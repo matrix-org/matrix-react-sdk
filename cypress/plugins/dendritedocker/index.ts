@@ -25,29 +25,18 @@ import PluginEvents = Cypress.PluginEvents;
 import PluginConfigOptions = Cypress.PluginConfigOptions;
 import { getFreePort } from "../utils/port";
 import { dockerExec, dockerLogs, dockerRun, dockerStop } from "../docker";
+import { HomeserverConfig, HomeserverInstance } from "../utils/homeserver";
 
 // A cypress plugins to add command to start & stop dendrites in
 // docker with preset templates.
 
-interface DendriteConfig {
-    configDir: string;
-    registrationSecret: string;
-    // Dendrite must be configured with its public_baseurl so we have to allocate a port & url at this stage
-    baseUrl: string;
-    port: number;
-}
-
-export interface DendriteInstance extends DendriteConfig {
-    dendriteId: string;
-}
-
-const dendrites = new Map<string, DendriteInstance>();
+const dendrites = new Map<string, HomeserverInstance>();
 
 function randB64Bytes(numBytes: number): string {
     return crypto.randomBytes(numBytes).toString("base64").replace(/=*$/, "");
 }
 
-async function cfgDirFromTemplate(template: string): Promise<DendriteConfig> {
+async function cfgDirFromTemplate(template: string): Promise<HomeserverConfig> {
     template = "default"
     const templateDir = path.join(__dirname, "templates", template);
     const configFile = "dendrite.yaml";
@@ -88,11 +77,10 @@ async function cfgDirFromTemplate(template: string): Promise<DendriteConfig> {
     };
 }
 
-// TODO (devon): this is the unique per homeserver 
 // Start a dendrite instance: the template must be the name of
 // one of the templates in the cypress/plugins/dendritedocker/templates
 // directory
-async function dendriteStart(template: string): Promise<DendriteInstance> {
+async function dendriteStart(template: string): Promise<HomeserverInstance> {
     const denCfg = await cfgDirFromTemplate(template);
 
     console.log(`Starting dendrite with config dir ${denCfg.configDir}...`);
@@ -123,12 +111,11 @@ async function dendriteStart(template: string): Promise<DendriteInstance> {
         ],
     });
 
-    const dendrite: DendriteInstance = { dendriteId, ...denCfg };
+    const dendrite: HomeserverInstance = { serverId: dendriteId, ...denCfg };
     dendrites.set(dendriteId, dendrite);
     return dendrite;
 }
 
-// TODO (devon): this is the same for all homeservers 
 async function dendriteStop(id: string): Promise<void> {
     const denCfg = dendrites.get(id);
 
@@ -157,7 +144,6 @@ async function dendriteStop(id: string): Promise<void> {
     return null;
 }
 
-// TODO (devon): this is the same for all homeservers 
 /**
  * @type {Cypress.PluginConfig}
  */

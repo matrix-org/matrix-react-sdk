@@ -16,18 +16,17 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-// import { SynapseInstance } from "../../plugins/synapsedocker";
-import { DendriteInstance } from "../../plugins/dendritedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 
 describe("Login", () => {
-    let synapse: DendriteInstance;
+    let homeserver: HomeserverInstance;
 
     beforeEach(() => {
         cy.stubDefaultServer();
     });
 
     afterEach(() => {
-        cy.stopDendrite(synapse);
+        cy.stopHomeserver(homeserver);
     });
 
     describe("m.login.password", () => {
@@ -35,14 +34,14 @@ describe("Login", () => {
         const password = "p4s5W0rD";
 
         beforeEach(() => {
-            cy.startDendrite("consent").then((data) => {
-                synapse = data;
-                cy.registerUser(synapse, username, password);
+            cy.startHomeserver("consent").then((data) => {
+                homeserver = data;
+                cy.registerUser(homeserver, username, password);
                 cy.visit("/#/login");
             });
         });
 
-        it.only("logs in with an existing account and lands on the home screen", () => {
+        it("logs in with an existing account and lands on the home screen", () => {
             cy.injectAxe();
 
             cy.get("#mx_LoginForm_username", { timeout: 15000 }).should("be.visible");
@@ -50,7 +49,7 @@ describe("Login", () => {
             cy.checkA11y();
 
             cy.get(".mx_ServerPicker_change").click();
-            cy.get(".mx_ServerPickerDialog_otherHomeserver").type(synapse.baseUrl);
+            cy.get(".mx_ServerPickerDialog_otherHomeserver").type(homeserver.baseUrl);
             cy.get(".mx_ServerPickerDialog_continue").click();
             // wait for the dialog to go away
             cy.get(".mx_ServerPickerDialog").should("not.exist");
@@ -65,9 +64,9 @@ describe("Login", () => {
 
     describe("logout", () => {
         beforeEach(() => {
-            cy.startDendrite("consent").then((data) => {
-                synapse = data;
-                cy.initTestUser(synapse, "Erin");
+            cy.startHomeserver("consent").then((data) => {
+                homeserver = data;
+                cy.initTestUser(homeserver, "Erin");
             });
         });
 
