@@ -137,26 +137,18 @@ async function synapseStart(template: string): Promise<SynapseInstance> {
     await dockerExec({
         containerId: synapseId,
         params: [
-            // HACK START
-            // "curl",
-            // "--connect-timeout",
-            // "30",
-            // "--retry",
-            // "30",
-            // "--retry-delay",
-            // "1",
-            // "--retry-all-errors",
-            // "--silent",
-            "sh",
-            "-c",
-            "sleep 3 && wget --spider -q http://localhost:8008/_dendrite/monitor/health",
-            // "wget",
-            // "--spider",
-            // "-q",
-            // HACK END
+            "curl",
+            "--connect-timeout",
+            "30",
+            "--retry",
+            "30",
+            "--retry-delay",
+            "1",
+            "--retry-all-errors",
+            "--silent",
             // HACK START
             // "http://localhost:8008/health",
-            // "http://localhost:8008/_dendrite/monitor/health",
+            "http://localhost:8008/_matrix/client/versions",
             // HACK END
         ],
     });
