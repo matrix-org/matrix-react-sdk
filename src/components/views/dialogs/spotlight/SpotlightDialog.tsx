@@ -78,7 +78,7 @@ import BaseAvatar from "../../avatars/BaseAvatar";
 import DecoratedRoomAvatar from "../../avatars/DecoratedRoomAvatar";
 import { SearchResultAvatar } from "../../avatars/SearchResultAvatar";
 import { NetworkDropdown } from "../../directory/NetworkDropdown";
-import AccessibleButton from "../../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../elements/AccessibleButton";
 import LabelledCheckbox from "../../elements/LabelledCheckbox";
 import Spinner from "../../elements/Spinner";
 import NotificationBadge from "../../rooms/NotificationBadge";
@@ -103,8 +103,8 @@ interface IProps extends IDialogProps {
     initialFilter?: Filter;
 }
 
-function refIsForRecentlyViewed(ref: RefObject<HTMLElement>): boolean {
-    return ref.current?.id?.startsWith("mx_SpotlightDialog_button_recentlyViewed_") === true;
+function refIsForRecentlyViewed(ref: RefObject<HTMLElement> | null): boolean {
+    return ref?.current?.id?.startsWith("mx_SpotlightDialog_button_recentlyViewed_") === true;
 }
 
 function getRoomTypes(showRooms: boolean, showSpaces: boolean): Set<RoomType | null> {
@@ -141,7 +141,7 @@ function filterToLabel(filter: Filter): string {
 interface IBaseResult {
     section: Section;
     filter: Filter[];
-    query?: string[]; // extra fields to query match, stored as lowercase
+    query?: (string | undefined)[]; // extra fields to query match, stored as lowercase
 }
 
 interface IPublicRoomResult extends IBaseResult {
@@ -287,8 +287,8 @@ interface IDirectoryOpts {
 }
 
 const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = null, onFinished }) => {
-    const inputRef = useRef<HTMLInputElement>();
-    const scrollContainerRef = useRef<HTMLDivElement>();
+    const inputRef = useRef<HTMLInputElement>(null);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
     const cli = MatrixClientPeg.get();
     const rovingContext = useContext(RovingTabIndexContext);
     const [query, _setQuery] = useState(initialText);
@@ -305,7 +305,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         return compareMembers(activityScores, memberScores);
     }, [cli]);
 
-    const ownInviteLink = makeUserPermalink(cli.getUserId());
+    const ownInviteLink = makeUserPermalink(cli.getUserId()!);
     const [inviteLinkCopied, setInviteLinkCopied] = useState<boolean>(false);
     const trimmedQuery = useMemo(() => query.trim(), [query]);
 
@@ -360,7 +360,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         return [
             ...SpaceStore.instance.enabledMetaSpaces.map((spaceKey) => ({
                 section: Section.Spaces,
-                filter: [],
+                filter: [] as Filter[],
                 avatar: (
                     <div
                         className={classNames(
@@ -402,15 +402,15 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     if (
                         !entry.room.normalizedName?.includes(normalizedQuery) &&
                         !entry.room.getCanonicalAlias()?.toLowerCase().includes(lcQuery) &&
-                        !entry.query?.some((q) => q.includes(lcQuery))
+                        !entry.query?.some((q) => q?.includes(lcQuery))
                     )
                         return; // bail, does not match query
                 } else if (isMemberResult(entry)) {
-                    if (!entry.query?.some((q) => q.includes(lcQuery))) return; // bail, does not match query
+                    if (!entry.query?.some((q) => q?.includes(lcQuery))) return; // bail, does not match query
                 } else if (isPublicRoomResult(entry)) {
-                    if (!entry.query?.some((q) => q.includes(lcQuery))) return; // bail, does not match query
+                    if (!entry.query?.some((q) => q?.includes(lcQuery))) return; // bail, does not match query
                 } else {
-                    if (!entry.name.toLowerCase().includes(lcQuery) && !entry.query?.some((q) => q.includes(lcQuery)))
+                    if (!entry.name.toLowerCase().includes(lcQuery) && !entry.query?.some((q) => q?.includes(lcQuery)))
                         return; // bail, does not match query
                 }
 
@@ -434,7 +434,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
         // Sort results by most recent activity
 
-        const myUserId = cli.getUserId();
+        const myUserId = cli.getUserId()!;
         for (const resultArray of Object.values(results)) {
             resultArray.sort((a: Result, b: Result) => {
                 if (isRoomResult(a) || isRoomResult(b)) {
@@ -450,6 +450,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
                     return memberComparator(a.member, b.member);
                 }
+                return 0;
             });
         }
 
@@ -459,7 +460,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     const numResults = sum(Object.values(results).map((it) => it.length));
     useWebSearchMetrics(numResults, query.length, true);
 
-    const activeSpace = SpaceStore.instance.activeSpaceRoom;
+    const activeSpace = SpaceStore.instance.activeSpaceRoom ?? undefined;
     const [spaceResults, spaceResultsLoading] = useSpaceResults(activeSpace, query);
 
     const setQuery = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -468,17 +469,16 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     };
     useEffect(() => {
         setImmediate(() => {
-            let ref: Ref;
             if (rovingContext.state.refs) {
-                ref = rovingContext.state.refs[0];
+                const ref: Ref = rovingContext.state.refs[0];
+                rovingContext.dispatch({
+                    type: Type.SetFocus,
+                    payload: { ref },
+                });
+                ref?.current?.scrollIntoView?.({
+                    block: "nearest",
+                });
             }
-            rovingContext.dispatch({
-                type: Type.SetFocus,
-                payload: { ref },
-            });
-            ref?.current?.scrollIntoView?.({
-                block: "nearest",
-            });
         });
         // we intentionally ignore changes to the rovingContext for the purpose of this hook
         // we only want to reset the focus whenever the results or filters change
@@ -491,7 +491,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         viaKeyboard = false,
     ) => {
         if (persist) {
-            const recents = new Set(SettingsStore.getValue("SpotlightSearch.recentSearches", null).reverse());
+            const recents = new Set(SettingsStore.getValue("SpotlightSearch.recentSearches", undefined).reverse());
             // remove & add the room to put it at the end
             recents.delete(room.roomId);
             recents.add(room.roomId);
@@ -516,7 +516,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         onFinished();
     };
 
-    let otherSearchesSection: JSX.Element;
+    let otherSearchesSection: JSX.Element | null = null;
     if (trimmedQuery || filter !== Filter.PublicRooms) {
         otherSearchesSection = (
             <div
@@ -592,7 +592,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         id={`mx_SpotlightDialog_button_result_${result.member.userId}`}
                         key={`${Section[result.section]}-${result.member.userId}`}
                         onClick={() => {
-                            startDmOnFirstMessage(cli, [result.member]);
+                            startDmOnFirstMessage(cli, [result.member as Member]);
                             onFinished();
                         }}
                         aria-label={
@@ -620,7 +620,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 const showViewButton =
                     clientRoom?.getMyMembership() === "join" || result.publicRoom.world_readable || cli.isGuest();
 
-                const listener = (ev) => {
+                const listener = (ev: ButtonEvent) => {
                     const { publicRoom } = result;
                     viewRoom(
                         {
@@ -679,7 +679,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 <Option
                     id={`mx_SpotlightDialog_button_result_${result.name}`}
                     key={`${Section[result.section]}-${result.name}`}
-                    onClick={result.onClick}
+                    onClick={() => result.onClick?.()}
                 >
                     {result.avatar}
                     {result.name}
@@ -688,7 +688,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             );
         };
 
-        let peopleSection: JSX.Element;
+        let peopleSection: JSX.Element | null = null;
         if (results[Section.People].length) {
             peopleSection = (
                 <div
@@ -702,7 +702,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             );
         }
 
-        let suggestionsSection: JSX.Element;
+        let suggestionsSection: JSX.Element | null = null;
         if (results[Section.Suggestions].length && filter === Filter.People) {
             suggestionsSection = (
                 <div
@@ -716,7 +716,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             );
         }
 
-        let roomsSection: JSX.Element;
+        let roomsSection: JSX.Element | null = null;
         if (results[Section.Rooms].length) {
             roomsSection = (
                 <div
@@ -730,7 +730,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             );
         }
 
-        let spacesSection: JSX.Element;
+        let spacesSection: JSX.Element | null = null;
         if (results[Section.Spaces].length) {
             spacesSection = (
                 <div
@@ -744,7 +744,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             );
         }
 
-        let publicRoomsSection: JSX.Element;
+        let publicRoomsSection: JSX.Element | null = null;
         if (filter === Filter.PublicRooms) {
             publicRoomsSection = (
                 <div
@@ -786,7 +786,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             );
         }
 
-        let spaceRoomsSection: JSX.Element;
+        let spaceRoomsSection: JSX.Element | null = null;
         if (spaceResults.length && activeSpace && filter === null) {
             spaceRoomsSection = (
                 <div
@@ -808,12 +808,12 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                     }}
                                 >
                                     <BaseAvatar
-                                        name={room.name}
+                                        name={room.name ?? ""}
                                         idName={room.room_id}
                                         url={
                                             room.avatar_url
                                                 ? mediaFromMxc(room.avatar_url).getSquareThumbnailHttp(AVATAR_SIZE)
-                                                : null
+                                                : undefined
                                         }
                                         width={AVATAR_SIZE}
                                         height={AVATAR_SIZE}
@@ -831,7 +831,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             );
         }
 
-        let joinRoomSection: JSX.Element;
+        let joinRoomSection: JSX.Element | null = null;
         if (
             trimmedQuery.startsWith("#") &&
             trimmedQuery.includes(":") &&
@@ -863,7 +863,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             );
         }
 
-        let hiddenResultsSection: JSX.Element;
+        let hiddenResultsSection: JSX.Element | null = null;
         if (filter === Filter.People) {
             hiddenResultsSection = (
                 <div className="mx_SpotlightDialog_section mx_SpotlightDialog_hiddenResults" role="group">
@@ -916,7 +916,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             );
         }
 
-        let groupChatSection: JSX.Element;
+        let groupChatSection: JSX.Element | null = null;
         if (filter === Filter.People) {
             groupChatSection = (
                 <div
@@ -936,7 +936,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             );
         }
 
-        let messageSearchSection: JSX.Element;
+        let messageSearchSection: JSX.Element | null = null;
         if (filter === null) {
             messageSearchSection = (
                 <div
@@ -972,7 +972,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             </>
         );
     } else {
-        let recentSearchesSection: JSX.Element;
+        let recentSearchesSection: JSX.Element | null = null;
         if (recentSearches.length) {
             recentSearchesSection = (
                 <div
@@ -1060,7 +1060,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         );
     }
 
-    const onDialogKeyDown = (ev: KeyboardEvent) => {
+    const onDialogKeyDown = (ev: React.KeyboardEvent<Element> | globalThis.KeyboardEvent) => {
         const navigationAction = getKeyBindingsManager().getNavigationAction(ev);
         switch (navigationAction) {
             case KeyBindingAction.FilterRooms:
@@ -1070,7 +1070,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 break;
         }
 
-        let ref: RefObject<HTMLElement>;
+        let ref: RefObject<HTMLElement> | null = null;
         const accessibilityAction = getKeyBindingsManager().getAccessibilityAction(ev);
         switch (accessibilityAction) {
             case KeyBindingAction.Escape:
@@ -1095,8 +1095,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         refs = refs.filter((ref) => ref === keptRecentlyViewedRef || !refIsForRecentlyViewed(ref));
                     }
 
-                    const idx = refs.indexOf(rovingContext.state.activeRef);
-                    ref = findSiblingElement(refs, idx + (accessibilityAction === KeyBindingAction.ArrowUp ? -1 : 1));
+                    if (rovingContext.state.activeRef) {
+                        const idx = refs.indexOf(rovingContext.state.activeRef);
+                        ref = findSiblingElement(
+                            refs,
+                            idx + (accessibilityAction === KeyBindingAction.ArrowUp ? -1 : 1),
+                        );
+                    }
                 }
                 break;
 
@@ -1114,8 +1119,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     ev.preventDefault();
 
                     const refs = rovingContext.state.refs.filter(refIsForRecentlyViewed);
-                    const idx = refs.indexOf(rovingContext.state.activeRef);
-                    ref = findSiblingElement(refs, idx + (accessibilityAction === KeyBindingAction.ArrowLeft ? -1 : 1));
+                    if (rovingContext.state.activeRef) {
+                        const idx = refs.indexOf(rovingContext.state.activeRef);
+                        ref = findSiblingElement(
+                            refs,
+                            idx + (accessibilityAction === KeyBindingAction.ArrowLeft ? -1 : 1),
+                        );
+                    }
                 }
                 break;
         }

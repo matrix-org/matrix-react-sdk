@@ -63,7 +63,7 @@ export const usePublicRoomDirectory = () => {
         }
     }
 
-    function setConfig(config: IPublicRoomDirectoryConfig) {
+    function setConfig(config: IPublicRoomDirectoryConfig | null) {
         if (!ready) {
             throw new Error("public room configuration not initialised yet");
         } else {
