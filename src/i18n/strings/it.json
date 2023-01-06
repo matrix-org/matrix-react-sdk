@@ -3697,5 +3697,8 @@
     "Force 15s voice broadcast chunk length": "Forza lunghezza pezzo trasmissione vocale a 15s",
     "Sign out of %(count)s sessions|one": "Disconnetti %(count)s sessione",
     "Sign out of %(count)s sessions|other": "Disconnetti %(count)s sessioni",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Disconnetti tutte le altre sessioni (%(otherSessionsCount)s)"
+    "Sign out of all other sessions (%(otherSessionsCount)s)": "Disconnetti tutte le altre sessioni (%(otherSessionsCount)s)",
+    "Yes, end my recording": "Sì, termina la mia registrazione",
+    "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "Se inizi ad ascoltare questa trasmissione in diretta, l'attuale registrazione della tua trasmissione in diretta finirà.",
+    "Listen to live broadcast?": "Ascoltare la trasmissione in diretta?"
 }
