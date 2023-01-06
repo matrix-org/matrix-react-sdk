@@ -23,13 +23,12 @@ import { LinkModal } from "../../../../../../src/components/views/rooms/wysiwyg_
 import { mockPlatformPeg } from "../../../../../test-utils";
 import * as selection from "../../../../../../src/components/views/rooms/wysiwyg_composer/utils/selection";
 import { SubSelection } from "../../../../../../src/components/views/rooms/wysiwyg_composer/types";
-import spyOn = jest.spyOn;
 
 describe("LinkModal", () => {
     const formattingFunctions = {
         link: jest.fn(),
         removeLinks: jest.fn(),
-        getLink: jest.fn(),
+        getLink: jest.fn().mockReturnValue("my initial content"),
     } as unknown as FormattingFunctions;
     const defaultValue: SubSelection = {
         focusNode: null,
@@ -147,10 +146,16 @@ describe("LinkModal", () => {
 
     it("Should display the link in editing", async () => {
         // When
-        spyOn(formattingFunctions, "getLink").mockReturnValue("my initial content");
         customRender(true, jest.fn(), true);
 
         // Then
         expect(screen.getByLabelText("Link")).toContainHTML("my initial content");
+        expect(screen.getByText("Save")).toBeDisabled();
+
+        // When
+        await userEvent.type(screen.getByLabelText("Link"), "l");
+
+        // Then
+        await waitFor(() => expect(screen.getByText("Save")).toBeEnabled());
     });
 });

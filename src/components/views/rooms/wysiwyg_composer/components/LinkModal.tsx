@@ -36,7 +36,7 @@ export function openLinkModal(
             composerContext,
             composer,
             onClose: () => modal.close(),
-            isTextEnabled: !isEditing && isSelectionEmpty(),
+            isTextEnabled: isSelectionEmpty(),
             isEditing,
         },
         "mx_CompoundDialog",
@@ -58,8 +58,10 @@ interface LinkModalProps {
 }
 
 export function LinkModal({ composer, isTextEnabled, onClose, composerContext, isEditing }: LinkModalProps) {
+    const [hasLinkChanged, setHasLinkChanged] = useState(false);
     const [fields, setFields] = useState({ text: "", link: isEditing ? composer.getLink() : "" });
-    const isSaveDisabled = (isTextEnabled && isEmpty(fields.text)) || isEmpty(fields.link);
+    const hasText = !isEditing && isTextEnabled;
+    const isSaveDisabled = !hasLinkChanged || (hasText && isEmpty(fields.text)) || isEmpty(fields.link);
 
     return (
         <BaseDialog
@@ -79,7 +81,7 @@ export function LinkModal({ composer, isTextEnabled, onClose, composerContext, i
                     onClose();
                 }}
             >
-                {isTextEnabled && (
+                {hasText && (
                     <Field
                         required={true}
                         autoFocus={true}
@@ -97,9 +99,11 @@ export function LinkModal({ composer, isTextEnabled, onClose, composerContext, i
                     label={_td("Link")}
                     value={fields.link}
                     placeholder=""
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                        setFields((fields) => ({ ...fields, link: e.target.value }))
-                    }
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                        console.log("onChange", e.target.value);
+                        setFields((fields) => ({ ...fields, link: e.target.value }));
+                        setHasLinkChanged(true);
+                    }}
                 />
 
                 <div className="mx_LinkModal_buttons">
