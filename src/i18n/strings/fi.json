@@ -3414,5 +3414,21 @@
     "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.": "Moderointia tukevissa huoneissa väärinkäytökset voi ilmoittaa Ilmoita-painikkeella huoneen moderaattoreille.",
     "Report to moderators": "Ilmoita moderaattoreille",
     "Let moderators hide messages pending moderation.": "Anna moderaattorien piilottaa moderointia odottavia viestejä.",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)s h %(minutes)s m %(seconds)s s jäljellä"
+    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)s h %(minutes)s m %(seconds)s s jäljellä",
+    "View List": "Näytä luettelo",
+    "View list": "Näytä luettelo",
+    "Mark as read": "Merkitse luetuksi",
+    "Interactively verify by emoji": "Vahvista vuorovaikutteisesti emojilla",
+    "Manually verify by text": "Vahvista manuaalisesti tekstillä",
+    "Text": "Teksti",
+    "Link": "Linkki",
+    "Create a link": "Luo linkki",
+    " in <strong>%(room)s</strong>": " huoneessa <strong>%(room)s</strong>",
+    "Sign out of %(count)s sessions|one": "Kirjaudu ulos %(count)s istunnosta",
+    "Sign out of %(count)s sessions|other": "Kirjaudu ulos %(count)s istunnosta",
+    "Your current session is ready for secure messaging.": "Nykyinen istuntosi on valmis turvalliseen viestintään.",
+    "Sign out of all other sessions (%(otherSessionsCount)s)": "Kirjaudu ulos kaikista muista istunnoista (%(otherSessionsCount)s)",
+    "You did it!": "Teit sen!",
+    "Right panel stays open": "Oikea paneeli pysyy avoinna",
+    "Currently experimental.": "Tällä hetkellä kokeellinen."
 }
