@@ -35,7 +35,7 @@ import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import { _t } from "../../../../languageHandler";
-import { getDeviceClientInformation } from "../../../../utils/device/clientInformation";
+import { getDeviceClientInformation, pruneClientInformation } from "../../../../utils/device/clientInformation";
 import { DevicesDictionary, ExtendedDevice, ExtendedDeviceAppInfo } from "./types";
 import { useEventEmitter } from "../../../../hooks/useEventEmitter";
 import { parseUserAgent } from "../../../../utils/device/parseUserAgent";
@@ -175,6 +175,10 @@ export const useOwnDevices = (): DevicesState => {
     useEffect(() => {
         refreshDevices();
     }, [refreshDevices]);
+
+    useEffect(() => {
+        pruneClientInformation(Object.keys(devices), matrixClient);
+    }, [devices]);
 
     useEventEmitter(matrixClient, CryptoEvent.DevicesUpdated, (users: string[]): void => {
         if (users.includes(userId)) {

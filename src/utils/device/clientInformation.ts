@@ -40,8 +40,8 @@ const formatUrl = (): string | undefined => {
     ].join("");
 };
 
-export const getClientInformationEventType = (deviceId: string): string =>
-    `io.element.matrix_client_information.${deviceId}`;
+const clientInformationEventPrefix = "io.element.matrix_client_information.";
+export const getClientInformationEventType = (deviceId: string): string => `${clientInformationEventPrefix}${deviceId}`;
 
 /**
  * Record extra client information for the current device
@@ -66,9 +66,26 @@ export const recordClientInformation = async (
 };
 
 /**
- * Remove extra client information
- * @todo(kerrya) revisit after MSC3391: account data deletion is done
- * (PSBE-12)
+ * Remove client information events for devices that no longer exist
+ * @param validDeviceIds - ids of current devices,
+ *                      client information for devices NOT in this list will be removed
+ */
+export const pruneClientInformation = async (validDeviceIds: string[], matrixClient: MatrixClient): Promise<void> => {
+    const orphanClientInformationEvents = Object.values(matrixClient.store.accountData).filter((event) => {
+        if (event.getType().startsWith(clientInformationEventPrefix)) {
+            const [, deviceId] = event.getType().split(clientInformationEventPrefix);
+            return deviceId && !validDeviceIds.includes(deviceId);
+        }
+        return false;
+    });
+
+    orphanClientInformationEvents.forEach((event) => {
+        matrixClient.deleteAccountData(event.getType());
+    });
+};
+
+/**
+ * Remove extra client information for current device
  */
 export const removeClientInformation = async (matrixClient: MatrixClient): Promise<void> => {
     const deviceId = matrixClient.getDeviceId();

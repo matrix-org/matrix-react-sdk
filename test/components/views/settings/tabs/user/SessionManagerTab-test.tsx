@@ -93,6 +93,8 @@ describe("<SessionManagerTab />", () => {
         setLocalNotificationSettings: jest.fn(),
         getVersions: jest.fn().mockResolvedValue({}),
     });
+    // @ts-ignore mock
+    mockClient.store = { accountData: {} };
 
     const defaultProps = {};
     const getComponent = (props = {}): React.ReactElement => (
