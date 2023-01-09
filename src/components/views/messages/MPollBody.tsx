@@ -42,8 +42,11 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import { GetRelationsForEvent } from "../rooms/EventTile";
 import PollCreateDialog from "../elements/PollCreateDialog";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { Poll, PollEvent } from "matrix-js-sdk/src/models/poll";
 
 interface IState {
+    poll?: Poll,
+    pollReady: boolean;
     selected?: string | null | undefined; // Which option was clicked by the local user
     voteRelations: RelatedRelations; // Voting (response) events
     endRelations: RelatedRelations; // Poll end events
@@ -229,17 +232,44 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
 
         this.state = {
             selected: null,
+            pollReady: false,
             voteRelations: this.fetchVoteRelations(),
             endRelations: this.fetchEndRelations(),
         };
+
+        
 
         this.addListeners(this.state.voteRelations, this.state.endRelations);
         this.props.mxEvent.on(MatrixEventEvent.RelationsCreated, this.onRelationsCreated);
     }
 
+    public componentDidMount(): void {
+        const room = this.context.getRoom(this.props.mxEvent.getRoomId());
+        const poll = room?.polls.get(this.props.mxEvent.getId());
+        if (poll) {
+            this.setPollInstance(poll);
+        } else {
+            room.on(PollEvent.New, this.setPollInstance.bind(this));
+        }
+
+    }
+
     public componentWillUnmount() {
         this.props.mxEvent.off(MatrixEventEvent.RelationsCreated, this.onRelationsCreated);
         this.removeListeners(this.state.voteRelations, this.state.endRelations);
+    }
+
+    private async setPollInstance(poll: Poll) {
+        if (poll.pollId !== this.props.mxEvent.getId()) {
+            return;
+        }
+        console.log('hhh MPollBody setPollInstance', { poll, e: this.props.mxEvent });
+        this.setState({ poll });
+        const responses = await poll.getResponses();
+        const voteRelations = new RelatedRelations([responses]);
+        this.setState({ pollReady: true, voteRelations }, () => {
+            this.addListeners(this.state.voteRelations, this.state.endRelations);
+        });
     }
 
     private addListeners(voteRelations?: RelatedRelations, endRelations?: RelatedRelations) {
@@ -293,6 +323,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
     };
 
     private onRelationsChange = () => {
+        console.log('hhh', 'onRelationsChange');
         // We hold Relations in our state, and they changed under us.
         // Check whether we should delete our selection, and then
         // re-render.
@@ -385,11 +416,13 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
      * have already seen.
      */
     private unselectIfNewEventFromMe() {
+        // @TODO(kerrya) removed filter because vote relations are only poll responses now
         const newEvents: MatrixEvent[] = this.state.voteRelations
             .getRelations()
-            .filter(isPollResponse)
             .filter((mxEvent: MatrixEvent) => !this.seenEventIds.includes(mxEvent.getId()!));
         let newSelected = this.state.selected;
+
+        console.log('hhh unselectIfNewEvent', newEvents, this.seenEventIds);
 
         if (newEvents.length > 0) {
             for (const mxEvent of newEvents) {
@@ -416,6 +449,100 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
     }
 
     public render() {
+        const { poll, pollReady } = this.state;
+        console.log('hhh', 'MPollBody render', poll, pollReady)
+        if (!poll) {
+            return null;
+        }
+
+        const pollEvent = poll.getPollStartEvent();
+
+
+        const pollId = this.props.mxEvent.getId();
+        const userVotes = this.collectUserVotes();
+        const votes = countVotes(userVotes, pollEvent);
+        const totalVotes = this.totalVotes(votes);
+        const winCount = Math.max(...votes.values());
+        const userId = this.context.getUserId();
+        const myVote = userVotes?.get(userId!)?.answers[0];
+        const disclosed = M_POLL_KIND_DISCLOSED.matches(pollEvent.kind.name);
+
+        // Disclosed: votes are hidden until I vote or the poll ends
+        // Undisclosed: votes are hidden until poll ends
+        const showResults = poll.isEnded || (disclosed && myVote !== undefined);
+
+        let totalText: string;
+        if (poll.isEnded) {
+            totalText = _t("Final result based on %(count)s votes", { count: totalVotes });
+        } else if (!disclosed) {
+            totalText = _t("Results will be visible when the poll is ended");
+        } else if (myVote === undefined) {
+            if (totalVotes === 0) {
+                totalText = _t("No votes cast");
+            } else {
+                totalText = _t("%(count)s votes cast. Vote to see the results", { count: totalVotes });
+            }
+        } else {
+            totalText = _t("Based on %(count)s votes", { count: totalVotes });
+        }
+
+        const editedSpan = this.props.mxEvent.replacingEvent() ? (
+            <span className="mx_MPollBody_edited"> ({_t("edited")})</span>
+        ) : null;
+
+        return (
+            <div className="mx_MPollBody">
+                <h2>
+                    {pollEvent.question.text}
+                    {editedSpan}
+                </h2>
+                <div className="mx_MPollBody_allOptions">
+                    {pollEvent.answers.map((answer: PollAnswerSubevent) => {
+                        let answerVotes = 0;
+                        let votesText = "";
+
+                        if (showResults) {
+                            answerVotes = votes.get(answer.id) ?? 0;
+                            votesText = _t("%(count)s votes", { count: answerVotes });
+                        }
+
+                        const checked = (!poll.isEnded && myVote === answer.id) || (poll.isEnded && answerVotes === winCount);
+                        const cls = classNames({
+                            mx_MPollBody_option: true,
+                            mx_MPollBody_option_checked: checked,
+                            mx_MPollBody_option_ended: poll.isEnded,
+                        });
+
+                        const answerPercent = totalVotes === 0 ? 0 : Math.round((100.0 * answerVotes) / totalVotes);
+                        return (
+                            <div key={answer.id} className={cls} onClick={() => this.selectOption(answer.id)}>
+                                {poll.isEnded ? (
+                                    <EndedPollOption answer={answer} checked={checked} votesText={votesText} />
+                                ) : (
+                                    <LivePollOption
+                                        pollId={pollId}
+                                        answer={answer}
+                                        checked={checked}
+                                        votesText={votesText}
+                                        onOptionSelected={this.onOptionSelected}
+                                    />
+                                )}
+                                <div className="mx_MPollBody_popularityBackground">
+                                    <div
+                                        className="mx_MPollBody_popularityAmount"
+                                        style={{ width: `${answerPercent}%` }}
+                                    />
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+                <div className="mx_MPollBody_totalVotes">{totalText}</div>
+            </div>
+        );
+    }
+
+    public render2() {
         const poll = this.props.mxEvent.unstableExtensibleEvent as PollStartEvent;
         if (!poll?.isEquivalentTo(M_POLL_START)) return null; // invalid
 
