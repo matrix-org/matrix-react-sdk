@@ -16,8 +16,9 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import type { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+
+import type { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { Layout } from "../../../src/settings/enums/Layout";
