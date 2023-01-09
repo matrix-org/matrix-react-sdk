@@ -71,6 +71,12 @@ export function doesRoomHaveUnreadMessages(room: Room): boolean {
 }
 
 export function doesRoomOrThreadHaveUnreadMessages(room: Room | Thread): boolean {
+    // If there are no messages yet in the timeline then it isn't fully initialised
+    // and cannot be unread.
+    if (room.timeline.length === 0) {
+        return false;
+    }
+
     const myUserId = MatrixClientPeg.get().getUserId();
 
     // as we don't send RRs for our own messages, make sure we special case that
