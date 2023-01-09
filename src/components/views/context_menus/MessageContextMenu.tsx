@@ -1,6 +1,6 @@
 /*
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
-Copyright 2015 - 2022 The Matrix.org Foundation C.I.C.
+Copyright 2015 - 2023 The Matrix.org Foundation C.I.C.
 Copyright 2021 - 2022 Šimon Brandner <simon.bra.ag@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -56,7 +56,6 @@ import { getForwardableEvent } from "../../../events/forward/getForwardableEvent
 import { getShareableLocationEvent } from "../../../events/location/getShareableLocationEvent";
 import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
 import { CardContext } from "../right_panel/context";
-import { UserTab } from "../dialogs/UserTab";
 
 interface IReplyInThreadButton {
     mxEvent: MatrixEvent;
@@ -71,12 +70,7 @@ const ReplyInThreadButton = ({ mxEvent, closeMenu }: IReplyInThreadButton) => {
     if (Boolean(relationType) && relationType !== RelationType.Thread) return null;
 
     const onClick = (): void => {
-        if (!SettingsStore.getValue("feature_threadstable")) {
-            dis.dispatch({
-                action: Action.ViewUserSettings,
-                initialTabId: UserTab.Labs,
-            });
-        } else if (mxEvent.getThread() && !mxEvent.isThreadRoot) {
+        if (mxEvent.getThread() && !mxEvent.isThreadRoot) {
             dis.dispatch<ShowThreadPayload>({
                 action: Action.ShowThread,
                 rootEvent: mxEvent.getThread().rootEvent,
@@ -640,7 +634,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             rightClick &&
             contentActionable &&
             canSendMessages &&
-            SettingsStore.getValue("feature_threadstable") &&
             Thread.hasServerSideSupport &&
             timelineRenderingType !== TimelineRenderingType.Thread
         ) {

@@ -1,5 +1,5 @@
 /*
-Copyright 2015 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2015 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -65,18 +65,6 @@ export function doesRoomHaveUnreadMessages(room: Room): boolean {
     // N.B. this is NOT a read marker (RM, aka "read up to marker"),
     // despite the name of the method :((
     const readUpToId = room.getEventReadUpTo(myUserId!);
-
-    if (!SettingsStore.getValue("feature_threadstable")) {
-        // as we don't send RRs for our own messages, make sure we special case that
-        // if *we* sent the last message into the room, we consider it not unread!
-        // Should fix: https://github.com/vector-im/element-web/issues/3263
-        //             https://github.com/vector-im/element-web/issues/2427
-        // ...and possibly some of the others at
-        //             https://github.com/vector-im/element-web/issues/3363
-        if (room.timeline.length && room.timeline[room.timeline.length - 1].getSender() === myUserId) {
-            return false;
-        }
-    }
 
     // if the read receipt relates to an event is that part of a thread
     // we consider that there are no unread messages

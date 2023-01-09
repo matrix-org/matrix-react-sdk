@@ -1,5 +1,5 @@
 /*
-Copyright 2015 - 2022 The Matrix.org Foundation C.I.C.
+Copyright 2015 - 2023 The Matrix.org Foundation C.I.C.
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -57,7 +57,6 @@ import { IReadReceiptInfo } from "./ReadReceiptMarker";
 import MessageActionBar from "../messages/MessageActionBar";
 import ReactionsRow from "../messages/ReactionsRow";
 import { getEventDisplayInfo } from "../../../utils/EventRenderingUtils";
-import SettingsStore from "../../../settings/SettingsStore";
 import { MessagePreviewStore } from "../../../stores/room-list/MessagePreviewStore";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
@@ -386,12 +385,10 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             }
         }
 
-        if (SettingsStore.getValue("feature_threadstable")) {
-            this.props.mxEvent.on(ThreadEvent.Update, this.updateThread);
+        this.props.mxEvent.on(ThreadEvent.Update, this.updateThread);
 
-            if (this.thread && !this.supportsThreadNotifications) {
-                this.setupNotificationListener(this.thread);
-            }
+        if (this.thread && !this.supportsThreadNotifications) {
+            this.setupNotificationListener(this.thread);
         }
 
         client.decryptEventIfNeeded(this.props.mxEvent);
@@ -469,9 +466,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         if (this.props.showReactions) {
             this.props.mxEvent.removeListener(MatrixEventEvent.RelationsCreated, this.onReactionsCreated);
         }
-        if (SettingsStore.getValue("feature_threadstable")) {
-            this.props.mxEvent.off(ThreadEvent.Update, this.updateThread);
-        }
+        this.props.mxEvent.off(ThreadEvent.Update, this.updateThread);
         this.threadState?.off(NotificationStateEvents.Update, this.onThreadStateUpdate);
     }
 
@@ -500,10 +495,6 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
     };
 
     private get thread(): Thread | null {
-        if (!SettingsStore.getValue("feature_threadstable")) {
-            return null;
-        }
-
         let thread = this.props.mxEvent.getThread();
         /**
          * Accessing the threads value through the room due to a race condition

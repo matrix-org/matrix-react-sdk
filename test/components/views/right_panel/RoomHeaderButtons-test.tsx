@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ import React from "react";
 
 import RoomHeaderButtons from "../../../../src/components/views/right_panel/RoomHeaderButtons";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
-import SettingsStore from "../../../../src/settings/SettingsStore";
 import { stubClient } from "../../../test-utils";
 
 describe("RoomHeaderButtons-test.tsx", function () {
@@ -37,10 +36,6 @@ describe("RoomHeaderButtons-test.tsx", function () {
         client = MatrixClientPeg.get();
         room = new Room(ROOM_ID, client, client.getUserId() ?? "", {
             pendingEventOrdering: PendingEventOrdering.Detached,
-        });
-
-        jest.spyOn(SettingsStore, "getValue").mockImplementation((name: string) => {
-            if (name === "feature_threadstable") return true;
         });
     });
 
@@ -59,12 +54,6 @@ describe("RoomHeaderButtons-test.tsx", function () {
     it("shows the thread button", () => {
         const { container } = getComponent(room);
         expect(getThreadButton(container)).not.toBeNull();
-    });
-
-    it("hides the thread button", () => {
-        jest.spyOn(SettingsStore, "getValue").mockReset().mockReturnValue(false);
-        const { container } = getComponent(room);
-        expect(getThreadButton(container)).toBeNull();
     });
 
     it("room wide notification does not change the thread button", () => {
