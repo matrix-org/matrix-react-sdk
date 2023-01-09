@@ -676,20 +676,22 @@ describe("<SessionManagerTab />", () => {
             const mobileDeviceClientInfo = new MatrixEvent({
                 type: getClientInformationEventType(alicesMobileDevice.device_id),
                 content: {
-                    name: 'test'
-                }
-            })
+                    name: "test",
+                },
+            });
             // @ts-ignore setup mock
             mockClient.store = {
                 // @ts-ignore setup mock
                 accountData: {
-                    [mobileDeviceClientInfo.getType()]: mobileDeviceClientInfo
-                }
-            }
+                    [mobileDeviceClientInfo.getType()]: mobileDeviceClientInfo,
+                },
+            };
 
-            mockClient.getDevices.mockResolvedValueOnce({
+            mockClient.getDevices
+                .mockResolvedValueOnce({
                     devices: [alicesDevice, alicesMobileDevice, alicesOlderMobileDevice],
-                }).mockResolvedValueOnce({
+                })
+                .mockResolvedValueOnce({
                     // refreshed devices after sign out
                     devices: [alicesDevice],
                 });

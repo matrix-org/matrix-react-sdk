@@ -116,8 +116,8 @@ export type DevicesState = {
 export const useOwnDevices = (): DevicesState => {
     const matrixClient = useContext(MatrixClientContext);
 
-    const currentDeviceId = matrixClient.getDeviceId();
-    const userId = matrixClient.getUserId();
+    const currentDeviceId = matrixClient.getDeviceId()!;
+    const userId = matrixClient.getSafeUserId();
 
     const [devices, setDevices] = useState<DevicesState["devices"]>({});
     const [pushers, setPushers] = useState<DevicesState["pushers"]>([]);
@@ -138,11 +138,6 @@ export const useOwnDevices = (): DevicesState => {
     const refreshDevices = useCallback(async () => {
         setIsLoadingDeviceList(true);
         try {
-            // realistically we should never hit this
-            // but it satisfies types
-            if (!userId) {
-                throw new Error("Cannot fetch devices without user id");
-            }
             const devices = await fetchDevicesWithVerification(matrixClient, userId);
             setDevices(devices);
 

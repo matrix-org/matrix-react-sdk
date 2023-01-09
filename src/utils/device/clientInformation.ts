@@ -52,7 +52,7 @@ export const recordClientInformation = async (
     sdkConfig: IConfigOptions,
     platform: BasePlatform,
 ): Promise<void> => {
-    const deviceId = matrixClient.getDeviceId();
+    const deviceId = matrixClient.getDeviceId()!;
     const { brand } = sdkConfig;
     const version = await platform.getAppVersion();
     const type = getClientInformationEventType(deviceId);
@@ -88,7 +88,7 @@ export const pruneClientInformation = async (validDeviceIds: string[], matrixCli
  * Remove extra client information for current device
  */
 export const removeClientInformation = async (matrixClient: MatrixClient): Promise<void> => {
-    const deviceId = matrixClient.getDeviceId();
+    const deviceId = matrixClient.getDeviceId()!;
     const type = getClientInformationEventType(deviceId);
     const clientInformation = getDeviceClientInformation(matrixClient, deviceId);
 
