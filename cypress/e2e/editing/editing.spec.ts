@@ -16,8 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { MsgType } from "matrix-js-sdk/src/@types/event";
-
+import type { MsgType } from "matrix-js-sdk/src/@types/event";
 import type { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 import type { EventType } from "matrix-js-sdk/src/@types/event";
 import { SynapseInstance } from "../../plugins/synapsedocker";
@@ -25,7 +24,7 @@ import Chainable = Cypress.Chainable;
 
 const sendEvent = (roomId: string): Chainable<ISendEventResponse> => {
     return cy.sendEvent(roomId, null, "m.room.message" as EventType, {
-        msgtype: MsgType.Text,
+        msgtype: "m.text" as MsgType,
         body: "Message",
     });
 };

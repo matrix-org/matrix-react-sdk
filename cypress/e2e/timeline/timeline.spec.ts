@@ -16,9 +16,8 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
-
 import type { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
+import type { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { Layout } from "../../../src/settings/enums/Layout";
@@ -55,7 +54,7 @@ const expectAvatar = (e: JQuery<HTMLElement>, avatarUrl: string): void => {
 
 const sendEvent = (roomId: string, html = false): Chainable<ISendEventResponse> => {
     const content = {
-        msgtype: MsgType.Text,
+        msgtype: "m.text" as MsgType,
         body: "Message",
         format: undefined,
         formatted_body: undefined,
@@ -64,7 +63,7 @@ const sendEvent = (roomId: string, html = false): Chainable<ISendEventResponse> 
         content.format = "org.matrix.custom.html";
         content.formatted_body = "<b>Message</b>";
     }
-    return cy.sendEvent(roomId, null, EventType.RoomMessage, content);
+    return cy.sendEvent(roomId, null, "m.room.message" as EventType, content);
 };
 
 describe("Timeline", () => {
@@ -318,8 +317,8 @@ describe("Timeline", () => {
                 },
             }).as("preview_url");
 
-            cy.sendEvent(roomId, null, EventType.RoomMessage, {
-                msgtype: MsgType.Text,
+            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
+                msgtype: "m.text" as MsgType,
                 body: "https://call.element.io/",
             });
             cy.visit("/#/room/" + roomId);
