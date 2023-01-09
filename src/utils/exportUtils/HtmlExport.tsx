@@ -246,9 +246,9 @@ export default class HTMLExporter extends Exporter {
         return renderToStaticMarkup(dateSeparator);
     }
 
-    protected needsDateSeparator(event: MatrixEvent, prevEvent: MatrixEvent) {
+    protected needsDateSeparator(event: MatrixEvent | null, prevEvent: MatrixEvent | null) {
         if (prevEvent == null) return true;
-        return wantsDateSeparator(prevEvent.getDate(), event.getDate());
+        return wantsDateSeparator(prevEvent.getDate(), event?.getDate() ?? null);
     }
 
     public getEventTile(mxEv: MatrixEvent, continuation: boolean) {

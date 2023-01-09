@@ -234,7 +234,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
                     if (containsEmoji(content, effect.emojis)) {
                         // For initial threads launch, chat effects are disabled
                         // see #19731
-                        const isNotThread = content["m.relates_to"].rel_type !== THREAD_RELATION_TYPE.name;
+                        const isNotThread = content["m.relates_to"]?.rel_type !== THREAD_RELATION_TYPE.name;
                         if (isNotThread) {
                             dis.dispatch({ action: `effects.${effect.command}` });
                         }
