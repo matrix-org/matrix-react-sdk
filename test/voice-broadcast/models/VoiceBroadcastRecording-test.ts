@@ -114,6 +114,13 @@ describe("VoiceBroadcastRecording", () => {
         });
     };
 
+    const emitFirsChunkRecorded = () => {
+        voiceBroadcastRecorder.emit(VoiceBroadcastRecorderEvent.ChunkRecorded, {
+            buffer: new Uint8Array([1, 2, 3]),
+            length: 23,
+        });
+    };
+
     const itShouldSendAnInfoEvent = (state: VoiceBroadcastInfoState, lastChunkSequence: number) => {
         it(`should send a ${state} info event`, () => {
             expect(client.sendStateEvent).toHaveBeenCalledWith(
@@ -182,6 +189,13 @@ describe("VoiceBroadcastRecording", () => {
         });
     };
 
+    const setUpUploadFileMock = () => {
+        mocked(uploadFile).mockResolvedValue({
+            url: uploadedUrl,
+            file: uploadedFile,
+        });
+    };
+
     beforeEach(() => {
         client = stubClient();
         room = mkStubRoom(roomId, "Test Room", client);
@@ -197,10 +211,7 @@ describe("VoiceBroadcastRecording", () => {
         jest.spyOn(voiceBroadcastRecorder, "destroy");
         mocked(createVoiceBroadcastRecorder).mockReturnValue(voiceBroadcastRecorder);
 
-        mocked(uploadFile).mockResolvedValue({
-            url: uploadedUrl,
-            file: uploadedFile,
-        });
+        setUpUploadFileMock();
 
         mocked(createVoiceMessageContent).mockImplementation(
             (
@@ -332,10 +343,7 @@ describe("VoiceBroadcastRecording", () => {
 
             describe("and a chunk has been recorded", () => {
                 beforeEach(async () => {
-                    voiceBroadcastRecorder.emit(VoiceBroadcastRecorderEvent.ChunkRecorded, {
-                        buffer: new Uint8Array([1, 2, 3]),
-                        length: 23,
-                    });
+                    emitFirsChunkRecorded();
                 });
 
                 itShouldSendAVoiceMessage([1, 2, 3], 3, 23, 1);
@@ -428,6 +436,44 @@ describe("VoiceBroadcastRecording", () => {
                     expect(mocked(voiceBroadcastRecorder.stop)).toHaveBeenCalled();
                     expect(mocked(voiceBroadcastRecorder.destroy)).toHaveBeenCalled();
                     expect(mocked(voiceBroadcastRecording.removeAllListeners)).toHaveBeenCalled();
+                });
+            });
+
+            describe("and a chunk has been recorded and the upload fails", () => {
+                beforeEach(() => {
+                    mocked(uploadFile).mockRejectedValue("Error");
+                    emitFirsChunkRecorded();
+                });
+
+                itShouldBeInState("connection_error");
+
+                describe("and the connection is back", () => {
+                    beforeEach(() => {
+                        setUpUploadFileMock();
+                        client.emit(ClientEvent.Sync, SyncState.Catchup, SyncState.Error);
+                    });
+
+                    itShouldBeInState(VoiceBroadcastInfoState.Paused);
+                    itShouldSendAVoiceMessage([1, 2, 3], 3, 23, 1);
+                });
+            });
+
+            describe("and a chunk has been recorded and sending the voice message fails", () => {
+                beforeEach(() => {
+                    mocked(client.sendMessage).mockRejectedValue("Error");
+                    emitFirsChunkRecorded();
+                });
+
+                itShouldBeInState("connection_error");
+
+                describe("and the connection is back", () => {
+                    beforeEach(() => {
+                        mocked(client.sendMessage).mockResolvedValue({ event_id: "e23" });
+                        client.emit(ClientEvent.Sync, SyncState.Catchup, SyncState.Error);
+                    });
+
+                    itShouldBeInState(VoiceBroadcastInfoState.Paused);
+                    itShouldSendAVoiceMessage([1, 2, 3], 3, 23, 1);
                 });
             });
         });

@@ -296,11 +296,30 @@ export class VoiceBroadcastRecording
     };
 
     private onChunkRecorded = async (chunk: ChunkRecordedPayload): Promise<void> => {
-        const { url, file } = await this.uploadFile(chunk);
-        await this.sendVoiceMessage(chunk, url, file);
+        const uploadAndSendFn = async () => {
+            const { url, file } = await this.uploadFile(chunk);
+            await this.sendVoiceMessage(chunk, url, file);
+        };
+
+        try {
+            await uploadAndSendFn();
+        } catch {
+            // Uploading audio failed.
+            this.toRetry.push(uploadAndSendFn);
+            await this.onConnectionError();
+        }
     };
 
-    private uploadFile(chunk: ChunkRecordedPayload): ReturnType<typeof uploadFile> {
+    /**
+     * This function is called on connection errors.
+     * It sets the connection error state and stops the recorder.
+     */
+    private async onConnectionError(): Promise<void> {
+        await this.stopRecorder();
+        this.setState("connection_error");
+    }
+
+    private async uploadFile(chunk: ChunkRecordedPayload): ReturnType<typeof uploadFile> {
         return uploadFile(
             this.client,
             this.infoEvent.getRoomId(),
@@ -311,23 +330,33 @@ export class VoiceBroadcastRecording
     }
 
     private async sendVoiceMessage(chunk: ChunkRecordedPayload, url: string, file: IEncryptedFile): Promise<void> {
-        const content = createVoiceMessageContent(
-            url,
-            this.getRecorder().contentType,
-            Math.round(chunk.length * 1000),
-            chunk.buffer.length,
-            file,
-        );
-        content["m.relates_to"] = {
-            rel_type: RelationType.Reference,
-            event_id: this.infoEvent.getId(),
-        };
-        content["io.element.voice_broadcast_chunk"] = {
+        const sendMessageFn = async () => {
+            const content = createVoiceMessageContent(
+                url,
+                this.getRecorder().contentType,
+                Math.round(chunk.length * 1000),
+                chunk.buffer.length,
+                file,
+            );
+            content["m.relates_to"] = {
+                rel_type: RelationType.Reference,
+                event_id: this.infoEvent.getId(),
+            };
             /** Increment the last sequence number and use it for this message. Also see {@link sequence}. */
-            sequence: ++this.sequence,
+            content["io.element.voice_broadcast_chunk"] = {
+                sequence: ++this.sequence,
+            };
+
+            await this.client.sendMessage(this.infoEvent.getRoomId(), content);
         };
 
-        await this.client.sendMessage(this.infoEvent.getRoomId(), content);
+        try {
+            await sendMessageFn();
+        } catch {
+            // Sending the voice message failed.
+            this.toRetry.push(sendMessageFn);
+            this.onConnectionError();
+        }
     }
 
     /**
@@ -361,7 +390,7 @@ export class VoiceBroadcastRecording
                 await sendEventFn();
                 this.setState(state);
             });
-            this.setState("connection_error");
+            this.onConnectionError();
         }
     }
 
