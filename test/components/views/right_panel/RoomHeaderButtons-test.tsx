@@ -56,7 +56,7 @@ describe("RoomHeaderButtons-test.tsx", function () {
         return container.querySelector(".mx_RightPanel_threadsButton");
     }
 
-    function isIndicatorOfType(container, type: "red" | "gray" | "bold") {
+    function isIndicatorOfType(container: React.ReactElement, type: "red" | "gray" | "bold") {
         return container.querySelector(".mx_RightPanel_threadsButton .mx_Indicator").className.includes(type);
     }
 
@@ -148,7 +148,7 @@ describe("RoomHeaderButtons-test.tsx", function () {
             type: "m.receipt",
             room_id: room.roomId,
             content: {
-                [events.at(-1).getId()!]: {
+                [events.at(-1)!.getId()!]: {
                     [ReceiptType.Read]: {
                         [client.getUserId()!]: { ts: 1, thread_id: rootEvent.getId() },
                     },
