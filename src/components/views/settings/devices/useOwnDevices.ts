@@ -177,8 +177,13 @@ export const useOwnDevices = (): DevicesState => {
     }, [refreshDevices]);
 
     useEffect(() => {
-        pruneClientInformation(Object.keys(devices), matrixClient);
-    }, [devices]);
+        const deviceIds = Object.keys(devices);
+        // empty devices means devices have not been fetched yet
+        // as there is always at least the current device
+        if (deviceIds.length) {
+            pruneClientInformation(Object.keys(devices), matrixClient);
+        }
+    }, [devices, matrixClient]);
 
     useEventEmitter(matrixClient, CryptoEvent.DevicesUpdated, (users: string[]): void => {
         if (users.includes(userId)) {
