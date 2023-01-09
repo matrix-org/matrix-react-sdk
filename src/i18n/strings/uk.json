@@ -3700,5 +3700,7 @@
     "Sign out of all other sessions (%(otherSessionsCount)s)": "Вийти з усіх інших сеансів (%(otherSessionsCount)s)",
     "Yes, end my recording": "Так, завершити мій запис",
     "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "Якщо ви почнете слухати цю трансляцію наживо, ваш поточний запис трансляції наживо завершиться.",
-    "Listen to live broadcast?": "Слухати трансляцію наживо?"
+    "Listen to live broadcast?": "Слухати трансляцію наживо?",
+    "Unfortunately we're unable to start a recording right now. Please try again later.": "На жаль, ми не можемо розпочати запис прямо зараз. Будь ласка, спробуйте пізніше.",
+    "Connection error": "Помилка з'єднання"
 }
