@@ -3700,5 +3700,7 @@
     "Sign out of all other sessions (%(otherSessionsCount)s)": "Keluar dari semua sesi lain (%(otherSessionsCount)s)",
     "Yes, end my recording": "Ya, hentikan rekaman saya",
     "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "Jika Anda mendengarkan siaran langsung ini, rekaman siaran langsung Anda saat ini akan dihentikan.",
-    "Listen to live broadcast?": "Dengarkan siaran langsung?"
+    "Listen to live broadcast?": "Dengarkan siaran langsung?",
+    "Unfortunately we're unable to start a recording right now. Please try again later.": "Sayangnya kami saat ini tidak dapat memulai sebuah rekaman. Silakan mencoba lagi nanti.",
+    "Connection error": "Terjadi kesalahan koneksi"
 }
