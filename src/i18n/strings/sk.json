@@ -3700,5 +3700,7 @@
     "Sign out of all other sessions (%(otherSessionsCount)s)": "Odhlásiť sa zo všetkých ostatných relácií (%(otherSessionsCount)s)",
     "Yes, end my recording": "Áno, ukončiť moje nahrávanie",
     "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "Ak začnete počúvať toto živé vysielanie, váš aktuálny záznam živého vysielania sa ukončí.",
-    "Listen to live broadcast?": "Počúvať živé vysielanie?"
+    "Listen to live broadcast?": "Počúvať živé vysielanie?",
+    "Unfortunately we're unable to start a recording right now. Please try again later.": "Bohužiaľ teraz nemôžeme spustiť nahrávanie. Skúste to prosím neskôr.",
+    "Connection error": "Chyba pripojenia"
 }
