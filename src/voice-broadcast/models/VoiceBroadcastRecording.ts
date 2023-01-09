@@ -49,8 +49,10 @@ export enum VoiceBroadcastRecordingEvent {
     TimeLeftChanged = "time_left_changed",
 }
 
+export type VoiceBroadcastRecordingState = VoiceBroadcastInfoState | "connection_error";
+
 interface EventMap {
-    [VoiceBroadcastRecordingEvent.StateChanged]: (state: VoiceBroadcastInfoState) => void;
+    [VoiceBroadcastRecordingEvent.StateChanged]: (state: VoiceBroadcastRecordingState) => void;
     [VoiceBroadcastRecordingEvent.TimeLeftChanged]: (timeLeft: number) => void;
 }
 
@@ -58,7 +60,7 @@ export class VoiceBroadcastRecording
     extends TypedEventEmitter<VoiceBroadcastRecordingEvent, EventMap>
     implements IDestroyable
 {
-    private state: VoiceBroadcastInfoState;
+    private state: VoiceBroadcastRecordingState;
     private recorder: VoiceBroadcastRecorder;
     private dispatcherRef: string;
     private chunkEvents = new VoiceBroadcastChunkEvents();
@@ -173,7 +175,12 @@ export class VoiceBroadcastRecording
 
     public async pause(): Promise<void> {
         // stopped or already paused recordings cannot be paused
-        if ([VoiceBroadcastInfoState.Stopped, VoiceBroadcastInfoState.Paused].includes(this.state)) return;
+        if (
+            (
+                [VoiceBroadcastInfoState.Stopped, VoiceBroadcastInfoState.Paused] as VoiceBroadcastRecordingState[]
+            ).includes(this.state)
+        )
+            return;
 
         this.setState(VoiceBroadcastInfoState.Paused);
         await this.stopRecorder();
@@ -191,12 +198,16 @@ export class VoiceBroadcastRecording
     public toggle = async (): Promise<void> => {
         if (this.getState() === VoiceBroadcastInfoState.Paused) return this.resume();
 
-        if ([VoiceBroadcastInfoState.Started, VoiceBroadcastInfoState.Resumed].includes(this.getState())) {
+        if (
+            (
+                [VoiceBroadcastInfoState.Started, VoiceBroadcastInfoState.Resumed] as VoiceBroadcastRecordingState[]
+            ).includes(this.getState())
+        ) {
             return this.pause();
         }
     };
 
-    public getState(): VoiceBroadcastInfoState {
+    public getState(): VoiceBroadcastRecordingState {
         return this.state;
     }
 
@@ -238,7 +249,7 @@ export class VoiceBroadcastRecording
         this.pause();
     };
 
-    private setState(state: VoiceBroadcastInfoState): void {
+    private setState(state: VoiceBroadcastRecordingState): void {
         this.state = state;
         this.emit(VoiceBroadcastRecordingEvent.StateChanged, this.state);
     }

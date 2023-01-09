@@ -16,7 +16,12 @@ limitations under the License.
 
 import React, { useRef, useState } from "react";
 
-import { VoiceBroadcastControl, VoiceBroadcastInfoState, VoiceBroadcastRecording } from "../..";
+import {
+    VoiceBroadcastControl,
+    VoiceBroadcastInfoState,
+    VoiceBroadcastRecording,
+    VoiceBroadcastRecordingState,
+} from "../..";
 import { useVoiceBroadcastRecording } from "../../hooks/useVoiceBroadcastRecording";
 import { VoiceBroadcastHeader } from "../atoms/VoiceBroadcastHeader";
 import { Icon as StopIcon } from "../../../../res/img/element-icons/Stop.svg";
@@ -48,7 +53,11 @@ export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProp
 
         setDevice(device);
 
-        if ([VoiceBroadcastInfoState.Paused, VoiceBroadcastInfoState.Stopped].includes(recordingState)) {
+        if (
+            (
+                [VoiceBroadcastInfoState.Paused, VoiceBroadcastInfoState.Stopped] as VoiceBroadcastRecordingState[]
+            ).includes(recordingState)
+        ) {
             // Nothing to do in these cases. Resume will use the selected device.
             return;
         }

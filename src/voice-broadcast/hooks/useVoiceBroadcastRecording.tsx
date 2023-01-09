@@ -16,7 +16,12 @@ limitations under the License.
 
 import React, { useState } from "react";
 
-import { VoiceBroadcastInfoState, VoiceBroadcastRecording, VoiceBroadcastRecordingEvent } from "..";
+import {
+    VoiceBroadcastInfoState,
+    VoiceBroadcastRecording,
+    VoiceBroadcastRecordingEvent,
+    VoiceBroadcastRecordingState,
+} from "..";
 import QuestionDialog from "../../components/views/dialogs/QuestionDialog";
 import { useTypedEventEmitter } from "../../hooks/useEventEmitter";
 import { _t } from "../../languageHandler";
@@ -69,7 +74,9 @@ export const useVoiceBroadcastRecording = (recording: VoiceBroadcastRecording) =
     const [timeLeft, setTimeLeft] = useState(recording.getTimeLeft());
     useTypedEventEmitter(recording, VoiceBroadcastRecordingEvent.TimeLeftChanged, setTimeLeft);
 
-    const live = [VoiceBroadcastInfoState.Started, VoiceBroadcastInfoState.Resumed].includes(recordingState);
+    const live = (
+        [VoiceBroadcastInfoState.Started, VoiceBroadcastInfoState.Resumed] as VoiceBroadcastRecordingState[]
+    ).includes(recordingState);
 
     return {
         live,
