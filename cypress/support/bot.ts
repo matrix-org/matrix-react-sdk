@@ -178,7 +178,12 @@ Cypress.Commands.add("getBot", (homeserver: HomeserverInstance, opts: CreateBotO
 
 Cypress.Commands.add(
     "loginBot",
-    (homeserver: HomeserverInstance, username: string, password: string, opts: CreateBotOpts): Chainable<MatrixClient> => {
+    (
+        homeserver: HomeserverInstance,
+        username: string,
+        password: string,
+        opts: CreateBotOpts,
+    ): Chainable<MatrixClient> => {
         opts = Object.assign({}, defaultCreateBotOptions, { bootstrapCrossSigning: false }, opts);
         return cy.loginUser(homeserver, username, password).then((credentials) => {
             return setupBotClient(homeserver, credentials, opts);

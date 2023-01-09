@@ -33,26 +33,28 @@ describe("Sliding Sync", () => {
                 cy.startProxy(homeserver).as("proxy");
             });
 
-        cy.all([cy.get<HomeserverInstance>("@homeserver"), cy.get<ProxyInstance>("@proxy")]).then(([homeserver, proxy]) => {
-            cy.enableLabsFeature("feature_sliding_sync");
+        cy.all([cy.get<HomeserverInstance>("@homeserver"), cy.get<ProxyInstance>("@proxy")]).then(
+            ([homeserver, proxy]) => {
+                cy.enableLabsFeature("feature_sliding_sync");
 
-            cy.intercept("/config.json?cachebuster=*", (req) => {
-                return req.continue((res) => {
-                    res.send(200, {
-                        ...res.body,
-                        setting_defaults: {
-                            feature_sliding_sync_proxy_url: `http://localhost:${proxy.port}`,
-                        },
+                cy.intercept("/config.json?cachebuster=*", (req) => {
+                    return req.continue((res) => {
+                        res.send(200, {
+                            ...res.body,
+                            setting_defaults: {
+                                feature_sliding_sync_proxy_url: `http://localhost:${proxy.port}`,
+                            },
+                        });
                     });
                 });
-            });
 
-            cy.initTestUser(homeserver, "Sloth").then(() => {
-                return cy.window({ log: false }).then(() => {
-                    cy.createRoom({ name: "Test Room" }).as("roomId");
+                cy.initTestUser(homeserver, "Sloth").then(() => {
+                    return cy.window({ log: false }).then(() => {
+                        cy.createRoom({ name: "Test Room" }).as("roomId");
+                    });
                 });
-            });
-        });
+            },
+        );
     });
 
     afterEach(() => {

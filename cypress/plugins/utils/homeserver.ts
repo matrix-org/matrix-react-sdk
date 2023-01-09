@@ -24,5 +24,5 @@ export interface HomeserverConfig {
 }
 
 export interface HomeserverInstance extends HomeserverConfig {
-  serverId: string;
-} 
+    serverId: string;
+}

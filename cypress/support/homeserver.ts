@@ -57,7 +57,7 @@ declare global {
 }
 
 function startHomeserver(template: string): Chainable<HomeserverInstance> {
-    let homeserverName = Cypress.env("HOMESERVER");
+    const homeserverName = Cypress.env("HOMESERVER");
     return cy.task<HomeserverInstance>(homeserverName + "Start", template);
 }
 
@@ -66,7 +66,7 @@ function stopHomeserver(homeserver?: HomeserverInstance): Chainable<AUTWindow> {
     // Navigate away from app to stop the background network requests which will race with Homeserver shutting down
     return cy.window({ log: false }).then((win) => {
         win.location.href = "about:blank";
-        let homeserverName = Cypress.env("HOMESERVER");
+        const homeserverName = Cypress.env("HOMESERVER");
         cy.task(homeserverName + "Stop", homeserver.serverId);
     });
 }

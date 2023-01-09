@@ -37,7 +37,7 @@ function randB64Bytes(numBytes: number): string {
 }
 
 async function cfgDirFromTemplate(template: string): Promise<HomeserverConfig> {
-    template = "default"
+    template = "default";
     const templateDir = path.join(__dirname, "templates", template);
     const configFile = "dendrite.yaml";
 
@@ -88,20 +88,16 @@ async function dendriteStart(template: string): Promise<HomeserverInstance> {
     const dendriteId = await dockerRun({
         image: "matrixdotorg/dendrite-monolith:local",
         params: [
-            "--rm", 
-            "-v", 
-            `${denCfg.configDir}:/etc/dendrite`, 
-            "-p", 
+            "--rm",
+            "-v",
+            `${denCfg.configDir}:/etc/dendrite`,
+            "-p",
             `${denCfg.port}:8008/tcp`,
             "--entrypoint",
             "/usr/bin/dendrite-monolith-server",
         ],
         containerName: `react-sdk-cypress-dendrite`,
-        cmd: [
-            "--really-enable-open-registration",
-            "true",
-            "run",
-        ],
+        cmd: ["--really-enable-open-registration", "true", "run"],
     });
 
     console.log(`Started dendrite with id ${dendriteId} on port ${denCfg.port}.`);

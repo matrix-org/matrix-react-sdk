@@ -71,7 +71,7 @@ async function cfgDirFromTemplate(template: string): Promise<HomeserverConfig> {
     const signingKey = randB64Bytes(32);
     console.log(`Gen ${path.join(templateDir, "localhost.signing.key")}`);
     await fse.writeFile(path.join(tempDir, "localhost.signing.key"), `ed25519 x ${signingKey}`);
-    
+
     return {
         port,
         baseUrl,
