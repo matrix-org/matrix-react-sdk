@@ -76,9 +76,15 @@ export function LinkModal({ composer, isTextEnabled, onClose, composerContext, i
                     evt.preventDefault();
                     evt.stopPropagation();
 
+                    onClose();
+
+                    // When submitting is done when pressing enter when the link field has the focus,
+                    // The link field is getting back the focus (due to react-focus-lock)
+                    // So we are waiting that the focus stuff is done to play with the composer selection
+                    await new Promise((resolve) => setTimeout(resolve, 0));
+
                     await setSelection(composerContext.selection);
                     composer.link(fields.link, isTextEnabled ? fields.text : undefined);
-                    onClose();
                 }}
             >
                 {hasText && (
@@ -102,7 +108,6 @@ export function LinkModal({ composer, isTextEnabled, onClose, composerContext, i
                     className="mx_LinkModal_Field"
                     placeholder=""
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        console.log("onChange", e.target.value);
                         setFields((fields) => ({ ...fields, link: e.target.value }));
                         setHasLinkChanged(true);
                     }}
