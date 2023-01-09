@@ -70,17 +70,15 @@ export const recordClientInformation = async (
  * @param validDeviceIds - ids of current devices,
  *                      client information for devices NOT in this list will be removed
  */
-export const pruneClientInformation = async (validDeviceIds: string[], matrixClient: MatrixClient): Promise<void> => {
-    const orphanClientInformationEvents = Object.values(matrixClient.store.accountData).filter((event) => {
-        if (event.getType().startsWith(clientInformationEventPrefix)) {
-            const [, deviceId] = event.getType().split(clientInformationEventPrefix);
-            return deviceId && !validDeviceIds.includes(deviceId);
+export const pruneClientInformation = (validDeviceIds: string[], matrixClient: MatrixClient): void => {
+    Object.values(matrixClient.store.accountData).forEach((event) => {
+        if (!event.getType().startsWith(clientInformationEventPrefix)) {
+            return;
         }
-        return false;
-    });
-
-    orphanClientInformationEvents.forEach((event) => {
-        matrixClient.deleteAccountData(event.getType());
+        const [, deviceId] = event.getType().split(clientInformationEventPrefix);
+        if (deviceId && !validDeviceIds.includes(deviceId)) {
+            matrixClient.deleteAccountData(event.getType());
+        }
     });
 };
 
