@@ -78,13 +78,13 @@ describe("LinkModal", () => {
         // When
         jest.useFakeTimers();
         screen.getByText("Save").click();
+        jest.runAllTimers();
 
         // Then
-        expect(selectionSpy).toHaveBeenCalledWith(defaultValue);
-        await waitFor(() => expect(onClose).toBeCalledTimes(1));
-
-        // When
-        jest.runAllTimers();
+        await waitFor(() => {
+            expect(selectionSpy).toHaveBeenCalledWith(defaultValue);
+            expect(onClose).toBeCalledTimes(1);
+        });
 
         // Then
         expect(formattingFunctions.link).toHaveBeenCalledWith("l", undefined);
@@ -121,13 +121,13 @@ describe("LinkModal", () => {
         // When
         jest.useFakeTimers();
         screen.getByText("Save").click();
+        jest.runAllTimers();
 
         // Then
-        expect(selectionSpy).toHaveBeenCalledWith(defaultValue);
-        await waitFor(() => expect(onClose).toBeCalledTimes(1));
-
-        // When
-        jest.runAllTimers();
+        await waitFor(() => {
+            expect(selectionSpy).toHaveBeenCalledWith(defaultValue);
+            expect(onClose).toBeCalledTimes(1);
+        });
 
         // Then
         expect(formattingFunctions.link).toHaveBeenCalledWith("l", "t");
