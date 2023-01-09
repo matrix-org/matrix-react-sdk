@@ -20,6 +20,7 @@ import {
     VoiceBroadcastControl,
     VoiceBroadcastInfoState,
     VoiceBroadcastRecording,
+    VoiceBroadcastRecordingConnectionError,
     VoiceBroadcastRecordingState,
 } from "../..";
 import { useVoiceBroadcastRecording } from "../../hooks/useVoiceBroadcastRecording";
@@ -81,10 +82,10 @@ export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProp
             <VoiceBroadcastControl onClick={toggleRecording} icon={PauseIcon} label={_t("pause voice broadcast")} />
         );
 
-    return (
-        <div className="mx_VoiceBroadcastBody mx_VoiceBroadcastBody--pip" ref={pipRef}>
-            <VoiceBroadcastHeader linkToRoom={true} live={live ? "live" : "grey"} room={room} timeLeft={timeLeft} />
-            <hr className="mx_VoiceBroadcastBody_divider" />
+    const controls =
+        recordingState === "connection_error" ? (
+            <VoiceBroadcastRecordingConnectionError />
+        ) : (
             <div className="mx_VoiceBroadcastBody_controls">
                 {toggleControl}
                 <AccessibleTooltipButton onClick={() => setShowDeviceSelect(true)} title={_t("Change input device")}>
@@ -92,6 +93,13 @@ export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProp
                 </AccessibleTooltipButton>
                 <VoiceBroadcastControl icon={StopIcon} label="Stop Recording" onClick={stopRecording} />
             </div>
+        );
+
+    return (
+        <div className="mx_VoiceBroadcastBody mx_VoiceBroadcastBody--pip" ref={pipRef}>
+            <VoiceBroadcastHeader linkToRoom={true} live={live ? "live" : "grey"} room={room} timeLeft={timeLeft} />
+            <hr className="mx_VoiceBroadcastBody_divider" />
+            {controls}
             {showDeviceSelect && (
                 <DevicesContextMenu
                     containerRef={pipRef}

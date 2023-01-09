@@ -16,6 +16,8 @@ limitations under the License.
 
 import { logger } from "matrix-js-sdk/src/logger";
 import {
+    ClientEvent,
+    ClientEventHandlerMap,
     EventType,
     MatrixClient,
     MatrixEvent,
@@ -43,6 +45,7 @@ import dis from "../../dispatcher/dispatcher";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { VoiceBroadcastChunkEvents } from "../utils/VoiceBroadcastChunkEvents";
 import { RelationsHelper, RelationsHelperEvent } from "../../events/RelationsHelper";
+import { createReconnectedListener } from "../../utils/connection";
 
 export enum VoiceBroadcastRecordingEvent {
     StateChanged = "liveness_changed",
@@ -67,6 +70,8 @@ export class VoiceBroadcastRecording
     private chunkRelationHelper: RelationsHelper;
     private maxLength: number;
     private timeLeft: number;
+    private toRetry: Array<() => Promise<void>> = [];
+    private reconnectedListener: ClientEventHandlerMap[ClientEvent.Sync];
 
     /**
      * Broadcast chunks have a sequence number to bring them in the correct order and to know if a message is missing.
@@ -96,6 +101,8 @@ export class VoiceBroadcastRecording
         this.infoEvent.on(MatrixEventEvent.BeforeRedaction, this.onBeforeRedaction);
         this.dispatcherRef = dis.register(this.onAction);
         this.chunkRelationHelper = this.initialiseChunkEventRelation();
+        this.reconnectedListener = createReconnectedListener(this.onReconnect);
+        this.client.on(ClientEvent.Sync, this.reconnectedListener);
     }
 
     private initialiseChunkEventRelation(): RelationsHelper {
@@ -147,6 +154,35 @@ export class VoiceBroadcastRecording
     public getTimeLeft(): number {
         return this.timeLeft;
     }
+
+    /**
+     * Retries failed actions on reconnect.
+     */
+    private onReconnect = async () => {
+        // Do nothing if not in connection_error state.
+        if (this.state !== "connection_error") return;
+
+        // Copy the array, so that it is possible to remove elements from it while iterating over the original.
+        const toRetryCopy = [...this.toRetry];
+
+        for (const retryFn of this.toRetry) {
+            try {
+                await retryFn();
+                // Successfully retried. Remove from array copy.
+                toRetryCopy.splice(toRetryCopy.indexOf(retryFn), 1);
+            } catch {
+                // The current retry callback failed. Stop the loop.
+                break;
+            }
+        }
+
+        this.toRetry = toRetryCopy;
+
+        if (this.toRetry.length === 0) {
+            // Everything has been successfully retried. Recover from error state to paused.
+            await this.pause();
+        }
+    };
 
     private async setTimeLeft(timeLeft: number): Promise<void> {
         if (timeLeft <= 0) {
@@ -232,6 +268,7 @@ export class VoiceBroadcastRecording
         dis.unregister(this.dispatcherRef);
         this.chunkEvents = new VoiceBroadcastChunkEvents();
         this.chunkRelationHelper.destroy();
+        this.client.off(ClientEvent.Sync, this.reconnectedListener);
     }
 
     private onBeforeRedaction = () => {
@@ -293,22 +330,39 @@ export class VoiceBroadcastRecording
         await this.client.sendMessage(this.infoEvent.getRoomId(), content);
     }
 
+    /**
+     * Sends an info state event with given state.
+     * On error stores a resend function and setState(state) in {@link toRetry} and
+     * sets the broadcast state to connection_error.
+     */
     private async sendInfoStateEvent(state: VoiceBroadcastInfoState): Promise<void> {
-        // TODO Michael W: add error handling for state event
-        await this.client.sendStateEvent(
-            this.infoEvent.getRoomId(),
-            VoiceBroadcastInfoEventType,
-            {
-                device_id: this.client.getDeviceId(),
-                state,
-                last_chunk_sequence: this.sequence,
-                ["m.relates_to"]: {
-                    rel_type: RelationType.Reference,
-                    event_id: this.infoEvent.getId(),
-                },
-            } as VoiceBroadcastInfoEventContent,
-            this.client.getUserId(),
-        );
+        const sendEventFn = async () => {
+            await this.client.sendStateEvent(
+                this.infoEvent.getRoomId(),
+                VoiceBroadcastInfoEventType,
+                {
+                    device_id: this.client.getDeviceId(),
+                    state,
+                    last_chunk_sequence: this.sequence,
+                    ["m.relates_to"]: {
+                        rel_type: RelationType.Reference,
+                        event_id: this.infoEvent.getId(),
+                    },
+                } as VoiceBroadcastInfoEventContent,
+                this.client.getUserId(),
+            );
+        };
+
+        try {
+            await sendEventFn();
+        } catch {
+            // Sending the state event failed.
+            this.toRetry.push(async () => {
+                await sendEventFn();
+                this.setState(state);
+            });
+            this.setState("connection_error");
+        }
     }
 
     private async stopRecorder(): Promise<void> {

@@ -16,6 +16,7 @@ limitations under the License.
 
 import { mocked } from "jest-mock";
 import {
+    ClientEvent,
     EventTimelineSet,
     EventType,
     MatrixClient,
@@ -26,6 +27,7 @@ import {
     Room,
 } from "matrix-js-sdk/src/matrix";
 import { Relations } from "matrix-js-sdk/src/models/relations";
+import { SyncState } from "matrix-js-sdk/src/sync";
 
 import { uploadFile } from "../../../src/ContentMessages";
 import { IEncryptedFile } from "../../../src/customisations/models/IMediaEventContent";
@@ -41,6 +43,7 @@ import {
     VoiceBroadcastRecorderEvent,
     VoiceBroadcastRecording,
     VoiceBroadcastRecordingEvent,
+    VoiceBroadcastRecordingState,
 } from "../../../src/voice-broadcast";
 import { mkEvent, mkStubRoom, stubClient } from "../../test-utils";
 import dis from "../../../src/dispatcher/dispatcher";
@@ -105,7 +108,7 @@ describe("VoiceBroadcastRecording", () => {
         jest.spyOn(voiceBroadcastRecording, "removeAllListeners");
     };
 
-    const itShouldBeInState = (state: VoiceBroadcastInfoState) => {
+    const itShouldBeInState = (state: VoiceBroadcastRecordingState) => {
         it(`should be in state stopped ${state}`, () => {
             expect(voiceBroadcastRecording.getState()).toBe(state);
         });
@@ -385,6 +388,34 @@ describe("VoiceBroadcastRecording", () => {
 
                 it("should emit a paused state changed event", () => {
                     expect(onStateChanged).toHaveBeenCalledWith(VoiceBroadcastInfoState.Paused);
+                });
+            });
+
+            describe("and there is no connection", () => {
+                beforeEach(() => {
+                    mocked(client.sendStateEvent).mockImplementation(() => {
+                        throw new Error();
+                    });
+                });
+
+                describe.each([
+                    ["pause", async () => voiceBroadcastRecording.pause()],
+                    ["toggle", async () => voiceBroadcastRecording.toggle()],
+                ])("and calling %s", (_case: string, action: Function) => {
+                    beforeEach(async () => {
+                        await action();
+                    });
+
+                    itShouldBeInState("connection_error");
+
+                    describe("and the connection is back", () => {
+                        beforeEach(() => {
+                            mocked(client.sendStateEvent).mockResolvedValue({ event_id: "e1" });
+                            client.emit(ClientEvent.Sync, SyncState.Catchup, SyncState.Error);
+                        });
+
+                        itShouldBeInState(VoiceBroadcastInfoState.Paused);
+                    });
                 });
             });
 
