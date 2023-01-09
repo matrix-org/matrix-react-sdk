@@ -176,7 +176,7 @@ export const useOwnDevices = (): DevicesState => {
         // empty devices means devices have not been fetched yet
         // as there is always at least the current device
         if (deviceIds.length) {
-            pruneClientInformation(Object.keys(devices), matrixClient);
+            pruneClientInformation(deviceIds, matrixClient);
         }
     }, [devices, matrixClient]);
 
