@@ -16,14 +16,13 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { MessageEvent } from "matrix-events-sdk";
-
 import type { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 import type { EventType } from "matrix-js-sdk/src/@types/event";
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { Layout } from "../../../src/settings/enums/Layout";
 import Chainable = Cypress.Chainable;
+import { createMessageEventContent } from "../../../test/test-utils/events";
 
 // The avatar size used in the timeline
 const AVATAR_SIZE = 30;
@@ -59,7 +58,7 @@ const sendEvent = (roomId: string, html = false): Chainable<ISendEventResponse> 
         roomId,
         null,
         "m.room.message" as EventType,
-        MessageEvent.from("Message", html ? "<b>Message</b>" : undefined).serialize().content,
+        createMessageEventContent("Message", html ? "<b>Message</b>" : undefined),
     );
 };
 
@@ -318,7 +317,7 @@ describe("Timeline", () => {
                 roomId,
                 null,
                 "m.room.message" as EventType,
-                MessageEvent.from("https://call.element.io/").serialize().content,
+                createMessageEventContent("https://call.element.io/"),
             );
             cy.visit("/#/room/" + roomId);
 
