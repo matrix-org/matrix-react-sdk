@@ -74,7 +74,6 @@ export const pruneClientInformation = async (validDeviceIds: string[], matrixCli
     const orphanClientInformationEvents = Object.values(matrixClient.store.accountData).filter((event) => {
         if (event.getType().startsWith(clientInformationEventPrefix)) {
             const [, deviceId] = event.getType().split(clientInformationEventPrefix);
-            console.log('YO', deviceId, validDeviceIds)
             return deviceId && !validDeviceIds.includes(deviceId);
         }
         return false;
