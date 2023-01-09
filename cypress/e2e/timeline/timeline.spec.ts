@@ -20,7 +20,7 @@ import { MessageEvent } from "matrix-events-sdk";
 
 import type { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 import type { EventType } from "matrix-js-sdk/src/@types/event";
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { Layout } from "../../../src/settings/enums/Layout";
 import Chainable = Cypress.Chainable;
@@ -64,7 +64,7 @@ const sendEvent = (roomId: string, html = false): Chainable<ISendEventResponse> 
 };
 
 describe("Timeline", () => {
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
 
     let roomId: string;
 
@@ -72,9 +72,9 @@ describe("Timeline", () => {
     let newAvatarUrl: string;
 
     beforeEach(() => {
-        cy.startSynapse("default").then((data) => {
-            synapse = data;
-            cy.initTestUser(synapse, OLD_NAME).then(() =>
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
+            cy.initTestUser(homeserver, OLD_NAME).then(() =>
                 cy.createRoom({ name: ROOM_NAME }).then((_room1Id) => {
                     roomId = _room1Id;
                 }),
@@ -83,7 +83,7 @@ describe("Timeline", () => {
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
     });
 
     describe("useOnlyCurrentProfiles", () => {
