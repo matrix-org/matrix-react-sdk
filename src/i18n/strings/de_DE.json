@@ -3700,5 +3700,7 @@
     "Sign out of all other sessions (%(otherSessionsCount)s)": "Von allen anderen Sitzungen abmelden (%(otherSessionsCount)s)",
     "Listen to live broadcast?": "Echtzeitübertragung anhören?",
     "Yes, end my recording": "Ja, beende meine Aufzeichnung",
-    "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "Wenn du beginnst, diese Echtzeitübertragung anzuhören, wird deine aktuelle Echtzeitübertragungsaufzeichnung beendet."
+    "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "Wenn du beginnst, diese Echtzeitübertragung anzuhören, wird deine aktuelle Echtzeitübertragungsaufzeichnung beendet.",
+    "Unfortunately we're unable to start a recording right now. Please try again later.": "Leider ist es aktuell nicht möglich eine Aufnahme zu starten. Bitte versuche es später erneut.",
+    "Connection error": "Verbindungsfehler"
 }
