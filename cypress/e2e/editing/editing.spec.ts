@@ -35,7 +35,6 @@ describe("Editing", () => {
             synapse = data;
             cy.initTestUser(synapse, "Edith").then(() => {
                 cy.injectAxe();
-                return cy.createRoom({ name: "Test room" }).as("roomId");
             });
         });
     });
@@ -45,6 +44,8 @@ describe("Editing", () => {
     });
 
     it("should close the composer when clicking save after making a change and undoing it", () => {
+        cy.createRoom({ name: "Test room" }).as("roomId");
+
         cy.get<string>("@roomId").then((roomId) => {
             sendEvent(roomId);
             cy.visit("/#/room/" + roomId);
@@ -61,5 +62,84 @@ describe("Editing", () => {
 
         // Assert that the edit composer has gone away
         cy.get(".mx_EditMessageComposer").should("not.exist");
+    });
+
+    it("should correctly display events which are edited, where we lack the edit event", () => {
+        // This tests the behaviour when a message has been edited some time after it has been sent, and we
+        // jump back in room history to view the event, but do not have the actual edit event.
+        //
+        // In that scenario, we rely on the server to replace the content (pre-MSC3925), or do it ourselves based on
+        // the bundled edit event (post-MSC3925).
+        //
+        // To test it, we need to have a room with lots of events in, so we can jump around the timeline without
+        // paginating in the event itself. Hence, we create a bot user which creates the room and populates it before
+        // we join.
+
+        let testRoomId: string;
+        let originalEventId: string;
+        let editEventId: string;
+
+        // create a second user, which sends, and edits, the event.
+
+        cy.window({ log: false })
+            .then((win) => {
+                cy.getBot(synapse, { displayName: "Bob", userIdPrefix: "bob_" }).then(async (bob) => {
+                    const room = await bob.createRoom({ name: "TestRoom", visibility: win.matrixcs.Visibility.Public });
+                    testRoomId = room.room_id;
+                    cy.log(`Bot user created room ${room.room_id}`);
+
+                    originalEventId = (await bob.sendMessage(room.room_id, { body: "original", msgtype: "m.text" }))
+                        .event_id;
+                    cy.log(`Bot user sent original event ${originalEventId}`);
+
+                    // send a load of padding events. We make them large, so that they fill the whole screen
+                    // and the client doesn't end up paginating into the event we want.
+                    function mkPadding(n: number): MessageEvent {
+                        return MessageEvent.from(`padding ${n}`, `<h3>Test event ${n}</h3>\n`.repeat(10));
+                    }
+                    let i = 0;
+                    while (i < 20) {
+                        const ev = mkPadding(i++);
+                        await bob.sendMessage(room.room_id, ev.serialize().content);
+                    }
+
+                    // ... then the edit ...
+                    editEventId = (
+                        await bob.sendMessage(room.room_id, {
+                            "m.new_content": { body: "Edited body", msgtype: "m.text" },
+                            "m.relates_to": {
+                                rel_type: "m.replace",
+                                event_id: originalEventId,
+                            },
+                            "body": "* edited",
+                            "msgtype": "m.text",
+                        })
+                    ).event_id;
+                    cy.log(`Bot user sent edit event ${editEventId}`);
+
+                    // ... then a load more padding ...
+                    while (i < 40) {
+                        const ev = mkPadding(i++);
+                        await bob.sendMessage(room.room_id, ev.serialize().content);
+                    }
+                });
+            })
+            .then(() => {
+                // now have the cypress user join the room, jump to the original event, and wait for the event to be
+                // visible
+                cy.joinRoom(testRoomId);
+                cy.viewRoomByName("TestRoom");
+                cy.visit(`#/room/${testRoomId}/${originalEventId}`);
+                cy.get(`[data-event-id="${originalEventId}"]`).then((messageTile) => {
+                    // at this point, the edit event should still be unknown
+                    cy.getClient().then((cli) => {
+                        expect(cli.getRoom(testRoomId).getTimelineForEvent(editEventId)).to.be.null;
+                    });
+
+                    // nevertheless, the event should be updated
+                    expect(messageTile.find(".mx_EventTile_body").text()).to.eq("Edited body");
+                    expect(messageTile.find(".mx_EventTile_edited")).to.exist;
+                });
+            });
     });
 });
