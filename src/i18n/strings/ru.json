@@ -2976,7 +2976,6 @@
     "Use a more compact 'Modern' layout": "Использовать более компактный \"Современный\" макет",
     "Jump to date (adds /jumptodate and jump to date headers)": "Перейти к дате (добавляет /jumptodate и переход к заголовкам дат)",
     "Use new room breadcrumbs": "Использовать новые навигационные тропы комнат",
-    "Show extensible event representation of events": "Показать развернутое представление событий",
     "Let moderators hide messages pending moderation.": "Позволяет модераторам скрывать сообщения, ожидающие модерации.",
     "Developer": "Разработка",
     "Experimental": "Экспериментально",

@@ -2957,7 +2957,6 @@
     "Failed to fetch your location. Please try again later.": "Не вдалося отримати ваше місцеперебування. Повторіть спробу пізніше.",
     "Could not fetch location": "Не вдалося отримати місцеперебування",
     "Automatically send debug logs on decryption errors": "Автоматично надсилати журнали зневадження при збоях розшифрування",
-    "Show extensible event representation of events": "Показати розгорнене подання подій",
     "was removed %(count)s times|one": "було вилучено",
     "was removed %(count)s times|other": "було вилучено %(count)s разів",
     "were removed %(count)s times|one": "було вилучено",

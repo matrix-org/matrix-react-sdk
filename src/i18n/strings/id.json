@@ -2957,7 +2957,6 @@
     "Could not fetch location": "Tidak dapat mendapatkan lokasi",
     "From a thread": "Dari sebuah utasan",
     "Automatically send debug logs on decryption errors": "Kirim catatan pengawakutu secara otomatis ketika terjadi kesalahan pendekripsian",
-    "Show extensible event representation of events": "Tampilkan representasi peristiwa yang dapat diekstensi dari peristiwa",
     "Remove from %(roomName)s": "Keluarkan dari %(roomName)s",
     "You were removed from %(roomName)s by %(memberName)s": "Anda telah dikeluarkan dari %(roomName)s oleh %(memberName)s",
     "%(senderName)s removed %(targetName)s": "%(senderName)s mengeluarkan %(targetName)s",

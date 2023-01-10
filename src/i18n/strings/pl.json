@@ -1954,7 +1954,6 @@
     "Autoplay GIFs": "Auto odtwarzanie GIF'ów",
     "Let moderators hide messages pending moderation.": "Daj moderatorom ukrycie wiadomości które są sprawdzane.",
     "Show current avatar and name for users in message history": "Pokaż obecne awatary i nazwy użytkowników w historii wiadomości",
-    "Show extensible event representation of events": "Pokaż rozszerzalną reprezentację wydarzeń",
     "No virtual room for this room": "Brak wirtualnego pokoju dla tego pokoju",
     "Switches to this room's virtual room, if it has one": "Przełącza do wirtualnego pokoju tego pokoju, jeśli taki istnieje",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s i %(space2Name)s",

@@ -2957,7 +2957,6 @@
     "Failed to fetch your location. Please try again later.": "擷取您的位置失敗。請稍後再試。",
     "Could not fetch location": "無法擷取位置",
     "Automatically send debug logs on decryption errors": "自動傳送關於解密錯誤的除錯紀錄檔",
-    "Show extensible event representation of events": "顯示事件的可擴展事件表示",
     "was removed %(count)s times|one": "被移除",
     "was removed %(count)s times|other": "被移除 %(count)s 次",
     "were removed %(count)s times|one": "被移除",

@@ -2979,7 +2979,6 @@
     "Remove from %(roomName)s": "Expulser de %(roomName)s",
     "Keyboard": "Clavier",
     "Automatically send debug logs on decryption errors": "Envoyer automatiquement les journaux de débogage en cas d’erreurs de déchiffrement",
-    "Show extensible event representation of events": "Afficher une représentation extensible des évènements",
     "Let moderators hide messages pending moderation.": "Permettre aux modérateurs de cacher des messages en attente de modération.",
     "%(senderName)s has ended a poll": "%(senderName)s a terminé un sondage",
     "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s a démarré un sondage – %(pollQuestion)s",

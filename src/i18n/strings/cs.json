@@ -2957,7 +2957,6 @@
     "Failed to fetch your location. Please try again later.": "Nepodařilo se zjistit vaši polohu. Zkuste to prosím později.",
     "Could not fetch location": "Nepodařilo se zjistit polohu",
     "Automatically send debug logs on decryption errors": "Automaticky odesílat ladící protokoly při chybách dešifrování",
-    "Show extensible event representation of events": "Zobrazit rozšířené reprezentace událostí",
     "was removed %(count)s times|one": "byl(a) odebrán(a)",
     "was removed %(count)s times|other": "byli odebráni %(count)s krát",
     "were removed %(count)s times|one": "byli odebráni",

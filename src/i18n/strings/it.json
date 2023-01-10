@@ -2957,7 +2957,6 @@
     "Could not fetch location": "Impossibile rilevare la posizione",
     "From a thread": "Da una conversazione",
     "Automatically send debug logs on decryption errors": "Invia automaticamente log di debug per errori di decifrazione",
-    "Show extensible event representation of events": "Mostra la rappresentazione estensibile degli eventi",
     "Open this settings tab": "Apri questa scheda di impostazioni",
     "was removed %(count)s times|one": "è stato rimosso",
     "was removed %(count)s times|other": "è stato rimosso %(count)s volte",

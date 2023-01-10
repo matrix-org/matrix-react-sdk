@@ -2974,7 +2974,6 @@
     "Show join/leave messages (invites/removes/bans unaffected)": "Mostrar unirse/saír (convites/eliminacións/vetos non afectados)",
     "Jump to date (adds /jumptodate and jump to date headers)": "Ir á data (engade cabeceiras /vaiadata e vai á data)",
     "Use new room breadcrumbs": "Usar atallos para nova sala",
-    "Show extensible event representation of events": "Mostrar representación tipo evento extensible dos eventos",
     "Let moderators hide messages pending moderation.": "Permitir que a moderación agoche mensaxes pendentes de moderar.",
     "Back to thread": "Volver ao fío",
     "Room members": "Membros da sala",

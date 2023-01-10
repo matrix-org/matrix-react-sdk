@@ -2868,7 +2868,6 @@
     "Automatically send debug logs on decryption errors": "Skicka automatiskt avbuggningsloggar vid avkrypteringsfel",
     "Show join/leave messages (invites/removes/bans unaffected)": "Visa gå med/lämna-meddelanden (inbjudningar/borttagningar/banningar påverkas inte)",
     "Jump to date (adds /jumptodate and jump to date headers)": "Hoppa till datum (lägger till /jumptodate och hopp till datumrubriker)",
-    "Show extensible event representation of events": "Visa expanderbar händelserepresentation av händelser",
     "Let moderators hide messages pending moderation.": "Låt moderatorer dölja meddelanden i väntan på moderering.",
     "Back to thread": "Tillbaka till tråd",
     "Room members": "Rumsmedlemmar",

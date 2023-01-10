@@ -2172,7 +2172,6 @@
     "Jump to date (adds /jumptodate and jump to date headers)": "Pereiti prie datos (prideda /jumptodate ir perėjimo prie datos antraštes)",
     "Show HTML representation of room topics": "Rodyti kambarių temų HTML atvaizdavimą",
     "Show current avatar and name for users in message history": "Žinučių istorijoje rodyti dabartinį naudotojų avatarą ir vardą",
-    "Show extensible event representation of events": "Rodyti išplečiamą įvykių atvaizdavimą",
     "Render LaTeX maths in messages": "Atvaizduoti LaTeX matematikas žinutėse",
     "Let moderators hide messages pending moderation.": "Leisti moderatoriams slėpti žinutes, laukiančias moderavimo.",
     "Explore public spaces in the new search dialog": "Tyrinėkite viešas erdves naujajame paieškos lange",

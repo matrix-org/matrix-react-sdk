@@ -3164,7 +3164,6 @@
     "Force complete": "Sunni lõpetama",
     "<%(count)s spaces>|zero": "<tühi string>",
     "Call": "Helista",
-    "Show extensible event representation of events": "Näita laiendatavat sündmuste kujutamist",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "Astumisel jututuppa või liitumisel kogukonnaga tekkis viga %(errcode)s. Kui sa arvad, et sellise põhjusega viga ei tohiks tekkida, siis palun <issueLink>koosta veateade</issueLink>.",
     "Try again later, or ask a room or space admin to check if you have access.": "Proovi hiljem uuesti või küsi jututoa või kogukonna haldurilt, kas sul on ligipääs olemas.",
     "This room or space is not accessible at this time.": "See jututuba või kogukond pole hetkel ligipääsetav.",

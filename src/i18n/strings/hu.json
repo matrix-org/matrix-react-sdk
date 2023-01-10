@@ -2951,7 +2951,6 @@
     "Failed to get room topic: Unable to find room (%(roomId)s": "A szoba téma nem található: A szoba nem található (%(roomId)s)",
     "Command error: Unable to find rendering type (%(renderingType)s)": "Parancs hiba: Megjelenítési típus nem található (%(renderingType)s)",
     "Command error: Unable to handle slash command.": "Parancs hiba: A per (slash) parancs támogatott.",
-    "Show extensible event representation of events": "Események kibővített megjelenítése",
     "Open this settings tab": "Beállítások fül megnyitása",
     "Space home": "Kezdő tér",
     "was removed %(count)s times|one": "eltávolítva",
