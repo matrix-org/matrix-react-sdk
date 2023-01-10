@@ -510,7 +510,8 @@ export const isMuted = (member: RoomMember, powerLevelContent: IPowerLevelsConte
         (powerLevelContent.events ? powerLevelContent.events["m.room.message"] : null) ||
         powerLevelContent.events_default;
 
-    // levelToSend could be undefined as .events_default is optional
+    // levelToSend could be undefined as .events_default is optional. Coercing in this case using
+    // Number() would always return false, so this preserves behaviour
     if (levelToSend === undefined) return false;
 
     return member.powerLevel < levelToSend;
