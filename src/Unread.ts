@@ -70,10 +70,10 @@ export function doesRoomHaveUnreadMessages(room: Room): boolean {
     return false;
 }
 
-export function doesRoomOrThreadHaveUnreadMessages(room: Room | Thread): boolean {
+export function doesRoomOrThreadHaveUnreadMessages(roomOrThread: Room | Thread): boolean {
     // If there are no messages yet in the timeline then it isn't fully initialised
     // and cannot be unread.
-    if (room.timeline.length === 0) {
+    if (roomOrThread.timeline.length === 0) {
         return false;
     }
 
@@ -85,14 +85,14 @@ export function doesRoomOrThreadHaveUnreadMessages(room: Room | Thread): boolean
     //             https://github.com/vector-im/element-web/issues/2427
     // ...and possibly some of the others at
     //             https://github.com/vector-im/element-web/issues/3363
-    if (room.timeline.at(-1)?.getSender() === myUserId) {
+    if (roomOrThread.timeline.at(-1)?.getSender() === myUserId) {
         return false;
     }
 
     // get the most recent read receipt sent by our account.
     // N.B. this is NOT a read marker (RM, aka "read up to marker"),
     // despite the name of the method :((
-    const readUpToId = room.getEventReadUpTo(myUserId!);
+    const readUpToId = roomOrThread.getEventReadUpTo(myUserId!);
 
     // this just looks at whatever history we have, which if we've only just started
     // up probably won't be very much, so if the last couple of events are ones that
@@ -101,8 +101,8 @@ export function doesRoomOrThreadHaveUnreadMessages(room: Room | Thread): boolean
     // but currently we just guess.
 
     // Loop through messages, starting with the most recent...
-    for (let i = room.timeline.length - 1; i >= 0; --i) {
-        const ev = room.timeline[i];
+    for (let i = roomOrThread.timeline.length - 1; i >= 0; --i) {
+        const ev = roomOrThread.timeline[i];
 
         if (ev.getId() == readUpToId) {
             // If we've read up to this event, there's nothing more recent
