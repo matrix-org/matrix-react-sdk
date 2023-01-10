@@ -49,7 +49,7 @@ export function UserOnboardingPage({ justRegistered = false }: Props) {
 
     const useCase = useSettingValue<UseCase | null>("FTUE.useCaseSelection");
     const context = useUserOnboardingContext();
-    const [completedTasks, waitingTasks] = useUserOnboardingTasks(context);
+    const tasks = useUserOnboardingTasks(context);
 
     const initialSyncComplete = useInitialSyncComplete();
     const [showList, setShowList] = useState<boolean>(false);
@@ -77,10 +77,10 @@ export function UserOnboardingPage({ justRegistered = false }: Props) {
         return <EmbeddedPage className="mx_HomePage" url={pageUrl} scrollbar={true} />;
     }
 
-    return <AutoHideScrollbar className="mx_UserOnboardingPage">
-        <UserOnboardingHeader useCase={useCase} />
-        { showList && (
-            <UserOnboardingList completedTasks={completedTasks} waitingTasks={waitingTasks} />
-        ) }
-    </AutoHideScrollbar>;
+    return (
+        <AutoHideScrollbar className="mx_UserOnboardingPage">
+            <UserOnboardingHeader useCase={useCase} />
+            {showList && <UserOnboardingList tasks={tasks} />}
+        </AutoHideScrollbar>
+    );
 }

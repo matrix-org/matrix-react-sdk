@@ -15,26 +15,39 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { SearchResult } from "matrix-js-sdk/src/models/search-result";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { render } from "@testing-library/react";
+import { Room } from "matrix-js-sdk/src/models/room";
 
-import { createTestClient } from "../../../test-utils";
-import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
+import { stubClient } from "../../../test-utils";
 import SearchResultTile from "../../../../src/components/views/rooms/SearchResultTile";
+import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
+
+const ROOM_ID = "!qPewotXpIctQySfjSy:localhost";
 
 describe("SearchResultTile", () => {
     beforeAll(() => {
-        MatrixClientPeg.get = () => createTestClient();
+        stubClient();
+        const cli = MatrixClientPeg.get();
+
+        const room = new Room(ROOM_ID, cli, "@bob:example.org");
+        jest.spyOn(cli, "getRoom").mockReturnValue(room);
     });
 
     it("Sets up appropriate callEventGrouper for m.call. events", () => {
         const { container } = render(
             <SearchResultTile
-                searchResult={SearchResult.fromJson({
-                    rank: 0.00424866,
-                    result: {
+                timeline={[
+                    new MatrixEvent({
+                        type: EventType.CallInvite,
+                        sender: "@user1:server",
+                        room_id: ROOM_ID,
+                        origin_server_ts: 1432735824652,
+                        content: { call_id: "call.1" },
+                        event_id: "$1:server",
+                    }),
+                    new MatrixEvent({
                         content: {
                             body: "This is an example text message",
                             format: "org.matrix.custom.html",
@@ -43,35 +56,23 @@ describe("SearchResultTile", () => {
                         },
                         event_id: "$144429830826TWwbB:localhost",
                         origin_server_ts: 1432735824653,
-                        room_id: "!qPewotXpIctQySfjSy:localhost",
+                        room_id: ROOM_ID,
                         sender: "@example:example.org",
                         type: "m.room.message",
                         unsigned: {
                             age: 1234,
                         },
-                    },
-                    context: {
-                        end: "",
-                        start: "",
-                        profile_info: {},
-                        events_before: [{
-                            type: EventType.CallInvite,
-                            sender: "@user1:server",
-                            room_id: "!qPewotXpIctQySfjSy:localhost",
-                            origin_server_ts: 1432735824652,
-                            content: { call_id: "call.1" },
-                            event_id: "$1:server",
-                        }],
-                        events_after: [{
-                            type: EventType.CallAnswer,
-                            sender: "@user2:server",
-                            room_id: "!qPewotXpIctQySfjSy:localhost",
-                            origin_server_ts: 1432735824654,
-                            content: { call_id: "call.1" },
-                            event_id: "$2:server",
-                        }],
-                    },
-                }, o => new MatrixEvent(o))}
+                    }),
+                    new MatrixEvent({
+                        type: EventType.CallAnswer,
+                        sender: "@user2:server",
+                        room_id: ROOM_ID,
+                        origin_server_ts: 1432735824654,
+                        content: { call_id: "call.1" },
+                        event_id: "$2:server",
+                    }),
+                ]}
+                ourEventsIndexes={[1]}
             />,
         );
 

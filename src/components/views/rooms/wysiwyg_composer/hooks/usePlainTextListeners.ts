@@ -17,9 +17,20 @@ limitations under the License.
 import { KeyboardEvent, SyntheticEvent, useCallback, useRef, useState } from "react";
 
 import { useSettingValue } from "../../../../../hooks/useSettings";
+import { IS_MAC, Key } from "../../../../../Keyboard";
 
 function isDivElement(target: EventTarget): target is HTMLDivElement {
     return target instanceof HTMLDivElement;
+}
+
+// Hitting enter inside the editor inserts an editable div, initially containing a <br />
+// For correct display, first replace this pattern with a newline character and then remove divs
+// noting that they are used to delimit paragraphs
+function amendInnerHtml(text: string) {
+    return text
+        .replace(/<div><br><\/div>/g, "\n") // this is pressing enter then not typing
+        .replace(/<div>/g, "\n") // this is from pressing enter, then typing inside the div
+        .replace(/<\/div>/g, "");
 }
 
 export function usePlainTextListeners(
@@ -29,28 +40,55 @@ export function usePlainTextListeners(
 ) {
     const ref = useRef<HTMLDivElement | null>(null);
     const [content, setContent] = useState<string | undefined>(initialContent);
-    const send = useCallback((() => {
+    const send = useCallback(() => {
         if (ref.current) {
-            ref.current.innerHTML = '';
+            ref.current.innerHTML = "";
         }
         onSend?.();
-    }), [ref, onSend]);
+    }, [ref, onSend]);
 
-    const onInput = useCallback((event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>) => {
-        if (isDivElement(event.target)) {
-            setContent(event.target.innerHTML);
-            onChange?.(event.target.innerHTML);
-        }
-    }, [onChange]);
+    const setText = useCallback(
+        (text: string) => {
+            setContent(text);
+            onChange?.(text);
+        },
+        [onChange],
+    );
 
-    const isCtrlEnter = useSettingValue<boolean>("MessageComposerInput.ctrlEnterToSend");
-    const onKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
-        if (event.key === 'Enter' && !event.shiftKey && (!isCtrlEnter || (isCtrlEnter && event.ctrlKey))) {
-            event.preventDefault();
-            event.stopPropagation();
-            send();
-        }
-    }, [isCtrlEnter, send]);
+    const enterShouldSend = !useSettingValue<boolean>("MessageComposerInput.ctrlEnterToSend");
+    const onInput = useCallback(
+        (event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>) => {
+            if (isDivElement(event.target)) {
+                // if enterShouldSend, we do not need to amend the html before setting text
+                const newInnerHTML = enterShouldSend ? event.target.innerHTML : amendInnerHtml(event.target.innerHTML);
+                setText(newInnerHTML);
+            }
+        },
+        [setText, enterShouldSend],
+    );
 
-    return { ref, onInput, onPaste: onInput, onKeyDown, content };
+    const onKeyDown = useCallback(
+        (event: KeyboardEvent<HTMLDivElement>) => {
+            if (event.key === Key.ENTER) {
+                const sendModifierIsPressed = IS_MAC ? event.metaKey : event.ctrlKey;
+
+                // if enter should send, send if the user is not pushing shift
+                if (enterShouldSend && !event.shiftKey) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    send();
+                }
+
+                // if enter should not send, send only if the user is pushing ctrl/cmd
+                if (!enterShouldSend && sendModifierIsPressed) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    send();
+                }
+            }
+        },
+        [enterShouldSend, send],
+    );
+
+    return { ref, onInput, onPaste: onInput, onKeyDown, content, setContent: setText };
 }

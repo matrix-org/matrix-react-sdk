@@ -30,7 +30,7 @@ export default class MImageReplyBody extends MImageBody {
         return children;
     }
 
-    render() {
+    public render() {
         if (this.state.error) {
             return super.render();
         }
@@ -38,8 +38,6 @@ export default class MImageReplyBody extends MImageBody {
         const content = this.props.mxEvent.getContent<IMediaEventContent>();
         const thumbnail = this.messageContent(this.state.contentUrl, this.state.thumbUrl, content, FORCED_IMAGE_HEIGHT);
 
-        return <div className="mx_MImageReplyBody">
-            { thumbnail }
-        </div>;
+        return <div className="mx_MImageReplyBody">{thumbnail}</div>;
     }
 }

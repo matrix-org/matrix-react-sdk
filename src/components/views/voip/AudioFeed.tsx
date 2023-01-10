@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import { CallFeed, CallFeedEvent } from 'matrix-js-sdk/src/webrtc/callFeed';
-import { logger } from 'matrix-js-sdk/src/logger';
+import React, { createRef } from "react";
+import { CallFeed, CallFeedEvent } from "matrix-js-sdk/src/webrtc/callFeed";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import MediaDeviceHandler, { MediaDeviceHandlerEvent } from "../../../MediaDeviceHandler";
 
@@ -31,7 +31,7 @@ interface IState {
 export default class AudioFeed extends React.Component<IProps, IState> {
     private element = createRef<HTMLAudioElement>();
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -39,16 +39,13 @@ export default class AudioFeed extends React.Component<IProps, IState> {
         };
     }
 
-    componentDidMount() {
-        MediaDeviceHandler.instance.addListener(
-            MediaDeviceHandlerEvent.AudioOutputChanged,
-            this.onAudioOutputChanged,
-        );
+    public componentDidMount() {
+        MediaDeviceHandler.instance.addListener(MediaDeviceHandlerEvent.AudioOutputChanged, this.onAudioOutputChanged);
         this.props.feed.addListener(CallFeedEvent.NewStream, this.onNewStream);
         this.playMedia();
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount() {
         MediaDeviceHandler.instance.removeListener(
             MediaDeviceHandlerEvent.AudioOutputChanged,
             this.onAudioOutputChanged,
@@ -95,7 +92,8 @@ export default class AudioFeed extends React.Component<IProps, IState> {
         } catch (e) {
             logger.info(
                 `Failed to play media element with feed for userId ` +
-                `${this.props.feed.userId} with purpose ${this.props.feed.purpose}`, e,
+                    `${this.props.feed.userId} with purpose ${this.props.feed.purpose}`,
+                e,
             );
         }
     }
@@ -120,12 +118,10 @@ export default class AudioFeed extends React.Component<IProps, IState> {
         this.playMedia();
     };
 
-    render() {
+    public render() {
         // Do not render the audio element if there is no audio track
         if (this.state.audioMuted) return null;
 
-        return (
-            <audio ref={this.element} />
-        );
+        return <audio ref={this.element} />;
     }
 }

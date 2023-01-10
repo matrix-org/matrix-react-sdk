@@ -16,4 +16,7 @@ limitations under the License.
 
 export type ComposerFunctions = {
     clear: () => void;
+    insertText: (text: string) => void;
 };
+
+export type SubSelection = Pick<Selection, "anchorNode" | "anchorOffset" | "focusNode" | "focusOffset">;

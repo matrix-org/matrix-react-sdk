@@ -26,6 +26,7 @@ import {
     createLocalNotificationSettingsIfNeeded,
     deviceNotificationSettingsKeys,
     clearAllNotifications,
+    clearRoomNotification,
 } from "../../src/utils/notifications";
 import SettingsStore from "../../src/settings/SettingsStore";
 import { getMockClientWithEventEmitter } from "../test-utils/client";
@@ -34,7 +35,7 @@ import { MatrixClientPeg } from "../../src/MatrixClientPeg";
 
 jest.mock("../../src/settings/SettingsStore");
 
-describe('notifications', () => {
+describe("notifications", () => {
     let accountDataStore = {};
     let mockClient;
     let accountDataEventKey;
@@ -43,7 +44,7 @@ describe('notifications', () => {
         jest.clearAllMocks();
         mockClient = getMockClientWithEventEmitter({
             isGuest: jest.fn().mockReturnValue(false),
-            getAccountData: jest.fn().mockImplementation(eventType => accountDataStore[eventType]),
+            getAccountData: jest.fn().mockImplementation((eventType) => accountDataStore[eventType]),
             setAccountData: jest.fn().mockImplementation((eventType, content) => {
                 accountDataStore[eventType] = new MatrixEvent({
                     type: eventType,
@@ -56,14 +57,14 @@ describe('notifications', () => {
         mocked(SettingsStore).getValue.mockReturnValue(false);
     });
 
-    describe('createLocalNotification', () => {
-        it('creates account data event', async () => {
+    describe("createLocalNotification", () => {
+        it("creates account data event", async () => {
             await createLocalNotificationSettingsIfNeeded(mockClient);
             const event = mockClient.getAccountData(accountDataEventKey);
             expect(event?.getContent().is_silenced).toBe(true);
         });
 
-        it('does not do anything for guests', async () => {
+        it("does not do anything for guests", async () => {
             mockClient.isGuest.mockReset().mockReturnValue(true);
             await createLocalNotificationSettingsIfNeeded(mockClient);
             const event = mockClient.getAccountData(accountDataEventKey);
@@ -71,7 +72,7 @@ describe('notifications', () => {
         });
 
         it.each(deviceNotificationSettingsKeys)(
-            'unsilenced for existing sessions when %s setting is truthy',
+            "unsilenced for existing sessions when %s setting is truthy",
             async (settingKey) => {
                 mocked(SettingsStore).getValue.mockImplementation((key): any => {
                     return key === settingKey;
@@ -80,7 +81,8 @@ describe('notifications', () => {
                 await createLocalNotificationSettingsIfNeeded(mockClient);
                 const event = mockClient.getAccountData(accountDataEventKey);
                 expect(event?.getContent().is_silenced).toBe(false);
-            });
+            },
+        );
 
         it("does not override an existing account event data", async () => {
             mockClient.setAccountData(accountDataEventKey, {
@@ -93,11 +95,11 @@ describe('notifications', () => {
         });
     });
 
-    describe('localNotificationsAreSilenced', () => {
-        it('defaults to false when no setting exists', () => {
+    describe("localNotificationsAreSilenced", () => {
+        it("defaults to false when no setting exists", () => {
             expect(localNotificationsAreSilenced(mockClient)).toBeFalsy();
         });
-        it('checks the persisted value', () => {
+        it("checks the persisted value", () => {
             mockClient.setAccountData(accountDataEventKey, { is_silenced: true });
             expect(localNotificationsAreSilenced(mockClient)).toBeTruthy();
 
@@ -106,10 +108,44 @@ describe('notifications', () => {
         });
     });
 
+    describe("clearRoomNotification", () => {
+        let client: MatrixClient;
+        let room: Room;
+        let sendReadReceiptSpy: jest.SpyInstance;
+        const ROOM_ID = "123";
+        const USER_ID = "@bob:example.org";
+
+        beforeEach(() => {
+            stubClient();
+            client = mocked(MatrixClientPeg.get());
+            room = new Room(ROOM_ID, client, USER_ID);
+            sendReadReceiptSpy = jest.spyOn(client, "sendReadReceipt").mockResolvedValue({});
+            jest.spyOn(client, "getRooms").mockReturnValue([room]);
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((name) => {
+                return name === "sendReadReceipts";
+            });
+        });
+
+        it("sends a request even if everything has been read", () => {
+            clearRoomNotification(room, client);
+            expect(sendReadReceiptSpy).not.toBeCalled();
+        });
+
+        it("marks the room as read even if the receipt failed", async () => {
+            room.setUnreadNotificationCount(NotificationCountType.Total, 5);
+            sendReadReceiptSpy = jest.spyOn(client, "sendReadReceipt").mockReset().mockRejectedValue({});
+            try {
+                await clearRoomNotification(room, client);
+            } finally {
+                expect(room.getUnreadNotificationCount(NotificationCountType.Total)).toBe(0);
+            }
+        });
+    });
+
     describe("clearAllNotifications", () => {
         let client: MatrixClient;
         let room: Room;
-        let sendReadReceiptSpy;
+        let sendReadReceiptSpy: jest.SpyInstance;
 
         const ROOM_ID = "123";
         const USER_ID = "@bob:example.org";
