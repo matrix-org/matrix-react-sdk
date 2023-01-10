@@ -3700,5 +3700,7 @@
     "Sign out of all other sessions (%(otherSessionsCount)s)": "登出其他所有工作階段（%(otherSessionsCount)s）",
     "Yes, end my recording": "是的，結束我的錄製",
     "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "若您開始收聽本次直播，您目前的直播錄製將會結束。",
-    "Listen to live broadcast?": "聆聽直播？"
+    "Listen to live broadcast?": "聆聽直播？",
+    "Unfortunately we're unable to start a recording right now. Please try again later.": "很遺憾，我們無法立刻開始錄製。請再試一次。",
+    "Connection error": "連線錯誤"
 }
