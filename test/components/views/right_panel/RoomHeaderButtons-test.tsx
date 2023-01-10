@@ -52,12 +52,12 @@ describe("RoomHeaderButtons-test.tsx", function () {
         return render(<RoomHeaderButtons room={room} excludedRightPanelPhaseButtons={[]} />);
     }
 
-    function getThreadButton(container) {
+    function getThreadButton(container: HTMLElement) {
         return container.querySelector(".mx_RightPanel_threadsButton");
     }
 
-    function isIndicatorOfType(container: React.ReactElement, type: "red" | "gray" | "bold") {
-        return container.querySelector(".mx_RightPanel_threadsButton .mx_Indicator").className.includes(type);
+    function isIndicatorOfType(container: HTMLElement, type: "red" | "gray" | "bold") {
+        return container.querySelector(".mx_RightPanel_threadsButton .mx_Indicator")!.className.includes(type);
     }
 
     it("shows the thread button", () => {
