@@ -17,7 +17,7 @@ limitations under the License.
 import { FormattingFunctions } from "@matrix-org/matrix-wysiwyg";
 import React, { ChangeEvent, useState } from "react";
 
-import { _t, _td } from "../../../../../languageHandler";
+import { _t } from "../../../../../languageHandler";
 import Modal from "../../../../../Modal";
 import Field from "../../../elements/Field";
 import { ComposerContextState } from "../ComposerContext";
@@ -66,9 +66,9 @@ export function LinkModal({ composer, isTextEnabled, onClose, composerContext, i
     return (
         <BaseDialog
             className="mx_LinkModal"
-            title={isEditing ? _td("Edit link") : _td("Create a link")}
+            title={isEditing ? _t("Edit link") : _t("Create a link")}
             hasCancel={true}
-            onFinished={() => onClose()}
+            onFinished={onClose}
         >
             <form
                 className="mx_LinkModal_content"
@@ -91,7 +91,7 @@ export function LinkModal({ composer, isTextEnabled, onClose, composerContext, i
                     <Field
                         required={true}
                         autoFocus={true}
-                        label={_td("Text")}
+                        label={_t("Text")}
                         value={fields.text}
                         className="mx_LinkModal_Field"
                         placeholder=""
@@ -103,7 +103,7 @@ export function LinkModal({ composer, isTextEnabled, onClose, composerContext, i
                 <Field
                     required={true}
                     autoFocus={!hasText}
-                    label={_td("Link")}
+                    label={_t("Link")}
                     value={fields.link}
                     className="mx_LinkModal_Field"
                     placeholder=""
@@ -130,7 +130,7 @@ export function LinkModal({ composer, isTextEnabled, onClose, composerContext, i
                         primaryButton={_t("Save")}
                         primaryDisabled={isSaveDisabled}
                         primaryIsSubmit={true}
-                        onCancel={() => onClose()}
+                        onCancel={onClose}
                     />
                 </div>
             </form>

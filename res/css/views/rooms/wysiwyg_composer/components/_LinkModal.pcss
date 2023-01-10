@@ -16,8 +16,9 @@ limitations under the License.
 
 .mx_LinkModal {
     padding: $spacing-32;
-    max-width: calc(600px - ($spacing-32 * 2));
-    height: calc(341px - ($spacing-32 * 2));
+    max-width: 600px;
+    height: 341px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
 
@@ -25,7 +26,7 @@ limitations under the License.
         display: flex;
         flex-direction: column;
         flex: 1;
-        gap: 8px;
+        gap: $spacing-8;
         margin-top: 7px;
 
         .mx_LinkModal_Field {
