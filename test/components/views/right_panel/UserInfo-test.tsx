@@ -104,13 +104,12 @@ const mockClient = mocked({
 const defaultUserId = "@test:test";
 const defaultUser = new User(defaultUserId);
 
-beforeAll(() => {
+beforeEach(() => {
     jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
 });
 
 afterEach(() => {
     mockClient.getUser.mockClear().mockReturnValue({} as unknown as User);
-    jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
 });
 
 describe("<UserInfo />", () => {
@@ -125,7 +124,6 @@ describe("<UserInfo />", () => {
 
     const defaultProps = {
         user: defaultUser,
-        room: mockRoom,
         // idk what is wrong with this type
         phase: RightPanelPhases.RoomMemberInfo as RightPanelPhases.RoomMemberInfo,
         onClose: jest.fn(),
@@ -143,7 +141,6 @@ describe("<UserInfo />", () => {
 
     it("closes on close button click", async () => {
         renderComponent();
-        screen.debug();
 
         await userEvent.click(screen.getByTestId("base-card-close-button"));
 
