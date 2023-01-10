@@ -63,7 +63,7 @@ async function cfgDirFromTemplate(template: string): Promise<HomeserverConfig> {
     await fse.writeFile(path.join(tempDir, configFile), hsYaml);
 
     await dockerRun({
-        image: "matrixdotorg/dendrite-monolith:local",
+        image: "matrixdotorg/dendrite-monolith:main",
         params: ["--rm", "--entrypoint=", "-v", `${tempDir}:/mnt`],
         containerName: `react-sdk-cypress-dendrite-keygen`,
         cmd: ["/usr/bin/generate-keys", "-private-key", "/mnt/matrix_key.pem"],
@@ -86,7 +86,7 @@ async function dendriteStart(template: string): Promise<HomeserverInstance> {
     console.log(`Starting dendrite with config dir ${denCfg.configDir}...`);
 
     const dendriteId = await dockerRun({
-        image: "matrixdotorg/dendrite-monolith:local",
+        image: "matrixdotorg/dendrite-monolith:main",
         params: [
             "--rm",
             "-v",
