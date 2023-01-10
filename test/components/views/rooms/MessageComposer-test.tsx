@@ -17,10 +17,18 @@ limitations under the License.
 import * as React from "react";
 import { EventType, MatrixEvent, Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
-import { act, render, RenderResult } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { createTestClient, flushPromises, mkEvent, mkStubRoom, mockPlatformPeg, stubClient } from "../../../test-utils";
+import {
+    createTestClient,
+    filterConsole,
+    flushPromises,
+    mkEvent,
+    mkStubRoom,
+    mockPlatformPeg,
+    stubClient,
+} from "../../../test-utils";
 import MessageComposer from "../../../../src/components/views/rooms/MessageComposer";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -46,17 +54,17 @@ jest.mock("../../../../src/components/views/rooms/wysiwyg_composer", () => ({
     SendWysiwygComposer: jest.fn().mockImplementation(() => <div data-testid="wysiwyg-composer" />),
 }));
 
-const openStickerPicker = async (renderResult: RenderResult): Promise<void> => {
+const openStickerPicker = async (): Promise<void> => {
     await act(async () => {
-        await userEvent.click(renderResult.getByLabelText("More options"));
-        await userEvent.click(renderResult.getByLabelText("Sticker"));
+        await userEvent.click(screen.getByLabelText("More options"));
+        await userEvent.click(screen.getByLabelText("Sticker"));
     });
 };
 
-const startVoiceMessage = async (renderResult: RenderResult): Promise<void> => {
+const startVoiceMessage = async (): Promise<void> => {
     await act(async () => {
-        await userEvent.click(renderResult.getByLabelText("More options"));
-        await userEvent.click(renderResult.getByLabelText("Voice Message"));
+        await userEvent.click(screen.getByLabelText("More options"));
+        await userEvent.click(screen.getByLabelText("Voice Message"));
     });
 };
 
@@ -81,15 +89,17 @@ const shouldClearModal = async (): Promise<void> => {
     });
 };
 
-const expectVoiceMessageRecordingTriggered = (renderResult: RenderResult): void => {
+const expectVoiceMessageRecordingTriggered = (): void => {
     // Checking for the voice message dialog text, if no mic can be found.
     // By this we know at least that starting a voice message was triggered.
-    expect(renderResult.getByText("No microphone found")).toBeInTheDocument();
+    expect(screen.getByText("No microphone found")).toBeInTheDocument();
 };
 
 describe("MessageComposer", () => {
     stubClient();
     const cli = createTestClient();
+
+    filterConsole("Starting load of AsyncWrapper for modal");
 
     beforeEach(() => {
         mockPlatformPeg();
@@ -117,18 +127,18 @@ describe("MessageComposer", () => {
         const room = mkStubRoom("!roomId:server", "Room 1", cli);
 
         it("Renders a SendMessageComposer and MessageComposerButtons by default", () => {
-            const { renderResult } = wrapAndRender({ room });
-            expect(renderResult.getByLabelText("Send a message…")).toBeInTheDocument();
+            wrapAndRender({ room });
+            expect(screen.getByLabelText("Send a message…")).toBeInTheDocument();
         });
 
         it("Does not render a SendMessageComposer or MessageComposerButtons when user has no permission", () => {
-            const { renderResult } = wrapAndRender({ room }, false);
-            expect(renderResult.queryByLabelText("Send a message…")).not.toBeInTheDocument();
-            expect(renderResult.getByText("You do not have permission to post to this room")).toBeInTheDocument();
+            wrapAndRender({ room }, false);
+            expect(screen.queryByLabelText("Send a message…")).not.toBeInTheDocument();
+            expect(screen.getByText("You do not have permission to post to this room")).toBeInTheDocument();
         });
 
         it("Does not render a SendMessageComposer or MessageComposerButtons when room is tombstoned", () => {
-            const { renderResult } = wrapAndRender(
+            wrapAndRender(
                 { room },
                 true,
                 false,
@@ -143,8 +153,8 @@ describe("MessageComposer", () => {
                 }),
             );
 
-            expect(renderResult.queryByLabelText("Send a message…")).not.toBeInTheDocument();
-            expect(renderResult.getByText("This room has been replaced and is no longer active.")).toBeInTheDocument();
+            expect(screen.queryByLabelText("Send a message…")).not.toBeInTheDocument();
+            expect(screen.getByText("This room has been replaced and is no longer active.")).toBeInTheDocument();
         });
 
         describe("when receiving a »reply_to_event«", () => {
@@ -200,21 +210,19 @@ describe("MessageComposer", () => {
         ].forEach(({ setting, buttonLabel }) => {
             [true, false].forEach((value: boolean) => {
                 describe(`when ${setting} = ${value}`, () => {
-                    let renderResult: RenderResult;
-
                     beforeEach(async () => {
                         SettingsStore.setValue(setting, null, SettingLevel.DEVICE, value);
-                        renderResult = wrapAndRender({ room }).renderResult;
+                        wrapAndRender({ room });
                         await act(async () => {
-                            await userEvent.click(renderResult.getByLabelText("More options"));
+                            await userEvent.click(screen.getByLabelText("More options"));
                         });
                     });
 
                     it(`should${value || "not"} display the button`, () => {
                         if (value) {
-                            expect(renderResult.getByLabelText(buttonLabel)).toBeInTheDocument();
+                            expect(screen.getByLabelText(buttonLabel)).toBeInTheDocument();
                         } else {
-                            expect(renderResult.queryByLabelText(buttonLabel)).not.toBeInTheDocument();
+                            expect(screen.queryByLabelText(buttonLabel)).not.toBeInTheDocument();
                         }
                     });
 
@@ -234,9 +242,9 @@ describe("MessageComposer", () => {
 
                         it(`should${!value || "not"} display the button`, () => {
                             if (!value) {
-                                expect(renderResult.getByLabelText(buttonLabel)).toBeInTheDocument();
+                                expect(screen.getByLabelText(buttonLabel)).toBeInTheDocument();
                             } else {
-                                expect(renderResult.queryByLabelText(buttonLabel)).not.toBeInTheDocument();
+                                expect(screen.queryByLabelText(buttonLabel)).not.toBeInTheDocument();
                             }
                         });
                     });
@@ -245,25 +253,22 @@ describe("MessageComposer", () => {
         });
 
         it("should not render the send button", () => {
-            const { renderResult } = wrapAndRender({ room });
-            expect(renderResult.queryByLabelText("Send message")).not.toBeInTheDocument();
+            wrapAndRender({ room });
+            expect(screen.queryByLabelText("Send message")).not.toBeInTheDocument();
         });
 
         describe("when a message has been entered", () => {
-            let renderResult: RenderResult;
-
             beforeEach(async () => {
-                renderResult = wrapAndRender({ room }).renderResult;
+                const renderResult = wrapAndRender({ room }).renderResult;
                 await addTextToComposerRTL(renderResult, "Hello");
             });
 
             it("should render the send button", () => {
-                expect(renderResult.getByLabelText("Send message")).toBeInTheDocument();
+                expect(screen.getByLabelText("Send message")).toBeInTheDocument();
             });
         });
 
         describe("UIStore interactions", () => {
-            let renderResult: RenderResult;
             let resizeCallback: Function;
 
             beforeEach(() => {
@@ -274,58 +279,56 @@ describe("MessageComposer", () => {
 
             describe("when a non-resize event occurred in UIStore", () => {
                 beforeEach(async () => {
-                    renderResult = wrapAndRender({ room }).renderResult;
-                    await openStickerPicker(renderResult);
+                    wrapAndRender({ room });
+                    await openStickerPicker();
                     resizeCallback("test", {});
                 });
 
                 it("should still display the sticker picker", () => {
-                    expect(
-                        renderResult.getByText("You don't currently have any stickerpacks enabled"),
-                    ).toBeInTheDocument();
+                    expect(screen.getByText("You don't currently have any stickerpacks enabled")).toBeInTheDocument();
                 });
             });
 
             describe("when a resize to narrow event occurred in UIStore", () => {
                 beforeEach(async () => {
-                    renderResult = wrapAndRender({ room }, true, true).renderResult;
-                    await openStickerPicker(renderResult);
+                    wrapAndRender({ room }, true, true);
+                    await openStickerPicker();
                     resizeCallback(UI_EVENTS.Resize, {});
                 });
 
                 it("should close the menu", () => {
-                    expect(renderResult.queryByLabelText("Sticker")).not.toBeInTheDocument();
+                    expect(screen.queryByLabelText("Sticker")).not.toBeInTheDocument();
                 });
 
                 it("should not show the attachment button", () => {
-                    expect(renderResult.queryByLabelText("Attachment")).not.toBeInTheDocument();
+                    expect(screen.queryByLabelText("Attachment")).not.toBeInTheDocument();
                 });
 
                 it("should close the sticker picker", () => {
                     expect(
-                        renderResult.queryByText("You don't currently have any stickerpacks enabled"),
+                        screen.queryByText("You don't currently have any stickerpacks enabled"),
                     ).not.toBeInTheDocument();
                 });
             });
 
             describe("when a resize to non-narrow event occurred in UIStore", () => {
                 beforeEach(async () => {
-                    renderResult = wrapAndRender({ room }, true, false).renderResult;
-                    await openStickerPicker(renderResult);
+                    wrapAndRender({ room }, true, false);
+                    await openStickerPicker();
                     resizeCallback(UI_EVENTS.Resize, {});
                 });
 
                 it("should close the menu", () => {
-                    expect(renderResult.queryByLabelText("Sticker")).not.toBeInTheDocument();
+                    expect(screen.queryByLabelText("Sticker")).not.toBeInTheDocument();
                 });
 
                 it("should show the attachment button", () => {
-                    expect(renderResult.getByLabelText("Attachment")).toBeInTheDocument();
+                    expect(screen.getByLabelText("Attachment")).toBeInTheDocument();
                 });
 
                 it("should close the sticker picker", () => {
                     expect(
-                        renderResult.queryByText("You don't currently have any stickerpacks enabled"),
+                        screen.queryByText("You don't currently have any stickerpacks enabled"),
                     ).not.toBeInTheDocument();
                 });
             });
@@ -333,16 +336,16 @@ describe("MessageComposer", () => {
 
         describe("when not replying to an event", () => {
             it("should pass the expected placeholder to SendMessageComposer", () => {
-                const renderResult = wrapAndRender({ room }).renderResult;
-                expect(renderResult.getByLabelText("Send a message…")).toBeInTheDocument();
+                wrapAndRender({ room });
+                expect(screen.getByLabelText("Send a message…")).toBeInTheDocument();
             });
 
             it("and an e2e status it should pass the expected placeholder to SendMessageComposer", () => {
-                const renderResult = wrapAndRender({
+                wrapAndRender({
                     room,
                     e2eStatus: E2EStatus.Normal,
-                }).renderResult;
-                expect(renderResult.getByLabelText("Send an encrypted message…")).toBeInTheDocument();
+                });
+                expect(screen.getByLabelText("Send an encrypted message…")).toBeInTheDocument();
             });
         });
 
@@ -352,8 +355,8 @@ describe("MessageComposer", () => {
 
             const checkPlaceholder = (expected: string) => {
                 it("should pass the expected placeholder to SendMessageComposer", () => {
-                    const renderResult = wrapAndRender(props).renderResult;
-                    expect(renderResult.getByLabelText(expected)).toBeInTheDocument();
+                    wrapAndRender(props);
+                    expect(screen.getByLabelText(expected)).toBeInTheDocument();
                 });
             };
 
@@ -409,53 +412,48 @@ describe("MessageComposer", () => {
         });
 
         describe("when clicking start a voice message", () => {
-            let renderResult: RenderResult;
-
             beforeEach(async () => {
-                renderResult = wrapAndRender({ room }).renderResult;
-                await startVoiceMessage(renderResult);
+                wrapAndRender({ room });
+                await startVoiceMessage();
+                await flushPromises();
             });
 
             shouldClearModal();
 
             it("should try to start a voice message", () => {
-                expectVoiceMessageRecordingTriggered(renderResult);
+                expectVoiceMessageRecordingTriggered();
             });
         });
 
         describe("when recording a voice broadcast and trying to start a voice message", () => {
-            let renderResult: RenderResult;
-
             beforeEach(async () => {
                 setCurrentBroadcastRecording(room, VoiceBroadcastInfoState.Started);
-                renderResult = wrapAndRender({ room }).renderResult;
-                await startVoiceMessage(renderResult);
+                wrapAndRender({ room });
+                await startVoiceMessage();
                 await waitForModal();
             });
 
             shouldClearModal();
 
             it("should not start a voice message and display the info dialog", async () => {
-                expect(renderResult.queryByLabelText("Stop recording")).not.toBeInTheDocument();
-                expect(renderResult.getByText("Can't start voice message")).toBeInTheDocument();
+                expect(screen.queryByLabelText("Stop recording")).not.toBeInTheDocument();
+                expect(screen.getByText("Can't start voice message")).toBeInTheDocument();
             });
         });
 
         describe("when there is a stopped voice broadcast recording and trying to start a voice message", () => {
-            let renderResult: RenderResult;
-
             beforeEach(async () => {
                 setCurrentBroadcastRecording(room, VoiceBroadcastInfoState.Stopped);
-                renderResult = wrapAndRender({ room }).renderResult;
-                await startVoiceMessage(renderResult);
+                wrapAndRender({ room });
+                await startVoiceMessage();
                 await waitForModal();
             });
 
             shouldClearModal();
 
             it("should try to start a voice message and should not display the info dialog", async () => {
-                expect(renderResult.queryByText("Can't start voice message")).not.toBeInTheDocument();
-                expectVoiceMessageRecordingTriggered(renderResult);
+                expect(screen.queryByText("Can't start voice message")).not.toBeInTheDocument();
+                expectVoiceMessageRecordingTriggered();
             });
         });
     });
@@ -464,11 +462,11 @@ describe("MessageComposer", () => {
         const localRoom = new LocalRoom("!room:example.com", cli, cli.getUserId()!);
 
         it("should not show the stickers button", async () => {
-            const renderResult = wrapAndRender({ room: localRoom }).renderResult;
+            wrapAndRender({ room: localRoom });
             await act(async () => {
-                await userEvent.click(renderResult.getByLabelText("More options"));
+                await userEvent.click(screen.getByLabelText("More options"));
             });
-            expect(renderResult.queryByLabelText("Sticker")).not.toBeInTheDocument();
+            expect(screen.queryByLabelText("Sticker")).not.toBeInTheDocument();
         });
     });
 
@@ -476,8 +474,8 @@ describe("MessageComposer", () => {
         const room = mkStubRoom("!roomId:server", "Room 1", cli);
         SettingsStore.setValue("feature_wysiwyg_composer", null, SettingLevel.DEVICE, true);
 
-        const renderResult = wrapAndRender({ room }).renderResult;
-        expect(renderResult.getByTestId("wysiwyg-composer")).toBeInTheDocument();
+        wrapAndRender({ room });
+        expect(screen.getByTestId("wysiwyg-composer")).toBeInTheDocument();
     });
 });
 
