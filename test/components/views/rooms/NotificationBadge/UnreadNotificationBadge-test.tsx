@@ -17,10 +17,11 @@ limitations under the License.
 import React from "react";
 import "jest-mock";
 import { screen, act, render } from "@testing-library/react";
-import { MsgType, RelationType } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, MsgType, RelationType } from "matrix-js-sdk/src/matrix";
 import { PendingEventOrdering } from "matrix-js-sdk/src/client";
 import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
 import { EventStatus } from "matrix-js-sdk/src/models/event-status";
+import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 
 import { mkThread } from "../../../../test-utils/threads";
 import { UnreadNotificationBadge } from "../../../../../src/components/views/rooms/NotificationBadge/UnreadNotificationBadge";
@@ -56,6 +57,25 @@ describe("UnreadNotificationBadge", () => {
         room = new Room(ROOM_ID, client, client.getUserId()!, {
             pendingEventOrdering: PendingEventOrdering.Detached,
         });
+
+        const receipt = new MatrixEvent({
+            type: "m.receipt",
+            room_id: room.roomId,
+            content: {
+                "$event0:localhost": {
+                    [ReceiptType.Read]: {
+                        [client.getUserId()!]: { ts: 1, thread_id: "$otherthread:localhost" },
+                    },
+                },
+                "$event1:localhost": {
+                    [ReceiptType.Read]: {
+                        [client.getUserId()!]: { ts: 1 },
+                    },
+                },
+            },
+        });
+        room.addReceipt(receipt);
+
         room.setUnreadNotificationCount(NotificationCountType.Total, 1);
         room.setUnreadNotificationCount(NotificationCountType.Highlight, 0);
 
@@ -156,6 +176,7 @@ describe("UnreadNotificationBadge", () => {
                         rel_type: RelationType.Thread,
                     },
                 },
+                ts: 5,
             });
             room.addLiveEvents([event]);
         });
