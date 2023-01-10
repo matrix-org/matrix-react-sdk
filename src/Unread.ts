@@ -73,7 +73,7 @@ export function doesRoomHaveUnreadMessages(room: Room): boolean {
 export function doesRoomOrThreadHaveUnreadMessages(roomOrThread: Room | Thread): boolean {
     // If there are no messages yet in the timeline then it isn't fully initialised
     // and cannot be unread.
-    if (roomOrThread.timeline.length === 0) {
+    if (!roomOrThread || roomOrThread.timeline.length === 0) {
         return false;
     }
 
