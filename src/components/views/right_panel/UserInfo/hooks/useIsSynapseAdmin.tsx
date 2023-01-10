@@ -20,11 +20,14 @@ import { useEffect, useState } from "react";
 export const useIsSynapseAdmin = (cli: MatrixClient) => {
     const [isAdmin, setIsAdmin] = useState(false);
     useEffect(() => {
-        cli.isSynapseAdministrator().then((isAdmin) => {
-            setIsAdmin(isAdmin);
-        }, () => {
-            setIsAdmin(false);
-        });
+        cli.isSynapseAdministrator().then(
+            (isAdmin) => {
+                setIsAdmin(isAdmin);
+            },
+            () => {
+                setIsAdmin(false);
+            },
+        );
     }, [cli]);
     return isAdmin;
 };

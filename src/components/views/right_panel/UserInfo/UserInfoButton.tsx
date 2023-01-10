@@ -25,10 +25,9 @@ interface ButtonProps {
 }
 
 export const UserInfoButton: React.FC<ButtonProps> = ({ children, className, onClick }) => {
-    return <AccessibleButton
-        className={classNames("mx_BaseCard_Button", className)}
-        onClick={onClick}
-    >
-        { children }
-    </AccessibleButton>;
+    return (
+        <AccessibleButton className={classNames("mx_BaseCard_Button", className)} onClick={onClick}>
+            {children}
+        </AccessibleButton>
+    );
 };

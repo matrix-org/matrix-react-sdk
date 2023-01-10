@@ -27,11 +27,14 @@ export function useIsIgnored(cli: MatrixClient, member: User | RoomMember): bool
         setIsIgnored(cli.isUserIgnored(member.userId));
     }, [cli, member.userId]);
     // Recheck also if we receive new accountData m.ignored_user_list
-    const accountDataHandler = useCallback((ev) => {
-        if (ev.getType() === "m.ignored_user_list") {
-            setIsIgnored(cli.isUserIgnored(member.userId));
-        }
-    }, [cli, member.userId]);
+    const accountDataHandler = useCallback(
+        (ev) => {
+            if (ev.getType() === "m.ignored_user_list") {
+                setIsIgnored(cli.isUserIgnored(member.userId));
+            }
+        },
+        [cli, member.userId],
+    );
     useTypedEventEmitter(cli, ClientEvent.AccountData, accountDataHandler);
 
     return isIgnored;

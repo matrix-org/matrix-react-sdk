@@ -19,7 +19,11 @@ import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { useAsyncMemo } from "../../../../../hooks/useAsyncMemo";
 
 export const useHomeserverSupportsCrossSigning = (cli: MatrixClient) => {
-    return useAsyncMemo<boolean>(async () => {
-        return cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing");
-    }, [cli], false);
+    return useAsyncMemo<boolean>(
+        async () => {
+            return cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing");
+        },
+        [cli],
+        false,
+    );
 };

@@ -20,16 +20,19 @@ import { useCallback, useEffect, useState } from "react";
 import { useTypedEventEmitter } from "../../../../../hooks/useEventEmitter";
 import { PowerLevelsContent } from "../@types";
 
-const getPowerLevels = room => room?.currentState?.getStateEvents(EventType.RoomPowerLevels, "")?.getContent() || {};
+const getPowerLevels = (room) => room?.currentState?.getStateEvents(EventType.RoomPowerLevels, "")?.getContent() || {};
 
 export const useRoomPowerLevels = (cli: MatrixClient, room: Room) => {
     const [powerLevels, setPowerLevels] = useState<PowerLevelsContent>(getPowerLevels(room));
 
-    const update = useCallback((ev?: MatrixEvent) => {
-        if (!room) return;
-        if (ev && ev.getType() !== EventType.RoomPowerLevels) return;
-        setPowerLevels(getPowerLevels(room));
-    }, [room]);
+    const update = useCallback(
+        (ev?: MatrixEvent) => {
+            if (!room) return;
+            if (ev && ev.getType() !== EventType.RoomPowerLevels) return;
+            setPowerLevels(getPowerLevels(room));
+        },
+        [room],
+    );
 
     useTypedEventEmitter(cli, RoomStateEvent.Events, update);
     useEffect(() => {

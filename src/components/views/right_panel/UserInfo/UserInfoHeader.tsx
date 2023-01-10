@@ -31,7 +31,7 @@ import MemberAvatar from "../../avatars/MemberAvatar";
 import ImageView from "../../elements/ImageView";
 import PresenceLabel from "../../rooms/PresenceLabel";
 import E2EIcon from "../../rooms/E2EIcon";
-import UserIdentifierCustomisations from '../../../../customisations/UserIdentifier';
+import UserIdentifierCustomisations from "../../../../customisations/UserIdentifier";
 import AccessibleButton from "../../elements/AccessibleButton";
 import { _t } from "../../../../languageHandler";
 import { DirectoryMember, startDmOnFirstMessage } from "../../../../utils/direct-messages";
@@ -69,7 +69,8 @@ export const UserInfoHeader: React.FC<{
                 resizeMethod="scale"
                 fallbackUserId={member.userId}
                 onClick={onMemberAvatarClick}
-                urls={(member as User).avatarUrl ? [(member as User).avatarUrl] : undefined} />
+                urls={(member as User).avatarUrl ? [(member as User).avatarUrl] : undefined}
+            />
         </div>
     );
 
@@ -105,55 +106,54 @@ export const UserInfoHeader: React.FC<{
     }
 
     const displayName = (member as RoomMember).rawDisplayName;
-    return <React.Fragment>
-        { avatarElement }
+    return (
+        <React.Fragment>
+            {avatarElement}
 
-        <div className="mx_UserInfo_container mx_UserInfo_separator">
-            <div className="mx_UserInfo_profile">
-                <div>
-                    <h2>
-                        { e2eIcon }
-                        <span title={displayName} aria-label={displayName} dir="auto">
-                            { displayName }
-                        </span>
-                    </h2>
+            <div className="mx_UserInfo_container mx_UserInfo_separator">
+                <div className="mx_UserInfo_profile">
+                    <div>
+                        <h2>
+                            {e2eIcon}
+                            <span title={displayName} aria-label={displayName} dir="auto">
+                                {displayName}
+                            </span>
+                        </h2>
+                    </div>
+                    <div className="mx_UserInfo_profile_mxid">
+                        {UserIdentifierCustomisations.getDisplayUserIdentifier(member.userId, {
+                            roomId,
+                            withDisplayName: true,
+                        })}
+                    </div>
+                    <div className="mx_UserInfo_profileStatus">{presenceLabel}</div>
                 </div>
-                <div className="mx_UserInfo_profile_mxid">
-                    { UserIdentifierCustomisations.getDisplayUserIdentifier(member.userId, {
-                        roomId,
-                        withDisplayName: true,
-                    }) }
-                </div>
-                <div className="mx_UserInfo_profileStatus">
-                    { presenceLabel }
-                </div>
+
+                {member.userId !== cli.getUserId() && (
+                    <section className="mx_buttons_row mx_butons_row_equalSize">
+                        <MessageButton member={member as RoomMember} />
+                        <AccessibleButton
+                            kind="danger_outline"
+                            onClick={() => {
+                                const ignoredUsers = cli.getIgnoredUsers();
+                                if (isIgnored) {
+                                    const index = ignoredUsers.indexOf(member.userId);
+                                    if (index !== -1) ignoredUsers.splice(index, 1);
+                                } else {
+                                    ignoredUsers.push(member.userId);
+                                }
+
+                                cli.setIgnoredUsers(ignoredUsers);
+                            }}
+                            className="mx_UserInfo_cta"
+                        >
+                            {isIgnored ? _t("Unignore") : _t("Ignore")}
+                        </AccessibleButton>
+                    </section>
+                )}
             </div>
-
-            { member.userId !== cli.getUserId() && (
-                <section className="mx_buttons_row mx_butons_row_equalSize">
-                    <MessageButton member={member as RoomMember} />
-                    <AccessibleButton
-                        kind="danger_outline"
-                        onClick={() => {
-                            const ignoredUsers = cli.getIgnoredUsers();
-                            if (isIgnored) {
-                                const index = ignoredUsers.indexOf(member.userId);
-                                if (index !== -1) ignoredUsers.splice(index, 1);
-                            } else {
-                                ignoredUsers.push(member.userId);
-                            }
-
-                            cli.setIgnoredUsers(ignoredUsers);
-                        }}
-                        className="mx_UserInfo_cta"
-                    >
-                        { isIgnored ? _t("Unignore") : _t("Ignore") }
-                    </AccessibleButton>
-                </section>
-            ) }
-
-        </div>
-    </React.Fragment>;
+        </React.Fragment>
+    );
 };
 
 async function openDMForUser(matrixClient: MatrixClient, user: RoomMember): Promise<void> {
@@ -181,7 +181,7 @@ const MessageButton = ({ member }: { member: RoomMember }) => {
             className="mx_UserInfo_cta"
             disabled={busy}
         >
-            { _t("Message") }
+            {_t("Message")}
         </AccessibleButton>
     );
 };
