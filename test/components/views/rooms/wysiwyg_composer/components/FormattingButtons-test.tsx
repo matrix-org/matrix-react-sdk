@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { AllActionStates, FormattingFunctions } from "@matrix-org/matrix-wysiwyg";
+import { ActionState, ActionTypes, AllActionStates, FormattingFunctions } from "@matrix-org/matrix-wysiwyg";
 
 import { FormattingButtons } from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/FormattingButtons";
 import * as LinkModal from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/LinkModal";
@@ -35,7 +35,10 @@ const mockWysiwyg = {
 
 const openLinkModalSpy = jest.spyOn(LinkModal, "openLinkModal");
 
-const testCases = {
+const testCases: Record<
+    Exclude<ActionTypes, "undo" | "redo" | "clear">,
+    { label: string; mockFormatFn: jest.Func | jest.SpyInstance }
+> = {
     bold: { label: "Bold", mockFormatFn: mockWysiwyg.bold },
     italic: { label: "Italic", mockFormatFn: mockWysiwyg.italic },
     underline: { label: "Underline", mockFormatFn: mockWysiwyg.underline },
@@ -46,7 +49,7 @@ const testCases = {
     unorderedList: { label: "Bulleted list", mockFormatFn: mockWysiwyg.unorderedList },
 };
 
-const createActionStates = (state: string): AllActionStates => {
+const createActionStates = (state: ActionState): AllActionStates => {
     return Object.fromEntries(Object.keys(testCases).map((testKey) => [testKey, state])) as AllActionStates;
 };
 
@@ -78,7 +81,8 @@ describe("FormattingButtons", () => {
         const reversedActionStates = createActionStates("reversed");
         renderComponent({ actionStates: reversedActionStates });
 
-        Object.values(testCases).forEach(({ label }) => {
+        Object.values(testCases).forEach((testCase) => {
+            const { label } = testCase;
             expect(screen.getByLabelText(label)).toHaveClass(classes.active);
         });
     });
@@ -86,8 +90,8 @@ describe("FormattingButtons", () => {
     it("Should call wysiwyg function on button click", async () => {
         renderComponent();
 
-        for (const testKey in testCases) {
-            const { label, mockFormatFn } = testCases[testKey];
+        for (const testCase of Object.values(testCases)) {
+            const { label, mockFormatFn } = testCase;
 
             screen.getByLabelText(label).click();
             expect(mockFormatFn).toHaveBeenCalledTimes(1);
@@ -97,8 +101,8 @@ describe("FormattingButtons", () => {
     it("Each button should display the tooltip on mouse over", async () => {
         renderComponent();
 
-        for (const testKey in testCases) {
-            const { label } = testCases[testKey];
+        for (const testCase of Object.values(testCases)) {
+            const { label } = testCase;
 
             await userEvent.hover(screen.getByLabelText(label));
             expect(await screen.findByText(label)).toBeTruthy();
@@ -108,8 +112,8 @@ describe("FormattingButtons", () => {
     it("Each button should have hover style when hovered and enabled", async () => {
         renderComponent();
 
-        for (const testKey in testCases) {
-            const { label } = testCases[testKey];
+        for (const testCase of Object.values(testCases)) {
+            const { label } = testCase;
 
             await userEvent.hover(screen.getByLabelText(label));
             expect(await screen.findByLabelText(label)).toHaveClass("mx_FormattingButtons_Button_hover");
@@ -120,8 +124,8 @@ describe("FormattingButtons", () => {
         const reversedActionStates = createActionStates("reversed");
         renderComponent({ actionStates: reversedActionStates });
 
-        for (const testKey in testCases) {
-            const { label } = testCases[testKey];
+        for (const testCase of Object.values(testCases)) {
+            const { label } = testCase;
 
             await userEvent.hover(screen.getByLabelText(label));
             expect(await screen.findByLabelText(label)).not.toHaveClass("mx_FormattingButtons_Button_hover");
