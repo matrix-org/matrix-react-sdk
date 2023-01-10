@@ -116,7 +116,7 @@ describe("FormattingButtons", () => {
             const { label } = testCase;
 
             await userEvent.hover(screen.getByLabelText(label));
-            expect(await screen.findByLabelText(label)).toHaveClass("mx_FormattingButtons_Button_hover");
+            expect(screen.getByLabelText(label)).toHaveClass("mx_FormattingButtons_Button_hover");
         }
     });
 
@@ -128,7 +128,7 @@ describe("FormattingButtons", () => {
             const { label } = testCase;
 
             await userEvent.hover(screen.getByLabelText(label));
-            expect(await screen.findByLabelText(label)).not.toHaveClass("mx_FormattingButtons_Button_hover");
+            expect(screen.getByLabelText(label)).not.toHaveClass("mx_FormattingButtons_Button_hover");
         }
     });
 });
