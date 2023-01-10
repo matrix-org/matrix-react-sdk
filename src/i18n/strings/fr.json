@@ -3700,5 +3700,7 @@
     "Sign out of all other sessions (%(otherSessionsCount)s)": "Déconnecter toutes les autres sessions (%(otherSessionsCount)s)",
     "Yes, end my recording": "Oui, terminer mon enregistrement",
     "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "En commençant à écouter cette diffusion en direct, votre enregistrement de diffusion en direct actuel sera interrompu.",
-    "Listen to live broadcast?": "Écouter la diffusion en direct ?"
+    "Listen to live broadcast?": "Écouter la diffusion en direct ?",
+    "Unfortunately we're unable to start a recording right now. Please try again later.": "Malheureusement, nous ne pouvons pas démarrer l’enregistrement pour le moment. Veuillez réessayer plus tard.",
+    "Connection error": "Erreur de connexion"
 }
