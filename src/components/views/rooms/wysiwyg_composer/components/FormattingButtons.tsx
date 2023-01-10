@@ -24,7 +24,7 @@ import { Icon as UnderlineIcon } from "../../../../../../res/img/element-icons/r
 import { Icon as StrikeThroughIcon } from "../../../../../../res/img/element-icons/room/composer/strikethrough.svg";
 import { Icon as InlineCodeIcon } from "../../../../../../res/img/element-icons/room/composer/inline_code.svg";
 import { Icon as LinkIcon } from "../../../../../../res/img/element-icons/room/composer/link.svg";
-import { Icon as BulletedListIcon } from "../../../../../../res/img/element-icons/room/composer/bullet_list.svg";
+import { Icon as BulletedListIcon } from "../../../../../../res/img/element-icons/room/composer/bulleted_list.svg";
 import { Icon as NumberedListIcon } from "../../../../../../res/img/element-icons/room/composer/numbered_list.svg";
 import AccessibleTooltipButton from "../../../elements/AccessibleTooltipButton";
 import { Alignment } from "../../../elements/Tooltip";
