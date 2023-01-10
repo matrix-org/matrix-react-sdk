@@ -510,7 +510,8 @@ export const isMuted = (member: RoomMember, powerLevelContent: IPowerLevelsConte
         (powerLevelContent.events ? powerLevelContent.events["m.room.message"] : null) ||
         powerLevelContent.events_default;
 
-    if (!levelToSend) return false;
+    // levelToSend could be undefined as .events_default is optional
+    if (levelToSend === undefined) return false;
 
     return member.powerLevel < levelToSend;
 };
@@ -1547,7 +1548,7 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
 
     const classes = ["mx_UserInfo"];
 
-    let cardState = undefined as unknown as IRightPanelCardState;
+    let cardState: IRightPanelCardState = {};
     // We have no previousPhase for when viewing a UserInfo without a Room at this time
     if (room && phase === RightPanelPhases.EncryptionPanel) {
         cardState = { member };
