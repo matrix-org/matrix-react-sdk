@@ -36,14 +36,14 @@ const mockWysiwyg = {
 const openLinkModalSpy = jest.spyOn(LinkModal, "openLinkModal");
 
 const testCases = {
-    bold: { label: "Bold", formatFunction: mockWysiwyg.bold },
-    italic: { label: "Italic", formatFunction: mockWysiwyg.italic },
-    underline: { label: "Underline", formatFunction: mockWysiwyg.underline },
-    strikeThrough: { label: "Strikethrough", formatFunction: mockWysiwyg.strikeThrough },
-    inlineCode: { label: "Code", formatFunction: mockWysiwyg.inlineCode },
-    link: { label: "Link", formatFunction: openLinkModalSpy },
-    orderedList: { label: "Bulleted list", formatFunction: mockWysiwyg.orderedList },
-    unorderedList: { label: "Numbered list", formatFunction: mockWysiwyg.unorderedList },
+    bold: { label: "Bold", mockFormatFn: mockWysiwyg.bold },
+    italic: { label: "Italic", mockFormatFn: mockWysiwyg.italic },
+    underline: { label: "Underline", mockFormatFn: mockWysiwyg.underline },
+    strikeThrough: { label: "Strikethrough", mockFormatFn: mockWysiwyg.strikeThrough },
+    inlineCode: { label: "Code", mockFormatFn: mockWysiwyg.inlineCode },
+    link: { label: "Link", mockFormatFn: openLinkModalSpy },
+    orderedList: { label: "Numbered list", mockFormatFn: mockWysiwyg.orderedList },
+    unorderedList: { label: "Bulleted list", mockFormatFn: mockWysiwyg.unorderedList },
 };
 
 const createActionStates = (state: string): AllActionStates => {
@@ -51,17 +51,6 @@ const createActionStates = (state: string): AllActionStates => {
 };
 
 const defaultActionStates = createActionStates("enabled");
-
-const actionStates = {
-    bold: "reversed",
-    italic: "reversed",
-    underline: "enabled",
-    strikeThrough: "enabled",
-    inlineCode: "enabled",
-    link: "enabled",
-    orderedList: "enabled",
-    unorderedList: "enabled",
-} as AllActionStates;
 
 const renderComponent = (props = {}) => {
     return render(<FormattingButtons composer={mockWysiwyg} actionStates={defaultActionStates} {...props} />);
@@ -94,46 +83,15 @@ describe("FormattingButtons", () => {
         });
     });
 
-    // it("Should call wysiwyg function on button click", () => {
-    //     renderComponent();
+    it("Should call wysiwyg function on button click", async () => {
+        renderComponent();
 
-    //     // Object.values(omit(testCases, ["orderedList", "unorderedList"])).forEach(({ label, formatFunction }) => {
-    //     //     screen.getByLabelText(label).click();
-    //     //     expect(formatFunction).toHaveBeenCalledTimes(1);
-    //     // });
-    //     const thing1 = screen.getByLabelText("Bold");
-    //     thing1.click();
-    //     expect(mockWysiwyg.bold).toHaveBeenCalledTimes(1);
-    //     const thing2 = screen.getByLabelText("Numbered list");
-    //     thing2.click();
-    //     thing2.click();
-    //     screen.debug();
-    //     expect(mockWysiwyg.unorderedList).toHaveBeenCalledTimes(1);
-    // });
+        for (const testKey in testCases) {
+            const { label, mockFormatFn } = testCases[testKey];
 
-    // for some reason the above does not work despite looking identical...
-    it("Should call wysiwyg function on button click", () => {
-        // When
-        const spy = jest.spyOn(LinkModal, "openLinkModal");
-        render(<FormattingButtons composer={mockWysiwyg} actionStates={actionStates} />);
-        screen.getByLabelText("Bold").click();
-        screen.getByLabelText("Italic").click();
-        screen.getByLabelText("Underline").click();
-        screen.getByLabelText("Strikethrough").click();
-        screen.getByLabelText("Code").click();
-        screen.getByLabelText("Link").click();
-        screen.getByLabelText("Bulleted list").click();
-        screen.getByLabelText("Numbered list").click();
-
-        // Then
-        expect(mockWysiwyg.bold).toHaveBeenCalledTimes(1);
-        expect(mockWysiwyg.italic).toHaveBeenCalledTimes(1);
-        expect(mockWysiwyg.underline).toHaveBeenCalledTimes(1);
-        expect(mockWysiwyg.strikeThrough).toHaveBeenCalledTimes(1);
-        expect(mockWysiwyg.inlineCode).toHaveBeenCalledTimes(1);
-        expect(mockWysiwyg.orderedList).toHaveBeenCalledTimes(1);
-        expect(mockWysiwyg.unorderedList).toHaveBeenCalledTimes(1);
-        expect(spy).toHaveBeenCalledTimes(1);
+            screen.getByLabelText(label).click();
+            expect(mockFormatFn).toHaveBeenCalledTimes(1);
+        }
     });
 
     it("Each button should display the tooltip on mouse over", async () => {
