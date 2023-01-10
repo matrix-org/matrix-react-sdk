@@ -64,7 +64,7 @@ export class VoiceBroadcastRecording
     implements IDestroyable
 {
     private state: VoiceBroadcastRecordingState;
-    private recorder: VoiceBroadcastRecorder;
+    private recorder: VoiceBroadcastRecorder | null = null;
     private dispatcherRef: string;
     private chunkEvents = new VoiceBroadcastChunkEvents();
     private chunkRelationHelper: RelationsHelper;
@@ -72,6 +72,8 @@ export class VoiceBroadcastRecording
     private timeLeft: number;
     private toRetry: Array<() => Promise<void>> = [];
     private reconnectedListener: ClientEventHandlerMap[ClientEvent.Sync];
+    private roomId: string;
+    private infoEventId: string;
 
     /**
      * Broadcast chunks have a sequence number to bring them in the correct order and to know if a message is missing.
@@ -89,11 +91,13 @@ export class VoiceBroadcastRecording
         super();
         this.maxLength = getMaxBroadcastLength();
         this.timeLeft = this.maxLength;
+        this.infoEventId = this.determineEventIdFromInfoEvent();
+        this.roomId = this.determineRoomIdFromInfoEvent();
 
         if (initialState) {
             this.state = initialState;
         } else {
-            this.setInitialStateFromInfoEvent();
+            this.state = this.determineInitialStateFromInfoEvent();
         }
 
         // TODO Michael W: listen for state updates
@@ -134,17 +138,37 @@ export class VoiceBroadcastRecording
         this.chunkEvents.addEvent(event);
     };
 
-    private setInitialStateFromInfoEvent(): void {
-        const room = this.client.getRoom(this.infoEvent.getRoomId());
+    private determineEventIdFromInfoEvent(): string {
+        const infoEventId = this.infoEvent.getId();
+
+        if (!infoEventId) {
+            throw new Error("Cannot create broadcast for info event without Id.");
+        }
+
+        return infoEventId;
+    }
+
+    private determineRoomIdFromInfoEvent(): string {
+        const roomId = this.infoEvent.getRoomId();
+
+        if (!roomId) {
+            throw new Error(`Cannot create broadcast for unknown room (info event ${this.infoEventId})`);
+        }
+
+        return roomId;
+    }
+
+    /**
+     * Determines the initial broadcast state.
+     * Checks all related events. If one has the "stopped" state → stopped, else started.
+     */
+    private determineInitialStateFromInfoEvent(): VoiceBroadcastRecordingState {
+        const room = this.client.getRoom(this.roomId);
         const relations = room
             ?.getUnfilteredTimelineSet()
-            ?.relations?.getChildEventsForEvent(
-                this.infoEvent.getId(),
-                RelationType.Reference,
-                VoiceBroadcastInfoEventType,
-            );
+            ?.relations?.getChildEventsForEvent(this.infoEventId, RelationType.Reference, VoiceBroadcastInfoEventType);
         const relatedEvents = relations?.getRelations();
-        this.state = !relatedEvents?.find((event: MatrixEvent) => {
+        return !relatedEvents?.find((event: MatrixEvent) => {
             return event.getContent()?.state === VoiceBroadcastInfoState.Stopped;
         })
             ? VoiceBroadcastInfoState.Started
@@ -322,14 +346,14 @@ export class VoiceBroadcastRecording
     private async uploadFile(chunk: ChunkRecordedPayload): ReturnType<typeof uploadFile> {
         return uploadFile(
             this.client,
-            this.infoEvent.getRoomId(),
+            this.roomId,
             new Blob([chunk.buffer], {
                 type: this.getRecorder().contentType,
             }),
         );
     }
 
-    private async sendVoiceMessage(chunk: ChunkRecordedPayload, url: string, file: IEncryptedFile): Promise<void> {
+    private async sendVoiceMessage(chunk: ChunkRecordedPayload, url?: string, file?: IEncryptedFile): Promise<void> {
         const sendMessageFn = async () => {
             const content = createVoiceMessageContent(
                 url,
@@ -340,14 +364,14 @@ export class VoiceBroadcastRecording
             );
             content["m.relates_to"] = {
                 rel_type: RelationType.Reference,
-                event_id: this.infoEvent.getId(),
+                event_id: this.infoEventId,
             };
             /** Increment the last sequence number and use it for this message. Also see {@link sequence}. */
             content["io.element.voice_broadcast_chunk"] = {
                 sequence: ++this.sequence,
             };
 
-            await this.client.sendMessage(this.infoEvent.getRoomId(), content);
+            await this.client.sendMessage(this.roomId, content);
         };
 
         try {
@@ -367,7 +391,7 @@ export class VoiceBroadcastRecording
     private async sendInfoStateEvent(state: VoiceBroadcastInfoState): Promise<void> {
         const sendEventFn = async () => {
             await this.client.sendStateEvent(
-                this.infoEvent.getRoomId(),
+                this.roomId,
                 VoiceBroadcastInfoEventType,
                 {
                     device_id: this.client.getDeviceId(),
@@ -375,10 +399,10 @@ export class VoiceBroadcastRecording
                     last_chunk_sequence: this.sequence,
                     ["m.relates_to"]: {
                         rel_type: RelationType.Reference,
-                        event_id: this.infoEvent.getId(),
+                        event_id: this.infoEventId,
                     },
                 } as VoiceBroadcastInfoEventContent,
-                this.client.getUserId(),
+                this.client.getSafeUserId(),
             );
         };
 

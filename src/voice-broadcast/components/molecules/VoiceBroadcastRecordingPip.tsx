@@ -47,7 +47,7 @@ export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProp
     const onDeviceSelect = async (device: MediaDeviceInfo) => {
         setShowDeviceSelect(false);
 
-        if (currentDevice.deviceId === device.deviceId) {
+        if (currentDevice?.deviceId === device.deviceId) {
             // device unchanged
             return;
         }
