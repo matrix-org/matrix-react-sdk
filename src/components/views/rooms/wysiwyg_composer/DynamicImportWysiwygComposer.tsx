@@ -15,9 +15,33 @@ limitations under the License.
 */
 
 import React, { ComponentProps, lazy, Suspense } from "react";
+import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
+
+// we need to import the types for TS, but do not import the sendMessage
+// function to avoid importing from "@matrix-org/matrix-wysiwyg"
+import { SendMessageParams } from "./utils/message";
 
 const SendComposer = lazy(() => import("./SendWysiwygComposer"));
 const EditComposer = lazy(() => import("./EditWysiwygComposer"));
+
+export const dynamicImportSendMessage = async (
+    message: string,
+    isHTML: boolean,
+    params: SendMessageParams,
+): Promise<ISendEventResponse> => {
+    const { sendMessage } = await import("./utils/message");
+
+    return sendMessage(message, isHTML, params);
+};
+
+export const dynamicImportConversionFunctions = async (): Promise<{
+    richToPlain(rich: string): Promise<string>;
+    plainToRich(plain: string): Promise<string>;
+}> => {
+    const { richToPlain, plainToRich } = await import("@matrix-org/matrix-wysiwyg");
+
+    return { richToPlain, plainToRich };
+};
 
 export function DynamicImportSendWysiwygComposer(props: ComponentProps<typeof SendComposer>): JSX.Element {
     return (

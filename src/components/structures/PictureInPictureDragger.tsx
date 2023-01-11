@@ -16,9 +16,9 @@ limitations under the License.
 
 import React, { createRef } from "react";
 
-import UIStore, { UI_EVENTS } from "../../../stores/UIStore";
-import { lerp } from "../../../utils/AnimationUtils";
-import { MarkedExecution } from "../../../utils/MarkedExecution";
+import UIStore, { UI_EVENTS } from "../../stores/UIStore";
+import { lerp } from "../../utils/AnimationUtils";
+import { MarkedExecution } from "../../utils/MarkedExecution";
 
 const PIP_VIEW_WIDTH = 336;
 const PIP_VIEW_HEIGHT = 232;
@@ -47,7 +47,7 @@ interface IChildrenOptions {
 
 interface IProps {
     className?: string;
-    children: CreatePipChildren;
+    children: Array<CreatePipChildren>;
     draggable: boolean;
     onDoubleClick?: () => void;
     onMove?: () => void;
@@ -65,11 +65,19 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
     private desiredTranslationY = UIStore.instance.windowHeight - PADDING.bottom - PIP_VIEW_HEIGHT;
     private translationX = this.desiredTranslationX;
     private translationY = this.desiredTranslationY;
-    private moving = false;
-    private scheduledUpdate = new MarkedExecution(
+    private mouseHeld = false;
+    private scheduledUpdate: MarkedExecution = new MarkedExecution(
         () => this.animationCallback(),
         () => requestAnimationFrame(() => this.scheduledUpdate.trigger()),
     );
+
+    private _moving = false;
+    public get moving(): boolean {
+        return this._moving;
+    }
+    private set moving(value: boolean) {
+        this._moving = value;
+    }
 
     public componentDidMount(): void {
         document.addEventListener("mousemove", this.onMoving);
@@ -183,24 +191,45 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
         event.preventDefault();
         event.stopPropagation();
 
-        this.moving = true;
-        this.initX = event.pageX - this.desiredTranslationX;
-        this.initY = event.pageY - this.desiredTranslationY;
-        this.scheduledUpdate.mark();
+        this.mouseHeld = true;
     };
 
-    private onMoving = (event: React.MouseEvent | MouseEvent): void => {
-        if (!this.moving) return;
+    private onMoving = (event: MouseEvent): void => {
+        if (!this.mouseHeld) return;
 
         event.preventDefault();
         event.stopPropagation();
 
+        if (!this.moving) {
+            this.moving = true;
+            this.initX = event.pageX - this.desiredTranslationX;
+            this.initY = event.pageY - this.desiredTranslationY;
+            this.scheduledUpdate.mark();
+        }
+
         this.setTranslation(event.pageX - this.initX, event.pageY - this.initY);
     };
 
-    private onEndMoving = (): void => {
-        this.moving = false;
+    private onEndMoving = (event: MouseEvent): void => {
+        if (!this.mouseHeld) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        this.mouseHeld = false;
+        // Delaying this to the next event loop tick is necessary for click
+        // event cancellation to work
+        setImmediate(() => (this.moving = false));
         this.snap(true);
+    };
+
+    private onClickCapture = (event: React.MouseEvent): void => {
+        // To prevent mouse up events during dragging from being double-counted
+        // as clicks, we cancel clicks before they ever reach the target
+        if (this.moving) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
     };
 
     public render(): JSX.Element {
@@ -208,17 +237,22 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
             transform: `translateX(${this.translationX}px) translateY(${this.translationY}px)`,
         };
 
+        const children = this.props.children.map((create: CreatePipChildren) => {
+            return create({
+                onStartMoving: this.onStartMoving,
+                onResize: this.onResize,
+            });
+        });
+
         return (
             <aside
                 className={this.props.className}
                 style={style}
                 ref={this.callViewWrapper}
+                onClickCapture={this.onClickCapture}
                 onDoubleClick={this.props.onDoubleClick}
             >
-                {this.props.children({
-                    onStartMoving: this.onStartMoving,
-                    onResize: this.onResize,
-                })}
+                {children}
             </aside>
         );
     }

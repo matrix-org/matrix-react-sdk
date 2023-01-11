@@ -36,6 +36,7 @@ import { Layout } from "../../../settings/enums/Layout";
 import { formatTime } from "../../../DateUtils";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import DecryptionFailureBody from "../messages/DecryptionFailureBody";
 import { E2EState } from "./E2EIcon";
 import RoomAvatar from "../avatars/RoomAvatar";
 import MessageContextMenu from "../context_menus/MessageContextMenu";
@@ -322,7 +323,12 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         // events and pretty much anything that can't be sent by the composer as a message. For
         // those we rely on local echo giving the impression of things changing, and expect them
         // to be quick.
-        const simpleSendableEvents = [EventType.Sticker, EventType.RoomMessage, EventType.RoomMessageEncrypted];
+        const simpleSendableEvents = [
+            EventType.Sticker,
+            EventType.RoomMessage,
+            EventType.RoomMessageEncrypted,
+            EventType.PollStart,
+        ];
         if (!simpleSendableEvents.includes(this.props.mxEvent.getType() as EventType)) return false;
 
         // Default case
@@ -381,7 +387,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             }
         }
 
-        if (SettingsStore.getValue("feature_threadstable")) {
+        if (SettingsStore.getValue("feature_threadenabled")) {
             this.props.mxEvent.on(ThreadEvent.Update, this.updateThread);
 
             if (this.thread && !this.supportsThreadNotifications) {
@@ -464,7 +470,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         if (this.props.showReactions) {
             this.props.mxEvent.removeListener(MatrixEventEvent.RelationsCreated, this.onReactionsCreated);
         }
-        if (SettingsStore.getValue("feature_threadstable")) {
+        if (SettingsStore.getValue("feature_threadenabled")) {
             this.props.mxEvent.off(ThreadEvent.Update, this.updateThread);
         }
         this.threadState?.off(NotificationStateEvents.Update, this.onThreadStateUpdate);
@@ -495,7 +501,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
     };
 
     private get thread(): Thread | null {
-        if (!SettingsStore.getValue("feature_threadstable")) {
+        if (!SettingsStore.getValue("feature_threadenabled")) {
             return null;
         }
 
@@ -1324,6 +1330,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                             <div className="mx_EventTile_body">
                                 {this.props.mxEvent.isRedacted() ? (
                                     <RedactedBody mxEvent={this.props.mxEvent} />
+                                ) : this.props.mxEvent.isDecryptionFailure() ? (
+                                    <DecryptionFailureBody />
                                 ) : (
                                     MessagePreviewStore.instance.generatePreviewForEvent(this.props.mxEvent)
                                 )}

@@ -54,12 +54,12 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
 import { Features } from "../../../settings/Settings";
 import { VoiceMessageRecording } from "../../../audio/VoiceMessageRecording";
-import { VoiceBroadcastRecordingsStore } from "../../../voice-broadcast";
-import { SendWysiwygComposer, sendMessage } from "./wysiwyg_composer/";
+import { SendWysiwygComposer, sendMessage, getConversionFunctions } from "./wysiwyg_composer/";
 import { MatrixClientProps, withMatrixClientHOC } from "../../../contexts/MatrixClientContext";
-import { htmlToPlainText } from "../../../utils/room/htmlToPlaintext";
 import { setUpVoiceBroadcastPreRecording } from "../../../voice-broadcast/utils/setUpVoiceBroadcastPreRecording";
 import { SdkContextClass } from "../../../contexts/SDKContext";
+import { VoiceBroadcastInfoState } from "../../../voice-broadcast";
+import { createCantStartVoiceMessageBroadcastDialog } from "../dialogs/CantStartVoiceMessageBroadcastDialog";
 
 let instanceCount = 0;
 
@@ -334,7 +334,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
 
         if (this.state.isWysiwygLabEnabled) {
             const { permalinkCreator, relation, replyToEvent } = this.props;
-            sendMessage(this.state.composerContent, this.state.isRichTextEnabled, {
+            await sendMessage(this.state.composerContent, this.state.isRichTextEnabled, {
                 mxClient: this.props.mxClient,
                 roomContext: this.context,
                 permalinkCreator,
@@ -359,14 +359,19 @@ export class MessageComposer extends React.Component<IProps, IState> {
         });
     };
 
-    private onRichTextToggle = (): void => {
-        this.setState((state) => ({
-            isRichTextEnabled: !state.isRichTextEnabled,
-            initialComposerContent: !state.isRichTextEnabled
-                ? state.composerContent
-                : // TODO when available use rust model plain text
-                  htmlToPlainText(state.composerContent),
-        }));
+    private onRichTextToggle = async (): Promise<void> => {
+        const { richToPlain, plainToRich } = await getConversionFunctions();
+
+        const { isRichTextEnabled, composerContent } = this.state;
+        const convertedContent = isRichTextEnabled
+            ? await richToPlain(composerContent)
+            : await plainToRich(composerContent);
+
+        this.setState({
+            isRichTextEnabled: !isRichTextEnabled,
+            composerContent: convertedContent,
+            initialComposerContent: convertedContent,
+        });
     };
 
     private onVoiceStoreUpdate = (): void => {
@@ -423,7 +428,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
         return this.state.showStickersButton && !isLocalRoom(this.props.room);
     }
 
-    private getMenuPosition(): MenuProps {
+    private getMenuPosition(): MenuProps | undefined {
         if (this.ref.current) {
             const hasFormattingButtons = this.state.isWysiwygLabEnabled && this.state.isRichTextEnabled;
             const contentRect = this.ref.current.getBoundingClientRect();
@@ -441,6 +446,20 @@ export class MessageComposer extends React.Component<IProps, IState> {
             return aboveLeftOf(fixedRect);
         }
     }
+
+    private onRecordStartEndClick = (): void => {
+        const currentBroadcastRecording = SdkContextClass.instance.voiceBroadcastRecordingsStore.getCurrent();
+
+        if (currentBroadcastRecording && currentBroadcastRecording.getState() !== VoiceBroadcastInfoState.Stopped) {
+            createCantStartVoiceMessageBroadcastDialog();
+        } else {
+            this.voiceRecordingButton.current?.onRecordStartEndClick();
+        }
+
+        if (this.context.narrow) {
+            this.toggleButtonMenu();
+        }
+    };
 
     public render(): JSX.Element {
         const hasE2EIcon = Boolean(!this.state.isWysiwygLabEnabled && this.props.e2eStatus);
@@ -585,12 +604,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
                                     isStickerPickerOpen={this.state.isStickerPickerOpen}
                                     menuPosition={menuPosition}
                                     relation={this.props.relation}
-                                    onRecordStartEndClick={() => {
-                                        this.voiceRecordingButton.current?.onRecordStartEndClick();
-                                        if (this.context.narrow) {
-                                            this.toggleButtonMenu();
-                                        }
-                                    }}
+                                    onRecordStartEndClick={this.onRecordStartEndClick}
                                     setStickerPickerOpen={this.setStickerPickerOpen}
                                     showLocationButton={!window.electron}
                                     showPollsButton={this.state.showPollsButton}
@@ -604,7 +618,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
                                             this.props.room,
                                             MatrixClientPeg.get(),
                                             SdkContextClass.instance.voiceBroadcastPlaybacksStore,
-                                            VoiceBroadcastRecordingsStore.instance(),
+                                            SdkContextClass.instance.voiceBroadcastRecordingsStore,
                                             SdkContextClass.instance.voiceBroadcastPreRecordingStore,
                                         );
                                         this.toggleButtonMenu();

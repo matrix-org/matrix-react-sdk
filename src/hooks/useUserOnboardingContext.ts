@@ -82,21 +82,21 @@ function useUserOnboardingContextValue<T>(defaultValue: T, callback: (cli: Matri
     return value;
 }
 
-export function useUserOnboardingContext(): UserOnboardingContext | null {
-    const hasAvatar = useUserOnboardingContextValue(false, async (cli): Promise<boolean> => {
+export function useUserOnboardingContext(): UserOnboardingContext {
+    const hasAvatar = useUserOnboardingContextValue(false, async (cli) => {
         const profile = await cli.getProfileInfo(cli.getUserId());
         return Boolean(profile?.avatar_url);
     });
-    const hasDevices = useUserOnboardingContextValue(false, async (cli): Promise<boolean> => {
+    const hasDevices = useUserOnboardingContextValue(false, async (cli) => {
         const myDevice = cli.getDeviceId();
         const devices = await cli.getDevices();
         return Boolean(devices.devices.find((device) => device.device_id !== myDevice));
     });
-    const hasDmRooms = useUserOnboardingContextValue(false, async (): Promise<boolean> => {
+    const hasDmRooms = useUserOnboardingContextValue(false, async () => {
         const dmRooms = DMRoomMap.shared().getUniqueRoomsWithIndividuals() ?? {};
         return Boolean(Object.keys(dmRooms).length);
     });
-    const hasNotificationsEnabled = useUserOnboardingContextValue(false, async (): Promise<boolean> => {
+    const hasNotificationsEnabled = useUserOnboardingContextValue(false, async () => {
         return Notifier.isPossible();
     });
 
