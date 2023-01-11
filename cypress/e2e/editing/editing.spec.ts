@@ -79,67 +79,69 @@ describe("Editing", () => {
         let originalEventId: string;
         let editEventId: string;
 
-        // create a second user, which sends, and edits, the event.
+        // create a second user
+        const bobChainable = cy.getBot(synapse, { displayName: "Bob", userIdPrefix: "bob_" });
 
-        cy.window({ log: false })
-            .then((win) => {
-                cy.getBot(synapse, { displayName: "Bob", userIdPrefix: "bob_" }).then(async (bob) => {
-                    const room = await bob.createRoom({ name: "TestRoom", visibility: win.matrixcs.Visibility.Public });
-                    testRoomId = room.room_id;
-                    cy.log(`Bot user created room ${room.room_id}`);
+        cy.all([cy.window({ log: false }), bobChainable]).then(async ([win, bob]) => {
+            // "bob" now creates the room, and sends a load of events in it. Note that all of this happens via calls on
+            // the js-sdk rather than Cypress commands, so uses regular async/await.
 
-                    originalEventId = (await bob.sendMessage(room.room_id, { body: "original", msgtype: "m.text" }))
-                        .event_id;
-                    cy.log(`Bot user sent original event ${originalEventId}`);
+            const room = await bob.createRoom({ name: "TestRoom", visibility: win.matrixcs.Visibility.Public });
+            testRoomId = room.room_id;
+            cy.log(`Bot user created room ${room.room_id}`);
 
-                    // send a load of padding events. We make them large, so that they fill the whole screen
-                    // and the client doesn't end up paginating into the event we want.
-                    function mkPadding(n: number): MessageEvent {
-                        return MessageEvent.from(`padding ${n}`, `<h3>Test event ${n}</h3>\n`.repeat(10));
-                    }
-                    let i = 0;
-                    while (i < 20) {
-                        const ev = mkPadding(i++);
-                        await bob.sendMessage(room.room_id, ev.serialize().content);
-                    }
+            originalEventId = (await bob.sendMessage(room.room_id, { body: "original", msgtype: "m.text" })).event_id;
+            cy.log(`Bot user sent original event ${originalEventId}`);
 
-                    // ... then the edit ...
-                    editEventId = (
-                        await bob.sendMessage(room.room_id, {
-                            "m.new_content": { body: "Edited body", msgtype: "m.text" },
-                            "m.relates_to": {
-                                rel_type: "m.replace",
-                                event_id: originalEventId,
-                            },
-                            "body": "* edited",
-                            "msgtype": "m.text",
-                        })
-                    ).event_id;
-                    cy.log(`Bot user sent edit event ${editEventId}`);
+            // send a load of padding events. We make them large, so that they fill the whole screen
+            // and the client doesn't end up paginating into the event we want.
+            function mkPadding(n: number): MessageEvent {
+                return MessageEvent.from(`padding ${n}`, `<h3>Test event ${n}</h3>\n`.repeat(10));
+            }
+            let i = 0;
+            while (i < 20) {
+                const ev = mkPadding(i++);
+                await bob.sendMessage(room.room_id, ev.serialize().content);
+            }
 
-                    // ... then a load more padding ...
-                    while (i < 40) {
-                        const ev = mkPadding(i++);
-                        await bob.sendMessage(room.room_id, ev.serialize().content);
-                    }
+            // ... then the edit ...
+            editEventId = (
+                await bob.sendMessage(room.room_id, {
+                    "m.new_content": { body: "Edited body", msgtype: "m.text" },
+                    "m.relates_to": {
+                        rel_type: "m.replace",
+                        event_id: originalEventId,
+                    },
+                    "body": "* edited",
+                    "msgtype": "m.text",
+                })
+            ).event_id;
+            cy.log(`Bot user sent edit event ${editEventId}`);
+
+            // ... then a load more padding ...
+            while (i < 40) {
+                const ev = mkPadding(i++);
+                await bob.sendMessage(room.room_id, ev.serialize().content);
+            }
+        });
+
+        // the wrap() here just forces cypress to wait for all the setup to complete.
+        cy.wrap(null, { log: false }).then(() => {
+            // now have the cypress user join the room, jump to the original event, and wait for the event to be
+            // visible
+            cy.joinRoom(testRoomId);
+            cy.viewRoomByName("TestRoom");
+            cy.visit(`#/room/${testRoomId}/${originalEventId}`);
+            cy.get(`[data-event-id="${originalEventId}"]`).then((messageTile) => {
+                // at this point, the edit event should still be unknown
+                cy.getClient().then((cli) => {
+                    expect(cli.getRoom(testRoomId).getTimelineForEvent(editEventId)).to.be.null;
                 });
-            })
-            .then(() => {
-                // now have the cypress user join the room, jump to the original event, and wait for the event to be
-                // visible
-                cy.joinRoom(testRoomId);
-                cy.viewRoomByName("TestRoom");
-                cy.visit(`#/room/${testRoomId}/${originalEventId}`);
-                cy.get(`[data-event-id="${originalEventId}"]`).then((messageTile) => {
-                    // at this point, the edit event should still be unknown
-                    cy.getClient().then((cli) => {
-                        expect(cli.getRoom(testRoomId).getTimelineForEvent(editEventId)).to.be.null;
-                    });
 
-                    // nevertheless, the event should be updated
-                    expect(messageTile.find(".mx_EventTile_body").text()).to.eq("Edited body");
-                    expect(messageTile.find(".mx_EventTile_edited")).to.exist;
-                });
+                // nevertheless, the event should be updated
+                expect(messageTile.find(".mx_EventTile_body").text()).to.eq("Edited body");
+                expect(messageTile.find(".mx_EventTile_edited")).to.exist;
             });
+        });
     });
 });
