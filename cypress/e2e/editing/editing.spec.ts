@@ -16,9 +16,9 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import type { MsgType } from "matrix-js-sdk/src/@types/event";
+import type { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import type { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
-import type { EventType } from "matrix-js-sdk/src/@types/event";
+import type { IContent } from "matrix-js-sdk/src/models/event";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import Chainable = Cypress.Chainable;
 
@@ -30,8 +30,13 @@ const sendEvent = (roomId: string): Chainable<ISendEventResponse> => {
 };
 
 /** generate a message event which will take up some room on the page. */
-function mkPadding(n: number): MessageEvent {
-    return MessageEvent.from(`padding ${n}`, `<h3>Test event ${n}</h3>\n`.repeat(10));
+function mkPadding(n: number): IContent {
+    return {
+        msgtype: "m.text" as MsgType,
+        body: `padding ${n}`,
+        format: "org.matrix.custom.html",
+        formatted_body: `<h3>Test event ${n}</h3>\n`.repeat(10),
+    };
 }
 
 describe("Editing", () => {
@@ -87,7 +92,7 @@ describe("Editing", () => {
         let editEventId: string;
 
         // create a second user
-        const bobChainable = cy.getBot(synapse, { displayName: "Bob", userIdPrefix: "bob_" });
+        const bobChainable = cy.getBot(homeserver, { displayName: "Bob", userIdPrefix: "bob_" });
 
         cy.all([cy.window({ log: false }), bobChainable]).then(async ([win, bob]) => {
             // "bob" now creates the room, and sends a load of events in it. Note that all of this happens via calls on
@@ -104,8 +109,7 @@ describe("Editing", () => {
             // and the client doesn't end up paginating into the event we want.
             let i = 0;
             while (i < 20) {
-                const ev = mkPadding(i++);
-                await bob.sendMessage(room.room_id, ev.serialize().content);
+                await bob.sendMessage(room.room_id, mkPadding(i++));
             }
 
             // ... then the edit ...
@@ -124,8 +128,7 @@ describe("Editing", () => {
 
             // ... then a load more padding ...
             while (i < 40) {
-                const ev = mkPadding(i++);
-                await bob.sendMessage(room.room_id, ev.serialize().content);
+                await bob.sendMessage(room.room_id, mkPadding(i++));
             }
         });
 
