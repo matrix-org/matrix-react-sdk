@@ -3701,5 +3701,7 @@
     "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "若您開始收聽本次直播，您目前的直播錄製將會結束。",
     "Listen to live broadcast?": "聆聽直播？",
     "Unfortunately we're unable to start a recording right now. Please try again later.": "很遺憾，我們無法立刻開始錄製。請再試一次。",
-    "Connection error": "連線錯誤"
+    "Connection error": "連線錯誤",
+    "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "您無法開始語音訊息，因為您目前正在錄製直播。請結束您的直播，以便開始錄製語音訊息。",
+    "Can't start voice message": "無法開始語音訊息"
 }
