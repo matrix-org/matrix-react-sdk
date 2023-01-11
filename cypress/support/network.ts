@@ -35,27 +35,35 @@ declare global {
 
 Cypress.Commands.add("goOffline", (): void => {
     cy.log("Going offline");
-    cy.window({ log: false }).then(win => {
-        cy.intercept("**/_matrix/**", {
-            headers: {
-                "Authorization": "Bearer " + win.mxMatrixClientPeg.matrixClient.getAccessToken(),
+    cy.window({ log: false }).then((win) => {
+        cy.intercept(
+            "**/_matrix/**",
+            {
+                headers: {
+                    Authorization: "Bearer " + win.mxMatrixClientPeg.matrixClient.getAccessToken(),
+                },
             },
-        }, req => {
-            req.destroy();
-        });
+            (req) => {
+                req.destroy();
+            },
+        );
     });
 });
 
 Cypress.Commands.add("goOnline", (): void => {
     cy.log("Going online");
-    cy.window({ log: false }).then(win => {
-        cy.intercept("**/_matrix/**", {
-            headers: {
-                "Authorization": "Bearer " + win.mxMatrixClientPeg.matrixClient.getAccessToken(),
+    cy.window({ log: false }).then((win) => {
+        cy.intercept(
+            "**/_matrix/**",
+            {
+                headers: {
+                    Authorization: "Bearer " + win.mxMatrixClientPeg.matrixClient.getAccessToken(),
+                },
             },
-        }, req => {
-            req.continue();
-        });
+            (req) => {
+                req.continue();
+            },
+        );
         win.dispatchEvent(new Event("online"));
     });
 });
@@ -63,8 +71,8 @@ Cypress.Commands.add("goOnline", (): void => {
 Cypress.Commands.add("stubDefaultServer", (): void => {
     cy.log("Stubbing vector.im and matrix.org network calls");
     // We intercept vector.im & matrix.org calls so that tests don't fail when it has issues
-    cy.intercept("GET", "https://vector.im/_matrix/identity/api/v1", {
-        fixture: "vector-im-identity-v1.json",
+    cy.intercept("GET", "https://vector.im/_matrix/identity/v2", {
+        fixture: "vector-im-identity-v2.json",
     });
     cy.intercept("GET", "https://matrix.org/.well-known/matrix/client", {
         fixture: "matrix-org-client-well-known.json",
@@ -85,4 +93,4 @@ Cypress.Commands.add("stubDefaultServer", (): void => {
 });
 
 // Needed to make this file a module
-export { };
+export {};

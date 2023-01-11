@@ -15,16 +15,20 @@ limitations under the License.
 */
 
 import { NotificationCount, NotificationCountType, Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { Thread } from "matrix-js-sdk/src/models/thread";
 import { useCallback, useEffect, useState } from "react";
 
 import { getUnsentMessages } from "../components/structures/RoomStatusBar";
 import { getRoomNotifsState, getUnreadNotificationCount, RoomNotifState } from "../RoomNotifs";
 import { NotificationColor } from "../stores/notifications/NotificationColor";
-import { doesRoomHaveUnreadMessages } from "../Unread";
+import { doesRoomOrThreadHaveUnreadMessages } from "../Unread";
 import { EffectiveMembership, getEffectiveMembership } from "../utils/membership";
 import { useEventEmitter } from "./useEventEmitter";
 
-export const useUnreadNotifications = (room: Room, threadId?: string): {
+export const useUnreadNotifications = (
+    room: Room,
+    threadId?: string,
+): {
     symbol: string | null;
     count: number;
     color: NotificationColor;
@@ -33,7 +37,9 @@ export const useUnreadNotifications = (room: Room, threadId?: string): {
     const [count, setCount] = useState<number>(0);
     const [color, setColor] = useState<NotificationColor>(0);
 
-    useEventEmitter(room, RoomEvent.UnreadNotifications,
+    useEventEmitter(
+        room,
+        RoomEvent.UnreadNotifications,
         (unreadNotifications: NotificationCount, evtThreadId?: string) => {
             // Discarding all events not related to the thread if one has been setup
             if (threadId && threadId !== evtThreadId) return;
@@ -70,12 +76,14 @@ export const useUnreadNotifications = (room: Room, threadId?: string): {
                 setColor(NotificationColor.Red);
             } else if (greyNotifs > 0) {
                 setColor(NotificationColor.Grey);
-            } else if (!threadId) {
-                // TODO: No support for `Bold` on threads at the moment
-
+            } else {
                 // We don't have any notified messages, but we might have unread messages. Let's
                 // find out.
-                const hasUnread = doesRoomHaveUnreadMessages(room);
+                let roomOrThread: Room | Thread = room;
+                if (threadId) {
+                    roomOrThread = room.getThread(threadId)!;
+                }
+                const hasUnread = doesRoomOrThreadHaveUnreadMessages(roomOrThread);
                 setColor(hasUnread ? NotificationColor.Bold : NotificationColor.None);
             }
         }

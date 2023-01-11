@@ -16,7 +16,7 @@ limitations under the License.
 
 import "@testing-library/jest-dom";
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 
 import MatrixClientContext from "../../../../../src/contexts/MatrixClientContext";
 import RoomContext from "../../../../../src/contexts/RoomContext";
@@ -24,18 +24,22 @@ import defaultDispatcher from "../../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../../src/dispatcher/actions";
 import { IRoomState } from "../../../../../src/components/structures/RoomView";
 import { createTestClient, flushPromises, getRoomContext, mkEvent, mkStubRoom } from "../../../../test-utils";
-import { SendWysiwygComposer } from "../../../../../src/components/views/rooms/wysiwyg_composer";
+import { SendWysiwygComposer } from "../../../../../src/components/views/rooms/wysiwyg_composer/";
 import { aboveLeftOf } from "../../../../../src/components/structures/ContextMenu";
 import { ComposerInsertPayload, ComposerType } from "../../../../../src/dispatcher/payloads/ComposerInsertPayload";
 import { setSelection } from "../../../../../src/components/views/rooms/wysiwyg_composer/utils/selection";
 
 jest.mock("../../../../../src/components/views/rooms/EmojiButton", () => ({
-    EmojiButton: ({ addEmoji }: {addEmoji: (emoji: string) => void}) => {
-        return <button aria-label="Emoji" type="button" onClick={() => addEmoji('🦫')}>Emoji</button>;
+    EmojiButton: ({ addEmoji }: { addEmoji: (emoji: string) => void }) => {
+        return (
+            <button aria-label="Emoji" type="button" onClick={() => addEmoji("🦫")}>
+                Emoji
+            </button>
+        );
     },
 }));
 
-describe('SendWysiwygComposer', () => {
+describe("SendWysiwygComposer", () => {
     afterEach(() => {
         jest.resetAllMocks();
     });
@@ -43,13 +47,13 @@ describe('SendWysiwygComposer', () => {
     const mockClient = createTestClient();
     const mockEvent = mkEvent({
         type: "m.room.message",
-        room: 'myfakeroom',
-        user: 'myfakeuser',
-        content: { "msgtype": "m.text", "body": "Replying to this" },
+        room: "myfakeroom",
+        user: "myfakeuser",
+        content: { msgtype: "m.text", body: "Replying to this" },
         event: true,
     });
-    const mockRoom = mkStubRoom('myfakeroom', 'myfakeroom', mockClient) as any;
-    mockRoom.findEventById = jest.fn(eventId => {
+    const mockRoom = mkStubRoom("myfakeroom", "myfakeroom", mockClient) as any;
+    mockRoom.findEventById = jest.fn((eventId) => {
         return eventId === mockEvent.getId() ? mockEvent : null;
     });
 
@@ -79,46 +83,51 @@ describe('SendWysiwygComposer', () => {
         onSend = (): void => void 0,
         disabled = false,
         isRichTextEnabled = true,
-        placeholder?: string) => {
+        placeholder?: string,
+    ) => {
         return render(
             <MatrixClientContext.Provider value={mockClient}>
                 <RoomContext.Provider value={defaultRoomContext}>
-                    <SendWysiwygComposer onChange={onChange} onSend={onSend} disabled={disabled} isRichTextEnabled={isRichTextEnabled} menuPosition={aboveLeftOf({ top: 0, bottom: 0, right: 0 })} placeholder={placeholder} />
+                    <SendWysiwygComposer
+                        onChange={onChange}
+                        onSend={onSend}
+                        disabled={disabled}
+                        isRichTextEnabled={isRichTextEnabled}
+                        menuPosition={aboveLeftOf({ top: 0, bottom: 0, right: 0 })}
+                        placeholder={placeholder}
+                    />
                 </RoomContext.Provider>
             </MatrixClientContext.Provider>,
         );
     };
 
-    it('Should render WysiwygComposer when isRichTextEnabled is at true', () => {
+    it("Should render WysiwygComposer when isRichTextEnabled is at true", async () => {
         // When
         customRender(jest.fn(), jest.fn(), false, true);
 
         // Then
-        expect(screen.getByTestId('WysiwygComposer')).toBeTruthy();
+        await waitFor(() => expect(screen.getByTestId("WysiwygComposer")).toBeTruthy());
     });
 
-    it('Should render PlainTextComposer when isRichTextEnabled is at false', () => {
+    it("Should render PlainTextComposer when isRichTextEnabled is at false", () => {
         // When
         customRender(jest.fn(), jest.fn(), false, false);
 
         // Then
-        expect(screen.getByTestId('PlainTextComposer')).toBeTruthy();
+        expect(screen.getByTestId("PlainTextComposer")).toBeTruthy();
     });
 
-    describe.each([
-        { isRichTextEnabled: true, emptyContent: '<br>' },
-        { isRichTextEnabled: false, emptyContent: '' },
-    ])(
-        'Should focus when receiving an Action.FocusSendMessageComposer action',
-        ({ isRichTextEnabled, emptyContent }) => {
+    describe.each([{ isRichTextEnabled: true }, { isRichTextEnabled: false }])(
+        "Should focus when receiving an Action.FocusSendMessageComposer action",
+        ({ isRichTextEnabled }) => {
             afterEach(() => {
                 jest.resetAllMocks();
             });
 
-            it('Should focus when receiving an Action.FocusSendMessageComposer action', async () => {
+            it("Should focus when receiving an Action.FocusSendMessageComposer action", async () => {
                 // Given we don't have focus
                 customRender(jest.fn(), jest.fn(), false, isRichTextEnabled);
-                await waitFor(() => expect(screen.getByRole('textbox')).toHaveAttribute('contentEditable', "true"));
+                await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
 
                 // When we send the right action
                 defaultDispatcher.dispatch({
@@ -127,18 +136,18 @@ describe('SendWysiwygComposer', () => {
                 });
 
                 // Then the component gets the focus
-                await waitFor(() => expect(screen.getByRole('textbox')).toHaveFocus());
+                await waitFor(() => expect(screen.getByRole("textbox")).toHaveFocus());
             });
 
-            it('Should focus and clear when receiving an Action.ClearAndFocusSendMessageComposer', async () => {
+            it("Should focus and clear when receiving an Action.ClearAndFocusSendMessageComposer", async () => {
                 // Given we don't have focus
                 const onChange = jest.fn();
                 customRender(onChange, jest.fn(), false, isRichTextEnabled);
-                await waitFor(() => expect(screen.getByRole('textbox')).toHaveAttribute('contentEditable', "true"));
+                await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
 
-                fireEvent.input(screen.getByRole('textbox'), {
-                    data: 'foo bar',
-                    inputType: 'insertText',
+                fireEvent.input(screen.getByRole("textbox"), {
+                    data: "foo bar",
+                    inputType: "insertText",
                 });
 
                 // When we send the right action
@@ -149,15 +158,15 @@ describe('SendWysiwygComposer', () => {
 
                 // Then the component gets the focus
                 await waitFor(() => {
-                    expect(screen.getByRole('textbox')).toHaveTextContent(/^$/);
-                    expect(screen.getByRole('textbox')).toHaveFocus();
+                    expect(screen.getByRole("textbox")).toHaveTextContent(/^$/);
+                    expect(screen.getByRole("textbox")).toHaveFocus();
                 });
             });
 
-            it('Should focus when receiving a reply_to_event action', async () => {
+            it("Should focus when receiving a reply_to_event action", async () => {
                 // Given we don't have focus
                 customRender(jest.fn(), jest.fn(), false, isRichTextEnabled);
-                await waitFor(() => expect(screen.getByRole('textbox')).toHaveAttribute('contentEditable', "true"));
+                await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
 
                 // When we send the right action
                 defaultDispatcher.dispatch({
@@ -166,13 +175,13 @@ describe('SendWysiwygComposer', () => {
                 });
 
                 // Then the component gets the focus
-                await waitFor(() => expect(screen.getByRole('textbox')).toHaveFocus());
+                await waitFor(() => expect(screen.getByRole("textbox")).toHaveFocus());
             });
 
-            it('Should not focus when disabled', async () => {
+            it("Should not focus when disabled", async () => {
                 // Given we don't have focus and we are disabled
                 customRender(jest.fn(), jest.fn(), true, isRichTextEnabled);
-                expect(screen.getByRole('textbox')).not.toHaveFocus();
+                expect(screen.getByRole("textbox")).not.toHaveFocus();
 
                 // When we send an action that would cause us to get focus
                 defaultDispatcher.dispatch({
@@ -186,117 +195,119 @@ describe('SendWysiwygComposer', () => {
                 });
 
                 // Wait for event dispatch to happen
-                await flushPromises();
+                await act(async () => {
+                    await flushPromises();
+                });
 
                 // Then we don't get it because we are disabled
-                expect(screen.getByRole('textbox')).not.toHaveFocus();
+                expect(screen.getByRole("textbox")).not.toHaveFocus();
             });
-        });
+        },
+    );
 
-    describe.each([
-        { isRichTextEnabled: true },
-        { isRichTextEnabled: false },
-    ])('Placeholder when %s',
+    describe.each([{ isRichTextEnabled: true }, { isRichTextEnabled: false }])(
+        "Placeholder when %s",
         ({ isRichTextEnabled }) => {
             afterEach(() => {
                 jest.resetAllMocks();
             });
 
-            it('Should not has placeholder', async () => {
+            it("Should not has placeholder", async () => {
                 // When
                 customRender(jest.fn(), jest.fn(), false, isRichTextEnabled);
-                await waitFor(() => expect(screen.getByRole('textbox')).toHaveAttribute('contentEditable', "true"));
+                await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
 
                 // Then
-                expect(screen.getByRole('textbox')).not.toHaveClass("mx_WysiwygComposer_Editor_content_placeholder");
+                expect(screen.getByRole("textbox")).not.toHaveClass("mx_WysiwygComposer_Editor_content_placeholder");
             });
 
-            it('Should has placeholder', async () => {
+            it("Should has placeholder", async () => {
                 // When
-                customRender(jest.fn(), jest.fn(), false, isRichTextEnabled, 'my placeholder');
-                await waitFor(() => expect(screen.getByRole('textbox')).toHaveAttribute('contentEditable', "true"));
+                customRender(jest.fn(), jest.fn(), false, isRichTextEnabled, "my placeholder");
+                await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
 
                 // Then
-                expect(screen.getByRole('textbox')).toHaveClass("mx_WysiwygComposer_Editor_content_placeholder");
+                expect(screen.getByRole("textbox")).toHaveClass("mx_WysiwygComposer_Editor_content_placeholder");
             });
 
-            it('Should display or not placeholder when editor content change', async () => {
+            it("Should display or not placeholder when editor content change", async () => {
                 // When
-                customRender(jest.fn(), jest.fn(), false, isRichTextEnabled, 'my placeholder');
-                await waitFor(() => expect(screen.getByRole('textbox')).toHaveAttribute('contentEditable', "true"));
-                screen.getByRole('textbox').innerHTML = 'f';
-                fireEvent.input(screen.getByRole('textbox'), {
-                    data: 'f',
-                    inputType: 'insertText',
+                customRender(jest.fn(), jest.fn(), false, isRichTextEnabled, "my placeholder");
+                await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
+                screen.getByRole("textbox").innerHTML = "f";
+                fireEvent.input(screen.getByRole("textbox"), {
+                    data: "f",
+                    inputType: "insertText",
                 });
 
                 // Then
                 await waitFor(() =>
-                    expect(screen.getByRole('textbox'))
-                        .not.toHaveClass("mx_WysiwygComposer_Editor_content_placeholder"),
+                    expect(screen.getByRole("textbox")).not.toHaveClass(
+                        "mx_WysiwygComposer_Editor_content_placeholder",
+                    ),
                 );
 
                 // When
-                screen.getByRole('textbox').innerHTML = '';
-                fireEvent.input(screen.getByRole('textbox'), {
-                    inputType: 'deleteContentBackward',
+                screen.getByRole("textbox").innerHTML = "";
+                fireEvent.input(screen.getByRole("textbox"), {
+                    inputType: "deleteContentBackward",
                 });
 
                 // Then
                 await waitFor(() =>
-                    expect(screen.getByRole('textbox')).toHaveClass("mx_WysiwygComposer_Editor_content_placeholder"),
+                    expect(screen.getByRole("textbox")).toHaveClass("mx_WysiwygComposer_Editor_content_placeholder"),
                 );
             });
-        });
+        },
+    );
 
-    describe.each([
-        { isRichTextEnabled: true },
-        { isRichTextEnabled: false },
-    ])('Emoji when %s', ({ isRichTextEnabled }) => {
-        let emojiButton: HTMLElement;
+    describe.each([{ isRichTextEnabled: true }, { isRichTextEnabled: false }])(
+        "Emoji when %s",
+        ({ isRichTextEnabled }) => {
+            let emojiButton: HTMLElement;
 
-        beforeEach(async () => {
-            customRender(jest.fn(), jest.fn(), false, isRichTextEnabled);
-            await waitFor(() => expect(screen.getByRole('textbox')).toHaveAttribute('contentEditable', "true"));
-            emojiButton = screen.getByLabelText('Emoji');
-        });
-
-        afterEach(() => {
-            jest.resetAllMocks();
-        });
-
-        it('Should add an emoji in an empty composer', async () => {
-            // When
-            emojiButton.click();
-
-            // Then
-            await waitFor(() => expect(screen.getByRole('textbox')).toHaveTextContent(/🦫/));
-        });
-
-        it('Should add an emoji in the middle of a word', async () => {
-            // When
-            screen.getByRole('textbox').focus();
-            screen.getByRole('textbox').innerHTML = 'word';
-            fireEvent.input(screen.getByRole('textbox'), {
-                data: 'word',
-                inputType: 'insertText',
+            beforeEach(async () => {
+                customRender(jest.fn(), jest.fn(), false, isRichTextEnabled);
+                await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
+                emojiButton = screen.getByLabelText("Emoji");
             });
 
-            const textNode = screen.getByRole('textbox').firstChild;
-            setSelection({
-                anchorNode: textNode,
-                anchorOffset: 2,
-                focusNode: textNode,
-                focusOffset: 2,
+            afterEach(() => {
+                jest.resetAllMocks();
             });
-            // the event is not automatically fired by jest
-            document.dispatchEvent(new CustomEvent('selectionchange'));
 
-            emojiButton.click();
+            it("Should add an emoji in an empty composer", async () => {
+                // When
+                emojiButton.click();
 
-            // Then
-            await waitFor(() => expect(screen.getByRole('textbox')).toHaveTextContent(/wo🦫rd/));
-        });
-    });
+                // Then
+                await waitFor(() => expect(screen.getByRole("textbox")).toHaveTextContent(/🦫/));
+            });
+
+            it("Should add an emoji in the middle of a word", async () => {
+                // When
+                screen.getByRole("textbox").focus();
+                screen.getByRole("textbox").innerHTML = "word";
+                fireEvent.input(screen.getByRole("textbox"), {
+                    data: "word",
+                    inputType: "insertText",
+                });
+
+                const textNode = screen.getByRole("textbox").firstChild;
+                await setSelection({
+                    anchorNode: textNode,
+                    anchorOffset: 2,
+                    focusNode: textNode,
+                    focusOffset: 2,
+                });
+                // the event is not automatically fired by jest
+                document.dispatchEvent(new CustomEvent("selectionchange"));
+
+                emojiButton.click();
+
+                // Then
+                await waitFor(() => expect(screen.getByRole("textbox")).toHaveTextContent(/wo🦫rd/));
+            });
+        },
+    );
 });
-

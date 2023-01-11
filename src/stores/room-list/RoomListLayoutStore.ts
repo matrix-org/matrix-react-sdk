@@ -29,7 +29,7 @@ export default class RoomListLayoutStore extends AsyncStoreWithClient<IState> {
 
     private readonly layoutMap = new Map<TagID, ListLayout>();
 
-    constructor() {
+    public constructor() {
         super(defaultDispatcher);
     }
 
@@ -68,8 +68,7 @@ export default class RoomListLayoutStore extends AsyncStoreWithClient<IState> {
     }
 
     // We don't need this function, but our contract says we do
-    protected async onAction(payload: ActionPayload): Promise<void> {
-    }
+    protected async onAction(payload: ActionPayload): Promise<void> {}
 }
 
 window.mxRoomListLayoutStore = RoomListLayoutStore.instance;

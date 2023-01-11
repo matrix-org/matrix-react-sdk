@@ -36,7 +36,8 @@ type EventHandlerMap = {
 
 export abstract class NotificationState
     extends TypedEventEmitter<NotificationStateEvents, EventHandlerMap>
-    implements INotificationStateSnapshotParams, IDestroyable {
+    implements INotificationStateSnapshotParams, IDestroyable
+{
     //
     protected _symbol: string | null = null;
     protected _count = 0;
@@ -44,7 +45,7 @@ export abstract class NotificationState
 
     private watcherReferences: string[] = [];
 
-    constructor() {
+    public constructor() {
         super();
         this.watcherReferences.push(
             SettingsStore.watchSetting("feature_hidebold", null, () => {
@@ -110,7 +111,7 @@ export class NotificationStateSnapshot {
     private readonly count: number;
     private readonly color: NotificationColor;
 
-    constructor(state: INotificationStateSnapshotParams) {
+    public constructor(state: INotificationStateSnapshotParams) {
         this.symbol = state.symbol;
         this.count = state.count;
         this.color = state.color;

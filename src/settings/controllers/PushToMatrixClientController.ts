@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClientPeg } from '../../MatrixClientPeg';
+import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { SettingLevel } from "../SettingLevel";
 import SettingController from "./SettingController";
 
@@ -22,7 +22,7 @@ import SettingController from "./SettingController";
  * When the value changes, call a setter function on the matrix client with the new value
  */
 export default class PushToMatrixClientController extends SettingController {
-    constructor(private setter: Function, private inverse: boolean) {
+    public constructor(private setter: Function, private inverse: boolean) {
         super();
     }
 

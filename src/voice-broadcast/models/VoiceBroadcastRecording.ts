@@ -56,15 +56,23 @@ interface EventMap {
 
 export class VoiceBroadcastRecording
     extends TypedEventEmitter<VoiceBroadcastRecordingEvent, EventMap>
-    implements IDestroyable {
+    implements IDestroyable
+{
     private state: VoiceBroadcastInfoState;
     private recorder: VoiceBroadcastRecorder;
-    private sequence = 1;
     private dispatcherRef: string;
     private chunkEvents = new VoiceBroadcastChunkEvents();
     private chunkRelationHelper: RelationsHelper;
     private maxLength: number;
     private timeLeft: number;
+
+    /**
+     * Broadcast chunks have a sequence number to bring them in the correct order and to know if a message is missing.
+     * This variable holds the last sequence number.
+     * Starts with 0 because there is no chunk at the beginning of a broadcast.
+     * Will be incremented when a chunk message is created.
+     */
+    private sequence = 0;
 
     public constructor(
         public readonly infoEvent: MatrixEvent,
@@ -108,8 +116,8 @@ export class VoiceBroadcastRecording
 
     private onChunkEvent = (event: MatrixEvent): void => {
         if (
-            (!event.getId() && !event.getTxnId())
-            || event.getContent()?.msgtype !== MsgType.Audio // don't add non-audio event
+            (!event.getId() && !event.getTxnId()) ||
+            event.getContent()?.msgtype !== MsgType.Audio // don't add non-audio event
         ) {
             return;
         }
@@ -119,15 +127,19 @@ export class VoiceBroadcastRecording
 
     private setInitialStateFromInfoEvent(): void {
         const room = this.client.getRoom(this.infoEvent.getRoomId());
-        const relations = room?.getUnfilteredTimelineSet()?.relations?.getChildEventsForEvent(
-            this.infoEvent.getId(),
-            RelationType.Reference,
-            VoiceBroadcastInfoEventType,
-        );
+        const relations = room
+            ?.getUnfilteredTimelineSet()
+            ?.relations?.getChildEventsForEvent(
+                this.infoEvent.getId(),
+                RelationType.Reference,
+                VoiceBroadcastInfoEventType,
+            );
         const relatedEvents = relations?.getRelations();
         this.state = !relatedEvents?.find((event: MatrixEvent) => {
             return event.getContent()?.state === VoiceBroadcastInfoState.Stopped;
-        }) ? VoiceBroadcastInfoState.Started : VoiceBroadcastInfoState.Stopped;
+        })
+            ? VoiceBroadcastInfoState.Started
+            : VoiceBroadcastInfoState.Stopped;
     }
 
     public getTimeLeft(): number {
@@ -244,12 +256,9 @@ export class VoiceBroadcastRecording
         return uploadFile(
             this.client,
             this.infoEvent.getRoomId(),
-            new Blob(
-                [chunk.buffer],
-                {
-                    type: this.getRecorder().contentType,
-                },
-            ),
+            new Blob([chunk.buffer], {
+                type: this.getRecorder().contentType,
+            }),
         );
     }
 
@@ -266,7 +275,8 @@ export class VoiceBroadcastRecording
             event_id: this.infoEvent.getId(),
         };
         content["io.element.voice_broadcast_chunk"] = {
-            sequence: this.sequence++,
+            /** Increment the last sequence number and use it for this message. Also see {@link sequence}. */
+            sequence: ++this.sequence,
         };
 
         await this.client.sendMessage(this.infoEvent.getRoomId(), content);

@@ -40,7 +40,6 @@ describe("<ForgotPassword>", () => {
     let onComplete: () => void;
     let onLoginClick: () => void;
     let renderResult: RenderResult;
-    let restoreConsole: () => void;
 
     const typeIntoField = async (label: string, value: string): Promise<void> => {
         await act(async () => {
@@ -63,14 +62,14 @@ describe("<ForgotPassword>", () => {
         });
     };
 
-    beforeEach(() => {
-        restoreConsole = filterConsole(
-            // not implemented by js-dom https://github.com/jsdom/jsdom/issues/1937
-            "Not implemented: HTMLFormElement.prototype.requestSubmit",
-            // not of interested for this test
-            "Starting load of AsyncWrapper for modal",
-        );
+    filterConsole(
+        // not implemented by js-dom https://github.com/jsdom/jsdom/issues/1937
+        "Not implemented: HTMLFormElement.prototype.requestSubmit",
+        // not of interested for this test
+        "Starting load of AsyncWrapper for modal",
+    );
 
+    beforeEach(() => {
         client = stubClient();
         mocked(createClient).mockReturnValue(client);
 
@@ -87,7 +86,6 @@ describe("<ForgotPassword>", () => {
     afterEach(() => {
         // clean up modals
         Modal.closeCurrentModal("force");
-        restoreConsole?.();
     });
 
     beforeAll(() => {
@@ -100,11 +98,9 @@ describe("<ForgotPassword>", () => {
 
     describe("when starting a password reset flow", () => {
         beforeEach(() => {
-            renderResult = render(<ForgotPassword
-                serverConfig={serverConfig}
-                onComplete={onComplete}
-                onLoginClick={onLoginClick}
-            />);
+            renderResult = render(
+                <ForgotPassword serverConfig={serverConfig} onComplete={onComplete} onLoginClick={onLoginClick} />,
+            );
         });
 
         it("should show the email input and mention the homeserver", () => {
@@ -115,11 +111,9 @@ describe("<ForgotPassword>", () => {
         describe("and updating the server config", () => {
             beforeEach(() => {
                 serverConfig.hsName = "example2.com";
-                renderResult.rerender(<ForgotPassword
-                    serverConfig={serverConfig}
-                    onComplete={onComplete}
-                    onLoginClick={onLoginClick}
-                />);
+                renderResult.rerender(
+                    <ForgotPassword serverConfig={serverConfig} onComplete={onComplete} onLoginClick={onLoginClick} />,
+                );
             });
 
             it("should show the new homeserver server name", () => {
@@ -171,10 +165,12 @@ describe("<ForgotPassword>", () => {
             });
 
             it("should show an info about that", () => {
-                expect(screen.getByText(
-                    "Cannot reach homeserver: "
-                    + "Ensure you have a stable internet connection, or get in touch with the server admin",
-                )).toBeInTheDocument();
+                expect(
+                    screen.getByText(
+                        "Cannot reach homeserver: " +
+                            "Ensure you have a stable internet connection, or get in touch with the server admin",
+                    ),
+                ).toBeInTheDocument();
             });
         });
 

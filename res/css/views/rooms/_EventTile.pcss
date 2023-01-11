@@ -50,7 +50,7 @@ $left-gutter: 64px;
             mask-size: 16px;
             width: 16px;
             height: 16px;
-            content: '';
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
@@ -59,11 +59,11 @@ $left-gutter: 64px;
     }
 
     .mx_EventTile_receiptSent::before {
-        mask-image: url('$(res)/img/element-icons/circle-sent.svg');
+        mask-image: url("$(res)/img/element-icons/circle-sent.svg");
     }
 
     .mx_EventTile_receiptSending::before {
-        mask-image: url('$(res)/img/element-icons/circle-sending.svg');
+        mask-image: url("$(res)/img/element-icons/circle-sending.svg");
     }
 
     .mx_EventTile_content {
@@ -225,9 +225,8 @@ $left-gutter: 64px;
         &.mx_EventTile_selected {
             > .mx_EventTile_line {
                 /* TODO: ultimately we probably want some transition on here. */
-                box-shadow:
-                    inset var(--EventTile-box-shadow-offset-x) 0 0
-                    var(--EventTile-box-shadow-spread-radius) $accent;
+                box-shadow: inset var(--EventTile-box-shadow-offset-x) 0 0 var(--EventTile-box-shadow-spread-radius)
+                    $accent;
             }
         }
 
@@ -247,21 +246,18 @@ $left-gutter: 64px;
             }
 
             &.mx_EventTile_verified .mx_EventTile_line {
-                box-shadow:
-                    inset var(--EventTile-box-shadow-offset-x) 0 0
-                    var(--EventTile-box-shadow-spread-radius) $e2e-verified-color;
+                box-shadow: inset var(--EventTile-box-shadow-offset-x) 0 0 var(--EventTile-box-shadow-spread-radius)
+                    $e2e-verified-color;
             }
 
             &.mx_EventTile_unverified .mx_EventTile_line {
-                box-shadow:
-                    inset var(--EventTile-box-shadow-offset-x) 0 0
-                    var(--EventTile-box-shadow-spread-radius) $e2e-unverified-color;
+                box-shadow: inset var(--EventTile-box-shadow-offset-x) 0 0 var(--EventTile-box-shadow-spread-radius)
+                    $e2e-unverified-color;
             }
 
             &.mx_EventTile_unknown .mx_EventTile_line {
-                box-shadow:
-                    inset var(--EventTile-box-shadow-offset-x) 0 0
-                    var(--EventTile-box-shadow-spread-radius) $e2e-unknown-color;
+                box-shadow: inset var(--EventTile-box-shadow-offset-x) 0 0 var(--EventTile-box-shadow-spread-radius)
+                    $e2e-unknown-color;
             }
         }
     }
@@ -499,8 +495,9 @@ $left-gutter: 64px;
         > .mx_EventTile_line {
             /* 15 px of padding */
             /* stylelint-disable-next-line declaration-colon-space-after */
-            padding-left:
-                calc(var(--name-width) + var(--icon-width) + $MessageTimestamp_width + 3 * var(--right-padding));
+            padding-left: calc(
+                var(--name-width) + var(--icon-width) + $MessageTimestamp_width + 3 * var(--right-padding)
+            );
         }
     }
 
@@ -618,7 +615,8 @@ $left-gutter: 64px;
         */
 
         /* Override nested lists being lower-roman */
-        ol ol, ul ol {
+        ol ol,
+        ul ol {
             list-style-type: revert;
         }
     }
@@ -679,13 +677,18 @@ $left-gutter: 64px;
     }
 
     &.mx_EventTile_e2eIcon_warning::after {
-        mask-image: url('$(res)/img/e2e/warning.svg');
-        background-color: $alert;
+        mask-image: url("$(res)/img/e2e/warning.svg");
+        background-color: $e2e-warning-color;
     }
 
     &.mx_EventTile_e2eIcon_normal::after {
-        mask-image: url('$(res)/img/e2e/normal.svg');
+        mask-image: url("$(res)/img/e2e/normal.svg");
         background-color: $header-panel-text-primary-color;
+    }
+
+    &.mx_EventTile_e2eIcon_decryption_failure::after {
+        mask-image: url("$(res)/img/e2e/decryption-failure.svg");
+        background-color: $secondary-content;
     }
 }
 
@@ -795,33 +798,6 @@ $left-gutter: 64px;
     mask-image: url("$(res)/img/element-icons/maximise-expand.svg");
 }
 
-.mx_EventTile_keyRequestInfo {
-    font-size: $font-12px;
-
-    .mx_EventTile_keyRequestInfo_text {
-        opacity: 0.5;
-
-        .mx_AccessibleButton {
-            color: $primary-content;
-            text-decoration: underline;
-        }
-    }
-}
-
-.mx_EventTile_keyRequestInfo_tooltip_contents p {
-    text-align: auto;
-    margin-left: 3px;
-    margin-right: 3px;
-
-    &:first-child {
-        margin-top: 0px;
-    }
-
-    &:last-child {
-        margin-bottom: 0px;
-    }
-}
-
 .mx_EventTile_tileError {
     color: red;
     text-align: center;
@@ -845,7 +821,7 @@ $left-gutter: 64px;
 
 .mx_EventTile:hover .mx_MessageActionBar,
 .mx_EventTile.mx_EventTile_actionBarFocused .mx_MessageActionBar,
-[data-whatinput='keyboard'] .mx_EventTile:focus-within .mx_MessageActionBar,
+[data-whatinput="keyboard"] .mx_EventTile:focus-within .mx_MessageActionBar,
 .mx_EventTile.focus-visible:focus-within .mx_MessageActionBar {
     visibility: visible;
 }
@@ -854,13 +830,14 @@ $left-gutter: 64px;
 /* is less pretty, but is easier to target because otherwise we need to define the */
 /* animation for when it's shown which means duplicating the style definition in */
 /* multiple places. */
-.mx_EventTile:not(:hover):not(.mx_EventTile_actionBarFocused):not([data-whatinput='keyboard'] :focus-within) {
+.mx_EventTile:not(:hover):not(.mx_EventTile_actionBarFocused):not([data-whatinput="keyboard"] :focus-within) {
     &:not(.focus-visible:focus-within) .mx_MessageActionBar .mx_Indicator {
         animation: none;
     }
 }
 
-.mx_EventTile[data-shape="ThreadsList"] {
+.mx_EventTile[data-shape="ThreadsList"],
+.mx_EventTile[data-shape="Notification"] {
     --topOffset: $spacing-12;
     --leftOffset: 48px;
     $borderRadius: 8px;
@@ -940,9 +917,7 @@ $left-gutter: 64px;
     }
 
     .mx_DisambiguatedProfile {
-        margin-inline: 0 $spacing-12;
         display: inline-flex;
-        flex: 1;
 
         .mx_DisambiguatedProfile_displayName,
         .mx_DisambiguatedProfile_mxid {
@@ -965,6 +940,7 @@ $left-gutter: 64px;
         width: 100%;
         box-sizing: border-box;
         padding-bottom: 0;
+        padding-inline-start: var(--leftOffset);
 
         .mx_ThreadPanel_replies {
             margin-top: $spacing-8;
@@ -990,15 +966,11 @@ $left-gutter: 64px;
         }
     }
 
-    .mx_DisambiguatedProfile,
-    .mx_EventTile_line {
-        padding-inline-start: var(--leftOffset);
-    }
-
     .mx_MessageTimestamp {
         font-size: $font-12px;
         max-width: var(--MessageTimestamp-max-width);
         position: initial;
+        margin-left: auto; /* to ensure it's end-aligned even if it's the only element of its parent */
     }
 
     &:hover {
@@ -1130,7 +1102,8 @@ $left-gutter: 64px;
 
             .mx_ReplyChain_wrapper {
                 .mx_MLocationBody,
-                .mx_UnknownBody { /* Error message inside ReplyTile */
+                .mx_UnknownBody {
+                    /* Error message inside ReplyTile */
                     margin-inline: unset;
                 }
             }
@@ -1316,9 +1289,25 @@ $left-gutter: 64px;
         &[data-shape="ThreadsList"][data-notification]::before,
         .mx_NotificationBadge {
             /* stylelint-disable-next-line declaration-colon-space-after */
-            inset-block-start:
-                calc($notification-inset-block-start - var(--MatrixChat_useCompactLayout_group-padding-top));
+            inset-block-start: calc(
+                $notification-inset-block-start - var(--MatrixChat_useCompactLayout_group-padding-top)
+            );
         }
+    }
+}
+
+.mx_EventTile_details {
+    display: flex;
+    width: fill-available;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-8;
+    margin-left: var(--leftOffset);
+    .mx_EventTile_truncated {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 }
 

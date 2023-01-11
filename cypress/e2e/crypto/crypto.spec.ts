@@ -14,21 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
-
+import type { ISendEventResponse, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 import type { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import type { ISasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import type { CypressBot } from "../../support/bot";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import Chainable = Cypress.Chainable;
 
 type EmojiMapping = [emoji: string, name: string];
 interface CryptoTestContext extends Mocha.Context {
-    synapse: SynapseInstance;
-    bob: MatrixClient;
+    homeserver: HomeserverInstance;
+    bob: CypressBot;
 }
 
 const waitForVerificationRequest = (cli: MatrixClient): Promise<VerificationRequest> => {
-    return new Promise<VerificationRequest>(resolve => {
+    return new Promise<VerificationRequest>((resolve) => {
         const onVerificationRequestEvent = (request: VerificationRequest) => {
             // @ts-ignore CryptoEvent is not exported to window.matrixcs; using the string value here
             cli.off("crypto.verification.request", onVerificationRequestEvent);
@@ -49,7 +49,7 @@ const checkDMRoom = () => {
     cy.contains(".mx_RoomView_body .mx_cryptoEvent", "Encryption enabled").should("exist");
 };
 
-const startDMWithBob = function(this: CryptoTestContext) {
+const startDMWithBob = function (this: CryptoTestContext) {
     cy.get('.mx_RoomList [aria-label="Start chat"]').click();
     cy.get('[data-testid="invite-dialog-input"]').type(this.bob.getUserId());
     cy.contains(".mx_InviteDialog_tile_nameStack_name", "Bob").click();
@@ -57,11 +57,13 @@ const startDMWithBob = function(this: CryptoTestContext) {
     cy.get(".mx_InviteDialog_goButton").click();
 };
 
-const testMessages = function(this: CryptoTestContext) {
+const testMessages = function (this: CryptoTestContext) {
     // check the invite message
-    cy.contains(".mx_EventTile_body", "Hey!").closest(".mx_EventTile").within(() => {
-        cy.get(".mx_EventTile_e2eIcon_warning").should("not.exist");
-    });
+    cy.contains(".mx_EventTile_body", "Hey!")
+        .closest(".mx_EventTile")
+        .within(() => {
+            cy.get(".mx_EventTile_e2eIcon_warning").should("not.exist");
+        });
 
     // Bob sends a response
     cy.get<Room>("@bobsRoom").then((room) => {
@@ -72,28 +74,30 @@ const testMessages = function(this: CryptoTestContext) {
         .should("not.have.descendants", ".mx_EventTile_e2eIcon_warning");
 };
 
-const bobJoin = function(this: CryptoTestContext) {
-    cy.window({ log: false }).then(async win => {
-        const bobRooms = this.bob.getRooms();
-        if (!bobRooms.length) {
-            await new Promise<void>(resolve => {
-                const onMembership = (_event) => {
-                    this.bob.off(win.matrixcs.RoomMemberEvent.Membership, onMembership);
-                    resolve();
-                };
-                this.bob.on(win.matrixcs.RoomMemberEvent.Membership, onMembership);
-            });
-        }
-    }).then(() => {
-        cy.botJoinRoomByName(this.bob, "Alice").as("bobsRoom");
-    });
+const bobJoin = function (this: CryptoTestContext) {
+    cy.window({ log: false })
+        .then(async (win) => {
+            const bobRooms = this.bob.getRooms();
+            if (!bobRooms.length) {
+                await new Promise<void>((resolve) => {
+                    const onMembership = (_event) => {
+                        this.bob.off(win.matrixcs.RoomMemberEvent.Membership, onMembership);
+                        resolve();
+                    };
+                    this.bob.on(win.matrixcs.RoomMemberEvent.Membership, onMembership);
+                });
+            }
+        })
+        .then(() => {
+            cy.botJoinRoomByName(this.bob, "Alice").as("bobsRoom");
+        });
 
     cy.contains(".mx_TextualEvent", "Bob joined the room").should("exist");
 };
 
 /** configure the given MatrixClient to auto-accept any invites */
 function autoJoin(client: MatrixClient) {
-    cy.window({ log: false }).then(async win => {
+    cy.window({ log: false }).then(async (win) => {
         client.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
             if (member.membership === "invite" && member.userId === client.getUserId()) {
                 client.joinRoom(member.roomId);
@@ -103,21 +107,23 @@ function autoJoin(client: MatrixClient) {
 }
 
 const handleVerificationRequest = (request: VerificationRequest): Chainable<EmojiMapping[]> => {
-    return cy.wrap(new Promise<EmojiMapping[]>((resolve) => {
-        const onShowSas = (event: ISasEvent) => {
-            verifier.off("show_sas", onShowSas);
-            event.confirm();
-            verifier.done();
-            resolve(event.sas.emoji);
-        };
+    return cy.wrap(
+        new Promise<EmojiMapping[]>((resolve) => {
+            const onShowSas = (event: ISasEvent) => {
+                verifier.off("show_sas", onShowSas);
+                event.confirm();
+                verifier.done();
+                resolve(event.sas.emoji);
+            };
 
-        const verifier = request.beginKeyVerification("m.sas.v1");
-        verifier.on("show_sas", onShowSas);
-        verifier.verify();
-    }));
+            const verifier = request.beginKeyVerification("m.sas.v1");
+            verifier.on("show_sas", onShowSas);
+            verifier.verify();
+        }),
+    );
 };
 
-const verify = function(this: CryptoTestContext) {
+const verify = function (this: CryptoTestContext) {
     const bobsVerificationRequestPromise = waitForVerificationRequest(this.bob);
 
     openRoomInfo().within(() => {
@@ -125,14 +131,16 @@ const verify = function(this: CryptoTestContext) {
         cy.contains(".mx_EntityTile_name", "Bob").click();
         cy.contains(".mx_UserInfo_verifyButton", "Verify").click();
         cy.contains(".mx_AccessibleButton", "Start Verification").click();
-        cy.wrap(bobsVerificationRequestPromise).then((verificationRequest: VerificationRequest) => {
-            verificationRequest.accept();
-            return verificationRequest;
-        }).as("bobsVerificationRequest");
+        cy.wrap(bobsVerificationRequestPromise)
+            .then((verificationRequest: VerificationRequest) => {
+                verificationRequest.accept();
+                return verificationRequest;
+            })
+            .as("bobsVerificationRequest");
         cy.contains(".mx_AccessibleButton", "Verify by emoji").click();
         cy.get<VerificationRequest>("@bobsVerificationRequest").then((request: VerificationRequest) => {
             return handleVerificationRequest(request).then((emojis: EmojiMapping[]) => {
-                cy.get('.mx_VerificationShowSas_emojiSas_block').then((emojiBlocks) => {
+                cy.get(".mx_VerificationShowSas_emojiSas_block").then((emojiBlocks) => {
                     emojis.forEach((emoji: EmojiMapping, index: number) => {
                         expect(emojiBlocks[index].textContent.toLowerCase()).to.eq(emoji[0] + emoji[1]);
                     });
@@ -145,16 +153,18 @@ const verify = function(this: CryptoTestContext) {
     });
 };
 
-describe("Cryptography", function() {
-    beforeEach(function() {
-        cy.startSynapse("default").as("synapse").then((synapse: SynapseInstance) => {
-            cy.initTestUser(synapse, "Alice");
-            cy.getBot(synapse, { displayName: "Bob", autoAcceptInvites: false }).as("bob");
-        });
+describe("Cryptography", function () {
+    beforeEach(function () {
+        cy.startHomeserver("default")
+            .as("homeserver")
+            .then((homeserver: HomeserverInstance) => {
+                cy.initTestUser(homeserver, "Alice", undefined, "alice_");
+                cy.getBot(homeserver, { displayName: "Bob", autoAcceptInvites: false, userIdPrefix: "bob_" }).as("bob");
+            });
     });
 
-    afterEach(function(this: CryptoTestContext) {
-        cy.stopSynapse(this.synapse);
+    afterEach(function (this: CryptoTestContext) {
+        cy.stopHomeserver(this.homeserver);
     });
 
     it("setting up secure key backup should work", () => {
@@ -172,27 +182,24 @@ describe("Cryptography", function() {
         return;
     });
 
-    it("creating a DM should work, being e2e-encrypted / user verification", function(this: CryptoTestContext) {
+    it("creating a DM should work, being e2e-encrypted / user verification", function (this: CryptoTestContext) {
         cy.bootstrapCrossSigning();
         startDMWithBob.call(this);
         // send first message
-        cy.get(".mx_BasicMessageComposer_input")
-            .click()
-            .should("have.focus")
-            .type("Hey!{enter}");
+        cy.get(".mx_BasicMessageComposer_input").click().should("have.focus").type("Hey!{enter}");
         checkDMRoom();
         bobJoin.call(this);
         testMessages.call(this);
         verify.call(this);
     });
 
-    it("should allow verification when there is no existing DM", function(this: CryptoTestContext) {
+    it("should allow verification when there is no existing DM", function (this: CryptoTestContext) {
         cy.bootstrapCrossSigning();
         autoJoin(this.bob);
 
-        /* we need to have a room with the other user present, so we can open the verification panel */
+        // we need to have a room with the other user present, so we can open the verification panel
         let roomId: string;
-        cy.createRoom({ name: "TestRoom", invite: [this.bob.getUserId()] }).then(_room1Id => {
+        cy.createRoom({ name: "TestRoom", invite: [this.bob.getUserId()] }).then((_room1Id) => {
             roomId = _room1Id;
             cy.log(`Created test room ${roomId}`);
             cy.visit(`/#/room/${roomId}`);
@@ -202,5 +209,86 @@ describe("Cryptography", function() {
         });
 
         verify.call(this);
+    });
+
+    it("should show the correct shield on edited e2e events", function (this: CryptoTestContext) {
+        cy.bootstrapCrossSigning();
+
+        // bob has a second, not cross-signed, device
+        cy.loginBot(this.homeserver, this.bob.getUserId(), this.bob.__cypress_password, {}).as("bobSecondDevice");
+
+        autoJoin(this.bob);
+
+        // first create the room, so that we can open the verification panel
+        cy.createRoom({ name: "TestRoom", invite: [this.bob.getUserId()] })
+            .as("testRoomId")
+            .then((roomId) => {
+                cy.log(`Created test room ${roomId}`);
+                cy.visit(`/#/room/${roomId}`);
+
+                // enable encryption
+                cy.getClient().then((cli) => {
+                    cli.sendStateEvent(roomId, "m.room.encryption", { algorithm: "m.megolm.v1.aes-sha2" });
+                });
+
+                // wait for Bob to join the room, otherwise our attempt to open his user details may race
+                // with his join.
+                cy.contains(".mx_TextualEvent", "Bob joined the room").should("exist");
+            });
+
+        verify.call(this);
+
+        cy.get<string>("@testRoomId").then((roomId) => {
+            // bob sends a valid event
+            cy.wrap(this.bob.sendTextMessage(roomId, "Hoo!")).as("testEvent");
+
+            // the message should appear, decrypted, with no warning
+            cy.contains(".mx_EventTile_body", "Hoo!")
+                .closest(".mx_EventTile")
+                .should("have.class", "mx_EventTile_verified")
+                .should("not.have.descendants", ".mx_EventTile_e2eIcon_warning");
+
+            // bob sends an edit to the first message with his unverified device
+            cy.get<MatrixClient>("@bobSecondDevice").then((bobSecondDevice) => {
+                cy.get<ISendEventResponse>("@testEvent").then((testEvent) => {
+                    bobSecondDevice.sendMessage(roomId, {
+                        "m.new_content": {
+                            msgtype: "m.text",
+                            body: "Haa!",
+                        },
+                        "m.relates_to": {
+                            rel_type: "m.replace",
+                            event_id: testEvent.event_id,
+                        },
+                    });
+                });
+            });
+
+            // the edit should have a warning
+            cy.contains(".mx_EventTile_body", "Haa!")
+                .closest(".mx_EventTile")
+                .within(() => {
+                    cy.get(".mx_EventTile_e2eIcon_warning").should("exist");
+                });
+
+            // a second edit from the verified device should be ok
+            cy.get<ISendEventResponse>("@testEvent").then((testEvent) => {
+                this.bob.sendMessage(roomId, {
+                    "m.new_content": {
+                        msgtype: "m.text",
+                        body: "Hee!",
+                    },
+                    "m.relates_to": {
+                        rel_type: "m.replace",
+                        event_id: testEvent.event_id,
+                    },
+                });
+            });
+
+            cy.contains(".mx_EventTile_body", "Hee!")
+                .closest(".mx_EventTile")
+                .should("have.class", "mx_EventTile_verified")
+                .should("not.have.descendants", ".mx_EventTile_e2eIcon_warning");
+        });
     });
 });

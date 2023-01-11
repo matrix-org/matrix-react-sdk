@@ -32,7 +32,7 @@ export default class DeviceSettingsHandler extends AbstractLocalStorageSettingsH
      * @param {string[]} featureNames The names of known features.
      * @param {WatchManager} watchers The watch manager to notify updates to
      */
-    constructor(private featureNames: string[], public readonly watchers: WatchManager) {
+    public constructor(private featureNames: string[], public readonly watchers: WatchManager) {
         super();
     }
 
@@ -107,7 +107,8 @@ export default class DeviceSettingsHandler extends AbstractLocalStorageSettingsH
         this.watchers.unwatchSetting(cb);
     }
 
-    private getSettings(): any { // TODO: [TS] Type return
+    private getSettings(): any {
+        // TODO: [TS] Type return
         return this.getObject("mx_local_settings");
     }
 
