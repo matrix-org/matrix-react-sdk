@@ -1,5 +1,5 @@
 /*
-Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import UIStore from "../../../stores/UIStore";
 import QuickSettingsButton from "./QuickSettingsButton";
-import { useSettingValue } from "../../../hooks/useSettings";
+import { useSetting, useSettingValue } from "../../../hooks/useSettings";
 import UserMenu from "../../structures/UserMenu";
 import IndicatorScrollbar from "../../structures/IndicatorScrollbar";
 import { IS_MAC, Key } from "../../../Keyboard";
@@ -329,12 +329,15 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
 );
 
 const SpacePanel = () => {
-    const [isPanelCollapsed, setPanelCollapsed] = useState(true);
-    const ref = useRef<HTMLDivElement>();
+    const [isPanelCollapsed, setPanelCollapsed] = useSetting<boolean>("space_panel_collapsed");
+
+    const ref = useRef<HTMLDivElement>(null);
     useLayoutEffect(() => {
+        if (!ref.current) return;
+
         UIStore.instance.trackElementDimensions("SpacePanel", ref.current);
         return () => UIStore.instance.stopTrackingElementDimensions("SpacePanel");
-    }, []);
+    }, [ ref ]);
 
     useDispatcher(defaultDispatcher, (payload: ActionPayload) => {
         if (payload.action === Action.ToggleSpacePanel) {
@@ -359,6 +362,7 @@ const SpacePanel = () => {
                         <UserMenu isPanelCollapsed={isPanelCollapsed}>
                             <AccessibleTooltipButton
                                 className={classNames("mx_SpacePanel_toggleCollapse", { expanded: !isPanelCollapsed })}
+                                data-testid="collapse-space-panel-button"
                                 onClick={() => setPanelCollapsed(!isPanelCollapsed)}
                                 title={isPanelCollapsed ? _t("Expand") : _t("Collapse")}
                                 tooltip={

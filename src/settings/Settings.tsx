@@ -768,6 +768,11 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: [SettingLevel.ACCOUNT],
         default: [], // list of room IDs, most recent first
     },
+    "space_panel_collapsed": {
+        // not really a setting
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: true,
+    },
     "room_directory_servers": {
         supportedLevels: [SettingLevel.ACCOUNT],
         default: [],
