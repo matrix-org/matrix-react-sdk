@@ -37,10 +37,10 @@ declare global {
 cy.all = function all(commands): Cypress.Chainable {
     const resultArray = [];
 
-    // as each command completes, push the result onto resultArray
-    for (const cmd of commands) {
-        cmd.then((val) => {
-            resultArray.push(val);
+    // as each command completes, store the result in the corresponding location of resultArray.
+    for (let i = 0; i < commands.length; i++) {
+        commands[i].then((val) => {
+            resultArray[i] = val;
         });
     }
 
