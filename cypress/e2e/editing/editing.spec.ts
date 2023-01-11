@@ -16,15 +16,17 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { MessageEvent } from "matrix-events-sdk";
-
+import type { MsgType } from "matrix-js-sdk/src/@types/event";
 import type { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 import type { EventType } from "matrix-js-sdk/src/@types/event";
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import Chainable = Cypress.Chainable;
 
 const sendEvent = (roomId: string): Chainable<ISendEventResponse> => {
-    return cy.sendEvent(roomId, null, "m.room.message" as EventType, MessageEvent.from("Message").serialize().content);
+    return cy.sendEvent(roomId, null, "m.room.message" as EventType, {
+        msgtype: "m.text" as MsgType,
+        body: "Message",
+    });
 };
 
 /** generate a message event which will take up some room on the page. */
@@ -33,19 +35,19 @@ function mkPadding(n: number): MessageEvent {
 }
 
 describe("Editing", () => {
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
 
     beforeEach(() => {
-        cy.startSynapse("default").then((data) => {
-            synapse = data;
-            cy.initTestUser(synapse, "Edith").then(() => {
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
+            cy.initTestUser(homeserver, "Edith").then(() => {
                 cy.injectAxe();
             });
         });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
     });
 
     it("should close the composer when clicking save after making a change and undoing it", () => {

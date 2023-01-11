@@ -59,6 +59,7 @@ import { Action } from "../../../dispatcher/actions";
 import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
 import useFavouriteMessages from "../../../hooks/useFavouriteMessages";
 import { GetRelationsForEvent } from "../rooms/EventTile";
+import { VoiceBroadcastInfoEventType } from "../../../voice-broadcast/types";
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -203,7 +204,7 @@ const ReplyInThreadButton = ({ mxEvent }: IReplyInThreadButton) => {
 
     const relationType = mxEvent?.getRelation()?.rel_type;
     const hasARelation = !!relationType && relationType !== RelationType.Thread;
-    const threadsEnabled = SettingsStore.getValue("feature_threadstable");
+    const threadsEnabled = SettingsStore.getValue("feature_threadenabled");
 
     if (!threadsEnabled && !Thread.hasServerSideSupport) {
         // hide the prompt if the user would only have degraded mode
@@ -215,7 +216,7 @@ const ReplyInThreadButton = ({ mxEvent }: IReplyInThreadButton) => {
         e.preventDefault();
         e.stopPropagation();
 
-        if (!SettingsStore.getValue("feature_threadstable")) {
+        if (!SettingsStore.getValue("feature_threadenabled")) {
             dis.dispatch({
                 action: Action.ViewUserSettings,
                 initialTabId: UserTab.Labs,
@@ -251,7 +252,7 @@ const ReplyInThreadButton = ({ mxEvent }: IReplyInThreadButton) => {
                     </div>
                     {!hasARelation && (
                         <div className="mx_Tooltip_sub">
-                            {SettingsStore.getValue("feature_threadstable")
+                            {SettingsStore.getValue("feature_threadenabled")
                                 ? _t("Beta feature")
                                 : _t("Beta feature. Click to learn more.")}
                         </div>
@@ -394,7 +395,8 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
              * until cross-platform support
              * (PSF-1041)
              */
-            !M_BEACON_INFO.matches(this.props.mxEvent.getType());
+            !M_BEACON_INFO.matches(this.props.mxEvent.getType()) &&
+            !(this.props.mxEvent.getType() === VoiceBroadcastInfoEventType);
 
         return inNotThreadTimeline && isAllowedMessageType;
     }
@@ -546,7 +548,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                     );
                 }
             } else if (
-                SettingsStore.getValue("feature_threadstable") &&
+                SettingsStore.getValue("feature_threadenabled") &&
                 // Show thread icon even for deleted messages, but only within main timeline
                 this.context.timelineRenderingType === TimelineRenderingType.Room &&
                 this.props.mxEvent.getThread()
