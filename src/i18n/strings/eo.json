@@ -2850,5 +2850,8 @@
     "Next room or DM": "Sekva konversacio",
     "Previous room or DM": "Antaŭa konversacio",
     "Unfortunately we're unable to start a recording right now. Please try again later.": "Bedaŭrinde ni ne povas komenci registradon nun. Bonvolu reprovi poste.",
-    "Connection error": "eraro de konekto"
+    "Connection error": "eraro de konekto",
+    "You have unverified sessions": "Vi havas nekontrolitajn salutaĵojn",
+    "Export chat": "Eksporti babilejon",
+    "Files": "Dosieroj"
 }
