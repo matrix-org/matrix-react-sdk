@@ -27,6 +27,11 @@ const sendEvent = (roomId: string): Chainable<ISendEventResponse> => {
     return cy.sendEvent(roomId, null, "m.room.message" as EventType, MessageEvent.from("Message").serialize().content);
 };
 
+/** generate a message event which will take up some room on the page. */
+function mkPadding(n: number): MessageEvent {
+    return MessageEvent.from(`padding ${n}`, `<h3>Test event ${n}</h3>\n`.repeat(10));
+}
+
 describe("Editing", () => {
     let synapse: SynapseInstance;
 
@@ -95,9 +100,6 @@ describe("Editing", () => {
 
             // send a load of padding events. We make them large, so that they fill the whole screen
             // and the client doesn't end up paginating into the event we want.
-            function mkPadding(n: number): MessageEvent {
-                return MessageEvent.from(`padding ${n}`, `<h3>Test event ${n}</h3>\n`.repeat(10));
-            }
             let i = 0;
             while (i < 20) {
                 const ev = mkPadding(i++);
