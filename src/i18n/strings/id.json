@@ -3703,5 +3703,6 @@
     "Unfortunately we're unable to start a recording right now. Please try again later.": "Sayangnya kami saat ini tidak dapat memulai sebuah rekaman. Silakan mencoba lagi nanti.",
     "Connection error": "Terjadi kesalahan koneksi",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Anda tidak dapat memulai sebuah pesan suara karena Anda saat ini merekam sebuah siaran langsung. Silakan mengakhiri siaran langsung Anda untuk memulai merekam sebuah pesan suara.",
-    "Can't start voice message": "Tidak dapat memulai pesan suara"
+    "Can't start voice message": "Tidak dapat memulai pesan suara",
+    "Edit link": "Sunting tautan"
 }
