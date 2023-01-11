@@ -2901,5 +2901,13 @@
     "Add privileged users": "Aldoni rajtigitan uzanton",
     "Number of messages": "Nombro da mesaĝoj",
     "Number of messages can only be a number between %(min)s and %(max)s": "Nombro da mesaĝoj povas esti nur nombro inter %(min)s kaj %(max)s",
-    "Specify a number of messages": "Indiki kelkajn mesaĝojn"
+    "Specify a number of messages": "Indiki kelkajn mesaĝojn",
+    "New ways to ignore people": "Novaj manieroj ignori personojn",
+    "Currently experimental.": "Nuntempe eksperimenta.",
+    "Jump to date (adds /jumptodate and jump to date headers)": "Salti ĝis nun (aldonas /jumptodate kaj saltu ĝis nun kapliniojn)",
+    "Send read receipts": "Sendi legitajn kvitanojn",
+    "New group call experience": "La nova grupvoka sperto",
+    "Favourite Messages": "Ŝatataj Mesaĝoj",
+    "Use new session manager": "Uzi nova administrado de salutaĵoj",
+    "New session manager": "Nova administrado de salutaĵoj"
 }
