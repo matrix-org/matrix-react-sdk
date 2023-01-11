@@ -24,6 +24,6 @@ jobs:
               run: "./scripts/ci/install-deps.sh --ignore-scripts"
 
             - name: Typecheck
-              run:
-                - head -n 50 cypress/e2e/editing/editing.spec.ts
-                - "yarn run lint:types"
+              run: |
+                head -n 50 cypress/e2e/editing/editing.spec.ts
+                yarn run lint:types
