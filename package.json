@@ -47,7 +47,7 @@
         "lint": "yarn lint:types && yarn lint:js && yarn lint:style",
         "lint:js": "eslint --max-warnings 0 src test cypress && prettier --check .",
         "lint:js-fix": "prettier --loglevel=warn --write . && eslint --fix src test cypress",
-        "lint:types": "tsc --version && head cypress/e2e/editing/editing.spec.ts && tsc --noEmit --jsx react && tsc --noEmit --jsx react -p cypress",
+        "lint:types": "tsc --noEmit --jsx react && tsc --noEmit --jsx react -p cypress",
         "lint:style": "stylelint \"res/css/**/*.pcss\"",
         "test": "jest",
         "test:cypress": "cypress run",
