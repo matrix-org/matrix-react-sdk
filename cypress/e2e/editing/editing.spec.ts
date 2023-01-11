@@ -132,18 +132,15 @@ describe("Editing", () => {
             }
         });
 
-        // the wrap() here just forces cypress to wait for all the setup to complete.
-        cy.wrap(null, { log: false }).then(() => {
+        cy.getClient().then((cli) => {
             // now have the cypress user join the room, jump to the original event, and wait for the event to be
             // visible
             cy.joinRoom(testRoomId);
             cy.viewRoomByName("TestRoom");
             cy.visit(`#/room/${testRoomId}/${originalEventId}`);
-            cy.get(`[data-event-id="${originalEventId}"]`).then((messageTile) => {
+            cy.get(`[data-event-id="${originalEventId}"]`).should((messageTile) => {
                 // at this point, the edit event should still be unknown
-                cy.getClient().then((cli) => {
-                    expect(cli.getRoom(testRoomId).getTimelineForEvent(editEventId)).to.be.null;
-                });
+                expect(cli.getRoom(testRoomId).getTimelineForEvent(editEventId)).to.be.null;
 
                 // nevertheless, the event should be updated
                 expect(messageTile.find(".mx_EventTile_body").text()).to.eq("Edited body");
