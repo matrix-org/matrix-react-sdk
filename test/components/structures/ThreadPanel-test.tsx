@@ -17,9 +17,9 @@ limitations under the License.
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "focus-visible"; // to fix context menus
 import { mocked } from "jest-mock";
-import React from "react";
 import { MatrixClient, MatrixEvent, PendingEventOrdering, Room } from "matrix-js-sdk/src/matrix";
 import { FeatureSupport, Thread } from "matrix-js-sdk/src/models/thread";
+import React from "react";
 
 import ThreadPanel, { ThreadFilterType, ThreadPanelHeader } from "../../../src/components/structures/ThreadPanel";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
@@ -174,7 +174,7 @@ describe("ThreadPanel", () => {
         });
 
         function toggleThreadFilter(container: HTMLElement, newFilter: ThreadFilterType) {
-            fireEvent.click(container.querySelector(".mx_ThreadPanel_dropdown"));
+            fireEvent.click(container.querySelector(".mx_ThreadPanel_dropdown")!);
             const found = screen.queryAllByRole("menuitemradio");
             expect(found).toHaveLength(2);
 
@@ -187,21 +187,21 @@ describe("ThreadPanel", () => {
             expect(myThreadsOption).toBeTruthy();
 
             const toSelect = newFilter === ThreadFilterType.My ? myThreadsOption : allThreadsOption;
-            fireEvent.click(toSelect);
+            fireEvent.click(toSelect!);
         }
 
-        type EventData = { sender: string; content: string };
+        type EventData = { sender: string | null; content: string | null };
 
         function findEvents(container: HTMLElement): EventData[] {
             return Array.from(container.querySelectorAll(".mx_EventTile")).map((el) => {
-                const sender = el.querySelector(".mx_DisambiguatedProfile_displayName").textContent;
-                const content = el.querySelector(".mx_EventTile_body").textContent;
+                const sender = el.querySelector(".mx_DisambiguatedProfile_displayName")?.textContent ?? null;
+                const content = el.querySelector(".mx_EventTile_body")?.textContent ?? null;
                 return { sender, content };
             });
         }
 
         function toEventData(event: MatrixEvent): EventData {
-            return { sender: event.event.sender, content: event.event.content.body };
+            return { sender: event.event.sender ?? null, content: event.event.content?.body ?? null };
         }
 
         it("correctly filters Thread List with multiple threads", async () => {
@@ -209,27 +209,28 @@ describe("ThreadPanel", () => {
                 room,
                 client: mockClient,
                 authorId: SENDER,
-                participantUserIds: [mockClient.getUserId()],
+                participantUserIds: [mockClient.getUserId()!],
             });
 
             const mixedThread = mkThread({
                 room,
                 client: mockClient,
                 authorId: SENDER,
-                participantUserIds: [SENDER, mockClient.getUserId()],
+                participantUserIds: [SENDER, mockClient.getUserId()!],
             });
 
             const ownThread = mkThread({
                 room,
                 client: mockClient,
-                authorId: mockClient.getUserId(),
-                participantUserIds: [mockClient.getUserId()],
+                authorId: mockClient.getUserId()!,
+                participantUserIds: [mockClient.getUserId()!],
             });
 
             const threadRoots = [otherThread.rootEvent, mixedThread.rootEvent, ownThread.rootEvent];
-            jest.spyOn(mockClient, "fetchRoomEvent").mockImplementation((_, eventId) =>
-                Promise.resolve(threadRoots.find((it) => it.getId() === eventId).event),
-            );
+            jest.spyOn(mockClient, "fetchRoomEvent").mockImplementation((_, eventId) => {
+                const event = threadRoots.find((it) => it.getId() === eventId)?.event;
+                return event ? Promise.resolve(event) : Promise.reject();
+            });
             const [allThreads, myThreads] = room.threadsTimelineSets;
             allThreads.addLiveEvent(otherThread.rootEvent);
             allThreads.addLiveEvent(mixedThread.rootEvent);
@@ -272,13 +273,14 @@ describe("ThreadPanel", () => {
                 room,
                 client: mockClient,
                 authorId: SENDER,
-                participantUserIds: [mockClient.getUserId()],
+                participantUserIds: [mockClient.getUserId()!],
             });
 
             const threadRoots = [otherThread.rootEvent];
-            jest.spyOn(mockClient, "fetchRoomEvent").mockImplementation((_, eventId) =>
-                Promise.resolve(threadRoots.find((it) => it.getId() === eventId).event),
-            );
+            jest.spyOn(mockClient, "fetchRoomEvent").mockImplementation((_, eventId) => {
+                const event = threadRoots.find((it) => it.getId() === eventId)?.event;
+                return event ? Promise.resolve(event) : Promise.reject();
+            });
             const [allThreads] = room.threadsTimelineSets;
             allThreads.addLiveEvent(otherThread.rootEvent);
 
