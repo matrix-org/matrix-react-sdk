@@ -49,8 +49,9 @@ limitations under the License.
         }
 
         // model output always includes a linebreak but we do not want the user
-        // to see it when writing input
-        > br:last-child {
+        // to see it when writing input in lists
+        ul + br:last-of-type,
+        ol + br:last-of-type {
             display: none;
         }
     }
