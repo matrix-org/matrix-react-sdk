@@ -27,11 +27,11 @@ export class ListNotificationState extends NotificationState {
     private rooms: Room[] = [];
     private states: { [roomId: string]: RoomNotificationState } = {};
 
-    constructor(private byTileCount = false, private getRoomFn: FetchRoomFn) {
+    public constructor(private byTileCount = false, private getRoomFn: FetchRoomFn) {
         super();
     }
 
-    public get symbol(): string {
+    public get symbol(): string | null {
         return this._color === NotificationColor.Unsent ? "!" : null;
     }
 
@@ -45,7 +45,7 @@ export class ListNotificationState extends NotificationState {
 
         const oldRooms = this.rooms;
         const diff = arrayDiff(oldRooms, rooms);
-        this.rooms = rooms;
+        this.rooms = [...rooms];
         for (const oldRoom of diff.removed) {
             const state = this.states[oldRoom.roomId];
             if (!state) continue; // We likely just didn't have a badge (race condition)
@@ -98,4 +98,3 @@ export class ListNotificationState extends NotificationState {
         this.emitIfUpdated(snapshot);
     }
 }
-

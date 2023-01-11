@@ -14,15 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_WysiwygComposer_container {
-    position: relative;
-
+.mx_WysiwygComposer_Editor_container {
     @keyframes visualbell {
-        from { background-color: $visual-bell-bg-color; }
-        to { background-color: $background; }
+        from {
+            background-color: $visual-bell-bg-color;
+        }
+        to {
+            background-color: $background;
+        }
     }
 
-    .mx_WysiwygComposer_content {
+    .mx_WysiwygComposer_Editor_content {
         white-space: pre-wrap;
         word-wrap: break-word;
         outline: none;
@@ -33,5 +35,16 @@ limitations under the License.
         .caretNode {
             user-select: all;
         }
+    }
+
+    .mx_WysiwygComposer_Editor_content_placeholder::before {
+        content: var(--placeholder);
+        width: 0;
+        height: 0;
+        overflow: visible;
+        display: inline-block;
+        pointer-events: none;
+        white-space: nowrap;
+        color: $tertiary-content;
     }
 }

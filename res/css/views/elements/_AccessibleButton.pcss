@@ -24,6 +24,7 @@ limitations under the License.
         &.mx_AccessibleButton_kind_primary_outline,
         &.mx_AccessibleButton_kind_primary_sm,
         &.mx_AccessibleButton_kind_link,
+        &.mx_AccessibleButton_kind_link_accent,
         &.mx_AccessibleButton_kind_link_inline,
         &.mx_AccessibleButton_kind_danger_inline,
         &.mx_AccessibleButton_kind_content_inline,
@@ -67,7 +68,7 @@ limitations under the License.
             background-color: $accent;
 
             &::before {
-                mask-image: url('$(res)/img/feather-customised/check.svg');
+                mask-image: url("$(res)/img/feather-customised/check.svg");
             }
         }
 
@@ -75,7 +76,7 @@ limitations under the License.
             background-color: $alert;
 
             &::before {
-                mask-image: url('$(res)/img/feather-customised/x.svg');
+                mask-image: url("$(res)/img/feather-customised/x.svg");
             }
         }
 
@@ -109,6 +110,10 @@ limitations under the License.
 
     &.mx_AccessibleButton_kind_secondary {
         color: $accent;
+    }
+
+    &.mx_AccessibleButton_kind_secondary_content {
+        color: $secondary-content;
     }
 
     &.mx_AccessibleButton_kind_danger {

@@ -20,7 +20,7 @@ import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { ClientEvent, EventType, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { SyncState } from "matrix-js-sdk/src/sync";
 
-import { MatrixClientPeg } from './MatrixClientPeg';
+import { MatrixClientPeg } from "./MatrixClientPeg";
 import dis from "./dispatcher/dispatcher";
 import {
     hideToast as hideBulkUnverifiedSessionsToast,
@@ -36,17 +36,16 @@ import {
     showToast as showUnverifiedSessionsToast,
 } from "./toasts/UnverifiedSessionToast";
 import { accessSecretStorage, isSecretStorageBeingAccessed } from "./SecurityManager";
-import { isSecureBackupRequired } from './utils/WellKnownUtils';
+import { isSecureBackupRequired } from "./utils/WellKnownUtils";
 import { ActionPayload } from "./dispatcher/payloads";
 import { Action } from "./dispatcher/actions";
 import { isLoggedIn } from "./utils/login";
 import SdkConfig from "./SdkConfig";
 import PlatformPeg from "./PlatformPeg";
-import {
-    recordClientInformation,
-    removeClientInformation,
-} from "./utils/device/clientInformation";
+import { recordClientInformation, removeClientInformation } from "./utils/device/clientInformation";
 import SettingsStore, { CallbackFn } from "./settings/SettingsStore";
+import { UIFeature } from "./settings/UIFeature";
+import { isBulkUnverifiedDeviceReminderSnoozed } from "./utils/device/snoozeBulkUnverifiedDeviceReminder";
 
 const KEY_BACKUP_POLL_INTERVAL = 5 * 60 * 1000;
 
@@ -68,6 +67,7 @@ export default class DeviceListener {
     private displayingToastsForDeviceIds = new Set<string>();
     private running = false;
     private shouldRecordClientInformation = false;
+    private enableBulkUnverifiedSessionsReminder = true;
     private deviceClientInformationSettingWatcherRef: string | undefined;
 
     public static sharedInstance() {
@@ -85,9 +85,11 @@ export default class DeviceListener {
         MatrixClientPeg.get().on(ClientEvent.AccountData, this.onAccountData);
         MatrixClientPeg.get().on(ClientEvent.Sync, this.onSync);
         MatrixClientPeg.get().on(RoomStateEvent.Events, this.onRoomStateEvents);
-        this.shouldRecordClientInformation = SettingsStore.getValue('deviceClientInformationOptIn');
+        this.shouldRecordClientInformation = SettingsStore.getValue("deviceClientInformationOptIn");
+        // only configurable in config, so we don't need to watch the value
+        this.enableBulkUnverifiedSessionsReminder = SettingsStore.getValue(UIFeature.BulkUnverifiedSessionsReminder);
         this.deviceClientInformationSettingWatcherRef = SettingsStore.watchSetting(
-            'deviceClientInformationOptIn',
+            "deviceClientInformationOptIn",
             null,
             this.onRecordClientInformationSettingChange,
         );
@@ -133,7 +135,7 @@ export default class DeviceListener {
      * @param {String[]} deviceIds List of device IDs to dismiss notifications for
      */
     public async dismissUnverifiedSessions(deviceIds: Iterable<string>) {
-        logger.log("Dismissing unverified sessions: " + Array.from(deviceIds).join(','));
+        logger.log("Dismissing unverified sessions: " + Array.from(deviceIds).join(","));
         for (const d of deviceIds) {
             this.dismissed.add(d);
         }
@@ -149,9 +151,7 @@ export default class DeviceListener {
     private ensureDeviceIdsAtStartPopulated() {
         if (this.ourDeviceIdsAtStart === null) {
             const cli = MatrixClientPeg.get();
-            this.ourDeviceIdsAtStart = new Set(
-                cli.getStoredDevicesForUser(cli.getUserId()).map(d => d.deviceId),
-            );
+            this.ourDeviceIdsAtStart = new Set(cli.getStoredDevicesForUser(cli.getUserId()).map((d) => d.deviceId));
         }
     }
 
@@ -194,16 +194,16 @@ export default class DeviceListener {
         // * completed secret storage creation
         // which result in account data changes affecting checks below.
         if (
-            ev.getType().startsWith('m.secret_storage.') ||
-            ev.getType().startsWith('m.cross_signing.') ||
-            ev.getType() === 'm.megolm_backup.v1'
+            ev.getType().startsWith("m.secret_storage.") ||
+            ev.getType().startsWith("m.cross_signing.") ||
+            ev.getType() === "m.megolm_backup.v1"
         ) {
             this.recheck();
         }
     };
 
     private onSync = (state: SyncState, prevState?: SyncState) => {
-        if (state === 'PREPARED' && prevState === null) {
+        if (state === "PREPARED" && prevState === null) {
             this.recheck();
         }
     };
@@ -225,7 +225,7 @@ export default class DeviceListener {
     // The server doesn't tell us when key backup is set up, so we poll
     // & cache the result
     private async getKeyBackupInfo() {
-        const now = (new Date()).getTime();
+        const now = new Date().getTime();
         if (!this.keyBackupInfo || this.keyBackupFetchedAt < now - KEY_BACKUP_POLL_INTERVAL) {
             this.keyBackupInfo = await MatrixClientPeg.get().getKeyBackupVersion();
             this.keyBackupFetchedAt = now;
@@ -239,7 +239,7 @@ export default class DeviceListener {
         if (isSecretStorageBeingAccessed()) return false;
         // Show setup toasts once the user is in at least one encrypted room.
         const cli = MatrixClientPeg.get();
-        return cli && cli.getRooms().some(r => cli.isRoomEncrypted(r.roomId));
+        return cli && cli.getRooms().some((r) => cli.isRoomEncrypted(r.roomId));
     }
 
     private async recheck() {
@@ -267,10 +267,7 @@ export default class DeviceListener {
             await cli.downloadKeys([cli.getUserId()]);
             // cross signing isn't enabled - nag to enable it
             // There are 3 different toasts for:
-            if (
-                !cli.getCrossSigningId() &&
-                cli.getStoredCrossSigningForUser(cli.getUserId())
-            ) {
+            if (!cli.getCrossSigningId() && cli.getStoredCrossSigningForUser(cli.getUserId())) {
                 // Cross-signing on account but this device doesn't trust the master key (verify this session)
                 showSetupEncryptionToast(SetupKind.VERIFY_THIS_SESSION);
                 this.checkKeyBackupStatus();
@@ -306,6 +303,9 @@ export default class DeviceListener {
         // Unverified devices that have appeared since then
         const newUnverifiedDeviceIds = new Set<string>();
 
+        const isCurrentDeviceTrusted =
+            crossSigningReady && (await cli.checkDeviceTrust(cli.getUserId()!, cli.deviceId!).isCrossSigningVerified());
+
         // as long as cross-signing isn't ready,
         // you can't see or dismiss any device toasts
         if (crossSigningReady) {
@@ -313,7 +313,7 @@ export default class DeviceListener {
             for (const device of devices) {
                 if (device.deviceId === cli.deviceId) continue;
 
-                const deviceTrust = await cli.checkDeviceTrust(cli.getUserId(), device.deviceId);
+                const deviceTrust = await cli.checkDeviceTrust(cli.getUserId()!, device.deviceId!);
                 if (!deviceTrust.isCrossSigningVerified() && !this.dismissed.has(device.deviceId)) {
                     if (this.ourDeviceIdsAtStart.has(device.deviceId)) {
                         oldUnverifiedDeviceIds.add(device.deviceId);
@@ -324,12 +324,20 @@ export default class DeviceListener {
             }
         }
 
-        logger.debug("Old unverified sessions: " + Array.from(oldUnverifiedDeviceIds).join(','));
-        logger.debug("New unverified sessions: " + Array.from(newUnverifiedDeviceIds).join(','));
-        logger.debug("Currently showing toasts for: " + Array.from(this.displayingToastsForDeviceIds).join(','));
+        logger.debug("Old unverified sessions: " + Array.from(oldUnverifiedDeviceIds).join(","));
+        logger.debug("New unverified sessions: " + Array.from(newUnverifiedDeviceIds).join(","));
+        logger.debug("Currently showing toasts for: " + Array.from(this.displayingToastsForDeviceIds).join(","));
+
+        const isBulkUnverifiedSessionsReminderSnoozed = isBulkUnverifiedDeviceReminderSnoozed();
 
         // Display or hide the batch toast for old unverified sessions
-        if (oldUnverifiedDeviceIds.size > 0) {
+        // don't show the toast if the current device is unverified
+        if (
+            oldUnverifiedDeviceIds.size > 0 &&
+            isCurrentDeviceTrusted &&
+            this.enableBulkUnverifiedSessionsReminder &&
+            !isBulkUnverifiedSessionsReminderSnoozed
+        ) {
             showBulkUnverifiedSessionsToast(oldUnverifiedDeviceIds);
         } else {
             hideBulkUnverifiedSessionsToast();
@@ -365,7 +373,11 @@ export default class DeviceListener {
     };
 
     private onRecordClientInformationSettingChange: CallbackFn = (
-        _originalSettingName, _roomId, _level, _newLevel, newValue,
+        _originalSettingName,
+        _roomId,
+        _level,
+        _newLevel,
+        newValue,
     ) => {
         const prevValue = this.shouldRecordClientInformation;
 
@@ -379,18 +391,14 @@ export default class DeviceListener {
     private updateClientInformation = async () => {
         try {
             if (this.shouldRecordClientInformation) {
-                await recordClientInformation(
-                    MatrixClientPeg.get(),
-                    SdkConfig.get(),
-                    PlatformPeg.get(),
-                );
+                await recordClientInformation(MatrixClientPeg.get(), SdkConfig.get(), PlatformPeg.get());
             } else {
                 await removeClientInformation(MatrixClientPeg.get());
             }
         } catch (error) {
             // this is a best effort operation
             // log the error without rethrowing
-            logger.error('Failed to update client information', error);
+            logger.error("Failed to update client information", error);
         }
     };
 }

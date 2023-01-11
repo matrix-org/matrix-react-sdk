@@ -50,26 +50,82 @@ export class VoiceBroadcastChunkEvents {
     }
 
     public includes(event: MatrixEvent): boolean {
-        return !!this.events.find(e => e.getId() === event.getId());
+        return !!this.events.find((e) => this.equalByTxnIdOrId(event, e));
     }
 
+    /**
+     * @returns {number} Length in milliseconds
+     */
     public getLength(): number {
         return this.events.reduce((length: number, event: MatrixEvent) => {
             return length + this.calculateChunkLength(event);
         }, 0);
     }
 
+    public getLengthSeconds(): number {
+        return this.getLength() / 1000;
+    }
+
+    /**
+     * Returns the accumulated length to (excl.) a chunk event.
+     */
+    public getLengthTo(event: MatrixEvent): number {
+        let length = 0;
+
+        for (let i = 0; i < this.events.indexOf(event); i++) {
+            length += this.calculateChunkLength(this.events[i]);
+        }
+
+        return length;
+    }
+
+    public findByTime(time: number): MatrixEvent | null {
+        let lengthSoFar = 0;
+
+        for (let i = 0; i < this.events.length; i++) {
+            lengthSoFar += this.calculateChunkLength(this.events[i]);
+
+            if (lengthSoFar >= time) {
+                return this.events[i];
+            }
+        }
+
+        return null;
+    }
+
+    public isLast(event: MatrixEvent): boolean {
+        return this.events.indexOf(event) >= this.events.length - 1;
+    }
+
+    public getSequenceForEvent(event: MatrixEvent): number | null {
+        const sequence = parseInt(event.getContent()?.[VoiceBroadcastChunkEventType]?.sequence, 10);
+        if (!isNaN(sequence)) return sequence;
+
+        if (this.events.includes(event)) return this.events.indexOf(event) + 1;
+
+        return null;
+    }
+
+    public getNumberOfEvents(): number {
+        return this.events.length;
+    }
+
     private calculateChunkLength(event: MatrixEvent): number {
-        return event.getContent()?.["org.matrix.msc1767.audio"]?.duration
-            || event.getContent()?.info?.duration
-            || 0;
+        return event.getContent()?.["org.matrix.msc1767.audio"]?.duration || event.getContent()?.info?.duration || 0;
     }
 
     private addOrReplaceEvent = (event: MatrixEvent): boolean => {
-        this.events = this.events.filter(e => e.getId() !== event.getId());
+        this.events = this.events.filter((e) => !this.equalByTxnIdOrId(event, e));
         this.events.push(event);
         return true;
     };
+
+    private equalByTxnIdOrId(eventA: MatrixEvent, eventB: MatrixEvent): boolean {
+        return (
+            (eventA.getTxnId() && eventB.getTxnId() && eventA.getTxnId() === eventB.getTxnId()) ||
+            eventA.getId() === eventB.getId()
+        );
+    }
 
     /**
      * Sort by sequence, if available for all events.

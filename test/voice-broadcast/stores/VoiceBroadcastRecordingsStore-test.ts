@@ -69,12 +69,20 @@ describe("VoiceBroadcastRecordingsStore", () => {
         recordings.off(VoiceBroadcastRecordingsStoreEvent.CurrentChanged, onCurrentChanged);
     });
 
+    it("when setting a recording without info event Id, it should raise an error", () => {
+        infoEvent.event.event_id = undefined;
+        expect(() => {
+            recordings.setCurrent(recording);
+        }).toThrowError("Got broadcast info event without Id");
+    });
+
     describe("when setting a current Voice Broadcast recording", () => {
         beforeEach(() => {
             recordings.setCurrent(recording);
         });
 
         it("should return it as current", () => {
+            expect(recordings.hasCurrent()).toBe(true);
             expect(recordings.getCurrent()).toBe(recording);
         });
 
@@ -103,6 +111,7 @@ describe("VoiceBroadcastRecordingsStore", () => {
             });
 
             it("should clear the current recording", () => {
+                expect(recordings.hasCurrent()).toBe(false);
                 expect(recordings.getCurrent()).toBeNull();
             });
 

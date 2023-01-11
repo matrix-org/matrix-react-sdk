@@ -44,15 +44,18 @@ limitations under the License.
  *                      list ops)
  */
 
-import { MatrixClient } from 'matrix-js-sdk/src/matrix';
-import { EventType } from 'matrix-js-sdk/src/@types/event';
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 import {
     MSC3575Filter,
     MSC3575List,
+    MSC3575_STATE_KEY_LAZY,
+    MSC3575_STATE_KEY_ME,
+    MSC3575_WILDCARD,
     SlidingSync,
-} from 'matrix-js-sdk/src/sliding-sync';
+} from "matrix-js-sdk/src/sliding-sync";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IDeferred, defer } from 'matrix-js-sdk/src/utils';
+import { IDeferred, defer, sleep } from "matrix-js-sdk/src/utils";
 
 // how long to long poll for
 const SLIDING_SYNC_TIMEOUT_MS = 20 * 1000;
@@ -60,19 +63,42 @@ const SLIDING_SYNC_TIMEOUT_MS = 20 * 1000;
 // the things to fetch when a user clicks on a room
 const DEFAULT_ROOM_SUBSCRIPTION_INFO = {
     timeline_limit: 50,
-    required_state: [
-        ["*", "*"], // all events
-    ],
+    // missing required_state which will change depending on the kind of room
     include_old_rooms: {
         timeline_limit: 0,
-        required_state: [ // state needed to handle space navigation and tombstone chains
+        required_state: [
+            // state needed to handle space navigation and tombstone chains
             [EventType.RoomCreate, ""],
             [EventType.RoomTombstone, ""],
-            [EventType.SpaceChild, "*"],
-            [EventType.SpaceParent, "*"],
+            [EventType.SpaceChild, MSC3575_WILDCARD],
+            [EventType.SpaceParent, MSC3575_WILDCARD],
+            [EventType.RoomMember, MSC3575_STATE_KEY_ME],
         ],
     },
 };
+// lazy load room members so rooms like Matrix HQ don't take forever to load
+const UNENCRYPTED_SUBSCRIPTION_NAME = "unencrypted";
+const UNENCRYPTED_SUBSCRIPTION = Object.assign(
+    {
+        required_state: [
+            [MSC3575_WILDCARD, MSC3575_WILDCARD], // all events
+            [EventType.RoomMember, MSC3575_STATE_KEY_ME], // except for m.room.members, get our own membership
+            [EventType.RoomMember, MSC3575_STATE_KEY_LAZY], // ...and lazy load the rest.
+        ],
+    },
+    DEFAULT_ROOM_SUBSCRIPTION_INFO,
+);
+
+// we need all the room members in encrypted rooms because we need to know which users to encrypt
+// messages for.
+const ENCRYPTED_SUBSCRIPTION = Object.assign(
+    {
+        required_state: [
+            [MSC3575_WILDCARD, MSC3575_WILDCARD], // all events
+        ],
+    },
+    DEFAULT_ROOM_SUBSCRIPTION_INFO,
+);
 
 export type PartialSlidingSyncRequest = {
     filters?: MSC3575Filter;
@@ -109,15 +135,14 @@ export class SlidingSyncManager {
     public configure(client: MatrixClient, proxyUrl: string): SlidingSync {
         this.client = client;
         this.listIdToIndex = {};
-        this.slidingSync = new SlidingSync(
-            proxyUrl, [], DEFAULT_ROOM_SUBSCRIPTION_INFO, client, SLIDING_SYNC_TIMEOUT_MS,
-        );
+        // by default use the encrypted subscription as that gets everything, which is a safer
+        // default than potentially missing member events.
+        this.slidingSync = new SlidingSync(proxyUrl, [], ENCRYPTED_SUBSCRIPTION, client, SLIDING_SYNC_TIMEOUT_MS);
+        this.slidingSync.addCustomSubscription(UNENCRYPTED_SUBSCRIPTION_NAME, UNENCRYPTED_SUBSCRIPTION);
         // set the space list
         this.slidingSync.setList(this.getOrAllocateListIndex(SlidingSyncManager.ListSpaces), {
             ranges: [[0, 20]],
-            sort: [
-                "by_name",
-            ],
+            sort: ["by_name"],
             slow_get_all_rooms: true,
             timeline_limit: 0,
             required_state: [
@@ -126,18 +151,18 @@ export class SlidingSyncManager {
                 [EventType.RoomTombstone, ""], // lets JS SDK hide rooms which are dead
                 [EventType.RoomEncryption, ""], // lets rooms be configured for E2EE correctly
                 [EventType.RoomCreate, ""], // for isSpaceRoom checks
-                [EventType.SpaceChild, "*"], // all space children
-                [EventType.SpaceParent, "*"], // all space parents
-                [EventType.RoomMember, this.client.getUserId()!], // lets the client calculate that we are in fact in the room
+                [EventType.SpaceChild, MSC3575_WILDCARD], // all space children
+                [EventType.SpaceParent, MSC3575_WILDCARD], // all space parents
+                [EventType.RoomMember, MSC3575_STATE_KEY_ME], // lets the client calculate that we are in fact in the room
             ],
             include_old_rooms: {
                 timeline_limit: 0,
                 required_state: [
                     [EventType.RoomCreate, ""],
                     [EventType.RoomTombstone, ""], // lets JS SDK hide rooms which are dead
-                    [EventType.SpaceChild, "*"], // all space children
-                    [EventType.SpaceParent, "*"], // all space parents
-                    [EventType.RoomMember, this.client.getUserId()!], // lets the client calculate that we are in fact in the room
+                    [EventType.SpaceChild, MSC3575_WILDCARD], // all space children
+                    [EventType.SpaceParent, MSC3575_WILDCARD], // all space parents
+                    [EventType.RoomMember, MSC3575_STATE_KEY_ME], // lets the client calculate that we are in fact in the room
                 ],
             },
             filters: {
@@ -185,18 +210,14 @@ export class SlidingSyncManager {
      * @param updateArgs The fields to update on the list.
      * @returns The complete list request params
      */
-    public async ensureListRegistered(
-        listIndex: number, updateArgs: PartialSlidingSyncRequest,
-    ): Promise<MSC3575List> {
+    public async ensureListRegistered(listIndex: number, updateArgs: PartialSlidingSyncRequest): Promise<MSC3575List> {
         logger.debug("ensureListRegistered:::", listIndex, updateArgs);
         await this.configureDefer.promise;
         let list = this.slidingSync.getList(listIndex);
         if (!list) {
             list = {
                 ranges: [[0, 20]],
-                sort: [
-                    "by_notification_level", "by_recency",
-                ],
+                sort: ["by_notification_level", "by_recency"],
                 timeline_limit: 1, // most recent message display: though this seems to only be needed for favourites?
                 required_state: [
                     [EventType.RoomJoinRules, ""], // the public icon on the room list
@@ -204,16 +225,16 @@ export class SlidingSyncManager {
                     [EventType.RoomTombstone, ""], // lets JS SDK hide rooms which are dead
                     [EventType.RoomEncryption, ""], // lets rooms be configured for E2EE correctly
                     [EventType.RoomCreate, ""], // for isSpaceRoom checks
-                    [EventType.RoomMember, this.client.getUserId()], // lets the client calculate that we are in fact in the room
+                    [EventType.RoomMember, MSC3575_STATE_KEY_ME], // lets the client calculate that we are in fact in the room
                 ],
                 include_old_rooms: {
                     timeline_limit: 0,
                     required_state: [
                         [EventType.RoomCreate, ""],
                         [EventType.RoomTombstone, ""], // lets JS SDK hide rooms which are dead
-                        [EventType.SpaceChild, "*"], // all space children
-                        [EventType.SpaceParent, "*"], // all space parents
-                        [EventType.RoomMember, this.client.getUserId()!], // lets the client calculate that we are in fact in the room
+                        [EventType.SpaceChild, MSC3575_WILDCARD], // all space children
+                        [EventType.SpaceParent, MSC3575_WILDCARD], // all space parents
+                        [EventType.RoomMember, MSC3575_STATE_KEY_ME], // lets the client calculate that we are in fact in the room
                     ],
                 },
             };
@@ -249,9 +270,21 @@ export class SlidingSyncManager {
         } else {
             subscriptions.delete(roomId);
         }
-        logger.log("SlidingSync setRoomVisible:", roomId, visible);
+        const room = this.client.getRoom(roomId);
+        let shouldLazyLoad = !this.client.isRoomEncrypted(roomId);
+        if (!room) {
+            // default to safety: request all state if we can't work it out. This can happen if you
+            // refresh the app whilst viewing a room: we call setRoomVisible before we know anything
+            // about the room.
+            shouldLazyLoad = false;
+        }
+        logger.log("SlidingSync setRoomVisible:", roomId, visible, "shouldLazyLoad:", shouldLazyLoad);
+        if (shouldLazyLoad) {
+            // lazy load this room
+            this.slidingSync.useCustomSubscription(roomId, UNENCRYPTED_SUBSCRIPTION_NAME);
+        }
         const p = this.slidingSync.modifyRoomSubscriptions(subscriptions);
-        if (this.client.getRoom(roomId)) {
+        if (room) {
             return roomId; // we have data already for this room, show immediately e.g it's in a list
         }
         try {
@@ -261,5 +294,65 @@ export class SlidingSyncManager {
             logger.warn("SlidingSync setRoomVisible:", roomId, visible, "failed to confirm transaction");
         }
         return roomId;
+    }
+
+    /**
+     * Retrieve all rooms on the user's account. Used for pre-populating the local search cache.
+     * Retrieval is gradual over time.
+     * @param batchSize The number of rooms to return in each request.
+     * @param gapBetweenRequestsMs The number of milliseconds to wait between requests.
+     */
+    public async startSpidering(batchSize: number, gapBetweenRequestsMs: number) {
+        await sleep(gapBetweenRequestsMs); // wait a bit as this is called on first render so let's let things load
+        const listIndex = this.getOrAllocateListIndex(SlidingSyncManager.ListSearch);
+        let startIndex = batchSize;
+        let hasMore = true;
+        let firstTime = true;
+        while (hasMore) {
+            const endIndex = startIndex + batchSize - 1;
+            try {
+                const ranges = [
+                    [0, batchSize - 1],
+                    [startIndex, endIndex],
+                ];
+                if (firstTime) {
+                    await this.slidingSync.setList(listIndex, {
+                        // e.g [0,19] [20,39] then [0,19] [40,59]. We keep [0,20] constantly to ensure
+                        // any changes to the list whilst spidering are caught.
+                        ranges: ranges,
+                        sort: [
+                            "by_recency", // this list isn't shown on the UI so just sorting by timestamp is enough
+                        ],
+                        timeline_limit: 0, // we only care about the room details, not messages in the room
+                        required_state: [
+                            [EventType.RoomJoinRules, ""], // the public icon on the room list
+                            [EventType.RoomAvatar, ""], // any room avatar
+                            [EventType.RoomTombstone, ""], // lets JS SDK hide rooms which are dead
+                            [EventType.RoomEncryption, ""], // lets rooms be configured for E2EE correctly
+                            [EventType.RoomCreate, ""], // for isSpaceRoom checks
+                            [EventType.RoomMember, MSC3575_STATE_KEY_ME], // lets the client calculate that we are in fact in the room
+                        ],
+                        // we don't include_old_rooms here in an effort to reduce the impact of spidering all rooms
+                        // on the user's account. This means some data in the search dialog results may be inaccurate
+                        // e.g membership of space, but this will be corrected when the user clicks on the room
+                        // as the direct room subscription does include old room iterations.
+                        filters: {
+                            // we get spaces via a different list, so filter them out
+                            not_room_types: ["m.space"],
+                        },
+                    });
+                } else {
+                    await this.slidingSync.setListRanges(listIndex, ranges);
+                }
+                // gradually request more over time
+                await sleep(gapBetweenRequestsMs);
+            } catch (err) {
+                // do nothing, as we reject only when we get interrupted but that's fine as the next
+                // request will include our data
+            }
+            hasMore = endIndex + 1 < this.slidingSync.getListData(listIndex)?.joinedCount;
+            startIndex += batchSize;
+            firstTime = false;
+        }
     }
 }

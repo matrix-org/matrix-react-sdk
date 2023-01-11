@@ -24,14 +24,14 @@ export enum VoiceBroadcastRecordingsStoreEvent {
 }
 
 interface EventMap {
-    [VoiceBroadcastRecordingsStoreEvent.CurrentChanged]: (recording: VoiceBroadcastRecording) => void;
+    [VoiceBroadcastRecordingsStoreEvent.CurrentChanged]: (recording: VoiceBroadcastRecording | null) => void;
 }
 
 /**
  * This store provides access to the current and specific Voice Broadcast recordings.
  */
 export class VoiceBroadcastRecordingsStore extends TypedEventEmitter<VoiceBroadcastRecordingsStoreEvent, EventMap> {
-    private current: VoiceBroadcastRecording | null;
+    private current: VoiceBroadcastRecording | null = null;
     private recordings = new Map<string, VoiceBroadcastRecording>();
 
     public constructor() {
@@ -41,18 +41,28 @@ export class VoiceBroadcastRecordingsStore extends TypedEventEmitter<VoiceBroadc
     public setCurrent(current: VoiceBroadcastRecording): void {
         if (this.current === current) return;
 
+        const infoEventId = current.infoEvent.getId();
+
+        if (!infoEventId) {
+            throw new Error("Got broadcast info event without Id");
+        }
+
         if (this.current) {
             this.current.off(VoiceBroadcastRecordingEvent.StateChanged, this.onCurrentStateChanged);
         }
 
         this.current = current;
         this.current.on(VoiceBroadcastRecordingEvent.StateChanged, this.onCurrentStateChanged);
-        this.recordings.set(current.infoEvent.getId(), current);
+        this.recordings.set(infoEventId, current);
         this.emit(VoiceBroadcastRecordingsStoreEvent.CurrentChanged, current);
     }
 
-    public getCurrent(): VoiceBroadcastRecording {
+    public getCurrent(): VoiceBroadcastRecording | null {
         return this.current;
+    }
+
+    public hasCurrent(): boolean {
+        return this.current !== null;
     }
 
     public clearCurrent(): void {
@@ -66,11 +76,13 @@ export class VoiceBroadcastRecordingsStore extends TypedEventEmitter<VoiceBroadc
     public getByInfoEvent(infoEvent: MatrixEvent, client: MatrixClient): VoiceBroadcastRecording {
         const infoEventId = infoEvent.getId();
 
-        if (!this.recordings.has(infoEventId)) {
-            this.recordings.set(infoEventId, new VoiceBroadcastRecording(infoEvent, client));
+        if (!infoEventId) {
+            throw new Error("Got broadcast info event without Id");
         }
 
-        return this.recordings.get(infoEventId);
+        const recording = this.recordings.get(infoEventId) || new VoiceBroadcastRecording(infoEvent, client);
+        this.recordings.set(infoEventId, recording);
+        return recording;
     }
 
     private onCurrentStateChanged = (state: VoiceBroadcastInfoState) => {
@@ -78,13 +90,4 @@ export class VoiceBroadcastRecordingsStore extends TypedEventEmitter<VoiceBroadc
             this.clearCurrent();
         }
     };
-
-    private static readonly cachedInstance = new VoiceBroadcastRecordingsStore();
-
-    /**
-     * TODO Michael W: replace when https://github.com/matrix-org/matrix-react-sdk/pull/9293 has been merged
-     */
-    public static instance(): VoiceBroadcastRecordingsStore {
-        return VoiceBroadcastRecordingsStore.cachedInstance;
-    }
 }

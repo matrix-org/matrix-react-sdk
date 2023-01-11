@@ -57,7 +57,7 @@ export interface IConfigOptions {
     branding?: {
         welcome_background_url?: string | string[]; // chosen at random if array
         auth_header_logo_url?: string;
-        auth_footer_links?: {text: string, url: string}[];
+        auth_footer_links?: { text: string; url: string }[];
     };
 
     map_style_url?: string; // for location-shared maps
@@ -163,7 +163,7 @@ export interface IConfigOptions {
 
     enable_presence_by_hs_url?: Record<string, boolean>; // <HomeserverName, Enabled>
 
-    terms_and_conditions_links?: { url: string, text: string }[];
+    terms_and_conditions_links?: { url: string; text: string }[];
 
     latex_maths_delims?: {
         inline?: {
@@ -182,6 +182,14 @@ export interface IConfigOptions {
     voice_broadcast?: {
         // length per voice chunk in seconds
         chunk_length?: number;
+        // max voice broadcast length in seconds
+        max_length?: number;
+    };
+
+    user_notice?: {
+        title: string;
+        description: string;
+        show_once?: boolean;
     };
 }
 
