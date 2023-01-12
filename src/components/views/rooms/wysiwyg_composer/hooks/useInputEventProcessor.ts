@@ -29,7 +29,10 @@ export function useInputEventProcessor(onSend: () => void) {
 
             const isKeyboardEvent = event instanceof KeyboardEvent;
             const isEnterPress =
-                !isCtrlEnter && (isKeyboardEvent ? event.key === "Enter" : event.inputType === "insertParagraph");
+                !isCtrlEnter &&
+                (isKeyboardEvent
+                    ? event.key === "Enter" && event.shiftKey === false
+                    : event.inputType === "insertParagraph");
             // sendMessage is sent when ctrl+enter is pressed
             const isSendMessage = !isKeyboardEvent && event.inputType === "sendMessage";
 
