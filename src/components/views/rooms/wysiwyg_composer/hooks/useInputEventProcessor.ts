@@ -19,7 +19,7 @@ import { useCallback } from "react";
 
 import { useSettingValue } from "../../../../../hooks/useSettings";
 
-export function useInputEventProcessor(onSend: () => void): (event: WysiwygInputEvent) => WysiwygInputEvent | null {
+export function useInputEventProcessor(onSend: () => void): (event: WysiwygEvent) => WysiwygEvent | null {
     const isCtrlEnter = useSettingValue<boolean>("MessageComposerInput.ctrlEnterToSend");
     return useCallback(
         (event: WysiwygEvent) => {
