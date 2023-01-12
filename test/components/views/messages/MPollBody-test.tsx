@@ -440,7 +440,7 @@ describe("MPollBody", () => {
             responseEvent("@catrd:example.com", "poutine"),
             responseEvent("@dune2:example.com", "wings"),
         ];
-        const body = newMPollBody(votes, [], null, false);
+        const body = newMPollBody(votes, [], undefined, false);
         expect(votesCount(body, "pizza")).toBe("");
         expect(votesCount(body, "poutine")).toBe("");
         expect(votesCount(body, "italian")).toBe("");
@@ -456,7 +456,7 @@ describe("MPollBody", () => {
             responseEvent("@catrd:example.com", "poutine"),
             responseEvent("@dune2:example.com", "wings"),
         ];
-        const body = newMPollBody(votes, [], null, false);
+        const body = newMPollBody(votes, [], undefined, false);
 
         // My vote is marked
         expect(body.find('input[value="pizza"]').prop("checked")).toBeTruthy();
@@ -474,7 +474,7 @@ describe("MPollBody", () => {
             responseEvent("@dune2:example.com", "wings"),
         ];
         const ends = [endEvent("@me:example.com", 12)];
-        const body = newMPollBody(votes, ends, null, false);
+        const body = newMPollBody(votes, ends, undefined, false);
         expect(endedVotesCount(body, "pizza")).toBe("3 votes");
         expect(endedVotesCount(body, "poutine")).toBe("1 vote");
         expect(endedVotesCount(body, "italian")).toBe("0 votes");
@@ -913,7 +913,7 @@ describe("MPollBody", () => {
             responseEvent("@yh:example.com", "poutine", 14),
         ];
         const ends = [];
-        const body = newMPollBody(votes, ends, null, false);
+        const body = newMPollBody(votes, ends, undefined, false);
         expect(body.html()).toMatchSnapshot();
     });
 
@@ -927,7 +927,7 @@ describe("MPollBody", () => {
             responseEvent("@yh:example.com", "poutine", 14),
         ];
         const ends = [endEvent("@me:example.com", 25)];
-        const body = newMPollBody(votes, ends, null, false);
+        const body = newMPollBody(votes, ends, undefined, false);
         expect(body.html()).toMatchSnapshot();
     });
 });
@@ -1047,7 +1047,7 @@ function newPollStart(answers?: PollAnswer[], question?: string, disclosed = tru
         question = "What should we order for the party?";
     }
 
-    const answersFallback = answers.map((a, i) => `${i + 1}. ${a[M_TEXT.name]}`).join("\n");
+    const answersFallback = answers.map((a, i) => `${i + 1}. ${M_TEXT.findIn<string>(a)}`).join("\n");
 
     const fallback = `${question}\n${answersFallback}`;
 
