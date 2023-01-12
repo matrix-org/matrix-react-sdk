@@ -80,17 +80,18 @@ jobs:
         name: "Run Tests"
         needs: prepare
         runs-on: ubuntu-latest
+        container: cypress/browsers:node18.12.0-chrome107
         permissions:
             actions: read
             issues: read
             pull-requests: read
         environment:
             Cypress
-            #strategy:
-            #    fail-fast: false
-            #    matrix:
-            #      # Run 4 instances in Parallel
-            #      runner: [1, 2, 3, 4]
+        strategy:
+            fail-fast: false
+            matrix:
+                # Run 4 instances in Parallel
+                runner: [1, 2, 3, 4]
         steps:
             - uses: tecolicom/actions-use-apt-tools@v1
               with:
@@ -124,11 +125,9 @@ jobs:
                   browser: chrome
                   start: npx serve -p 8080 webapp
                   wait-on: "http://localhost:8080"
-                  record:
-                      true
-                      #parallel: true
-                      #command-prefix: 'yarn percy exec --parallel --'
-                  command-prefix: "yarn percy exec --"
+                  record: true
+                  parallel: true
+                  command-prefix: 'yarn percy exec --parallel --'
                   config: '{"reporter":"cypress-multi-reporters", "reporterOptions": { "configFile": "cypress-ci-reporter-config.json" } }'
                   ci-build-id: ${{ needs.prepare.outputs.uuid }}
               env:
@@ -159,9 +158,8 @@ jobs:
                   # tell Percy more details about the context of this run
                   PERCY_BRANCH: ${{ github.event.workflow_run.head_branch }}
                   PERCY_COMMIT: ${{ github.event.workflow_run.head_sha }}
-                  PERCY_PULL_REQUEST:
-                      ${{ needs.prepare.outputs.pr_id }}
-                      #PERCY_PARALLEL_TOTAL: ${{ strategy.job-total }}
+                  PERCY_PULL_REQUEST: ${{ needs.prepare.outputs.pr_id }}
+                  PERCY_PARALLEL_TOTAL: ${{ strategy.job-total }}
                   PERCY_PARALLEL_NONCE: ${{ needs.prepare.outputs.uuid }}
 
             - name: Upload Artifact
