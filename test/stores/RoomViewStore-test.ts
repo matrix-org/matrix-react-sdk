@@ -256,18 +256,17 @@ describe("RoomViewStore", function () {
         expect(roomViewStore.getQuotingEvent()).toBeFalsy();
     });
 
-    it.each([
-        TimelineRenderingType.Room,
-        TimelineRenderingType.File,
-        TimelineRenderingType.Notification,
-    ])("Should respect reply_to_event for %s rendering context", async (context) => {
-        const replyToEvent = {
-            getRoomId: () => roomId,
-        };
-        dis.dispatch({ action: "reply_to_event", event: replyToEvent, context });
-        await untilDispatch(Action.ViewRoom, dis);
-        expect(roomViewStore.getQuotingEvent()).toEqual(replyToEvent);
-    });
+    it.each([TimelineRenderingType.Room, TimelineRenderingType.File, TimelineRenderingType.Notification])(
+        "Should respect reply_to_event for %s rendering context",
+        async (context) => {
+            const replyToEvent = {
+                getRoomId: () => roomId,
+            };
+            dis.dispatch({ action: "reply_to_event", event: replyToEvent, context });
+            await untilDispatch(Action.ViewRoom, dis);
+            expect(roomViewStore.getQuotingEvent()).toEqual(replyToEvent);
+        },
+    );
 
     it("removes the roomId on ViewHomePage", async () => {
         dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
