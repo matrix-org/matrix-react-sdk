@@ -16,7 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { PollResponseEvent } from "matrix-events-sdk";
+import { PollResponseEvent } from "matrix-js-sdk/src/extensible_events_v1/PollResponseEvent";
 
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { MatrixClient } from "../../global";

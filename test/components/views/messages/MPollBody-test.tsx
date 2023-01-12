@@ -26,10 +26,10 @@ import {
     M_POLL_KIND_UNDISCLOSED,
     M_POLL_RESPONSE,
     M_POLL_START,
-    M_POLL_START_EVENT_CONTENT,
-    M_TEXT,
-    POLL_ANSWER,
-} from "matrix-events-sdk";
+    PollStartEventContent,
+    PollAnswer,
+} from "matrix-js-sdk/src/@types/polls";
+import { M_TEXT } from "matrix-js-sdk/src/@types/extensible_events";
 import { MockedObject } from "jest-mock";
 
 import {
@@ -951,7 +951,7 @@ function newRelations(relationEvents: Array<MatrixEvent>, eventType: string): Re
 function newMPollBody(
     relationEvents: Array<MatrixEvent>,
     endEvents: Array<MatrixEvent> = [],
-    answers?: POLL_ANSWER[],
+    answers?: PollAnswer[],
     disclosed = true,
 ): ReactWrapper {
     const mxEvent = new MatrixEvent({
@@ -1033,7 +1033,7 @@ function endedVotesCount(wrapper: ReactWrapper, value: string): string {
     return wrapper.find(`div[data-value="${value}"] .mx_MPollBody_optionVoteCount`).text();
 }
 
-function newPollStart(answers?: POLL_ANSWER[], question?: string, disclosed = true): M_POLL_START_EVENT_CONTENT {
+function newPollStart(answers?: PollAnswer[], question?: string, disclosed = true): PollStartEventContent {
     if (!answers) {
         answers = [
             { id: "pizza", [M_TEXT.name]: "Pizza" },
