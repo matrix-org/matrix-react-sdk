@@ -90,15 +90,15 @@ export async function waitForMember(
     roomId: string,
     userId: string,
     opts = { timeout: 1500 },
-): Promise<void> {
+): Promise<boolean> {
     const { timeout } = opts;
     let handler: (event: MatrixEvent, state: RoomState, member: RoomMember) => void;
-    return new Promise<void>((resolve) => {
+    return new Promise<boolean>((resolve) => {
         // eslint-disable-next-line @typescript-eslint/naming-convention
         handler = function (_, __, member: RoomMember) {
             if (member.userId !== userId) return;
             if (member.roomId !== roomId) return;
-            resolve();
+            resolve(true);
         };
         client.on(RoomStateEvent.NewMember, handler);
 
