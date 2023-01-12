@@ -511,6 +511,7 @@ describe("VoiceBroadcastRecording", () => {
 
                 describe("and the connection is back", () => {
                     beforeEach(() => {
+                        mocked(client.sendMessage).mockClear();
                         mocked(client.sendMessage).mockResolvedValue({ event_id: "e23" });
                         client.emit(ClientEvent.Sync, SyncState.Catchup, SyncState.Error);
                     });

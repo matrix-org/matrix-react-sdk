@@ -354,6 +354,13 @@ export class VoiceBroadcastRecording
     }
 
     private async sendVoiceMessage(chunk: ChunkRecordedPayload, url?: string, file?: IEncryptedFile): Promise<void> {
+        /**
+         * Increment the last sequence number and use it for this message.
+         * Done outside of the sendMessageFn to get a scoped value.
+         * Also see {@link VoiceBroadcastRecording.sequence}.
+         */
+        const sequence = ++this.sequence;
+
         const sendMessageFn = async () => {
             const content = createVoiceMessageContent(
                 url,
@@ -366,9 +373,8 @@ export class VoiceBroadcastRecording
                 rel_type: RelationType.Reference,
                 event_id: this.infoEventId,
             };
-            /** Increment the last sequence number and use it for this message. Also see {@link sequence}. */
             content["io.element.voice_broadcast_chunk"] = {
-                sequence: ++this.sequence,
+                sequence,
             };
 
             await this.client.sendMessage(this.roomId, content);
