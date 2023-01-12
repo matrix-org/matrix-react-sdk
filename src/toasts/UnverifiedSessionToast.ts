@@ -14,14 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { _t } from '../languageHandler';
+import { _t } from "../languageHandler";
 import dis from "../dispatcher/dispatcher";
-import { MatrixClientPeg } from '../MatrixClientPeg';
-import DeviceListener from '../DeviceListener';
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import DeviceListener from "../DeviceListener";
 import ToastStore from "../stores/ToastStore";
 import GenericToast from "../components/views/toasts/GenericToast";
 import { Action } from "../dispatcher/actions";
-import { UserTab } from "../components/views/dialogs/UserTab";
 
 function toastKey(deviceId: string) {
     return "unverified_session_" + deviceId;
@@ -33,8 +32,7 @@ export const showToast = async (deviceId: string) => {
     const onAccept = () => {
         DeviceListener.sharedInstance().dismissUnverifiedSessions([deviceId]);
         dis.dispatch({
-            action: Action.ViewUserSettings,
-            initialTabId: UserTab.Security,
+            action: Action.ViewUserDeviceSettings,
         });
     };
 

@@ -32,6 +32,9 @@ export const DEFAULTS: IConfigOptions = {
     },
     element_call: {
         url: "https://call.element.io",
+        use_exclusively: false,
+        participant_limit: 8,
+        brand: "Element Call",
     },
 
     // @ts-ignore - we deliberately use the camelCase version here so we trigger
@@ -43,7 +46,10 @@ export const DEFAULTS: IConfigOptions = {
         logo: require("../res/img/element-desktop-logo.svg").default,
         url: "https://element.io/get-started",
     },
-    spaces_learn_more_url: "https://element.io/blog/spaces-blast-out-of-beta/",
+    voice_broadcast: {
+        chunk_length: 2 * 60, // two minutes
+        max_length: 4 * 60 * 60, // four hours
+    },
 };
 
 export default class SdkConfig {
@@ -61,7 +67,8 @@ export default class SdkConfig {
     public static get(): IConfigOptions;
     public static get<K extends keyof IConfigOptions>(key: K, altCaseName?: string): IConfigOptions[K];
     public static get<K extends keyof IConfigOptions = never>(
-        key?: K, altCaseName?: string,
+        key?: K,
+        altCaseName?: string,
     ): IConfigOptions | IConfigOptions[K] {
         if (key === undefined) {
             // safe to cast as a fallback - we want to break the runtime contract in this case
@@ -71,7 +78,8 @@ export default class SdkConfig {
     }
 
     public static getObject<K extends KeysWithObjectShape<IConfigOptions>>(
-        key: K, altCaseName?: string,
+        key: K,
+        altCaseName?: string,
     ): Optional<SnakedObject<IConfigOptions[K]>> {
         const val = SdkConfig.get(key, altCaseName);
         if (val !== null && val !== undefined) {

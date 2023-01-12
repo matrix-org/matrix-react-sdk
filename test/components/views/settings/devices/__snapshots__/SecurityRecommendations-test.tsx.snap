@@ -6,15 +6,19 @@ exports[`<SecurityRecommendations /> renders both cards when user has both unver
     class="mx_SettingsSubsection"
     data-testid="security-recommendations-section"
   >
-    <h3
-      class="mx_Heading_h3 mx_SettingsSubsection_heading"
+    <div
+      class="mx_SettingsSubsectionHeading"
     >
-      Security recommendations
-    </h3>
+      <h3
+        class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+      >
+        Security recommendations
+      </h3>
+    </div>
     <div
       class="mx_SettingsSubsection_description"
     >
-      Improve your account security by following these recommendations
+      Improve your account security by following these recommendations.
     </div>
     <div
       class="mx_SettingsSubsection_content"
@@ -42,6 +46,13 @@ exports[`<SecurityRecommendations /> renders both cards when user has both unver
             class="mx_DeviceSecurityCard_description"
           >
             Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.
+            <div
+              class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
+              role="button"
+              tabindex="0"
+            >
+              Learn more
+            </div>
           </p>
           <div
             class="mx_DeviceSecurityCard_actions"
@@ -82,7 +93,14 @@ exports[`<SecurityRecommendations /> renders both cards when user has both unver
           <p
             class="mx_DeviceSecurityCard_description"
           >
-            Consider signing out from old sessions (90 days or older) you don't use anymore
+            Consider signing out from old sessions (90 days or older) you don't use anymore.
+            <div
+              class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
+              role="button"
+              tabindex="0"
+            >
+              Learn more
+            </div>
           </p>
           <div
             class="mx_DeviceSecurityCard_actions"
@@ -109,15 +127,19 @@ exports[`<SecurityRecommendations /> renders inactive devices section when user 
     class="mx_SettingsSubsection"
     data-testid="security-recommendations-section"
   >
-    <h3
-      class="mx_Heading_h3 mx_SettingsSubsection_heading"
+    <div
+      class="mx_SettingsSubsectionHeading"
     >
-      Security recommendations
-    </h3>
+      <h3
+        class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+      >
+        Security recommendations
+      </h3>
+    </div>
     <div
       class="mx_SettingsSubsection_description"
     >
-      Improve your account security by following these recommendations
+      Improve your account security by following these recommendations.
     </div>
     <div
       class="mx_SettingsSubsection_content"
@@ -145,6 +167,13 @@ exports[`<SecurityRecommendations /> renders inactive devices section when user 
             class="mx_DeviceSecurityCard_description"
           >
             Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.
+            <div
+              class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
+              role="button"
+              tabindex="0"
+            >
+              Learn more
+            </div>
           </p>
           <div
             class="mx_DeviceSecurityCard_actions"
@@ -185,7 +214,14 @@ exports[`<SecurityRecommendations /> renders inactive devices section when user 
           <p
             class="mx_DeviceSecurityCard_description"
           >
-            Consider signing out from old sessions (90 days or older) you don't use anymore
+            Consider signing out from old sessions (90 days or older) you don't use anymore.
+            <div
+              class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
+              role="button"
+              tabindex="0"
+            >
+              Learn more
+            </div>
           </p>
           <div
             class="mx_DeviceSecurityCard_actions"
@@ -212,15 +248,19 @@ exports[`<SecurityRecommendations /> renders unverified devices section when use
     class="mx_SettingsSubsection"
     data-testid="security-recommendations-section"
   >
-    <h3
-      class="mx_Heading_h3 mx_SettingsSubsection_heading"
+    <div
+      class="mx_SettingsSubsectionHeading"
     >
-      Security recommendations
-    </h3>
+      <h3
+        class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+      >
+        Security recommendations
+      </h3>
+    </div>
     <div
       class="mx_SettingsSubsection_description"
     >
-      Improve your account security by following these recommendations
+      Improve your account security by following these recommendations.
     </div>
     <div
       class="mx_SettingsSubsection_content"
@@ -248,6 +288,13 @@ exports[`<SecurityRecommendations /> renders unverified devices section when use
             class="mx_DeviceSecurityCard_description"
           >
             Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.
+            <div
+              class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
+              role="button"
+              tabindex="0"
+            >
+              Learn more
+            </div>
           </p>
           <div
             class="mx_DeviceSecurityCard_actions"
@@ -288,7 +335,14 @@ exports[`<SecurityRecommendations /> renders unverified devices section when use
           <p
             class="mx_DeviceSecurityCard_description"
           >
-            Consider signing out from old sessions (90 days or older) you don't use anymore
+            Consider signing out from old sessions (90 days or older) you don't use anymore.
+            <div
+              class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
+              role="button"
+              tabindex="0"
+            >
+              Learn more
+            </div>
           </p>
           <div
             class="mx_DeviceSecurityCard_actions"

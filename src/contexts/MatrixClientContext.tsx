@@ -25,22 +25,22 @@ export interface MatrixClientProps {
     mxClient: MatrixClient;
 }
 
-const matrixHOC = <ComposedComponentProps extends {}>(
-    ComposedComponent: ComponentClass<ComposedComponentProps>,
-) => {
+export function useMatrixClientContext() {
+    return useContext(MatrixClientContext);
+}
+
+const matrixHOC = <ComposedComponentProps extends {}>(ComposedComponent: ComponentClass<ComposedComponentProps>) => {
     type ComposedComponentInstance = InstanceType<typeof ComposedComponent>;
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
 
     const TypedComponent = ComposedComponent;
 
-    return forwardRef<ComposedComponentInstance, Omit<ComposedComponentProps, 'mxClient'>>(
-        (props, ref) => {
-            const client = useContext(MatrixClientContext);
+    return forwardRef<ComposedComponentInstance, Omit<ComposedComponentProps, "mxClient">>((props, ref) => {
+        const client = useContext(MatrixClientContext);
 
-            // @ts-ignore
-            return <TypedComponent ref={ref} {...props} mxClient={client} />;
-        },
-    );
+        // @ts-ignore
+        return <TypedComponent ref={ref} {...props} mxClient={client} />;
+    });
 };
 export const withMatrixClientHOC = matrixHOC;

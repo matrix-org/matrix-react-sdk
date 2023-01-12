@@ -36,14 +36,14 @@ function roundTimeToTargetFreq(seconds: number): number {
 
 function nextTimeForTargetFreq(roundedSeconds: number): number {
     // The extra round is just to make sure we cut off any floating point issues
-    return roundTimeToTargetFreq(roundedSeconds + (1 / TARGET_AMPLITUDE_FREQUENCY));
+    return roundTimeToTargetFreq(roundedSeconds + 1 / TARGET_AMPLITUDE_FREQUENCY);
 }
 
 class MxVoiceWorklet extends AudioWorkletProcessor {
     private nextAmplitudeSecond = 0;
     private amplitudeIndex = 0;
 
-    process(inputs, outputs, parameters) {
+    public process(inputs, outputs, parameters) {
         const currentSecond = roundTimeToTargetFreq(currentTime);
         // We special case the first ping because there's a fairly good chance that we'll miss the zeroth
         // update. Firefox for instance takes 0.06 seconds (roughly) to call this function for the first
@@ -85,4 +85,4 @@ class MxVoiceWorklet extends AudioWorkletProcessor {
 
 registerProcessor(WORKLET_NAME, MxVoiceWorklet);
 
-export default null; // to appease module loaders (we never use the export)
+export default ""; // to appease module loaders (we never use the export)

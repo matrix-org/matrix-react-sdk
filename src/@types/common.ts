@@ -17,35 +17,48 @@ limitations under the License.
 import React, { JSXElementConstructor } from "react";
 
 // Based on https://stackoverflow.com/a/53229857/3532235
-export type Without<T, U> = {[P in Exclude<keyof T, keyof U>]?: never};
-export type XOR<T, U> = (T | U) extends object ? (Without<T, U> & U) | (Without<U, T> & T) : T | U;
+export type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
+export type XOR<T, U> = T | U extends object ? (Without<T, U> & U) | (Without<U, T> & T) : T | U;
 export type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 
 export type ComponentClass = keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
 export type ReactAnyComponent = React.Component | React.ExoticComponent;
 
+// Utility type for string dot notation for accessing nested object properties
 // Based on https://stackoverflow.com/a/58436959
-type Join<K, P> = K extends string | number ?
-    P extends string | number ?
-        `${K}${"" extends P ? "" : "."}${P}`
-        : never : never;
+type Join<K, P> = K extends string | number
+    ? P extends string | number
+        ? `${K}${"" extends P ? "" : "."}${P}`
+        : never
+    : never;
 
-type Prev = [never, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, ...0[]];
+type Prev = [never, 0, 1, 2, 3, ...0[]];
 
-export type Leaves<T, D extends number = 5> = [D] extends [never] ? never : T extends object ?
-    { [K in keyof T]-?: Join<K, Leaves<T[K], Prev[D]>> }[keyof T] : "";
+export type Leaves<T, D extends number = 3> = [D] extends [never]
+    ? never
+    : T extends object
+    ? { [K in keyof T]-?: Join<K, Leaves<T[K], Prev[D]>> }[keyof T]
+    : "";
 
 export type RecursivePartial<T> = {
-    [P in keyof T]?:
-    T[P] extends (infer U)[] ? RecursivePartial<U>[] :
-        T[P] extends object ? RecursivePartial<T[P]> :
-            T[P];
+    [P in keyof T]?: T[P] extends (infer U)[]
+        ? RecursivePartial<U>[]
+        : T[P] extends object
+        ? RecursivePartial<T[P]>
+        : T[P];
 };
 
 // Inspired by https://stackoverflow.com/a/60206860
 export type KeysWithObjectShape<Input> = {
     [P in keyof Input]: Input[P] extends object
-        // Arrays are counted as objects - exclude them
-        ? (Input[P] extends Array<unknown> ? never : P)
+        ? // Arrays are counted as objects - exclude them
+          Input[P] extends Array<unknown>
+            ? never
+            : P
         : never;
+}[keyof Input];
+
+export type KeysStartingWith<Input extends object, Str extends string> = {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    [P in keyof Input]: P extends `${Str}${infer _X}` ? P : never; // we don't use _X
 }[keyof Input];

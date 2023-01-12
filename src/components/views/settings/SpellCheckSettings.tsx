@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 import SpellCheckLanguagesDropdown from "../../../components/views/elements/SpellCheckLanguagesDropdown";
 import AccessibleButton from "../../../components/views/elements/AccessibleButton";
@@ -42,12 +42,12 @@ export class ExistingSpellCheckLanguage extends React.Component<ExistingSpellChe
         return this.props.onRemoved(this.props.language);
     };
 
-    render() {
+    public render() {
         return (
             <div className="mx_ExistingSpellCheckLanguage">
-                <span className="mx_ExistingSpellCheckLanguage_language">{ this.props.language }</span>
+                <span className="mx_ExistingSpellCheckLanguage_language">{this.props.language}</span>
                 <AccessibleButton onClick={this.onRemove} kind="danger_sm">
-                    { _t("Remove") }
+                    {_t("Remove")}
                 </AccessibleButton>
             </div>
         );
@@ -55,7 +55,7 @@ export class ExistingSpellCheckLanguage extends React.Component<ExistingSpellChe
 }
 
 export default class SpellCheckLanguages extends React.Component<SpellCheckLanguagesIProps, SpellCheckLanguagesIState> {
-    constructor(props) {
+    public constructor(props) {
         super(props);
         this.state = {
             newLanguage: "",
@@ -86,26 +86,27 @@ export default class SpellCheckLanguages extends React.Component<SpellCheckLangu
         this.setState({ newLanguage: language });
     };
 
-    render() {
+    public render() {
         const existingSpellCheckLanguages = this.props.languages.map((e) => {
             return <ExistingSpellCheckLanguage language={e} onRemoved={this.onRemoved} key={e} />;
         });
 
         const addButton = (
             <AccessibleButton onClick={this.onAddClick} kind="primary">
-                { _t("Add") }
+                {_t("Add")}
             </AccessibleButton>
         );
 
         return (
             <div className="mx_SpellCheckLanguages">
-                { existingSpellCheckLanguages }
+                {existingSpellCheckLanguages}
                 <form onSubmit={this.onAddClick} noValidate={true}>
                     <SpellCheckLanguagesDropdown
                         className="mx_GeneralUserSettingsTab_spellCheckLanguageInput"
                         value={this.state.newLanguage}
-                        onOptionChange={this.onNewLanguageChange} />
-                    { addButton }
+                        onOptionChange={this.onNewLanguageChange}
+                    />
+                    {addButton}
                 </form>
             </div>
         );

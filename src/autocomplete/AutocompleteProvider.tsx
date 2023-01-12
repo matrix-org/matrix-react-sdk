@@ -16,10 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { TimelineRenderingType } from '../contexts/RoomContext';
-import type { ICompletion, ISelectionRange } from './Autocompleter';
+import { TimelineRenderingType } from "../contexts/RoomContext";
+import type { ICompletion, ISelectionRange } from "./Autocompleter";
 
 export interface ICommand {
     command: string | null;
@@ -36,21 +36,21 @@ export interface IAutocompleteOptions {
 }
 
 export default abstract class AutocompleteProvider {
-    commandRegex: RegExp;
-    forcedCommandRegex: RegExp;
+    public commandRegex: RegExp;
+    public forcedCommandRegex: RegExp;
 
     protected renderingType: TimelineRenderingType = TimelineRenderingType.Room;
 
     protected constructor({ commandRegex, forcedCommandRegex, renderingType }: IAutocompleteOptions) {
         if (commandRegex) {
             if (!commandRegex.global) {
-                throw new Error('commandRegex must have global flag set');
+                throw new Error("commandRegex must have global flag set");
             }
             this.commandRegex = commandRegex;
         }
         if (forcedCommandRegex) {
             if (!forcedCommandRegex.global) {
-                throw new Error('forcedCommandRegex must have global flag set');
+                throw new Error("forcedCommandRegex must have global flag set");
             }
             this.forcedCommandRegex = forcedCommandRegex;
         }
@@ -59,7 +59,7 @@ export default abstract class AutocompleteProvider {
         }
     }
 
-    destroy() {
+    public destroy() {
         // stub
     }
 
@@ -70,7 +70,7 @@ export default abstract class AutocompleteProvider {
      * @param {boolean} force True if the user is forcing completion
      * @return {object} { command, range } where both objects fields are null if no match
      */
-    getCurrentCommand(query: string, selection: ISelectionRange, force = false) {
+    public getCurrentCommand(query: string, selection: ISelectionRange, force = false) {
         let commandRegex = this.commandRegex;
 
         if (force && this.shouldForceComplete()) {
@@ -106,19 +106,19 @@ export default abstract class AutocompleteProvider {
         };
     }
 
-    abstract getCompletions(
+    public abstract getCompletions(
         query: string,
         selection: ISelectionRange,
         force: boolean,
         limit: number,
     ): Promise<ICompletion[]>;
 
-    abstract getName(): string;
+    public abstract getName(): string;
 
-    abstract renderCompletions(completions: React.ReactNode[]): React.ReactNode | null;
+    public abstract renderCompletions(completions: React.ReactNode[]): React.ReactNode | null;
 
     // Whether we should provide completions even if triggered forcefully, without a sigil.
-    shouldForceComplete(): boolean {
+    public shouldForceComplete(): boolean {
         return false;
     }
 }

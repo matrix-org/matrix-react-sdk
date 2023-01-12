@@ -17,17 +17,41 @@ limitations under the License.
 // eslint-disable-next-line deprecate/import
 import { ReactWrapper } from "enzyme";
 import { act } from "react-dom/test-utils";
+import { act as actRTL, fireEvent, RenderResult } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
-export const addTextToComposer = (wrapper: ReactWrapper, text: string) => act(() => {
-    // couldn't get input event on contenteditable to work
-    // paste works without illegal private method access
-    const pasteEvent = {
-        clipboardData: {
-            types: [],
-            files: [],
-            getData: type => type === "text/plain" ? text : undefined,
-        },
-    };
-    wrapper.find('[role="textbox"]').simulate('paste', pasteEvent);
-    wrapper.update();
-});
+export const addTextToComposer = (container: HTMLElement, text: string) =>
+    act(() => {
+        // couldn't get input event on contenteditable to work
+        // paste works without illegal private method access
+        const pasteEvent = {
+            clipboardData: {
+                types: [],
+                files: [],
+                getData: (type) => (type === "text/plain" ? text : undefined),
+            },
+        };
+        fireEvent.paste(container.querySelector('[role="textbox"]'), pasteEvent);
+    });
+
+export const addTextToComposerEnzyme = (wrapper: ReactWrapper, text: string) =>
+    act(() => {
+        // couldn't get input event on contenteditable to work
+        // paste works without illegal private method access
+        const pasteEvent = {
+            clipboardData: {
+                types: [],
+                files: [],
+                getData: (type) => (type === "text/plain" ? text : undefined),
+            },
+        };
+        wrapper.find('[role="textbox"]').simulate("paste", pasteEvent);
+        wrapper.update();
+    });
+
+export const addTextToComposerRTL = async (renderResult: RenderResult, text: string): Promise<void> => {
+    await actRTL(async () => {
+        await userEvent.click(renderResult.getByLabelText("Send a message…"));
+        await userEvent.keyboard(text);
+    });
+};

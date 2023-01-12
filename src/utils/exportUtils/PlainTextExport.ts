@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 import React from "react";
 
 import Exporter from "./Exporter";
-import { formatFullDateNoDay } from "../../DateUtils";
 import { _t } from "../../languageHandler";
 import { ExportType, IExportOptions } from "./exportUtils";
 import { textForEvent } from "../../TextForEvent";
@@ -30,7 +29,7 @@ export default class PlainTextExporter extends Exporter {
     protected totalSize: number;
     protected mediaOmitText: string;
 
-    constructor(
+    public constructor(
         room: Room,
         exportType: ExportType,
         exportOptions: IExportOptions,
@@ -41,6 +40,10 @@ export default class PlainTextExporter extends Exporter {
         this.mediaOmitText = !this.exportOptions.attachmentsIncluded
             ? _t("Media omitted")
             : _t("Media omitted - file size limit exceeded");
+    }
+
+    public get destinationFileName(): string {
+        return this.makeFileNameNoExtension() + ".txt";
     }
 
     public textForReplyEvent = (content: IContent) => {
@@ -58,7 +61,7 @@ export default class PlainTextExporter extends Exporter {
 
         rplSource = match[2].substring(1);
         // Get the first non-blank line from the source.
-        const lines = rplSource.split('\n').filter((line) => !/^\s*$/.test(line));
+        const lines = rplSource.split("\n").filter((line) => !/^\s*$/.test(line));
         if (lines.length > 0) {
             // Cut to a maximum length.
             rplSource = lines[0].substring(0, REPLY_SOURCE_MAX_LENGTH);
@@ -108,10 +111,14 @@ export default class PlainTextExporter extends Exporter {
         let content = "";
         for (let i = 0; i < events.length; i++) {
             const event = events[i];
-            this.updateProgress(_t("Processing event %(number)s out of %(total)s", {
-                number: i + 1,
-                total: events.length,
-            }), false, true);
+            this.updateProgress(
+                _t("Processing event %(number)s out of %(total)s", {
+                    number: i + 1,
+                    total: events.length,
+                }),
+                false,
+                true,
+            );
             if (this.cancelled) return this.cleanUp();
             if (!haveRendererForEvent(event, false)) continue;
             const textForEvent = await this.plainTextForEvent(event);
@@ -128,7 +135,7 @@ export default class PlainTextExporter extends Exporter {
         const res = await this.getRequiredEvents();
         const fetchEnd = performance.now();
 
-        logger.log(`Fetched ${res.length} events in ${(fetchEnd - fetchStart)/1000}s`);
+        logger.log(`Fetched ${res.length} events in ${(fetchEnd - fetchStart) / 1000}s`);
 
         this.updateProgress(_t("Creating output..."));
         const text = await this.createOutput(res);
@@ -137,7 +144,7 @@ export default class PlainTextExporter extends Exporter {
             this.addFile("export.txt", new Blob([text]));
             await this.downloadZIP();
         } else {
-            const fileName = `matrix-export-${formatFullDateNoDay(new Date())}.txt`;
+            const fileName = this.destinationFileName;
             this.downloadPlainText(fileName, text);
         }
 
@@ -147,10 +154,9 @@ export default class PlainTextExporter extends Exporter {
             logger.info("Export cancelled successfully");
         } else {
             logger.info("Export successful!");
-            logger.log(`Exported ${res.length} events in ${(exportEnd - fetchStart)/1000} seconds`);
+            logger.log(`Exported ${res.length} events in ${(exportEnd - fetchStart) / 1000} seconds`);
         }
 
         this.cleanUp();
     }
 }
-
