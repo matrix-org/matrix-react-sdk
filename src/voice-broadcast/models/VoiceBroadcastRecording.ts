@@ -325,13 +325,7 @@ export class VoiceBroadcastRecording
             await this.sendVoiceMessage(chunk, url, file);
         };
 
-        try {
-            await uploadAndSendFn();
-        } catch {
-            // Uploading audio failed.
-            this.toRetry.push(uploadAndSendFn);
-            await this.onConnectionError();
-        }
+        await this.callWithRetry(uploadAndSendFn);
     };
 
     /**
@@ -380,13 +374,7 @@ export class VoiceBroadcastRecording
             await this.client.sendMessage(this.roomId, content);
         };
 
-        try {
-            await sendMessageFn();
-        } catch {
-            // Sending the voice message failed.
-            this.toRetry.push(sendMessageFn);
-            this.onConnectionError();
-        }
+        this.callWithRetry(sendMessageFn);
     }
 
     /**
@@ -412,14 +400,20 @@ export class VoiceBroadcastRecording
             );
         };
 
+        await this.callWithRetry(sendEventFn);
+    }
+
+    /**
+     * Calls the function.
+     * On failure adds it to the retry list and triggers connection error.
+     * {@link toRetry}
+     * {@link onConnectionError}
+     */
+    private async callWithRetry(retryAbleFn: () => Promise<void>) {
         try {
-            await sendEventFn();
+            await retryAbleFn();
         } catch {
-            // Sending the state event failed.
-            this.toRetry.push(async () => {
-                await sendEventFn();
-                this.setState(state);
-            });
+            this.toRetry.push(retryAbleFn);
             this.onConnectionError();
         }
     }
