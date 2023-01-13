@@ -108,7 +108,7 @@ describe("Notifier", () => {
             decryptEventIfNeeded: jest.fn(),
             getRoom: jest.fn(),
             getPushActionsForEvent: jest.fn(),
-            supportsExperimentalThreads: jest.fn().mockReturnValue(false),
+            supportsThreads: jest.fn().mockReturnValue(false),
         });
 
         mockClient.pushRules = {
