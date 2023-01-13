@@ -14,20 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { WysiwygInputEvent } from "@matrix-org/matrix-wysiwyg";
+import { WysiwygEvent } from "@matrix-org/matrix-wysiwyg";
 import { useCallback } from "react";
 
 import { useSettingValue } from "../../../../../hooks/useSettings";
 
-export function useInputEventProcessor(onSend: () => void) {
+export function useInputEventProcessor(onSend: () => void): (event: WysiwygEvent) => WysiwygEvent | null {
     const isCtrlEnter = useSettingValue<boolean>("MessageComposerInput.ctrlEnterToSend");
     return useCallback(
-        (event: WysiwygInputEvent) => {
+        (event: WysiwygEvent) => {
             if (event instanceof ClipboardEvent) {
                 return event;
             }
 
-            if ((event.inputType === "insertParagraph" && !isCtrlEnter) || event.inputType === "sendMessage") {
+            const isKeyboardEvent = event instanceof KeyboardEvent;
+            const isEnterPress =
+                !isCtrlEnter && (isKeyboardEvent ? event.key === "Enter" : event.inputType === "insertParagraph");
+            // sendMessage is sent when ctrl+enter is pressed
+            const isSendMessage = !isKeyboardEvent && event.inputType === "sendMessage";
+
+            if (isEnterPress || isSendMessage) {
+                event.stopPropagation?.();
+                event.preventDefault?.();
                 onSend();
                 return null;
             }

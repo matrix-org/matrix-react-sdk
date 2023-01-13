@@ -18,14 +18,14 @@ limitations under the License.
 
 import { PollResponseEvent } from "matrix-events-sdk";
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { MatrixClient } from "../../global";
 import Chainable = Cypress.Chainable;
 
 const hideTimestampCSS = ".mx_MessageTimestamp { visibility: hidden !important; }";
 
 describe("Polls", () => {
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
 
     type CreatePollOptions = {
         title: string;
@@ -80,20 +80,20 @@ describe("Polls", () => {
         cy.window().then((win) => {
             win.localStorage.setItem("mx_lhs_size", "0"); // Collapse left panel for these tests
         });
-        cy.startSynapse("default").then((data) => {
-            synapse = data;
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
 
-            cy.initTestUser(synapse, "Tom");
+            cy.initTestUser(homeserver, "Tom");
         });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
     });
 
     it("should be creatable and votable", () => {
         let bot: MatrixClient;
-        cy.getBot(synapse, { displayName: "BotBob" }).then((_bot) => {
+        cy.getBot(homeserver, { displayName: "BotBob" }).then((_bot) => {
             bot = _bot;
         });
 
@@ -162,7 +162,7 @@ describe("Polls", () => {
 
     it("should be editable from context menu if no votes have been cast", () => {
         let bot: MatrixClient;
-        cy.getBot(synapse, { displayName: "BotBob" }).then((_bot) => {
+        cy.getBot(homeserver, { displayName: "BotBob" }).then((_bot) => {
             bot = _bot;
         });
 
@@ -205,7 +205,7 @@ describe("Polls", () => {
 
     it("should not be editable from context menu if votes have been cast", () => {
         let bot: MatrixClient;
-        cy.getBot(synapse, { displayName: "BotBob" }).then((_bot) => {
+        cy.getBot(homeserver, { displayName: "BotBob" }).then((_bot) => {
             bot = _bot;
         });
 
@@ -255,10 +255,10 @@ describe("Polls", () => {
     it("should be displayed correctly in thread panel", () => {
         let botBob: MatrixClient;
         let botCharlie: MatrixClient;
-        cy.getBot(synapse, { displayName: "BotBob" }).then((_bot) => {
+        cy.getBot(homeserver, { displayName: "BotBob" }).then((_bot) => {
             botBob = _bot;
         });
-        cy.getBot(synapse, { displayName: "BotCharlie" }).then((_bot) => {
+        cy.getBot(homeserver, { displayName: "BotCharlie" }).then((_bot) => {
             botCharlie = _bot;
         });
 

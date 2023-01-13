@@ -36,6 +36,7 @@ import { Layout } from "../../../settings/enums/Layout";
 import { formatTime } from "../../../DateUtils";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import DecryptionFailureBody from "../messages/DecryptionFailureBody";
 import { E2EState } from "./E2EIcon";
 import RoomAvatar from "../avatars/RoomAvatar";
 import MessageContextMenu from "../context_menus/MessageContextMenu";
@@ -333,7 +334,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         return true;
     }
 
-    private get shouldShowSentReceipt() {
+    private get shouldShowSentReceipt(): boolean {
         // If we're not even eligible, don't show the receipt.
         if (!this.isEligibleForSpecialReceipt) return false;
 
@@ -353,7 +354,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         return true;
     }
 
-    private get shouldShowSendingReceipt() {
+    private get shouldShowSendingReceipt(): boolean {
         // If we're not even eligible, don't show the receipt.
         if (!this.isEligibleForSpecialReceipt) return false;
 
@@ -366,7 +367,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         return true;
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.suppressReadReceiptAnimation = false;
         const client = MatrixClientPeg.get();
         if (!this.props.forExport) {
@@ -431,7 +432,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         }
     };
 
-    private updateThread = (thread: Thread) => {
+    private updateThread = (thread: Thread): void => {
         if (thread !== this.state.thread && !this.supportsThreadNotifications) {
             if (this.threadState) {
                 this.threadState.off(NotificationStateEvents.Update, this.onThreadStateUpdate);
@@ -451,7 +452,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         return !this.propsEqual(this.props, nextProps);
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         const client = MatrixClientPeg.get();
         if (client) {
             client.removeListener(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
@@ -470,7 +471,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         this.threadState?.off(NotificationStateEvents.Update, this.onThreadStateUpdate);
     }
 
-    public componentDidUpdate(prevProps: Readonly<EventTileProps>, prevState: Readonly<IState>) {
+    public componentDidUpdate(prevProps: Readonly<EventTileProps>, prevState: Readonly<IState>): void {
         // If the verification state changed, the height might have changed
         if (prevState.verified !== this.state.verified && this.props.onHeightChanged) {
             this.props.onHeightChanged();
@@ -486,7 +487,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         }
     }
 
-    private onNewThread = (thread: Thread) => {
+    private onNewThread = (thread: Thread): void => {
         if (thread.id === this.props.mxEvent.getId()) {
             this.updateThread(thread);
             const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
@@ -584,7 +585,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
     /** called when the event is decrypted after we show it.
      */
-    private onDecrypted = () => {
+    private onDecrypted = (): void => {
         // we need to re-verify the sending device.
         this.verifyEvent();
         // decryption might, of course, trigger a height change, so call onHeightChanged after the re-render
@@ -604,7 +605,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
     };
 
     /** called when the event is edited after we show it. */
-    private onReplaced = () => {
+    private onReplaced = (): void => {
         // re-verify the event if it is replaced (the edit may not be verified)
         this.verifyEvent();
     };
@@ -725,7 +726,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         return actions.tweaks.highlight;
     }
 
-    private onSenderProfileClick = () => {
+    private onSenderProfileClick = (): void => {
         dis.dispatch<ComposerInsertPayload>({
             action: Action.ComposerInsert,
             userId: this.props.mxEvent.getSender(),
@@ -733,7 +734,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         });
     };
 
-    private onPermalinkClicked = (e: MouseEvent) => {
+    private onPermalinkClicked = (e: MouseEvent): void => {
         // This allows the permalink to be opened in a new tab/window or copied as
         // matrix.to, but also for it to enable routing within Element when clicked.
         e.preventDefault();
@@ -747,7 +748,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         });
     };
 
-    private renderE2EPadlock() {
+    private renderE2EPadlock(): JSX.Element {
         // if the event was edited, show the verification info for the edit, not
         // the original
         const ev = this.props.mxEvent.replacingEvent() ?? this.props.mxEvent;
@@ -798,7 +799,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         return null;
     }
 
-    private onActionBarFocusChange = (actionBarFocused: boolean) => {
+    private onActionBarFocusChange = (actionBarFocused: boolean): void => {
         this.setState({ actionBarFocused });
     };
 
@@ -806,7 +807,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
     private getReplyChain = (): ReplyChain => this.replyChain.current;
 
-    private getReactions = () => {
+    private getReactions = (): Relations => {
         if (!this.props.showReactions || !this.props.getRelationsForEvent) {
             return null;
         }
@@ -872,7 +873,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         });
     };
 
-    private setQuoteExpanded = (expanded: boolean) => {
+    private setQuoteExpanded = (expanded: boolean): void => {
         this.setState({
             isQuoteExpanded: expanded,
         });
@@ -914,7 +915,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         );
     }
 
-    public render() {
+    public render(): JSX.Element {
         const msgtype = this.props.mxEvent.getContent().msgtype;
         const eventType = this.props.mxEvent.getType();
         const {
@@ -1320,6 +1321,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                             <div className="mx_EventTile_body">
                                 {this.props.mxEvent.isRedacted() ? (
                                     <RedactedBody mxEvent={this.props.mxEvent} />
+                                ) : this.props.mxEvent.isDecryptionFailure() ? (
+                                    <DecryptionFailureBody />
                                 ) : (
                                     MessagePreviewStore.instance.generatePreviewForEvent(this.props.mxEvent)
                                 )}
@@ -1464,19 +1467,19 @@ const SafeEventTile = forwardRef((props: EventTileProps, ref: RefObject<Unwrappe
 });
 export default SafeEventTile;
 
-function E2ePadlockUnverified(props: Omit<IE2ePadlockProps, "title" | "icon">) {
+function E2ePadlockUnverified(props: Omit<IE2ePadlockProps, "title" | "icon">): JSX.Element {
     return <E2ePadlock title={_t("Encrypted by an unverified session")} icon={E2ePadlockIcon.Warning} {...props} />;
 }
 
-function E2ePadlockUnencrypted(props: Omit<IE2ePadlockProps, "title" | "icon">) {
+function E2ePadlockUnencrypted(props: Omit<IE2ePadlockProps, "title" | "icon">): JSX.Element {
     return <E2ePadlock title={_t("Unencrypted")} icon={E2ePadlockIcon.Warning} {...props} />;
 }
 
-function E2ePadlockUnknown(props: Omit<IE2ePadlockProps, "title" | "icon">) {
+function E2ePadlockUnknown(props: Omit<IE2ePadlockProps, "title" | "icon">): JSX.Element {
     return <E2ePadlock title={_t("Encrypted by a deleted session")} icon={E2ePadlockIcon.Normal} {...props} />;
 }
 
-function E2ePadlockUnauthenticated(props: Omit<IE2ePadlockProps, "title" | "icon">) {
+function E2ePadlockUnauthenticated(props: Omit<IE2ePadlockProps, "title" | "icon">): JSX.Element {
     return (
         <E2ePadlock
             title={_t("The authenticity of this encrypted message can't be guaranteed on this device.")}
@@ -1486,7 +1489,7 @@ function E2ePadlockUnauthenticated(props: Omit<IE2ePadlockProps, "title" | "icon
     );
 }
 
-function E2ePadlockDecryptionFailure(props: Omit<IE2ePadlockProps, "title" | "icon">) {
+function E2ePadlockDecryptionFailure(props: Omit<IE2ePadlockProps, "title" | "icon">): JSX.Element {
     return (
         <E2ePadlock
             title={_t("This message could not be decrypted")}
@@ -1547,7 +1550,7 @@ interface ISentReceiptProps {
     messageState: string; // TODO: Types for message sending state
 }
 
-function SentReceipt({ messageState }: ISentReceiptProps) {
+function SentReceipt({ messageState }: ISentReceiptProps): JSX.Element {
     const isSent = !messageState || messageState === "sent";
     const isFailed = messageState === "not_sent";
     const receiptClasses = classNames({
