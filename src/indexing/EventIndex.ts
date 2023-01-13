@@ -505,7 +505,7 @@ export default class EventIndex extends EventEmitter {
             // decrypted if necessary.
             const matrixEvents = res.chunk.map(eventMapper);
             let stateEvents = [];
-            if (res.state !== undefined) {
+            if (res.state !== undefined && res.state !== null) {
                 stateEvents = res.state.map(eventMapper);
             }
 
