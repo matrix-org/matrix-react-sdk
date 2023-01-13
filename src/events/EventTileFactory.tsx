@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
-import { Optional } from "matrix-events-sdk";
+import { EmoteEvent, Optional, MessageEvent as ExtEvMessageEvent } from "matrix-events-sdk";
 import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { GroupCallIntent } from "matrix-js-sdk/src/webrtc/groupCall";
@@ -98,6 +98,14 @@ const EVENT_TILE_TYPES = new Map<string, Factory>([
     [EventType.CallInvite, LegacyCallEventFactory], // note that this requires a special factory type
 ]);
 
+const MSC1767MessageFactory: Factory = (ref, props) => <MessageEvent ref={ref} {...props} forceUnstableExtensibleRendering={true} />;
+const MSC1767_EVENT_TILE_TYPES = new Map<string, Factory>([
+    [ExtEvMessageEvent.type.name, MSC1767MessageFactory],
+    [ExtEvMessageEvent.type.altName, MSC1767MessageFactory],
+    [EmoteEvent.type.name, MSC1767MessageFactory],
+    [EmoteEvent.type.altName, MSC1767MessageFactory],
+]);
+
 const STATE_EVENT_TILE_TYPES = new Map<string, Factory>([
     [EventType.RoomEncryption, (ref, props) => <EncryptionEvent ref={ref} {...props} />],
     [EventType.RoomCanonicalAlias, TextualEventFactory],
@@ -175,6 +183,16 @@ export function pickFactory(
     const moderationState = getMessageModerationState(mxEvent, cli);
     if (moderationState === MessageModerationState.HIDDEN_TO_CURRENT_USER) {
         return HiddenEventFactory;
+    }
+
+    // Early intercept: MSC1767-supported rooms require us to not render non-extensible
+    // events, so we simply ignore everything that isn't extensible in nature. This doesn't
+    // apply to state events though, as that would quickly turn the timeline blank.
+    // TODO(TR): Some event types are legal to let through here because they are extensible,
+    // but we don't have proper parsers set up for them yet, so ignore them for now.
+    const room = cli.getRoom(mxEvent.getRoomId());
+    if (!mxEvent.isState() && room?.unstableRequiresExtensibleEvents()) {
+        return MSC1767_EVENT_TILE_TYPES.get(mxEvent.getType()) ?? noEventFactoryFactory();
     }
 
     if (evType === EventType.RoomMessage) {

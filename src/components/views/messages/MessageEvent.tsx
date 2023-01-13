@@ -20,6 +20,7 @@ import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
 import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
 import { MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { EmoteEvent, MessageEvent as ExtEvMessageEvent } from "matrix-events-sdk";
 
 import SettingsStore from "../../../settings/SettingsStore";
 import { Mjolnir } from "../../../mjolnir/Mjolnir";
@@ -54,6 +55,9 @@ interface IProps extends Omit<IBodyProps, "onMessageAllowed" | "mediaEventHelper
     getRelationsForEvent?: GetRelationsForEvent;
 
     isSeeingThroughMessageHiddenForModeration?: boolean;
+
+    // if true, the **unstable** extensible event functionality will be used to parse the event
+    forceUnstableExtensibleRendering?: boolean;
 }
 
 export interface IOperableEventTile {
@@ -149,7 +153,23 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
     public render(): JSX.Element {
         const content = this.props.mxEvent.getContent();
         const type = this.props.mxEvent.getType();
-        const msgtype = content.msgtype;
+        let msgtype = content.msgtype;
+
+        if (this.props.forceUnstableExtensibleRendering) {
+            // interpret the event as a legacy m.room.message event
+            const extev = this.props.mxEvent.unstableExtensibleEvent;
+            if (!extev) {
+                throw new Error("Runtime Error: Extensible event was asked for, but not given");
+            }
+            if (ExtEvMessageEvent.type.matches(extev.type)) {
+                msgtype = MsgType.Text;
+            } else if (EmoteEvent.type.matches(extev.type)) {
+                msgtype = MsgType.Emote;
+            } else {
+                throw new Error("Runtime Error: Unsupported extensible message type");
+            }
+        }
+
         let BodyType: React.ComponentType<Partial<IBodyProps>> | ReactAnyComponent = RedactedBody;
         if (!this.props.mxEvent.isRedacted()) {
             // only resolve BodyType if event is not redacted
@@ -210,6 +230,7 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
                 mediaEventHelper={this.mediaHelper}
                 getRelationsForEvent={this.props.getRelationsForEvent}
                 isSeeingThroughMessageHiddenForModeration={this.props.isSeeingThroughMessageHiddenForModeration}
+                forceUnstableExtensibleRendering={this.props.forceUnstableExtensibleRendering}
             />
         ) : null;
     }
