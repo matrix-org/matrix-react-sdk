@@ -360,6 +360,16 @@ export class StopGapWidgetDriver extends WidgetDriver {
     }
 
     public async askOpenID(observer: SimpleObservable<IOpenIDUpdate>) {
+        if (WidgetPermissionCustomisations.isIdentityRequestPreapproved) {
+            const approved = await WidgetPermissionCustomisations.isIdentityRequestPreapproved(this.forWidget);
+            if (approved) {
+                return observer.update({
+                    state: OpenIDRequestState.Allowed,
+                    token: await MatrixClientPeg.get().getOpenIdToken(),
+                });
+            }
+        }
+
         const oidcState = SdkContextClass.instance.widgetPermissionStore.getOIDCState(
             this.forWidget,
             this.forWidgetKind,

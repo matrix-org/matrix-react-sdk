@@ -36,11 +36,24 @@ async function preapproveCapabilities(
     return new Set(); // no additional capabilities approved
 }
 
+/**
+ * Approves the widget for identity token request, if it can be approved.
+ * This will be used to give certain widgets identity token without having to
+ * prompt the user to approve it.
+ * @param {Widget} widget The widget to approve identity request for.
+ * @returns {boolean} Resolves to true if identity request is preapproved, false otherwise
+ */
+async function isIdentityRequestPreapproved(widget: Widget): Promise<boolean> {
+    return false;
+}
+
 // This interface summarises all available customisation points and also marks
 // them all as optional. This allows customisers to only define and export the
 // customisations they need while still maintaining type safety.
 export interface IWidgetPermissionCustomisations {
     preapproveCapabilities?: typeof preapproveCapabilities;
+
+    isIdentityRequestPreapproved?: typeof isIdentityRequestPreapproved;
 }
 
 // A real customisation module will define and export one or more of the
