@@ -454,7 +454,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
 
         return (
             <div className="mx_MPollBody">
-                <h2>
+                <h2 data-testid="pollQuestion">
                     {poll.question.text}
                     {editedSpan}
                 </h2>
@@ -477,7 +477,12 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
 
                         const answerPercent = totalVotes === 0 ? 0 : Math.round((100.0 * answerVotes) / totalVotes);
                         return (
-                            <div key={answer.id} className={cls} onClick={() => this.selectOption(answer.id)}>
+                            <div
+                                data-testid={`pollOption-${answer.id}`}
+                                key={answer.id}
+                                className={cls}
+                                onClick={() => this.selectOption(answer.id)}
+                            >
                                 {ended ? (
                                     <EndedPollOption answer={answer} checked={checked} votesText={votesText} />
                                 ) : (
@@ -499,7 +504,9 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                         );
                     })}
                 </div>
-                <div className="mx_MPollBody_totalVotes">{totalText}</div>
+                <div data-testid="totalVotes" className="mx_MPollBody_totalVotes">
+                    {totalText}
+                </div>
             </div>
         );
     }
