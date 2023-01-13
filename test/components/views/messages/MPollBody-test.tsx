@@ -1065,7 +1065,7 @@ function newPollStart(answers?: POLL_ANSWER[], question?: string, disclosed = tr
         question = "What should we order for the party?";
     }
 
-    const answersFallback = answers.map((a, i) => `${i + 1}. ${a[M_TEXT.name]}`).join("\n");
+    const answersFallback = answers.map((a, i) => `${i + 1}. ${(a as any)[M_TEXT.name]}`).join("\n");
 
     const fallback = `${question}\n${answersFallback}`;
 
