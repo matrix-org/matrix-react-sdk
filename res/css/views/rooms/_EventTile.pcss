@@ -620,8 +620,15 @@ $left-gutter: 64px;
             list-style-type: revert;
         }
 
+        /* Make list type disc to match rich text editor */
         > ul {
             list-style-type: disc;
+        }
+
+        /* Remove top and bottom margin for better consecutive list display */
+        > :is(ol, ul) {
+            margin-top: 0;
+            margin-bottom: 0;
         }
     }
 }
