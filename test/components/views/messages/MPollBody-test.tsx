@@ -429,7 +429,7 @@ describe("MPollBody", () => {
     });
 
     it("renders nothing if poll has no answers", () => {
-        const answers: POLL_ANSWER[] = [];
+        const answers: PollAnswer[] = [];
         const votes: MatrixEvent[] = [];
         const ends: MatrixEvent[] = [];
         const { container } = newMPollBody(votes, ends, answers);
