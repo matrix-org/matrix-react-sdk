@@ -473,10 +473,10 @@ describe("MPollBody", () => {
         const { container } = newMPollBody(votes, [], undefined, false);
 
         // My vote is marked
-        expect(container.querySelector('input[value="pizza"]')!.hasAttribute("checked")).toBeTruthy();
+        expect(container.querySelector('input[value="pizza"]')!).toBeChecked();
 
         // Sanity: other items are not checked
-        expect(container.querySelector('input[value="poutine"]')!.hasAttribute("checked")).toBeFalsy();
+        expect(container.querySelector('input[value="poutine"]')!).not.toBeChecked();
     });
 
     it("shows scores if the poll is undisclosed but ended", () => {
@@ -592,8 +592,8 @@ describe("MPollBody", () => {
     it("shows non-radio buttons if the poll is ended", () => {
         const events = [endEvent()];
         const { container } = newMPollBody([], events);
-        expect(container.querySelectorAll(".mx_StyledRadioButton")).toHaveLength(0);
-        expect(container.querySelectorAll('input[type="radio"]')).toHaveLength(0);
+        expect(container.querySelector(".mx_StyledRadioButton")).not.toBeInTheDocument();
+        expect(container.querySelector('input[type="radio"]')).not.toBeInTheDocument();
     });
 
     it("counts votes as normal if the poll is ended", () => {
