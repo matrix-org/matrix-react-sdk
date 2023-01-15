@@ -25,10 +25,10 @@ import {
     M_POLL_KIND_UNDISCLOSED,
     M_POLL_RESPONSE,
     M_POLL_START,
-    M_POLL_START_EVENT_CONTENT,
-    M_TEXT,
-    POLL_ANSWER,
-} from "matrix-events-sdk";
+    PollStartEventContent,
+    PollAnswer,
+} from "matrix-js-sdk/src/@types/polls";
+import { M_TEXT } from "matrix-js-sdk/src/@types/extensible_events";
 import { MockedObject } from "jest-mock";
 
 import {
@@ -965,7 +965,7 @@ function newRelations(relationEvents: Array<MatrixEvent>, eventType: string): Re
 function newMPollBody(
     relationEvents: Array<MatrixEvent>,
     endEvents: Array<MatrixEvent> = [],
-    answers?: POLL_ANSWER[],
+    answers?: PollAnswer[],
     disclosed = true,
 ): RenderResult {
     const mxEvent = new MatrixEvent({
@@ -1051,7 +1051,7 @@ function endedVotesCount(renderResult: RenderResult, value: string): string {
     return votesCount(renderResult, value);
 }
 
-function newPollStart(answers?: POLL_ANSWER[], question?: string, disclosed = true): M_POLL_START_EVENT_CONTENT {
+function newPollStart(answers?: PollAnswer[], question?: string, disclosed = true): PollStartEventContent {
     if (!answers) {
         answers = [
             { id: "pizza", [M_TEXT.name]: "Pizza" },
@@ -1065,7 +1065,7 @@ function newPollStart(answers?: POLL_ANSWER[], question?: string, disclosed = tr
         question = "What should we order for the party?";
     }
 
-    const answersFallback = answers.map((a, i) => `${i + 1}. ${(a as any)[M_TEXT.name]}`).join("\n");
+    const answersFallback = answers.map((a, i) => `${i + 1}. ${M_TEXT.findIn<string>(a)}`).join("\n");
 
     const fallback = `${question}\n${answersFallback}`;
 
