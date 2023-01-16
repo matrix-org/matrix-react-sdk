@@ -52,7 +52,7 @@ export const useVoiceBroadcastRecording = (
 ): {
     live: boolean;
     timeLeft: number;
-    recordingState: VoiceBroadcastInfoState;
+    recordingState: VoiceBroadcastRecordingState;
     room: Room;
     sender: RoomMember;
     stopRecording(): void;
