@@ -24,11 +24,11 @@ interface IProps {
 }
 
 export default class TooltipButton extends React.Component<IProps> {
-    constructor(props) {
+    public constructor(props) {
         super(props);
     }
 
-    render() {
+    public render(): JSX.Element {
         return (
             <TooltipTarget
                 className="mx_TooltipButton_container"

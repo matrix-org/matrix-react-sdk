@@ -56,7 +56,7 @@ function isMultiLine(node: commonmark.Node): boolean {
     return par.firstChild != par.lastChild;
 }
 
-function getTextUntilEndOrLinebreak(node: commonmark.Node) {
+function getTextUntilEndOrLinebreak(node: commonmark.Node): string {
     let currentNode = node;
     let text = "";
     while (currentNode !== null && currentNode.type !== "softbreak" && currentNode.type !== "linebreak") {
@@ -117,7 +117,7 @@ export default class Markdown {
     private input: string;
     private parsed: commonmark.Node;
 
-    constructor(input: string) {
+    public constructor(input: string) {
         this.input = input;
 
         const parser = new commonmark.Parser();
@@ -137,7 +137,7 @@ export default class Markdown {
      * See: https://github.com/vector-im/element-web/issues/4674
      * @param parsed
      */
-    private repairLinks(parsed: commonmark.Node) {
+    private repairLinks(parsed: commonmark.Node): commonmark.Node {
         const walker = parsed.walker();
         let event: commonmark.NodeWalkingStep = null;
         let text = "";
@@ -234,7 +234,7 @@ export default class Markdown {
         return parsed;
     }
 
-    isPlainText(): boolean {
+    public isPlainText(): boolean {
         const walker = this.parsed.walker();
 
         let ev: commonmark.NodeWalkingStep;
@@ -257,7 +257,7 @@ export default class Markdown {
         return true;
     }
 
-    toHTML({ externalLinks = false } = {}): string {
+    public toHTML({ externalLinks = false } = {}): string {
         const renderer = new commonmark.HtmlRenderer({
             safe: false,
 
@@ -344,7 +344,7 @@ export default class Markdown {
      * N.B. this does **NOT** render arbitrary MD to plain text - only MD
      * which has no formatting.  Otherwise it emits HTML(!).
      */
-    toPlaintext(): string {
+    public toPlaintext(): string {
         const renderer = new commonmark.HtmlRenderer({ safe: false });
 
         renderer.paragraph = function (node: commonmark.Node, entering: boolean) {

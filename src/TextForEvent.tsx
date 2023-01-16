@@ -20,15 +20,8 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { removeDirectionOverrideChars } from "matrix-js-sdk/src/utils";
 import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
-import {
-    M_EMOTE,
-    M_NOTICE,
-    M_MESSAGE,
-    MessageEvent,
-    M_POLL_START,
-    M_POLL_END,
-    PollStartEvent,
-} from "matrix-events-sdk";
+import { M_POLL_START, M_POLL_END } from "matrix-js-sdk/src/@types/polls";
+import { PollStartEvent } from "matrix-js-sdk/src/extensible_events_v1/PollStartEvent";
 
 import { _t } from "./languageHandler";
 import * as Roles from "./Roles";
@@ -45,10 +38,7 @@ import RightPanelStore from "./stores/right-panel/RightPanelStore";
 import { highlightEvent, isLocationEvent } from "./utils/EventUtils";
 import { ElementCall } from "./models/Call";
 import { textForVoiceBroadcastStoppedEvent, VoiceBroadcastInfoEventType } from "./voice-broadcast";
-
-export function getSenderName(event: MatrixEvent): string {
-    return event.sender?.name ?? event.getSender() ?? _t("Someone");
-}
+import { getSenderName } from "./utils/event/getSenderName";
 
 function getRoomMemberDisplayname(event: MatrixEvent, userId = event.getSender()): string {
     const client = MatrixClientPeg.get();
@@ -239,7 +229,7 @@ function textForTombstoneEvent(ev: MatrixEvent): () => string | null {
     return () => _t("%(senderDisplayName)s upgraded this room.", { senderDisplayName });
 }
 
-const onViewJoinRuleSettingsClick = () => {
+const onViewJoinRuleSettingsClick = (): void => {
     defaultDispatcher.dispatch({
         action: "open_room_settings",
         initial_tab_id: ROOM_SECURITY_TAB,
@@ -348,17 +338,6 @@ function textForMessageEvent(ev: MatrixEvent): () => string | null {
         let message = ev.getContent().body;
         if (ev.isRedacted()) {
             message = textForRedactedPollAndMessageEvent(ev);
-        }
-
-        if (SettingsStore.isEnabled("feature_extensible_events")) {
-            const extev = ev.unstableExtensibleEvent as MessageEvent;
-            if (extev) {
-                if (extev.isEquivalentTo(M_EMOTE)) {
-                    return `* ${senderDisplayName} ${extev.text}`;
-                } else if (extev.isEquivalentTo(M_NOTICE) || extev.isEquivalentTo(M_MESSAGE)) {
-                    return `${senderDisplayName}: ${extev.text}`;
-                }
-            }
         }
 
         if (ev.getContent().msgtype === MsgType.Emote) {

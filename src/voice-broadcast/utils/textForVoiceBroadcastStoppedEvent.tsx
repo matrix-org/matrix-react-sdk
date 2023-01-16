@@ -20,8 +20,8 @@ import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import AccessibleButton from "../../components/views/elements/AccessibleButton";
 import { highlightEvent } from "../../utils/EventUtils";
-import { getSenderName } from "../../TextForEvent";
 import { _t } from "../../languageHandler";
+import { getSenderName } from "../../utils/event/getSenderName";
 
 export const textForVoiceBroadcastStoppedEvent = (event: MatrixEvent): (() => ReactNode) => {
     return (): ReactNode => {
@@ -32,7 +32,7 @@ export const textForVoiceBroadcastStoppedEvent = (event: MatrixEvent): (() => Re
         const templateTags = {
             a: (text: string) =>
                 startEventId && roomId ? (
-                    <AccessibleButton kind="link_inline" onClick={() => highlightEvent(roomId, startEventId)}>
+                    <AccessibleButton kind="link_inline" onClick={(): void => highlightEvent(roomId, startEventId)}>
                         {text}
                     </AccessibleButton>
                 ) : (

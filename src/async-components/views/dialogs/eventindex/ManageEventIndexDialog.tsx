@@ -43,7 +43,7 @@ interface IState {
  * Allows the user to introspect the event index state and disable it.
  */
 export default class ManageEventIndexDialog extends React.Component<IProps, IState> {
-    constructor(props) {
+    public constructor(props) {
         super(props);
 
         this.state = {
@@ -56,7 +56,7 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
         };
     }
 
-    updateCurrentRoom = async (room) => {
+    public updateCurrentRoom = async (room): Promise<void> => {
         const eventIndex = EventIndexPeg.get();
         let stats;
 
@@ -84,7 +84,7 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
         });
     };
 
-    componentWillUnmount(): void {
+    public componentWillUnmount(): void {
         const eventIndex = EventIndexPeg.get();
 
         if (eventIndex !== null) {
@@ -92,7 +92,7 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
         }
     }
 
-    async componentDidMount(): Promise<void> {
+    public async componentDidMount(): Promise<void> {
         let eventIndexSize = 0;
         let crawlingRoomsCount = 0;
         let roomCount = 0;
@@ -131,17 +131,17 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
         });
     }
 
-    private onDisable = async () => {
+    private onDisable = async (): Promise<void> => {
         const DisableEventIndexDialog = (await import("./DisableEventIndexDialog")).default;
         Modal.createDialog(DisableEventIndexDialog, null, null, /* priority = */ false, /* static = */ true);
     };
 
-    private onCrawlerSleepTimeChange = (e) => {
+    private onCrawlerSleepTimeChange = (e): void => {
         this.setState({ crawlerSleepTime: e.target.value });
         SettingsStore.setValue("crawlerSleepTime", null, SettingLevel.DEVICE, e.target.value);
     };
 
-    render() {
+    public render(): JSX.Element {
         const brand = SdkConfig.get().brand;
 
         let crawlerState;

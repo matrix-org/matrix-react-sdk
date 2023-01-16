@@ -59,7 +59,7 @@ const KEY_FRAME_INTERVAL = 15; // 15ms, roughly
 export default class Hearts implements ICanvasEffect {
     private readonly options: HeartOptions;
 
-    constructor(options: { [key: string]: any }) {
+    public constructor(options: { [key: string]: any }) {
         this.options = { ...DefaultOptions, ...options };
     }
 
@@ -84,7 +84,7 @@ export default class Hearts implements ICanvasEffect {
 
     public isRunning: boolean;
 
-    public start = async (canvas: HTMLCanvasElement, timeout = 3000) => {
+    public start = async (canvas: HTMLCanvasElement, timeout = 3000): Promise<void> => {
         if (!canvas) {
             return;
         }
@@ -101,7 +101,7 @@ export default class Hearts implements ICanvasEffect {
         }
     };
 
-    public stop = async () => {
+    public stop = async (): Promise<void> => {
         this.isRunning = false;
     };
 
@@ -136,7 +136,7 @@ export default class Hearts implements ICanvasEffect {
         }
     };
 
-    private animateAndRenderHearts() {
+    private animateAndRenderHearts(): void {
         if (!this.context || !this.context.canvas) {
             return;
         }

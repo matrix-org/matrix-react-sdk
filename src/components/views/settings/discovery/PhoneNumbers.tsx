@@ -48,7 +48,7 @@ interface IPhoneNumberState {
 }
 
 export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumberState> {
-    constructor(props: IPhoneNumberProps) {
+    public constructor(props: IPhoneNumberProps) {
         super(props);
 
         const { bound } = props.msisdn;
@@ -63,7 +63,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
         };
     }
 
-    public componentDidUpdate(prevProps: Readonly<IPhoneNumberProps>) {
+    public componentDidUpdate(prevProps: Readonly<IPhoneNumberProps>): void {
         if (this.props.msisdn !== prevProps.msisdn) {
             const { bound } = this.props.msisdn;
             this.setState({ bound });

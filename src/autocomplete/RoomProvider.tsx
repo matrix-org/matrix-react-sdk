@@ -37,7 +37,15 @@ function canonicalScore(displayedAlias: string, room: Room): number {
     return displayedAlias === room.getCanonicalAlias() ? 0 : 1;
 }
 
-function matcherObject(room: Room, displayedAlias: string, matchName = "") {
+function matcherObject(
+    room: Room,
+    displayedAlias: string,
+    matchName = "",
+): {
+    room: Room;
+    matchName: string;
+    displayedAlias: string;
+} {
     return {
         room,
         matchName,
@@ -46,24 +54,28 @@ function matcherObject(room: Room, displayedAlias: string, matchName = "") {
 }
 
 export default class RoomProvider extends AutocompleteProvider {
-    protected matcher: QueryMatcher<Room>;
+    protected matcher: QueryMatcher<ReturnType<typeof matcherObject>>;
 
-    constructor(room: Room, renderingType?: TimelineRenderingType) {
+    public constructor(room: Room, renderingType?: TimelineRenderingType) {
         super({ commandRegex: ROOM_REGEX, renderingType });
         this.matcher = new QueryMatcher([], {
             keys: ["displayedAlias", "matchName"],
         });
     }
 
-    protected getRooms() {
+    protected getRooms(): Room[] {
         const cli = MatrixClientPeg.get();
 
         // filter out spaces here as they get their own autocomplete provider
         return cli.getVisibleRooms().filter((r) => !r.isSpaceRoom());
     }
 
-    async getCompletions(query: string, selection: ISelectionRange, force = false, limit = -1): Promise<ICompletion[]> {
-        let completions = [];
+    public async getCompletions(
+        query: string,
+        selection: ISelectionRange,
+        force = false,
+        limit = -1,
+    ): Promise<ICompletion[]> {
         const { command, range } = this.getCurrentCommand(query, selection, force);
         if (command) {
             // the only reason we need to do this is because Fuse only matches on properties
@@ -91,15 +103,15 @@ export default class RoomProvider extends AutocompleteProvider {
 
             this.matcher.setObjects(matcherObjects);
             const matchedString = command[0];
-            completions = this.matcher.match(matchedString, limit);
+            let completions = this.matcher.match(matchedString, limit);
             completions = sortBy(completions, [
                 (c) => canonicalScore(c.displayedAlias, c.room),
                 (c) => c.displayedAlias.length,
             ]);
             completions = uniqBy(completions, (match) => match.room);
-            completions = completions
-                .map((room) => {
-                    return {
+            return completions
+                .map(
+                    (room): ICompletion => ({
                         completion: room.displayedAlias,
                         completionId: room.room.roomId,
                         type: "room",
@@ -111,18 +123,18 @@ export default class RoomProvider extends AutocompleteProvider {
                             </PillCompletion>
                         ),
                         range,
-                    };
-                })
+                    }),
+                )
                 .filter((completion) => !!completion.completion && completion.completion.length > 0);
         }
-        return completions;
+        return [];
     }
 
-    getName() {
+    public getName(): string {
         return _t("Rooms");
     }
 
-    renderCompletions(completions: React.ReactNode[]): React.ReactNode {
+    public renderCompletions(completions: React.ReactNode[]): React.ReactNode {
         return (
             <div
                 className="mx_Autocomplete_Completion_container_pill mx_Autocomplete_Completion_container_truncate"

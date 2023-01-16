@@ -38,13 +38,13 @@ const startBroadcast = async (
     const userId = client.getUserId();
 
     if (!userId) {
-        reject("unable to start voice broadcast if current user is unkonwn");
+        reject("unable to start voice broadcast if current user is unknown");
         return promise;
     }
 
     let result: ISendEventResponse | null = null;
 
-    const onRoomStateEvents = () => {
+    const onRoomStateEvents = (): void => {
         if (!result) return;
 
         const voiceBroadcastEvent = room.currentState.getStateEvents(VoiceBroadcastInfoEventType, userId);
@@ -88,7 +88,7 @@ export const startNewVoiceBroadcastRecording = async (
     playbacksStore: VoiceBroadcastPlaybacksStore,
     recordingsStore: VoiceBroadcastRecordingsStore,
 ): Promise<VoiceBroadcastRecording | null> => {
-    if (!checkVoiceBroadcastPreConditions(room, client, recordingsStore)) {
+    if (!(await checkVoiceBroadcastPreConditions(room, client, recordingsStore))) {
         return null;
     }
 

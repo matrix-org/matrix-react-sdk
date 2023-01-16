@@ -74,14 +74,14 @@ interface IState {
 // craft event_id's, using a homeserver that generates predictable event IDs; even then the impact would
 // be low as each event being loaded (after the first) is triggered by an explicit user action.
 export default class ReplyChain extends React.Component<IProps, IState> {
-    static contextType = RoomContext;
+    public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
 
     private unmounted = false;
     private room: Room;
     private blockquoteRef = React.createRef<HTMLQuoteElement>();
 
-    constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
+    public constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
         super(props, context);
 
         this.state = {
@@ -98,21 +98,21 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         return MatrixClientPeg.get();
     }
 
-    componentDidMount() {
+    public componentDidMount(): void {
         this.initialize();
         this.trySetExpandableQuotes();
     }
 
-    componentDidUpdate() {
+    public componentDidUpdate(): void {
         this.props.onHeightChanged();
         this.trySetExpandableQuotes();
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.unmounted = true;
     }
 
-    private trySetExpandableQuotes() {
+    private trySetExpandableQuotes(): void {
         if (this.props.isQuoteExpanded === undefined && this.blockquoteRef.current) {
             const el: HTMLElement | null = this.blockquoteRef.current.querySelector(".mx_EventTile_body");
             if (el) {
@@ -199,7 +199,7 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         return getUserNameColorClass(ev.getSender()).replace("Username", "ReplyChain");
     }
 
-    render() {
+    public render(): JSX.Element {
         let header = null;
         if (this.state.err) {
             header = (

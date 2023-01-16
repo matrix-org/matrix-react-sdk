@@ -22,7 +22,7 @@ import { VoiceBroadcastHeader } from "../atoms/VoiceBroadcastHeader";
 import { Icon as StopIcon } from "../../../../res/img/element-icons/Stop.svg";
 import { Icon as PauseIcon } from "../../../../res/img/element-icons/pause.svg";
 import { Icon as RecordIcon } from "../../../../res/img/element-icons/Record.svg";
-import { Icon as MicrophoneIcon } from "../../../../res/img/element-icons/Mic.svg";
+import { Icon as MicrophoneIcon } from "../../../../res/img/element-icons/mic.svg";
 import { _t } from "../../../languageHandler";
 import { useAudioDeviceSelection } from "../../../hooks/useAudioDeviceSelection";
 import { DevicesContextMenu } from "../../../components/views/audio_messages/DevicesContextMenu";
@@ -38,7 +38,7 @@ export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProp
         useVoiceBroadcastRecording(recording);
     const { currentDevice, devices, setDevice } = useAudioDeviceSelection();
 
-    const onDeviceSelect = async (device: MediaDeviceInfo) => {
+    const onDeviceSelect = async (device: MediaDeviceInfo): Promise<void> => {
         setShowDeviceSelect(false);
 
         if (currentDevice.deviceId === device.deviceId) {
@@ -78,7 +78,10 @@ export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProp
             <hr className="mx_VoiceBroadcastBody_divider" />
             <div className="mx_VoiceBroadcastBody_controls">
                 {toggleControl}
-                <AccessibleTooltipButton onClick={() => setShowDeviceSelect(true)} title={_t("Change input device")}>
+                <AccessibleTooltipButton
+                    onClick={(): void => setShowDeviceSelect(true)}
+                    title={_t("Change input device")}
+                >
                     <MicrophoneIcon className="mx_Icon mx_Icon_16 mx_Icon_alert" />
                 </AccessibleTooltipButton>
                 <VoiceBroadcastControl icon={StopIcon} label="Stop Recording" onClick={stopRecording} />

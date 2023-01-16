@@ -41,11 +41,11 @@ interface IState {
 }
 
 export default class LogoutDialog extends React.Component<IProps, IState> {
-    static defaultProps = {
+    public static defaultProps = {
         onFinished: function () {},
     };
 
-    constructor(props) {
+    public constructor(props) {
         super(props);
 
         const cli = MatrixClientPeg.get();
@@ -63,7 +63,7 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
         }
     }
 
-    private async loadBackupStatus() {
+    private async loadBackupStatus(): Promise<void> {
         try {
             const backupInfo = await MatrixClientPeg.get().getKeyBackupVersion();
             this.setState({
@@ -127,7 +127,7 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
         this.props.onFinished(true);
     };
 
-    render() {
+    public render(): JSX.Element {
         if (this.state.shouldLoadBackupStatus) {
             const description = (
                 <div>

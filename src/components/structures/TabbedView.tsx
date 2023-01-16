@@ -37,7 +37,7 @@ export class Tab {
      * @param {React.ReactNode} body The JSX for the tab container.
      * @param {string} screenName The screen name to report to Posthog.
      */
-    constructor(
+    public constructor(
         public readonly id: string,
         public readonly label: string,
         public readonly icon: string,
@@ -64,7 +64,7 @@ interface IState {
 }
 
 export default class TabbedView extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         const initialTabIdIsValid = props.tabs.find((tab) => tab.id === props.initialTabId);
@@ -73,7 +73,7 @@ export default class TabbedView extends React.Component<IProps, IState> {
         };
     }
 
-    static defaultProps = {
+    public static defaultProps = {
         tabLocation: TabLocation.LEFT,
     };
 
@@ -86,7 +86,7 @@ export default class TabbedView extends React.Component<IProps, IState> {
      * @param {Tab} tab the tab to show
      * @private
      */
-    private setActiveTab(tab: Tab) {
+    private setActiveTab(tab: Tab): void {
         // make sure this tab is still in available tabs
         if (!!this.getTabById(tab.id)) {
             if (this.props.onChange) this.props.onChange(tab.id);
@@ -96,7 +96,7 @@ export default class TabbedView extends React.Component<IProps, IState> {
         }
     }
 
-    private renderTabLabel(tab: Tab) {
+    private renderTabLabel(tab: Tab): JSX.Element {
         let classes = "mx_TabbedView_tabLabel ";
 
         if (this.state.activeTabId === tab.id) classes += "mx_TabbedView_tabLabel_active";
@@ -106,7 +106,7 @@ export default class TabbedView extends React.Component<IProps, IState> {
             tabIcon = <span className={`mx_TabbedView_maskedIcon ${tab.icon}`} />;
         }
 
-        const onClickHandler = () => this.setActiveTab(tab);
+        const onClickHandler = (): void => this.setActiveTab(tab);
 
         const label = _t(tab.label);
         return (

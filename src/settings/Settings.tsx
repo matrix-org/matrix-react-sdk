@@ -44,6 +44,7 @@ import SdkConfig from "../SdkConfig";
 import SlidingSyncController from "./controllers/SlidingSyncController";
 import ThreadBetaController from "./controllers/ThreadBetaController";
 import { FontWatcher } from "./watchers/FontWatcher";
+import RustCryptoSdkController from "./controllers/RustCryptoSdkController";
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
 const LEVELS_ROOM_SETTINGS = [
@@ -89,6 +90,7 @@ export enum LabGroup {
 
 export enum Features {
     VoiceBroadcast = "feature_voice_broadcast",
+    VoiceBroadcastForceSmallChunks = "feature_voice_broadcast_force_small_chunks",
 }
 
 export const labGroupNames: Record<LabGroup, string> = {
@@ -255,13 +257,13 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_threadstable": {
+    "feature_threadenabled": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
         controller: new ThreadBetaController(),
         displayName: _td("Threaded messages"),
         supportedLevels: LEVELS_FEATURE,
-        default: false,
+        default: true,
         betaInfo: {
             title: _td("Threaded messages"),
             caption: () => (
@@ -336,13 +338,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Encryption,
         displayName: _td("Offline encrypted messaging using dehydrated devices"),
         supportedLevels: LEVELS_FEATURE,
-        default: false,
-    },
-    "feature_extensible_events": {
-        isFeature: true,
-        labsGroup: LabGroup.Developer, // developer for now, eventually Messaging and default on
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Show extensible event representation of events"),
         default: false,
     },
     "useOnlyCurrentProfiles": {
@@ -457,7 +452,11 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Messaging,
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("Voice broadcast"),
-        description: _td("Under active development"),
+        default: false,
+    },
+    [Features.VoiceBroadcastForceSmallChunks]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Force 15s voice broadcast chunk length"),
         default: false,
     },
     "feature_new_device_manager": {
@@ -490,6 +489,17 @@ export const SETTINGS: { [setting: string]: ISetting } = {
                 "(requires compatible homeserver)",
         ),
         default: false,
+    },
+    "feature_rust_crypto": {
+        // use the rust matrix-sdk-crypto-js for crypto.
+        isFeature: true,
+        labsGroup: LabGroup.Developer,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        displayName: _td("Rust cryptography implementation"),
+        description: _td("Under active development. Can currently only be enabled via config.json"),
+        // shouldWarn: true,
+        default: false,
+        controller: new RustCryptoSdkController(),
     },
     "baseFontSize": {
         displayName: _td("Font size"),
@@ -872,18 +882,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
             allow: [],
             deny: [],
         },
-    },
-    // TODO: Remove setting: https://github.com/vector-im/element-web/issues/14373
-    "RoomList.orderAlphabetically": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Order rooms by name"),
-        default: false,
-    },
-    // TODO: Remove setting: https://github.com/vector-im/element-web/issues/14373
-    "RoomList.orderByImportance": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Show rooms with unread notifications first"),
-        default: true,
     },
     "breadcrumbs": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,

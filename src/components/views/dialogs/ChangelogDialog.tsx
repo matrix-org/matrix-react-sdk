@@ -30,7 +30,7 @@ interface IProps {
 const REPOS = ["vector-im/element-web", "matrix-org/matrix-react-sdk", "matrix-org/matrix-js-sdk"];
 
 export default class ChangelogDialog extends React.Component<IProps> {
-    constructor(props) {
+    public constructor(props) {
         super(props);
 
         this.state = {};
@@ -54,7 +54,7 @@ export default class ChangelogDialog extends React.Component<IProps> {
         }
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         const version = this.props.newVersion.split("-");
         const version2 = this.props.version.split("-");
         if (version == null || version2 == null) return;
@@ -76,7 +76,7 @@ export default class ChangelogDialog extends React.Component<IProps> {
         );
     }
 
-    public render() {
+    public render(): JSX.Element {
         const logs = REPOS.map((repo) => {
             let content;
             if (this.state[repo] == null) {

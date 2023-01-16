@@ -59,23 +59,23 @@ export interface IProviderCompletions {
 }
 
 export default class Autocompleter {
-    room: Room;
-    providers: AutocompleteProvider[];
+    public room: Room;
+    public providers: AutocompleteProvider[];
 
-    constructor(room: Room, renderingType: TimelineRenderingType = TimelineRenderingType.Room) {
+    public constructor(room: Room, renderingType: TimelineRenderingType = TimelineRenderingType.Room) {
         this.room = room;
         this.providers = PROVIDERS.map((Prov) => {
             return new Prov(room, renderingType);
         });
     }
 
-    destroy() {
+    public destroy(): void {
         this.providers.forEach((p) => {
             p.destroy();
         });
     }
 
-    async getCompletions(
+    public async getCompletions(
         query: string,
         selection: ISelectionRange,
         force = false,
@@ -88,7 +88,7 @@ export default class Autocompleter {
         */
         // list of results from each provider, each being a list of completions or null if it times out
         const completionsList: ICompletion[][] = await Promise.all(
-            this.providers.map(async (provider) => {
+            this.providers.map(async (provider): Promise<ICompletion[] | null> => {
                 return timeout(
                     provider.getCompletions(query, selection, force, limit),
                     null,

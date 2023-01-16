@@ -34,27 +34,27 @@ interface IState {
 export default class DialpadModal extends React.PureComponent<IProps, IState> {
     private numberEntryFieldRef: React.RefObject<Field> = createRef();
 
-    constructor(props) {
+    public constructor(props) {
         super(props);
         this.state = {
             value: "",
         };
     }
 
-    onCancelClick = () => {
+    public onCancelClick = (): void => {
         this.props.onFinished(false);
     };
 
-    onChange = (ev) => {
+    public onChange = (ev): void => {
         this.setState({ value: ev.target.value });
     };
 
-    onFormSubmit = (ev) => {
+    public onFormSubmit = (ev): void => {
         ev.preventDefault();
         this.onDialPress();
     };
 
-    onDigitPress = (digit: string, ev: ButtonEvent) => {
+    public onDigitPress = (digit: string, ev: ButtonEvent): void => {
         this.setState({ value: this.state.value + digit });
 
         // Keep the number field focused so that keyboard entry is still available.
@@ -65,7 +65,7 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
         }
     };
 
-    onDeletePress = (ev: ButtonEvent) => {
+    public onDeletePress = (ev: ButtonEvent): void => {
         if (this.state.value.length === 0) return;
         this.setState({ value: this.state.value.slice(0, -1) });
 
@@ -77,12 +77,12 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
         }
     };
 
-    onDialPress = async () => {
+    public onDialPress = async (): Promise<void> => {
         LegacyCallHandler.instance.dialNumber(this.state.value);
         this.props.onFinished(true);
     };
 
-    render() {
+    public render(): JSX.Element {
         const backspaceButton = <DialPadBackspaceButton onBackspacePress={this.onDeletePress} />;
 
         // Only show the backspace button if the field has content

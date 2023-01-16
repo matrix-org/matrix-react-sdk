@@ -46,7 +46,7 @@ const KEY_FRAME_INTERVAL = 15;
 export default class Rainfall implements ICanvasEffect {
     private readonly options: RainfallOptions;
 
-    constructor(options: { [key: string]: any }) {
+    public constructor(options: { [key: string]: any }) {
         this.options = { ...DefaultOptions, ...options };
     }
 
@@ -56,7 +56,7 @@ export default class Rainfall implements ICanvasEffect {
 
     public isRunning: boolean;
 
-    public start = async (canvas: HTMLCanvasElement, timeout = 3000) => {
+    public start = async (canvas: HTMLCanvasElement, timeout = 3000): Promise<void> => {
         if (!canvas) {
             return;
         }
@@ -73,7 +73,7 @@ export default class Rainfall implements ICanvasEffect {
         }
     };
 
-    public stop = async () => {
+    public stop = async (): Promise<void> => {
         this.isRunning = false;
     };
 

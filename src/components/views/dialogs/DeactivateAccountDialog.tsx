@@ -46,7 +46,7 @@ interface IState {
 }
 
 export default class DeactivateAccountDialog extends React.Component<IProps, IState> {
-    constructor(props) {
+    public constructor(props) {
         super(props);
 
         this.state = {
@@ -172,7 +172,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
             });
     }
 
-    public render() {
+    public render(): JSX.Element {
         let error = null;
         if (this.state.errStr) {
             error = <div className="error">{this.state.errStr}</div>;

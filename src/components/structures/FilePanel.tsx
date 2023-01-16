@@ -51,7 +51,7 @@ interface IState {
  * Component which shows the filtered file using a TimelinePanel
  */
 class FilePanel extends React.Component<IProps, IState> {
-    static contextType = RoomContext;
+    public static contextType = RoomContext;
 
     // This is used to track if a decrypted event was a live event and should be
     // added to the timeline.
@@ -59,7 +59,7 @@ class FilePanel extends React.Component<IProps, IState> {
     public noRoom: boolean;
     private card = createRef<HTMLDivElement>();
 
-    state = {
+    public state = {
         timelineSet: null,
         narrow: false,
     };
@@ -223,7 +223,7 @@ class FilePanel extends React.Component<IProps, IState> {
         }
     }
 
-    public render() {
+    public render(): JSX.Element {
         if (MatrixClientPeg.get().isGuest()) {
             return (
                 <BaseCard className="mx_FilePanel mx_RoomView_messageListWrapper" onClose={this.props.onClose}>

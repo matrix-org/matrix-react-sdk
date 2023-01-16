@@ -47,10 +47,10 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
     private readonly roomProps: RoomEchoChamber;
     private soundUpload = createRef<HTMLInputElement>();
 
-    static contextType = MatrixClientContext;
+    public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
 
-    constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
+    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);
 
         this.roomProps = EchoChamber.forRoom(context.getRoom(this.props.roomId));
@@ -140,12 +140,12 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
         });
     };
 
-    private onRoomNotificationChange = (value: RoomNotifState) => {
+    private onRoomNotificationChange = (value: RoomNotifState): void => {
         this.roomProps.notificationVolume = value;
         this.forceUpdate();
     };
 
-    private onOpenSettingsClick = (event: ButtonEvent) => {
+    private onOpenSettingsClick = (event: ButtonEvent): void => {
         // avoid selecting the radio button
         event.preventDefault();
         this.props.closeSettingsFn();

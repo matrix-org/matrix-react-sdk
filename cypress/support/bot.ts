@@ -17,10 +17,15 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import type { ISendEventResponse, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
-import { SynapseInstance } from "../plugins/synapsedocker";
+import { HomeserverInstance } from "../plugins/utils/homeserver";
+import { Credentials } from "./homeserver";
 import Chainable = Cypress.Chainable;
 
 interface CreateBotOpts {
+    /**
+     * A prefix to use for the userid. If unspecified, "bot_" will be used.
+     */
+    userIdPrefix?: string;
     /**
      * Whether the bot should automatically accept all invites.
      */
@@ -33,12 +38,22 @@ interface CreateBotOpts {
      * Whether or not to start the syncing client.
      */
     startClient?: boolean;
+    /**
+     * Whether or not to generate cross-signing keys
+     */
+    bootstrapCrossSigning?: boolean;
 }
 
 const defaultCreateBotOptions = {
+    userIdPrefix: "bot_",
     autoAcceptInvites: true,
     startClient: true,
+    bootstrapCrossSigning: true,
 } as CreateBotOpts;
+
+export interface CypressBot extends MatrixClient {
+    __cypress_password: string;
+}
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -46,10 +61,23 @@ declare global {
         interface Chainable {
             /**
              * Returns a new Bot instance
-             * @param synapse the instance on which to register the bot user
+             * @param homeserver the instance on which to register the bot user
              * @param opts create bot options
              */
-            getBot(synapse: SynapseInstance, opts: CreateBotOpts): Chainable<MatrixClient>;
+            getBot(homeserver: HomeserverInstance, opts: CreateBotOpts): Chainable<CypressBot>;
+            /**
+             * Returns a new Bot instance logged in as an existing user
+             * @param homeserver the instance on which to register the bot user
+             * @param username the username for the bot to log in with
+             * @param password the password for the bot to log in with
+             * @param opts create bot options
+             */
+            loginBot(
+                homeserver: HomeserverInstance,
+                username: string,
+                password: string,
+                opts: CreateBotOpts,
+            ): Chainable<MatrixClient>;
             /**
              * Let a bot join a room
              * @param cli The bot's MatrixClient
@@ -73,52 +101,95 @@ declare global {
     }
 }
 
-Cypress.Commands.add("getBot", (synapse: SynapseInstance, opts: CreateBotOpts): Chainable<MatrixClient> => {
+function setupBotClient(
+    homeserver: HomeserverInstance,
+    credentials: Credentials,
+    opts: CreateBotOpts,
+): Chainable<MatrixClient> {
     opts = Object.assign({}, defaultCreateBotOptions, opts);
-    const username = Cypress._.uniqueId("userId_");
-    const password = Cypress._.uniqueId("password_");
-    return cy.registerUser(synapse, username, password, opts.displayName).then((credentials) => {
-        cy.log(`Registered bot user ${username} with displayname ${opts.displayName}`);
-        return cy.window({ log: false }).then((win) => {
-            const cli = new win.matrixcs.MatrixClient({
-                baseUrl: synapse.baseUrl,
-                userId: credentials.userId,
-                deviceId: credentials.deviceId,
-                accessToken: credentials.accessToken,
-                store: new win.matrixcs.MemoryStore(),
-                scheduler: new win.matrixcs.MatrixScheduler(),
-                cryptoStore: new win.matrixcs.MemoryCryptoStore(),
+    return cy.window({ log: false }).then((win) => {
+        const keys = {};
+
+        const getCrossSigningKey = (type: string) => {
+            return keys[type];
+        };
+
+        const saveCrossSigningKeys = (k: Record<string, Uint8Array>) => {
+            Object.assign(keys, k);
+        };
+
+        const cli = new win.matrixcs.MatrixClient({
+            baseUrl: homeserver.baseUrl,
+            userId: credentials.userId,
+            deviceId: credentials.deviceId,
+            accessToken: credentials.accessToken,
+            store: new win.matrixcs.MemoryStore(),
+            scheduler: new win.matrixcs.MatrixScheduler(),
+            cryptoStore: new win.matrixcs.MemoryCryptoStore(),
+            cryptoCallbacks: { getCrossSigningKey, saveCrossSigningKeys },
+        });
+
+        if (opts.autoAcceptInvites) {
+            cli.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
+                if (member.membership === "invite" && member.userId === cli.getUserId()) {
+                    cli.joinRoom(member.roomId);
+                }
             });
+        }
 
-            if (opts.autoAcceptInvites) {
-                cli.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
-                    if (member.membership === "invite" && member.userId === cli.getUserId()) {
-                        cli.joinRoom(member.roomId);
-                    }
-                });
-            }
+        if (!opts.startClient) {
+            return cy.wrap(cli);
+        }
 
-            if (!opts.startClient) {
-                return cy.wrap(cli);
-            }
-
-            return cy.wrap(
-                cli
-                    .initCrypto()
-                    .then(() => cli.setGlobalErrorOnUnknownDevices(false))
-                    .then(() => cli.startClient())
-                    .then(() =>
-                        cli.bootstrapCrossSigning({
+        return cy.wrap(
+            cli
+                .initCrypto()
+                .then(() => cli.setGlobalErrorOnUnknownDevices(false))
+                .then(() => cli.startClient())
+                .then(async () => {
+                    if (opts.bootstrapCrossSigning) {
+                        await cli.bootstrapCrossSigning({
                             authUploadDeviceSigningKeys: async (func) => {
                                 await func({});
                             },
-                        }),
-                    )
-                    .then(() => cli),
-            );
-        });
+                        });
+                    }
+                })
+                .then(() => cli),
+        );
     });
+}
+
+Cypress.Commands.add("getBot", (homeserver: HomeserverInstance, opts: CreateBotOpts): Chainable<CypressBot> => {
+    opts = Object.assign({}, defaultCreateBotOptions, opts);
+    const username = Cypress._.uniqueId(opts.userIdPrefix);
+    const password = Cypress._.uniqueId("password_");
+    return cy
+        .registerUser(homeserver, username, password, opts.displayName)
+        .then((credentials) => {
+            cy.log(`Registered bot user ${username} with displayname ${opts.displayName}`);
+            return setupBotClient(homeserver, credentials, opts);
+        })
+        .then((client): Chainable<CypressBot> => {
+            Object.assign(client, { __cypress_password: password });
+            return cy.wrap(client as CypressBot);
+        });
 });
+
+Cypress.Commands.add(
+    "loginBot",
+    (
+        homeserver: HomeserverInstance,
+        username: string,
+        password: string,
+        opts: CreateBotOpts,
+    ): Chainable<MatrixClient> => {
+        opts = Object.assign({}, defaultCreateBotOptions, { bootstrapCrossSigning: false }, opts);
+        return cy.loginUser(homeserver, username, password).then((credentials) => {
+            return setupBotClient(homeserver, credentials, opts);
+        });
+    },
+);
 
 Cypress.Commands.add("botJoinRoom", (cli: MatrixClient, roomId: string): Chainable<Room> => {
     return cy.wrap(cli.joinRoom(roomId));

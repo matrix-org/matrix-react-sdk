@@ -39,7 +39,7 @@ export class EchoStore extends AsyncStoreWithClient<IState> {
 
     private caches = new Map<ContextKey, GenericEchoChamber<any, any, any>>();
 
-    constructor() {
+    public constructor() {
         super(defaultDispatcher);
     }
 
@@ -70,7 +70,7 @@ export class EchoStore extends AsyncStoreWithClient<IState> {
         return echo;
     }
 
-    private async checkContexts() {
+    private async checkContexts(): Promise<void> {
         let hasOrHadError = false;
         for (const echo of this.caches.values()) {
             hasOrHadError = echo.context.state === ContextTransactionState.PendingErrors;

@@ -36,7 +36,7 @@ export default class ScalarAuthClient {
     private termsInteractionCallback: TermsInteractionCallback;
     private isDefaultManager: boolean;
 
-    constructor(private apiUrl: string, private uiUrl: string) {
+    public constructor(private apiUrl: string, private uiUrl: string) {
         this.scalarToken = null;
         // `undefined` to allow `startTermsFlow` to fallback to a default
         // callback if this is unset.
@@ -49,7 +49,7 @@ export default class ScalarAuthClient {
         this.isDefaultManager = apiUrl === configApiUrl && configUiUrl === uiUrl;
     }
 
-    private writeTokenToStore() {
+    private writeTokenToStore(): void {
         window.localStorage.setItem("mx_scalar_token_at_" + this.apiUrl, this.scalarToken);
         if (this.isDefaultManager) {
             // We remove the old token from storage to migrate upwards. This is safe
@@ -72,22 +72,22 @@ export default class ScalarAuthClient {
         return this.readTokenFromStore();
     }
 
-    setTermsInteractionCallback(callback) {
+    public setTermsInteractionCallback(callback: TermsInteractionCallback): void {
         this.termsInteractionCallback = callback;
     }
 
-    connect(): Promise<void> {
+    public connect(): Promise<void> {
         return this.getScalarToken().then((tok) => {
             this.scalarToken = tok;
         });
     }
 
-    hasCredentials(): boolean {
+    public hasCredentials(): boolean {
         return this.scalarToken != null; // undef or null
     }
 
     // Returns a promise that resolves to a scalar_token string
-    getScalarToken(): Promise<string> {
+    public getScalarToken(): Promise<string> {
         const token = this.readToken();
 
         if (!token) {
@@ -169,7 +169,7 @@ export default class ScalarAuthClient {
             });
     }
 
-    registerForToken(): Promise<string> {
+    public registerForToken(): Promise<string> {
         // Get openid bearer token from the HS as the first part of our dance
         return MatrixClientPeg.get()
             .getOpenIdToken()
@@ -256,7 +256,7 @@ export default class ScalarAuthClient {
         }
     }
 
-    getScalarInterfaceUrlForRoom(room: Room, screen: string, id: string): string {
+    public getScalarInterfaceUrlForRoom(room: Room, screen: string, id: string): string {
         const roomId = room.roomId;
         const roomName = room.name;
         let url = this.uiUrl;
@@ -273,7 +273,7 @@ export default class ScalarAuthClient {
         return url;
     }
 
-    getStarterLink(starterLinkUrl: string): string {
+    public getStarterLink(starterLinkUrl: string): string {
         return starterLinkUrl + "?scalar_token=" + encodeURIComponent(this.scalarToken);
     }
 }

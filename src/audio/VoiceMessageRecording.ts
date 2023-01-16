@@ -136,12 +136,12 @@ export class VoiceMessageRecording implements IDestroyable {
         return this.voiceRecording.isSupported;
     }
 
-    destroy(): void {
+    public destroy(): void {
         this.playback?.destroy();
         this.voiceRecording.destroy();
     }
 
-    private onDataAvailable = (data: ArrayBuffer) => {
+    private onDataAvailable = (data: ArrayBuffer): void => {
         const buf = new Uint8Array(data);
         this.buffer = concat(this.buffer, buf);
     };
@@ -153,6 +153,6 @@ export class VoiceMessageRecording implements IDestroyable {
     }
 }
 
-export const createVoiceMessageRecording = (matrixClient: MatrixClient) => {
+export const createVoiceMessageRecording = (matrixClient: MatrixClient): VoiceMessageRecording => {
     return new VoiceMessageRecording(matrixClient, new VoiceRecording());
 };

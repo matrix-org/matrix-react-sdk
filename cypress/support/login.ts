@@ -17,7 +17,7 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import Chainable = Cypress.Chainable;
-import { SynapseInstance } from "../plugins/synapsedocker";
+import { HomeserverInstance } from "../plugins/utils/homeserver";
 
 export interface UserCredentials {
     accessToken: string;
@@ -37,11 +37,14 @@ declare global {
              * @param synapse the synapse returned by startSynapse
              * @param displayName the displayName to give the test user
              * @param prelaunchFn optional function to run before the app is visited
+             * @param userIdPrefix optional prefix to use for the generated user id. If unspecified, `user_` will be
+             *     useed.
              */
             initTestUser(
-                synapse: SynapseInstance,
+                homeserver: HomeserverInstance,
                 displayName: string,
                 prelaunchFn?: () => void,
+                userIdPrefix?: string,
             ): Chainable<UserCredentials>;
             /**
              * Logs into synapse with the given username/password
@@ -49,7 +52,7 @@ declare global {
              * @param username login username
              * @param password login password
              */
-            loginUser(synapse: SynapseInstance, username: string, password: string): Chainable<UserCredentials>;
+            loginUser(synapse: HomeserverInstance, username: string, password: string): Chainable<UserCredentials>;
         }
     }
 }
@@ -57,8 +60,8 @@ declare global {
 // eslint-disable-next-line max-len
 Cypress.Commands.add(
     "loginUser",
-    (synapse: SynapseInstance, username: string, password: string): Chainable<UserCredentials> => {
-        const url = `${synapse.baseUrl}/_matrix/client/r0/login`;
+    (homeserver: HomeserverInstance, username: string, password: string): Chainable<UserCredentials> => {
+        const url = `${homeserver.baseUrl}/_matrix/client/r0/login`;
         return cy
             .request<{
                 access_token: string;
@@ -91,7 +94,12 @@ Cypress.Commands.add(
 // eslint-disable-next-line max-len
 Cypress.Commands.add(
     "initTestUser",
-    (synapse: SynapseInstance, displayName: string, prelaunchFn?: () => void): Chainable<UserCredentials> => {
+    (
+        homeserver: HomeserverInstance,
+        displayName: string,
+        prelaunchFn?: () => void,
+        userIdPrefix = "user_",
+    ): Chainable<UserCredentials> => {
         // XXX: work around Cypress not clearing IDB between tests
         cy.window({ log: false }).then((win) => {
             win.indexedDB.databases()?.then((databases) => {
@@ -101,18 +109,18 @@ Cypress.Commands.add(
             });
         });
 
-        const username = Cypress._.uniqueId("userId_");
+        const username = Cypress._.uniqueId(userIdPrefix);
         const password = Cypress._.uniqueId("password_");
         return cy
-            .registerUser(synapse, username, password, displayName)
+            .registerUser(homeserver, username, password, displayName)
             .then(() => {
-                return cy.loginUser(synapse, username, password);
+                return cy.loginUser(homeserver, username, password);
             })
             .then((response) => {
                 cy.log(`Registered test user ${username} with displayname ${displayName}`);
                 cy.window({ log: false }).then((win) => {
                     // Seed the localStorage with the required credentials
-                    win.localStorage.setItem("mx_hs_url", synapse.baseUrl);
+                    win.localStorage.setItem("mx_hs_url", homeserver.baseUrl);
                     win.localStorage.setItem("mx_user_id", response.userId);
                     win.localStorage.setItem("mx_access_token", response.accessToken);
                     win.localStorage.setItem("mx_device_id", response.deviceId);

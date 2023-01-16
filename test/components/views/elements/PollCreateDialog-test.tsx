@@ -18,14 +18,10 @@ import React from "react";
 // eslint-disable-next-line deprecate/import
 import { mount, ReactWrapper } from "enzyme";
 import { Room } from "matrix-js-sdk/src/models/room";
-import {
-    M_POLL_KIND_DISCLOSED,
-    M_POLL_KIND_UNDISCLOSED,
-    M_POLL_START,
-    M_TEXT,
-    PollStartEvent,
-} from "matrix-events-sdk";
+import { M_POLL_KIND_DISCLOSED, M_POLL_KIND_UNDISCLOSED, M_POLL_START } from "matrix-js-sdk/src/@types/polls";
+import { PollStartEvent } from "matrix-js-sdk/src/extensible_events_v1/PollStartEvent";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { M_TEXT } from "matrix-js-sdk/src/@types/extensible_events";
 
 import { findById, getMockClientWithEventEmitter } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -251,6 +247,25 @@ describe("PollCreateDialog", () => {
                 rel_type: "m.replace",
             },
         });
+    });
+
+    it("retains poll disclosure type when editing", () => {
+        const previousEvent: MatrixEvent = new MatrixEvent(
+            PollStartEvent.from("Poll Q", ["Answer 1", "Answer 2"], M_POLL_KIND_DISCLOSED).serialize(),
+        );
+        previousEvent.event.event_id = "$prevEventId";
+
+        const dialog = mount(
+            <PollCreateDialog room={createRoom()} onFinished={jest.fn()} editingMxEvent={previousEvent} />,
+        );
+
+        changeValue(dialog, "Question or topic", "Poll Q updated");
+        dialog.find("button").simulate("click");
+
+        const [, , eventType, sentEventContent] = mockClient.sendEvent.mock.calls[0];
+        expect(M_POLL_START.matches(eventType)).toBeTruthy();
+        // didnt change
+        expect(sentEventContent["m.new_content"][M_POLL_START.name].kind).toEqual(M_POLL_KIND_DISCLOSED.name);
     });
 });
 

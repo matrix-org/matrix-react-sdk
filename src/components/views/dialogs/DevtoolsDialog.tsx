@@ -31,6 +31,7 @@ import { AccountDataExplorer, RoomAccountDataExplorer } from "./devtools/Account
 import SettingsFlag from "../elements/SettingsFlag";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import ServerInfo from "./devtools/ServerInfo";
+import { Features } from "../../../settings/Settings";
 
 enum Category {
     Room,
@@ -80,7 +81,7 @@ const DevtoolsDialog: React.FC<IProps> = ({ roomId, onFinished }) => {
         const Tool = tool[1];
         body = <Tool onBack={onBack} setTool={(label, tool) => setTool([label, tool])} />;
     } else {
-        const onBack = () => {
+        const onBack = (): void => {
             onFinished(false);
         };
         body = (
@@ -89,7 +90,7 @@ const DevtoolsDialog: React.FC<IProps> = ({ roomId, onFinished }) => {
                     <div key={category}>
                         <h3>{_t(categoryLabels[category])}</h3>
                         {tools.map(([label, tool]) => {
-                            const onClick = () => {
+                            const onClick = (): void => {
                                 setTool([label, tool]);
                             };
                             return (
@@ -105,6 +106,7 @@ const DevtoolsDialog: React.FC<IProps> = ({ roomId, onFinished }) => {
                     <SettingsFlag name="developerMode" level={SettingLevel.ACCOUNT} />
                     <SettingsFlag name="showHiddenEventsInTimeline" level={SettingLevel.DEVICE} />
                     <SettingsFlag name="enableWidgetScreenshots" level={SettingLevel.ACCOUNT} />
+                    <SettingsFlag name={Features.VoiceBroadcastForceSmallChunks} level={SettingLevel.DEVICE} />
                 </div>
             </BaseTool>
         );

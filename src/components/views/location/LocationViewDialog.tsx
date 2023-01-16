@@ -38,7 +38,7 @@ interface IState {
  * Dialog to view m.location events maximised
  */
 export default class LocationViewDialog extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -46,15 +46,15 @@ export default class LocationViewDialog extends React.Component<IProps, IState> 
         };
     }
 
-    private getBodyId = () => {
+    private getBodyId = (): string => {
         return `mx_LocationViewDialog_${this.props.mxEvent.getId()}`;
     };
 
-    private onError = (error) => {
+    private onError = (error: Error): void => {
         this.setState({ error });
     };
 
-    render() {
+    public render(): JSX.Element {
         const { mxEvent } = this.props;
 
         // only pass member to marker when should render avatar marker

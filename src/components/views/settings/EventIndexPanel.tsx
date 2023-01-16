@@ -35,7 +35,7 @@ interface IState {
 }
 
 export default class EventIndexPanel extends React.Component<{}, IState> {
-    constructor(props) {
+    public constructor(props) {
         super(props);
 
         this.state = {
@@ -46,7 +46,7 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
         };
     }
 
-    updateCurrentRoom = async (room) => {
+    public updateCurrentRoom = async (): Promise<void> => {
         const eventIndex = EventIndexPeg.get();
         let stats;
 
@@ -64,7 +64,7 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
         });
     };
 
-    componentWillUnmount(): void {
+    public componentWillUnmount(): void {
         const eventIndex = EventIndexPeg.get();
 
         if (eventIndex !== null) {
@@ -72,11 +72,11 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
         }
     }
 
-    componentDidMount(): void {
+    public componentDidMount(): void {
         this.updateState();
     }
 
-    async updateState() {
+    public async updateState(): Promise<void> {
         const eventIndex = EventIndexPeg.get();
         const eventIndexingEnabled = SettingsStore.getValueAt(SettingLevel.DEVICE, "enableEventIndexing");
         const enabling = false;
@@ -106,7 +106,7 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
         });
     }
 
-    private onManage = async () => {
+    private onManage = async (): Promise<void> => {
         Modal.createDialogAsync(
             // @ts-ignore: TS doesn't seem to like the type of this now that it
             // has also been converted to TS as well, but I can't figure out why...
@@ -120,7 +120,7 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
         );
     };
 
-    private onEnable = async () => {
+    private onEnable = async (): Promise<void> => {
         this.setState({
             enabling: true,
         });
@@ -132,9 +132,9 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
         await this.updateState();
     };
 
-    private confirmEventStoreReset = () => {
+    private confirmEventStoreReset = (): void => {
         const { close } = Modal.createDialog(SeshatResetDialog, {
-            onFinished: async (success) => {
+            onFinished: async (success): Promise<void> => {
                 if (success) {
                     await SettingsStore.setValue("enableEventIndexing", null, SettingLevel.DEVICE, false);
                     await EventIndexPeg.deleteEventIndex();
@@ -145,7 +145,7 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
         });
     };
 
-    render() {
+    public render(): JSX.Element {
         let eventIndexingSettings = null;
         const brand = SdkConfig.get().brand;
 

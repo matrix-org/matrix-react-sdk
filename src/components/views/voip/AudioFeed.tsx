@@ -31,7 +31,7 @@ interface IState {
 export default class AudioFeed extends React.Component<IProps, IState> {
     private element = createRef<HTMLAudioElement>();
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -39,13 +39,13 @@ export default class AudioFeed extends React.Component<IProps, IState> {
         };
     }
 
-    componentDidMount() {
+    public componentDidMount(): void {
         MediaDeviceHandler.instance.addListener(MediaDeviceHandlerEvent.AudioOutputChanged, this.onAudioOutputChanged);
         this.props.feed.addListener(CallFeedEvent.NewStream, this.onNewStream);
         this.playMedia();
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         MediaDeviceHandler.instance.removeListener(
             MediaDeviceHandlerEvent.AudioOutputChanged,
             this.onAudioOutputChanged,
@@ -54,7 +54,7 @@ export default class AudioFeed extends React.Component<IProps, IState> {
         this.stopMedia();
     }
 
-    private onAudioOutputChanged = (audioOutput: string) => {
+    private onAudioOutputChanged = (audioOutput: string): void => {
         const element = this.element.current;
         if (audioOutput) {
             try {
@@ -70,7 +70,7 @@ export default class AudioFeed extends React.Component<IProps, IState> {
         }
     };
 
-    private async playMedia() {
+    private async playMedia(): Promise<void> {
         const element = this.element.current;
         if (!element) return;
         this.onAudioOutputChanged(MediaDeviceHandler.getAudioOutput());
@@ -98,7 +98,7 @@ export default class AudioFeed extends React.Component<IProps, IState> {
         }
     }
 
-    private stopMedia() {
+    private stopMedia(): void {
         const element = this.element.current;
         if (!element) return;
 
@@ -111,14 +111,14 @@ export default class AudioFeed extends React.Component<IProps, IState> {
         // seem to be necessary - Šimon
     }
 
-    private onNewStream = () => {
+    private onNewStream = (): void => {
         this.setState({
             audioMuted: this.props.feed.isAudioMuted(),
         });
         this.playMedia();
     };
 
-    render() {
+    public render(): JSX.Element {
         // Do not render the audio element if there is no audio track
         if (this.state.audioMuted) return null;
 

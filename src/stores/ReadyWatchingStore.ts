@@ -28,7 +28,7 @@ export abstract class ReadyWatchingStore extends EventEmitter implements IDestro
     protected matrixClient: MatrixClient;
     private dispatcherRef: string | null = null;
 
-    constructor(protected readonly dispatcher: Dispatcher<ActionPayload>) {
+    public constructor(protected readonly dispatcher: Dispatcher<ActionPayload>) {
         super();
     }
 
@@ -46,27 +46,27 @@ export abstract class ReadyWatchingStore extends EventEmitter implements IDestro
         return this.matrixClient; // for external readonly access
     }
 
-    public useUnitTestClient(cli: MatrixClient) {
+    public useUnitTestClient(cli: MatrixClient): void {
         this.matrixClient = cli;
     }
 
-    public destroy() {
+    public destroy(): void {
         if (this.dispatcherRef !== null) this.dispatcher.unregister(this.dispatcherRef);
     }
 
-    protected async onReady() {
+    protected async onReady(): Promise<void> {
         // Default implementation is to do nothing.
     }
 
-    protected async onNotReady() {
+    protected async onNotReady(): Promise<void> {
         // Default implementation is to do nothing.
     }
 
-    protected onDispatcherAction(payload: ActionPayload) {
+    protected onDispatcherAction(payload: ActionPayload): void {
         // Default implementation is to do nothing.
     }
 
-    private onAction = async (payload: ActionPayload) => {
+    private onAction = async (payload: ActionPayload): Promise<void> => {
         this.onDispatcherAction(payload);
 
         if (payload.action === "MatrixActions.sync") {

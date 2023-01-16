@@ -60,7 +60,7 @@ export default class PowerSelector extends React.Component<IProps, IState> {
         usersDefault: 0,
     };
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -73,11 +73,11 @@ export default class PowerSelector extends React.Component<IProps, IState> {
         };
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.initStateFromProps();
     }
 
-    public componentDidUpdate(prevProps: Readonly<IProps>) {
+    public componentDidUpdate(prevProps: Readonly<IProps>): void {
         if (objectHasDiff(this.props, prevProps)) {
             this.initStateFromProps();
         }

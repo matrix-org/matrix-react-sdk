@@ -34,7 +34,7 @@ export default class TypingStore {
         };
     };
 
-    constructor(private readonly context: SdkContextClass) {
+    public constructor(private readonly context: SdkContextClass) {
         this.reset();
     }
 
@@ -42,7 +42,7 @@ export default class TypingStore {
      * Clears all cached typing states. Intended to be called when the
      * MatrixClientPeg client changes.
      */
-    public reset() {
+    public reset(): void {
         this.typingStates = {
             // "roomId": {
             //     isTyping: bool,     // Whether the user is typing or not
@@ -65,7 +65,7 @@ export default class TypingStore {
         if (SettingsStore.getValue("lowBandwidth")) return;
         // Disable typing notification for threads for the initial launch
         // before we figure out a better user experience for them
-        if (SettingsStore.getValue("feature_threadstable") && threadId) return;
+        if (SettingsStore.getValue("feature_threadenabled") && threadId) return;
 
         let currentTyping = this.typingStates[roomId];
         if ((!isTyping && !currentTyping) || (currentTyping && currentTyping.isTyping === isTyping)) {

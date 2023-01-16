@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 
-import { AboveLeftOf } from "../../../../structures/ContextMenu";
+import { MenuProps } from "../../../../structures/ContextMenu";
 import { EmojiButton } from "../../EmojiButton";
 import dis from "../../../../../dispatcher/dispatcher";
 import { ComposerInsertPayload } from "../../../../../dispatcher/payloads/ComposerInsertPayload";
@@ -24,18 +24,16 @@ import { Action } from "../../../../../dispatcher/actions";
 import { useRoomContext } from "../../../../../contexts/RoomContext";
 
 interface EmojiProps {
-    selectPreviousSelection: () => void;
-    menuPosition: AboveLeftOf;
+    menuPosition: MenuProps;
 }
 
-export function Emoji({ selectPreviousSelection, menuPosition }: EmojiProps) {
+export function Emoji({ menuPosition }: EmojiProps): JSX.Element {
     const roomContext = useRoomContext();
 
     return (
         <EmojiButton
             menuPosition={menuPosition}
             addEmoji={(emoji) => {
-                selectPreviousSelection();
                 dis.dispatch<ComposerInsertPayload>({
                     action: Action.ComposerInsert,
                     text: emoji,
