@@ -37,7 +37,7 @@ async function preapproveCapabilities(
 }
 
 /**
- * Approves the widget for identity token request, if it can be approved.
+ * Approves the widget for identity token.
  * This will be used to give certain widgets an identity token without having to
  * prompt the user to approve it.
  * @param {Widget} widget The widget to approve identity request for.
