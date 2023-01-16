@@ -118,7 +118,12 @@ describe("Composer", () => {
             // It has been sent
             cy.contains(".mx_EventTile_body", "my message 0");
 
-            // Type another
+            // To fix flakiness: wait a while after the composer becomes
+            // editable
+            cy.get("div[contenteditable=true]");
+            cy.wait(500);
+
+            // Type another message
             cy.get("div[contenteditable=true]").type("my message 1");
             // Press enter. Would be nice to just use {enter} but we can't because Cypress
             // does not trigger an insertParagraph when you do that.
