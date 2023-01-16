@@ -182,7 +182,7 @@ export class VoiceBroadcastRecording
     /**
      * Retries failed actions on reconnect.
      */
-    private onReconnect = async () => {
+    private onReconnect = async (): Promise<void> => {
         // Do nothing if not in connection_error state.
         if (this.state !== "connection_error") return;
 
@@ -320,7 +320,7 @@ export class VoiceBroadcastRecording
     };
 
     private onChunkRecorded = async (chunk: ChunkRecordedPayload): Promise<void> => {
-        const uploadAndSendFn = async () => {
+        const uploadAndSendFn = async (): Promise<void> => {
             const { url, file } = await this.uploadFile(chunk);
             await this.sendVoiceMessage(chunk, url, file);
         };
@@ -355,7 +355,7 @@ export class VoiceBroadcastRecording
          */
         const sequence = ++this.sequence;
 
-        const sendMessageFn = async () => {
+        const sendMessageFn = async (): Promise<void> => {
             const content = createVoiceMessageContent(
                 url,
                 this.getRecorder().contentType,
@@ -383,7 +383,7 @@ export class VoiceBroadcastRecording
      * sets the broadcast state to connection_error.
      */
     private async sendInfoStateEvent(state: VoiceBroadcastInfoState): Promise<void> {
-        const sendEventFn = async () => {
+        const sendEventFn = async (): Promise<void> => {
             await this.client.sendStateEvent(
                 this.roomId,
                 VoiceBroadcastInfoEventType,
@@ -409,7 +409,7 @@ export class VoiceBroadcastRecording
      * {@link toRetry}
      * {@link onConnectionError}
      */
-    private async callWithRetry(retryAbleFn: () => Promise<void>) {
+    private async callWithRetry(retryAbleFn: () => Promise<void>): Promise<void> {
         try {
             await retryAbleFn();
         } catch {
