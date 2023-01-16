@@ -374,7 +374,7 @@ export class VoiceBroadcastRecording
             await this.client.sendMessage(this.roomId, content);
         };
 
-        this.callWithRetry(sendMessageFn);
+        await this.callWithRetry(sendMessageFn);
     }
 
     /**
