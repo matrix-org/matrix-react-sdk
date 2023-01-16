@@ -18,6 +18,7 @@ import React, { createRef, SyntheticEvent, MouseEvent, ReactNode } from "react";
 import ReactDOM from "react-dom";
 import highlight from "highlight.js";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { EmoteEvent, MessageEvent as ExtEvMessageEvent } from "matrix-events-sdk";
 
 import * as HtmlUtils from "../../../HtmlUtils";
 import { formatDate } from "../../../DateUtils";
@@ -572,9 +573,46 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             );
         }
         const mxEvent = this.props.mxEvent;
-        const content = mxEvent.getContent();
+        let content = mxEvent.getContent();
         let isNotice = false;
         let isEmote = false;
+
+        if (this.props.forceUnstableExtensibleRendering) {
+            // interpret the event as a legacy m.room.message event
+            const extev = this.props.mxEvent.unstableExtensibleEvent;
+            if (!extev) {
+                throw new Error("Runtime Error: Extensible event was asked for, but not given @ TextualEvent");
+            }
+            if (ExtEvMessageEvent.type.matches(extev.type)) {
+                const msg = extev as unknown as ExtEvMessageEvent;
+                if (msg.text === undefined) {
+                    // TODO(TR): We should probably detect this a whole lot sooner so we can just ignore the event.
+                    throw new Error("Runtime Error: Message event is missing text");
+                }
+                content = {
+                    ...content,
+                    msgtype: MsgType.Text,
+                    body: msg.text,
+                    format: msg.html !== undefined ? "org.matrix.custom.html" : undefined,
+                    formatted_body: msg.html,
+                };
+            } else if (EmoteEvent.type.matches(extev.type)) {
+                const msg = extev as unknown as EmoteEvent;
+                if (msg.text === undefined) {
+                    // TODO(TR): We should probably detect this a whole lot sooner so we can just ignore the event.
+                    throw new Error("Runtime Error: Message event is missing text");
+                }
+                content = {
+                    ...content,
+                    msgtype: MsgType.Emote,
+                    body: msg.text,
+                    format: msg.html !== undefined ? "org.matrix.custom.html" : undefined,
+                    formatted_body: msg.html,
+                };
+            } else {
+                throw new Error("Runtime Error: Unsupported extensible message type @ TextualEvent");
+            }
+        }
 
         // only strip reply if this is the original replying event, edits thereafter do not have the fallback
         const stripReply = !mxEvent.replacingEvent() && !!getParentEventId(mxEvent);

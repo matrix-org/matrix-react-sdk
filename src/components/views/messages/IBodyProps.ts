@@ -54,5 +54,8 @@ export interface IBodyProps {
     // helper function to access relations for this event
     getRelationsForEvent?: GetRelationsForEvent;
 
+    // if true, the **unstable** extensible event functionality will be used to parse the event
+    forceUnstableExtensibleRendering?: boolean;
+
     ref?: React.RefObject<any> | LegacyRef<any>;
 }
