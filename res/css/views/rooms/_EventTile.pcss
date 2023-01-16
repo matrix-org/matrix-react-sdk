@@ -619,6 +619,17 @@ $left-gutter: 64px;
         ul ol {
             list-style-type: revert;
         }
+
+        /* Make list type disc to match rich text editor */
+        > ul {
+            list-style-type: disc;
+        }
+
+        /* Remove top and bottom margin for better consecutive list display */
+        > :is(ol, ul) {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
     }
 }
 
@@ -970,6 +981,7 @@ $left-gutter: 64px;
         font-size: $font-12px;
         max-width: var(--MessageTimestamp-max-width);
         position: initial;
+        margin-left: auto; /* to ensure it's end-aligned even if it's the only element of its parent */
     }
 
     &:hover {
@@ -1297,7 +1309,7 @@ $left-gutter: 64px;
 
 .mx_EventTile_details {
     display: flex;
-    width: -webkit-fill-available;
+    width: fill-available;
     align-items: center;
     justify-content: space-between;
     gap: $spacing-8;

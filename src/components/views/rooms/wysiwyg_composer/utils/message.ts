@@ -47,7 +47,7 @@ export async function sendMessage(
     message: string,
     isHTML: boolean,
     { roomContext, mxClient, ...params }: SendMessageParams,
-) {
+): Promise<ISendEventResponse> {
     const { relation, replyToEvent } = params;
     const { room } = roomContext;
     const roomId = room?.roomId;
@@ -112,7 +112,7 @@ export async function sendMessage(
             // For initial threads launch, chat effects are disabled
             // see #19731
             const isNotThread = relation?.rel_type !== THREAD_RELATION_TYPE.name;
-            if (!SettingsStore.getValue("feature_threadstable") || isNotThread) {
+            if (!SettingsStore.getValue("feature_threadenabled") || isNotThread) {
                 dis.dispatch({ action: `effects.${effect.command}` });
             }
         }
@@ -143,7 +143,10 @@ interface EditMessageParams {
     editorStateTransfer: EditorStateTransfer;
 }
 
-export async function editMessage(html: string, { roomContext, mxClient, editorStateTransfer }: EditMessageParams) {
+export async function editMessage(
+    html: string,
+    { roomContext, mxClient, editorStateTransfer }: EditMessageParams,
+): Promise<ISendEventResponse> {
     const editedEvent = editorStateTransfer.getEvent();
 
     PosthogAnalytics.instance.trackEvent<ComposerEvent>({
