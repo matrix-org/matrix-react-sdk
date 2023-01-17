@@ -26,6 +26,7 @@ import { Icon as InlineCodeIcon } from "../../../../../../res/img/element-icons/
 import { Icon as LinkIcon } from "../../../../../../res/img/element-icons/room/composer/link.svg";
 import { Icon as BulletedListIcon } from "../../../../../../res/img/element-icons/room/composer/bulleted_list.svg";
 import { Icon as NumberedListIcon } from "../../../../../../res/img/element-icons/room/composer/numbered_list.svg";
+import { Icon as CodeBlockIcon } from "../../../../../../res/img/element-icons/room/composer/code_block.svg";
 import AccessibleTooltipButton from "../../../elements/AccessibleTooltipButton";
 import { Alignment } from "../../../elements/Tooltip";
 import { KeyboardShortcut } from "../../../settings/KeyboardShortcut";
@@ -125,10 +126,16 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
             />
             <Button
                 isActive={actionStates.inlineCode === "reversed"}
-                label={_td("Code")}
+                label={_td("Inline code")}
                 keyCombo={{ ctrlOrCmdKey: true, key: "e" }}
                 onClick={() => composer.inlineCode()}
                 icon={<InlineCodeIcon className="mx_FormattingButtons_Icon" />}
+            />
+            <Button
+                isActive={actionStates.codeBlock === "reversed"}
+                label={_td("Code block")}
+                onClick={() => composer.codeBlock()}
+                icon={<CodeBlockIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
                 isActive={actionStates.link === "reversed"}
