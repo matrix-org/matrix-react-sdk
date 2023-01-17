@@ -47,16 +47,15 @@ export default class DisambiguatedProfile extends React.Component<IProps> {
         let title: string | undefined;
 
         if (mxid) {
-            const identifier = UserIdentifier.getDisplayUserIdentifier?.(mxid, {
-                withDisplayName: true,
-                roomId: member.roomId
-            }) ?? mxid;
+            const identifier =
+                UserIdentifier.getDisplayUserIdentifier?.(mxid, {
+                    withDisplayName: true,
+                    roomId: member.roomId,
+                }) ?? mxid;
             if (member?.disambiguate) {
-                mxidElement = (
-                    <span className="mx_DisambiguatedProfile_mxid">{ identifier }</span>
-                );
+                mxidElement = <span className="mx_DisambiguatedProfile_mxid">{identifier}</span>;
             }
-            title = _t('%(displayName)s (%(matrixId)s)', {
+            title = _t("%(displayName)s (%(matrixId)s)", {
                 displayName: rawDisplayName,
                 matrixId: identifier,
             });
