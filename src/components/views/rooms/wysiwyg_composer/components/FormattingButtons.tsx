@@ -126,7 +126,7 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
             />
             <Button
                 isActive={actionStates.inlineCode === "reversed"}
-                label={_td("Inline code")}
+                label={_td("Code")}
                 keyCombo={{ ctrlOrCmdKey: true, key: "e" }}
                 onClick={() => composer.inlineCode()}
                 icon={<InlineCodeIcon className="mx_FormattingButtons_Icon" />}
