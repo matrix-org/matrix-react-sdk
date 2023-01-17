@@ -160,16 +160,15 @@ describe("Cryptography", function () {
         cy.startHomeserver("default")
             .as("homeserver")
             .then((homeserver: HomeserverInstance) => {
-                cy.initTestUser(homeserver, "Alice", undefined, "alice_")
-                    .then((credentials) => {
-                        aliceCredenditals = {
-                            homeServer: credentials.homeServer,
-                            accessToken: credentials.accessToken,
-                            userId: credentials.userId,
-                            deviceId: credentials.deviceId,
-                            password: credentials.password,
-                        };
-                    });
+                cy.initTestUser(homeserver, "Alice", undefined, "alice_").then((credentials) => {
+                    aliceCredenditals = {
+                        homeServer: credentials.homeServer,
+                        accessToken: credentials.accessToken,
+                        userId: credentials.userId,
+                        deviceId: credentials.deviceId,
+                        password: credentials.password,
+                    };
+                });
                 cy.getBot(homeserver, { displayName: "Bob", autoAcceptInvites: false, userIdPrefix: "bob_" }).as("bob");
             });
     });
