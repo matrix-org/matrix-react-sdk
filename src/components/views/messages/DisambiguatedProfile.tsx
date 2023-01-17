@@ -18,8 +18,8 @@ limitations under the License.
 import React from "react";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import classNames from "classnames";
-import { _t } from "../../../languageHandler";
 
+import { _t } from "../../../languageHandler";
 import { getUserNameColorClass } from "../../../utils/FormattingUtils";
 import UserIdentifier from "../../../customisations/UserIdentifier";
 
@@ -54,7 +54,7 @@ export default class DisambiguatedProfile extends React.Component<IProps> {
 
         let title: string;
         if (mxid) {
-            title = _t('%(displayName)s (%(identifier)s)', {
+            title = _t('%(displayName)s (%(matrixId)s)', {
                 displayName: rawDisplayName,
                 matrixId: UserIdentifier.getDisplayUserIdentifier(mxid, {
                     withDisplayName: true,
