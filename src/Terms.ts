@@ -34,7 +34,7 @@ export class Service {
      * @param {string} baseUrl The Base URL of the service (ie. before '/_matrix')
      * @param {string} accessToken The user's access token for the service
      */
-    constructor(public serviceType: SERVICE_TYPES, public baseUrl: string, public accessToken: string) {}
+    public constructor(public serviceType: SERVICE_TYPES, public baseUrl: string, public accessToken: string) {}
 }
 
 export interface LocalisedPolicy {
@@ -75,7 +75,7 @@ export type TermsInteractionCallback = (
 export async function startTermsFlow(
     services: Service[],
     interactionCallback: TermsInteractionCallback = dialogTermsInteractionCallback,
-) {
+): Promise<void> {
     const termsPromises = services.map((s) => MatrixClientPeg.get().getTerms(s.serviceType, s.baseUrl));
 
     /*
@@ -176,7 +176,7 @@ export async function startTermsFlow(
             urlsForService,
         );
     });
-    return Promise.all(agreePromises);
+    await Promise.all(agreePromises);
 }
 
 export async function dialogTermsInteractionCallback(

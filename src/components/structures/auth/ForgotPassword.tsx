@@ -110,11 +110,11 @@ export default class ForgotPassword extends React.Component<Props, State> {
         this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.checkServerCapabilities(this.props.serverConfig);
     }
 
-    public componentDidUpdate(prevProps: Readonly<Props>) {
+    public componentDidUpdate(prevProps: Readonly<Props>): void {
         if (
             prevProps.serverConfig.hsUrl !== this.props.serverConfig.hsUrl ||
             prevProps.serverConfig.isUrl !== this.props.serverConfig.isUrl
@@ -159,7 +159,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
         });
     }
 
-    private async onPhaseEmailInputSubmit() {
+    private async onPhaseEmailInputSubmit(): Promise<void> {
         this.phase = Phase.SendingEmail;
 
         if (await this.sendVerificationMail()) {
@@ -213,7 +213,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
         });
     }
 
-    private async onPhaseEmailSentSubmit() {
+    private async onPhaseEmailSentSubmit(): Promise<void> {
         this.setState({
             phase: Phase.PasswordInput,
         });
@@ -288,7 +288,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
             false,
             false,
             {
-                onBeforeClose: async (reason?: string) => {
+                onBeforeClose: async (reason?: string): Promise<boolean> => {
                     if (reason === "backgroundClick") {
                         // Modal dismissed by clicking the background.
                         // Go one phase back.
@@ -342,7 +342,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
         }
     };
 
-    private onInputChanged = (stateKey: string, ev: React.FormEvent<HTMLInputElement>) => {
+    private onInputChanged = (stateKey: string, ev: React.FormEvent<HTMLInputElement>): void => {
         let value = ev.currentTarget.value;
         if (stateKey === "email") value = value.trim();
         this.setState({
@@ -350,7 +350,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
         } as any);
     };
 
-    renderEnterEmail(): JSX.Element {
+    public renderEnterEmail(): JSX.Element {
         return (
             <EnterEmail
                 email={this.state.email}
@@ -364,7 +364,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
         );
     }
 
-    async renderConfirmLogoutDevicesDialog(): Promise<boolean> {
+    public async renderConfirmLogoutDevicesDialog(): Promise<boolean> {
         const { finished } = Modal.createDialog<[boolean]>(QuestionDialog, {
             title: _t("Warning!"),
             description: (
@@ -395,7 +395,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
         return confirmed;
     }
 
-    renderCheckEmail(): JSX.Element {
+    public renderCheckEmail(): JSX.Element {
         return (
             <CheckEmail
                 email={this.state.email}
@@ -407,7 +407,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
         );
     }
 
-    renderSetPassword(): JSX.Element {
+    public renderSetPassword(): JSX.Element {
         const submitButtonChild =
             this.state.phase === Phase.ResettingPassword ? <Spinner w={16} h={16} /> : _t("Reset password");
 
@@ -460,7 +460,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
         );
     }
 
-    renderDone() {
+    public renderDone(): JSX.Element {
         return (
             <>
                 <CheckboxIcon className="mx_Icon mx_Icon_32 mx_Icon_accent" />
@@ -484,7 +484,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
         );
     }
 
-    render() {
+    public render(): JSX.Element {
         let resetPasswordJsx: JSX.Element;
 
         switch (this.state.phase) {

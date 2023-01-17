@@ -54,8 +54,12 @@ import { ThreadPayload } from "../dispatcher/payloads/ThreadPayload";
 import {
     doClearCurrentVoiceBroadcastPlaybackIfStopped,
     doMaybeSetCurrentVoiceBroadcastPlayback,
+    VoiceBroadcastRecording,
+    VoiceBroadcastRecordingsStoreEvent,
 } from "../voice-broadcast";
 import { IRoomStateEventsActionPayload } from "../actions/MatrixActionCreators";
+import { showCantStartACallDialog } from "../voice-broadcast/utils/showCantStartACallDialog";
+import { pauseNonLiveBroadcastFromOtherRoom } from "../voice-broadcast/utils/pauseNonLiveBroadcastFromOtherRoom";
 
 const NUM_JOIN_RETRY = 5;
 
@@ -151,6 +155,10 @@ export class RoomViewStore extends EventEmitter {
     public constructor(dis: MatrixDispatcher, private readonly stores: SdkContextClass) {
         super();
         this.resetDispatcher(dis);
+        this.stores.voiceBroadcastRecordingsStore.addListener(
+            VoiceBroadcastRecordingsStoreEvent.CurrentChanged,
+            this.onCurrentBroadcastRecordingChanged,
+        );
     }
 
     public addRoomListener(roomId: string, fn: Listener): void {
@@ -165,19 +173,39 @@ export class RoomViewStore extends EventEmitter {
         this.emit(roomId, isActive);
     }
 
+    private onCurrentBroadcastRecordingChanged = (recording: VoiceBroadcastRecording | null): void => {
+        if (recording === null) {
+            const room = this.stores.client?.getRoom(this.state.roomId || undefined);
+
+            if (room) {
+                this.doMaybeSetCurrentVoiceBroadcastPlayback(room);
+            }
+        }
+    };
+
     private setState(newState: Partial<State>): void {
         // If values haven't changed, there's nothing to do.
         // This only tries a shallow comparison, so unchanged objects will slip
         // through, but that's probably okay for now.
         let stateChanged = false;
         for (const key of Object.keys(newState)) {
-            if (this.state[key] !== newState[key]) {
+            if (this.state[key as keyof State] !== newState[key as keyof State]) {
                 stateChanged = true;
                 break;
             }
         }
         if (!stateChanged) {
             return;
+        }
+
+        if (newState.viewingCall) {
+            // Pause current broadcast, if any
+            this.stores.voiceBroadcastPlaybacksStore.getCurrent()?.pause();
+
+            if (this.stores.voiceBroadcastRecordingsStore.getCurrent()) {
+                showCantStartACallDialog();
+                newState.viewingCall = false;
+            }
         }
 
         const lastRoomId = this.state.roomId;
@@ -307,10 +335,11 @@ export class RoomViewStore extends EventEmitter {
                 this.reset();
                 break;
             case "reply_to_event":
-                // If currently viewed room does not match the room in which we wish to reply then change rooms
-                // this can happen when performing a search across all rooms. Persist the data from this event for
-                // both room and search timeline rendering types, search will get auto-closed by RoomView at this time.
-                if ([TimelineRenderingType.Room, TimelineRenderingType.Search].includes(payload.context)) {
+                // Thread timeline view handles its own reply-to-state
+                if (TimelineRenderingType.Thread !== payload.context) {
+                    // If currently viewed room does not match the room in which we wish to reply then change rooms this
+                    // can happen when performing a search across all rooms. Persist the data from this event for both
+                    // room and search timeline rendering types, search will get auto-closed by RoomView at this time.
                     if (payload.event && payload.event.getRoomId() !== this.state.roomId) {
                         this.dis.dispatch<ViewRoomPayload>({
                             action: Action.ViewRoom,
@@ -434,6 +463,7 @@ export class RoomViewStore extends EventEmitter {
             }
 
             if (room) {
+                pauseNonLiveBroadcastFromOtherRoom(room, this.stores.voiceBroadcastPlaybacksStore);
                 this.doMaybeSetCurrentVoiceBroadcastPlayback(room);
             }
         } else if (payload.room_alias) {
@@ -596,7 +626,7 @@ export class RoomViewStore extends EventEmitter {
      * unregistered.
      * @param dis The new dispatcher to use.
      */
-    public resetDispatcher(dis: MatrixDispatcher) {
+    public resetDispatcher(dis: MatrixDispatcher): void {
         if (this.dispatchToken) {
             this.dis.unregister(this.dispatchToken);
         }

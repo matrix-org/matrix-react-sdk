@@ -619,6 +619,17 @@ $left-gutter: 64px;
         ul ol {
             list-style-type: revert;
         }
+
+        /* Make list type disc to match rich text editor */
+        > ul {
+            list-style-type: disc;
+        }
+
+        /* Remove top and bottom margin for better consecutive list display */
+        > :is(ol, ul) {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
     }
 }
 
@@ -678,12 +689,17 @@ $left-gutter: 64px;
 
     &.mx_EventTile_e2eIcon_warning::after {
         mask-image: url("$(res)/img/e2e/warning.svg");
-        background-color: $alert;
+        background-color: $e2e-warning-color;
     }
 
     &.mx_EventTile_e2eIcon_normal::after {
         mask-image: url("$(res)/img/e2e/normal.svg");
         background-color: $header-panel-text-primary-color;
+    }
+
+    &.mx_EventTile_e2eIcon_decryption_failure::after {
+        mask-image: url("$(res)/img/e2e/decryption-failure.svg");
+        background-color: $secondary-content;
     }
 }
 
@@ -793,33 +809,6 @@ $left-gutter: 64px;
     mask-image: url("$(res)/img/element-icons/maximise-expand.svg");
 }
 
-.mx_EventTile_keyRequestInfo {
-    font-size: $font-12px;
-
-    .mx_EventTile_keyRequestInfo_text {
-        opacity: 0.5;
-
-        .mx_AccessibleButton {
-            color: $primary-content;
-            text-decoration: underline;
-        }
-    }
-}
-
-.mx_EventTile_keyRequestInfo_tooltip_contents p {
-    text-align: auto;
-    margin-left: 3px;
-    margin-right: 3px;
-
-    &:first-child {
-        margin-top: 0px;
-    }
-
-    &:last-child {
-        margin-bottom: 0px;
-    }
-}
-
 .mx_EventTile_tileError {
     color: red;
     text-align: center;
@@ -858,7 +847,8 @@ $left-gutter: 64px;
     }
 }
 
-.mx_EventTile[data-shape="ThreadsList"] {
+.mx_EventTile[data-shape="ThreadsList"],
+.mx_EventTile[data-shape="Notification"] {
     --topOffset: $spacing-12;
     --leftOffset: 48px;
     $borderRadius: 8px;
@@ -938,9 +928,7 @@ $left-gutter: 64px;
     }
 
     .mx_DisambiguatedProfile {
-        margin-inline: 0 $spacing-12;
         display: inline-flex;
-        flex: 1;
 
         .mx_DisambiguatedProfile_displayName,
         .mx_DisambiguatedProfile_mxid {
@@ -963,6 +951,7 @@ $left-gutter: 64px;
         width: 100%;
         box-sizing: border-box;
         padding-bottom: 0;
+        padding-inline-start: var(--leftOffset);
 
         .mx_ThreadPanel_replies {
             margin-top: $spacing-8;
@@ -988,15 +977,11 @@ $left-gutter: 64px;
         }
     }
 
-    .mx_DisambiguatedProfile,
-    .mx_EventTile_line {
-        padding-inline-start: var(--leftOffset);
-    }
-
     .mx_MessageTimestamp {
         font-size: $font-12px;
         max-width: var(--MessageTimestamp-max-width);
         position: initial;
+        margin-left: auto; /* to ensure it's end-aligned even if it's the only element of its parent */
     }
 
     &:hover {
@@ -1319,6 +1304,21 @@ $left-gutter: 64px;
                 $notification-inset-block-start - var(--MatrixChat_useCompactLayout_group-padding-top)
             );
         }
+    }
+}
+
+.mx_EventTile_details {
+    display: flex;
+    width: stretch;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-8;
+    margin-left: var(--leftOffset);
+    .mx_EventTile_truncated {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 }
 

@@ -39,12 +39,12 @@ interface IState {
     cancelling?: boolean;
 }
 
-function capFirst(s) {
+function capFirst(s: string): string {
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 export default class VerificationShowSas extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -69,7 +69,7 @@ export default class VerificationShowSas extends React.Component<IProps, IState>
         this.props.onCancel();
     };
 
-    render() {
+    public render(): JSX.Element {
         let sasDisplay;
         let sasCaption;
         if (this.props.sas.emoji) {

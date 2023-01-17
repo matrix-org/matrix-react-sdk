@@ -55,7 +55,7 @@ interface IState {
 export default class DateSeparator extends React.Component<IProps, IState> {
     private settingWatcherRef = null;
 
-    constructor(props, context) {
+    public constructor(props, context) {
         super(props, context);
         this.state = {
             jumpToDateEnabled: SettingsStore.getValue("feature_jump_to_date"),
@@ -72,7 +72,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
         );
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         SettingsStore.unwatchSetting(this.settingWatcherRef);
     }
 
@@ -218,7 +218,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
         );
     }
 
-    render() {
+    public render(): JSX.Element {
         const label = this.getLabel();
 
         let dateHeaderContent;

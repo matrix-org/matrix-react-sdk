@@ -54,7 +54,7 @@ interface IEmailAddressState {
 }
 
 export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddressState> {
-    constructor(props: IEmailAddressProps) {
+    public constructor(props: IEmailAddressProps) {
         super(props);
 
         const { bound } = props.email;
@@ -67,7 +67,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         };
     }
 
-    public componentDidUpdate(prevProps: Readonly<IEmailAddressProps>) {
+    public componentDidUpdate(prevProps: Readonly<IEmailAddressProps>): void {
         if (this.props.email !== prevProps.email) {
             const { bound } = this.props.email;
             this.setState({ bound });

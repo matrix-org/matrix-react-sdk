@@ -71,10 +71,10 @@ export default class MemberList extends React.Component<IProps, IState> {
     private showPresence = true;
     private mounted = false;
 
-    static contextType = SDKContext;
+    public static contextType = SDKContext;
     public context!: React.ContextType<typeof SDKContext>;
 
-    constructor(props: IProps, context: React.ContextType<typeof SDKContext>) {
+    public constructor(props: IProps, context: React.ContextType<typeof SDKContext>) {
         super(props);
         this.state = this.getMembersState([], []);
         this.showPresence = context.memberListStore.isPresenceEnabled();
@@ -97,11 +97,11 @@ export default class MemberList extends React.Component<IProps, IState> {
         cli.on(RoomEvent.MyMembership, this.onMyMembership);
     }
 
-    componentDidMount(): void {
+    public componentDidMount(): void {
         this.updateListNow(true);
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.mounted = false;
         const cli = MatrixClientPeg.get();
         if (cli) {
@@ -321,7 +321,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         }
     }
 
-    private makeMemberTiles(members: Array<RoomMember | MatrixEvent>) {
+    private makeMemberTiles(members: Array<RoomMember | MatrixEvent>): JSX.Element[] {
         return members.map((m) => {
             if (m instanceof RoomMember) {
                 // Is a Matrix invite
@@ -359,7 +359,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         return this.state.filteredInvitedMembers.length + (this.getPending3PidInvites() || []).length;
     };
 
-    render() {
+    public render(): JSX.Element {
         if (this.state.loading) {
             return (
                 <BaseCard className="mx_MemberList" onClose={this.props.onClose}>

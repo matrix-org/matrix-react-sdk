@@ -45,7 +45,7 @@ interface IState {
  * To avoid this, we keep the dialog open as long as /redact is in progress.
  */
 export default class ConfirmAndWaitRedactDialog extends React.PureComponent<IProps, IState> {
-    constructor(props) {
+    public constructor(props) {
         super(props);
         this.state = {
             isRedacting: false,
@@ -72,7 +72,7 @@ export default class ConfirmAndWaitRedactDialog extends React.PureComponent<IPro
         }
     };
 
-    public render() {
+    public render(): JSX.Element {
         if (this.state.isRedacting) {
             if (this.state.redactionErrorCode) {
                 const code = this.state.redactionErrorCode;

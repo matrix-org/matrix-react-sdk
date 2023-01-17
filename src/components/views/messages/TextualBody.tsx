@@ -18,7 +18,6 @@ import React, { createRef, SyntheticEvent, MouseEvent, ReactNode } from "react";
 import ReactDOM from "react-dom";
 import highlight from "highlight.js";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
-import { isEventLike, LegacyMsgType, M_MESSAGE, MessageEvent } from "matrix-events-sdk";
 
 import * as HtmlUtils from "../../../HtmlUtils";
 import { formatDate } from "../../../DateUtils";
@@ -49,6 +48,7 @@ import AccessibleButton from "../elements/AccessibleButton";
 import { options as linkifyOpts } from "../../../linkify-matrix";
 import { getParentEventId } from "../../../utils/Reply";
 import { EditWysiwygComposer } from "../rooms/wysiwyg_composer";
+import { IEventTileOps } from "../rooms/EventTile";
 
 const MAX_HIGHLIGHT_LENGTH = 4096;
 
@@ -67,10 +67,10 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
     private pills: Element[] = [];
     private tooltips: Element[] = [];
 
-    static contextType = RoomContext;
+    public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
 
-    constructor(props) {
+    public constructor(props) {
         super(props);
 
         this.state = {
@@ -79,7 +79,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         };
     }
 
-    componentDidMount() {
+    public componentDidMount(): void {
         if (!this.props.editState) {
             this.applyFormatting();
         }
@@ -162,7 +162,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             button.className += "mx_EventTile_collapseButton";
         }
 
-        button.onclick = async () => {
+        button.onclick = async (): Promise<void> => {
             button.className = "mx_EventTile_button ";
             if (pre.className == "mx_EventTile_collapsedCodeBlock") {
                 pre.className = "";
@@ -188,7 +188,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         const expansionButtonExists = div.getElementsByClassName("mx_EventTile_button");
         if (expansionButtonExists.length > 0) button.className += "mx_EventTile_buttonBottom";
 
-        button.onclick = async () => {
+        button.onclick = async (): Promise<void> => {
             const copyCode = button.parentElement.getElementsByTagName("code")[0];
             const successful = await copyPlaintext(copyCode.textContent);
 
@@ -281,7 +281,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         }
     }
 
-    componentDidUpdate(prevProps) {
+    public componentDidUpdate(prevProps: Readonly<IBodyProps>): void {
         if (!this.props.editState) {
             const stoppedEditing = prevProps.editState && !this.props.editState;
             const messageWasEdited = prevProps.replacingEventId !== this.props.replacingEventId;
@@ -291,13 +291,13 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         }
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.unmounted = true;
         unmountPills(this.pills);
         unmountTooltips(this.tooltips);
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+    public shouldComponentUpdate(nextProps: Readonly<IBodyProps>, nextState: Readonly<IState>): boolean {
         //console.info("shouldComponentUpdate: ShowUrlPreview for %s is %s", this.props.mxEvent.getId(), this.props.showUrlPreview);
 
         // exploit that events are immutable :)
@@ -451,7 +451,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         }
     };
 
-    public getEventTileOps = () => ({
+    public getEventTileOps = (): IEventTileOps => ({
         isWidgetHidden: () => {
             return this.state.widgetHidden;
         },
@@ -518,7 +518,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         Modal.createDialog(MessageEditHistoryDialog, { mxEvent: this.props.mxEvent });
     };
 
-    private renderEditedMarker() {
+    private renderEditedMarker(): JSX.Element {
         const date = this.props.mxEvent.replacingEventDate();
         const dateString = date && formatDate(date);
 
@@ -545,7 +545,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
      * Render a marker informing the user that, while they can see the message,
      * it is hidden for other users.
      */
-    private renderPendingModerationMarker() {
+    private renderPendingModerationMarker(): JSX.Element {
         let text;
         const visibility = this.props.mxEvent.messageVisibility();
         switch (visibility.visible) {
@@ -562,7 +562,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         return <span className="mx_EventTile_pendingModeration">{`(${text})`}</span>;
     }
 
-    render() {
+    public render(): JSX.Element {
         if (this.props.editState) {
             const isWysiwygComposerEnabled = SettingsStore.getValue("feature_wysiwyg_composer");
             return isWysiwygComposerEnabled ? (
@@ -579,29 +579,6 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         // only strip reply if this is the original replying event, edits thereafter do not have the fallback
         const stripReply = !mxEvent.replacingEvent() && !!getParentEventId(mxEvent);
         let body: ReactNode;
-        if (SettingsStore.isEnabled("feature_extensible_events")) {
-            const extev = this.props.mxEvent.unstableExtensibleEvent as MessageEvent;
-            if (extev?.isEquivalentTo(M_MESSAGE)) {
-                isEmote = isEventLike(extev.wireFormat, LegacyMsgType.Emote);
-                isNotice = isEventLike(extev.wireFormat, LegacyMsgType.Notice);
-                body = HtmlUtils.bodyToHtml(
-                    {
-                        body: extev.text,
-                        format: extev.html ? "org.matrix.custom.html" : undefined,
-                        formatted_body: extev.html,
-                        msgtype: MsgType.Text,
-                    },
-                    this.props.highlights,
-                    {
-                        disableBigEmoji: isEmote || !SettingsStore.getValue<boolean>("TextualBody.enableBigEmoji"),
-                        // Part of Replies fallback support
-                        stripReplyFallback: stripReply,
-                        ref: this.contentRef,
-                        returnString: false,
-                    },
-                );
-            }
-        }
         if (!body) {
             isEmote = content.msgtype === MsgType.Emote;
             isNotice = content.msgtype === MsgType.Notice;

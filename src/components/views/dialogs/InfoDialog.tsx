@@ -34,17 +34,17 @@ interface IProps extends IDialogProps {
 }
 
 export default class InfoDialog extends React.Component<IProps> {
-    static defaultProps = {
+    public static defaultProps = {
         title: "",
         description: "",
         hasCloseButton: false,
     };
 
-    private onFinished = () => {
+    private onFinished = (): void => {
         this.props.onFinished();
     };
 
-    render() {
+    public render(): JSX.Element {
         return (
             <BaseDialog
                 className="mx_InfoDialog"

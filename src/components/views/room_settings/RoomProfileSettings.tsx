@@ -48,7 +48,7 @@ interface IState {
 export default class RoomProfileSettings extends React.Component<IProps, IState> {
     private avatarUpload = createRef<HTMLInputElement>();
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         const client = MatrixClientPeg.get();
@@ -97,7 +97,7 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
         });
     };
 
-    private isSaveEnabled = () => {
+    private isSaveEnabled = (): boolean => {
         return Boolean(Object.values(this.state.profileFieldsTouched).length);
     };
 

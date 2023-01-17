@@ -76,7 +76,7 @@ interface IState {
     sidebarShown: boolean;
 }
 
-function getFullScreenElement() {
+function getFullScreenElement(): Element | undefined {
     return (
         document.fullscreenElement ||
         // moz omitted because firefox supports this unprefixed now (webkit here for safari)
@@ -85,7 +85,7 @@ function getFullScreenElement() {
     );
 }
 
-function requestFullscreen(element: Element) {
+function requestFullscreen(element: Element): void {
     const method =
         element.requestFullscreen ||
         // moz omitted since firefox supports unprefixed now
@@ -94,7 +94,7 @@ function requestFullscreen(element: Element) {
     if (method) method.call(element);
 }
 
-function exitFullscreen() {
+function exitFullscreen(): void {
     const exitMethod = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
     if (exitMethod) exitMethod.call(document);
 }
@@ -104,7 +104,7 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
     private contentWrapperRef = createRef<HTMLDivElement>();
     private buttonsRef = createRef<LegacyCallViewButtons>();
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         const { primary, secondary, sidebar } = LegacyCallView.getOrderedFeeds(this.props.call.getFeeds());
@@ -140,7 +140,7 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
         dis.unregister(this.dispatcherRef);
     }
 
-    static getDerivedStateFromProps(props: IProps): Partial<IState> {
+    public static getDerivedStateFromProps(props: IProps): Partial<IState> {
         const { primary, secondary, sidebar } = LegacyCallView.getOrderedFeeds(props.call.getFeeds());
 
         return {
@@ -232,7 +232,7 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
         this.buttonsRef.current?.showControls();
     };
 
-    static getOrderedFeeds(feeds: Array<CallFeed>): {
+    public static getOrderedFeeds(feeds: Array<CallFeed>): {
         primary?: CallFeed;
         secondary?: CallFeed;
         sidebar: Array<CallFeed>;

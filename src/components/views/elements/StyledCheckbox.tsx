@@ -38,13 +38,13 @@ export default class StyledCheckbox extends React.PureComponent<IProps, IState> 
         className: "",
     };
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
         // 56^10 so unlikely chance of collision.
         this.id = this.props.id || "checkbox_" + randomString(10);
     }
 
-    public render() {
+    public render(): JSX.Element {
         /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
         const { children, className, kind = CheckboxStyle.Solid, inputRef, ...otherProps } = this.props;
 

@@ -22,7 +22,7 @@ import { TimelineRenderingType } from "../contexts/RoomContext";
 import type { ICompletion, ISelectionRange } from "./Autocompleter";
 
 export interface ICommand {
-    command: string | null;
+    command: RegExpExecArray | null;
     range: {
         start: number;
         end: number;
@@ -36,8 +36,8 @@ export interface IAutocompleteOptions {
 }
 
 export default abstract class AutocompleteProvider {
-    commandRegex: RegExp;
-    forcedCommandRegex: RegExp;
+    public commandRegex: RegExp;
+    public forcedCommandRegex: RegExp;
 
     protected renderingType: TimelineRenderingType = TimelineRenderingType.Room;
 
@@ -59,7 +59,7 @@ export default abstract class AutocompleteProvider {
         }
     }
 
-    destroy() {
+    public destroy(): void {
         // stub
     }
 
@@ -70,7 +70,7 @@ export default abstract class AutocompleteProvider {
      * @param {boolean} force True if the user is forcing completion
      * @return {object} { command, range } where both objects fields are null if no match
      */
-    getCurrentCommand(query: string, selection: ISelectionRange, force = false) {
+    public getCurrentCommand(query: string, selection: ISelectionRange, force = false): ICommand {
         let commandRegex = this.commandRegex;
 
         if (force && this.shouldForceComplete()) {
@@ -83,7 +83,7 @@ export default abstract class AutocompleteProvider {
 
         commandRegex.lastIndex = 0;
 
-        let match;
+        let match: RegExpExecArray;
         while ((match = commandRegex.exec(query)) !== null) {
             const start = match.index;
             const end = start + match[0].length;
@@ -106,19 +106,19 @@ export default abstract class AutocompleteProvider {
         };
     }
 
-    abstract getCompletions(
+    public abstract getCompletions(
         query: string,
         selection: ISelectionRange,
         force: boolean,
         limit: number,
     ): Promise<ICompletion[]>;
 
-    abstract getName(): string;
+    public abstract getName(): string;
 
-    abstract renderCompletions(completions: React.ReactNode[]): React.ReactNode | null;
+    public abstract renderCompletions(completions: React.ReactNode[]): React.ReactNode | null;
 
     // Whether we should provide completions even if triggered forcefully, without a sigil.
-    shouldForceComplete(): boolean {
+    public shouldForceComplete(): boolean {
         return false;
     }
 }

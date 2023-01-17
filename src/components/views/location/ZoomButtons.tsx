@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import maplibregl from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -27,11 +27,11 @@ interface Props {
 }
 
 const ZoomButtons: React.FC<Props> = ({ map }) => {
-    const onZoomIn = () => {
+    const onZoomIn = (): void => {
         map.zoomIn();
     };
 
-    const onZoomOut = () => {
+    const onZoomOut = (): void => {
         map.zoomOut();
     };
 

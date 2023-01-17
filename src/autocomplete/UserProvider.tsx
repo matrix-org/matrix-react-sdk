@@ -43,11 +43,11 @@ const USER_REGEX = /\B@\S*/g;
 const FORCED_USER_REGEX = /[^/,:; \t\n]\S*/g;
 
 export default class UserProvider extends AutocompleteProvider {
-    matcher: QueryMatcher<RoomMember>;
-    users: RoomMember[];
-    room: Room;
+    public matcher: QueryMatcher<RoomMember>;
+    public users: RoomMember[];
+    public room: Room;
 
-    constructor(room: Room, renderingType?: TimelineRenderingType) {
+    public constructor(room: Room, renderingType?: TimelineRenderingType) {
         super({
             commandRegex: USER_REGEX,
             forcedCommandRegex: FORCED_USER_REGEX,
@@ -64,7 +64,7 @@ export default class UserProvider extends AutocompleteProvider {
         MatrixClientPeg.get().on(RoomStateEvent.Update, this.onRoomStateUpdate);
     }
 
-    destroy() {
+    public destroy(): void {
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener(RoomEvent.Timeline, this.onRoomTimeline);
             MatrixClientPeg.get().removeListener(RoomStateEvent.Update, this.onRoomStateUpdate);
@@ -77,7 +77,7 @@ export default class UserProvider extends AutocompleteProvider {
         toStartOfTimeline: boolean,
         removed: boolean,
         data: IRoomTimelineData,
-    ) => {
+    ): void => {
         if (!room) return; // notification timeline, we'll get this event again with a room specific timeline
         if (removed) return;
         if (room.roomId !== this.room.roomId) return;
@@ -93,7 +93,7 @@ export default class UserProvider extends AutocompleteProvider {
         this.onUserSpoke(ev.sender);
     };
 
-    private onRoomStateUpdate = (state: RoomState) => {
+    private onRoomStateUpdate = (state: RoomState): void => {
         // ignore updates in other rooms
         if (state.roomId !== this.room.roomId) return;
 
@@ -101,7 +101,7 @@ export default class UserProvider extends AutocompleteProvider {
         this.users = null;
     };
 
-    async getCompletions(
+    public async getCompletions(
         rawQuery: string,
         selection: ISelectionRange,
         force = false,
@@ -146,11 +146,11 @@ export default class UserProvider extends AutocompleteProvider {
         return completions;
     }
 
-    getName(): string {
+    public getName(): string {
         return _t("Users");
     }
 
-    private makeUsers() {
+    private makeUsers(): void {
         const events = this.room.getLiveTimeline().getEvents();
         const lastSpoken = {};
 
@@ -167,7 +167,7 @@ export default class UserProvider extends AutocompleteProvider {
         this.matcher.setObjects(this.users);
     }
 
-    onUserSpoke(user: RoomMember) {
+    public onUserSpoke(user: RoomMember): void {
         if (!this.users) return;
         if (!user) return;
         if (user.userId === MatrixClientPeg.get().credentials.userId) return;
@@ -182,7 +182,7 @@ export default class UserProvider extends AutocompleteProvider {
         this.matcher.setObjects(this.users);
     }
 
-    renderCompletions(completions: React.ReactNode[]): React.ReactNode {
+    public renderCompletions(completions: React.ReactNode[]): React.ReactNode {
         return (
             <div
                 className="mx_Autocomplete_Completion_container_pill"
@@ -194,7 +194,7 @@ export default class UserProvider extends AutocompleteProvider {
         );
     }
 
-    shouldForceComplete(): boolean {
+    public shouldForceComplete(): boolean {
         return true;
     }
 }

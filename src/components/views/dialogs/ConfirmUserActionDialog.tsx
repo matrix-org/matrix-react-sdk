@@ -55,12 +55,12 @@ interface IState {
  * Also tweaks the style for 'dangerous' actions (albeit only with colour)
  */
 export default class ConfirmUserActionDialog extends React.Component<IProps, IState> {
-    static defaultProps = {
+    public static defaultProps = {
         danger: false,
         askReason: false,
     };
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -77,13 +77,13 @@ export default class ConfirmUserActionDialog extends React.Component<IProps, ISt
         this.props.onFinished(false);
     };
 
-    private onReasonChange = (ev: ChangeEvent<HTMLInputElement>) => {
+    private onReasonChange = (ev: ChangeEvent<HTMLInputElement>): void => {
         this.setState({
             reason: ev.target.value,
         });
     };
 
-    public render() {
+    public render(): JSX.Element {
         const confirmButtonClass = this.props.danger ? "danger" : "";
 
         let reasonBox;

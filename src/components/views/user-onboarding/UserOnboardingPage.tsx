@@ -43,13 +43,13 @@ export function showUserOnboardingPage(useCase: UseCase): boolean {
 }
 
 const ANIMATION_DURATION = 2800;
-export function UserOnboardingPage({ justRegistered = false }: Props) {
+export function UserOnboardingPage({ justRegistered = false }: Props): JSX.Element {
     const config = SdkConfig.get();
     const pageUrl = getHomePageUrl(config);
 
     const useCase = useSettingValue<UseCase | null>("FTUE.useCaseSelection");
     const context = useUserOnboardingContext();
-    const [completedTasks, waitingTasks] = useUserOnboardingTasks(context);
+    const tasks = useUserOnboardingTasks(context);
 
     const initialSyncComplete = useInitialSyncComplete();
     const [showList, setShowList] = useState<boolean>(false);
@@ -80,7 +80,7 @@ export function UserOnboardingPage({ justRegistered = false }: Props) {
     return (
         <AutoHideScrollbar className="mx_UserOnboardingPage">
             <UserOnboardingHeader useCase={useCase} />
-            {showList && <UserOnboardingList completedTasks={completedTasks} waitingTasks={waitingTasks} />}
+            {showList && <UserOnboardingList tasks={tasks} />}
         </AutoHideScrollbar>
     );
 }

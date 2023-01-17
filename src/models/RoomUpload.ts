@@ -23,14 +23,14 @@ export class RoomUpload {
     public promise: Promise<{ url?: string; file?: IEncryptedFile }>;
     private uploaded = 0;
 
-    constructor(
+    public constructor(
         public readonly roomId: string,
         public readonly fileName: string,
         public readonly relation?: IEventRelation,
         public fileSize = 0,
     ) {}
 
-    public onProgress(progress: UploadProgress) {
+    public onProgress(progress: UploadProgress): void {
         this.uploaded = progress.loaded;
         this.fileSize = progress.total;
     }

@@ -25,7 +25,7 @@ interface IState {
 }
 
 export default class ToastContainer extends React.Component<{}, IState> {
-    constructor(props, context) {
+    public constructor(props, context) {
         super(props, context);
         this.state = {
             toasts: ToastStore.sharedInstance().getToasts(),
@@ -39,18 +39,18 @@ export default class ToastContainer extends React.Component<{}, IState> {
         ToastStore.sharedInstance().on("update", this.onToastStoreUpdate);
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         ToastStore.sharedInstance().removeListener("update", this.onToastStoreUpdate);
     }
 
-    private onToastStoreUpdate = () => {
+    private onToastStoreUpdate = (): void => {
         this.setState({
             toasts: ToastStore.sharedInstance().getToasts(),
             countSeen: ToastStore.sharedInstance().getCountSeen(),
         });
     };
 
-    render() {
+    public render(): JSX.Element {
         const totalCount = this.state.toasts.length;
         const isStacked = totalCount > 1;
         let toast;

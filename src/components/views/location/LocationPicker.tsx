@@ -57,7 +57,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     private geolocate?: maplibregl.GeolocateControl = null;
     private marker?: maplibregl.Marker = null;
 
-    constructor(props: ILocationPickerProps) {
+    public constructor(props: ILocationPickerProps) {
         super(props);
 
         this.state = {
@@ -67,11 +67,11 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         };
     }
 
-    private getMarkerId = () => {
+    private getMarkerId = (): string => {
         return "mx_MLocationPicker_marker";
     };
 
-    componentDidMount() {
+    public componentDidMount(): void {
         this.context.on(ClientEvent.ClientWellKnown, this.updateStyleUrl);
 
         try {
@@ -128,16 +128,16 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         }
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.geolocate?.off("error", this.onGeolocateError);
         this.geolocate?.off("geolocate", this.onGeolocate);
         this.map?.off("click", this.onClick);
         this.context.off(ClientEvent.ClientWellKnown, this.updateStyleUrl);
     }
 
-    private addMarkerToMap = () => {
+    private addMarkerToMap = (): void => {
         this.marker = new maplibregl.Marker({
-            element: document.getElementById(this.getMarkerId()),
+            element: document.getElementById(this.getMarkerId()) ?? undefined,
             anchor: "bottom",
             offset: [0, -1],
         })
@@ -145,14 +145,14 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
             .addTo(this.map);
     };
 
-    private updateStyleUrl = (clientWellKnown: IClientWellKnown) => {
+    private updateStyleUrl = (clientWellKnown: IClientWellKnown): void => {
         const style = tileServerFromWellKnown(clientWellKnown)?.["map_style_url"];
         if (style) {
             this.map?.setStyle(style);
         }
     };
 
-    private onGeolocate = (position: GeolocationPosition) => {
+    private onGeolocate = (position: GeolocationPosition): void => {
         if (!this.marker) {
             this.addMarkerToMap();
         }
@@ -160,7 +160,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         this.marker?.setLngLat(new maplibregl.LngLat(position.coords.longitude, position.coords.latitude));
     };
 
-    private onClick = (event: MapMouseEvent) => {
+    private onClick = (event: MapMouseEvent): void => {
         if (!this.marker) {
             this.addMarkerToMap();
         }
@@ -174,7 +174,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         });
     };
 
-    private onGeolocateError = (e: GeolocationPositionError) => {
+    private onGeolocateError = (e: GeolocationPositionError): void => {
         logger.error("Could not fetch location", e);
         // close the dialog and show an error when trying to share own location
         // pin drop location without permissions is ok
@@ -195,7 +195,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         this.setState({ timeout });
     };
 
-    private onOk = () => {
+    private onOk = (): void => {
         const { timeout, position } = this.state;
 
         this.props.onChoose(
@@ -208,7 +208,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         this.props.onFinished();
     };
 
-    render() {
+    public render(): JSX.Element {
         if (this.state.error) {
             return (
                 <div className="mx_LocationPicker mx_LocationPicker_hasError">

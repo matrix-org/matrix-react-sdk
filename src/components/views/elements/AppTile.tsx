@@ -85,7 +85,7 @@ interface IProps {
     widgetPageTitle?: string;
     showLayoutButtons?: boolean;
     // Handle to manually notify the PersistedElement that it needs to move
-    movePersistedElement?: MutableRefObject<() => void>;
+    movePersistedElement?: MutableRefObject<(() => void) | undefined>;
 }
 
 interface IState {
@@ -104,7 +104,7 @@ interface IState {
 
 export default class AppTile extends React.Component<IProps, IState> {
     public static contextType = MatrixClientContext;
-    context: ContextType<typeof MatrixClientContext>;
+    public context: ContextType<typeof MatrixClientContext>;
 
     public static defaultProps: Partial<IProps> = {
         waitForIframeLoad: true,
@@ -126,7 +126,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     private dispatcherRef: string;
     private unmounted: boolean;
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         // Tiles in miniMode are floating, and therefore not docked
@@ -147,7 +147,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         this.state = this.getNewState(props);
     }
 
-    private watchUserReady = () => {
+    private watchUserReady = (): void => {
         if (OwnProfileStore.instance.isProfileInfoFetched) {
             return;
         }
@@ -168,7 +168,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         return allowed || props.userId === props.creatorUserId;
     };
 
-    private onUserLeftRoom() {
+    private onUserLeftRoom(): void {
         const isActiveWidget = ActiveWidgetStore.instance.getWidgetPersistence(
             this.props.app.id,
             this.props.app.roomId,
@@ -304,13 +304,13 @@ export default class AppTile extends React.Component<IProps, IState> {
         OwnProfileStore.instance.removeListener(UPDATE_EVENT, this.onUserReady);
     }
 
-    private setupSgListeners() {
+    private setupSgListeners(): void {
         this.sgWidget.on("preparing", this.onWidgetPreparing);
         // emits when the capabilities have been set up or changed
         this.sgWidget.on("capabilitiesNotified", this.onWidgetCapabilitiesNotified);
     }
 
-    private stopSgListeners() {
+    private stopSgListeners(): void {
         if (!this.sgWidget) return;
         this.sgWidget.off("preparing", this.onWidgetPreparing);
         this.sgWidget.off("capabilitiesNotified", this.onWidgetCapabilitiesNotified);
@@ -337,7 +337,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         });
     }
 
-    private startMessaging() {
+    private startMessaging(): void {
         try {
             this.sgWidget?.startMessaging(this.iframe);
         } catch (e) {
@@ -490,7 +490,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         );
     }
 
-    private reload() {
+    private reload(): void {
         this.endWidgetActions().then(() => {
             // reset messaging
             this.resetWidget(this.props);

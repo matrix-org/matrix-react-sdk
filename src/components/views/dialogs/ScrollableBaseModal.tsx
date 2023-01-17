@@ -58,11 +58,11 @@ export default abstract class ScrollableBaseModal<
         }
     };
 
-    private onCancel = () => {
+    private onCancel = (): void => {
         this.cancel();
     };
 
-    private onSubmit = (e: MouseEvent | FormEvent) => {
+    private onSubmit = (e: MouseEvent | FormEvent): void => {
         e.stopPropagation();
         e.preventDefault();
         if (!this.state.canSubmit) return; // pretend the submit button was disabled
@@ -96,7 +96,7 @@ export default abstract class ScrollableBaseModal<
                             aria-label={_t("Close dialog")}
                         />
                     </div>
-                    <form onSubmit={this.onSubmit}>
+                    <form onSubmit={this.onSubmit} className="mx_CompoundDialog_form">
                         <div className="mx_CompoundDialog_content">{this.renderContent()}</div>
                         <div className="mx_CompoundDialog_footer">
                             <AccessibleButton onClick={this.onCancel} kind="primary_outline">

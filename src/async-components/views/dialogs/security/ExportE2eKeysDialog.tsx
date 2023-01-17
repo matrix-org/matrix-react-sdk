@@ -48,7 +48,7 @@ type AnyPassphrase = KeysStartingWith<IState, "passphrase">;
 export default class ExportE2eKeysDialog extends React.Component<IProps, IState> {
     private unmounted = false;
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -121,7 +121,7 @@ export default class ExportE2eKeysDialog extends React.Component<IProps, IState>
         return false;
     };
 
-    private onPassphraseChange = (ev: React.ChangeEvent<HTMLInputElement>, phrase: AnyPassphrase) => {
+    private onPassphraseChange = (ev: React.ChangeEvent<HTMLInputElement>, phrase: AnyPassphrase): void => {
         this.setState({
             [phrase]: ev.target.value,
         } as Pick<IState, AnyPassphrase>);

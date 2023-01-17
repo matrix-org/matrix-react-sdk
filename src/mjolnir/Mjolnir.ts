@@ -39,15 +39,15 @@ export class Mjolnir {
     private mjolnirWatchRef: string = null;
     private dispatcherRef: string = null;
 
-    get roomIds(): string[] {
+    public get roomIds(): string[] {
         return this._roomIds;
     }
 
-    get lists(): BanList[] {
+    public get lists(): BanList[] {
         return this._lists;
     }
 
-    start() {
+    public start(): void {
         this.mjolnirWatchRef = SettingsStore.watchSetting("mjolnirRooms", null, this.onListsChanged.bind(this));
 
         this.dispatcherRef = dis.register(this.onAction);
@@ -57,20 +57,20 @@ export class Mjolnir {
         });
     }
 
-    private onAction = (payload: ActionPayload) => {
+    private onAction = (payload: ActionPayload): void => {
         if (payload["action"] === "setup_mjolnir") {
             logger.log("Setting up Mjolnir: after sync");
             this.setup();
         }
     };
 
-    setup() {
+    public setup(): void {
         if (!MatrixClientPeg.get()) return;
         this.updateLists(SettingsStore.getValue("mjolnirRooms"));
         MatrixClientPeg.get().on(RoomStateEvent.Events, this.onEvent);
     }
 
-    stop() {
+    public stop(): void {
         if (this.mjolnirWatchRef) {
             SettingsStore.unwatchSetting(this.mjolnirWatchRef);
             this.mjolnirWatchRef = null;
@@ -85,7 +85,7 @@ export class Mjolnir {
         MatrixClientPeg.get().removeListener(RoomStateEvent.Events, this.onEvent);
     }
 
-    async getOrCreatePersonalList(): Promise<BanList> {
+    public async getOrCreatePersonalList(): Promise<BanList> {
         let personalRoomId = SettingsStore.getValue("mjolnirPersonalRoom");
         if (!personalRoomId) {
             const resp = await MatrixClientPeg.get().createRoom({
@@ -113,7 +113,7 @@ export class Mjolnir {
     }
 
     // get without creating the list
-    getPersonalList(): BanList {
+    public getPersonalList(): BanList {
         const personalRoomId = SettingsStore.getValue("mjolnirPersonalRoom");
         if (!personalRoomId) return null;
 
@@ -125,19 +125,19 @@ export class Mjolnir {
         return list;
     }
 
-    async subscribeToList(roomId: string) {
+    public async subscribeToList(roomId: string): Promise<void> {
         const roomIds = [...this._roomIds, roomId];
         await SettingsStore.setValue("mjolnirRooms", null, SettingLevel.ACCOUNT, roomIds);
         this._lists.push(new BanList(roomId));
     }
 
-    async unsubscribeFromList(roomId: string) {
+    public async unsubscribeFromList(roomId: string): Promise<void> {
         const roomIds = this._roomIds.filter((r) => r !== roomId);
         await SettingsStore.setValue("mjolnirRooms", null, SettingLevel.ACCOUNT, roomIds);
         this._lists = this._lists.filter((b) => b.roomId !== roomId);
     }
 
-    private onEvent = (event: MatrixEvent) => {
+    private onEvent = (event: MatrixEvent): void => {
         if (!MatrixClientPeg.get()) return;
         if (!this._roomIds.includes(event.getRoomId())) return;
         if (!ALL_RULE_TYPES.includes(event.getType())) return;
@@ -145,12 +145,12 @@ export class Mjolnir {
         this.updateLists(this._roomIds);
     };
 
-    private onListsChanged(settingName: string, roomId: string, atLevel: SettingLevel, newValue: string[]) {
+    private onListsChanged(settingName: string, roomId: string, atLevel: SettingLevel, newValue: string[]): void {
         // We know that ban lists are only recorded at one level so we don't need to re-eval them
         this.updateLists(newValue);
     }
 
-    private updateLists(listRoomIds: string[]) {
+    private updateLists(listRoomIds: string[]): void {
         if (!MatrixClientPeg.get()) return;
 
         logger.log("Updating Mjolnir ban lists to: " + listRoomIds);
@@ -164,7 +164,7 @@ export class Mjolnir {
         }
     }
 
-    isServerBanned(serverName: string): boolean {
+    public isServerBanned(serverName: string): boolean {
         for (const list of this._lists) {
             for (const rule of list.serverRules) {
                 if (rule.isMatch(serverName)) {
@@ -175,7 +175,7 @@ export class Mjolnir {
         return false;
     }
 
-    isUserBanned(userId: string): boolean {
+    public isUserBanned(userId: string): boolean {
         for (const list of this._lists) {
             for (const rule of list.userRules) {
                 if (rule.isMatch(userId)) {
@@ -186,7 +186,7 @@ export class Mjolnir {
         return false;
     }
 
-    static sharedInstance(): Mjolnir {
+    public static sharedInstance(): Mjolnir {
         if (!Mjolnir.instance) {
             Mjolnir.instance = new Mjolnir();
         }

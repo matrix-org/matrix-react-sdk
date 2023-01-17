@@ -45,7 +45,7 @@ const GLYPH = "👾";
 export default class SpaceInvaders implements ICanvasEffect {
     private readonly options: SpaceInvadersOptions;
 
-    constructor(options: { [key: string]: any }) {
+    public constructor(options: { [key: string]: any }) {
         this.options = { ...DefaultOptions, ...options };
     }
 
@@ -55,7 +55,7 @@ export default class SpaceInvaders implements ICanvasEffect {
 
     public isRunning: boolean;
 
-    public start = async (canvas: HTMLCanvasElement, timeout = 3000) => {
+    public start = async (canvas: HTMLCanvasElement, timeout = 3000): Promise<void> => {
         if (!canvas) {
             return;
         }
@@ -72,7 +72,7 @@ export default class SpaceInvaders implements ICanvasEffect {
         }
     };
 
-    public stop = async () => {
+    public stop = async (): Promise<void> => {
         this.isRunning = false;
     };
 
@@ -103,7 +103,7 @@ export default class SpaceInvaders implements ICanvasEffect {
         }
     };
 
-    private animateAndRenderInvaders() {
+    private animateAndRenderInvaders(): void {
         if (!this.context || !this.context.canvas) {
             return;
         }
