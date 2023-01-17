@@ -22,7 +22,7 @@ import type { MatrixClient } from "matrix-js-sdk/src/client";
 import type { Room } from "matrix-js-sdk/src/models/room";
 import type { IContent } from "matrix-js-sdk/src/models/event";
 import Chainable = Cypress.Chainable;
-import { Credentials } from "./homeserver";
+import { UserCredentials } from "./login";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -120,7 +120,7 @@ declare global {
             /**
              * Boostraps cross-signing.
              */
-            bootstrapCrossSigning(credendtials: Credentials): Chainable<void>;
+            bootstrapCrossSigning(credendtials: UserCredentials): Chainable<void>;
             /**
              * Joins the given room by alias or ID
              * @param roomIdOrAlias the id or alias of the room to join
@@ -211,7 +211,7 @@ Cypress.Commands.add("setAvatarUrl", (url: string): Chainable<{}> => {
     });
 });
 
-Cypress.Commands.add("bootstrapCrossSigning", (credentials: Credentials) => {
+Cypress.Commands.add("bootstrapCrossSigning", (credentials: UserCredentials) => {
     cy.window({ log: false }).then((win) => {
         win.mxMatrixClientPeg.matrixClient.bootstrapCrossSigning({
             authUploadDeviceSigningKeys: async (func) => {
