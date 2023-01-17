@@ -154,11 +154,22 @@ const verify = function (this: CryptoTestContext) {
 };
 
 describe("Cryptography", function () {
+    var aliceCredenditals = undefined;
+
     beforeEach(function () {
         cy.startHomeserver("default")
             .as("homeserver")
             .then((homeserver: HomeserverInstance) => {
-                cy.initTestUser(homeserver, "Alice", undefined, "alice_");
+                cy.initTestUser(homeserver, "Alice", undefined, "alice_")
+                    .then((credentials) => {
+                        aliceCredenditals = {
+                            homeServer: credentials.homeServer,
+                            accessToken: credentials.accessToken,
+                            userId: credentials.userId,
+                            deviceId: credentials.deviceId,
+                            password: credentials.password,
+                        };
+                    });
                 cy.getBot(homeserver, { displayName: "Bob", autoAcceptInvites: false, userIdPrefix: "bob_" }).as("bob");
             });
     });
@@ -183,7 +194,7 @@ describe("Cryptography", function () {
     });
 
     it("creating a DM should work, being e2e-encrypted / user verification", function (this: CryptoTestContext) {
-        cy.bootstrapCrossSigning();
+        cy.bootstrapCrossSigning(aliceCredenditals);
         startDMWithBob.call(this);
         // send first message
         cy.get(".mx_BasicMessageComposer_input").click().should("have.focus").type("Hey!{enter}");
@@ -194,7 +205,7 @@ describe("Cryptography", function () {
     });
 
     it("should allow verification when there is no existing DM", function (this: CryptoTestContext) {
-        cy.bootstrapCrossSigning();
+        cy.bootstrapCrossSigning(aliceCredenditals);
         autoJoin(this.bob);
 
         // we need to have a room with the other user present, so we can open the verification panel
@@ -212,7 +223,7 @@ describe("Cryptography", function () {
     });
 
     it("should show the correct shield on edited e2e events", function (this: CryptoTestContext) {
-        cy.bootstrapCrossSigning();
+        cy.bootstrapCrossSigning(aliceCredenditals);
 
         // bob has a second, not cross-signed, device
         cy.loginBot(this.homeserver, this.bob.getUserId(), this.bob.__cypress_password, {}).as("bobSecondDevice");

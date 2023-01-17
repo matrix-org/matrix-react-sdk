@@ -110,7 +110,14 @@ describe("Decryption Failure Bar", () => {
                     otherDevice = cli;
                     await otherDevice.bootstrapCrossSigning({
                         authUploadDeviceSigningKeys: async (makeRequest) => {
-                            await makeRequest({});
+                            await makeRequest({
+                                type: "m.login.password",
+                                identifier: {
+                                    type: "m.id.user",
+                                    user: otherDevice.getUserId(),
+                                },
+                                password: testUser.password,
+                            });
                         },
                         setupNewCrossSigning: true,
                     });
@@ -172,7 +179,14 @@ describe("Decryption Failure Bar", () => {
             cy.loginBot(homeserver, testUser.username, testUser.password, {}).then(async (cli) => {
                 await cli.bootstrapCrossSigning({
                     authUploadDeviceSigningKeys: async (makeRequest) => {
-                        await makeRequest({});
+                        await makeRequest({
+                            type: "m.login.password",
+                            identifier: {
+                                type: "m.id.user",
+                                user: cli.getUserId(),
+                            },
+                            password: testUser.password,
+                        });
                     },
                     setupNewCrossSigning: true,
                 });
