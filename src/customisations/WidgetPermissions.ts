@@ -24,6 +24,7 @@ import { Capability, Widget } from "matrix-widget-api";
  * capabilities that Element will be automatically granting, such as the
  * ability for Jitsi widgets to stay on screen - those will be approved
  * regardless.
+ * This function is not called and exists to provide the type.
  * @param {Widget} widget The widget to approve capabilities for.
  * @param {Set<Capability>} requestedCapabilities The capabilities the widget requested.
  * @returns {Set<Capability>} Resolves to the capabilities that are approved for use
@@ -40,6 +41,7 @@ async function preapproveCapabilities(
  * Approves the widget for identity token.
  * This will be used to give certain widgets an identity token without having to
  * prompt the user to approve it.
+ * This function is not called and exists to provide the type.
  * @param {Widget} widget The widget to approve identity request for.
  * @returns {boolean} Resolves to true if identity request is preapproved, false otherwise
  */
