@@ -22,8 +22,9 @@ describe("Registration", () => {
     let synapse: SynapseInstance;
 
     beforeEach(() => {
+        cy.stubDefaultServer();
         cy.visit("/#/register");
-        cy.startSynapse("consent").then(data => {
+        cy.startSynapse("consent").then((data) => {
             synapse = data;
         });
     });
@@ -44,7 +45,7 @@ describe("Registration", () => {
         cy.get(".mx_ServerPickerDialog_otherHomeserver").type(synapse.baseUrl);
         cy.get(".mx_ServerPickerDialog_continue").click();
         // wait for the dialog to go away
-        cy.get('.mx_ServerPickerDialog').should('not.exist');
+        cy.get(".mx_ServerPickerDialog").should("not.exist");
 
         cy.get("#mx_RegistrationForm_username").should("be.visible");
         // Hide the server text as it contains the randomly allocated Synapse port
@@ -55,7 +56,6 @@ describe("Registration", () => {
         cy.get("#mx_RegistrationForm_username").type("alice");
         cy.get("#mx_RegistrationForm_password").type("totally a great password");
         cy.get("#mx_RegistrationForm_passwordConfirm").type("totally a great password");
-        cy.startMeasuring("create-account");
         cy.get(".mx_Login_submit").click();
 
         cy.get(".mx_RegistrationEmailPromptDialog").should("be.visible");
@@ -63,13 +63,11 @@ describe("Registration", () => {
         cy.checkA11y();
         cy.get(".mx_RegistrationEmailPromptDialog button.mx_Dialog_primary").click();
 
-        cy.stopMeasuring("create-account");
         cy.get(".mx_InteractiveAuthEntryComponents_termsPolicy").should("be.visible");
         cy.percySnapshot("Registration terms prompt", { percyCSS });
         cy.checkA11y();
 
         cy.get(".mx_InteractiveAuthEntryComponents_termsPolicy input").click();
-        cy.startMeasuring("from-submit-to-home");
         cy.get(".mx_InteractiveAuthEntryComponents_termsSubmit").click();
 
         cy.get(".mx_UseCaseSelection_skip", { timeout: 30000 }).should("exist");
@@ -77,13 +75,14 @@ describe("Registration", () => {
         cy.checkA11y();
         cy.get(".mx_UseCaseSelection_skip .mx_AccessibleButton").click();
 
-        cy.url().should('contain', '/#/home');
-        cy.stopMeasuring("from-submit-to-home");
+        cy.url().should("contain", "/#/home");
 
         cy.get('[aria-label="User menu"]').click();
         cy.get('[aria-label="Security & Privacy"]').click();
-        cy.get(".mx_DevicesPanel_myDevice .mx_DevicesPanel_deviceTrust .mx_E2EIcon")
-            .should("have.class", "mx_E2EIcon_verified");
+        cy.get(".mx_DevicesPanel_myDevice .mx_DevicesPanel_deviceTrust .mx_E2EIcon").should(
+            "have.class",
+            "mx_E2EIcon_verified",
+        );
     });
 
     it("should require username to fulfil requirements and be available", () => {
@@ -92,7 +91,7 @@ describe("Registration", () => {
         cy.get(".mx_ServerPickerDialog_otherHomeserver").type(synapse.baseUrl);
         cy.get(".mx_ServerPickerDialog_continue").click();
         // wait for the dialog to go away
-        cy.get('.mx_ServerPickerDialog').should('not.exist');
+        cy.get(".mx_ServerPickerDialog").should("not.exist");
 
         cy.get("#mx_RegistrationForm_username").should("be.visible");
 

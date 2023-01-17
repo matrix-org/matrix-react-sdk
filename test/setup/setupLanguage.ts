@@ -20,10 +20,6 @@ import * as languageHandler from "../../src/languageHandler";
 import en from "../../src/i18n/strings/en_EN.json";
 import de from "../../src/i18n/strings/de_DE.json";
 
-fetchMock.config.overwriteRoutes = false;
-fetchMock.catch("");
-window.fetch = fetchMock.sandbox();
-
 const lv = {
     "Save": "Saglabāt",
     "Uploading %(filename)s and %(count)s others|one": "Качване на %(filename)s и %(count)s друг",
@@ -38,7 +34,7 @@ function weblateToCounterpart(inTrs: object): object {
     const outTrs = {};
 
     for (const key of Object.keys(inTrs)) {
-        const keyParts = key.split('|', 2);
+        const keyParts = key.split("|", 2);
         if (keyParts.length === 2) {
             let obj = outTrs[keyParts[0]];
             if (obj === undefined) {
@@ -47,7 +43,7 @@ function weblateToCounterpart(inTrs: object): object {
                 // This is a transitional edge case if a string went from singular to pluralised and both still remain
                 // in the translation json file. Use the singular translation as `other` and merge pluralisation atop.
                 obj = outTrs[keyParts[0]] = {
-                    "other": inTrs[key],
+                    other: inTrs[key],
                 };
                 console.warn("Found entry in i18n file in both singular and pluralised form", keyParts[0]);
             }
@@ -62,22 +58,22 @@ function weblateToCounterpart(inTrs: object): object {
 
 fetchMock
     .get("/i18n/languages.json", {
-        "en": {
-            "fileName": "en_EN.json",
-            "label": "English",
+        en: {
+            fileName: "en_EN.json",
+            label: "English",
         },
-        "de": {
-            "fileName": "de_DE.json",
-            "label": "German",
+        de: {
+            fileName: "de_DE.json",
+            label: "German",
         },
-        "lv": {
-            "fileName": "lv.json",
-            "label": "Latvian",
+        lv: {
+            fileName: "lv.json",
+            label: "Latvian",
         },
     })
     .get("end:en_EN.json", weblateToCounterpart(en))
     .get("end:de_DE.json", weblateToCounterpart(de))
     .get("end:lv.json", weblateToCounterpart(lv));
 
-languageHandler.setLanguage('en');
-languageHandler.setMissingEntryGenerator(key => key.split("|", 2)[1]);
+languageHandler.setLanguage("en");
+languageHandler.setMissingEntryGenerator((key) => key.split("|", 2)[1]);

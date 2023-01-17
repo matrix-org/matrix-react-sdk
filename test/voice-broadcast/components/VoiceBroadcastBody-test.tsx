@@ -14,14 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactElement } from "react";
 import { act, render, screen } from "@testing-library/react";
 import { mocked } from "jest-mock";
-import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 
 import {
     VoiceBroadcastBody,
-    VoiceBroadcastInfoEventType,
     VoiceBroadcastInfoState,
     VoiceBroadcastRecordingBody,
     VoiceBroadcastRecordingsStore,
@@ -30,8 +29,10 @@ import {
     VoiceBroadcastPlayback,
     VoiceBroadcastPlaybacksStore,
 } from "../../../src/voice-broadcast";
-import { mkEvent, stubClient } from "../../test-utils";
-import { RelationsHelper } from "../../../src/events/RelationsHelper";
+import { stubClient } from "../../test-utils";
+import { mkVoiceBroadcastInfoStateEvent } from "../utils/test-utils";
+import { MediaEventHelper } from "../../../src/utils/MediaEventHelper";
+import { RoomPermalinkCreator } from "../../../src/utils/permalinks/Permalinks";
 
 jest.mock("../../../src/voice-broadcast/components/molecules/VoiceBroadcastRecordingBody", () => ({
     VoiceBroadcastRecordingBody: jest.fn(),
@@ -41,73 +42,105 @@ jest.mock("../../../src/voice-broadcast/components/molecules/VoiceBroadcastPlayb
     VoiceBroadcastPlaybackBody: jest.fn(),
 }));
 
-jest.mock("../../../src/events/RelationsHelper");
+jest.mock("../../../src/utils/permalinks/Permalinks");
+jest.mock("../../../src/utils/MediaEventHelper");
 
 describe("VoiceBroadcastBody", () => {
     const roomId = "!room:example.com";
+    let userId: string;
+    let deviceId: string;
     let client: MatrixClient;
+    let room: Room;
     let infoEvent: MatrixEvent;
+    let stoppedEvent: MatrixEvent;
     let testRecording: VoiceBroadcastRecording;
     let testPlayback: VoiceBroadcastPlayback;
 
-    const mkVoiceBroadcastInfoEvent = (state: VoiceBroadcastInfoState) => {
-        return mkEvent({
-            event: true,
-            type: VoiceBroadcastInfoEventType,
-            user: client.getUserId(),
-            room: roomId,
-            content: {
-                state,
-            },
-        });
-    };
-
     const renderVoiceBroadcast = () => {
-        render(<VoiceBroadcastBody
-            mxEvent={infoEvent}
-            mediaEventHelper={null}
-            onHeightChanged={() => {}}
-            onMessageAllowed={() => {}}
-            permalinkCreator={null}
-        />);
+        render(
+            <VoiceBroadcastBody
+                mxEvent={infoEvent}
+                mediaEventHelper={new MediaEventHelper(infoEvent)}
+                onHeightChanged={() => {}}
+                onMessageAllowed={() => {}}
+                permalinkCreator={new RoomPermalinkCreator(room)}
+            />,
+        );
         testRecording = VoiceBroadcastRecordingsStore.instance().getByInfoEvent(infoEvent, client);
     };
 
     beforeEach(() => {
         client = stubClient();
-        infoEvent = mkVoiceBroadcastInfoEvent(VoiceBroadcastInfoState.Started);
+        userId = client.getUserId() || "";
+        deviceId = client.getDeviceId() || "";
+        mocked(client.relations).mockClear();
+        mocked(client.relations).mockResolvedValue({ events: [] });
+        room = new Room(roomId, client, userId);
+        mocked(client.getRoom).mockImplementation((getRoomId?: string) => {
+            if (getRoomId === roomId) return room;
+            return null;
+        });
+
+        infoEvent = mkVoiceBroadcastInfoStateEvent(roomId, VoiceBroadcastInfoState.Started, userId, deviceId);
+        stoppedEvent = mkVoiceBroadcastInfoStateEvent(
+            roomId,
+            VoiceBroadcastInfoState.Stopped,
+            userId,
+            deviceId,
+            infoEvent,
+        );
+        room.addEventsToTimeline([infoEvent], true, room.getLiveTimeline());
         testRecording = new VoiceBroadcastRecording(infoEvent, client);
         testPlayback = new VoiceBroadcastPlayback(infoEvent, client);
-        mocked(VoiceBroadcastRecordingBody).mockImplementation(({ recording }) => {
+        mocked(VoiceBroadcastRecordingBody).mockImplementation(({ recording }): ReactElement | null => {
             if (testRecording === recording) {
                 return <div data-testid="voice-broadcast-recording-body" />;
             }
+
+            return null;
         });
 
-        mocked(VoiceBroadcastPlaybackBody).mockImplementation(({ playback }) => {
+        mocked(VoiceBroadcastPlaybackBody).mockImplementation(({ playback }): ReactElement | null => {
             if (testPlayback === playback) {
                 return <div data-testid="voice-broadcast-playback-body" />;
             }
+
+            return null;
         });
 
         jest.spyOn(VoiceBroadcastRecordingsStore.instance(), "getByInfoEvent").mockImplementation(
-            (getEvent: MatrixEvent, getClient: MatrixClient) => {
+            (getEvent: MatrixEvent, getClient: MatrixClient): VoiceBroadcastRecording => {
                 if (getEvent === infoEvent && getClient === client) {
                     return testRecording;
                 }
+
+                throw new Error("unexpected event");
             },
         );
 
         jest.spyOn(VoiceBroadcastPlaybacksStore.instance(), "getByInfoEvent").mockImplementation(
-            (getEvent: MatrixEvent) => {
+            (getEvent: MatrixEvent): VoiceBroadcastPlayback => {
                 if (getEvent === infoEvent) {
                     return testPlayback;
                 }
+
+                throw new Error("unexpected event");
             },
         );
     });
 
-    describe("when displaying a voice broadcast recording", () => {
+    describe("when there is a stopped voice broadcast", () => {
+        beforeEach(() => {
+            room.addEventsToTimeline([stoppedEvent], true, room.getLiveTimeline());
+            renderVoiceBroadcast();
+        });
+
+        it("should render a voice broadcast playback body", () => {
+            screen.getByTestId("voice-broadcast-playback-body");
+        });
+    });
+
+    describe("when there is a started voice broadcast from the current user", () => {
         beforeEach(() => {
             renderVoiceBroadcast();
         });
@@ -118,13 +151,8 @@ describe("VoiceBroadcastBody", () => {
 
         describe("and the recordings ends", () => {
             beforeEach(() => {
-                const stoppedEvent = mkVoiceBroadcastInfoEvent(VoiceBroadcastInfoState.Stopped);
-                // get the RelationsHelper instanced used in VoiceBroadcastBody
-                const relationsHelper = mocked(RelationsHelper).mock.instances[5];
                 act(() => {
-                    // invoke the callback of the VoiceBroadcastBody hook to simulate an ended broadcast
-                    // @ts-ignore
-                    mocked(relationsHelper.on).mock.calls[0][1](stoppedEvent);
+                    room.addEventsToTimeline([stoppedEvent], true, room.getLiveTimeline());
                 });
             });
 

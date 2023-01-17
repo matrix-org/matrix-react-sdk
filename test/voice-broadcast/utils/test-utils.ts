@@ -14,24 +14,69 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { EventType, MatrixEvent, MsgType } from "matrix-js-sdk/src/matrix";
 
-import { VoiceBroadcastInfoEventType, VoiceBroadcastInfoState } from "../../../src/voice-broadcast";
+import {
+    VoiceBroadcastChunkEventType,
+    VoiceBroadcastInfoEventType,
+    VoiceBroadcastInfoState,
+} from "../../../src/voice-broadcast";
 import { mkEvent } from "../../test-utils";
 
 export const mkVoiceBroadcastInfoStateEvent = (
     roomId: string,
     state: VoiceBroadcastInfoState,
-    sender: string,
+    senderId: string,
+    senderDeviceId: string,
+    startedInfoEvent?: MatrixEvent,
 ): MatrixEvent => {
+    const relationContent = {};
+
+    if (startedInfoEvent) {
+        relationContent["m.relates_to"] = {
+            event_id: startedInfoEvent.getId(),
+            rel_type: "m.reference",
+        };
+    }
+
     return mkEvent({
         event: true,
         room: roomId,
-        user: sender,
+        user: senderId,
         type: VoiceBroadcastInfoEventType,
-        skey: sender,
+        skey: senderId,
         content: {
             state,
+            device_id: senderDeviceId,
+            ...relationContent,
         },
+    });
+};
+
+export const mkVoiceBroadcastChunkEvent = (
+    userId: string,
+    roomId: string,
+    duration: number,
+    sequence?: number,
+    timestamp?: number,
+): MatrixEvent => {
+    return mkEvent({
+        event: true,
+        user: userId,
+        room: roomId,
+        type: EventType.RoomMessage,
+        content: {
+            msgtype: MsgType.Audio,
+            ["org.matrix.msc1767.audio"]: {
+                duration,
+            },
+            info: {
+                duration,
+            },
+            [VoiceBroadcastChunkEventType]: {
+                ...(sequence ? { sequence } : {}),
+            },
+        },
+        ts: timestamp,
     });
 };

@@ -44,12 +44,6 @@ const CallView = wrapInMatrixClientContext(_CallView);
 
 describe("CallLobby", () => {
     useMockedCalls();
-    Object.defineProperty(navigator, "mediaDevices", {
-        value: {
-            enumerateDevices: jest.fn(),
-            getUserMedia: () => null,
-        },
-    });
     jest.spyOn(HTMLMediaElement.prototype, "play").mockImplementation(async () => {});
 
     let client: Mocked<MatrixClient>;
@@ -66,9 +60,9 @@ describe("CallLobby", () => {
             pendingEventOrdering: PendingEventOrdering.Detached,
         });
         alice = mkRoomMember(room.roomId, "@alice:example.org");
-        jest.spyOn(room, "getMember").mockImplementation(userId => userId === alice.userId ? alice : null);
+        jest.spyOn(room, "getMember").mockImplementation((userId) => (userId === alice.userId ? alice : null));
 
-        client.getRoom.mockImplementation(roomId => roomId === room.roomId ? room : null);
+        client.getRoom.mockImplementation((roomId) => (roomId === room.roomId ? room : null));
         client.getRooms.mockReturnValue([room]);
         client.reEmitter.reEmit(room, [RoomStateEvent.Events]);
 
@@ -137,7 +131,7 @@ describe("CallLobby", () => {
 
                 for (const [userId, avatar] of zip(userIds, avatars)) {
                     fireEvent.focus(avatar!);
-                    screen.getByRole("tooltip", { name: userId });
+                    screen.getAllByRole("tooltip", { name: userId });
                 }
             };
 
@@ -145,15 +139,25 @@ describe("CallLobby", () => {
             expect(screen.queryByLabelText(/joined/)).toBe(null);
             expectAvatars([]);
 
-            act(() => { call.participants = new Set([alice]); });
+            act(() => {
+                call.participants = new Map([[alice, new Set(["a"])]]);
+            });
             screen.getByText("1 person joined");
             expectAvatars([alice.userId]);
 
-            act(() => { call.participants = new Set([alice, bob, carol]); });
-            screen.getByText("3 people joined");
-            expectAvatars([alice.userId, bob.userId, carol.userId]);
+            act(() => {
+                call.participants = new Map([
+                    [alice, new Set(["a"])],
+                    [bob, new Set(["b1", "b2"])],
+                    [carol, new Set(["c"])],
+                ]);
+            });
+            screen.getByText("4 people joined");
+            expectAvatars([alice.userId, bob.userId, bob.userId, carol.userId]);
 
-            act(() => { call.participants = new Set(); });
+            act(() => {
+                call.participants = new Map();
+            });
             expect(screen.queryByLabelText(/joined/)).toBe(null);
             expectAvatars([]);
         });
@@ -170,9 +174,12 @@ describe("CallLobby", () => {
             const carol = mkRoomMember(room.roomId, "@carol:example.org");
 
             SdkConfig.put({
-                "element_call": { participant_limit: 2, url: "", use_exclusively: false, brand: "Element Call" },
+                element_call: { participant_limit: 2, url: "", use_exclusively: false, brand: "Element Call" },
             });
-            call.participants = new Set([bob, carol]);
+            call.participants = new Map([
+                [bob, new Set("b")],
+                [carol, new Set("c")],
+            ]);
 
             await renderView();
             const connectSpy = jest.spyOn(call, "connect");
@@ -249,9 +256,7 @@ describe("CallLobby", () => {
         });
 
         it("show with dropdown when multiple devices are available", async () => {
-            mocked(navigator.mediaDevices.enumerateDevices).mockResolvedValue([
-                fakeAudioInput1, fakeAudioInput2,
-            ]);
+            mocked(navigator.mediaDevices.enumerateDevices).mockResolvedValue([fakeAudioInput1, fakeAudioInput2]);
 
             await renderView();
             screen.getByRole("button", { name: /microphone/ });
@@ -261,9 +266,7 @@ describe("CallLobby", () => {
         });
 
         it("sets video device when selected", async () => {
-            mocked(navigator.mediaDevices.enumerateDevices).mockResolvedValue([
-                fakeVideoInput1, fakeVideoInput2,
-            ]);
+            mocked(navigator.mediaDevices.enumerateDevices).mockResolvedValue([fakeVideoInput1, fakeVideoInput2]);
 
             await renderView();
             screen.getByRole("button", { name: /camera/ });
@@ -274,9 +277,7 @@ describe("CallLobby", () => {
         });
 
         it("sets audio device when selected", async () => {
-            mocked(navigator.mediaDevices.enumerateDevices).mockResolvedValue([
-                fakeAudioInput1, fakeAudioInput2,
-            ]);
+            mocked(navigator.mediaDevices.enumerateDevices).mockResolvedValue([fakeAudioInput1, fakeAudioInput2]);
 
             await renderView();
             screen.getByRole("button", { name: /microphone/ });

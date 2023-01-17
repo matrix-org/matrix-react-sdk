@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient, Room } from 'matrix-js-sdk/src/matrix';
-import { mocked } from 'jest-mock';
+import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import { mocked } from "jest-mock";
 
-import { Command, Commands, getCommand } from '../src/SlashCommands';
-import { createTestClient } from './test-utils';
-import { MatrixClientPeg } from '../src/MatrixClientPeg';
-import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from '../src/models/LocalRoom';
-import SettingsStore from '../src/settings/SettingsStore';
-import LegacyCallHandler from '../src/LegacyCallHandler';
-import { SdkContextClass } from '../src/contexts/SDKContext';
+import { Command, Commands, getCommand } from "../src/SlashCommands";
+import { createTestClient } from "./test-utils";
+import { MatrixClientPeg } from "../src/MatrixClientPeg";
+import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../src/models/LocalRoom";
+import SettingsStore from "../src/settings/SettingsStore";
+import LegacyCallHandler from "../src/LegacyCallHandler";
+import { SdkContextClass } from "../src/contexts/SDKContext";
 
-describe('SlashCommands', () => {
+describe("SlashCommands", () => {
     let client: MatrixClient;
     const roomId = "!room:example.com";
     let room: Room;
@@ -55,7 +55,7 @@ describe('SlashCommands', () => {
         jest.clearAllMocks();
 
         client = createTestClient();
-        jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(client);
+        jest.spyOn(MatrixClientPeg, "get").mockReturnValue(client);
 
         room = new Room(roomId, client, client.getUserId());
         localRoom = new LocalRoom(localRoomId, client, client.getUserId());
@@ -63,8 +63,8 @@ describe('SlashCommands', () => {
         jest.spyOn(SdkContextClass.instance.roomViewStore, "getRoomId");
     });
 
-    describe('/topic', () => {
-        it('sets topic', async () => {
+    describe("/topic", () => {
+        it("sets topic", async () => {
             const command = getCommand("/topic pizza");
             expect(command.cmd).toBeDefined();
             expect(command.args).toBeDefined();
@@ -193,6 +193,48 @@ describe('SlashCommands', () => {
                     expect(command.isEnabled()).toBe(false);
                 });
             });
+        });
+    });
+
+    describe("/part", () => {
+        it("should part room matching alias if found", async () => {
+            const room1 = new Room("room-id", client, client.getUserId());
+            room1.getCanonicalAlias = jest.fn().mockReturnValue("#foo:bar");
+            const room2 = new Room("other-room", client, client.getUserId());
+            room2.getCanonicalAlias = jest.fn().mockReturnValue("#baz:bar");
+            mocked(client.getRooms).mockReturnValue([room1, room2]);
+
+            const command = getCommand("/part #foo:bar");
+            expect(command.cmd).toBeDefined();
+            expect(command.args).toBeDefined();
+            await command.cmd.run("room-id", null, command.args);
+            expect(client.leaveRoomChain).toHaveBeenCalledWith("room-id", expect.anything());
+        });
+
+        it("should part room matching alt alias if found", async () => {
+            const room1 = new Room("room-id", client, client.getUserId());
+            room1.getAltAliases = jest.fn().mockReturnValue(["#foo:bar"]);
+            const room2 = new Room("other-room", client, client.getUserId());
+            room2.getAltAliases = jest.fn().mockReturnValue(["#baz:bar"]);
+            mocked(client.getRooms).mockReturnValue([room1, room2]);
+
+            const command = getCommand("/part #foo:bar");
+            expect(command.cmd).toBeDefined();
+            expect(command.args).toBeDefined();
+            await command.cmd.run("room-id", null, command.args);
+            expect(client.leaveRoomChain).toHaveBeenCalledWith("room-id", expect.anything());
+        });
+    });
+
+    describe.each(["rainbow", "rainbowme"])("/%s", (commandName: string) => {
+        const command = findCommand(commandName);
+
+        it("should return usage if no args", () => {
+            expect(command.run(roomId, null, null).error).toBe(command.getUsage());
+        });
+
+        it("should make things rainbowy", () => {
+            return expect(command.run(roomId, null, "this is a test message").promise).resolves.toMatchSnapshot();
         });
     });
 });

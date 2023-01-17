@@ -20,6 +20,7 @@ import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import {
     VoiceBroadcastInfoEventType,
+    VoiceBroadcastInfoState,
     VoiceBroadcastRecording,
     VoiceBroadcastRecordingBody,
 } from "../../../../src/voice-broadcast";
@@ -29,7 +30,7 @@ import { mkEvent, stubClient } from "../../../test-utils";
 jest.mock("../../../../src/components/views/avatars/RoomAvatar", () => ({
     __esModule: true,
     default: jest.fn().mockImplementation(({ room }) => {
-        return <div data-testid="room-avatar">room avatar: { room.name }</div>;
+        return <div data-testid="room-avatar">room avatar: {room.name}</div>;
     }),
 }));
 
@@ -49,7 +50,7 @@ describe("VoiceBroadcastRecordingBody", () => {
             room: roomId,
             user: userId,
         });
-        recording = new VoiceBroadcastRecording(infoEvent, client);
+        recording = new VoiceBroadcastRecording(infoEvent, client, VoiceBroadcastInfoState.Resumed);
     });
 
     describe("when rendering a live broadcast", () => {
@@ -59,21 +60,21 @@ describe("VoiceBroadcastRecordingBody", () => {
             renderResult = render(<VoiceBroadcastRecordingBody recording={recording} />);
         });
 
-        it("should render the expected HTML", () => {
+        it("should render with a red live badge", () => {
             expect(renderResult.container).toMatchSnapshot();
         });
     });
 
-    describe("when rendering a non-live broadcast", () => {
+    describe("when rendering a paused broadcast", () => {
         let renderResult: RenderResult;
 
-        beforeEach(() => {
-            recording.stop();
+        beforeEach(async () => {
+            await recording.pause();
             renderResult = render(<VoiceBroadcastRecordingBody recording={recording} />);
         });
 
-        it("should not render the live badge", () => {
-            expect(renderResult.queryByText("Live")).toBeFalsy();
+        it("should render with a grey live badge", () => {
+            expect(renderResult.container).toMatchSnapshot();
         });
     });
 });

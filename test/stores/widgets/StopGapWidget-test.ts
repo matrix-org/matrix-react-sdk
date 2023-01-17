@@ -89,24 +89,22 @@ describe("StopGapWidget", () => {
                 content: {},
             });
             voiceBroadcastRecording = new VoiceBroadcastRecording(voiceBroadcastInfoEvent, client);
-            jest.spyOn(voiceBroadcastRecording, "stop");
+            jest.spyOn(voiceBroadcastRecording, "pause");
             jest.spyOn(VoiceBroadcastRecordingsStore.instance(), "getCurrent").mockReturnValue(voiceBroadcastRecording);
         });
 
         describe(`and receiving a action:${ElementWidgetActions.JoinCall} message`, () => {
             beforeEach(async () => {
-                messaging.on.mock.calls.find(
-                    ([event, listener]) => {
-                        if (event === `action:${ElementWidgetActions.JoinCall}`) {
-                            listener();
-                            return true;
-                        }
-                    },
-                );
+                messaging.on.mock.calls.find(([event, listener]) => {
+                    if (event === `action:${ElementWidgetActions.JoinCall}`) {
+                        listener();
+                        return true;
+                    }
+                });
             });
 
-            it("should stop the current voice broadcast recording", () => {
-                expect(voiceBroadcastRecording.stop).toHaveBeenCalled();
+            it("should pause the current voice broadcast recording", () => {
+                expect(voiceBroadcastRecording.pause).toHaveBeenCalled();
             });
         });
     });
