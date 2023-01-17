@@ -38,34 +38,32 @@ export default class DisambiguatedProfile extends React.Component<IProps> {
         const rawDisplayName = member?.rawDisplayName || fallbackName;
         const mxid = member?.userId;
 
-        let colorClass;
+        let colorClass: string | undefined;
         if (colored) {
             colorClass = getUserNameColorClass(fallbackName);
         }
 
         let mxidElement;
-        if (member?.disambiguate && mxid) {
-            mxidElement = (
-                <span className="mx_DisambiguatedProfile_mxid">
-                    {UserIdentifier.getDisplayUserIdentifier(mxid, { withDisplayName: true, roomId: member.roomId })}
-                </span>
-            );
-        }
+        let title: string | undefined;
 
-        let title: string;
         if (mxid) {
+            const identifier = UserIdentifier.getDisplayUserIdentifier?.(mxid, {
+                withDisplayName: true,
+                roomId: member.roomId
+            }) ?? mxid;
+            if (member?.disambiguate) {
+                mxidElement = (
+                    <span className="mx_DisambiguatedProfile_mxid">{ identifier }</span>
+                );
+            }
             title = _t('%(displayName)s (%(matrixId)s)', {
                 displayName: rawDisplayName,
-                matrixId: UserIdentifier.getDisplayUserIdentifier(mxid, {
-                    withDisplayName: true,
-                    roomId: member.roomId
-                }),
+                matrixId: identifier,
             });
         }
 
-        const displayNameClasses = classNames({
+        const displayNameClasses = classNames(colorClass, {
             mx_DisambiguatedProfile_displayName: emphasizeDisplayName,
-            [colorClass]: true,
         });
 
         return (
