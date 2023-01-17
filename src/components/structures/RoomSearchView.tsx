@@ -37,7 +37,7 @@ import RoomContext from "../../contexts/RoomContext";
 import SettingsStore from "../../settings/SettingsStore";
 
 const DEBUG = false;
-let debuglog = function (msg: string) {};
+let debuglog = function (msg: string): void {};
 
 /* istanbul ignore next */
 if (DEBUG) {
@@ -76,7 +76,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
 
                 return searchPromise
                     .then(
-                        async (results) => {
+                        async (results): Promise<boolean> => {
                             debuglog("search complete");
                             if (aborted.current) {
                                 logger.error("Discarding stale search results");
@@ -100,7 +100,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                                 return b.length - a.length;
                             });
 
-                            if (SettingsStore.getValue("feature_threadstable")) {
+                            if (SettingsStore.getValue("feature_threadenabled")) {
                                 // Process all thread roots returned in this batch of search results
                                 // XXX: This won't work for results coming from Seshat which won't include the bundled relationship
                                 for (const result of results.results) {
@@ -209,7 +209,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
 
         // once dynamic content in the search results load, make the scrollPanel check
         // the scroll offsets.
-        const onHeightChanged = () => {
+        const onHeightChanged = (): void => {
             const scrollPanel = ref.current;
             scrollPanel?.checkScroll();
         };
