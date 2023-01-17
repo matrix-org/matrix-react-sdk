@@ -154,7 +154,7 @@ const verify = function (this: CryptoTestContext) {
 };
 
 describe("Cryptography", function () {
-    var aliceCredenditals = undefined;
+    let aliceCredenditals = undefined;
 
     beforeEach(function () {
         cy.startHomeserver("default")
