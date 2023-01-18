@@ -34,6 +34,8 @@ import { WidgetType } from "../../../widgets/WidgetType";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { getConfigLivestreamUrl, startJitsiAudioLivestream } from "../../../Livestream";
+import { WidgetPermissionCustomisations } from "../../../customisations/WidgetPermissions";
+import { ElementWidget } from "../../../stores/widgets/StopGapWidget";
 
 interface IProps extends React.ComponentProps<typeof IconizedContextMenu> {
     app: IApp;
@@ -157,7 +159,12 @@ const WidgetContextMenu: React.FC<IProps> = ({
 
     const isLocalWidget = WidgetType.JITSI.matches(app.type);
     let revokeButton;
-    if (!userWidget && !isLocalWidget && isAllowedWidget) {
+    if (
+        !userWidget &&
+        !isLocalWidget &&
+        isAllowedWidget &&
+        !WidgetPermissionCustomisations.isEmbeddingPreapproved?.(new ElementWidget(app))
+    ) {
         const onRevokeClick = (): void => {
             logger.info("Revoking permission for widget to load: " + app.eventId);
             const current = SettingsStore.getValue("allowedWidgets", roomId);

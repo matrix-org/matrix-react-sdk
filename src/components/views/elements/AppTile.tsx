@@ -50,6 +50,7 @@ import { Action } from "../../../dispatcher/actions";
 import { ElementWidgetCapabilities } from "../../../stores/widgets/ElementWidgetCapabilities";
 import { WidgetMessagingStore } from "../../../stores/widgets/WidgetMessagingStore";
 import { SdkContextClass } from "../../../contexts/SDKContext";
+import { WidgetPermissionCustomisations } from "../../../customisations/WidgetPermissions";
 
 interface IProps {
     app: IApp;
@@ -162,6 +163,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     private hasPermissionToLoad = (props: IProps): boolean => {
         if (this.usingLocalWidget()) return true;
         if (!props.room) return true; // user widgets always have permissions
+        if (WidgetPermissionCustomisations.isEmbeddingPreapproved?.(new ElementWidget(this.props.app))) return true;
 
         const currentlyAllowedWidgets = SettingsStore.getValue("allowedWidgets", props.room.roomId);
         const allowed = props.app.eventId !== undefined && (currentlyAllowedWidgets[props.app.eventId] ?? false);

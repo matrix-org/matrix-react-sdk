@@ -36,11 +36,23 @@ async function preapproveCapabilities(
     return new Set(); // no additional capabilities approved
 }
 
+/**
+ * Approves the widget embedding.
+ * This will be used to embed certain widgets without prompting the user.
+ * @param {Widget} widget The widget to approve embedding for.
+ * @returns {boolean} true if embedding is preapproved, false otherwise
+ */
+function isEmbeddingPreapproved(widget: Widget): boolean {
+    return false;
+}
+
 // This interface summarises all available customisation points and also marks
 // them all as optional. This allows customisers to only define and export the
 // customisations they need while still maintaining type safety.
 export interface IWidgetPermissionCustomisations {
     preapproveCapabilities?: typeof preapproveCapabilities;
+
+    isEmbeddingPreapproved?: typeof isEmbeddingPreapproved;
 }
 
 // A real customisation module will define and export one or more of the
