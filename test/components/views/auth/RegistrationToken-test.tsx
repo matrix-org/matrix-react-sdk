@@ -97,6 +97,10 @@ describe("InteractiveAuthComponent", function () {
         );
 
         expect(onAuthFinished).toBeCalledTimes(1);
-        expect(onAuthFinished).toBeCalledWith(true, { a: 1 }, { clientSecret: "t35tcl1Ent5ECr3T", emailSid: null });
+        expect(onAuthFinished).toBeCalledWith(
+            true,
+            { a: 1 },
+            { clientSecret: "t35tcl1Ent5ECr3T", emailSid: undefined },
+        );
     });
 });
