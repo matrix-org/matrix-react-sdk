@@ -49,6 +49,15 @@ limitations under the License.
         :is(ol, ul) + br:last-of-type {
             display: none;
         }
+
+        pre,
+        code {
+            font-family: $monospace-font-family !important;
+            background-color: $codeblock-background-color;
+            border: 1px solid $codeblock-border-color;
+            border-radius: 4px;
+            padding: 2px;
+        }
     }
 
     .mx_WysiwygComposer_Editor_content_placeholder::before {
