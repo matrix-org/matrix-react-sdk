@@ -35,10 +35,11 @@ export function useInputEventProcessor(onSend: () => void): (event: WysiwygEvent
 
             const isKeyboardEvent = event instanceof KeyboardEvent;
             const isEnterPress = !isCtrlEnter && isKeyboardEvent && isEnterPressed(event);
+            const isInsertParagraph = !isCtrlEnter && !isKeyboardEvent && event.inputType === "insertParagraph";
             // sendMessage is sent when cmd+enter is pressed
             const isSendMessage = isCtrlEnter && !isKeyboardEvent && event.inputType === "sendMessage";
 
-            if (isEnterPress || isSendMessage) {
+            if (isEnterPress || isInsertParagraph || isSendMessage) {
                 event.stopPropagation?.();
                 event.preventDefault?.();
                 onSend();
