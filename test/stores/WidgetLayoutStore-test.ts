@@ -39,7 +39,7 @@ const mockRoom = <Room>{
 describe("WidgetLayoutStore", () => {
     let client: MatrixClient;
     let store: WidgetLayoutStore;
-    let roomUpdateListener: (string) => void;
+    let roomUpdateListener: (event: string) => void;
     let mockApps: IApp[];
 
     beforeEach(() => {
@@ -54,7 +54,7 @@ describe("WidgetLayoutStore", () => {
         jest.spyOn(WidgetStore, "instance", "get").mockReturnValue({
             on: jest.fn(),
             off: jest.fn(),
-            getApps: (_room) => mockApps,
+            getApps: () => mockApps,
         } as unknown as WidgetStore);
     });
 
@@ -164,7 +164,9 @@ describe("WidgetLayoutStore", () => {
         store.recalculateRoom(mockRoom);
         mocked(roomUpdateListener).mockClear();
 
-        jest.spyOn(WidgetStore, "instance", "get").mockReturnValue(<WidgetStore>{ getApps: (_room) => [] });
+        jest.spyOn(WidgetStore, "instance", "get").mockReturnValue(<WidgetStore>(
+            ({ getApps: (): IApp[] => [] } as unknown as WidgetStore)
+        ));
         store.recalculateRoom(mockRoom);
         expect(roomUpdateListener).toHaveBeenCalled();
         expect(store.getContainerWidgets(mockRoom, Container.Top)).toEqual([]);
