@@ -29,9 +29,14 @@ export function useInputEventProcessor(onSend: () => void): (event: WysiwygEvent
 
             const isKeyboardEvent = event instanceof KeyboardEvent;
             const isEnterPress =
-                !isCtrlEnter && (isKeyboardEvent ? event.key === "Enter" : event.inputType === "insertParagraph");
+                !isCtrlEnter &&
+                (isKeyboardEvent
+                    ? // Ugly but here we need to send the message only if Enter is pressed
+                      // And we need to stop the event propagation on enter to avoid the composer to grow
+                      event.key === "Enter" && !event.shiftKey && !event.ctrlKey && !event.metaKey && !event.altKey
+                    : event.inputType === "insertParagraph");
             // sendMessage is sent when ctrl+enter is pressed
-            const isSendMessage = !isKeyboardEvent && event.inputType === "sendMessage";
+            const isSendMessage = !isKeyboardEvent && isCtrlEnter && event.inputType === "sendMessage";
 
             if (isEnterPress || isSendMessage) {
                 event.stopPropagation?.();
