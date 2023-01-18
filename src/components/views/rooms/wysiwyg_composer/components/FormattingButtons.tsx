@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { MouseEventHandler, ReactNode } from "react";
-import { FormattingFunctions, AllActionStates } from "@matrix-org/matrix-wysiwyg";
+import { FormattingFunctions, AllActionStates, ActionState } from "@matrix-org/matrix-wysiwyg";
 import classNames from "classnames";
 
 import { Icon as BoldIcon } from "../../../../../../res/img/element-icons/room/composer/bold.svg";
@@ -53,21 +53,22 @@ function Tooltip({ label, keyCombo }: TooltipProps): JSX.Element {
 
 interface ButtonProps extends TooltipProps {
     icon: ReactNode;
-    isActive: boolean;
+    state: ActionState;
     onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
-function Button({ label, keyCombo, onClick, isActive, icon }: ButtonProps): JSX.Element {
+function Button({ label, keyCombo, onClick, state, icon }: ButtonProps): JSX.Element {
     return (
         <AccessibleTooltipButton
             element="button"
             onClick={onClick as (e: ButtonEvent) => void}
             title={label}
             className={classNames("mx_FormattingButtons_Button", {
-                mx_FormattingButtons_active: isActive,
-                mx_FormattingButtons_Button_hover: !isActive,
+                mx_FormattingButtons_active: state === "reversed",
+                mx_FormattingButtons_Button_hover: state === "enabled",
+                mx_FormattingButtons_disabled: state === "disabled",
             })}
-            tooltip={keyCombo && <Tooltip label={label} keyCombo={keyCombo} />}
+            tooltip={keyCombo && <Tooltip label={label} keyCombo={keyCombo} state={state} />}
             alignment={Alignment.Top}
         >
             {icon}
@@ -85,53 +86,53 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
     return (
         <div className="mx_FormattingButtons">
             <Button
-                isActive={actionStates.bold === "reversed"}
+                state={actionStates.bold}
                 label={_td("Bold")}
                 keyCombo={{ ctrlOrCmdKey: true, key: "b" }}
                 onClick={() => composer.bold()}
                 icon={<BoldIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
-                isActive={actionStates.italic === "reversed"}
+                state={actionStates.italic}
                 label={_td("Italic")}
                 keyCombo={{ ctrlOrCmdKey: true, key: "i" }}
                 onClick={() => composer.italic()}
                 icon={<ItalicIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
-                isActive={actionStates.underline === "reversed"}
+                state={actionStates.underline}
                 label={_td("Underline")}
                 keyCombo={{ ctrlOrCmdKey: true, key: "u" }}
                 onClick={() => composer.underline()}
                 icon={<UnderlineIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
-                isActive={actionStates.strikeThrough === "reversed"}
+                state={actionStates.strikeThrough}
                 label={_td("Strikethrough")}
                 onClick={() => composer.strikeThrough()}
                 icon={<StrikeThroughIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
-                isActive={actionStates.unorderedList === "reversed"}
+                state={actionStates.unorderedList}
                 label={_td("Bulleted list")}
                 onClick={() => composer.unorderedList()}
                 icon={<BulletedListIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
-                isActive={actionStates.orderedList === "reversed"}
+                state={actionStates.orderedList}
                 label={_td("Numbered list")}
                 onClick={() => composer.orderedList()}
                 icon={<NumberedListIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
-                isActive={actionStates.inlineCode === "reversed"}
+                state={actionStates.inlineCode}
                 label={_td("Code")}
                 keyCombo={{ ctrlOrCmdKey: true, key: "e" }}
                 onClick={() => composer.inlineCode()}
                 icon={<InlineCodeIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
-                isActive={actionStates.link === "reversed"}
+                state={actionStates.link}
                 label={_td("Link")}
                 onClick={() => openLinkModal(composer, composerContext, actionStates.link === "reversed")}
                 icon={<LinkIcon className="mx_FormattingButtons_Icon" />}
