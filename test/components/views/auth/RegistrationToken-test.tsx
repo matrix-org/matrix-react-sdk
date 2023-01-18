@@ -16,17 +16,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { act } from 'react-dom/test-utils';
+import React from "react";
+import { act } from "react-dom/test-utils";
 // eslint-disable-next-line deprecate/import
-import { mount, ReactWrapper } from 'enzyme';
+import { mount, ReactWrapper } from "enzyme";
 
 import InteractiveAuthComponent from "../../../../src/components/structures/InteractiveAuth";
-import { flushPromises, getMockClientWithEventEmitter, unmockClientPeg } from '../../../test-utils';
+import { flushPromises, getMockClientWithEventEmitter, unmockClientPeg } from "../../../test-utils";
 
-describe('InteractiveAuthComponent', function() {
+describe("InteractiveAuthComponent", function () {
     const mockClient = getMockClientWithEventEmitter({
-        generateClientSecret: jest.fn().mockReturnValue('t35tcl1Ent5ECr3T'),
+        generateClientSecret: jest.fn().mockReturnValue("t35tcl1Ent5ECr3T"),
     });
 
     const defaultProps = {
@@ -34,12 +34,9 @@ describe('InteractiveAuthComponent', function() {
         makeRequest: jest.fn().mockResolvedValue(undefined),
         onAuthFinished: jest.fn(),
     };
-    const getComponent = (props = {}) => mount(<InteractiveAuthComponent
-        {...defaultProps}
-        {...props}
-    />);
+    const getComponent = (props = {}) => mount(<InteractiveAuthComponent {...defaultProps} {...props} />);
 
-    beforeEach(function() {
+    beforeEach(function () {
         jest.clearAllMocks();
     });
 
@@ -48,26 +45,23 @@ describe('InteractiveAuthComponent', function() {
     });
 
     const getSubmitButton = (wrapper: ReactWrapper) => wrapper.find('AccessibleButton[kind="primary"]').at(0);
-    const getRegistrationTokenInput = (wrapper: ReactWrapper) => wrapper.find(
-        'input[name="registrationTokenField"]',
-    ).at(0);
+    const getRegistrationTokenInput = (wrapper: ReactWrapper) =>
+        wrapper.find('input[name="registrationTokenField"]').at(0);
 
-    it('Should successfully complete a registration token flow', async () => {
+    it("Should successfully complete a registration token flow", async () => {
         const onAuthFinished = jest.fn();
         const makeRequest = jest.fn().mockResolvedValue({ a: 1 });
 
         const authData = {
             session: "sess",
-            flows: [
-                { "stages": ["m.login.registration_token"] },
-            ],
+            flows: [{ stages: ["m.login.registration_token"] }],
         };
 
         const wrapper = getComponent({ makeRequest, onAuthFinished, authData });
 
         const registrationTokenNode = getRegistrationTokenInput(wrapper);
         const submitNode = getSubmitButton(wrapper);
-        const formNode = wrapper.find('form').at(0);
+        const formNode = wrapper.find("form").at(0);
 
         expect(registrationTokenNode).toBeTruthy();
         expect(submitNode).toBeTruthy();
@@ -78,7 +72,7 @@ describe('InteractiveAuthComponent', function() {
 
         // put something in the registration token box
         act(() => {
-            registrationTokenNode.simulate('change', { target: { value: "s3kr3t" } });
+            registrationTokenNode.simulate("change", { target: { value: "s3kr3t" } });
             wrapper.setProps({});
         });
 
@@ -87,24 +81,22 @@ describe('InteractiveAuthComponent', function() {
 
         // hit enter; that should trigger a request
         act(() => {
-            formNode.simulate('submit');
+            formNode.simulate("submit");
         });
 
         // wait for auth request to resolve
         await flushPromises();
 
         expect(makeRequest).toHaveBeenCalledTimes(1);
-        expect(makeRequest).toBeCalledWith(expect.objectContaining({
-            session: "sess",
-            type: "m.login.registration_token",
-            token: "s3kr3t",
-        }));
+        expect(makeRequest).toBeCalledWith(
+            expect.objectContaining({
+                session: "sess",
+                type: "m.login.registration_token",
+                token: "s3kr3t",
+            }),
+        );
 
         expect(onAuthFinished).toBeCalledTimes(1);
-        expect(onAuthFinished).toBeCalledWith(
-            true,
-            { a: 1 },
-            { "clientSecret": "t35tcl1Ent5ECr3T", "emailSid": null },
-        );
+        expect(onAuthFinished).toBeCalledWith(true, { a: 1 }, { clientSecret: "t35tcl1Ent5ECr3T", emailSid: null });
     });
 });

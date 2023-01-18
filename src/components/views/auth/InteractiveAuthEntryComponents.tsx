@@ -707,11 +707,11 @@ export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps,
         };
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.props.onPhaseChange(DEFAULT_PHASE);
     }
 
-    private onSubmit = (e: FormEvent) => {
+    private onSubmit = (e: FormEvent): void => {
         e.preventDefault();
         if (this.props.busy) return;
 
@@ -722,16 +722,16 @@ export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps,
         });
     };
 
-    private onRegistrationTokenFieldChange = (ev: ChangeEvent<HTMLInputElement>) => {
+    private onRegistrationTokenFieldChange = (ev: ChangeEvent<HTMLInputElement>): void => {
         // enable the submit button if the registration token is non-empty
         this.setState({
             registrationToken: ev.target.value,
         });
     };
 
-    public render() {
+    public render(): JSX.Element {
         const registrationTokenBoxClass = classNames({
-            "error": this.props.errorText,
+            error: this.props.errorText,
         });
 
         let submitButtonOrSpinner;
@@ -739,11 +739,9 @@ export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps,
             submitButtonOrSpinner = <Spinner />;
         } else {
             submitButtonOrSpinner = (
-                <AccessibleButton
-                    onClick={this.onSubmit}
-                    kind='primary'
-                    disabled={!this.state.registrationToken}
-                >{ _t("Continue") }</AccessibleButton>
+                <AccessibleButton onClick={this.onSubmit} kind="primary" disabled={!this.state.registrationToken}>
+                    {_t("Continue")}
+                </AccessibleButton>
             );
         }
 
@@ -751,14 +749,14 @@ export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps,
         if (this.props.errorText) {
             errorSection = (
                 <div className="error" role="alert">
-                    { this.props.errorText }
+                    {this.props.errorText}
                 </div>
             );
         }
 
         return (
             <div>
-                <p>{ _t("Enter a registration token provided by the homeserver administrator.") }</p>
+                <p>{_t("Enter a registration token provided by the homeserver administrator.")}</p>
                 <form onSubmit={this.onSubmit} className="mx_InteractiveAuthEntryComponents_registrationTokenSection">
                     <Field
                         className={registrationTokenBoxClass}
@@ -769,10 +767,8 @@ export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps,
                         value={this.state.registrationToken}
                         onChange={this.onRegistrationTokenFieldChange}
                     />
-                    { errorSection }
-                    <div className="mx_button_row">
-                        { submitButtonOrSpinner }
-                    </div>
+                    {errorSection}
+                    <div className="mx_button_row">{submitButtonOrSpinner}</div>
                 </form>
             </div>
         );
