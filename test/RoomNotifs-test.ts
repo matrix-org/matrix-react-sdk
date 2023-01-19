@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,10 +15,11 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
-import { ConditionKind, PushRuleActionName, TweakName } from "matrix-js-sdk/src/@types/PushRules";
+import { PushRuleActionName, TweakName } from "matrix-js-sdk/src/@types/PushRules";
 import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import { mkEvent, stubClient } from "./test-utils";
+import { mkEvent, mkRoom, muteRoom, stubClient } from "./test-utils";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
 import { getRoomNotifsState, RoomNotifState, getUnreadNotificationCount } from "../src/RoomNotifs";
 
@@ -52,26 +53,9 @@ describe("RoomNotifs test", () => {
 
     it("getRoomNotifsState handles mute state", () => {
         const cli = MatrixClientPeg.get();
-        cli.pushRules = {
-            global: {
-                override: [
-                    {
-                        rule_id: "!roomId:server",
-                        enabled: true,
-                        default: false,
-                        conditions: [
-                            {
-                                kind: ConditionKind.EventMatch,
-                                key: "room_id",
-                                pattern: "!roomId:server",
-                            },
-                        ],
-                        actions: [PushRuleActionName.DontNotify],
-                    },
-                ],
-            },
-        };
-        expect(getRoomNotifsState(cli, "!roomId:server")).toBe(RoomNotifState.Mute);
+        const room = mkRoom(cli, "!roomId:server");
+        muteRoom(room);
+        expect(getRoomNotifsState(cli, room.roomId)).toBe(RoomNotifState.Mute);
     });
 
     it("getRoomNotifsState handles mentions only", () => {
@@ -100,11 +84,11 @@ describe("RoomNotifs test", () => {
         const ROOM_ID = "!roomId:example.org";
         const THREAD_ID = "$threadId";
 
-        let cli;
+        let cli: jest.Mocked<MatrixClient>;
         let room: Room;
         beforeEach(() => {
-            cli = MatrixClientPeg.get();
-            room = new Room(ROOM_ID, cli, cli.getUserId());
+            cli = MatrixClientPeg.get() as jest.Mocked<MatrixClient>;
+            room = new Room(ROOM_ID, cli, cli.getUserId()!);
         });
 
         it("counts room notification type", () => {
@@ -125,7 +109,7 @@ describe("RoomNotifs test", () => {
             room.setUnreadNotificationCount(NotificationCountType.Highlight, 1);
 
             const OLD_ROOM_ID = "!oldRoomId:example.org";
-            const oldRoom = new Room(OLD_ROOM_ID, cli, cli.getUserId());
+            const oldRoom = new Room(OLD_ROOM_ID, cli, cli.getUserId()!);
             oldRoom.setUnreadNotificationCount(NotificationCountType.Total, 10);
             oldRoom.setUnreadNotificationCount(NotificationCountType.Highlight, 6);
 
@@ -135,7 +119,7 @@ describe("RoomNotifs test", () => {
                 event: true,
                 type: "m.room.create",
                 room: ROOM_ID,
-                user: cli.getUserId(),
+                user: cli.getUserId()!,
                 content: {
                     creator: cli.getUserId(),
                     room_version: "5",
