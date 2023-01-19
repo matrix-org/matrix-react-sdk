@@ -127,7 +127,7 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
                 icon={<NumberedListIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
-                isActive={actionStates.quote === "reversed"}
+                actionState={actionStates.quote}
                 label={_td("Quote")}
                 onClick={() => composer.quote()}
                 icon={<QuoteIcon className="mx_FormattingButtons_Icon" />}
