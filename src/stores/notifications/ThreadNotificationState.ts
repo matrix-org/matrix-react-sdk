@@ -23,7 +23,7 @@ import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { NotificationState } from "./NotificationState";
 
 export class ThreadNotificationState extends NotificationState implements IDestroyable {
-    protected _symbol = null;
+    protected _symbol: string | null = null;
     protected _count = 0;
     protected _color = NotificationColor.None;
 

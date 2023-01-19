@@ -23,8 +23,8 @@ import SettingsStore from "../../../../../../src/settings/SettingsStore";
 
 describe("WysiwygComposer", () => {
     const customRender = (
-        onChange = (_content: string) => void 0,
-        onSend = () => void 0,
+        onChange = (_content: string): void => void 0,
+        onSend = (): void => void 0,
         disabled = false,
         initialContent?: string,
     ) => {

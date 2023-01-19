@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { PendingEventOrdering } from "matrix-js-sdk/src/client";
+import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
 import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
 import { Room } from "matrix-js-sdk/src/models/room";
 
@@ -25,8 +25,8 @@ import { stubClient } from "../../test-utils";
 describe("RoomNotificationStateStore", () => {
     const ROOM_ID = "!roomId:example.org";
 
-    let room;
-    let client;
+    let room: Room;
+    let client: MatrixClient;
 
     beforeEach(() => {
         stubClient();

@@ -19,7 +19,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { _t } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
-import AccessibleButton from "../../../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../../elements/AccessibleButton";
 import RoomUpgradeDialog from "../../../dialogs/RoomUpgradeDialog";
 import Modal from "../../../../../Modal";
 import dis from "../../../../../dispatcher/dispatcher";
@@ -46,8 +46,8 @@ interface IState {
 }
 
 export default class AdvancedRoomSettingsTab extends React.Component<IProps, IState> {
-    public constructor(props, context) {
-        super(props, context);
+    public constructor(props: IProps) {
+        super(props);
 
         this.state = {
             // This is eventually set to the value of room.getRecommendedVersion()
@@ -75,12 +75,12 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
         });
     }
 
-    private upgradeRoom = (e): void => {
+    private upgradeRoom = (): void => {
         const room = MatrixClientPeg.get().getRoom(this.props.roomId);
         Modal.createDialog(RoomUpgradeDialog, { room });
     };
 
-    private onOldRoomClicked = (e): void => {
+    private onOldRoomClicked = (e: ButtonEvent): void => {
         e.preventDefault();
         e.stopPropagation();
 

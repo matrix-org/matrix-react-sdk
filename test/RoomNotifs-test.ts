@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { mocked } from "jest-mock";
+import { Mocked, mocked } from "jest-mock";
 import { ConditionKind, PushRuleActionName, TweakName } from "matrix-js-sdk/src/@types/PushRules";
 import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { mkEvent, stubClient } from "./test-utils";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
@@ -100,10 +101,10 @@ describe("RoomNotifs test", () => {
         const ROOM_ID = "!roomId:example.org";
         const THREAD_ID = "$threadId";
 
-        let cli;
+        let cli: Mocked<MatrixClient>;
         let room: Room;
         beforeEach(() => {
-            cli = MatrixClientPeg.get();
+            cli = MatrixClientPeg.get() as Mocked<MatrixClient>;
             room = new Room(ROOM_ID, cli, cli.getUserId());
         });
 

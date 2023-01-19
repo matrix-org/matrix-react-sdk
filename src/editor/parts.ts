@@ -68,6 +68,8 @@ interface IBasePart {
     updateDOMNode(node: Node): void;
     canUpdateDOMNode(node: Node): boolean;
     toDOMNode(): Node;
+
+    merge?(part: Part): boolean;
 }
 
 interface IPillCandidatePart extends Omit<IBasePart, "type" | "createAutoComplete"> {
@@ -221,7 +223,7 @@ abstract class PlainBasePart extends BasePart {
         return document.createTextNode(this.text);
     }
 
-    public merge(part): boolean {
+    public merge(part: Part): boolean {
         if (part.type === this.type) {
             this._text = this.text + part.text;
             return true;
@@ -248,7 +250,7 @@ export class PlainPart extends PlainBasePart implements IBasePart {
 }
 
 export abstract class PillPart extends BasePart implements IPillPart {
-    public constructor(public resourceId: string, label) {
+    public constructor(public resourceId: string, label: string) {
         super(label);
     }
 
@@ -449,7 +451,7 @@ class AtRoomPillPart extends RoomPillPart {
 }
 
 class UserPillPart extends PillPart {
-    public constructor(userId, displayName, private member: RoomMember) {
+    public constructor(userId: string, displayName: string, private member: RoomMember) {
         super(userId, displayName);
     }
 

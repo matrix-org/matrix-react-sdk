@@ -30,6 +30,10 @@ const CURRENTLY_ACTIVE_THRESHOLD_MS = 700;
 // 'Under a few minutes'.
 const RECENTLY_ACTIVE_THRESHOLD_MS = 2 * 60 * 1000;
 
+function isMouseEvent(event: Event): event is MouseEvent {
+    return event.type.startsWith("mouse");
+}
+
 /**
  * This class watches for user activity (moving the mouse or pressing a key)
  * and starts/stops attached timers while the user is active.
@@ -168,7 +172,7 @@ export default class UserActivity {
         return this.activeRecentlyTimeout.isRunning();
     }
 
-    private onPageVisibilityChanged = (e): void => {
+    private onPageVisibilityChanged = (e: Event): void => {
         if (this.document.visibilityState === "hidden") {
             this.activeNowTimeout.abort();
             this.activeRecentlyTimeout.abort();
@@ -182,11 +186,12 @@ export default class UserActivity {
         this.activeRecentlyTimeout.abort();
     };
 
-    private onUserActivity = (event: MouseEvent): void => {
+    // XXX: exported for tests
+    public onUserActivity = (event: Event | MouseEvent): void => {
         // ignore anything if the window isn't focused
         if (!this.document.hasFocus()) return;
 
-        if (event.screenX && event.type === "mousemove") {
+        if (isMouseEvent(event) && event.screenX && event.type === "mousemove") {
             if (event.screenX === this.lastScreenX && event.screenY === this.lastScreenY) {
                 // mouse hasn't actually moved
                 return;

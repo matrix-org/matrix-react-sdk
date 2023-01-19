@@ -29,6 +29,7 @@ import { isVoiceMessage } from "../../../utils/EventUtils";
 import { PlaybackQueue } from "../../../audio/PlaybackQueue";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import MediaProcessingError from "./shared/MediaProcessingError";
+import { IContent } from "matrix-js-sdk/src/matrix";
 
 interface IState {
     error?: Error;
@@ -66,8 +67,8 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
         // We should have a buffer to work with now: let's set it up
 
         // Note: we don't actually need a waveform to render an audio event, but voice messages do.
-        const content = this.props.mxEvent.getContent<IMediaEventContent>();
-        const waveform = content?.["org.matrix.msc1767.audio"]?.waveform?.map((p) => p / 1024);
+        const content = this.props.mxEvent.getContent<IMediaEventContent & IContent>();
+        const waveform = content?.["org.matrix.msc1767.audio"]?.waveform?.map((p: number) => p / 1024);
 
         // We should have a buffer to work with now: let's set it up
         const playback = PlaybackManager.instance.createPlaybackInstance(buffer, waveform);

@@ -786,7 +786,11 @@ describe("MPollBody", () => {
                 },
             } as unknown as Room;
         });
-        const getRelationsForEvent = (eventId: string, relationType: string, eventType: string) => {
+        const getRelationsForEvent = (
+            eventId: string,
+            relationType: string,
+            eventType: string,
+        ): Relations | null | undefined => {
             expect(eventId).toBe("$mypoll");
             expect(relationType).toBe("m.reference");
             expect(M_POLL_END.matches(eventType)).toBe(true);
@@ -1133,8 +1137,6 @@ function expectedResponseEvent(answer: string) {
         },
         roomId: "#myroom:example.com",
         eventType: M_POLL_RESPONSE.name,
-        txnId: undefined,
-        callback: undefined,
     };
 }
 function expectedResponseEventCall(answer: string) {

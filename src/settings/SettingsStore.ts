@@ -42,9 +42,9 @@ import { MatrixClientPeg } from "../MatrixClientPeg";
 const defaultWatchManager = new WatchManager();
 
 // Convert the settings to easier to manage objects for the handlers
-const defaultSettings = {};
-const invertedDefaultSettings = {};
-const featureNames = [];
+const defaultSettings: Record<string, any> = {};
+const invertedDefaultSettings: Record<string, boolean> = {};
+const featureNames: string[] = [];
 for (const key of Object.keys(SETTINGS)) {
     defaultSettings[key] = SETTINGS[key].default;
     if (SETTINGS[key].isFeature) featureNames.push(key);
@@ -56,7 +56,7 @@ for (const key of Object.keys(SETTINGS)) {
 }
 
 // Only wrap the handlers with async setters in a local echo wrapper
-const LEVEL_HANDLERS = {
+const LEVEL_HANDLERS: Record<SettingLevel, SettingsHandler> = {
     [SettingLevel.DEVICE]: new DeviceSettingsHandler(featureNames, defaultWatchManager),
     [SettingLevel.ROOM_DEVICE]: new RoomDeviceSettingsHandler(defaultWatchManager),
     [SettingLevel.ROOM_ACCOUNT]: new LocalEchoWrapper(
@@ -97,10 +97,9 @@ export type CallbackFn = (
     newVal: any,
 ) => void;
 
-interface IHandlerMap {
-    // @ts-ignore - TS wants this to be a string key but we know better
-    [level: SettingLevel]: SettingsHandler;
-}
+type HandlerMap = Partial<{
+    [level in SettingLevel]: SettingsHandler;
+}>;
 
 /**
  * Controls and manages application settings by providing varying levels at which the
@@ -646,9 +645,9 @@ export default class SettingsStore {
         logger.log(`--- default level order: ${JSON.stringify(LEVEL_ORDER)}`);
         logger.log(`--- registered handlers: ${JSON.stringify(Object.keys(LEVEL_HANDLERS))}`);
 
-        const doChecks = (settingName): void => {
+        const doChecks = (settingName: string): void => {
             for (const handlerName of Object.keys(LEVEL_HANDLERS)) {
-                const handler = LEVEL_HANDLERS[handlerName];
+                const handler = LEVEL_HANDLERS[handlerName as SettingLevel];
 
                 try {
                     const value = handler.getValue(settingName, roomId);
@@ -728,10 +727,10 @@ export default class SettingsStore {
         return handlers[level];
     }
 
-    private static getHandlers(settingName: string): IHandlerMap {
+    private static getHandlers(settingName: string): HandlerMap {
         if (!SETTINGS[settingName]) return {};
 
-        const handlers = {};
+        const handlers: Partial<Record<SettingLevel, SettingsHandler>> = {};
         for (const level of SETTINGS[settingName].supportedLevels) {
             if (!LEVEL_HANDLERS[level]) throw new Error("Unexpected level " + level);
             if (SettingsStore.isLevelSupported(level)) handlers[level] = LEVEL_HANDLERS[level];

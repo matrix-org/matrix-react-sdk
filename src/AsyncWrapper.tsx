@@ -42,11 +42,6 @@ interface IState {
 export default class AsyncWrapper extends React.Component<IProps, IState> {
     private unmounted = false;
 
-    public state = {
-        component: null,
-        error: null,
-    };
-
     public componentDidMount(): void {
         // XXX: temporary logging to try to diagnose
         // https://github.com/vector-im/element-web/issues/3148

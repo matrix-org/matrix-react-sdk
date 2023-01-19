@@ -501,7 +501,7 @@ export const Commands = [
                 ? ContentHelpers.parseTopicContent(content)
                 : { text: _t("This room has no topic.") };
 
-            const ref = (e): void => {
+            const ref = (e: HTMLElement): void => {
                 if (e) linkifyElement(e);
             };
             const body = topicToHtml(topic.text, topic.html, ref, true);
@@ -700,11 +700,8 @@ export const Commands = [
                     }
 
                     if (viaServers) {
-                        // For the join
-                        dispatch["opts"] = {
-                            // These are passed down to the js-sdk's /join call
-                            viaServers: viaServers,
-                        };
+                        // For the join, these are passed down to the js-sdk's /join call
+                        dispatch["opts"] = { viaServers };
 
                         // For if the join fails (rejoin button)
                         dispatch["via_servers"] = viaServers;

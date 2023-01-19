@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import EventEmitter from "events";
-import { mocked, MockedObject } from "jest-mock";
+import { Mocked, mocked, MockedObject } from "jest-mock";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import {
@@ -81,7 +81,7 @@ export function stubClient(): MatrixClient {
  *
  * @returns {object} MatrixClient stub
  */
-export function createTestClient(): MatrixClient {
+export function createTestClient(): Mocked<MatrixClient> {
     const eventEmitter = new EventEmitter();
     let txnId = 1;
 
@@ -145,7 +145,7 @@ export function createTestClient(): MatrixClient {
                 content: {},
             });
         }),
-        mxcUrlToHttp: (mxc) => `http://this.is.a.url/${mxc.substring(6)}`,
+        mxcUrlToHttp: (mxc: string) => `http://this.is.a.url/${mxc.substring(6)}`,
         setAccountData: jest.fn(),
         setRoomAccountData: jest.fn(),
         setRoomTopic: jest.fn(),
@@ -200,18 +200,17 @@ export function createTestClient(): MatrixClient {
             stopAllStreams: jest.fn(),
         } as unknown as MediaHandler),
         uploadContent: jest.fn(),
-        getEventMapper: () => (opts) => new MatrixEvent(opts),
+        getEventMapper: () => (opts: Partial<IEvent>) => new MatrixEvent(opts),
         leaveRoomChain: jest.fn((roomId) => ({ [roomId]: null })),
         doesServerSupportLogoutDevices: jest.fn().mockReturnValue(true),
         requestPasswordEmailToken: jest.fn().mockRejectedValue({}),
         setPassword: jest.fn().mockRejectedValue({}),
         groupCallEventHandler: { groupCalls: new Map<string, GroupCall>() },
         redactEvent: jest.fn(),
-    } as unknown as MatrixClient;
+        canSupport: new Map<Feature, ServerSupport>(),
+    } as unknown as Mocked<MatrixClient>;
 
-    client.reEmitter = new ReEmitter(client);
-
-    client.canSupport = new Map();
+    client.reEmitter = new ReEmitter(client) as any;
     Object.keys(Feature).forEach((feature) => {
         client.canSupport.set(feature as Feature, ServerSupport.Stable);
     });
@@ -476,7 +475,7 @@ export function mkMessage({
 }
 
 export function mkStubRoom(roomId: string = null, name: string, client: MatrixClient): Room {
-    const stubTimeline = { getEvents: () => [] } as unknown as EventTimeline;
+    const stubTimeline = { getEvents: jest.fn().mockReturnValue([]) } as unknown as EventTimeline;
     return {
         roomId,
         getReceiptsForEvent: jest.fn().mockReturnValue([]),
@@ -494,14 +493,14 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         getInvitedAndJoinedMemberCount: jest.fn().mockReturnValue(1),
         setUnreadNotificationCount: jest.fn(),
         getMembers: jest.fn().mockReturnValue([]),
-        getPendingEvents: () => [],
+        getPendingEvents: jest.fn().mockReturnValue([]),
         getLiveTimeline: jest.fn().mockReturnValue(stubTimeline),
         getUnfilteredTimelineSet: jest.fn(),
-        findEventById: () => null,
-        getAccountData: () => null,
-        hasMembershipState: () => null,
+        findEventById: jest.fn().mockReturnValue(null),
+        getAccountData: jest.fn().mockReturnValue(null),
+        hasMembershipState: jest.fn().mockReturnValue(null),
         getVersion: () => "1",
-        shouldUpgradeToVersion: () => null,
+        shouldUpgradeToVersion: jest.fn().mockReturnValue(null),
         getMyMembership: jest.fn().mockReturnValue("join"),
         maySendMessage: jest.fn().mockReturnValue(true),
         currentState: {
@@ -546,7 +545,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
     } as unknown as Room;
 }
 
-export function mkServerConfig(hsUrl, isUrl) {
+export function mkServerConfig(hsUrl: string, isUrl: string) {
     return makeType(ValidatedServerConfig, {
         hsUrl,
         hsName: "TEST_ENVIRONMENT",

@@ -14,17 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
 import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
-import AccessibleButton from "../elements/AccessibleButton";
-import withValidation, { IValidationResult } from "../elements/Validation";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
 import Field from "../elements/Field";
 import CountryDropdown from "./CountryDropdown";
 import EmailField from "./EmailField";
+import { PhoneNumberCountryDefinition } from "../../../phonenumber";
 
 // For validating phone numbers without country codes
 const PHONE_NUMBER_REGEX = /^[0-9()\-\s]*$/;
@@ -51,7 +52,7 @@ interface IProps {
 interface IState {
     fieldValid: Partial<Record<LoginField, boolean>>;
     loginType: LoginField.Email | LoginField.MatrixId | LoginField.Phone;
-    password: "";
+    password: string;
 }
 
 const enum LoginField {
@@ -66,6 +67,10 @@ const enum LoginField {
  * The email/username/phone fields are fully-controlled, the password field is not.
  */
 export default class PasswordLogin extends React.PureComponent<IProps, IState> {
+    private [LoginField.Email]: Field;
+    private [LoginField.Phone]: Field;
+    private [LoginField.MatrixId]: Field;
+
     public static defaultProps = {
         onUsernameChanged: function () {},
         onUsernameBlur: function () {},
@@ -75,7 +80,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
         disableSubmit: false,
     };
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             // Field error codes by field ID
@@ -85,13 +90,13 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
         };
     }
 
-    private onForgotPasswordClick = (ev): void => {
+    private onForgotPasswordClick = (ev: ButtonEvent): void => {
         ev.preventDefault();
         ev.stopPropagation();
         this.props.onForgotPasswordClick();
     };
 
-    private onSubmitForm = async (ev): Promise<void> => {
+    private onSubmitForm = async (ev: SyntheticEvent): Promise<void> => {
         ev.preventDefault();
 
         const allFieldsValid = await this.verifyFieldsBeforeSubmit();
@@ -117,29 +122,29 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
         this.props.onSubmit(username, phoneCountry, phoneNumber, this.state.password);
     };
 
-    private onUsernameChanged = (ev): void => {
+    private onUsernameChanged = (ev: React.ChangeEvent<HTMLInputElement>): void => {
         this.props.onUsernameChanged(ev.target.value);
     };
 
-    private onUsernameBlur = (ev): void => {
+    private onUsernameBlur = (ev: React.FocusEvent<HTMLInputElement>): void => {
         this.props.onUsernameBlur(ev.target.value);
     };
 
-    private onLoginTypeChange = (ev): void => {
-        const loginType = ev.target.value;
+    private onLoginTypeChange = (ev: React.ChangeEvent<HTMLSelectElement>): void => {
+        const loginType = ev.target.value as IState["loginType"];
         this.setState({ loginType });
         this.props.onUsernameChanged(""); // Reset because email and username use the same state
     };
 
-    private onPhoneCountryChanged = (country): void => {
+    private onPhoneCountryChanged = (country: PhoneNumberCountryDefinition): void => {
         this.props.onPhoneCountryChanged(country.iso2);
     };
 
-    private onPhoneNumberChanged = (ev): void => {
+    private onPhoneNumberChanged = (ev: React.ChangeEvent<HTMLInputElement>): void => {
         this.props.onPhoneNumberChanged(ev.target.value);
     };
 
-    private onPasswordChanged = (ev): void => {
+    private onPasswordChanged = (ev: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({ password: ev.target.value });
     };
 
@@ -151,7 +156,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
             activeElement.blur();
         }
 
-        const fieldIDsInDisplayOrder = [this.state.loginType, LoginField.Password];
+        const fieldIDsInDisplayOrder: LoginField[] = [this.state.loginType, LoginField.Password];
 
         // Run all fields with stricter validation that no longer allows empty
         // values for required fields.
@@ -221,7 +226,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
         ],
     });
 
-    private onUsernameValidate = async (fieldState): Promise<IValidationResult> => {
+    private onUsernameValidate = async (fieldState: IFieldState): Promise<IValidationResult> => {
         const result = await this.validateUsernameRules(fieldState);
         this.markFieldValid(LoginField.MatrixId, result.valid);
         return result;
@@ -248,7 +253,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
         ],
     });
 
-    private onPhoneNumberValidate = async (fieldState): Promise<IValidationResult> => {
+    private onPhoneNumberValidate = async (fieldState: IFieldState): Promise<IValidationResult> => {
         const result = await this.validatePhoneNumberRules(fieldState);
         this.markFieldValid(LoginField.Password, result.valid);
         return result;
@@ -266,7 +271,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
         ],
     });
 
-    private onPasswordValidate = async (fieldState): Promise<IValidationResult> => {
+    private onPasswordValidate = async (fieldState: IFieldState): Promise<IValidationResult> => {
         const result = await this.validatePasswordRules(fieldState);
         this.markFieldValid(LoginField.Password, result.valid);
         return result;

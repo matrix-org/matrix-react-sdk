@@ -196,7 +196,7 @@ export default abstract class BasePlatform {
         room: Room,
         ev?: MatrixEvent,
     ): Notification {
-        const notifBody = {
+        const notifBody: NotificationOptions = {
             body: msg,
             silent: true, // we play our own sounds
         };

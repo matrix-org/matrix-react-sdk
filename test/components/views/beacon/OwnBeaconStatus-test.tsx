@@ -36,7 +36,7 @@ describe("<OwnBeaconStatus />", () => {
     };
     const userId = "@user:server";
     const roomId = "!room:server";
-    let defaultBeacon;
+    let defaultBeacon: Beacon;
     const getComponent = (props = {}) => mount(<OwnBeaconStatus {...defaultProps} {...props} />);
 
     beforeEach(() => {

@@ -25,7 +25,7 @@ import { NotificationColor } from "./NotificationColor";
 export class ThreadsRoomNotificationState extends NotificationState implements IDestroyable {
     public readonly threadsState = new Map<Thread, ThreadNotificationState>();
 
-    protected _symbol = null;
+    protected _symbol: string | null = null;
     protected _count = 0;
     protected _color = NotificationColor.None;
 

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ComponentProps } from "react";
 // eslint-disable-next-line deprecate/import
 import { mount, ReactWrapper } from "enzyme";
 import { act } from "react-dom/test-utils";
@@ -30,7 +30,7 @@ describe("AccessSecretStorageDialog", () => {
         checkSecretStorageKey: jest.fn(),
         isValidRecoveryKey: jest.fn(),
     });
-    const defaultProps = {
+    const defaultProps: ComponentProps<typeof AccessSecretStorageDialog> = {
         onFinished: jest.fn(),
         checkPrivateKey: jest.fn(),
         keyInfo: undefined,

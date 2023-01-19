@@ -42,7 +42,7 @@ describe("SlidingRoomListStore", () => {
     let context: TestSdkContext;
     let dis: MatrixDispatcher;
     let activeSpace: string;
-    let tagIdToIndex = {};
+    let tagIdToIndex: Record<string, number> = {};
 
     beforeEach(async () => {
         context = new TestSdkContext();

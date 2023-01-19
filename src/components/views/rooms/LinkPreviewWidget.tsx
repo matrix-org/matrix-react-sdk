@@ -50,7 +50,7 @@ export default class LinkPreviewWidget extends React.Component<IProps> {
         }
     }
 
-    private onImageClick = (ev): void => {
+    private onImageClick = (ev: React.MouseEvent): void => {
         const p = this.props.preview;
         if (ev.button != 0 || ev.metaKey) return;
         ev.preventDefault();

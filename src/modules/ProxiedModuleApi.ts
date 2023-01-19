@@ -35,6 +35,7 @@ import { MatrixClientPeg } from "../MatrixClientPeg";
 import { getCachedRoomIDForAlias } from "../RoomAliasCache";
 import { Action } from "../dispatcher/actions";
 import { OverwriteLoginPayload } from "../dispatcher/payloads/OverwriteLoginPayload";
+import { IRegisterRequestParams } from "matrix-js-sdk/src/matrix";
 
 /**
  * Glue between the `ModuleApi` interface and the react-sdk. Anticipates one instance
@@ -104,7 +105,7 @@ export class ProxiedModuleApi implements ModuleApi {
         const client = Matrix.createClient({ baseUrl: hsUrl });
         const deviceName =
             SdkConfig.get("default_device_display_name") || PlatformPeg.get().getDefaultDeviceDisplayName();
-        const req = {
+        const req: IRegisterRequestParams = {
             username,
             password,
             initial_device_display_name: deviceName,

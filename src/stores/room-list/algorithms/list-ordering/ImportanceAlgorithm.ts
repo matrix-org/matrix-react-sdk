@@ -25,15 +25,13 @@ import { OrderingAlgorithm } from "./OrderingAlgorithm";
 import { NotificationColor } from "../../../notifications/NotificationColor";
 import { RoomNotificationStateStore } from "../../../notifications/RoomNotificationStateStore";
 
-interface ICategorizedRoomMap {
-    // @ts-ignore - TS wants this to be a string, but we know better
-    [category: NotificationColor]: Room[];
-}
+type CategorizedRoomMap = Partial<{
+    [category in NotificationColor]: Room[];
+}>;
 
-interface ICategoryIndex {
-    // @ts-ignore - TS wants this to be a string, but we know better
-    [category: NotificationColor]: number; // integer
-}
+type CategoryIndex = Partial<{
+    [category in NotificationColor]: number; // integer
+}>;
 
 // Caution: changing this means you'll need to update a bunch of assumptions and
 // comments! Check the usage of Category carefully to figure out what needs changing
@@ -69,15 +67,15 @@ export class ImportanceAlgorithm extends OrderingAlgorithm {
     // tracks when rooms change categories and splices the orderedRooms array as
     // needed, preventing many ordering operations.
 
-    private indices: ICategoryIndex = {};
+    private indices: CategoryIndex = {};
 
     public constructor(tagId: TagID, initialSortingAlgorithm: SortAlgorithm) {
         super(tagId, initialSortingAlgorithm);
     }
 
     // noinspection JSMethodCanBeStatic
-    private categorizeRooms(rooms: Room[]): ICategorizedRoomMap {
-        const map: ICategorizedRoomMap = {
+    private categorizeRooms(rooms: Room[]): CategorizedRoomMap {
+        const map: CategorizedRoomMap = {
             [NotificationColor.Unsent]: [],
             [NotificationColor.Red]: [],
             [NotificationColor.Grey]: [],
@@ -111,7 +109,7 @@ export class ImportanceAlgorithm extends OrderingAlgorithm {
             }
 
             const newlyOrganized: Room[] = [];
-            const newIndices: ICategoryIndex = {};
+            const newIndices: CategoryIndex = {};
 
             for (const category of CATEGORY_ORDER) {
                 newIndices[category] = newlyOrganized.length;
@@ -206,7 +204,7 @@ export class ImportanceAlgorithm extends OrderingAlgorithm {
     }
 
     // noinspection JSMethodCanBeStatic
-    private getCategoryFromIndices(index: number, indices: ICategoryIndex): NotificationColor {
+    private getCategoryFromIndices(index: number, indices: CategoryIndex): NotificationColor {
         for (let i = 0; i < CATEGORY_ORDER.length; i++) {
             const category = CATEGORY_ORDER[i];
             const isLast = i === CATEGORY_ORDER.length - 1;
@@ -226,7 +224,7 @@ export class ImportanceAlgorithm extends OrderingAlgorithm {
         nRooms: number,
         fromCategory: NotificationColor,
         toCategory: NotificationColor,
-        indices: ICategoryIndex,
+        indices: CategoryIndex,
     ): void {
         // We have to update the index of the category *after* the from/toCategory variables
         // in order to update the indices correctly. Because the room is moving from/to those
@@ -238,7 +236,7 @@ export class ImportanceAlgorithm extends OrderingAlgorithm {
         this.alterCategoryPositionBy(toCategory, +nRooms, indices);
     }
 
-    private alterCategoryPositionBy(category: NotificationColor, n: number, indices: ICategoryIndex): void {
+    private alterCategoryPositionBy(category: NotificationColor, n: number, indices: CategoryIndex): void {
         // Note: when we alter a category's index, we actually have to modify the ones following
         // the target and not the target itself.
 

@@ -22,7 +22,7 @@ import SettingsStore from "./settings/SettingsStore";
 import ThemeWatcher from "./settings/watchers/ThemeWatcher";
 
 export const DEFAULT_THEME = "light";
-const HIGH_CONTRAST_THEMES = {
+const HIGH_CONTRAST_THEMES: Record<string, string> = {
     light: "light-high-contrast",
 };
 
@@ -80,7 +80,7 @@ export function enumerateThemes(): { [key: string]: string } {
         "dark": _t("Dark"),
     };
     const customThemes = SettingsStore.getValue("custom_themes");
-    const customThemeNames = {};
+    const customThemeNames: Record<string, string> = {};
     for (const { name } of customThemes) {
         customThemeNames[`custom-${name}`] = name;
     }
@@ -150,7 +150,7 @@ function generateCustomFontFaceCSS(faces: IFontFaces[]): string {
             const props = Object.keys(face).filter((prop) => allowedFontFaceProps.includes(prop));
             const body = props
                 .map((prop) => {
-                    let value;
+                    let value: string;
                     if (prop === "src") {
                         value = src;
                     } else if (prop === "font-family") {
@@ -169,7 +169,7 @@ function generateCustomFontFaceCSS(faces: IFontFaces[]): string {
 function setCustomThemeVars(customTheme: ICustomTheme): void {
     const { style } = document.body;
 
-    function setCSSColorVariable(name, hexColor, doPct = true): void {
+    function setCSSColorVariable(name: string, hexColor: string, doPct = true): void {
         style.setProperty(`--${name}`, hexColor);
         if (doPct) {
             // uses #rrggbbaa to define the color with alpha values at 0%, 15% and 50%
@@ -215,9 +215,9 @@ export function getCustomTheme(themeName: string): ICustomTheme {
     if (!customThemes) {
         throw new Error(`No custom themes set, can't set custom theme "${themeName}"`);
     }
-    const customTheme = customThemes.find((t) => t.name === themeName);
+    const customTheme = customThemes.find((t: ITheme) => t.name === themeName);
     if (!customTheme) {
-        const knownNames = customThemes.map((t) => t.name).join(", ");
+        const knownNames = customThemes.map((t: ITheme) => t.name).join(", ");
         throw new Error(`Can't find custom theme "${themeName}", only know ${knownNames}`);
     }
     return customTheme;
@@ -248,7 +248,7 @@ export async function setTheme(theme?: string): Promise<void> {
     const styleElements = new Map<string, HTMLLinkElement>();
     const themes = Array.from(document.querySelectorAll<HTMLLinkElement>("[data-mx-theme]"));
     themes.forEach((theme) => {
-        styleElements.set(theme.attributes["data-mx-theme"].value.toLowerCase(), theme);
+        styleElements.set(theme.dataset.mxTheme.toLowerCase(), theme);
     });
 
     if (!styleElements.has(stylesheetName)) {

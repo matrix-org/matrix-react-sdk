@@ -18,8 +18,8 @@ import { setTheme } from "../src/theme";
 
 describe("theme", () => {
     describe("setTheme", () => {
-        let lightTheme;
-        let darkTheme;
+        let lightTheme: HTMLStyleElement;
+        let darkTheme: HTMLStyleElement;
 
         let spyQuerySelectorAll: jest.MockInstance<NodeListOf<Element>, [selectors: string]>;
 
@@ -33,8 +33,8 @@ describe("theme", () => {
                     },
                     disabled: true,
                     href: "urlLight",
-                    onload: () => void 0,
-                },
+                    onload: (): void => void 0,
+                } as unknown as HTMLStyleElement,
                 {
                     attributes: {
                         "data-mx-theme": {
@@ -43,8 +43,8 @@ describe("theme", () => {
                     },
                     disabled: true,
                     href: "urlDark",
-                    onload: () => void 0,
-                },
+                    onload: (): void => void 0,
+                } as unknown as HTMLStyleElement,
             ];
             lightTheme = styles[0];
             darkTheme = styles[1];
@@ -62,7 +62,7 @@ describe("theme", () => {
             // When
             await new Promise((resolve) => {
                 setTheme("light").then(resolve);
-                lightTheme.onload();
+                lightTheme.onload(void 0);
             });
 
             // Then

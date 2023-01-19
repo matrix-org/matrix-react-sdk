@@ -79,7 +79,7 @@ describe("<PinnedMessagesCard />", () => {
     };
 
     const mountPins = async (room: Room): Promise<ReactWrapper<ComponentProps<typeof PinnedMessagesCard>>> => {
-        let pins;
+        let pins: ReactWrapper<ComponentProps<typeof PinnedMessagesCard>>;
         await act(async () => {
             pins = mount(
                 <PinnedMessagesCard
@@ -131,8 +131,8 @@ describe("<PinnedMessagesCard />", () => {
 
     it("updates when messages are pinned", async () => {
         // Start with nothing pinned
-        const localPins = [];
-        const nonLocalPins = [];
+        const localPins: MatrixEvent[] = [];
+        const nonLocalPins: MatrixEvent[] = [];
         const pins = await mountPins(mkRoom(localPins, nonLocalPins));
         expect(pins.find(PinnedEventTile).length).toBe(0);
 
@@ -235,9 +235,9 @@ describe("<PinnedMessagesCard />", () => {
 
         const answers = (poll.unstableExtensibleEvent as PollStartEvent).answers;
         const responses = [
-            ["@alice:example.org", 0],
-            ["@bob:example.org", 0],
-            ["@eve:example.org", 1],
+            ["@alice:example.org", 0] as [string, number],
+            ["@bob:example.org", 0] as [string, number],
+            ["@eve:example.org", 1] as [string, number],
         ].map(([user, option], i) =>
             mkEvent({
                 ...PollResponseEvent.from([answers[option].id], poll.getId()).serialize(),

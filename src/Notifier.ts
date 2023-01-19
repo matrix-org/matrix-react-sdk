@@ -67,7 +67,7 @@ Override both the content body and the TextForEvent handler for specific msgtype
 This is useful when the content body contains fallback text that would explain that the client can't handle a particular
 type of tile.
 */
-const msgTypeHandlers = {
+const msgTypeHandlers: Record<string, (event: MatrixEvent) => string> = {
     [MsgType.KeyVerificationRequest]: (event: MatrixEvent) => {
         const name = (event.sender || {}).name;
         return _t("%(name)s is requesting verification", { name });
@@ -88,12 +88,12 @@ const msgTypeHandlers = {
 };
 
 export const Notifier = {
-    notifsByRoom: {},
+    notifsByRoom: {} as Record<string, Notification[]>,
 
     // A list of event IDs that we've received but need to wait until
     // they're decrypted until we decide whether to notify for them
     // or not
-    pendingEncryptedEventIds: [],
+    pendingEncryptedEventIds: [] as string[],
 
     notificationMessageForEvent: function (ev: MatrixEvent): string {
         if (msgTypeHandlers.hasOwnProperty(ev.getContent().msgtype)) {
