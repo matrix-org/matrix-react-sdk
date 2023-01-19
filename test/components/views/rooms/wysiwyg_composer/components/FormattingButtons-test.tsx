@@ -37,7 +37,7 @@ const mockWysiwyg = {
 const openLinkModalSpy = jest.spyOn(LinkModal, "openLinkModal");
 
 const testCases: Record<
-    Exclude<ActionTypes, "undo" | "redo" | "clear" | "codeBlock">,
+    Exclude<ActionTypes, "undo" | "redo" | "clear">,
     { label: string; mockFormatFn: jest.Func | jest.SpyInstance }
 > = {
     bold: { label: "Bold", mockFormatFn: mockWysiwyg.bold },
