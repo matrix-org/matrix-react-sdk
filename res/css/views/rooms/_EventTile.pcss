@@ -549,8 +549,16 @@ $left-gutter: 64px;
         code {
             font-family: $monospace-font-family !important;
             background-color: $codeblock-background-color;
-            border: 1px solid $codeblock-border-color;
-            padding: 2px;
+        }
+
+        code:not(pre *) {
+            background-color: $inlinecode-background-color;
+            border: 1px solid $inlinecode-border-color;
+            border-radius: 4px;
+            // The horizontal padding is added by gfm.css .markdown-body
+            padding: 2px 0;
+            // Avoid inline code blocks to be sticked when on multiple lines
+            line-height: $font-22px;
         }
 
         code {
