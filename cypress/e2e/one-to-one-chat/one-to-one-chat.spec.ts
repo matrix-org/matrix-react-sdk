@@ -17,30 +17,30 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
-import type { Credentials } from "../../support/synapse";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
+import { Credentials } from "../../support/homeserver";
 
 describe("1:1 chat room", () => {
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
     let user2: Credentials;
 
     const username = "user1234";
     const password = "p4s5W0rD";
 
     beforeEach(() => {
-        cy.startSynapse("default").then((data) => {
-            synapse = data;
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
 
-            cy.initTestUser(synapse, "Jeff");
-            cy.registerUser(synapse, username, password).then((credentials) => {
-                user2 = credentials;
+            cy.initTestUser(homeserver, "Jeff");
+            cy.registerUser(homeserver, username, password).then((credential) => {
+                user2 = credential;
                 cy.visit(`/#/user/${user2.userId}?action=chat`);
             });
         });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
     });
 
     it("should open new 1:1 chat room after leaving the old one", () => {
