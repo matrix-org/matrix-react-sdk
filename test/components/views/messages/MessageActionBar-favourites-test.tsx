@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 import React from "react";
+import { EventType, MatrixEvent, MsgType, Room } from "matrix-js-sdk/src/matrix";
 import { act, fireEvent, render, waitFor } from "@testing-library/react";
 import { mocked } from "jest-mock";
 
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../../src/settings/SettingLevel";
-import { EventType, MatrixEvent, MsgType, Room } from "../../../../../matrix-js-sdk";
 import { IRoomState } from "../../../../src/components/structures/RoomView";
 import RoomContext, { TimelineRenderingType } from "../../../../src/contexts/RoomContext";
 import MessageActionBar from "../../../../src/components/views/messages/MessageActionBar";
