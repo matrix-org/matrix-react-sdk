@@ -17,20 +17,27 @@ limitations under the License.
 import { mocked } from "jest-mock";
 import { PushRuleActionName, TweakName } from "matrix-js-sdk/src/@types/PushRules";
 import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { EventStatus, PendingEventOrdering } from "matrix-js-sdk/src/matrix";
 
+import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { mkEvent, mkRoom, muteRoom, stubClient } from "./test-utils";
-import { MatrixClientPeg } from "../src/MatrixClientPeg";
-import { getRoomNotifsState, RoomNotifState, getUnreadNotificationCount } from "../src/RoomNotifs";
+import {
+    getRoomNotifsState,
+    RoomNotifState,
+    getUnreadNotificationCount,
+    determineUnreadState,
+} from "../src/RoomNotifs";
+import { NotificationColor } from "../src/stores/notifications/NotificationColor";
 
 describe("RoomNotifs test", () => {
+    let client: jest.Mocked<MatrixClient>;
+
     beforeEach(() => {
-        stubClient();
+        client = stubClient() as jest.Mocked<MatrixClient>;
     });
 
     it("getRoomNotifsState handles rules with no conditions", () => {
-        const cli = MatrixClientPeg.get();
-        mocked(cli).pushRules = {
+        mocked(client).pushRules = {
             global: {
                 override: [
                     {
@@ -42,53 +49,47 @@ describe("RoomNotifs test", () => {
                 ],
             },
         };
-        expect(getRoomNotifsState(cli, "!roomId:server")).toBe(null);
+        expect(getRoomNotifsState(client, "!roomId:server")).toBe(null);
     });
 
     it("getRoomNotifsState handles guest users", () => {
-        const cli = MatrixClientPeg.get();
-        mocked(cli).isGuest.mockReturnValue(true);
-        expect(getRoomNotifsState(cli, "!roomId:server")).toBe(RoomNotifState.AllMessages);
+        mocked(client).isGuest.mockReturnValue(true);
+        expect(getRoomNotifsState(client, "!roomId:server")).toBe(RoomNotifState.AllMessages);
     });
 
     it("getRoomNotifsState handles mute state", () => {
-        const cli = MatrixClientPeg.get();
-        const room = mkRoom(cli, "!roomId:server");
+        const room = mkRoom(client, "!roomId:server");
         muteRoom(room);
-        expect(getRoomNotifsState(cli, room.roomId)).toBe(RoomNotifState.Mute);
+        expect(getRoomNotifsState(client, room.roomId)).toBe(RoomNotifState.Mute);
     });
 
     it("getRoomNotifsState handles mentions only", () => {
-        const cli = MatrixClientPeg.get();
-        cli.getRoomPushRule = () => ({
+        (client as any).getRoomPushRule = () => ({
             rule_id: "!roomId:server",
             enabled: true,
             default: false,
             actions: [PushRuleActionName.DontNotify],
         });
-        expect(getRoomNotifsState(cli, "!roomId:server")).toBe(RoomNotifState.MentionsOnly);
+        expect(getRoomNotifsState(client, "!roomId:server")).toBe(RoomNotifState.MentionsOnly);
     });
 
     it("getRoomNotifsState handles noisy", () => {
-        const cli = MatrixClientPeg.get();
-        cli.getRoomPushRule = () => ({
+        (client as any).getRoomPushRule = () => ({
             rule_id: "!roomId:server",
             enabled: true,
             default: false,
             actions: [{ set_tweak: TweakName.Sound, value: "default" }],
         });
-        expect(getRoomNotifsState(cli, "!roomId:server")).toBe(RoomNotifState.AllMessagesLoud);
+        expect(getRoomNotifsState(client, "!roomId:server")).toBe(RoomNotifState.AllMessagesLoud);
     });
 
     describe("getUnreadNotificationCount", () => {
         const ROOM_ID = "!roomId:example.org";
         const THREAD_ID = "$threadId";
 
-        let cli: jest.Mocked<MatrixClient>;
         let room: Room;
         beforeEach(() => {
-            cli = MatrixClientPeg.get() as jest.Mocked<MatrixClient>;
-            room = new Room(ROOM_ID, cli, cli.getUserId()!);
+            room = new Room(ROOM_ID, client, client.getUserId()!);
         });
 
         it("counts room notification type", () => {
@@ -109,19 +110,19 @@ describe("RoomNotifs test", () => {
             room.setUnreadNotificationCount(NotificationCountType.Highlight, 1);
 
             const OLD_ROOM_ID = "!oldRoomId:example.org";
-            const oldRoom = new Room(OLD_ROOM_ID, cli, cli.getUserId()!);
+            const oldRoom = new Room(OLD_ROOM_ID, client, client.getUserId()!);
             oldRoom.setUnreadNotificationCount(NotificationCountType.Total, 10);
             oldRoom.setUnreadNotificationCount(NotificationCountType.Highlight, 6);
 
-            cli.getRoom.mockReset().mockReturnValue(oldRoom);
+            client.getRoom.mockReset().mockReturnValue(oldRoom);
 
             const predecessorEvent = mkEvent({
                 event: true,
                 type: "m.room.create",
                 room: ROOM_ID,
-                user: cli.getUserId()!,
+                user: client.getUserId()!,
                 content: {
-                    creator: cli.getUserId(),
+                    creator: client.getUserId(),
                     room_version: "5",
                     predecessor: {
                         room_id: OLD_ROOM_ID,
@@ -147,6 +148,80 @@ describe("RoomNotifs test", () => {
 
             expect(getUnreadNotificationCount(room, NotificationCountType.Total, THREAD_ID)).toBe(2);
             expect(getUnreadNotificationCount(room, NotificationCountType.Highlight, THREAD_ID)).toBe(1);
+        });
+    });
+
+    describe("determineUnreadState", () => {
+        let room: Room;
+
+        beforeEach(() => {
+            room = new Room("!room-id:example.com", client, "@user:example.com", {
+                pendingEventOrdering: PendingEventOrdering.Detached,
+            });
+        });
+
+        it("shows nothing by default", async () => {
+            const { color, symbol, count } = determineUnreadState(room);
+
+            expect(symbol).toBe(null);
+            expect(color).toBe(NotificationColor.None);
+            expect(count).toBe(0);
+        });
+
+        it("indicates if there are unsent messages", async () => {
+            const event = mkEvent({
+                event: true,
+                type: "m.message",
+                user: "@user:example.org",
+                content: {},
+            });
+            event.status = EventStatus.NOT_SENT;
+            room.addPendingEvent(event, "txn");
+
+            const { color, symbol, count } = determineUnreadState(room);
+
+            expect(symbol).toBe("!");
+            expect(color).toBe(NotificationColor.Unsent);
+            expect(count).toBeGreaterThan(0);
+        });
+
+        it("indicates the user has been invited to a channel", async () => {
+            room.updateMyMembership("invite");
+
+            const { color, symbol, count } = determineUnreadState(room);
+
+            expect(symbol).toBe("!");
+            expect(color).toBe(NotificationColor.Red);
+            expect(count).toBeGreaterThan(0);
+        });
+
+        it("shows nothing for muted channels", async () => {
+            room.setUnreadNotificationCount(NotificationCountType.Highlight, 99);
+            room.setUnreadNotificationCount(NotificationCountType.Total, 99);
+            muteRoom(room);
+
+            const { color, count } = determineUnreadState(room);
+
+            expect(color).toBe(NotificationColor.None);
+            expect(count).toBe(0);
+        });
+
+        it("uses the correct number of unreads", async () => {
+            room.setUnreadNotificationCount(NotificationCountType.Total, 999);
+
+            const { color, count } = determineUnreadState(room);
+
+            expect(color).toBe(NotificationColor.Grey);
+            expect(count).toBe(999);
+        });
+
+        it("uses the correct number of highlights", async () => {
+            room.setUnreadNotificationCount(NotificationCountType.Highlight, 888);
+
+            const { color, count } = determineUnreadState(room);
+
+            expect(color).toBe(NotificationColor.Red);
+            expect(count).toBe(888);
         });
     });
 });
