@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactElement, useCallback, useContext, useEffect } from "react";
+import React, { FC, ReactElement, useCallback, useContext, useEffect, useState } from "react";
 import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import classNames from "classnames";
 import { MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
@@ -60,6 +60,7 @@ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayloa
 import useFavouriteMessages from "../../../hooks/useFavouriteMessages";
 import { GetRelationsForEvent } from "../rooms/EventTile";
 import { VoiceBroadcastInfoEventType } from "../../../voice-broadcast/types";
+import { FavouriteMessagesStore } from "../../../stores/FavouriteMessagesStore";
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -274,14 +275,19 @@ const ReplyInThreadButton: React.FC<IReplyInThreadButton> = ({ mxEvent }) => {
 
 interface IFavouriteButtonProp {
     mxEvent: MatrixEvent;
+    favouriteMessagesStore?: FavouriteMessagesStore;
 }
 
-const FavouriteButton: React.FC<IFavouriteButtonProp> = ({ mxEvent }) => {
-    const { isFavourite, toggleFavourite } = useFavouriteMessages();
+const FavouriteButton: FC<IFavouriteButtonProp> = ({ mxEvent, favouriteMessagesStore }: IFavouriteButtonProp) => {
+    const { isFavourite, toggleFavourite, registerFavouritesChangedListener } =
+        useFavouriteMessages(favouriteMessagesStore);
+    const [, forceRefresh] = useState([]);
+
+    registerFavouritesChangedListener(() => forceRefresh([]));
 
     const eventId = mxEvent.getId();
-    const classes = classNames("mx_MessageActionBar_iconButton mx_MessageActionBar_favouriteButton", {
-        mx_MessageActionBar_favouriteButton_fillstar: isFavourite(eventId),
+    const classes = classNames("mx_MessageActionBar_iconButton", {
+        mx_MessageActionBar_favouriteButton_fillstar: isFavourite(mxEvent.getId() ?? ""),
     });
 
     const onClick = useCallback(
@@ -290,9 +296,9 @@ const FavouriteButton: React.FC<IFavouriteButtonProp> = ({ mxEvent }) => {
             e.preventDefault();
             e.stopPropagation();
 
-            toggleFavourite(eventId);
+            toggleFavourite(mxEvent);
         },
-        [toggleFavourite, eventId],
+        [mxEvent, toggleFavourite],
     );
 
     return (
@@ -319,6 +325,14 @@ interface IMessageActionBarProps {
     toggleThreadExpanded: () => void;
     isQuoteExpanded?: boolean;
     getRelationsForEvent?: GetRelationsForEvent;
+
+    // Is this tile being shown in the FavouritesView?
+    // (If so, we don't allow editing messages.)
+    isFavouritesView?: boolean;
+
+    // Provide this to use a different store for favourite messages
+    // e.g. in tests. If not supplied, we use the global default.
+    favouriteMessagesStore?: FavouriteMessagesStore;
 }
 
 export default class MessageActionBar extends React.PureComponent<IMessageActionBarProps> {
@@ -442,7 +456,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
 
     public render(): JSX.Element {
         const toolbarOpts = [];
-        if (canEditContent(this.props.mxEvent)) {
+        if (canEditContent(this.props.mxEvent) && !this.props.isFavouritesView) {
             toolbarOpts.push(
                 <RovingAccessibleTooltipButton
                     className="mx_MessageActionBar_iconButton"
@@ -532,7 +546,15 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                     );
                 }
                 if (SettingsStore.getValue("feature_favourite_messages")) {
-                    toolbarOpts.splice(-1, 0, <FavouriteButton key="favourite" mxEvent={this.props.mxEvent} />);
+                    toolbarOpts.splice(
+                        -1,
+                        0,
+                        <FavouriteButton
+                            key="favourite"
+                            mxEvent={this.props.mxEvent}
+                            favouriteMessagesStore={this.props.favouriteMessagesStore}
+                        />,
+                    );
                 }
 
                 // XXX: Assuming that the underlying tile will be a media event if it is eligible media.

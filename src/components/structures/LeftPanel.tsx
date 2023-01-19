@@ -378,6 +378,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 onResize={this.refreshStickyHeaders}
                 onListCollapse={this.refreshStickyHeaders}
                 ref={this.roomListRef}
+                pageType={this.props.pageType}
             />
         );
 

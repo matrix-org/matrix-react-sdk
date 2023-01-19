@@ -83,6 +83,7 @@ import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
 import { ElementCall } from "../../../models/Call";
 import { UnreadNotificationBadge } from "./NotificationBadge/UnreadNotificationBadge";
 import { EventTileThreadToolbar } from "./EventTile/EventTileThreadToolbar";
+import { FavouriteMessagesStore } from "../../../stores/FavouriteMessagesStore";
 
 export type GetRelationsForEvent = (
     eventId: string,
@@ -224,6 +225,14 @@ export interface EventTileProps {
     // displayed to the current user either because they're
     // the author or they are a moderator
     isSeeingThroughMessageHiddenForModeration?: boolean;
+
+    // Is this tile being shown in the FavouritesView?
+    // (If so, we don't allow editing messages.)
+    isFavouritesView?: boolean;
+
+    // Provide this to use a different store for favourite messages
+    // e.g. in tests. If not supplied, we use the global default.
+    favouriteMessagesStore?: FavouriteMessagesStore;
 }
 
 interface IState {
@@ -1110,6 +1119,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                 isQuoteExpanded={isQuoteExpanded}
                 toggleThreadExpanded={() => this.setQuoteExpanded(!isQuoteExpanded)}
                 getRelationsForEvent={this.props.getRelationsForEvent}
+                isFavouritesView={this.props.isFavouritesView}
+                favouriteMessagesStore={this.props.favouriteMessagesStore}
             />
         ) : undefined;
 

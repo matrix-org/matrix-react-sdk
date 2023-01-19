@@ -14,30 +14,61 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState } from "react";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { useCallback, useEffect } from "react";
 
-const favouriteMessageIds = JSON.parse(localStorage?.getItem("io_element_favouriteMessages") ?? "[]") as string[];
+import { FavouriteMessagesStore, FavouriteStorage } from "../stores/FavouriteMessagesStore";
 
-export default function useFavouriteMessages(): {
-    toggleFavourite: (eventId: string) => void;
+export default function useFavouriteMessages(favouriteMessageStore = FavouriteMessagesStore.instance): {
+    getFavouriteMessages: () => FavouriteStorage[];
     isFavourite: (eventId: string) => boolean;
+    toggleFavourite: (mxEvent: MatrixEvent) => void;
+    clearFavouriteMessages: () => void;
+    registerFavouritesChangedListener: (listener: () => void) => void;
 } {
-    const [, setX] = useState<string[]>();
+    const myListeners = [];
 
-    //checks if an id already exist
-    const isFavourite = (eventId: string): boolean => favouriteMessageIds.includes(eventId);
+    const isFavourite: (eventId: string) => boolean = useCallback(
+        (eventId: string): boolean => favouriteMessageStore.isFavourite(eventId),
+        [favouriteMessageStore],
+    );
 
-    const toggleFavourite = (eventId: string): void => {
-        isFavourite(eventId)
-            ? favouriteMessageIds.splice(favouriteMessageIds.indexOf(eventId), 1)
-            : favouriteMessageIds.push(eventId);
+    const toggleFavourite: (mxEvent: MatrixEvent) => void = useCallback(
+        async (mxEvent: MatrixEvent) => {
+            const eventId = mxEvent.getId() ?? "";
+            const roomId = mxEvent.getRoomId() ?? "";
+            const content = mxEvent.getContent() ?? {};
+            await favouriteMessageStore.toggleFavourite(eventId, roomId, content);
+        },
+        [favouriteMessageStore],
+    );
 
-        //update the local storage
-        localStorage.setItem("io_element_favouriteMessages", JSON.stringify(favouriteMessageIds));
+    const clearFavouriteMessages: () => void = useCallback(async () => {
+        await favouriteMessageStore.clearAll();
+    }, [favouriteMessageStore]);
 
-        // This forces a re-render to account for changes in appearance in real-time when the favourite button is toggled
-        setX([]);
+    const getFavouriteMessages: () => FavouriteStorage[] = useCallback(() => {
+        return favouriteMessageStore.allFavourites();
+    }, [favouriteMessageStore]);
+
+    const registerFavouritesChangedListener = (listener: () => void): void => {
+        favouriteMessageStore.addUpdatedListener(listener);
+        myListeners.push(listener);
     };
 
-    return { isFavourite, toggleFavourite };
+    useEffect(() => {
+        return () => {
+            for (const listener of myListeners) {
+                favouriteMessageStore.removeUpdatedListener(listener);
+            }
+        };
+    });
+
+    return {
+        getFavouriteMessages,
+        isFavourite,
+        toggleFavourite,
+        clearFavouriteMessages,
+        registerFavouritesChangedListener,
+    };
 }

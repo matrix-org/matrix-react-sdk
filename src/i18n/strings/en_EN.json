@@ -3459,6 +3459,8 @@
     "Original event source": "Original event source",
     "Event ID: %(eventId)s": "Event ID: %(eventId)s",
     "Thread root ID: %(threadRootId)s": "Thread root ID: %(threadRootId)s",
+    "Are you sure you wish to clear all your favourite messages? ": "Are you sure you wish to clear all your favourite messages? ",
+    "No Favourite Messages": "No Favourite Messages",
     "Unable to verify this device": "Unable to verify this device",
     "Verify this device": "Verify this device",
     "Device verified": "Device verified",

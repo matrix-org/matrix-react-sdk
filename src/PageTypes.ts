@@ -20,6 +20,7 @@ enum PageType {
     HomePage = "home_page",
     RoomView = "room_view",
     UserView = "user_view",
+    FavouriteMessagesView = "favourite_messages_view",
 }
 
 export default PageType;

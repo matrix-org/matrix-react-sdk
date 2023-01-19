@@ -768,6 +768,11 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: [SettingLevel.ACCOUNT],
         default: [], // list of room IDs, most recent first
     },
+    "favourite_messages": {
+        // not really a setting
+        supportedLevels: [SettingLevel.ACCOUNT],
+        default: [], // list of FavouriteStorage
+    },
     "room_directory_servers": {
         supportedLevels: [SettingLevel.ACCOUNT],
         default: [],
