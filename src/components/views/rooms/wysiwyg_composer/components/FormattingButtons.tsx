@@ -41,6 +41,8 @@ interface TooltipProps {
     keyCombo?: KeyCombo;
 }
 
+// add a comment, see how long CI jest tests take
+
 function Tooltip({ label, keyCombo }: TooltipProps): JSX.Element {
     return (
         <div className="mx_FormattingButtons_Tooltip">
