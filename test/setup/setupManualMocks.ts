@@ -97,3 +97,10 @@ Object.defineProperty(navigator, "mediaDevices", {
         getUserMedia: jest.fn(),
     },
 });
+
+console.log = () => {};
+console.warn = () => {};
+console.error = () => {};
+console.info = () => {};
+console.debug = () => {};
+console.trace = () => {};
