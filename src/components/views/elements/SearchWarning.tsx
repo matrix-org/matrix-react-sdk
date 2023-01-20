@@ -66,7 +66,7 @@ export default function SearchWarning({ isRoomEncrypted, kind }: IProps): JSX.El
         );
     }
 
-    const brand = SdkConfig.get("brand");
+    const brand = SdkConfig?.get("brand");
     const desktopBuilds = SdkConfig.getObject("desktop_builds");
 
     let text = null;
