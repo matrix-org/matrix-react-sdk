@@ -26,7 +26,7 @@ export default function useFavouriteMessages(favouriteMessageStore = FavouriteMe
     clearFavouriteMessages: () => void;
     registerFavouritesChangedListener: (listener: () => void) => void;
 } {
-    const myListeners = [];
+    const myListeners: (() => void)[] = [];
 
     const isFavourite: (eventId: string) => boolean = useCallback(
         (eventId: string): boolean => favouriteMessageStore.isFavourite(eventId),
