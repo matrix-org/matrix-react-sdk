@@ -217,10 +217,10 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 if (this.unmounted) {
                     return;
                 }
-                let errorText;
+                let errorText: ReactNode;
 
                 // Some error strings only apply for logging in
-                const usingEmail = username.indexOf("@") > 0;
+                const usingEmail = username?.indexOf("@") > 0;
                 if (error.httpStatus === 400 && usingEmail) {
                     errorText = _t("This homeserver does not support login using email address.");
                 } else if (error.errcode === "M_RESOURCE_LIMIT_EXCEEDED") {

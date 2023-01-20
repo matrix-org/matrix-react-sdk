@@ -104,22 +104,15 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
             return;
         }
 
-        let username = ""; // XXX: Synapse breaks if you send null here:
-        let phoneCountry = null;
-        let phoneNumber = null;
-
         switch (this.state.loginType) {
             case LoginField.Email:
             case LoginField.MatrixId:
-                username = this.props.username;
+                this.props.onSubmit(this.props.username, undefined, undefined, this.state.password);
                 break;
             case LoginField.Phone:
-                phoneCountry = this.props.phoneCountry;
-                phoneNumber = this.props.phoneNumber;
+                this.props.onSubmit(undefined, this.props.phoneCountry, this.props.phoneNumber, this.state.password);
                 break;
         }
-
-        this.props.onSubmit(username, phoneCountry, phoneNumber, this.state.password);
     };
 
     private onUsernameChanged = (ev: React.ChangeEvent<HTMLInputElement>): void => {

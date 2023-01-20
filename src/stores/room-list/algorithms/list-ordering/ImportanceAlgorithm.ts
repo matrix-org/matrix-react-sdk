@@ -104,8 +104,14 @@ export class ImportanceAlgorithm extends OrderingAlgorithm {
             // Every other sorting type affects the categories, not the whole tag.
             const categorized = this.categorizeRooms(rooms);
             for (const category of Object.keys(categorized)) {
-                const roomsToOrder = categorized[category];
-                categorized[category] = sortRoomsWithAlgorithm(roomsToOrder, this.tagId, this.sortingAlgorithm);
+                if (!isNaN(Number(category))) continue;
+                const notificationColor = category as unknown as NotificationColor;
+                const roomsToOrder = categorized[notificationColor];
+                categorized[notificationColor] = sortRoomsWithAlgorithm(
+                    roomsToOrder,
+                    this.tagId,
+                    this.sortingAlgorithm,
+                );
             }
 
             const newlyOrganized: Room[] = [];

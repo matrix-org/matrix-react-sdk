@@ -47,9 +47,7 @@ class VectorPushRuleDefinition {
             enabled = rule.enabled;
         }
 
-        for (const stateKey in PushRuleVectorState.states) {
-            // eslint-disable-line guard-for-in
-            const state: VectorState = PushRuleVectorState.states[stateKey];
+        for (const state of Object.values(PushRuleVectorState.states)) {
             const vectorStateToActions = this.vectorStateToActions[state];
 
             if (!vectorStateToActions) {

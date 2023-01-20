@@ -26,7 +26,7 @@ const HIGH_CONTRAST_THEMES: Record<string, string> = {
     light: "light-high-contrast",
 };
 
-interface IFontFaces {
+interface IFontFaces extends Omit<Record<typeof allowedFontFaceProps[number], string>, "src"> {
     src: {
         format: string;
         url: string;
@@ -126,28 +126,28 @@ const allowedFontFaceProps = [
     "font-variation-settings",
     "src",
     "unicode-range",
-];
+] as const;
 
 function generateCustomFontFaceCSS(faces: IFontFaces[]): string {
     return faces
         .map((face) => {
-            const src =
-                face.src &&
-                face.src
-                    .map((srcElement) => {
-                        let format;
-                        if (srcElement.format) {
-                            format = `format("${srcElement.format}")`;
-                        }
-                        if (srcElement.url) {
-                            return `url("${srcElement.url}") ${format}`;
-                        } else if (srcElement.local) {
-                            return `local("${srcElement.local}") ${format}`;
-                        }
-                        return "";
-                    })
-                    .join(", ");
-            const props = Object.keys(face).filter((prop) => allowedFontFaceProps.includes(prop));
+            const src = face.src
+                ?.map((srcElement) => {
+                    let format: string;
+                    if (srcElement.format) {
+                        format = `format("${srcElement.format}")`;
+                    }
+                    if (srcElement.url) {
+                        return `url("${srcElement.url}") ${format}`;
+                    } else if (srcElement.local) {
+                        return `local("${srcElement.local}") ${format}`;
+                    }
+                    return "";
+                })
+                .join(", ");
+            const props = Object.keys(face).filter((prop: typeof allowedFontFaceProps[number]) =>
+                allowedFontFaceProps.includes(prop),
+            ) as Array<typeof allowedFontFaceProps[number]>;
             const body = props
                 .map((prop) => {
                     let value: string;
