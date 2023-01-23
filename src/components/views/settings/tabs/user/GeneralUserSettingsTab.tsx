@@ -302,6 +302,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         );
     }
 
+    private codeTag = (sub) => <code>{sub}</code>;
+
     private renderAccountSection(): JSX.Element {
         let passwordChangeForm = (
             <ChangePassword
@@ -359,24 +361,18 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             const { hostname } = new URL(this.state.externalAccountManagementUrl);
 
             externalAccountManagement = (
-                <p className="mx_SettingsTab_subsectionText" data-testid="external-account-management-outer">
-                    {_t(
-                        "Manage your account at <a>%(hostname)s</a>.",
-                        { hostname },
-                        {
-                            a: (hostname) => (
-                                <a
-                                    href={this.state.externalAccountManagementUrl}
-                                    rel="noreferrer noopener"
-                                    target="_blank"
-                                    data-testid="external-account-management-link"
-                                >
-                                    {hostname}
-                                </a>
-                            ),
-                        },
-                    )}
-                </p>
+                <>
+                    <p className="mx_SettingsTab_subsectionText" data-testid="external-account-management-outer">
+                        {_t(
+                            "Your account details are managed separately at <code>%(hostname)s</code>.",
+                            { hostname },
+                            { code: this.codeTag }
+                        )}
+                    </p>
+                    <AccessibleButton onClick={null} element="a" kind="primary" target="_blank" rel="noreferrer noopener" href={this.state.externalAccountManagementUrl} data-testid="external-account-management-link">
+                        {_t("Manage account")}
+                    </AccessibleButton>
+                </>
             );
         }
         return (
