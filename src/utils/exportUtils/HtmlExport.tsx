@@ -238,7 +238,7 @@ export default class HTMLExporter extends Exporter {
         }
     }
 
-    protected async getDateSeparator(event: MatrixEvent): Promise<string> {
+    protected getDateSeparator(event: MatrixEvent): string {
         const ts = event.getTs();
         const dateSeparator = (
             <li key={ts}>
@@ -248,7 +248,7 @@ export default class HTMLExporter extends Exporter {
         return renderToStaticMarkup(dateSeparator);
     }
 
-    protected async needsDateSeparator(event: MatrixEvent, prevEvent: MatrixEvent | null): Promise<boolean> {
+    protected needsDateSeparator(event: MatrixEvent, prevEvent: MatrixEvent | null): boolean {
         if (!prevEvent) return true;
         return wantsDateSeparator(prevEvent.getDate() || undefined, event.getDate() || undefined);
     }
@@ -400,7 +400,7 @@ export default class HTMLExporter extends Exporter {
             if (this.cancelled) return this.cleanUp();
             if (!haveRendererForEvent(event, false)) continue;
 
-            content += (await this.needsDateSeparator(event, prevEvent)) ? this.getDateSeparator(event) : "";
+            content += this.needsDateSeparator(event, prevEvent) ? this.getDateSeparator(event) : "";
             const shouldBeJoined =
                 !this.needsDateSeparator(event, prevEvent) &&
                 shouldFormContinuation(prevEvent, event, false, this.threadsEnabled);
