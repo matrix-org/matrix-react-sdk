@@ -302,8 +302,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         );
     }
 
-    private codeTag = (sub): JSX.Element => <code>{sub}</code>;
-
     private renderAccountSection(): JSX.Element {
         let passwordChangeForm = (
             <ChangePassword
@@ -366,7 +364,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                         {_t(
                             "Your account details are managed separately at <code>%(hostname)s</code>.",
                             { hostname },
-                            { code: this.codeTag },
+                            { code: (sub) => <code>{sub}</code> },
                         )}
                     </p>
                     <AccessibleButton
