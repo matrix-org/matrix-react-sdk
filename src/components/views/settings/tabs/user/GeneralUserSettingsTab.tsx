@@ -302,7 +302,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         );
     }
 
-    private codeTag = (sub) => <code>{sub}</code>;
+    private codeTag = (sub): JSX.Element => <code>{sub}</code>;
 
     private renderAccountSection(): JSX.Element {
         let passwordChangeForm = (
