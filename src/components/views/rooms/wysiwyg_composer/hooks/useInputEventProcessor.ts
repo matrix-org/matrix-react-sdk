@@ -18,11 +18,40 @@ import { WysiwygEvent } from "@matrix-org/matrix-wysiwyg";
 import { useCallback } from "react";
 
 import { useSettingValue } from "../../../../../hooks/useSettings";
+import { getKeyBindingsManager } from "../../../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../../../accessibility/KeyboardShortcuts";
 
-function isEnterPressed(event: KeyboardEvent): boolean {
-    // Ugly but here we need to send the message only if Enter is pressed
-    // And we need to stop the event propagation on enter to avoid the composer to grow
-    return event.key === "Enter" && !event.shiftKey && !event.ctrlKey && !event.metaKey && !event.altKey;
+type Send = () => void;
+
+function handleKeyboardEvent(event: KeyboardEvent, send: Send): KeyboardEvent | null {
+    const action = getKeyBindingsManager().getMessageComposerAction(event);
+
+    switch (action) {
+        case KeyBindingAction.SendMessage:
+            send();
+            return null;
+    }
+
+    return event;
+}
+
+type InputEvent = Exclude<WysiwygEvent, KeyboardEvent | ClipboardEvent>;
+
+function handleInputEvent(event: InputEvent, send: Send, isCtrlEnter: boolean): InputEvent | null {
+    switch (event.inputType) {
+        case "insertParagraph":
+            if (!isCtrlEnter) {
+                send();
+            }
+            return null;
+        case "sendMessage":
+            if (isCtrlEnter) {
+                send();
+            }
+            return null;
+    }
+
+    return event;
 }
 
 export function useInputEventProcessor(onSend: () => void): (event: WysiwygEvent) => WysiwygEvent | null {
@@ -33,20 +62,18 @@ export function useInputEventProcessor(onSend: () => void): (event: WysiwygEvent
                 return event;
             }
 
-            const isKeyboardEvent = event instanceof KeyboardEvent;
-            const isEnterPress = !isCtrlEnter && isKeyboardEvent && isEnterPressed(event);
-            const isInsertParagraph = !isCtrlEnter && !isKeyboardEvent && event.inputType === "insertParagraph";
-            // sendMessage is sent when cmd+enter is pressed
-            const isSendMessage = isCtrlEnter && !isKeyboardEvent && event.inputType === "sendMessage";
-
-            if (isEnterPress || isInsertParagraph || isSendMessage) {
+            const send = (): void => {
                 event.stopPropagation?.();
                 event.preventDefault?.();
                 onSend();
-                return null;
-            }
+            };
 
-            return event;
+            const isKeyboardEvent = event instanceof KeyboardEvent;
+            if (isKeyboardEvent) {
+                return handleKeyboardEvent(event, send);
+            } else {
+                return handleInputEvent(event, send, isCtrlEnter);
+            }
         },
         [isCtrlEnter, onSend],
     );
