@@ -42,12 +42,14 @@ import {
 import { RelationsHelper, RelationsHelperEvent } from "../../events/RelationsHelper";
 import { VoiceBroadcastChunkEvents } from "../utils/VoiceBroadcastChunkEvents";
 import { determineVoiceBroadcastLiveness } from "../utils/determineVoiceBroadcastLiveness";
+import { _t } from "../../languageHandler";
 
 export enum VoiceBroadcastPlaybackState {
     Paused = "pause",
     Playing = "playing",
     Stopped = "stopped",
     Buffering = "buffering",
+    Error = "error",
 }
 
 export enum VoiceBroadcastPlaybackEvent {
@@ -201,12 +203,24 @@ export class VoiceBroadcastPlayback
         }
     };
 
+    private async tryLoadPlayback(chunkEvent: MatrixEvent): Promise<void> {
+        try {
+            return await this.loadPlayback(chunkEvent);
+        } catch (err) {
+            logger.warn("Unable to load broadcast playback", {
+                message: err.message,
+                broadcastId: this.infoEvent.getId(),
+                chunkId: chunkEvent.getId(),
+            });
+            this.setError();
+        }
+    }
+
     private async loadPlayback(chunkEvent: MatrixEvent): Promise<void> {
         const eventId = chunkEvent.getId();
 
         if (!eventId) {
-            logger.warn("got voice broadcast chunk event without ID", this.infoEvent, chunkEvent);
-            return;
+            throw new Error("Broadcast chunk event without Id occurred");
         }
 
         const helper = new MediaEventHelper(chunkEvent);
@@ -307,16 +321,28 @@ export class VoiceBroadcastPlayback
     private async playEvent(event: MatrixEvent): Promise<void> {
         this.setState(VoiceBroadcastPlaybackState.Playing);
         this.currentlyPlaying = event;
-        const playback = await this.getOrLoadPlaybackForEvent(event);
+        const playback = await this.tryGetOrLoadPlaybackForEvent(event);
         playback?.play();
+    }
+
+    private async tryGetOrLoadPlaybackForEvent(event: MatrixEvent): Promise<Playback | undefined> {
+        try {
+            return await this.getOrLoadPlaybackForEvent(event);
+        } catch (err) {
+            logger.warn("Unable to load broadcast playback", {
+                message: err.message,
+                broadcastId: this.infoEvent.getId(),
+                chunkId: event.getId(),
+            });
+            this.setError();
+        }
     }
 
     private async getOrLoadPlaybackForEvent(event: MatrixEvent): Promise<Playback | undefined> {
         const eventId = event.getId();
 
         if (!eventId) {
-            logger.warn("event without id occurred");
-            return;
+            throw new Error("Broadcast chunk event without Id occurred");
         }
 
         if (!this.playbacks.has(eventId)) {
@@ -326,13 +352,12 @@ export class VoiceBroadcastPlayback
         const playback = this.playbacks.get(eventId);
 
         if (!playback) {
-            // logging error, because this should not happen
-            logger.warn("unable to find playback for event", event);
+            throw new Error(`Unable to find playback for event ${event.getId()}`);
         }
 
         // try to load the playback for the next event for a smooth(er) playback
         const nextEvent = this.chunkEvents.getNext(event);
-        if (nextEvent) this.loadPlayback(nextEvent);
+        if (nextEvent) this.tryLoadPlayback(nextEvent);
 
         return playback;
     }
@@ -379,7 +404,7 @@ export class VoiceBroadcastPlayback
         }
 
         const currentPlayback = this.getCurrentPlayback();
-        const skipToPlayback = await this.getOrLoadPlaybackForEvent(event);
+        const skipToPlayback = await this.tryGetOrLoadPlaybackForEvent(event);
 
         if (!skipToPlayback) {
             logger.warn("voice broadcast chunk to skip to not found", event);
@@ -435,6 +460,9 @@ export class VoiceBroadcastPlayback
     }
 
     public stop(): void {
+        // error is a final state
+        if (this.getState() === VoiceBroadcastPlaybackState.Error) return;
+
         this.setState(VoiceBroadcastPlaybackState.Stopped);
         this.getCurrentPlayback()?.stop();
         this.currentlyPlaying = null;
@@ -442,6 +470,9 @@ export class VoiceBroadcastPlayback
     }
 
     public pause(): void {
+        // error is a final state
+        if (this.getState() === VoiceBroadcastPlaybackState.Error) return;
+
         // stopped voice broadcasts cannot be paused
         if (this.getState() === VoiceBroadcastPlaybackState.Stopped) return;
 
@@ -450,6 +481,9 @@ export class VoiceBroadcastPlayback
     }
 
     public resume(): void {
+        // error is a final state
+        if (this.getState() === VoiceBroadcastPlaybackState.Error) return;
+
         if (!this.currentlyPlaying) {
             // no playback to resume, start from the beginning
             this.start();
@@ -467,6 +501,9 @@ export class VoiceBroadcastPlayback
      * paused → playing
      */
     public async toggle(): Promise<void> {
+        // error is a final state
+        if (this.getState() === VoiceBroadcastPlaybackState.Error) return;
+
         if (this.state === VoiceBroadcastPlaybackState.Stopped) {
             await this.start();
             return;
@@ -485,12 +522,25 @@ export class VoiceBroadcastPlayback
     }
 
     private setState(state: VoiceBroadcastPlaybackState): void {
+        // error is a final state
+        if (this.getState() === VoiceBroadcastPlaybackState.Error) return;
+
         if (this.state === state) {
             return;
         }
 
         this.state = state;
         this.emit(VoiceBroadcastPlaybackEvent.StateChanged, state, this);
+    }
+
+    /**
+     * Set error state. Stop current playback, if any.
+     */
+    private setError(): void {
+        this.setState(VoiceBroadcastPlaybackState.Error);
+        this.getCurrentPlayback()?.stop();
+        this.currentlyPlaying = null;
+        this.setPosition(0);
     }
 
     public getInfoState(): VoiceBroadcastInfoState {
@@ -505,6 +555,10 @@ export class VoiceBroadcastPlayback
         this.infoState = state;
         this.emit(VoiceBroadcastPlaybackEvent.InfoStateChanged, state);
         this.setLiveness(determineVoiceBroadcastLiveness(this.infoState));
+    }
+
+    public get errorMessage(): string {
+        return this.getState() === VoiceBroadcastPlaybackState.Error ? _t("Unable to play this voice broadcast") : "";
     }
 
     public destroy(): void {

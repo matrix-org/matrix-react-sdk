@@ -31,7 +31,7 @@ import {
     VoiceBroadcastPlaybackState,
     VoiceBroadcastRecording,
 } from "../../../src/voice-broadcast";
-import { flushPromises, stubClient } from "../../test-utils";
+import { filterConsole, flushPromises, stubClient } from "../../test-utils";
 import { createTestPlayback } from "../../test-utils/audio";
 import { mkVoiceBroadcastChunkEvent, mkVoiceBroadcastInfoStateEvent } from "../utils/test-utils";
 
@@ -181,6 +181,12 @@ describe("VoiceBroadcastPlayback", () => {
         });
     };
 
+    filterConsole(
+        "Starting load of AsyncWrapper for modal",
+        // expected for some tests
+        "Unable to load broadcast playback",
+    );
+
     beforeEach(() => {
         client = stubClient();
         deviceId = client.getDeviceId() || "";
@@ -275,6 +281,35 @@ describe("VoiceBroadcastPlayback", () => {
 
         it("durationSeconds should have the length of the known chunks", () => {
             expect(playback.durationSeconds).toEqual(6.5);
+        });
+
+        describe("and starting a playback with a broken chunk", () => {
+            beforeEach(async () => {
+                mocked(chunk2Playback.prepare).mockRejectedValue("Error decoding chunk");
+                await playback.start();
+            });
+
+            itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Error);
+
+            it("start() should keep it in the error state)", async () => {
+                await playback.start();
+                expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Error);
+            });
+
+            it("stop() should keep it in the error state)", () => {
+                playback.stop();
+                expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Error);
+            });
+
+            it("toggle() should keep it in the error state)", async () => {
+                await playback.toggle();
+                expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Error);
+            });
+
+            it("pause() should keep it in the error state)", () => {
+                playback.pause();
+                expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Error);
+            });
         });
 
         describe("and an event with the same transaction Id occurs", () => {
