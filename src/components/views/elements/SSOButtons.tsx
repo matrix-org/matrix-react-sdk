@@ -102,7 +102,7 @@ const SSOButton: React.FC<ISSOButtonProps> = ({
     const onClick = (): void => {
         const authenticationType = getAuthenticationType(idp?.brand ?? "");
         PosthogAnalytics.instance.setAuthenticationType(authenticationType);
-        PlatformPeg.get().startSingleSignOn(matrixClient, loginType, fragmentAfterLogin, idp?.id, action);
+        PlatformPeg.get()?.startSingleSignOn(matrixClient, loginType, fragmentAfterLogin, idp?.id, action);
     };
 
     let icon: JSX.Element | undefined;
