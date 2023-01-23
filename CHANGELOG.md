@@ -1,4 +1,10 @@
-Changes in [3.64.2](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.64.2) (2023-01-20)
+Changes in 3.64.3
+=====================================================================================================
+
+## ✨ Features
+ * Applied monospace font to maximize readability, room and message IDs in the view event source dialogue.
+ 
+ Changes in [3.64.2](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.64.2) (2023-01-20)
 =====================================================================================================
 
 ## 🐛 Bug Fixes
