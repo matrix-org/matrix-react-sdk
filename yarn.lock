@@ -1589,10 +1589,10 @@
   resolved "https://registry.yarnpkg.com/@matrix-org/matrix-sdk-crypto-js/-/matrix-sdk-crypto-js-0.1.0-alpha.2.tgz#a09d0fea858e817da971a3c9f904632ef7b49eb6"
   integrity sha512-oVkBCh9YP7H9i4gAoQbZzswniczfo/aIptNa4dxRi4Ff9lSvUCFv6Hvzi7C+90c0/PWZLXjIDTIAWZYmwyd2fA==
 
-"@matrix-org/matrix-wysiwyg@^0.16.0":
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-wysiwyg/-/matrix-wysiwyg-0.16.0.tgz#2eb81899cedc740f522bd7c2839bd9151d67a28e"
-  integrity sha512-w+/bUQ5x4lVRncrYSmdxy5ww4kkgXeSg4aFfby9c7c6o/+o4gfV6/XBdoJ71nhStyIYIweKAz8i3zA3rKonyvw==
+"@matrix-org/matrix-wysiwyg@^0.20.0":
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-wysiwyg/-/matrix-wysiwyg-0.20.0.tgz#6193f790b031eaa96e944b647fe2b27018639d57"
+  integrity sha512-9VqzyccwizglssShi/M+tCxdZDgzsecH4WjlS0HC5KkLmljIxxlHFstf/D3C/G4ZfRodFUh6wUvd+oQI/ScPpw==
 
 "@matrix-org/olm@https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.14.tgz":
   version "3.2.14"
@@ -6492,8 +6492,8 @@ matrix-events-sdk@0.0.1:
   integrity sha512-1QEOsXO+bhyCroIe2/A5OwaxHvBm7EsSQ46DEDn8RBIfQwN5HWBpFvyWWR4QY0KHPPnnJdI99wgRiAl7Ad5qaA==
 
 "matrix-js-sdk@github:matrix-org/matrix-js-sdk#develop":
-  version "23.0.0"
-  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/1ebcac37cca04f108548376f02a7a2d0666904d6"
+  version "23.1.1"
+  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/c309fe69426d701893ebee315105f8fa8fef03f8"
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@matrix-org/matrix-sdk-crypto-js" "^0.1.0-alpha.2"
@@ -6504,7 +6504,6 @@ matrix-events-sdk@0.0.1:
     matrix-events-sdk "0.0.1"
     matrix-widget-api "^1.0.0"
     p-retry "4"
-    qs "^6.9.6"
     sdp-transform "^2.14.1"
     unhomoglyph "^1.0.6"
     uuid "9"
@@ -7325,13 +7324,6 @@ qrcode@1.5.1:
     encode-utf8 "^1.0.3"
     pngjs "^5.0.0"
     yargs "^15.3.1"
-
-qs@^6.9.6:
-  version "6.11.0"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-6.11.0.tgz#fd0d963446f7a65e1367e01abd85429453f0c37a"
-  integrity sha512-MvjoMCJwEarSbUYk5O+nmoSzSutSsTwF85zcHPQ9OrlFoZOYIjaqBAJIqIXjptyD5vThxGq52Xu/MaJzRkIk4Q==
-  dependencies:
-    side-channel "^1.0.4"
 
 qs@~6.5.2:
   version "6.5.3"
