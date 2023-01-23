@@ -366,10 +366,18 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                         {_t(
                             "Your account details are managed separately at <code>%(hostname)s</code>.",
                             { hostname },
-                            { code: this.codeTag }
+                            { code: this.codeTag },
                         )}
                     </p>
-                    <AccessibleButton onClick={null} element="a" kind="primary" target="_blank" rel="noreferrer noopener" href={this.state.externalAccountManagementUrl} data-testid="external-account-management-link">
+                    <AccessibleButton
+                        onClick={null}
+                        element="a"
+                        kind="primary"
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        href={this.state.externalAccountManagementUrl}
+                        data-testid="external-account-management-link"
+                    >
                         {_t("Manage account")}
                     </AccessibleButton>
                 </>
