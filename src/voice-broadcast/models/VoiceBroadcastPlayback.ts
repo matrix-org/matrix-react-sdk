@@ -44,10 +44,10 @@ import { VoiceBroadcastChunkEvents } from "../utils/VoiceBroadcastChunkEvents";
 import { determineVoiceBroadcastLiveness } from "../utils/determineVoiceBroadcastLiveness";
 
 export enum VoiceBroadcastPlaybackState {
-    Paused,
-    Playing,
-    Stopped,
-    Buffering,
+    Paused = "pause",
+    Playing = "playing",
+    Stopped = "stopped",
+    Buffering = "buffering",
 }
 
 export enum VoiceBroadcastPlaybackEvent {
