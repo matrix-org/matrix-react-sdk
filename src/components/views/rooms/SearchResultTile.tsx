@@ -58,7 +58,7 @@ export default class SearchResultTile extends React.Component<IProps> {
         this.callEventGroupers = buildLegacyCallEventGroupers(this.callEventGroupers, events);
     }
 
-    public render() {
+    public render(): JSX.Element {
         const timeline = this.props.timeline;
         const resultEvent = timeline[this.props.ourEventsIndexes[0]];
         const eventId = resultEvent.getId();
@@ -68,7 +68,7 @@ export default class SearchResultTile extends React.Component<IProps> {
         const layout = SettingsStore.getValue("layout");
         const isTwelveHour = SettingsStore.getValue("showTwelveHourTimestamps");
         const alwaysShowTimestamps = SettingsStore.getValue("alwaysShowTimestamps");
-        const threadsEnabled = SettingsStore.getValue("feature_threadstable");
+        const threadsEnabled = SettingsStore.getValue("feature_threadenabled");
 
         for (let j = 0; j < timeline.length; j++) {
             const mxEv = timeline[j];

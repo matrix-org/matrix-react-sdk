@@ -220,7 +220,7 @@ export function attemptTokenLogin(
     })
         .then(function (creds) {
             logger.log("Logged in with token");
-            return clearStorage().then(async () => {
+            return clearStorage().then(async (): Promise<boolean> => {
                 await persistCredentials(creds);
                 // remember that we just logged in
                 sessionStorage.setItem("mx_fresh_login", String(true));
@@ -407,7 +407,7 @@ async function pickleKeyToAesKey(pickleKey: string): Promise<Uint8Array> {
     );
 }
 
-async function abortLogin() {
+async function abortLogin(): Promise<void> {
     const signOut = await showStorageEvictedDialog();
     if (signOut) {
         await clearStorage();

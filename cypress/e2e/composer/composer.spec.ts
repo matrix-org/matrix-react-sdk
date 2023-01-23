@@ -16,25 +16,25 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 
 describe("Composer", () => {
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
 
     beforeEach(() => {
-        cy.startSynapse("default").then((data) => {
-            synapse = data;
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
         });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
     });
 
     describe("CIDER", () => {
         beforeEach(() => {
-            cy.initTestUser(synapse, "Janet").then(() => {
+            cy.initTestUser(homeserver, "Janet").then(() => {
                 cy.createRoom({ name: "Composing Room" });
             });
             cy.viewRoomByName("Composing Room");
@@ -101,7 +101,7 @@ describe("Composer", () => {
     describe("WYSIWYG", () => {
         beforeEach(() => {
             cy.enableLabsFeature("feature_wysiwyg_composer");
-            cy.initTestUser(synapse, "Janet").then(() => {
+            cy.initTestUser(homeserver, "Janet").then(() => {
                 cy.createRoom({ name: "Composing Room" });
             });
             cy.viewRoomByName("Composing Room");
@@ -120,11 +120,25 @@ describe("Composer", () => {
 
             // Type another
             cy.get("div[contenteditable=true]").type("my message 1");
-            // Press enter. Would be nice to just use {enter} but we can't because Cypress
-            // does not trigger an insertParagraph when you do that.
-            cy.get("div[contenteditable=true]").trigger("input", { inputType: "insertParagraph" });
+            // Send message
+            cy.get("div[contenteditable=true]").type("{enter}");
             // It was sent
             cy.contains(".mx_EventTile_body", "my message 1");
+        });
+
+        it("sends only one message when you press Enter multiple times", () => {
+            // Type a message
+            cy.get("div[contenteditable=true]").type("my message 0");
+            // It has not been sent yet
+            cy.contains(".mx_EventTile_body", "my message 0").should("not.exist");
+
+            // Click send
+            cy.get("div[contenteditable=true]").type("{enter}");
+            cy.get("div[contenteditable=true]").type("{enter}");
+            cy.get("div[contenteditable=true]").type("{enter}");
+            // It has been sent
+            cy.contains(".mx_EventTile_body", "my message 0");
+            cy.get(".mx_EventTile_body").should("have.length", 1);
         });
 
         it("can write formatted text", () => {
@@ -141,7 +155,7 @@ describe("Composer", () => {
             it("only sends when you press Ctrl+Enter", () => {
                 // Type a message and press Enter
                 cy.get("div[contenteditable=true]").type("my message 3");
-                cy.get("div[contenteditable=true]").trigger("input", { inputType: "insertParagraph" });
+                cy.get("div[contenteditable=true]").type("{enter}");
                 // It has not been sent yet
                 cy.contains(".mx_EventTile_body", "my message 3").should("not.exist");
 

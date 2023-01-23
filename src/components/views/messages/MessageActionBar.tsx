@@ -199,12 +199,12 @@ interface IReplyInThreadButton {
     mxEvent: MatrixEvent;
 }
 
-const ReplyInThreadButton = ({ mxEvent }: IReplyInThreadButton) => {
+const ReplyInThreadButton: React.FC<IReplyInThreadButton> = ({ mxEvent }) => {
     const context = useContext(CardContext);
 
     const relationType = mxEvent?.getRelation()?.rel_type;
     const hasARelation = !!relationType && relationType !== RelationType.Thread;
-    const threadsEnabled = SettingsStore.getValue("feature_threadstable");
+    const threadsEnabled = SettingsStore.getValue("feature_threadenabled");
 
     if (!threadsEnabled && !Thread.hasServerSideSupport) {
         // hide the prompt if the user would only have degraded mode
@@ -216,7 +216,7 @@ const ReplyInThreadButton = ({ mxEvent }: IReplyInThreadButton) => {
         e.preventDefault();
         e.stopPropagation();
 
-        if (!SettingsStore.getValue("feature_threadstable")) {
+        if (!SettingsStore.getValue("feature_threadenabled")) {
             dis.dispatch({
                 action: Action.ViewUserSettings,
                 initialTabId: UserTab.Labs,
@@ -252,7 +252,7 @@ const ReplyInThreadButton = ({ mxEvent }: IReplyInThreadButton) => {
                     </div>
                     {!hasARelation && (
                         <div className="mx_Tooltip_sub">
-                            {SettingsStore.getValue("feature_threadstable")
+                            {SettingsStore.getValue("feature_threadenabled")
                                 ? _t("Beta feature")
                                 : _t("Beta feature. Click to learn more.")}
                         </div>
@@ -276,7 +276,7 @@ interface IFavouriteButtonProp {
     mxEvent: MatrixEvent;
 }
 
-const FavouriteButton = ({ mxEvent }: IFavouriteButtonProp) => {
+const FavouriteButton: React.FC<IFavouriteButtonProp> = ({ mxEvent }) => {
     const { isFavourite, toggleFavourite } = useFavouriteMessages();
 
     const eventId = mxEvent.getId();
@@ -548,7 +548,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                     );
                 }
             } else if (
-                SettingsStore.getValue("feature_threadstable") &&
+                SettingsStore.getValue("feature_threadenabled") &&
                 // Show thread icon even for deleted messages, but only within main timeline
                 this.context.timelineRenderingType === TimelineRenderingType.Room &&
                 this.props.mxEvent.getThread()

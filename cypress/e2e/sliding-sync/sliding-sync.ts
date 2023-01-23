@@ -20,43 +20,43 @@ import _ from "lodash";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { Interception } from "cypress/types/net-stubbing";
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
-import { SettingLevel } from "../../../src/settings/SettingLevel";
-import { Layout } from "../../../src/settings/enums/Layout";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { ProxyInstance } from "../../plugins/sliding-sync";
 
 describe("Sliding Sync", () => {
     beforeEach(() => {
-        cy.startSynapse("default")
-            .as("synapse")
-            .then((synapse) => {
-                cy.startProxy(synapse).as("proxy");
+        cy.startHomeserver("default")
+            .as("homeserver")
+            .then((homeserver) => {
+                cy.startProxy(homeserver).as("proxy");
             });
 
-        cy.all([cy.get<SynapseInstance>("@synapse"), cy.get<ProxyInstance>("@proxy")]).then(([synapse, proxy]) => {
-            cy.enableLabsFeature("feature_sliding_sync");
+        cy.all([cy.get<HomeserverInstance>("@homeserver"), cy.get<ProxyInstance>("@proxy")]).then(
+            ([homeserver, proxy]) => {
+                cy.enableLabsFeature("feature_sliding_sync");
 
-            cy.intercept("/config.json?cachebuster=*", (req) => {
-                return req.continue((res) => {
-                    res.send(200, {
-                        ...res.body,
-                        setting_defaults: {
-                            feature_sliding_sync_proxy_url: `http://localhost:${proxy.port}`,
-                        },
+                cy.intercept("/config.json?cachebuster=*", (req) => {
+                    return req.continue((res) => {
+                        res.send(200, {
+                            ...res.body,
+                            setting_defaults: {
+                                feature_sliding_sync_proxy_url: `http://localhost:${proxy.port}`,
+                            },
+                        });
                     });
                 });
-            });
 
-            cy.initTestUser(synapse, "Sloth").then(() => {
-                return cy.window({ log: false }).then(() => {
-                    cy.createRoom({ name: "Test Room" }).as("roomId");
+                cy.initTestUser(homeserver, "Sloth").then(() => {
+                    return cy.window({ log: false }).then(() => {
+                        cy.createRoom({ name: "Test Room" }).as("roomId");
+                    });
                 });
-            });
-        });
+            },
+        );
     });
 
     afterEach(() => {
-        cy.get<SynapseInstance>("@synapse").then(cy.stopSynapse);
+        cy.get<HomeserverInstance>("@homeserver").then(cy.stopHomeserver);
         cy.get<ProxyInstance>("@proxy").then(cy.stopProxy);
     });
 
@@ -84,9 +84,9 @@ describe("Sliding Sync", () => {
     };
     const createAndJoinBob = () => {
         // create a Bob user
-        cy.get<SynapseInstance>("@synapse").then((synapse) => {
+        cy.get<HomeserverInstance>("@homeserver").then((homeserver) => {
             return cy
-                .getBot(synapse, {
+                .getBot(homeserver, {
                     displayName: "Bob",
                 })
                 .as("bob");
@@ -99,21 +99,6 @@ describe("Sliding Sync", () => {
             });
         });
     };
-
-    // sanity check everything works
-    it("should correctly render expected messages", () => {
-        cy.get<string>("@roomId").then((roomId) => cy.visit("/#/room/" + roomId));
-        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
-
-        // Wait until configuration is finished
-        cy.contains(
-            ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
-            "created and configured the room.",
-        );
-
-        // Click "expand" link button
-        cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
-    });
 
     it("should render the Rooms list in reverse chronological order by default and allowing sorting A-Z", () => {
         // create rooms and check room names are correct

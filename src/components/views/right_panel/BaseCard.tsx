@@ -57,7 +57,7 @@ const BaseCard: React.FC<IProps> = forwardRef<HTMLDivElement, IProps>(
         const cardHistory = RightPanelStore.instance.roomPhaseHistory;
         if (cardHistory.length > 1) {
             const prevCard = cardHistory[cardHistory.length - 2];
-            const onBackClick = (ev: ButtonEvent) => {
+            const onBackClick = (ev: ButtonEvent): void => {
                 onBack?.(ev);
                 RightPanelStore.instance.popCard();
             };
@@ -69,7 +69,7 @@ const BaseCard: React.FC<IProps> = forwardRef<HTMLDivElement, IProps>(
         if (onClose) {
             closeButton = (
                 <AccessibleButton
-                    data-test-id="base-card-close-button"
+                    data-testid="base-card-close-button"
                     className="mx_BaseCard_close"
                     onClick={onClose}
                     title={closeLabel || _t("Close")}
