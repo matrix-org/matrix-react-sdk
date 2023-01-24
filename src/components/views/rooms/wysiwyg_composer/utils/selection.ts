@@ -34,3 +34,21 @@ export function isSelectionEmpty(): boolean {
     const selection = document.getSelection();
     return Boolean(selection?.isCollapsed);
 }
+
+export function isCaretAtStart(editor: HTMLElement): Boolean {
+    const selection = document.getSelection();
+
+    if (!selection || selection.anchorOffset !== 0) {
+        return false;
+    }
+
+    // In case of nested html elements (list, code blocks), we are going through all the first child
+    let child = editor.firstChild;
+    do {
+        if (child === selection.anchorNode) {
+            return true;
+        }
+    } while ((child = child.firstChild));
+
+    return false;
+}
