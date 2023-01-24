@@ -33,7 +33,7 @@ interface PlainTextComposerProps {
     initialContent?: string;
     className?: string;
     leftComponent?: ReactNode;
-    rightComponent?: (selectPreviousSelection: () => void) => ReactNode;
+    rightComponent?: ReactNode;
     children?: (ref: MutableRefObject<HTMLDivElement | null>, composerFunctions: ComposerFunctions) => ReactNode;
 }
 
@@ -47,7 +47,7 @@ export function PlainTextComposer({
     initialContent,
     leftComponent,
     rightComponent,
-}: PlainTextComposerProps) {
+}: PlainTextComposerProps): JSX.Element {
     const { ref, onInput, onPaste, onKeyDown, content, setContent } = usePlainTextListeners(
         initialContent,
         onChange,

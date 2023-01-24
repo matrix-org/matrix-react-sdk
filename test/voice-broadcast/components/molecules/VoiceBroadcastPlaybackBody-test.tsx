@@ -28,10 +28,11 @@ import {
     VoiceBroadcastPlaybackEvent,
     VoiceBroadcastPlaybackState,
 } from "../../../../src/voice-broadcast";
-import { stubClient } from "../../../test-utils";
+import { filterConsole, stubClient } from "../../../test-utils";
 import { mkVoiceBroadcastInfoStateEvent } from "../../utils/test-utils";
 import dis from "../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../src/dispatcher/actions";
+import { SdkContextClass } from "../../../../src/contexts/SDKContext";
 
 jest.mock("../../../../src/dispatcher/dispatcher");
 
@@ -52,6 +53,11 @@ describe("VoiceBroadcastPlaybackBody", () => {
     let playback: VoiceBroadcastPlayback;
     let renderResult: RenderResult;
 
+    filterConsole(
+        // expected for some tests
+        "voice broadcast chunk event to skip to not found",
+    );
+
     beforeAll(() => {
         client = stubClient();
         mocked(client.relations).mockClear();
@@ -66,7 +72,11 @@ describe("VoiceBroadcastPlaybackBody", () => {
     });
 
     beforeEach(() => {
-        playback = new VoiceBroadcastPlayback(infoEvent, client);
+        playback = new VoiceBroadcastPlayback(
+            infoEvent,
+            client,
+            SdkContextClass.instance.voiceBroadcastRecordingsStore,
+        );
         jest.spyOn(playback, "toggle").mockImplementation(() => Promise.resolve());
         jest.spyOn(playback, "getLiveness");
         jest.spyOn(playback, "getState");
@@ -206,6 +216,17 @@ describe("VoiceBroadcastPlaybackBody", () => {
                 expect(await screen.findByText("05:13")).toBeInTheDocument();
                 expect(await screen.findByText("-07:05")).toBeInTheDocument();
             });
+        });
+    });
+
+    describe("when rendering an error broadcast", () => {
+        beforeEach(() => {
+            mocked(playback.getState).mockReturnValue(VoiceBroadcastPlaybackState.Error);
+            renderResult = render(<VoiceBroadcastPlaybackBody playback={playback} />);
+        });
+
+        it("should render as expected", () => {
+            expect(renderResult.container).toMatchSnapshot();
         });
     });
 

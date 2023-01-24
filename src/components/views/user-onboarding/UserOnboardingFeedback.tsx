@@ -24,13 +24,13 @@ import Heading from "../../views/typography/Heading";
 import FeedbackDialog from "../dialogs/FeedbackDialog";
 import { shouldShowFeedback } from "../../../utils/Feedback";
 
-export function UserOnboardingFeedback() {
+export function UserOnboardingFeedback(): JSX.Element {
     if (!shouldShowFeedback()) {
         return null;
     }
 
     return (
-        <div className="mx_UserOnboardingFeedback">
+        <div className="mx_UserOnboardingFeedback" data-testid="user-onboarding-feedback">
             <div className="mx_UserOnboardingFeedback_content">
                 <Heading size="h4" className="mx_UserOnboardingFeedback_title">
                     {_t("How are you finding %(brand)s so far?", {

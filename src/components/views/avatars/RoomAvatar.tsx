@@ -29,6 +29,7 @@ import * as Avatar from "../../../Avatar";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
+import { LocalRoom } from "../../../models/LocalRoom";
 
 interface IProps extends Omit<ComponentProps<typeof BaseAvatar>, "name" | "idName" | "url" | "onClick"> {
     // Room may be left unset here, but if it is,
@@ -62,11 +63,11 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
         };
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         MatrixClientPeg.get().on(RoomStateEvent.Events, this.onRoomStateEvents);
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         MatrixClientPeg.get()?.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
     }
 
@@ -76,7 +77,7 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
         };
     }
 
-    private onRoomStateEvents = (ev: MatrixEvent) => {
+    private onRoomStateEvents = (ev: MatrixEvent): void => {
         if (ev.getRoomId() !== this.props.room?.roomId || ev.getType() !== EventType.RoomAvatar) return;
 
         this.setState({
@@ -107,7 +108,7 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
         return Avatar.avatarUrlForRoom(props.room, props.width, props.height, props.resizeMethod);
     }
 
-    private onRoomAvatarClick = () => {
+    private onRoomAvatarClick = (): void => {
         const avatarUrl = Avatar.avatarUrlForRoom(this.props.room, null, null, null);
         const params = {
             src: avatarUrl,
@@ -117,13 +118,26 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
         Modal.createDialog(ImageView, params, "mx_Dialog_lightbox", null, true);
     };
 
-    public render() {
-        const { room, oobData, viewAvatarOnClick, onClick, className, ...otherProps } = this.props;
+    private get roomIdName(): string | undefined {
+        const room = this.props.room;
 
+        if (room) {
+            const dmMapUserId = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
+            // If the room is a DM, we use the other user's ID for the color hash
+            // in order to match the room avatar with their avatar
+            if (dmMapUserId) return dmMapUserId;
+
+            if (room instanceof LocalRoom && room.targets.length === 1) {
+                return room.targets[0].userId;
+            }
+        }
+
+        return this.props.room?.roomId || this.props.oobData?.roomId;
+    }
+
+    public render(): JSX.Element {
+        const { room, oobData, viewAvatarOnClick, onClick, className, ...otherProps } = this.props;
         const roomName = room?.name ?? oobData.name;
-        // If the room is a DM, we use the other user's ID for the color hash
-        // in order to match the room avatar with their avatar
-        const idName = room ? DMRoomMap.shared().getUserIdForRoomId(room.roomId) ?? room.roomId : oobData.roomId;
 
         return (
             <BaseAvatar
@@ -132,7 +146,7 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
                     mx_RoomAvatar_isSpaceRoom: (room?.getType() ?? this.props.oobData?.roomType) === RoomType.Space,
                 })}
                 name={roomName}
-                idName={idName}
+                idName={this.roomIdName}
                 urls={this.state.urls}
                 onClick={viewAvatarOnClick && this.state.urls[0] ? this.onRoomAvatarClick : onClick}
             />

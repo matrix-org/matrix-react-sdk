@@ -18,12 +18,13 @@ import type { ISendEventResponse, MatrixClient, Room } from "matrix-js-sdk/src/m
 import type { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import type { ISasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
 import type { CypressBot } from "../../support/bot";
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import Chainable = Cypress.Chainable;
+import { UserCredentials } from "../../support/login";
 
 type EmojiMapping = [emoji: string, name: string];
 interface CryptoTestContext extends Mocha.Context {
-    synapse: SynapseInstance;
+    homeserver: HomeserverInstance;
     bob: CypressBot;
 }
 
@@ -154,17 +155,21 @@ const verify = function (this: CryptoTestContext) {
 };
 
 describe("Cryptography", function () {
+    let aliceCredentials: UserCredentials;
+
     beforeEach(function () {
-        cy.startSynapse("default")
-            .as("synapse")
-            .then((synapse: SynapseInstance) => {
-                cy.initTestUser(synapse, "Alice", undefined, "alice_");
-                cy.getBot(synapse, { displayName: "Bob", autoAcceptInvites: false, userIdPrefix: "bob_" }).as("bob");
+        cy.startHomeserver("default")
+            .as("homeserver")
+            .then((homeserver: HomeserverInstance) => {
+                cy.initTestUser(homeserver, "Alice", undefined, "alice_").then((credentials) => {
+                    aliceCredentials = credentials;
+                });
+                cy.getBot(homeserver, { displayName: "Bob", autoAcceptInvites: false, userIdPrefix: "bob_" }).as("bob");
             });
     });
 
     afterEach(function (this: CryptoTestContext) {
-        cy.stopSynapse(this.synapse);
+        cy.stopHomeserver(this.homeserver);
     });
 
     it("setting up secure key backup should work", () => {
@@ -183,7 +188,7 @@ describe("Cryptography", function () {
     });
 
     it("creating a DM should work, being e2e-encrypted / user verification", function (this: CryptoTestContext) {
-        cy.bootstrapCrossSigning();
+        cy.bootstrapCrossSigning(aliceCredentials);
         startDMWithBob.call(this);
         // send first message
         cy.get(".mx_BasicMessageComposer_input").click().should("have.focus").type("Hey!{enter}");
@@ -194,7 +199,7 @@ describe("Cryptography", function () {
     });
 
     it("should allow verification when there is no existing DM", function (this: CryptoTestContext) {
-        cy.bootstrapCrossSigning();
+        cy.bootstrapCrossSigning(aliceCredentials);
         autoJoin(this.bob);
 
         // we need to have a room with the other user present, so we can open the verification panel
@@ -212,10 +217,10 @@ describe("Cryptography", function () {
     });
 
     it("should show the correct shield on edited e2e events", function (this: CryptoTestContext) {
-        cy.bootstrapCrossSigning();
+        cy.bootstrapCrossSigning(aliceCredentials);
 
         // bob has a second, not cross-signed, device
-        cy.loginBot(this.synapse, this.bob.getUserId(), this.bob.__cypress_password, {}).as("bobSecondDevice");
+        cy.loginBot(this.homeserver, this.bob.getUserId(), this.bob.__cypress_password, {}).as("bobSecondDevice");
 
         autoJoin(this.bob);
 
