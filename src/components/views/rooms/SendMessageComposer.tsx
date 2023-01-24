@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { ClipboardEvent, createRef, KeyboardEvent } from "react";
 import EMOJI_REGEX from "emojibase-regex";
-import { IContent, MatrixEvent, IEventRelation } from "matrix-js-sdk/src/models/event";
+import { IContent, MatrixEvent, IEventRelation, IMentions } from "matrix-js-sdk/src/models/event";
 import { DebouncedFunc, throttle } from "lodash";
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -36,7 +36,7 @@ import {
     unescapeMessage,
 } from "../../../editor/serialize";
 import BasicMessageComposer, { REGEX_EMOTICON } from "./BasicMessageComposer";
-import { CommandPartCreator, Part, PartCreator, SerializedPart } from "../../../editor/parts";
+import { CommandPartCreator, Part, PartCreator, SerializedPart, Type } from "../../../editor/parts";
 import { findEditableEvent } from "../../../utils/EventUtils";
 import SendHistoryManager from "../../../SendHistoryManager";
 import { CommandCategories } from "../../../SlashCommands";
@@ -59,6 +59,29 @@ import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { addReplyToMessageContent } from "../../../utils/Reply";
 import { doMaybeLocalRoomAction } from "../../../utils/local-room";
+
+// Search the editor model for room or user pills and fill in the mentions object.
+function attachMentions(content: IContent, model: EditorModel): void {
+    const userMentions = [];
+    let isRoomMention = false;
+    for (const part of model.parts) {
+        if (part.type === Type.UserPill) {
+            // XXX This should handle duplicate users and such.
+            userMentions.push(part.resourceId);
+        } else if (part.type === Type.AtRoomPill) {
+            isRoomMention = true;
+        }
+    }
+    if (userMentions.length || isRoomMention) {
+        const mentions: IMentions = (content["org.matrix.msc3952.mentions"] = {});
+        if (userMentions.length) {
+            mentions.user_ids = userMentions;
+        }
+        if (isRoomMention) {
+            mentions.room = isRoomMention;
+        }
+    }
+}
 
 // Merges favouring the given relation
 export function attachRelation(content: IContent, relation?: IEventRelation): void {
@@ -101,6 +124,9 @@ export function createMessageContent(
         content.format = "org.matrix.custom.html";
         content.formatted_body = formattedBody;
     }
+
+    // Check for mentions by iterating each part of the model for @-mentions.
+    attachMentions(content, model);
 
     attachRelation(content, relation);
     if (replyToEvent) {
