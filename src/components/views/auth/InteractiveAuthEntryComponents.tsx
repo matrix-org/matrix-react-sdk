@@ -796,7 +796,7 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
     private ssoUrl: string;
     private popupWindow: Window;
 
-    public constructor(props) {
+    public constructor(props: ISSOAuthEntryProps) {
         super(props);
 
         // We actually send the user through fallback auth so we don't have to
