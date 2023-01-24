@@ -40,6 +40,7 @@ const AvatarSetting: React.FC<IProps> = ({ avatarUrl, avatarAltText, avatarName,
             element="div"
             onClick={uploadAvatar}
             className="mx_AvatarSetting_avatarPlaceholder"
+            aria-labelledby="hover-text"
             {...hoveringProps}
         />
     );
@@ -60,7 +61,12 @@ const AvatarSetting: React.FC<IProps> = ({ avatarUrl, avatarAltText, avatarName,
     if (uploadAvatar) {
         // insert an empty div to be the host for a css mask containing the upload.svg
         uploadAvatarBtn = (
-            <AccessibleButton onClick={uploadAvatar} className="mx_AvatarSetting_uploadButton" {...hoveringProps} />
+            <AccessibleButton
+                onClick={uploadAvatar}
+                className="mx_AvatarSetting_uploadButton"
+                aria-labelledby="hover-text"
+                {...hoveringProps}
+            />
         );
     }
 
@@ -80,9 +86,9 @@ const AvatarSetting: React.FC<IProps> = ({ avatarUrl, avatarAltText, avatarName,
     return (
         <div className={avatarClasses}>
             {avatarElement}
-            <div className="mx_AvatarSetting_hover">
+            <div className="mx_AvatarSetting_hover" aria-hidden="true">
                 <div className="mx_AvatarSetting_hoverBg" />
-                <span>{_t("Upload")}</span>
+                <span id="hover-text">{_t("Upload")}</span>
             </div>
             {uploadAvatarBtn}
             {removeAvatarBtn}
