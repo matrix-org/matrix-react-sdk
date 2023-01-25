@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 
 interface IProps {
     avatarUrl?: string;
     avatarName: string; // name of user/room the avatar belongs to
-    uploadAvatar?: (e: React.MouseEvent) => void;
-    removeAvatar?: (e: React.MouseEvent) => void;
+    uploadAvatar?: (e: ButtonEvent) => void;
+    removeAvatar?: (e: ButtonEvent) => void;
     avatarAltText: string;
 }
 
@@ -34,13 +34,16 @@ const AvatarSetting: React.FC<IProps> = ({ avatarUrl, avatarAltText, avatarName,
         onMouseEnter: () => setIsHovering(true),
         onMouseLeave: () => setIsHovering(false),
     };
+    // TODO: Use useId() as soon as we're using React 18.
+    // Prevents ID collisions when this component is used more than once on the same page.
+    const a11yId = useRef(`hover-text-${Math.random()}`);
 
     let avatarElement = (
         <AccessibleButton
             element="div"
             onClick={uploadAvatar}
             className="mx_AvatarSetting_avatarPlaceholder"
-            aria-labelledby="hover-text"
+            aria-labelledby={a11yId.current}
             {...hoveringProps}
         />
     );
@@ -64,7 +67,7 @@ const AvatarSetting: React.FC<IProps> = ({ avatarUrl, avatarAltText, avatarName,
             <AccessibleButton
                 onClick={uploadAvatar}
                 className="mx_AvatarSetting_uploadButton"
-                aria-labelledby="hover-text"
+                aria-labelledby={a11yId.current}
                 {...hoveringProps}
             />
         );
@@ -88,7 +91,7 @@ const AvatarSetting: React.FC<IProps> = ({ avatarUrl, avatarAltText, avatarName,
             {avatarElement}
             <div className="mx_AvatarSetting_hover" aria-hidden="true">
                 <div className="mx_AvatarSetting_hoverBg" />
-                <span id="hover-text">{_t("Upload")}</span>
+                <span id={a11yId.current}>{_t("Upload")}</span>
             </div>
             {uploadAvatarBtn}
             {removeAvatarBtn}
