@@ -49,11 +49,10 @@ export class VoiceBroadcastRecorder
 {
     private headers = new Uint8Array(0);
     private chunkBuffer = new Uint8Array(0);
-    // position of the previous chunk in seconds
-    private previousChunkEndTimePosition = 0;
     private pagesFromRecorderCount = 0;
     // current chunk length in seconds
     private currentChunkLength = 0;
+    private sending = false;
 
     public constructor(private voiceRecording: VoiceRecording, public readonly targetChunkLength: number) {
         super();
@@ -63,7 +62,7 @@ export class VoiceBroadcastRecorder
     public async start(): Promise<void> {
         await this.voiceRecording.start();
         this.voiceRecording.liveData.onUpdate((data: IRecordingUpdate) => {
-            this.setCurrentChunkLength(data.timeSeconds - this.previousChunkEndTimePosition);
+            this.setCurrentChunkLength(data.timeSeconds);
         });
     }
 
@@ -79,9 +78,9 @@ export class VoiceBroadcastRecorder
 
         // forget about that call, so that we can stop it again later
         Singleflight.forgetAllFor(this.voiceRecording);
-        const chunk = this.extractChunk();
+        const chunk = this.extractChunk(false);
         this.currentChunkLength = 0;
-        this.previousChunkEndTimePosition = 0;
+        this.pagesFromRecorderCount = 0;
         this.headers = new Uint8Array(0);
         return chunk;
     }
@@ -97,11 +96,9 @@ export class VoiceBroadcastRecorder
         this.emit(VoiceBroadcastRecorderEvent.CurrentChunkLengthUpdated, currentChunkLength);
     }
 
-    public getCurrentChunkLength(): number {
-        return this.currentChunkLength;
-    }
+    private onDataAvailable = async (data: ArrayBuffer): Promise<void> => {
+        console.log("MiW recorderSeconds", this.voiceRecording.recorderSeconds);
 
-    private onDataAvailable = (data: ArrayBuffer): void => {
         const dataArray = new Uint8Array(data);
         this.pagesFromRecorderCount++;
 
@@ -111,46 +108,48 @@ export class VoiceBroadcastRecorder
             return;
         }
 
-        this.setCurrentChunkLength(this.voiceRecording.recorderSeconds - this.previousChunkEndTimePosition);
-        this.handleData(dataArray);
-    };
+        this.setCurrentChunkLength(this.voiceRecording.recorderSeconds);
+        this.chunkBuffer = concat(this.chunkBuffer, dataArray);
 
-    private handleData(data: Uint8Array): void {
-        this.chunkBuffer = concat(this.chunkBuffer, data);
-        this.emitChunkIfTargetLengthReached();
-    }
-
-    private emitChunkIfTargetLengthReached(): void {
-        if (this.getCurrentChunkLength() >= this.targetChunkLength) {
-            this.emitAndResetChunk();
+        if (this.voiceRecording.recorderSeconds >= this.targetChunkLength && !this.sending) {
+            this.sending = true;
+            await this.emitAndResetChunk();
         }
-    }
+    };
 
     /**
      * Extracts the current chunk and resets the buffer.
      */
-    private extractChunk(): Optional<ChunkRecordedPayload> {
+    private async extractChunk(restartRecorder = true): Promise<ChunkRecordedPayload | null> {
         if (this.chunkBuffer.length === 0) {
             return null;
         }
 
-        const currentRecorderTime = this.voiceRecording.recorderSeconds;
+        if (restartRecorder) await this.voiceRecording.recorder.stop();
+
         const payload: ChunkRecordedPayload = {
             buffer: concat(this.headers, this.chunkBuffer),
-            length: this.getCurrentChunkLength(),
+            length: this.voiceRecording.recorderSeconds,
         };
+
+        this.pagesFromRecorderCount = 0;
+        this.headers = new Uint8Array(0);
+
         this.chunkBuffer = new Uint8Array(0);
         this.setCurrentChunkLength(0);
-        this.previousChunkEndTimePosition = currentRecorderTime;
+
+        this.sending = false;
+        if (restartRecorder) this.voiceRecording.recorder.start();
+
         return payload;
     }
 
-    private emitAndResetChunk(): void {
+    private async emitAndResetChunk(): Promise<void> {
         if (this.chunkBuffer.length === 0) {
             return;
         }
 
-        this.emit(VoiceBroadcastRecorderEvent.ChunkRecorded, this.extractChunk());
+        this.emit(VoiceBroadcastRecorderEvent.ChunkRecorded, await this.extractChunk());
     }
 
     public destroy(): void {
