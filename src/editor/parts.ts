@@ -295,9 +295,9 @@ export abstract class PillPart extends BasePart implements IPillPart {
     }
 
     // helper method for subclasses
-    protected setAvatarVars(node: HTMLElement, avatarUrl: string, initialLetter: string): void {
+    protected setAvatarVars(node: HTMLElement, avatarUrl: string, initialLetter: string | undefined): void {
         const avatarBackground = `url('${avatarUrl}')`;
-        const avatarLetter = `'${initialLetter}'`;
+        const avatarLetter = `'${initialLetter || ""}'`;
         // check if the value is changing,
         // otherwise the avatars flicker on every keystroke while updating.
         if (node.style.getPropertyValue("--avatar-background") !== avatarBackground) {
@@ -413,7 +413,7 @@ class RoomPillPart extends PillPart {
     }
 
     protected setAvatar(node: HTMLElement): void {
-        let initialLetter = "";
+        let initialLetter: string | undefined = "";
         let avatarUrl = Avatar.avatarUrlForRoom(this.room, 16, 16, "crop");
         if (!avatarUrl) {
             initialLetter = Avatar.getInitialLetter(this.room?.name || this.resourceId);
@@ -468,7 +468,7 @@ class UserPillPart extends PillPart {
         const name = this.member.name || this.member.userId;
         const defaultAvatarUrl = Avatar.defaultAvatarUrlForString(this.member.userId);
         const avatarUrl = Avatar.avatarUrlForMember(this.member, 16, 16, "crop");
-        let initialLetter = "";
+        let initialLetter: string | undefined = "";
         if (avatarUrl === defaultAvatarUrl) {
             initialLetter = Avatar.getInitialLetter(name);
         }

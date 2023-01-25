@@ -1,5 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2015, 2016, 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,14 +26,15 @@ import { isLocalRoom } from "./utils/localRoom/isLocalRoom";
 
 // Not to be used for BaseAvatar urls as that has similar default avatar fallback already
 export function avatarUrlForMember(
-    member: RoomMember,
+    member: RoomMember | null | undefined,
     width: number,
     height: number,
     resizeMethod: ResizeMethod,
 ): string {
-    let url: string;
-    if (member?.getMxcAvatarUrl()) {
-        url = mediaFromMxc(member.getMxcAvatarUrl()).getThumbnailOfSourceHttp(width, height, resizeMethod);
+    let url: string | undefined;
+    const mxcUrl = member?.getMxcAvatarUrl();
+    if (mxcUrl) {
+        url = mediaFromMxc(mxcUrl).getThumbnailOfSourceHttp(width, height, resizeMethod);
     }
     if (!url) {
         // member can be null here currently since on invites, the JS SDK
@@ -86,7 +87,7 @@ function urlForColor(color: string): string {
 // hard to install a listener here, even if there were a clear event to listen to
 const colorToDataURLCache = new Map<string, string>();
 
-export function defaultAvatarUrlForString(s: string): string {
+export function defaultAvatarUrlForString(s: string | undefined): string {
     if (!s) return ""; // XXX: should never happen but empirically does by evidence of a rageshake
     const defaultColors = ["#0DBD8B", "#368bd6", "#ac3ba8"];
     let total = 0;
@@ -97,7 +98,7 @@ export function defaultAvatarUrlForString(s: string): string {
     // overwritten color value in custom themes
     const cssVariable = `--avatar-background-colors_${colorIndex}`;
     const cssValue = document.body.style.getPropertyValue(cssVariable);
-    const color = cssValue || defaultColors[colorIndex];
+    const color = cssValue || defaultColors[colorIndex]!;
     let dataUrl = colorToDataURLCache.get(color);
     if (!dataUrl) {
         // validate color as this can come from account_data
@@ -118,7 +119,7 @@ export function defaultAvatarUrlForString(s: string): string {
  * @param {string} name
  * @return {string} the first letter
  */
-export function getInitialLetter(name: string): string {
+export function getInitialLetter(name: string): string | undefined {
     if (!name) {
         // XXX: We should find out what causes the name to sometimes be falsy.
         console.trace("`name` argument to `getInitialLetter` not supplied");
@@ -134,19 +135,20 @@ export function getInitialLetter(name: string): string {
     }
 
     // rely on the grapheme cluster splitter in lodash so that we don't break apart compound emojis
-    return split(name, "", 1)[0].toUpperCase();
+    return split(name, "", 1)[0]!.toUpperCase();
 }
 
 export function avatarUrlForRoom(
-    room: Room,
+    room: Room | undefined,
     width: number,
     height: number,
     resizeMethod?: ResizeMethod,
 ): string | null {
     if (!room) return null; // null-guard
 
-    if (room.getMxcAvatarUrl()) {
-        return mediaFromMxc(room.getMxcAvatarUrl()).getThumbnailOfSourceHttp(width, height, resizeMethod);
+    const mxcUrl = room.getMxcAvatarUrl();
+    if (mxcUrl) {
+        return mediaFromMxc(mxcUrl).getThumbnailOfSourceHttp(width, height, resizeMethod);
     }
 
     // space rooms cannot be DMs so skip the rest
@@ -159,8 +161,9 @@ export function avatarUrlForRoom(
 
     // If there are only two members in the DM use the avatar of the other member
     const otherMember = room.getAvatarFallbackMember();
-    if (otherMember?.getMxcAvatarUrl()) {
-        return mediaFromMxc(otherMember.getMxcAvatarUrl()).getThumbnailOfSourceHttp(width, height, resizeMethod);
+    const otherMemberMxc = otherMember?.getMxcAvatarUrl();
+    if (otherMemberMxc) {
+        return mediaFromMxc(otherMemberMxc).getThumbnailOfSourceHttp(width, height, resizeMethod);
     }
     return null;
 }

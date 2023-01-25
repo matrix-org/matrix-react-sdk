@@ -1,6 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
+Copyright 2015, 2016, 2019 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,14 +32,13 @@ interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | 
     width: number;
     height: number;
     resizeMethod?: ResizeMethod;
-    // The onClick to give the avatar
-    onClick?: React.MouseEventHandler;
-    // Whether the onClick of the avatar should be overridden to dispatch `Action.ViewUser`
+    /** Whether the onClick of the avatar should be overridden to dispatch `Action.ViewUser` */
     viewUserOnClick?: boolean;
     pushUserOnClick?: boolean;
     title?: string;
-    style?: any;
-    forceHistorical?: boolean; // true to deny `useOnlyCurrentProfiles` usage. Default false.
+    style?: React.CSSProperties;
+    /** true to deny `useOnlyCurrentProfiles` usage. Default false. */
+    forceHistorical?: boolean;
     hideTitle?: boolean;
 }
 
@@ -77,8 +75,8 @@ export default function MemberAvatar({
 
         if (!title) {
             title =
-                UserIdentifierCustomisations.getDisplayUserIdentifier(member?.userId ?? "", {
-                    roomId: member?.roomId ?? "",
+                UserIdentifierCustomisations.getDisplayUserIdentifier!(member.userId, {
+                    roomId: member.roomId,
                 }) ?? fallbackUserId;
         }
     }
@@ -88,7 +86,6 @@ export default function MemberAvatar({
             {...props}
             width={width}
             height={height}
-            resizeMethod={resizeMethod}
             name={name ?? ""}
             title={hideTitle ? undefined : title}
             idName={member?.userId ?? fallbackUserId}
