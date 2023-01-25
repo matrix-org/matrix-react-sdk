@@ -299,6 +299,7 @@ describe("SendWysiwygComposer", () => {
                     anchorOffset: 2,
                     focusNode: textNode,
                     focusOffset: 2,
+                    isForward: true,
                 });
                 // the event is not automatically fired by jest
                 document.dispatchEvent(new CustomEvent("selectionchange"));
