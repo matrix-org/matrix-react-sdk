@@ -249,7 +249,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             return;
         }
 
-        let advertisedLang: string = "";
+        let advertisedLang = "";
         for (const cl of code.className.split(/\s+/)) {
             if (cl.startsWith("language-")) {
                 const maybeLang = cl.split("-", 2)[1];
