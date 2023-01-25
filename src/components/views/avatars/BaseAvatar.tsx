@@ -139,35 +139,7 @@ const BaseAvatar: React.FC<IProps> = (props) => {
     const [imageUrl, onError] = useImageUrl({ url, urls });
 
     if (!imageUrl && defaultToInitialLetter && name) {
-        const initialLetter = AvatarLogic.getInitialLetter(name);
-        const textNode = (
-            <span
-                className="mx_BaseAvatar_initial"
-                aria-hidden="true"
-                style={{
-                    fontSize: toPx(width * 0.65),
-                    width: toPx(width),
-                    lineHeight: toPx(height),
-                }}
-            >
-                {initialLetter}
-            </span>
-        );
-        const imgNode = (
-            <img
-                className="mx_BaseAvatar_image"
-                src={AvatarLogic.defaultAvatarUrlForString(idName || name)}
-                alt=""
-                title={title}
-                onError={onError}
-                style={{
-                    width: toPx(width),
-                    height: toPx(height),
-                }}
-                aria-hidden="true"
-                data-testid="avatar-img"
-            />
-        );
+        const avatar = <TextAvatar name={name} idName={idName} width={width} height={height} title={title} />;
 
         if (onClick) {
             return (
@@ -180,8 +152,7 @@ const BaseAvatar: React.FC<IProps> = (props) => {
                     onClick={onClick}
                     inputRef={inputRef}
                 >
-                    {textNode}
-                    {imgNode}
+                    {avatar}
                 </AccessibleButton>
             );
         } else {
@@ -192,8 +163,7 @@ const BaseAvatar: React.FC<IProps> = (props) => {
                     {...otherProps}
                     role="presentation"
                 >
-                    {textNode}
-                    {imgNode}
+                    {avatar}
                 </span>
             );
         }
@@ -240,3 +210,47 @@ const BaseAvatar: React.FC<IProps> = (props) => {
 
 export default BaseAvatar;
 export type BaseAvatarType = React.FC<IProps>;
+
+const TextAvatar: React.FC<{
+    name: string;
+    idName?: string;
+    width: number;
+    height: number;
+    title?: string;
+}> = ({ name, idName, width, height, title }) => {
+    const initialLetter = AvatarLogic.getInitialLetter(name);
+    const textNode = (
+        <span
+            className="mx_BaseAvatar_initial"
+            aria-hidden="true"
+            style={{
+                fontSize: toPx(width * 0.65),
+                width: toPx(width),
+                lineHeight: toPx(height),
+            }}
+        >
+            {initialLetter}
+        </span>
+    );
+    const imgNode = (
+        <img
+            className="mx_BaseAvatar_image"
+            src={AvatarLogic.defaultAvatarUrlForString(idName || name)}
+            alt=""
+            title={title}
+            style={{
+                width: toPx(width),
+                height: toPx(height),
+            }}
+            aria-hidden="true"
+            data-testid="avatar-img"
+        />
+    );
+
+    return (
+        <>
+            {textNode}
+            {imgNode}
+        </>
+    );
+};
