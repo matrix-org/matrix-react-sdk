@@ -29,7 +29,7 @@ import { IRoomState } from "../../../../structures/RoomView";
 import { ComposerContextState, useComposerContext } from "../ComposerContext";
 import EditorStateTransfer from "../../../../../utils/EditorStateTransfer";
 import { useMatrixClientContext } from "../../../../../contexts/MatrixClientContext";
-import { isCaretAtStart } from "../utils/selection";
+import { isCaretAtEnd, isCaretAtStart } from "../utils/selection";
 
 export function useInputEventProcessor(
     onSend: () => void,
@@ -84,6 +84,8 @@ function handleKeyboardEvent(
     composerContext: ComposerContextState,
     mxClient: MatrixClient,
 ): KeyboardEvent | null {
+    const { editorStateTransfer } = composerContext;
+    const isEditorModified = initialContent !== composer.content();
     const action = getKeyBindingsManager().getMessageComposerAction(event);
 
     switch (action) {
@@ -91,10 +93,6 @@ function handleKeyboardEvent(
             send();
             return null;
         case KeyBindingAction.EditPrevMessage: {
-            const { editorStateTransfer } = composerContext;
-
-            const isEditorModified = initialContent !== composer.content();
-
             // If not in edition
             // Or if the caret is not at the beginning of the editor
             // Or the editor is modified
@@ -102,25 +100,59 @@ function handleKeyboardEvent(
                 break;
             }
 
-            const previousEvent = findEditableEvent({
-                events: getEventsFromEditorStateTransfer(editorStateTransfer, roomContext, mxClient),
-                isForward: false,
-                fromEventId: editorStateTransfer.getEvent().getId(),
-            });
-            if (previousEvent) {
-                dis.dispatch({
-                    action: Action.EditEvent,
-                    event: previousEvent,
-                    timelineRenderingType: roomContext.timelineRenderingType,
-                });
-                event.stopPropagation();
-                event.preventDefault();
-            }
+            dispatchEditEvent(event, false, editorStateTransfer, roomContext, mxClient);
             return null;
+        }
+        case KeyBindingAction.EditNextMessage: {
+            // If not in edition
+            // Or if the caret is not at the end of the editor
+            // Or the editor is modified
+            if (!editorStateTransfer || !isCaretAtEnd(editor) || isEditorModified) {
+                break;
+            }
+
+            dispatchEditEvent(event, true, editorStateTransfer, roomContext, mxClient);
+            // TODO cancel edit if no newEvent
+            break;
         }
     }
 
     return event;
+}
+
+function dispatchEditEvent(
+    event: KeyboardEvent,
+    isForward: boolean,
+    editorStateTransfer: EditorStateTransfer,
+    roomContext: IRoomState,
+    mxClient: MatrixClient,
+): void {
+    const newEvent = findEditableEvent({
+        events: getEventsFromEditorStateTransfer(editorStateTransfer, roomContext, mxClient),
+        isForward,
+        fromEventId: editorStateTransfer.getEvent().getId(),
+    });
+    if (newEvent) {
+        dis.dispatch({
+            action: Action.EditEvent,
+            event: newEvent,
+            timelineRenderingType: roomContext.timelineRenderingType,
+        });
+        event.stopPropagation();
+        event.preventDefault();
+    }
+}
+
+// From EditMessageComposer private get events(): MatrixEvent[]
+function getEventsFromEditorStateTransfer(
+    editorStateTransfer: EditorStateTransfer,
+    roomContext: IRoomState,
+    mxClient: MatrixClient,
+): MatrixEvent[] {
+    const liveTimelineEvents = roomContext.liveTimeline.getEvents();
+    const pendingEvents = mxClient.getRoom(editorStateTransfer.getEvent().getRoomId()).getPendingEvents();
+    const isInThread = Boolean(editorStateTransfer.getEvent().getThread());
+    return liveTimelineEvents.concat(isInThread ? [] : pendingEvents);
 }
 
 type InputEvent = Exclude<WysiwygEvent, KeyboardEvent | ClipboardEvent>;
@@ -140,16 +172,4 @@ function handleInputEvent(event: InputEvent, send: Send, isCtrlEnter: boolean): 
     }
 
     return event;
-}
-
-// From EditMessageComposer private get events(): MatrixEvent[]
-function getEventsFromEditorStateTransfer(
-    editorStateTransfer: EditorStateTransfer,
-    roomContext: IRoomState,
-    mxClient: MatrixClient,
-): MatrixEvent[] {
-    const liveTimelineEvents = roomContext.liveTimeline.getEvents();
-    const pendingEvents = mxClient.getRoom(editorStateTransfer.getEvent().getRoomId()).getPendingEvents();
-    const isInThread = Boolean(editorStateTransfer.getEvent().getThread());
-    return liveTimelineEvents.concat(isInThread ? [] : pendingEvents);
 }

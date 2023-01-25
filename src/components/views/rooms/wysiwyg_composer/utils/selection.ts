@@ -19,8 +19,6 @@ import { SubSelection } from "../types";
 export function setSelection(selection: SubSelection): Promise<void> {
     if (selection.anchorNode && selection.focusNode) {
         const range = new Range();
-        range.setStart(selection.anchorNode, selection.anchorOffset);
-        range.setEnd(selection.focusNode, selection.focusOffset);
 
         document.getSelection()?.removeAllRanges();
         document.getSelection()?.addRange(range);
@@ -35,9 +33,10 @@ export function isSelectionEmpty(): boolean {
     return Boolean(selection?.isCollapsed);
 }
 
-export function isCaretAtStart(editor: HTMLElement): Boolean {
+export function isCaretAtStart(editor: HTMLElement): boolean {
     const selection = document.getSelection();
 
+    // No selection or the caret is not at the beginning of the selected element
     if (!selection || selection.anchorOffset !== 0) {
         return false;
     }
@@ -49,6 +48,34 @@ export function isCaretAtStart(editor: HTMLElement): Boolean {
             return true;
         }
     } while ((child = child.firstChild));
+
+    return false;
+}
+
+export function isCaretAtEnd(editor: HTMLElement): boolean {
+    const selection = document.getSelection();
+
+    if (!selection) {
+        return false;
+    }
+
+    // When we are going cycling across all the timeline message with the keyboard
+    // The caret is on the last message element but the focusNode and the anchorNode is the editor himself instead of the text in it.
+    // In this case, the focusOffset & anchorOffset match the index + 1 of the selected text
+    const isOnLastElement = selection.focusNode === editor && selection.focusOffset === editor.childNodes?.length;
+    if (isOnLastElement) {
+        return true;
+    }
+
+    // In case of nested html elements (list, code blocks), we are going through all the last child
+    // The last child of the editor is always a <br> tag, we skip it
+    let child = editor.childNodes.item(editor.childNodes.length - 2);
+    do {
+        if (child === selection.focusNode) {
+            // Checking that the cursor is at end of the selected text
+            return child.nodeType === Node.TEXT_NODE && selection.focusOffset === child.textContent.length;
+        }
+    } while ((child = child.lastChild));
 
     return false;
 }
