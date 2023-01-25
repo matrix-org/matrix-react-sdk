@@ -41,7 +41,7 @@ const AvatarSetting: React.FC<IProps> = ({ avatarUrl, avatarAltText, avatarName,
     let avatarElement = (
         <AccessibleButton
             element="div"
-            onClick={uploadAvatar}
+            onClick={uploadAvatar ?? null}
             className="mx_AvatarSetting_avatarPlaceholder"
             aria-labelledby={a11yId.current}
             {...hoveringProps}
@@ -54,7 +54,7 @@ const AvatarSetting: React.FC<IProps> = ({ avatarUrl, avatarAltText, avatarName,
                 src={avatarUrl}
                 alt={avatarAltText}
                 aria-label={avatarAltText}
-                onClick={uploadAvatar}
+                onClick={uploadAvatar ?? null}
                 {...hoveringProps}
             />
         );
