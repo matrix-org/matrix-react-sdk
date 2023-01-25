@@ -47,6 +47,17 @@ export function avatarUrlForMember(
     return url;
 }
 
+export function getMemberAvatar(
+    member: RoomMember | null | undefined,
+    width: number,
+    height: number,
+    resizeMethod: ResizeMethod,
+): string | undefined {
+    const mxcUrl = member?.getMxcAvatarUrl();
+    if (!mxcUrl) return undefined;
+    return mediaFromMxc(mxcUrl).getThumbnailOfSourceHttp(width, height, resizeMethod);
+}
+
 export function avatarUrlForUser(
     user: Pick<User, "avatarUrl">,
     width: number,
