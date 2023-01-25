@@ -35,24 +35,18 @@ exports[`<BaseAvatar /> matches snapshot (no avatar + click) 1`] = `
     aria-live="off"
     class="mx_AccessibleButton mx_BaseAvatar big-and-bold"
     role="button"
+    style="width: 40px; height: 40px;"
     tabindex="0"
   >
     <span
       aria-hidden="true"
-      class="mx_BaseAvatar_initial"
-      style="font-size: 26px; width: 40px; line-height: 40px;"
+      class="mx_BaseAvatar_image mx_BaseAvatar_initial"
+      data-testid="avatar-img"
+      style="background-color: rgb(13, 189, 139); width: 40px; height: 40px; font-size: 26px; line-height: 40px;"
+      title=":kiss:"
     >
       X
     </span>
-    <img
-      alt=""
-      aria-hidden="true"
-      class="mx_BaseAvatar_image"
-      data-testid="avatar-img"
-      src="data:image/png;base64,00"
-      style="width: 40px; height: 40px;"
-      title=":kiss:"
-    />
   </span>
 </div>
 `;
@@ -62,23 +56,17 @@ exports[`<BaseAvatar /> matches snapshot (no avatar) 1`] = `
   <span
     class="mx_BaseAvatar big-and-bold"
     role="presentation"
+    style="width: 40px; height: 40px;"
   >
     <span
       aria-hidden="true"
-      class="mx_BaseAvatar_initial"
-      style="font-size: 26px; width: 40px; line-height: 40px;"
+      class="mx_BaseAvatar_image mx_BaseAvatar_initial"
+      data-testid="avatar-img"
+      style="background-color: rgb(13, 189, 139); width: 40px; height: 40px; font-size: 26px; line-height: 40px;"
+      title=":kiss:"
     >
       X
     </span>
-    <img
-      alt=""
-      aria-hidden="true"
-      class="mx_BaseAvatar_image"
-      data-testid="avatar-img"
-      src="data:image/png;base64,00"
-      style="width: 40px; height: 40px;"
-      title=":kiss:"
-    />
   </span>
 </div>
 `;

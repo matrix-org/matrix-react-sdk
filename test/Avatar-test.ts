@@ -22,6 +22,7 @@ import {
     avatarUrlForRoom,
     avatarUrlForUser,
     defaultAvatarUrlForString,
+    getColorForString,
     getInitialLetter,
 } from "../src/Avatar";
 import { mediaFromMxc } from "../src/customisations/Media";
@@ -81,6 +82,16 @@ describe("avatarUrlForUser", () => {
 describe("defaultAvatarUrlForString", () => {
     it.each(["a", "abc", "abcde", "@".repeat(150)])("should return a value for %s", (s) => {
         expect(defaultAvatarUrlForString(s)).not.toBe("");
+    });
+});
+
+describe("getColorForString", () => {
+    it.each(["a", "abc", "abcde", "@".repeat(150)])("should return a value for %s", (s) => {
+        expect(getColorForString(s)).toMatch(/^#\w+$/);
+    });
+
+    it("should return different values for different strings", () => {
+        expect(getColorForString("a")).not.toBe(getColorForString("b"));
     });
 });
 

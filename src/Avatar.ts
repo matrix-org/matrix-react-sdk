@@ -24,6 +24,8 @@ import DMRoomMap from "./utils/DMRoomMap";
 import { mediaFromMxc } from "./customisations/Media";
 import { isLocalRoom } from "./utils/localRoom/isLocalRoom";
 
+const DEFAULT_COLORS: Readonly<string[]> = ["#0DBD8B", "#368bd6", "#ac3ba8"];
+
 // Not to be used for BaseAvatar urls as that has similar default avatar fallback already
 export function avatarUrlForMember(
     member: RoomMember | null | undefined,
@@ -89,16 +91,8 @@ const colorToDataURLCache = new Map<string, string>();
 
 export function defaultAvatarUrlForString(s: string | undefined): string {
     if (!s) return ""; // XXX: should never happen but empirically does by evidence of a rageshake
-    const defaultColors = ["#0DBD8B", "#368bd6", "#ac3ba8"];
-    let total = 0;
-    for (let i = 0; i < s.length; ++i) {
-        total += s.charCodeAt(i);
-    }
-    const colorIndex = total % defaultColors.length;
-    // overwritten color value in custom themes
-    const cssVariable = `--avatar-background-colors_${colorIndex}`;
-    const cssValue = document.body.style.getPropertyValue(cssVariable);
-    const color = cssValue || defaultColors[colorIndex]!;
+
+    const color = getColorForString(s);
     let dataUrl = colorToDataURLCache.get(color);
     if (!dataUrl) {
         // validate color as this can come from account_data
@@ -111,6 +105,16 @@ export function defaultAvatarUrlForString(s: string | undefined): string {
         }
     }
     return dataUrl;
+}
+
+export function getColorForString(input: string): string {
+    const charSum = [...input].reduce((s, c) => s + c.charCodeAt(0), 0);
+    const index = charSum % DEFAULT_COLORS.length;
+
+    // overwritten color value in custom themes
+    const cssVariable = `--avatar-background-colors_${index}`;
+    const cssValue = document.body.style.getPropertyValue(cssVariable);
+    return cssValue || DEFAULT_COLORS[index]!;
 }
 
 /**

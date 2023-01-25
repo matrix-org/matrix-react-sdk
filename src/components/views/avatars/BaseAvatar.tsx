@@ -151,6 +151,10 @@ const BaseAvatar: React.FC<IProps> = (props) => {
                     className={classNames("mx_BaseAvatar", className)}
                     onClick={onClick}
                     inputRef={inputRef}
+                    style={{
+                        width: toPx(width),
+                        height: toPx(height),
+                    }}
                 >
                     {avatar}
                 </AccessibleButton>
@@ -161,6 +165,10 @@ const BaseAvatar: React.FC<IProps> = (props) => {
                     className={classNames("mx_BaseAvatar", className)}
                     ref={inputRef}
                     {...otherProps}
+                    style={{
+                        width: toPx(width),
+                        height: toPx(height),
+                    }}
                     role="presentation"
                 >
                     {avatar}
@@ -219,38 +227,22 @@ const TextAvatar: React.FC<{
     title?: string;
 }> = ({ name, idName, width, height, title }) => {
     const initialLetter = AvatarLogic.getInitialLetter(name);
-    const textNode = (
+
+    return (
         <span
-            className="mx_BaseAvatar_initial"
+            className="mx_BaseAvatar_image mx_BaseAvatar_initial"
             aria-hidden="true"
             style={{
-                fontSize: toPx(width * 0.65),
+                backgroundColor: AvatarLogic.getColorForString(idName || name),
                 width: toPx(width),
+                height: toPx(height),
+                fontSize: toPx(width * 0.65),
                 lineHeight: toPx(height),
             }}
+            title={title}
+            data-testid="avatar-img"
         >
             {initialLetter}
         </span>
-    );
-    const imgNode = (
-        <img
-            className="mx_BaseAvatar_image"
-            src={AvatarLogic.defaultAvatarUrlForString(idName || name)}
-            alt=""
-            title={title}
-            style={{
-                width: toPx(width),
-                height: toPx(height),
-            }}
-            aria-hidden="true"
-            data-testid="avatar-img"
-        />
-    );
-
-    return (
-        <>
-            {textNode}
-            {imgNode}
-        </>
     );
 };

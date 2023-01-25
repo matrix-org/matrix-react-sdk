@@ -110,9 +110,8 @@ describe("MemberAvatar", () => {
 
         const { container } = render(getComponent({ member }));
 
-        const img = container.querySelector("img");
+        const img = container.querySelector(".mx_BaseAvatar_image");
         expect(img).not.toBeNull();
-        expect(img!.src).toMatch(/^data:/);
     });
 
     it("dispatches on click", () => {
