@@ -249,7 +249,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             return;
         }
 
-        let advertisedLang;
+        let advertisedLang: string = "";
         for (const cl of code.className.split(/\s+/)) {
             if (cl.startsWith("language-")) {
                 const maybeLang = cl.split("-", 2)[1];
@@ -265,7 +265,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             // We don't use highlightElement here because we can't force language detection
             // off. It should use the one we've found in the CSS class but we'd rather pass
             // it in explicitly to make sure.
-            code.innerHTML = highlight.highlight(advertisedLang, code.textContent).value;
+            code.innerHTML = highlight.highlight(code.textContent, { language: advertisedLang }).value;
         } else if (
             SettingsStore.getValue("enableSyntaxHighlightLanguageDetection") &&
             code.parentElement instanceof HTMLPreElement
