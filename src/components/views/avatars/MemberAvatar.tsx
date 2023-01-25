@@ -25,6 +25,7 @@ import { mediaFromMxc } from "../../../customisations/Media";
 import { CardContext } from "../right_panel/context";
 import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
 import { useRoomMemberProfile } from "../../../hooks/room/useRoomMemberProfile";
+import { ViewUserPayload } from "../../../dispatcher/payloads/ViewUserPayload";
 
 interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | "idName" | "url"> {
     member: RoomMember | null;
@@ -93,9 +94,9 @@ export default function MemberAvatar({
             onClick={
                 viewUserOnClick
                     ? () => {
-                          dis.dispatch({
+                          dis.dispatch<ViewUserPayload>({
                               action: Action.ViewUser,
-                              member: propsMember,
+                              member: propsMember || undefined,
                               push: card.isCard,
                           });
                       }

@@ -15,33 +15,95 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
-import { Room, RoomMember, RoomType } from "matrix-js-sdk/src/matrix";
+import { Room, RoomMember, RoomType, User } from "matrix-js-sdk/src/matrix";
 
-import { avatarUrlForRoom } from "../src/Avatar";
-import { Media, mediaFromMxc } from "../src/customisations/Media";
+import {
+    avatarUrlForMember,
+    avatarUrlForRoom,
+    avatarUrlForUser,
+    defaultAvatarUrlForString,
+    getInitialLetter,
+} from "../src/Avatar";
+import { mediaFromMxc } from "../src/customisations/Media";
 import DMRoomMap from "../src/utils/DMRoomMap";
-
-jest.mock("../src/customisations/Media", () => ({
-    mediaFromMxc: jest.fn(),
-}));
+import { filterConsole, stubClient } from "./test-utils";
 
 const roomId = "!room:example.com";
 const avatarUrl1 = "https://example.com/avatar1";
 const avatarUrl2 = "https://example.com/avatar2";
 
+describe("avatarUrlForMember", () => {
+    let member: RoomMember;
+
+    beforeEach(() => {
+        stubClient();
+        member = new RoomMember(roomId, "@user:example.com");
+    });
+
+    it("returns the member's url", () => {
+        const mxc = "mxc://example.com/a/b/c/d/avatar.gif";
+        jest.spyOn(member, "getMxcAvatarUrl").mockReturnValue(mxc);
+
+        expect(avatarUrlForMember(member, 32, 32, "crop")).toBe(
+            mediaFromMxc(mxc).getThumbnailOfSourceHttp(32, 32, "crop"),
+        );
+    });
+
+    it("returns a default if the member has no avatar", () => {
+        jest.spyOn(member, "getMxcAvatarUrl").mockReturnValue(undefined);
+
+        expect(avatarUrlForMember(member, 32, 32, "crop")).toMatch(/^data:/);
+    });
+});
+
+describe("avatarUrlForUser", () => {
+    let user: User;
+
+    beforeEach(() => {
+        stubClient();
+        user = new User("@user:example.com");
+    });
+
+    it("should return the user's avatar", () => {
+        const mxc = "mxc://example.com/a/b/c/d/avatar.gif";
+        user.avatarUrl = mxc;
+
+        expect(avatarUrlForUser(user, 64, 64, "scale")).toBe(
+            mediaFromMxc(mxc).getThumbnailOfSourceHttp(64, 64, "scale"),
+        );
+    });
+
+    it("should not provide a fallback", () => {
+        expect(avatarUrlForUser(user, 64, 64, "scale")).toBeNull();
+    });
+});
+
+describe("defaultAvatarUrlForString", () => {
+    it.each(["a", "abc", "abcde", "@".repeat(150)])("should return a value for %s", (s) => {
+        expect(defaultAvatarUrlForString(s)).not.toBe("");
+    });
+});
+
+describe("getInitialLetter", () => {
+    filterConsole("argument to `getInitialLetter` not supplied");
+
+    it.each(["a", "abc", "abcde", "@".repeat(150)])("should return a value for %s", (s) => {
+        expect(getInitialLetter(s)).not.toBe("");
+    });
+
+    it("should return undefined for empty strings", () => {
+        expect(getInitialLetter("")).toBeUndefined();
+    });
+});
+
 describe("avatarUrlForRoom", () => {
-    let getThumbnailOfSourceHttp: jest.Mock;
     let room: Room;
     let roomMember: RoomMember;
     let dmRoomMap: DMRoomMap;
 
     beforeEach(() => {
-        getThumbnailOfSourceHttp = jest.fn();
-        mocked(mediaFromMxc).mockImplementation((): Media => {
-            return {
-                getThumbnailOfSourceHttp,
-            } as unknown as Media;
-        });
+        stubClient();
+
         room = {
             roomId,
             getMxcAvatarUrl: jest.fn(),
@@ -64,9 +126,9 @@ describe("avatarUrlForRoom", () => {
 
     it("should return the HTTP source if the room provides a MXC url", () => {
         mocked(room.getMxcAvatarUrl).mockReturnValue(avatarUrl1);
-        getThumbnailOfSourceHttp.mockReturnValue(avatarUrl2);
-        expect(avatarUrlForRoom(room, 128, 256, "crop")).toEqual(avatarUrl2);
-        expect(getThumbnailOfSourceHttp).toHaveBeenCalledWith(128, 256, "crop");
+        expect(avatarUrlForRoom(room, 128, 256, "crop")).toBe(
+            mediaFromMxc(avatarUrl1).getThumbnailOfSourceHttp(128, 256, "crop"),
+        );
     });
 
     it("should return null for a space room", () => {
@@ -97,8 +159,8 @@ describe("avatarUrlForRoom", () => {
         mocked(dmRoomMap).getUserIdForRoomId.mockReturnValue("@user:example.com");
         mocked(room.getAvatarFallbackMember).mockReturnValue(roomMember);
         mocked(roomMember.getMxcAvatarUrl).mockReturnValue(avatarUrl2);
-        getThumbnailOfSourceHttp.mockReturnValue(avatarUrl2);
-        expect(avatarUrlForRoom(room, 128, 256, "crop")).toEqual(avatarUrl2);
-        expect(getThumbnailOfSourceHttp).toHaveBeenCalledWith(128, 256, "crop");
+        expect(avatarUrlForRoom(room, 128, 256, "crop")).toEqual(
+            mediaFromMxc(avatarUrl2).getThumbnailOfSourceHttp(128, 256, "crop"),
+        );
     });
 });
