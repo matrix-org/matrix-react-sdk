@@ -21,7 +21,7 @@ import EditorStateTransfer from "../../../../utils/EditorStateTransfer";
 
 export function getDefaultContextValue(defaultValue?: Partial<ComposerContextState>): { selection: SubSelection } {
     return {
-        selection: { anchorNode: null, anchorOffset: 0, focusNode: null, focusOffset: 0 },
+        selection: { anchorNode: null, anchorOffset: 0, focusNode: null, focusOffset: 0, isForward: true },
         ...defaultValue,
     };
 }

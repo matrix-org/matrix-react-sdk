@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,11 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export type ComposerFunctions = {
-    clear: () => void;
-    insertText: (text: string) => void;
-};
+import React from "react";
 
-export type SubSelection = Pick<Selection, "anchorNode" | "anchorOffset" | "focusNode" | "focusOffset"> & {
-    isForward: boolean;
+import { Icon as WarningIcon } from "../../../../res/img/element-icons/warning.svg";
+
+interface Props {
+    message: string;
+}
+
+export const VoiceBroadcastError: React.FC<Props> = ({ message }) => {
+    return (
+        <div className="mx_VoiceBroadcastRecordingConnectionError">
+            <WarningIcon className="mx_Icon mx_Icon_16" />
+            {message}
+        </div>
+    );
 };
