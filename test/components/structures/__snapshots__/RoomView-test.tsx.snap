@@ -191,25 +191,6 @@ exports[`RoomView for a local room in state ERROR should match the snapshot 1`] 
               <li
                 class="mx_NewRoomIntro"
               >
-                <div
-                  class="mx_EventTileBubble mx_cryptoEvent mx_cryptoEvent_icon_warning"
-                >
-                  <div
-                    class="mx_EventTileBubble_title"
-                  >
-                    End-to-end encryption isn't enabled
-                  </div>
-                  <div
-                    class="mx_EventTileBubble_subtitle"
-                  >
-                    <span>
-                       
-                      Your private messages are normally encrypted, but this room isn't. Usually this is due to an unsupported device or method being used, like email invites.
-                       
-                       
-                    </span>
-                  </div>
-                </div>
                 <span
                   aria-label="Avatar"
                   aria-live="off"
@@ -386,25 +367,6 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
               <li
                 class="mx_NewRoomIntro"
               >
-                <div
-                  class="mx_EventTileBubble mx_cryptoEvent mx_cryptoEvent_icon_warning"
-                >
-                  <div
-                    class="mx_EventTileBubble_title"
-                  >
-                    End-to-end encryption isn't enabled
-                  </div>
-                  <div
-                    class="mx_EventTileBubble_subtitle"
-                  >
-                    <span>
-                       
-                      Your private messages are normally encrypted, but this room isn't. Usually this is due to an unsupported device or method being used, like email invites.
-                       
-                       
-                    </span>
-                  </div>
-                </div>
                 <span
                   aria-label="Avatar"
                   aria-live="off"

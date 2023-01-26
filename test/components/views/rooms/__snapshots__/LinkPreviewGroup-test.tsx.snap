@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LinkPreviewGroup > should render 1`] = `
+<div>
+  <div
+    class="mx_LinkPreviewGroup"
+  >
+    <div
+      class="mx_LinkPreviewWidget"
+    >
+      <div
+        class="mx_LinkPreviewWidget_wrapImageCaption"
+      >
+        <div
+          class="mx_LinkPreviewWidget_caption"
+        >
+          <div
+            class="mx_LinkPreviewWidget_title"
+          >
+            <a
+              href="https://www.example.com/file.txt"
+              rel="noreferrer noopener"
+              target="_blank"
+            >
+              File
+            </a>
+          </div>
+          <div
+            class="mx_LinkPreviewWidget_description"
+          />
+        </div>
+      </div>
+      <div
+        aria-label="Close preview"
+        class="mx_AccessibleButton mx_LinkPreviewGroup_hide"
+        role="button"
+        tabindex="0"
+      >
+        <img
+          alt=""
+          class="mx_filterFlipColor"
+          height="18"
+          role="presentation"
+          src="image-file-stub"
+          width="18"
+        />
+      </div>
+    </div>
+    <div
+      class="mx_LinkPreviewWidget"
+    >
+      <div
+        class="mx_LinkPreviewWidget_wrapImageCaption"
+      >
+        <div
+          class="mx_LinkPreviewWidget_caption"
+        >
+          <div
+            class="mx_LinkPreviewWidget_title"
+          >
+            <a
+              href="https://www.example.com/website.html"
+              rel="noreferrer noopener"
+              target="_blank"
+            >
+              My Cool Website
+            </a>
+          </div>
+          <div
+            class="mx_LinkPreviewWidget_description"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

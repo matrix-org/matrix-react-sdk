@@ -109,7 +109,7 @@ export function createTestClient(): MatrixClient {
 
         crypto: {
             deviceList: {
-                downloadKeys: jest.fn(),
+                downloadKeys: jest.fn().mockReturnValue({}),
             },
         },
 
@@ -155,6 +155,7 @@ export function createTestClient(): MatrixClient {
         sendMessage: jest.fn().mockResolvedValue({}),
         sendStateEvent: jest.fn().mockResolvedValue(undefined),
         getSyncState: jest.fn().mockReturnValue("SYNCING"),
+        getSyncStateData: jest.fn().mockReturnValue({}),
         generateClientSecret: () => "t35tcl1Ent5ECr3T",
         isGuest: jest.fn().mockReturnValue(false),
         getRoomHierarchy: jest.fn().mockReturnValue({
@@ -186,7 +187,7 @@ export function createTestClient(): MatrixClient {
         isCryptoEnabled: jest.fn().mockReturnValue(false),
         hasLazyLoadMembersEnabled: jest.fn().mockReturnValue(false),
         isInitialSyncComplete: jest.fn().mockReturnValue(true),
-        downloadKeys: jest.fn(),
+        downloadKeys: jest.fn().mockReturnValue({}),
         fetchRoomEvent: jest.fn().mockRejectedValue({}),
         makeTxnId: jest.fn().mockImplementation(() => `t${txnId++}`),
         sendToDevice: jest.fn().mockResolvedValue(undefined),
@@ -208,6 +209,12 @@ export function createTestClient(): MatrixClient {
         setPassword: jest.fn().mockRejectedValue({}),
         groupCallEventHandler: { groupCalls: new Map<string, GroupCall>() },
         redactEvent: jest.fn(),
+
+        getUrlPreview: jest.fn().mockResolvedValue({
+            "og:title": "title",
+            "og:type": "type",
+            "og:url": "url",
+        }),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
