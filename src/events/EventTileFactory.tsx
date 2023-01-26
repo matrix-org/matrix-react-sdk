@@ -48,7 +48,11 @@ import ViewSourceEvent from "../components/views/messages/ViewSourceEvent";
 import { shouldDisplayAsBeaconTile } from "../utils/beacon/timeline";
 import { shouldDisplayAsVoiceBroadcastTile } from "../voice-broadcast/utils/shouldDisplayAsVoiceBroadcastTile";
 import { ElementCall } from "../models/Call";
-import { shouldDisplayAsVoiceBroadcastStoppedText, VoiceBroadcastChunkEventType } from "../voice-broadcast";
+import {
+    isRelatedToVoiceBroadcast,
+    shouldDisplayAsVoiceBroadcastStoppedText,
+    VoiceBroadcastChunkEventType,
+} from "../voice-broadcast";
 
 // Subset of EventTile's IProps plus some mixins
 export interface EventTileTypeProps {
@@ -257,6 +261,11 @@ export function pickFactory(
 
     if (mxEvent.getContent()[VoiceBroadcastChunkEventType]) {
         // hide voice broadcast chunks
+        return noEventFactoryFactory();
+    }
+
+    if (mxEvent.isDecryptionFailure() && isRelatedToVoiceBroadcast(mxEvent, cli)) {
+        // hide utd events related to a broadcast
         return noEventFactoryFactory();
     }
 
