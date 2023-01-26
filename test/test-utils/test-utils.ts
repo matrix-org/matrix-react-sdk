@@ -40,6 +40,7 @@ import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
 import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
 import { CryptoBackend } from "matrix-js-sdk/src/common-crypto/CryptoBackend";
 import { IEventDecryptionResult } from "matrix-js-sdk/src/@types/crypto";
+import { MapperOpts } from "matrix-js-sdk/src/event-mapper";
 
 import type { GroupCall } from "matrix-js-sdk/src/webrtc/groupCall";
 import { MatrixClientPeg as peg } from "../../src/MatrixClientPeg";
@@ -145,7 +146,7 @@ export function createTestClient(): MatrixClient {
                 content: {},
             });
         }),
-        mxcUrlToHttp: (mxc) => `http://this.is.a.url/${mxc.substring(6)}`,
+        mxcUrlToHttp: (mxc: string) => `http://this.is.a.url/${mxc.substring(6)}`,
         setAccountData: jest.fn(),
         setRoomAccountData: jest.fn(),
         setRoomTopic: jest.fn(),
@@ -200,7 +201,7 @@ export function createTestClient(): MatrixClient {
             stopAllStreams: jest.fn(),
         } as unknown as MediaHandler),
         uploadContent: jest.fn(),
-        getEventMapper: () => (opts) => new MatrixEvent(opts),
+        getEventMapper: (_options?: MapperOpts) => (event: Partial<IEvent>) => new MatrixEvent(event),
         leaveRoomChain: jest.fn((roomId) => ({ [roomId]: null })),
         doesServerSupportLogoutDevices: jest.fn().mockReturnValue(true),
         requestPasswordEmailToken: jest.fn().mockRejectedValue({}),
@@ -476,7 +477,7 @@ export function mkMessage({
 }
 
 export function mkStubRoom(roomId: string = null, name: string, client: MatrixClient): Room {
-    const stubTimeline = { getEvents: () => [] } as unknown as EventTimeline;
+    const stubTimeline = { getEvents: () => [] as MatrixEvent[] } as unknown as EventTimeline;
     return {
         canInvite: jest.fn(),
         client,
@@ -497,7 +498,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         fetchRoomThreads: jest.fn().mockReturnValue(Promise.resolve()),
         findEventById: (_: string) => undefined as MatrixEvent | undefined,
         findPredecessor: jest.fn().mockReturnValue({ roomId: "", eventId: null }),
-        getAccountData: (_: EventType | string) => undefined,
+        getAccountData: (_: EventType | string) => undefined as MatrixEvent | undefined,
         getAltAliases: jest.fn().mockReturnValue([]),
         getAvatarUrl: () => "mxc://avatar.url/room.png",
         getCanonicalAlias: jest.fn(),
@@ -548,7 +549,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
     } as unknown as Room;
 }
 
-export function mkServerConfig(hsUrl, isUrl) {
+export function mkServerConfig(hsUrl: string, isUrl: string) {
     return makeType(ValidatedServerConfig, {
         hsUrl,
         hsName: "TEST_ENVIRONMENT",
