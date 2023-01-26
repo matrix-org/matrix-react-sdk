@@ -35,8 +35,11 @@ interface IProps extends IDialogProps {
 }
 
 export default class EndPollDialog extends React.Component<IProps> {
-    private onFinished = (endPoll: boolean): void => {
-        const topAnswer = findTopAnswer(this.props.event, this.props.matrixClient, this.props.getRelationsForEvent);
+    private onFinished = async (endPoll: boolean): Promise<void> => {
+        const room = this.props.matrixClient.getRoom(this.props.event.getRoomId());
+        const poll = room?.polls.get(this.props.event.getId());
+        const responses = await poll.getResponses();
+        const topAnswer = findTopAnswer(this.props.event, responses);
 
         const message =
             topAnswer === ""

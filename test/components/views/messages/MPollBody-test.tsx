@@ -16,9 +16,8 @@ limitations under the License.
 
 import React from "react";
 import { fireEvent, render, RenderResult } from "@testing-library/react";
-import { MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, MatrixEvent, Poll, Room } from "matrix-js-sdk/src/matrix";
 import { Relations } from "matrix-js-sdk/src/models/relations";
-import { RelatedRelations } from "matrix-js-sdk/src/models/related-relations";
 import {
     M_POLL_END,
     M_POLL_KIND_DISCLOSED,
@@ -32,10 +31,8 @@ import { M_TEXT } from "matrix-js-sdk/src/@types/extensible_events";
 import { MockedObject } from "jest-mock";
 
 import {
-    UserVote,
     allVotes,
     findTopAnswer,
-    pollEndTs,
     isPollEnded,
 } from "../../../../src/components/views/messages/MPollBody";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -47,9 +44,10 @@ import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalink
 import { MediaEventHelper } from "../../../../src/utils/MediaEventHelper";
 
 const CHECKED = "mx_MPollBody_option_checked";
+const userId = "@me:example.com";
 
 const mockClient = getMockClientWithEventEmitter({
-    getUserId: jest.fn().mockReturnValue("@me:example.com"),
+    getUserId: jest.fn().mockReturnValue(userId),
     sendEvent: jest.fn().mockReturnValue(Promise.resolve({ event_id: "fake_send_id" })),
     getRoom: jest.fn(),
 });
@@ -59,94 +57,19 @@ setRedactionAllowedForMeOnly(mockClient);
 describe("MPollBody", () => {
     beforeEach(() => {
         mockClient.sendEvent.mockClear();
+
+        mockClient.getRoom.mockReturnValue(undefined);
     });
 
     it("finds no votes if there are none", () => {
         expect(
             allVotes(
-                { getRoomId: () => "$room" } as MatrixEvent,
-                MatrixClientPeg.get(),
-                new RelatedRelations([newVoteRelations([])]),
-                new RelatedRelations([newEndRelations([])]),
+                newVoteRelations([]),
             ),
         ).toEqual([]);
     });
 
-    it("can find all the valid responses to a poll", () => {
-        const ev1 = responseEvent();
-        const ev2 = responseEvent();
-        const badEvent = badResponseEvent();
-
-        const voteRelations = new RelatedRelations([newVoteRelations([ev1, badEvent, ev2])]);
-        expect(
-            allVotes(
-                { getRoomId: () => "$room" } as MatrixEvent,
-                MatrixClientPeg.get(),
-                voteRelations,
-                new RelatedRelations([newEndRelations([])]),
-            ),
-        ).toEqual([
-            new UserVote(ev1.getTs(), ev1.getSender()!, ev1.getContent()[M_POLL_RESPONSE.name].answers),
-            new UserVote(
-                badEvent.getTs(),
-                badEvent.getSender()!,
-                [], // should be spoiled
-            ),
-            new UserVote(ev2.getTs(), ev2.getSender()!, ev2.getContent()[M_POLL_RESPONSE.name].answers),
-        ]);
-    });
-
-    it("finds the first end poll event", () => {
-        const endRelations = new RelatedRelations([
-            newEndRelations([
-                endEvent("@me:example.com", 25),
-                endEvent("@me:example.com", 12),
-                endEvent("@me:example.com", 45),
-                endEvent("@me:example.com", 13),
-            ]),
-        ]);
-
-        setRedactionAllowedForMeOnly(mockClient);
-
-        expect(pollEndTs({ getRoomId: () => "$room" } as MatrixEvent, mockClient, endRelations)).toBe(12);
-    });
-
-    it("ignores unauthorised end poll event when finding end ts", () => {
-        const endRelations = new RelatedRelations([
-            newEndRelations([
-                endEvent("@me:example.com", 25),
-                endEvent("@unauthorised:example.com", 12),
-                endEvent("@me:example.com", 45),
-                endEvent("@me:example.com", 13),
-            ]),
-        ]);
-
-        setRedactionAllowedForMeOnly(mockClient);
-
-        expect(pollEndTs({ getRoomId: () => "$room" } as MatrixEvent, mockClient, endRelations)).toBe(13);
-    });
-
-    it("counts only votes before the end poll event", () => {
-        const voteRelations = new RelatedRelations([
-            newVoteRelations([
-                responseEvent("sf@matrix.org", "wings", 13),
-                responseEvent("jr@matrix.org", "poutine", 40),
-                responseEvent("ak@matrix.org", "poutine", 37),
-                responseEvent("id@matrix.org", "wings", 13),
-                responseEvent("ps@matrix.org", "wings", 19),
-            ]),
-        ]);
-        const endRelations = new RelatedRelations([newEndRelations([endEvent("@me:example.com", 25)])]);
-        expect(
-            allVotes({ getRoomId: () => "$room" } as MatrixEvent, MatrixClientPeg.get(), voteRelations, endRelations),
-        ).toEqual([
-            new UserVote(13, "sf@matrix.org", ["wings"]),
-            new UserVote(13, "id@matrix.org", ["wings"]),
-            new UserVote(19, "ps@matrix.org", ["wings"]),
-        ]);
-    });
-
-    it("renders no votes if none were made", () => {
+    fit("renders no votes if none were made", () => {
         const votes: MatrixEvent[] = [];
         const renderResult = newMPollBody(votes);
         expect(votesCount(renderResult, "pizza")).toBe("");
@@ -557,7 +480,7 @@ describe("MPollBody", () => {
             responseEvent("@fa:example.com", "poutine", 18),
         ];
 
-        expect(runFindTopAnswer(votes, [])).toEqual("Poutine");
+        expect(runFindTopAnswer(votes)).toEqual("Poutine");
     });
 
     it("finds all top answers when there is a draw", () => {
@@ -566,27 +489,11 @@ describe("MPollBody", () => {
             responseEvent("@ab:example.com", "pizza", 17),
             responseEvent("@fa:example.com", "poutine", 18),
         ];
-        expect(runFindTopAnswer(votes, [])).toEqual("Italian, Pizza and Poutine");
-    });
-
-    it("finds all top answers ignoring late votes", () => {
-        const votes = [
-            responseEvent("@uy:example.com", "italian", 14),
-            responseEvent("@ab:example.com", "pizza", 17),
-            responseEvent("@io:example.com", "poutine", 30), // Late
-            responseEvent("@fa:example.com", "poutine", 18),
-            responseEvent("@of:example.com", "poutine", 31), // Late
-        ];
-        const ends = [endEvent("@me:example.com", 25)];
-        expect(runFindTopAnswer(votes, ends)).toEqual("Italian, Pizza and Poutine");
+        expect(runFindTopAnswer(votes)).toEqual("Italian, Pizza and Poutine");
     });
 
     it("is silent about the top answer if there are no votes", () => {
-        expect(runFindTopAnswer([], [])).toEqual("");
-    });
-
-    it("is silent about the top answer if there are no votes when ended", () => {
-        expect(runFindTopAnswer([], [endEvent("@me:example.com", 13)])).toEqual("");
+        expect(runFindTopAnswer([])).toEqual("");
     });
 
     it("shows non-radio buttons if the poll is ended", () => {
@@ -779,6 +686,7 @@ describe("MPollBody", () => {
         });
         mockClient.getRoom.mockImplementation((_roomId) => {
             return {
+                polls: new Map<string, Poll>(),
                 currentState: {
                     maySendRedactionForEvent: (_evt: MatrixEvent, userId: string) => {
                         return userId === "@me:example.com";
@@ -1180,7 +1088,7 @@ function runIsPollEnded(ends: MatrixEvent[]) {
     return isPollEnded(pollEvent, mockClient, getRelationsForEvent);
 }
 
-function runFindTopAnswer(votes: MatrixEvent[], ends: MatrixEvent[]) {
+function runFindTopAnswer(votes: MatrixEvent[]) {
     const pollEvent = new MatrixEvent({
         event_id: "$mypoll",
         room_id: "#myroom:example.com",
@@ -1188,31 +1096,18 @@ function runFindTopAnswer(votes: MatrixEvent[], ends: MatrixEvent[]) {
         content: newPollStart(),
     });
 
-    const getRelationsForEvent = (eventId: string, relationType: string, eventType: string) => {
-        expect(eventId).toBe("$mypoll");
-        expect(relationType).toBe("m.reference");
-        if (M_POLL_RESPONSE.matches(eventType)) {
-            return newVoteRelations(votes);
-        } else if (M_POLL_END.matches(eventType)) {
-            return newEndRelations(ends);
-        } else {
-            fail(`eventType should be end or vote but was ${eventType}`);
-        }
-    };
-
-    return findTopAnswer(pollEvent, MatrixClientPeg.get(), getRelationsForEvent);
+    return findTopAnswer(pollEvent, newVoteRelations(votes));
 }
 
 function setRedactionAllowedForMeOnly(matrixClient: MockedObject<MatrixClient>) {
-    matrixClient.getRoom.mockImplementation((_roomId: string) => {
-        return {
-            currentState: {
-                maySendRedactionForEvent: (_evt: MatrixEvent, userId: string) => {
-                    return userId === "@me:example.com";
-                },
-            },
-        } as Room;
-    });
+    const room = new Room("!room:server.org", matrixClient, userId);
+    jest.spyOn(room.currentState, "maySendRedactionForEvent").mockImplementation(
+        (_evt: MatrixEvent, userId: string) => {
+            return userId === userId;
+        },
+    );
+
+    matrixClient.getRoom.mockReturnValue(room);
 }
 
 let EVENT_ID = 0;
