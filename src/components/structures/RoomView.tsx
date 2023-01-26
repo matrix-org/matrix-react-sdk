@@ -1,5 +1,5 @@
 /*
-Copyright 2015 - 2023 The Matrix.org Foundation C.I.C.
+Copyright 2015, 2017 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 import { HistoryVisibility } from "matrix-js-sdk/src/@types/partials";
 import { ISearchResults } from "matrix-js-sdk/src/@types/search";
-import { IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
+import { IRoomTimelineData } from "matrix-js-sdk/src/matrix";
 
 import shouldHideEvent from "../../shouldHideEvent";
 import { _t } from "../../languageHandler";
@@ -364,8 +364,8 @@ function LocalRoomCreateLoader(props: ILocalRoomCreateLoaderProps): ReactElement
 }
 
 export class RoomView extends React.Component<IRoomProps, IRoomState> {
-    private readonly dispatcherRef: string;
-    private settingWatchers: string[];
+    private dispatcherRef: string | undefined = undefined;
+    private settingWatchers: string[] = [];
 
     private unmounted = false;
     private permalinkCreators: Record<string, RoomPermalinkCreator> = {};
@@ -420,57 +420,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             narrow: false,
             visibleDecryptionFailures: [],
         };
-
-        this.dispatcherRef = dis.register(this.onAction);
-        client.on(ClientEvent.Room, this.onRoom);
-        client.on(RoomEvent.Timeline, this.onRoomTimeline);
-        client.on(RoomEvent.TimelineReset, this.onRoomTimelineReset);
-        client.on(RoomEvent.Name, this.onRoomName);
-        client.on(RoomStateEvent.Events, this.onRoomStateEvents);
-        client.on(RoomStateEvent.Update, this.onRoomStateUpdate);
-        client.on(RoomEvent.MyMembership, this.onMyMembership);
-        client.on(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatus);
-        client.on(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
-        client.on(CryptoEvent.UserTrustStatusChanged, this.onUserVerificationChanged);
-        client.on(CryptoEvent.KeysChanged, this.onCrossSigningKeysChanged);
-        client.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
-        // Start listening for RoomViewStore updates
-        context.roomViewStore.on(UPDATE_EVENT, this.onRoomViewStoreUpdate);
-
-        context.rightPanelStore.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
-
-        WidgetEchoStore!.on(UPDATE_EVENT, this.onWidgetEchoStoreUpdate);
-        context.widgetStore.on(UPDATE_EVENT, this.onWidgetStoreUpdate);
-
-        CallStore.instance.on(CallStoreEvent.ActiveCalls, this.onActiveCalls);
-
-        this.props.resizeNotifier.on("isResizing", this.onIsResizing);
-
-        this.settingWatchers = [
-            SettingsStore.watchSetting("layout", null, (...[, , , value]) =>
-                this.setState({ layout: value as Layout }),
-            ),
-            SettingsStore.watchSetting("lowBandwidth", null, (...[, , , value]) =>
-                this.setState({ lowBandwidth: value as boolean }),
-            ),
-            SettingsStore.watchSetting("alwaysShowTimestamps", null, (...[, , , value]) =>
-                this.setState({ alwaysShowTimestamps: value as boolean }),
-            ),
-            SettingsStore.watchSetting("showTwelveHourTimestamps", null, (...[, , , value]) =>
-                this.setState({ showTwelveHourTimestamps: value as boolean }),
-            ),
-            SettingsStore.watchSetting("readMarkerInViewThresholdMs", null, (...[, , , value]) =>
-                this.setState({ readMarkerInViewThresholdMs: value as number }),
-            ),
-            SettingsStore.watchSetting("readMarkerOutOfViewThresholdMs", null, (...[, , , value]) =>
-                this.setState({ readMarkerOutOfViewThresholdMs: value as number }),
-            ),
-            SettingsStore.watchSetting("showHiddenEventsInTimeline", null, (...[, , , value]) =>
-                this.setState({ showHiddenEvents: value as boolean }),
-            ),
-            SettingsStore.watchSetting("urlPreviewsEnabled", null, this.onUrlPreviewsEnabledChange),
-            SettingsStore.watchSetting("urlPreviewsEnabled_e2ee", null, this.onUrlPreviewsEnabledChange),
-        ];
     }
 
     private onIsResizing = (resizing: boolean): void => {
@@ -832,6 +781,59 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     }
 
     public componentDidMount(): void {
+        const context = this.context;
+        const client = context.client!;
+        this.dispatcherRef = dis.register(this.onAction);
+        client.on(ClientEvent.Room, this.onRoom);
+        client.on(RoomEvent.Timeline, this.onRoomTimeline);
+        client.on(RoomEvent.TimelineReset, this.onRoomTimelineReset);
+        client.on(RoomEvent.Name, this.onRoomName);
+        client.on(RoomStateEvent.Events, this.onRoomStateEvents);
+        client.on(RoomStateEvent.Update, this.onRoomStateUpdate);
+        client.on(RoomEvent.MyMembership, this.onMyMembership);
+        client.on(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatus);
+        client.on(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
+        client.on(CryptoEvent.UserTrustStatusChanged, this.onUserVerificationChanged);
+        client.on(CryptoEvent.KeysChanged, this.onCrossSigningKeysChanged);
+        client.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
+        // Start listening for RoomViewStore updates
+        context.roomViewStore.on(UPDATE_EVENT, this.onRoomViewStoreUpdate);
+
+        context.rightPanelStore.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
+
+        WidgetEchoStore!.on(UPDATE_EVENT, this.onWidgetEchoStoreUpdate);
+        context.widgetStore.on(UPDATE_EVENT, this.onWidgetStoreUpdate);
+
+        CallStore.instance.on(CallStoreEvent.ActiveCalls, this.onActiveCalls);
+
+        this.props.resizeNotifier.on("isResizing", this.onIsResizing);
+
+        this.settingWatchers = [
+            SettingsStore.watchSetting("layout", null, (...[, , , value]) =>
+                this.setState({ layout: value as Layout }),
+            ),
+            SettingsStore.watchSetting("lowBandwidth", null, (...[, , , value]) =>
+                this.setState({ lowBandwidth: value as boolean }),
+            ),
+            SettingsStore.watchSetting("alwaysShowTimestamps", null, (...[, , , value]) =>
+                this.setState({ alwaysShowTimestamps: value as boolean }),
+            ),
+            SettingsStore.watchSetting("showTwelveHourTimestamps", null, (...[, , , value]) =>
+                this.setState({ showTwelveHourTimestamps: value as boolean }),
+            ),
+            SettingsStore.watchSetting("readMarkerInViewThresholdMs", null, (...[, , , value]) =>
+                this.setState({ readMarkerInViewThresholdMs: value as number }),
+            ),
+            SettingsStore.watchSetting("readMarkerOutOfViewThresholdMs", null, (...[, , , value]) =>
+                this.setState({ readMarkerOutOfViewThresholdMs: value as number }),
+            ),
+            SettingsStore.watchSetting("showHiddenEventsInTimeline", null, (...[, , , value]) =>
+                this.setState({ showHiddenEvents: value as boolean }),
+            ),
+            SettingsStore.watchSetting("urlPreviewsEnabled", null, this.onUrlPreviewsEnabledChange),
+            SettingsStore.watchSetting("urlPreviewsEnabled_e2ee", null, this.onUrlPreviewsEnabledChange),
+        ];
+
         this.onRoomViewStoreUpdate(true);
 
         const call = this.getCallForRoom();
@@ -888,7 +890,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // stop tracking room changes to format permalinks
         this.stopAllPermalinkCreators();
 
-        dis.unregister(this.dispatcherRef);
+        if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
         if (this.context.client) {
             this.context.client.removeListener(ClientEvent.Room, this.onRoom);
             this.context.client.removeListener(RoomEvent.Timeline, this.onRoomTimeline);
