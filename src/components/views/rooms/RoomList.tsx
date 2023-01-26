@@ -62,6 +62,7 @@ import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import ExtraTile from "./ExtraTile";
 import RoomSublist, { IAuxButtonProps } from "./RoomSublist";
 import { SdkContextClass } from "../../../contexts/SDKContext";
+import PageType from "../../../PageTypes";
 
 interface IProps {
     onKeyDown: (ev: React.KeyboardEvent, state: IRovingTabIndexState) => void;
@@ -72,6 +73,7 @@ interface IProps {
     resizeNotifier: ResizeNotifier;
     isMinimized: boolean;
     activeSpace: SpaceKey;
+    pageType?: PageType;
 }
 
 interface IState {
@@ -614,10 +616,10 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         return [
             <ExtraTile
                 isMinimized={this.props.isMinimized}
-                isSelected={false}
+                isSelected={this.props.pageType === PageType.FavouriteMessagesView}
                 displayName="Favourite Messages"
                 avatar={avatar}
-                onClick={() => ""}
+                onClick={onFavouriteClicked}
                 key="favMessagesTile_key"
             />,
         ];
@@ -709,3 +711,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         );
     }
 }
+
+const onFavouriteClicked = (): void => {
+    defaultDispatcher.dispatch({ action: Action.ViewFavouriteMessages });
+};

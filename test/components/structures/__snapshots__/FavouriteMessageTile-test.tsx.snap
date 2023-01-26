@@ -1,0 +1,323 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FavouriteMessageTile displays the favourite content 1`] = `
+<DocumentFragment>
+  <li
+    data-scroll-tokens="$alices_message"
+  >
+    <ol>
+      <div
+        aria-label="Sun, Jan 16 1977"
+        class="mx_DateSeparator"
+        role="separator"
+        tabindex="-1"
+      >
+        <hr
+          role="none"
+        />
+        <h2
+          aria-hidden="true"
+        >
+          Sun, Jan 16 1977
+        </h2>
+        <hr
+          role="none"
+        />
+      </div>
+      <li
+        aria-atomic="true"
+        aria-live="off"
+        class="mx_EventTile mx_EventTile_lastInSection"
+        data-event-id="$alices_message"
+        data-has-reply="false"
+        data-layout="false"
+        data-scroll-tokens="$alices_message"
+        data-self="false"
+        tabindex="-1"
+      >
+        <div
+          class="mx_DisambiguatedProfile"
+        >
+          <span
+            class="mx_Username_color6 mx_DisambiguatedProfile_displayName"
+            dir="auto"
+          >
+            @alice:server.org
+          </span>
+        </div>
+        <div
+          class="mx_EventTile_line"
+        >
+          <a
+            aria-label="00:23"
+            href="#"
+          />
+          <div
+            class="mx_MTextBody mx_EventTile_content"
+          >
+            <span
+              class="mx_EventTile_body"
+              dir="auto"
+            >
+              i am alice
+            </span>
+          </div>
+          <div
+            aria-label="Message Actions"
+            aria-live="off"
+            class="mx_MessageActionBar"
+            role="toolbar"
+          >
+            <div
+              aria-label="Favourite"
+              class="mx_AccessibleButton mx_MessageActionBar_iconButton"
+              data-testid="$alices_message"
+              role="button"
+              tabindex="0"
+            >
+              <div />
+            </div>
+            <div
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="Options"
+              class="mx_AccessibleButton mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
+              role="button"
+              tabindex="-1"
+            >
+              <div />
+            </div>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </li>
+</DocumentFragment>
+`;
+
+exports[`FavouriteMessageTile displays the favourite content within a timeline 1`] = `
+<DocumentFragment>
+  <li
+    data-scroll-tokens="$alices_message"
+  >
+    <ol>
+      <div
+        aria-label="Sun, Jan 16 1977"
+        class="mx_DateSeparator"
+        role="separator"
+        tabindex="-1"
+      >
+        <hr
+          role="none"
+        />
+        <h2
+          aria-hidden="true"
+        >
+          Sun, Jan 16 1977
+        </h2>
+        <hr
+          role="none"
+        />
+      </div>
+      <li
+        aria-atomic="true"
+        aria-live="off"
+        class="mx_EventTile mx_EventTile_lastInSection"
+        data-event-id="$alices_message"
+        data-has-reply="false"
+        data-layout="false"
+        data-scroll-tokens="$alices_message"
+        data-self="false"
+        tabindex="-1"
+      >
+        <div
+          class="mx_DisambiguatedProfile"
+        >
+          <span
+            class="mx_Username_color6 mx_DisambiguatedProfile_displayName"
+            dir="auto"
+          >
+            @alice:server.org
+          </span>
+        </div>
+        <div
+          class="mx_EventTile_line"
+        >
+          <a
+            aria-label="00:11"
+            href="#"
+          />
+          <div
+            class="mx_MTextBody mx_EventTile_content"
+          >
+            <span
+              class="mx_EventTile_body"
+              dir="auto"
+            >
+              i am before
+            </span>
+          </div>
+          <div
+            aria-label="Message Actions"
+            aria-live="off"
+            class="mx_MessageActionBar"
+            role="toolbar"
+          >
+            <div
+              aria-label="Favourite"
+              class="mx_AccessibleButton mx_MessageActionBar_iconButton"
+              data-testid="$alices_message"
+              role="button"
+              tabindex="0"
+            >
+              <div />
+            </div>
+            <div
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="Options"
+              class="mx_AccessibleButton mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
+              role="button"
+              tabindex="-1"
+            >
+              <div />
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-atomic="true"
+        aria-live="off"
+        class="mx_EventTile mx_EventTile_lastInSection"
+        data-event-id="$alices_message"
+        data-has-reply="false"
+        data-layout="false"
+        data-scroll-tokens="$alices_message"
+        data-self="false"
+        tabindex="-1"
+      >
+        <div
+          class="mx_DisambiguatedProfile"
+        >
+          <span
+            class="mx_Username_color6 mx_DisambiguatedProfile_displayName"
+            dir="auto"
+          >
+            @alice:server.org
+          </span>
+        </div>
+        <div
+          class="mx_EventTile_line"
+        >
+          <a
+            aria-label="00:23"
+            href="#"
+          />
+          <div
+            class="mx_MTextBody mx_EventTile_content"
+          >
+            <span
+              class="mx_EventTile_body"
+              dir="auto"
+            >
+              i am alice
+            </span>
+          </div>
+          <div
+            aria-label="Message Actions"
+            aria-live="off"
+            class="mx_MessageActionBar"
+            role="toolbar"
+          >
+            <div
+              aria-label="Favourite"
+              class="mx_AccessibleButton mx_MessageActionBar_iconButton"
+              data-testid="$alices_message"
+              role="button"
+              tabindex="0"
+            >
+              <div />
+            </div>
+            <div
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="Options"
+              class="mx_AccessibleButton mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
+              role="button"
+              tabindex="-1"
+            >
+              <div />
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-atomic="true"
+        aria-live="off"
+        class="mx_EventTile mx_EventTile_lastInSection"
+        data-event-id="$alices_message"
+        data-has-reply="false"
+        data-layout="false"
+        data-scroll-tokens="$alices_message"
+        data-self="false"
+        tabindex="-1"
+      >
+        <div
+          class="mx_DisambiguatedProfile"
+        >
+          <span
+            class="mx_Username_color6 mx_DisambiguatedProfile_displayName"
+            dir="auto"
+          >
+            @alice:server.org
+          </span>
+        </div>
+        <div
+          class="mx_EventTile_line"
+        >
+          <a
+            aria-label="00:35"
+            href="#"
+          />
+          <div
+            class="mx_MTextBody mx_EventTile_content"
+          >
+            <span
+              class="mx_EventTile_body"
+              dir="auto"
+            >
+              i am after
+            </span>
+          </div>
+          <div
+            aria-label="Message Actions"
+            aria-live="off"
+            class="mx_MessageActionBar"
+            role="toolbar"
+          >
+            <div
+              aria-label="Favourite"
+              class="mx_AccessibleButton mx_MessageActionBar_iconButton"
+              data-testid="$alices_message"
+              role="button"
+              tabindex="0"
+            >
+              <div />
+            </div>
+            <div
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="Options"
+              class="mx_AccessibleButton mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
+              role="button"
+              tabindex="-1"
+            >
+              <div />
+            </div>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </li>
+</DocumentFragment>
+`;

@@ -71,6 +71,7 @@ import { IConfigOptions } from "../../IConfigOptions";
 import LeftPanelLiveShareWarning from "../views/beacon/LeftPanelLiveShareWarning";
 import { UserOnboardingPage } from "../views/user-onboarding/UserOnboardingPage";
 import { PipContainer } from "./PipContainer";
+import FavouriteMessagesView from "./FavouriteMessagesView/FavouriteMessagesView";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -646,6 +647,10 @@ class LoggedInView extends React.Component<IProps, IState> {
 
             case PageTypes.UserView:
                 pageElement = <UserView userId={this.props.currentUserId} resizeNotifier={this.props.resizeNotifier} />;
+                break;
+
+            case PageTypes.FavouriteMessagesView:
+                pageElement = <FavouriteMessagesView resizeNotifier={this.props.resizeNotifier} />;
                 break;
         }
 

@@ -138,6 +138,7 @@ import { cleanUpBroadcasts, VoiceBroadcastResumer } from "../../voice-broadcast"
 import GenericToast from "../views/toasts/GenericToast";
 import { Linkify } from "../views/elements/Linkify";
 import RovingSpotlightDialog, { Filter } from "../views/dialogs/spotlight/SpotlightDialog";
+import ConfirmClearFavouritesDialog from "./FavouriteMessagesView/ConfirmClearFavouritesDialog";
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -741,6 +742,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 this.viewSomethingBehindModal();
                 break;
             }
+            case Action.OpenClearFavourites: {
+                Modal.createDialog(ConfirmClearFavouritesDialog);
+                break;
+            }
             case "view_welcome_page":
                 this.viewWelcome();
                 break;
@@ -839,6 +844,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 this.setState({
                     hideToSRUsers: false,
                 });
+                break;
+            case Action.ViewFavouriteMessages:
+                this.viewFavouriteMessages();
                 break;
             case Action.PseudonymousAnalyticsAccept:
                 hideAnalyticsToast();
@@ -1038,6 +1046,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.notifyNewScreen("home");
         ThemeController.isLogin = false;
         this.themeWatcher.recheck();
+    }
+
+    private viewFavouriteMessages(): void {
+        this.setPage(PageType.FavouriteMessagesView);
+        this.notifyNewScreen("favourite_messages");
     }
 
     private viewUser(userId: string, subAction: string): void {
@@ -1757,6 +1770,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         } else if (screen === "home") {
             dis.dispatch({
                 action: Action.ViewHomePage,
+            });
+        } else if (screen === "favourite_messages") {
+            dis.dispatch({
+                action: Action.ViewFavouriteMessages,
             });
         } else if (screen === "start") {
             this.showScreen("home");

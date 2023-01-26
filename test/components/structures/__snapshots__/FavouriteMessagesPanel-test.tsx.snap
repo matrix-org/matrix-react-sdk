@@ -1,0 +1,265 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FavouriteMessagesPanel renders favourite messages correctly for multiple single event 1`] = `
+<DocumentFragment>
+  <div
+    class="mx_FavMessagesHeader"
+  >
+    <div
+      class="mx_FavMessagesHeader_Wrapper"
+    >
+      <div
+        class="mx_FavMessagesHeader_Wrapper_left"
+      >
+        <span
+          class="mx_BaseAvatar"
+          role="presentation"
+        >
+          <span
+            aria-hidden="true"
+            class="mx_BaseAvatar_initial"
+            style="font-size: 16.900000000000002px; width: 26px; line-height: 26px;"
+          >
+            F
+          </span>
+          <img
+            alt=""
+            aria-hidden="true"
+            class="mx_BaseAvatar_image"
+            data-testid="avatar-img"
+            src="data:image/png;base64,00"
+            style="width: 26px; height: 26px;"
+          />
+        </span>
+        <span>
+          Favourite Messages
+        </span>
+      </div>
+      <div
+        class="mx_FavMessagesHeader_Wrapper_right"
+      >
+        <div
+          aria-label="Search"
+          class="mx_AccessibleButton mx_RoomHeader_button mx_RoomHeader_searchButton"
+          role="button"
+          tabindex="0"
+        />
+        <div
+          aria-label="Clear"
+          class="mx_AccessibleButton mx_RoomHeader_button mx_FavMessagesHeader_clearAllButton"
+          role="button"
+          tabindex="0"
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    class="mx_AutoHideScrollbar mx_ScrollPanel mx_RoomView_searchResultsPanel mx_FavouriteMessages_scrollPanel"
+    tabindex="-1"
+  >
+    <div
+      class="mx_RoomView_messageListWrapper"
+    >
+      <ol
+        aria-live="polite"
+        class="mx_RoomView_MessageList"
+        style="height: 400px;"
+      >
+        <li>
+          <h2>
+            Room: My room
+          </h2>
+        </li>
+        <li
+          data-scroll-tokens="$alices_message"
+        >
+          <ol>
+            <div
+              aria-label="Thu, Jan 1 1970"
+              class="mx_DateSeparator"
+              role="separator"
+              tabindex="-1"
+            >
+              <hr
+                role="none"
+              />
+              <h2
+                aria-hidden="true"
+              >
+                Thu, Jan 1 1970
+              </h2>
+              <hr
+                role="none"
+              />
+            </div>
+            <li
+              aria-atomic="true"
+              aria-live="off"
+              class="mx_EventTile mx_EventTile_lastInSection"
+              data-event-id="$alices_message"
+              data-has-reply="false"
+              data-layout="false"
+              data-scroll-tokens="$alices_message"
+              data-self="false"
+              tabindex="-1"
+            >
+              <div
+                class="mx_DisambiguatedProfile"
+              >
+                <span
+                  class="mx_Username_color6 mx_DisambiguatedProfile_displayName"
+                  dir="auto"
+                >
+                  @alice:server.org
+                </span>
+              </div>
+              <div
+                class="mx_EventTile_line"
+              >
+                <a
+                  aria-label="00:02"
+                  href="#"
+                />
+                <div
+                  class="mx_MTextBody mx_EventTile_content"
+                >
+                  <a
+                    href="#/room/!room:server.org/$alices_message"
+                  >
+                    <span
+                      class="mx_EventTile_body"
+                      dir="auto"
+                    >
+                      i am alice
+                    </span>
+                  </a>
+                </div>
+                <div
+                  aria-label="Message Actions"
+                  aria-live="off"
+                  class="mx_MessageActionBar"
+                  role="toolbar"
+                >
+                  <div
+                    aria-label="Favourite"
+                    class="mx_AccessibleButton mx_MessageActionBar_iconButton"
+                    data-testid="$alices_message"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <div />
+                  </div>
+                  <div
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    aria-label="Options"
+                    class="mx_AccessibleButton mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
+                    role="button"
+                    tabindex="-1"
+                  >
+                    <div />
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </li>
+        <li
+          data-scroll-tokens="$bobs_message"
+        >
+          <ol>
+            <div
+              aria-label="Thu, Jan 1 1970"
+              class="mx_DateSeparator"
+              role="separator"
+              tabindex="-1"
+            >
+              <hr
+                role="none"
+              />
+              <h2
+                aria-hidden="true"
+              >
+                Thu, Jan 1 1970
+              </h2>
+              <hr
+                role="none"
+              />
+            </div>
+            <li
+              aria-atomic="true"
+              aria-live="off"
+              class="mx_EventTile mx_EventTile_lastInSection"
+              data-event-id="$bobs_message"
+              data-has-reply="false"
+              data-layout="false"
+              data-scroll-tokens="$bobs_message"
+              data-self="false"
+              tabindex="-1"
+            >
+              <div
+                class="mx_DisambiguatedProfile"
+              >
+                <span
+                  class="mx_Username_color3 mx_DisambiguatedProfile_displayName"
+                  dir="auto"
+                >
+                  @bob:server.org
+                </span>
+              </div>
+              <div
+                class="mx_EventTile_line"
+              >
+                <a
+                  aria-label="00:02"
+                  href="#"
+                />
+                <div
+                  class="mx_MTextBody mx_EventTile_content"
+                >
+                  <a
+                    href="#/room/!room:server.org/$bobs_message"
+                  >
+                    <span
+                      class="mx_EventTile_body"
+                      dir="auto"
+                    >
+                      i am bob
+                    </span>
+                  </a>
+                </div>
+                <div
+                  aria-label="Message Actions"
+                  aria-live="off"
+                  class="mx_MessageActionBar"
+                  role="toolbar"
+                >
+                  <div
+                    aria-label="Favourite"
+                    class="mx_AccessibleButton mx_MessageActionBar_iconButton"
+                    data-testid="$bobs_message"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <div />
+                  </div>
+                  <div
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    aria-label="Options"
+                    class="mx_AccessibleButton mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
+                    role="button"
+                    tabindex="-1"
+                  >
+                    <div />
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </div>
+  </div>
+</DocumentFragment>
+`;
