@@ -77,7 +77,7 @@ type Send = () => void;
 function handleKeyboardEvent(
     event: KeyboardEvent,
     send: Send,
-    initialContent: string,
+    initialContent: string | undefined,
     composer: Wysiwyg,
     editor: HTMLElement,
     roomContext: IRoomState,
@@ -127,8 +127,13 @@ function dispatchEditEvent(
     roomContext: IRoomState,
     mxClient: MatrixClient,
 ): void {
+    const foundEvents = getEventsFromEditorStateTransfer(editorStateTransfer, roomContext, mxClient);
+    if (!foundEvents) {
+        return;
+    }
+
     const newEvent = findEditableEvent({
-        events: getEventsFromEditorStateTransfer(editorStateTransfer, roomContext, mxClient),
+        events: foundEvents,
         isForward,
         fromEventId: editorStateTransfer.getEvent().getId(),
     });
@@ -148,9 +153,23 @@ function getEventsFromEditorStateTransfer(
     editorStateTransfer: EditorStateTransfer,
     roomContext: IRoomState,
     mxClient: MatrixClient,
-): MatrixEvent[] {
-    const liveTimelineEvents = roomContext.liveTimeline.getEvents();
-    const pendingEvents = mxClient.getRoom(editorStateTransfer.getEvent().getRoomId()).getPendingEvents();
+): MatrixEvent[] | undefined {
+    const liveTimelineEvents = roomContext.liveTimeline?.getEvents();
+    if (!liveTimelineEvents) {
+        return;
+    }
+
+    const roomId = editorStateTransfer.getEvent().getRoomId();
+    if (!roomId) {
+        return;
+    }
+
+    const room = mxClient.getRoom(roomId);
+    if (!room) {
+        return;
+    }
+
+    const pendingEvents = room.getPendingEvents();
     const isInThread = Boolean(editorStateTransfer.getEvent().getThread());
     return liveTimelineEvents.concat(isInThread ? [] : pendingEvents);
 }

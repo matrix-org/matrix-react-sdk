@@ -54,7 +54,7 @@ export function isCaretAtStart(editor: HTMLElement): boolean {
         if (child === selection.anchorNode) {
             return true;
         }
-    } while ((child = child.firstChild));
+    } while ((child = child?.firstChild || null));
 
     return false;
 }
@@ -76,11 +76,11 @@ export function isCaretAtEnd(editor: HTMLElement): boolean {
 
     // In case of nested html elements (list, code blocks), we are going through all the last child
     // The last child of the editor is always a <br> tag, we skip it
-    let child = editor.childNodes.item(editor.childNodes.length - 2);
+    let child: ChildNode | null = editor.childNodes.item(editor.childNodes.length - 2);
     do {
         if (child === selection.focusNode) {
             // Checking that the cursor is at end of the selected text
-            return child.nodeType === Node.TEXT_NODE && selection.focusOffset === child.textContent.length;
+            return child.nodeType === Node.TEXT_NODE && selection.focusOffset === child.textContent?.length;
         }
     } while ((child = child.lastChild));
 
