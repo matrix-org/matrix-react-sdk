@@ -32,6 +32,7 @@ import SettingsFlag from "../elements/SettingsFlag";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import ServerInfo from "./devtools/ServerInfo";
 import { Features } from "../../../settings/Settings";
+import CopyableText from "../elements/CopyableText";
 
 enum Category {
     Room,
@@ -119,7 +120,9 @@ const DevtoolsDialog: React.FC<IProps> = ({ roomId, onFinished }) => {
                 {(cli) => (
                     <>
                         <div className="mx_DevTools_label_left">{label}</div>
-                        <div className="mx_DevTools_label_right">{_t("Room ID: %(roomId)s", { roomId })}</div>
+                        <CopyableText className="mx_DevTools_label_right" getTextToCopy={() => roomId} border={false}>
+                            {_t("Room ID: %(roomId)s", { roomId })}
+                        </CopyableText>
                         <div className="mx_DevTools_label_bottom" />
                         <DevtoolsContext.Provider value={{ room: cli.getRoom(roomId) }}>
                             {body}
