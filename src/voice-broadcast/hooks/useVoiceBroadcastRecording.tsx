@@ -16,11 +16,16 @@ limitations under the License.
 
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import React, { useState } from "react";
+import React from "react";
 
-import { VoiceBroadcastInfoState, VoiceBroadcastRecording, VoiceBroadcastRecordingEvent } from "..";
+import {
+    VoiceBroadcastInfoState,
+    VoiceBroadcastRecording,
+    VoiceBroadcastRecordingEvent,
+    VoiceBroadcastRecordingState,
+} from "..";
 import QuestionDialog from "../../components/views/dialogs/QuestionDialog";
-import { useTypedEventEmitter } from "../../hooks/useEventEmitter";
+import { useTypedEventEmitterState } from "../../hooks/useEventEmitter";
 import { _t } from "../../languageHandler";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import Modal from "../../Modal";
@@ -47,7 +52,7 @@ export const useVoiceBroadcastRecording = (
 ): {
     live: boolean;
     timeLeft: number;
-    recordingState: VoiceBroadcastInfoState;
+    recordingState: VoiceBroadcastRecordingState;
     room: Room;
     sender: RoomMember;
     stopRecording(): void;
@@ -69,19 +74,25 @@ export const useVoiceBroadcastRecording = (
         }
     };
 
-    const [recordingState, setRecordingState] = useState(recording.getState());
-    useTypedEventEmitter(
+    const recordingState = useTypedEventEmitterState(
         recording,
         VoiceBroadcastRecordingEvent.StateChanged,
-        (state: VoiceBroadcastInfoState, _recording: VoiceBroadcastRecording) => {
-            setRecordingState(state);
+        (state?: VoiceBroadcastRecordingState) => {
+            return state ?? recording.getState();
         },
     );
 
-    const [timeLeft, setTimeLeft] = useState(recording.getTimeLeft());
-    useTypedEventEmitter(recording, VoiceBroadcastRecordingEvent.TimeLeftChanged, setTimeLeft);
+    const timeLeft = useTypedEventEmitterState(
+        recording,
+        VoiceBroadcastRecordingEvent.TimeLeftChanged,
+        (t?: number) => {
+            return t ?? recording.getTimeLeft();
+        },
+    );
 
-    const live = [VoiceBroadcastInfoState.Started, VoiceBroadcastInfoState.Resumed].includes(recordingState);
+    const live = (
+        [VoiceBroadcastInfoState.Started, VoiceBroadcastInfoState.Resumed] as VoiceBroadcastRecordingState[]
+    ).includes(recordingState);
 
     return {
         live,
