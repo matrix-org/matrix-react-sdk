@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
+
 import EditorStateTransfer from "../../../../../utils/EditorStateTransfer";
 import { IRoomState } from "../../../../structures/RoomView";
-import { MatrixClient, MatrixEvent } from "../../../../../../../matrix-js-sdk";
 
 // From EditMessageComposer private get events(): MatrixEvent[]
 export function getEventsFromEditorStateTransfer(
