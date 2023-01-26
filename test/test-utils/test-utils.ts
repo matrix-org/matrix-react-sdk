@@ -541,7 +541,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         roomId,
         setBlacklistUnverifiedDevices: jest.fn(),
         setUnreadNotificationCount: jest.fn(),
-        shouldUpgradeToVersion: () => null as () => string | null,
+        shouldUpgradeToVersion: (() => null) as () => string | null,
         tags: {},
         timeline: [],
     } as unknown as Room;
