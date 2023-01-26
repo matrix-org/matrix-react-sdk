@@ -865,6 +865,214 @@ exports[`MPollBody renders a poll with local, non-local and invalid votes 1`] = 
 </div>
 `;
 
+exports[`MPollBody renders a poll with local, non-local and invalid votes 2`] = `
+<div>
+  <div
+    class="mx_MPollBody"
+  >
+    <h2
+      data-testid="pollQuestion"
+    >
+      What should we order for the party?
+    </h2>
+    <div
+      class="mx_MPollBody_allOptions"
+    >
+      <div
+        class="mx_MPollBody_option"
+        data-testid="pollOption-pizza"
+      >
+        <label
+          class="mx_StyledRadioButton mx_MPollBody_live-option mx_StyledRadioButton_enabled"
+        >
+          <input
+            name="poll_answer_select-$mypoll"
+            type="radio"
+            value="pizza"
+          />
+          <div>
+            <div />
+          </div>
+          <div
+            class="mx_StyledRadioButton_content"
+          >
+            <div
+              class="mx_MPollBody_optionDescription"
+            >
+              <div
+                class="mx_MPollBody_optionText"
+              >
+                Pizza
+              </div>
+              <div
+                class="mx_MPollBody_optionVoteCount"
+              >
+                1 vote
+              </div>
+            </div>
+          </div>
+          <div
+            class="mx_StyledRadioButton_spacer"
+          />
+        </label>
+        <div
+          class="mx_MPollBody_popularityBackground"
+        >
+          <div
+            class="mx_MPollBody_popularityAmount"
+            style="width: 20%;"
+          />
+        </div>
+      </div>
+      <div
+        class="mx_MPollBody_option"
+        data-testid="pollOption-poutine"
+      >
+        <label
+          class="mx_StyledRadioButton mx_MPollBody_live-option mx_StyledRadioButton_enabled"
+        >
+          <input
+            name="poll_answer_select-$mypoll"
+            type="radio"
+            value="poutine"
+          />
+          <div>
+            <div />
+          </div>
+          <div
+            class="mx_StyledRadioButton_content"
+          >
+            <div
+              class="mx_MPollBody_optionDescription"
+            >
+              <div
+                class="mx_MPollBody_optionText"
+              >
+                Poutine
+              </div>
+              <div
+                class="mx_MPollBody_optionVoteCount"
+              >
+                0 votes
+              </div>
+            </div>
+          </div>
+          <div
+            class="mx_StyledRadioButton_spacer"
+          />
+        </label>
+        <div
+          class="mx_MPollBody_popularityBackground"
+        >
+          <div
+            class="mx_MPollBody_popularityAmount"
+            style="width: 0%;"
+          />
+        </div>
+      </div>
+      <div
+        class="mx_MPollBody_option mx_MPollBody_option_checked"
+        data-testid="pollOption-italian"
+      >
+        <label
+          class="mx_StyledRadioButton mx_MPollBody_live-option mx_StyledRadioButton_enabled mx_StyledRadioButton_checked"
+        >
+          <input
+            name="poll_answer_select-$mypoll"
+            type="radio"
+            value="italian"
+          />
+          <div>
+            <div />
+          </div>
+          <div
+            class="mx_StyledRadioButton_content"
+          >
+            <div
+              class="mx_MPollBody_optionDescription"
+            >
+              <div
+                class="mx_MPollBody_optionText"
+              >
+                Italian
+              </div>
+              <div
+                class="mx_MPollBody_optionVoteCount"
+              >
+                3 votes
+              </div>
+            </div>
+          </div>
+          <div
+            class="mx_StyledRadioButton_spacer"
+          />
+        </label>
+        <div
+          class="mx_MPollBody_popularityBackground"
+        >
+          <div
+            class="mx_MPollBody_popularityAmount"
+            style="width: 60%;"
+          />
+        </div>
+      </div>
+      <div
+        class="mx_MPollBody_option"
+        data-testid="pollOption-wings"
+      >
+        <label
+          class="mx_StyledRadioButton mx_MPollBody_live-option mx_StyledRadioButton_enabled"
+        >
+          <input
+            name="poll_answer_select-$mypoll"
+            type="radio"
+            value="wings"
+          />
+          <div>
+            <div />
+          </div>
+          <div
+            class="mx_StyledRadioButton_content"
+          >
+            <div
+              class="mx_MPollBody_optionDescription"
+            >
+              <div
+                class="mx_MPollBody_optionText"
+              >
+                Wings
+              </div>
+              <div
+                class="mx_MPollBody_optionVoteCount"
+              >
+                1 vote
+              </div>
+            </div>
+          </div>
+          <div
+            class="mx_StyledRadioButton_spacer"
+          />
+        </label>
+        <div
+          class="mx_MPollBody_popularityBackground"
+        >
+          <div
+            class="mx_MPollBody_popularityAmount"
+            style="width: 20%;"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="mx_MPollBody_totalVotes"
+      data-testid="totalVotes"
+    >
+      Based on 5 votes
+    </div>
+  </div>
+</div>
+`;
+
 exports[`MPollBody renders a poll with no votes 1`] = `
 <div>
   <div

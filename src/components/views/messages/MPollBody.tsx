@@ -20,7 +20,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
-import { M_POLL_END, M_POLL_KIND_DISCLOSED, M_POLL_RESPONSE, M_POLL_START } from "matrix-js-sdk/src/@types/polls";
+import { M_POLL_KIND_DISCLOSED, M_POLL_RESPONSE, M_POLL_START } from "matrix-js-sdk/src/@types/polls";
 import { RelatedRelations } from "matrix-js-sdk/src/models/related-relations";
 import { PollStartEvent, PollAnswerSubevent } from "matrix-js-sdk/src/extensible_events_v1/PollStartEvent";
 import { PollResponseEvent } from "matrix-js-sdk/src/extensible_events_v1/PollResponseEvent";
@@ -97,62 +97,13 @@ export function findTopAnswer(pollEvent: MatrixEvent, voteRelations: Relations):
     return formatCommaSeparatedList(bestAnswerTexts, 3);
 }
 
-export function isPollEnded(
-    pollEvent: MatrixEvent,
-    matrixClient: MatrixClient,
-    getRelationsForEvent?: GetRelationsForEvent,
-): boolean {
-    if (!getRelationsForEvent) {
+export function isPollEnded(pollEvent: MatrixEvent, matrixClient: MatrixClient): boolean {
+    const room = matrixClient.getRoom(pollEvent.getRoomId());
+    const poll = room?.polls.get(pollEvent.getId());
+    if (!poll || poll.isFetchingResponses) {
         return false;
     }
-
-    const pollEventId = pollEvent.getId();
-    if (!pollEventId) {
-        logger.warn(
-            "isPollEnded: Poll event must have event ID in order to determine whether it has ended " +
-                "- assuming poll has not ended",
-        );
-        return false;
-    }
-
-    const roomId = pollEvent.getRoomId();
-    if (!roomId) {
-        logger.warn(
-            "isPollEnded: Poll event must have room ID in order to determine whether it has ended " +
-                "- assuming poll has not ended",
-        );
-        return false;
-    }
-
-    const roomCurrentState = matrixClient.getRoom(roomId)?.currentState;
-    function userCanRedact(endEvent: MatrixEvent): boolean {
-        const endEventSender = endEvent.getSender();
-        return (
-            endEventSender && roomCurrentState && roomCurrentState.maySendRedactionForEvent(pollEvent, endEventSender)
-        );
-    }
-
-    const relationsList: Relations[] = [];
-
-    const pollEndRelations = getRelationsForEvent(pollEventId, "m.reference", M_POLL_END.name);
-    if (pollEndRelations) {
-        relationsList.push(pollEndRelations);
-    }
-
-    const pollEndAltRelations = getRelationsForEvent(pollEventId, "m.reference", M_POLL_END.altName);
-    if (pollEndAltRelations) {
-        relationsList.push(pollEndAltRelations);
-    }
-
-    const endRelations = new RelatedRelations(relationsList);
-
-    if (!endRelations) {
-        return false;
-    }
-
-    const authorisedRelations = endRelations.getRelations().filter(userCanRedact);
-
-    return authorisedRelations.length > 0;
+    return poll.isEnded;
 }
 
 export function pollAlreadyHasVotes(mxEvent: MatrixEvent, getRelationsForEvent?: GetRelationsForEvent): boolean {
@@ -297,10 +248,10 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
      * have already seen.
      */
     private unselectIfNewEventFromMe(): void {
-        // @TODO(kerrya) removed filter because vote relations are only poll responses now
-        const newEvents: MatrixEvent[] = this.state.voteRelations
-            .getRelations()
-            .filter((mxEvent: MatrixEvent) => !this.seenEventIds.includes(mxEvent.getId()!));
+        const relations = this.state.voteRelations?.getRelations() || [];
+        const newEvents: MatrixEvent[] = relations.filter(
+            (mxEvent: MatrixEvent) => !this.seenEventIds.includes(mxEvent.getId()!),
+        );
         let newSelected = this.state.selected;
 
         if (newEvents.length > 0) {
@@ -325,7 +276,6 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
 
     public render(): JSX.Element {
         const { poll, pollReady } = this.state;
-        console.log("hhh", "MPollBody render", poll, pollReady);
         if (!poll?.pollEvent) {
             return null;
         }

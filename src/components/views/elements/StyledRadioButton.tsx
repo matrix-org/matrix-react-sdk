@@ -43,6 +43,8 @@ export default class StyledRadioButton extends React.PureComponent<IProps, IStat
             mx_StyledRadioButton_outlined: outlined,
         });
 
+        console.log("radio", this.props.value, otherProps.checked);
+
         const radioButton = (
             <React.Fragment>
                 <input
