@@ -31,6 +31,7 @@ import EditorStateTransfer from "../../../../../utils/EditorStateTransfer";
 import { useMatrixClientContext } from "../../../../../contexts/MatrixClientContext";
 import { isCaretAtEnd, isCaretAtStart } from "../utils/selection";
 import { getEventsFromEditorStateTransfer } from "../utils/event";
+import { endEditing } from "../utils/editing";
 
 export function useInputEventProcessor(
     onSend: () => void,
@@ -112,8 +113,13 @@ function handleKeyboardEvent(
                 break;
             }
 
-            dispatchEditEvent(event, true, editorStateTransfer, roomContext, mxClient);
-            // TODO cancel edit if no newEvent
+            const isDispatched = dispatchEditEvent(event, true, editorStateTransfer, roomContext, mxClient);
+            if (!isDispatched) {
+                endEditing(roomContext);
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
             break;
         }
     }
@@ -127,10 +133,10 @@ function dispatchEditEvent(
     editorStateTransfer: EditorStateTransfer,
     roomContext: IRoomState,
     mxClient: MatrixClient,
-): void {
+): boolean {
     const foundEvents = getEventsFromEditorStateTransfer(editorStateTransfer, roomContext, mxClient);
     if (!foundEvents) {
-        return;
+        return false;
     }
 
     const newEvent = findEditableEvent({
@@ -146,7 +152,9 @@ function dispatchEditEvent(
         });
         event.stopPropagation();
         event.preventDefault();
+        return true;
     }
+    return false;
 }
 
 type InputEvent = Exclude<WysiwygEvent, KeyboardEvent | ClipboardEvent>;
