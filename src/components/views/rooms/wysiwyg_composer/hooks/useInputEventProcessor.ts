@@ -16,7 +16,7 @@ limitations under the License.
 
 import { Wysiwyg, WysiwygEvent } from "@matrix-org/matrix-wysiwyg";
 import { useCallback } from "react";
-import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { useSettingValue } from "../../../../../hooks/useSettings";
 import { getKeyBindingsManager } from "../../../../../KeyBindingsManager";
@@ -30,6 +30,7 @@ import { ComposerContextState, useComposerContext } from "../ComposerContext";
 import EditorStateTransfer from "../../../../../utils/EditorStateTransfer";
 import { useMatrixClientContext } from "../../../../../contexts/MatrixClientContext";
 import { isCaretAtEnd, isCaretAtStart } from "../utils/selection";
+import { getEventsFromEditorStateTransfer } from "../utils/event";
 
 export function useInputEventProcessor(
     onSend: () => void,
@@ -146,32 +147,6 @@ function dispatchEditEvent(
         event.stopPropagation();
         event.preventDefault();
     }
-}
-
-// From EditMessageComposer private get events(): MatrixEvent[]
-function getEventsFromEditorStateTransfer(
-    editorStateTransfer: EditorStateTransfer,
-    roomContext: IRoomState,
-    mxClient: MatrixClient,
-): MatrixEvent[] | undefined {
-    const liveTimelineEvents = roomContext.liveTimeline?.getEvents();
-    if (!liveTimelineEvents) {
-        return;
-    }
-
-    const roomId = editorStateTransfer.getEvent().getRoomId();
-    if (!roomId) {
-        return;
-    }
-
-    const room = mxClient.getRoom(roomId);
-    if (!room) {
-        return;
-    }
-
-    const pendingEvents = room.getPendingEvents();
-    const isInThread = Boolean(editorStateTransfer.getEvent().getThread());
-    return liveTimelineEvents.concat(isInThread ? [] : pendingEvents);
 }
 
 type InputEvent = Exclude<WysiwygEvent, KeyboardEvent | ClipboardEvent>;
