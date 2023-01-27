@@ -812,7 +812,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         return ret;
     }
 
-    public wantsDateSeparator(prevEvent: MatrixEvent, nextEventDate: Date): boolean {
+    public wantsDateSeparator(prevEvent: MatrixEvent, nextEvent: Date): boolean {
         if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList) {
             return false;
         }
@@ -821,7 +821,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             // here.
             return !this.props.canBackPaginate;
         }
-        return wantsDateSeparator(prevEvent.getDate(), nextEventDate);
+        return wantsDateSeparator(prevEvent.getDate(), nextEvent.getDate());
     }
 
     // Get a list of read receipts that should be shown next to this event
