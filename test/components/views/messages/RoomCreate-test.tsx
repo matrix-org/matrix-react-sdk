@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
 import { EventType, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
@@ -66,17 +67,21 @@ describe("<RoomCreate />", () => {
         );
     });
 
-    it("Opens the old room on click", () => {
+    it("Opens the old room on click", async () => {
         render(<RoomCreate mxEvent={createEvent} />);
         const link = screen.getByText("Click here to see older messages.");
-        fireEvent.click(link);
-        expect(dis.dispatch).toHaveBeenCalledWith({
-            action: Action.ViewRoom,
-            event_id: "tombstone_event_id",
-            highlighted: true,
-            room_id: "old_room_id",
-            metricsTrigger: "Predecessor",
-            metricsViaKeyboard: false,
-        });
+
+        await act(() => userEvent.click(link));
+
+        await waitFor(() =>
+            expect(dis.dispatch).toHaveBeenCalledWith({
+                action: Action.ViewRoom,
+                event_id: "tombstone_event_id",
+                highlighted: true,
+                room_id: "old_room_id",
+                metricsTrigger: "Predecessor",
+                metricsViaKeyboard: false,
+            }),
+        );
     });
 });
