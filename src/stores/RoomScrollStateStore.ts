@@ -38,12 +38,13 @@ export class RoomScrollStateStore {
     //        from the focussedEvent.
     private scrollStateMap = new Map<string, ScrollState>();
 
-    public getScrollState(roomId: string): ScrollState {
+    public getScrollState(roomId: string): ScrollState | undefined {
         return this.scrollStateMap.get(roomId);
     }
 
-    public setScrollState(roomId: string, scrollState: ScrollState): void {
-        this.scrollStateMap.set(roomId, scrollState);
+    public setScrollState(roomId: string, scrollState: ScrollState | undefined): void {
+        if (scrollState === undefined) this.scrollStateMap.delete(roomId);
+        else this.scrollStateMap.set(roomId, scrollState);
     }
 }
 

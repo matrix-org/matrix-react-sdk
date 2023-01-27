@@ -19,7 +19,7 @@ import React from "react";
 import UIStore, { UI_EVENTS } from "../../../stores/UIStore";
 
 interface IProps {
-    sensor: Element;
+    sensor?: Element;
     breakpoint: number;
     onMeasurement(narrow: boolean): void;
 }

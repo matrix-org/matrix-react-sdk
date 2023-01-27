@@ -1264,7 +1264,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
      *
      * returns null if we are not mounted.
      */
-    public getScrollState = (): IScrollState => {
+    public getScrollState = (): IScrollState | null => {
         if (!this.messagePanel.current) {
             return null;
         }
@@ -1316,7 +1316,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
      *
      * We pass it down to the scroll panel.
      */
-    public handleScrollKey = (ev: React.KeyboardEvent): void => {
+    public handleScrollKey = (ev: KeyboardEvent | React.KeyboardEvent): void => {
         if (!this.messagePanel.current) return;
 
         // jump to the live timeline on ctrl-end, rather than the end of the

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, CSSProperties, ReactNode, KeyboardEvent } from "react";
+import React, { createRef, CSSProperties, ReactNode } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import SettingsStore from "../../settings/SettingsStore";
@@ -587,7 +587,7 @@ export default class ScrollPanel extends React.Component<IProps> {
      * Scroll up/down in response to a scroll key
      * @param {object} ev the keyboard event
      */
-    public handleScrollKey = (ev: KeyboardEvent): void => {
+    public handleScrollKey = (ev: KeyboardEvent | React.KeyboardEvent): void => {
         const roomAction = getKeyBindingsManager().getRoomAction(ev);
         switch (roomAction) {
             case KeyBindingAction.ScrollUp:

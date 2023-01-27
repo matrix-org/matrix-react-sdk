@@ -466,7 +466,7 @@ export interface IProps {
     onInviteClick: (() => void) | null;
     onForgetClick: (() => void) | null;
     onAppsClick: (() => void) | null;
-    e2eStatus: E2EStatus;
+    e2eStatus?: E2EStatus;
     appsShown: boolean;
     searchInfo?: ISearchInfo;
     excludedRightPanelPhaseButtons?: Array<RightPanelPhases>;

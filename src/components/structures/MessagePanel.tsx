@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, KeyboardEvent, ReactNode, TransitionEvent } from "react";
+import React, { createRef, ReactNode, TransitionEvent } from "react";
 import ReactDOM from "react-dom";
 import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
@@ -428,7 +428,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
      *
      * @param {KeyboardEvent} ev: the keyboard event to handle
      */
-    public handleScrollKey(ev: KeyboardEvent): void {
+    public handleScrollKey(ev: KeyboardEvent | React.KeyboardEvent): void {
         if (this.scrollPanel.current) {
             this.scrollPanel.current.handleScrollKey(ev);
         }
