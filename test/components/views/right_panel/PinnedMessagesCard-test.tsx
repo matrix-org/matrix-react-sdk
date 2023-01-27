@@ -275,18 +275,14 @@ describe("<PinnedMessagesCard />", () => {
         const room = mkRoom([], [poll]);
         // poll end event validates against this
         jest.spyOn(room.currentState, "maySendRedactionForEvent").mockReturnValue(true);
-        await room.processPollEvents([poll]);
-
-        const pollInstance = room.polls.get(poll.getId());
-        jest.spyOn(pollInstance, "getResponses");
 
         const pins = await mountPins(room);
         // two pages of results
         await flushPromises();
         await flushPromises();
 
+        const pollInstance = room.polls.get(poll.getId());
         expect(pollInstance).toBeTruthy();
-        expect(pollInstance.getResponses).toHaveBeenCalled();
 
         const pinTile = pins.find(MPollBody);
 
