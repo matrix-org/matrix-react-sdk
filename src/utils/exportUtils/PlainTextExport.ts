@@ -122,7 +122,7 @@ export default class PlainTextExporter extends Exporter {
             if (this.cancelled) return this.cleanUp();
             if (!haveRendererForEvent(event, false)) continue;
             const textForEvent = await this.plainTextForEvent(event);
-            content += textForEvent && `${new Date(event.getTs()).toLocaleString()} - ${textForEvent}\n`;
+            content += textForEvent && `${new Date(event.getTs()).toLocaleString('en-CA', {hour12: false})} - ${textForEvent}\n`;
         }
         return content;
     }
