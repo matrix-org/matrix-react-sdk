@@ -66,8 +66,8 @@ export function isCaretAtEnd(editor: HTMLElement): boolean {
         return false;
     }
 
-    // When we are going cycling across all the timeline message with the keyboard
-    // The caret is on the last message element but the focusNode and the anchorNode is the editor himself instead of the text in it.
+    // When we are cycling across all the timeline message with the keyboard
+    // The caret is on the last text element but focusNode and anchorNode refers to the editor div
     // In this case, the focusOffset & anchorOffset match the index + 1 of the selected text
     const isOnLastElement = selection.focusNode === editor && selection.focusOffset === editor.childNodes?.length;
     if (isOnLastElement) {
