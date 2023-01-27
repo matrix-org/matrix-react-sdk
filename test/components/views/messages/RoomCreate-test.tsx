@@ -18,13 +18,16 @@ import React from "react";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
-import { EventType, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { EventType, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 
 import dis from "../../../../src/dispatcher/dispatcher";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { RoomCreate } from "../../../../src/components/views/messages/RoomCreate";
-import { stubClient } from "../../../test-utils/test-utils";
+import { stubClient, upsertRoomStateEvents } from "../../../test-utils/test-utils";
 import { Action } from "../../../../src/dispatcher/actions";
+import RoomContext from "../../../../src/contexts/RoomContext";
+import { getRoomContext } from "../../../test-utils";
+import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 
 jest.mock("../../../../src/dispatcher/dispatcher");
 
@@ -33,6 +36,7 @@ describe("<RoomCreate />", () => {
     const roomId = "!room:server.org";
     const createEvent = new MatrixEvent({
         type: EventType.RoomCreate,
+        state_key: "",
         sender: userId,
         room_id: roomId,
         content: {
@@ -40,6 +44,10 @@ describe("<RoomCreate />", () => {
         },
         event_id: "$create",
     });
+    stubClient();
+    const client = mocked(MatrixClientPeg.get());
+    const room = new Room(roomId, client, userId);
+    upsertRoomStateEvents(room, [createEvent]);
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -54,13 +62,21 @@ describe("<RoomCreate />", () => {
         jest.spyOn(SettingsStore, "setValue").mockRestore();
     });
 
+    function renderRoomCreate() {
+        return render(
+            <RoomContext.Provider value={getRoomContext(room, {})}>
+                <RoomCreate mxEvent={createEvent} />
+            </RoomContext.Provider>,
+        );
+    }
+
     it("Renders as expected", () => {
-        const roomCreate = render(<RoomCreate mxEvent={createEvent} />);
+        const roomCreate = renderRoomCreate();
         expect(roomCreate.asFragment()).toMatchSnapshot();
     });
 
     it("Links to the old version of the room", () => {
-        render(<RoomCreate mxEvent={createEvent} />);
+        renderRoomCreate();
         expect(screen.getByText("Click here to see older messages.")).toHaveAttribute(
             "href",
             "https://matrix.to/#/old_room_id/tombstone_event_id",
@@ -68,7 +84,7 @@ describe("<RoomCreate />", () => {
     });
 
     it("Opens the old room on click", async () => {
-        render(<RoomCreate mxEvent={createEvent} />);
+        renderRoomCreate();
         const link = screen.getByText("Click here to see older messages.");
 
         await act(() => userEvent.click(link));
