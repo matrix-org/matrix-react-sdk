@@ -37,9 +37,19 @@ limitations under the License.
             user-select: all;
         }
 
+        // we always have a <br/> tag at the end of the html, remove it in any way and the cursor won't work properly,
+        // so we give it zero content which effectively makes it disappear visually whilst still being in the flow of
+        // the markup
+        br {
+            content: "";
+        }
+
         p {
             margin-top: 0;
             margin-bottom: 0;
+            // this may seem redundant, but we need to handle zero content formatting tags, which occur when we split a
+            // formatting tag into paragraphs
+            height: $font-22px;
         }
 
         ul,
@@ -59,12 +69,6 @@ limitations under the License.
             margin-block-end: 0;
             margin-inline-start: 0;
             margin-inline-end: 0;
-        }
-
-        // model output always includes a linebreak but we do not want the user
-        // to see it when writing input in lists
-        :is(ol, ul, pre, blockquote) + br:last-of-type {
-            display: none;
         }
 
         > pre {
