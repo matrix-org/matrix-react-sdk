@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, RenderResult } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { mocked } from "jest-mock";
 import { EventType, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
@@ -40,10 +40,6 @@ describe("<RoomCreate />", () => {
         event_id: "$create",
     });
 
-    function getComponent(event: MatrixEvent): RenderResult {
-        return render(<RoomCreate mxEvent={event} />);
-    }
-
     beforeEach(() => {
         jest.clearAllMocks();
         mocked(dis.dispatch).mockReset();
@@ -58,21 +54,21 @@ describe("<RoomCreate />", () => {
     });
 
     it("Renders as expected", () => {
-        const wrapper = getComponent(createEvent);
-        expect(wrapper.asFragment()).toMatchSnapshot();
+        const roomCreate = render(<RoomCreate mxEvent={createEvent} />);
+        expect(roomCreate.asFragment()).toMatchSnapshot();
     });
 
     it("Links to the old version of the room", () => {
-        const wrapper = getComponent(createEvent);
-        expect(wrapper.getByText("Click here to see older messages.")).toHaveAttribute(
+        render(<RoomCreate mxEvent={createEvent} />);
+        expect(screen.getByText("Click here to see older messages.")).toHaveAttribute(
             "href",
             "https://matrix.to/#/old_room_id/tombstone_event_id",
         );
     });
 
     it("Opens the old room on click", () => {
-        const wrapper = getComponent(createEvent);
-        const link = wrapper.getByText("Click here to see older messages.");
+        render(<RoomCreate mxEvent={createEvent} />);
+        const link = screen.getByText("Click here to see older messages.");
         fireEvent.click(link);
         expect(dis.dispatch).toHaveBeenCalledWith({
             action: Action.ViewRoom,
