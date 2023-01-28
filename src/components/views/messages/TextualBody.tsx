@@ -240,17 +240,9 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
     private highlightCode(code: HTMLElement): void {
         const codeTextContent = code.textContent;
         if (!codeTextContent) {
-            console.log("Code block is empty");
             return;
         }
         if (codeTextContent.length > MAX_HIGHLIGHT_LENGTH) {
-            console.log(
-                "Code block is bigger than highlight limit (" +
-                    codeTextContent.length +
-                    " > " +
-                    MAX_HIGHLIGHT_LENGTH +
-                    "): not highlighting",
-            );
             return;
         }
 
