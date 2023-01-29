@@ -28,6 +28,54 @@ exports[`editBodyDiffToHtml deduplicates diff steps 1`] = `
 </div>
 `;
 
+exports[`editBodyDiffToHtml handles complex transformations 1`] = `
+<div>
+  <span
+    class="mx_EventTile_body markdown-body"
+    dir="auto"
+  >
+    <span>
+      <span
+        class="mx_EditHistoryMessage_deletion"
+      >
+        <span
+          data-mx-maths="{<span class='mx_Emoji' title=':snowman:'>☃️</span>}^\\infty"
+        >
+          <code>
+            {
+            <span
+              class="mx_Emoji"
+              title=":snowman:"
+            >
+              ☃️
+            </span>
+            }^\\infty
+          </code>
+        </span>
+      </span>
+      <span
+        class="mx_EditHistoryMessage_insertion"
+      >
+        <span
+          data-mx-maths="{<span class='mx_Emoji' title=':smiley:'>😃</span>}^\\infty"
+        >
+          <code>
+            {
+            <span
+              class="mx_Emoji"
+              title=":snowman:"
+            >
+              ☃️
+            </span>
+            }^\\infty
+          </code>
+        </span>
+      </span>
+    </span>
+  </span>
+</div>
+`;
+
 exports[`editBodyDiffToHtml handles non-html input 1`] = `
 <div>
   <span

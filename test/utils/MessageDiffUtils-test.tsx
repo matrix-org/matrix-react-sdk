@@ -80,12 +80,11 @@ describe("editBodyDiffToHtml", () => {
     });
 
     // see https://github.com/vector-im/element-web/issues/23665
-    it("does not throw", () => {
-        expect(() => {
-            renderDiff(
-                '<span data-mx-maths="{☃️}^\\infty"><code>{☃️}^\\infty</code></span>',
-                '<span data-mx-maths="{😃}^\\infty"><code>{😃}^\\infty</code></span>',
-            );
-        }).not.toThrow();
+    it("handles complex transformations", () => {
+        const { container } = renderDiff(
+            '<span data-mx-maths="{☃️}^\\infty"><code>{☃️}^\\infty</code></span>',
+            '<span data-mx-maths="{😃}^\\infty"><code>{😃}^\\infty</code></span>',
+        );
+        expect(container).toMatchSnapshot();
     });
 });
