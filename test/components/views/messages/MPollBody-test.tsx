@@ -221,7 +221,7 @@ describe("MPollBody", () => {
             room_id: "#myroom:example.com",
             content: newPollStart(undefined, undefined, true),
         });
-        const props = getMPollBodyPropsFromEvent(mxEvent, votes);
+        const props = getMPollBodyPropsFromEvent(mxEvent);
         const room = await setupRoomWithPollEvents(mxEvent, votes);
         const renderResult = renderMPollBodyWithWrapper(props);
         // wait for /relations promise to resolve
@@ -249,7 +249,7 @@ describe("MPollBody", () => {
             room_id: "#myroom:example.com",
             content: newPollStart(undefined, undefined, true),
         });
-        const props = getMPollBodyPropsFromEvent(mxEvent, votes);
+        const props = getMPollBodyPropsFromEvent(mxEvent);
         const room = await setupRoomWithPollEvents(mxEvent, votes);
         const renderResult = renderMPollBodyWithWrapper(props);
         // wait for /relations promise to resolve
@@ -858,10 +858,6 @@ function newVoteRelations(relationEvents: Array<MatrixEvent>): Relations {
     return newRelations(relationEvents, M_POLL_RESPONSE.name, [M_POLL_RESPONSE.altName!]);
 }
 
-function newEndRelations(relationEvents: Array<MatrixEvent>): Relations {
-    return newRelations(relationEvents, M_POLL_END.name, [M_POLL_END.altName!]);
-}
-
 function newRelations(relationEvents: Array<MatrixEvent>, eventType: string, altEventTypes?: string[]): Relations {
     const voteRelations = new Relations("m.reference", eventType, mockClient, altEventTypes);
     for (const ev of relationEvents) {
@@ -891,29 +887,9 @@ async function newMPollBody(
     return result;
 }
 
-function getMPollBodyPropsFromEvent(
-    mxEvent: MatrixEvent,
-    relationEvents: Array<MatrixEvent>,
-    endEvents: Array<MatrixEvent> = [],
-): IBodyProps {
-    const voteRelations = newVoteRelations(relationEvents);
-    const endRelations = newEndRelations(endEvents);
-
-    const getRelationsForEvent = (eventId: string, relationType: string, eventType: string) => {
-        expect(eventId).toBe("$mypoll");
-        expect(relationType).toBe("m.reference");
-        if (M_POLL_RESPONSE.matches(eventType)) {
-            return voteRelations;
-        } else if (M_POLL_END.matches(eventType)) {
-            return endRelations;
-        } else {
-            fail("Unexpected eventType: " + eventType);
-        }
-    };
-
+function getMPollBodyPropsFromEvent(mxEvent: MatrixEvent): IBodyProps {
     return {
         mxEvent,
-        getRelationsForEvent,
         // We don't use any of these props, but they're required.
         highlightLink: "unused",
         highlights: [],
@@ -937,7 +913,7 @@ async function newMPollBodyFromEvent(
     relationEvents: Array<MatrixEvent>,
     endEvents: Array<MatrixEvent> = [],
 ): Promise<RenderResult> {
-    const props = getMPollBodyPropsFromEvent(mxEvent, relationEvents, endEvents);
+    const props = getMPollBodyPropsFromEvent(mxEvent);
 
     await setupRoomWithPollEvents(mxEvent, relationEvents, endEvents);
 
