@@ -24,7 +24,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { bodyToHtml, checkBlockNode, IOptsReturnString } from "../HtmlUtils";
 
 const decodeEntities = (function () {
-    let textarea = null;
+    let textarea: HTMLTextAreaElement | undefined;
     return function (str: string): string {
         if (!textarea) {
             textarea = document.createElement("textarea");
@@ -96,14 +96,14 @@ function isTextNode(node: Text | HTMLElement): node is Text {
     return node.nodeName === "#text";
 }
 
-function diffTreeToDOM(desc): Node {
+function diffTreeToDOM(desc: Text | HTMLElement): Node {
     if (isTextNode(desc)) {
         return stringAsTextNode(desc.data);
     } else {
         const node = document.createElement(desc.nodeName);
         if (desc.attributes) {
             for (const [key, value] of Object.entries(desc.attributes)) {
-                node.setAttribute(key, value);
+                node.setAttribute(key, value.value);
             }
         }
         if (desc.childNodes) {
