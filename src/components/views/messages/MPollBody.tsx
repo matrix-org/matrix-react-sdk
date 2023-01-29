@@ -36,10 +36,12 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import { GetRelationsForEvent } from "../rooms/EventTile";
 import PollCreateDialog from "../elements/PollCreateDialog";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import Spinner from "../elements/Spinner";
 
 interface IState {
     poll?: Poll;
-    pollReady: boolean;
+    // poll instance has fetched at least one page of responses
+    pollInitialised: boolean;
     selected?: string | null | undefined; // Which option was clicked by the local user
     voteRelations?: Relations; // Voting (response) events
 }
@@ -147,7 +149,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
 
         this.state = {
             selected: null,
-            pollReady: false,
+            pollInitialised: false,
         };
     }
 
@@ -175,7 +177,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         const responses = await poll.getResponses();
         const voteRelations = responses;
 
-        this.setState({ pollReady: true, voteRelations });
+        this.setState({ pollInitialised: true, voteRelations });
     }
 
     private addListeners(): void {
@@ -275,7 +277,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
     }
 
     public render(): JSX.Element {
-        const { poll, pollReady } = this.state;
+        const { poll, pollInitialised } = this.state;
         if (!poll?.pollEvent) {
             return null;
         }
@@ -283,6 +285,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         const pollEvent = poll.pollEvent;
 
         const pollId = this.props.mxEvent.getId();
+        const isFetchingResponses = !pollInitialised || poll.isFetchingResponses;
         const userVotes = this.collectUserVotes();
         const votes = countVotes(userVotes, pollEvent);
         const totalVotes = this.totalVotes(votes);
@@ -369,6 +372,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                 </div>
                 <div data-testid="totalVotes" className="mx_MPollBody_totalVotes">
                     {totalText}
+                    {isFetchingResponses && <Spinner w={16} h={16} />}
                 </div>
             </div>
         );

@@ -38,6 +38,7 @@ export default class EndPollDialog extends React.Component<IProps> {
     private onFinished = async (endPoll: boolean): Promise<void> => {
         const room = this.props.matrixClient.getRoom(this.props.event.getRoomId());
         const poll = room?.polls.get(this.props.event.getId());
+        // @TODO(kerrya) handle missing poll?
         const responses = await poll.getResponses();
         const topAnswer = findTopAnswer(this.props.event, responses);
 

@@ -60,10 +60,28 @@ describe("MPollBody", () => {
         expect(allVotes(newVoteRelations([]))).toEqual([]);
     });
 
+    it("renders a loader while responses are still loading", async () => {
+        const votes = [
+            responseEvent("@me:example.com", "pizza"),
+            responseEvent("@bellc:example.com", "pizza"),
+            responseEvent("@catrd:example.com", "poutine"),
+            responseEvent("@dune2:example.com", "wings"),
+        ];
+        // render without waiting for responses
+        const renderResult = await newMPollBody(votes, [], undefined, undefined, false);
+
+        // votes still displayed
+        expect(votesCount(renderResult, "pizza")).toBe("2 votes");
+        expect(votesCount(renderResult, "poutine")).toBe("1 vote");
+        expect(votesCount(renderResult, "italian")).toBe("0 votes");
+        expect(votesCount(renderResult, "wings")).toBe("1 vote");
+        // spinner rendered
+        expect(renderResult.getByTestId("totalVotes").innerHTML).toMatchSnapshot();
+    });
+
     it("renders no votes if none were made", async () => {
         const votes: MatrixEvent[] = [];
         const renderResult = await newMPollBody(votes);
-        await flushPromises();
         expect(votesCount(renderResult, "pizza")).toBe("");
         expect(votesCount(renderResult, "poutine")).toBe("");
         expect(votesCount(renderResult, "italian")).toBe("");
@@ -206,6 +224,8 @@ describe("MPollBody", () => {
         const props = getMPollBodyPropsFromEvent(mxEvent, votes);
         const room = await setupRoomWithPollEvents(mxEvent, votes);
         const renderResult = renderMPollBodyWithWrapper(props);
+        // wait for /relations promise to resolve
+        await flushPromises();
         clickOption(renderResult, "pizza");
 
         // When a new vote from me comes in
@@ -232,6 +252,8 @@ describe("MPollBody", () => {
         const props = getMPollBodyPropsFromEvent(mxEvent, votes);
         const room = await setupRoomWithPollEvents(mxEvent, votes);
         const renderResult = renderMPollBodyWithWrapper(props);
+        // wait for /relations promise to resolve
+        await flushPromises();
 
         clickOption(renderResult, "pizza");
 
@@ -754,6 +776,7 @@ describe("MPollBody", () => {
         ];
         const renderResult = await newMPollBody(votes);
         clickOption(renderResult, "italian");
+
         expect(renderResult.container).toMatchSnapshot();
     });
 
@@ -832,15 +855,15 @@ describe("MPollBody", () => {
 });
 
 function newVoteRelations(relationEvents: Array<MatrixEvent>): Relations {
-    return newRelations(relationEvents, M_POLL_RESPONSE.name);
+    return newRelations(relationEvents, M_POLL_RESPONSE.name, [M_POLL_RESPONSE.altName!]);
 }
 
 function newEndRelations(relationEvents: Array<MatrixEvent>): Relations {
-    return newRelations(relationEvents, M_POLL_END.name);
+    return newRelations(relationEvents, M_POLL_END.name, [M_POLL_END.altName!]);
 }
 
-function newRelations(relationEvents: Array<MatrixEvent>, eventType: string): Relations {
-    const voteRelations = new Relations("m.reference", eventType, mockClient);
+function newRelations(relationEvents: Array<MatrixEvent>, eventType: string, altEventTypes?: string[]): Relations {
+    const voteRelations = new Relations("m.reference", eventType, mockClient, altEventTypes);
     for (const ev of relationEvents) {
         voteRelations.addEvent(ev);
     }
@@ -852,6 +875,7 @@ async function newMPollBody(
     endEvents: Array<MatrixEvent> = [],
     answers?: PollAnswer[],
     disclosed = true,
+    waitForResponsesLoad = true,
 ): Promise<RenderResult> {
     const mxEvent = new MatrixEvent({
         type: M_POLL_START.name,
@@ -859,7 +883,12 @@ async function newMPollBody(
         room_id: "#myroom:example.com",
         content: newPollStart(answers, undefined, disclosed),
     });
-    return newMPollBodyFromEvent(mxEvent, relationEvents, endEvents);
+    const result = newMPollBodyFromEvent(mxEvent, relationEvents, endEvents);
+    // flush promises from loading relations
+    if (waitForResponsesLoad) {
+        await flushPromises();
+    }
+    return result;
 }
 
 function getMPollBodyPropsFromEvent(
@@ -984,21 +1013,6 @@ function newPollStart(answers?: PollAnswer[], question?: string, disclosed = tru
         },
         [M_TEXT.name]: fallback,
     };
-}
-
-function badResponseEvent(): MatrixEvent {
-    return new MatrixEvent({
-        event_id: nextId(),
-        type: M_POLL_RESPONSE.name,
-        sender: "@malicious:example.com",
-        content: {
-            "m.relates_to": {
-                rel_type: "m.reference",
-                event_id: "$mypoll",
-            },
-            // Does not actually contain a response
-        },
-    });
 }
 
 function responseEvent(
