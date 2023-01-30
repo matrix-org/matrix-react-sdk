@@ -166,7 +166,7 @@ export function createTestClient(): MatrixClient {
         decryptEventIfNeeded: () => Promise.resolve(),
         isUserIgnored: jest.fn().mockReturnValue(false),
         getCapabilities: jest.fn().mockResolvedValue({}),
-        supportsExperimentalThreads: () => false,
+        supportsThreads: () => false,
         getRoomUpgradeHistory: jest.fn().mockReturnValue([]),
         getOpenIdToken: jest.fn().mockResolvedValue(undefined),
         registerWithIdentityServer: jest.fn().mockResolvedValue({}),
@@ -208,6 +208,10 @@ export function createTestClient(): MatrixClient {
         setPassword: jest.fn().mockRejectedValue({}),
         groupCallEventHandler: { groupCalls: new Map<string, GroupCall>() },
         redactEvent: jest.fn(),
+
+        createMessagesRequest: jest.fn().mockResolvedValue({
+            chunk: [],
+        }),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
