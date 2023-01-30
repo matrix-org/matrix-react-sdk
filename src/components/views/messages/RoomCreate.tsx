@@ -27,6 +27,7 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import EventTileBubble from "./EventTileBubble";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import RoomContext from "../../../contexts/RoomContext";
+import { useRoomState } from "../../../hooks/useRoomState";
 
 interface IProps {
     /** The m.room.create MatrixEvent that this tile represents */
@@ -44,7 +45,10 @@ export const RoomCreate: React.FC<IProps> = ({ mxEvent, timestamp }) => {
     // use a different predecessor (e.g. through MSC3946) and still display it
     // in the timeline location of the create event.
     const roomContext = useContext(RoomContext);
-    const predecessor = roomContext.room.findPredecessor();
+    const predecessor = useRoomState(
+        roomContext.room,
+        useCallback((state) => state.findPredecessor(), []),
+    );
 
     const onLinkClicked = useCallback(
         (e: React.MouseEvent): void => {
