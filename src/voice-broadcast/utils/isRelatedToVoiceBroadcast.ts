@@ -23,6 +23,7 @@ export const isRelatedToVoiceBroadcast = (event: MatrixEvent, client: MatrixClie
 
     return (
         relation?.rel_type === RelationType.Reference &&
+        !!relation.event_id &&
         client.getRoom(event.getRoomId())?.findEventById(relation.event_id)?.getType() === VoiceBroadcastInfoEventType
     );
 };

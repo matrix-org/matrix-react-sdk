@@ -22,17 +22,23 @@ import { isRelatedToVoiceBroadcast, VoiceBroadcastInfoState } from "../../../src
 import { mkEvent, stubClient } from "../../test-utils";
 import { mkVoiceBroadcastInfoStateEvent } from "./test-utils";
 
-const mkRelatedEvent = (room: Room, relatesTo: MatrixEvent, client: MatrixClient): MatrixEvent => {
+const mkRelatedEvent = (
+    room: Room,
+    relationType: RelationType,
+    relatesTo: MatrixEvent | undefined,
+    client: MatrixClient,
+): MatrixEvent => {
     const event = mkEvent({
         event: true,
         type: EventType.RoomMessage,
         room: room.roomId,
-        content: {},
-        user: client.getSafeUserId(),
-        relatesTo: {
-            rel_type: RelationType.Reference,
-            event_id: relatesTo.getId(),
+        content: {
+            "m.relates_to": {
+                rel_type: relationType,
+                event_id: relatesTo?.getId(),
+            },
         },
+        user: client.getSafeUserId(),
     });
     room.addLiveEvents([event]);
     return event;
@@ -71,12 +77,42 @@ describe("isRelatedToVoiceBroadcast", () => {
         room.addLiveEvents([broadcastEvent, nonBroadcastEvent]);
     });
 
-    it("should return true if related to a broadcast event", () => {
-        expect(isRelatedToVoiceBroadcast(mkRelatedEvent(room, broadcastEvent, client), client)).toBe(true);
+    it("should return true if related (reference) to a broadcast event", () => {
+        expect(
+            isRelatedToVoiceBroadcast(mkRelatedEvent(room, RelationType.Reference, broadcastEvent, client), client),
+        ).toBe(true);
+    });
+
+    it("should return false if related (reference) is undefeind", () => {
+        expect(isRelatedToVoiceBroadcast(mkRelatedEvent(room, RelationType.Reference, undefined, client), client)).toBe(
+            false,
+        );
+    });
+
+    it("should return false if related (referenireplace) to a broadcast event", () => {
+        expect(
+            isRelatedToVoiceBroadcast(mkRelatedEvent(room, RelationType.Replace, broadcastEvent, client), client),
+        ).toBe(false);
+    });
+
+    it("should return false if the event has no relation", () => {
+        const noRelationEvent = mkEvent({
+            event: true,
+            type: EventType.RoomMessage,
+            room: room.roomId,
+            content: {},
+            user: client.getSafeUserId(),
+        });
+        expect(isRelatedToVoiceBroadcast(noRelationEvent, client)).toBe(false);
     });
 
     it("should return false for an unknown room", () => {
         const otherRoom = new Room("!other:example.com", client, client.getSafeUserId());
-        expect(isRelatedToVoiceBroadcast(mkRelatedEvent(otherRoom, broadcastEvent, client), client)).toBe(false);
+        expect(
+            isRelatedToVoiceBroadcast(
+                mkRelatedEvent(otherRoom, RelationType.Reference, broadcastEvent, client),
+                client,
+            ),
+        ).toBe(false);
     });
 });

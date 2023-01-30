@@ -182,16 +182,36 @@ export class VoiceBroadcastPlayback
     };
 
     private onChunkEventDecryptionFailure = (event: MatrixEvent): void => {
-        if (!this.utdChunkEvents.has(event.getId())) {
+        const eventId = event.getId();
+
+        if (!eventId) {
+            // This should not happen, as the existence of the Id is checked before the call.
+            // Log anyway and return.
+            logger.warn("Broadcast chunk decryption failure for event without Id", {
+                broadcast: this.infoEvent.getId(),
+            });
+            return;
+        }
+
+        if (!this.utdChunkEvents.has(eventId)) {
             event.once(MatrixEventEvent.Decrypted, this.onChunkEventDecrypted);
         }
 
-        this.utdChunkEvents.set(event.getId(), event);
+        this.utdChunkEvents.set(eventId, event);
         this.setError();
     };
 
     private onChunkEventDecrypted = async (event: MatrixEvent): Promise<void> => {
-        this.utdChunkEvents.delete(event.getId());
+        const eventId = event.getId();
+
+        if (!eventId) {
+            // This should not happen, as the existence of the Id is checked before the call.
+            // Log anyway and return.
+            logger.warn("Broadcast chunk decrypted for event without Id", { broadcast: this.infoEvent.getId() });
+            return;
+        }
+
+        this.utdChunkEvents.delete(eventId);
         await this.addChunkEvent(event);
 
         if (this.utdChunkEvents.size === 0) {
@@ -236,7 +256,7 @@ export class VoiceBroadcastPlayback
     private async tryLoadPlayback(chunkEvent: MatrixEvent): Promise<void> {
         try {
             return await this.loadPlayback(chunkEvent);
-        } catch (err) {
+        } catch (err: any) {
             logger.warn("Unable to load broadcast playback", {
                 message: err.message,
                 broadcastId: this.infoEvent.getId(),
@@ -358,7 +378,7 @@ export class VoiceBroadcastPlayback
     private async tryGetOrLoadPlaybackForEvent(event: MatrixEvent): Promise<Playback | undefined> {
         try {
             return await this.getOrLoadPlaybackForEvent(event);
-        } catch (err) {
+        } catch (err: any) {
             logger.warn("Unable to load broadcast playback", {
                 message: err.message,
                 broadcastId: this.infoEvent.getId(),
