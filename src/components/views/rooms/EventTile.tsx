@@ -1082,6 +1082,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                 this.context.timelineRenderingType === TimelineRenderingType.Thread
             ) {
                 sender = <SenderProfile onClick={this.onSenderProfileClick} mxEvent={this.props.mxEvent} />;
+            } else if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList) {
+                sender = <SenderProfile mxEvent={this.props.mxEvent} withTooltip />;
             } else {
                 sender = <SenderProfile mxEvent={this.props.mxEvent} />;
             }
