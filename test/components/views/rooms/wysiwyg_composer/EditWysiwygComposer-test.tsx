@@ -508,8 +508,6 @@ describe("EditWysiwygComposer", () => {
                     inputType: "insertText",
                 });
                 const brNode = textbox.lastChild;
-                // console.log("textNode", textNode, textNode.textContent, textNode.nodeName);
-                //     const { length } = textNode.textContent;
                 await select({
                     anchorNode: brNode,
                     anchorOffset: 0,
@@ -531,7 +529,7 @@ describe("EditWysiwygComposer", () => {
                 const { textbox, spyDispatcher } = await setup();
                 // Skipping the BR tag
                 const textNode = textbox.childNodes[textbox.childNodes.length - 2];
-                const { length } = textNode.textContent;
+                const { length } = textNode.textContent || "";
                 await select({
                     anchorNode: textNode,
                     anchorOffset: length,
@@ -568,8 +566,8 @@ describe("EditWysiwygComposer", () => {
                 const { textbox, spyDispatcher } = await setup(editorStateTransfer, mockClient, defaultRoomContext);
 
                 // Skipping the BR tag and get the text node inside the last LI tag
-                const textNode = textbox.childNodes[textbox.childNodes.length - 2].lastChild.lastChild;
-                const { length } = textNode.textContent;
+                const textNode = textbox.childNodes[textbox.childNodes.length - 2].lastChild?.lastChild || textbox;
+                const { length } = textNode.textContent || "";
                 await select({
                     anchorNode: textNode,
                     anchorOffset: length,
