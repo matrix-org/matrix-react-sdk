@@ -38,7 +38,7 @@ export default class EndPollDialog extends React.Component<IProps> {
     private onFinished = async (endPoll: boolean): Promise<void> => {
         if (endPoll) {
             const room = this.props.matrixClient.getRoom(this.props.event.getRoomId());
-            const poll = room?.polls.get(this.props.event.getId());
+            const poll = room?.polls.get(this.props.event.getId()!);
 
             if (!poll) {
                 throw new Error("No poll instance found in room.");
@@ -53,9 +53,9 @@ export default class EndPollDialog extends React.Component<IProps> {
                         ? _t("The poll has ended. No votes were cast.")
                         : _t("The poll has ended. Top answer: %(topAnswer)s", { topAnswer });
 
-                const endEvent = PollEndEvent.from(this.props.event.getId(), message).serialize();
+                const endEvent = PollEndEvent.from(this.props.event.getId()!, message).serialize();
 
-                await this.props.matrixClient.sendEvent(this.props.event.getRoomId(), endEvent.type, endEvent.content);
+                await this.props.matrixClient.sendEvent(this.props.event.getRoomId()!, endEvent.type, endEvent.content);
             } catch (e) {
                 console.error("Failed to submit poll response event:", e);
                 Modal.createDialog(ErrorDialog, {

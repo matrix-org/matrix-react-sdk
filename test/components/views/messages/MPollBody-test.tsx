@@ -31,7 +31,7 @@ import { M_TEXT } from "matrix-js-sdk/src/@types/extensible_events";
 
 import { allVotes, findTopAnswer, isPollEnded } from "../../../../src/components/views/messages/MPollBody";
 import { IBodyProps } from "../../../../src/components/views/messages/IBodyProps";
-import { flushPromises, getMockClientWithEventEmitter } from "../../../test-utils";
+import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../test-utils";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import MPollBody from "../../../../src/components/views/messages/MPollBody";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
@@ -41,7 +41,7 @@ const CHECKED = "mx_MPollBody_option_checked";
 const userId = "@me:example.com";
 
 const mockClient = getMockClientWithEventEmitter({
-    getUserId: jest.fn().mockReturnValue(userId),
+    ...mockClientMethodsUser(userId),
     sendEvent: jest.fn().mockReturnValue(Promise.resolve({ event_id: "fake_send_id" })),
     getRoom: jest.fn(),
     decryptEventIfNeeded: jest.fn().mockResolvedValue(true),
@@ -52,7 +52,7 @@ describe("MPollBody", () => {
     beforeEach(() => {
         mockClient.sendEvent.mockClear();
 
-        mockClient.getRoom.mockReturnValue(undefined);
+        mockClient.getRoom.mockReturnValue(null);
         mockClient.relations.mockResolvedValue({ events: [] });
     });
 
@@ -696,7 +696,7 @@ describe("MPollBody", () => {
         const ends = [endEvent("@me:example.com", 25)];
 
         await setupRoomWithPollEvents(pollEvent, [], ends);
-        const poll = mockClient.getRoom(pollEvent.getRoomId()!).polls.get(pollEvent.getId()!);
+        const poll = mockClient.getRoom(pollEvent.getRoomId()!)!.polls.get(pollEvent.getId()!)!;
         // start fetching, dont await
         poll.getResponses();
         expect(isPollEnded(pollEvent, mockClient)).toBe(false);
@@ -925,7 +925,7 @@ async function setupRoomWithPollEvents(
     relationEvents: Array<MatrixEvent>,
     endEvents: Array<MatrixEvent> = [],
 ): Promise<Room> {
-    const room = new Room(mxEvent.getRoomId(), mockClient, userId);
+    const room = new Room(mxEvent.getRoomId()!, mockClient, userId);
     room.processPollEvents([mxEvent, ...relationEvents, ...endEvents]);
     setRedactionAllowedForMeOnly(room);
     // wait for events to process on room

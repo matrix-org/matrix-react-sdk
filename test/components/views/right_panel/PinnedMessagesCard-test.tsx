@@ -40,7 +40,7 @@ describe("<PinnedMessagesCard />", () => {
     stubClient();
     const cli = mocked(MatrixClientPeg.get());
     cli.getUserId.mockReturnValue("@alice:example.org");
-    cli.setRoomAccountData.mockReturnValue(undefined);
+    cli.setRoomAccountData.mockResolvedValue({});
     cli.relations.mockResolvedValue({ originalEvent: {} as unknown as MatrixEvent, events: [] });
 
     const mkRoom = (localPins: MatrixEvent[], nonLocalPins: MatrixEvent[]): Room => {
@@ -135,8 +135,8 @@ describe("<PinnedMessagesCard />", () => {
 
     it("updates when messages are pinned", async () => {
         // Start with nothing pinned
-        const localPins = [];
-        const nonLocalPins = [];
+        const localPins: MatrixEvent[] = [];
+        const nonLocalPins: MatrixEvent[] = [];
         const pins = await mountPins(mkRoom(localPins, nonLocalPins));
         expect(pins.find(PinnedEventTile).length).toBe(0);
 
@@ -244,7 +244,7 @@ describe("<PinnedMessagesCard />", () => {
             ["@eve:example.org", 1],
         ].map(([user, option], i) =>
             mkEvent({
-                ...PollResponseEvent.from([answers[option].id], poll.getId()).serialize(),
+                ...PollResponseEvent.from([answers[option].id], poll.getId()!).serialize(),
                 event: true,
                 room: "!room:example.org",
                 user: user as string,
@@ -252,17 +252,17 @@ describe("<PinnedMessagesCard />", () => {
         );
 
         const end = mkEvent({
-            ...PollEndEvent.from(poll.getId(), "Closing the poll").serialize(),
+            ...PollEndEvent.from(poll.getId()!, "Closing the poll").serialize(),
             event: true,
             room: "!room:example.org",
             user: "@alice:example.org",
         });
 
         // Make the responses available
-        cli.relations.mockImplementation(async (roomId, eventId, relationType, eventType, { from }) => {
+        cli.relations.mockImplementation(async (roomId, eventId, relationType, eventType, opts) => {
             if (eventId === poll.getId() && relationType === RelationType.Reference) {
                 // Paginate the results, for added challenge
-                return from === "page2"
+                return opts?.from === "page2"
                     ? { originalEvent: poll, events: responses.slice(2) }
                     : { originalEvent: poll, events: [...responses.slice(0, 2), end], nextBatch: "page2" };
             }
@@ -281,7 +281,7 @@ describe("<PinnedMessagesCard />", () => {
         await flushPromises();
         await flushPromises();
 
-        const pollInstance = room.polls.get(poll.getId());
+        const pollInstance = room.polls.get(poll.getId()!);
         expect(pollInstance).toBeTruthy();
 
         const pinTile = pins.find(MPollBody);

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
@@ -101,7 +101,7 @@ export function findTopAnswer(pollEvent: MatrixEvent, voteRelations: Relations):
 
 export function isPollEnded(pollEvent: MatrixEvent, matrixClient: MatrixClient): boolean {
     const room = matrixClient.getRoom(pollEvent.getRoomId());
-    const poll = room?.polls.get(pollEvent.getId());
+    const poll = room?.polls.get(pollEvent.getId()!);
     if (!poll || poll.isFetchingResponses) {
         return false;
     }
@@ -155,7 +155,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
 
     public componentDidMount(): void {
         const room = this.context.getRoom(this.props.mxEvent.getRoomId());
-        const poll = room?.polls.get(this.props.mxEvent.getId());
+        const poll = room?.polls.get(this.props.mxEvent.getId()!);
         if (poll) {
             this.setPollInstance(poll);
         } else {
@@ -210,15 +210,15 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
             return;
         }
         const userVotes = this.collectUserVotes();
-        const userId = this.context.getUserId();
+        const userId = this.context.getSafeUserId();
         const myVote = userVotes.get(userId)?.answers[0];
         if (answerId === myVote) {
             return;
         }
 
-        const response = PollResponseEvent.from([answerId], this.props.mxEvent.getId()).serialize();
+        const response = PollResponseEvent.from([answerId], this.props.mxEvent.getId()!).serialize();
 
-        this.context.sendEvent(this.props.mxEvent.getRoomId(), response.type, response.content).catch((e: any) => {
+        this.context.sendEvent(this.props.mxEvent.getRoomId()!, response.type, response.content).catch((e: any) => {
             console.error("Failed to submit poll response event:", e);
 
             Modal.createDialog(ErrorDialog, {
@@ -238,6 +238,9 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
      * @returns userId -> UserVote
      */
     private collectUserVotes(): Map<string, UserVote> {
+        if (!this.state.voteRelations) {
+            return new Map<string, UserVote>();
+        }
         return collectUserVotes(allVotes(this.state.voteRelations), this.context.getUserId(), this.state.selected);
     }
 
@@ -263,7 +266,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                 }
             }
         }
-        const newEventIds = newEvents.map((mxEvent: MatrixEvent) => mxEvent.getId());
+        const newEventIds = newEvents.map((mxEvent: MatrixEvent) => mxEvent.getId()!);
         this.seenEventIds = this.seenEventIds.concat(newEventIds);
         this.setState({ selected: newSelected });
     }
@@ -276,7 +279,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         return sum;
     }
 
-    public render(): JSX.Element {
+    public render(): ReactNode {
         const { poll, pollInitialised } = this.state;
         if (!poll?.pollEvent) {
             return null;
@@ -284,7 +287,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
 
         const pollEvent = poll.pollEvent;
 
-        const pollId = this.props.mxEvent.getId();
+        const pollId = this.props.mxEvent.getId()!;
         const isFetchingResponses = !pollInitialised || poll.isFetchingResponses;
         const userVotes = this.collectUserVotes();
         const votes = countVotes(userVotes, pollEvent);
@@ -435,7 +438,7 @@ function userResponseFromPollResponseEvent(event: MatrixEvent): UserVote {
         throw new Error("Failed to parse Poll Response Event to determine user response");
     }
 
-    return new UserVote(event.getTs(), event.getSender(), response.answerIds);
+    return new UserVote(event.getTs(), event.getSender()!, response.answerIds);
 }
 
 export function allVotes(voteRelations: Relations): Array<UserVote> {
@@ -484,7 +487,7 @@ function countVotes(userVotes: Map<string, UserVote>, pollStart: PollStartEvent)
         if (!tempResponse.spoiled) {
             for (const answerId of tempResponse.answerIds) {
                 if (collected.has(answerId)) {
-                    collected.set(answerId, collected.get(answerId) + 1);
+                    collected.set(answerId, collected.get(answerId)! + 1);
                 } else {
                     collected.set(answerId, 1);
                 }
