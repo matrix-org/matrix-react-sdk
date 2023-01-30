@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClientPeg } from "../MatrixClientPeg";
+import { SdkContextClass } from "../contexts/SDKContext";
 import SettingsStore from "../settings/SettingsStore";
+import { isLocalRoom } from "../utils/localRoom/isLocalRoom";
 import Timer from "../utils/Timer";
 
 const TYPING_USER_TIMEOUT = 10000;
@@ -33,22 +34,15 @@ export default class TypingStore {
         };
     };
 
-    constructor() {
+    public constructor(private readonly context: SdkContextClass) {
         this.reset();
-    }
-
-    public static sharedInstance(): TypingStore {
-        if (window.mxTypingStore === undefined) {
-            window.mxTypingStore = new TypingStore();
-        }
-        return window.mxTypingStore;
     }
 
     /**
      * Clears all cached typing states. Intended to be called when the
      * MatrixClientPeg client changes.
      */
-    public reset() {
+    public reset(): void {
         this.typingStates = {
             // "roomId": {
             //     isTyping: bool,     // Whether the user is typing or not
@@ -64,11 +58,14 @@ export default class TypingStore {
      * @param {boolean} isTyping Whether the user is typing or not.
      */
     public setSelfTyping(roomId: string, threadId: string | null, isTyping: boolean): void {
-        if (!SettingsStore.getValue('sendTypingNotifications')) return;
-        if (SettingsStore.getValue('lowBandwidth')) return;
+        // No typing notifications for local rooms
+        if (isLocalRoom(roomId)) return;
+
+        if (!SettingsStore.getValue("sendTypingNotifications")) return;
+        if (SettingsStore.getValue("lowBandwidth")) return;
         // Disable typing notification for threads for the initial launch
         // before we figure out a better user experience for them
-        if (SettingsStore.getValue("feature_thread") && threadId) return;
+        if (SettingsStore.getValue("feature_threadenabled") && threadId) return;
 
         let currentTyping = this.typingStates[roomId];
         if ((!isTyping && !currentTyping) || (currentTyping && currentTyping.isTyping === isTyping)) {
@@ -88,22 +85,28 @@ export default class TypingStore {
 
         if (isTyping) {
             if (!currentTyping.serverTimer.isRunning()) {
-                currentTyping.serverTimer.restart().finished().then(() => {
-                    const currentTyping = this.typingStates[roomId];
-                    if (currentTyping) currentTyping.isTyping = false;
+                currentTyping.serverTimer
+                    .restart()
+                    .finished()
+                    .then(() => {
+                        const currentTyping = this.typingStates[roomId];
+                        if (currentTyping) currentTyping.isTyping = false;
 
-                    // The server will (should) time us out on typing, so we don't
-                    // need to advertise a stop of typing.
-                });
+                        // The server will (should) time us out on typing, so we don't
+                        // need to advertise a stop of typing.
+                    });
             } else currentTyping.serverTimer.restart();
 
             if (!currentTyping.userTimer.isRunning()) {
-                currentTyping.userTimer.restart().finished().then(() => {
-                    this.setSelfTyping(roomId, threadId, false);
-                });
+                currentTyping.userTimer
+                    .restart()
+                    .finished()
+                    .then(() => {
+                        this.setSelfTyping(roomId, threadId, false);
+                    });
             } else currentTyping.userTimer.restart();
         }
 
-        MatrixClientPeg.get().sendTyping(roomId, isTyping, TYPING_SERVER_TIMEOUT);
+        this.context.client?.sendTyping(roomId, isTyping, TYPING_SERVER_TIMEOUT);
     }
 }

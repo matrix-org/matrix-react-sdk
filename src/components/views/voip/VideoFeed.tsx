@@ -1,5 +1,6 @@
 /*
-Copyright 2015, 2016, 2019 The Matrix.org Foundation C.I.C.
+Copyright 2015, 2016, 2019, 2020, 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 Šimon Brandner <simon.bra.ag@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,16 +15,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import classnames from 'classnames';
-import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
-import React from 'react';
-import { CallFeed, CallFeedEvent } from 'matrix-js-sdk/src/webrtc/callFeed';
-import { logger } from 'matrix-js-sdk/src/logger';
-import { SDPStreamMetadataPurpose } from 'matrix-js-sdk/src/webrtc/callEventTypes';
+import classnames from "classnames";
+import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
+import React from "react";
+import { CallFeed, CallFeedEvent } from "matrix-js-sdk/src/webrtc/callFeed";
+import { logger } from "matrix-js-sdk/src/logger";
+import { SDPStreamMetadataPurpose } from "matrix-js-sdk/src/webrtc/callEventTypes";
 
 import SettingsStore from "../../../settings/SettingsStore";
 import MemberAvatar from "../avatars/MemberAvatar";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     call: MatrixCall;
@@ -40,7 +40,8 @@ interface IProps {
     // due to a change in video metadata
     onResize?: (e: Event) => void;
 
-    primary: boolean;
+    primary?: boolean;
+    secondary?: boolean;
 }
 
 interface IState {
@@ -48,11 +49,10 @@ interface IState {
     videoMuted: boolean;
 }
 
-@replaceableComponent("views.voip.VideoFeed")
 export default class VideoFeed extends React.PureComponent<IProps, IState> {
     private element: HTMLVideoElement;
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -61,27 +61,24 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
         };
     }
 
-    componentDidMount() {
+    public componentDidMount(): void {
         this.updateFeed(null, this.props.feed);
         this.playMedia();
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.updateFeed(this.props.feed, null);
     }
 
-    componentDidUpdate(prevProps: IProps, prevState: IState) {
+    public componentDidUpdate(prevProps: IProps, prevState: IState): void {
         this.updateFeed(prevProps.feed, this.props.feed);
         // If the mutes state has changed, we try to playMedia()
-        if (
-            prevState.videoMuted !== this.state.videoMuted ||
-            prevProps.feed.stream !== this.props.feed.stream
-        ) {
+        if (prevState.videoMuted !== this.state.videoMuted || prevProps.feed.stream !== this.props.feed.stream) {
             this.playMedia();
         }
     }
 
-    static getDerivedStateFromProps(props: IProps) {
+    public static getDerivedStateFromProps(props: IProps): IState {
         return {
             audioMuted: props.feed.isAudioMuted(),
             videoMuted: props.feed.isVideoMuted(),
@@ -90,15 +87,15 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
 
     private setElementRef = (element: HTMLVideoElement): void => {
         if (!element) {
-            this.element?.removeEventListener('resize', this.onResize);
+            this.element?.removeEventListener("resize", this.onResize);
             return;
         }
 
         this.element = element;
-        element.addEventListener('resize', this.onResize);
+        element.addEventListener("resize", this.onResize);
     };
 
-    private updateFeed(oldFeed: CallFeed, newFeed: CallFeed) {
+    private updateFeed(oldFeed: CallFeed, newFeed: CallFeed): void {
         if (oldFeed === newFeed) return;
 
         if (oldFeed) {
@@ -119,7 +116,7 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
         }
     }
 
-    private async playMedia() {
+    private async playMedia(): Promise<void> {
         const element = this.element;
         if (!element) return;
         // We play audio in AudioFeed, not here
@@ -138,11 +135,15 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
             // load() explicitly, it shouldn't be a problem. - Dave
             await element.play();
         } catch (e) {
-            logger.info("Failed to play media element with feed", this.props.feed, e);
+            logger.info(
+                `Failed to play media element with feed for userId ` +
+                    `${this.props.feed.userId} with purpose ${this.props.feed.purpose}`,
+                e,
+            );
         }
     }
 
-    private stopMedia() {
+    private stopMedia(): void {
         const element = this.element;
         if (!element) return;
 
@@ -155,30 +156,33 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
         // seem to be necessary - Šimon
     }
 
-    private onNewStream = () => {
+    private onNewStream = (): void => {
+        this.setState({
+            audioMuted: this.props.feed.isAudioMuted(),
+            videoMuted: this.props.feed.isVideoMuted(),
+        });
+        this.playMedia();
+    };
+
+    private onMuteStateChanged = (): void => {
         this.setState({
             audioMuted: this.props.feed.isAudioMuted(),
             videoMuted: this.props.feed.isVideoMuted(),
         });
     };
 
-    private onMuteStateChanged = () => {
-        this.setState({
-            audioMuted: this.props.feed.isAudioMuted(),
-            videoMuted: this.props.feed.isVideoMuted(),
-        });
-    };
-
-    private onResize = (e) => {
+    private onResize = (e): void => {
         if (this.props.onResize && !this.props.feed.isLocal()) {
             this.props.onResize(e);
         }
     };
 
-    render() {
-        const { pipMode, primary, feed } = this.props;
+    public render(): JSX.Element {
+        const { pipMode, primary, secondary, feed } = this.props;
 
         const wrapperClasses = classnames("mx_VideoFeed", {
+            mx_VideoFeed_primary: primary,
+            mx_VideoFeed_secondary: secondary,
             mx_VideoFeed_voice: this.state.videoMuted,
         });
         const micIconClasses = classnames("mx_VideoFeed_mic", {
@@ -187,14 +191,8 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
         });
 
         let micIcon;
-        if (
-            feed.purpose !== SDPStreamMetadataPurpose.Screenshare &&
-            !primary &&
-            !pipMode
-        ) {
-            micIcon = (
-                <div className={micIconClasses} />
-            );
+        if (feed.purpose !== SDPStreamMetadataPurpose.Screenshare && !primary && !pipMode) {
+            micIcon = <div className={micIconClasses} />;
         }
 
         let content;
@@ -207,31 +205,22 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
             else if (!pipMode && primary) avatarSize = 160;
             else; // TBD
 
-            content =(
-                <MemberAvatar
-                    member={member}
-                    height={avatarSize}
-                    width={avatarSize}
-                />
-            );
+            content = <MemberAvatar member={member} height={avatarSize} width={avatarSize} />;
         } else {
             const videoClasses = classnames("mx_VideoFeed_video", {
-                mx_VideoFeed_video_mirror: (
+                mx_VideoFeed_video_mirror:
                     this.props.feed.isLocal() &&
                     this.props.feed.purpose === SDPStreamMetadataPurpose.Usermedia &&
-                    SettingsStore.getValue('VideoView.flipVideoHorizontally')
-                ),
+                    SettingsStore.getValue("VideoView.flipVideoHorizontally"),
             });
 
-            content= (
-                <video className={videoClasses} ref={this.setElementRef} />
-            );
+            content = <video className={videoClasses} ref={this.setElementRef} />;
         }
 
         return (
             <div className={wrapperClasses}>
-                { micIcon }
-                { content }
+                {micIcon}
+                {content}
             </div>
         );
     }

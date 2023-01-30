@@ -1,6 +1,5 @@
 /*
-Copyright 2019 New Vector Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019, 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,15 +20,12 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import AutocompleteWrapperModel, {
-    GetAutocompleterComponent,
-    UpdateCallback,
-    UpdateQuery,
-} from "./autocomplete";
+import AutocompleteWrapperModel, { GetAutocompleterComponent, UpdateCallback, UpdateQuery } from "./autocomplete";
 import { unicodeToShortcode } from "../HtmlUtils";
 import * as Avatar from "../Avatar";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { Action } from "../dispatcher/actions";
+import SettingsStore from "../settings/SettingsStore";
 
 interface ISerializedPart {
     type: Type.Plain | Type.Newline | Type.Emoji | Type.Command | Type.PillCandidate;
@@ -88,10 +84,11 @@ export type Part = IBasePart | IPillCandidatePart | IPillPart;
 abstract class BasePart {
     protected _text: string;
 
-    constructor(text = "") {
+    public constructor(text = "") {
         this._text = text;
     }
 
+    // chr can also be a grapheme cluster
     protected acceptsInsertion(chr: string, offset: number, inputType: string): boolean {
         return true;
     }
@@ -105,8 +102,8 @@ abstract class BasePart {
     }
 
     public split(offset: number): IBasePart {
-        const splitText = this.text.substr(offset);
-        this._text = this.text.substr(0, offset);
+        const splitText = this.text.slice(offset);
+        this._text = this.text.slice(0, offset);
         return new PlainPart(splitText);
     }
 
@@ -114,8 +111,8 @@ abstract class BasePart {
     // if the part would become invalid if it removed everything.
     public remove(offset: number, len: number): string | undefined {
         // validate
-        const strWithRemoval = this.text.substr(0, offset) + this.text.substr(offset + len);
-        for (let i = offset; i < (len + offset); ++i) {
+        const strWithRemoval = this.text.slice(0, offset) + this.text.slice(offset + len);
+        for (let i = offset; i < len + offset; ++i) {
             const chr = this.text.charAt(i);
             if (!this.acceptsRemoval(i, chr)) {
                 return strWithRemoval;
@@ -127,14 +124,20 @@ abstract class BasePart {
     // append str, returns the remaining string if a character was rejected.
     public appendUntilRejected(str: string, inputType: string): string | undefined {
         const offset = this.text.length;
-        for (let i = 0; i < str.length; ++i) {
-            const chr = str.charAt(i);
-            if (!this.acceptsInsertion(chr, offset + i, inputType)) {
-                this._text = this._text + str.substr(0, i);
-                return str.substr(i);
+        // Take a copy as we will be taking chunks off the start of the string as we process them
+        // To only need to grapheme split the bits of the string we're working on.
+        let buffer = str;
+        while (buffer) {
+            // We use lodash's grapheme splitter to avoid breaking apart compound emojis
+            const [char] = split(buffer, "", 2);
+            if (!this.acceptsInsertion(char, offset + str.length - buffer.length, inputType)) {
+                break;
             }
+            buffer = buffer.slice(char.length);
         }
-        this._text = this._text + str;
+
+        this._text += str.slice(0, str.length - buffer.length);
+        return buffer || undefined;
     }
 
     // inserts str at offset if all the characters in str were accepted, otherwise don't do anything
@@ -146,8 +149,8 @@ abstract class BasePart {
                 return false;
             }
         }
-        const beforeInsert = this._text.substr(0, offset);
-        const afterInsert = this._text.substr(offset);
+        const beforeInsert = this._text.slice(0, offset);
+        const afterInsert = this._text.slice(offset);
         this._text = beforeInsert + str + afterInsert;
         return true;
     }
@@ -155,8 +158,8 @@ abstract class BasePart {
     public createAutoComplete(updateCallback: UpdateCallback): void {}
 
     protected trim(len: number): string {
-        const remaining = this._text.substr(len);
-        this._text = this._text.substr(0, len);
+        const remaining = this._text.slice(len);
+        this._text = this._text.slice(0, len);
         return remaining;
     }
 
@@ -208,8 +211,7 @@ abstract class PlainBasePart extends BasePart {
 
             // or split if the previous character is a space
             // or if it is a + and this is a :
-            return this._text[offset - 1] !== " " &&
-                (this._text[offset - 1] !== "+" || chr !== ":");
+            return this._text[offset - 1] !== " " && (this._text[offset - 1] !== "+" || chr !== ":");
         }
         return true;
     }
@@ -245,7 +247,7 @@ export class PlainPart extends PlainBasePart implements IBasePart {
 }
 
 export abstract class PillPart extends BasePart implements IPillPart {
-    constructor(public resourceId: string, label) {
+    public constructor(public resourceId: string, label) {
         super(label);
     }
 
@@ -254,7 +256,7 @@ export abstract class PillPart extends BasePart implements IPillPart {
     }
 
     protected acceptsRemoval(position: number, chr: string): boolean {
-        return position !== 0;  //if you remove initial # or @, pill should become plain
+        return position !== 0; //if you remove initial # or @, pill should become plain
     }
 
     public toDOMNode(): Node {
@@ -283,16 +285,18 @@ export abstract class PillPart extends BasePart implements IPillPart {
     }
 
     public canUpdateDOMNode(node: HTMLElement): boolean {
-        return node.nodeType === Node.ELEMENT_NODE &&
-               node.nodeName === "SPAN" &&
-               node.childNodes.length === 1 &&
-               node.childNodes[0].nodeType === Node.TEXT_NODE;
+        return (
+            node.nodeType === Node.ELEMENT_NODE &&
+            node.nodeName === "SPAN" &&
+            node.childNodes.length === 1 &&
+            node.childNodes[0].nodeType === Node.TEXT_NODE
+        );
     }
 
     // helper method for subclasses
-    protected setAvatarVars(node: HTMLElement, avatarUrl: string, initialLetter: string): void {
-        const avatarBackground = `url('${avatarUrl}')`;
-        const avatarLetter = `'${initialLetter}'`;
+    protected setAvatarVars(node: HTMLElement, avatarBackground: string, initialLetter: string | undefined): void {
+        // const avatarBackground = `url('${avatarUrl}')`;
+        const avatarLetter = `'${initialLetter || ""}'`;
         // check if the value is changing,
         // otherwise the avatars flicker on every keystroke while updating.
         if (node.style.getPropertyValue("--avatar-background") !== avatarBackground) {
@@ -360,7 +364,7 @@ class NewlinePart extends BasePart implements IBasePart {
     }
 }
 
-class EmojiPart extends BasePart implements IBasePart {
+export class EmojiPart extends BasePart implements IBasePart {
     protected acceptsInsertion(chr: string, offset: number): boolean {
         return EMOJIBASE_REGEX.test(chr);
     }
@@ -403,31 +407,33 @@ class EmojiPart extends BasePart implements IBasePart {
 }
 
 class RoomPillPart extends PillPart {
-    constructor(resourceId: string, label: string, private room: Room) {
+    public constructor(resourceId: string, label: string, private room?: Room) {
         super(resourceId, label);
     }
 
     protected setAvatar(node: HTMLElement): void {
-        let initialLetter = "";
-        let avatarUrl = Avatar.avatarUrlForRoom(this.room, 16, 16, "crop");
-        if (!avatarUrl) {
-            initialLetter = Avatar.getInitialLetter(this.room ? this.room.name : this.resourceId);
-            avatarUrl = Avatar.defaultAvatarUrlForString(this.room ? this.room.roomId : this.resourceId);
+        const avatarUrl = Avatar.avatarUrlForRoom(this.room, 16, 16, "crop");
+        if (avatarUrl) {
+            this.setAvatarVars(node, `url('${avatarUrl}')`, "");
+            return;
         }
-        this.setAvatarVars(node, avatarUrl, initialLetter);
+
+        const initialLetter = Avatar.getInitialLetter(this.room?.name || this.resourceId);
+        const color = Avatar.getColorForString(this.room?.roomId ?? this.resourceId);
+        this.setAvatarVars(node, color, initialLetter);
     }
 
     public get type(): IPillPart["type"] {
         return Type.RoomPill;
     }
 
-    protected get className() {
-        return "mx_RoomPill mx_Pill";
+    protected get className(): string {
+        return "mx_Pill " + (this.room?.isSpaceRoom() ? "mx_SpacePill" : "mx_RoomPill");
     }
 }
 
 class AtRoomPillPart extends RoomPillPart {
-    constructor(text: string, room: Room) {
+    public constructor(text: string, room: Room) {
         super(text, text, room);
     }
 
@@ -444,7 +450,7 @@ class AtRoomPillPart extends RoomPillPart {
 }
 
 class UserPillPart extends PillPart {
-    constructor(userId, displayName, private member: RoomMember) {
+    public constructor(userId, displayName, private member: RoomMember) {
         super(userId, displayName);
     }
 
@@ -452,7 +458,7 @@ class UserPillPart extends PillPart {
         return Type.UserPill;
     }
 
-    protected get className() {
+    protected get className(): string {
         return "mx_UserPill mx_Pill";
     }
 
@@ -460,14 +466,17 @@ class UserPillPart extends PillPart {
         if (!this.member) {
             return;
         }
-        const name = this.member.name || this.member.userId;
-        const defaultAvatarUrl = Avatar.defaultAvatarUrlForString(this.member.userId);
-        const avatarUrl = Avatar.avatarUrlForMember(this.member, 16, 16, "crop");
-        let initialLetter = "";
-        if (avatarUrl === defaultAvatarUrl) {
-            initialLetter = Avatar.getInitialLetter(name);
+
+        const avatar = Avatar.getMemberAvatar(this.member, 16, 16, "crop");
+        if (avatar) {
+            this.setAvatarVars(node, `url('${avatar}')`, "");
+            return;
         }
-        this.setAvatarVars(node, avatarUrl, initialLetter);
+
+        const name = this.member.name || this.member.userId;
+        const initialLetter = Avatar.getInitialLetter(name);
+        const color = Avatar.getColorForString(this.member.userId);
+        this.setAvatarVars(node, color, initialLetter);
     }
 
     protected onClick = (): void => {
@@ -479,7 +488,7 @@ class UserPillPart extends PillPart {
 }
 
 class PillCandidatePart extends PlainBasePart implements IPillCandidatePart {
-    constructor(text: string, private autoCompleteCreator: IAutocompleteCreator) {
+    public constructor(text: string, private autoCompleteCreator: IAutocompleteCreator) {
         super(text);
     }
 
@@ -503,7 +512,7 @@ class PillCandidatePart extends PlainBasePart implements IPillCandidatePart {
         return true;
     }
 
-    get type(): IPillCandidatePart["type"] {
+    public get type(): IPillCandidatePart["type"] {
         return Type.PillCandidate;
     }
 }
@@ -511,12 +520,7 @@ class PillCandidatePart extends PlainBasePart implements IPillCandidatePart {
 export function getAutoCompleteCreator(getAutocompleterComponent: GetAutocompleterComponent, updateQuery: UpdateQuery) {
     return (partCreator: PartCreator) => {
         return (updateCallback: UpdateCallback) => {
-            return new AutocompleteWrapperModel(
-                updateCallback,
-                getAutocompleterComponent,
-                updateQuery,
-                partCreator,
-            );
+            return new AutocompleteWrapperModel(updateCallback, getAutocompleterComponent, updateQuery, partCreator);
         };
     };
 }
@@ -530,7 +534,7 @@ interface IAutocompleteCreator {
 export class PartCreator {
     protected readonly autoCompleteCreator: IAutocompleteCreator;
 
-    constructor(
+    public constructor(
         private readonly room: Room,
         private readonly client: MatrixClient,
         autoCompleteCreator: AutoCompleteCreator = null,
@@ -554,7 +558,8 @@ export class PartCreator {
             case "\n":
                 return new NewlinePart();
             default:
-                if (EMOJIBASE_REGEX.test(input[0])) {
+                // We use lodash's grapheme splitter to avoid breaking apart compound emojis
+                if (EMOJIBASE_REGEX.test(split(input, "", 2)[0])) {
                     return new EmojiPart();
                 }
                 return new PlainPart();
@@ -601,13 +606,12 @@ export class PartCreator {
     }
 
     public roomPill(alias: string, roomId?: string): RoomPillPart {
-        let room;
+        let room: Room | undefined;
         if (roomId || alias[0] !== "#") {
             room = this.client.getRoom(roomId || alias);
         } else {
             room = this.client.getRooms().find((r) => {
-                return r.getCanonicalAlias() === alias ||
-                       r.getAltAliases().includes(alias);
+                return r.getCanonicalAlias() === alias || r.getAltAliases().includes(alias);
             });
         }
         return new RoomPillPart(alias, room ? room.name : alias, room);
@@ -650,6 +654,9 @@ export class PartCreator {
         userId: string,
     ): [UserPillPart, PlainPart] {
         const pill = this.userPill(displayName, userId);
+        if (!SettingsStore.getValue("MessageComposerInput.insertTrailingColon")) {
+            insertTrailingCharacter = false;
+        }
         const postfix = this.plain(insertTrailingCharacter ? ": " : " ");
         return [pill, postfix];
     }

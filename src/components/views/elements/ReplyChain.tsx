@@ -15,26 +15,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { Relations } from 'matrix-js-sdk/src/models/relations';
+import React from "react";
+import classNames from "classnames";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixClient } from "matrix-js-sdk/src/client";
 
-import { _t } from '../../../languageHandler';
-import dis from '../../../dispatcher/dispatcher';
+import { _t } from "../../../languageHandler";
+import dis from "../../../dispatcher/dispatcher";
 import { makeUserPermalink, RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import SettingsStore from "../../../settings/SettingsStore";
 import { Layout } from "../../../settings/enums/Layout";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { getUserNameColorClass } from "../../../utils/FormattingUtils";
 import { Action } from "../../../dispatcher/actions";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import Spinner from './Spinner';
+import Spinner from "./Spinner";
 import ReplyTile from "../rooms/ReplyTile";
-import Pill from './Pill';
-import { ButtonEvent } from './AccessibleButton';
-import { getParentEventId } from '../../../utils/Reply';
+import Pill, { PillType } from "./Pill";
+import AccessibleButton, { ButtonEvent } from "./AccessibleButton";
+import { getParentEventId, shouldDisplayReply } from "../../../utils/Reply";
+import RoomContext from "../../../contexts/RoomContext";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { GetRelationsForEvent } from "../rooms/EventTile";
 
 /**
  * This number is based on the previous behavior - if we have message of height
@@ -55,9 +56,7 @@ interface IProps {
     forExport?: boolean;
     isQuoteExpanded?: boolean;
     setQuoteExpanded: (isExpanded: boolean) => void;
-    getRelationsForEvent?: (
-        (eventId: string, relationType: string, eventType: string) => Relations
-    );
+    getRelationsForEvent?: GetRelationsForEvent;
 }
 
 interface IState {
@@ -74,14 +73,15 @@ interface IState {
 // This component does no cycle detection, simply because the only way to make such a cycle would be to
 // craft event_id's, using a homeserver that generates predictable event IDs; even then the impact would
 // be low as each event being loaded (after the first) is triggered by an explicit user action.
-@replaceableComponent("views.elements.ReplyChain")
 export default class ReplyChain extends React.Component<IProps, IState> {
-    static contextType = MatrixClientContext;
+    public static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
+
     private unmounted = false;
     private room: Room;
-    private blockquoteRef = React.createRef<HTMLElement>();
+    private blockquoteRef = React.createRef<HTMLQuoteElement>();
 
-    constructor(props, context) {
+    public constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
         super(props, context);
 
         this.state = {
@@ -91,28 +91,32 @@ export default class ReplyChain extends React.Component<IProps, IState> {
             err: false,
         };
 
-        this.room = this.context.getRoom(this.props.parentEv.getRoomId());
+        this.room = this.matrixClient.getRoom(this.props.parentEv.getRoomId());
     }
 
-    componentDidMount() {
+    private get matrixClient(): MatrixClient {
+        return MatrixClientPeg.get();
+    }
+
+    public componentDidMount(): void {
         this.initialize();
         this.trySetExpandableQuotes();
     }
 
-    componentDidUpdate() {
+    public componentDidUpdate(): void {
         this.props.onHeightChanged();
         this.trySetExpandableQuotes();
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.unmounted = true;
     }
 
-    private trySetExpandableQuotes() {
+    private trySetExpandableQuotes(): void {
         if (this.props.isQuoteExpanded === undefined && this.blockquoteRef.current) {
-            const el: HTMLElement | null = this.blockquoteRef.current.querySelector('.mx_EventTile_body');
+            const el: HTMLElement | null = this.blockquoteRef.current.querySelector(".mx_EventTile_body");
             if (el) {
-                const code: HTMLElement | null = el.querySelector('code');
+                const code: HTMLElement | null = el.querySelector("code");
                 const isCodeEllipsisShown = code ? code.offsetHeight >= SHOW_EXPAND_QUOTE_PIXELS : false;
                 const isElipsisShown = el.offsetHeight >= SHOW_EXPAND_QUOTE_PIXELS || isCodeEllipsisShown;
                 if (isElipsisShown) {
@@ -158,10 +162,10 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         try {
             // ask the client to fetch the event we want using the context API, only interface to do so is to ask
             // for a timeline with that event, but once it is loaded we can use findEventById to look up the ev map
-            await this.context.getEventTimeline(this.room.getUnfilteredTimelineSet(), eventId);
+            await this.matrixClient.getEventTimeline(this.room.getUnfilteredTimelineSet(), eventId);
         } catch (e) {
             // if it fails catch the error and return early, there's no point trying to find the event in this case.
-            // Return null as it is falsey and thus should be treated as an error (as the event cannot be resolved).
+            // Return null as it is falsy and thus should be treated as an error (as the event cannot be resolved).
             return null;
         }
         return this.room.findEventById(eventId);
@@ -195,49 +199,65 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         return getUserNameColorClass(ev.getSender()).replace("Username", "ReplyChain");
     }
 
-    render() {
+    public render(): JSX.Element {
         let header = null;
-
         if (this.state.err) {
-            header = <blockquote className="mx_ReplyChain mx_ReplyChain_error">
-                {
-                    _t('Unable to load event that was replied to, ' +
-                        'it either does not exist or you do not have permission to view it.')
-                }
-            </blockquote>;
-        } else if (this.state.loadedEv) {
+            header = (
+                <blockquote className="mx_ReplyChain mx_ReplyChain_error">
+                    {_t(
+                        "Unable to load event that was replied to, " +
+                            "it either does not exist or you do not have permission to view it.",
+                    )}
+                </blockquote>
+            );
+        } else if (this.state.loadedEv && shouldDisplayReply(this.state.events[0])) {
             const ev = this.state.loadedEv;
-            const room = this.context.getRoom(ev.getRoomId());
-            header = <blockquote className={`mx_ReplyChain ${this.getReplyChainColorClass(ev)}`}>
-                {
-                    _t('<a>In reply to</a> <pill>', {}, {
-                        'a': (sub) => (
-                            <button onClick={this.onQuoteClick} className="mx_ReplyChain_show">
-                                { sub }
-                            </button>
-                        ),
-                        'pill': (
-                            <Pill
-                                type={Pill.TYPE_USER_MENTION}
-                                room={room}
-                                url={makeUserPermalink(ev.getSender())}
-                                shouldShowPillAvatar={SettingsStore.getValue("Pill.shouldShowPillAvatar")}
-                            />
-                        ),
-                    })
-                }
-            </blockquote>;
+            const room = this.matrixClient.getRoom(ev.getRoomId());
+            header = (
+                <blockquote className={`mx_ReplyChain ${this.getReplyChainColorClass(ev)}`}>
+                    {_t(
+                        "<a>In reply to</a> <pill>",
+                        {},
+                        {
+                            a: (sub) => (
+                                <AccessibleButton
+                                    kind="link_inline"
+                                    className="mx_ReplyChain_show"
+                                    onClick={this.onQuoteClick}
+                                >
+                                    {sub}
+                                </AccessibleButton>
+                            ),
+                            pill: (
+                                <Pill
+                                    type={PillType.UserMention}
+                                    room={room}
+                                    url={makeUserPermalink(ev.getSender())}
+                                    shouldShowPillAvatar={SettingsStore.getValue("Pill.shouldShowPillAvatar")}
+                                />
+                            ),
+                        },
+                    )}
+                </blockquote>
+            );
         } else if (this.props.forExport) {
             const eventId = getParentEventId(this.props.parentEv);
-            header = <p className="mx_ReplyChain_Export">
-                { _t("In reply to <a>this message</a>",
-                    {},
-                    { a: (sub) => (
-                        <a className="mx_reply_anchor" href={`#${eventId}`} scroll-to={eventId}> { sub } </a>
-                    ),
-                    })
-                }
-            </p>;
+            header = (
+                <p className="mx_ReplyChain_Export">
+                    {_t(
+                        "In reply to <a>this message</a>",
+                        {},
+                        {
+                            a: (sub) => (
+                                <a className="mx_reply_anchor" href={`#${eventId}`} data-scroll-to={eventId}>
+                                    {" "}
+                                    {sub}{" "}
+                                </a>
+                            ),
+                        },
+                    )}
+                </p>
+            );
         } else if (this.state.loading) {
             header = <Spinner w={16} h={16} />;
         }
@@ -245,12 +265,12 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         const { isQuoteExpanded } = this.props;
         const evTiles = this.state.events.map((ev) => {
             const classname = classNames({
-                'mx_ReplyChain': true,
+                "mx_ReplyChain": true,
                 [this.getReplyChainColorClass(ev)]: true,
                 // We don't want to add the class if it's undefined, it should only be expanded/collapsed when it's true/false
-                'mx_ReplyChain--expanded': isQuoteExpanded === true,
+                "mx_ReplyChain--expanded": isQuoteExpanded === true,
                 // We don't want to add the class if it's undefined, it should only be expanded/collapsed when it's true/false
-                'mx_ReplyChain--collapsed': isQuoteExpanded === false,
+                "mx_ReplyChain--collapsed": isQuoteExpanded === false,
             });
             return (
                 <blockquote ref={this.blockquoteRef} className={classname} key={ev.getId()}>
@@ -265,9 +285,11 @@ export default class ReplyChain extends React.Component<IProps, IState> {
             );
         });
 
-        return <div className="mx_ReplyChain_wrapper">
-            <div>{ header }</div>
-            <div>{ evTiles }</div>
-        </div>;
+        return (
+            <div className="mx_ReplyChain_wrapper">
+                <div>{header}</div>
+                <div>{evTiles}</div>
+            </div>
+        );
     }
 }

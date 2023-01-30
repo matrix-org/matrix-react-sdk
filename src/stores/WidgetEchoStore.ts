@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventEmitter from 'events';
-import { IWidget } from 'matrix-widget-api';
+import EventEmitter from "events";
+import { IWidget } from "matrix-widget-api";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import { WidgetType } from "../widgets/WidgetType";
@@ -31,7 +31,7 @@ class WidgetEchoStore extends EventEmitter {
         };
     };
 
-    constructor() {
+    public constructor() {
         super();
 
         this.roomWidgetEcho = {
@@ -44,9 +44,9 @@ class WidgetEchoStore extends EventEmitter {
     }
 
     /**
-     * Gets the widgets for a room, substracting those that are pending deletion.
+     * Gets the widgets for a room, subtracting those that are pending deletion.
      * Widgets that are pending addition are not included, since widgets are
-     * represted as MatrixEvents, so to do this we'd have to create fake MatrixEvents,
+     * represented as MatrixEvents, so to do this we'd have to create fake MatrixEvents,
      * and we don't really need the actual widget events anyway since we just want to
      * show a spinner / prevent widgets being added twice.
      *
@@ -54,7 +54,7 @@ class WidgetEchoStore extends EventEmitter {
      * @param {MatrixEvent[]} currentRoomWidgets Current widgets for the room
      * @returns {MatrixEvent[]} List of widgets in the room, minus any pending removal
      */
-    getEchoedRoomWidgets(roomId: string, currentRoomWidgets: MatrixEvent[]): MatrixEvent[] {
+    public getEchoedRoomWidgets(roomId: string, currentRoomWidgets: MatrixEvent[]): MatrixEvent[] {
         const echoedWidgets = [];
 
         const roomEchoState = Object.assign({}, this.roomWidgetEcho[roomId]);
@@ -73,7 +73,7 @@ class WidgetEchoStore extends EventEmitter {
         return echoedWidgets;
     }
 
-    roomHasPendingWidgetsOfType(roomId: string, currentRoomWidgets: MatrixEvent[], type?: WidgetType): boolean {
+    public roomHasPendingWidgetsOfType(roomId: string, currentRoomWidgets: MatrixEvent[], type?: WidgetType): boolean {
         const roomEchoState = Object.assign({}, this.roomWidgetEcho[roomId]);
 
         // any widget IDs that are already in the room are not pending, so
@@ -93,25 +93,25 @@ class WidgetEchoStore extends EventEmitter {
         }
     }
 
-    roomHasPendingWidgets(roomId: string, currentRoomWidgets: MatrixEvent[]): boolean {
+    public roomHasPendingWidgets(roomId: string, currentRoomWidgets: MatrixEvent[]): boolean {
         return this.roomHasPendingWidgetsOfType(roomId, currentRoomWidgets);
     }
 
-    setRoomWidgetEcho(roomId: string, widgetId: string, state: IWidget) {
+    public setRoomWidgetEcho(roomId: string, widgetId: string, state: IWidget): void {
         if (this.roomWidgetEcho[roomId] === undefined) this.roomWidgetEcho[roomId] = {};
 
         this.roomWidgetEcho[roomId][widgetId] = state;
-        this.emit('update', roomId, widgetId);
+        this.emit("update", roomId, widgetId);
     }
 
-    removeRoomWidgetEcho(roomId: string, widgetId: string) {
+    public removeRoomWidgetEcho(roomId: string, widgetId: string): void {
         delete this.roomWidgetEcho[roomId][widgetId];
         if (Object.keys(this.roomWidgetEcho[roomId]).length === 0) delete this.roomWidgetEcho[roomId];
-        this.emit('update', roomId, widgetId);
+        this.emit("update", roomId, widgetId);
     }
 }
 
-let singletonWidgetEchoStore = null;
+let singletonWidgetEchoStore: WidgetEchoStore | null = null;
 if (!singletonWidgetEchoStore) {
     singletonWidgetEchoStore = new WidgetEchoStore();
 }

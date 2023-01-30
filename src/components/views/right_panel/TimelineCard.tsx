@@ -14,35 +14,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { EventSubscription } from "fbemitter";
-import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { EventTimelineSet } from 'matrix-js-sdk/src/models/event-timeline-set';
-import { NotificationCountType, Room } from 'matrix-js-sdk/src/models/room';
-import { Thread } from 'matrix-js-sdk/src/models/thread';
-import classNames from 'classnames';
+import React from "react";
+import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
+import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
+import { Thread } from "matrix-js-sdk/src/models/thread";
 
 import BaseCard from "./BaseCard";
-import ResizeNotifier from '../../../utils/ResizeNotifier';
-import MessageComposer from '../rooms/MessageComposer';
-import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
-import { Layout } from '../../../settings/enums/Layout';
-import TimelinePanel from '../../structures/TimelinePanel';
-import { E2EStatus } from '../../../utils/ShieldUtils';
-import EditorStateTransfer from '../../../utils/EditorStateTransfer';
-import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
-import dis from '../../../dispatcher/dispatcher';
-import { _t } from '../../../languageHandler';
-import { replaceableComponent } from '../../../utils/replaceableComponent';
-import { ActionPayload } from '../../../dispatcher/payloads';
-import { Action } from '../../../dispatcher/actions';
-import RoomViewStore from '../../../stores/RoomViewStore';
-import ContentMessages from '../../../ContentMessages';
-import UploadBar from '../../structures/UploadBar';
-import SettingsStore from '../../../settings/SettingsStore';
-import JumpToBottomButton from '../rooms/JumpToBottomButton';
+import ResizeNotifier from "../../../utils/ResizeNotifier";
+import MessageComposer from "../rooms/MessageComposer";
+import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
+import { Layout } from "../../../settings/enums/Layout";
+import TimelinePanel from "../../structures/TimelinePanel";
+import { E2EStatus } from "../../../utils/ShieldUtils";
+import EditorStateTransfer from "../../../utils/EditorStateTransfer";
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
+import dis from "../../../dispatcher/dispatcher";
+import { _t } from "../../../languageHandler";
+import { ActionPayload } from "../../../dispatcher/payloads";
+import { Action } from "../../../dispatcher/actions";
+import ContentMessages from "../../../ContentMessages";
+import UploadBar from "../../structures/UploadBar";
+import SettingsStore from "../../../settings/SettingsStore";
+import JumpToBottomButton from "../rooms/JumpToBottomButton";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import Measured from '../elements/Measured';
+import Measured from "../elements/Measured";
+import Heading from "../typography/Heading";
+import { UPDATE_EVENT } from "../../../stores/AsyncStore";
+import { SdkContextClass } from "../../../contexts/SDKContext";
 
 interface IProps {
     room: Room;
@@ -71,18 +70,16 @@ interface IState {
     showReadReceipts?: boolean;
 }
 
-@replaceableComponent("structures.TimelineCard")
 export default class TimelineCard extends React.Component<IProps, IState> {
-    static contextType = RoomContext;
+    public static contextType = RoomContext;
 
     private dispatcherRef: string;
     private layoutWatcherRef: string;
     private timelinePanel = React.createRef<TimelinePanel>();
     private card = React.createRef<HTMLDivElement>();
-    private roomStoreToken: EventSubscription;
     private readReceiptsSettingWatcher: string;
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             showReadReceipts: SettingsStore.getValue("showReadReceipts", props.room.roomId),
@@ -94,20 +91,18 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
-        this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
+        SdkContextClass.instance.roomViewStore.addListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
         this.dispatcherRef = dis.register(this.onAction);
-        this.readReceiptsSettingWatcher = SettingsStore.watchSetting("showReadReceipts", null, (...[,,, value]) =>
+        this.readReceiptsSettingWatcher = SettingsStore.watchSetting("showReadReceipts", null, (...[, , , value]) =>
             this.setState({ showReadReceipts: value as boolean }),
         );
-        this.layoutWatcherRef = SettingsStore.watchSetting("layout", null, (...[,,, value]) =>
+        this.layoutWatcherRef = SettingsStore.watchSetting("layout", null, (...[, , , value]) =>
             this.setState({ layout: value as Layout }),
         );
     }
 
     public componentWillUnmount(): void {
-        // Remove RoomStore listener
-
-        this.roomStoreToken?.remove();
+        SdkContextClass.instance.roomViewStore.removeListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
 
         if (this.readReceiptsSettingWatcher) {
             SettingsStore.unwatchSetting(this.readReceiptsSettingWatcher);
@@ -121,12 +116,9 @@ export default class TimelineCard extends React.Component<IProps, IState> {
 
     private onRoomViewStoreUpdate = async (initial?: boolean): Promise<void> => {
         const newState: Pick<IState, any> = {
-            // roomLoading: RoomViewStore.isRoomLoading(),
-            // roomLoadError: RoomViewStore.getRoomLoadError(),
-
-            initialEventId: RoomViewStore.getInitialEventId(),
-            isInitialEventHighlighted: RoomViewStore.isInitialEventHighlighted(),
-            replyToEvent: RoomViewStore.getQuotingEvent(),
+            initialEventId: SdkContextClass.instance.roomViewStore.getInitialEventId(),
+            isInitialEventHighlighted: SdkContextClass.instance.roomViewStore.isInitialEventHighlighted(),
+            replyToEvent: SdkContextClass.instance.roomViewStore.getQuotingEvent(),
         };
 
         this.setState(newState);
@@ -135,29 +127,19 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     private onAction = (payload: ActionPayload): void => {
         switch (payload.action) {
             case Action.EditEvent:
-                this.setState({
-                    editState: payload.event ? new EditorStateTransfer(payload.event) : null,
-                }, () => {
-                    if (payload.event) {
-                        this.timelinePanel.current?.scrollToEventIfNeeded(payload.event.getId());
-                    }
-                });
+                this.setState(
+                    {
+                        editState: payload.event ? new EditorStateTransfer(payload.event) : null,
+                    },
+                    () => {
+                        if (payload.event) {
+                            this.timelinePanel.current?.scrollToEventIfNeeded(payload.event.getId());
+                        }
+                    },
+                );
                 break;
             default:
                 break;
-        }
-    };
-
-    private onUserScroll = (): void => {
-        if (this.state.initialEventId && this.state.isInitialEventHighlighted) {
-            dis.dispatch<ViewRoomPayload>({
-                action: Action.ViewRoom,
-                room_id: this.props.room.roomId,
-                event_id: this.state.initialEventId,
-                highlighted: false,
-                replyingToEvent: this.state.replyToEvent,
-                metricsTrigger: undefined, // room doesn't change
-            });
         }
     };
 
@@ -173,13 +155,24 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                 atEndOfLiveTimeline: false,
             });
         }
+
+        if (this.state.initialEventId && this.state.isInitialEventHighlighted) {
+            dis.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
+                room_id: this.props.room.roomId,
+                event_id: this.state.initialEventId,
+                highlighted: false,
+                replyingToEvent: this.state.replyToEvent,
+                metricsTrigger: undefined, // room doesn't change
+            });
+        }
     };
 
     private onMeasurement = (narrow: boolean): void => {
         this.setState({ narrow });
     };
 
-    private jumpToLiveTimeline = () => {
+    private jumpToLiveTimeline = (): void => {
         if (this.state.initialEventId && this.state.isInitialEventHighlighted) {
             // If we were viewing a highlighted event, firing view_room without
             // an event will take care of both clearing the URL fragment and
@@ -196,38 +189,42 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     };
 
     private renderTimelineCardHeader = (): JSX.Element => {
-        return <div className="mx_TimelineCard__header">
-            <span>{ _t("Chat") }</span>
-        </div>;
+        return (
+            <div className="mx_BaseCard_header_title">
+                <Heading size="h4" className="mx_BaseCard_header_title_heading">
+                    {_t("Chat")}
+                </Heading>
+            </div>
+        );
     };
 
     public render(): JSX.Element {
-        const highlightedEventId = this.state.isInitialEventHighlighted
-            ? this.state.initialEventId
-            : null;
-
-        const messagePanelClassNames = classNames({
-            "mx_RoomView_messagePanel": true,
-            "mx_GroupLayout": this.state.layout === Layout.Group,
-        });
+        const highlightedEventId = this.state.isInitialEventHighlighted ? this.state.initialEventId : null;
 
         let jumpToBottom;
         if (!this.state.atEndOfLiveTimeline) {
-            jumpToBottom = (<JumpToBottomButton
-                highlight={this.props.room.getUnreadNotificationCount(NotificationCountType.Highlight) > 0}
-                onScrollToBottomClick={this.jumpToLiveTimeline}
-            />);
+            jumpToBottom = (
+                <JumpToBottomButton
+                    highlight={this.props.room.getUnreadNotificationCount(NotificationCountType.Highlight) > 0}
+                    onScrollToBottomClick={this.jumpToLiveTimeline}
+                />
+            );
         }
 
         const isUploading = ContentMessages.sharedInstance().getCurrentUploads(this.props.composerRelation).length > 0;
 
+        const myMembership = this.props.room.getMyMembership();
+        const showComposer = myMembership === "join";
+
         return (
-            <RoomContext.Provider value={{
-                ...this.context,
-                timelineRenderingType: this.props.timelineRenderingType ?? this.context.timelineRenderingType,
-                liveTimeline: this.props.timelineSet.getLiveTimeline(),
-                narrow: this.state.narrow,
-            }}>
+            <RoomContext.Provider
+                value={{
+                    ...this.context,
+                    timelineRenderingType: this.props.timelineRenderingType ?? this.context.timelineRenderingType,
+                    liveTimeline: this.props.timelineSet.getLiveTimeline(),
+                    narrow: this.state.narrow,
+                }}
+            >
                 <BaseCard
                     className={this.props.classNames}
                     onClose={this.props.onClose}
@@ -235,12 +232,9 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                     header={this.renderTimelineCardHeader()}
                     ref={this.card}
                 >
-                    <Measured
-                        sensor={this.card.current}
-                        onMeasurement={this.onMeasurement}
-                    />
+                    <Measured sensor={this.card.current} onMeasurement={this.onMeasurement} />
                     <div className="mx_TimelineCard_timeline">
-                        { jumpToBottom }
+                        {jumpToBottom}
                         <TimelinePanel
                             ref={this.timelinePanel}
                             showReadReceipts={this.state.showReadReceipts}
@@ -248,13 +242,13 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                             manageReadMarkers={false} // No RM support in the TimelineCard
                             sendReadReceiptOnLoad={true}
                             timelineSet={this.props.timelineSet}
-                            showUrlPreview={true}
+                            showUrlPreview={this.context.showUrlPreview}
                             // The right panel timeline (and therefore threads) don't support IRC layout at this time
                             layout={this.state.layout === Layout.Bubble ? Layout.Bubble : Layout.Group}
                             hideThreadedMessages={false}
                             hidden={false}
                             showReactions={true}
-                            className={messagePanelClassNames}
+                            className="mx_RoomView_messagePanel"
                             permalinkCreator={this.props.permalinkCreator}
                             membersLoaded={true}
                             editState={this.state.editState}
@@ -262,23 +256,22 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                             resizeNotifier={this.props.resizeNotifier}
                             highlightedEventId={highlightedEventId}
                             onScroll={this.onScroll}
-                            onUserScroll={this.onUserScroll}
                         />
                     </div>
 
-                    { isUploading && (
-                        <UploadBar room={this.props.room} relation={this.props.composerRelation} />
-                    ) }
+                    {isUploading && <UploadBar room={this.props.room} relation={this.props.composerRelation} />}
 
-                    <MessageComposer
-                        room={this.props.room}
-                        relation={this.props.composerRelation}
-                        resizeNotifier={this.props.resizeNotifier}
-                        replyToEvent={this.state.replyToEvent}
-                        permalinkCreator={this.props.permalinkCreator}
-                        e2eStatus={this.props.e2eStatus}
-                        compact={true}
-                    />
+                    {showComposer && (
+                        <MessageComposer
+                            room={this.props.room}
+                            relation={this.props.composerRelation}
+                            resizeNotifier={this.props.resizeNotifier}
+                            replyToEvent={this.state.replyToEvent}
+                            permalinkCreator={this.props.permalinkCreator}
+                            e2eStatus={this.props.e2eStatus}
+                            compact={true}
+                        />
+                    )}
                 </BaseCard>
             </RoomContext.Provider>
         );

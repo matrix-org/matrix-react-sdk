@@ -14,12 +14,12 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import React, { FunctionComponent, useEffect, useRef } from 'react';
+import React, { FunctionComponent, useEffect, useRef } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import dis from '../../../dispatcher/dispatcher';
-import ICanvasEffect from '../../../effects/ICanvasEffect';
-import { CHAT_EFFECTS } from '../../../effects';
+import dis from "../../../dispatcher/dispatcher";
+import ICanvasEffect from "../../../effects/ICanvasEffect";
+import { CHAT_EFFECTS } from "../../../effects";
 import UIStore, { UI_EVENTS } from "../../../stores/UIStore";
 
 interface IProps {
@@ -47,15 +47,15 @@ const EffectsOverlay: FunctionComponent<IProps> = ({ roomWidth }) => {
     };
 
     useEffect(() => {
-        const resize = () => {
+        const resize = (): void => {
             if (canvasRef.current && canvasRef.current?.height !== UIStore.instance.windowHeight) {
                 canvasRef.current.height = UIStore.instance.windowHeight;
             }
         };
-        const onAction = (payload: { action: string }) => {
-            const actionPrefix = 'effects.';
+        const onAction = (payload: { action: string }): void => {
+            const actionPrefix = "effects.";
             if (payload.action.indexOf(actionPrefix) === 0) {
-                const effect = payload.action.substr(actionPrefix.length);
+                const effect = payload.action.slice(actionPrefix.length);
                 lazyLoadEffectModule(effect).then((module) => module?.start(canvasRef.current));
             }
         };
@@ -83,10 +83,10 @@ const EffectsOverlay: FunctionComponent<IProps> = ({ roomWidth }) => {
             ref={canvasRef}
             width={roomWidth}
             style={{
-                display: 'block',
+                display: "block",
                 zIndex: 999999,
-                pointerEvents: 'none',
-                position: 'fixed',
+                pointerEvents: "none",
+                position: "fixed",
                 top: 0,
                 right: 0,
             }}

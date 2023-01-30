@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021, 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import ReactDOM from "react-dom";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
@@ -23,6 +23,7 @@ import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import Exporter from "./Exporter";
+import SettingsStore from "../../settings/SettingsStore";
 import { mediaFromMxc } from "../../customisations/Media";
 import { Layout } from "../../settings/enums/Layout";
 import { shouldFormContinuation } from "../../components/structures/MessagePanel";
@@ -30,14 +31,14 @@ import { formatFullDateNoDayNoTime, wantsDateSeparator } from "../../DateUtils";
 import { RoomPermalinkCreator } from "../permalinks/Permalinks";
 import { _t } from "../../languageHandler";
 import * as Avatar from "../../Avatar";
-import EventTile, { haveTileForEvent } from "../../components/views/rooms/EventTile";
+import EventTile from "../../components/views/rooms/EventTile";
 import DateSeparator from "../../components/views/messages/DateSeparator";
 import BaseAvatar from "../../components/views/avatars/BaseAvatar";
-import { ExportType } from "./exportUtils";
-import { IExportOptions } from "./exportUtils";
+import { ExportType, IExportOptions } from "./exportUtils";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import getExportCSS from "./exportCSS";
 import { textForEvent } from "../../TextForEvent";
+import { haveRendererForEvent } from "../../events/EventTileFactory";
 
 import exportJS from "!!raw-loader!./exportJS";
 
@@ -46,8 +47,9 @@ export default class HTMLExporter extends Exporter {
     protected permalinkCreator: RoomPermalinkCreator;
     protected totalSize: number;
     protected mediaOmitText: string;
+    private threadsEnabled: boolean;
 
-    constructor(
+    public constructor(
         room: Room,
         exportType: ExportType,
         exportOptions: IExportOptions,
@@ -60,10 +62,11 @@ export default class HTMLExporter extends Exporter {
         this.mediaOmitText = !this.exportOptions.attachmentsIncluded
             ? _t("Media omitted")
             : _t("Media omitted - file size limit exceeded");
+        this.threadsEnabled = SettingsStore.getValue("feature_threadenabled");
     }
 
-    protected async getRoomAvatar() {
-        let blob: Blob;
+    protected async getRoomAvatar(): Promise<ReactNode> {
+        let blob: Blob | undefined = undefined;
         const avatarUrl = Avatar.avatarUrlForRoom(this.room, 32, 32, "crop");
         const avatarPath = "room.png";
         if (avatarUrl) {
@@ -82,20 +85,20 @@ export default class HTMLExporter extends Exporter {
                 height={32}
                 name={this.room.name}
                 title={this.room.name}
-                url={blob ? avatarPath : null}
+                url={blob ? avatarPath : ""}
                 resizeMethod="crop"
             />
         );
         return renderToStaticMarkup(avatar);
     }
 
-    protected async wrapHTML(content: string) {
+    protected async wrapHTML(content: string): Promise<string> {
         const roomAvatar = await this.getRoomAvatar();
         const exportDate = formatFullDateNoDayNoTime(new Date());
         const creator = this.room.currentState.getStateEvents(EventType.RoomCreate, "")?.getSender();
-        const creatorName = this.room?.getMember(creator)?.rawDisplayName || creator;
-        const exporter = this.client.getUserId();
-        const exporterName = this.room?.getMember(exporter)?.rawDisplayName;
+        const creatorName = (creator ? this.room.getMember(creator)?.rawDisplayName : creator) || creator;
+        const exporter = this.client.getUserId()!;
+        const exporterName = this.room.getMember(exporter)?.rawDisplayName;
         const topic = this.room.currentState.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic || "";
         const createdText = _t("%(creatorName)s created this room.", {
             creatorName,
@@ -103,31 +106,27 @@ export default class HTMLExporter extends Exporter {
 
         const exportedText = renderToStaticMarkup(
             <p>
-                { _t(
+                {_t(
                     "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.",
                     {
                         exportDate,
                     },
                     {
-                        roomName: () => <b>{ this.room.name }</b>,
+                        roomName: () => <b>{this.room.name}</b>,
                         exporterDetails: () => (
-                            <a
-                                href={`https://matrix.to/#/${exporter}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                { exporterName ? (
+                            <a href={`https://matrix.to/#/${exporter}`} target="_blank" rel="noopener noreferrer">
+                                {exporterName ? (
                                     <>
-                                        <b>{ exporterName }</b>
-                                        { " (" + exporter + ")" }
+                                        <b>{exporterName}</b>
+                                        {" (" + exporter + ")"}
                                     </>
                                 ) : (
-                                    <b>{ exporter }</b>
-                                ) }
+                                    <b>{exporter}</b>
+                                )}
                             </a>
                         ),
                     },
-                ) }
+                )}
             </p>,
         );
 
@@ -182,7 +181,6 @@ export default class HTMLExporter extends Exporter {
                                 mx_AutoHideScrollbar
                                 mx_ScrollPanel
                                 mx_RoomView_messagePanel
-                                mx_GroupLayout
                                 "
                             >
                                 <div class="mx_RoomView_messageListWrapper">
@@ -219,80 +217,73 @@ export default class HTMLExporter extends Exporter {
         </html>`;
     }
 
-    protected getAvatarURL(event: MatrixEvent): string {
+    protected getAvatarURL(event: MatrixEvent): string | undefined {
         const member = event.sender;
-        return (
-            member.getMxcAvatarUrl() &&
-            mediaFromMxc(member.getMxcAvatarUrl()).getThumbnailOfSourceHttp(
-                30,
-                30,
-                "crop",
-            )
-        );
+        const avatarUrl = member?.getMxcAvatarUrl();
+        return avatarUrl ? mediaFromMxc(avatarUrl).getThumbnailOfSourceHttp(30, 30, "crop") : undefined;
     }
 
-    protected async saveAvatarIfNeeded(event: MatrixEvent) {
-        const member = event.sender;
+    protected async saveAvatarIfNeeded(event: MatrixEvent): Promise<void> {
+        const member = event.sender!;
         if (!this.avatars.has(member.userId)) {
             try {
                 const avatarUrl = this.getAvatarURL(event);
                 this.avatars.set(member.userId, true);
-                const image = await fetch(avatarUrl);
+                const image = await fetch(avatarUrl!);
                 const blob = await image.blob();
-                this.addFile(`users/${member.userId.replace(/:/g, '-')}.png`, blob);
+                this.addFile(`users/${member.userId.replace(/:/g, "-")}.png`, blob);
             } catch (err) {
                 logger.log("Failed to fetch user's avatar" + err);
             }
         }
     }
 
-    protected getDateSeparator(event: MatrixEvent) {
+    protected getDateSeparator(event: MatrixEvent): string {
         const ts = event.getTs();
         const dateSeparator = (
             <li key={ts}>
-                <DateSeparator forExport={true} key={ts} roomId={event.getRoomId()} ts={ts} />
+                <DateSeparator forExport={true} key={ts} roomId={event.getRoomId()!} ts={ts} />
             </li>
         );
         return renderToStaticMarkup(dateSeparator);
     }
 
-    protected needsDateSeparator(event: MatrixEvent, prevEvent: MatrixEvent) {
-        if (prevEvent == null) return true;
-        return wantsDateSeparator(prevEvent.getDate(), event.getDate());
+    protected needsDateSeparator(event: MatrixEvent, prevEvent: MatrixEvent | null): boolean {
+        if (!prevEvent) return true;
+        return wantsDateSeparator(prevEvent.getDate() || undefined, event.getDate() || undefined);
     }
 
-    public getEventTile(mxEv: MatrixEvent, continuation: boolean) {
-        return <div className="mx_Export_EventWrapper" id={mxEv.getId()}>
-            <MatrixClientContext.Provider value={this.client}>
-                <EventTile
-                    mxEvent={mxEv}
-                    continuation={continuation}
-                    isRedacted={mxEv.isRedacted()}
-                    replacingEventId={mxEv.replacingEventId()}
-                    forExport={true}
-                    readReceipts={null}
-                    alwaysShowTimestamps={true}
-                    readReceiptMap={null}
-                    showUrlPreview={false}
-                    checkUnmounting={() => false}
-                    isTwelveHour={false}
-                    last={false}
-                    lastInSection={false}
-                    permalinkCreator={this.permalinkCreator}
-                    lastSuccessful={false}
-                    isSelectedEvent={false}
-                    getRelationsForEvent={null}
-                    showReactions={false}
-                    layout={Layout.Group}
-                    enableFlair={false}
-                    showReadReceipts={false}
-                />
-            </MatrixClientContext.Provider>
-        </div>;
+    public getEventTile(mxEv: MatrixEvent, continuation: boolean): JSX.Element {
+        return (
+            <div className="mx_Export_EventWrapper" id={mxEv.getId()}>
+                <MatrixClientContext.Provider value={this.client}>
+                    <EventTile
+                        mxEvent={mxEv}
+                        continuation={continuation}
+                        isRedacted={mxEv.isRedacted()}
+                        replacingEventId={mxEv.replacingEventId()}
+                        forExport={true}
+                        alwaysShowTimestamps={true}
+                        showUrlPreview={false}
+                        checkUnmounting={() => false}
+                        isTwelveHour={false}
+                        last={false}
+                        lastInSection={false}
+                        permalinkCreator={this.permalinkCreator}
+                        lastSuccessful={false}
+                        isSelectedEvent={false}
+                        showReactions={false}
+                        layout={Layout.Group}
+                        showReadReceipts={false}
+                    />
+                </MatrixClientContext.Provider>
+            </div>
+        );
     }
 
-    protected async getEventTileMarkup(mxEv: MatrixEvent, continuation: boolean, filePath?: string) {
-        const hasAvatar = !!this.getAvatarURL(mxEv);
+    protected async getEventTileMarkup(mxEv: MatrixEvent, continuation: boolean, filePath?: string): Promise<string> {
+        const avatarUrl = this.getAvatarURL(mxEv);
+        const hasAvatar = !!avatarUrl;
         if (hasAvatar) await this.saveAvatarIfNeeded(mxEv);
         const EventTile = this.getEventTile(mxEv, continuation);
         let eventTileMarkup: string;
@@ -304,31 +295,28 @@ export default class HTMLExporter extends Exporter {
         ) {
             // to linkify textual events, we'll need lifecycle methods which won't be invoked in renderToString
             // So, we'll have to render the component into a temporary root element
-            const tempRoot = document.createElement('div');
-            ReactDOM.render(
-                EventTile,
-                tempRoot,
-            );
+            const tempRoot = document.createElement("div");
+            ReactDOM.render(EventTile, tempRoot);
             eventTileMarkup = tempRoot.innerHTML;
         } else {
             eventTileMarkup = renderToStaticMarkup(EventTile);
         }
 
         if (filePath) {
-            const mxc = mxEv.getContent().url || mxEv.getContent().file?.url;
+            const mxc = mxEv.getContent().url ?? mxEv.getContent().file?.url;
             eventTileMarkup = eventTileMarkup.split(mxc).join(filePath);
         }
-        eventTileMarkup = eventTileMarkup.replace(/<span class="mx_MFileBody_info_icon".*?>.*?<\/span>/, '');
+        eventTileMarkup = eventTileMarkup.replace(/<span class="mx_MFileBody_info_icon".*?>.*?<\/span>/, "");
         if (hasAvatar) {
             eventTileMarkup = eventTileMarkup.replace(
-                encodeURI(this.getAvatarURL(mxEv)).replace(/&/g, '&amp;'),
-                `users/${mxEv.sender.userId.replace(/:/g, "-")}.png`,
+                encodeURI(avatarUrl).replace(/&/g, "&amp;"),
+                `users/${mxEv.sender!.userId.replace(/:/g, "-")}.png`,
             );
         }
         return eventTileMarkup;
     }
 
-    protected createModifiedEvent(text: string, mxEv: MatrixEvent, italic=true) {
+    protected createModifiedEvent(text: string, mxEv: MatrixEvent, italic = true): MatrixEvent {
         const modifiedContent = {
             msgtype: "m.text",
             body: `${text}`,
@@ -336,8 +324,8 @@ export default class HTMLExporter extends Exporter {
             formatted_body: `${text}`,
         };
         if (italic) {
-            modifiedContent.formatted_body = '<em>' + modifiedContent.formatted_body + '</em>';
-            modifiedContent.body = '*' + modifiedContent.body + '*';
+            modifiedContent.formatted_body = "<em>" + modifiedContent.formatted_body + "</em>";
+            modifiedContent.body = "*" + modifiedContent.body + "*";
         }
         const modifiedEvent = new MatrixEvent();
         modifiedEvent.event = mxEv.event;
@@ -347,7 +335,7 @@ export default class HTMLExporter extends Exporter {
         return modifiedEvent;
     }
 
-    protected async createMessageBody(mxEv: MatrixEvent, joined = false) {
+    protected async createMessageBody(mxEv: MatrixEvent, joined = false): Promise<string> {
         let eventTile: string;
         try {
             if (this.isAttachment(mxEv)) {
@@ -381,7 +369,9 @@ export default class HTMLExporter extends Exporter {
                         joined,
                     );
                 }
-            } else eventTile = await this.getEventTileMarkup(mxEv, joined);
+            } else {
+                eventTile = await this.getEventTileMarkup(mxEv, joined);
+            }
         } catch (e) {
             // TODO: Handle callEvent errors
             logger.error(e);
@@ -394,40 +384,49 @@ export default class HTMLExporter extends Exporter {
         return eventTile;
     }
 
-    protected async createHTML(events: MatrixEvent[], start: number) {
+    protected async createHTML(events: MatrixEvent[], start: number): Promise<string> {
         let content = "";
         let prevEvent = null;
         for (let i = start; i < Math.min(start + 1000, events.length); i++) {
             const event = events[i];
-            this.updateProgress(_t("Processing event %(number)s out of %(total)s", {
-                number: i + 1,
-                total: events.length,
-            }), false, true);
+            this.updateProgress(
+                _t("Processing event %(number)s out of %(total)s", {
+                    number: i + 1,
+                    total: events.length,
+                }),
+                false,
+                true,
+            );
             if (this.cancelled) return this.cleanUp();
-            if (!haveTileForEvent(event)) continue;
+            if (!haveRendererForEvent(event, false)) continue;
 
             content += this.needsDateSeparator(event, prevEvent) ? this.getDateSeparator(event) : "";
-            const shouldBeJoined = !this.needsDateSeparator(event, prevEvent)
-                                       && shouldFormContinuation(prevEvent, event, false);
+            const shouldBeJoined =
+                !this.needsDateSeparator(event, prevEvent) &&
+                shouldFormContinuation(prevEvent, event, false, this.threadsEnabled);
             const body = await this.createMessageBody(event, shouldBeJoined);
             this.totalSize += Buffer.byteLength(body);
             content += body;
             prevEvent = event;
         }
-        return await this.wrapHTML(content);
+        return this.wrapHTML(content);
     }
 
-    public async export() {
+    public async export(): Promise<void> {
         this.updateProgress(_t("Starting export..."));
 
         const fetchStart = performance.now();
         const res = await this.getRequiredEvents();
         const fetchEnd = performance.now();
 
-        this.updateProgress(_t("Fetched %(count)s events in %(seconds)ss", {
-            count: res.length,
-            seconds: (fetchEnd - fetchStart) / 1000,
-        }), true, false);
+        this.updateProgress(
+            _t("Fetched %(count)s events in %(seconds)ss", {
+                count: res.length,
+                seconds: (fetchEnd - fetchStart) / 1000,
+            }),
+            true,
+            false,
+        );
 
         this.updateProgress(_t("Creating HTML..."));
 
@@ -435,8 +434,8 @@ export default class HTMLExporter extends Exporter {
         for (let page = 0; page < res.length / 1000; page++) {
             const html = await this.createHTML(res, page * 1000);
             const document = new DOMParser().parseFromString(html, "text/html");
-            document.querySelectorAll("*").forEach(element => {
-                element.classList.forEach(c => usedClasses.add(c));
+            document.querySelectorAll("*").forEach((element) => {
+                element.classList.forEach((c) => usedClasses.add(c));
             });
             this.addFile(`messages${page ? page + 1 : ""}.html`, new Blob([html]));
         }
@@ -453,13 +452,14 @@ export default class HTMLExporter extends Exporter {
             logger.info("Export cancelled successfully");
         } else {
             this.updateProgress(_t("Export successful!"));
-            this.updateProgress(_t("Exported %(count)s events in %(seconds)s seconds", {
-                count: res.length,
-                seconds: (exportEnd - fetchStart) / 1000,
-            }));
+            this.updateProgress(
+                _t("Exported %(count)s events in %(seconds)s seconds", {
+                    count: res.length,
+                    seconds: (exportEnd - fetchStart) / 1000,
+                }),
+            );
         }
 
         this.cleanUp();
     }
 }
-

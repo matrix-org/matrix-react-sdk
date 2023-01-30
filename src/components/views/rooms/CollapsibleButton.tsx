@@ -14,36 +14,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps, useContext } from 'react';
-import classNames from 'classnames';
+import React, { ComponentProps, useContext } from "react";
+import classNames from "classnames";
 
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { MenuItem } from "../../structures/ContextMenu";
-import { OverflowMenuContext } from './MessageComposerButtons';
+import { OverflowMenuContext } from "./MessageComposerButtons";
+import { IconizedContextMenuOption } from "../context_menus/IconizedContextMenu";
 
 interface ICollapsibleButtonProps extends ComponentProps<typeof MenuItem> {
     title: string;
+    iconClassName: string;
 }
 
-export const CollapsibleButton = ({ title, children, className, ...props }: ICollapsibleButtonProps) => {
+export const CollapsibleButton: React.FC<ICollapsibleButtonProps> = ({
+    title,
+    children,
+    className,
+    iconClassName,
+    ...props
+}) => {
     const inOverflowMenu = !!useContext(OverflowMenuContext);
     if (inOverflowMenu) {
-        return <MenuItem
-            {...props}
-            className={classNames("mx_CallContextMenu_item", className)}
-        >
-            { title }
-            { children }
-        </MenuItem>;
+        return <IconizedContextMenuOption {...props} iconClassName={iconClassName} label={title} />;
     }
 
-    return <AccessibleTooltipButton
-        {...props}
-        title={title}
-        className={className}
-    >
-        { children }
-    </AccessibleTooltipButton>;
+    return (
+        <AccessibleTooltipButton {...props} title={title} className={classNames(className, iconClassName)}>
+            {children}
+        </AccessibleTooltipButton>
+    );
 };
-
-export default CollapsibleButton;

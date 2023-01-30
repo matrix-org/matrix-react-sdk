@@ -1,52 +1,34 @@
-import { TextEncoder, TextDecoder } from 'util';
+/*
+Copyright 2022 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+import "@testing-library/jest-dom";
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
+// eslint-disable-next-line deprecate/import
 import { configure } from "enzyme";
+import "blob-polyfill"; // https://github.com/jsdom/jsdom/issues/2555
 
-import * as languageHandler from "../src/languageHandler";
-import SdkConfig, { DEFAULTS } from '../src/SdkConfig';
-
-languageHandler.setLanguage('en');
-languageHandler.setMissingEntryGenerator(key => key.split("|", 2)[1]);
-
-// uninitialised SdkConfig causes lots of warnings in console
-// init with defaults
-SdkConfig.put(DEFAULTS);
-
-require('jest-fetch-mock').enableMocks();
-
-// jest 27 removes setImmediate from jsdom
-// polyfill until setImmediate use in client can be removed
-global.setImmediate = callback => setTimeout(callback, 0);
-
-// Stub ResizeObserver
-class ResizeObserver {
-    observe() {} // do nothing
-    unobserve() {} // do nothing
-    disconnect() {} // do nothing
-}
-window.ResizeObserver = ResizeObserver;
-
-// polyfilling TextEncoder as it is not available on JSDOM
-// view https://github.com/facebook/jest/issues/9983
-global.TextEncoder = TextEncoder;
-global.TextDecoder = TextDecoder;
-
+// Enable the enzyme mocks
 configure({ adapter: new Adapter() });
 
-// maplibre requires a createObjectURL mock
-global.URL.createObjectURL = jest.fn();
-
-// matchMedia is not included in jsdom
-const mockMatchMedia = jest.fn().mockImplementation(query => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(), // Deprecated
-    removeListener: jest.fn(), // Deprecated
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-}));
-global.matchMedia = mockMatchMedia;
-
-window.HTMLElement.prototype.scrollIntoView = jest.fn();
+// Very carefully enable the mocks for everything else in
+// a specific order. We use this order to ensure we properly
+// establish an application state that actually works.
+//
+// These are also require() calls to make sure they get called
+// synchronously.
+require("./setup/setupManualMocks"); // must be first
+require("./setup/setupLanguage");
+require("./setup/setupConfig");

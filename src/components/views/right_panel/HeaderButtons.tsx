@@ -18,35 +18,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import dis from '../../../dispatcher/dispatcher';
+import dis from "../../../dispatcher/dispatcher";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
-import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
-import { IRightPanelCardState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { UPDATE_EVENT } from '../../../stores/AsyncStore';
-import { NotificationColor } from '../../../stores/notifications/NotificationColor';
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
+import { IRightPanelCardState } from "../../../stores/right-panel/RightPanelStoreIPanelState";
+import { UPDATE_EVENT } from "../../../stores/AsyncStore";
+import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 
 export enum HeaderKind {
-  Room = "room",
-  Group = "group",
+    Room = "room",
 }
 
 interface IState {
     headerKind: HeaderKind;
     phase: RightPanelPhases;
     threadNotificationColor: NotificationColor;
+    globalNotificationColor: NotificationColor;
 }
 
 interface IProps {}
 
-@replaceableComponent("views.right_panel.HeaderButtons")
 export default abstract class HeaderButtons<P = {}> extends React.Component<IProps & P, IState> {
     private unmounted = false;
     private dispatcherRef: string;
 
-    constructor(props: IProps & P, kind: HeaderKind) {
+    public constructor(props: IProps & P, kind: HeaderKind) {
         super(props);
 
         const rps = RightPanelStore.instance;
@@ -54,15 +52,16 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
             headerKind: kind,
             phase: rps.currentCard.phase,
             threadNotificationColor: NotificationColor.None,
+            globalNotificationColor: NotificationColor.None,
         };
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         this.dispatcherRef = dis.register(this.onAction.bind(this)); // used by subclasses
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.unmounted = true;
         RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
@@ -70,13 +69,13 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
 
     protected abstract onAction(payload);
 
-    public setPhase(phase: RightPanelPhases, cardState?: Partial<IRightPanelCardState>) {
+    public setPhase(phase: RightPanelPhases, cardState?: Partial<IRightPanelCardState>): void {
         const rps = RightPanelStore.instance;
         if (rps.currentCard.phase == phase && !cardState && rps.isOpen) {
-            rps.togglePanel();
+            rps.togglePanel(null);
         } else {
             RightPanelStore.instance.setCard({ phase, state: cardState });
-            if (!rps.isOpen) rps.togglePanel();
+            if (!rps.isOpen) rps.togglePanel(null);
         }
     }
 
@@ -89,19 +88,19 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
         }
     }
 
-    private onRightPanelStoreUpdate = () => {
+    private onRightPanelStoreUpdate = (): void => {
         if (this.unmounted) return;
-        let phase = RightPanelStore.instance.currentCard.phase;
-        if (!RightPanelStore.instance.isOpenForGroup) {phase = null;}
-        this.setState({ phase });
+        this.setState({ phase: RightPanelStore.instance.currentCard.phase });
     };
 
     // XXX: Make renderButtons a prop
     public abstract renderButtons(): JSX.Element;
 
-    public render() {
-        return <div className="mx_HeaderButtons">
-            { this.renderButtons() }
-        </div>;
+    public render(): JSX.Element {
+        return (
+            <div className="mx_HeaderButtons" role="tablist">
+                {this.renderButtons()}
+            </div>
+        );
     }
 }

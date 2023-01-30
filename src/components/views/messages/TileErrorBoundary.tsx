@@ -14,19 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
+import React, { ReactNode } from "react";
+import classNames from "classnames";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
-import { _t } from '../../../languageHandler';
-import Modal from '../../../Modal';
+import { _t } from "../../../languageHandler";
+import Modal from "../../../Modal";
 import SdkConfig from "../../../SdkConfig";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import BugReportDialog from '../dialogs/BugReportDialog';
-import AccessibleButton from '../elements/AccessibleButton';
+import BugReportDialog from "../dialogs/BugReportDialog";
+import AccessibleButton from "../elements/AccessibleButton";
 import SettingsStore from "../../../settings/SettingsStore";
 import ViewSource from "../../structures/ViewSource";
-import { Layout } from '../../../settings/enums/Layout';
+import { Layout } from "../../../settings/enums/Layout";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -37,9 +36,8 @@ interface IState {
     error: Error;
 }
 
-@replaceableComponent("views.messages.TileErrorBoundary")
 export default class TileErrorBoundary extends React.Component<IProps, IState> {
-    constructor(props) {
+    public constructor(props) {
         super(props);
 
         this.state = {
@@ -47,26 +45,30 @@ export default class TileErrorBoundary extends React.Component<IProps, IState> {
         };
     }
 
-    static getDerivedStateFromError(error: Error): Partial<IState> {
+    public static getDerivedStateFromError(error: Error): Partial<IState> {
         // Side effects are not permitted here, so we only update the state so
         // that the next render shows an error message.
         return { error };
     }
 
     private onBugReport = (): void => {
-        Modal.createTrackedDialog('Bug Report Dialog', '', BugReportDialog, {
-            label: 'react-soft-crash-tile',
+        Modal.createDialog(BugReportDialog, {
+            label: "react-soft-crash-tile",
             error: this.state.error,
         });
     };
 
     private onViewSource = (): void => {
-        Modal.createTrackedDialog('View Event Source', 'from crash', ViewSource, {
-            mxEvent: this.props.mxEvent,
-        }, 'mx_Dialog_viewsource');
+        Modal.createDialog(
+            ViewSource,
+            {
+                mxEvent: this.props.mxEvent,
+            },
+            "mx_Dialog_viewsource",
+        );
     };
 
-    render() {
+    public render(): ReactNode {
         if (this.state.error) {
             const { mxEvent } = this.props;
             const classes = {
@@ -78,28 +80,40 @@ export default class TileErrorBoundary extends React.Component<IProps, IState> {
 
             let submitLogsButton;
             if (SdkConfig.get().bug_report_endpoint_url) {
-                submitLogsButton = <AccessibleButton kind="link_inline" onClick={this.onBugReport}>
-                    { _t("Submit logs") }
-                </AccessibleButton>;
+                submitLogsButton = (
+                    <>
+                        &nbsp;
+                        <AccessibleButton kind="link" onClick={this.onBugReport}>
+                            {_t("Submit logs")}
+                        </AccessibleButton>
+                    </>
+                );
             }
 
             let viewSourceButton;
             if (mxEvent && SettingsStore.getValue("developerMode")) {
-                viewSourceButton = <AccessibleButton onClick={this.onViewSource} kind="link_inline">
-                    { _t("View Source") }
-                </AccessibleButton>;
+                viewSourceButton = (
+                    <>
+                        &nbsp;
+                        <AccessibleButton onClick={this.onViewSource} kind="link">
+                            {_t("View Source")}
+                        </AccessibleButton>
+                    </>
+                );
             }
 
-            return (<li className={classNames(classes)} data-layout={this.props.layout}>
-                <div className="mx_EventTile_line">
-                    <span>
-                        { _t("Can't load this message") }
-                        { mxEvent && ` (${mxEvent.getType()})` }
-                        { submitLogsButton }
-                        { viewSourceButton }
-                    </span>
-                </div>
-            </li>);
+            return (
+                <li className={classNames(classes)} data-layout={this.props.layout}>
+                    <div className="mx_EventTile_line">
+                        <span>
+                            {_t("Can't load this message")}
+                            {mxEvent && ` (${mxEvent.getType()})`}
+                            {submitLogsButton}
+                            {viewSourceButton}
+                        </span>
+                    </div>
+                </li>
+            );
         }
 
         return this.props.children;

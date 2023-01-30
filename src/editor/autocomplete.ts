@@ -34,13 +34,12 @@ export type UpdateQuery = (test: string) => Promise<void>;
 export default class AutocompleteWrapperModel {
     private partIndex: number;
 
-    constructor(
+    public constructor(
         private updateCallback: UpdateCallback,
         private getAutocompleterComponent: GetAutocompleterComponent,
         private updateQuery: UpdateQuery,
         private partCreator: PartCreator | CommandPartCreator,
-    ) {
-    }
+    ) {}
 
     public onEscape(e: KeyboardEvent): void {
         this.getAutocompleterComponent().onEscape(e);
@@ -59,8 +58,8 @@ export default class AutocompleteWrapperModel {
         return ac && ac.countCompletions() > 0;
     }
 
-    public async confirmCompletion(): Promise<void> {
-        await this.getAutocompleterComponent().onConfirmCompletion();
+    public confirmCompletion(): void {
+        this.getAutocompleterComponent().onConfirmCompletion();
         this.updateCallback({ close: true });
     }
 

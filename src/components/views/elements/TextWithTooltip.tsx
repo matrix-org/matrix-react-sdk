@@ -14,13 +14,12 @@
  limitations under the License.
  */
 
-import React from 'react';
-import classNames from 'classnames';
+import React, { HTMLAttributes } from "react";
+import classNames from "classnames";
 
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import TooltipTarget from './TooltipTarget';
+import TooltipTarget from "./TooltipTarget";
 
-interface IProps {
+interface IProps extends HTMLAttributes<HTMLSpanElement> {
     class?: string;
     tooltipClass?: string;
     tooltip: React.ReactNode;
@@ -28,9 +27,8 @@ interface IProps {
     onClick?: (ev?: React.MouseEvent) => void;
 }
 
-@replaceableComponent("views.elements.TextWithTooltip")
 export default class TextWithTooltip extends React.Component<IProps> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
     }
 
@@ -47,7 +45,7 @@ export default class TextWithTooltip extends React.Component<IProps> {
                 className="mx_TextWithTooltip_tooltip"
                 {...props}
             >
-                { children }
+                {children}
             </TooltipTarget>
         );
     }

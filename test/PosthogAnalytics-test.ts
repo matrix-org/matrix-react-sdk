@@ -14,37 +14,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-    Anonymity,
-    getRedactedCurrentLocation,
-    IEvent,
-    PosthogAnalytics,
-} from '../src/PosthogAnalytics';
-import SdkConfig from '../src/SdkConfig';
+import { mocked } from "jest-mock";
+import { PostHog } from "posthog-js";
 
-class FakePosthog {
-    public capture;
-    public init;
-    public identify;
-    public reset;
-    public register;
+import { Anonymity, getRedactedCurrentLocation, IPosthogEvent, PosthogAnalytics } from "../src/PosthogAnalytics";
+import SdkConfig from "../src/SdkConfig";
+import { getMockClientWithEventEmitter } from "./test-utils";
+import SettingsStore from "../src/settings/SettingsStore";
+import { Layout } from "../src/settings/enums/Layout";
+import defaultDispatcher from "../src/dispatcher/dispatcher";
+import { Action } from "../src/dispatcher/actions";
+import { SettingLevel } from "../src/settings/SettingLevel";
 
-    constructor() {
-        this.capture = jest.fn();
-        this.init = jest.fn();
-        this.identify = jest.fn();
-        this.reset = jest.fn();
-        this.register = jest.fn();
-    }
-}
+const getFakePosthog = (): PostHog =>
+    ({
+        capture: jest.fn(),
+        init: jest.fn(),
+        identify: jest.fn(),
+        reset: jest.fn(),
+        register: jest.fn(),
+    } as unknown as PostHog);
 
-export interface ITestEvent extends IEvent {
+export interface ITestEvent extends IPosthogEvent {
     eventName: "JestTestEvents";
-    foo: string;
+    foo?: string;
 }
 
 describe("PosthogAnalytics", () => {
-    let fakePosthog: FakePosthog;
+    let fakePosthog: PostHog;
     const shaHashes = {
         "42": "73475cb40a568e8da8a045ced110137e159f890ac4da883b6b17dc651b3a8049",
         "some": "a6b46dd0d1ae5e86cbc8f37e75ceeb6760230c1ca4ffbcb0c97b96dd7d9c464b",
@@ -53,7 +50,7 @@ describe("PosthogAnalytics", () => {
     };
 
     beforeEach(() => {
-        fakePosthog = new FakePosthog();
+        fakePosthog = getFakePosthog();
 
         window.crypto = {
             subtle: {
@@ -62,30 +59,33 @@ describe("PosthogAnalytics", () => {
                     const hexHash = shaHashes[message];
                     const bytes = [];
                     for (let c = 0; c < hexHash.length; c += 2) {
-                        bytes.push(parseInt(hexHash.substr(c, 2), 16));
+                        bytes.push(parseInt(hexHash.slice(c, c + 2), 16));
                     }
-                    return bytes;
+                    return bytes as unknown as ArrayBuffer;
                 },
-            },
-        };
+            } as unknown as SubtleCrypto,
+        } as unknown as Crypto;
     });
 
     afterEach(() => {
         window.crypto = null;
+        SdkConfig.unset(); // we touch the config, so clean up
     });
 
     describe("Initialisation", () => {
         it("Should not be enabled without config being set", () => {
-            jest.spyOn(SdkConfig, "get").mockReturnValue({});
+            // force empty/invalid state for posthog options
+            SdkConfig.put({ brand: "Testing" });
             const analytics = new PosthogAnalytics(fakePosthog);
             expect(analytics.isEnabled()).toBe(false);
         });
 
         it("Should be enabled if config is set", () => {
-            jest.spyOn(SdkConfig, "get").mockReturnValue({
+            SdkConfig.put({
+                brand: "Testing",
                 posthog: {
-                    projectApiKey: "foo",
-                    apiHost: "bar",
+                    project_api_key: "foo",
+                    api_host: "bar",
                 },
             });
             const analytics = new PosthogAnalytics(fakePosthog);
@@ -98,10 +98,11 @@ describe("PosthogAnalytics", () => {
         let analytics: PosthogAnalytics;
 
         beforeEach(() => {
-            jest.spyOn(SdkConfig, "get").mockReturnValue({
+            SdkConfig.put({
+                brand: "Testing",
                 posthog: {
-                    projectApiKey: "foo",
-                    apiHost: "bar",
+                    project_api_key: "foo",
+                    api_host: "bar",
                 },
             });
 
@@ -114,8 +115,8 @@ describe("PosthogAnalytics", () => {
                 eventName: "JestTestEvents",
                 foo: "bar",
             });
-            expect(fakePosthog.capture.mock.calls[0][0]).toBe("JestTestEvents");
-            expect(fakePosthog.capture.mock.calls[0][1]["foo"]).toEqual("bar");
+            expect(mocked(fakePosthog).capture.mock.calls[0][0]).toBe("JestTestEvents");
+            expect(mocked(fakePosthog).capture.mock.calls[0][1]["foo"]).toEqual("bar");
         });
 
         it("Should not track events if anonymous", async () => {
@@ -124,7 +125,7 @@ describe("PosthogAnalytics", () => {
                 eventName: "JestTestEvents",
                 foo: "bar",
             });
-            expect(fakePosthog.capture.mock.calls.length).toBe(0);
+            expect(fakePosthog.capture).not.toHaveBeenCalled();
         });
 
         it("Should not track any events if disabled", async () => {
@@ -133,7 +134,7 @@ describe("PosthogAnalytics", () => {
                 eventName: "JestTestEvents",
                 foo: "bar",
             });
-            expect(fakePosthog.capture.mock.calls.length).toBe(0);
+            expect(fakePosthog.capture).not.toHaveBeenCalled();
         });
 
         it("Should anonymise location of a known screen", async () => {
@@ -153,28 +154,116 @@ describe("PosthogAnalytics", () => {
 
         it("Should identify the user to posthog if pseudonymous", async () => {
             analytics.setAnonymity(Anonymity.Pseudonymous);
-            class FakeClient {
-                getAccountDataFromServer = jest.fn().mockResolvedValue(null);
-                setAccountData = jest.fn().mockResolvedValue({});
-            }
-            await analytics.identifyUser(new FakeClient(), () => "analytics_id");
-            expect(fakePosthog.identify.mock.calls[0][0]).toBe("analytics_id");
+            const client = getMockClientWithEventEmitter({
+                getAccountDataFromServer: jest.fn().mockResolvedValue(null),
+                setAccountData: jest.fn().mockResolvedValue({}),
+            });
+            await analytics.identifyUser(client, () => "analytics_id");
+            expect(mocked(fakePosthog).identify.mock.calls[0][0]).toBe("analytics_id");
         });
 
         it("Should not identify the user to posthog if anonymous", async () => {
             analytics.setAnonymity(Anonymity.Anonymous);
-            await analytics.identifyUser(null);
-            expect(fakePosthog.identify.mock.calls.length).toBe(0);
+            const client = getMockClientWithEventEmitter({});
+            await analytics.identifyUser(client, () => "analytics_id");
+            expect(mocked(fakePosthog).identify.mock.calls.length).toBe(0);
         });
 
         it("Should identify using the server's analytics id if present", async () => {
             analytics.setAnonymity(Anonymity.Pseudonymous);
-            class FakeClient {
-                getAccountDataFromServer = jest.fn().mockResolvedValue({ id: "existing_analytics_id" });
-                setAccountData = jest.fn().mockResolvedValue({});
-            }
-            await analytics.identifyUser(new FakeClient(), () => "new_analytics_id");
-            expect(fakePosthog.identify.mock.calls[0][0]).toBe("existing_analytics_id");
+
+            const client = getMockClientWithEventEmitter({
+                getAccountDataFromServer: jest.fn().mockResolvedValue({ id: "existing_analytics_id" }),
+                setAccountData: jest.fn().mockResolvedValue({}),
+            });
+            await analytics.identifyUser(client, () => "new_analytics_id");
+            expect(mocked(fakePosthog).identify.mock.calls[0][0]).toBe("existing_analytics_id");
+        });
+    });
+
+    describe("WebLayout", () => {
+        let analytics: PosthogAnalytics;
+
+        beforeEach(() => {
+            SdkConfig.put({
+                brand: "Testing",
+                posthog: {
+                    project_api_key: "foo",
+                    api_host: "bar",
+                },
+            });
+
+            analytics = new PosthogAnalytics(fakePosthog);
+            analytics.setAnonymity(Anonymity.Pseudonymous);
+        });
+
+        it("should send layout IRC correctly", async () => {
+            await SettingsStore.setValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
+            defaultDispatcher.dispatch(
+                {
+                    action: Action.SettingUpdated,
+                    settingName: "layout",
+                },
+                true,
+            );
+            analytics.trackEvent<ITestEvent>({
+                eventName: "JestTestEvents",
+            });
+            expect(mocked(fakePosthog).capture.mock.calls[0][1]["$set"]).toStrictEqual({
+                WebLayout: "IRC",
+            });
+        });
+
+        it("should send layout Bubble correctly", async () => {
+            await SettingsStore.setValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
+            defaultDispatcher.dispatch(
+                {
+                    action: Action.SettingUpdated,
+                    settingName: "layout",
+                },
+                true,
+            );
+            analytics.trackEvent<ITestEvent>({
+                eventName: "JestTestEvents",
+            });
+            expect(mocked(fakePosthog).capture.mock.calls[0][1]["$set"]).toStrictEqual({
+                WebLayout: "Bubble",
+            });
+        });
+
+        it("should send layout Group correctly", async () => {
+            await SettingsStore.setValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+            defaultDispatcher.dispatch(
+                {
+                    action: Action.SettingUpdated,
+                    settingName: "layout",
+                },
+                true,
+            );
+            analytics.trackEvent<ITestEvent>({
+                eventName: "JestTestEvents",
+            });
+            expect(mocked(fakePosthog).capture.mock.calls[0][1]["$set"]).toStrictEqual({
+                WebLayout: "Group",
+            });
+        });
+
+        it("should send layout Compact correctly", async () => {
+            await SettingsStore.setValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+            await SettingsStore.setValue("useCompactLayout", null, SettingLevel.DEVICE, true);
+            defaultDispatcher.dispatch(
+                {
+                    action: Action.SettingUpdated,
+                    settingName: "useCompactLayout",
+                },
+                true,
+            );
+            analytics.trackEvent<ITestEvent>({
+                eventName: "JestTestEvents",
+            });
+            expect(mocked(fakePosthog).capture.mock.calls[0][1]["$set"]).toStrictEqual({
+                WebLayout: "Compact",
+            });
         });
     });
 });

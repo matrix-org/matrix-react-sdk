@@ -14,13 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { _t } from '../../../languageHandler';
-import { SetupEncryptionStore, Phase } from '../../../stores/SetupEncryptionStore';
+import { _t } from "../../../languageHandler";
+import { SetupEncryptionStore, Phase } from "../../../stores/SetupEncryptionStore";
 import SetupEncryptionBody from "./SetupEncryptionBody";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import AccessibleButton from '../../views/elements/AccessibleButton';
+import AccessibleButton from "../../views/elements/AccessibleButton";
 import CompleteSecurityBody from "../../views/auth/CompleteSecurityBody";
 import AuthPage from "../../views/auth/AuthPage";
 
@@ -33,9 +32,8 @@ interface IState {
     lostKeys: boolean;
 }
 
-@replaceableComponent("structures.auth.CompleteSecurity")
 export default class CompleteSecurity extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
         const store = SetupEncryptionStore.sharedInstance();
         store.on("update", this.onStoreUpdate);
@@ -59,7 +57,7 @@ export default class CompleteSecurity extends React.Component<IProps, IState> {
         store.stop();
     }
 
-    public render() {
+    public render(): JSX.Element {
         const { phase, lostKeys } = this.state;
         let icon;
         let title;
@@ -95,18 +93,22 @@ export default class CompleteSecurity extends React.Component<IProps, IState> {
         let skipButton;
         if (phase === Phase.Intro || phase === Phase.ConfirmReset) {
             skipButton = (
-                <AccessibleButton onClick={this.onSkipClick} className="mx_CompleteSecurity_skip" aria-label={_t("Skip verification for now")} />
+                <AccessibleButton
+                    onClick={this.onSkipClick}
+                    className="mx_CompleteSecurity_skip"
+                    aria-label={_t("Skip verification for now")}
+                />
             );
         }
 
         return (
             <AuthPage>
                 <CompleteSecurityBody>
-                    <h2 className="mx_CompleteSecurity_header">
-                        { icon }
-                        { title }
-                        { skipButton }
-                    </h2>
+                    <h1 className="mx_CompleteSecurity_header">
+                        {icon}
+                        {title}
+                        {skipButton}
+                    </h1>
                     <div className="mx_CompleteSecurity_body">
                         <SetupEncryptionBody onFinished={this.props.onFinished} />
                     </div>

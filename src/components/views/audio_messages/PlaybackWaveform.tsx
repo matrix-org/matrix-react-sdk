@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from "react";
 
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { arraySeed, arrayTrimFill } from "../../../utils/arrays";
 import Waveform from "./Waveform";
 import { Playback, PLAYBACK_WAVEFORM_SAMPLES } from "../../../audio/Playback";
@@ -34,7 +33,6 @@ interface IState {
 /**
  * A waveform which shows the waveform of a previously recorded recording
  */
-@replaceableComponent("views.audio_messages.PlaybackWaveform")
 export default class PlaybackWaveform extends React.PureComponent<IProps, IState> {
     public constructor(props) {
         super(props);
@@ -48,22 +46,22 @@ export default class PlaybackWaveform extends React.PureComponent<IProps, IState
         this.props.playback.clockInfo.liveData.onUpdate(this.onTimeUpdate);
     }
 
-    private toHeights(waveform: number[]) {
+    private toHeights(waveform: number[]): number[] {
         const seed = arraySeed(0, PLAYBACK_WAVEFORM_SAMPLES);
         return arrayTrimFill(waveform, PLAYBACK_WAVEFORM_SAMPLES, seed);
     }
 
-    private onWaveformUpdate = (waveform: number[]) => {
+    private onWaveformUpdate = (waveform: number[]): void => {
         this.setState({ heights: this.toHeights(waveform) });
     };
 
-    private onTimeUpdate = (time: number[]) => {
+    private onTimeUpdate = (time: number[]): void => {
         // Track percentages to a general precision to avoid over-waking the component.
         const progress = Number(percentageOf(time[0], 0, time[1]).toFixed(3));
         this.setState({ progress });
     };
 
-    public render() {
+    public render(): JSX.Element {
         return <Waveform relHeights={this.state.heights} progress={this.state.progress} />;
     }
 }

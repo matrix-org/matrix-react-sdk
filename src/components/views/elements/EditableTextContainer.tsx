@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Spinner from "./Spinner";
 import EditableText from "./EditableText";
 
@@ -56,17 +55,18 @@ interface IState {
  * similarly asynchronous way. If this is not provided, the initial value is
  * taken from the 'initialValue' property.
  */
-@replaceableComponent("views.elements.EditableTextContainer")
 export default class EditableTextContainer extends React.Component<IProps, IState> {
     private unmounted = false;
     public static defaultProps: Partial<IProps> = {
         initialValue: "",
         placeholder: "",
         blurToSubmit: false,
-        onSubmit: () => { return Promise.resolve(); },
+        onSubmit: () => {
+            return Promise.resolve();
+        },
     };
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -113,14 +113,18 @@ export default class EditableTextContainer extends React.Component<IProps, IStat
 
         this.props.onSubmit(value).then(
             () => {
-                if (this.unmounted) { return; }
+                if (this.unmounted) {
+                    return;
+                }
                 this.setState({
                     busy: false,
                     value: value,
                 });
             },
             (error) => {
-                if (this.unmounted) { return; }
+                if (this.unmounted) {
+                    return;
+                }
                 this.setState({
                     errorString: error.toString(),
                     busy: false,
@@ -131,16 +135,13 @@ export default class EditableTextContainer extends React.Component<IProps, IStat
 
     public render(): JSX.Element {
         if (this.state.busy) {
-            return (
-                <Spinner />
-            );
+            return <Spinner />;
         } else if (this.state.errorString) {
-            return (
-                <div className="error">{ this.state.errorString }</div>
-            );
+            return <div className="error">{this.state.errorString}</div>;
         } else {
             return (
-                <EditableText initialValue={this.state.value}
+                <EditableText
+                    initialValue={this.state.value}
                     placeholder={this.props.placeholder}
                     onValueChanged={this.onValueChanged}
                     blurToSubmit={this.props.blurToSubmit}
@@ -149,4 +150,3 @@ export default class EditableTextContainer extends React.Component<IProps, IStat
         }
     }
 }
-

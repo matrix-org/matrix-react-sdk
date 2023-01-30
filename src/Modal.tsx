@@ -15,14 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import classNames from 'classnames';
+import React from "react";
+import ReactDOM from "react-dom";
+import classNames from "classnames";
 import { defer, sleep } from "matrix-js-sdk/src/utils";
+import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
 
-import Analytics from './Analytics';
-import dis from './dispatcher/dispatcher';
-import AsyncWrapper from './AsyncWrapper';
+import dis from "./dispatcher/dispatcher";
+import AsyncWrapper from "./AsyncWrapper";
 
 const DIALOG_CONTAINER_ID = "mx_Dialog_Container";
 const STATIC_DIALOG_CONTAINER_ID = "mx_Dialog_StaticContainer";
@@ -55,7 +55,15 @@ interface IOptions<T extends any[]> {
 
 type ParametersWithoutFirst<T extends (...args: any) => any> = T extends (a: any, ...args: infer P) => any ? P : never;
 
-export class ModalManager {
+export enum ModalManagerEvent {
+    Opened = "opened",
+}
+
+type HandlerMap = {
+    [ModalManagerEvent.Opened]: () => void;
+};
+
+export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMap> {
     private counter = 0;
     // The modal to prioritise over all others. If this is set, only show
     // this modal. Remove all other modals from the stack when this modal
@@ -69,7 +77,7 @@ export class ModalManager {
     // Neither the static nor priority modal will be in this list.
     private modals: IModal<any>[] = [];
 
-    private static getOrCreateContainer() {
+    private static getOrCreateContainer(): HTMLElement {
         let container = document.getElementById(DIALOG_CONTAINER_ID);
 
         if (!container) {
@@ -81,7 +89,7 @@ export class ModalManager {
         return container;
     }
 
-    private static getOrCreateStaticContainer() {
+    private static getOrCreateStaticContainer(): HTMLElement {
         let container = document.getElementById(STATIC_DIALOG_CONTAINER_ID);
 
         if (!container) {
@@ -93,67 +101,31 @@ export class ModalManager {
         return container;
     }
 
-    public toggleCurrentDialogVisibility() {
+    public toggleCurrentDialogVisibility(): void {
         const modal = this.getCurrentModal();
         if (!modal) return;
         modal.hidden = !modal.hidden;
     }
 
-    public hasDialogs() {
-        return this.priorityModal || this.staticModal || this.modals.length > 0;
-    }
-
-    public createTrackedDialog<T extends any[]>(
-        analyticsAction: string,
-        analyticsInfo: string,
-        ...rest: Parameters<ModalManager["createDialog"]>
-    ) {
-        Analytics.trackEvent('Modal', analyticsAction, analyticsInfo);
-        return this.createDialog<T>(...rest);
-    }
-
-    public appendTrackedDialog<T extends any[]>(
-        analyticsAction: string,
-        analyticsInfo: string,
-        ...rest: Parameters<ModalManager["appendDialog"]>
-    ) {
-        Analytics.trackEvent('Modal', analyticsAction, analyticsInfo);
-        return this.appendDialog<T>(...rest);
+    public hasDialogs(): boolean {
+        return !!this.priorityModal || !!this.staticModal || this.modals.length > 0;
     }
 
     public createDialog<T extends any[]>(
-        Element: React.ComponentType,
+        Element: React.ComponentType<any>,
         ...rest: ParametersWithoutFirst<ModalManager["createDialogAsync"]>
-    ) {
+    ): IHandle<T> {
         return this.createDialogAsync<T>(Promise.resolve(Element), ...rest);
     }
 
     public appendDialog<T extends any[]>(
         Element: React.ComponentType,
         ...rest: ParametersWithoutFirst<ModalManager["appendDialogAsync"]>
-    ) {
+    ): IHandle<T> {
         return this.appendDialogAsync<T>(Promise.resolve(Element), ...rest);
     }
 
-    public createTrackedDialogAsync<T extends any[]>(
-        analyticsAction: string,
-        analyticsInfo: string,
-        ...rest: Parameters<ModalManager["createDialogAsync"]>
-    ) {
-        Analytics.trackEvent('Modal', analyticsAction, analyticsInfo);
-        return this.createDialogAsync<T>(...rest);
-    }
-
-    public appendTrackedDialogAsync<T extends any[]>(
-        analyticsAction: string,
-        analyticsInfo: string,
-        ...rest: Parameters<ModalManager["appendDialogAsync"]>
-    ) {
-        Analytics.trackEvent('Modal', analyticsAction, analyticsInfo);
-        return this.appendDialogAsync<T>(...rest);
-    }
-
-    public closeCurrentModal(reason: string) {
+    public closeCurrentModal(reason: string): void {
         const modal = this.getCurrentModal();
         if (!modal) {
             return;
@@ -167,7 +139,11 @@ export class ModalManager {
         props?: IProps<T>,
         className?: string,
         options?: IOptions<T>,
-    ) {
+    ): {
+        modal: IModal<T>;
+        closeDialog: IHandle<T>["close"];
+        onFinishedProm: IHandle<T>["finished"];
+    } {
         const modal: IModal<T> = {
             onFinished: props ? props.onFinished : null,
             onBeforeClose: options.onBeforeClose,
@@ -200,40 +176,43 @@ export class ModalManager {
         props: IProps<T>,
     ): [IHandle<T>["close"], IHandle<T>["finished"]] {
         const deferred = defer<T>();
-        return [async (...args: T) => {
-            if (modal.beforeClosePromise) {
-                await modal.beforeClosePromise;
-            } else if (modal.onBeforeClose) {
-                modal.beforeClosePromise = modal.onBeforeClose(modal.closeReason);
-                const shouldClose = await modal.beforeClosePromise;
-                modal.beforeClosePromise = null;
-                if (!shouldClose) {
-                    return;
+        return [
+            async (...args: T): Promise<void> => {
+                if (modal.beforeClosePromise) {
+                    await modal.beforeClosePromise;
+                } else if (modal.onBeforeClose) {
+                    modal.beforeClosePromise = modal.onBeforeClose(modal.closeReason);
+                    const shouldClose = await modal.beforeClosePromise;
+                    modal.beforeClosePromise = null;
+                    if (!shouldClose) {
+                        return;
+                    }
                 }
-            }
-            deferred.resolve(args);
-            if (props && props.onFinished) props.onFinished.apply(null, args);
-            const i = this.modals.indexOf(modal);
-            if (i >= 0) {
-                this.modals.splice(i, 1);
-            }
+                deferred.resolve(args);
+                if (props && props.onFinished) props.onFinished.apply(null, args);
+                const i = this.modals.indexOf(modal);
+                if (i >= 0) {
+                    this.modals.splice(i, 1);
+                }
 
-            if (this.priorityModal === modal) {
-                this.priorityModal = null;
+                if (this.priorityModal === modal) {
+                    this.priorityModal = null;
 
-                // XXX: This is destructive
-                this.modals = [];
-            }
+                    // XXX: This is destructive
+                    this.modals = [];
+                }
 
-            if (this.staticModal === modal) {
-                this.staticModal = null;
+                if (this.staticModal === modal) {
+                    this.staticModal = null;
 
-                // XXX: This is destructive
-                this.modals = [];
-            }
+                    // XXX: This is destructive
+                    this.modals = [];
+                }
 
-            this.reRender();
-        }, deferred.promise];
+                this.reRender();
+            },
+            deferred.promise,
+        ];
     }
 
     /**
@@ -273,7 +252,7 @@ export class ModalManager {
      * @param {onBeforeClose} options.onBeforeClose a callback to decide whether to close the dialog
      * @returns {object} Object with 'close' parameter being a function that will close the dialog
      */
-    private createDialogAsync<T extends any[]>(
+    public createDialogAsync<T extends any[]>(
         prom: Promise<React.ComponentType>,
         props?: IProps<T>,
         className?: string,
@@ -281,6 +260,7 @@ export class ModalManager {
         isStaticModal = false,
         options: IOptions<T> = {},
     ): IHandle<T> {
+        const beforeModal = this.getCurrentModal();
         const { modal, closeDialog, onFinishedProm } = this.buildModal<T>(prom, props, className, options);
         if (isPriorityModal) {
             // XXX: This is destructive
@@ -293,6 +273,8 @@ export class ModalManager {
         }
 
         this.reRender();
+        this.emitIfChanged(beforeModal);
+
         return {
             close: closeDialog,
             finished: onFinishedProm,
@@ -304,17 +286,27 @@ export class ModalManager {
         props?: IProps<T>,
         className?: string,
     ): IHandle<T> {
+        const beforeModal = this.getCurrentModal();
         const { modal, closeDialog, onFinishedProm } = this.buildModal<T>(prom, props, className, {});
 
         this.modals.push(modal);
+
         this.reRender();
+        this.emitIfChanged(beforeModal);
+
         return {
             close: closeDialog,
             finished: onFinishedProm,
         };
     }
 
-    private onBackgroundClick = () => {
+    private emitIfChanged(beforeModal?: IModal<any>): void {
+        if (beforeModal !== this.getCurrentModal()) {
+            this.emit(ModalManagerEvent.Opened);
+        }
+    }
+
+    private onBackgroundClick = (): void => {
         const modal = this.getCurrentModal();
         if (!modal) {
             return;
@@ -329,10 +321,10 @@ export class ModalManager {
     };
 
     private getCurrentModal(): IModal<any> {
-        return this.priorityModal ? this.priorityModal : (this.modals[0] || this.staticModal);
+        return this.priorityModal ? this.priorityModal : this.modals[0] || this.staticModal;
     }
 
-    private async reRender() {
+    private async reRender(): Promise<void> {
         // await next tick because sometimes ReactDOM can race with itself and cause the modal to wrongly stick around
         await sleep(0);
 
@@ -340,7 +332,7 @@ export class ModalManager {
             // If there is no modal to render, make all of Element available
             // to screen reader users again
             dis.dispatch({
-                action: 'aria_unhide_main_app',
+                action: "aria_unhide_main_app",
             });
             ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateContainer());
             ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateStaticContainer());
@@ -351,7 +343,7 @@ export class ModalManager {
         // so they won't be able to navigate into it and act on it using
         // screen reader specific features
         dis.dispatch({
-            action: 'aria_hide_main_app',
+            action: "aria_hide_main_app",
         });
 
         if (this.staticModal) {
@@ -359,10 +351,12 @@ export class ModalManager {
 
             const staticDialog = (
                 <div className={classes}>
-                    <div className="mx_Dialog">
-                        { this.staticModal.elem }
-                    </div>
-                    <div className="mx_Dialog_background mx_Dialog_staticBackground" onClick={this.onBackgroundClick} />
+                    <div className="mx_Dialog">{this.staticModal.elem}</div>
+                    <div
+                        data-testid="dialog-background"
+                        className="mx_Dialog_background mx_Dialog_staticBackground"
+                        onClick={this.onBackgroundClick}
+                    />
                 </div>
             );
 
@@ -380,10 +374,12 @@ export class ModalManager {
 
             const dialog = (
                 <div className={classes}>
-                    <div className="mx_Dialog">
-                        { modal.elem }
-                    </div>
-                    <div className="mx_Dialog_background" onClick={this.onBackgroundClick} />
+                    <div className="mx_Dialog">{modal.elem}</div>
+                    <div
+                        data-testid="dialog-background"
+                        className="mx_Dialog_background"
+                        onClick={this.onBackgroundClick}
+                    />
                 </div>
             );
 

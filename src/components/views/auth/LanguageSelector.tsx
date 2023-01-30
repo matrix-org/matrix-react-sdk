@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 import SdkConfig from "../../../SdkConfig";
 import { getCurrentLanguage } from "../../../languageHandler";
@@ -35,11 +35,13 @@ interface IProps {
 }
 
 export default function LanguageSelector({ disabled }: IProps): JSX.Element {
-    if (SdkConfig.get()['disable_login_language_selector']) return <div />;
-    return <LanguageDropdown
-        className="mx_AuthBody_language"
-        onOptionChange={onChange}
-        value={getCurrentLanguage()}
-        disabled={disabled}
-    />;
+    if (SdkConfig.get("disable_login_language_selector")) return <div />;
+    return (
+        <LanguageDropdown
+            className="mx_AuthBody_language"
+            onOptionChange={onChange}
+            value={getCurrentLanguage()}
+            disabled={disabled}
+        />
+    );
 }

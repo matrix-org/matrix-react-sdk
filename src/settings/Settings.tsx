@@ -15,33 +15,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { MatrixClient } from "matrix-js-sdk/src/client";
 import React, { ReactNode } from "react";
 
-import { _t, _td } from '../languageHandler';
+import { _t, _td } from "../languageHandler";
 import {
     NotificationBodyEnabledController,
     NotificationsEnabledController,
 } from "./controllers/NotificationControllers";
-import CustomStatusController from "./controllers/CustomStatusController";
-import ThemeController from './controllers/ThemeController';
-import PushToMatrixClientController from './controllers/PushToMatrixClientController';
+import ThemeController from "./controllers/ThemeController";
+import PushToMatrixClientController from "./controllers/PushToMatrixClientController";
 import ReloadOnChangeController from "./controllers/ReloadOnChangeController";
-import FontSizeController from './controllers/FontSizeController';
-import SystemFontController from './controllers/SystemFontController';
-import UseSystemFontController from './controllers/UseSystemFontController';
+import FontSizeController from "./controllers/FontSizeController";
+import SystemFontController from "./controllers/SystemFontController";
+import UseSystemFontController from "./controllers/UseSystemFontController";
 import { SettingLevel } from "./SettingLevel";
 import SettingController from "./controllers/SettingController";
-import { isMac } from '../Keyboard';
+import { IS_MAC } from "../Keyboard";
 import UIFeatureController from "./controllers/UIFeatureController";
 import { UIFeature } from "./UIFeature";
 import { OrderedMultiController } from "./controllers/OrderedMultiController";
 import { Layout } from "./enums/Layout";
-import ReducedMotionController from './controllers/ReducedMotionController';
+import ReducedMotionController from "./controllers/ReducedMotionController";
 import IncompatibleController from "./controllers/IncompatibleController";
 import { ImageSize } from "./enums/ImageSize";
 import { MetaSpace } from "../stores/spaces";
 import SdkConfig from "../SdkConfig";
+import SlidingSyncController from "./controllers/SlidingSyncController";
+import ThreadBetaController from "./controllers/ThreadBetaController";
+import { FontWatcher } from "./watchers/FontWatcher";
+import RustCryptoSdkController from "./controllers/RustCryptoSdkController";
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
 const LEVELS_ROOM_SETTINGS = [
@@ -51,10 +54,7 @@ const LEVELS_ROOM_SETTINGS = [
     SettingLevel.ACCOUNT,
     SettingLevel.CONFIG,
 ];
-const LEVELS_ROOM_OR_ACCOUNT = [
-    SettingLevel.ROOM_ACCOUNT,
-    SettingLevel.ACCOUNT,
-];
+const LEVELS_ROOM_OR_ACCOUNT = [SettingLevel.ROOM_ACCOUNT, SettingLevel.ACCOUNT];
 const LEVELS_ROOM_SETTINGS_WITH_ROOM = [
     SettingLevel.DEVICE,
     SettingLevel.ROOM_DEVICE,
@@ -63,22 +63,10 @@ const LEVELS_ROOM_SETTINGS_WITH_ROOM = [
     SettingLevel.CONFIG,
     SettingLevel.ROOM,
 ];
-const LEVELS_ACCOUNT_SETTINGS = [
-    SettingLevel.DEVICE,
-    SettingLevel.ACCOUNT,
-    SettingLevel.CONFIG,
-];
-const LEVELS_FEATURE = [
-    SettingLevel.DEVICE,
-    SettingLevel.CONFIG,
-];
-const LEVELS_DEVICE_ONLY_SETTINGS = [
-    SettingLevel.DEVICE,
-];
-const LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG = [
-    SettingLevel.DEVICE,
-    SettingLevel.CONFIG,
-];
+const LEVELS_ACCOUNT_SETTINGS = [SettingLevel.DEVICE, SettingLevel.ACCOUNT, SettingLevel.CONFIG];
+const LEVELS_FEATURE = [SettingLevel.DEVICE, SettingLevel.CONFIG];
+const LEVELS_DEVICE_ONLY_SETTINGS = [SettingLevel.DEVICE];
+const LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG = [SettingLevel.DEVICE, SettingLevel.CONFIG];
 const LEVELS_UI_FEATURE = [
     SettingLevel.CONFIG,
     // in future we might have a .well-known level or something
@@ -90,6 +78,7 @@ export enum LabGroup {
     Spaces,
     Widgets,
     Rooms,
+    VoiceAndVideo,
     Moderation,
     Analytics,
     MessagePreviews,
@@ -99,12 +88,18 @@ export enum LabGroup {
     Developer,
 }
 
+export enum Features {
+    VoiceBroadcast = "feature_voice_broadcast",
+    VoiceBroadcastForceSmallChunks = "feature_voice_broadcast_force_small_chunks",
+}
+
 export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.Messaging]: _td("Messaging"),
     [LabGroup.Profile]: _td("Profile"),
     [LabGroup.Spaces]: _td("Spaces"),
     [LabGroup.Widgets]: _td("Widgets"),
     [LabGroup.Rooms]: _td("Rooms"),
+    [LabGroup.VoiceAndVideo]: _td("Voice & Video"),
     [LabGroup.Moderation]: _td("Moderation"),
     [LabGroup.Analytics]: _td("Analytics"),
     [LabGroup.MessagePreviews]: _td("Message Previews"),
@@ -114,25 +109,22 @@ export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.Developer]: _td("Developer"),
 };
 
-export type SettingValueType = boolean |
-    number |
-    string |
-    number[] |
-    string[] |
-    Record<string, unknown>;
+export type SettingValueType = boolean | number | string | number[] | string[] | Record<string, unknown> | null;
 
 export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     isFeature?: false | undefined;
 
     // Display names are strongly recommended for clarity.
     // Display name can also be an object for different levels.
-    displayName?: string | {
-        // @ts-ignore - TS wants the key to be a string, but we know better
-        [level: SettingLevel]: string;
-    };
+    displayName?:
+        | string
+        | {
+              // @ts-ignore - TS wants the key to be a string, but we know better
+              [level: SettingLevel]: string;
+          };
 
     // Optional description which will be shown as microCopy under SettingsFlags
-    description?: string;
+    description?: string | (() => ReactNode);
 
     // The supported levels are required. Preferably, use the preset arrays
     // at the top of this file to define this rather than a custom array.
@@ -164,13 +156,16 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     betaInfo?: {
         title: string; // _td
         caption: () => ReactNode;
-        disclaimer?: (enabled: boolean) => ReactNode;
-        image: string; // require(...)
+        faq?: (enabled: boolean) => ReactNode;
+        image?: string; // require(...)
         feedbackSubheading?: string;
         feedbackLabel?: string;
         extraSettings?: string[];
         requiresRefresh?: boolean;
     };
+
+    // Whether the setting should have a warning sign in the microcopy
+    shouldWarn?: boolean;
 }
 
 export interface IFeature extends Omit<IBaseSetting<boolean>, "isFeature"> {
@@ -182,10 +177,58 @@ export interface IFeature extends Omit<IBaseSetting<boolean>, "isFeature"> {
 // Type using I-identifier for backwards compatibility from before it became a discriminated union
 export type ISetting = IBaseSetting | IFeature;
 
-export const SETTINGS: {[setting: string]: ISetting} = {
+export const SETTINGS: { [setting: string]: ISetting } = {
+    "feature_video_rooms": {
+        isFeature: true,
+        labsGroup: LabGroup.VoiceAndVideo,
+        displayName: _td("Video rooms"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+        // Reload to ensure that the left panel etc. get remounted
+        controller: new ReloadOnChangeController(),
+        betaInfo: {
+            title: _td("Video rooms"),
+            caption: () => (
+                <>
+                    <p>
+                        {_t("A new way to chat over voice and video in %(brand)s.", {
+                            brand: SdkConfig.get().brand,
+                        })}
+                    </p>
+                    <p>
+                        {_t("Video rooms are always-on VoIP channels embedded within a room in %(brand)s.", {
+                            brand: SdkConfig.get().brand,
+                        })}
+                    </p>
+                </>
+            ),
+            faq: () =>
+                SdkConfig.get().bug_report_endpoint_url && (
+                    <>
+                        <h4>{_t("How can I create a video room?")}</h4>
+                        <p>{_t("Use the “+” button in the room section of the left panel.")}</p>
+                        <h4>{_t("Can I use text chat alongside the video call?")}</h4>
+                        <p>{_t("Yes, the chat timeline is displayed alongside the video.")}</p>
+                    </>
+                ),
+            feedbackLabel: "video-room-feedback",
+            feedbackSubheading: _td(
+                "Thank you for trying the beta, " + "please go into as much detail as you can so we can improve it.",
+            ),
+            image: require("../../res/img/betas/video_rooms.png"),
+            requiresRefresh: true,
+        },
+    },
+    "feature_exploring_public_spaces": {
+        displayName: _td("Explore public spaces in the new search dialog"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_msc3531_hide_messages_pending_moderation": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
+        // Requires a reload since this setting is cached in EventUtils
+        controller: new ReloadOnChangeController(),
         displayName: _td("Let moderators hide messages pending moderation."),
         supportedLevels: LEVELS_FEATURE,
         default: false,
@@ -193,15 +236,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_report_to_moderators": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
-        displayName: _td("Report to moderators prototype. " +
-            "In rooms that support moderation, the `report` button will let you report abuse to room moderators"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-    },
-    "feature_dnd": {
-        isFeature: true,
-        labsGroup: LabGroup.Profile,
-        displayName: _td("Show options to enable 'Do not disturb' mode"),
+        displayName: _td("Report to moderators"),
+        description: _td(
+            "In rooms that support moderation, " + "the “Report” button will let you report abuse to room moderators.",
+        ),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
@@ -212,17 +250,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_communities_v2_prototypes": {
-        isFeature: true,
-        labsGroup: LabGroup.Spaces,
-        displayName: _td(
-            "Communities v2 prototypes. Requires compatible homeserver. " +
-            "Highly experimental - use with caution.",
-        ),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", false, false),
-    },
     "feature_pinning": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
@@ -230,31 +257,43 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_thread": {
+    "feature_threadenabled": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
-        // Requires a reload as we change an option flag on the `js-sdk`
-        // And the entire sync history needs to be parsed again
-        controller: new ReloadOnChangeController(),
-        displayName: _td("Threaded messaging"),
+        controller: new ThreadBetaController(),
+        displayName: _td("Threaded messages"),
         supportedLevels: LEVELS_FEATURE,
-        default: false,
+        default: true,
+        betaInfo: {
+            title: _td("Threaded messages"),
+            caption: () => (
+                <>
+                    <p>{_t("Keep discussions organised with threads.")}</p>
+                    <p>
+                        {_t(
+                            "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.",
+                            {},
+                            {
+                                a: (sub) => (
+                                    <a href="https://element.io/help#threads" rel="noreferrer noopener" target="_blank">
+                                        {sub}
+                                    </a>
+                                ),
+                            },
+                        )}
+                    </p>
+                </>
+            ),
+            requiresRefresh: true,
+        },
     },
-    "feature_custom_status": {
+    "feature_wysiwyg_composer": {
         isFeature: true,
-        labsGroup: LabGroup.Profile,
-        displayName: _td("Custom user status messages"),
+        labsGroup: LabGroup.Messaging,
+        displayName: _td("Rich text editor"),
+        description: _td("Use rich text instead of Markdown in the message composer. Plain text mode coming soon."),
         supportedLevels: LEVELS_FEATURE,
         default: false,
-        controller: new CustomStatusController(),
-    },
-    "feature_custom_tags": {
-        isFeature: true,
-        labsGroup: LabGroup.Experimental,
-        displayName: _td("Group & filter rooms by custom tags (refresh to apply changes)"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", false, false),
     },
     "feature_state_counters": {
         isFeature: true,
@@ -263,17 +302,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_many_integration_managers": {
-        isFeature: true,
-        labsGroup: LabGroup.Experimental,
-        displayName: _td("Multiple integration managers (requires manual setup)"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-    },
     "feature_mjolnir": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
-        displayName: _td("Try out new ways to ignore people (experimental)"),
+        displayName: _td("New ways to ignore people"),
+        description: _td("Currently experimental."),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
@@ -307,24 +340,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_extensible_events": {
-        isFeature: true,
-        labsGroup: LabGroup.Developer, // developer for now, eventually Messaging and default on
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Show extensible event representation of events"),
-        default: false,
-    },
-    "feature_use_only_current_profiles": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
+    "useOnlyCurrentProfiles": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Show current avatar and name for users in message history"),
         default: false,
-    },
-    "doNotDisturb": {
-        supportedLevels: [SettingLevel.DEVICE],
-        default: false,
-        controller: new IncompatibleController("feature_dnd", false, false),
     },
     "mjolnirRooms": {
         supportedLevels: [SettingLevel.ACCOUNT],
@@ -333,6 +352,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "mjolnirPersonalRoom": {
         supportedLevels: [SettingLevel.ACCOUNT],
         default: null,
+    },
+    "feature_html_topic": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Show HTML representation of room topics"),
+        default: false,
     },
     "feature_bridge_state": {
         isFeature: true,
@@ -348,37 +374,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Use new room breadcrumbs"),
         default: false,
     },
-    "feature_spotlight": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("New search experience"),
-        default: false,
-        betaInfo: {
-            title: _td("The new search"),
-            caption: () => <>
-                <p>{ _t("A new, quick way to search spaces and rooms you're in.") }</p>
-                <p>{ _t("This feature is a work in progress, we'd love to hear your feedback.") }</p>
-            </>,
-            disclaimer: () => <>
-                { SdkConfig.get().bug_report_endpoint_url && <>
-                    <h4>{ _t("How can I give feedback?") }</h4>
-                    <p>{ _t("To feedback, join the beta, start a search and click on feedback.") }</p>
-                </> }
-                <h4>{ _t("How can I leave the beta?") }</h4>
-                <p>{ _t("To leave, just return to this page or click on the beta badge when you search.") }</p>
-            </>,
-            feedbackLabel: "spotlight-feedback",
-            feedbackSubheading: _td("Thank you for trying the beta, " +
-                "please go into as much detail as you can so we can improve it."),
-            image: require("../../res/img/betas/new_search_experience.gif"),
-        },
-    },
     "feature_right_panel_default_open": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Right panel stays open (defaults to room member list)"),
+        displayName: _td("Right panel stays open"),
+        description: _td("Defaults to room member list."),
         default: false,
     },
     "feature_jump_to_date": {
@@ -394,15 +395,125 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: null,
     },
-    "feature_hidden_read_receipts": {
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Don't send read receipts"),
+    "sendReadReceipts": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td("Send read receipts"),
+        default: true,
+    },
+    "feature_sliding_sync": {
+        isFeature: true,
+        labsGroup: LabGroup.Developer,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        displayName: _td("Sliding Sync mode"),
+        description: _td("Under active development, cannot be disabled."),
+        shouldWarn: true,
         default: false,
+        controller: new SlidingSyncController(),
+    },
+    "feature_sliding_sync_proxy_url": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        default: "",
+    },
+    "feature_element_call_video_rooms": {
+        isFeature: true,
+        supportedLevels: LEVELS_FEATURE,
+        labsGroup: LabGroup.VoiceAndVideo,
+        displayName: _td("Element Call video rooms"),
+        controller: new ReloadOnChangeController(),
+        default: false,
+    },
+    "feature_group_calls": {
+        isFeature: true,
+        supportedLevels: LEVELS_FEATURE,
+        labsGroup: LabGroup.VoiceAndVideo,
+        displayName: _td("New group call experience"),
+        controller: new ReloadOnChangeController(),
+        default: false,
+    },
+    "feature_location_share_live": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Live Location Sharing"),
+        description: _td("Temporary implementation. Locations persist in room history."),
+        shouldWarn: true,
+        default: false,
+    },
+    "feature_dynamic_room_predecessors": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Dynamic room predecessors"),
+        description: _td("Enable MSC3946 (to support late-arriving room archives)"),
+        shouldWarn: true,
+        default: false,
+    },
+    "feature_favourite_messages": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Favourite Messages"),
+        description: _td("Under active development."),
+        default: false,
+    },
+    [Features.VoiceBroadcast]: {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Voice broadcast"),
+        default: false,
+    },
+    [Features.VoiceBroadcastForceSmallChunks]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Force 15s voice broadcast chunk length"),
+        default: false,
+    },
+    "feature_new_device_manager": {
+        isFeature: true,
+        labsGroup: LabGroup.Experimental,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Use new session manager"),
+        default: false,
+        betaInfo: {
+            title: _td("New session manager"),
+            caption: () => (
+                <>
+                    <p>{_td("Have greater visibility and control over all your sessions.")}</p>
+                    <p>
+                        {_td(
+                            "Our new sessions manager provides better visibility of all your sessions, " +
+                                "and greater control over them including the ability to remotely toggle push notifications.",
+                        )}
+                    </p>
+                </>
+            ),
+        },
+    },
+    "feature_qr_signin_reciprocate_show": {
+        isFeature: true,
+        labsGroup: LabGroup.Experimental,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td(
+            "Allow a QR code to be shown in session manager to sign in another device " +
+                "(requires compatible homeserver)",
+        ),
+        default: false,
+    },
+    "feature_rust_crypto": {
+        // use the rust matrix-sdk-crypto-js for crypto.
+        isFeature: true,
+        labsGroup: LabGroup.Developer,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        displayName: _td("Rust cryptography implementation"),
+        description: _td("Under active development. Can currently only be enabled via config.json"),
+        // shouldWarn: true,
+        default: false,
+        controller: new RustCryptoSdkController(),
     },
     "baseFontSize": {
         displayName: _td("Font size"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        default: 10,
+        default: FontWatcher.DEFAULT_SIZE,
         controller: new FontSizeController(),
     },
     "useCustomFontSize": {
@@ -412,108 +523,125 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "MessageComposerInput.suggestEmoji": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Enable Emoji suggestions while typing'),
+        displayName: _td("Enable Emoji suggestions while typing"),
         default: true,
-        invertedSettingName: 'MessageComposerInput.dontSuggestEmoji',
+        invertedSettingName: "MessageComposerInput.dontSuggestEmoji",
     },
     "MessageComposerInput.showStickersButton": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Show stickers button'),
+        displayName: _td("Show stickers button"),
         default: true,
         controller: new UIFeatureController(UIFeature.Widgets, false),
+    },
+    "MessageComposerInput.showPollsButton": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td("Show polls button"),
+        default: true,
+    },
+    "MessageComposerInput.insertTrailingColon": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td("Insert a trailing colon after user mentions at the start of a message"),
+        default: true,
     },
     // TODO: Wire up appropriately to UI (FTUE notifications)
     "Notifications.alwaysShowBadgeCounts": {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
         default: false,
     },
+    "feature_hidebold": {
+        isFeature: true,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        displayName: _td("Hide notification dot (only display counters badges)"),
+        labsGroup: LabGroup.Rooms,
+        default: false,
+    },
     "useCompactLayout": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         displayName: _td("Use a more compact 'Modern' layout"),
         default: false,
-        controller: new IncompatibleController("layout", false, v => v !== Layout.Group),
+        controller: new IncompatibleController("layout", false, (v: Layout) => v !== Layout.Group),
     },
     "showRedactions": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td('Show a placeholder for removed messages'),
+        displayName: _td("Show a placeholder for removed messages"),
         default: true,
-        invertedSettingName: 'hideRedactions',
+        invertedSettingName: "hideRedactions",
     },
     "showJoinLeaves": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td('Show join/leave messages (invites/removes/bans unaffected)'),
+        displayName: _td("Show join/leave messages (invites/removes/bans unaffected)"),
         default: true,
-        invertedSettingName: 'hideJoinLeaves',
+        invertedSettingName: "hideJoinLeaves",
     },
     "showAvatarChanges": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td('Show avatar changes'),
+        displayName: _td("Show avatar changes"),
         default: true,
-        invertedSettingName: 'hideAvatarChanges',
+        invertedSettingName: "hideAvatarChanges",
     },
     "showDisplaynameChanges": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td('Show display name changes'),
+        displayName: _td("Show display name changes"),
         default: true,
-        invertedSettingName: 'hideDisplaynameChanges',
+        invertedSettingName: "hideDisplaynameChanges",
     },
     "showReadReceipts": {
         supportedLevels: LEVELS_ROOM_SETTINGS,
-        displayName: _td('Show read receipts sent by other users'),
+        displayName: _td("Show read receipts sent by other users"),
         default: true,
-        invertedSettingName: 'hideReadReceipts',
+        invertedSettingName: "hideReadReceipts",
     },
     "showTwelveHourTimestamps": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Show timestamps in 12 hour format (e.g. 2:30pm)'),
+        displayName: _td("Show timestamps in 12 hour format (e.g. 2:30pm)"),
         default: false,
     },
     "alwaysShowTimestamps": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Always show message timestamps'),
+        displayName: _td("Always show message timestamps"),
         default: false,
     },
     "autoplayGifs": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Autoplay GIFs'),
+        displayName: _td("Autoplay GIFs"),
         default: false,
     },
     "autoplayVideo": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Autoplay videos'),
+        displayName: _td("Autoplay videos"),
         default: false,
     },
     "enableSyntaxHighlightLanguageDetection": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Enable automatic language detection for syntax highlighting'),
+        displayName: _td("Enable automatic language detection for syntax highlighting"),
         default: false,
     },
     "expandCodeByDefault": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Expand code blocks by default'),
+        displayName: _td("Expand code blocks by default"),
         default: false,
     },
     "showCodeLineNumbers": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Show line numbers in code blocks'),
+        displayName: _td("Show line numbers in code blocks"),
         default: true,
     },
     "scrollToBottomOnMessageSent": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Jump to the bottom of the timeline when you send a message'),
+        displayName: _td("Jump to the bottom of the timeline when you send a message"),
         default: true,
     },
     "Pill.shouldShowPillAvatar": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Show avatars in user and room mentions'),
+        displayName: _td("Show avatars in user and room mentions"),
         default: true,
-        invertedSettingName: 'Pill.shouldHidePillAvatar',
+        invertedSettingName: "Pill.shouldHidePillAvatar",
     },
     "TextualBody.enableBigEmoji": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Enable big emoji in chat'),
+        displayName: _td("Enable big emoji in chat"),
         default: true,
-        invertedSettingName: 'TextualBody.disableBigEmoji',
+        invertedSettingName: "TextualBody.disableBigEmoji",
     },
     "MessageComposerInput.isRichTextEnabled": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -527,7 +655,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Send typing notifications"),
         default: true,
-        invertedSettingName: 'dontSendTypingNotifications',
+        invertedSettingName: "dontSendTypingNotifications",
     },
     "showTypingNotifications": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -536,12 +664,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "ctrlFForSearch": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: isMac ? _td("Use Command + F to search timeline") : _td("Use Ctrl + F to search timeline"),
+        displayName: IS_MAC ? _td("Use Command + F to search timeline") : _td("Use Ctrl + F to search timeline"),
         default: false,
     },
     "MessageComposerInput.ctrlEnterToSend": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: isMac ? _td("Use Command + Enter to send a message") : _td("Use Ctrl + Enter to send a message"),
+        displayName: IS_MAC ? _td("Use Command + Enter to send a message") : _td("Use Ctrl + Enter to send a message"),
         default: false,
     },
     "MessageComposerInput.surroundWith": {
@@ -551,21 +679,24 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "MessageComposerInput.autoReplaceEmoji": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Automatically replace plain text Emoji'),
+        displayName: _td("Automatically replace plain text Emoji"),
         default: false,
+    },
+    "MessageComposerInput.useMarkdown": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td("Enable Markdown"),
+        description: () =>
+            _t(
+                "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.",
+                {},
+                { code: (sub) => <code>{sub}</code> },
+            ),
+        default: true,
     },
     "VideoView.flipVideoHorizontally": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Mirror local video feed'),
+        displayName: _td("Mirror local video feed"),
         default: false,
-    },
-    "TagPanel.enableTagPanel": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Enable Community Filter Panel'),
-        default: true,
-        invertedSettingName: 'TagPanel.disableTagPanel',
-        // We force the value to true because the invertedSettingName causes it to flip
-        controller: new UIFeatureController(UIFeature.Communities, true),
     },
     "theme": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -595,24 +726,37 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "webRtcAllowPeerToPeer": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td(
-            "Allow Peer-to-Peer for 1:1 calls " +
-            "(if you enable this, the other party might be able to see your IP address)",
-        ),
+        displayName: _td("Allow Peer-to-Peer for 1:1 calls"),
+        description: _td("When enabled, the other party might be able to see your IP address"),
         default: true,
-        invertedSettingName: 'webRtcForceTURN',
+        invertedSettingName: "webRtcForceTURN",
     },
     "webrtc_audiooutput": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: null,
+        default: "default",
     },
     "webrtc_audioinput": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: null,
+        default: "default",
     },
     "webrtc_videoinput": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: null,
+        default: "default",
+    },
+    "webrtc_audio_autoGainControl": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Automatic gain control"),
+        default: true,
+    },
+    "webrtc_audio_echoCancellation": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Echo cancellation"),
+        default: true,
+    },
+    "webrtc_audio_noiseSuppression": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Noise suppression"),
+        default: true,
     },
     "language": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
@@ -646,18 +790,25 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevelsAreOrdered: true,
         default: {}, // none allowed
     },
+    // Legacy, kept around for transitionary purposes
     "analyticsOptIn": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td('Send analytics data'),
         default: false,
-    },
-    "showCookieBar": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        default: true,
     },
     "pseudonymousAnalyticsOptIn": {
         supportedLevels: [SettingLevel.ACCOUNT],
-        displayName: _td('Send analytics data'),
+        displayName: _td("Send analytics data"),
+        default: null,
+    },
+    "deviceClientInformationOptIn": {
+        supportedLevels: [SettingLevel.ACCOUNT],
+        displayName: _td(
+            `Record the client name, version, and url ` + `to recognise sessions more easily in session manager`,
+        ),
+        default: false,
+    },
+    "FTUE.useCaseSelection": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: null,
     },
     "autocompleteDelay": {
@@ -678,8 +829,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: [SettingLevel.ROOM_DEVICE, SettingLevel.DEVICE],
         supportedLevelsAreOrdered: true,
         displayName: {
-            "default": _td('Never send encrypted messages to unverified sessions from this session'),
-            "room-device": _td('Never send encrypted messages to unverified sessions in this room from this session'),
+            "default": _td("Never send encrypted messages to unverified sessions from this session"),
+            "room-device": _td("Never send encrypted messages to unverified sessions in this room from this session"),
         },
         default: false,
         controller: new UIFeatureController(UIFeature.AdvancedEncryption),
@@ -687,7 +838,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "urlPreviewsEnabled": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
         displayName: {
-            "default": _td('Enable inline URL previews by default'),
+            "default": _td("Enable inline URL previews by default"),
             "room-account": _td("Enable URL previews for this room (only affects you)"),
             "room": _td("Enable URL previews by default for participants in this room"),
         },
@@ -707,6 +858,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
         controller: new NotificationsEnabledController(),
     },
+    "deviceNotificationsEnabled": {
+        supportedLevels: [SettingLevel.DEVICE],
+        default: true,
+    },
     "notificationSound": {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
         default: false,
@@ -722,18 +877,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "enableWidgetScreenshots": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Enable widget screenshots on supported widgets'),
+        displayName: _td("Enable widget screenshots on supported widgets"),
         default: false,
     },
     "promptBeforeInviteUnknownUsers": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Prompt before sending invites to potentially invalid matrix IDs'),
+        displayName: _td("Prompt before sending invites to potentially invalid matrix IDs"),
         default: true,
-    },
-    "showDeveloperTools": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Show developer tools'),
-        default: false,
     },
     "widgetOpenIDPermissions": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
@@ -742,23 +892,16 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             deny: [],
         },
     },
-    // TODO: Remove setting: https://github.com/vector-im/element-web/issues/14373
-    "RoomList.orderAlphabetically": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Order rooms by name"),
-        default: false,
-    },
-    // TODO: Remove setting: https://github.com/vector-im/element-web/issues/14373
-    "RoomList.orderByImportance": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Show rooms with unread notifications first"),
-        default: true,
-    },
     "breadcrumbs": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Show shortcuts to recently viewed rooms above the room list"),
         default: true,
         controller: new IncompatibleController("feature_breadcrumbs_v2", true),
+    },
+    "FTUE.userOnboardingButton": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td("Show shortcut to welcome checklist above the room list"),
+        default: true,
     },
     "showHiddenEventsInTimeline": {
         displayName: _td("Show hidden events in timeline"),
@@ -767,15 +910,17 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "lowBandwidth": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td('Low bandwidth mode (requires compatible homeserver)'),
+        displayName: _td("Low bandwidth mode"),
+        description: _td("Requires compatible homeserver."),
         default: false,
         controller: new ReloadOnChangeController(),
+        shouldWarn: true,
     },
     "fallbackICEServerAllowed": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        displayName: _td(
-            "Allow fallback call assist server turn.matrix.org when your homeserver " +
-            "does not offer one (your IP address would be shared during a call)",
+        displayName: _td("Allow fallback call assist server (turn.matrix.org)"),
+        description: _td(
+            "Only applies if your homeserver does not offer one. " + "Your IP address would be shared during a call.",
         ),
         // This is a tri-state value, where `null` means "prompt the user".
         default: null,
@@ -819,9 +964,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             // show up and can't be toggled. PushToMatrixClientController doesn't
             // do any overrides anyways.
             new UIFeatureController(UIFeature.AdvancedEncryption),
-            new PushToMatrixClientController(
-                MatrixClient.prototype.setCryptoTrustCrossSignedDevices, true,
-            ),
+            new PushToMatrixClientController(MatrixClient.prototype.setCryptoTrustCrossSignedDevices, true),
         ]),
     },
     "ircDisplayNameWidth": {
@@ -850,7 +993,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: [SettingLevel.CONFIG],
         default: false,
     },
-    "Widgets.pinned": { // deprecated
+    "Widgets.pinned": {
+        // deprecated
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
         default: {},
     },
@@ -858,16 +1002,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
         default: {},
     },
-    "Widgets.leftPanel": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        default: null,
-    },
     "Spaces.allRoomsInHome": {
         displayName: _td("Show all rooms in Home"),
         description: _td("All rooms you're in will appear in Home."),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: false,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", null),
     },
     "Spaces.enabledMetaSpaces": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -878,15 +1017,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "Spaces.showPeopleInSpace": {
         supportedLevels: [SettingLevel.ROOM_ACCOUNT],
         default: true,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", null),
-    },
-    "showCommunitiesInsteadOfSpaces": {
-        displayName: _td("Display Communities instead of Spaces"),
-        description: _td("Temporarily show communities instead of Spaces for this session. " +
-            "Support for this will be removed in the near future. This will reload Element."),
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        default: false,
-        controller: new ReloadOnChangeController(),
     },
     "developerMode": {
         displayName: _td("Developer mode"),
@@ -909,6 +1039,38 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Automatically send debug logs when key backup is not functioning"),
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: false,
+    },
+    "debug_scroll_panel": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: false,
+    },
+    "debug_timeline_panel": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: false,
+    },
+    "debug_registration": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: false,
+    },
+    "debug_animation": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: false,
+    },
+    "debug_legacy_call_handler": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: false,
+    },
+    "audioInputMuted": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: false,
+    },
+    "videoInputMuted": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: false,
+    },
+    "activeCallRoomIds": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: [],
     },
     [UIFeature.RoomHistorySettings]: {
         supportedLevels: LEVELS_UI_FEATURE,
@@ -964,23 +1126,44 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
     },
-    [UIFeature.Flair]: {
-        supportedLevels: LEVELS_UI_FEATURE,
-        default: true,
-        // Disable Flair when Communities are disabled
-        controller: new UIFeatureController(UIFeature.Communities),
-    },
-    [UIFeature.Communities]: {
-        supportedLevels: LEVELS_UI_FEATURE,
-        default: true,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", false, false),
-    },
     [UIFeature.AdvancedSettings]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
     },
     [UIFeature.TimelineEnableRelativeDates]: {
         supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.BulkUnverifiedSessionsReminder]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+
+    // Electron-specific settings, they are stored by Electron and set/read over an IPC.
+    // We store them over there are they are necessary to know before the renderer process launches.
+    "Electron.autoLaunch": {
+        supportedLevels: [SettingLevel.PLATFORM],
+        displayName: _td("Start automatically after system login"),
+        default: false,
+    },
+    "Electron.warnBeforeExit": {
+        supportedLevels: [SettingLevel.PLATFORM],
+        displayName: _td("Warn before quitting"),
+        default: true,
+    },
+    "Electron.alwaysShowMenuBar": {
+        supportedLevels: [SettingLevel.PLATFORM],
+        displayName: _td("Always show the window menu bar"),
+        default: false,
+    },
+    "Electron.showTrayIcon": {
+        supportedLevels: [SettingLevel.PLATFORM],
+        displayName: _td("Show tray icon and minimise window to it on close"),
+        default: true,
+    },
+    "Electron.enableHardwareAcceleration": {
+        supportedLevels: [SettingLevel.PLATFORM],
+        displayName: _td("Enable hardware acceleration"),
         default: true,
     },
 };

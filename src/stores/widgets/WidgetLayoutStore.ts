@@ -18,6 +18,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { Optional } from "matrix-events-sdk";
+import { compare } from "matrix-js-sdk/src/utils";
 
 import SettingsStore from "../../settings/SettingsStore";
 import WidgetStore, { IApp } from "../WidgetStore";
@@ -28,7 +29,6 @@ import { ReadyWatchingStore } from "../ReadyWatchingStore";
 import { SettingLevel } from "../../settings/SettingLevel";
 import { arrayFastClone } from "../../utils/arrays";
 import { UPDATE_EVENT } from "../AsyncStore";
-import { compare } from "../../utils/strings";
 
 export const WIDGET_LAYOUT_EVENT_TYPE = "io.element.widgets.layout";
 
@@ -41,7 +41,7 @@ export enum Container {
     // changes needed", though this may change in the future.
     Right = "right",
 
-    Center = "center"
+    Center = "center",
 }
 
 export interface IStoredLayout {
@@ -114,21 +114,22 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
     }
 
     public static get instance(): WidgetLayoutStore {
-        if (!WidgetLayoutStore.internalInstance) {
-            WidgetLayoutStore.internalInstance = new WidgetLayoutStore();
+        if (!this.internalInstance) {
+            this.internalInstance = new WidgetLayoutStore();
+            this.internalInstance.start();
         }
-        return WidgetLayoutStore.internalInstance;
+        return this.internalInstance;
     }
 
     public static emissionForRoom(room: Room): string {
         return `update_${room.roomId}`;
     }
 
-    private emitFor(room: Room) {
+    private emitFor(room: Room): void {
         this.emit(WidgetLayoutStore.emissionForRoom(room));
     }
 
-    protected async onReady(): Promise<any> {
+    protected async onReady(): Promise<void> {
         this.updateAllRooms();
 
         this.matrixClient.on(RoomStateEvent.Events, this.updateRoomFromState);
@@ -137,7 +138,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         WidgetStore.instance.on(UPDATE_EVENT, this.updateFromWidgetStore);
     }
 
-    protected async onNotReady(): Promise<any> {
+    protected async onNotReady(): Promise<void> {
         this.byRoom = {};
 
         this.matrixClient?.off(RoomStateEvent.Events, this.updateRoomFromState);
@@ -146,14 +147,14 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         WidgetStore.instance.off(UPDATE_EVENT, this.updateFromWidgetStore);
     }
 
-    private updateAllRooms = () => {
+    private updateAllRooms = (): void => {
         this.byRoom = {};
         for (const room of this.matrixClient.getVisibleRooms()) {
             this.recalculateRoom(room);
         }
     };
 
-    private updateFromWidgetStore = (roomId?: string) => {
+    private updateFromWidgetStore = (roomId?: string): void => {
         if (roomId) {
             const room = this.matrixClient.getRoom(roomId);
             if (room) this.recalculateRoom(room);
@@ -162,13 +163,13 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         }
     };
 
-    private updateRoomFromState = (ev: MatrixEvent) => {
+    private updateRoomFromState = (ev: MatrixEvent): void => {
         if (ev.getType() !== WIDGET_LAYOUT_EVENT_TYPE) return;
         const room = this.matrixClient.getRoom(ev.getRoomId());
         if (room) this.recalculateRoom(room);
     };
 
-    private updateFromSettings = (settingName: string, roomId: string /* and other stuff */) => {
+    private updateFromSettings = (settingName: string, roomId: string /* and other stuff */): void => {
         if (roomId) {
             const room = this.matrixClient.getRoom(roomId);
             if (room) this.recalculateRoom(room);
@@ -177,7 +178,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         }
     };
 
-    public recalculateRoom(room: Room) {
+    public recalculateRoom(room: Room): void {
         const widgets = WidgetStore.instance.getApps(room.roomId);
         if (!widgets?.length) {
             this.byRoom[room.roomId] = {};
@@ -209,7 +210,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
             const manualContainer = userLayout?.widgets?.[widget.id]?.container;
             const isLegacyPinned = !!legacyPinned?.[widget.id];
             const defaultContainer = WidgetType.JITSI.matches(widget.type) ? Container.Top : Container.Right;
-            if ((manualContainer) ? manualContainer === Container.Center : stateContainer === Container.Center) {
+            if (manualContainer ? manualContainer === Container.Center : stateContainer === Container.Center) {
                 if (centerWidgets.length) {
                     console.error("Tried to push a second widget into the center container");
                 } else {
@@ -220,7 +221,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
             }
             let targetContainer = defaultContainer;
             if (!!manualContainer || !!stateContainer) {
-                targetContainer = (manualContainer) ? manualContainer : stateContainer;
+                targetContainer = manualContainer ? manualContainer : stateContainer;
             } else if (isLegacyPinned && !stateContainer) {
                 // Special legacy case
                 targetContainer = Container.Top;
@@ -298,7 +299,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
                 // When we're over, we try to scale all the widgets within range first.
                 // We clamp values to try and keep ourselves sane and within range.
                 for (let i = 0; i < widths.length; i++) {
-                    widths[i] = clamp(widths[i] - (difference / widths.length), MIN_WIDGET_WIDTH_PCT, 100);
+                    widths[i] = clamp(widths[i] - difference / widths.length, MIN_WIDGET_WIDTH_PCT, 100);
                 }
 
                 // If we're still over, find the widgets which have more width than the minimum
@@ -310,9 +311,9 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
                 const toReclaim = sum(...widths) - 100;
                 if (toReclaim > 0) {
                     const largeIndices = widths
-                        .map((v, i) => ([i, v]))
-                        .filter(p => p[1] > MIN_WIDGET_WIDTH_PCT)
-                        .map(p => p[0]);
+                        .map((v, i) => [i, v])
+                        .filter((p) => p[1] > MIN_WIDGET_WIDTH_PCT)
+                        .map((p) => p[0]);
                     for (const idx of largeIndices) {
                         widths[idx] -= toReclaim / largeIndices.length;
                     }
@@ -351,18 +352,22 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
     }
 
     public isInContainer(room: Optional<Room>, widget: IApp, container: Container): boolean {
-        return this.getContainerWidgets(room, container).some(w => w.id === widget.id);
+        return this.getContainerWidgets(room, container).some((w) => w.id === widget.id);
     }
 
     public canAddToContainer(room: Room, container: Container): boolean {
         switch (container) {
-            case Container.Top: return this.getContainerWidgets(room, container).length < MAX_PINNED;
-            case Container.Right: return this.getContainerWidgets(room, container).length < MAX_PINNED;
-            case Container.Center: return this.getContainerWidgets(room, container).length < 1;
+            case Container.Top:
+                return this.getContainerWidgets(room, container).length < MAX_PINNED;
+            case Container.Right:
+                return this.getContainerWidgets(room, container).length < MAX_PINNED;
+            case Container.Center:
+                return this.getContainerWidgets(room, container).length < 1;
         }
     }
 
-    public getResizerDistributions(room: Room, container: Container): string[] { // yes, string.
+    public getResizerDistributions(room: Room, container: Container): string[] {
+        // yes, string.
         let distributions = this.byRoom[room.roomId]?.[container]?.distributions;
         if (!distributions || distributions.length < 2) return [];
 
@@ -372,13 +377,13 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
 
         if (distributions.length === 2) distributions = [distributions[0]];
         if (distributions.length === 3) distributions = [distributions[0], distributions[2]];
-        return distributions.map(d => `${d.toFixed(1)}%`); // actual percents - these are decoded later
+        return distributions.map((d) => `${d.toFixed(1)}%`); // actual percents - these are decoded later
     }
 
-    public setResizerDistributions(room: Room, container: Container, distributions: string[]) {
+    public setResizerDistributions(room: Room, container: Container, distributions: string[]): void {
         if (container !== Container.Top) return; // ignore - not relevant
 
-        const numbers = distributions.map(d => Number(Number(d.substring(0, d.length - 1)).toFixed(1)));
+        const numbers = distributions.map((d) => Number(Number(d.substring(0, d.length - 1)).toFixed(1)));
         const widgets = this.getContainerWidgets(room, container);
 
         // From getResizerDistributions, we need to fill in the middle size if applicable.
@@ -402,14 +407,14 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         return this.byRoom[room.roomId]?.[container]?.height; // let the default get returned if needed
     }
 
-    public setContainerHeight(room: Room, container: Container, height: number) {
+    public setContainerHeight(room: Room, container: Container, height: number): void {
         const widgets = this.getContainerWidgets(room, container);
         const widths = this.byRoom[room.roomId]?.[container]?.distributions;
         const localLayout = {};
         widgets.forEach((w, i) => {
             localLayout[w.id] = {
                 container: container,
-                width: widths[i],
+                width: widths?.[i],
                 index: i,
                 height: height,
             };
@@ -417,9 +422,9 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         this.updateUserLayout(room, localLayout);
     }
 
-    public moveWithinContainer(room: Room, container: Container, widget: IApp, delta: number) {
+    public moveWithinContainer(room: Room, container: Container, widget: IApp, delta: number): void {
         const widgets = arrayFastClone(this.getContainerWidgets(room, container));
-        const currentIdx = widgets.findIndex(w => w.id === widget.id);
+        const currentIdx = widgets.findIndex((w) => w.id === widget.id);
         if (currentIdx < 0) return; // no change needed
 
         widgets.splice(currentIdx, 1); // remove existing widget
@@ -432,7 +437,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         widgets.forEach((w, i) => {
             localLayout[w.id] = {
                 container: container,
-                width: widths[i],
+                width: widths?.[i],
                 index: i,
                 height: height,
             };
@@ -440,7 +445,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         this.updateUserLayout(room, localLayout);
     }
 
-    public moveToContainer(room: Room, widget: IApp, toContainer: Container) {
+    public moveToContainer(room: Room, widget: IApp, toContainer: Container): void {
         const allWidgets = this.getAllWidgets(room);
         if (!allWidgets.some(([w]) => w.id === widget.id)) return; // invalid
         // Prepare other containers (potentially move widgets to obey the following rules)
@@ -473,11 +478,11 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         this.updateUserLayout(room, newLayout);
     }
 
-    public hasMaximisedWidget(room: Room) {
+    public hasMaximisedWidget(room: Room): boolean {
         return this.getContainerWidgets(room, Container.Center).length > 0;
     }
 
-    public hasPinnedWidgets(room: Room) {
+    public hasPinnedWidgets(room: Room): boolean {
         return this.getContainerWidgets(room, Container.Top).length > 0;
     }
 
@@ -486,14 +491,14 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         return room.currentState.maySendStateEvent(WIDGET_LAYOUT_EVENT_TYPE, this.matrixClient.getUserId());
     }
 
-    public copyLayoutToRoom(room: Room) {
+    public copyLayoutToRoom(room: Room): void {
         const allWidgets = this.getAllWidgets(room);
         const evContent: ILayoutStateEvent = { widgets: {} };
         for (const [widget, container] of allWidgets) {
             evContent.widgets[widget.id] = { container };
             if (container === Container.Top) {
                 const containerWidgets = this.getContainerWidgets(room, container);
-                const idx = containerWidgets.findIndex(w => w.id === widget.id);
+                const idx = containerWidgets.findIndex((w) => w.id === widget.id);
                 const widths = this.byRoom[room.roomId]?.[container]?.distributions;
                 const height = this.byRoom[room.roomId]?.[container]?.height;
                 evContent.widgets[widget.id] = {
@@ -521,12 +526,12 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         return ret;
     }
 
-    private updateUserLayout(room: Room, newLayout: IWidgetLayouts) {
+    private updateUserLayout(room: Room, newLayout: IWidgetLayouts): void {
         // Polyfill any missing widgets
         const allWidgets = this.getAllWidgets(room);
         for (const [widget, container] of allWidgets) {
             const containerWidgets = this.getContainerWidgets(room, container);
-            const idx = containerWidgets.findIndex(w => w.id === widget.id);
+            const idx = containerWidgets.findIndex((w) => w.id === widget.id);
             const widths = this.byRoom[room.roomId]?.[container]?.distributions;
             if (!newLayout[widget.id]) {
                 newLayout[widget.id] = {

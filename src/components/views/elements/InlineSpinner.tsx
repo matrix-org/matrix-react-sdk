@@ -17,7 +17,6 @@ limitations under the License.
 import React from "react";
 
 import { _t } from "../../../languageHandler";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     w?: number;
@@ -25,14 +24,13 @@ interface IProps {
     children?: React.ReactNode;
 }
 
-@replaceableComponent("views.elements.InlineSpinner")
 export default class InlineSpinner extends React.PureComponent<IProps> {
-    static defaultProps = {
+    public static defaultProps = {
         w: 16,
         h: 16,
     };
 
-    render() {
+    public render(): JSX.Element {
         return (
             <div className="mx_InlineSpinner">
                 <div
@@ -40,7 +38,7 @@ export default class InlineSpinner extends React.PureComponent<IProps> {
                     style={{ width: this.props.w, height: this.props.h }}
                     aria-label={_t("Loading...")}
                 >
-                    { this.props.children }
+                    {this.props.children}
                 </div>
             </div>
         );

@@ -24,21 +24,21 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import RoomContext from "../../../contexts/RoomContext";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import { _t } from "../../../languageHandler";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import MiniAvatarUploader, { AVATAR_SIZE } from "../elements/MiniAvatarUploader";
 import RoomAvatar from "../avatars/RoomAvatar";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
-import dis from "../../../dispatcher/dispatcher";
 import { ViewUserPayload } from "../../../dispatcher/payloads/ViewUserPayload";
 import { Action } from "../../../dispatcher/actions";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { showSpaceInvite } from "../../../utils/space";
-import { privateShouldBeEncrypted } from "../../../createRoom";
 import EventTileBubble from "../messages/EventTileBubble";
 import { ROOM_SECURITY_TAB } from "../dialogs/RoomSettingsDialog";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
+import { privateShouldBeEncrypted } from "../../../utils/rooms";
+import { LocalRoom } from "../../../models/LocalRoom";
 
 function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): boolean {
     const isEncrypted: boolean = matrixClient.isRoomEncrypted(room.roomId);
@@ -46,51 +46,68 @@ function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): 
     return isPublic || !privateShouldBeEncrypted() || isEncrypted;
 }
 
-const NewRoomIntro = () => {
+const NewRoomIntro: React.FC = () => {
     const cli = useContext(MatrixClientContext);
     const { room, roomId } = useContext(RoomContext);
 
-    const dmPartner = DMRoomMap.shared().getUserIdForRoomId(roomId);
-    let body;
+    const isLocalRoom = room instanceof LocalRoom;
+    const dmPartner = isLocalRoom ? room.targets[0]?.userId : DMRoomMap.shared().getUserIdForRoomId(roomId);
+
+    let body: JSX.Element;
     if (dmPartner) {
-        let caption;
-        if ((room.getJoinedMemberCount() + room.getInvitedMemberCount()) === 2) {
+        let introMessage = _t("This is the beginning of your direct message history with <displayName/>.");
+        let caption: string | undefined;
+
+        if (isLocalRoom) {
+            introMessage = _t("Send your first message to invite <displayName/> to chat");
+        } else if (room.getJoinedMemberCount() + room.getInvitedMemberCount() === 2) {
             caption = _t("Only the two of you are in this conversation, unless either of you invites anyone to join.");
         }
 
         const member = room?.getMember(dmPartner);
-        const displayName = member?.rawDisplayName || dmPartner;
-        body = <React.Fragment>
-            <RoomAvatar
-                room={room}
-                width={AVATAR_SIZE}
-                height={AVATAR_SIZE}
-                onClick={() => {
-                    defaultDispatcher.dispatch<ViewUserPayload>({
-                        action: Action.ViewUser,
-                        // XXX: We should be using a real member object and not assuming what the receiver wants.
-                        member: member || { userId: dmPartner } as User,
-                    });
-                }}
-            />
+        const displayName = room?.name || member?.rawDisplayName || dmPartner;
+        body = (
+            <React.Fragment>
+                <RoomAvatar
+                    room={room}
+                    width={AVATAR_SIZE}
+                    height={AVATAR_SIZE}
+                    onClick={() => {
+                        defaultDispatcher.dispatch<ViewUserPayload>({
+                            action: Action.ViewUser,
+                            // XXX: We should be using a real member object and not assuming what the receiver wants.
+                            member: member || ({ userId: dmPartner } as User),
+                        });
+                    }}
+                />
 
-            <h2>{ room.name }</h2>
+                <h2>{room.name}</h2>
 
-            <p>{ _t("This is the beginning of your direct message history with <displayName/>.", {}, {
-                displayName: () => <b>{ displayName }</b>,
-            }) }</p>
-            { caption && <p>{ caption }</p> }
-        </React.Fragment>;
+                <p>
+                    {_t(
+                        introMessage,
+                        {},
+                        {
+                            displayName: () => <b>{displayName}</b>,
+                        },
+                    )}
+                </p>
+                {caption && <p>{caption}</p>}
+            </React.Fragment>
+        );
     } else {
         const inRoom = room && room.getMyMembership() === "join";
         const topic = room.currentState.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic;
         const canAddTopic = inRoom && room.currentState.maySendStateEvent(EventType.RoomTopic, cli.getUserId());
 
-        const onTopicClick = () => {
-            dis.dispatch({
-                action: "open_room_settings",
-                room_id: roomId,
-            }, true);
+        const onTopicClick = (): void => {
+            defaultDispatcher.dispatch(
+                {
+                    action: "open_room_settings",
+                    room_id: roomId,
+                },
+                true,
+            );
             // focus the topic field to help the user find it as it'll gain an outline
             setImmediate(() => {
                 window.document.getElementById("profileTopic").focus();
@@ -99,19 +116,31 @@ const NewRoomIntro = () => {
 
         let topicText;
         if (canAddTopic && topic) {
-            topicText = _t("Topic: %(topic)s (<a>edit</a>)", { topic }, {
-                a: sub => <AccessibleButton kind="link" onClick={onTopicClick}>{ sub }</AccessibleButton>,
-            });
+            topicText = _t(
+                "Topic: %(topic)s (<a>edit</a>)",
+                { topic },
+                {
+                    a: (sub) => (
+                        <AccessibleButton kind="link_inline" onClick={onTopicClick}>
+                            {sub}
+                        </AccessibleButton>
+                    ),
+                },
+            );
         } else if (topic) {
             topicText = _t("Topic: %(topic)s ", { topic });
         } else if (canAddTopic) {
-            topicText = _t("<a>Add a topic</a> to help people know what it is about.", {}, {
-                a: sub => <AccessibleButton
-                    kind="link"
-                    element="span"
-                    onClick={onTopicClick}
-                >{ sub }</AccessibleButton>,
-            });
+            topicText = _t(
+                "<a>Add a topic</a> to help people know what it is about.",
+                {},
+                {
+                    a: (sub) => (
+                        <AccessibleButton kind="link_inline" onClick={onTopicClick}>
+                            {sub}
+                        </AccessibleButton>
+                    ),
+                },
+            );
         }
 
         const creator = room.currentState.getStateEvents(EventType.RoomCreate, "")?.getSender();
@@ -135,98 +164,129 @@ const NewRoomIntro = () => {
         }
 
         let buttons;
-        if (parentSpace) {
-            buttons = <div className="mx_NewRoomIntro_buttons">
-                <AccessibleButton
-                    className="mx_NewRoomIntro_inviteButton"
-                    kind="primary"
-                    onClick={() => {
-                        showSpaceInvite(parentSpace);
-                    }}
-                >
-                    { _t("Invite to %(spaceName)s", { spaceName: parentSpace.name }) }
-                </AccessibleButton>
-                { room.canInvite(cli.getUserId()) && <AccessibleButton
-                    className="mx_NewRoomIntro_inviteButton"
-                    kind="primary_outline"
-                    onClick={() => {
-                        dis.dispatch({ action: "view_invite", roomId });
-                    }}
-                >
-                    { _t("Invite to just this room") }
-                </AccessibleButton> }
-            </div>;
+        if (parentSpace && shouldShowComponent(UIComponent.InviteUsers)) {
+            buttons = (
+                <div className="mx_NewRoomIntro_buttons">
+                    <AccessibleButton
+                        className="mx_NewRoomIntro_inviteButton"
+                        kind="primary"
+                        onClick={() => {
+                            showSpaceInvite(parentSpace);
+                        }}
+                    >
+                        {_t("Invite to %(spaceName)s", { spaceName: parentSpace.name })}
+                    </AccessibleButton>
+                    {room.canInvite(cli.getUserId()) && (
+                        <AccessibleButton
+                            className="mx_NewRoomIntro_inviteButton"
+                            kind="primary_outline"
+                            onClick={() => {
+                                defaultDispatcher.dispatch({ action: "view_invite", roomId });
+                            }}
+                        >
+                            {_t("Invite to just this room")}
+                        </AccessibleButton>
+                    )}
+                </div>
+            );
         } else if (room.canInvite(cli.getUserId()) && shouldShowComponent(UIComponent.InviteUsers)) {
-            buttons = <div className="mx_NewRoomIntro_buttons">
-                <AccessibleButton
-                    className="mx_NewRoomIntro_inviteButton"
-                    kind="primary"
-                    onClick={() => {
-                        dis.dispatch({ action: "view_invite", roomId });
-                    }}
-                >
-                    { _t("Invite to this room") }
-                </AccessibleButton>
-            </div>;
+            buttons = (
+                <div className="mx_NewRoomIntro_buttons">
+                    <AccessibleButton
+                        className="mx_NewRoomIntro_inviteButton"
+                        kind="primary"
+                        onClick={() => {
+                            defaultDispatcher.dispatch({ action: "view_invite", roomId });
+                        }}
+                    >
+                        {_t("Invite to this room")}
+                    </AccessibleButton>
+                </div>
+            );
         }
 
         const avatarUrl = room.currentState.getStateEvents(EventType.RoomAvatar, "")?.getContent()?.url;
-        body = <React.Fragment>
-            <MiniAvatarUploader
-                hasAvatar={!!avatarUrl}
-                noAvatarLabel={_t("Add a photo, so people can easily spot your room.")}
-                setAvatarUrl={url => cli.sendStateEvent(roomId, EventType.RoomAvatar, { url }, '')}
-            >
-                <RoomAvatar room={room} width={AVATAR_SIZE} height={AVATAR_SIZE} viewAvatarOnClick={true} />
-            </MiniAvatarUploader>
+        let avatar = (
+            <RoomAvatar room={room} width={AVATAR_SIZE} height={AVATAR_SIZE} viewAvatarOnClick={!!avatarUrl} />
+        );
 
-            <h2>{ room.name }</h2>
+        if (!avatarUrl) {
+            avatar = (
+                <MiniAvatarUploader
+                    hasAvatar={false}
+                    noAvatarLabel={_t("Add a photo, so people can easily spot your room.")}
+                    setAvatarUrl={(url) => cli.sendStateEvent(roomId, EventType.RoomAvatar, { url }, "")}
+                >
+                    {avatar}
+                </MiniAvatarUploader>
+            );
+        }
 
-            <p>{ createdText } { _t("This is the start of <roomName/>.", {}, {
-                roomName: () => <b>{ room.name }</b>,
-            }) }</p>
-            <p>{ topicText }</p>
-            { buttons }
-        </React.Fragment>;
+        body = (
+            <React.Fragment>
+                {avatar}
+
+                <h2>{room.name}</h2>
+
+                <p>
+                    {createdText}{" "}
+                    {_t(
+                        "This is the start of <roomName/>.",
+                        {},
+                        {
+                            roomName: () => <b>{room.name}</b>,
+                        },
+                    )}
+                </p>
+                <p>{topicText}</p>
+                {buttons}
+            </React.Fragment>
+        );
     }
 
-    function openRoomSettings(event) {
+    function openRoomSettings(event: ButtonEvent): void {
         event.preventDefault();
-        dis.dispatch({
+        defaultDispatcher.dispatch({
             action: "open_room_settings",
             initial_tab_id: ROOM_SECURITY_TAB,
         });
     }
 
     const subText = _t(
-        "Your private messages are normally encrypted, but this room isn't. "+
-        "Usually this is due to an unsupported device or method being used, " +
-        "like email invites.",
+        "Your private messages are normally encrypted, but this room isn't. " +
+            "Usually this is due to an unsupported device or method being used, " +
+            "like email invites.",
     );
 
     let subButton;
-    if (room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, MatrixClientPeg.get())) {
+    if (room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, MatrixClientPeg.get()) && !isLocalRoom) {
         subButton = (
-            <AccessibleButton kind='link_inline' onClick={openRoomSettings}>{ _t("Enable encryption in settings.") }</AccessibleButton>
+            <AccessibleButton kind="link_inline" onClick={openRoomSettings}>
+                {_t("Enable encryption in settings.")}
+            </AccessibleButton>
         );
     }
 
     const subtitle = (
-        <span> { subText } { subButton } </span>
+        <span>
+            {" "}
+            {subText} {subButton}{" "}
+        </span>
     );
 
-    return <div className="mx_NewRoomIntro">
+    return (
+        <li className="mx_NewRoomIntro">
+            {!hasExpectedEncryptionSettings(cli, room) && (
+                <EventTileBubble
+                    className="mx_cryptoEvent mx_cryptoEvent_icon_warning"
+                    title={_t("End-to-end encryption isn't enabled")}
+                    subtitle={subtitle}
+                />
+            )}
 
-        { !hasExpectedEncryptionSettings(cli, room) && (
-            <EventTileBubble
-                className="mx_cryptoEvent mx_cryptoEvent_icon_warning"
-                title={_t("End-to-end encryption isn't enabled")}
-                subtitle={subtitle}
-            />
-        ) }
-
-        { body }
-    </div>;
+            {body}
+        </li>
+    );
 };
 
 export default NewRoomIntro;

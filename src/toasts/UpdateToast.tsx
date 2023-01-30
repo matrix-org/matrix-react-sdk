@@ -31,17 +31,17 @@ const TOAST_KEY = "update";
  * Check a version string is compatible with the Changelog
  * dialog ([element-version]-react-[react-sdk-version]-js-[js-sdk-version])
  */
-function checkVersion(ver) {
-    const parts = ver.split('-');
-    return parts.length === 5 && parts[1] === 'react' && parts[3] === 'js';
+function checkVersion(ver: string): boolean {
+    const parts = ver.split("-");
+    return parts.length === 5 && parts[1] === "react" && parts[3] === "js";
 }
 
-function installUpdate() {
+function installUpdate(): void {
     PlatformPeg.get().installUpdate();
 }
 
-export const showToast = (version: string, newVersion: string, releaseNotes?: string) => {
-    function onReject() {
+export const showToast = (version: string, newVersion: string, releaseNotes?: string): void => {
+    function onReject(): void {
         PlatformPeg.get().deferUpdate(newVersion);
     }
 
@@ -49,9 +49,9 @@ export const showToast = (version: string, newVersion: string, releaseNotes?: st
     let acceptLabel = _t("What's new?");
     if (releaseNotes) {
         onAccept = () => {
-            Modal.createTrackedDialog('Display release notes', '', QuestionDialog, {
+            Modal.createDialog(QuestionDialog, {
                 title: _t("What's New"),
-                description: <pre>{ releaseNotes }</pre>,
+                description: <pre>{releaseNotes}</pre>,
                 button: _t("Update"),
                 onFinished: (update) => {
                     if (update && PlatformPeg.get()) {
@@ -62,7 +62,7 @@ export const showToast = (version: string, newVersion: string, releaseNotes?: st
         };
     } else if (checkVersion(version) && checkVersion(newVersion)) {
         onAccept = () => {
-            Modal.createTrackedDialog('Display Changelog', '', ChangelogDialog, {
+            Modal.createDialog(ChangelogDialog, {
                 version,
                 newVersion,
                 onFinished: (update) => {
@@ -93,6 +93,6 @@ export const showToast = (version: string, newVersion: string, releaseNotes?: st
     });
 };
 
-export const hideToast = () => {
+export const hideToast = (): void => {
     ToastStore.sharedInstance().dismissToast(TOAST_KEY);
 };

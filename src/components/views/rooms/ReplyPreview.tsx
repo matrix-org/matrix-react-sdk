@@ -14,19 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import React from "react";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
-import dis from '../../../dispatcher/dispatcher';
-import { _t } from '../../../languageHandler';
+import dis from "../../../dispatcher/dispatcher";
+import { _t } from "../../../languageHandler";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import ReplyTile from './ReplyTile';
-import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
+import ReplyTile from "./ReplyTile";
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
+import AccessibleButton from "../elements/AccessibleButton";
 
-function cancelQuoting(context: TimelineRenderingType) {
+function cancelQuoting(context: TimelineRenderingType): void {
     dis.dispatch({
-        action: 'reply_to_event',
+        action: "reply_to_event",
         event: null,
         context,
     });
@@ -34,38 +34,28 @@ function cancelQuoting(context: TimelineRenderingType) {
 
 interface IProps {
     permalinkCreator: RoomPermalinkCreator;
-    replyToEvent: MatrixEvent;
+    replyToEvent?: MatrixEvent;
 }
 
-@replaceableComponent("views.rooms.ReplyPreview")
 export default class ReplyPreview extends React.Component<IProps> {
     public static contextType = RoomContext;
 
-    public render(): JSX.Element {
+    public render(): JSX.Element | null {
         if (!this.props.replyToEvent) return null;
 
-        return <div className="mx_ReplyPreview">
-            <div className="mx_ReplyPreview_section">
-                <div className="mx_ReplyPreview_header mx_ReplyPreview_title">
-                    { _t('Replying') }
-                </div>
-                <div className="mx_ReplyPreview_header mx_ReplyPreview_cancel">
-                    <img
-                        className="mx_filterFlipColor"
-                        src={require("../../../../res/img/cancel.svg")}
-                        width="18"
-                        height="18"
-                        onClick={() => cancelQuoting(this.context.timelineRenderingType)}
-                    />
-                </div>
-                <div className="mx_ReplyPreview_clear" />
-                <div className="mx_ReplyPreview_tile">
-                    <ReplyTile
-                        mxEvent={this.props.replyToEvent}
-                        permalinkCreator={this.props.permalinkCreator}
-                    />
+        return (
+            <div className="mx_ReplyPreview">
+                <div className="mx_ReplyPreview_section">
+                    <div className="mx_ReplyPreview_header">
+                        <span>{_t("Replying")}</span>
+                        <AccessibleButton
+                            className="mx_ReplyPreview_header_cancel"
+                            onClick={() => cancelQuoting(this.context.timelineRenderingType)}
+                        />
+                    </div>
+                    <ReplyTile mxEvent={this.props.replyToEvent} permalinkCreator={this.props.permalinkCreator} />
                 </div>
             </div>
-        </div>;
+        );
     }
 }

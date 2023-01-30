@@ -17,14 +17,12 @@ limitations under the License.
 import React from "react";
 
 import MAudioBody from "./MAudioBody";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import MVoiceMessageBody from "./MVoiceMessageBody";
 import { IBodyProps } from "./IBodyProps";
 import { isVoiceMessage } from "../../../utils/EventUtils";
 
-@replaceableComponent("views.messages.MVoiceOrAudioBody")
 export default class MVoiceOrAudioBody extends React.PureComponent<IBodyProps> {
-    public render() {
+    public render(): JSX.Element {
         if (!this.props.forExport && isVoiceMessage(this.props.mxEvent)) {
             return <MVoiceMessageBody {...this.props} />;
         } else {

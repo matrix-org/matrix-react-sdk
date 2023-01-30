@@ -20,23 +20,27 @@ import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
 import ServerOfflineDialog from "../dialogs/ServerOfflineDialog";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
-@replaceableComponent("views.toasts.NonUrgentEchoFailureToast")
 export default class NonUrgentEchoFailureToast extends React.PureComponent {
-    private openDialog = () => {
-        Modal.createTrackedDialog('Local Echo Server Error', '', ServerOfflineDialog, {});
+    private openDialog = (): void => {
+        Modal.createDialog(ServerOfflineDialog, {});
     };
 
-    public render() {
+    public render(): JSX.Element {
         return (
             <div className="mx_NonUrgentEchoFailureToast">
                 <span className="mx_NonUrgentEchoFailureToast_icon" />
-                { _t("Your server isn't responding to some <a>requests</a>.", {}, {
-                    'a': (sub) => (
-                        <AccessibleButton kind="link" onClick={this.openDialog}>{ sub }</AccessibleButton>
-                    ),
-                }) }
+                {_t(
+                    "Your server isn't responding to some <a>requests</a>.",
+                    {},
+                    {
+                        a: (sub) => (
+                            <AccessibleButton kind="link_inline" onClick={this.openDialog}>
+                                {sub}
+                            </AccessibleButton>
+                        ),
+                    },
+                )}
             </div>
         );
     }

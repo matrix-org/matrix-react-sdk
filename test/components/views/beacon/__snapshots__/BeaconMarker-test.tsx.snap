@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<BeaconMarker /> renders marker when beacon has location 1`] = `
+<DocumentFragment>
+  <span>
+    <div
+      class="mx_Marker mx_Username_color4"
+      id="!room:server_@alice:server"
+    >
+      <div
+        class="mx_Marker_border"
+      >
+        <span
+          class="mx_BaseAvatar"
+          role="presentation"
+          style="width: 36px; height: 36px;"
+        >
+          <span
+            aria-hidden="true"
+            class="mx_BaseAvatar_image mx_BaseAvatar_initial"
+            data-testid="avatar-img"
+            style="background-color: rgb(172, 59, 168); width: 36px; height: 36px; font-size: 23.400000000000002px; line-height: 36px;"
+            title="@alice:server"
+          >
+            A
+          </span>
+        </span>
+      </div>
+    </div>
+  </span>
+</DocumentFragment>
+`;

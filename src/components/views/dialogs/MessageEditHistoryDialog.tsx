@@ -14,18 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { defer } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { _t } from '../../../languageHandler';
-import { wantsDateSeparator } from '../../../DateUtils';
-import SettingsStore from '../../../settings/SettingsStore';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { _t } from "../../../languageHandler";
+import { wantsDateSeparator } from "../../../DateUtils";
+import SettingsStore from "../../../settings/SettingsStore";
 import BaseDialog from "./BaseDialog";
 import ScrollPanel from "../../structures/ScrollPanel";
 import Spinner from "../elements/Spinner";
@@ -48,9 +47,8 @@ interface IState {
     isTwelveHour: boolean;
 }
 
-@replaceableComponent("views.dialogs.MessageEditHistoryDialog")
 export default class MessageEditHistoryDialog extends React.PureComponent<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             originalEvent: null,
@@ -88,15 +86,18 @@ export default class MessageEditHistoryDialog extends React.PureComponent<IProps
 
         const newEvents = result.events;
         this.locallyRedactEventsIfNeeded(newEvents);
-        this.setState({
-            originalEvent: this.state.originalEvent || result.originalEvent,
-            events: this.state.events.concat(newEvents),
-            nextBatch: result.nextBatch,
-            isLoading: false,
-        }, () => {
-            const hasMoreResults = !!this.state.nextBatch;
-            resolve(hasMoreResults);
-        });
+        this.setState(
+            {
+                originalEvent: this.state.originalEvent || result.originalEvent,
+                events: this.state.events.concat(newEvents),
+                nextBatch: result.nextBatch,
+                isLoading: false,
+            },
+            () => {
+                const hasMoreResults = !!this.state.nextBatch;
+                resolve(hasMoreResults);
+            },
+        );
         return promise;
     };
 
@@ -106,8 +107,8 @@ export default class MessageEditHistoryDialog extends React.PureComponent<IProps
         const room = client.getRoom(roomId);
         const pendingEvents = room.getPendingEvents();
         for (const e of newEvents) {
-            const pendingRedaction = pendingEvents.find(pe => {
-                return pe.getType() === "m.room.redaction" && pe.getAssociatedId() === e.getId();
+            const pendingRedaction = pendingEvents.find((pe) => {
+                return pe.getType() === EventType.RoomRedaction && pe.getAssociatedId() === e.getId();
             });
             if (pendingRedaction) {
                 e.markLocallyRedacted(pendingRedaction);
@@ -129,18 +130,23 @@ export default class MessageEditHistoryDialog extends React.PureComponent<IProps
         }
         const baseEventId = this.props.mxEvent.getId();
         allEvents.forEach((e, i) => {
-            if (!lastEvent || wantsDateSeparator(lastEvent.getDate(), e.getDate())) {
-                nodes.push(<li key={e.getTs() + "~"}><DateSeparator roomId={e.getRoomId()} ts={e.getTs()} /></li>);
+            if (!lastEvent || wantsDateSeparator(lastEvent.getDate() || undefined, e.getDate() || undefined)) {
+                nodes.push(
+                    <li key={e.getTs() + "~"}>
+                        <DateSeparator roomId={e.getRoomId()} ts={e.getTs()} />
+                    </li>,
+                );
             }
             const isBaseEvent = e.getId() === baseEventId;
-            nodes.push((
+            nodes.push(
                 <EditHistoryMessage
                     key={e.getId()}
                     previousEdit={!isBaseEvent ? allEvents[i + 1] : null}
                     isBaseEvent={isBaseEvent}
                     mxEvent={e}
                     isTwelveHour={this.state.isTwelveHour}
-                />));
+                />,
+            );
             lastEvent = e;
         });
         return nodes;
@@ -151,41 +157,45 @@ export default class MessageEditHistoryDialog extends React.PureComponent<IProps
         if (this.state.error) {
             const { error } = this.state;
             if (error.errcode === "M_UNRECOGNIZED") {
-                content = (<p className="mx_MessageEditHistoryDialog_error">
-                    { _t("Your homeserver doesn't seem to support this feature.") }
-                </p>);
+                content = (
+                    <p className="mx_MessageEditHistoryDialog_error">
+                        {_t("Your homeserver doesn't seem to support this feature.")}
+                    </p>
+                );
             } else if (error.errcode) {
                 // some kind of error from the homeserver
-                content = (<p className="mx_MessageEditHistoryDialog_error">
-                    { _t("Something went wrong!") }
-                </p>);
+                content = <p className="mx_MessageEditHistoryDialog_error">{_t("Something went wrong!")}</p>;
             } else {
-                content = (<p className="mx_MessageEditHistoryDialog_error">
-                    { _t("Cannot reach homeserver") }
-                    <br />
-                    { _t("Ensure you have a stable internet connection, or get in touch with the server admin") }
-                </p>);
+                content = (
+                    <p className="mx_MessageEditHistoryDialog_error">
+                        {_t("Cannot reach homeserver")}
+                        <br />
+                        {_t("Ensure you have a stable internet connection, or get in touch with the server admin")}
+                    </p>
+                );
             }
         } else if (this.state.isLoading) {
             content = <Spinner />;
         } else {
-            content = (<ScrollPanel
-                className="mx_MessageEditHistoryDialog_scrollPanel"
-                onFillRequest={this.loadMoreEdits}
-                stickyBottom={false}
-                startAtBottom={false}
-            >
-                <ul className="mx_MessageEditHistoryDialog_edits">{ this.renderEdits() }</ul>
-            </ScrollPanel>);
+            content = (
+                <ScrollPanel
+                    className="mx_MessageEditHistoryDialog_scrollPanel"
+                    onFillRequest={this.loadMoreEdits}
+                    stickyBottom={false}
+                    startAtBottom={false}
+                >
+                    <ul className="mx_MessageEditHistoryDialog_edits">{this.renderEdits()}</ul>
+                </ScrollPanel>
+            );
         }
         return (
             <BaseDialog
-                className='mx_MessageEditHistoryDialog'
+                className="mx_MessageEditHistoryDialog"
                 hasCancel={true}
                 onFinished={this.props.onFinished}
                 title={_t("Message edits")}
             >
-                { content }
+                {content}
             </BaseDialog>
         );
     }

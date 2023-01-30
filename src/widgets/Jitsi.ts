@@ -44,7 +44,7 @@ export class Jitsi {
      *
      * See https://github.com/matrix-org/prosody-mod-auth-matrix-user-verification
      */
-    public async getJitsiAuth(): Promise<string|null> {
+    public async getJitsiAuth(): Promise<string | null> {
         if (!this.preferredDomain) {
             return null;
         }
@@ -61,7 +61,7 @@ export class Jitsi {
         return null;
     }
 
-    public start() {
+    public start(): void {
         const cli = MatrixClientPeg.get();
         cli.on(ClientEvent.ClientWellKnown, this.update);
         // call update initially in case we missed the first WellKnown.client event and for if no well-known present
@@ -70,10 +70,10 @@ export class Jitsi {
 
     private update = async (discoveryResponse: IClientWellKnown): Promise<any> => {
         // Start with a default of the config's domain
-        let domain = SdkConfig.get().jitsi?.preferredDomain || "meet.element.io";
+        let domain = SdkConfig.getObject("jitsi")?.get("preferred_domain") || "meet.element.io";
 
         logger.log("Attempting to get Jitsi conference information from homeserver");
-        const wkPreferredDomain = discoveryResponse?.[JITSI_WK_PROPERTY]?.['preferredDomain'];
+        const wkPreferredDomain = discoveryResponse?.[JITSI_WK_PROPERTY]?.["preferredDomain"];
         if (wkPreferredDomain) domain = wkPreferredDomain;
 
         // Put the result into memory for us to use later

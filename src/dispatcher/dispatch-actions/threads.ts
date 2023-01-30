@@ -13,37 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
 
-export const showThread = (props: {
-    rootEvent: MatrixEvent;
-    initialEvent?: MatrixEvent;
-    highlighted?: boolean;
-    push?: boolean;
-}) => {
-    const push = props.push ?? false;
-    const threadViewCard = {
-        phase: RightPanelPhases.ThreadView,
-        state: {
-            threadHeadEvent: props.rootEvent,
-            initialEvent: props.initialEvent,
-            isInitialEventHighlighted: props.highlighted,
-        },
-    };
-    if (push) {
-        RightPanelStore.instance.pushCard(threadViewCard);
-    } else {
-        RightPanelStore.instance.setCards([
-            { phase: RightPanelPhases.ThreadPanel },
-            threadViewCard,
-        ]);
-    }
-};
-
-export const showThreadPanel = () => {
+export const showThreadPanel = (): void => {
     RightPanelStore.instance.setCard({ phase: RightPanelPhases.ThreadPanel });
 };
-

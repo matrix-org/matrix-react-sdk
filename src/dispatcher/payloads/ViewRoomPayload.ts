@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { ViewRoom as ViewRoomEvent } from "matrix-analytics-events/types/typescript/ViewRoom";
+import { ViewRoom as ViewRoomEvent } from "@matrix-org/analytics-events/types/typescript/ViewRoom";
 
 import { ActionPayload } from "../payloads";
 import { Action } from "../actions";
@@ -26,12 +26,15 @@ import { IOpts } from "../../createRoom";
 export interface ViewRoomPayload extends Pick<ActionPayload, "action"> {
     action: Action.ViewRoom;
 
-    // either of room_id or room_alias must be specified
+    // either or both of room_id or room_alias must be specified
+    // where possible, a room_id should be provided with a room_alias as it reduces
+    // the number of API calls required.
     room_id?: string;
     room_alias?: string;
 
     event_id?: string; // the event to ensure is in view if any
     highlighted?: boolean; // whether to highlight `event_id`
+    scroll_into_view?: boolean; // whether to scroll `event_id` into view
     should_peek?: boolean; // whether we should peek the room if we are not yet joined
     joining?: boolean; // whether we have already sent a join request for this room
     via_servers?: string[]; // the list of servers to join via if no room_alias is provided
@@ -44,6 +47,7 @@ export interface ViewRoomPayload extends Pick<ActionPayload, "action"> {
     forceTimeline?: boolean; // Whether to override default behaviour to end up at a timeline
     show_room_tile?: boolean; // Whether to ensure that the room tile is visible in the room list
     clear_search?: boolean; // Whether to clear the room list search
+    view_call?: boolean; // Whether to view the call or call lobby for the room
 
     deferred_action?: ActionPayload; // Action to fire after MatrixChat handles this ViewRoom action
 

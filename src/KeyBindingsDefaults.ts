@@ -15,29 +15,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { isMac, Key } from "./Keyboard";
+import { IS_MAC, Key } from "./Keyboard";
 import SettingsStore from "./settings/SettingsStore";
 import SdkConfig from "./SdkConfig";
-import {
-    IKeyBindingsProvider,
-    KeyBinding,
-    KeyCombo,
-} from "./KeyBindingsManager";
-import {
-    CATEGORIES,
-    CategoryName,
-    getCustomizableShortcuts,
-    KeyBindingAction,
-} from "./accessibility/KeyboardShortcuts";
+import { IKeyBindingsProvider, KeyBinding } from "./KeyBindingsManager";
+import { CATEGORIES, CategoryName, KeyBindingAction } from "./accessibility/KeyboardShortcuts";
+import { getKeyboardShortcuts } from "./accessibility/KeyboardShortcutUtils";
 
 export const getBindingsByCategory = (category: CategoryName): KeyBinding[] => {
-    return CATEGORIES[category].settingNames.reduce((bindings, name) => {
-        const value = getCustomizableShortcuts()[name]?.default;
-        if (value) {
-            bindings.push({
-                action: name as KeyBindingAction,
-                keyCombo: value as KeyCombo,
-            });
+    return CATEGORIES[category].settingNames.reduce((bindings, action) => {
+        const keyCombo = getKeyboardShortcuts()[action]?.default;
+        if (keyCombo) {
+            bindings.push({ action, keyCombo });
         }
         return bindings;
     }, []);
@@ -46,7 +35,7 @@ export const getBindingsByCategory = (category: CategoryName): KeyBinding[] => {
 const messageComposerBindings = (): KeyBinding[] => {
     const bindings = getBindingsByCategory(CategoryName.COMPOSER);
 
-    if (SettingsStore.getValue('MessageComposerInput.ctrlEnterToSend')) {
+    if (SettingsStore.getValue("MessageComposerInput.ctrlEnterToSend")) {
         bindings.push({
             action: KeyBindingAction.SendMessage,
             keyCombo: {
@@ -81,7 +70,7 @@ const messageComposerBindings = (): KeyBinding[] => {
                 shiftKey: true,
             },
         });
-        if (isMac) {
+        if (IS_MAC) {
             bindings.push({
                 action: KeyBindingAction.NewLine,
                 keyCombo: {
@@ -135,7 +124,7 @@ const roomListBindings = (): KeyBinding[] => {
 const roomBindings = (): KeyBinding[] => {
     const bindings = getBindingsByCategory(CategoryName.ROOM);
 
-    if (SettingsStore.getValue('ctrlFForSearch')) {
+    if (SettingsStore.getValue("ctrlFForSearch")) {
         bindings.push({
             action: KeyBindingAction.SearchInRoom,
             keyCombo: {
@@ -161,7 +150,7 @@ const callBindings = (): KeyBinding[] => {
 };
 
 const labsBindings = (): KeyBinding[] => {
-    if (!SdkConfig.get()['showLabsSettings']) return [];
+    if (!SdkConfig.get("show_labs_settings")) return [];
 
     return getBindingsByCategory(CategoryName.LABS);
 };

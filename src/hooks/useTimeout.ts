@@ -19,7 +19,7 @@ import { useEffect, useRef, useState } from "react";
 type Handler = () => void;
 
 // Hook to simplify timeouts in functional components
-export const useTimeout = (handler: Handler, timeoutMs: number) => {
+export const useTimeout = (handler: Handler, timeoutMs: number): void => {
     // Create a ref that stores handler
     const savedHandler = useRef<Handler>();
 
@@ -30,7 +30,7 @@ export const useTimeout = (handler: Handler, timeoutMs: number) => {
 
     // Set up timer
     useEffect(() => {
-        const timeoutID = setTimeout(() => {
+        const timeoutID = window.setTimeout(() => {
             savedHandler.current();
         }, timeoutMs);
         return () => clearTimeout(timeoutID);
@@ -38,7 +38,7 @@ export const useTimeout = (handler: Handler, timeoutMs: number) => {
 };
 
 // Hook to simplify intervals in functional components
-export const useInterval = (handler: Handler, intervalMs: number) => {
+export const useInterval = (handler: Handler, intervalMs: number): void => {
     // Create a ref that stores handler
     const savedHandler = useRef<Handler>();
 
@@ -49,7 +49,7 @@ export const useInterval = (handler: Handler, intervalMs: number) => {
 
     // Set up timer
     useEffect(() => {
-        const intervalID = setInterval(() => {
+        const intervalID = window.setInterval(() => {
             savedHandler.current();
         }, intervalMs);
         return () => clearInterval(intervalID);
@@ -57,9 +57,9 @@ export const useInterval = (handler: Handler, intervalMs: number) => {
 };
 
 // Hook to simplify a variable counting down to 0, handler called when it reached 0
-export const useExpiringCounter = (handler: Handler, intervalMs: number, initialCount: number) => {
+export const useExpiringCounter = (handler: Handler, intervalMs: number, initialCount: number): number => {
     const [count, setCount] = useState(initialCount);
-    useInterval(() => setCount(c => c - 1), intervalMs);
+    useInterval(() => setCount((c) => c - 1), intervalMs);
     if (count === 0) {
         handler();
     }

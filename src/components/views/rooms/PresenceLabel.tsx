@@ -14,10 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
-import { _t } from '../../../languageHandler';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { _t } from "../../../languageHandler";
+
+const BUSY_PRESENCE_NAME = new UnstableValue("busy", "org.matrix.msc3026.busy");
 
 interface IProps {
     // number of milliseconds ago this user was last active.
@@ -30,9 +32,8 @@ interface IProps {
     presenceState?: string;
 }
 
-@replaceableComponent("views.rooms.PresenceLabel")
 export default class PresenceLabel extends React.Component<IProps> {
-    static defaultProps = {
+    public static defaultProps = {
         activeAgo: -1,
         presenceState: null,
     };
@@ -62,6 +63,11 @@ export default class PresenceLabel extends React.Component<IProps> {
     }
 
     private getPrettyPresence(presence: string, activeAgo: number, currentlyActive: boolean): string {
+        // for busy presence, we ignore the 'currentlyActive' flag: they're busy whether
+        // they're active or not. It can be set while the user is active in which case
+        // the 'active ago' ends up being 0.
+        if (BUSY_PRESENCE_NAME.matches(presence)) return _t("Busy");
+
         if (!currentlyActive && activeAgo !== undefined && activeAgo > 0) {
             const duration = this.getDuration(activeAgo);
             if (presence === "online") return _t("Online for %(duration)s", { duration: duration });
@@ -76,10 +82,10 @@ export default class PresenceLabel extends React.Component<IProps> {
         }
     }
 
-    render() {
+    public render(): JSX.Element {
         return (
             <div className="mx_PresenceLabel">
-                { this.getPrettyPresence(this.props.presenceState, this.props.activeAgo, this.props.currentlyActive) }
+                {this.getPrettyPresence(this.props.presenceState, this.props.activeAgo, this.props.currentlyActive)}
             </div>
         );
     }

@@ -14,59 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk";
-import { POLL_ANSWER, M_TEXT, M_POLL_KIND_DISCLOSED, M_POLL_START } from "matrix-events-sdk";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { PollStartEventPreview } from "../../../../src/stores/room-list/previews/PollStartEventPreview";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
+import { makePollStartEvent } from "../../../test-utils";
 
-MatrixClientPeg.matrixClient = {
+jest.spyOn(MatrixClientPeg, "get").mockReturnValue({
     getUserId: () => "@me:example.com",
-};
+} as unknown as MatrixClient);
 
 describe("PollStartEventPreview", () => {
     it("shows the question for a poll I created", async () => {
-        const pollStartEvent = newPollStartEvent("My Question", "@me:example.com");
+        const pollStartEvent = makePollStartEvent("My Question", "@me:example.com");
         const preview = new PollStartEventPreview();
         expect(preview.getTextFor(pollStartEvent)).toBe("My Question");
     });
 
     it("shows the sender and question for a poll created by someone else", async () => {
-        const pollStartEvent = newPollStartEvent("Your Question", "@yo:example.com");
+        const pollStartEvent = makePollStartEvent("Your Question", "@yo:example.com");
         const preview = new PollStartEventPreview();
         expect(preview.getTextFor(pollStartEvent)).toBe("@yo:example.com: Your Question");
     });
 });
-
-function newPollStartEvent(
-    question: string,
-    sender: string,
-    answers?: POLL_ANSWER[],
-): MatrixEvent {
-    if (!answers) {
-        answers = [
-            { "id": "socks", [M_TEXT.name]: "Socks" },
-            { "id": "shoes", [M_TEXT.name]: "Shoes" },
-        ];
-    }
-
-    return new MatrixEvent(
-        {
-            "event_id": "$mypoll",
-            "room_id": "#myroom:example.com",
-            "sender": sender,
-            "type": M_POLL_START.name,
-            "content": {
-                [M_POLL_START.name]: {
-                    "question": {
-                        [M_TEXT.name]: question,
-                    },
-                    "kind": M_POLL_KIND_DISCLOSED.name,
-                    "answers": answers,
-                },
-                [M_TEXT.name]: `${question}: answers`,
-            },
-        },
-    );
-}
-

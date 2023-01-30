@@ -19,7 +19,6 @@ import React from "react";
 import { _t, pickBestLanguage } from "../../../languageHandler";
 import { objectClone } from "../../../utils/objects";
 import StyledCheckbox from "../elements/StyledCheckbox";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AccessibleButton from "../elements/AccessibleButton";
 
 interface IProps {
@@ -40,9 +39,8 @@ interface Policy {
     name: string;
 }
 
-@replaceableComponent("views.terms.InlineTermsAgreement")
 export default class InlineTermsAgreement extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             policies: [],
@@ -52,11 +50,11 @@ export default class InlineTermsAgreement extends React.Component<IProps, IState
 
     public componentDidMount(): void {
         // Build all the terms the user needs to accept
-        const policies = []; // { checked, url, name }
+        const policies: Policy[] = [];
         for (const servicePolicies of this.props.policiesAndServicePairs) {
             const availablePolicies = Object.values(servicePolicies.policies);
             for (const policy of availablePolicies) {
-                const language = pickBestLanguage(Object.keys(policy).filter(p => p !== 'version'));
+                const language = pickBestLanguage(Object.keys(policy).filter((p) => p !== "version"));
                 const renderablePolicy: Policy = {
                     checked: false,
                     url: policy[language].url,
@@ -76,11 +74,11 @@ export default class InlineTermsAgreement extends React.Component<IProps, IState
     };
 
     private onContinue = (): void => {
-        const hasUnchecked = !!this.state.policies.some(p => !p.checked);
+        const hasUnchecked = !!this.state.policies.some((p) => !p.checked);
         if (hasUnchecked) return;
 
         this.setState({ busy: true });
-        this.props.onFinished(this.state.policies.map(p => p.url));
+        this.props.onFinished(this.state.policies.map((p) => p.url));
     };
 
     private renderCheckboxes(): React.ReactNode[] {
@@ -88,23 +86,25 @@ export default class InlineTermsAgreement extends React.Component<IProps, IState
         for (let i = 0; i < this.state.policies.length; i++) {
             const policy = this.state.policies[i];
             const introText = _t(
-                "Accept <policyLink /> to continue:", {}, {
+                "Accept <policyLink /> to continue:",
+                {},
+                {
                     policyLink: () => {
                         return (
-                            <a href={policy.url} rel='noreferrer noopener' target='_blank'>
-                                { policy.name }
-                                <span className='mx_InlineTermsAgreement_link' />
+                            <a href={policy.url} rel="noreferrer noopener" target="_blank">
+                                {policy.name}
+                                <span className="mx_InlineTermsAgreement_link" />
                             </a>
                         );
                     },
                 },
             );
             rendered.push(
-                <div key={i} className='mx_InlineTermsAgreement_cbContainer'>
-                    <div>{ introText }</div>
-                    <div className='mx_InlineTermsAgreement_checkbox'>
+                <div key={i} className="mx_InlineTermsAgreement_cbContainer">
+                    <div>{introText}</div>
+                    <div className="mx_InlineTermsAgreement_checkbox">
                         <StyledCheckbox onChange={() => this.togglePolicy(i)} checked={policy.checked}>
-                            { _t("Accept") }
+                            {_t("Accept")}
                         </StyledCheckbox>
                     </div>
                 </div>,
@@ -114,18 +114,18 @@ export default class InlineTermsAgreement extends React.Component<IProps, IState
     }
 
     public render(): React.ReactNode {
-        const hasUnchecked = !!this.state.policies.some(p => !p.checked);
+        const hasUnchecked = !!this.state.policies.some((p) => !p.checked);
 
         return (
             <div>
-                { this.props.introElement }
-                { this.renderCheckboxes() }
+                {this.props.introElement}
+                {this.renderCheckboxes()}
                 <AccessibleButton
                     onClick={this.onContinue}
                     disabled={hasUnchecked || this.state.busy}
                     kind="primary_sm"
                 >
-                    { _t("Continue") }
+                    {_t("Continue")}
                 </AccessibleButton>
             </div>
         );

@@ -23,19 +23,17 @@ import ContentMessages from "../ContentMessages";
 import { IMatrixClientPeg } from "../MatrixClientPeg";
 import ToastStore from "../stores/ToastStore";
 import DeviceListener from "../DeviceListener";
-import { RoomListStoreClass } from "../stores/room-list/RoomListStore";
+import { RoomListStore } from "../stores/room-list/Interface";
 import { PlatformPeg } from "../PlatformPeg";
 import RoomListLayoutStore from "../stores/room-list/RoomListLayoutStore";
 import { IntegrationManagers } from "../integrations/IntegrationManagers";
 import { ModalManager } from "../Modal";
 import SettingsStore from "../settings/SettingsStore";
-import { ActiveRoomObserver } from "../ActiveRoomObserver";
 import { Notifier } from "../Notifier";
 import type { Renderer } from "react-dom";
 import RightPanelStore from "../stores/right-panel/RightPanelStore";
 import WidgetStore from "../stores/WidgetStore";
-import CallHandler from "../CallHandler";
-import { Analytics } from "../Analytics";
+import LegacyCallHandler from "../LegacyCallHandler";
 import UserActivity from "../UserActivity";
 import { ModalWidgetStore } from "../stores/ModalWidgetStore";
 import { WidgetLayoutStore } from "../stores/widgets/WidgetLayoutStore";
@@ -50,8 +48,9 @@ import { SetupEncryptionStore } from "../stores/SetupEncryptionStore";
 import { RoomScrollStateStore } from "../stores/RoomScrollStateStore";
 import { ConsoleLogger, IndexedDBLogStore } from "../rageshake/rageshake";
 import ActiveWidgetStore from "../stores/ActiveWidgetStore";
-import { Skinner } from "../Skinner";
 import AutoRageshakeStore from "../stores/AutoRageshakeStore";
+import { IConfigOptions } from "../IConfigOptions";
+import { MatrixDispatcher } from "../dispatcher/dispatcher";
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -62,6 +61,7 @@ declare global {
         Olm: {
             init: () => Promise<void>;
         };
+        mxReactSdkConfig: IConfigOptions;
 
         // Needed for Safari, unknown to TypeScript
         webkitAudioContext: typeof AudioContext;
@@ -73,15 +73,14 @@ declare global {
         // https://github.com/microsoft/TypeScript-DOM-lib-generator/issues/1029#issuecomment-869224737
         // https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas
         OffscreenCanvas?: {
-            new(width: number, height: number): OffscreenCanvas;
+            new (width: number, height: number): OffscreenCanvas;
         };
 
         mxContentMessages: ContentMessages;
         mxToastStore: ToastStore;
         mxDeviceListener: DeviceListener;
-        mxRoomListStore: RoomListStoreClass;
+        mxRoomListStore: RoomListStore;
         mxRoomListLayoutStore: RoomListLayoutStore;
-        mxActiveRoomObserver: ActiveRoomObserver;
         mxPlatformPeg: PlatformPeg;
         mxIntegrationManagers: typeof IntegrationManagers;
         singletonModalManager: ModalManager;
@@ -90,8 +89,7 @@ declare global {
         mxRightPanelStore: RightPanelStore;
         mxWidgetStore: WidgetStore;
         mxWidgetLayoutStore: WidgetLayoutStore;
-        mxCallHandler: CallHandler;
-        mxAnalytics: Analytics;
+        mxLegacyCallHandler: LegacyCallHandler;
         mxUserActivity: UserActivity;
         mxModalWidgetStore: ModalWidgetStore;
         mxVoipUserMapper: VoipUserMapper;
@@ -105,12 +103,12 @@ declare global {
         mxSetupEncryptionStore?: SetupEncryptionStore;
         mxRoomScrollStateStore?: RoomScrollStateStore;
         mxActiveWidgetStore?: ActiveWidgetStore;
-        mxSkinner?: Skinner;
         mxOnRecaptchaLoaded?: () => void;
         electron?: Electron;
         mxSendSentryReport: (userText: string, issueUrl: string, error: Error) => Promise<void>;
         mxLoginWithAccessToken: (hsUrl: string, accessToken: string) => Promise<void>;
         mxAutoRageshakeStore?: AutoRageshakeStore;
+        mxDispatcher: MatrixDispatcher;
     }
 
     interface Electron {
@@ -151,14 +149,7 @@ declare global {
 
     // https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas
     interface OffscreenCanvas {
-        height: number;
-        width: number;
-        getContext: HTMLCanvasElement["getContext"];
-        convertToBlob(opts?: {
-            type?: string;
-            quality?: number;
-        }): Promise<Blob>;
-        transferToImageBitmap(): ImageBitmap;
+        convertToBlob(opts?: { type?: string; quality?: number }): Promise<Blob>;
     }
 
     interface HTMLAudioElement {
@@ -173,10 +164,6 @@ declare global {
         // sinkId & setSinkId are experimental and typescript doesn't know about them
         sinkId: string;
         setSinkId(outputId: string): void;
-    }
-
-    interface HTMLStyleElement {
-        disabled?: boolean;
     }
 
     // Add Chrome-specific `instant` ScrollBehaviour
@@ -211,11 +198,7 @@ declare global {
     // https://github.com/microsoft/TypeScript/issues/28308#issuecomment-650802278
     interface AudioWorkletProcessor {
         readonly port: MessagePort;
-        process(
-            inputs: Float32Array[][],
-            outputs: Float32Array[][],
-            parameters: Record<string, Float32Array>
-        ): boolean;
+        process(inputs: Float32Array[][], outputs: Float32Array[][], parameters: Record<string, Float32Array>): boolean;
     }
 
     // https://github.com/microsoft/TypeScript/issues/28308#issuecomment-650802278
@@ -232,11 +215,9 @@ declare global {
     // https://github.com/microsoft/TypeScript/issues/28308#issuecomment-650802278
     function registerProcessor(
         name: string,
-        processorCtor: (new (
-            options?: AudioWorkletNodeOptions
-        ) => AudioWorkletProcessor) & {
+        processorCtor: (new (options?: AudioWorkletNodeOptions) => AudioWorkletProcessor) & {
             parameterDescriptors?: AudioParamDescriptor[];
-        }
+        },
     );
 
     // eslint-disable-next-line no-var

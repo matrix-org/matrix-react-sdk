@@ -14,12 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 import SettingsStore from "../../../settings/SettingsStore";
-import Draggable, { ILocationState } from './Draggable';
+import Draggable, { ILocationState } from "./Draggable";
 import { SettingLevel } from "../../../settings/SettingLevel";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     // Current room
@@ -33,9 +32,8 @@ interface IState {
     IRCLayoutRoot: HTMLElement;
 }
 
-@replaceableComponent("views.elements.IRCTimelineProfileResizer")
 export default class IRCTimelineProfileResizer extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -44,13 +42,16 @@ export default class IRCTimelineProfileResizer extends React.Component<IProps, I
         };
     }
 
-    componentDidMount() {
-        this.setState({
-            IRCLayoutRoot: document.querySelector(".mx_IRCLayout") as HTMLElement,
-        }, () => this.updateCSSWidth(this.state.width));
+    public componentDidMount(): void {
+        this.setState(
+            {
+                IRCLayoutRoot: document.querySelector(".mx_IRCLayout"),
+            },
+            () => this.updateCSSWidth(this.state.width),
+        );
     }
 
-    private dragFunc = (location: ILocationState, event: React.MouseEvent<Element, MouseEvent>): ILocationState => {
+    private dragFunc = (location: ILocationState, event: MouseEvent): ILocationState => {
         const offset = event.clientX - location.currentX;
         const newWidth = this.state.width + offset;
 
@@ -75,11 +76,11 @@ export default class IRCTimelineProfileResizer extends React.Component<IProps, I
         };
     };
 
-    private updateCSSWidth(newWidth: number) {
+    private updateCSSWidth(newWidth: number): void {
         this.state.IRCLayoutRoot.style.setProperty("--name-width", newWidth + "px");
     }
 
-    private onMoueUp(event: MouseEvent) {
+    private onMoueUp = (): void => {
         if (this.props.roomId) {
             SettingsStore.setValue(
                 "ircDisplayNameWidth",
@@ -88,13 +89,9 @@ export default class IRCTimelineProfileResizer extends React.Component<IProps, I
                 this.state.width,
             );
         }
-    }
+    };
 
-    render() {
-        return <Draggable
-            className="mx_ProfileResizer"
-            dragFunc={this.dragFunc.bind(this)}
-            onMouseUp={this.onMoueUp.bind(this)}
-        />;
+    public render(): JSX.Element {
+        return <Draggable className="mx_ProfileResizer" dragFunc={this.dragFunc} onMouseUp={this.onMoueUp} />;
     }
 }

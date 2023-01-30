@@ -14,15 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { ClientEvent, IClientWellKnown, MatrixClient } from 'matrix-js-sdk/src/client';
+import React from "react";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixClient } from "matrix-js-sdk/src/client";
 
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseDialog from "../dialogs/BaseDialog";
 import { IDialogProps } from "../dialogs/IDialogProps";
-import { createMap, LocationBodyContent, locationEventGeoUri, parseGeoUri } from '../messages/MLocationBody';
-import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
+import { locationEventGeoUri, isSelfLocation } from "../../../utils/location";
+import Map from "./Map";
+import SmartMarker from "./SmartMarker";
+import ZoomButtons from "./ZoomButtons";
 
 interface IProps extends IDialogProps {
     matrixClient: MatrixClient;
@@ -33,80 +34,53 @@ interface IState {
     error: Error;
 }
 
-@replaceableComponent("views.location.LocationViewDialog")
+/**
+ * Dialog to view m.location events maximised
+ */
 export default class LocationViewDialog extends React.Component<IProps, IState> {
-    private coords: GeolocationCoordinates;
-    private map?: maplibregl.Map;
-
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
-        this.coords = parseGeoUri(locationEventGeoUri(this.props.mxEvent));
-        this.map = null;
         this.state = {
             error: undefined,
         };
     }
 
-    componentDidMount() {
-        if (this.state.error) {
-            return;
-        }
-
-        this.props.matrixClient.on(ClientEvent.ClientWellKnown, this.updateStyleUrl);
-
-        this.map = createMap(
-            this.coords,
-            true,
-            this.getBodyId(),
-            this.getMarkerId(),
-            (e: Error) => this.setState({ error: e }),
-        );
-    }
-
-    componentWillUnmount() {
-        this.props.matrixClient.off(ClientEvent.ClientWellKnown, this.updateStyleUrl);
-    }
-
-    private updateStyleUrl = (clientWellKnown: IClientWellKnown) => {
-        const style = tileServerFromWellKnown(clientWellKnown)?.["map_style_url"];
-        if (style) {
-            this.map?.setStyle(style);
-        }
-    };
-
-    private getBodyId = () => {
+    private getBodyId = (): string => {
         return `mx_LocationViewDialog_${this.props.mxEvent.getId()}`;
     };
 
-    private getMarkerId = () => {
-        return `mx_MLocationViewDialog_marker_${this.props.mxEvent.getId()}`;
+    private onError = (error: Error): void => {
+        this.setState({ error });
     };
 
-    private onZoomIn = () => {
-        this.map?.zoomIn();
-    };
+    public render(): JSX.Element {
+        const { mxEvent } = this.props;
 
-    private onZoomOut = () => {
-        this.map?.zoomOut();
-    };
-
-    render() {
+        // only pass member to marker when should render avatar marker
+        const markerRoomMember = isSelfLocation(mxEvent.getContent()) ? mxEvent.sender : undefined;
+        const geoUri = locationEventGeoUri(mxEvent);
         return (
-            <BaseDialog
-                className='mx_LocationViewDialog'
-                onFinished={this.props.onFinished}
-                fixedWidth={false}
-            >
-                <LocationBodyContent
-                    mxEvent={this.props.mxEvent}
-                    bodyId={this.getBodyId()}
-                    markerId={this.getMarkerId()}
-                    error={this.state.error}
-                    zoomButtons={true}
-                    onZoomIn={this.onZoomIn}
-                    onZoomOut={this.onZoomOut}
-                />
+            <BaseDialog className="mx_LocationViewDialog" onFinished={this.props.onFinished} fixedWidth={false}>
+                <Map
+                    id={this.getBodyId()}
+                    centerGeoUri={geoUri}
+                    onError={this.onError}
+                    interactive
+                    className="mx_LocationViewDialog_map"
+                >
+                    {({ map }) => (
+                        <>
+                            <SmartMarker
+                                map={map}
+                                id={`${this.getBodyId()}-marker`}
+                                geoUri={geoUri}
+                                roomMember={markerRoomMember}
+                            />
+                            <ZoomButtons map={map} />
+                        </>
+                    )}
+                </Map>
             </BaseDialog>
         );
     }

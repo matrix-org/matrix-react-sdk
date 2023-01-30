@@ -14,11 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, createRef } from 'react';
+import React, { ChangeEvent, createRef } from "react";
 
 import Field from "../elements/Field";
-import { _t, _td } from '../../../languageHandler';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { _t, _td } from "../../../languageHandler";
 import { IFieldState, IValidationResult } from "../elements/Validation";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
@@ -33,7 +32,7 @@ interface IProps extends IDialogProps {
     busyMessage?: string; // pass _td string
     focus?: boolean;
     hasCancel?: boolean;
-    validator?: (fieldState: IFieldState) => IValidationResult; // result of withValidation
+    validator?: (fieldState: IFieldState) => Promise<IValidationResult>; // result of withValidation
     fixedWidth?: boolean;
 }
 
@@ -43,7 +42,6 @@ interface IState {
     valid: boolean;
 }
 
-@replaceableComponent("views.dialogs.TextInputDialog")
 export default class TextInputDialog extends React.Component<IProps, IState> {
     private field = createRef<Field>();
 
@@ -56,7 +54,7 @@ export default class TextInputDialog extends React.Component<IProps, IState> {
         hasCancel: true,
     };
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -119,7 +117,7 @@ export default class TextInputDialog extends React.Component<IProps, IState> {
                 <form onSubmit={this.onOk}>
                     <div className="mx_Dialog_content">
                         <div className="mx_TextInputDialog_label">
-                            <label htmlFor="textinput"> { this.props.description } </label>
+                            <label htmlFor="textinput"> {this.props.description} </label>
                         </div>
                         <div>
                             <Field

@@ -1,7 +1,7 @@
 /*
 Copyright 2017 Vector Creations Ltd
 Copyright 2017, 2018 New Vector Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,88 +17,179 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { Store } from 'flux/utils';
+import * as utils from "matrix-js-sdk/src/utils";
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ViewRoom as ViewRoomEvent } from "matrix-analytics-events/types/typescript/ViewRoom";
-import { JoinedRoom as JoinedRoomEvent } from "matrix-analytics-events/types/typescript/JoinedRoom";
+import { ViewRoom as ViewRoomEvent } from "@matrix-org/analytics-events/types/typescript/ViewRoom";
+import { JoinedRoom as JoinedRoomEvent } from "@matrix-org/analytics-events/types/typescript/JoinedRoom";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { ClientEvent } from "matrix-js-sdk/src/client";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Optional } from "matrix-events-sdk";
+import EventEmitter from "events";
 
-import dis from '../dispatcher/dispatcher';
-import { MatrixClientPeg } from '../MatrixClientPeg';
-import * as sdk from '../index';
-import Modal from '../Modal';
-import { _t } from '../languageHandler';
-import { getCachedRoomIDForAlias, storeRoomAliasInCache } from '../RoomAliasCache';
-import { ActionPayload } from "../dispatcher/payloads";
+import { MatrixDispatcher } from "../dispatcher/dispatcher";
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import Modal from "../Modal";
+import { _t } from "../languageHandler";
+import { getCachedRoomIDForAlias, storeRoomAliasInCache } from "../RoomAliasCache";
 import { Action } from "../dispatcher/actions";
 import { retry } from "../utils/promise";
 import { TimelineRenderingType } from "../contexts/RoomContext";
-import { PosthogAnalytics } from "../PosthogAnalytics";
 import { ViewRoomPayload } from "../dispatcher/payloads/ViewRoomPayload";
 import DMRoomMap from "../utils/DMRoomMap";
-import SpaceStore from "./spaces/SpaceStore";
 import { isMetaSpace, MetaSpace } from "./spaces";
 import { JoinRoomPayload } from "../dispatcher/payloads/JoinRoomPayload";
 import { JoinRoomReadyPayload } from "../dispatcher/payloads/JoinRoomReadyPayload";
 import { JoinRoomErrorPayload } from "../dispatcher/payloads/JoinRoomErrorPayload";
 import { ViewRoomErrorPayload } from "../dispatcher/payloads/ViewRoomErrorPayload";
+import ErrorDialog from "../components/views/dialogs/ErrorDialog";
+import { ActiveRoomChangedPayload } from "../dispatcher/payloads/ActiveRoomChangedPayload";
+import SettingsStore from "../settings/SettingsStore";
+import { awaitRoomDownSync } from "../utils/RoomUpgrade";
+import { UPDATE_EVENT } from "./AsyncStore";
+import { SdkContextClass } from "../contexts/SDKContext";
+import { CallStore } from "./CallStore";
+import { ThreadPayload } from "../dispatcher/payloads/ThreadPayload";
+import {
+    doClearCurrentVoiceBroadcastPlaybackIfStopped,
+    doMaybeSetCurrentVoiceBroadcastPlayback,
+    VoiceBroadcastRecording,
+    VoiceBroadcastRecordingsStoreEvent,
+} from "../voice-broadcast";
+import { IRoomStateEventsActionPayload } from "../actions/MatrixActionCreators";
+import { showCantStartACallDialog } from "../voice-broadcast/utils/showCantStartACallDialog";
+import { pauseNonLiveBroadcastFromOtherRoom } from "../voice-broadcast/utils/pauseNonLiveBroadcastFromOtherRoom";
 
 const NUM_JOIN_RETRY = 5;
 
-const INITIAL_STATE = {
-    // Whether we're joining the currently viewed room (see isJoining())
-    joining: false,
-    // Any error that has occurred during joining
-    joinError: null,
-    // The room ID of the room currently being viewed
-    roomId: null,
+interface State {
+    /**
+     * Whether we're joining the currently viewed (see isJoining())
+     */
+    joining: boolean;
+    /**
+     * Any error that has occurred during joining
+     */
+    joinError: Error | null;
+    /**
+     * The ID of the room currently being viewed
+     */
+    roomId: string | null;
+    /**
+     * The ID of the thread currently being viewed
+     */
+    threadId: string | null;
+    /**
+     * The ID of the room being subscribed to (in Sliding Sync)
+     */
+    subscribingRoomId: string | null;
+    /**
+     * The event to scroll to when the room is first viewed
+     */
+    initialEventId: string | null;
+    initialEventPixelOffset: number | null;
+    /**
+     * Whether to highlight the initial event
+     */
+    isInitialEventHighlighted: boolean;
+    /**
+     * Whether to scroll the initial event into view
+     */
+    initialEventScrollIntoView: boolean;
+    /**
+     * The alias of the room (or null if not originally specified in view_room)
+     */
+    roomAlias: string | null;
+    /**
+     * Whether the current room is loading
+     */
+    roomLoading: boolean;
+    /**
+     * Any error that has occurred during loading
+     */
+    roomLoadError: MatrixError | null;
+    replyingToEvent: MatrixEvent | null;
+    shouldPeek: boolean;
+    viaServers: string[];
+    wasContextSwitch: boolean;
+    /**
+     * Whether we're viewing a call or call lobby in this room
+     */
+    viewingCall: boolean;
+}
 
-    // The event to scroll to when the room is first viewed
+const INITIAL_STATE: State = {
+    joining: false,
+    joinError: null,
+    roomId: null,
+    threadId: null,
+    subscribingRoomId: null,
     initialEventId: null,
     initialEventPixelOffset: null,
-    // Whether to highlight the initial event
     isInitialEventHighlighted: false,
-
-    // The room alias of the room (or null if not originally specified in view_room)
+    initialEventScrollIntoView: true,
     roomAlias: null,
-    // Whether the current room is loading
     roomLoading: false,
-    // Any error that has occurred during loading
     roomLoadError: null,
-
-    quotingEvent: null,
-
     replyingToEvent: null,
-
     shouldPeek: false,
-
     viaServers: [],
-
     wasContextSwitch: false,
+    viewingCall: false,
 };
 
-/**
- * A class for storing application state for RoomView. This is the RoomView's interface
-*  with a subset of the js-sdk.
- *  ```
- */
-class RoomViewStore extends Store<ActionPayload> {
-    private state = INITIAL_STATE; // initialize state
+type Listener = (isActive: boolean) => void;
 
-    constructor() {
-        super(dis);
+/**
+ * A class for storing application state for RoomView.
+ */
+export class RoomViewStore extends EventEmitter {
+    // initialize state as a copy of the initial state. We need to copy else one RVS can talk to
+    // another RVS via INITIAL_STATE as they share the same underlying object. Mostly relevant for tests.
+    private state = utils.deepCopy(INITIAL_STATE);
+
+    private dis: MatrixDispatcher;
+    private dispatchToken: string;
+
+    public constructor(dis: MatrixDispatcher, private readonly stores: SdkContextClass) {
+        super();
+        this.resetDispatcher(dis);
+        this.stores.voiceBroadcastRecordingsStore.addListener(
+            VoiceBroadcastRecordingsStoreEvent.CurrentChanged,
+            this.onCurrentBroadcastRecordingChanged,
+        );
     }
 
-    setState(newState: Partial<typeof INITIAL_STATE>) {
+    public addRoomListener(roomId: string, fn: Listener): void {
+        this.on(roomId, fn);
+    }
+
+    public removeRoomListener(roomId: string, fn: Listener): void {
+        this.off(roomId, fn);
+    }
+
+    private emitForRoom(roomId: string, isActive: boolean): void {
+        this.emit(roomId, isActive);
+    }
+
+    private onCurrentBroadcastRecordingChanged = (recording: VoiceBroadcastRecording | null): void => {
+        if (recording === null) {
+            const room = this.stores.client?.getRoom(this.state.roomId || undefined);
+
+            if (room) {
+                this.doMaybeSetCurrentVoiceBroadcastPlayback(room);
+            }
+        }
+    };
+
+    private setState(newState: Partial<State>): void {
         // If values haven't changed, there's nothing to do.
         // This only tries a shallow comparison, so unchanged objects will slip
         // through, but that's probably okay for now.
         let stateChanged = false;
         for (const key of Object.keys(newState)) {
-            if (this.state[key] !== newState[key]) {
+            if (this.state[key as keyof State] !== newState[key as keyof State]) {
                 stateChanged = true;
                 break;
             }
@@ -107,11 +198,58 @@ class RoomViewStore extends Store<ActionPayload> {
             return;
         }
 
+        if (newState.viewingCall) {
+            // Pause current broadcast, if any
+            this.stores.voiceBroadcastPlaybacksStore.getCurrent()?.pause();
+
+            if (this.stores.voiceBroadcastRecordingsStore.getCurrent()) {
+                showCantStartACallDialog();
+                newState.viewingCall = false;
+            }
+        }
+
+        const lastRoomId = this.state.roomId;
         this.state = Object.assign(this.state, newState);
-        this.__emitChange();
+        if (lastRoomId !== this.state.roomId) {
+            if (lastRoomId) this.emitForRoom(lastRoomId, false);
+            if (this.state.roomId) this.emitForRoom(this.state.roomId, true);
+
+            // Fired so we can reduce dependency on event emitters to this store, which is relatively
+            // central to the application and can easily cause import cycles.
+            this.dis.dispatch<ActiveRoomChangedPayload>({
+                action: Action.ActiveRoomChanged,
+                oldRoomId: lastRoomId,
+                newRoomId: this.state.roomId,
+            });
+        }
+
+        this.emit(UPDATE_EVENT);
     }
 
-    __onDispatch(payload) { // eslint-disable-line @typescript-eslint/naming-convention
+    private doMaybeSetCurrentVoiceBroadcastPlayback(room: Room): void {
+        doMaybeSetCurrentVoiceBroadcastPlayback(
+            room,
+            this.stores.client,
+            this.stores.voiceBroadcastPlaybacksStore,
+            this.stores.voiceBroadcastRecordingsStore,
+        );
+    }
+
+    private onRoomStateEvents(event: MatrixEvent): void {
+        const roomId = event.getRoomId?.();
+
+        // no room or not current room
+        if (!roomId || roomId !== this.state.roomId) return;
+
+        const room = this.stores.client?.getRoom(roomId);
+
+        if (room) {
+            this.doMaybeSetCurrentVoiceBroadcastPlayback(room);
+        }
+    }
+
+    private onDispatch(payload): void {
+        // eslint-disable-line @typescript-eslint/naming-convention
         switch (payload.action) {
             // view_room:
             //      - room_alias:   '#somealias:matrix.org'
@@ -122,28 +260,33 @@ class RoomViewStore extends Store<ActionPayload> {
             case Action.ViewRoom:
                 this.viewRoom(payload);
                 break;
+            case Action.ViewThread:
+                this.viewThread(payload);
+                break;
             // for these events blank out the roomId as we are no longer in the RoomView
-            case 'view_create_group':
-            case 'view_welcome_page':
+            case "view_welcome_page":
             case Action.ViewHomePage:
-            case 'view_my_groups':
-            case 'view_group':
                 this.setState({
                     roomId: null,
                     roomAlias: null,
                     viaServers: [],
                     wasContextSwitch: false,
+                    viewingCall: false,
                 });
+                doClearCurrentVoiceBroadcastPlaybackIfStopped(this.stores.voiceBroadcastPlaybacksStore);
+                break;
+            case "MatrixActions.RoomState.events":
+                this.onRoomStateEvents((payload as IRoomStateEventsActionPayload).event);
                 break;
             case Action.ViewRoomError:
                 this.viewRoomError(payload);
                 break;
-            case 'will_join':
+            case "will_join":
                 this.setState({
                     joining: true,
                 });
                 break;
-            case 'cancel_join':
+            case "cancel_join":
                 this.setState({
                     joining: false,
                 });
@@ -161,48 +304,44 @@ class RoomViewStore extends Store<ActionPayload> {
                     this.setState({ shouldPeek: false });
                 }
 
-                const cli = MatrixClientPeg.get();
-
-                const updateMetrics = () => {
-                    const room = cli.getRoom(payload.roomId);
+                awaitRoomDownSync(MatrixClientPeg.get(), payload.roomId).then((room) => {
                     const numMembers = room.getJoinedMemberCount();
-                    const roomSize = numMembers > 1000 ? "MoreThanAThousand"
-                        : numMembers > 100 ? "OneHundredAndOneToAThousand"
-                            : numMembers > 10 ? "ElevenToOneHundred"
-                                : numMembers > 2 ? "ThreeToTen"
-                                    : numMembers > 1 ? "Two"
-                                        : "One";
+                    const roomSize =
+                        numMembers > 1000
+                            ? "MoreThanAThousand"
+                            : numMembers > 100
+                            ? "OneHundredAndOneToAThousand"
+                            : numMembers > 10
+                            ? "ElevenToOneHundred"
+                            : numMembers > 2
+                            ? "ThreeToTen"
+                            : numMembers > 1
+                            ? "Two"
+                            : "One";
 
-                    PosthogAnalytics.instance.trackEvent<JoinedRoomEvent>({
+                    this.stores.posthogAnalytics.trackEvent<JoinedRoomEvent>({
                         eventName: "JoinedRoom",
                         trigger: payload.metricsTrigger,
                         roomSize,
                         isDM: !!DMRoomMap.shared().getUserIdForRoomId(room.roomId),
                         isSpace: room.isSpaceRoom(),
                     });
-
-                    cli.off(ClientEvent.Room, updateMetrics);
-                };
-
-                if (cli.getRoom(payload.roomId)) {
-                    updateMetrics();
-                } else {
-                    cli.on(ClientEvent.Room, updateMetrics);
-                }
+                });
 
                 break;
             }
-            case 'on_client_not_viable':
-            case 'on_logged_out':
+            case "on_client_not_viable":
+            case Action.OnLoggedOut:
                 this.reset();
                 break;
-            case 'reply_to_event':
-                // If currently viewed room does not match the room in which we wish to reply then change rooms
-                // this can happen when performing a search across all rooms
-                if (payload.context === TimelineRenderingType.Room) {
-                    if (payload.event
-                        && payload.event.getRoomId() !== this.state.roomId) {
-                        dis.dispatch<ViewRoomPayload>({
+            case "reply_to_event":
+                // Thread timeline view handles its own reply-to-state
+                if (TimelineRenderingType.Thread !== payload.context) {
+                    // If currently viewed room does not match the room in which we wish to reply then change rooms this
+                    // can happen when performing a search across all rooms. Persist the data from this event for both
+                    // room and search timeline rendering types, search will get auto-closed by RoomView at this time.
+                    if (payload.event && payload.event.getRoomId() !== this.state.roomId) {
+                        this.dis.dispatch<ViewRoomPayload>({
                             action: Action.ViewRoom,
                             room_id: payload.event.getRoomId(),
                             replyingToEvent: payload.event,
@@ -215,47 +354,77 @@ class RoomViewStore extends Store<ActionPayload> {
                     }
                 }
                 break;
-            case 'open_room_settings': {
-                // FIXME: Using an import will result in test failures
-                const RoomSettingsDialog = sdk.getComponent("dialogs.RoomSettingsDialog");
-                Modal.createTrackedDialog('Room settings', '', RoomSettingsDialog, {
-                    roomId: payload.room_id || this.state.roomId,
-                    initialTabId: payload.initial_tab_id,
-                }, /*className=*/null, /*isPriority=*/false, /*isStatic=*/true);
-                break;
-            }
         }
     }
 
     private async viewRoom(payload: ViewRoomPayload): Promise<void> {
         if (payload.room_id) {
+            const room = MatrixClientPeg.get().getRoom(payload.room_id);
+
             if (payload.metricsTrigger !== null && payload.room_id !== this.state.roomId) {
                 let activeSpace: ViewRoomEvent["activeSpace"];
-                if (SpaceStore.instance.activeSpace === MetaSpace.Home) {
+                if (this.stores.spaceStore.activeSpace === MetaSpace.Home) {
                     activeSpace = "Home";
-                } else if (isMetaSpace(SpaceStore.instance.activeSpace)) {
+                } else if (isMetaSpace(this.stores.spaceStore.activeSpace)) {
                     activeSpace = "Meta";
                 } else {
-                    activeSpace = SpaceStore.instance.activeSpaceRoom.getJoinRule() === JoinRule.Public
-                        ? "Public"
-                        : "Private";
+                    activeSpace =
+                        this.stores.spaceStore.activeSpaceRoom?.getJoinRule() === JoinRule.Public
+                            ? "Public"
+                            : "Private";
                 }
 
-                PosthogAnalytics.instance.trackEvent<ViewRoomEvent>({
+                this.stores.posthogAnalytics.trackEvent<ViewRoomEvent>({
                     eventName: "ViewRoom",
                     trigger: payload.metricsTrigger,
                     viaKeyboard: payload.metricsViaKeyboard,
                     isDM: !!DMRoomMap.shared().getUserIdForRoomId(payload.room_id),
-                    isSpace: MatrixClientPeg.get().getRoom(payload.room_id)?.isSpaceRoom(),
+                    isSpace: room?.isSpaceRoom(),
                     activeSpace,
                 });
             }
 
-            const newState = {
+            if (SettingsStore.getValue("feature_sliding_sync") && this.state.roomId !== payload.room_id) {
+                if (this.state.subscribingRoomId && this.state.subscribingRoomId !== payload.room_id) {
+                    // unsubscribe from this room, but don't await it as we don't care when this gets done.
+                    this.stores.slidingSyncManager.setRoomVisible(this.state.subscribingRoomId, false);
+                }
+                this.setState({
+                    subscribingRoomId: payload.room_id,
+                    roomId: payload.room_id,
+                    initialEventId: null,
+                    initialEventPixelOffset: null,
+                    isInitialEventHighlighted: null,
+                    initialEventScrollIntoView: true,
+                    roomAlias: null,
+                    roomLoading: true,
+                    roomLoadError: null,
+                    viaServers: payload.via_servers,
+                    wasContextSwitch: payload.context_switch,
+                    viewingCall: payload.view_call ?? false,
+                });
+                // set this room as the room subscription. We need to await for it as this will fetch
+                // all room state for this room, which is required before we get the state below.
+                await this.stores.slidingSyncManager.setRoomVisible(payload.room_id, true);
+                // Whilst we were subscribing another room was viewed, so stop what we're doing and
+                // unsubscribe
+                if (this.state.subscribingRoomId !== payload.room_id) {
+                    this.stores.slidingSyncManager.setRoomVisible(payload.room_id, false);
+                    return;
+                }
+                // Re-fire the payload: we won't re-process it because the prev room ID == payload room ID now
+                this.dis.dispatch({
+                    ...payload,
+                });
+                return;
+            }
+
+            const newState: Partial<State> = {
                 roomId: payload.room_id,
-                roomAlias: payload.room_alias,
-                initialEventId: payload.event_id,
-                isInitialEventHighlighted: payload.highlighted,
+                roomAlias: payload.room_alias ?? null,
+                initialEventId: payload.event_id ?? null,
+                isInitialEventHighlighted: payload.highlighted ?? false,
+                initialEventScrollIntoView: payload.scroll_into_view ?? true,
                 roomLoading: false,
                 roomLoadError: null,
                 // should peek by default
@@ -264,26 +433,38 @@ class RoomViewStore extends Store<ActionPayload> {
                 joining: payload.joining || false,
                 // Reset replyingToEvent because we don't want cross-room because bad UX
                 replyingToEvent: null,
-                // pull the user out of Room Settings
-                isEditingSettings: false,
-                viaServers: payload.via_servers,
-                wasContextSwitch: payload.context_switch,
+                viaServers: payload.via_servers ?? [],
+                wasContextSwitch: payload.context_switch ?? false,
+                viewingCall:
+                    payload.view_call ??
+                    (payload.room_id === this.state.roomId
+                        ? this.state.viewingCall
+                        : CallStore.instance.getActiveCall(payload.room_id) !== null),
             };
 
             // Allow being given an event to be replied to when switching rooms but sanity check its for this room
             if (payload.replyingToEvent?.getRoomId() === payload.room_id) {
                 newState.replyingToEvent = payload.replyingToEvent;
+            } else if (this.state.replyingToEvent?.getRoomId() === payload.room_id) {
+                // if the reply-to matches the desired room, e.g visiting a permalink then maintain replyingToEvent
+                // See https://github.com/vector-im/element-web/issues/21462
+                newState.replyingToEvent = this.state.replyingToEvent;
             }
 
             this.setState(newState);
 
             if (payload.auto_join) {
-                dis.dispatch<JoinRoomPayload>({
+                this.dis.dispatch<JoinRoomPayload>({
                     ...payload,
                     action: Action.JoinRoom,
                     roomId: payload.room_id,
                     metricsTrigger: payload.metricsTrigger as JoinRoomPayload["metricsTrigger"],
                 });
+            }
+
+            if (room) {
+                pauseNonLiveBroadcastFromOtherRoom(room, this.stores.voiceBroadcastPlaybacksStore);
+                this.doMaybeSetCurrentVoiceBroadcastPlayback(room);
             }
         } else if (payload.room_alias) {
             // Try the room alias to room ID navigation cache first to avoid
@@ -296,12 +477,14 @@ class RoomViewStore extends Store<ActionPayload> {
                     roomId: null,
                     initialEventId: null,
                     initialEventPixelOffset: null,
-                    isInitialEventHighlighted: null,
+                    isInitialEventHighlighted: false,
+                    initialEventScrollIntoView: true,
                     roomAlias: payload.room_alias,
                     roomLoading: true,
                     roomLoadError: null,
                     viaServers: payload.via_servers,
                     wasContextSwitch: payload.context_switch,
+                    viewingCall: payload.view_call ?? false,
                 });
                 try {
                     const result = await MatrixClientPeg.get().getRoomIdForAlias(payload.room_alias);
@@ -309,7 +492,7 @@ class RoomViewStore extends Store<ActionPayload> {
                     roomId = result.room_id;
                 } catch (err) {
                     logger.error("RVS failed to get room id for alias: ", err);
-                    dis.dispatch<ViewRoomErrorPayload>({
+                    this.dis.dispatch<ViewRoomErrorPayload>({
                         action: Action.ViewRoomError,
                         room_id: null,
                         room_alias: payload.room_alias,
@@ -320,14 +503,20 @@ class RoomViewStore extends Store<ActionPayload> {
             }
 
             // Re-fire the payload with the newly found room_id
-            dis.dispatch({
+            this.dis.dispatch({
                 ...payload,
                 room_id: roomId,
             });
         }
     }
 
-    private viewRoomError(payload: ViewRoomErrorPayload) {
+    private viewThread(payload: ThreadPayload): void {
+        this.setState({
+            threadId: payload.thread_id,
+        });
+    }
+
+    private viewRoomError(payload: ViewRoomErrorPayload): void {
         this.setState({
             roomId: payload.room_id,
             roomAlias: payload.room_alias,
@@ -336,7 +525,7 @@ class RoomViewStore extends Store<ActionPayload> {
         });
     }
 
-    private async joinRoom(payload: JoinRoomPayload) {
+    private async joinRoom(payload: JoinRoomPayload): Promise<void> {
         this.setState({
             joining: true,
         });
@@ -347,74 +536,80 @@ class RoomViewStore extends Store<ActionPayload> {
         const address = roomAlias || roomId;
         const viaServers = this.state.viaServers || [];
         try {
-            await retry<Room, MatrixError>(() => cli.joinRoom(address, {
-                viaServers,
-                ...(payload.opts || {}),
-            }), NUM_JOIN_RETRY, (err) => {
-                // if we received a Gateway timeout then retry
-                return err.httpStatus === 504;
-            });
+            await retry<Room, MatrixError>(
+                () =>
+                    cli.joinRoom(address, {
+                        viaServers,
+                        ...(payload.opts || {}),
+                    }),
+                NUM_JOIN_RETRY,
+                (err) => {
+                    // if we received a Gateway timeout then retry
+                    return err.httpStatus === 504;
+                },
+            );
 
             // We do *not* clear the 'joining' flag because the Room object and/or our 'joined' member event may not
             // have come down the sync stream yet, and that's the point at which we'd consider the user joined to the
             // room.
-            dis.dispatch<JoinRoomReadyPayload>({
+            this.dis.dispatch<JoinRoomReadyPayload>({
                 action: Action.JoinRoomReady,
                 roomId,
                 metricsTrigger: payload.metricsTrigger,
             });
         } catch (err) {
-            dis.dispatch({
+            this.dis.dispatch({
                 action: Action.JoinRoomError,
                 roomId,
-                err: err,
+                err,
             });
         }
     }
 
-    private static getInvitingUserId(roomId: string): string {
+    private getInvitingUserId(roomId: string): string {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(roomId);
-        if (room && room.getMyMembership() === "invite") {
+        if (room?.getMyMembership() === "invite") {
             const myMember = room.getMember(cli.getUserId());
             const inviteEvent = myMember ? myMember.events.member : null;
             return inviteEvent && inviteEvent.getSender();
         }
     }
 
-    public showJoinRoomError(err: MatrixError, roomId: string) {
-        let msg: ReactNode = err.message ? err.message : JSON.stringify(err);
-        logger.log("Failed to join room:", msg);
+    public showJoinRoomError(err: MatrixError, roomId: string): void {
+        let description: ReactNode = err.message ? err.message : JSON.stringify(err);
+        logger.log("Failed to join room:", description);
 
         if (err.name === "ConnectionError") {
-            msg = _t("There was an error joining the room");
-        } else if (err.errcode === 'M_INCOMPATIBLE_ROOM_VERSION') {
-            msg = <div>
-                { _t("Sorry, your homeserver is too old to participate in this room.") }<br />
-                { _t("Please contact your homeserver administrator.") }
-            </div>;
+            description = _t("There was an error joining.");
+        } else if (err.errcode === "M_INCOMPATIBLE_ROOM_VERSION") {
+            description = (
+                <div>
+                    {_t("Sorry, your homeserver is too old to participate here.")}
+                    <br />
+                    {_t("Please contact your homeserver administrator.")}
+                </div>
+            );
         } else if (err.httpStatus === 404) {
-            const invitingUserId = RoomViewStore.getInvitingUserId(roomId);
+            const invitingUserId = this.getInvitingUserId(roomId);
             // only provide a better error message for invites
             if (invitingUserId) {
                 // if the inviting user is on the same HS, there can only be one cause: they left.
                 if (invitingUserId.endsWith(`:${MatrixClientPeg.get().getDomain()}`)) {
-                    msg = _t("The person who invited you already left the room.");
+                    description = _t("The person who invited you has already left.");
                 } else {
-                    msg = _t("The person who invited you already left the room, or their server is offline.");
+                    description = _t("The person who invited you has already left, or their server is offline.");
                 }
             }
         }
 
-        // FIXME: Using an import will result in test failures
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-        Modal.createTrackedDialog('Failed to join room', '', ErrorDialog, {
-            title: _t("Failed to join room"),
-            description: msg,
+        Modal.createDialog(ErrorDialog, {
+            title: _t("Failed to join"),
+            description,
         });
     }
 
-    private joinRoomError(payload: JoinRoomErrorPayload) {
+    private joinRoomError(payload: JoinRoomErrorPayload): void {
         this.setState({
             joining: false,
             joinError: payload.err,
@@ -422,37 +617,64 @@ class RoomViewStore extends Store<ActionPayload> {
         this.showJoinRoomError(payload.err, payload.roomId);
     }
 
-    public reset() {
+    public reset(): void {
         this.state = Object.assign({}, INITIAL_STATE);
     }
 
+    /**
+     * Reset which dispatcher should be used to listen for actions. The old dispatcher will be
+     * unregistered.
+     * @param dis The new dispatcher to use.
+     */
+    public resetDispatcher(dis: MatrixDispatcher): void {
+        if (this.dispatchToken) {
+            this.dis.unregister(this.dispatchToken);
+        }
+        this.dis = dis;
+        if (dis) {
+            // Some tests mock the dispatcher file resulting in an empty defaultDispatcher
+            // so rather than dying here, just ignore it. When we no longer mock files like this,
+            // we should remove the null check.
+            this.dispatchToken = this.dis.register(this.onDispatch.bind(this));
+        }
+    }
+
     // The room ID of the room currently being viewed
-    public getRoomId() {
+    public getRoomId(): Optional<string> {
         return this.state.roomId;
     }
 
+    public getThreadId(): Optional<string> {
+        return this.state.threadId;
+    }
+
     // The event to scroll to when the room is first viewed
-    public getInitialEventId() {
+    public getInitialEventId(): Optional<string> {
         return this.state.initialEventId;
     }
 
     // Whether to highlight the initial event
-    public isInitialEventHighlighted() {
+    public isInitialEventHighlighted(): boolean {
         return this.state.isInitialEventHighlighted;
     }
 
+    // Whether to avoid jumping to the initial event
+    public initialEventScrollIntoView(): boolean {
+        return this.state.initialEventScrollIntoView;
+    }
+
     // The room alias of the room (or null if not originally specified in view_room)
-    public getRoomAlias() {
+    public getRoomAlias(): Optional<string> {
         return this.state.roomAlias;
     }
 
     // Whether the current room is loading (true whilst resolving an alias)
-    public isRoomLoading() {
+    public isRoomLoading(): boolean {
         return this.state.roomLoading;
     }
 
     // Any error that has occurred during loading
-    public getRoomLoadError() {
+    public getRoomLoadError(): Optional<MatrixError> {
         return this.state.roomLoadError;
     }
 
@@ -461,7 +683,7 @@ class RoomViewStore extends Store<ActionPayload> {
     // since we should still consider a join to be in progress until the room
     // & member events come down the sync.
     //
-    // This flag remains true after the room has been sucessfully joined,
+    // This flag remains true after the room has been successfully joined,
     // (this store doesn't listen for the appropriate member events)
     // so you should always observe the joined state from the member event
     // if a room object is present.
@@ -473,37 +695,35 @@ class RoomViewStore extends Store<ActionPayload> {
     //         // Not joined
     //     }
     // } else {
-    //     if (RoomViewStore.isJoining()) {
+    //     if (this.stores.roomViewStore.isJoining()) {
     //         // show spinner
     //     } else {
     //         // show join prompt
     //     }
     // }
-    public isJoining() {
+    public isJoining(): boolean {
         return this.state.joining;
     }
 
     // Any error that has occurred during joining
-    public getJoinError() {
+    public getJoinError(): Optional<Error> {
         return this.state.joinError;
     }
 
     // The mxEvent if one is currently being replied to/quoted
-    public getQuotingEvent() {
+    public getQuotingEvent(): Optional<MatrixEvent> {
         return this.state.replyingToEvent;
     }
 
-    public shouldPeek() {
+    public shouldPeek(): boolean {
         return this.state.shouldPeek;
     }
 
-    public getWasContextSwitch() {
+    public getWasContextSwitch(): boolean {
         return this.state.wasContextSwitch;
     }
-}
 
-let singletonRoomViewStore: RoomViewStore = null;
-if (!singletonRoomViewStore) {
-    singletonRoomViewStore = new RoomViewStore();
+    public isViewingCall(): boolean {
+        return this.state.viewingCall;
+    }
 }
-export default singletonRoomViewStore;

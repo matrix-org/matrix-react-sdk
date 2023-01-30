@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventType } from "matrix-js-sdk/src/@types/event";
@@ -26,7 +25,7 @@ import { MatrixClientPeg } from "../MatrixClientPeg";
 import { arrayFastClone } from "../utils/arrays";
 import { PlaybackManager } from "./PlaybackManager";
 import { isVoiceMessage } from "../utils/EventUtils";
-import RoomViewStore from "../stores/RoomViewStore";
+import { SdkContextClass } from "../contexts/SDKContext";
 
 /**
  * Audio playback queue management for a given room. This keeps track of where the user
@@ -49,18 +48,18 @@ export class PlaybackQueue {
     private currentPlaybackId: string; // event ID, broken out from above for ease of use
     private recentFullPlays = new Set<string>(); // event IDs
 
-    constructor(private client: MatrixClient, private room: Room) {
+    public constructor(private room: Room) {
         this.loadClocks();
 
-        RoomViewStore.addListener(() => {
-            if (RoomViewStore.getRoomId() === this.room.roomId) {
-                // Reset the state of the playbacks before they start mounting and enqueuing updates.
-                // We reset the entirety of the queue, including order, to ensure the user isn't left
-                // confused with what order the messages are playing in.
-                this.currentPlaybackId = null; // this in particular stops autoplay when the room is switched to
-                this.recentFullPlays = new Set<string>();
-                this.playbackIdOrder = [];
-            }
+        SdkContextClass.instance.roomViewStore.addRoomListener(this.room.roomId, (isActive) => {
+            if (!isActive) return;
+
+            // Reset the state of the playbacks before they start mounting and enqueuing updates.
+            // We reset the entirety of the queue, including order, to ensure the user isn't left
+            // confused with what order the messages are playing in.
+            this.currentPlaybackId = null; // this in particular stops autoplay when the room is switched to
+            this.recentFullPlays = new Set<string>();
+            this.playbackIdOrder = [];
         });
     }
 
@@ -71,33 +70,33 @@ export class PlaybackQueue {
         if (PlaybackQueue.queues.has(room.roomId)) {
             return PlaybackQueue.queues.get(room.roomId);
         }
-        const queue = new PlaybackQueue(cli, room);
+        const queue = new PlaybackQueue(room);
         PlaybackQueue.queues.set(room.roomId, queue);
         return queue;
     }
 
-    private persistClocks() {
+    private persistClocks(): void {
         localStorage.setItem(
             `mx_voice_message_clocks_${this.room.roomId}`,
             JSON.stringify(Array.from(this.clockStates.entries())),
         );
     }
 
-    private loadClocks() {
+    private loadClocks(): void {
         const val = localStorage.getItem(`mx_voice_message_clocks_${this.room.roomId}`);
         if (!!val) {
             this.clockStates = new Map<string, number>(JSON.parse(val));
         }
     }
 
-    public unsortedEnqueue(mxEvent: MatrixEvent, playback: Playback) {
+    public unsortedEnqueue(mxEvent: MatrixEvent, playback: Playback): void {
         // We don't ever detach our listeners: we expect the Playback to clean up for us
         this.playbacks.set(mxEvent.getId(), playback);
         playback.on(UPDATE_EVENT, (state) => this.onPlaybackStateChange(playback, mxEvent, state));
         playback.clockInfo.liveData.onUpdate((clock) => this.onPlaybackClock(playback, mxEvent, clock));
     }
 
-    private onPlaybackStateChange(playback: Playback, mxEvent: MatrixEvent, newState: PlaybackState) {
+    private onPlaybackStateChange(playback: Playback, mxEvent: MatrixEvent, newState: PlaybackState): void {
         // Remember where the user got to in playback
         const wasLastPlaying = this.currentPlaybackId === mxEvent.getId();
         if (newState === PlaybackState.Stopped && this.clockStates.has(mxEvent.getId()) && !wasLastPlaying) {
@@ -117,8 +116,8 @@ export class PlaybackQueue {
                         const instance = this.playbacks.get(next);
                         if (!instance) {
                             logger.warn(
-                                "Voice message queue desync: Missing playback for next message: "
-                                + `Current=${this.currentPlaybackId} Last=${last} Next=${next}`,
+                                "Voice message queue desync: Missing playback for next message: " +
+                                    `Current=${this.currentPlaybackId} Last=${last} Next=${next}`,
                             );
                         } else {
                             this.playbackIdOrder = orderClone;
@@ -176,8 +175,8 @@ export class PlaybackQueue {
                     }
                 } else {
                     logger.warn(
-                        "Voice message queue desync: Expected playback stop to be last in order. "
-                        + `Current=${this.currentPlaybackId} Last=${last} EventID=${mxEvent.getId()}`,
+                        "Voice message queue desync: Expected playback stop to be last in order. " +
+                            `Current=${this.currentPlaybackId} Last=${last} EventID=${mxEvent.getId()}`,
                     );
                 }
             }
@@ -189,8 +188,8 @@ export class PlaybackQueue {
                 if (order.length === 0 || order[order.length - 1] !== this.currentPlaybackId) {
                     const lastInstance = this.playbacks.get(this.currentPlaybackId);
                     if (
-                        lastInstance.currentState === PlaybackState.Playing
-                        || lastInstance.currentState === PlaybackState.Paused
+                        lastInstance.currentState === PlaybackState.Playing ||
+                        lastInstance.currentState === PlaybackState.Paused
                     ) {
                         order.push(this.currentPlaybackId);
                     }
@@ -211,7 +210,7 @@ export class PlaybackQueue {
         }
     }
 
-    private onPlaybackClock(playback: Playback, mxEvent: MatrixEvent, clocks: number[]) {
+    private onPlaybackClock(playback: Playback, mxEvent: MatrixEvent, clocks: number[]): void {
         if (playback.currentState === PlaybackState.Decoding) return; // ignore pre-ready values
 
         if (playback.currentState !== PlaybackState.Stopped) {

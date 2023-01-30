@@ -14,18 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 import { _t } from "../../../../../languageHandler";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import Notifications from "../../Notifications";
 
-@replaceableComponent("views.settings.tabs.user.NotificationUserSettingsTab")
 export default class NotificationUserSettingsTab extends React.Component {
-    render() {
+    public render(): JSX.Element {
         return (
-            <div className="mx_SettingsTab mx_NotificationUserSettingsTab">
-                <div className="mx_SettingsTab_heading">{ _t("Notifications") }</div>
+            <div className="mx_SettingsTab">
+                <div className="mx_SettingsTab_heading">{_t("Notifications")}</div>
                 <div className="mx_SettingsTab_section mx_SettingsTab_subsectionText">
                     <Notifications />
                 </div>

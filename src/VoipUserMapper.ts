@@ -14,14 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from 'matrix-js-sdk/src/models/room';
+import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
-import { EventType } from 'matrix-js-sdk/src/@types/event';
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
-import { ensureVirtualRoomExists, findDMForUser } from './createRoom';
+import { ensureVirtualRoomExists } from "./createRoom";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import DMRoomMap from "./utils/DMRoomMap";
-import CallHandler, { VIRTUAL_ROOM_EVENT_TYPE } from './CallHandler';
+import LegacyCallHandler from "./LegacyCallHandler";
+import { VIRTUAL_ROOM_EVENT_TYPE } from "./call-types";
+import { findDMForUser } from "./utils/dm/findDMForUser";
 
 // Functions for mapping virtual users & rooms. Currently the only lookup
 // is sip virtual: there could be others in the future.
@@ -37,7 +39,7 @@ export default class VoipUserMapper {
     }
 
     private async userToVirtualUser(userId: string): Promise<string> {
-        const results = await CallHandler.instance.sipVirtualLookup(userId);
+        const results = await LegacyCallHandler.instance.sipVirtualLookup(userId);
         if (results.length === 0 || !results[0].fields.lookup_success) return null;
         return results[0].userid;
     }
@@ -77,7 +79,7 @@ export default class VoipUserMapper {
         return findDMForUser(MatrixClientPeg.get(), virtualUser);
     }
 
-    public nativeRoomForVirtualRoom(roomId: string): string {
+    public nativeRoomForVirtualRoom(roomId: string): string | null {
         const cachedNativeRoomId = this.virtualToNativeRoomIdCache.get(roomId);
         if (cachedNativeRoomId) {
             logger.log(
@@ -90,9 +92,9 @@ export default class VoipUserMapper {
         if (!virtualRoom) return null;
         const virtualRoomEvent = virtualRoom.getAccountData(VIRTUAL_ROOM_EVENT_TYPE);
         if (!virtualRoomEvent || !virtualRoomEvent.getContent()) return null;
-        const nativeRoomID = virtualRoomEvent.getContent()['native_room'];
+        const nativeRoomID = virtualRoomEvent.getContent()["native_room"];
         const nativeRoom = MatrixClientPeg.get().getRoom(nativeRoomID);
-        if (!nativeRoom || nativeRoom.getMyMembership() !== 'join') return null;
+        if (!nativeRoom || nativeRoom.getMyMembership() !== "join") return null;
 
         return nativeRoomID;
     }
@@ -116,11 +118,11 @@ export default class VoipUserMapper {
     }
 
     public async onNewInvitedRoom(invitedRoom: Room): Promise<void> {
-        if (!CallHandler.instance.getSupportsVirtualRooms()) return;
+        if (!LegacyCallHandler.instance.getSupportsVirtualRooms()) return;
 
         const inviterId = invitedRoom.getDMInviter();
         logger.log(`Checking virtual-ness of room ID ${invitedRoom.roomId}, invited by ${inviterId}`);
-        const result = await CallHandler.instance.sipNativeLookup(inviterId);
+        const result = await LegacyCallHandler.instance.sipNativeLookup(inviterId);
         if (result.length === 0) {
             return;
         }

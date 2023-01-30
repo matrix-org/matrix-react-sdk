@@ -14,12 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseDialog from "./BaseDialog";
 
 interface IProps {
@@ -32,7 +31,6 @@ interface IProps {
     onFinished: (success: boolean) => void;
 }
 
-@replaceableComponent("views.dialogs.AskInviteAnywayDialog")
 export default class AskInviteAnywayDialog extends React.Component<IProps> {
     private onInviteClicked = (): void => {
         this.props.onInviteAnyways();
@@ -50,33 +48,37 @@ export default class AskInviteAnywayDialog extends React.Component<IProps> {
         this.props.onFinished(false);
     };
 
-    public render() {
-        const errorList = this.props.unknownProfileUsers
-            .map(address => <li key={address.userId}>{ address.userId }: { address.errorText }</li>);
+    public render(): JSX.Element {
+        const errorList = this.props.unknownProfileUsers.map((address) => (
+            <li key={address.userId}>
+                {address.userId}: {address.errorText}
+            </li>
+        ));
 
         return (
-            <BaseDialog className='mx_RetryInvitesDialog'
+            <BaseDialog
+                className="mx_RetryInvitesDialog"
                 onFinished={this.onGiveUpClicked}
-                title={_t('The following users may not exist')}
-                contentId='mx_Dialog_content'
+                title={_t("The following users may not exist")}
+                contentId="mx_Dialog_content"
             >
-                <div id='mx_Dialog_content'>
-                    <p>{ _t("Unable to find profiles for the Matrix IDs listed below - " +
-                        "would you like to invite them anyway?") }</p>
-                    <ul>
-                        { errorList }
-                    </ul>
+                <div id="mx_Dialog_content">
+                    <p>
+                        {_t(
+                            "Unable to find profiles for the Matrix IDs listed below - " +
+                                "would you like to invite them anyway?",
+                        )}
+                    </p>
+                    <ul>{errorList}</ul>
                 </div>
 
                 <div className="mx_Dialog_buttons">
-                    <button onClick={this.onGiveUpClicked}>
-                        { _t('Close') }
-                    </button>
+                    <button onClick={this.onGiveUpClicked}>{_t("Close")}</button>
                     <button onClick={this.onInviteNeverWarnClicked}>
-                        { _t('Invite anyway and never warn me again') }
+                        {_t("Invite anyway and never warn me again")}
                     </button>
                     <button onClick={this.onInviteClicked} autoFocus={true}>
-                        { _t('Invite anyway') }
+                        {_t("Invite anyway")}
                     </button>
                 </div>
             </BaseDialog>

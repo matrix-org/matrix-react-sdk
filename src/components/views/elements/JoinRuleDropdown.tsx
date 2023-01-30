@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { JoinRule } from 'matrix-js-sdk/src/@types/partials';
+import React from "react";
+import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 
 import Dropdown from "./Dropdown";
 
@@ -29,7 +29,7 @@ interface IProps {
     onChange(value: JoinRule): void;
 }
 
-const JoinRuleDropdown = ({
+const JoinRuleDropdown: React.FC<IProps> = ({
     label,
     labelInvite,
     labelPublic,
@@ -37,32 +37,36 @@ const JoinRuleDropdown = ({
     value,
     width = 448,
     onChange,
-}: IProps) => {
+}) => {
     const options = [
         <div key={JoinRule.Invite} className="mx_JoinRuleDropdown_invite">
-            { labelInvite }
+            {labelInvite}
         </div>,
         <div key={JoinRule.Public} className="mx_JoinRuleDropdown_public">
-            { labelPublic }
+            {labelPublic}
         </div>,
     ];
 
     if (labelRestricted) {
-        options.unshift(<div key={JoinRule.Restricted} className="mx_JoinRuleDropdown_restricted">
-            { labelRestricted }
-        </div>);
+        options.unshift(
+            <div key={JoinRule.Restricted} className="mx_JoinRuleDropdown_restricted">
+                {labelRestricted}
+            </div>,
+        );
     }
 
-    return <Dropdown
-        id="mx_JoinRuleDropdown"
-        className="mx_JoinRuleDropdown"
-        onOptionChange={onChange}
-        menuWidth={width}
-        value={value}
-        label={label}
-    >
-        { options }
-    </Dropdown>;
+    return (
+        <Dropdown
+            id="mx_JoinRuleDropdown"
+            className="mx_JoinRuleDropdown"
+            onOptionChange={onChange}
+            menuWidth={width}
+            value={value}
+            label={label}
+        >
+            {options}
+        </Dropdown>
+    );
 };
 
 export default JoinRuleDropdown;

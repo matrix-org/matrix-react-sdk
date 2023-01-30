@@ -24,9 +24,6 @@ export interface IContentRules {
     externalRules: IAnnotatedPushRule[];
 }
 
-export const SCOPE = "global";
-export const KIND = "content";
-
 export class ContentRules {
     /**
      * Extract the keyword rules from a list of rules, and parse them
@@ -95,8 +92,13 @@ export class ContentRules {
         }
     }
 
-    private static categoriseContentRules(rulesets: IPushRules) {
-        const contentRules: Record<"on"|"on_but_disabled"|"loud"|"loud_but_disabled"|"other", IAnnotatedPushRule[]> = {
+    private static categoriseContentRules(
+        rulesets: IPushRules,
+    ): Record<"on" | "on_but_disabled" | "loud" | "loud_but_disabled" | "other", IAnnotatedPushRule[]> {
+        const contentRules: Record<
+            "on" | "on_but_disabled" | "loud" | "loud_but_disabled" | "other",
+            IAnnotatedPushRule[]
+        > = {
             on: [],
             on_but_disabled: [],
             loud: [],
@@ -109,7 +111,7 @@ export class ContentRules {
                 const r = rulesets.global[kind][i];
 
                 // check it's not a default rule
-                if (r.rule_id[0] === '.' || kind !== PushRuleKind.ContentSpecific) {
+                if (r.rule_id[0] === "." || kind !== PushRuleKind.ContentSpecific) {
                     continue;
                 }
 

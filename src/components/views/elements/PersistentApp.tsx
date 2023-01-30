@@ -1,6 +1,6 @@
 /*
 Copyright 2018 New Vector Ltd
-Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
+Copyright 2019-2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,50 +15,41 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ContextType } from 'react';
+import React, { ContextType, MutableRefObject } from "react";
+import { Room } from "matrix-js-sdk/src/models/room";
 
-import ActiveWidgetStore from '../../../stores/ActiveWidgetStore';
-import WidgetUtils from '../../../utils/WidgetUtils';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import WidgetUtils from "../../../utils/WidgetUtils";
 import AppTile from "./AppTile";
-import { IApp } from '../../../stores/WidgetStore';
+import WidgetStore from "../../../stores/WidgetStore";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps {
     persistentWidgetId: string;
+    persistentRoomId: string;
     pointerEvents?: string;
+    movePersistedElement: MutableRefObject<(() => void) | undefined>;
 }
 
-@replaceableComponent("views.elements.PersistentApp")
 export default class PersistentApp extends React.Component<IProps> {
     public static contextType = MatrixClientContext;
-    context: ContextType<typeof MatrixClientContext>;
+    public context: ContextType<typeof MatrixClientContext>;
+    private room: Room;
 
-    private get app(): IApp {
-        const persistentWidgetInRoomId = ActiveWidgetStore.instance.getRoomId(this.props.persistentWidgetId);
-        const persistentWidgetInRoom = this.context.getRoom(persistentWidgetInRoomId);
-
-        // get the widget data
-        const appEvent = WidgetUtils.getRoomWidgets(persistentWidgetInRoom).find((ev) => {
-            return ev.getStateKey() === ActiveWidgetStore.instance.getPersistentWidgetId();
-        });
-        return WidgetUtils.makeAppConfig(
-            appEvent.getStateKey(), appEvent.getContent(), appEvent.getSender(),
-            persistentWidgetInRoomId, appEvent.getId(),
-        );
+    public constructor(props: IProps, context: ContextType<typeof MatrixClientContext>) {
+        super(props, context);
+        this.room = context.getRoom(this.props.persistentRoomId)!;
     }
 
-    public render(): JSX.Element {
-        const app = this.app;
-        if (app) {
-            const persistentWidgetInRoomId = ActiveWidgetStore.instance.getRoomId(this.props.persistentWidgetId);
-            const persistentWidgetInRoom = this.context.getRoom(persistentWidgetInRoomId);
+    public render(): JSX.Element | null {
+        const app = WidgetStore.instance.get(this.props.persistentWidgetId, this.props.persistentRoomId);
+        if (!app) return null;
 
-            return <AppTile
+        return (
+            <AppTile
                 key={app.id}
                 app={app}
                 fullWidth={true}
-                room={persistentWidgetInRoom}
+                room={this.room}
                 userId={this.context.credentials.userId}
                 creatorUserId={app.creatorUserId}
                 widgetPageTitle={WidgetUtils.getWidgetDataTitle(app)}
@@ -66,9 +57,8 @@ export default class PersistentApp extends React.Component<IProps> {
                 miniMode={true}
                 showMenubar={false}
                 pointerEvents={this.props.pointerEvents}
-            />;
-        }
-        return null;
+                movePersistedElement={this.props.movePersistedElement}
+            />
+        );
     }
 }
-

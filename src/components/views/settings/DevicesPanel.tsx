@@ -14,21 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
 import { IMyDevice } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { _t } from '../../../languageHandler';
-import Modal from '../../../Modal';
-import { SSOAuthEntry } from "../auth/InteractiveAuthEntryComponents";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import InteractiveAuthDialog from "../dialogs/InteractiveAuthDialog";
+import { _t } from "../../../languageHandler";
 import DevicesPanelEntry from "./DevicesPanelEntry";
 import Spinner from "../elements/Spinner";
 import AccessibleButton from "../elements/AccessibleButton";
+import { deleteDevicesWithInteractiveAuth } from "./devices/deleteDevices";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps {
     className?: string;
@@ -42,11 +40,12 @@ interface IState {
     deleting?: boolean;
 }
 
-@replaceableComponent("views.settings.DevicesPanel")
 export default class DevicesPanel extends React.Component<IProps, IState> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
     private unmounted = false;
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             devices: [],
@@ -56,35 +55,43 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
+        this.context.on(CryptoEvent.DevicesUpdated, this.onDevicesUpdated);
         this.loadDevices();
     }
 
     public componentWillUnmount(): void {
+        this.context.off(CryptoEvent.DevicesUpdated, this.onDevicesUpdated);
         this.unmounted = true;
     }
 
+    private onDevicesUpdated = (users: string[]): void => {
+        if (!users.includes(this.context.getUserId())) return;
+        this.loadDevices();
+    };
+
     private loadDevices(): void {
-        const cli = MatrixClientPeg.get();
+        const cli = this.context;
         cli.getDevices().then(
             (resp) => {
-                if (this.unmounted) { return; }
+                if (this.unmounted) {
+                    return;
+                }
 
                 const crossSigningInfo = cli.getStoredCrossSigningForUser(cli.getUserId());
                 this.setState((state, props) => {
                     const deviceIds = resp.devices.map((device) => device.device_id);
-                    const selectedDevices = state.selectedDevices.filter(
-                        (deviceId) => deviceIds.includes(deviceId),
-                    );
+                    const selectedDevices = state.selectedDevices.filter((deviceId) => deviceIds.includes(deviceId));
                     return {
                         devices: resp.devices || [],
                         selectedDevices,
                         crossSigningInfo: crossSigningInfo,
                     };
                 });
-                console.log(this.state);
             },
             (error) => {
-                if (this.unmounted) { return; }
+                if (this.unmounted) {
+                    return;
+                }
                 let errtxt;
                 if (error.httpStatus == 404) {
                     // 404 probably means the HS doesn't yet support the API.
@@ -104,26 +111,24 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
      */
     private deviceCompare(a: IMyDevice, b: IMyDevice): number {
         // return < 0 if a comes before b, > 0 if a comes after b.
-        const lastSeenDelta =
-              (b.last_seen_ts || 0) - (a.last_seen_ts || 0);
+        const lastSeenDelta = (b.last_seen_ts || 0) - (a.last_seen_ts || 0);
 
-        if (lastSeenDelta !== 0) { return lastSeenDelta; }
+        if (lastSeenDelta !== 0) {
+            return lastSeenDelta;
+        }
 
         const idA = a.device_id;
         const idB = b.device_id;
-        return (idA < idB) ? -1 : (idA > idB) ? 1 : 0;
+        return idA < idB ? -1 : idA > idB ? 1 : 0;
     }
 
     private isDeviceVerified(device: IMyDevice): boolean | null {
         try {
-            const cli = MatrixClientPeg.get();
+            const cli = this.context;
             const deviceInfo = cli.getStoredDevice(cli.getUserId(), device.device_id);
-            return this.state.crossSigningInfo.checkDeviceTrust(
-                this.state.crossSigningInfo,
-                deviceInfo,
-                false,
-                true,
-            ).isCrossSigningVerified();
+            return this.state.crossSigningInfo
+                .checkDeviceTrust(this.state.crossSigningInfo, deviceInfo, false, true)
+                .isCrossSigningVerified();
         } catch (e) {
             console.error("Error getting device cross-signing info", e);
             return null;
@@ -131,7 +136,9 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
     }
 
     private onDeviceSelectionToggled = (device: IMyDevice): void => {
-        if (this.unmounted) { return; }
+        if (this.unmounted) {
+            return;
+        }
 
         const deviceId = device.device_id;
         this.setState((state, props) => {
@@ -180,77 +187,39 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
         });
     };
 
-    private onDeleteClick = (): void => {
-        if (this.state.selectedDevices.length === 0) { return; }
+    private onDeleteClick = async (): Promise<void> => {
+        if (this.state.selectedDevices.length === 0) {
+            return;
+        }
 
         this.setState({
             deleting: true,
         });
 
-        this.makeDeleteRequest(null).catch((error) => {
-            if (this.unmounted) { return; }
-            if (error.httpStatus !== 401 || !error.data || !error.data.flows) {
-                // doesn't look like an interactive-auth failure
-                throw error;
-            }
-
-            // pop up an interactive auth dialog
-
-            const numDevices = this.state.selectedDevices.length;
-            const dialogAesthetics = {
-                [SSOAuthEntry.PHASE_PREAUTH]: {
-                    title: _t("Use Single Sign On to continue"),
-                    body: _t("Confirm logging out these devices by using Single Sign On to prove your identity.", {
-                        count: numDevices,
-                    }),
-                    continueText: _t("Single Sign On"),
-                    continueKind: "primary",
-                },
-                [SSOAuthEntry.PHASE_POSTAUTH]: {
-                    title: _t("Confirm signing out these devices"),
-                    body: _t("Click the button below to confirm signing out these devices.", {
-                        count: numDevices,
-                    }),
-                    continueText: _t("Sign out devices", { count: numDevices }),
-                    continueKind: "danger",
-                },
-            };
-            Modal.createTrackedDialog('Delete Device Dialog', '', InteractiveAuthDialog, {
-                title: _t("Authentication"),
-                matrixClient: MatrixClientPeg.get(),
-                authData: error.data,
-                makeRequest: this.makeDeleteRequest.bind(this),
-                aestheticsForStagePhases: {
-                    [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
-                    [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
-                },
+        try {
+            await deleteDevicesWithInteractiveAuth(this.context, this.state.selectedDevices, (success) => {
+                if (success) {
+                    // Reset selection to [], update device list
+                    this.setState({
+                        selectedDevices: [],
+                    });
+                    this.loadDevices();
+                }
+                this.setState({
+                    deleting: false,
+                });
             });
-        }).catch((e) => {
-            logger.error("Error deleting sessions", e);
-            if (this.unmounted) { return; }
-        }).finally(() => {
+        } catch (error) {
+            logger.error("Error deleting sessions", error);
             this.setState({
                 deleting: false,
             });
-        });
+        }
     };
 
-    // TODO: proper typing for auth
-    private makeDeleteRequest(auth?: any): Promise<any> {
-        return MatrixClientPeg.get().deleteMultipleDevices(this.state.selectedDevices, auth).then(
-            () => {
-                // Reset selection to [], update device list
-                this.setState({
-                    selectedDevices: [],
-                });
-                this.loadDevices();
-            },
-        );
-    }
-
     private renderDevice = (device: IMyDevice): JSX.Element => {
-        const myDeviceId = MatrixClientPeg.get().getDeviceId();
-        const myDevice = this.state.devices.find((device) => (device.device_id === myDeviceId));
+        const myDeviceId = this.context.getDeviceId();
+        const myDevice = this.state.devices.find((device) => device.device_id === myDeviceId);
 
         const isOwnDevice = device.device_id === myDeviceId;
 
@@ -258,24 +227,22 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
         // devices, it can only request verification for itself
         const canBeVerified = (myDevice && this.isDeviceVerified(myDevice)) || isOwnDevice;
 
-        return <DevicesPanelEntry
-            key={device.device_id}
-            device={device}
-            selected={this.state.selectedDevices.includes(device.device_id)}
-            isOwnDevice={isOwnDevice}
-            verified={this.isDeviceVerified(device)}
-            canBeVerified={canBeVerified}
-            onDeviceChange={this.loadDevices}
-            onDeviceToggled={this.onDeviceSelectionToggled}
-        />;
+        return (
+            <DevicesPanelEntry
+                key={device.device_id}
+                device={device}
+                selected={this.state.selectedDevices.includes(device.device_id)}
+                isOwnDevice={isOwnDevice}
+                verified={this.isDeviceVerified(device)}
+                canBeVerified={canBeVerified}
+                onDeviceChange={this.loadDevices}
+                onDeviceToggled={this.onDeviceSelectionToggled}
+            />
+        );
     };
 
     public render(): JSX.Element {
-        const loadError = (
-            <div className={classNames(this.props.className, "error")}>
-                { this.state.deviceLoadError }
-            </div>
-        );
+        const loadError = <div className={classNames(this.props.className, "error")}>{this.state.deviceLoadError}</div>;
 
         if (this.state.deviceLoadError !== undefined) {
             return loadError;
@@ -287,13 +254,14 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
             return <Spinner />;
         }
 
-        const myDeviceId = MatrixClientPeg.get().getDeviceId();
-        const myDevice = devices.find((device) => (device.device_id === myDeviceId));
+        const myDeviceId = this.context.getDeviceId();
+        const myDevice = devices.find((device) => device.device_id === myDeviceId);
+
         if (!myDevice) {
             return loadError;
         }
 
-        const otherDevices = devices.filter((device) => (device.device_id !== myDeviceId));
+        const otherDevices = devices.filter((device) => device.device_id !== myDeviceId);
         otherDevices.sort(this.deviceCompare);
 
         const verifiedDevices = [];
@@ -318,34 +286,38 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
             let selectButton: JSX.Element;
             if (deviceList.length > 1) {
                 const anySelected = deviceList.some((device) => this.state.selectedDevices.includes(device.device_id));
-                const buttonAction = anySelected ?
-                    () => { this.deselectAll(deviceList); } :
-                    () => { this.selectAll(deviceList); };
+                const buttonAction = anySelected
+                    ? () => {
+                          this.deselectAll(deviceList);
+                      }
+                    : () => {
+                          this.selectAll(deviceList);
+                      };
                 const buttonText = anySelected ? _t("Deselect all") : _t("Select all");
-                selectButton = <div className="mx_DevicesPanel_header_button">
-                    <AccessibleButton
-                        className="mx_DevicesPanel_selectButton"
-                        kind="secondary"
-                        onClick={buttonAction}
-                    >
-                        { buttonText }
-                    </AccessibleButton>
-                </div>;
+                selectButton = (
+                    <div className="mx_DevicesPanel_header_button">
+                        <AccessibleButton
+                            className="mx_DevicesPanel_selectButton"
+                            kind="secondary"
+                            onClick={buttonAction}
+                        >
+                            {buttonText}
+                        </AccessibleButton>
+                    </div>
+                );
             }
 
-            return <React.Fragment>
-                <hr />
-                <div className="mx_DevicesPanel_header">
-                    <div className="mx_DevicesPanel_header_trust">
-                        { trustIcon }
+            return (
+                <React.Fragment>
+                    <hr />
+                    <div className="mx_DevicesPanel_header">
+                        <div className="mx_DevicesPanel_header_trust">{trustIcon}</div>
+                        <div className="mx_DevicesPanel_header_title">{title}</div>
+                        {selectButton}
                     </div>
-                    <div className="mx_DevicesPanel_header_title">
-                        { title }
-                    </div>
-                    { selectButton }
-                </div>
-                { deviceList.map(this.renderDevice) }
-            </React.Fragment>;
+                    {deviceList.map(this.renderDevice)}
+                </React.Fragment>
+            );
         };
 
         const verifiedDevicesSection = section(
@@ -366,41 +338,45 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
             nonCryptoDevices,
         );
 
-        const deleteButton = this.state.deleting ?
-            <Spinner w={22} h={22} /> :
+        const deleteButton = this.state.deleting ? (
+            <Spinner w={22} h={22} />
+        ) : (
             <AccessibleButton
                 className="mx_DevicesPanel_deleteButton"
                 onClick={this.onDeleteClick}
                 kind="danger_outline"
                 disabled={this.state.selectedDevices.length === 0}
+                data-testid="sign-out-devices-btn"
             >
-                { _t("Sign out %(count)s selected devices", { count: this.state.selectedDevices.length }) }
-            </AccessibleButton>;
+                {_t("Sign out %(count)s selected devices", { count: this.state.selectedDevices.length })}
+            </AccessibleButton>
+        );
 
-        const otherDevicesSection = (otherDevices.length > 0) ?
-            <React.Fragment>
-                { verifiedDevicesSection }
-                { unverifiedDevicesSection }
-                { nonCryptoDevicesSection }
-                { deleteButton }
-            </React.Fragment> :
-            <React.Fragment>
-                <hr />
-                <div className="mx_DevicesPanel_noOtherDevices">
-                    { _t("You aren't signed into any other devices.") }
-                </div>
-            </React.Fragment>;
+        const otherDevicesSection =
+            otherDevices.length > 0 ? (
+                <React.Fragment>
+                    {verifiedDevicesSection}
+                    {unverifiedDevicesSection}
+                    {nonCryptoDevicesSection}
+                    {deleteButton}
+                </React.Fragment>
+            ) : (
+                <React.Fragment>
+                    <hr />
+                    <div className="mx_DevicesPanel_noOtherDevices">
+                        {_t("You aren't signed into any other devices.")}
+                    </div>
+                </React.Fragment>
+            );
 
         const classes = classNames(this.props.className, "mx_DevicesPanel");
         return (
             <div className={classes}>
                 <div className="mx_DevicesPanel_header">
-                    <div className="mx_DevicesPanel_header_title">
-                        { _t("This device") }
-                    </div>
+                    <div className="mx_DevicesPanel_header_title">{_t("This device")}</div>
                 </div>
-                { this.renderDevice(myDevice) }
-                { otherDevicesSection }
+                {this.renderDevice(myDevice)}
+                {otherDevicesSection}
             </div>
         );
     }

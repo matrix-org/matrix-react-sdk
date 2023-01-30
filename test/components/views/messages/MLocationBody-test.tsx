@@ -14,279 +14,165 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { makeLocationContent } from "matrix-js-sdk/src/content-helpers";
-import {
-    ASSET_NODE_TYPE,
-    ILocationContent,
-    LOCATION_EVENT_TYPE,
-    TIMESTAMP_NODE_TYPE,
-} from "matrix-js-sdk/src/@types/location";
-import { TEXT_NODE_TYPE } from "matrix-js-sdk/src/@types/extensible_events";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import React from "react";
+// eslint-disable-next-line deprecate/import
+import { mount } from "enzyme";
+import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
+import { ClientEvent, RoomMember } from "matrix-js-sdk/src/matrix";
+import * as maplibregl from "maplibre-gl";
+import { logger } from "matrix-js-sdk/src/logger";
+import { act } from "react-dom/test-utils";
+import { SyncState } from "matrix-js-sdk/src/sync";
 
-import sdk from "../../../skinned-sdk";
-import {
-    createMapSiteLink,
-    isSelfLocation,
-    parseGeoUri,
-} from "../../../../src/components/views/messages/MLocationBody";
-
-sdk.getComponent("views.messages.MLocationBody");
+import MLocationBody from "../../../../src/components/views/messages/MLocationBody";
+import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
+import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
+import { MediaEventHelper } from "../../../../src/utils/MediaEventHelper";
+import Modal from "../../../../src/Modal";
+import SdkConfig from "../../../../src/SdkConfig";
+import { TILE_SERVER_WK_KEY } from "../../../../src/utils/WellKnownUtils";
+import { makeLocationEvent } from "../../../test-utils/location";
+import { getMockClientWithEventEmitter } from "../../../test-utils";
 
 describe("MLocationBody", () => {
-    describe("parseGeoUri", () => {
-        it("fails if the supplied URI is empty", () => {
-            expect(parseGeoUri("")).toBeFalsy();
+    const mapOptions = { container: {} as unknown as HTMLElement, style: "" };
+    describe("<MLocationBody>", () => {
+        const roomId = "!room:server";
+        const userId = "@user:server";
+        const mockClient = getMockClientWithEventEmitter({
+            getClientWellKnown: jest.fn().mockReturnValue({
+                [TILE_SERVER_WK_KEY.name]: { map_style_url: "maps.com" },
+            }),
+            isGuest: jest.fn().mockReturnValue(false),
+        });
+        const defaultEvent = makeLocationEvent("geo:51.5076,-0.1276", LocationAssetType.Pin);
+        const defaultProps = {
+            mxEvent: defaultEvent,
+            highlights: [],
+            highlightLink: "",
+            onHeightChanged: jest.fn(),
+            onMessageAllowed: jest.fn(),
+            permalinkCreator: {} as RoomPermalinkCreator,
+            mediaEventHelper: {} as MediaEventHelper,
+        };
+        const getComponent = (props = {}) =>
+            mount(<MLocationBody {...defaultProps} {...props} />, {
+                wrappingComponent: MatrixClientContext.Provider,
+                wrappingComponentProps: { value: mockClient },
+            });
+        const getMapErrorComponent = () => {
+            const mockMap = new maplibregl.Map(mapOptions);
+            mockClient.getClientWellKnown.mockReturnValue({
+                [TILE_SERVER_WK_KEY.name]: { map_style_url: "bad-tile-server.com" },
+            });
+            const component = getComponent();
+
+            // simulate error initialising map in maplibregl
+            // @ts-ignore
+            mockMap.emit("error", { status: 404 });
+
+            return component;
+        };
+
+        beforeEach(() => {
+            jest.clearAllMocks();
         });
 
-        // We use some examples from the spec, but don't check semantics
-        // like two textually-different URIs being equal, since we are
-        // just a humble parser.
+        describe("with error", () => {
+            let sdkConfigSpy;
 
-        // Note: we do not understand geo URIs with percent-encoded coords
-        // or accuracy.  It is RECOMMENDED in the spec never to percent-encode
-        // these, but it is permitted, and we will fail to parse in that case.
+            beforeEach(() => {
+                // eat expected errors to keep console clean
+                jest.spyOn(logger, "error").mockImplementation(() => {});
+                mockClient.getClientWellKnown.mockReturnValue({});
+                sdkConfigSpy = jest.spyOn(SdkConfig, "get").mockReturnValue({});
+            });
 
-        it("rfc5870 6.1 Simple 3-dimensional", () => {
-            expect(parseGeoUri("geo:48.2010,16.3695,183")).toEqual(
-                {
-                    latitude: 48.2010,
-                    longitude: 16.3695,
-                    altitude: 183,
-                    accuracy: undefined,
-                    altitudeAccuracy: undefined,
-                    heading: undefined,
-                    speed: undefined,
-                },
-            );
+            afterAll(() => {
+                sdkConfigSpy.mockRestore();
+                jest.spyOn(logger, "error").mockRestore();
+            });
+
+            it("displays correct fallback content without error style when map_style_url is not configured", () => {
+                const component = getComponent();
+                expect(component.find(".mx_EventTile_body")).toMatchSnapshot();
+            });
+
+            it("displays correct fallback content when map_style_url is misconfigured", () => {
+                const component = getMapErrorComponent();
+                component.setProps({});
+                expect(component.find(".mx_EventTile_body")).toMatchSnapshot();
+            });
+
+            it("should clear the error on reconnect", () => {
+                const component = getMapErrorComponent();
+                expect((component.state() as React.ComponentState).error).toBeDefined();
+                mockClient.emit(ClientEvent.Sync, SyncState.Reconnecting, SyncState.Error);
+                expect((component.state() as React.ComponentState).error).toBeUndefined();
+            });
         });
 
-        it("rfc5870 6.2 Explicit CRS and accuracy", () => {
-            expect(parseGeoUri("geo:48.198634,16.371648;crs=wgs84;u=40")).toEqual(
-                {
-                    latitude: 48.198634,
-                    longitude: 16.371648,
-                    altitude: undefined,
-                    accuracy: 40,
-                    altitudeAccuracy: undefined,
-                    heading: undefined,
-                    speed: undefined,
-                },
-            );
-        });
+        describe("without error", () => {
+            beforeEach(() => {
+                mockClient.getClientWellKnown.mockReturnValue({
+                    [TILE_SERVER_WK_KEY.name]: { map_style_url: "maps.com" },
+                });
 
-        it("rfc5870 6.4 Negative longitude and explicit CRS", () => {
-            expect(parseGeoUri("geo:90,-22.43;crs=WGS84")).toEqual(
-                {
-                    latitude: 90,
-                    longitude: -22.43,
-                    altitude: undefined,
-                    accuracy: undefined,
-                    altitudeAccuracy: undefined,
-                    heading: undefined,
-                    speed: undefined,
-                },
-            );
-        });
+                // MLocationBody uses random number for map id
+                // stabilise for test
+                jest.spyOn(global.Math, "random").mockReturnValue(0.123456);
+            });
 
-        it("rfc5870 6.4 Integer lat and lon", () => {
-            expect(parseGeoUri("geo:90,46")).toEqual(
-                {
-                    latitude: 90,
-                    longitude: 46,
-                    altitude: undefined,
-                    accuracy: undefined,
-                    altitudeAccuracy: undefined,
-                    heading: undefined,
-                    speed: undefined,
-                },
-            );
-        });
+            afterAll(() => {
+                jest.spyOn(global.Math, "random").mockRestore();
+            });
 
-        it("rfc5870 6.4 Percent-encoded param value", () => {
-            expect(parseGeoUri("geo:66,30;u=6.500;FOo=this%2dthat")).toEqual(
-                {
-                    latitude: 66,
-                    longitude: 30,
-                    altitude: undefined,
-                    accuracy: 6.500,
-                    altitudeAccuracy: undefined,
-                    heading: undefined,
-                    speed: undefined,
-                },
-            );
-        });
+            it("renders map correctly", () => {
+                const mockMap = new maplibregl.Map(mapOptions);
+                const component = getComponent();
 
-        it("rfc5870 6.4 Unknown param", () => {
-            expect(parseGeoUri("geo:66.0,30;u=6.5;foo=this-that>")).toEqual(
-                {
-                    latitude: 66.0,
-                    longitude: 30,
-                    altitude: undefined,
-                    accuracy: 6.5,
-                    altitudeAccuracy: undefined,
-                    heading: undefined,
-                    speed: undefined,
-                },
-            );
-        });
+                expect(component).toMatchSnapshot();
+                // map was centered
+                expect(mockMap.setCenter).toHaveBeenCalledWith({
+                    lat: 51.5076,
+                    lon: -0.1276,
+                });
+            });
 
-        it("rfc5870 6.4 Multiple unknown params", () => {
-            expect(parseGeoUri("geo:70,20;foo=1.00;bar=white")).toEqual(
-                {
-                    latitude: 70,
-                    longitude: 20,
-                    altitude: undefined,
-                    accuracy: undefined,
-                    altitudeAccuracy: undefined,
-                    heading: undefined,
-                    speed: undefined,
-                },
-            );
-        });
+            it("opens map dialog on click", () => {
+                const modalSpy = jest.spyOn(Modal, "createDialog").mockReturnValue(undefined);
+                const component = getComponent();
 
-        it("Negative latitude", () => {
-            expect(parseGeoUri("geo:-7.5,20")).toEqual(
-                {
-                    latitude: -7.5,
-                    longitude: 20,
-                    altitude: undefined,
-                    accuracy: undefined,
-                    altitudeAccuracy: undefined,
-                    heading: undefined,
-                    speed: undefined,
-                },
-            );
-        });
+                act(() => {
+                    component.find("Map").at(0).simulate("click");
+                });
 
-        it("Zero altitude is not unknown", () => {
-            expect(parseGeoUri("geo:-7.5,-20,0")).toEqual(
-                {
-                    latitude: -7.5,
-                    longitude: -20,
-                    altitude: 0,
-                    accuracy: undefined,
-                    altitudeAccuracy: undefined,
-                    heading: undefined,
-                    speed: undefined,
-                },
-            );
-        });
-    });
+                expect(modalSpy).toHaveBeenCalled();
+            });
 
-    describe("createMapSiteLink", () => {
-        it("returns null if event does not contain geouri", () => {
-            expect(createMapSiteLink(nonLocationEvent())).toBeNull();
-        });
+            it("renders marker correctly for a non-self share", () => {
+                const mockMap = new maplibregl.Map(mapOptions);
+                const component = getComponent();
 
-        it("returns OpenStreetMap link if event contains m.location", () => {
-            expect(
-                createMapSiteLink(modernLocationEvent("geo:51.5076,-0.1276")),
-            ).toEqual(
-                "https://www.openstreetmap.org/" +
-                "?mlat=51.5076&mlon=-0.1276" +
-                "#map=16/51.5076/-0.1276",
-            );
-        });
+                expect(component.find("SmartMarker").at(0).props()).toEqual(
+                    expect.objectContaining({
+                        map: mockMap,
+                        geoUri: "geo:51.5076,-0.1276",
+                        roomMember: undefined,
+                    }),
+                );
+            });
 
-        it("returns OpenStreetMap link if event contains geo_uri", () => {
-            expect(
-                createMapSiteLink(oldLocationEvent("geo:51.5076,-0.1276")),
-            ).toEqual(
-                "https://www.openstreetmap.org/" +
-                "?mlat=51.5076&mlon=-0.1276" +
-                "#map=16/51.5076/-0.1276",
-            );
-        });
-    });
+            it("renders marker correctly for a self share", () => {
+                const selfShareEvent = makeLocationEvent("geo:51.5076,-0.1276", LocationAssetType.Self);
+                const member = new RoomMember(roomId, userId);
+                // @ts-ignore cheat assignment to property
+                selfShareEvent.sender = member;
+                const component = getComponent({ mxEvent: selfShareEvent });
 
-    describe("isSelfLocation", () => {
-        it("Returns true for a full m.asset event", () => {
-            const content = makeLocationContent("", "", 0);
-            expect(isSelfLocation(content)).toBe(true);
-        });
-
-        it("Returns true for a missing m.asset", () => {
-            const content = {
-                body: "",
-                msgtype: "m.location",
-                geo_uri: "",
-                [LOCATION_EVENT_TYPE.name]: { uri: "" },
-                [TEXT_NODE_TYPE.name]: "",
-                [TIMESTAMP_NODE_TYPE.name]: 0,
-                // Note: no m.asset!
-            };
-            expect(isSelfLocation(content as ILocationContent)).toBe(true);
-        });
-
-        it("Returns true for a missing m.asset type", () => {
-            const content = {
-                body: "",
-                msgtype: "m.location",
-                geo_uri: "",
-                [LOCATION_EVENT_TYPE.name]: { uri: "" },
-                [TEXT_NODE_TYPE.name]: "",
-                [TIMESTAMP_NODE_TYPE.name]: 0,
-                [ASSET_NODE_TYPE.name]: {
-                    // Note: no type!
-                },
-            };
-            expect(isSelfLocation(content as ILocationContent)).toBe(true);
-        });
-
-        it("Returns false for an unknown asset type", () => {
-            const content = makeLocationContent("", "", 0, "", "org.example.unknown");
-            expect(isSelfLocation(content)).toBe(false);
+                // render self locations with user avatars
+                expect(component.find("SmartMarker").at(0).props()["roomMember"]).toEqual(member);
+            });
         });
     });
 });
-
-function oldLocationEvent(geoUri: string): MatrixEvent {
-    return new MatrixEvent(
-        {
-            "event_id": nextId(),
-            "type": LOCATION_EVENT_TYPE.name,
-            "content": {
-                "body": "Something about where I am",
-                "msgtype": "m.location",
-                "geo_uri": geoUri,
-            },
-        },
-    );
-}
-
-function modernLocationEvent(geoUri: string): MatrixEvent {
-    return new MatrixEvent(
-        {
-            "event_id": nextId(),
-            "type": LOCATION_EVENT_TYPE.name,
-            "content": makeLocationContent(
-                `Found at ${geoUri} at 2021-12-21T12:22+0000`,
-                geoUri,
-                252523,
-                "Human-readable label",
-            ),
-        },
-    );
-}
-
-function nonLocationEvent(): MatrixEvent {
-    return new MatrixEvent(
-        {
-            "event_id": nextId(),
-            "type": "some.event.type",
-            "content": {
-                "m.relates_to": {
-                    "rel_type": "m.reference",
-                    "event_id": "$mypoll",
-                },
-            },
-        },
-    );
-}
-
-let EVENT_ID = 0;
-function nextId(): string {
-    EVENT_ID++;
-    return EVENT_ID.toString();
-}

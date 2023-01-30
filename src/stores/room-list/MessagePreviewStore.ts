@@ -17,7 +17,7 @@ limitations under the License.
 import { Room } from "matrix-js-sdk/src/models/room";
 import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { M_POLL_START } from "matrix-events-sdk";
+import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
 
 import { ActionPayload } from "../../dispatcher/payloads";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
@@ -25,39 +25,48 @@ import defaultDispatcher from "../../dispatcher/dispatcher";
 import { MessageEventPreview } from "./previews/MessageEventPreview";
 import { PollStartEventPreview } from "./previews/PollStartEventPreview";
 import { TagID } from "./models";
-import { CallInviteEventPreview } from "./previews/CallInviteEventPreview";
-import { CallAnswerEventPreview } from "./previews/CallAnswerEventPreview";
-import { CallHangupEvent } from "./previews/CallHangupEvent";
+import { LegacyCallInviteEventPreview } from "./previews/LegacyCallInviteEventPreview";
+import { LegacyCallAnswerEventPreview } from "./previews/LegacyCallAnswerEventPreview";
+import { LegacyCallHangupEvent } from "./previews/LegacyCallHangupEvent";
 import { StickerEventPreview } from "./previews/StickerEventPreview";
 import { ReactionEventPreview } from "./previews/ReactionEventPreview";
 import { UPDATE_EVENT } from "../AsyncStore";
+import { IPreview } from "./previews/IPreview";
+import { VoiceBroadcastInfoEventType } from "../../voice-broadcast";
+import { VoiceBroadcastPreview } from "./previews/VoiceBroadcastPreview";
 
 // Emitted event for when a room's preview has changed. First argument will the room for which
 // the change happened.
 const ROOM_PREVIEW_CHANGED = "room_preview_changed";
 
-const PREVIEWS = {
-    'm.room.message': {
+const PREVIEWS: Record<
+    string,
+    {
+        isState: boolean;
+        previewer: IPreview;
+    }
+> = {
+    "m.room.message": {
         isState: false,
         previewer: new MessageEventPreview(),
     },
-    'm.call.invite': {
+    "m.call.invite": {
         isState: false,
-        previewer: new CallInviteEventPreview(),
+        previewer: new LegacyCallInviteEventPreview(),
     },
-    'm.call.answer': {
+    "m.call.answer": {
         isState: false,
-        previewer: new CallAnswerEventPreview(),
+        previewer: new LegacyCallAnswerEventPreview(),
     },
-    'm.call.hangup': {
+    "m.call.hangup": {
         isState: false,
-        previewer: new CallHangupEvent(),
+        previewer: new LegacyCallHangupEvent(),
     },
-    'm.sticker': {
+    "m.sticker": {
         isState: false,
         previewer: new StickerEventPreview(),
     },
-    'm.reaction': {
+    "m.reaction": {
         isState: false,
         previewer: new ReactionEventPreview(),
     },
@@ -68,6 +77,10 @@ const PREVIEWS = {
     [M_POLL_START.altName]: {
         isState: false,
         previewer: new PollStartEventPreview(),
+    },
+    [VoiceBroadcastInfoEventType]: {
+        isState: true,
+        previewer: new VoiceBroadcastPreview(),
     },
 };
 
@@ -83,10 +96,14 @@ interface IState {
 }
 
 export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
-    private static internalInstance = new MessagePreviewStore();
+    private static readonly internalInstance = (() => {
+        const instance = new MessagePreviewStore();
+        instance.start();
+        return instance;
+    })();
 
     // null indicates the preview is empty / irrelevant
-    private previews = new Map<string, Map<TagID|TAG_ANY, string|null>>();
+    private previews = new Map<string, Map<TagID | TAG_ANY, string | null>>();
 
     private constructor() {
         super(defaultDispatcher, {});
@@ -122,13 +139,10 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
 
     public generatePreviewForEvent(event: MatrixEvent): string {
         const previewDef = PREVIEWS[event.getType()];
-        // TODO: Handle case where we don't have
-        if (!previewDef) return '';
-        const previewText = previewDef.previewer.getTextFor(event, null, true);
-        return previewText ?? '';
+        return previewDef?.previewer.getTextFor(event, null, true) ?? "";
     }
 
-    private async generatePreview(room: Room, tagId?: TagID) {
+    private async generatePreview(room: Room, tagId?: TagID): Promise<void> {
         const events = room.timeline;
         if (!events) return; // should only happen in tests
 
@@ -163,7 +177,7 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
             changed = changed || anyPreview !== map.get(TAG_ANY);
             map.set(TAG_ANY, anyPreview);
 
-            const tagsToGenerate = Array.from(map.keys()).filter(t => t !== TAG_ANY); // we did the any tag above
+            const tagsToGenerate = Array.from(map.keys()).filter((t) => t !== TAG_ANY); // we did the any tag above
             for (const genTagId of tagsToGenerate) {
                 const realTagId: TagID = genTagId === TAG_ANY ? null : genTagId;
                 const preview = previewDef.previewer.getTextFor(event, realTagId);
@@ -186,15 +200,15 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
         }
 
         // At this point, we didn't generate a preview so clear it
-        this.previews.set(room.roomId, new Map<TagID|TAG_ANY, string|null>());
+        this.previews.set(room.roomId, new Map<TagID | TAG_ANY, string | null>());
         this.emit(UPDATE_EVENT, this);
         this.emit(MessagePreviewStore.getPreviewChangedEventName(room), room);
     }
 
-    protected async onAction(payload: ActionPayload) {
+    protected async onAction(payload: ActionPayload): Promise<void> {
         if (!this.matrixClient) return;
 
-        if (payload.action === 'MatrixActions.Room.timeline' || payload.action === 'MatrixActions.Event.decrypted') {
+        if (payload.action === "MatrixActions.Room.timeline" || payload.action === "MatrixActions.Event.decrypted") {
             const event = payload.event; // TODO: Type out the dispatcher
             const isHistoricalEvent = payload.hasOwnProperty("isLiveEvent") && !payload.isLiveEvent;
             if (!this.previews.has(event.getRoomId()) || isHistoricalEvent) return; // not important

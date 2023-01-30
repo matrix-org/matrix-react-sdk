@@ -16,6 +16,7 @@
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
+import { Optional } from "matrix-events-sdk";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { IMediaEventContent, IPreparedMedia, prepEventContentAsMedia } from "./models/IMediaEventContent";
@@ -35,7 +36,7 @@ export class Media {
     private client: MatrixClient;
 
     // Per above, this constructor signature can be whatever is helpful for you.
-    constructor(private prepared: IPreparedMedia, client?: MatrixClient) {
+    public constructor(private prepared: IPreparedMedia, client?: MatrixClient) {
         this.client = client ?? MatrixClientPeg.get();
         if (!this.client) {
             throw new Error("No possible MatrixClient for media resolution. Please provide one or log in.");
@@ -60,7 +61,7 @@ export class Media {
      * The MXC URI of the thumbnail media, if a thumbnail is recorded. Null/undefined
      * otherwise.
      */
-    public get thumbnailMxc(): string | undefined | null {
+    public get thumbnailMxc(): Optional<string> {
         return this.prepared.thumbnail?.mxc;
     }
 
@@ -130,9 +131,9 @@ export class Media {
     public getSquareThumbnailHttp(dim: number): string {
         dim = Math.floor(dim * window.devicePixelRatio); // scale using the device pixel ratio to keep images clear
         if (this.hasThumbnail) {
-            return this.getThumbnailHttp(dim, dim, 'crop');
+            return this.getThumbnailHttp(dim, dim, "crop");
         }
-        return this.getThumbnailOfSourceHttp(dim, dim, 'crop');
+        return this.getThumbnailOfSourceHttp(dim, dim, "crop");
     }
 
     /**
@@ -150,7 +151,7 @@ export class Media {
  * @param {MatrixClient} client? Optional client to use.
  * @returns {Media} The media object.
  */
-export function mediaFromContent(content: IMediaEventContent, client?: MatrixClient): Media {
+export function mediaFromContent(content: Partial<IMediaEventContent>, client?: MatrixClient): Media {
     return new Media(prepEventContentAsMedia(content), client);
 }
 

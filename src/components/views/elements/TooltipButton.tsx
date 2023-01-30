@@ -15,22 +15,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import TooltipTarget from './TooltipTarget';
+import TooltipTarget from "./TooltipTarget";
 
 interface IProps {
     helpText: React.ReactNode | string;
 }
 
-@replaceableComponent("views.elements.TooltipButton")
 export default class TooltipButton extends React.Component<IProps> {
-    constructor(props) {
+    public constructor(props) {
         super(props);
     }
 
-    render() {
+    public render(): JSX.Element {
         return (
             <TooltipTarget
                 className="mx_TooltipButton_container"

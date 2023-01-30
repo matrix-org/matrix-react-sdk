@@ -15,16 +15,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, RefObject } from 'react';
+import React, { createRef, RefObject } from "react";
 import classNames from "classnames";
 
 import AccessibleButton from "../elements/AccessibleButton";
-import { _t } from '../../../languageHandler';
-import DesktopBuildsNotice, { WarningKind } from "../elements/DesktopBuildsNotice";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { PosthogScreenTracker } from '../../../PosthogTrackers';
+import { _t } from "../../../languageHandler";
+import { PosthogScreenTracker } from "../../../PosthogTrackers";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import SearchWarning, { WarningKind } from "../elements/SearchWarning";
 
 interface IProps {
     onCancelClick: () => void;
@@ -42,26 +41,25 @@ export enum SearchScope {
     All = "All",
 }
 
-@replaceableComponent("views.rooms.SearchBar")
 export default class SearchBar extends React.Component<IProps, IState> {
     private searchTerm: RefObject<HTMLInputElement> = createRef();
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             scope: SearchScope.Room,
         };
     }
 
-    private onThisRoomClick = () => {
+    private onThisRoomClick = (): void => {
         this.setState({ scope: SearchScope.Room }, () => this.searchIfQuery());
     };
 
-    private onAllRoomsClick = () => {
+    private onAllRoomsClick = (): void => {
         this.setState({ scope: SearchScope.All }, () => this.searchIfQuery());
     };
 
-    private onSearchChange = (e: React.KeyboardEvent) => {
+    private onSearchChange = (e: React.KeyboardEvent): void => {
         const action = getKeyBindingsManager().getAccessibilityAction(e);
         switch (action) {
             case KeyBindingAction.Enter:
@@ -80,10 +78,11 @@ export default class SearchBar extends React.Component<IProps, IState> {
     }
 
     private onSearch = (): void => {
+        if (!this.searchTerm.current.value.trim()) return;
         this.props.onSearch(this.searchTerm.current.value, this.state.scope);
     };
 
-    public render() {
+    public render(): JSX.Element {
         const searchButtonClasses = classNames("mx_SearchBar_searchButton", {
             mx_SearchBar_searching: this.props.searchInProgress,
         });
@@ -105,7 +104,7 @@ export default class SearchBar extends React.Component<IProps, IState> {
                             aria-checked={this.state.scope === SearchScope.Room}
                             role="radio"
                         >
-                            { _t("This Room") }
+                            {_t("This Room")}
                         </AccessibleButton>
                         <AccessibleButton
                             className={allRoomsClasses}
@@ -113,7 +112,7 @@ export default class SearchBar extends React.Component<IProps, IState> {
                             aria-checked={this.state.scope === SearchScope.All}
                             role="radio"
                         >
-                            { _t("All Rooms") }
+                            {_t("All Rooms")}
                         </AccessibleButton>
                     </div>
                     <div className="mx_SearchBar_input mx_textinput">
@@ -128,7 +127,7 @@ export default class SearchBar extends React.Component<IProps, IState> {
                     </div>
                     <AccessibleButton className="mx_SearchBar_cancel" onClick={this.props.onCancelClick} />
                 </div>
-                <DesktopBuildsNotice isRoomEncrypted={this.props.isRoomEncrypted} kind={WarningKind.Search} />
+                <SearchWarning isRoomEncrypted={this.props.isRoomEncrypted} kind={WarningKind.Search} />
             </>
         );
     }

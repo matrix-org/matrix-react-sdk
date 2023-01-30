@@ -14,79 +14,71 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EventSubscription } from 'fbemitter';
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { Optional } from "matrix-events-sdk";
 
-import defaultDispatcher from '../../dispatcher/dispatcher';
-import { pendingVerificationRequestForUser } from '../../verification';
+import defaultDispatcher from "../../dispatcher/dispatcher";
+import { pendingVerificationRequestForUser } from "../../verification";
 import SettingsStore from "../../settings/SettingsStore";
 import { RightPanelPhases } from "./RightPanelStorePhases";
-import { ActionPayload } from "../../dispatcher/payloads";
 import { SettingLevel } from "../../settings/SettingLevel";
-import { UPDATE_EVENT } from '../AsyncStore';
-import { ReadyWatchingStore } from '../ReadyWatchingStore';
+import { UPDATE_EVENT } from "../AsyncStore";
+import { ReadyWatchingStore } from "../ReadyWatchingStore";
 import {
     convertToStatePanel,
     convertToStorePanel,
     IRightPanelCard,
     IRightPanelForRoom,
-} from './RightPanelStoreIPanelState';
-import RoomViewStore from '../RoomViewStore';
-
-const GROUP_PHASES = [
-    RightPanelPhases.GroupMemberList,
-    RightPanelPhases.GroupRoomList,
-    RightPanelPhases.GroupRoomInfo,
-    RightPanelPhases.GroupMemberInfo,
-];
+} from "./RightPanelStoreIPanelState";
+import { ActionPayload } from "../../dispatcher/payloads";
+import { Action } from "../../dispatcher/actions";
+import { ActiveRoomChangedPayload } from "../../dispatcher/payloads/ActiveRoomChangedPayload";
+import { SdkContextClass } from "../../contexts/SDKContext";
 
 /**
  * A class for tracking the state of the right panel between layouts and
  * sessions. This state includes a history for each room. Each history element
  * contains the phase (e.g. RightPanelPhase.RoomMemberInfo) and the state (e.g.
  * the member) associated with it.
- * Groups are treated the same as rooms (they are also stored in the byRoom
- * object). This is possible since the store keeps track of the opened
- * room/group -> the store will provide the correct history for that group/room.
-*/
+ */
 export default class RightPanelStore extends ReadyWatchingStore {
     private static internalInstance: RightPanelStore;
-    private readonly dispatcherRefRightPanelStore: string;
-    private viewedRoomId: string;
-    private isReady = false;
 
-    private global?: IRightPanelForRoom = null;
-    private byRoom: {
-        [roomId: string]: IRightPanelForRoom;
-    } = {};
-
-    private roomStoreToken: EventSubscription;
+    private global?: IRightPanelForRoom;
+    private byRoom: { [roomId: string]: IRightPanelForRoom };
+    private viewedRoomId: Optional<string>;
 
     private constructor() {
         super(defaultDispatcher);
-        this.dispatcherRefRightPanelStore = defaultDispatcher.register(this.onDispatch);
+        this.reset();
+    }
+
+    /**
+     * Resets the store. Intended for test usage only.
+     */
+    public reset(): void {
+        this.global = null;
+        this.byRoom = {};
+        this.viewedRoomId = null;
     }
 
     protected async onReady(): Promise<any> {
-        this.isReady = true;
-        this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
+        this.viewedRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
         this.matrixClient.on(CryptoEvent.VerificationRequest, this.onVerificationRequestUpdate);
-        this.viewedRoomId = RoomViewStore.getRoomId();
         this.loadCacheFromSettings();
         this.emitAndUpdateSettings();
     }
-    public destroy() {
-        if (this.dispatcherRefRightPanelStore) {
-            defaultDispatcher.unregister(this.dispatcherRefRightPanelStore);
-        }
-        super.destroy();
-    }
 
     protected async onNotReady(): Promise<any> {
-        this.isReady = false;
         this.matrixClient.off(CryptoEvent.VerificationRequest, this.onVerificationRequestUpdate);
-        this.roomStoreToken.remove();
+    }
+
+    protected onDispatcherAction(payload: ActionPayload): void {
+        if (payload.action !== Action.ActiveRoomChanged) return;
+
+        const changePayload = <ActiveRoomChangedPayload>payload;
+        this.handleViewedRoomChange(changePayload.oldRoomId, changePayload.newRoomId);
     }
 
     // Getters
@@ -138,14 +130,8 @@ export default class RightPanelStore extends ReadyWatchingStore {
         return { state: {}, phase: null };
     }
 
-    // The Group associated getters are just for backwards compatibility. Can be removed when deprecating groups.
-    public get isOpenForGroup(): boolean { return this.isOpen; }
-    public get groupPhaseHistory(): Array<IRightPanelCard> { return this.roomPhaseHistory; }
-    public get currentGroup(): IRightPanelCard { return this.currentCard; }
-    public get previousGroup(): IRightPanelCard { return this.previousCard; }
-
     // Setters
-    public setCard(card: IRightPanelCard, allowClose = true, roomId?: string) {
+    public setCard(card: IRightPanelCard, allowClose = true, roomId?: string): void {
         const rId = roomId ?? this.viewedRoomId;
         // This function behaves as following:
         // Update state: if the same phase is send but with a state
@@ -156,65 +142,61 @@ export default class RightPanelStore extends ReadyWatchingStore {
         const cardState = redirect?.state ?? (Object.keys(card.state ?? {}).length === 0 ? null : card.state);
 
         // Checks for wrong SetRightPanelPhase requests
-        if (!this.isPhaseActionValid(targetPhase)) return;
+        if (!this.isPhaseValid(targetPhase, Boolean(rId))) return;
 
-        if ((targetPhase === this.currentCardForRoom(rId)?.phase && !!cardState)) {
-            // Update state: set right panel with a new state but keep the phase (dont know it this is ever needed...)
+        if (targetPhase === this.currentCardForRoom(rId)?.phase && !!cardState) {
+            // Update state: set right panel with a new state but keep the phase (don't know it this is ever needed...)
             const hist = this.byRoom[rId]?.history ?? [];
             hist[hist.length - 1].state = cardState;
             this.emitAndUpdateSettings();
-            return;
-        } else if (targetPhase !== this.currentCard?.phase) {
-            // Set right panel and erase history.
-            this.show();
-            this.setRightPanelCache({ phase: targetPhase, state: cardState ?? {} }, rId);
+        } else if (targetPhase !== this.currentCardForRoom(rId)?.phase || !this.byRoom[rId]) {
+            // Set right panel and initialize/erase history
+            const history = [{ phase: targetPhase, state: cardState ?? {} }];
+            this.byRoom[rId] = { history, isOpen: true };
+            this.emitAndUpdateSettings();
         } else {
-            this.show();
+            this.show(rId);
             this.emitAndUpdateSettings();
         }
     }
 
-    public setCards(cards: IRightPanelCard[], allowClose = true, roomId: string = null) {
+    public setCards(cards: IRightPanelCard[], allowClose = true, roomId: string = null): void {
         // This function sets the history of the right panel and shows the right panel if not already visible.
         const rId = roomId ?? this.viewedRoomId;
-        const history = cards.map(c => ({ phase: c.phase, state: c.state ?? {} }));
+        const history = cards.map((c) => ({ phase: c.phase, state: c.state ?? {} }));
         this.byRoom[rId] = { history, isOpen: true };
-        this.show();
+        this.show(rId);
         this.emitAndUpdateSettings();
     }
 
-    public pushCard(
-        card: IRightPanelCard,
-        allowClose = true,
-        roomId: string = null,
-    ) {
-        // This function appends a card to the history and shows the right panel if now already visible.
+    // Appends a card to the history and shows the right panel if not already visible
+    public pushCard(card: IRightPanelCard, allowClose = true, roomId: string = null): void {
         const rId = roomId ?? this.viewedRoomId;
         const redirect = this.getVerificationRedirect(card);
         const targetPhase = redirect?.phase ?? card.phase;
-        const pState = redirect?.state ?? (Object.keys(card.state ?? {}).length === 0 ? null : card.state);
+        const pState = redirect?.state ?? card.state ?? {};
 
         // Checks for wrong SetRightPanelPhase requests
-        if (!this.isPhaseActionValid(targetPhase)) return;
+        if (!this.isPhaseValid(targetPhase, Boolean(rId))) return;
 
-        let roomCache = this.byRoom[rId];
+        const roomCache = this.byRoom[rId];
         if (!!roomCache) {
             // append new phase
             roomCache.history.push({ state: pState, phase: targetPhase });
             roomCache.isOpen = allowClose ? roomCache.isOpen : true;
         } else {
             // setup room panel cache with the new card
-            roomCache = {
-                history: [{ phase: targetPhase, state: pState ?? {} }],
+            this.byRoom[rId] = {
+                history: [{ phase: targetPhase, state: pState }],
                 // if there was no right panel store object the the panel was closed -> keep it closed, except if allowClose==false
                 isOpen: !allowClose,
             };
         }
-        this.show();
+        this.show(rId);
         this.emitAndUpdateSettings();
     }
 
-    public popCard(roomId: string = null) {
+    public popCard(roomId: string = null): IRightPanelCard {
         const rId = roomId ?? this.viewedRoomId;
         if (!this.byRoom[rId]) return;
 
@@ -223,7 +205,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         return removedCard;
     }
 
-    public togglePanel(roomId: string = null) {
+    public togglePanel(roomId: string | null): void {
         const rId = roomId ?? this.viewedRoomId;
         if (!this.byRoom[rId]) return;
 
@@ -231,32 +213,36 @@ export default class RightPanelStore extends ReadyWatchingStore {
         this.emitAndUpdateSettings();
     }
 
-    public show() {
-        if (!this.isOpen) {
-            this.togglePanel();
+    public show(roomId: string | null): void {
+        if (!this.isOpenForRoom(roomId ?? this.viewedRoomId)) {
+            this.togglePanel(roomId);
         }
     }
 
-    public hide() {
-        if (this.isOpen) {
-            this.togglePanel();
+    public hide(roomId: string | null): void {
+        if (this.isOpenForRoom(roomId ?? this.viewedRoomId)) {
+            this.togglePanel(roomId);
         }
     }
 
-    private loadCacheFromSettings() {
-        const room = this.viewedRoomId && this.mxClient?.getRoom(this.viewedRoomId);
-        if (!!room) {
-            this.global = this.global ??
-                convertToStatePanel(SettingsStore.getValue("RightPanel.phasesGlobal"), room);
-            this.byRoom[this.viewedRoomId] = this.byRoom[this.viewedRoomId] ??
-                convertToStatePanel(SettingsStore.getValue("RightPanel.phases", this.viewedRoomId), room);
-        } else {
-            console.warn("Could not restore the right panel after load because there was no associated room object. " +
-                "The right panel can only be restored for rooms and spaces but not for groups.");
+    private loadCacheFromSettings(): void {
+        if (this.viewedRoomId) {
+            const room = this.mxClient?.getRoom(this.viewedRoomId);
+            if (!!room) {
+                this.global =
+                    this.global ?? convertToStatePanel(SettingsStore.getValue("RightPanel.phasesGlobal"), room);
+                this.byRoom[this.viewedRoomId] =
+                    this.byRoom[this.viewedRoomId] ??
+                    convertToStatePanel(SettingsStore.getValue("RightPanel.phases", this.viewedRoomId), room);
+            } else {
+                logger.warn(
+                    "Could not restore the right panel after load because there was no associated room object.",
+                );
+            }
         }
     }
 
-    private emitAndUpdateSettings() {
+    private emitAndUpdateSettings(): void {
         this.filterValidCards(this.global);
         const storePanelGlobal = convertToStorePanel(this.global);
         SettingsStore.setValue("RightPanel.phasesGlobal", null, SettingLevel.DEVICE, storePanelGlobal);
@@ -275,12 +261,15 @@ export default class RightPanelStore extends ReadyWatchingStore {
         this.emit(UPDATE_EVENT, null);
     }
 
-    private filterValidCards(rightPanelForRoom?: IRightPanelForRoom) {
+    private filterValidCards(rightPanelForRoom?: IRightPanelForRoom): void {
         if (!rightPanelForRoom?.history) return;
         rightPanelForRoom.history = rightPanelForRoom.history.filter((card) => this.isCardStateValid(card));
+        if (!rightPanelForRoom.history.length) {
+            rightPanelForRoom.isOpen = false;
+        }
     }
 
-    private isCardStateValid(card: IRightPanelCard) {
+    private isCardStateValid(card: IRightPanelCard): boolean {
         // this function does a sanity check on the card. this is required because
         // some phases require specific state properties that might not be available.
         // This can be caused on if element is reloaded and the tries to reload right panel data from id's stored in the local storage.
@@ -288,43 +277,35 @@ export default class RightPanelStore extends ReadyWatchingStore {
         // or potentially other errors.
         // (A nicer fix could be to indicate, that the right panel is loading if there is missing state data and re-emit if the data is available)
         switch (card.phase) {
+            case RightPanelPhases.ThreadPanel:
+                if (!SettingsStore.getValue("feature_threadenabled")) return false;
+                break;
             case RightPanelPhases.ThreadView:
+                if (!SettingsStore.getValue("feature_threadenabled")) return false;
                 if (!card.state.threadHeadEvent) {
-                    console.warn("removed card from right panel because of missing threadHeadEvent in card state");
+                    logger.warn("removed card from right panel because of missing threadHeadEvent in card state");
                 }
                 return !!card.state.threadHeadEvent;
             case RightPanelPhases.RoomMemberInfo:
             case RightPanelPhases.SpaceMemberInfo:
             case RightPanelPhases.EncryptionPanel:
-            case RightPanelPhases.GroupMemberInfo:
                 if (!card.state.member) {
-                    console.warn("removed card from right panel because of missing member in card state");
+                    logger.warn("removed card from right panel because of missing member in card state");
                 }
                 return !!card.state.member;
             case RightPanelPhases.Room3pidMemberInfo:
             case RightPanelPhases.Space3pidMemberInfo:
                 if (!card.state.memberInfoEvent) {
-                    console.warn("removed card from right panel because of missing memberInfoEvent in card state");
+                    logger.warn("removed card from right panel because of missing memberInfoEvent in card state");
                 }
                 return !!card.state.memberInfoEvent;
-            case RightPanelPhases.GroupRoomInfo:
-                if (!card.state.groupRoomId) {
-                    console.warn("removed card from right panel because of missing groupRoomId in card state");
-                }
-                return !!card.state.groupRoomId;
             case RightPanelPhases.Widget:
                 if (!card.state.widgetId) {
-                    console.warn("removed card from right panel because of missing widgetId in card state");
+                    logger.warn("removed card from right panel because of missing widgetId in card state");
                 }
                 return !!card.state.widgetId;
         }
         return true;
-    }
-
-    private setRightPanelCache(card: IRightPanelCard, roomId?: string) {
-        const history = [{ phase: card.phase, state: card.state ?? {} }];
-        this.byRoom[roomId ?? this.viewedRoomId] = { history, isOpen: true };
-        this.emitAndUpdateSettings();
     }
 
     private getVerificationRedirect(card: IRightPanelCard): IRightPanelCard {
@@ -345,28 +326,23 @@ export default class RightPanelStore extends ReadyWatchingStore {
         return null;
     }
 
-    private isPhaseActionValid(targetPhase) {
+    private isPhaseValid(targetPhase: RightPanelPhases, isViewingRoom: boolean): boolean {
         if (!RightPanelPhases[targetPhase]) {
             logger.warn(`Tried to switch right panel to unknown phase: ${targetPhase}`);
             return false;
         }
-        if (GROUP_PHASES.includes(targetPhase) && this.isViewingRoom) {
-            logger.warn(
-                `Tried to switch right panel to a group phase: ${targetPhase}, ` +
-                `but we are currently not viewing a group`,
-            );
-            return false;
-        } else if (!GROUP_PHASES.includes(targetPhase) && !this.isViewingRoom) {
+        if (!isViewingRoom) {
             logger.warn(
                 `Tried to switch right panel to a room phase: ${targetPhase}, ` +
-                `but we are currently not viewing a room`,
+                    `but we are currently not viewing a room`,
             );
             return false;
         }
         return true;
     }
 
-    private onVerificationRequestUpdate = () => {
+    private onVerificationRequestUpdate = (): void => {
+        if (!this.currentCard?.state) return;
         const { member } = this.currentCard.state;
         if (!member) return;
         const pendingRequest = pendingVerificationRequestForUser(member);
@@ -376,18 +352,29 @@ export default class RightPanelStore extends ReadyWatchingStore {
         }
     };
 
-    private onRoomViewStoreUpdate = () => {
-        // TODO: only use this function instead of the onDispatch (the whole onDispatch can get removed!) as soon groups are removed
-        this.viewedRoomId = RoomViewStore.getRoomId();
+    private handleViewedRoomChange(oldRoomId: Optional<string>, newRoomId: Optional<string>): void {
+        if (!this.mxClient) return; // not ready, onReady will handle the first room
+        this.viewedRoomId = newRoomId;
         // load values from byRoomCache with the viewedRoomId.
         this.loadCacheFromSettings();
+
+        // when we're switching to a room, clear out any stale MemberInfo cards
+        // in order to fix https://github.com/vector-im/element-web/issues/21487
+        if (this.currentCard?.phase !== RightPanelPhases.EncryptionPanel) {
+            const panel = this.byRoom[this.viewedRoomId];
+            if (panel?.history) {
+                panel.history = panel.history.filter(
+                    (card) =>
+                        card.phase != RightPanelPhases.RoomMemberInfo &&
+                        card.phase != RightPanelPhases.Room3pidMemberInfo,
+                );
+            }
+        }
+
         // If the right panel stays open mode is used, and the panel was either
         // closed or never shown for that room, then force it open and display
         // the room member list.
-        if (
-            SettingsStore.getValue("feature_right_panel_default_open") &&
-            !this.byRoom[this.viewedRoomId]?.isOpen
-        ) {
+        if (SettingsStore.getValue("feature_right_panel_default_open") && !this.byRoom[this.viewedRoomId]?.isOpen) {
             const history = [{ phase: RightPanelPhases.RoomMemberList }];
             const room = this.viewedRoomId && this.mxClient?.getRoom(this.viewedRoomId);
             if (!room?.isSpaceRoom()) {
@@ -399,48 +386,14 @@ export default class RightPanelStore extends ReadyWatchingStore {
             };
         }
         this.emitAndUpdateSettings();
-    };
-
-    private get isViewingRoom(): boolean {
-        return !!this.viewedRoomId;
     }
 
-    private onDispatch = (payload: ActionPayload) => {
-        switch (payload.action) {
-            case 'view_group': {
-                // Put group in the same/similar view to what was open from the previously viewed room
-                // Is contradictory to the new "per room" philosophy but it is the legacy behavior for groups.
-
-                if (
-                    this.currentCard?.phase === RightPanelPhases.GroupMemberInfo
-                ) {
-                    // switch from room to group
-                    this.setRightPanelCache({ phase: RightPanelPhases.GroupMemberList, state: {} });
-                }
-
-                // The right panel store always will return the state for the current room.
-                this.viewedRoomId = null; // a group is not a room
-                // load values from byRoomCache with the viewedRoomId.
-                if (this.isReady) {
-                    // we need the client to be ready to get the events form the ids of the settings
-                    // the loading will be done in the onReady function (to catch up with the changes done here before it was ready)
-                    // all the logic in this case is not necessary anymore as soon as groups are dropped and we use: onRoomViewStoreUpdate
-                    this.loadCacheFromSettings();
-
-                    // DO NOT EMIT. Emitting breaks iframe refs by triggering a render
-                    // for the room view and calling the iframe ref changed function
-                    // this.emitAndUpdateSettings();
-                }
-                break;
-            }
-        }
-    };
-
     public static get instance(): RightPanelStore {
-        if (!RightPanelStore.internalInstance) {
-            RightPanelStore.internalInstance = new RightPanelStore();
+        if (!this.internalInstance) {
+            this.internalInstance = new RightPanelStore();
+            this.internalInstance.start();
         }
-        return RightPanelStore.internalInstance;
+        return this.internalInstance;
     }
 }
 

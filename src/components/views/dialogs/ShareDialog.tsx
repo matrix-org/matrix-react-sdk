@@ -15,55 +15,57 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as React from 'react';
+import * as React from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { User } from "matrix-js-sdk/src/models/user";
-import { Group } from "matrix-js-sdk/src/models/group";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import QRCode from "../elements/QRCode";
-import { RoomPermalinkCreator, makeGroupPermalink, makeUserPermalink } from "../../../utils/permalinks/Permalinks";
+import { RoomPermalinkCreator, makeUserPermalink } from "../../../utils/permalinks/Permalinks";
 import { selectText } from "../../../utils/strings";
-import StyledCheckbox from '../elements/StyledCheckbox';
+import StyledCheckbox from "../elements/StyledCheckbox";
 import { IDialogProps } from "./IDialogProps";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseDialog from "./BaseDialog";
 import CopyableText from "../elements/CopyableText";
 
 const socials = [
     {
-        name: 'Facebook',
+        name: "Facebook",
         img: require("../../../../res/img/social/facebook.png"),
         url: (url) => `https://www.facebook.com/sharer/sharer.php?u=${url}`,
-    }, {
-        name: 'Twitter',
+    },
+    {
+        name: "Twitter",
         img: require("../../../../res/img/social/twitter-2.png"),
         url: (url) => `https://twitter.com/home?status=${url}`,
-    }, /* // icon missing
+    },
+    /* // icon missing
         name: 'Google Plus',
         img: 'img/social/',
         url: (url) => `https://plus.google.com/share?url=${url}`,
     },*/ {
-        name: 'LinkedIn',
+        name: "LinkedIn",
         img: require("../../../../res/img/social/linkedin.png"),
         url: (url) => `https://www.linkedin.com/shareArticle?mini=true&url=${url}`,
-    }, {
-        name: 'Reddit',
+    },
+    {
+        name: "Reddit",
         img: require("../../../../res/img/social/reddit.png"),
-        url: (url) => `http://www.reddit.com/submit?url=${url}`,
-    }, {
-        name: 'email',
+        url: (url) => `https://www.reddit.com/submit?url=${url}`,
+    },
+    {
+        name: "email",
         img: require("../../../../res/img/social/email-1.png"),
         url: (url) => `mailto:?body=${url}`,
     },
 ];
 
 interface IProps extends IDialogProps {
-    target: Room | User | Group | RoomMember | MatrixEvent;
+    target: Room | User | RoomMember | MatrixEvent;
     permalinkCreator: RoomPermalinkCreator;
 }
 
@@ -72,11 +74,8 @@ interface IState {
     permalinkCreator: RoomPermalinkCreator;
 }
 
-@replaceableComponent("views.dialogs.ShareDialog")
 export default class ShareDialog extends React.PureComponent<IProps, IState> {
-    protected closeCopiedTooltip: () => void;
-
-    constructor(props) {
+    public constructor(props) {
         super(props);
 
         let permalinkCreator: RoomPermalinkCreator = null;
@@ -92,24 +91,18 @@ export default class ShareDialog extends React.PureComponent<IProps, IState> {
         };
     }
 
-    static onLinkClick(e) {
+    public static onLinkClick(e): void {
         e.preventDefault();
         selectText(e.target);
     }
 
-    private onLinkSpecificEventCheckboxClick = () => {
+    private onLinkSpecificEventCheckboxClick = (): void => {
         this.setState({
             linkSpecificEvent: !this.state.linkSpecificEvent,
         });
     };
 
-    componentWillUnmount() {
-        // if the Copied tooltip is open then get rid of it, there are ways to close the modal which wouldn't close
-        // the tooltip otherwise, such as pressing Escape or clicking X really quickly
-        if (this.closeCopiedTooltip) this.closeCopiedTooltip();
-    }
-
-    private getUrl() {
+    private getUrl(): string {
         let matrixToUrl;
 
         if (this.props.target instanceof Room) {
@@ -121,8 +114,6 @@ export default class ShareDialog extends React.PureComponent<IProps, IState> {
             }
         } else if (this.props.target instanceof User || this.props.target instanceof RoomMember) {
             matrixToUrl = makeUserPermalink(this.props.target.userId);
-        } else if (this.props.target instanceof Group) {
-            matrixToUrl = makeGroupPermalink(this.props.target.groupId);
         } else if (this.props.target instanceof MatrixEvent) {
             if (this.state.linkSpecificEvent) {
                 matrixToUrl = this.props.permalinkCreator.forEvent(this.props.target.getId());
@@ -133,38 +124,40 @@ export default class ShareDialog extends React.PureComponent<IProps, IState> {
         return matrixToUrl;
     }
 
-    render() {
+    public render(): JSX.Element {
         let title;
         let checkbox;
 
         if (this.props.target instanceof Room) {
-            title = _t('Share Room');
+            title = _t("Share Room");
 
             const events = this.props.target.getLiveTimeline().getEvents();
             if (events.length > 0) {
-                checkbox = <div>
+                checkbox = (
+                    <div>
+                        <StyledCheckbox
+                            checked={this.state.linkSpecificEvent}
+                            onChange={this.onLinkSpecificEventCheckboxClick}
+                        >
+                            {_t("Link to most recent message")}
+                        </StyledCheckbox>
+                    </div>
+                );
+            }
+        } else if (this.props.target instanceof User || this.props.target instanceof RoomMember) {
+            title = _t("Share User");
+        } else if (this.props.target instanceof MatrixEvent) {
+            title = _t("Share Room Message");
+            checkbox = (
+                <div>
                     <StyledCheckbox
                         checked={this.state.linkSpecificEvent}
                         onChange={this.onLinkSpecificEventCheckboxClick}
                     >
-                        { _t('Link to most recent message') }
+                        {_t("Link to selected message")}
                     </StyledCheckbox>
-                </div>;
-            }
-        } else if (this.props.target instanceof User || this.props.target instanceof RoomMember) {
-            title = _t('Share User');
-        } else if (this.props.target instanceof Group) {
-            title = _t('Share Community');
-        } else if (this.props.target instanceof MatrixEvent) {
-            title = _t('Share Room Message');
-            checkbox = <div>
-                <StyledCheckbox
-                    checked={this.state.linkSpecificEvent}
-                    onClick={this.onLinkSpecificEventCheckboxClick}
-                >
-                    { _t('Link to selected message') }
-                </StyledCheckbox>
-            </div>;
+                </div>
+            );
         }
 
         const matrixToUrl = this.getUrl();
@@ -175,45 +168,53 @@ export default class ShareDialog extends React.PureComponent<IProps, IState> {
 
         let qrSocialSection;
         if (showQrCode || showSocials) {
-            qrSocialSection = <>
-                <hr />
-                <div className="mx_ShareDialog_split">
-                    { showQrCode && <div className="mx_ShareDialog_qrcode_container">
-                        <QRCode data={matrixToUrl} width={256} />
-                    </div> }
-                    { showSocials && <div className="mx_ShareDialog_social_container">
-                        { socials.map((social) => (
-                            <a
-                                rel="noreferrer noopener"
-                                target="_blank"
-                                key={social.name}
-                                title={social.name}
-                                href={social.url(encodedUrl)}
-                                className="mx_ShareDialog_social_icon"
-                            >
-                                <img src={social.img} alt={social.name} height={64} width={64} />
-                            </a>
-                        )) }
-                    </div> }
-                </div>
-            </>;
+            qrSocialSection = (
+                <>
+                    <hr />
+                    <div className="mx_ShareDialog_split">
+                        {showQrCode && (
+                            <div className="mx_ShareDialog_qrcode_container">
+                                <QRCode data={matrixToUrl} width={256} />
+                            </div>
+                        )}
+                        {showSocials && (
+                            <div className="mx_ShareDialog_social_container">
+                                {socials.map((social) => (
+                                    <a
+                                        rel="noreferrer noopener"
+                                        target="_blank"
+                                        key={social.name}
+                                        title={social.name}
+                                        href={social.url(encodedUrl)}
+                                        className="mx_ShareDialog_social_icon"
+                                    >
+                                        <img src={social.img} alt={social.name} height={64} width={64} />
+                                    </a>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </>
+            );
         }
 
-        return <BaseDialog
-            title={title}
-            className='mx_ShareDialog'
-            contentId='mx_Dialog_content'
-            onFinished={this.props.onFinished}
-        >
-            <div className="mx_ShareDialog_content">
-                <CopyableText getTextToCopy={() => matrixToUrl}>
-                    <a title={_t('Link to room')} href={matrixToUrl} onClick={ShareDialog.onLinkClick}>
-                        { matrixToUrl }
-                    </a>
-                </CopyableText>
-                { checkbox }
-                { qrSocialSection }
-            </div>
-        </BaseDialog>;
+        return (
+            <BaseDialog
+                title={title}
+                className="mx_ShareDialog"
+                contentId="mx_Dialog_content"
+                onFinished={this.props.onFinished}
+            >
+                <div className="mx_ShareDialog_content">
+                    <CopyableText getTextToCopy={() => matrixToUrl}>
+                        <a title={_t("Link to room")} href={matrixToUrl} onClick={ShareDialog.onLinkClick}>
+                            {matrixToUrl}
+                        </a>
+                    </CopyableText>
+                    {checkbox}
+                    {qrSocialSection}
+                </div>
+            </BaseDialog>
+        );
     }
 }

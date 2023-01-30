@@ -18,11 +18,10 @@ limitations under the License.
 import React from "react";
 
 import SettingsStore from "../../../settings/SettingsStore";
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import ToggleSwitch from "./ToggleSwitch";
 import StyledCheckbox from "./StyledCheckbox";
 import { SettingLevel } from "../../../settings/SettingLevel";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     // The setting must be a boolean
@@ -34,6 +33,8 @@ interface IProps {
     // XXX: once design replaces all toggles make this the default
     useCheckbox?: boolean;
     disabled?: boolean;
+    disabledDescription?: string;
+    hideIfCannotSet?: boolean;
     onChange?(checked: boolean): void;
 }
 
@@ -41,9 +42,8 @@ interface IState {
     value: boolean;
 }
 
-@replaceableComponent("views.elements.SettingsFlag")
 export default class SettingsFlag extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -56,17 +56,17 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
         };
     }
 
-    private onChange = async (checked: boolean) => {
+    private onChange = async (checked: boolean): Promise<void> => {
         await this.save(checked);
         this.setState({ value: checked });
         if (this.props.onChange) this.props.onChange(checked);
     };
 
-    private checkBoxOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    private checkBoxOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         this.onChange(e.target.checked);
     };
 
-    private save = async (val?: boolean) => {
+    private save = async (val?: boolean): Promise<void> => {
         await SettingsStore.setValue(
             this.props.name,
             this.props.roomId,
@@ -75,36 +75,61 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
         );
     };
 
-    public render() {
+    public render(): JSX.Element {
         const canChange = SettingsStore.canSetValue(this.props.name, this.props.roomId, this.props.level);
 
-        const label = this.props.label
-            ? _t(this.props.label)
-            : SettingsStore.getDisplayName(this.props.name, this.props.level);
+        if (!canChange && this.props.hideIfCannotSet) return null;
+
+        const label =
+            (this.props.label
+                ? _t(this.props.label)
+                : SettingsStore.getDisplayName(this.props.name, this.props.level)) ?? undefined;
         const description = SettingsStore.getDescription(this.props.name);
+        const shouldWarn = SettingsStore.shouldHaveWarning(this.props.name);
+
+        let disabledDescription: JSX.Element | null = null;
+        if (this.props.disabled && this.props.disabledDescription) {
+            disabledDescription = <div className="mx_SettingsFlag_microcopy">{this.props.disabledDescription}</div>;
+        }
 
         if (this.props.useCheckbox) {
-            return <StyledCheckbox
-                checked={this.state.value}
-                onChange={this.checkBoxOnChange}
-                disabled={this.props.disabled || !canChange}
-            >
-                { label }
-            </StyledCheckbox>;
+            return (
+                <StyledCheckbox
+                    checked={this.state.value}
+                    onChange={this.checkBoxOnChange}
+                    disabled={this.props.disabled || !canChange}
+                >
+                    {label}
+                </StyledCheckbox>
+            );
         } else {
             return (
                 <div className="mx_SettingsFlag">
                     <label className="mx_SettingsFlag_label">
-                        <span className="mx_SettingsFlag_labelText">{ label }</span>
-                        { description && <div className="mx_SettingsFlag_microcopy">
-                            { description }
-                        </div> }
+                        <span className="mx_SettingsFlag_labelText">{label}</span>
+                        {description && (
+                            <div className="mx_SettingsFlag_microcopy">
+                                {shouldWarn
+                                    ? _t(
+                                          "<w>WARNING:</w> <description/>",
+                                          {},
+                                          {
+                                              w: (sub) => (
+                                                  <span className="mx_SettingsTab_microcopy_warning">{sub}</span>
+                                              ),
+                                              description: description,
+                                          },
+                                      )
+                                    : description}
+                            </div>
+                        )}
+                        {disabledDescription}
                     </label>
                     <ToggleSwitch
                         checked={this.state.value}
                         onChange={this.onChange}
                         disabled={this.props.disabled || !canChange}
-                        aria-label={label}
+                        title={label}
                     />
                 </div>
             );

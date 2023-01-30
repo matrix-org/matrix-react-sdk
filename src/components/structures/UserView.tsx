@@ -20,16 +20,15 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
-import Modal from '../../Modal';
-import { _t } from '../../languageHandler';
-import HomePage from "./HomePage";
-import { replaceableComponent } from "../../utils/replaceableComponent";
+import Modal from "../../Modal";
+import { _t } from "../../languageHandler";
 import ErrorDialog from "../views/dialogs/ErrorDialog";
 import MainSplit from "./MainSplit";
 import RightPanel from "./RightPanel";
 import Spinner from "../views/elements/Spinner";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
+import { UserOnboardingPage } from "../views/user-onboarding/UserOnboardingPage";
 
 interface IProps {
     userId?: string;
@@ -41,9 +40,8 @@ interface IState {
     member?: RoomMember;
 }
 
-@replaceableComponent("structures.UserView")
 export default class UserView extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             loading: true,
@@ -72,9 +70,9 @@ export default class UserView extends React.Component<IProps, IState> {
         try {
             profileInfo = await cli.getProfileInfo(this.props.userId);
         } catch (err) {
-            Modal.createTrackedDialog(_t('Could not load user profile'), '', ErrorDialog, {
-                title: _t('Could not load user profile'),
-                description: ((err && err.message) ? err.message : _t("Operation failed")),
+            Modal.createDialog(ErrorDialog, {
+                title: _t("Could not load user profile"),
+                description: err && err.message ? err.message : _t("Operation failed"),
             });
             this.setState({ loading: false });
             return;
@@ -89,15 +87,19 @@ export default class UserView extends React.Component<IProps, IState> {
         if (this.state.loading) {
             return <Spinner />;
         } else if (this.state.member) {
-            const panel = <RightPanel
-                overwriteCard={{ phase: RightPanelPhases.RoomMemberInfo, state: { member: this.state.member } }}
-                resizeNotifier={this.props.resizeNotifier}
-            />;
-            return (<MainSplit panel={panel} resizeNotifier={this.props.resizeNotifier}>
-                <HomePage />
-            </MainSplit>);
+            const panel = (
+                <RightPanel
+                    overwriteCard={{ phase: RightPanelPhases.RoomMemberInfo, state: { member: this.state.member } }}
+                    resizeNotifier={this.props.resizeNotifier}
+                />
+            );
+            return (
+                <MainSplit panel={panel} resizeNotifier={this.props.resizeNotifier}>
+                    <UserOnboardingPage />
+                </MainSplit>
+            );
         } else {
-            return (<div />);
+            return <div />;
         }
     }
 }

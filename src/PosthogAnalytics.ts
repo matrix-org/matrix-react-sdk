@@ -14,16 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import posthog, { PostHog } from 'posthog-js';
+import posthog, { PostHog, Properties } from "posthog-js";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
-import { UserProperties } from "matrix-analytics-events/types/typescript/UserProperties";
+import { UserProperties } from "@matrix-org/analytics-events/types/typescript/UserProperties";
+import { Signup } from "@matrix-org/analytics-events/types/typescript/Signup";
 
-import PlatformPeg from './PlatformPeg';
-import SdkConfig from './SdkConfig';
+import PlatformPeg from "./PlatformPeg";
+import SdkConfig from "./SdkConfig";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import SettingsStore from "./settings/SettingsStore";
 import { ScreenName } from "./PosthogTrackers";
+import { ActionPayload } from "./dispatcher/payloads";
+import { Action } from "./dispatcher/actions";
+import { SettingUpdatedPayload } from "./dispatcher/payloads/SettingUpdatedPayload";
+import dis from "./dispatcher/dispatcher";
+import { Layout } from "./settings/enums/Layout";
 
 /* Posthog analytics tracking.
  *
@@ -41,34 +47,48 @@ import { ScreenName } from "./PosthogTrackers";
  * - If both flags are false or not set, events are not sent.
  */
 
-interface IEvent {
+export interface IPosthogEvent {
     // The event name that will be used by PostHog. Event names should use camelCase.
     eventName: string;
 
     // do not allow these to be sent manually, we enqueue them all for caching purposes
-    "$set"?: void;
-    "$set_once"?: void;
+    $set?: void;
+    $set_once?: void;
+}
+
+export interface IPostHogEventOptions {
+    timestamp?: Date;
 }
 
 export enum Anonymity {
     Disabled,
     Anonymous,
-    Pseudonymous
+    Pseudonymous,
 }
 
 const whitelistedScreens = new Set([
-    "register", "login", "forgot_password", "soft_logout", "new", "settings", "welcome", "home", "start", "directory",
-    "start_sso", "start_cas", "groups", "complete_security", "post_registration", "room", "user", "group",
+    "register",
+    "login",
+    "forgot_password",
+    "soft_logout",
+    "new",
+    "settings",
+    "welcome",
+    "home",
+    "start",
+    "directory",
+    "start_sso",
+    "start_cas",
+    "complete_security",
+    "post_registration",
+    "room",
+    "user",
 ]);
 
-export function getRedactedCurrentLocation(
-    origin: string,
-    hash: string,
-    pathname: string,
-): string {
+export function getRedactedCurrentLocation(origin: string, hash: string, pathname: string): string {
     // Redact PII from the current location.
     // For known screens, assumes a URL structure of /<screen name>/might/be/pii
-    if (origin.startsWith('file://')) {
+    if (origin.startsWith("file://")) {
         pathname = "/<redacted_file_scheme_url>/";
     }
 
@@ -114,9 +134,10 @@ export class PosthogAnalytics {
     private readonly enabled: boolean = false;
     private static _instance = null;
     private platformSuperProperties = {};
-    private static ANALYTICS_EVENT_TYPE = "im.vector.analytics";
+    public static readonly ANALYTICS_EVENT_TYPE = "im.vector.analytics";
     private propertiesForNextEvent: Partial<Record<"$set" | "$set_once", UserProperties>> = {};
     private userPropertyCache: UserProperties = {};
+    private authenticationType: Signup["authenticationType"] = "Other";
 
     public static get instance(): PosthogAnalytics {
         if (!this._instance) {
@@ -125,11 +146,11 @@ export class PosthogAnalytics {
         return this._instance;
     }
 
-    constructor(private readonly posthog: PostHog) {
-        const posthogConfig = SdkConfig.get()["posthog"];
+    public constructor(private readonly posthog: PostHog) {
+        const posthogConfig = SdkConfig.getObject("posthog");
         if (posthogConfig) {
-            this.posthog.init(posthogConfig.projectApiKey, {
-                api_host: posthogConfig.apiHost,
+            this.posthog.init(posthogConfig.get("project_api_key"), {
+                api_host: posthogConfig.get("api_host"),
                 autocapture: false,
                 mask_all_text: true,
                 mask_all_element_attributes: true,
@@ -147,12 +168,45 @@ export class PosthogAnalytics {
         } else {
             this.enabled = false;
         }
+
+        dis.register(this.onAction);
+        SettingsStore.monitorSetting("layout", null);
+        SettingsStore.monitorSetting("useCompactLayout", null);
+        this.onLayoutUpdated();
     }
+
+    private onLayoutUpdated = (): void => {
+        let layout: UserProperties["WebLayout"];
+
+        switch (SettingsStore.getValue("layout")) {
+            case Layout.IRC:
+                layout = "IRC";
+                break;
+            case Layout.Bubble:
+                layout = "Bubble";
+                break;
+            case Layout.Group:
+                layout = SettingsStore.getValue("useCompactLayout") ? "Compact" : "Group";
+                break;
+        }
+
+        // This is known to clobber other devices but is a good enough solution
+        // to get an idea of how much use each layout gets.
+        this.setProperty("WebLayout", layout);
+    };
+
+    private onAction = (payload: ActionPayload): void => {
+        if (payload.action !== Action.SettingUpdated) return;
+        const settingsPayload = payload as SettingUpdatedPayload;
+        if (["layout", "useCompactLayout"].includes(settingsPayload.settingName)) {
+            this.onLayoutUpdated();
+        }
+    };
 
     // we persist the last `$screen_name` and send it for all events until it is replaced
     private lastScreen: ScreenName = "Loading";
 
-    private sanitizeProperties = (properties: posthog.Properties, eventName: string): posthog.Properties => {
+    private sanitizeProperties = (properties: Properties, eventName: string): Properties => {
         // Callback from posthog to sanitize properties before sending them to the server.
         //
         // Here we sanitize posthog's built in properties which leak PII e.g. url reporting.
@@ -166,19 +220,19 @@ export class PosthogAnalytics {
 
         if (this.anonymity == Anonymity.Anonymous) {
             // drop referrer information for anonymous users
-            properties['$referrer'] = null;
-            properties['$referring_domain'] = null;
-            properties['$initial_referrer'] = null;
-            properties['$initial_referring_domain'] = null;
+            properties["$referrer"] = null;
+            properties["$referring_domain"] = null;
+            properties["$initial_referrer"] = null;
+            properties["$initial_referring_domain"] = null;
 
             // drop device ID, which is a UUID persisted in local storage
-            properties['$device_id'] = null;
+            properties["$device_id"] = null;
         }
 
         return properties;
     };
 
-    private registerSuperProperties(properties: posthog.Properties) {
+    private registerSuperProperties(properties: Properties): void {
         if (this.enabled) {
             this.posthog.register(properties);
         }
@@ -186,7 +240,7 @@ export class PosthogAnalytics {
 
     private static async getPlatformProperties(): Promise<PlatformProperties> {
         const platform = PlatformPeg.get();
-        let appVersion;
+        let appVersion: string;
         try {
             appVersion = await platform.getAppVersion();
         } catch (e) {
@@ -200,16 +254,20 @@ export class PosthogAnalytics {
         };
     }
 
-    private capture(eventName: string, properties: posthog.Properties) {
+    // eslint-disable-nextline no-unused-varsx
+    private capture(eventName: string, properties: Properties, options?: IPostHogEventOptions): void {
         if (!this.enabled) {
             return;
         }
         const { origin, hash, pathname } = window.location;
         properties["redactedCurrentUrl"] = getRedactedCurrentLocation(origin, hash, pathname);
-        this.posthog.capture(eventName, {
-            ...this.propertiesForNextEvent,
-            ...properties,
-        });
+        this.posthog.capture(
+            eventName,
+            { ...this.propertiesForNextEvent, ...properties },
+            // TODO: Uncomment below once https://github.com/PostHog/posthog-js/pull/391
+            // gets merged
+            /* options as any, */ // No proper type definition in the posthog library
+        );
         this.propertiesForNextEvent = {};
     }
 
@@ -232,7 +290,7 @@ export class PosthogAnalytics {
     }
 
     private static getRandomAnalyticsId(): string {
-        return [...crypto.getRandomValues(new Uint8Array(16))].map((c) => c.toString(16)).join('');
+        return [...crypto.getRandomValues(new Uint8Array(16))].map((c) => c.toString(16)).join("");
     }
 
     public async identifyUser(client: MatrixClient, analyticsIdGenerator: () => string): Promise<void> {
@@ -249,8 +307,10 @@ export class PosthogAnalytics {
                     // until the next time account data is refreshed and this function is called (most likely on next
                     // page load). This will happen pretty infrequently, so we can tolerate the possibility.
                     analyticsID = analyticsIdGenerator();
-                    await client.setAccountData(PosthogAnalytics.ANALYTICS_EVENT_TYPE,
-                        Object.assign({ id: analyticsID }, accountData));
+                    await client.setAccountData(
+                        PosthogAnalytics.ANALYTICS_EVENT_TYPE,
+                        Object.assign({ id: analyticsID }, accountData),
+                    );
                 }
                 this.posthog.identify(analyticsID);
             } catch (e) {
@@ -272,9 +332,9 @@ export class PosthogAnalytics {
         this.setAnonymity(Anonymity.Disabled);
     }
 
-    public trackEvent<E extends IEvent>({ eventName, ...properties }: E): void {
+    public trackEvent<E extends IPosthogEvent>({ eventName, ...properties }: E, options?: IPostHogEventOptions): void {
         if (this.anonymity == Anonymity.Disabled || this.anonymity == Anonymity.Anonymous) return;
-        this.capture(eventName, properties);
+        this.capture(eventName, properties, options);
     }
 
     public setProperty<K extends keyof UserProperties>(key: K, value: UserProperties[K]): void {
@@ -313,6 +373,9 @@ export class PosthogAnalytics {
         this.setAnonymity(anonymity);
         if (anonymity === Anonymity.Pseudonymous) {
             await this.identifyUser(MatrixClientPeg.get(), PosthogAnalytics.getRandomAnalyticsId);
+            if (MatrixClientPeg.currentUserIsJustRegistered()) {
+                this.trackNewUserEvent();
+            }
         }
 
         if (anonymity !== Anonymity.Disabled) {
@@ -329,9 +392,36 @@ export class PosthogAnalytics {
         //  * When the user changes their preferences on this device
         // Note that for new accounts, pseudonymousAnalyticsOptIn won't be set, so updateAnonymityFromSettings
         // won't be called (i.e. this.anonymity will be left as the default, until the setting changes)
-        SettingsStore.watchSetting("pseudonymousAnalyticsOptIn", null,
+        SettingsStore.watchSetting(
+            "pseudonymousAnalyticsOptIn",
+            null,
             (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
                 this.updateAnonymityFromSettings(!!newValue);
-            });
+            },
+        );
+    }
+
+    public setAuthenticationType(authenticationType: Signup["authenticationType"]): void {
+        this.authenticationType = authenticationType;
+    }
+
+    private trackNewUserEvent(): void {
+        // This is the only event that could have occured before analytics opt-in
+        // that we want to accumulate before the user has given consent
+        // All other scenarios should not track a user before they have given
+        // explicit consent that they are ok with their analytics data being collected
+        const options: IPostHogEventOptions = {};
+        const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time"), 10);
+        if (!isNaN(registrationTime)) {
+            options.timestamp = new Date(registrationTime);
+        }
+
+        return this.trackEvent<Signup>(
+            {
+                eventName: "Signup",
+                authenticationType: this.authenticationType,
+            },
+            options,
+        );
     }
 }

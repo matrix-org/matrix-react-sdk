@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from "react";
 
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Clock from "./Clock";
 import { Playback, PlaybackState } from "../../../audio/Playback";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
@@ -39,7 +38,6 @@ interface IState {
 /**
  * A clock for a playback of a recording.
  */
-@replaceableComponent("views.audio_messages.PlaybackClock")
 export default class PlaybackClock extends React.PureComponent<IProps, IState> {
     public constructor(props) {
         super(props);
@@ -57,17 +55,17 @@ export default class PlaybackClock extends React.PureComponent<IProps, IState> {
         this.props.playback.clockInfo.liveData.onUpdate(this.onTimeUpdate);
     }
 
-    private onPlaybackUpdate = (ev: PlaybackState) => {
+    private onPlaybackUpdate = (ev: PlaybackState): void => {
         // Convert Decoding -> Stopped because we don't care about the distinction here
         if (ev === PlaybackState.Decoding) ev = PlaybackState.Stopped;
         this.setState({ playbackPhase: ev });
     };
 
-    private onTimeUpdate = (time: number[]) => {
+    private onTimeUpdate = (time: number[]): void => {
         this.setState({ seconds: time[0], durationSeconds: time[1] });
     };
 
-    public render() {
+    public render(): JSX.Element {
         let seconds = this.state.seconds;
         if (this.state.playbackPhase === PlaybackState.Stopped) {
             if (Number.isFinite(this.props.defaultDisplaySeconds)) {
@@ -76,9 +74,6 @@ export default class PlaybackClock extends React.PureComponent<IProps, IState> {
                 seconds = this.state.durationSeconds;
             }
         }
-        return <Clock
-            seconds={seconds}
-            aria-live={this.state.playbackPhase === PlaybackState.Playing ? "off" : undefined}
-        />;
+        return <Clock seconds={seconds} role="timer" />;
     }
 }

@@ -20,17 +20,26 @@ import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { EnhancedMap } from "../../utils/maps";
+import WidgetUtils from "../../utils/WidgetUtils";
+
+export enum WidgetMessagingStoreEvent {
+    StoreMessaging = "store_messaging",
+    StopMessaging = "stop_messaging",
+}
 
 /**
  * Temporary holding store for widget messaging instances. This is eventually
  * going to be merged with a more complete WidgetStore, but for now it's
  * easiest to split this into a single place.
  */
-export class WidgetMessagingStore extends AsyncStoreWithClient<unknown> {
-    private static internalInstance = new WidgetMessagingStore();
+export class WidgetMessagingStore extends AsyncStoreWithClient<{}> {
+    private static readonly internalInstance = (() => {
+        const instance = new WidgetMessagingStore();
+        instance.start();
+        return instance;
+    })();
 
-    // TODO: Fix uniqueness problem (widget IDs are not unique across the whole app)
-    private widgetMap = new EnhancedMap<string, ClientWidgetApi>(); // <widget ID, ClientWidgetAPi>
+    private widgetMap = new EnhancedMap<string, ClientWidgetApi>(); // <widget UID, ClientWidgetAPi>
 
     public constructor() {
         super(defaultDispatcher);
@@ -49,35 +58,37 @@ export class WidgetMessagingStore extends AsyncStoreWithClient<unknown> {
         this.widgetMap.clear();
     }
 
-    public storeMessaging(widget: Widget, widgetApi: ClientWidgetApi) {
-        this.stopMessaging(widget);
-        this.widgetMap.set(widget.id, widgetApi);
+    public storeMessaging(widget: Widget, roomId: string, widgetApi: ClientWidgetApi): void {
+        this.stopMessaging(widget, roomId);
+        const uid = WidgetUtils.calcWidgetUid(widget.id, roomId);
+        this.widgetMap.set(uid, widgetApi);
+
+        this.emit(WidgetMessagingStoreEvent.StoreMessaging, uid, widgetApi);
     }
 
-    public stopMessaging(widget: Widget) {
-        this.widgetMap.remove(widget.id)?.stop();
+    public stopMessaging(widget: Widget, roomId: string): void {
+        this.stopMessagingByUid(WidgetUtils.calcWidgetUid(widget.id, roomId));
     }
 
-    public getMessaging(widget: Widget): ClientWidgetApi {
-        return this.widgetMap.get(widget.id);
-    }
-
-    /**
-     * Stops the widget messaging instance for a given widget ID.
-     * @param {string} widgetId The widget ID.
-     * @deprecated Widget IDs are not globally unique.
-     */
-    public stopMessagingById(widgetId: string) {
-        this.widgetMap.remove(widgetId)?.stop();
+    public getMessaging(widget: Widget, roomId: string): ClientWidgetApi {
+        return this.widgetMap.get(WidgetUtils.calcWidgetUid(widget.id, roomId));
     }
 
     /**
-     * Gets the widget messaging class for a given widget ID.
-     * @param {string} widgetId The widget ID.
-     * @returns {ClientWidgetApi} The widget API, or a falsey value if not found.
-     * @deprecated Widget IDs are not globally unique.
+     * Stops the widget messaging instance for a given widget UID.
+     * @param {string} widgetUid The widget UID.
      */
-    public getMessagingForId(widgetId: string): ClientWidgetApi {
-        return this.widgetMap.get(widgetId);
+    public stopMessagingByUid(widgetUid: string): void {
+        this.widgetMap.remove(widgetUid)?.stop();
+        this.emit(WidgetMessagingStoreEvent.StopMessaging, widgetUid);
+    }
+
+    /**
+     * Gets the widget messaging class for a given widget UID.
+     * @param {string} widgetUid The widget UID.
+     * @returns {ClientWidgetApi} The widget API, or a falsy value if not found.
+     */
+    public getMessagingForUid(widgetUid: string): ClientWidgetApi {
+        return this.widgetMap.get(widgetUid);
     }
 }

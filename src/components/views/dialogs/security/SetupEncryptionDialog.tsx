@@ -14,20 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import SetupEncryptionBody from '../../../structures/auth/SetupEncryptionBody';
-import BaseDialog from '../BaseDialog';
-import { _t } from '../../../../languageHandler';
-import { SetupEncryptionStore, Phase } from '../../../../stores/SetupEncryptionStore';
-import { replaceableComponent } from "../../../../utils/replaceableComponent";
+import SetupEncryptionBody from "../../../structures/auth/SetupEncryptionBody";
+import BaseDialog from "../BaseDialog";
+import { _t } from "../../../../languageHandler";
+import { SetupEncryptionStore, Phase } from "../../../../stores/SetupEncryptionStore";
 import { IDialogProps } from "../IDialogProps";
 
-function iconFromPhase(phase: Phase) {
+function iconFromPhase(phase: Phase): string {
     if (phase === Phase.Done) {
-        return require("../../../../../res/img/e2e/verified.svg");
+        return require("../../../../../res/img/e2e/verified-deprecated.svg").default;
     } else {
-        return require("../../../../../res/img/e2e/warning.svg");
+        return require("../../../../../res/img/e2e/warning-deprecated.svg").default;
     }
 }
 
@@ -36,22 +35,21 @@ interface IState {
     icon: string;
 }
 
-@replaceableComponent("views.dialogs.security.SetupEncryptionDialog")
 export default class SetupEncryptionDialog extends React.Component<IProps, IState> {
     private store: SetupEncryptionStore;
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.store = SetupEncryptionStore.sharedInstance();
         this.state = { icon: iconFromPhase(this.store.phase) };
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.store.on("update", this.onStoreUpdate);
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.store.removeListener("update", this.onStoreUpdate);
     }
 
@@ -59,13 +57,15 @@ export default class SetupEncryptionDialog extends React.Component<IProps, IStat
         this.setState({ icon: iconFromPhase(this.store.phase) });
     };
 
-    public render() {
-        return <BaseDialog
-            headerImage={this.state.icon}
-            onFinished={this.props.onFinished}
-            title={_t("Verify this session")}
-        >
-            <SetupEncryptionBody onFinished={this.props.onFinished} />
-        </BaseDialog>;
+    public render(): JSX.Element {
+        return (
+            <BaseDialog
+                headerImage={this.state.icon}
+                onFinished={this.props.onFinished}
+                title={_t("Verify this session")}
+            >
+                <SetupEncryptionBody onFinished={this.props.onFinished} />
+            </BaseDialog>
+        );
     }
 }

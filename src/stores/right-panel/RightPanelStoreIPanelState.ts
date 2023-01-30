@@ -20,16 +20,12 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 
-import { GroupMember } from "../../components/views/right_panel/UserInfo";
 import { RightPanelPhases } from "./RightPanelStorePhases";
 
 export interface IRightPanelCardState {
-    member?: RoomMember | User | GroupMember;
+    member?: RoomMember | User;
     verificationRequest?: VerificationRequest;
     verificationRequestPromise?: Promise<VerificationRequest>;
-    // group
-    groupId?: string;
-    groupRoomId?: string;
     widgetId?: string;
     spaceId?: string;
     // Room3pidMemberInfo, Space3pidMemberInfo,
@@ -38,14 +34,12 @@ export interface IRightPanelCardState {
     threadHeadEvent?: MatrixEvent;
     initialEvent?: MatrixEvent;
     isInitialEventHighlighted?: boolean;
+    initialEventScrollIntoView?: boolean;
 }
 
 export interface IRightPanelCardStateStored {
     memberId?: string;
     // we do not store the things associated with verification
-    // group
-    groupId?: string;
-    groupRoomId?: string;
     widgetId?: string;
     spaceId?: string;
     // 3pidMemberInfo
@@ -54,6 +48,7 @@ export interface IRightPanelCardStateStored {
     threadHeadEventId?: string;
     initialEventId?: string;
     isInitialEventHighlighted?: boolean;
+    initialEventScrollIntoView?: boolean;
 }
 
 export interface IRightPanelCard {
@@ -78,32 +73,27 @@ interface IRightPanelForRoomStored {
 
 export function convertToStorePanel(cacheRoom: IRightPanelForRoom): IRightPanelForRoomStored {
     if (!cacheRoom) return cacheRoom;
-    const storeHistory = [...cacheRoom.history].map(panelState => convertCardToStore(panelState));
+    const storeHistory = [...cacheRoom.history].map((panelState) => convertCardToStore(panelState));
     return { isOpen: cacheRoom.isOpen, history: storeHistory };
 }
 
 export function convertToStatePanel(storeRoom: IRightPanelForRoomStored, room: Room): IRightPanelForRoom {
     if (!storeRoom) return storeRoom;
-    const stateHistory = [...storeRoom.history].map(panelStateStore => convertStoreToCard(panelStateStore, room));
+    const stateHistory = [...storeRoom.history].map((panelStateStore) => convertStoreToCard(panelStateStore, room));
     return { history: stateHistory, isOpen: storeRoom.isOpen };
 }
 
 export function convertCardToStore(panelState: IRightPanelCard): IRightPanelCardStored {
     const state = panelState.state ?? {};
     const stateStored: IRightPanelCardStateStored = {
-        groupId: state.groupId,
-        groupRoomId: state.groupRoomId,
         widgetId: state.widgetId,
         spaceId: state.spaceId,
         isInitialEventHighlighted: state.isInitialEventHighlighted,
-        threadHeadEventId: !!state?.threadHeadEvent?.getId() ?
-            panelState.state.threadHeadEvent.getId() : undefined,
-        memberInfoEventId: !!state?.memberInfoEvent?.getId() ?
-            panelState.state.memberInfoEvent.getId() : undefined,
-        initialEventId: !!state?.initialEvent?.getId() ?
-            panelState.state.initialEvent.getId() : undefined,
-        memberId: !!state?.member?.userId ?
-            panelState.state.member.userId : undefined,
+        initialEventScrollIntoView: state.initialEventScrollIntoView,
+        threadHeadEventId: !!state?.threadHeadEvent?.getId() ? panelState.state.threadHeadEvent.getId() : undefined,
+        memberInfoEventId: !!state?.memberInfoEvent?.getId() ? panelState.state.memberInfoEvent.getId() : undefined,
+        initialEventId: !!state?.initialEvent?.getId() ? panelState.state.initialEvent.getId() : undefined,
+        memberId: !!state?.member?.userId ? panelState.state.member.userId : undefined,
     };
 
     return { state: stateStored, phase: panelState.phase };
@@ -112,19 +102,18 @@ export function convertCardToStore(panelState: IRightPanelCard): IRightPanelCard
 function convertStoreToCard(panelStateStore: IRightPanelCardStored, room: Room): IRightPanelCard {
     const stateStored = panelStateStore.state ?? {};
     const state: IRightPanelCardState = {
-        groupId: stateStored.groupId,
-        groupRoomId: stateStored.groupRoomId,
         widgetId: stateStored.widgetId,
         spaceId: stateStored.spaceId,
         isInitialEventHighlighted: stateStored.isInitialEventHighlighted,
-        threadHeadEvent: !!stateStored?.threadHeadEventId ?
-            room.findEventById(stateStored.threadHeadEventId) : undefined,
-        memberInfoEvent: !!stateStored?.memberInfoEventId ?
-            room.findEventById(stateStored.memberInfoEventId) : undefined,
-        initialEvent: !!stateStored?.initialEventId ?
-            room.findEventById(stateStored.initialEventId) : undefined,
-        member: !!stateStored?.memberId ?
-            room.getMember(stateStored.memberId) : undefined,
+        initialEventScrollIntoView: stateStored.initialEventScrollIntoView,
+        threadHeadEvent: !!stateStored?.threadHeadEventId
+            ? room.findEventById(stateStored.threadHeadEventId)
+            : undefined,
+        memberInfoEvent: !!stateStored?.memberInfoEventId
+            ? room.findEventById(stateStored.memberInfoEventId)
+            : undefined,
+        initialEvent: !!stateStored?.initialEventId ? room.findEventById(stateStored.initialEventId) : undefined,
+        member: !!stateStored?.memberId ? room.getMember(stateStored.memberId) : undefined,
     };
 
     return { state: state, phase: panelStateStore.phase };

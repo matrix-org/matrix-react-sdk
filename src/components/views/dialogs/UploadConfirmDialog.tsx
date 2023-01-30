@@ -15,12 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import filesize from "filesize";
+import React from "react";
+import { filesize } from "filesize";
 
-import { _t } from '../../../languageHandler';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { getBlobSafeMimeType } from '../../../utils/blobs';
+import { Icon as FileIcon } from "../../../../res/img/feather-customised/files.svg";
+import { _t } from "../../../languageHandler";
+import { getBlobSafeMimeType } from "../../../utils/blobs";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 
@@ -31,100 +31,103 @@ interface IProps {
     onFinished: (uploadConfirmed: boolean, uploadAll?: boolean) => void;
 }
 
-@replaceableComponent("views.dialogs.UploadConfirmDialog")
 export default class UploadConfirmDialog extends React.Component<IProps> {
-    private objectUrl: string;
-    private mimeType: string;
+    private readonly objectUrl: string;
+    private readonly mimeType: string;
 
-    static defaultProps = {
+    public static defaultProps = {
         totalFiles: 1,
     };
 
-    constructor(props) {
+    public constructor(props) {
         super(props);
 
         // Create a fresh `Blob` for previewing (even though `File` already is
         // one) so we can adjust the MIME type if needed.
         this.mimeType = getBlobSafeMimeType(props.file.type);
-        const blob = new Blob([props.file], { type:
-            this.mimeType,
-        });
+        const blob = new Blob([props.file], { type: this.mimeType });
         this.objectUrl = URL.createObjectURL(blob);
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         if (this.objectUrl) URL.revokeObjectURL(this.objectUrl);
     }
 
-    private onCancelClick = () => {
+    private onCancelClick = (): void => {
         this.props.onFinished(false);
     };
 
-    private onUploadClick = () => {
+    private onUploadClick = (): void => {
         this.props.onFinished(true);
     };
 
-    private onUploadAllClick = () => {
+    private onUploadAllClick = (): void => {
         this.props.onFinished(true, true);
     };
 
-    render() {
-        let title;
+    public render(): JSX.Element {
+        let title: string;
         if (this.props.totalFiles > 1 && this.props.currentIndex !== undefined) {
-            title = _t(
-                "Upload files (%(current)s of %(total)s)",
-                {
-                    current: this.props.currentIndex + 1,
-                    total: this.props.totalFiles,
-                },
-            );
+            title = _t("Upload files (%(current)s of %(total)s)", {
+                current: this.props.currentIndex + 1,
+                total: this.props.totalFiles,
+            });
         } else {
-            title = _t('Upload files');
+            title = _t("Upload files");
         }
 
-        let preview;
-        if (this.mimeType.startsWith('image/')) {
-            preview = <div className="mx_UploadConfirmDialog_previewOuter">
-                <div className="mx_UploadConfirmDialog_previewInner">
-                    <div><img className="mx_UploadConfirmDialog_imagePreview" src={this.objectUrl} /></div>
-                    <div>{ this.props.file.name } ({ filesize(this.props.file.size) })</div>
-                </div>
-            </div>;
+        const fileId = `mx-uploadconfirmdialog-${this.props.file.name}`;
+        let preview: JSX.Element;
+        let placeholder: JSX.Element;
+        if (this.mimeType.startsWith("image/")) {
+            preview = (
+                <img className="mx_UploadConfirmDialog_imagePreview" src={this.objectUrl} aria-labelledby={fileId} />
+            );
+        } else if (this.mimeType.startsWith("video/")) {
+            preview = (
+                <video
+                    className="mx_UploadConfirmDialog_imagePreview"
+                    src={this.objectUrl}
+                    playsInline
+                    controls={false}
+                />
+            );
         } else {
-            preview = <div>
-                <div>
-                    <img className="mx_UploadConfirmDialog_fileIcon"
-                        src={require("../../../../res/img/feather-customised/files.svg")}
-                    />
-                    { this.props.file.name } ({ filesize(this.props.file.size) })
-                </div>
-            </div>;
+            placeholder = <FileIcon className="mx_UploadConfirmDialog_fileIcon" height={18} width={18} />;
         }
 
         let uploadAllButton;
         if (this.props.currentIndex + 1 < this.props.totalFiles) {
-            uploadAllButton = <button onClick={this.onUploadAllClick}>
-                { _t("Upload all") }
-            </button>;
+            uploadAllButton = <button onClick={this.onUploadAllClick}>{_t("Upload all")}</button>;
         }
 
         return (
-            <BaseDialog className='mx_UploadConfirmDialog'
+            <BaseDialog
+                className="mx_UploadConfirmDialog"
                 fixedWidth={false}
                 onFinished={this.onCancelClick}
                 title={title}
-                contentId='mx_Dialog_content'
+                contentId="mx_Dialog_content"
             >
-                <div id='mx_Dialog_content'>
-                    { preview }
+                <div id="mx_Dialog_content">
+                    <div className="mx_UploadConfirmDialog_previewOuter">
+                        <div className="mx_UploadConfirmDialog_previewInner">
+                            {preview && <div>{preview}</div>}
+                            <div id={fileId}>
+                                {placeholder}
+                                {this.props.file.name} ({filesize(this.props.file.size)})
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <DialogButtons primaryButton={_t('Upload')}
+                <DialogButtons
+                    primaryButton={_t("Upload")}
                     hasCancel={false}
                     onPrimaryButtonClick={this.onUploadClick}
                     focus={true}
                 >
-                    { uploadAllButton }
+                    {uploadAllButton}
                 </DialogButtons>
             </BaseDialog>
         );

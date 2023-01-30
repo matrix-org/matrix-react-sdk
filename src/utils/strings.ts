@@ -24,7 +24,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 export async function copyPlaintext(text: string): Promise<boolean> {
     try {
-        if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+        if (navigator?.clipboard?.writeText) {
             await navigator.clipboard.writeText(text);
             return true;
         } else {
@@ -55,7 +55,7 @@ export async function copyPlaintext(text: string): Promise<boolean> {
     return false;
 }
 
-export function selectText(target: Element) {
+export function selectText(target: Element): void {
     const range = document.createRange();
     range.selectNodeContents(target);
 
@@ -72,15 +72,13 @@ export function selectText(target: Element) {
  */
 export function copyNode(ref: Element): boolean {
     selectText(ref);
-    return document.execCommand('copy');
+    return document.execCommand("copy");
 }
 
-const collator = new Intl.Collator();
 /**
- * Performant language-sensitive string comparison
- * @param a the first string to compare
- * @param b the second string to compare
+ * Returns text which has been selected by the user
+ * @returns the selected text
  */
-export function compare(a: string, b: string): number {
-    return collator.compare(a, b);
+export function getSelectedText(): string {
+    return window.getSelection().toString();
 }

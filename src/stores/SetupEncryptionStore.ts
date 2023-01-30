@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventEmitter from 'events';
+import EventEmitter from "events";
 import {
     PHASE_DONE as VERIF_PHASE_DONE,
     VerificationRequest,
@@ -25,11 +25,11 @@ import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
-import { MatrixClientPeg } from '../MatrixClientPeg';
-import { AccessCancelledError, accessSecretStorage } from '../SecurityManager';
-import Modal from '../Modal';
-import InteractiveAuthDialog from '../components/views/dialogs/InteractiveAuthDialog';
-import { _t } from '../languageHandler';
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import { AccessCancelledError, accessSecretStorage } from "../SecurityManager";
+import Modal from "../Modal";
+import InteractiveAuthDialog from "../components/views/dialogs/InteractiveAuthDialog";
+import { _t } from "../languageHandler";
 
 export enum Phase {
     Loading = 0,
@@ -50,7 +50,7 @@ export class SetupEncryptionStore extends EventEmitter {
     public keyInfo: ISecretStorageKeyInfo;
     public hasDevicesToVerifyAgainst: boolean;
 
-    public static sharedInstance() {
+    public static sharedInstance(): SetupEncryptionStore {
         if (!window.mxSetupEncryptionStore) window.mxSetupEncryptionStore = new SetupEncryptionStore();
         return window.mxSetupEncryptionStore;
     }
@@ -89,9 +89,7 @@ export class SetupEncryptionStore extends EventEmitter {
             return;
         }
         this.started = false;
-        if (this.verificationRequest) {
-            this.verificationRequest.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
-        }
+        this.verificationRequest?.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener(CryptoEvent.VerificationRequest, this.onVerificationRequest);
             MatrixClientPeg.get().removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
@@ -99,8 +97,9 @@ export class SetupEncryptionStore extends EventEmitter {
     }
 
     public async fetchKeyInfo(): Promise<void> {
+        if (!this.started) return; // bail if we were stopped
         const cli = MatrixClientPeg.get();
-        const keys = await cli.isSecretStored('m.cross_signing.master', false);
+        const keys = await cli.isSecretStored("m.cross_signing.master");
         if (keys === null || Object.keys(keys).length === 0) {
             this.keyId = null;
             this.keyInfo = null;
@@ -114,17 +113,14 @@ export class SetupEncryptionStore extends EventEmitter {
         const dehydratedDevice = await cli.getDehydratedDevice();
         const ownUserId = cli.getUserId();
         const crossSigningInfo = cli.getStoredCrossSigningForUser(ownUserId);
-        this.hasDevicesToVerifyAgainst = cli.getStoredDevicesForUser(ownUserId).some(
-            device =>
-                device.getIdentityKey() &&
-                (!dehydratedDevice || (device.deviceId != dehydratedDevice.device_id)) &&
-                crossSigningInfo.checkDeviceTrust(
-                    crossSigningInfo,
-                    device,
-                    false,
-                    true,
-                ).isCrossSigningVerified(),
-        );
+        this.hasDevicesToVerifyAgainst = cli
+            .getStoredDevicesForUser(ownUserId)
+            .some(
+                (device) =>
+                    device.getIdentityKey() &&
+                    (!dehydratedDevice || device.deviceId != dehydratedDevice.device_id) &&
+                    crossSigningInfo.checkDeviceTrust(crossSigningInfo, device, false, true).isCrossSigningVerified(),
+            );
 
         this.phase = Phase.Intro;
         this.emit("update");
@@ -147,7 +143,7 @@ export class SetupEncryptionStore extends EventEmitter {
             // on the first trust check, and the key backup restore will happen
             // in the background.
             await new Promise((resolve: (value?: unknown) => void, reject: (reason?: any) => void) => {
-                accessSecretStorage(async () => {
+                accessSecretStorage(async (): Promise<void> => {
                     await cli.checkOwnCrossSigningTrust();
                     resolve();
                     if (backupInfo) {
@@ -173,7 +169,7 @@ export class SetupEncryptionStore extends EventEmitter {
         }
     }
 
-    private onUserTrustStatusChanged = (userId: string) => {
+    private onUserTrustStatusChanged = (userId: string): void => {
         if (userId !== MatrixClientPeg.get().getUserId()) return;
         const publicKeysTrusted = MatrixClientPeg.get().getCrossSigningId();
         if (publicKeysTrusted) {
@@ -229,18 +225,15 @@ export class SetupEncryptionStore extends EventEmitter {
             // secret storage key if they had one. Start by resetting
             // secret storage and setting up a new recovery key, then
             // create new cross-signing keys once that succeeds.
-            await accessSecretStorage(async () => {
+            await accessSecretStorage(async (): Promise<void> => {
                 const cli = MatrixClientPeg.get();
                 await cli.bootstrapCrossSigning({
-                    authUploadDeviceSigningKeys: async (makeRequest) => {
-                        const { finished } = Modal.createTrackedDialog(
-                            'Cross-signing keys dialog', '', InteractiveAuthDialog,
-                            {
-                                title: _t("Setting up keys"),
-                                matrixClient: cli,
-                                makeRequest,
-                            },
-                        );
+                    authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
+                        const { finished } = Modal.createDialog(InteractiveAuthDialog, {
+                            title: _t("Setting up keys"),
+                            matrixClient: cli,
+                            makeRequest,
+                        });
                         const [confirmed] = await finished;
                         if (!confirmed) {
                             throw new Error("Cross-signing key upload auth canceled");
@@ -270,6 +263,7 @@ export class SetupEncryptionStore extends EventEmitter {
     }
 
     private async setActiveVerificationRequest(request: VerificationRequest): Promise<void> {
+        if (!this.started) return; // bail if we were stopped
         if (request.otherUserId !== MatrixClientPeg.get().getUserId()) return;
 
         if (this.verificationRequest) {

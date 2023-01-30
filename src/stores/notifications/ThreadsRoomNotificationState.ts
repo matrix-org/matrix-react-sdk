@@ -29,12 +29,10 @@ export class ThreadsRoomNotificationState extends NotificationState implements I
     protected _count = 0;
     protected _color = NotificationColor.None;
 
-    constructor(public readonly room: Room) {
+    public constructor(public readonly room: Room) {
         super();
-        if (this.room?.threads) {
-            for (const [, thread] of this.room.threads) {
-                this.onNewThread(thread);
-            }
+        for (const thread of this.room.getThreads()) {
+            this.onNewThread(thread);
         }
         this.room.on(ThreadEvent.New, this.onNewThread);
     }
@@ -56,10 +54,7 @@ export class ThreadsRoomNotificationState extends NotificationState implements I
 
     private onNewThread = (thread: Thread): void => {
         const notificationState = new ThreadNotificationState(thread);
-        this.threadsState.set(
-            thread,
-            notificationState,
-        );
+        this.threadsState.set(thread, notificationState);
         notificationState.on(NotificationStateEvents.Update, this.onThreadUpdate);
     };
 

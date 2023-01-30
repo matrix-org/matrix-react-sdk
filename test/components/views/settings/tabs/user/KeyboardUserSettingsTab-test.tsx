@@ -1,4 +1,3 @@
-
 /*
 Copyright 2022 Šimon Brandner <simon.bra.ag@gmail.com>
 
@@ -15,13 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { render } from "@testing-library/react";
 import React from "react";
-import { mount, ReactWrapper } from "enzyme";
 
+import KeyboardUserSettingsTab from "../../../../../../src/components/views/settings/tabs/user/KeyboardUserSettingsTab";
 import { Key } from "../../../../../../src/Keyboard";
+import { mockPlatformPeg } from "../../../../../test-utils/platform";
 
 const PATH_TO_KEYBOARD_SHORTCUTS = "../../../../../../src/accessibility/KeyboardShortcuts";
-const PATH_TO_COMPONENT = "../../../../../../src/components/views/settings/tabs/user/KeyboardUserSettingsTab";
+const PATH_TO_KEYBOARD_SHORTCUT_UTILS = "../../../../../../src/accessibility/KeyboardShortcutUtils";
 
 const mockKeyboardShortcuts = (override) => {
     jest.doMock(PATH_TO_KEYBOARD_SHORTCUTS, () => {
@@ -33,102 +34,74 @@ const mockKeyboardShortcuts = (override) => {
     });
 };
 
-const renderKeyboardUserSettingsTab = async (component, props?): Promise<ReactWrapper> => {
-    const Component = (await import(PATH_TO_COMPONENT))[component];
-    return mount(<Component {...props} />);
+const mockKeyboardShortcutUtils = (override) => {
+    jest.doMock(PATH_TO_KEYBOARD_SHORTCUT_UTILS, () => {
+        const original = jest.requireActual(PATH_TO_KEYBOARD_SHORTCUT_UTILS);
+        return {
+            ...original,
+            ...override,
+        };
+    });
+};
+
+const renderKeyboardUserSettingsTab = () => {
+    return render(<KeyboardUserSettingsTab />).container;
 };
 
 describe("KeyboardUserSettingsTab", () => {
     beforeEach(() => {
         jest.resetModules();
+        mockPlatformPeg();
     });
 
-    it("renders key icon", async () => {
-        const body = await renderKeyboardUserSettingsTab("KeyboardKey", { name: Key.ARROW_DOWN });
-        expect(body).toMatchSnapshot();
-    });
-
-    it("renders alternative key name", async () => {
-        const body = await renderKeyboardUserSettingsTab("KeyboardKey", { name: Key.PAGE_DOWN });
-        expect(body).toMatchSnapshot();
-    });
-
-    it("doesn't render + if last", async () => {
-        const body = await renderKeyboardUserSettingsTab("KeyboardKey", { name: Key.A, last: true });
-        expect(body).toMatchSnapshot();
-    });
-
-    it("doesn't render same modifier twice", async () => {
+    it("renders list of keyboard shortcuts", () => {
         mockKeyboardShortcuts({
-            "getKeyboardShortcuts": () => ({
-                "keybind1": {
-                    default: {
-                        key: Key.A,
-                        ctrlOrCmdKey: true,
-                        metaKey: true,
-                    },
-                    displayName: "Cancel replying to a message",
-                },
-            }),
-        });
-        const body1 = await renderKeyboardUserSettingsTab("KeyboardShortcut", { name: "keybind1" });
-        expect(body1).toMatchSnapshot();
-        jest.resetModules();
-
-        mockKeyboardShortcuts({
-            "getKeyboardShortcuts": () => ({
-                "keybind1": {
-                    default: {
-                        key: Key.A,
-                        ctrlOrCmdKey: true,
-                        ctrlKey: true,
-                    },
-                    displayName: "Cancel replying to a message",
-                },
-            }),
-        });
-        const body2 = await renderKeyboardUserSettingsTab("KeyboardShortcut", { name: "keybind1" });
-        expect(body2).toMatchSnapshot();
-        jest.resetModules();
-    });
-
-    it("renders list of keyboard shortcuts", async () => {
-        mockKeyboardShortcuts({
-            "getKeyboardShortcuts": () => ({
-                "keybind1": {
-                    default: {
-                        key: Key.A,
-                        ctrlKey: true,
-                    },
-                    displayName: "Cancel replying to a message",
-                },
-                "keybind2": {
-                    default: {
-                        key: Key.B,
-                        ctrlKey: true,
-                    },
-                    displayName: "Toggle Bold",
-                },
-                "keybind3": {
-                    default: {
-                        key: Key.ENTER,
-                    },
-                    displayName: "Select room from the room list",
-                },
-            }),
-            "CATEGORIES": {
-                "Composer": {
+            CATEGORIES: {
+                Composer: {
                     settingNames: ["keybind1", "keybind2"],
                     categoryLabel: "Composer",
                 },
-                "Navigation": {
+                Navigation: {
                     settingNames: ["keybind3"],
                     categoryLabel: "Navigation",
                 },
             },
         });
+        mockKeyboardShortcutUtils({
+            getKeyboardShortcutValue: (name) => {
+                switch (name) {
+                    case "keybind1":
+                        return {
+                            key: Key.A,
+                            ctrlKey: true,
+                        };
+                    case "keybind2": {
+                        return {
+                            key: Key.B,
+                            ctrlKey: true,
+                        };
+                    }
+                    case "keybind3": {
+                        return {
+                            key: Key.ENTER,
+                        };
+                    }
+                }
+            },
+            getKeyboardShortcutDisplayName: (name) => {
+                switch (name) {
+                    case "keybind1":
+                        return "Cancel replying to a message";
+                    case "keybind2":
+                        return "Toggle Bold";
 
-        const body = await renderKeyboardUserSettingsTab("default");
+                    case "keybind3":
+                        return "Select room from the room list";
+                }
+            },
+        });
+
+        const body = renderKeyboardUserSettingsTab();
         expect(body).toMatchSnapshot();
     });
 });

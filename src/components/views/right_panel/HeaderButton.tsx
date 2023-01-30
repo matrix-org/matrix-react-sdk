@@ -18,21 +18,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
 
-import Analytics from '../../../Analytics';
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ButtonEvent } from "../elements/AccessibleButton";
+import { Alignment } from "../elements/Tooltip";
 
 interface IProps {
     // Whether this button is highlighted
     isHighlighted: boolean;
+    isUnread?: boolean;
     // click handler
     onClick: (ev: ButtonEvent) => void;
-    // The parameters to track the click event
-    analytics: Parameters<typeof Analytics.trackEvent>;
 
     // Button name
     name: string;
@@ -41,30 +39,27 @@ interface IProps {
 }
 
 // TODO: replace this, the composer buttons and the right panel buttons with a unified representation
-@replaceableComponent("views.right_panel.HeaderButton")
 export default class HeaderButton extends React.Component<IProps> {
-    private onClick = (ev: ButtonEvent) => {
-        Analytics.trackEvent(...this.props.analytics);
-        this.props.onClick(ev);
-    };
-
-    public render() {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { isHighlighted, onClick, analytics, name, title, ...props } = this.props;
+    public render(): JSX.Element {
+        const { isHighlighted, isUnread = false, onClick, name, title, ...props } = this.props;
 
         const classes = classNames({
             mx_RightPanel_headerButton: true,
             mx_RightPanel_headerButton_highlight: isHighlighted,
+            mx_RightPanel_headerButton_unread: isUnread,
             [`mx_RightPanel_${name}`]: true,
         });
 
-        return <AccessibleTooltipButton
-            {...props}
-            aria-selected={isHighlighted}
-            role="tab"
-            title={title}
-            className={classes}
-            onClick={this.onClick}
-        />;
+        return (
+            <AccessibleTooltipButton
+                {...props}
+                aria-selected={isHighlighted}
+                role="tab"
+                title={title}
+                alignment={Alignment.Bottom}
+                className={classes}
+                onClick={onClick}
+            />
+        );
     }
 }
