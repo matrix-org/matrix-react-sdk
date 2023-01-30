@@ -363,10 +363,14 @@ export const UserOptionsSection: React.FC<{
     const ignore = useCallback(async () => {
         const { finished } = Modal.createDialog(QuestionDialog, {
             title: _t("Ignore %(user)s", { user: member.name }),
-            description: <div>
-                { _t("All messages and invites from this user will be hidden. " +
-                     "Are you sure you want to ignore them?") }
-            </div>,
+            description: (
+                <div>
+                    {_t(
+                        "All messages and invites from this user will be hidden. " +
+                            "Are you sure you want to ignore them?",
+                    )}
+                </div>
+            ),
             button: _t("Ignore"),
         });
         const [confirmed] = await finished;
