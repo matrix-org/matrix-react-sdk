@@ -50,6 +50,7 @@ import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import SettingsStore from "../../../settings/SettingsStore";
 import DevtoolsDialog from "../dialogs/DevtoolsDialog";
 import { SdkContextClass } from "../../../contexts/SDKContext";
+import { isVideoRoom as calcIsVideoRoom } from "../../../utils/video-rooms";
 
 interface IProps extends IContextMenuProps {
     room: Room;
@@ -107,10 +108,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
     }
 
     const isDm = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
-    const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
-    const elementCallVideoRoomsEnabled = useFeatureEnabled("feature_element_call_video_rooms");
-    const isVideoRoom =
-        videoRoomsEnabled && (room.isElementVideoRoom() || (elementCallVideoRoomsEnabled && room.isCallRoom()));
+    const isVideoRoom = calcIsVideoRoom(room);
 
     let inviteOption: JSX.Element;
     if (room.canInvite(cli.getUserId()!) && !isDm) {

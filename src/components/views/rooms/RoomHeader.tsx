@@ -28,7 +28,6 @@ import { _t } from "../../../languageHandler";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { UserTab } from "../dialogs/UserTab";
-import SettingsStore from "../../../settings/SettingsStore";
 import RoomHeaderButtons from "../right_panel/RoomHeaderButtons";
 import E2EIcon from "./E2EIcon";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
@@ -247,8 +246,7 @@ const CallButtons: FC<CallButtonsProps> = ({ room }) => {
     const [busy, setBusy] = useState(false);
     const showButtons = useSettingValue<boolean>("showCallButtonsInComposer");
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
-    const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
-    const isVideoRoom = useMemo(() => videoRoomsEnabled && calcIsVideoRoom(room), [videoRoomsEnabled, room]);
+    const isVideoRoom = useMemo(() => calcIsVideoRoom(room), [room]);
     const useElementCallExclusively = useMemo(() => {
         return SdkConfig.get("element_call").use_exclusively ?? DEFAULTS.element_call.use_exclusively;
     }, []);
@@ -336,7 +334,7 @@ const CallButtons: FC<CallButtonsProps> = ({ room }) => {
                 </>
             );
         }
-    } else if (hasLegacyCall || hasJitsiWidget) {
+    } else if (hasLegacyCall || hasJitsiWidget || hasGroupCall) {
         return (
             <>
                 {makeVoiceCallButton(new DisabledWithReason(_t("Ongoing call")))}
@@ -717,7 +715,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
     }
 
     public render(): JSX.Element {
-        const isVideoRoom = SettingsStore.getValue("feature_video_rooms") && calcIsVideoRoom(this.props.room);
+        const isVideoRoom = calcIsVideoRoom(this.props.room);
 
         let roomAvatar: JSX.Element | null = null;
         if (this.props.room) {

@@ -245,7 +245,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
         const plContent = plEvent ? plEvent.getContent() || {} : {};
         const canChangeLevels = room.currentState.mayClientSendStateEvent(EventType.RoomPowerLevels, client);
 
-        const plEventsToLabels = {
+        const plEventsToLabels: { [eventType: string]: string | null } = {
             // These will be translated for us later.
             [EventType.RoomAvatar]: isSpaceRoom ? _td("Change space avatar") : _td("Change room avatar"),
             [EventType.RoomName]: isSpaceRoom ? _td("Change space name") : _td("Change room name"),
@@ -265,15 +265,12 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
             "im.vector.modular.widgets": isSpaceRoom ? null : _td("Modify widgets"),
             [VoiceBroadcastInfoEventType]: _td("Voice broadcasts"),
+            [ElementCall.CALL_EVENT_TYPE.name]: _td("Start %(brand)s calls"),
+            [ElementCall.MEMBER_EVENT_TYPE.name]: _td("Join %(brand)s calls"),
         };
 
         if (SettingsStore.getValue("feature_pinning")) {
             plEventsToLabels[EventType.RoomPinnedEvents] = _td("Manage pinned events");
-        }
-        // MSC3401: Native Group VoIP signaling
-        if (SettingsStore.getValue("feature_group_calls")) {
-            plEventsToLabels[ElementCall.CALL_EVENT_TYPE.name] = _td("Start %(brand)s calls");
-            plEventsToLabels[ElementCall.MEMBER_EVENT_TYPE.name] = _td("Join %(brand)s calls");
         }
 
         const powerLevelDescriptors: Record<string, IPowerLevelDescriptor> = {

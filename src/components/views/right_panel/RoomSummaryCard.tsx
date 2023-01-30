@@ -51,6 +51,7 @@ import ExportDialog from "../dialogs/ExportDialog";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { isVideoRoom as calcIsVideoRoom } from "../../../utils/video-rooms";
 
 interface IProps {
     room: Room;
@@ -284,10 +285,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
     const isRoomEncrypted = useIsEncrypted(cli, room);
     const roomContext = useContext(RoomContext);
     const e2eStatus = roomContext.e2eStatus;
-    const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
-    const elementCallVideoRoomsEnabled = useFeatureEnabled("feature_element_call_video_rooms");
-    const isVideoRoom =
-        videoRoomsEnabled && (room.isElementVideoRoom() || (elementCallVideoRoomsEnabled && room.isCallRoom()));
+    const isVideoRoom = calcIsVideoRoom(room);
 
     const alias = room.getCanonicalAlias() || room.getAltAliases()[0] || "";
     const header = (

@@ -505,7 +505,7 @@ export const Notifier = {
      * Some events require special handling such as showing in-app toasts
      */
     _performCustomEventHandling: function (ev: MatrixEvent) {
-        if (ElementCall.CALL_EVENT_TYPE.names.includes(ev.getType()) && SettingsStore.getValue("feature_group_calls")) {
+        if (ElementCall.CALL_EVENT_TYPE.names.includes(ev.getType())) {
             ToastStore.sharedInstance().addOrReplaceToast({
                 key: getIncomingCallToastKey(ev.getStateKey()),
                 priority: 100,

@@ -25,7 +25,6 @@ import { UserTab } from "../dialogs/UserTab";
 import { EffectiveMembership, getEffectiveMembership } from "../../../utils/membership";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useDispatcher } from "../../../hooks/useDispatcher";
-import { useFeatureEnabled } from "../../../hooks/useSettings";
 import { useRoomState } from "../../../hooks/useRoomState";
 import { useMyRoomMembership } from "../../../hooks/useRoomMembers";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -37,6 +36,7 @@ import RoomAvatar from "../avatars/RoomAvatar";
 import MemberAvatar from "../avatars/MemberAvatar";
 import { BetaPill } from "../beta/BetaCard";
 import RoomInfoLine from "./RoomInfoLine";
+import { isVideoRoom } from "../../../utils/video-rooms";
 
 interface IProps {
     room: Room;
@@ -50,9 +50,6 @@ interface IProps {
 // and viewing invite reasons to achieve parity with the default invite screen.
 const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButtonClicked }) => {
     const cli = useContext(MatrixClientContext);
-    const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
-    const elementCallVideoRoomsEnabled = useFeatureEnabled("feature_element_call_video_rooms");
-    const isVideoRoom = room.isElementVideoRoom() || (elementCallVideoRoomsEnabled && room.isCallRoom());
     const myMembership = useMyRoomMembership(room);
     useDispatcher(defaultDispatcher, (payload) => {
         if (payload.action === Action.JoinRoomError && payload.roomId === room.roomId) {
@@ -158,7 +155,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
     }
 
     let avatarRow: JSX.Element;
-    if (isVideoRoom) {
+    if (isVideoRoom(room)) {
         avatarRow = (
             <>
                 <RoomAvatar room={room} height={50} width={50} viewAvatarOnClick />
@@ -177,17 +174,6 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
         notice = _t("To view %(roomName)s, you need an invite", {
             roomName: room.name,
         });
-    } else if (isVideoRoom && !videoRoomsEnabled) {
-        notice =
-            myMembership === "join"
-                ? _t("To view, please enable video rooms in Labs first")
-                : _t("To join, please enable video rooms in Labs first");
-
-        joinButtons = (
-            <AccessibleButton kind="primary" onClick={viewLabs}>
-                {_t("Show Labs settings")}
-            </AccessibleButton>
-        );
     }
 
     return (

@@ -331,7 +331,7 @@ export class JitsiCall extends Call {
 
     public static get(room: Room): JitsiCall | null {
         // Only supported in video rooms
-        if (SettingsStore.getValue("feature_video_rooms") && room.isElementVideoRoom()) {
+        if (room.isElementVideoRoom()) {
             const apps = WidgetStore.instance.getApps(room.roomId);
             // The isVideoChannel field differentiates rich Jitsi calls from bare Jitsi widgets
             const jitsiWidget = apps.find((app) => WidgetType.JITSI.matches(app.type) && app.data?.isVideoChannel);
@@ -700,32 +700,19 @@ export class ElementCall extends Call {
     }
 
     public static get(room: Room): ElementCall | null {
-        // Only supported in the new group call experience or in video rooms
-        if (
-            SettingsStore.getValue("feature_group_calls") ||
-            (SettingsStore.getValue("feature_video_rooms") &&
-                SettingsStore.getValue("feature_element_call_video_rooms") &&
-                room.isCallRoom())
-        ) {
-            const groupCall = room.client.groupCallEventHandler!.groupCalls.get(room.roomId);
-            if (groupCall !== undefined) return new ElementCall(groupCall, room.client);
-        }
+        const groupCall = room.client.groupCallEventHandler!.groupCalls.get(room.roomId);
+        if (groupCall !== undefined) return new ElementCall(groupCall, room.client);
 
         return null;
     }
 
     public static async create(room: Room): Promise<void> {
-        const isVideoRoom =
-            SettingsStore.getValue("feature_video_rooms") &&
-            SettingsStore.getValue("feature_element_call_video_rooms") &&
-            room.isCallRoom();
-
         const groupCall = new GroupCall(
             room.client,
             room,
             GroupCallType.Video,
             false,
-            isVideoRoom ? GroupCallIntent.Room : GroupCallIntent.Prompt,
+            room.isCallRoom() ? GroupCallIntent.Room : GroupCallIntent.Prompt,
         );
 
         await groupCall.create();
