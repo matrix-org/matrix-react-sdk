@@ -78,13 +78,13 @@ export interface EventTileTypeProps {
 type FactoryProps = Omit<EventTileTypeProps, "ref">;
 type Factory<X = FactoryProps> = (ref: Optional<React.RefObject<any>>, props: X) => JSX.Element;
 
-const MessageEventFactory: Factory = (ref, props) => <MessageEvent ref={ref} {...props} />;
+export const MessageEventFactory: Factory = (ref, props) => <MessageEvent ref={ref} {...props} />;
 const KeyVerificationConclFactory: Factory = (ref, props) => <MKeyVerificationConclusion ref={ref} {...props} />;
 const LegacyCallEventFactory: Factory<FactoryProps & { callEventGrouper: LegacyCallEventGrouper }> = (ref, props) => (
     <LegacyCallEvent ref={ref} {...props} />
 );
 const CallEventFactory: Factory = (ref, props) => <CallEvent ref={ref} {...props} />;
-const TextualEventFactory: Factory = (ref, props) => <TextualEvent ref={ref} {...props} />;
+export const TextualEventFactory: Factory = (ref, props) => <TextualEvent ref={ref} {...props} />;
 const VerificationReqFactory: Factory = (ref, props) => <MKeyVerificationRequest ref={ref} {...props} />;
 const HiddenEventFactory: Factory = (ref, props) => <HiddenBody ref={ref} {...props} />;
 
@@ -264,7 +264,7 @@ export function pickFactory(
         return noEventFactoryFactory();
     }
 
-    if (mxEvent.isDecryptionFailure() && isRelatedToVoiceBroadcast(mxEvent, cli)) {
+    if (!showHiddenEvents && mxEvent.isDecryptionFailure() && isRelatedToVoiceBroadcast(mxEvent, cli)) {
         // hide utd events related to a broadcast
         return noEventFactoryFactory();
     }
