@@ -466,11 +466,11 @@ describe("TextForEvent", () => {
         it("returns correct message for redacted message", () => {
             messageEvent.makeRedacted(messageEvent);
 
-            expect(textForEvent(messageEvent)).toEqual("@a: Message deleted");
+            expect(textForEvent(messageEvent)).toEqual("<@a>: Message deleted");
         });
 
         it("returns correct message for normal message", () => {
-            expect(textForEvent(messageEvent)).toEqual("@a: test message");
+            expect(textForEvent(messageEvent)).toEqual("<@a>: test message");
         });
     });
 
