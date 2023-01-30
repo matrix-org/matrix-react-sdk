@@ -18,7 +18,7 @@ limitations under the License.
 
 import type { MatrixClient } from "matrix-js-sdk/src/client";
 import type { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import Chainable = Cypress.Chainable;
 import { UserCredentials } from "../../support/login";
 
@@ -37,12 +37,14 @@ function spaceCreateOptions(spaceName: string): ICreateRoomOpts {
         creation_content: {
             type: "m.space",
         },
-        initial_state: [{
-            type: "m.room.name",
-            content: {
-                name: spaceName,
+        initial_state: [
+            {
+                type: "m.room.name",
+                content: {
+                    name: spaceName,
+                },
             },
-        }],
+        ],
     };
 }
 
@@ -57,14 +59,14 @@ function spaceChildInitialState(roomId: string): ICreateRoomOpts["initial_state"
 }
 
 describe("Spaces", () => {
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
     let user: UserCredentials;
 
     beforeEach(() => {
-        cy.startSynapse("default").then(data => {
-            synapse = data;
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
 
-            cy.initTestUser(synapse, "Sue").then(_user => {
+            cy.initTestUser(homeserver, "Sue").then((_user) => {
                 user = _user;
                 cy.mockClipboard();
             });
@@ -72,48 +74,54 @@ describe("Spaces", () => {
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
     });
 
-    it("should allow user to create public space", () => {
-        openSpaceCreateMenu().within(() => {
+    it.only("should allow user to create public space", () => {
+        openSpaceCreateMenu();
+        cy.get("#mx_ContextualMenu_Container").percySnapshotElement("Space create menu");
+        cy.get(".mx_SpaceCreateMenu_wrapper .mx_ContextualMenu").within(() => {
             cy.get(".mx_SpaceCreateMenuType_public").click();
-            cy.get('.mx_SpaceBasicSettings_avatarContainer input[type="file"]')
-                .selectFile("cypress/fixtures/riot.png", { force: true });
+            cy.get('.mx_SpaceBasicSettings_avatarContainer input[type="file"]').selectFile(
+                "cypress/fixtures/riot.png",
+                { force: true },
+            );
             cy.get('input[label="Name"]').type("Let's have a Riot");
             cy.get('input[label="Address"]').should("have.value", "lets-have-a-riot");
             cy.get('textarea[label="Description"]').type("This is a space to reminisce Riot.im!");
-            cy.get(".mx_AccessibleButton").contains("Create").click();
+            cy.contains(".mx_AccessibleButton", "Create").click();
         });
 
         // Create the default General & Random rooms, as well as a custom "Jokes" room
         cy.get('input[label="Room name"][value="General"]').should("exist");
         cy.get('input[label="Room name"][value="Random"]').should("exist");
         cy.get('input[placeholder="Support"]').type("Jokes");
-        cy.get(".mx_AccessibleButton").contains("Continue").click();
+        cy.contains(".mx_AccessibleButton", "Continue").click();
 
         // Copy matrix.to link
         cy.get(".mx_SpacePublicShare_shareButton").focus().realClick();
         cy.getClipboardText().should("eq", "https://matrix.to/#/#lets-have-a-riot:localhost");
 
         // Go to space home
-        cy.get(".mx_AccessibleButton").contains("Go to my first room").click();
+        cy.contains(".mx_AccessibleButton", "Go to my first room").click();
 
         // Assert rooms exist in the room list
-        cy.get(".mx_RoomList").contains(".mx_RoomTile", "General").should("exist");
-        cy.get(".mx_RoomList").contains(".mx_RoomTile", "Random").should("exist");
-        cy.get(".mx_RoomList").contains(".mx_RoomTile", "Jokes").should("exist");
+        cy.contains(".mx_RoomList .mx_RoomTile", "General").should("exist");
+        cy.contains(".mx_RoomList .mx_RoomTile", "Random").should("exist");
+        cy.contains(".mx_RoomList .mx_RoomTile", "Jokes").should("exist");
     });
 
     it("should allow user to create private space", () => {
         openSpaceCreateMenu().within(() => {
             cy.get(".mx_SpaceCreateMenuType_private").click();
-            cy.get('.mx_SpaceBasicSettings_avatarContainer input[type="file"]')
-                .selectFile("cypress/fixtures/riot.png", { force: true });
+            cy.get('.mx_SpaceBasicSettings_avatarContainer input[type="file"]').selectFile(
+                "cypress/fixtures/riot.png",
+                { force: true },
+            );
             cy.get('input[label="Name"]').type("This is not a Riot");
             cy.get('input[label="Address"]').should("not.exist");
             cy.get('textarea[label="Description"]').type("This is a private space of mourning Riot.im...");
-            cy.get(".mx_AccessibleButton").contains("Create").click();
+            cy.contains(".mx_AccessibleButton", "Create").click();
         });
 
         cy.get(".mx_SpaceRoomView_privateScope_meAndMyTeammatesButton").click();
@@ -122,20 +130,20 @@ describe("Spaces", () => {
         cy.get('input[label="Room name"][value="General"]').should("exist");
         cy.get('input[label="Room name"][value="Random"]').should("exist");
         cy.get('input[placeholder="Support"]').type("Projects");
-        cy.get(".mx_AccessibleButton").contains("Continue").click();
+        cy.contains(".mx_AccessibleButton", "Continue").click();
 
         cy.get(".mx_SpaceRoomView").should("contain", "Invite your teammates");
-        cy.get(".mx_AccessibleButton").contains("Skip for now").click();
+        cy.contains(".mx_AccessibleButton", "Skip for now").click();
 
         // Assert rooms exist in the room list
-        cy.get(".mx_RoomList").contains(".mx_RoomTile", "General").should("exist");
-        cy.get(".mx_RoomList").contains(".mx_RoomTile", "Random").should("exist");
-        cy.get(".mx_RoomList").contains(".mx_RoomTile", "Projects").should("exist");
+        cy.contains(".mx_RoomList .mx_RoomTile", "General").should("exist");
+        cy.contains(".mx_RoomList .mx_RoomTile", "Random").should("exist");
+        cy.contains(".mx_RoomList .mx_RoomTile", "Projects").should("exist");
 
         // Assert rooms exist in the space explorer
-        cy.get(".mx_SpaceHierarchy_list").contains(".mx_SpaceHierarchy_roomTile", "General").should("exist");
-        cy.get(".mx_SpaceHierarchy_list").contains(".mx_SpaceHierarchy_roomTile", "Random").should("exist");
-        cy.get(".mx_SpaceHierarchy_list").contains(".mx_SpaceHierarchy_roomTile", "Projects").should("exist");
+        cy.contains(".mx_SpaceHierarchy_list .mx_SpaceHierarchy_roomTile", "General").should("exist");
+        cy.contains(".mx_SpaceHierarchy_list .mx_SpaceHierarchy_roomTile", "Random").should("exist");
+        cy.contains(".mx_SpaceHierarchy_list .mx_SpaceHierarchy_roomTile", "Projects").should("exist");
     });
 
     it("should allow user to create just-me space", () => {
@@ -145,8 +153,10 @@ describe("Spaces", () => {
 
         openSpaceCreateMenu().within(() => {
             cy.get(".mx_SpaceCreateMenuType_private").click();
-            cy.get('.mx_SpaceBasicSettings_avatarContainer input[type="file"]')
-                .selectFile("cypress/fixtures/riot.png", { force: true });
+            cy.get('.mx_SpaceBasicSettings_avatarContainer input[type="file"]').selectFile(
+                "cypress/fixtures/riot.png",
+                { force: true },
+            );
             cy.get('input[label="Address"]').should("not.exist");
             cy.get('textarea[label="Description"]').type("This is a personal space to mourn Riot.im...");
             cy.get('input[label="Name"]').type("This is my Riot{enter}");
@@ -155,15 +165,15 @@ describe("Spaces", () => {
         cy.get(".mx_SpaceRoomView_privateScope_justMeButton").click();
 
         cy.get(".mx_AddExistingToSpace_entry").click();
-        cy.get(".mx_AccessibleButton").contains("Add").click();
+        cy.contains(".mx_AccessibleButton", "Add").click();
 
-        cy.get(".mx_RoomList").contains(".mx_RoomTile", "Sample Room").should("exist");
-        cy.get(".mx_SpaceHierarchy_list").contains(".mx_SpaceHierarchy_roomTile", "Sample Room").should("exist");
+        cy.contains(".mx_RoomList .mx_RoomTile", "Sample Room").should("exist");
+        cy.contains(".mx_SpaceHierarchy_list .mx_SpaceHierarchy_roomTile", "Sample Room").should("exist");
     });
 
     it("should allow user to invite another to a space", () => {
         let bot: MatrixClient;
-        cy.getBot(synapse, { displayName: "BotBob" }).then(_bot => {
+        cy.getBot(homeserver, { displayName: "BotBob" }).then((_bot) => {
             bot = _bot;
         });
 
@@ -186,7 +196,7 @@ describe("Spaces", () => {
 
         cy.get(".mx_InviteDialog_other").within(() => {
             cy.get('input[type="text"]').type(bot.getUserId());
-            cy.get(".mx_AccessibleButton").contains("Invite").click();
+            cy.contains(".mx_AccessibleButton", "Invite").click();
         });
 
         cy.get(".mx_InviteDialog_other").should("not.exist");
@@ -198,13 +208,17 @@ describe("Spaces", () => {
         });
         cy.getSpacePanelButton("My Space").should("exist");
 
-        cy.getBot(synapse, { displayName: "BotBob" }).then({ timeout: 10000 }, async bot => {
+        cy.getBot(homeserver, { displayName: "BotBob" }).then({ timeout: 10000 }, async (bot) => {
             const { room_id: roomId } = await bot.createRoom(spaceCreateOptions("Space Space"));
             await bot.invite(roomId, user.userId);
         });
         // Assert that `Space Space` is above `My Space` due to it being an invite
-        cy.getSpacePanelButton("Space Space").should("exist")
-            .parent().next().find('.mx_SpaceButton[aria-label="My Space"]').should("exist");
+        cy.getSpacePanelButton("Space Space")
+            .should("exist")
+            .parent()
+            .next()
+            .find('.mx_SpaceButton[aria-label="My Space"]')
+            .should("exist");
     });
 
     it("should include rooms in space home", () => {
@@ -216,16 +230,10 @@ describe("Spaces", () => {
         }).as("roomId2");
 
         const spaceName = "Spacey Mc. Space Space";
-        cy.all([
-            cy.get<string>("@roomId1"),
-            cy.get<string>("@roomId2"),
-        ]).then(([roomId1, roomId2]) => {
+        cy.all([cy.get<string>("@roomId1"), cy.get<string>("@roomId2")]).then(([roomId1, roomId2]) => {
             cy.createSpace({
                 name: spaceName,
-                initial_state: [
-                    spaceChildInitialState(roomId1),
-                    spaceChildInitialState(roomId2),
-                ],
+                initial_state: [spaceChildInitialState(roomId1), spaceChildInitialState(roomId2)],
             }).as("spaceId");
         });
 
@@ -244,12 +252,10 @@ describe("Spaces", () => {
         cy.createSpace({
             name: "Child Space",
             initial_state: [],
-        }).then(spaceId => {
+        }).then((spaceId) => {
             cy.createSpace({
                 name: "Root Space",
-                initial_state: [
-                    spaceChildInitialState(spaceId),
-                ],
+                initial_state: [spaceChildInitialState(spaceId)],
             }).as("spaceId");
         });
         cy.get('.mx_SpacePanel .mx_SpaceButton[aria-label="Root Space"]').should("exist");
@@ -258,7 +264,7 @@ describe("Spaces", () => {
         const axeOptions = {
             rules: {
                 // Disable this check as it triggers on nested roving tab index elements which are in practice fine
-                'nested-interactive': {
+                "nested-interactive": {
                     enabled: false,
                 },
             },
@@ -269,8 +275,10 @@ describe("Spaces", () => {
         cy.get(".mx_SpaceButton_toggleCollapse").click({ force: true });
         cy.get(".mx_SpacePanel:not(.collapsed)").should("exist");
 
-        cy.contains(".mx_SpaceItem", "Root Space").should("exist")
-            .contains(".mx_SpaceItem", "Child Space").should("exist");
+        cy.contains(".mx_SpaceItem", "Root Space")
+            .should("exist")
+            .contains(".mx_SpaceItem", "Child Space")
+            .should("exist");
 
         cy.checkA11y(undefined, axeOptions);
         cy.get(".mx_SpacePanel").percySnapshotElement("Space panel expanded", { widths: [258] });

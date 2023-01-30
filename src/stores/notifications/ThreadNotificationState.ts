@@ -27,7 +27,7 @@ export class ThreadNotificationState extends NotificationState implements IDestr
     protected _count = 0;
     protected _color = NotificationColor.None;
 
-    constructor(public readonly thread: Thread) {
+    public constructor(public readonly thread: Thread) {
         super();
         this.thread.on(ThreadEvent.NewReply, this.handleNewThreadReply);
         this.thread.on(ThreadEvent.ViewThread, this.resetThreadNotification);
@@ -43,7 +43,7 @@ export class ThreadNotificationState extends NotificationState implements IDestr
         this.thread.off(ThreadEvent.ViewThread, this.resetThreadNotification);
     }
 
-    private handleNewThreadReply = (thread: Thread, event: MatrixEvent) => {
+    private handleNewThreadReply = (thread: Thread, event: MatrixEvent): void => {
         const client = MatrixClientPeg.get();
 
         const myUserId = client.getUserId();
@@ -51,13 +51,11 @@ export class ThreadNotificationState extends NotificationState implements IDestr
         const isOwn = myUserId === event.getSender();
         const readReceipt = this.thread.room.getReadReceiptForUserId(myUserId);
 
-        if (!isOwn && !readReceipt || (readReceipt && event.getTs() >= readReceipt.data.ts)) {
+        if ((!isOwn && !readReceipt) || (readReceipt && event.getTs() >= readReceipt.data.ts)) {
             const actions = client.getPushActionsForEvent(event, true);
 
             if (actions?.tweaks) {
-                const color = !!actions.tweaks.highlight
-                    ? NotificationColor.Red
-                    : NotificationColor.Grey;
+                const color = !!actions.tweaks.highlight ? NotificationColor.Red : NotificationColor.Grey;
 
                 this.updateNotificationState(color);
             }
@@ -68,7 +66,7 @@ export class ThreadNotificationState extends NotificationState implements IDestr
         this.updateNotificationState(NotificationColor.None);
     };
 
-    private updateNotificationState(color: NotificationColor) {
+    private updateNotificationState(color: NotificationColor): void {
         const snapshot = this.snapshot();
 
         this._color = color;

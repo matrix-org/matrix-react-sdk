@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
-import { Room } from "matrix-js-sdk/src/matrix";
+import { Room, RoomType } from "matrix-js-sdk/src/matrix";
 
 import { VisibilityProvider } from "../../../../src/stores/room-list/filters/VisibilityProvider";
-import CallHandler from "../../../../src/CallHandler";
+import LegacyCallHandler from "../../../../src/LegacyCallHandler";
 import VoipUserMapper from "../../../../src/VoipUserMapper";
 import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../../../../src/models/LocalRoom";
 import { RoomListCustomisations } from "../../../../src/customisations/RoomList";
@@ -28,7 +28,7 @@ jest.mock("../../../../src/VoipUserMapper", () => ({
     sharedInstance: jest.fn(),
 }));
 
-jest.mock("../../../../src/CallHandler", () => ({
+jest.mock("../../../../src/LegacyCallHandler", () => ({
     instance: {
         getSupportsVirtualRooms: jest.fn(),
     },
@@ -43,6 +43,7 @@ jest.mock("../../../../src/customisations/RoomList", () => ({
 const createRoom = (isSpaceRoom = false): Room => {
     return {
         isSpaceRoom: () => isSpaceRoom,
+        getType: () => (isSpaceRoom ? RoomType.Space : undefined),
     } as unknown as Room;
 };
 
@@ -82,7 +83,7 @@ describe("VisibilityProvider", () => {
     describe("isRoomVisible", () => {
         describe("for a virtual room", () => {
             beforeEach(() => {
-                mocked(CallHandler.instance.getSupportsVirtualRooms).mockReturnValue(true);
+                mocked(LegacyCallHandler.instance.getSupportsVirtualRooms).mockReturnValue(true);
                 mocked(mockVoipUserMapper.isVirtualRoom).mockReturnValue(true);
             });
 

@@ -33,7 +33,7 @@ type DownloadOptions = {
 // set up the iframe as a singleton so we don't have to figure out destruction of it down the line.
 let managedIframe: HTMLIFrameElement;
 let onLoadPromise: Promise<void>;
-function getManagedIframe(): { iframe: HTMLIFrameElement, onLoadPromise: Promise<void> } {
+function getManagedIframe(): { iframe: HTMLIFrameElement; onLoadPromise: Promise<void> } {
     if (managedIframe) return { iframe: managedIframe, onLoadPromise };
 
     managedIframe = document.createElement("iframe");
@@ -49,7 +49,7 @@ function getManagedIframe(): { iframe: HTMLIFrameElement, onLoadPromise: Promise
     // noinspection JSConstantReassignment
     managedIframe.sandbox = "allow-scripts allow-downloads allow-downloads-without-user-activation";
 
-    onLoadPromise = new Promise(resolve => {
+    onLoadPromise = new Promise((resolve) => {
         managedIframe.onload = () => {
             resolve();
         };
@@ -75,8 +75,7 @@ export class FileDownloader {
      * @param iframeFn Function to get a pre-configured iframe. Set to null to have the downloader
      * use a generic, hidden, iframe.
      */
-    constructor(private iframeFn: getIframeFn = null) {
-    }
+    public constructor(private iframeFn: getIframeFn = null) {}
 
     private get iframe(): HTMLIFrameElement {
         const iframe = this.iframeFn?.();
@@ -89,14 +88,17 @@ export class FileDownloader {
         return iframe;
     }
 
-    public async download({ blob, name, autoDownload = true, opts = DEFAULT_STYLES }: DownloadOptions) {
+    public async download({ blob, name, autoDownload = true, opts = DEFAULT_STYLES }: DownloadOptions): Promise<void> {
         const iframe = this.iframe; // get the iframe first just in case we need to await onload
         if (this.onLoadPromise) await this.onLoadPromise;
-        iframe.contentWindow.postMessage({
-            ...opts,
-            blob: blob,
-            download: name,
-            auto: autoDownload,
-        }, '*');
+        iframe.contentWindow.postMessage(
+            {
+                ...opts,
+                blob: blob,
+                download: name,
+                auto: autoDownload,
+            },
+            "*",
+        );
     }
 }

@@ -25,14 +25,15 @@ import { _t } from "../languageHandler";
 import Modal from "../Modal";
 import { Notifier } from "../Notifier";
 import PosthogTrackers from "../PosthogTrackers";
+import SdkConfig from "../SdkConfig";
 import { UseCase } from "../settings/enums/UseCase";
 import { useSettingValue } from "./useSettings";
 import { UserOnboardingContext } from "./useUserOnboardingContext";
 
-export interface UserOnboardingTask {
+interface UserOnboardingTask {
     id: string;
-    title: string;
-    description: string;
+    title: string | (() => string);
+    description: string | (() => string);
     relevant?: UseCase[];
     action?: {
         label: string;
@@ -40,20 +41,19 @@ export interface UserOnboardingTask {
         href?: string;
         hideOnComplete?: boolean;
     };
-}
-
-interface InternalUserOnboardingTask extends UserOnboardingTask {
     completed: (ctx: UserOnboardingContext) => boolean;
 }
 
-const hasOpenDMs = (ctx: UserOnboardingContext) => Boolean(Object.entries(ctx.dmRooms).length);
+export interface UserOnboardingTaskWithResolvedCompletion extends Omit<UserOnboardingTask, "completed"> {
+    completed: boolean;
+}
 
-const onClickStartDm = (ev: ButtonEvent) => {
+const onClickStartDm = (ev: ButtonEvent): void => {
     PosthogTrackers.trackInteraction("WebUserOnboardingTaskSendDm", ev);
-    defaultDispatcher.dispatch({ action: 'view_create_chat' });
+    defaultDispatcher.dispatch({ action: "view_create_chat" });
 };
 
-const tasks: InternalUserOnboardingTask[] = [
+const tasks: UserOnboardingTask[] = [
     {
         id: "create-account",
         title: _t("Create account"),
@@ -64,7 +64,7 @@ const tasks: InternalUserOnboardingTask[] = [
         id: "find-friends",
         title: _t("Find and invite your friends"),
         description: _t("It’s what you’re here for, so lets get to it"),
-        completed: hasOpenDMs,
+        completed: (ctx: UserOnboardingContext) => ctx.hasDmRooms,
         relevant: [UseCase.PersonalMessaging, UseCase.Skip],
         action: {
             label: _t("Find friends"),
@@ -75,7 +75,7 @@ const tasks: InternalUserOnboardingTask[] = [
         id: "find-coworkers",
         title: _t("Find and invite your co-workers"),
         description: _t("Get stuff done by finding your teammates"),
-        completed: hasOpenDMs,
+        completed: (ctx: UserOnboardingContext) => ctx.hasDmRooms,
         relevant: [UseCase.WorkMessaging],
         action: {
             label: _t("Find people"),
@@ -86,7 +86,7 @@ const tasks: InternalUserOnboardingTask[] = [
         id: "find-community-members",
         title: _t("Find and invite your community members"),
         description: _t("Get stuff done by finding your teammates"),
-        completed: hasOpenDMs,
+        completed: (ctx: UserOnboardingContext) => ctx.hasDmRooms,
         relevant: [UseCase.CommunityMessaging],
         action: {
             label: _t("Find people"),
@@ -95,11 +95,15 @@ const tasks: InternalUserOnboardingTask[] = [
     },
     {
         id: "download-apps",
-        title: _t("Download Element"),
-        description: _t("Don’t miss a thing by taking Element with you"),
-        completed: (ctx: UserOnboardingContext) => {
-            return Boolean(ctx.devices.filter(it => it.device_id !== ctx.myDevice).length);
-        },
+        title: () =>
+            _t("Download %(brand)s", {
+                brand: SdkConfig.get("brand"),
+            }),
+        description: () =>
+            _t("Don’t miss a thing by taking %(brand)s with you", {
+                brand: SdkConfig.get("brand"),
+            }),
+        completed: (ctx: UserOnboardingContext) => ctx.hasDevices,
         action: {
             label: _t("Download apps"),
             onClick: (ev: ButtonEvent) => {
@@ -112,7 +116,7 @@ const tasks: InternalUserOnboardingTask[] = [
         id: "setup-profile",
         title: _t("Set up your profile"),
         description: _t("Make sure people know it’s really you"),
-        completed: (info: UserOnboardingContext) => Boolean(info.avatar),
+        completed: (ctx: UserOnboardingContext) => ctx.hasAvatar,
         action: {
             label: _t("Your profile"),
             onClick: (ev: ButtonEvent) => {
@@ -128,7 +132,7 @@ const tasks: InternalUserOnboardingTask[] = [
         id: "permission-notifications",
         title: _t("Turn on notifications"),
         description: _t("Don’t miss a reply or important message"),
-        completed: () => Notifier.isPossible(),
+        completed: (ctx: UserOnboardingContext) => ctx.hasNotificationsEnabled,
         action: {
             label: _t("Enable notifications"),
             onClick: (ev: ButtonEvent) => {
@@ -140,12 +144,15 @@ const tasks: InternalUserOnboardingTask[] = [
     },
 ];
 
-export function useUserOnboardingTasks(context: UserOnboardingContext): [UserOnboardingTask[], UserOnboardingTask[]] {
+export function useUserOnboardingTasks(context: UserOnboardingContext): UserOnboardingTaskWithResolvedCompletion[] {
     const useCase = useSettingValue<UseCase | null>("FTUE.useCaseSelection") ?? UseCase.Skip;
-    const relevantTasks = useMemo(
-        () => tasks.filter(it => !it.relevant || it.relevant.includes(useCase)),
-        [useCase],
-    );
-    const completedTasks = relevantTasks.filter(it => context && it.completed(context));
-    return [completedTasks, relevantTasks.filter(it => !completedTasks.includes(it))];
+
+    return useMemo<UserOnboardingTaskWithResolvedCompletion[]>(() => {
+        return tasks
+            .filter((task) => !task.relevant || task.relevant.includes(useCase))
+            .map((task) => ({
+                ...task,
+                completed: task.completed(context),
+            }));
+    }, [context, useCase]);
 }

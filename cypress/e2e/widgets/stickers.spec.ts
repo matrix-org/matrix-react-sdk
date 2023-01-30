@@ -16,7 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 
 const STICKER_PICKER_WIDGET_ID = "fake-sticker-picker";
 const STICKER_PICKER_WIDGET_NAME = "Fake Stickers";
@@ -67,8 +67,8 @@ const WIDGET_HTML = `
 `;
 
 function openStickerPicker() {
-    cy.get('.mx_MessageComposer_buttonMenu').click();
-    cy.get('#stickersButton').click();
+    cy.get(".mx_MessageComposer_buttonMenu").click();
+    cy.get("#stickersButton").click();
 }
 
 function sendStickerFromPicker() {
@@ -76,18 +76,16 @@ function sendStickerFromPicker() {
     // to use `chromeWebSecurity: false` in our cypress config. Not even cy.origin() can
     // break into the iframe for us :(
     cy.accessIframe(`iframe[title="${STICKER_PICKER_WIDGET_NAME}"]`).within({}, () => {
-        cy.get("#sendsticker").should('exist').click();
+        cy.get("#sendsticker").should("exist").click();
     });
 
     // Sticker picker should close itself after sending.
-    cy.get(".mx_AppTileFullWidth#stickers").should('not.exist');
+    cy.get(".mx_AppTileFullWidth#stickers").should("not.exist");
 }
 
 function expectTimelineSticker(roomId: string) {
     // Make sure it's in the right room
-    cy.get('.mx_EventTile_sticker > a')
-        .should("have.attr", "href")
-        .and("include", `/${roomId}/`);
+    cy.get(".mx_EventTile_sticker > a").should("have.attr", "href").and("include", `/${roomId}/`);
 
     // Make sure the image points at the sticker image
     cy.get<HTMLImageElement>(`img[alt="${STICKER_NAME}"]`)
@@ -104,25 +102,25 @@ describe("Stickers", () => {
     // See sendStickerFromPicker() for more detail on iframe comms.
 
     let stickerPickerUrl: string;
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
 
     beforeEach(() => {
-        cy.startSynapse("default").then(data => {
-            synapse = data;
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
 
-            cy.initTestUser(synapse, "Sally");
+            cy.initTestUser(homeserver, "Sally");
         });
-        cy.serveHtmlFile(WIDGET_HTML).then(url => {
+        cy.serveHtmlFile(WIDGET_HTML).then((url) => {
             stickerPickerUrl = url;
         });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
         cy.stopWebServers();
     });
 
-    it('should send a sticker to multiple rooms', () => {
+    it("should send a sticker to multiple rooms", () => {
         cy.createRoom({
             name: ROOM_NAME_1,
         }).as("roomId1");

@@ -21,7 +21,7 @@ import EventTileBubble from "../messages/EventTileBubble";
 import RoomContext from "../../../contexts/RoomContext";
 import { _t } from "../../../languageHandler";
 
-const HistoryTile = () => {
+const HistoryTile: React.FC = () => {
     const { room } = useContext(RoomContext);
 
     const oldState = room.getLiveTimeline().getState(EventTimeline.BACKWARDS);
@@ -37,11 +37,9 @@ const HistoryTile = () => {
         subtitle = _t("Encrypted messages before this point are unavailable.");
     }
 
-    return <EventTileBubble
-        className="mx_HistoryTile"
-        title={_t("You can't see earlier messages")}
-        subtitle={subtitle}
-    />;
+    return (
+        <EventTileBubble className="mx_HistoryTile" title={_t("You can't see earlier messages")} subtitle={subtitle} />
+    );
 };
 
 export default HistoryTile;

@@ -112,6 +112,24 @@ exports[`<DevicesPanel /> renders device panel with devices 1`] = `
         data-testid="device-tile-device_1"
       >
         <div
+          class="mx_DeviceTypeIcon"
+        >
+          <div
+            class="mx_DeviceTypeIcon_deviceIconWrapper"
+          >
+            <div
+              aria-label="Unknown session type"
+              class="mx_DeviceTypeIcon_deviceIcon"
+              role="img"
+            />
+          </div>
+          <div
+            aria-label="Unverified"
+            class="mx_DeviceTypeIcon_verificationIcon unverified"
+            role="img"
+          />
+        </div>
+        <div
           class="mx_DeviceTile_info"
         >
           <h4
@@ -128,7 +146,11 @@ exports[`<DevicesPanel /> renders device panel with devices 1`] = `
               Unverified
             </span>
              · 
-             · 
+            <span
+              data-testid="device-metadata-deviceId"
+            >
+              device_1
+            </span>
           </div>
         </div>
         <div
@@ -196,6 +218,7 @@ exports[`<DevicesPanel /> renders device panel with devices 1`] = `
           class="mx_Checkbox mx_SelectableDeviceTile_checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
         >
           <input
+            data-testid="device-tile-checkbox-device_2"
             id="device-tile-checkbox-device_2"
             type="checkbox"
           />
@@ -216,6 +239,24 @@ exports[`<DevicesPanel /> renders device panel with devices 1`] = `
           data-testid="device-tile-device_2"
         >
           <div
+            class="mx_DeviceTypeIcon"
+          >
+            <div
+              class="mx_DeviceTypeIcon_deviceIconWrapper"
+            >
+              <div
+                aria-label="Unknown session type"
+                class="mx_DeviceTypeIcon_deviceIcon"
+                role="img"
+              />
+            </div>
+            <div
+              aria-label="Unverified"
+              class="mx_DeviceTypeIcon_verificationIcon unverified"
+              role="img"
+            />
+          </div>
+          <div
             class="mx_DeviceTile_info"
           >
             <h4
@@ -232,7 +273,11 @@ exports[`<DevicesPanel /> renders device panel with devices 1`] = `
                 Unverified
               </span>
                · 
-               · 
+              <span
+                data-testid="device-metadata-deviceId"
+              >
+                device_2
+              </span>
             </div>
           </div>
           <div
@@ -259,6 +304,7 @@ exports[`<DevicesPanel /> renders device panel with devices 1`] = `
           class="mx_Checkbox mx_SelectableDeviceTile_checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
         >
           <input
+            data-testid="device-tile-checkbox-device_3"
             id="device-tile-checkbox-device_3"
             type="checkbox"
           />
@@ -279,6 +325,24 @@ exports[`<DevicesPanel /> renders device panel with devices 1`] = `
           data-testid="device-tile-device_3"
         >
           <div
+            class="mx_DeviceTypeIcon"
+          >
+            <div
+              class="mx_DeviceTypeIcon_deviceIconWrapper"
+            >
+              <div
+                aria-label="Unknown session type"
+                class="mx_DeviceTypeIcon_deviceIcon"
+                role="img"
+              />
+            </div>
+            <div
+              aria-label="Unverified"
+              class="mx_DeviceTypeIcon_verificationIcon unverified"
+              role="img"
+            />
+          </div>
+          <div
             class="mx_DeviceTile_info"
           >
             <h4
@@ -295,7 +359,11 @@ exports[`<DevicesPanel /> renders device panel with devices 1`] = `
                 Unverified
               </span>
                · 
-               · 
+              <span
+                data-testid="device-metadata-deviceId"
+              >
+                device_3
+              </span>
             </div>
           </div>
           <div

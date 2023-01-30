@@ -32,11 +32,11 @@ const DEFAULT_SETTINGS_EVENT_TYPE = "im.vector.web.settings";
  * Gets and sets settings at the "room-account" level for the current user.
  */
 export default class RoomAccountSettingsHandler extends MatrixClientBackedSettingsHandler {
-    constructor(public readonly watchers: WatchManager) {
+    public constructor(public readonly watchers: WatchManager) {
         super();
     }
 
-    protected initMatrixClient(oldClient: MatrixClient, newClient: MatrixClient) {
+    protected initMatrixClient(oldClient: MatrixClient, newClient: MatrixClient): void {
         if (oldClient) {
             oldClient.removeListener(RoomEvent.AccountData, this.onAccountData);
         }
@@ -44,12 +44,12 @@ export default class RoomAccountSettingsHandler extends MatrixClientBackedSettin
         newClient.on(RoomEvent.AccountData, this.onAccountData);
     }
 
-    private onAccountData = (event: MatrixEvent, room: Room, prevEvent: MatrixEvent) => {
+    private onAccountData = (event: MatrixEvent, room: Room, prevEvent: MatrixEvent): void => {
         const roomId = room.roomId;
 
         if (event.getType() === "org.matrix.room.preview_urls") {
-            let val = event.getContent()['disable'];
-            if (typeof (val) !== "boolean") {
+            let val = event.getContent()["disable"];
+            if (typeof val !== "boolean") {
                 val = null;
             } else {
                 val = !val;
@@ -75,8 +75,8 @@ export default class RoomAccountSettingsHandler extends MatrixClientBackedSettin
             const content = this.getSettings(roomId, "org.matrix.room.preview_urls") || {};
 
             // Check to make sure that we actually got a boolean
-            if (typeof (content['disable']) !== "boolean") return null;
-            return !content['disable'];
+            if (typeof content["disable"] !== "boolean") return null;
+            return !content["disable"];
         }
 
         // Special case allowed widgets
@@ -107,7 +107,7 @@ export default class RoomAccountSettingsHandler extends MatrixClientBackedSettin
         await this.client.setRoomAccountData(roomId, eventType, content);
 
         const deferred = defer<void>();
-        const handler = (event: MatrixEvent, room: Room) => {
+        const handler = (event: MatrixEvent, room: Room): void => {
             if (room.roomId !== roomId || event.getType() !== eventType) return;
             if (field !== null && event.getContent()[field] !== value) return;
             this.client.off(RoomEvent.AccountData, handler);
@@ -142,7 +142,8 @@ export default class RoomAccountSettingsHandler extends MatrixClientBackedSettin
         return this.client && !this.client.isGuest();
     }
 
-    private getSettings(roomId: string, eventType = DEFAULT_SETTINGS_EVENT_TYPE): any { // TODO: [TS] Type return
+    private getSettings(roomId: string, eventType = DEFAULT_SETTINGS_EVENT_TYPE): any {
+        // TODO: [TS] Type return
         const event = this.client.getRoom(roomId)?.getAccountData(eventType);
         if (!event || !event.getContent()) return null;
         return objectClone(event.getContent()); // clone to prevent mutation

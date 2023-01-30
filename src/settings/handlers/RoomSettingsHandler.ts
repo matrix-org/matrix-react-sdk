@@ -31,11 +31,11 @@ const DEFAULT_SETTINGS_EVENT_TYPE = "im.vector.web.settings";
  * Gets and sets settings at the "room" level.
  */
 export default class RoomSettingsHandler extends MatrixClientBackedSettingsHandler {
-    constructor(public readonly watchers: WatchManager) {
+    public constructor(public readonly watchers: WatchManager) {
         super();
     }
 
-    protected initMatrixClient(oldClient: MatrixClient, newClient: MatrixClient) {
+    protected initMatrixClient(oldClient: MatrixClient, newClient: MatrixClient): void {
         if (oldClient) {
             oldClient.removeListener(RoomStateEvent.Events, this.onEvent);
         }
@@ -43,7 +43,7 @@ export default class RoomSettingsHandler extends MatrixClientBackedSettingsHandl
         newClient.on(RoomStateEvent.Events, this.onEvent);
     }
 
-    private onEvent = (event: MatrixEvent, state: RoomState, prevEvent: MatrixEvent) => {
+    private onEvent = (event: MatrixEvent, state: RoomState, prevEvent: MatrixEvent): void => {
         const roomId = event.getRoomId();
         const room = this.client.getRoom(roomId);
 
@@ -57,8 +57,8 @@ export default class RoomSettingsHandler extends MatrixClientBackedSettingsHandl
         if (room && state !== room.currentState) return;
 
         if (event.getType() === "org.matrix.room.preview_urls") {
-            let val = event.getContent()['disable'];
-            if (typeof (val) !== "boolean") {
+            let val = event.getContent()["disable"];
+            if (typeof val !== "boolean") {
                 val = null;
             } else {
                 val = !val;
@@ -81,8 +81,8 @@ export default class RoomSettingsHandler extends MatrixClientBackedSettingsHandl
             const content = this.getSettings(roomId, "org.matrix.room.preview_urls") || {};
 
             // Check to make sure that we actually got a boolean
-            if (typeof (content['disable']) !== "boolean") return null;
-            return !content['disable'];
+            if (typeof content["disable"] !== "boolean") return null;
+            return !content["disable"];
         }
 
         const settings = this.getSettings(roomId) || {};
@@ -90,19 +90,14 @@ export default class RoomSettingsHandler extends MatrixClientBackedSettingsHandl
     }
 
     // helper function to send state event then await it being echoed back
-    private async sendStateEvent(
-        roomId: string,
-        eventType: string,
-        field: string,
-        value: any,
-    ): Promise<void> {
+    private async sendStateEvent(roomId: string, eventType: string, field: string, value: any): Promise<void> {
         const content = this.getSettings(roomId, eventType) || {};
         content[field] = value;
 
         const { event_id: eventId } = await this.client.sendStateEvent(roomId, eventType, content);
 
         const deferred = defer<void>();
-        const handler = (event: MatrixEvent) => {
+        const handler = (event: MatrixEvent): void => {
             if (event.getId() !== eventId) return;
             this.client.off(RoomStateEvent.Events, handler);
             deferred.resolve();

@@ -74,9 +74,9 @@ export const Key = {
     Z: "z",
 };
 
-export const IS_MAC = navigator.platform.toUpperCase().includes('MAC');
+export const IS_MAC = navigator.platform.toUpperCase().includes("MAC");
 
-export function isOnlyCtrlOrCmdKeyEvent(ev) {
+export function isOnlyCtrlOrCmdKeyEvent(ev: KeyboardEvent): boolean {
     if (IS_MAC) {
         return ev.metaKey && !ev.altKey && !ev.ctrlKey && !ev.shiftKey;
     } else {

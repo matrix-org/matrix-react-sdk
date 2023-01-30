@@ -84,9 +84,18 @@ limitations under the License.
         .mx_MessageComposer_sendMessage {
             margin-right: 0;
         }
+
+        // Make use of the space above the composer buttons too
+        .mx_Autocomplete {
+            width: calc(100% + 140px);
+        }
+        &.mx_ThreadView_narrow .mx_Autocomplete {
+            width: calc(100% + 108px);
+        }
     }
 
-    .mx_RoomView_messagePanel { /* To avoid the rule from being applied to .mx_ThreadPanel_empty */
+    .mx_RoomView_messagePanel {
+        /* To avoid the rule from being applied to .mx_ThreadPanel_empty */
         .mx_RoomView_messageListWrapper {
             width: calc(100% + 6px); /* 8px - 2px */
         }
@@ -121,7 +130,7 @@ limitations under the License.
     }
 
     .mx_MessageTimestamp {
-        color: $secondary-content;
+        color: $event-timestamp-color;
     }
 
     .mx_BaseCard_footer {
@@ -141,11 +150,11 @@ limitations under the License.
 }
 
 .mx_ThreadPanel_viewInRoom::before {
-    mask-image: url('$(res)/img/element-icons/view-in-room.svg');
+    mask-image: url("$(res)/img/element-icons/view-in-room.svg");
 }
 
 .mx_ThreadPanel_copyLinkToThread::before {
-    mask-image: url('$(res)/img/element-icons/link.svg');
+    mask-image: url("$(res)/img/element-icons/link.svg");
 }
 
 .mx_ThreadPanel_empty {
@@ -194,7 +203,7 @@ limitations under the License.
         font-size: $font-12px;
         line-height: $font-15px;
 
-        >b {
+        > b {
             font-weight: $font-semi-bold;
         }
     }

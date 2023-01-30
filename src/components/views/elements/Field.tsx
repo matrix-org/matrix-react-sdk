@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes, RefObject } from 'react';
-import classNames from 'classnames';
+import React, { InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes, RefObject } from "react";
+import classNames from "classnames";
 import { debounce } from "lodash";
 
 import { IFieldState, IValidationResult } from "./Validation";
@@ -26,7 +26,7 @@ const VALIDATION_THROTTLE_MS = 200;
 
 const BASE_ID = "mx_Field";
 let count = 1;
-function getId() {
+function getId(): string {
     return `${BASE_ID}_${count++}`;
 }
 
@@ -38,8 +38,6 @@ export interface IValidateOpts {
 interface IProps {
     // The field's ID, which binds the input and label together. Immutable.
     id?: string;
-    // The field's type (when used as an <input>). Defaults to "text".
-    type?: string;
     // id of a <datalist> element for suggestions
     list?: string;
     // The field's label string.
@@ -147,7 +145,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         });
     }, VALIDATION_THROTTLE_MS);
 
-    constructor(props) {
+    public constructor(props) {
         super(props);
         this.state = {
             valid: undefined,
@@ -159,7 +157,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         this.id = this.props.id || getId();
     }
 
-    public focus() {
+    public focus(): void {
         this.inputRef.current?.focus();
         // programmatic does not fire onFocus handler
         this.setState({
@@ -167,7 +165,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         });
     }
 
-    private onFocus = (ev) => {
+    private onFocus = (ev): void => {
         this.setState({
             focused: true,
         });
@@ -182,7 +180,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         }
     };
 
-    private onChange = (ev) => {
+    private onChange = (ev): void => {
         if (this.props.validateOnChange) {
             this.validateOnChange();
         }
@@ -192,7 +190,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         }
     };
 
-    private onBlur = (ev) => {
+    private onBlur = (ev): void => {
         this.setState({
             focused: false,
         });
@@ -207,7 +205,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         }
     };
 
-    public async validate({ focused, allowEmpty = true }: IValidateOpts) {
+    public async validate({ focused, allowEmpty = true }: IValidateOpts): Promise<boolean> {
         if (!this.props.onValidate) {
             return;
         }
@@ -240,16 +238,31 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         return valid;
     }
 
-    public render() {
+    public render(): JSX.Element {
         /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
-        const { element, inputRef, prefixComponent, postfixComponent, className, onValidate, children,
-            tooltipContent, forceValidity, tooltipClassName, list, validateOnBlur, validateOnChange, validateOnFocus,
-            usePlaceholderAsHint, forceTooltipVisible,
-            ...inputProps } = this.props;
+        const {
+            element,
+            inputRef,
+            prefixComponent,
+            postfixComponent,
+            className,
+            onValidate,
+            children,
+            tooltipContent,
+            forceValidity,
+            tooltipClassName,
+            list,
+            validateOnBlur,
+            validateOnChange,
+            validateOnFocus,
+            usePlaceholderAsHint,
+            forceTooltipVisible,
+            ...inputProps
+        } = this.props;
 
         this.inputRef = inputRef || React.createRef();
 
-        inputProps.placeholder = inputProps.placeholder || inputProps.label;
+        inputProps.placeholder = inputProps.placeholder ?? inputProps.label;
         inputProps.id = this.id; // this overwrites the id from props
 
         inputProps.onFocus = this.onFocus;
@@ -263,48 +276,45 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
 
         let prefixContainer = null;
         if (prefixComponent) {
-            prefixContainer = <span className="mx_Field_prefix">{ prefixComponent }</span>;
+            prefixContainer = <span className="mx_Field_prefix">{prefixComponent}</span>;
         }
         let postfixContainer = null;
         if (postfixComponent) {
-            postfixContainer = <span className="mx_Field_postfix">{ postfixComponent }</span>;
+            postfixContainer = <span className="mx_Field_postfix">{postfixComponent}</span>;
         }
 
         const hasValidationFlag = forceValidity !== null && forceValidity !== undefined;
-        const fieldClasses = classNames(
-            "mx_Field",
-            `mx_Field_${this.props.element}`,
-            className,
-            {
-                // If we have a prefix element, leave the label always at the top left and
-                // don't animate it, as it looks a bit clunky and would add complexity to do
-                // properly.
-                mx_Field_labelAlwaysTopLeft: prefixComponent || usePlaceholderAsHint,
-                mx_Field_placeholderIsHint: usePlaceholderAsHint,
-                mx_Field_valid: hasValidationFlag ? forceValidity : onValidate && this.state.valid === true,
-                mx_Field_invalid: hasValidationFlag
-                    ? !forceValidity
-                    : onValidate && this.state.valid === false,
-            },
-        );
+        const fieldClasses = classNames("mx_Field", `mx_Field_${this.props.element}`, className, {
+            // If we have a prefix element, leave the label always at the top left and
+            // don't animate it, as it looks a bit clunky and would add complexity to do
+            // properly.
+            mx_Field_labelAlwaysTopLeft: prefixComponent || usePlaceholderAsHint,
+            mx_Field_placeholderIsHint: usePlaceholderAsHint,
+            mx_Field_valid: hasValidationFlag ? forceValidity : onValidate && this.state.valid === true,
+            mx_Field_invalid: hasValidationFlag ? !forceValidity : onValidate && this.state.valid === false,
+        });
 
         // Handle displaying feedback on validity
         let fieldTooltip;
         if (tooltipContent || this.state.feedback) {
-            fieldTooltip = <Tooltip
-                tooltipClassName={classNames("mx_Field_tooltip", tooltipClassName)}
-                visible={(this.state.focused && forceTooltipVisible) || this.state.feedbackVisible}
-                label={tooltipContent || this.state.feedback}
-                alignment={Tooltip.Alignment.Right}
-            />;
+            fieldTooltip = (
+                <Tooltip
+                    tooltipClassName={classNames("mx_Field_tooltip", "mx_Tooltip_noMargin", tooltipClassName)}
+                    visible={(this.state.focused && forceTooltipVisible) || this.state.feedbackVisible}
+                    label={tooltipContent || this.state.feedback}
+                    alignment={Tooltip.Alignment.Right}
+                />
+            );
         }
 
-        return <div className={fieldClasses}>
-            { prefixContainer }
-            { fieldInput }
-            <label htmlFor={this.id}>{ this.props.label }</label>
-            { postfixContainer }
-            { fieldTooltip }
-        </div>;
+        return (
+            <div className={fieldClasses}>
+                {prefixContainer}
+                {fieldInput}
+                <label htmlFor={this.id}>{this.props.label}</label>
+                {postfixContainer}
+                {fieldTooltip}
+            </div>
+        );
     }
 }

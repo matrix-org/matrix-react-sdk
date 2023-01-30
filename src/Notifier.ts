@@ -23,29 +23,35 @@ import { ClientEvent } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
 import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
-import {
-    PermissionChanged as PermissionChangedEvent,
-} from "@matrix-org/analytics-events/types/typescript/PermissionChanged";
+import { PermissionChanged as PermissionChangedEvent } from "@matrix-org/analytics-events/types/typescript/PermissionChanged";
+import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
+import { IRoomTimelineData } from "matrix-js-sdk/src/matrix";
 
-import { MatrixClientPeg } from './MatrixClientPeg';
+import { MatrixClientPeg } from "./MatrixClientPeg";
 import { PosthogAnalytics } from "./PosthogAnalytics";
-import SdkConfig from './SdkConfig';
-import PlatformPeg from './PlatformPeg';
-import * as TextForEvent from './TextForEvent';
-import * as Avatar from './Avatar';
-import dis from './dispatcher/dispatcher';
-import { _t } from './languageHandler';
-import Modal from './Modal';
+import SdkConfig from "./SdkConfig";
+import PlatformPeg from "./PlatformPeg";
+import * as TextForEvent from "./TextForEvent";
+import * as Avatar from "./Avatar";
+import dis from "./dispatcher/dispatcher";
+import { _t } from "./languageHandler";
+import Modal from "./Modal";
 import SettingsStore from "./settings/SettingsStore";
 import { hideToast as hideNotificationsToast } from "./toasts/DesktopNotificationsToast";
 import { SettingLevel } from "./settings/SettingLevel";
 import { isPushNotifyDisabled } from "./settings/controllers/NotificationControllers";
-import { RoomViewStore } from "./stores/RoomViewStore";
 import UserActivity from "./UserActivity";
 import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
-import CallHandler from "./CallHandler";
+import LegacyCallHandler from "./LegacyCallHandler";
 import VoipUserMapper from "./VoipUserMapper";
+import { SdkContextClass } from "./contexts/SDKContext";
+import { localNotificationsAreSilenced, createLocalNotificationSettingsIfNeeded } from "./utils/notifications";
+import { getIncomingCallToastKey, IncomingCallToast } from "./toasts/IncomingCallToast";
+import ToastStore from "./stores/ToastStore";
+import { ElementCall } from "./models/Call";
+import { VoiceBroadcastChunkEventType, VoiceBroadcastInfoEventType } from "./voice-broadcast";
+import { getSenderName } from "./utils/event/getSenderName";
 
 /*
  * Dispatches:
@@ -73,6 +79,20 @@ const msgTypeHandlers = {
     [M_LOCATION.altName]: (event: MatrixEvent) => {
         return TextForEvent.textForLocationEvent(event)();
     },
+    [MsgType.Audio]: (event: MatrixEvent): string | null => {
+        if (event.getContent()?.[VoiceBroadcastChunkEventType]) {
+            if (event.getContent()?.[VoiceBroadcastChunkEventType]?.sequence === 1) {
+                // Show a notification for the first broadcast chunk.
+                // At this point a user received something to listen to.
+                return _t("%(senderName)s started a voice broadcast", { senderName: getSenderName(event) });
+            }
+
+            // Mute other broadcast chunks
+            return null;
+        }
+
+        return TextForEvent.textForEvent(event);
+    },
 };
 
 export const Notifier = {
@@ -83,19 +103,24 @@ export const Notifier = {
     // or not
     pendingEncryptedEventIds: [],
 
-    notificationMessageForEvent: function(ev: MatrixEvent): string {
+    notificationMessageForEvent: function (ev: MatrixEvent): string {
         if (msgTypeHandlers.hasOwnProperty(ev.getContent().msgtype)) {
             return msgTypeHandlers[ev.getContent().msgtype](ev);
         }
         return TextForEvent.textForEvent(ev);
     },
 
-    _displayPopupNotification: function(ev: MatrixEvent, room: Room) {
+    _displayPopupNotification: function (ev: MatrixEvent, room: Room): void {
         const plaf = PlatformPeg.get();
+        const cli = MatrixClientPeg.get();
         if (!plaf) {
             return;
         }
         if (!plaf.supportsNotifications() || !plaf.maySendNotifications()) {
+            return;
+        }
+
+        if (localNotificationsAreSilenced(cli)) {
             return;
         }
 
@@ -110,7 +135,7 @@ export const Notifier = {
             if (ev.getContent().body && !msgTypeHandlers.hasOwnProperty(ev.getContent().msgtype)) {
                 msg = ev.getContent().body;
             }
-        } else if (ev.getType() === 'm.room.member') {
+        } else if (ev.getType() === "m.room.member") {
             // context is all in the message here, we don't need
             // to display sender info
             title = room.name;
@@ -124,12 +149,12 @@ export const Notifier = {
         }
 
         if (!this.isBodyEnabled()) {
-            msg = '';
+            msg = "";
         }
 
         let avatarUrl = null;
         if (ev.sender && !SettingsStore.getValue("lowBandwidth")) {
-            avatarUrl = Avatar.avatarUrlForMember(ev.sender, 40, 40, 'crop');
+            avatarUrl = Avatar.avatarUrlForMember(ev.sender, 40, 40, "crop");
         }
 
         const notif = plaf.displayNotification(title, msg, avatarUrl, room, ev);
@@ -142,7 +167,7 @@ export const Notifier = {
         }
     },
 
-    getSoundForRoom: function(roomId: string) {
+    getSoundForRoom: function (roomId: string) {
         // We do no caching here because the SDK caches setting
         // and the browser will cache the sound.
         const content = SettingsStore.getValue("notificationSound", roomId);
@@ -150,8 +175,8 @@ export const Notifier = {
             return null;
         }
 
-        if (!content.url) {
-            logger.warn(`${roomId} has custom notification sound event, but no url key`);
+        if (typeof content.url !== "string") {
+            logger.warn(`${roomId} has custom notification sound event, but no url string`);
             return null;
         }
 
@@ -170,13 +195,19 @@ export const Notifier = {
         };
     },
 
-    _playAudioNotification: async function(ev: MatrixEvent, room: Room) {
+    _playAudioNotification: async function (ev: MatrixEvent, room: Room): Promise<void> {
+        const cli = MatrixClientPeg.get();
+        if (localNotificationsAreSilenced(cli)) {
+            return;
+        }
+
         const sound = this.getSoundForRoom(room.roomId);
-        logger.log(`Got sound ${sound && sound.name || "default"} for ${room.roomId}`);
+        logger.log(`Got sound ${(sound && sound.name) || "default"} for ${room.roomId}`);
 
         try {
-            const selector =
-                document.querySelector<HTMLAudioElement>(sound ? `audio[src='${sound.url}']` : "#messageAudio");
+            const selector = document.querySelector<HTMLAudioElement>(
+                sound ? `audio[src='${sound.url}']` : "#messageAudio",
+            );
             let audioElement = selector;
             if (!selector) {
                 if (!sound) {
@@ -195,14 +226,14 @@ export const Notifier = {
         }
     },
 
-    start: function() {
+    start: function (this: typeof Notifier) {
         // do not re-bind in the case of repeated call
         this.boundOnEvent = this.boundOnEvent || this.onEvent.bind(this);
         this.boundOnSyncStateChange = this.boundOnSyncStateChange || this.onSyncStateChange.bind(this);
         this.boundOnRoomReceipt = this.boundOnRoomReceipt || this.onRoomReceipt.bind(this);
         this.boundOnEventDecrypted = this.boundOnEventDecrypted || this.onEventDecrypted.bind(this);
 
-        MatrixClientPeg.get().on(ClientEvent.Event, this.boundOnEvent);
+        MatrixClientPeg.get().on(RoomEvent.Timeline, this.boundOnEvent);
         MatrixClientPeg.get().on(RoomEvent.Receipt, this.boundOnRoomReceipt);
         MatrixClientPeg.get().on(MatrixEventEvent.Decrypted, this.boundOnEventDecrypted);
         MatrixClientPeg.get().on(ClientEvent.Sync, this.boundOnSyncStateChange);
@@ -210,9 +241,9 @@ export const Notifier = {
         this.isSyncing = false;
     },
 
-    stop: function() {
+    stop: function (this: typeof Notifier) {
         if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener(ClientEvent.Event, this.boundOnEvent);
+            MatrixClientPeg.get().removeListener(RoomEvent.Timeline, this.boundOnEvent);
             MatrixClientPeg.get().removeListener(RoomEvent.Receipt, this.boundOnRoomReceipt);
             MatrixClientPeg.get().removeListener(MatrixEventEvent.Decrypted, this.boundOnEventDecrypted);
             MatrixClientPeg.get().removeListener(ClientEvent.Sync, this.boundOnSyncStateChange);
@@ -220,12 +251,12 @@ export const Notifier = {
         this.isSyncing = false;
     },
 
-    supportsDesktopNotifications: function() {
+    supportsDesktopNotifications: function () {
         const plaf = PlatformPeg.get();
         return plaf && plaf.supportsNotifications();
     },
 
-    setEnabled: function(enable: boolean, callback?: () => void) {
+    setEnabled: function (enable: boolean, callback?: () => void) {
         const plaf = PlatformPeg.get();
         if (!plaf) return;
 
@@ -242,16 +273,22 @@ export const Notifier = {
         if (enable) {
             // Attempt to get permission from user
             plaf.requestNotificationPermission().then((result) => {
-                if (result !== 'granted') {
+                if (result !== "granted") {
                     // The permission request was dismissed or denied
                     // TODO: Support alternative branding in messaging
                     const brand = SdkConfig.get().brand;
-                    const description = result === 'denied'
-                        ? _t('%(brand)s does not have permission to send you notifications - ' +
-                            'please check your browser settings', { brand })
-                        : _t('%(brand)s was not given permission to send notifications - please try again', { brand });
+                    const description =
+                        result === "denied"
+                            ? _t(
+                                  "%(brand)s does not have permission to send you notifications - " +
+                                      "please check your browser settings",
+                                  { brand },
+                              )
+                            : _t("%(brand)s was not given permission to send notifications - please try again", {
+                                  brand,
+                              });
                     Modal.createDialog(ErrorDialog, {
-                        title: _t('Unable to enable Notifications'),
+                        title: _t("Unable to enable Notifications"),
                         description,
                     });
                     return;
@@ -285,11 +322,11 @@ export const Notifier = {
         this.setPromptHidden(true);
     },
 
-    isEnabled: function() {
+    isEnabled: function () {
         return this.isPossible() && SettingsStore.getValue("notificationsEnabled");
     },
 
-    isPossible: function() {
+    isPossible: function () {
         const plaf = PlatformPeg.get();
         if (!plaf) return false;
         if (!plaf.supportsNotifications()) return false;
@@ -298,16 +335,16 @@ export const Notifier = {
         return true; // possible, but not necessarily enabled
     },
 
-    isBodyEnabled: function() {
+    isBodyEnabled: function () {
         return this.isEnabled() && SettingsStore.getValue("notificationBodyEnabled");
     },
 
-    isAudioEnabled: function() {
+    isAudioEnabled: function () {
         // We don't route Audio via the HTML Notifications API so it is possible regardless of other things
         return SettingsStore.getValue("audioNotificationsEnabled");
     },
 
-    setPromptHidden: function(hidden: boolean, persistent = true) {
+    setPromptHidden: function (this: typeof Notifier, hidden: boolean, persistent = true) {
         this.toolbarHidden = hidden;
 
         hideNotificationsToast();
@@ -318,17 +355,22 @@ export const Notifier = {
         }
     },
 
-    shouldShowPrompt: function() {
+    shouldShowPrompt: function () {
         const client = MatrixClientPeg.get();
         if (!client) {
             return false;
         }
         const isGuest = client.isGuest();
-        return !isGuest && this.supportsDesktopNotifications() && !isPushNotifyDisabled() &&
-            !this.isEnabled() && !this._isPromptHidden();
+        return (
+            !isGuest &&
+            this.supportsDesktopNotifications() &&
+            !isPushNotifyDisabled() &&
+            !this.isEnabled() &&
+            !this._isPromptHidden()
+        );
     },
 
-    _isPromptHidden: function() {
+    _isPromptHidden: function (this: typeof Notifier) {
         // Check localStorage for any such meta data
         if (global.localStorage) {
             return global.localStorage.getItem("notifications_hidden") === "true";
@@ -337,17 +379,35 @@ export const Notifier = {
         return this.toolbarHidden;
     },
 
-    onSyncStateChange: function(state: string) {
-        if (state === "SYNCING") {
+    onSyncStateChange: function (
+        this: typeof Notifier,
+        state: SyncState,
+        prevState?: SyncState,
+        data?: ISyncStateData,
+    ) {
+        if (state === SyncState.Syncing) {
             this.isSyncing = true;
-        } else if (state === "STOPPED" || state === "ERROR") {
+        } else if (state === SyncState.Stopped || state === SyncState.Error) {
             this.isSyncing = false;
+        }
+
+        // wait for first non-cached sync to complete
+        if (![SyncState.Stopped, SyncState.Error].includes(state) && !data?.fromCache) {
+            createLocalNotificationSettingsIfNeeded(MatrixClientPeg.get());
         }
     },
 
-    onEvent: function(ev: MatrixEvent) {
+    onEvent: function (
+        this: typeof Notifier,
+        ev: MatrixEvent,
+        room: Room | undefined,
+        toStartOfTimeline: boolean | undefined,
+        removed: boolean,
+        data: IRoomTimelineData,
+    ) {
+        if (!data.liveEvent) return; // only notify for new things, not old.
         if (!this.isSyncing) return; // don't alert for any messages initially
-        if (ev.getSender() === MatrixClientPeg.get().credentials.userId) return;
+        if (ev.getSender() === MatrixClientPeg.get().getUserId()) return;
 
         MatrixClientPeg.get().decryptEventIfNeeded(ev);
 
@@ -365,7 +425,7 @@ export const Notifier = {
         this._evaluateEvent(ev);
     },
 
-    onEventDecrypted: function(ev: MatrixEvent) {
+    onEventDecrypted: function (ev: MatrixEvent) {
         // 'decrypted' means the decryption process has finished: it may have failed,
         // in which case it might decrypt soon if the keys arrive
         if (ev.isDecryptionFailure()) return;
@@ -377,7 +437,7 @@ export const Notifier = {
         this._evaluateEvent(ev);
     },
 
-    onRoomReceipt: function(ev: MatrixEvent, room: Room) {
+    onRoomReceipt: function (ev: MatrixEvent, room: Room) {
         if (room.getUnreadNotificationCount() === 0) {
             // ideally we would clear each notification when it was read,
             // but we have no way, given a read receipt, to know whether
@@ -395,9 +455,12 @@ export const Notifier = {
         }
     },
 
-    _evaluateEvent: function(ev: MatrixEvent) {
+    _evaluateEvent: function (ev: MatrixEvent) {
+        // Mute notifications for broadcast info events
+        if (ev.getType() === VoiceBroadcastInfoEventType) return;
+
         let roomId = ev.getRoomId();
-        if (CallHandler.instance.getSupportsVirtualRooms()) {
+        if (LegacyCallHandler.instance.getSupportsVirtualRooms()) {
             // Attempt to translate a virtual room to a native one
             const nativeRoomId = VoipUserMapper.sharedInstance().nativeRoomForVirtualRoom(roomId);
             if (nativeRoomId) {
@@ -405,13 +468,25 @@ export const Notifier = {
             }
         }
         const room = MatrixClientPeg.get().getRoom(roomId);
+        if (!room) {
+            // e.g we are in the process of joining a room.
+            // Seen in the cypress lazy-loading test.
+            return;
+        }
 
         const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
+
         if (actions?.notify) {
-            if (RoomViewStore.instance.getRoomId() === room.roomId &&
-                UserActivity.sharedInstance().userActiveRecently() &&
-                !Modal.hasDialogs()
-            ) {
+            this._performCustomEventHandling(ev);
+
+            const store = SdkContextClass.instance.roomViewStore;
+            const isViewingRoom = store.getRoomId() === room.roomId;
+            const threadId: string | undefined = ev.getId() !== ev.threadRootId ? ev.threadRootId : undefined;
+            const isViewingThread = store.getThreadId() === threadId;
+
+            const isViewingEventTimeline = isViewingRoom && (!threadId || isViewingThread);
+
+            if (isViewingEventTimeline && UserActivity.sharedInstance().userActiveRecently() && !Modal.hasDialogs()) {
                 // don't bother notifying as user was recently active in this room
                 return;
             }
@@ -423,6 +498,21 @@ export const Notifier = {
                 PlatformPeg.get().loudNotification(ev, room);
                 this._playAudioNotification(ev, room);
             }
+        }
+    },
+
+    /**
+     * Some events require special handling such as showing in-app toasts
+     */
+    _performCustomEventHandling: function (ev: MatrixEvent) {
+        if (ElementCall.CALL_EVENT_TYPE.names.includes(ev.getType()) && SettingsStore.getValue("feature_group_calls")) {
+            ToastStore.sharedInstance().addOrReplaceToast({
+                key: getIncomingCallToastKey(ev.getStateKey()),
+                priority: 100,
+                component: IncomingCallToast,
+                bodyClassName: "mx_IncomingCallToast",
+                props: { callEvent: ev },
+            });
         }
     },
 };

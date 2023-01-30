@@ -33,11 +33,11 @@ interface IServerWellKnown {
     };
 }
 
-const ServerInfo = ({ onBack }: IDevtoolsProps) => {
+const ServerInfo: React.FC<IDevtoolsProps> = ({ onBack }) => {
     const cli = useContext(MatrixClientContext);
     const capabilities = useAsyncMemo(() => cli.getCapabilities(true).catch(() => FAILED_TO_LOAD), [cli]);
     const clientVersions = useAsyncMemo(() => cli.getVersions().catch(() => FAILED_TO_LOAD), [cli]);
-    const serverVersions = useAsyncMemo<IServerWellKnown | symbol>(async () => {
+    const serverVersions = useAsyncMemo(async (): Promise<IServerWellKnown | symbol> => {
         let baseUrl = cli.getHomeserverUrl();
 
         try {
@@ -66,30 +66,33 @@ const ServerInfo = ({ onBack }: IDevtoolsProps) => {
     if (!capabilities || !clientVersions || !serverVersions) {
         body = <Spinner />;
     } else {
-        body = <>
-            <h4>{ _t("Capabilities") }</h4>
-            { capabilities !== FAILED_TO_LOAD
-                ? <SyntaxHighlight language="json" children={JSON.stringify(capabilities, null, 4)} />
-                : <div>{ _t("Failed to load.") }</div>
-            }
+        body = (
+            <>
+                <h4>{_t("Capabilities")}</h4>
+                {capabilities !== FAILED_TO_LOAD ? (
+                    <SyntaxHighlight language="json" children={JSON.stringify(capabilities, null, 4)} />
+                ) : (
+                    <div>{_t("Failed to load.")}</div>
+                )}
 
-            <h4>{ _t("Client Versions") }</h4>
-            { clientVersions !== FAILED_TO_LOAD
-                ? <SyntaxHighlight language="json" children={JSON.stringify(clientVersions, null, 4)} />
-                : <div>{ _t("Failed to load.") }</div>
-            }
+                <h4>{_t("Client Versions")}</h4>
+                {clientVersions !== FAILED_TO_LOAD ? (
+                    <SyntaxHighlight language="json" children={JSON.stringify(clientVersions, null, 4)} />
+                ) : (
+                    <div>{_t("Failed to load.")}</div>
+                )}
 
-            <h4>{ _t("Server Versions") }</h4>
-            { serverVersions !== FAILED_TO_LOAD
-                ? <SyntaxHighlight language="json" children={JSON.stringify(serverVersions, null, 4)} />
-                : <div>{ _t("Failed to load.") }</div>
-            }
-        </>;
+                <h4>{_t("Server Versions")}</h4>
+                {serverVersions !== FAILED_TO_LOAD ? (
+                    <SyntaxHighlight language="json" children={JSON.stringify(serverVersions, null, 4)} />
+                ) : (
+                    <div>{_t("Failed to load.")}</div>
+                )}
+            </>
+        );
     }
 
-    return <BaseTool onBack={onBack}>
-        { body }
-    </BaseTool>;
+    return <BaseTool onBack={onBack}>{body}</BaseTool>;
 };
 
 export default ServerInfo;

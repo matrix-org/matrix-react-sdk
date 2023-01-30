@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import dis from '../../dispatcher/dispatcher';
-import SettingsStore from '../SettingsStore';
+import dis from "../../dispatcher/dispatcher";
+import SettingsStore from "../SettingsStore";
 import IWatcher from "./Watcher";
-import { toPx } from '../../utils/units';
-import { Action } from '../../dispatcher/actions';
+import { toPx } from "../../utils/units";
+import { Action } from "../../dispatcher/actions";
 import { SettingLevel } from "../SettingLevel";
 import { UpdateSystemFontPayload } from "../../dispatcher/payloads/UpdateSystemFontPayload";
 import { ActionPayload } from "../../dispatcher/payloads";
@@ -32,20 +32,20 @@ export class FontWatcher implements IWatcher {
 
     private dispatcherRef: string;
 
-    constructor() {
+    public constructor() {
         this.dispatcherRef = null;
     }
 
-    public start() {
+    public start(): void {
         this.updateFont();
         this.dispatcherRef = dis.register(this.onAction);
     }
 
-    public stop() {
+    public stop(): void {
         dis.unregister(this.dispatcherRef);
     }
 
-    private updateFont() {
+    private updateFont(): void {
         this.setRootFontSize(SettingsStore.getValue("baseFontSize"));
         this.setSystemFont({
             useSystemFont: SettingsStore.getValue("useSystemFont"),
@@ -53,7 +53,7 @@ export class FontWatcher implements IWatcher {
         });
     }
 
-    private onAction = (payload: ActionPayload) => {
+    private onAction = (payload: ActionPayload): void => {
         if (payload.action === Action.UpdateFontSize) {
             this.setRootFontSize(payload.size);
         } else if (payload.action === Action.UpdateSystemFont) {
@@ -71,7 +71,7 @@ export class FontWatcher implements IWatcher {
         }
     };
 
-    private setRootFontSize = (size: number) => {
+    private setRootFontSize = (size: number): void => {
         const fontSize = Math.max(Math.min(FontWatcher.MAX_SIZE, size), FontWatcher.MIN_SIZE);
 
         if (fontSize !== size) {
@@ -80,19 +80,22 @@ export class FontWatcher implements IWatcher {
         document.querySelector<HTMLElement>(":root").style.fontSize = toPx(fontSize);
     };
 
-    private setSystemFont = ({ useSystemFont, font }: Pick<UpdateSystemFontPayload, "useSystemFont" | "font">) => {
+    private setSystemFont = ({
+        useSystemFont,
+        font,
+    }: Pick<UpdateSystemFontPayload, "useSystemFont" | "font">): void => {
         if (useSystemFont) {
             // Make sure that fonts with spaces in their names get interpreted properly
             document.body.style.fontFamily = font
-                .split(',')
-                .map(font => {
+                .split(",")
+                .map((font) => {
                     font = font.trim();
                     if (!font.startsWith('"') && !font.endsWith('"')) {
                         font = `"${font}"`;
                     }
                     return font;
                 })
-                .join(',');
+                .join(",");
         } else {
             document.body.style.fontFamily = "";
         }

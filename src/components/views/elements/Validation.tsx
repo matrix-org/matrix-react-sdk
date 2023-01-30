@@ -15,7 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/* eslint-disable @typescript-eslint/no-invalid-this */
 import React from "react";
 import classNames from "classnames";
 
@@ -46,7 +45,7 @@ interface IArgs<T, D = void> {
 export interface IFieldState {
     value: string;
     focused: boolean;
-    allowEmpty: boolean;
+    allowEmpty?: boolean;
 }
 
 export interface IValidationResult {
@@ -80,10 +79,16 @@ export interface IValidationResult {
  *     A validation function that takes in the current input value and returns
  *     the overall validity and a feedback UI that can be rendered for more detail.
  */
-export default function withValidation<T = undefined, D = void>({
-    description, hideDescriptionIfValid, deriveData, rules,
+export default function withValidation<T = void, D = void>({
+    description,
+    hideDescriptionIfValid,
+    deriveData,
+    rules,
 }: IArgs<T, D>) {
-    return async function onValidate({ value, focused, allowEmpty = true }: IFieldState): Promise<IValidationResult> {
+    return async function onValidate(
+        this: T,
+        { value, focused, allowEmpty = true }: IFieldState,
+    ): Promise<IValidationResult> {
         if (!value && allowEmpty) {
             return {
                 valid: null,
@@ -96,7 +101,7 @@ export default function withValidation<T = undefined, D = void>({
 
         const results: IResult[] = [];
         let valid = true;
-        if (rules && rules.length) {
+        if (rules?.length) {
             for (const rule of rules) {
                 if (!rule.key || !rule.test) {
                     continue;
@@ -152,18 +157,22 @@ export default function withValidation<T = undefined, D = void>({
 
         let details;
         if (results && results.length) {
-            details = <ul className="mx_Validation_details">
-                { results.map(result => {
-                    const classes = classNames({
-                        "mx_Validation_detail": true,
-                        "mx_Validation_valid": result.valid,
-                        "mx_Validation_invalid": !result.valid,
-                    });
-                    return <li key={result.key} className={classes}>
-                        { result.text }
-                    </li>;
-                }) }
-            </ul>;
+            details = (
+                <ul className="mx_Validation_details">
+                    {results.map((result) => {
+                        const classes = classNames({
+                            mx_Validation_detail: true,
+                            mx_Validation_valid: result.valid,
+                            mx_Validation_invalid: !result.valid,
+                        });
+                        return (
+                            <li key={result.key} className={classes}>
+                                {result.text}
+                            </li>
+                        );
+                    })}
+                </ul>
+            );
         }
 
         let summary;
@@ -171,15 +180,17 @@ export default function withValidation<T = undefined, D = void>({
             // We're setting `this` to whichever component holds the validation
             // function. That allows rules to access the state of the component.
             const content = description.call(this, derivedData, results);
-            summary = content ? <div className="mx_Validation_description">{ content }</div> : undefined;
+            summary = content ? <div className="mx_Validation_description">{content}</div> : undefined;
         }
 
         let feedback;
         if (summary || details) {
-            feedback = <div className="mx_Validation">
-                { summary }
-                { details }
-            </div>;
+            feedback = (
+                <div className="mx_Validation">
+                    {summary}
+                    {details}
+                </div>
+            );
         }
 
         return {

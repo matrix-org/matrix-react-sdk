@@ -44,21 +44,25 @@ export abstract class AsyncStoreWithClient<T extends Object> extends AsyncStore<
         })(dispatcher);
     }
 
-    get matrixClient(): MatrixClient {
+    public async start(): Promise<void> {
+        await this.readyStore.start();
+    }
+
+    public get matrixClient(): MatrixClient {
         return this.readyStore.mxClient;
     }
 
-    protected async onReady() {
+    protected async onReady(): Promise<void> {
         // Default implementation is to do nothing.
     }
 
-    protected async onNotReady() {
+    protected async onNotReady(): Promise<void> {
         // Default implementation is to do nothing.
     }
 
     protected abstract onAction(payload: ActionPayload): Promise<void>;
 
-    protected async onDispatch(payload: ActionPayload) {
+    protected async onDispatch(payload: ActionPayload): Promise<void> {
         await this.onAction(payload);
     }
 }

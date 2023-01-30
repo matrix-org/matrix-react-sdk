@@ -27,39 +27,37 @@ function LatestResultsComponent({ query, doRequest }) {
     const [updateQuery, updateResult] = useLatestResult(setValueInternal);
     useEffect(() => {
         updateQuery(query);
-        doRequest(query).then(it => {
+        doRequest(query).then((it) => {
             updateResult(query, it);
         });
     }, [doRequest, query, updateQuery, updateResult]);
 
-    return <div>
-        { value }
-    </div>;
+    return <div>{value}</div>;
 }
 
 describe("useLatestResult", () => {
     it("should return results", async () => {
         const doRequest = async (query) => {
-            await sleep(20);
+            await sleep(180);
             return query;
         };
 
         const wrapper = mount(<LatestResultsComponent query={0} doRequest={doRequest} />);
         await act(async () => {
-            await sleep(25);
+            await sleep(100);
         });
         expect(wrapper.text()).toEqual("0");
         wrapper.setProps({ doRequest, query: 1 });
         await act(async () => {
-            await sleep(10);
+            await sleep(70);
         });
         wrapper.setProps({ doRequest, query: 2 });
         await act(async () => {
-            await sleep(10);
+            await sleep(70);
         });
         expect(wrapper.text()).toEqual("0");
         await act(async () => {
-            await sleep(15);
+            await sleep(120);
         });
         expect(wrapper.text()).toEqual("2");
     });

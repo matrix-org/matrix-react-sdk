@@ -54,7 +54,7 @@ export const sortRooms = (rooms: Room[]): Room[] => {
 
     // TODO: Don't assume we're using the same client as the peg
     // See https://github.com/vector-im/element-web/issues/14458
-    let myUserId = '';
+    let myUserId = "";
     if (MatrixClientPeg.get()) {
         myUserId = MatrixClientPeg.get().getUserId();
     }
@@ -72,8 +72,8 @@ export const sortRooms = (rooms: Room[]): Room[] => {
     });
 };
 
-const getLastTs = (r: Room, userId: string) => {
-    const ts = (() => {
+const getLastTs = (r: Room, userId: string): number => {
+    const mainTimelineLastTs = ((): number => {
         // Apparently we can have rooms without timelines, at least under testing
         // environments. Just return MAX_INT when this happens.
         if (!r?.timeline) {
@@ -95,10 +95,7 @@ const getLastTs = (r: Room, userId: string) => {
             const ev = r.timeline[i];
             if (!ev.getTs()) continue; // skip events that don't have timestamps (tests only?)
 
-            if (
-                (ev.getSender() === userId && shouldCauseReorder(ev)) ||
-                Unread.eventTriggersUnreadCount(ev)
-            ) {
+            if ((ev.getSender() === userId && shouldCauseReorder(ev)) || Unread.eventTriggersUnreadCount(ev)) {
                 return ev.getTs();
             }
         }
@@ -108,7 +105,13 @@ const getLastTs = (r: Room, userId: string) => {
         // This is better than just assuming the last event was forever ago.
         return r.timeline[0]?.getTs() ?? Number.MAX_SAFE_INTEGER;
     })();
-    return ts;
+
+    const threadLastEventTimestamps = r.getThreads().map((thread) => {
+        const event = thread.replyToEvent ?? thread.rootEvent;
+        return event?.getTs() ?? 0;
+    });
+
+    return Math.max(mainTimelineLastTs, ...threadLastEventTimestamps);
 };
 
 /**

@@ -16,12 +16,12 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 
-function seedLabs(synapse: SynapseInstance, labsVal: boolean | null): void {
-    cy.initTestUser(synapse, "Sally", () => {
+function seedLabs(homeserver: HomeserverInstance, labsVal: boolean | null): void {
+    cy.initTestUser(homeserver, "Sally", () => {
         // seed labs flag
-        cy.window({ log: false }).then(win => {
+        cy.window({ log: false }).then((win) => {
             if (typeof labsVal === "boolean") {
                 // stringify boolean
                 win.localStorage.setItem("mx_labs_feature_feature_hidden_read_receipts", `${labsVal}`);
@@ -61,30 +61,30 @@ describe("Hidden Read Receipts Setting Migration", () => {
     // For a security-sensitive feature like hidden read receipts, it's absolutely vital
     // that we migrate the setting appropriately.
 
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
 
     beforeEach(() => {
-        cy.startSynapse("default").then(data => {
-            synapse = data;
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
         });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
     });
 
-    it('should not migrate the lack of a labs flag', () => {
-        seedLabs(synapse, null);
+    it("should not migrate the lack of a labs flag", () => {
+        seedLabs(homeserver, null);
         testForVal(null);
     });
 
-    it('should migrate labsHiddenRR=false as sendRR=true', () => {
-        seedLabs(synapse, false);
+    it("should migrate labsHiddenRR=false as sendRR=true", () => {
+        seedLabs(homeserver, false);
         testForVal(true);
     });
 
-    it('should migrate labsHiddenRR=true as sendRR=false', () => {
-        seedLabs(synapse, true);
+    it("should migrate labsHiddenRR=true as sendRR=false", () => {
+        seedLabs(homeserver, true);
         testForVal(false);
     });
 });

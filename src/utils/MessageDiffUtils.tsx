@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from 'react';
-import classNames from 'classnames';
-import { diff_match_patch as DiffMatchPatch } from 'diff-match-patch';
+import React, { ReactNode } from "react";
+import classNames from "classnames";
+import { diff_match_patch as DiffMatchPatch } from "diff-match-patch";
 import { DiffDOM, IDiff } from "diff-dom";
 import { IContent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { bodyToHtml, checkBlockNode, IOptsReturnString } from "../HtmlUtils";
 
-const decodeEntities = (function() {
+const decodeEntities = (function () {
     let textarea = null;
-    return function(str: string): string {
+    return function (str: string): string {
         if (!textarea) {
             textarea = document.createElement("textarea");
         }
@@ -74,9 +74,16 @@ function wrapDeletion(child: Node): HTMLElement {
     return wrapper;
 }
 
-function findRefNodes(root: Node, route: number[], isAddition = false) {
+function findRefNodes(
+    root: Node,
+    route: number[],
+    isAddition = false,
+): {
+    refNode: Node;
+    refParentNode?: Node;
+} {
     let refNode = root;
-    let refParentNode;
+    let refParentNode: Node | undefined;
     const end = isAddition ? route.length - 1 : route.length;
     for (let i = 0; i < end; ++i) {
         refParentNode = refNode;
@@ -85,8 +92,12 @@ function findRefNodes(root: Node, route: number[], isAddition = false) {
     return { refNode, refParentNode };
 }
 
-function diffTreeToDOM(desc) {
-    if (desc.nodeName === "#text") {
+function isTextNode(node: Text | HTMLElement): node is Text {
+    return node.nodeName === "#text";
+}
+
+function diffTreeToDOM(desc): Node {
+    if (isTextNode(desc)) {
         return stringAsTextNode(desc.data);
     } else {
         const node = document.createElement(desc.nodeName);
@@ -97,7 +108,7 @@ function diffTreeToDOM(desc) {
         }
         if (desc.childNodes) {
             for (const childDesc of desc.childNodes) {
-                node.appendChild(diffTreeToDOM(childDesc));
+                node.appendChild(diffTreeToDOM(childDesc as Text | HTMLElement));
             }
         }
         return node;
@@ -152,25 +163,25 @@ function renderDifferenceInDOM(originalRootNode: Node, diff: IDiff, diffMathPatc
     switch (diff.action) {
         case "replaceElement": {
             const container = document.createElement("span");
-            const delNode = wrapDeletion(diffTreeToDOM(diff.oldValue));
-            const insNode = wrapInsertion(diffTreeToDOM(diff.newValue));
+            const delNode = wrapDeletion(diffTreeToDOM(diff.oldValue as HTMLElement));
+            const insNode = wrapInsertion(diffTreeToDOM(diff.newValue as HTMLElement));
             container.appendChild(delNode);
             container.appendChild(insNode);
             refNode.parentNode.replaceChild(container, refNode);
             break;
         }
         case "removeTextElement": {
-            const delNode = wrapDeletion(stringAsTextNode(diff.value));
+            const delNode = wrapDeletion(stringAsTextNode(diff.value as string));
             refNode.parentNode.replaceChild(delNode, refNode);
             break;
         }
         case "removeElement": {
-            const delNode = wrapDeletion(diffTreeToDOM(diff.element));
+            const delNode = wrapDeletion(diffTreeToDOM(diff.element as HTMLElement));
             refNode.parentNode.replaceChild(delNode, refNode);
             break;
         }
         case "modifyTextElement": {
-            const textDiffs = diffMathPatch.diff_main(diff.oldValue, diff.newValue);
+            const textDiffs = diffMathPatch.diff_main(diff.oldValue as string, diff.newValue as string);
             diffMathPatch.diff_cleanupSemantic(textDiffs);
             const container = document.createElement("span");
             for (const [modifier, text] of textDiffs) {
@@ -186,7 +197,7 @@ function renderDifferenceInDOM(originalRootNode: Node, diff: IDiff, diffMathPatc
             break;
         }
         case "addElement": {
-            const insNode = wrapInsertion(diffTreeToDOM(diff.element));
+            const insNode = wrapInsertion(diffTreeToDOM(diff.element as HTMLElement));
             insertBefore(refParentNode, refNode, insNode);
             break;
         }
@@ -194,7 +205,7 @@ function renderDifferenceInDOM(originalRootNode: Node, diff: IDiff, diffMathPatc
             // XXX: sometimes diffDOM says insert a newline when there shouldn't be one
             // but we must insert the node anyway so that we don't break the route child IDs.
             // See https://github.com/fiduswriter/diffDOM/issues/100
-            const insNode = wrapInsertion(stringAsTextNode(diff.value !== "\n" ? diff.value : ""));
+            const insNode = wrapInsertion(stringAsTextNode(diff.value !== "\n" ? (diff.value as string) : ""));
             insertBefore(refParentNode, refNode, insNode);
             break;
         }
@@ -206,7 +217,7 @@ function renderDifferenceInDOM(originalRootNode: Node, diff: IDiff, diffMathPatc
             const delNode = wrapDeletion(refNode.cloneNode(true));
             const updatedNode = refNode.cloneNode(true) as HTMLElement;
             if (diff.action === "addAttribute" || diff.action === "modifyAttribute") {
-                updatedNode.setAttribute(diff.name, diff.newValue);
+                updatedNode.setAttribute(diff.name, diff.newValue as string);
             } else {
                 updatedNode.removeAttribute(diff.name);
             }
@@ -235,7 +246,8 @@ function filterCancelingOutDiffs(originalDiffActions: IDiff[]): IDiff[] {
         const diff = diffActions[i];
         if (diff.action === "removeTextElement") {
             const nextDiff = diffActions[i + 1];
-            const cancelsOut = nextDiff &&
+            const cancelsOut =
+                nextDiff &&
                 nextDiff.action === "addTextElement" &&
                 nextDiff.text === diff.text &&
                 routeIsEqual(nextDiff.route, diff.route);
@@ -283,8 +295,8 @@ export function editBodyDiffToHtml(originalContent: IContent, editContent: ICont
     // take the html out of the modified DOM tree again
     const safeBody = originalRootNode.innerHTML;
     const className = classNames({
-        'mx_EventTile_body': true,
-        'markdown-body': true,
+        "mx_EventTile_body": true,
+        "markdown-body": true,
     });
     return <span key="body" className={className} dangerouslySetInnerHTML={{ __html: safeBody }} dir="auto" />;
 }

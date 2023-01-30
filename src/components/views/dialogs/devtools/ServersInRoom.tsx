@@ -20,12 +20,12 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import BaseTool, { DevtoolsContext, IDevtoolsProps } from "./BaseTool";
 import { _t } from "../../../../languageHandler";
 
-const ServersInRoom = ({ onBack }: IDevtoolsProps) => {
+const ServersInRoom: React.FC<IDevtoolsProps> = ({ onBack }) => {
     const context = useContext(DevtoolsContext);
 
     const servers = useMemo<Record<string, number>>(() => {
         const servers: Record<string, number> = {};
-        context.room.currentState.getStateEvents(EventType.RoomMember).forEach(ev => {
+        context.room.currentState.getStateEvents(EventType.RoomMember).forEach((ev) => {
             if (ev.getContent().membership !== "join") return; // only count joined users
             const server = ev.getSender().split(":")[1];
             servers[server] = (servers[server] ?? 0) + 1;
@@ -33,24 +33,26 @@ const ServersInRoom = ({ onBack }: IDevtoolsProps) => {
         return servers;
     }, [context.room]);
 
-    return <BaseTool onBack={onBack}>
-        <table>
-            <thead>
-                <tr>
-                    <th>{ _t("Server") }</th>
-                    <th>{ _t("Number of users") }</th>
-                </tr>
-            </thead>
-            <tbody>
-                { Object.entries(servers).map(([server, numUsers]) => (
-                    <tr key={server}>
-                        <td>{ server }</td>
-                        <td>{ numUsers }</td>
+    return (
+        <BaseTool onBack={onBack}>
+            <table>
+                <thead>
+                    <tr>
+                        <th>{_t("Server")}</th>
+                        <th>{_t("Number of users")}</th>
                     </tr>
-                )) }
-            </tbody>
-        </table>
-    </BaseTool>;
+                </thead>
+                <tbody>
+                    {Object.entries(servers).map(([server, numUsers]) => (
+                        <tr key={server}>
+                            <td>{server}</td>
+                            <td>{numUsers}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </BaseTool>
+    );
 };
 
 export default ServersInRoom;

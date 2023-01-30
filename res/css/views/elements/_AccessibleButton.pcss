@@ -24,7 +24,10 @@ limitations under the License.
         &.mx_AccessibleButton_kind_primary_outline,
         &.mx_AccessibleButton_kind_primary_sm,
         &.mx_AccessibleButton_kind_link,
+        &.mx_AccessibleButton_kind_link_accent,
         &.mx_AccessibleButton_kind_link_inline,
+        &.mx_AccessibleButton_kind_danger_inline,
+        &.mx_AccessibleButton_kind_content_inline,
         &.mx_AccessibleButton_kind_link_sm {
             opacity: 0.4;
         }
@@ -65,7 +68,7 @@ limitations under the License.
             background-color: $accent;
 
             &::before {
-                mask-image: url('$(res)/img/feather-customised/check.svg');
+                mask-image: url("$(res)/img/feather-customised/check.svg");
             }
         }
 
@@ -73,7 +76,7 @@ limitations under the License.
             background-color: $alert;
 
             &::before {
-                mask-image: url('$(res)/img/feather-customised/x.svg');
+                mask-image: url("$(res)/img/feather-customised/x.svg");
             }
         }
 
@@ -109,6 +112,10 @@ limitations under the License.
         color: $accent;
     }
 
+    &.mx_AccessibleButton_kind_secondary_content {
+        color: $secondary-content;
+    }
+
     &.mx_AccessibleButton_kind_danger {
         color: $button-danger-fg-color;
         background-color: $alert;
@@ -138,15 +145,31 @@ limitations under the License.
     }
 
     &.mx_AccessibleButton_kind_link,
-    &.mx_AccessibleButton_kind_link_inline {
-        color: $accent;
+    &.mx_AccessibleButton_kind_link_inline,
+    &.mx_AccessibleButton_kind_danger_inline,
+    &.mx_AccessibleButton_kind_content_inline {
         font-size: inherit;
         font-weight: normal;
         line-height: inherit;
         padding: 0;
     }
 
+    &.mx_AccessibleButton_kind_link,
     &.mx_AccessibleButton_kind_link_inline {
+        color: $accent;
+    }
+
+    &.mx_AccessibleButton_kind_danger_inline {
+        color: $alert;
+    }
+
+    &.mx_AccessibleButton_kind_content_inline {
+        color: $primary-content;
+    }
+
+    &.mx_AccessibleButton_kind_link_inline,
+    &.mx_AccessibleButton_kind_danger_inline,
+    &.mx_AccessibleButton_kind_content_inline {
         display: inline;
     }
 

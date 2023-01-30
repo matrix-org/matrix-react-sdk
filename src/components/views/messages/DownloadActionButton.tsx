@@ -52,7 +52,7 @@ export default class DownloadActionButton extends React.PureComponent<IProps, IS
         };
     }
 
-    private onDownloadClick = async () => {
+    private onDownloadClick = async (): Promise<void> => {
         if (this.state.loading) return;
 
         if (this.props.mediaEventHelperGet().media.isEncrypted) {
@@ -71,7 +71,7 @@ export default class DownloadActionButton extends React.PureComponent<IProps, IS
         await this.doDownload();
     };
 
-    private async doDownload() {
+    private async doDownload(): Promise<void> {
         await this.downloader.download({
             blob: this.state.blob,
             name: this.props.mediaEventHelperGet().fileName,
@@ -79,26 +79,28 @@ export default class DownloadActionButton extends React.PureComponent<IProps, IS
         this.setState({ loading: false });
     }
 
-    public render() {
+    public render(): JSX.Element {
         let spinner: JSX.Element;
         if (this.state.loading) {
             spinner = <Spinner w={18} h={18} />;
         }
 
         const classes = classNames({
-            'mx_MessageActionBar_iconButton': true,
-            'mx_MessageActionBar_downloadButton': true,
-            'mx_MessageActionBar_downloadSpinnerButton': !!spinner,
+            mx_MessageActionBar_iconButton: true,
+            mx_MessageActionBar_downloadButton: true,
+            mx_MessageActionBar_downloadSpinnerButton: !!spinner,
         });
 
-        return <RovingAccessibleTooltipButton
-            className={classes}
-            title={spinner ? _t(this.state.tooltip) : _t("Download")}
-            onClick={this.onDownloadClick}
-            disabled={!!spinner}
-        >
-            <DownloadIcon />
-            { spinner }
-        </RovingAccessibleTooltipButton>;
+        return (
+            <RovingAccessibleTooltipButton
+                className={classes}
+                title={spinner ? _t(this.state.tooltip) : _t("Download")}
+                onClick={this.onDownloadClick}
+                disabled={!!spinner}
+            >
+                <DownloadIcon />
+                {spinner}
+            </RovingAccessibleTooltipButton>
+        );
     }
 }

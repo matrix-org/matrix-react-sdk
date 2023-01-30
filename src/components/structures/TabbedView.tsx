@@ -20,8 +20,8 @@ import * as React from "react";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../languageHandler';
-import AutoHideScrollbar from './AutoHideScrollbar';
+import { _t } from "../../languageHandler";
+import AutoHideScrollbar from "./AutoHideScrollbar";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import { PosthogScreenTracker, ScreenName } from "../../PosthogTrackers";
 
@@ -37,7 +37,7 @@ export class Tab {
      * @param {React.ReactNode} body The JSX for the tab container.
      * @param {string} screenName The screen name to report to Posthog.
      */
-    constructor(
+    public constructor(
         public readonly id: string,
         public readonly label: string,
         public readonly icon: string,
@@ -47,8 +47,8 @@ export class Tab {
 }
 
 export enum TabLocation {
-    LEFT = 'left',
-    TOP = 'top',
+    LEFT = "left",
+    TOP = "top",
 }
 
 interface IProps {
@@ -64,21 +64,21 @@ interface IState {
 }
 
 export default class TabbedView extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
-        const initialTabIdIsValid = props.tabs.find(tab => tab.id === props.initialTabId);
+        const initialTabIdIsValid = props.tabs.find((tab) => tab.id === props.initialTabId);
         this.state = {
             activeTabId: initialTabIdIsValid ? props.initialTabId : props.tabs[0]?.id,
         };
     }
 
-    static defaultProps = {
+    public static defaultProps = {
         tabLocation: TabLocation.LEFT,
     };
 
     private getTabById(id: string): Tab | undefined {
-        return this.props.tabs.find(tab => tab.id === id);
+        return this.props.tabs.find((tab) => tab.id === id);
     }
 
     /**
@@ -86,7 +86,7 @@ export default class TabbedView extends React.Component<IProps, IState> {
      * @param {Tab} tab the tab to show
      * @private
      */
-    private setActiveTab(tab: Tab) {
+    private setActiveTab(tab: Tab): void {
         // make sure this tab is still in available tabs
         if (!!this.getTabById(tab.id)) {
             if (this.props.onChange) this.props.onChange(tab.id);
@@ -96,7 +96,7 @@ export default class TabbedView extends React.Component<IProps, IState> {
         }
     }
 
-    private renderTabLabel(tab: Tab) {
+    private renderTabLabel(tab: Tab): JSX.Element {
         let classes = "mx_TabbedView_tabLabel ";
 
         if (this.state.activeTabId === tab.id) classes += "mx_TabbedView_tabLabel_active";
@@ -106,7 +106,7 @@ export default class TabbedView extends React.Component<IProps, IState> {
             tabIcon = <span className={`mx_TabbedView_maskedIcon ${tab.icon}`} />;
         }
 
-        const onClickHandler = () => this.setActiveTab(tab);
+        const onClickHandler = (): void => this.setActiveTab(tab);
 
         const label = _t(tab.label);
         return (
@@ -116,10 +116,8 @@ export default class TabbedView extends React.Component<IProps, IState> {
                 onClick={onClickHandler}
                 data-testid={`settings-tab-${tab.id}`}
             >
-                { tabIcon }
-                <span className="mx_TabbedView_tabLabel_text">
-                    { label }
-                </span>
+                {tabIcon}
+                <span className="mx_TabbedView_tabLabel_text">{label}</span>
             </AccessibleButton>
         );
     }
@@ -127,31 +125,27 @@ export default class TabbedView extends React.Component<IProps, IState> {
     private renderTabPanel(tab: Tab): React.ReactNode {
         return (
             <div className="mx_TabbedView_tabPanel" key={"mx_tabpanel_" + tab.label}>
-                <AutoHideScrollbar className='mx_TabbedView_tabPanelContent'>
-                    { tab.body }
-                </AutoHideScrollbar>
+                <AutoHideScrollbar className="mx_TabbedView_tabPanelContent">{tab.body}</AutoHideScrollbar>
             </div>
         );
     }
 
     public render(): React.ReactNode {
-        const labels = this.props.tabs.map(tab => this.renderTabLabel(tab));
+        const labels = this.props.tabs.map((tab) => this.renderTabLabel(tab));
         const tab = this.getTabById(this.state.activeTabId);
         const panel = tab ? this.renderTabPanel(tab) : null;
 
         const tabbedViewClasses = classNames({
-            'mx_TabbedView': true,
-            'mx_TabbedView_tabsOnLeft': this.props.tabLocation == TabLocation.LEFT,
-            'mx_TabbedView_tabsOnTop': this.props.tabLocation == TabLocation.TOP,
+            mx_TabbedView: true,
+            mx_TabbedView_tabsOnLeft: this.props.tabLocation == TabLocation.LEFT,
+            mx_TabbedView_tabsOnTop: this.props.tabLocation == TabLocation.TOP,
         });
 
         return (
             <div className={tabbedViewClasses}>
                 <PosthogScreenTracker screenName={tab?.screenName ?? this.props.screenName} />
-                <div className="mx_TabbedView_tabLabels">
-                    { labels }
-                </div>
-                { panel }
+                <div className="mx_TabbedView_tabLabels">{labels}</div>
+                {panel}
             </div>
         );
     }
