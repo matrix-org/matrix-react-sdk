@@ -42,7 +42,7 @@ describe("UnreadNotificationBadge", () => {
 
     beforeEach(() => {
         client = stubClient();
-        client.supportsExperimentalThreads = () => true;
+        client.supportsThreads = () => true;
 
         room = new Room(ROOM_ID, client, client.getUserId()!, {
             pendingEventOrdering: PendingEventOrdering.Detached,
