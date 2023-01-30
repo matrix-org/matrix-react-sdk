@@ -83,6 +83,8 @@ const mockClient = mocked({
     getUser: jest.fn(),
     isGuest: jest.fn().mockReturnValue(false),
     isUserIgnored: jest.fn(),
+    getIgnoredUsers: jest.fn(),
+    setIgnoredUsers: jest.fn(),
     isCryptoEnabled: jest.fn(),
     getUserId: jest.fn(),
     on: jest.fn(),
@@ -383,13 +385,17 @@ describe("<UserOptionsSection />", () => {
     };
 
     const inviteSpy = jest.spyOn(MultiInviter.prototype, "invite");
+    const modalSpy = jest.spyOn(Modal, "createDialog");
 
-    beforeEach(() => {
+    afterEach(() => {
         inviteSpy.mockReset();
+        modalSpy.mockReset();
+        mockClient.setIgnoredUsers.mockClear();
     });
 
     afterAll(() => {
         inviteSpy.mockRestore();
+        modalSpy.mockRestore();
     });
 
     it("always shows share user button", () => {
@@ -542,6 +548,40 @@ describe("<UserOptionsSection />", () => {
         await waitFor(() => {
             expect(screen.getByText(/operation failed/i)).toBeInTheDocument();
         });
+    });
+
+    it("shows a modal before ignoring the user", async () => {
+        mockClient.getIgnoredUsers.mockReturnValue([]);
+        modalSpy.mockReturnValue({
+            finished: Promise.resolve([true]),
+            close: () => {},
+        });
+        renderComponent({ isIgnored: false });
+
+        await userEvent.click(screen.getByRole("button", { name: "Ignore" }));
+        expect(modalSpy).toHaveBeenCalled();
+        expect(mockClient.setIgnoredUsers).toHaveBeenLastCalledWith([member.userId]);
+    });
+
+    it("cancels ignoring the user", async () => {
+        mockClient.getIgnoredUsers.mockReturnValue([]);
+        modalSpy.mockReturnValue({
+            finished: Promise.resolve([false]),
+            close: () => {},
+        });
+        renderComponent({ isIgnored: false });
+
+        await userEvent.click(screen.getByRole("button", { name: "Ignore" }));
+        expect(modalSpy).toHaveBeenCalled();
+        expect(mockClient.setIgnoredUsers).not.toHaveBeenCalled();
+    });
+
+    it("unignores the user", async () => {
+        mockClient.getIgnoredUsers.mockReturnValue([member.userId]);
+        renderComponent({ isIgnored: true });
+
+        await userEvent.click(screen.getByRole("button", { name: "Unignore" }));
+        expect(mockClient.setIgnoredUsers).toHaveBeenCalledWith([]);
     });
 });
 
