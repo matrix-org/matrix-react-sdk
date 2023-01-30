@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
+import { IContent } from "matrix-js-sdk/src/matrix";
 
 import { Playback } from "../../../audio/Playback";
 import InlineSpinner from "../elements/InlineSpinner";
@@ -29,7 +30,6 @@ import { isVoiceMessage } from "../../../utils/EventUtils";
 import { PlaybackQueue } from "../../../audio/PlaybackQueue";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import MediaProcessingError from "./shared/MediaProcessingError";
-import { IContent } from "matrix-js-sdk/src/matrix";
 
 interface IState {
     error?: Error;

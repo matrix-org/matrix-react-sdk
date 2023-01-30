@@ -22,6 +22,7 @@ import React from "react";
 import { AccountAuthInfo } from "@matrix-org/react-sdk-module-api/lib/types/AccountAuthInfo";
 import { PlainSubstitution } from "@matrix-org/react-sdk-module-api/lib/types/translations";
 import * as Matrix from "matrix-js-sdk/src/matrix";
+import { IRegisterRequestParams } from "matrix-js-sdk/src/matrix";
 
 import Modal from "../Modal";
 import { _t } from "../languageHandler";
@@ -35,7 +36,6 @@ import { MatrixClientPeg } from "../MatrixClientPeg";
 import { getCachedRoomIDForAlias } from "../RoomAliasCache";
 import { Action } from "../dispatcher/actions";
 import { OverwriteLoginPayload } from "../dispatcher/payloads/OverwriteLoginPayload";
-import { IRegisterRequestParams } from "matrix-js-sdk/src/matrix";
 
 /**
  * Glue between the `ModuleApi` interface and the react-sdk. Anticipates one instance

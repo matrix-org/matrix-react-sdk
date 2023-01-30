@@ -18,6 +18,7 @@ import React, { ReactNode } from "react";
 import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { SyncState, ISyncStateData } from "matrix-js-sdk/src/sync";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { _t, _td } from "../../languageHandler";
 import Resend from "../../Resend";
@@ -29,7 +30,6 @@ import AccessibleButton from "../views/elements/AccessibleButton";
 import InlineSpinner from "../views/elements/InlineSpinner";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { RoomStatusBarUnsentMessages } from "./RoomStatusBarUnsentMessages";
-import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 const STATUS_BAR_HIDDEN = 0;
 const STATUS_BAR_EXPANDED = 1;
