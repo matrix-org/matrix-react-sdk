@@ -592,6 +592,40 @@ describe("EditWysiwygComposer", () => {
                     timelineRenderingType: defaultRoomContext.timelineRenderingType,
                 });
             });
+
+            it("Should close editing", async () => {
+                // When
+                jest.spyOn(EventUtils, "findEditableEvent").mockReturnValue(undefined);
+                const { textbox, spyDispatcher } = await setup();
+                // Skipping the BR tag
+                const textNode = textbox.childNodes[textbox.childNodes.length - 2];
+                const { length } = textNode.textContent || "";
+                await select({
+                    anchorNode: textNode,
+                    anchorOffset: length,
+                    focusNode: textNode,
+                    focusOffset: length,
+                    isForward: true,
+                });
+
+                fireEvent.keyDown(textbox, {
+                    key: "ArrowDown",
+                });
+
+                // Wait for event dispatch to happen
+                await act(async () => {
+                    await flushPromises();
+                });
+
+                // Then
+                await waitFor(() =>
+                    expect(spyDispatcher).toBeCalledWith({
+                        action: Action.EditEvent,
+                        event: null,
+                        timelineRenderingType: defaultRoomContext.timelineRenderingType,
+                    }),
+                );
+            });
         });
     });
 });
