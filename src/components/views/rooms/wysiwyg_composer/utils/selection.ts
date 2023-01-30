@@ -80,7 +80,7 @@ export function isCaretAtEnd(editor: HTMLElement): boolean {
     do {
         if (child === selection.focusNode) {
             // Checking that the cursor is at end of the selected text
-            return child.nodeType === Node.TEXT_NODE && selection.focusOffset === child.textContent?.length;
+            return selection.focusOffset === child.textContent?.length;
         }
     } while ((child = child.lastChild));
 

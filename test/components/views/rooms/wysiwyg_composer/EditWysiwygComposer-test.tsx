@@ -17,7 +17,7 @@ limitations under the License.
 import "@testing-library/jest-dom";
 import React from "react";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { EventTimeline } from "matrix-js-sdk/src/matrix";
+import { EventTimeline, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import MatrixClientContext from "../../../../../src/contexts/MatrixClientContext";
 import RoomContext from "../../../../../src/contexts/RoomContext";
@@ -69,7 +69,7 @@ describe("EditWysiwygComposer", () => {
         });
 
         const defaultRoomContext: IRoomState = getRoomContext(mockRoom, {
-            liveTimeline: { getEvents: () => [] } as unknown as EventTimeline,
+            liveTimeline: { getEvents: (): MatrixEvent[] => [] } as unknown as EventTimeline,
         });
 
         const editorStateTransfer = new EditorStateTransfer(mockEvent);
@@ -463,6 +463,123 @@ describe("EditWysiwygComposer", () => {
 
                 fireEvent.keyDown(textbox, {
                     key: "ArrowUp",
+                });
+
+                // Wait for event dispatch to happen
+                await act(async () => {
+                    await flushPromises();
+                });
+
+                // Then
+                expect(spyDispatcher).toBeCalledWith({
+                    action: Action.EditEvent,
+                    event: mockEvent,
+                    timelineRenderingType: defaultRoomContext.timelineRenderingType,
+                });
+            });
+        });
+
+        describe("Moving down", () => {
+            it("Should not moving when caret is not at the end of the text", async () => {
+                // When
+                const { textbox, spyDispatcher } = await setup();
+                const brNode = textbox.lastChild;
+                await select({
+                    anchorNode: brNode,
+                    anchorOffset: 0,
+                    focusNode: brNode,
+                    focusOffset: 0,
+                    isForward: true,
+                });
+
+                fireEvent.keyDown(textbox, {
+                    key: "ArrowDown",
+                });
+
+                // Then
+                expect(spyDispatcher).toBeCalledTimes(0);
+            });
+
+            it("Should not moving when the content has changed", async () => {
+                // When
+                const { textbox, spyDispatcher } = await setup();
+                fireEvent.input(textbox, {
+                    data: "word",
+                    inputType: "insertText",
+                });
+                const brNode = textbox.lastChild;
+                // console.log("textNode", textNode, textNode.textContent, textNode.nodeName);
+                //     const { length } = textNode.textContent;
+                await select({
+                    anchorNode: brNode,
+                    anchorOffset: 0,
+                    focusNode: brNode,
+                    focusOffset: 0,
+                    isForward: true,
+                });
+
+                fireEvent.keyDown(textbox, {
+                    key: "ArrowDown",
+                });
+
+                // Then
+                expect(spyDispatcher).toBeCalledTimes(0);
+            });
+
+            it("Should moving down", async () => {
+                // When
+                const { textbox, spyDispatcher } = await setup();
+                // Skipping the BR tag
+                const textNode = textbox.childNodes[textbox.childNodes.length - 2];
+                const { length } = textNode.textContent;
+                await select({
+                    anchorNode: textNode,
+                    anchorOffset: length,
+                    focusNode: textNode,
+                    focusOffset: length,
+                    isForward: true,
+                });
+
+                fireEvent.keyDown(textbox, {
+                    key: "ArrowDown",
+                });
+
+                // Wait for event dispatch to happen
+                await act(async () => {
+                    await flushPromises();
+                });
+
+                // Then
+                await waitFor(() =>
+                    expect(spyDispatcher).toBeCalledWith({
+                        action: Action.EditEvent,
+                        event: mockEvent,
+                        timelineRenderingType: defaultRoomContext.timelineRenderingType,
+                    }),
+                );
+            });
+
+            it("Should moving down in list", async () => {
+                // When
+                const { mockEvent, defaultRoomContext, mockClient, editorStateTransfer } = createMocks(
+                    "<ul><li><strong>Content</strong></li><li>Other Content</li></ul>",
+                );
+                jest.spyOn(EventUtils, "findEditableEvent").mockReturnValue(mockEvent);
+                const { textbox, spyDispatcher } = await setup(editorStateTransfer, mockClient, defaultRoomContext);
+
+                // Skipping the BR tag and get the text node inside the last LI tag
+                const textNode = textbox.childNodes[textbox.childNodes.length - 2].lastChild.lastChild;
+                const { length } = textNode.textContent;
+                await select({
+                    anchorNode: textNode,
+                    anchorOffset: length,
+                    focusNode: textNode,
+                    focusOffset: length,
+                    isForward: true,
+                });
+
+                fireEvent.keyDown(textbox, {
+                    key: "ArrowDown",
                 });
 
                 // Wait for event dispatch to happen
