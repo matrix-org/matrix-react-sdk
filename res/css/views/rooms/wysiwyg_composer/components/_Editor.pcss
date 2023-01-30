@@ -37,11 +37,10 @@ limitations under the License.
             user-select: all;
         }
 
-        // we always have a <br/> tag at the end of the html, remove it in any way and the cursor won't work properly,
-        // so we give it zero content which effectively makes it disappear visually whilst still being in the flow of
-        // the markup
-        br {
-            content: "";
+        // we always have a <br/> tag at the end of the html, we need it to be present at first then hide it as soon as
+        // we have any other elements
+        br:not(:only-child) {
+            display: none;
         }
 
         p {
