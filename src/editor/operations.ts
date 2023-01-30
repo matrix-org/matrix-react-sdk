@@ -29,6 +29,7 @@ import { longestBacktickSequence } from "./deserialize";
  * @param {Formatting} action the action that should be performed on the range
  */
 export function formatRange(range: Range, action: Formatting): void {
+    
     // If the selection was empty we select the current word instead
     if (range.wasInitializedEmpty()) {
         selectRangeOfWordAtCaret(range);
@@ -37,12 +38,8 @@ export function formatRange(range: Range, action: Formatting): void {
         range.trim();
     }
 
-    // Edge case when just selecting whitespace or new line.
-    // There should be no reason to format whitespace, so we can just return.
-    if (range.length === 0) {
-        return;
-    }
-
+    
+    
     switch (action) {
         case Formatting.Bold:
             toggleInlineFormat(range, "**");
@@ -270,13 +267,14 @@ export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix
     if (startIndex <= lastNonEmptyPart) {
         paragraphIndexes.push([startIndex, lastNonEmptyPart + 1]);
     }
-
+    
     // keep track of how many things we have inserted as an offset:=0
     let offset = 0;
     paragraphIndexes.forEach(([startIdx, endIdx]) => {
         // for each paragraph apply the same rule
         const base = startIdx + offset;
         const index = endIdx + offset;
+        
 
         const isFormatted =
             index - base > 0 && parts[base].text.startsWith(prefix) && parts[index - 1].text.endsWith(suffix);
@@ -301,6 +299,14 @@ export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix
     // If the user didn't select something initially, we want to just restore
     // the caret position instead of making a new selection.
     if (range.wasInitializedEmpty() && prefix === suffix) {
+
+       // When just selecting whitespace or new line.
+        if (range.length === 0) {
+            
+            parts.splice(0,0,partCreator.plain(suffix));
+            parts.splice(1,0,partCreator.plain(suffix));
+            
+        }
         // Check if we need to add a offset for a toggle or untoggle
         const hasFormatting = range.text.startsWith(prefix) && range.text.endsWith(suffix);
         replaceRangeAndAutoAdjustCaret(range, parts, hasFormatting, prefix.length);
