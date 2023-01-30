@@ -19,7 +19,6 @@ import { getByLabelText, render } from "@testing-library/react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import userEvent from "@testing-library/user-event";
-import { sleep } from "matrix-js-sdk/src/utils";
 
 import { stubClient } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -46,6 +45,10 @@ describe("DevtoolsDialog", () => {
         jest.spyOn(cli, "getRoom").mockReturnValue(room);
     });
 
+    afterAll(() => {
+        jest.restoreAllMocks();
+    });
+
     it("renders the devtools dialog", () => {
         const { asFragment } = getComponent(room.roomId);
         expect(asFragment()).toMatchSnapshot();
@@ -53,15 +56,16 @@ describe("DevtoolsDialog", () => {
 
     it("copies the roomid", async () => {
         const user = userEvent.setup();
+        jest.spyOn(navigator.clipboard, "writeText");
+
         const { container } = getComponent(room.roomId);
 
         const copyBtn = getByLabelText(container, "Copy");
-        user.click(copyBtn);
+        await user.click(copyBtn);
+        const copiedBtn = getByLabelText(container, "Copied!");
 
-        // Not great, but I could not find another way to wait for the clipboard
-        // to be populated
-        // Ideally would prefer to write `waitFor(() => expect(navigator.clipboard.write).toHaveBeenCalled())
-        await sleep(100);
-        await expect(navigator.clipboard.readText()).resolves.toBe(room.roomId);
+        expect(copiedBtn).toBeInTheDocument();
+        expect(navigator.clipboard.writeText).toHaveBeenCalled();
+        expect(navigator.clipboard.readText()).resolves.toBe(room.roomId);
     });
 });
