@@ -45,12 +45,15 @@ const usePollStartEvent = (event: MatrixEvent): { pollStartEvent?: MatrixEvent; 
                 const startEventJson = await matrixClient.fetchRoomEvent(roomId, pollStartEventId);
                 const startEvent = new MatrixEvent(startEventJson);
                 // add the poll to the room polls state
-                room.processPollEvents([startEvent]);
-                setPollStartEvent(startEvent);
+                room.processPollEvents([startEvent, event]);
+
+                if (startEvent.getSender() === event.getSender()) {
+                    setPollStartEvent(startEvent);
+                }
             } catch (error) {
-                logger.error("Failed to fetch related poll start event");
+                logger.error("Failed to fetch related poll start event", error);
             } finally {
-                setIsLoadingPollStartEvent(false)
+                setIsLoadingPollStartEvent(false);
             }
         };
 
@@ -65,13 +68,15 @@ const usePollStartEvent = (event: MatrixEvent): { pollStartEvent?: MatrixEvent; 
             .find((e) => e.getId() === pollStartEventId);
 
         if (localEvent) {
-            setPollStartEvent(localEvent);
+            if (localEvent.getSender() === event.getSender()) {
+                setPollStartEvent(localEvent);
+            }
         } else {
             // pollStartEvent is not in the current timeline,
             // fetch it
             fetchPollStartEvent(room.roomId, pollStartEventId);
         }
-    }, [pollStartEventId, pollStartEvent, matrixClient]);
+    }, [event, pollStartEventId, pollStartEvent, matrixClient]);
 
     return { pollStartEvent, isLoadingPollStartEvent };
 };
