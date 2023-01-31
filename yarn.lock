@@ -1589,10 +1589,10 @@
   resolved "https://registry.yarnpkg.com/@matrix-org/matrix-sdk-crypto-js/-/matrix-sdk-crypto-js-0.1.0-alpha.2.tgz#a09d0fea858e817da971a3c9f904632ef7b49eb6"
   integrity sha512-oVkBCh9YP7H9i4gAoQbZzswniczfo/aIptNa4dxRi4Ff9lSvUCFv6Hvzi7C+90c0/PWZLXjIDTIAWZYmwyd2fA==
 
-"@matrix-org/matrix-wysiwyg@^0.20.0":
-  version "0.20.0"
-  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-wysiwyg/-/matrix-wysiwyg-0.20.0.tgz#6193f790b031eaa96e944b647fe2b27018639d57"
-  integrity sha512-9VqzyccwizglssShi/M+tCxdZDgzsecH4WjlS0HC5KkLmljIxxlHFstf/D3C/G4ZfRodFUh6wUvd+oQI/ScPpw==
+"@matrix-org/matrix-wysiwyg@^0.22.0":
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-wysiwyg/-/matrix-wysiwyg-0.22.0.tgz#53f1e80d9ae7be0940e0ca905a3952804b029b29"
+  integrity sha512-3b5jGMI56zcqZ2PktrSPMAbzfWmkdupuzcLeemWQ0fT8QuiG4dA72NUxdDyarlz+1eQ+Qm4fu9j/zsPlvNpy8g==
 
 "@matrix-org/olm@https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.14.tgz":
   version "3.2.14"
@@ -6492,8 +6492,8 @@ matrix-events-sdk@0.0.1:
   integrity sha512-1QEOsXO+bhyCroIe2/A5OwaxHvBm7EsSQ46DEDn8RBIfQwN5HWBpFvyWWR4QY0KHPPnnJdI99wgRiAl7Ad5qaA==
 
 "matrix-js-sdk@github:matrix-org/matrix-js-sdk#develop":
-  version "23.1.1"
-  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/c309fe69426d701893ebee315105f8fa8fef03f8"
+  version "23.2.0"
+  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/1c26dc02339c6b7c67b030b1701248a2d68c24c0"
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@matrix-org/matrix-sdk-crypto-js" "^0.1.0-alpha.2"
