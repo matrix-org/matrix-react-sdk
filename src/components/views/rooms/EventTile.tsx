@@ -1294,7 +1294,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                         )}
 
                         {msgOption}
-                        <UnreadNotificationBadge room={room} threadId={this.props.mxEvent.getId()} />
+                        <UnreadNotificationBadge room={room || undefined} threadId={this.props.mxEvent.getId()} />
                     </>,
                 );
             }
