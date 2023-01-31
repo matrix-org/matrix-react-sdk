@@ -28,33 +28,19 @@ interface Props {
     voiceBroadcastPreRecording: VoiceBroadcastPreRecording;
 }
 
-interface State {
-    showDeviceSelect: boolean;
-    disableStartButton: boolean;
-}
-
 export const VoiceBroadcastPreRecordingPip: React.FC<Props> = ({ voiceBroadcastPreRecording }) => {
     const pipRef = useRef<HTMLDivElement | null>(null);
     const { currentDevice, currentDeviceLabel, devices, setDevice } = useAudioDeviceSelection();
-    const [state, setState] = useState<State>({
-        showDeviceSelect: false,
-        disableStartButton: false,
-    });
+    const [disableStartButton, setDisableStartButton] = useState<boolean>(false);
+    const [showDeviceSelect, setShowDeviceSelect] = useState<boolean>(false);
 
     const onDeviceSelect = (device: MediaDeviceInfo): void => {
-        setState((state) => ({
-            ...state,
-            showDeviceSelect: false,
-        }));
+        setShowDeviceSelect(() => false);
         setDevice(device);
     };
 
     const onStartBroadcastClick = (): void => {
-        setState((state) => ({
-            ...state,
-            disableStartButton: true,
-        }));
-
+        setDisableStartButton(() => true);
         voiceBroadcastPreRecording.start();
     };
 
@@ -63,7 +49,7 @@ export const VoiceBroadcastPreRecordingPip: React.FC<Props> = ({ voiceBroadcastP
             <VoiceBroadcastHeader
                 linkToRoom={true}
                 onCloseClick={voiceBroadcastPreRecording.cancel}
-                onMicrophoneLineClick={(): void => setState({ ...state, showDeviceSelect: true })}
+                onMicrophoneLineClick={(): void => setShowDeviceSelect(() => true)}
                 room={voiceBroadcastPreRecording.room}
                 microphoneLabel={currentDeviceLabel}
                 showClose={true}
@@ -72,12 +58,12 @@ export const VoiceBroadcastPreRecordingPip: React.FC<Props> = ({ voiceBroadcastP
                 className="mx_VoiceBroadcastBody_blockButton"
                 kind="danger"
                 onClick={onStartBroadcastClick}
-                disabled={state.disableStartButton}
+                disabled={disableStartButton}
             >
                 <LiveIcon className="mx_Icon mx_Icon_16" />
                 {_t("Go live")}
             </AccessibleButton>
-            {state.showDeviceSelect && (
+            {showDeviceSelect && (
                 <DevicesContextMenu
                     containerRef={pipRef}
                     currentDevice={currentDevice}

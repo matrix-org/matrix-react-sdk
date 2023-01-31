@@ -115,7 +115,8 @@ describe("VoiceBroadcastPreRecordingPip", () => {
                 });
             });
 
-            it("should call start once", () => {
+            it("should dissable the button and call start once", () => {
+                expect(screen.getByText("Go live")).toHaveAttribute("disabled");
                 expect(preRecording.start).toHaveBeenCalledTimes(1);
             });
         });
