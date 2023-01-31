@@ -136,7 +136,7 @@ describe("pickFactory", () => {
         });
 
         it("should return a TextualEventFactory for a voice broadcast stopped event", () => {
-            expect(pickFactory(voiceBroadcastStoppedEvent, client, true)).toBe(TextualEventFactory);
+            expect(pickFactory(voiceBroadcastStoppedEvent, client, false)).toBe(TextualEventFactory);
         });
 
         it("should return a MessageEventFactory for an audio message event", () => {
