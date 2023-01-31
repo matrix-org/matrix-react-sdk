@@ -26,7 +26,7 @@ import { EffectiveMembership, getEffectiveMembership } from "../utils/membership
 import { useEventEmitter } from "./useEventEmitter";
 
 export const useUnreadNotifications = (
-    room: Room,
+    room?: Room,
     threadId?: string,
 ): {
     symbol: string | null;
@@ -35,7 +35,7 @@ export const useUnreadNotifications = (
 } => {
     const [symbol, setSymbol] = useState<string | null>(null);
     const [count, setCount] = useState<number>(0);
-    const [color, setColor] = useState<NotificationColor>(0);
+    const [color, setColor] = useState<NotificationColor>(NotificationColor.None);
 
     useEventEmitter(
         room,
@@ -53,7 +53,11 @@ export const useUnreadNotifications = (
     useEventEmitter(room, RoomEvent.MyMembership, () => updateNotificationState());
 
     const updateNotificationState = useCallback(() => {
-        if (getUnsentMessages(room, threadId).length > 0) {
+        if (!room) {
+            setSymbol(null);
+            setCount(0);
+            setColor(NotificationColor.None);
+        } else if (getUnsentMessages(room, threadId).length > 0) {
             setSymbol("!");
             setCount(1);
             setColor(NotificationColor.Unsent);
