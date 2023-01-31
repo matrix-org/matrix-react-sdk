@@ -185,5 +185,49 @@ describe("Composer", () => {
                 cy.get(".mx_EventTile_body a").should("have.attr", "href").and("include", "https://matrix.org/");
             });
         });
+
+        describe("keyboard navigation in editing", () => {
+            it("navigate to the previous message", () => {
+                // Type two messages
+                cy.get("div[contenteditable=true]").type("my message 0");
+                cy.get('div[aria-label="Send message"]').click();
+                cy.get("div[contenteditable=true]").type("my message 1");
+                cy.get('div[aria-label="Send message"]').click();
+
+                // Edit last message
+                cy.get('div[aria-label="Edit"]').eq(1).click({ force: true });
+
+                // In cypress, the first upArrow set the selection at the end of the editor
+                cy.get("div[contenteditable=true]").eq(0).type("{upArrow}");
+                // Move the cursor to the editor start
+                cy.get("div[contenteditable=true]").eq(0).type("{upArrow}");
+                // Move to previous message
+                cy.get("div[contenteditable=true]").eq(0).type("{upArrow}");
+
+                // The first message is in editing mode
+                cy.contains('div[role="textbox"]', "my message 0");
+            });
+
+            it("navigate to the next message", () => {
+                // Type two messages
+                cy.get("div[contenteditable=true]").type("my message 0");
+                cy.get('div[aria-label="Send message"]').click();
+                cy.get("div[contenteditable=true]").type("my message 1");
+                cy.get('div[aria-label="Send message"]').click();
+
+                // Edit last message
+                cy.get('div[aria-label="Edit"]').eq(0).click({ force: true });
+
+                // Move to next message
+                cy.get("div[contenteditable=true]").eq(0).type("{downArrow}");
+
+                // The second message is in editing mode
+                cy.contains("div[contenteditable=true]", "my message 1");
+
+                // Close editing mode
+                cy.get("div[contenteditable=true]").eq(0).type("{downArrow}");
+                cy.get("div[contenteditable=true]").should("have.length", 1);
+            });
+        });
     });
 });
