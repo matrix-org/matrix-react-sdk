@@ -40,7 +40,7 @@ export function useInputEventProcessor(
     const roomContext = useRoomContext();
     const composerContext = useComposerContext();
     const mxClient = useMatrixClientContext();
-    const isCtrlEnter = useSettingValue<boolean>("MessageComposerInput.ctrlEnterToSend");
+    const isCtrlEnterToSend = useSettingValue<boolean>("MessageComposerInput.ctrlEnterToSend");
 
     return useCallback(
         (event: WysiwygEvent, composer: Wysiwyg, editor: HTMLElement) => {
@@ -67,10 +67,10 @@ export function useInputEventProcessor(
                     mxClient,
                 );
             } else {
-                return handleInputEvent(event, send, isCtrlEnter);
+                return handleInputEvent(event, send, isCtrlEnterToSend);
             }
         },
-        [isCtrlEnter, onSend, initialContent, roomContext, composerContext, mxClient],
+        [isCtrlEnterToSend, onSend, initialContent, roomContext, composerContext, mxClient],
     );
 }
 
@@ -102,8 +102,12 @@ function handleKeyboardEvent(
                 break;
             }
 
-            dispatchEditEvent(event, false, editorStateTransfer, roomContext, mxClient);
-            return null;
+            const isDispatched = dispatchEditEvent(event, false, editorStateTransfer, roomContext, mxClient);
+            if (isDispatched) {
+                return null;
+            }
+
+            break;
         }
         case KeyBindingAction.EditNextMessage: {
             // If not in edition
@@ -120,7 +124,7 @@ function handleKeyboardEvent(
                 event.stopPropagation();
             }
 
-            break;
+            return null;
         }
     }
 
@@ -159,15 +163,15 @@ function dispatchEditEvent(
 
 type InputEvent = Exclude<WysiwygEvent, KeyboardEvent | ClipboardEvent>;
 
-function handleInputEvent(event: InputEvent, send: Send, isCtrlEnter: boolean): InputEvent | null {
+function handleInputEvent(event: InputEvent, send: Send, isCtrlEnterToSend: boolean): InputEvent | null {
     switch (event.inputType) {
         case "insertParagraph":
-            if (!isCtrlEnter) {
+            if (!isCtrlEnterToSend) {
                 send();
             }
             return null;
         case "sendMessage":
-            if (isCtrlEnter) {
+            if (isCtrlEnterToSend) {
                 send();
             }
             return null;
