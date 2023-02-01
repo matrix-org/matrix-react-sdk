@@ -24,7 +24,8 @@ interface Props {
     event: MatrixEvent;
 }
 
-const formatDate = (ts: number): string => new Intl.DateTimeFormat().format(ts);
+const formatDate = (ts: number): string =>
+    new Intl.DateTimeFormat(undefined, { day: "2-digit", month: "2-digit", year: "2-digit" }).format(ts);
 
 const PollListItem: React.FC<Props> = ({ event }) => {
     const pollEvent = event.unstableExtensibleEvent as unknown as PollStartEvent;

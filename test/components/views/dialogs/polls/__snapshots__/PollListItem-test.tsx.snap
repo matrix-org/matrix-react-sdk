@@ -7,7 +7,7 @@ exports[`<PollListItem /> renders a poll 1`] = `
     data-testid="pollListItem-$mypoll"
   >
     <span>
-      01/01/1970
+      01/01/70
     </span>
     <div
       class="mx_PollListItem_icon"

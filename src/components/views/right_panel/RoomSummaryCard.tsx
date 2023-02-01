@@ -329,20 +329,12 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
     return (
         <BaseCard header={header} className="mx_RoomSummaryCard" onClose={onClose}>
             <Group title={_t("About")} className="mx_RoomSummaryCard_aboutGroup">
-                <Button
-                    data-testid="roomMembersButton"
-                    className="mx_RoomSummaryCard_icon_people"
-                    onClick={onRoomMembersClick}
-                >
+                <Button className="mx_RoomSummaryCard_icon_people" onClick={onRoomMembersClick}>
                     {_t("People")}
                     <span className="mx_BaseCard_Button_sublabel">{memberCount}</span>
                 </Button>
                 {!isVideoRoom && (
-                    <Button
-                        data-testid="roomFilesButton"
-                        className="mx_RoomSummaryCard_icon_files"
-                        onClick={onRoomFilesClick}
-                    >
+                    <Button className="mx_RoomSummaryCard_icon_files" onClick={onRoomFilesClick}>
                         {_t("Files")}
                     </Button>
                 )}
@@ -352,21 +344,13 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
                     </Button>
                 )}
                 {pinningEnabled && !isVideoRoom && (
-                    <Button
-                        data-testid="roomPinsButton"
-                        className="mx_RoomSummaryCard_icon_pins"
-                        onClick={onRoomPinsClick}
-                    >
+                    <Button className="mx_RoomSummaryCard_icon_pins" onClick={onRoomPinsClick}>
                         {_t("Pinned")}
                         {pinCount > 0 && <span className="mx_BaseCard_Button_sublabel">{pinCount}</span>}
                     </Button>
                 )}
                 {!isVideoRoom && (
-                    <Button
-                        data-testid="exportChatButton"
-                        className="mx_RoomSummaryCard_icon_export"
-                        onClick={onRoomExportClick}
-                    >
+                    <Button className="mx_RoomSummaryCard_icon_export" onClick={onRoomExportClick}>
                         {_t("Export chat")}
                     </Button>
                 )}
@@ -377,11 +361,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
                 >
                     {_t("Share room")}
                 </Button>
-                <Button
-                    data-testid="roomSettingsButton"
-                    className="mx_RoomSummaryCard_icon_settings"
-                    onClick={onRoomSettingsClick}
-                >
+                <Button className="mx_RoomSummaryCard_icon_settings" onClick={onRoomSettingsClick}>
                     {_t("Room settings")}
                 </Button>
             </Group>
