@@ -386,7 +386,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Poll history"),
+        displayName: _td("Polls history"),
         description: _td("View a list of polls in a room. (Under active development)"),
         default: false,
     },
