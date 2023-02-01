@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { NotificationCountType } from "matrix-js-sdk/src/models/room";
+import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
 import { Thread } from "matrix-js-sdk/src/models/thread";
 import React, { useContext } from "react";
 
@@ -72,6 +72,33 @@ export default function RoomNotifications({ onBack }: IDevtoolsProps): JSX.Eleme
                     <li>
                         {_t("Dot: ")} {doesRoomOrThreadHaveUnreadMessages(room) + ""}
                     </li>
+                    {roomHasUnread && (
+                        <>
+                            <li>
+                                {_t("User read up to: ")}
+                                <strong>
+                                    {room.getReadReceiptForUserId(cli.getSafeUserId())?.eventId ??
+                                        _t("No receipt found")}
+                                </strong>
+                            </li>
+                            <li>
+                                {_t("Last event:")}
+                                <ul>
+                                    <li>
+                                        {_t("ID: ")} <strong>{room.timeline[room.timeline.length - 1].getId()}</strong>
+                                    </li>
+                                    <li>
+                                        {_t("Type: ")}{" "}
+                                        <strong>{room.timeline[room.timeline.length - 1].getType()}</strong>
+                                    </li>
+                                    <li>
+                                        {_t("Sender: ")}{" "}
+                                        <strong>{room.timeline[room.timeline.length - 1].getSender()}</strong>
+                                    </li>
+                                </ul>
+                            </li>
+                        </>
+                    )}
                 </ul>
             </section>
 
@@ -80,7 +107,7 @@ export default function RoomNotifications({ onBack }: IDevtoolsProps): JSX.Eleme
                 <ul>
                     {room
                         .getThreads()
-                        .filter((thread) => hasUnread(thread))
+                        .filter((thread) => threadHasUnread(thread))
                         .map((thread) => (
                             <li key={thread.id}>
                                 {_t("Thread Id: ")} {thread.id}
@@ -136,10 +163,18 @@ export default function RoomNotifications({ onBack }: IDevtoolsProps): JSX.Eleme
     );
 }
 
-function hasUnread(thread: Thread): boolean {
+function threadHasUnread(thread: Thread): boolean {
     const total = thread.room.getThreadUnreadNotificationCount(thread.id, NotificationCountType.Total);
     const highlight = thread.room.getThreadUnreadNotificationCount(thread.id, NotificationCountType.Highlight);
     const dot = doesRoomOrThreadHaveUnreadMessages(thread);
+
+    return total > 0 || highlight > 0 || dot;
+}
+
+function roomHasUnread(room: Room): boolean {
+    const total = room.getRoomUnreadNotificationCount(NotificationCountType.Total);
+    const highlight = room.getRoomUnreadNotificationCount(NotificationCountType.Highlight);
+    const dot = doesRoomOrThreadHaveUnreadMessages(room);
 
     return total > 0 || highlight > 0 || dot;
 }
