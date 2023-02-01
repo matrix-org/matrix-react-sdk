@@ -29,6 +29,7 @@ import Modal from "../../../../src/Modal";
 import RightPanelStore from "../../../../src/stores/right-panel/RightPanelStore";
 import { RightPanelPhases } from "../../../../src/stores/right-panel/RightPanelStorePhases";
 import { getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../test-utils";
+import { PollHistoryDialog } from "../../../../src/components/views/dialogs/polls/PollHistoryDialog";
 
 describe("<RoomSummaryCard />", () => {
     const userId = "@alice:domain.org";
@@ -127,6 +128,24 @@ describe("<RoomSummaryCard />", () => {
             const { getByTestId } = getComponent();
 
             expect(getByTestId("roomPinsButton")).toBeInTheDocument();
+        });
+    });
+
+    describe("poll history", () => {
+        it("renders poll history option when feature is enabled", () => {
+            featureEnabledSpy.mockImplementation((feature) => feature === "feature_poll_history");
+            const { getByTestId } = getComponent();
+
+            expect(getByTestId("roomPollHistoryButton")).toBeInTheDocument();
+        });
+
+        it("opens poll history dialog on button click", () => {
+            featureEnabledSpy.mockImplementation((feature) => feature === "feature_poll_history");
+            const { getByTestId } = getComponent();
+
+            fireEvent.click(getByTestId("roomPollHistoryButton"));
+
+            expect(modalSpy).toHaveBeenCalledWith(PollHistoryDialog, { roomId });
         });
     });
 

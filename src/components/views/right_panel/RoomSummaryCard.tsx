@@ -51,6 +51,7 @@ import ExportDialog from "../dialogs/ExportDialog";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { PollHistoryDialog } from "../dialogs/polls/PollHistoryDialog";
 
 interface IProps {
     room: Room;
@@ -282,6 +283,12 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
         });
     };
 
+    const onRoomPollHistoryClick = (): void => {
+        Modal.createDialog(PollHistoryDialog, {
+            roomId: room.roomId,
+        });
+    };
+
     const isRoomEncrypted = useIsEncrypted(cli, room);
     const roomContext = useContext(RoomContext);
     const e2eStatus = roomContext.e2eStatus;
@@ -316,6 +323,8 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
     const pinningEnabled = useFeatureEnabled("feature_pinning");
     const pinCount = usePinnedEvents(pinningEnabled && room)?.length;
 
+    const isPollHistoryEnabled = useFeatureEnabled("feature_poll_history");
+
     return (
         <BaseCard header={header} className="mx_RoomSummaryCard" onClose={onClose}>
             <Group title={_t("About")} className="mx_RoomSummaryCard_aboutGroup">
@@ -334,6 +343,15 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
                         onClick={onRoomFilesClick}
                     >
                         {_t("Files")}
+                    </Button>
+                )}
+                {!isVideoRoom && isPollHistoryEnabled && (
+                    <Button
+                        data-testid="roomPollHistoryButton"
+                        className="mx_RoomSummaryCard_icon_poll"
+                        onClick={onRoomPollHistoryClick}
+                    >
+                        {_t("Polls history")}
                     </Button>
                 )}
                 {pinningEnabled && !isVideoRoom && (
