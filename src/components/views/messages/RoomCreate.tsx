@@ -63,7 +63,7 @@ export const RoomCreate: React.FC<IProps> = ({ mxEvent, timestamp }) => {
                 metricsViaKeyboard: e.type !== "click",
             });
         },
-        [predecessor.eventId, predecessor.roomId],
+        [predecessor?.eventId, predecessor?.roomId],
     );
 
     if (!roomContext.room || roomContext.room.roomId !== mxEvent.getRoomId()) {

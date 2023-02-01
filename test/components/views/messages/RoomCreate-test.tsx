@@ -44,10 +44,20 @@ describe("<RoomCreate />", () => {
         },
         event_id: "$create",
     });
+    const createEventWithoutPredecessor = new MatrixEvent({
+        type: EventType.RoomCreate,
+        state_key: "",
+        sender: userId,
+        room_id: roomId,
+        content: {},
+        event_id: "$create",
+    });
     stubClient();
     const client = mocked(MatrixClientPeg.get());
     const room = new Room(roomId, client, userId);
     upsertRoomStateEvents(room, [createEvent]);
+    const roomNoPredecessors = new Room(roomId, client, userId);
+    upsertRoomStateEvents(roomNoPredecessors, [createEventWithoutPredecessor]);
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -62,7 +72,7 @@ describe("<RoomCreate />", () => {
         jest.spyOn(SettingsStore, "setValue").mockRestore();
     });
 
-    function renderRoomCreate() {
+    function renderRoomCreate(room: Room) {
         return render(
             <RoomContext.Provider value={getRoomContext(room, {})}>
                 <RoomCreate mxEvent={createEvent} />
@@ -71,20 +81,25 @@ describe("<RoomCreate />", () => {
     }
 
     it("Renders as expected", () => {
-        const roomCreate = renderRoomCreate();
+        const roomCreate = renderRoomCreate(room);
         expect(roomCreate.asFragment()).toMatchSnapshot();
     });
 
     it("Links to the old version of the room", () => {
-        renderRoomCreate();
+        renderRoomCreate(room);
         expect(screen.getByText("Click here to see older messages.")).toHaveAttribute(
             "href",
             "https://matrix.to/#/old_room_id/tombstone_event_id",
         );
     });
 
+    it("Shows an empty div if there is no predecessor", () => {
+        renderRoomCreate(roomNoPredecessors);
+        expect(screen.queryByText("Click here to see older messages.", { exact: false })).toBeNull();
+    });
+
     it("Opens the old room on click", async () => {
-        renderRoomCreate();
+        renderRoomCreate(room);
         const link = screen.getByText("Click here to see older messages.");
 
         await act(() => userEvent.click(link));
