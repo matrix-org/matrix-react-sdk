@@ -13,7 +13,7 @@ exports[`<RoomNotifications /> should render 1`] = `
         <li>
           Room unread status: 
           <strong>
-            none
+            None
           </strong>
         </li>
         <li>
