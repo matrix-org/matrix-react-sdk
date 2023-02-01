@@ -16,18 +16,21 @@ limitations under the License.
 
 .mx_PollListItem {
     width: 100%;
-
     display: grid;
     justify-content: left;
-
+    align-items: center;
     grid-gap: $spacing-8;
     grid-template-columns: auto auto auto;
     grid-template-rows: auto;
+
+    color: $primary-content;
 }
 
 .mx_PollListItem_icon {
     height: 14px;
     width: 14px;
+    color: $quaternary-content;
+    padding-left: $spacing-8;
 }
 
 .mx_PollListItem_question {
