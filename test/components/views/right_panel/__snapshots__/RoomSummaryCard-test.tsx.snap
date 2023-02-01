@@ -60,7 +60,6 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
         </h1>
         <div
           class="mx_AccessibleButton mx_BaseCard_Button mx_RoomSummaryCard_Button mx_RoomSummaryCard_icon_people"
-          data-testid="roomMembersButton"
           role="button"
           tabindex="0"
         >
@@ -73,7 +72,6 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
         </div>
         <div
           class="mx_AccessibleButton mx_BaseCard_Button mx_RoomSummaryCard_Button mx_RoomSummaryCard_icon_files"
-          data-testid="roomFilesButton"
           role="button"
           tabindex="0"
         >
@@ -81,7 +79,6 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
         </div>
         <div
           class="mx_AccessibleButton mx_BaseCard_Button mx_RoomSummaryCard_Button mx_RoomSummaryCard_icon_export"
-          data-testid="exportChatButton"
           role="button"
           tabindex="0"
         >
@@ -89,7 +86,6 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
         </div>
         <div
           class="mx_AccessibleButton mx_BaseCard_Button mx_RoomSummaryCard_Button mx_RoomSummaryCard_icon_share"
-          data-testid="shareRoomButton"
           role="button"
           tabindex="0"
         >
@@ -97,7 +93,6 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
         </div>
         <div
           class="mx_AccessibleButton mx_BaseCard_Button mx_RoomSummaryCard_Button mx_RoomSummaryCard_icon_settings"
-          data-testid="roomSettingsButton"
           role="button"
           tabindex="0"
         >
