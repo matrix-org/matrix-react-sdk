@@ -79,6 +79,10 @@ export const RoomCreate: React.FC<IProps> = ({ mxEvent, timestamp }) => {
     }
 
     const prevRoom = MatrixClientPeg.get().getRoom(predecessor.roomId);
+    if (!prevRoom) {
+        logger.warn(`Failed to find predecessor room with id ${predecessor.roomId}`);
+        return <></>;
+    }
     const permalinkCreator = new RoomPermalinkCreator(prevRoom, predecessor.roomId);
     permalinkCreator.load();
     let predecessorPermalink: string;
