@@ -347,11 +347,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
                     </Button>
                 )}
                 {!isVideoRoom && isPollHistoryEnabled && (
-                    <Button
-                        data-testid="roomPollHistoryButton"
-                        className="mx_RoomSummaryCard_icon_poll"
-                        onClick={onRoomPollHistoryClick}
-                    >
+                    <Button className="mx_RoomSummaryCard_icon_poll" onClick={onRoomPollHistoryClick}>
                         {_t("Polls history")}
                     </Button>
                 )}

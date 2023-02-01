@@ -83,41 +83,41 @@ describe("<RoomSummaryCard />", () => {
     });
 
     it("opens room members list on button click", () => {
-        const { getByTestId } = getComponent();
+        const { getByText } = getComponent();
 
-        fireEvent.click(getByTestId("roomMembersButton"));
+        fireEvent.click(getByText("People"));
 
         expect(rightPanelCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.RoomMemberList }, true);
     });
 
     it("opens room file panel on button click", () => {
-        const { getByTestId } = getComponent();
+        const { getByText } = getComponent();
 
-        fireEvent.click(getByTestId("roomFilesButton"));
+        fireEvent.click(getByText("Files"));
 
         expect(rightPanelCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.FilePanel }, true);
     });
 
     it("opens room export dialog on button click", () => {
-        const { getByTestId } = getComponent();
+        const { getByText } = getComponent();
 
-        fireEvent.click(getByTestId("exportChatButton"));
+        fireEvent.click(getByText("Export chat"));
 
         expect(modalSpy).toHaveBeenCalledWith(ExportDialog, { room });
     });
 
     it("opens share room dialog on button click", () => {
-        const { getByTestId } = getComponent();
+        const { getByText } = getComponent();
 
-        fireEvent.click(getByTestId("shareRoomButton"));
+        fireEvent.click(getByText("Share room"));
 
         expect(modalSpy).toHaveBeenCalledWith(ShareDialog, { target: room });
     });
 
     it("opens room settings on button click", () => {
-        const { getByTestId } = getComponent();
+        const { getByText } = getComponent();
 
-        fireEvent.click(getByTestId("roomSettingsButton"));
+        fireEvent.click(getByText("Room settings"));
 
         expect(dispatchSpy).toHaveBeenCalledWith({ action: "open_room_settings" });
     });
@@ -125,27 +125,27 @@ describe("<RoomSummaryCard />", () => {
     describe("pinning", () => {
         it("renders pins options when pinning feature is enabled", () => {
             featureEnabledSpy.mockImplementation((feature) => feature === "feature_pinning");
-            const { getByTestId } = getComponent();
+            const { getByText } = getComponent();
 
-            expect(getByTestId("roomPinsButton")).toBeInTheDocument();
+            expect(getByText("Pinned")).toBeInTheDocument();
         });
     });
 
     describe("poll history", () => {
         it("renders poll history option when feature is enabled", () => {
             featureEnabledSpy.mockImplementation((feature) => feature === "feature_poll_history");
-            const { getByTestId } = getComponent();
+            const { getByText } = getComponent();
 
-            expect(getByTestId("roomPollHistoryButton")).toBeInTheDocument();
+            expect(getByText("Polls history")).toBeInTheDocument();
         });
 
         it("opens poll history dialog on button click", () => {
             featureEnabledSpy.mockImplementation((feature) => feature === "feature_poll_history");
-            const { getByTestId } = getComponent();
+            const { getByText } = getComponent();
 
-            fireEvent.click(getByTestId("roomPollHistoryButton"));
+            fireEvent.click(getByText("Polls history"));
 
-            expect(modalSpy).toHaveBeenCalledWith(PollHistoryDialog, { roomId });
+            expect(modalSpy).toHaveBeenCalledWith(PollHistoryDialog, { roomId, matrixClient: mockClient });
         });
     });
 
@@ -155,12 +155,12 @@ describe("<RoomSummaryCard />", () => {
             featureEnabledSpy.mockImplementation(
                 (feature) => feature === "feature_video_rooms" || feature === "feature_pinning",
             );
-            const { queryByTestId } = getComponent();
+            const { queryByText } = getComponent();
 
             // options not rendered
-            expect(queryByTestId("roomFilesButton")).not.toBeInTheDocument();
-            expect(queryByTestId("roomPinsButton")).not.toBeInTheDocument();
-            expect(queryByTestId("exportChatButton")).not.toBeInTheDocument();
+            expect(queryByText("Files")).not.toBeInTheDocument();
+            expect(queryByText("Pinned")).not.toBeInTheDocument();
+            expect(queryByText("Export chat")).not.toBeInTheDocument();
         });
 
         it("does not render irrelevant options for element call room", () => {
@@ -171,12 +171,12 @@ describe("<RoomSummaryCard />", () => {
                     feature === "feature_video_rooms" ||
                     feature === "feature_pinning",
             );
-            const { queryByTestId } = getComponent();
+            const { queryByText } = getComponent();
 
             // options not rendered
-            expect(queryByTestId("roomFilesButton")).not.toBeInTheDocument();
-            expect(queryByTestId("roomPinsButton")).not.toBeInTheDocument();
-            expect(queryByTestId("exportChatButton")).not.toBeInTheDocument();
+            expect(queryByText("Files")).not.toBeInTheDocument();
+            expect(queryByText("Pinned")).not.toBeInTheDocument();
+            expect(queryByText("Export chat")).not.toBeInTheDocument();
         });
     });
 });

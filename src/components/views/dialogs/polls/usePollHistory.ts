@@ -21,13 +21,13 @@ export const getPolls = (roomId: string, matrixClient: MatrixClient): MatrixEven
     const room = matrixClient.getRoom(roomId);
 
     if (!room) {
-        throw new Error('Cannot find room');
+        throw new Error("Cannot find room");
     }
 
     // @TODO(kerrya) poll history will be actively fetched in PSG-1043
     // for now, just display polls that are in the current timeline
     const timelineEvents = room.getUnfilteredTimelineSet()?.getLiveTimeline()?.getEvents() || [];
-    const pollStartEvents = timelineEvents.filter(event => M_POLL_START.matches(event.getType()))
-    
+    const pollStartEvents = timelineEvents.filter((event) => M_POLL_START.matches(event.getType()));
+
     return pollStartEvents;
-}
+};

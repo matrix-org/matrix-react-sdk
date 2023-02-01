@@ -19,13 +19,17 @@ import React from "react";
 import PollListItem from "./PollListItem";
 
 type PollHistoryListProps = {
-    pollStartEvents: MatrixEvent[],
-}
+    pollStartEvents: MatrixEvent[];
+};
 export const PollHistoryList: React.FC<PollHistoryListProps> = ({ pollStartEvents }) => {
-    console.log('hhh', { pollStartEvents })
-    return <div className="mx_PollHistoryList">
-        <ol>
-            { pollStartEvents.map(pollStartEvent => <PollListItem key={pollStartEvent.getId()!} event={pollStartEvent} />)}
-        </ol>
-    </div>;
-}
+    console.log("hhh", { pollStartEvents });
+    return (
+        <div className="mx_PollHistoryList">
+            <ol>
+                {pollStartEvents.map((pollStartEvent) => (
+                    <PollListItem key={pollStartEvent.getId()!} event={pollStartEvent} />
+                ))}
+            </ol>
+        </div>
+    );
+};

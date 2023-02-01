@@ -1,15 +1,13 @@
+import React from "react";
+import { mount } from "enzyme";
 
-import React from 'react';
-import { mount } from 'enzyme';
+import PollListItem from "../../../../../src/components/views/dialogs/polls/PollListItem";
 
-import PollListItem from '../../../../../src/components/views/dialogs/polls/PollListItem';
-
-describe('<PollListItem />', () => {
+describe("<PollListItem />", () => {
     const defaultProps = {};
-    const getComponent = (props = {}) =>
-        mount(<PollListItem {...defaultProps} {...props} />);
+    const getComponent = (props = {}) => mount(<PollListItem {...defaultProps} {...props} />);
 
-    it('renders', () => {
+    it("renders", () => {
         const component = getComponent();
         expect(component).toBeTruthy();
     });

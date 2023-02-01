@@ -30,26 +30,27 @@ const usePolls = (roomId: string): MatrixEvent[] => {
     const room = matrixClient.getRoom(roomId);
 
     if (!room) {
-        throw new Error('Cannot find room');
+        throw new Error("Cannot find room");
     }
 
     // @TODO(kerrya) polls will be actively fetched in PSG-1043
     // for now, just display polls that are in the current timeline
     const timelineEvents = room.getUnfilteredTimelineSet()?.getLiveTimeline()?.getEvents() || [];
-    const pollStartEvents = timelineEvents.filter(event => M_POLL_START.matches(event.getType()))
-    
+    const pollStartEvents = timelineEvents.filter((event) => M_POLL_START.matches(event.getType()));
+
     return pollStartEvents;
-}
+};
 
 type PollHistoryContentProps = {
     roomId: string;
-}
+};
 export const PollHistoryContent: React.FC<PollHistoryContentProps> = ({ roomId }) => {
     const pollStartEvents = usePolls(roomId);
 
-    return <div className="mx_PollHistoryContent">
-        
-        <PollHistoryList pollStartEvents={pollStartEvents} />
-        <a>load more</a>
-    </div>
-}
+    return (
+        <div className="mx_PollHistoryContent">
+            <PollHistoryList pollStartEvents={pollStartEvents} />
+            <a>load more</a>
+        </div>
+    );
+};
