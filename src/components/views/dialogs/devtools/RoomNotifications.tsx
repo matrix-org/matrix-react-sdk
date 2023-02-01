@@ -72,7 +72,7 @@ export default function RoomNotifications({ onBack }: IDevtoolsProps): JSX.Eleme
                     <li>
                         {_t("Dot: ")} {doesRoomOrThreadHaveUnreadMessages(room) + ""}
                     </li>
-                    {roomHasUnread && (
+                    {roomHasUnread(room) && (
                         <>
                             <li>
                                 {_t("User read up to: ")}
@@ -144,13 +144,13 @@ export default function RoomNotifications({ onBack }: IDevtoolsProps): JSX.Eleme
                                         {_t("Last event:")}
                                         <ul>
                                             <li>
-                                                {_t("ID: ")} <strong>{thread.lastReply().getId()}</strong>
+                                                {_t("ID: ")} <strong>{thread.lastReply()?.getId()}</strong>
                                             </li>
                                             <li>
-                                                {_t("Type: ")} <strong>{thread.lastReply().getType()}</strong>
+                                                {_t("Type: ")} <strong>{thread.lastReply()?.getType()}</strong>
                                             </li>
                                             <li>
-                                                {_t("Sender: ")} <strong>{thread.lastReply().getSender()}</strong>
+                                                {_t("Sender: ")} <strong>{thread.lastReply()?.getSender()}</strong>
                                             </li>
                                         </ul>
                                     </li>
