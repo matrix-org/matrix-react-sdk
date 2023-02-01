@@ -1,6 +1,6 @@
 /*
 Copyright 2022 Michael Telatynski <7t3chguy@gmail.com>
-Copyright 2018-2021 The Matrix.org Foundation C.I.C.
+Copyright 2018-2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@ import SettingsFlag from "../elements/SettingsFlag";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import ServerInfo from "./devtools/ServerInfo";
 import { Features } from "../../../settings/Settings";
+import CopyableText from "../elements/CopyableText";
 
 enum Category {
     Room,
@@ -81,7 +82,7 @@ const DevtoolsDialog: React.FC<IProps> = ({ roomId, onFinished }) => {
         const Tool = tool[1];
         body = <Tool onBack={onBack} setTool={(label, tool) => setTool([label, tool])} />;
     } else {
-        const onBack = () => {
+        const onBack = (): void => {
             onFinished(false);
         };
         body = (
@@ -90,7 +91,7 @@ const DevtoolsDialog: React.FC<IProps> = ({ roomId, onFinished }) => {
                     <div key={category}>
                         <h3>{_t(categoryLabels[category])}</h3>
                         {tools.map(([label, tool]) => {
-                            const onClick = () => {
+                            const onClick = (): void => {
                                 setTool([label, tool]);
                             };
                             return (
@@ -119,11 +120,15 @@ const DevtoolsDialog: React.FC<IProps> = ({ roomId, onFinished }) => {
                 {(cli) => (
                     <>
                         <div className="mx_DevTools_label_left">{label}</div>
-                        <div className="mx_DevTools_label_right">{_t("Room ID: %(roomId)s", { roomId })}</div>
+                        <CopyableText className="mx_DevTools_label_right" getTextToCopy={() => roomId} border={false}>
+                            {_t("Room ID: %(roomId)s", { roomId })}
+                        </CopyableText>
                         <div className="mx_DevTools_label_bottom" />
-                        <DevtoolsContext.Provider value={{ room: cli.getRoom(roomId) }}>
-                            {body}
-                        </DevtoolsContext.Provider>
+                        {cli.getRoom(roomId) && (
+                            <DevtoolsContext.Provider value={{ room: cli.getRoom(roomId)! }}>
+                                {body}
+                            </DevtoolsContext.Provider>
+                        )}
                     </>
                 )}
             </MatrixClientContext.Consumer>

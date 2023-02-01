@@ -17,9 +17,11 @@ limitations under the License.
 import "@testing-library/jest-dom";
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import { WysiwygComposer } from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/WysiwygComposer";
 import SettingsStore from "../../../../../../src/settings/SettingsStore";
+import { mockPlatformPeg } from "../../../../../test-utils";
 
 describe("WysiwygComposer", () => {
     const customRender = (
@@ -45,6 +47,7 @@ describe("WysiwygComposer", () => {
         const onChange = jest.fn();
         const onSend = jest.fn();
         beforeEach(async () => {
+            mockPlatformPeg({ overrideBrowserShortcuts: jest.fn().mockReturnValue(false) });
             customRender(onChange, onSend);
             await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
         });
@@ -86,6 +89,45 @@ describe("WysiwygComposer", () => {
 
             // Then it sends a message
             await waitFor(() => expect(onSend).toBeCalledTimes(1));
+        });
+
+        it("Should not call onSend when Shift+Enter is pressed ", async () => {
+            //When
+            await userEvent.type(screen.getByRole("textbox"), "{shift>}{enter}");
+
+            // Then it sends a message
+            await waitFor(() => expect(onSend).toBeCalledTimes(0));
+        });
+
+        it("Should not call onSend when ctrl+Enter is pressed ", async () => {
+            //When
+            // Using userEvent.type or .keyboard wasn't working as expected in the case of ctrl+enter
+            fireEvent(
+                screen.getByRole("textbox"),
+                new KeyboardEvent("keydown", {
+                    ctrlKey: true,
+                    code: "Enter",
+                }),
+            );
+
+            // Then it sends a message
+            await waitFor(() => expect(onSend).toBeCalledTimes(0));
+        });
+
+        it("Should not call onSend when alt+Enter is pressed ", async () => {
+            //When
+            await userEvent.type(screen.getByRole("textbox"), "{alt>}{enter}");
+
+            // Then it sends a message
+            await waitFor(() => expect(onSend).toBeCalledTimes(0));
+        });
+
+        it("Should not call onSend when meta+Enter is pressed ", async () => {
+            //When
+            await userEvent.type(screen.getByRole("textbox"), "{meta>}{enter}");
+
+            // Then it sends a message
+            await waitFor(() => expect(onSend).toBeCalledTimes(0));
         });
     });
 

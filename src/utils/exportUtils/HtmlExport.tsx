@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021, 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import ReactDOM from "react-dom";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
@@ -65,8 +65,8 @@ export default class HTMLExporter extends Exporter {
         this.threadsEnabled = SettingsStore.getValue("feature_threadenabled");
     }
 
-    protected async getRoomAvatar() {
-        let blob: Blob;
+    protected async getRoomAvatar(): Promise<ReactNode> {
+        let blob: Blob | undefined = undefined;
         const avatarUrl = Avatar.avatarUrlForRoom(this.room, 32, 32, "crop");
         const avatarPath = "room.png";
         if (avatarUrl) {
@@ -85,20 +85,20 @@ export default class HTMLExporter extends Exporter {
                 height={32}
                 name={this.room.name}
                 title={this.room.name}
-                url={blob ? avatarPath : null}
+                url={blob ? avatarPath : ""}
                 resizeMethod="crop"
             />
         );
         return renderToStaticMarkup(avatar);
     }
 
-    protected async wrapHTML(content: string) {
+    protected async wrapHTML(content: string): Promise<string> {
         const roomAvatar = await this.getRoomAvatar();
         const exportDate = formatFullDateNoDayNoTime(new Date());
         const creator = this.room.currentState.getStateEvents(EventType.RoomCreate, "")?.getSender();
-        const creatorName = this.room?.getMember(creator)?.rawDisplayName || creator;
-        const exporter = this.client.getUserId();
-        const exporterName = this.room?.getMember(exporter)?.rawDisplayName;
+        const creatorName = (creator ? this.room.getMember(creator)?.rawDisplayName : creator) || creator;
+        const exporter = this.client.getUserId()!;
+        const exporterName = this.room.getMember(exporter)?.rawDisplayName;
         const topic = this.room.currentState.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic || "";
         const createdText = _t("%(creatorName)s created this room.", {
             creatorName,
@@ -217,20 +217,19 @@ export default class HTMLExporter extends Exporter {
         </html>`;
     }
 
-    protected getAvatarURL(event: MatrixEvent): string {
+    protected getAvatarURL(event: MatrixEvent): string | undefined {
         const member = event.sender;
-        return (
-            member.getMxcAvatarUrl() && mediaFromMxc(member.getMxcAvatarUrl()).getThumbnailOfSourceHttp(30, 30, "crop")
-        );
+        const avatarUrl = member?.getMxcAvatarUrl();
+        return avatarUrl ? mediaFromMxc(avatarUrl).getThumbnailOfSourceHttp(30, 30, "crop") : undefined;
     }
 
-    protected async saveAvatarIfNeeded(event: MatrixEvent) {
-        const member = event.sender;
+    protected async saveAvatarIfNeeded(event: MatrixEvent): Promise<void> {
+        const member = event.sender!;
         if (!this.avatars.has(member.userId)) {
             try {
                 const avatarUrl = this.getAvatarURL(event);
                 this.avatars.set(member.userId, true);
-                const image = await fetch(avatarUrl);
+                const image = await fetch(avatarUrl!);
                 const blob = await image.blob();
                 this.addFile(`users/${member.userId.replace(/:/g, "-")}.png`, blob);
             } catch (err) {
@@ -239,22 +238,22 @@ export default class HTMLExporter extends Exporter {
         }
     }
 
-    protected getDateSeparator(event: MatrixEvent) {
+    protected getDateSeparator(event: MatrixEvent): string {
         const ts = event.getTs();
         const dateSeparator = (
             <li key={ts}>
-                <DateSeparator forExport={true} key={ts} roomId={event.getRoomId()} ts={ts} />
+                <DateSeparator forExport={true} key={ts} roomId={event.getRoomId()!} ts={ts} />
             </li>
         );
         return renderToStaticMarkup(dateSeparator);
     }
 
-    protected needsDateSeparator(event: MatrixEvent, prevEvent: MatrixEvent) {
-        if (prevEvent == null) return true;
-        return wantsDateSeparator(prevEvent.getDate(), event.getDate());
+    protected needsDateSeparator(event: MatrixEvent, prevEvent: MatrixEvent | null): boolean {
+        if (!prevEvent) return true;
+        return wantsDateSeparator(prevEvent.getDate() || undefined, event.getDate() || undefined);
     }
 
-    public getEventTile(mxEv: MatrixEvent, continuation: boolean) {
+    public getEventTile(mxEv: MatrixEvent, continuation: boolean): JSX.Element {
         return (
             <div className="mx_Export_EventWrapper" id={mxEv.getId()}>
                 <MatrixClientContext.Provider value={this.client}>
@@ -264,9 +263,7 @@ export default class HTMLExporter extends Exporter {
                         isRedacted={mxEv.isRedacted()}
                         replacingEventId={mxEv.replacingEventId()}
                         forExport={true}
-                        readReceipts={null}
                         alwaysShowTimestamps={true}
-                        readReceiptMap={null}
                         showUrlPreview={false}
                         checkUnmounting={() => false}
                         isTwelveHour={false}
@@ -275,7 +272,6 @@ export default class HTMLExporter extends Exporter {
                         permalinkCreator={this.permalinkCreator}
                         lastSuccessful={false}
                         isSelectedEvent={false}
-                        getRelationsForEvent={null}
                         showReactions={false}
                         layout={Layout.Group}
                         showReadReceipts={false}
@@ -285,8 +281,9 @@ export default class HTMLExporter extends Exporter {
         );
     }
 
-    protected async getEventTileMarkup(mxEv: MatrixEvent, continuation: boolean, filePath?: string) {
-        const hasAvatar = !!this.getAvatarURL(mxEv);
+    protected async getEventTileMarkup(mxEv: MatrixEvent, continuation: boolean, filePath?: string): Promise<string> {
+        const avatarUrl = this.getAvatarURL(mxEv);
+        const hasAvatar = !!avatarUrl;
         if (hasAvatar) await this.saveAvatarIfNeeded(mxEv);
         const EventTile = this.getEventTile(mxEv, continuation);
         let eventTileMarkup: string;
@@ -312,14 +309,14 @@ export default class HTMLExporter extends Exporter {
         eventTileMarkup = eventTileMarkup.replace(/<span class="mx_MFileBody_info_icon".*?>.*?<\/span>/, "");
         if (hasAvatar) {
             eventTileMarkup = eventTileMarkup.replace(
-                encodeURI(this.getAvatarURL(mxEv)).replace(/&/g, "&amp;"),
-                `users/${mxEv.sender.userId.replace(/:/g, "-")}.png`,
+                encodeURI(avatarUrl).replace(/&/g, "&amp;"),
+                `users/${mxEv.sender!.userId.replace(/:/g, "-")}.png`,
             );
         }
         return eventTileMarkup;
     }
 
-    protected createModifiedEvent(text: string, mxEv: MatrixEvent, italic = true) {
+    protected createModifiedEvent(text: string, mxEv: MatrixEvent, italic = true): MatrixEvent {
         const modifiedContent = {
             msgtype: "m.text",
             body: `${text}`,
@@ -338,7 +335,7 @@ export default class HTMLExporter extends Exporter {
         return modifiedEvent;
     }
 
-    protected async createMessageBody(mxEv: MatrixEvent, joined = false) {
+    protected async createMessageBody(mxEv: MatrixEvent, joined = false): Promise<string> {
         let eventTile: string;
         try {
             if (this.isAttachment(mxEv)) {
@@ -387,7 +384,7 @@ export default class HTMLExporter extends Exporter {
         return eventTile;
     }
 
-    protected async createHTML(events: MatrixEvent[], start: number) {
+    protected async createHTML(events: MatrixEvent[], start: number): Promise<string> {
         let content = "";
         let prevEvent = null;
         for (let i = start; i < Math.min(start + 1000, events.length); i++) {
@@ -415,7 +412,7 @@ export default class HTMLExporter extends Exporter {
         return this.wrapHTML(content);
     }
 
-    public async export() {
+    public async export(): Promise<void> {
         this.updateProgress(_t("Starting export..."));
 
         const fetchStart = performance.now();

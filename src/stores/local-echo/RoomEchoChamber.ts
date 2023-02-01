@@ -33,7 +33,7 @@ export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedR
         super(context, (k) => this.properties.get(k));
     }
 
-    protected onClientChanged(oldClient, newClient) {
+    protected onClientChanged(oldClient, newClient): void {
         this.properties.clear();
         if (oldClient) {
             oldClient.removeListener("accountData", this.onAccountData);
@@ -47,7 +47,7 @@ export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedR
         }
     }
 
-    private onAccountData = (event: MatrixEvent) => {
+    private onAccountData = (event: MatrixEvent): void => {
         if (event.getType() === EventType.PushRules) {
             const currentVolume = this.properties.get(CachedRoomKey.NotificationVolume);
             const newVolume = getRoomNotifsState(this.matrixClient, this.context.room.roomId);
@@ -57,11 +57,10 @@ export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedR
         }
     };
 
-    private updateNotificationVolume() {
-        this.properties.set(
-            CachedRoomKey.NotificationVolume,
-            getRoomNotifsState(this.matrixClient, this.context.room.roomId),
-        );
+    private updateNotificationVolume(): void {
+        const state = getRoomNotifsState(this.matrixClient, this.context.room.roomId);
+        if (state) this.properties.set(CachedRoomKey.NotificationVolume, state);
+        else this.properties.delete(CachedRoomKey.NotificationVolume);
         this.markEchoReceived(CachedRoomKey.NotificationVolume);
         this.emit(PROPERTY_UPDATED, CachedRoomKey.NotificationVolume);
     }
@@ -77,7 +76,7 @@ export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedR
             _t("Change notification settings"),
             CachedRoomKey.NotificationVolume,
             v,
-            async () => {
+            async (): Promise<void> => {
                 return setRoomNotifsState(this.context.room.roomId, v);
             },
             implicitlyReverted,

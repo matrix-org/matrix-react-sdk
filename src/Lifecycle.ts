@@ -23,6 +23,7 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 import { decryptAES, encryptAES, IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
+import { SSOAction } from "matrix-js-sdk/src/@types/auth";
 
 import { IMatrixClientCreds, MatrixClientPeg } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";
@@ -219,7 +220,7 @@ export function attemptTokenLogin(
     })
         .then(function (creds) {
             logger.log("Logged in with token");
-            return clearStorage().then(async () => {
+            return clearStorage().then(async (): Promise<boolean> => {
                 await persistCredentials(creds);
                 // remember that we just logged in
                 sessionStorage.setItem("mx_fresh_login", String(true));
@@ -248,7 +249,7 @@ export function attemptTokenLogin(
                             idBaseUrl: identityServer,
                         });
                         const idpId = localStorage.getItem(SSO_IDP_ID_KEY) || undefined;
-                        PlatformPeg.get().startSingleSignOn(cli, "sso", fragmentAfterLogin, idpId);
+                        PlatformPeg.get()?.startSingleSignOn(cli, "sso", fragmentAfterLogin, idpId, SSOAction.LOGIN);
                     }
                 },
             });
@@ -406,7 +407,7 @@ async function pickleKeyToAesKey(pickleKey: string): Promise<Uint8Array> {
     );
 }
 
-async function abortLogin() {
+async function abortLogin(): Promise<void> {
     const signOut = await showStorageEvictedDialog();
     if (signOut) {
         await clearStorage();

@@ -19,25 +19,31 @@ import { useCallback, useEffect } from "react";
 import useFocus from "../../../../../hooks/useFocus";
 import { useComposerContext, ComposerContextState } from "../ComposerContext";
 
-function setSelectionContext(composerContext: ComposerContextState) {
+function setSelectionContext(composerContext: ComposerContextState): void {
     const selection = document.getSelection();
 
     if (selection) {
+        const range = selection.getRangeAt(0);
+        const isForward = range.startContainer === selection.anchorNode && range.startOffset === selection.anchorOffset;
+
         composerContext.selection = {
             anchorNode: selection.anchorNode,
             anchorOffset: selection.anchorOffset,
             focusNode: selection.focusNode,
             focusOffset: selection.focusOffset,
+            isForward,
         };
     }
 }
 
-export function useSelection() {
+export function useSelection(): ReturnType<typeof useFocus>[1] & {
+    onInput(): void;
+} {
     const composerContext = useComposerContext();
     const [isFocused, focusProps] = useFocus();
 
     useEffect(() => {
-        function onSelectionChange() {
+        function onSelectionChange(): void {
             setSelectionContext(composerContext);
         }
 

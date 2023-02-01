@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
-import { ISSOFlow, LoginFlow } from "matrix-js-sdk/src/@types/auth";
+import { ISSOFlow, LoginFlow, SSOAction } from "matrix-js-sdk/src/@types/auth";
 
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
@@ -101,7 +101,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         }
     }
 
-    private onClearAll = () => {
+    private onClearAll = (): void => {
         Modal.createDialog(ConfirmWipeDeviceDialog, {
             onFinished: (wipeData) => {
                 if (!wipeData) return;
@@ -112,7 +112,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         });
     };
 
-    private async initLogin() {
+    private async initLogin(): Promise<void> {
         const queryParams = this.props.realQueryParams;
         const hasAllParams = queryParams && queryParams["loginToken"];
         if (hasAllParams) {
@@ -133,15 +133,15 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         this.setState({ flows, loginView: chosenView });
     }
 
-    private onPasswordChange = (ev) => {
+    private onPasswordChange = (ev): void => {
         this.setState({ password: ev.target.value });
     };
 
-    private onForgotPassword = () => {
+    private onForgotPassword = (): void => {
         dis.dispatch({ action: "start_password_recovery" });
     };
 
-    private onPasswordLogin = async (ev) => {
+    private onPasswordLogin = async (ev): Promise<void> => {
         ev.preventDefault();
         ev.stopPropagation();
 
@@ -181,7 +181,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         });
     };
 
-    private async trySsoLogin() {
+    private async trySsoLogin(): Promise<void> {
         this.setState({ busy: true });
 
         const hsUrl = localStorage.getItem(SSO_HOMESERVER_URL_KEY);
@@ -256,12 +256,13 @@ export default class SoftLogout extends React.Component<IProps, IState> {
                     loginType={loginType}
                     fragmentAfterLogin={this.props.fragmentAfterLogin}
                     primary={!this.state.flows.find((flow) => flow.type === "m.login.password")}
+                    action={SSOAction.LOGIN}
                 />
             </div>
         );
     }
 
-    private renderSignInSection() {
+    private renderSignInSection(): JSX.Element {
         if (this.state.loginView === LoginView.Loading) {
             return <Spinner />;
         }
@@ -325,7 +326,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         );
     }
 
-    public render() {
+    public render(): JSX.Element {
         return (
             <AuthPage>
                 <AuthHeader />

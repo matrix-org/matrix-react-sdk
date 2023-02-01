@@ -58,7 +58,7 @@ export default class SearchResultTile extends React.Component<IProps> {
         this.callEventGroupers = buildLegacyCallEventGroupers(this.callEventGroupers, events);
     }
 
-    public render() {
+    public render(): JSX.Element {
         const timeline = this.props.timeline;
         const resultEvent = timeline[this.props.ourEventsIndexes[0]];
         const eventId = resultEvent.getId();
@@ -84,7 +84,7 @@ export default class SearchResultTile extends React.Component<IProps> {
                 // is this a continuation of the previous message?
                 const continuation =
                     prevEv &&
-                    !wantsDateSeparator(prevEv.getDate(), mxEv.getDate()) &&
+                    !wantsDateSeparator(prevEv.getDate() || undefined, mxEv.getDate() || undefined) &&
                     shouldFormContinuation(
                         prevEv,
                         mxEv,
@@ -96,7 +96,10 @@ export default class SearchResultTile extends React.Component<IProps> {
                 let lastInSection = true;
                 const nextEv = timeline[j + 1];
                 if (nextEv) {
-                    const willWantDateSeparator = wantsDateSeparator(mxEv.getDate(), nextEv.getDate());
+                    const willWantDateSeparator = wantsDateSeparator(
+                        mxEv.getDate() || undefined,
+                        nextEv.getDate() || undefined,
+                    );
                     lastInSection =
                         willWantDateSeparator ||
                         mxEv.getSender() !== nextEv.getSender() ||
