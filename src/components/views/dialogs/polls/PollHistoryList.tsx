@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import React from "react";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+
 import PollListItem from "./PollListItem";
 
 type PollHistoryListProps = {
     pollStartEvents: MatrixEvent[];
 };
 export const PollHistoryList: React.FC<PollHistoryListProps> = ({ pollStartEvents }) => {
-    console.log("hhh", { pollStartEvents });
     return (
         <div className="mx_PollHistoryList">
-            <ol>
+            <ol className="mx_PollHistoryList_list">
                 {pollStartEvents.map((pollStartEvent) => (
                     <PollListItem key={pollStartEvent.getId()!} event={pollStartEvent} />
                 ))}

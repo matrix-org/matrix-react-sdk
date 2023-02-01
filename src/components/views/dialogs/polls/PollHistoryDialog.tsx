@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from "react";
-
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { _t } from "../../../../languageHandler";

@@ -16,6 +16,7 @@ limitations under the License.
 
 import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { MatrixClient } from "matrix-js-sdk/src/client";
 
 export const getPolls = (roomId: string, matrixClient: MatrixClient): MatrixEvent[] => {
     const room = matrixClient.getRoom(roomId);

@@ -41,5 +41,6 @@ export const makePollStartEvent = (question: string, sender: string, answers?: P
             },
             [M_TEXT.name]: `${question}: answers`,
         },
+        origin_server_ts: 0,
     });
 };
