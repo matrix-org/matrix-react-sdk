@@ -286,6 +286,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
     const onRoomPollHistoryClick = (): void => {
         Modal.createDialog(PollHistoryDialog, {
             roomId: room.roomId,
+            matrixClient: cli,
         });
     };
 
