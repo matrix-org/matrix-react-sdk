@@ -23,7 +23,7 @@ import { useIsEncrypted } from "../../../hooks/useIsEncrypted";
 import BaseCard, { Group } from "./BaseCard";
 import { _t } from "../../../languageHandler";
 import RoomAvatar from "../avatars/RoomAvatar";
-import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent, IAccessibleButtonProps } from "../elements/AccessibleButton";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import Modal from "../../../Modal";
@@ -61,14 +61,15 @@ interface IAppsSectionProps {
     room: Room;
 }
 
-interface IButtonProps {
+interface IButtonProps extends IAccessibleButtonProps {
     className: string;
     onClick(ev: ButtonEvent): void;
 }
 
-const Button: React.FC<IButtonProps> = ({ children, className, onClick }) => {
+const Button: React.FC<IButtonProps> = ({ children, className, onClick, ...props }) => {
     return (
         <AccessibleButton
+            {...props}
             className={classNames("mx_BaseCard_Button mx_RoomSummaryCard_Button", className)}
             onClick={onClick}
         >
@@ -318,30 +319,54 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
     return (
         <BaseCard header={header} className="mx_RoomSummaryCard" onClose={onClose}>
             <Group title={_t("About")} className="mx_RoomSummaryCard_aboutGroup">
-                <Button className="mx_RoomSummaryCard_icon_people" onClick={onRoomMembersClick}>
+                <Button
+                    data-testid="roomMembersButton"
+                    className="mx_RoomSummaryCard_icon_people"
+                    onClick={onRoomMembersClick}
+                >
                     {_t("People")}
                     <span className="mx_BaseCard_Button_sublabel">{memberCount}</span>
                 </Button>
                 {!isVideoRoom && (
-                    <Button className="mx_RoomSummaryCard_icon_files" onClick={onRoomFilesClick}>
+                    <Button
+                        data-testid="roomFilesButton"
+                        className="mx_RoomSummaryCard_icon_files"
+                        onClick={onRoomFilesClick}
+                    >
                         {_t("Files")}
                     </Button>
                 )}
                 {pinningEnabled && !isVideoRoom && (
-                    <Button className="mx_RoomSummaryCard_icon_pins" onClick={onRoomPinsClick}>
+                    <Button
+                        data-testid="roomPinsButton"
+                        className="mx_RoomSummaryCard_icon_pins"
+                        onClick={onRoomPinsClick}
+                    >
                         {_t("Pinned")}
                         {pinCount > 0 && <span className="mx_BaseCard_Button_sublabel">{pinCount}</span>}
                     </Button>
                 )}
                 {!isVideoRoom && (
-                    <Button className="mx_RoomSummaryCard_icon_export" onClick={onRoomExportClick}>
+                    <Button
+                        data-testid="exportChatButton"
+                        className="mx_RoomSummaryCard_icon_export"
+                        onClick={onRoomExportClick}
+                    >
                         {_t("Export chat")}
                     </Button>
                 )}
-                <Button className="mx_RoomSummaryCard_icon_share" onClick={onShareRoomClick}>
+                <Button
+                    data-testid="shareRoomButton"
+                    className="mx_RoomSummaryCard_icon_share"
+                    onClick={onShareRoomClick}
+                >
                     {_t("Share room")}
                 </Button>
-                <Button className="mx_RoomSummaryCard_icon_settings" onClick={onRoomSettingsClick}>
+                <Button
+                    data-testid="roomSettingsButton"
+                    className="mx_RoomSummaryCard_icon_settings"
+                    onClick={onRoomSettingsClick}
+                >
                     {_t("Room settings")}
                 </Button>
             </Group>
