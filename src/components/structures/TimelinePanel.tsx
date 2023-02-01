@@ -58,6 +58,7 @@ import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
+import { joinRoom } from "./SpaceHierarchy";
 
 const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
@@ -352,7 +353,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         if (differentEventId || differentHighlightedEventId || differentAvoidJump) {
             logger.log(
                 `TimelinePanel switching to eventId ${this.props.eventId} (was ${prevProps.eventId}), ` +
-                    `scrollIntoView: ${this.props.eventScrollIntoView} (was ${prevProps.eventScrollIntoView})`,
+                `scrollIntoView: ${this.props.eventScrollIntoView} (was ${prevProps.eventScrollIntoView})`,
             );
             this.initTimeline(this.props);
         } else if (differentOverlayTimeline) {
@@ -484,17 +485,17 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         logger.debug(
             `TimelinePanel(${this.context.timelineRenderingType}): Debugging info for ${room?.roomId}\n` +
-                `\tevents(${eventIdList.length})=${JSON.stringify(eventIdList)}\n` +
-                `\trenderedEventIds(${renderedEventIds?.length ?? 0})=` +
-                `${JSON.stringify(renderedEventIds)}\n` +
-                `\tserializedEventIdsFromTimelineSets=${JSON.stringify(serializedEventIdsFromTimelineSets)}\n` +
-                `\tserializedEventIdsFromThreadsTimelineSets=` +
-                `${JSON.stringify(serializedEventIdsFromThreadsTimelineSets)}\n` +
-                `\tserializedThreadsMap=${JSON.stringify(serializedThreadsMap)}\n` +
-                `\ttimelineWindowEventIds(${timelineWindowEventIds.length})=${JSON.stringify(
-                    timelineWindowEventIds,
-                )}\n` +
-                `\tpendingEventIds(${pendingEventIds.length})=${JSON.stringify(pendingEventIds)}`,
+            `\tevents(${eventIdList.length})=${JSON.stringify(eventIdList)}\n` +
+            `\trenderedEventIds(${renderedEventIds?.length ?? 0})=` +
+            `${JSON.stringify(renderedEventIds)}\n` +
+            `\tserializedEventIdsFromTimelineSets=${JSON.stringify(serializedEventIdsFromTimelineSets)}\n` +
+            `\tserializedEventIdsFromThreadsTimelineSets=` +
+            `${JSON.stringify(serializedEventIdsFromThreadsTimelineSets)}\n` +
+            `\tserializedThreadsMap=${JSON.stringify(serializedThreadsMap)}\n` +
+            `\ttimelineWindowEventIds(${timelineWindowEventIds.length})=${JSON.stringify(
+                timelineWindowEventIds,
+            )}\n` +
+            `\tpendingEventIds(${pendingEventIds.length})=${JSON.stringify(pendingEventIds)}`,
         );
     };
 
@@ -1058,7 +1059,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             } else {
                 cli.setRoomReadMarkers(
                     roomId,
-                    this.state.readMarkerEventId ?? "",
+                    this.state.readMarkerEventId ?? joinRoom(cli, [], roomId),
                     sendRRs ? lastReadEvent ?? undefined : undefined, // Public read receipt (could be null)
                     lastReadEvent ?? undefined, // Private read receipt (could be null)
                 ).catch(async (e): Promise<void> => {
@@ -1349,11 +1350,11 @@ class TimelinePanel extends React.Component<IProps, IState> {
             if (eventId) {
                 debuglog(
                     "TimelinePanel scrolling to eventId " +
-                        eventId +
-                        " at position " +
-                        offsetBase * 100 +
-                        "% + " +
-                        pixelOffset,
+                    eventId +
+                    " at position " +
+                    offsetBase * 100 +
+                    "% + " +
+                    pixelOffset,
                 );
                 this.messagePanel.current.scrollToEvent(eventId, pixelOffset, offsetBase);
             } else {
@@ -1470,7 +1471,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             if (error.errcode == "M_FORBIDDEN") {
                 description = _t(
                     "Tried to load a specific point in this room's timeline, but you " +
-                        "do not have permission to view the message in question.",
+                    "do not have permission to view the message in question.",
                 );
             } else {
                 description = _t(
