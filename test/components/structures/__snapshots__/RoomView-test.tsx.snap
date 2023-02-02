@@ -56,11 +56,9 @@ exports[`RoomView for a local room in state CREATING should match the snapshot 1
           <div
             tabindex="0"
           >
-            <div>
-              <span
-                dir="auto"
-              />
-            </div>
+            <span
+              dir="auto"
+            />
           </div>
         </div>
       </div>
@@ -149,11 +147,9 @@ exports[`RoomView for a local room in state ERROR should match the snapshot 1`] 
           <div
             tabindex="0"
           >
-            <div>
-              <span
-                dir="auto"
-              />
-            </div>
+            <span
+              dir="auto"
+            />
           </div>
         </div>
       </div>
@@ -332,11 +328,9 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
           <div
             tabindex="0"
           >
-            <div>
-              <span
-                dir="auto"
-              />
-            </div>
+            <span
+              dir="auto"
+            />
           </div>
         </div>
       </div>
@@ -587,11 +581,9 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
           <div
             tabindex="0"
           >
-            <div>
-              <span
-                dir="auto"
-              />
-            </div>
+            <span
+              dir="auto"
+            />
           </div>
         </div>
       </div>
