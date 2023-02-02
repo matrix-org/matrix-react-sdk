@@ -140,8 +140,8 @@ export const ELEMENT_URL_PATTERN =
     ")(#.*)";
 
 export const options: Opts = {
-    events: function (href: string, type: Type | string): Partial<GlobalEventHandlers> {
-        switch (type) {
+    events: function (href: string, type: string): Partial<GlobalEventHandlers> {
+        switch (type as Type) {
             case Type.URL: {
                 // intercept local permalinks to users and show them like userids (in userinfo of current room)
                 try {
