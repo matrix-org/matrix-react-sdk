@@ -19,20 +19,18 @@ import { PollStartEvent } from "matrix-js-sdk/src/extensible_events_v1/PollStart
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { Icon as PollIcon } from "../../../../../res/img/element-icons/room/composer/poll.svg";
+import { formatLocalDateShort } from "../../../../DateUtils";
 
 interface Props {
     event: MatrixEvent;
 }
-
-const formatDate = (ts: number): string =>
-    new Intl.DateTimeFormat(undefined, { day: "2-digit", month: "2-digit", year: "2-digit" }).format(ts);
 
 const PollListItem: React.FC<Props> = ({ event }) => {
     const pollEvent = event.unstableExtensibleEvent as unknown as PollStartEvent;
     if (!pollEvent) {
         return null;
     }
-    const formattedDate = formatDate(event.getTs());
+    const formattedDate = formatLocalDateShort(event.getTs());
     return (
         <li data-testid={`pollListItem-${event.getId()!}`} className="mx_PollListItem">
             <span>{formattedDate}</span>
