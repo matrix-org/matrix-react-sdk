@@ -32,7 +32,7 @@ function openSpaceContextMenu(spaceName: string): Chainable<JQuery> {
     return cy.get(".mx_SpacePanel_contextMenu");
 }
 
-function spaceCreateOptions(spaceName: string): ICreateRoomOpts {
+function spaceCreateOptions(spaceName: string, roomIds: string[] = []): ICreateRoomOpts {
     return {
         creation_content: {
             type: "m.space",
@@ -44,6 +44,7 @@ function spaceCreateOptions(spaceName: string): ICreateRoomOpts {
                     name: spaceName,
                 },
             },
+            ...roomIds.map(spaceChildInitialState),
         ],
     };
 }
@@ -77,7 +78,7 @@ describe("Spaces", () => {
         cy.stopHomeserver(homeserver);
     });
 
-    it.only("should allow user to create public space", () => {
+    it("should allow user to create public space", () => {
         openSpaceCreateMenu();
         cy.get("#mx_ContextualMenu_Container").percySnapshotElement("Space create menu");
         cy.get(".mx_SpaceCreateMenu_wrapper .mx_ContextualMenu").within(() => {
@@ -280,5 +281,26 @@ describe("Spaces", () => {
 
         cy.checkA11y(undefined, axeOptions);
         cy.get(".mx_SpacePanel").percySnapshotElement("Space panel expanded", { widths: [258] });
+    });
+
+    it("should not soft crash when joining a room from space hierarchy which has a link in its topic", () => {
+        cy.getBot(homeserver, { displayName: "BotBob" }).then({ timeout: 10000 }, async (bot) => {
+            const { room_id: roomId } = await bot.createRoom({
+                name: "Test Room",
+                topic: "This is a topic https://github.com/matrix-org/matrix-react-sdk/pull/10060 with a link",
+            });
+            const { room_id: spaceId } = await bot.createRoom(spaceCreateOptions("Test Space", [roomId]));
+            await bot.invite(spaceId, user.userId);
+        });
+
+        cy.getSpacePanelButton("Test Space").should("exist").click();
+        cy.contains(".mx_AccessibleButton", "Accept").click();
+
+        cy.contains(".mx_AccessibleButton", "Test Room").within(() => {
+            cy.contains(".mx_AccessibleButton", "Join").click();
+        });
+
+        // Assert we get shown the new room intro, and thus not the soft crash screen
+        cy.get(".mx_NewRoomIntro").should("exist");
     });
 });
