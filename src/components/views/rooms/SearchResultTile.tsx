@@ -83,13 +83,16 @@ export default class SearchResultTile extends React.Component<IProps> {
                 // is this a continuation of the previous message?
                 const continuation =
                     prevEv &&
-                    !wantsDateSeparator(prevEv.getDate(), mxEv.getDate()) &&
+                    !wantsDateSeparator(prevEv.getDate() || undefined, mxEv.getDate() || undefined) &&
                     shouldFormContinuation(prevEv, mxEv, this.context?.showHiddenEvents, TimelineRenderingType.Search);
 
                 let lastInSection = true;
                 const nextEv = timeline[j + 1];
                 if (nextEv) {
-                    const willWantDateSeparator = wantsDateSeparator(mxEv.getDate(), nextEv.getDate());
+                    const willWantDateSeparator = wantsDateSeparator(
+                        mxEv.getDate() || undefined,
+                        nextEv.getDate() || undefined,
+                    );
                     lastInSection =
                         willWantDateSeparator ||
                         mxEv.getSender() !== nextEv.getSender() ||

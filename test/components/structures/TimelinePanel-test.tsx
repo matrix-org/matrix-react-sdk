@@ -329,7 +329,6 @@ describe("TimelinePanel", () => {
             client = MatrixClientPeg.get();
 
             Thread.hasServerSideSupport = FeatureSupport.Stable;
-
             room = new Room("roomId", client, "userId");
             allThreads = new EventTimelineSet(
                 room,
@@ -483,7 +482,7 @@ describe("TimelinePanel", () => {
     it("renders when the last message is an undecryptable thread root", async () => {
         const client = MatrixClientPeg.get();
         client.isRoomEncrypted = () => true;
-        client.supportsExperimentalThreads = () => true;
+        client.supportsThreads = () => true;
         client.decryptEventIfNeeded = () => Promise.resolve();
         const authorId = client.getUserId()!;
         const room = new Room("roomId", client, authorId, {
