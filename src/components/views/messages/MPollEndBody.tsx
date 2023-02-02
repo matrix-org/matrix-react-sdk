@@ -45,7 +45,7 @@ const usePollStartEvent = (event: MatrixEvent): { pollStartEvent?: MatrixEvent; 
                 const startEventJson = await matrixClient.fetchRoomEvent(roomId, pollStartEventId);
                 const startEvent = new MatrixEvent(startEventJson);
                 // add the poll to the room polls state
-                room.processPollEvents([startEvent, event]);
+                room?.processPollEvents([startEvent, event]);
 
                 if (startEvent.getSender() === event.getSender()) {
                     setPollStartEvent(startEvent);
@@ -81,7 +81,7 @@ const usePollStartEvent = (event: MatrixEvent): { pollStartEvent?: MatrixEvent; 
     return { pollStartEvent, isLoadingPollStartEvent };
 };
 
-export const MPollEndBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, ...props }, ref) => {
+export const MPollEndBody = React.forwardRef<any, IBodyProps>(({ mxEvent, ...props }, ref) => {
     const { pollStartEvent, isLoadingPollStartEvent } = usePollStartEvent(mxEvent);
 
     if (!pollStartEvent) {

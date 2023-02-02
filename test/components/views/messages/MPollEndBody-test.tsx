@@ -46,7 +46,7 @@ describe("<MPollEndBody />", () => {
         fetchRoomEvent: jest.fn(),
     });
     const pollStartEvent = makePollStartEvent("Question?", userId, undefined, roomId);
-    const pollEndEvent = makePollEndEvent(pollStartEvent.getId(), roomId, userId, 123);
+    const pollEndEvent = makePollEndEvent(pollStartEvent.getId()!, roomId, userId, 123);
 
     const setupRoomWithEventsTimeline = async (pollEnd: MatrixEvent, pollStart?: MatrixEvent): Promise<Room> => {
         if (pollStart) {
@@ -83,6 +83,7 @@ describe("<MPollEndBody />", () => {
         onHeightChanged: () => {},
         onMessageAllowed: () => {},
         permalinkCreator: {} as unknown as RoomPermalinkCreator,
+        ref: undefined,
     };
 
     const getComponent = (props: Partial<IBodyProps> = {}) =>
@@ -118,7 +119,7 @@ describe("<MPollEndBody />", () => {
 
         it("does not render a poll tile when end event is invalid", async () => {
             // sender of end event does not match start event
-            const invalidEndEvent = makePollEndEvent(pollStartEvent.getId(), roomId, "@mallory:domain.org", 123);
+            const invalidEndEvent = makePollEndEvent(pollStartEvent.getId()!, roomId, "@mallory:domain.org", 123);
             await setupRoomWithEventsTimeline(invalidEndEvent, pollStartEvent);
             const { getByText } = getComponent({ mxEvent: invalidEndEvent });
 
@@ -147,7 +148,7 @@ describe("<MPollEndBody />", () => {
 
         it("does not render a poll tile when end event is invalid", async () => {
             // sender of end event does not match start event
-            const invalidEndEvent = makePollEndEvent(pollStartEvent.getId(), roomId, "@mallory:domain.org", 123);
+            const invalidEndEvent = makePollEndEvent(pollStartEvent.getId()!, roomId, "@mallory:domain.org", 123);
             await setupRoomWithEventsTimeline(invalidEndEvent);
             const { getByText } = getComponent({ mxEvent: invalidEndEvent });
 
@@ -187,7 +188,7 @@ describe("<MPollEndBody />", () => {
         });
 
         it("displays fallback text when the poll end event does not have text", async () => {
-            const endWithoutText = makePollEndEvent(pollStartEvent.getId(), roomId, userId, 123);
+            const endWithoutText = makePollEndEvent(pollStartEvent.getId()!, roomId, userId, 123);
             delete endWithoutText.getContent()[M_TEXT.name];
             await setupRoomWithEventsTimeline(endWithoutText);
             mockClient.fetchRoomEvent.mockRejectedValue({ code: 404 });
