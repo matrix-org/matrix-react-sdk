@@ -19,7 +19,7 @@ import { render } from "@testing-library/react";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import PollListItem from "../../../../../src/components/views/dialogs/polls/PollListItem";
-import { makePollStartEvent } from "../../../../test-utils";
+import { makePollStartEvent, mockIntlDateTimeFormat, unmockIntlDateTimeFormat } from "../../../../test-utils";
 
 describe("<PollListItem />", () => {
     const event = makePollStartEvent("Question?", "@me:domain.org");
@@ -30,14 +30,11 @@ describe("<PollListItem />", () => {
     beforeAll(() => {
         // mock default locale to en-GB and set timezone
         // so these tests run the same everywhere
-        const DateTimeFormat = Intl.DateTimeFormat;
-        jest.spyOn(global.Intl, "DateTimeFormat").mockImplementation(
-            (locale, options) => new DateTimeFormat(locale || "en-GB", { ...options, timeZone: "Europe/London" }),
-        );
+        mockIntlDateTimeFormat();
     });
 
     afterAll(() => {
-        jest.spyOn(global.Intl, "DateTimeFormat").mockRestore();
+        unmockIntlDateTimeFormat();
     });
 
     it("renders a poll", () => {

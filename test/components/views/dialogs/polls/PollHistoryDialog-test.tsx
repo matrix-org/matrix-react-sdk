@@ -19,7 +19,13 @@ import { render } from "@testing-library/react";
 import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 
 import { PollHistoryDialog } from "../../../../../src/components/views/dialogs/polls/PollHistoryDialog";
-import { getMockClientWithEventEmitter, makePollStartEvent, mockClientMethodsUser } from "../../../../test-utils";
+import {
+    getMockClientWithEventEmitter,
+    makePollStartEvent,
+    mockClientMethodsUser,
+    mockIntlDateTimeFormat,
+    unmockIntlDateTimeFormat,
+} from "../../../../test-utils";
 
 describe("<PollHistoryDialog />", () => {
     const userId = "@alice:domain.org";
@@ -37,10 +43,18 @@ describe("<PollHistoryDialog />", () => {
     };
     const getComponent = () => render(<PollHistoryDialog {...defaultProps} />);
 
+    beforeAll(() => {
+        mockIntlDateTimeFormat();
+    });
+
     beforeEach(() => {
         mockClient.getRoom.mockReturnValue(room);
         const timeline = room.getLiveTimeline();
         jest.spyOn(timeline, "getEvents").mockReturnValue([]);
+    });
+
+    afterAll(() => {
+        unmockIntlDateTimeFormat();
     });
 
     it("throws when room is not found", () => {

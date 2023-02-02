@@ -15,3 +15,16 @@ limitations under the License.
 */
 
 export const REPEATABLE_DATE = new Date(2022, 10, 17, 16, 58, 32, 517);
+
+// mock default locale to en-GB and set timezone
+// so tests run the same everywhere
+export const mockIntlDateTimeFormat = (): void => {
+    const DateTimeFormat = Intl.DateTimeFormat;
+    jest.spyOn(global.Intl, "DateTimeFormat").mockImplementation(
+        (locale, options) => new DateTimeFormat(locale || "en-GB", { ...options, timeZone: "Europe/London" }),
+    );
+};
+
+export const unmockIntlDateTimeFormat = (): void => {
+    jest.spyOn(global.Intl, "DateTimeFormat").mockRestore();
+};
