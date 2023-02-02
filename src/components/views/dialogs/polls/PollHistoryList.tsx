@@ -18,6 +18,7 @@ import React from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import PollListItem from "./PollListItem";
+import { _t } from "../../../../languageHandler";
 
 type PollHistoryListProps = {
     pollStartEvents: MatrixEvent[];
@@ -25,11 +26,15 @@ type PollHistoryListProps = {
 export const PollHistoryList: React.FC<PollHistoryListProps> = ({ pollStartEvents }) => {
     return (
         <div className="mx_PollHistoryList">
-            <ol className="mx_PollHistoryList_list">
-                {pollStartEvents.map((pollStartEvent) => (
-                    <PollListItem key={pollStartEvent.getId()!} event={pollStartEvent} />
-                ))}
-            </ol>
+            {!!pollStartEvents.length ? (
+                <ol className="mx_PollHistoryList_list">
+                    {pollStartEvents.map((pollStartEvent) => (
+                        <PollListItem key={pollStartEvent.getId()!} event={pollStartEvent} />
+                    ))}
+                </ol>
+            ) : (
+                <span className="mx_PollHistoryList_noResults">{_t("There are no polls in this room")}</span>
+            )}
         </div>
     );
 };
