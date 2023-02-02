@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { CSSProperties, useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import classNames from "classnames";
 import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
 import { ClientEvent } from "matrix-js-sdk/src/client";
@@ -51,7 +51,6 @@ interface IProps {
     inputRef?: React.RefObject<HTMLImageElement & HTMLSpanElement>;
     className?: string;
     tabIndex?: number;
-    style?: CSSProperties;
 }
 
 const calculateUrls = (url: string | undefined, urls: string[] | undefined, lowBandwidth: boolean): string[] => {
@@ -133,16 +132,9 @@ const BaseAvatar: React.FC<IProps> = (props) => {
         onClick,
         inputRef,
         className,
-        style: parentStyle,
         resizeMethod: _unused, // to keep it from being in `otherProps`
         ...otherProps
     } = props;
-
-    const style = {
-        ...parentStyle,
-        width: toPx(width),
-        height: toPx(height),
-    };
 
     const [imageUrl, onError] = useImageUrl({ url, urls });
 
@@ -159,7 +151,10 @@ const BaseAvatar: React.FC<IProps> = (props) => {
                     className={classNames("mx_BaseAvatar", className)}
                     onClick={onClick}
                     inputRef={inputRef}
-                    style={style}
+                    style={{
+                        width: toPx(width),
+                        height: toPx(height),
+                    }}
                 >
                     {avatar}
                 </AccessibleButton>
@@ -170,7 +165,10 @@ const BaseAvatar: React.FC<IProps> = (props) => {
                     className={classNames("mx_BaseAvatar", className)}
                     ref={inputRef}
                     {...otherProps}
-                    style={style}
+                    style={{
+                        width: toPx(width),
+                        height: toPx(height),
+                    }}
                     role="presentation"
                 >
                     {avatar}
@@ -187,7 +185,10 @@ const BaseAvatar: React.FC<IProps> = (props) => {
                 src={imageUrl}
                 onClick={onClick}
                 onError={onError}
-                style={style}
+                style={{
+                    width: toPx(width),
+                    height: toPx(height),
+                }}
                 title={title}
                 alt={_t("Avatar")}
                 inputRef={inputRef}
@@ -201,7 +202,10 @@ const BaseAvatar: React.FC<IProps> = (props) => {
                 className={classNames("mx_BaseAvatar mx_BaseAvatar_image", className)}
                 src={imageUrl}
                 onError={onError}
-                style={style}
+                style={{
+                    width: toPx(width),
+                    height: toPx(height),
+                }}
                 title={title}
                 alt=""
                 ref={inputRef}
