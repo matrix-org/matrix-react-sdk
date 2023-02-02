@@ -17,6 +17,7 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import type { MatrixClient } from "matrix-js-sdk/src/client";
+import type { Preset } from "matrix-js-sdk/src/@types/partials";
 import type { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import Chainable = Cypress.Chainable;
@@ -286,6 +287,7 @@ describe("Spaces", () => {
     it("should not soft crash when joining a room from space hierarchy which has a link in its topic", () => {
         cy.getBot(homeserver, { displayName: "BotBob" }).then({ timeout: 10000 }, async (bot) => {
             const { room_id: roomId } = await bot.createRoom({
+                preset: "public_chat" as Preset,
                 name: "Test Room",
                 topic: "This is a topic https://github.com/matrix-org/matrix-react-sdk/pull/10060 with a link",
             });
@@ -293,11 +295,14 @@ describe("Spaces", () => {
             await bot.invite(spaceId, user.userId);
         });
 
-        cy.getSpacePanelButton("Test Space").should("exist").click();
+        cy.getSpacePanelButton("Test Space").should("exist");
+        cy.wait(500); // without this we can end up clicking too quickly and it ends up having no effect
+        cy.viewSpaceByName("Test Space");
         cy.contains(".mx_AccessibleButton", "Accept").click();
 
-        cy.contains(".mx_AccessibleButton", "Test Room").within(() => {
-            cy.contains(".mx_AccessibleButton", "Join").click();
+        cy.contains(".mx_SpaceHierarchy_roomTile.mx_AccessibleButton", "Test Room").within(() => {
+            cy.contains("Join").should("exist").realHover().click();
+            cy.contains("View", { timeout: 5000 }).should("exist").click();
         });
 
         // Assert we get shown the new room intro, and thus not the soft crash screen
