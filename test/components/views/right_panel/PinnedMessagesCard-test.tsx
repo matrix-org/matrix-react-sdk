@@ -244,7 +244,7 @@ describe("<PinnedMessagesCard />", () => {
             ["@eve:example.org", 1],
         ].map(([user, option], i) =>
             mkEvent({
-                ...PollResponseEvent.from([answers[option].id], poll.getId()!).serialize(),
+                ...PollResponseEvent.from([answers[option as number].id], poll.getId()!).serialize(),
                 event: true,
                 room: "!room:example.org",
                 user: user as string,

@@ -1016,8 +1016,7 @@ function expectedResponseEvent(answer: string) {
         },
         roomId: "#myroom:example.com",
         eventType: M_POLL_RESPONSE.name,
-        txnId: undefined,
-        callback: undefined,
+        txnId: "$123",
     };
 }
 function expectedResponseEventCall(answer: string) {
