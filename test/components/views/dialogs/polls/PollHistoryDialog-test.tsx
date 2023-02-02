@@ -44,7 +44,7 @@ describe("<PollHistoryDialog />", () => {
     });
 
     it("throws when room is not found", () => {
-        mockClient.getRoom.mockReturnValue(undefined);
+        mockClient.getRoom.mockReturnValue(null);
 
         expect(() => getComponent()).toThrow("Cannot find room");
     });
