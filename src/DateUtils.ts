@@ -44,7 +44,7 @@ function pad(n: number): string {
 }
 
 function twelveHourTime(date: Date, showSeconds = false): string {
-    let hours = date.getHours();
+    const hours = date.getHours();
     const minutes = pad(date.getMinutes());
     if (showSeconds) {
         const seconds = pad(date.getSeconds());
