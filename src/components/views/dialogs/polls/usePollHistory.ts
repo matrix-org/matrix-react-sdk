@@ -18,6 +18,12 @@ import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
+/**
+ * Get poll start events in a rooms live timeline
+ * @param roomId - id of room to retrieve polls for
+ * @param matrixClient - client
+ * @returns {MatrixEvent[]} - array fo poll start events
+ */
 export const getPolls = (roomId: string, matrixClient: MatrixClient): MatrixEvent[] => {
     const room = matrixClient.getRoom(roomId);
 
