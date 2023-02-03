@@ -126,12 +126,13 @@ function useServers(): ServerList {
     removeAll(removableServers, ...configServers);
 
     return {
-        allServers: [
+        allServers: [...new Set([
             // we always show our connected HS, this takes precedence over it being configured or user-defined
-            homeServer,
+            // Disable for FOSDEM
+            (homeServer === 'attendees.fosdem.org' ? 'fosdem.org' : homeServer),
             ...Array.from(configServers).sort(),
             ...Array.from(removableServers).sort(),
-        ],
+        ])],
         homeServer,
         userDefinedServers: Array.from(removableServers).sort(),
         setUserDefinedServers,
