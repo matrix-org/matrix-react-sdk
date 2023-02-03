@@ -92,6 +92,7 @@ const HiddenEventFactory: Factory = (ref, props) => <HiddenBody ref={ref} {...pr
 // These factories are exported for reference comparison against pickFactory()
 export const JitsiEventFactory: Factory = (ref, props) => <MJitsiWidgetEvent ref={ref} {...props} />;
 export const JSONEventFactory: Factory = (ref, props) => <ViewSourceEvent ref={ref} {...props} />;
+export const RoomCreateEventFactory: Factory = (ref, props) => <RoomCreate {...props} />;
 
 const EVENT_TILE_TYPES = new Map<string, Factory>([
     [EventType.RoomMessage, MessageEventFactory], // note that verification requests are handled in pickFactory()
@@ -106,7 +107,7 @@ const EVENT_TILE_TYPES = new Map<string, Factory>([
 const STATE_EVENT_TILE_TYPES = new Map<string, Factory>([
     [EventType.RoomEncryption, (ref, props) => <EncryptionEvent ref={ref} {...props} />],
     [EventType.RoomCanonicalAlias, TextualEventFactory],
-    [EventType.RoomCreate, (_ref, props) => <RoomCreate {...props} />],
+    [EventType.RoomCreate, RoomCreateEventFactory],
     [EventType.RoomMember, TextualEventFactory],
     [EventType.RoomName, TextualEventFactory],
     [EventType.RoomAvatar, (ref, props) => <RoomAvatarEvent ref={ref} {...props} />],
