@@ -1520,44 +1520,46 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 ready: true,
             });
 
-            if (!this.fosdemSpaceJoinPromise) {
-                this.fosdemSpaceJoinPromise = (async () => {
-                    // Auto-join to some FOSDEM spaces
-                    const fosdemSpaces = {
-                        '!JtsIvQBImEUcxXdcEq:fosdem.org': '#fosdem2023:fosdem.org',
-                        '!RomMjGfUoEGEfiOeLa:fosdem.org': '#space-infodesk:fosdem.org',
-                        '!BbyfkWqQeTAnPkLSdA:fosdem.org': '#space-main-tracks:fosdem.org',
-                        '!EBhIunHWOcfczzoGfM:fosdem.org': '#space-devrooms:fosdem.org',
-                        '!FrKXOQOxVcNCUAhJnu:fosdem.org': '#space-social:fosdem.org',
-                    };
-                    const cli = MatrixClientPeg.get();
-                    for (const [spaceId, spaceAlias] of Object.entries(fosdemSpaces)) {
-                        if (!cli.getRoom(spaceId)) {
-                            // See first did we already do this
-                            const sessionKey = `fosdem_autojoin_${spaceAlias}`;
-                            const joinStatus = localStorage.getItem(sessionKey);
-                            if (joinStatus) {
-                                logger.debug(`Already auto-joined once, not rejoining FOSDEM space ${spaceId} / ${spaceAlias}`);
-                                continue;
-                            }
-                            logger.info(`Joining to FOSDEM space ${spaceId} / ${spaceAlias}`);
-                            try {
-                                await cli.joinRoom(spaceAlias);
-                                localStorage.setItem(sessionKey, 'joined');
-                            } catch (error) {
-                                logger.warn(`Failed auto-joining to FOSDEM space ${spaceId} / ${spaceAlias}: ${error}`);
-                            }
-                        } else {
-                            logger.debug(`Already member of FOSDEM space ${spaceId} / ${spaceAlias}`);
-                        }
-                    }
-                })().catch((ex) => {
-                    logger.warn(`Failed to sync up spaces for FOSDEM`, ex);
-                    // Reset so we can retry on next sync.
-                    this.fosdemSpaceJoinPromise = undefined;
-                });
+            if (this.fosdemSpaceJoinPromise) {
+                return;
             }
 
+            this.fosdemSpaceJoinPromise = (async () => {
+                // Auto-join to some FOSDEM spaces
+                const fosdemSpaces = {
+                    '!JtsIvQBImEUcxXdcEq:fosdem.org': '#fosdem2023:fosdem.org',
+                    '!RomMjGfUoEGEfiOeLa:fosdem.org': '#space-infodesk:fosdem.org',
+                    '!BbyfkWqQeTAnPkLSdA:fosdem.org': '#space-main-tracks:fosdem.org',
+                    '!EBhIunHWOcfczzoGfM:fosdem.org': '#space-devrooms:fosdem.org',
+                    '!FrKXOQOxVcNCUAhJnu:fosdem.org': '#space-social:fosdem.org',
+                };
+                const cli = MatrixClientPeg.get();
+                for (const [spaceId, spaceAlias] of Object.entries(fosdemSpaces)) {
+                    if (!cli.getRoom(spaceId)) {
+                        // See first did we already do this
+                        const sessionKey = `fosdem_autojoin_${spaceAlias}`;
+                        const joinStatus = localStorage.getItem(sessionKey);
+                        if (joinStatus) {
+                            logger.debug(`Already auto-joined once, not rejoining FOSDEM space ${spaceId} / ${spaceAlias}`);
+                            continue;
+                        }
+                        logger.info(`Joining to FOSDEM space ${spaceId} / ${spaceAlias}`);
+                        try {
+                            await cli.joinRoom(spaceAlias);
+                            localStorage.setItem(sessionKey, 'joined');
+                        } catch (error) {
+                            logger.warn(`Failed auto-joining to FOSDEM space ${spaceId} / ${spaceAlias}: ${error}`);
+                        }
+                    } else {
+                        logger.debug(`Already member of FOSDEM space ${spaceId} / ${spaceAlias}`);
+                    }
+                }
+            })().catch((ex) => {
+                logger.warn(`Failed to sync up spaces for FOSDEM`, ex);
+                // Reset so we can retry on next sync.
+                this.fosdemSpaceJoinPromise = undefined;
+            });
+        });
         cli.on(HttpApiEvent.SessionLoggedOut, function (errObj) {
             if (Lifecycle.isLoggingOut()) return;
 
