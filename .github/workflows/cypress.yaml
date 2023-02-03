@@ -2,7 +2,9 @@
 name: Cypress End to End Tests
 on:
     workflow_run:
-        workflows: ["Element Web - Build"]
+        # disabled for ER test
+        # workflows: ["Element Web - Build"]
+        workflows: []
         types:
             - completed
 concurrency:
