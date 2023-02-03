@@ -15,8 +15,10 @@ limitations under the License.
 */
 
 import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, Poll, PollEvent } from "matrix-js-sdk/src/matrix";
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import { useEffect, useState } from "react";
+import { useEventEmitterState } from "../../../../hooks/useEventEmitter";
 
 /**
  * Get poll start events in a rooms live timeline
@@ -38,3 +40,26 @@ export const getPolls = (roomId: string, matrixClient: MatrixClient): MatrixEven
 
     return pollStartEvents;
 };
+
+export const usePolls = (roomId: string, matrixClient: MatrixClient): {
+    polls: Map<string, Poll>;
+    activePollIds: string[];
+    endedPollIds: string[];
+} => {
+    const room = matrixClient.getRoom(roomId);
+    const [activePollIds, setActivePollIds] = useState([]);
+
+    if (!room) {
+        throw new Error("Cannot find room");
+    }
+
+    const polls = useEventEmitterState(room, PollEvent.New, () => room.polls);
+
+    // const 
+
+    // useEffect(() => {
+
+    // }, [polls])
+
+    return {polls};
+}
