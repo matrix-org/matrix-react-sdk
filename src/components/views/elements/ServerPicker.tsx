@@ -93,14 +93,6 @@ const ServerPicker: React.FC<IProps> = ({ title, dialogTitle, serverConfig, onSe
         desc = (
             <span className="mx_ServerPicker_desc">{_t("Join millions for free on the largest public server")}</span>
         );
-    } else if (serverConfig.hsName === "attendees.fosdem.org") {
-        desc = <span className="mx_ServerPicker_desc">
-            Please change your homeserver to "fosdem.org" if you registered your account for FOSDEM 2021
-        </span>;
-    } else if (serverConfig.hsName === "attendees.fosdem.org") {
-        desc = <span className="mx_ServerPicker_desc">
-            Please change your homeserver to "fosdem.org" if you registered your account for FOSDEM 2021
-        </span>;
     } else if (serverConfig.hsName === "attendees.fosdem.org" && onServerConfigChange) {
         desc = <span className="mx_ServerPicker_desc">
             Please change your homeserver to "fosdem.org" if you registered your account for FOSDEM 2021
