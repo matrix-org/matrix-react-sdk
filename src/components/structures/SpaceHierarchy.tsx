@@ -51,7 +51,7 @@ import TextWithTooltip from "../views/elements/TextWithTooltip";
 import { useStateToggle } from "../../hooks/useStateToggle";
 import { getChildOrder } from "../../stores/spaces/SpaceStore";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
-import { linkifyElement, topicToHtml } from "../../HtmlUtils";
+import { Linkify, topicToHtml } from "../../HtmlUtils";
 import { useDispatcher } from "../../hooks/useDispatcher";
 import { Action } from "../../dispatcher/actions";
 import { IState, RovingTabIndexProvider, useRovingTabIndex } from "../../accessibility/RovingTabIndex";
@@ -210,6 +210,25 @@ const Tile: React.FC<ITileProps> = ({
         topic = room.topic;
     }
 
+    let topicSection: ReactNode | undefined;
+    if (topic) {
+        topicSection = (
+            <Linkify
+                options={{
+                    attributes: {
+                        onClick(ev: MouseEvent) {
+                            // prevent clicks on links from bubbling up to the room tile
+                            ev.stopPropagation();
+                        },
+                    },
+                }}
+            >
+                {" · "}
+                {topic}
+            </Linkify>
+        );
+    }
+
     let joinedSection: ReactElement | undefined;
     if (joinedRoom) {
         joinedSection = <div className="mx_SpaceHierarchy_roomTile_joined">{_t("Joined")}</div>;
@@ -231,19 +250,9 @@ const Tile: React.FC<ITileProps> = ({
                     {joinedSection}
                     {suggestedSection}
                 </div>
-                <div
-                    className="mx_SpaceHierarchy_roomTile_info"
-                    ref={(e) => e && linkifyElement(e)}
-                    onClick={(ev) => {
-                        // prevent clicks on links from bubbling up to the room tile
-                        if ((ev.target as HTMLElement).tagName === "A") {
-                            ev.stopPropagation();
-                        }
-                    }}
-                >
+                <div className="mx_SpaceHierarchy_roomTile_info">
                     {description}
-                    {topic && " · "}
-                    {topic}
+                    {topicSection}
                 </div>
             </div>
             <div className="mx_SpaceHierarchy_actions">
@@ -413,9 +422,18 @@ interface IHierarchyLevelProps {
     onToggleClick?(parentId: string, childId: string): void;
 }
 
-const toLocalRoom = (cli: MatrixClient, room: IHierarchyRoom): IHierarchyRoom => {
+export const toLocalRoom = (cli: MatrixClient, room: IHierarchyRoom, hierarchy: RoomHierarchy): IHierarchyRoom => {
     const history = cli.getRoomUpgradeHistory(room.room_id, true);
-    const cliRoom = history[history.length - 1];
+
+    // Pick latest room that is actually part of the hierarchy
+    let cliRoom = null;
+    for (let idx = history.length - 1; idx >= 0; --idx) {
+        if (hierarchy.roomMap.get(history[idx].roomId)) {
+            cliRoom = history[idx];
+            break;
+        }
+    }
+
     if (cliRoom) {
         return {
             ...room,
@@ -424,7 +442,7 @@ const toLocalRoom = (cli: MatrixClient, room: IHierarchyRoom): IHierarchyRoom =>
             name: cliRoom.name,
             topic: cliRoom.currentState.getStateEvents(EventType.RoomTopic, "")?.getContent().topic,
             avatar_url: cliRoom.getMxcAvatarUrl(),
-            canonical_alias: cliRoom.getCanonicalAlias(),
+            canonical_alias: cliRoom.getCanonicalAlias() ?? undefined,
             aliases: cliRoom.getAltAliases(),
             world_readable:
                 cliRoom.currentState.getStateEvents(EventType.RoomHistoryVisibility, "")?.getContent()
@@ -461,7 +479,7 @@ export const HierarchyLevel: React.FC<IHierarchyLevelProps> = ({
         (result, ev: IHierarchyRelation) => {
             const room = hierarchy.roomMap.get(ev.state_key);
             if (room && roomSet.has(room)) {
-                result[room.room_type === RoomType.Space ? 0 : 1].push(toLocalRoom(cli, room));
+                result[room.room_type === RoomType.Space ? 0 : 1].push(toLocalRoom(cli, room, hierarchy));
             }
             return result;
         },
