@@ -165,7 +165,7 @@ describe("RoomNotifs test", () => {
                 oldRoom.setUnreadNotificationCount(NotificationCountType.Total, 10);
                 oldRoom.setUnreadNotificationCount(NotificationCountType.Highlight, 6);
 
-                client.getRoom.mockImplementation((roomId: string): Room | null => {
+                client.getRoom.mockImplementation((roomId: string | undefined): Room | null => {
                     if (roomId === room.roomId) return room;
                     if (roomId === OLD_ROOM_ID) return oldRoom;
                     return null;
