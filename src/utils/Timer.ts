@@ -124,6 +124,6 @@ export default class Timer {
     }
 
     public isRunning(): boolean {
-        return this.timerHandle !== null;
+        return this.timerHandle !== undefined;
     }
 }
