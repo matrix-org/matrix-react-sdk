@@ -140,6 +140,11 @@ export function getInitialLetter(name: string): string {
         name = name.substring(1);
     }
 
+    // Is a FOSDEM guest
+    if (name === "Guest") {
+        return undefined;
+    }
+    
     // rely on the grapheme cluster splitter in lodash so that we don't break apart compound emojis
     return split(name, "", 1)[0].toUpperCase();
 }
