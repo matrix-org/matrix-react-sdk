@@ -14,24 +14,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { FieldsetHTMLAttributes, ReactNode } from 'react';
+import React, { FieldsetHTMLAttributes, ReactNode } from "react";
 
 export type FilterTab<T> = {
     label: string | ReactNode;
     id: T;
-}
+};
 type FilterTabGroupProps<T extends string = string> = FieldsetHTMLAttributes<any> & {
     name: string;
     onFilterChange: (id: T) => void;
     value: T;
     tabs: FilterTab<T>[];
-}
+};
 
-export const FilterTabGroup = <T extends string = string>({ name, value, tabs, onFilterChange, ...rest }: FilterTabGroupProps<T>): JSX.Element =>
-    <fieldset { ...rest } className="mx_FilterTabGroup">
-        { tabs.map(({ label, id }) => <label>
-                        <input type="radio" name={name} value={id} onChange={() => onFilterChange(id)} checked={value === id}/>
-                         {label}
-                        </label>
-                        )}
-    </fieldset>;
+export const FilterTabGroup = <T extends string = string>({
+    name,
+    value,
+    tabs,
+    onFilterChange,
+    ...rest
+}: FilterTabGroupProps<T>): JSX.Element => (
+    <fieldset {...rest} className="mx_FilterTabGroup">
+        {tabs.map(({ label, id }) => (
+            <label key={id}>
+                <input type="radio" name={name} value={id} onChange={() => onFilterChange(id)} checked={value === id} />
+                {label}
+            </label>
+        ))}
+    </fieldset>
+);
