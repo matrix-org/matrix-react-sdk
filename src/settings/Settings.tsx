@@ -290,7 +290,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
         displayName: _td("Rich text editor"),
-        description: _td("Use rich text instead of Markdown in the message composer. Plain text mode coming soon."),
+        description: _td("Use rich text instead of Markdown in the message composer."),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
@@ -381,6 +381,14 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         description: _td("Defaults to room member list."),
         default: false,
     },
+    "feature_poll_history": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Polls history"),
+        description: _td("View a list of polls in a room. (Under active development)"),
+        default: false,
+    },
     "feature_jump_to_date": {
         // We purposely leave out `isFeature: true` so it doesn't show in Labs
         // by default. We will conditionally show it depending on whether we can
@@ -435,6 +443,15 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("Live Location Sharing"),
         description: _td("Temporary implementation. Locations persist in room history."),
+        shouldWarn: true,
+        default: false,
+    },
+    "feature_dynamic_room_predecessors": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Dynamic room predecessors"),
+        description: _td("Enable MSC3946 (to support late-arriving room archives)"),
         shouldWarn: true,
         default: false,
     },

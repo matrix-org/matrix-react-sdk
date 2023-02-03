@@ -26,6 +26,7 @@ import dis from "../../../../../dispatcher/dispatcher";
 import { Action } from "../../../../../dispatcher/actions";
 import CopyableText from "../../../elements/CopyableText";
 import { ViewRoomPayload } from "../../../../../dispatcher/payloads/ViewRoomPayload";
+import SettingsStore from "../../../../../settings/SettingsStore";
 
 interface IProps {
     roomId: string;
@@ -49,6 +50,8 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
     public constructor(props: IProps) {
         super(props);
 
+        const msc3946ProcessDynamicPredecessor = SettingsStore.getValue("feature_dynamic_room_predecessors");
+
         this.state = {
             // This is eventually set to the value of room.getRecommendedVersion()
             upgradeRecommendation: null,
@@ -60,11 +63,10 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
             const tombstone = room.currentState.getStateEvents(EventType.RoomTombstone, "");
 
             const additionalStateChanges: Partial<IState> = {};
-            const createEvent = room.currentState.getStateEvents(EventType.RoomCreate, "");
-            const predecessor = createEvent ? createEvent.getContent().predecessor : null;
-            if (predecessor && predecessor.room_id) {
-                additionalStateChanges.oldRoomId = predecessor.room_id;
-                additionalStateChanges.oldEventId = predecessor.event_id;
+            const predecessor = room.findPredecessor(msc3946ProcessDynamicPredecessor);
+            if (predecessor) {
+                additionalStateChanges.oldRoomId = predecessor.roomId;
+                additionalStateChanges.oldEventId = predecessor.eventId;
             }
 
             this.setState({

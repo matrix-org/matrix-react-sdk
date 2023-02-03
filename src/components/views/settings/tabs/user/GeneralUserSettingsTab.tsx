@@ -20,6 +20,7 @@ import React from "react";
 import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
 import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
+import { IDelegatedAuthConfig, M_AUTHENTICATION } from "matrix-js-sdk/src/matrix";
 import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../../languageHandler";
@@ -77,6 +78,7 @@ interface IState {
     loading3pids: boolean; // whether or not the emails and msisdns have been loaded
     canChangePassword: boolean;
     idServerName: string;
+    externalAccountManagementUrl?: string;
 }
 
 export default class GeneralUserSettingsTab extends React.Component<IProps, IState> {
@@ -104,6 +106,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             loading3pids: true, // whether or not the emails and msisdns have been loaded
             canChangePassword: false,
             idServerName: null,
+            externalAccountManagementUrl: undefined,
         };
 
         this.dispatcherRef = dis.register(this.onAction);
@@ -159,7 +162,10 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         // the enabled flag value.
         const canChangePassword = !changePasswordCap || changePasswordCap["enabled"] !== false;
 
-        this.setState({ serverSupportsSeparateAddAndBind, canChangePassword });
+        const delegatedAuthConfig = M_AUTHENTICATION.findIn<IDelegatedAuthConfig | undefined>(cli.getClientWellKnown());
+        const externalAccountManagementUrl = delegatedAuthConfig?.account;
+
+        this.setState({ serverSupportsSeparateAddAndBind, canChangePassword, externalAccountManagementUrl });
     }
 
     private async getThreepidState(): Promise<void> {
@@ -346,9 +352,37 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             passwordChangeForm = null;
         }
 
+        let externalAccountManagement: JSX.Element | undefined;
+        if (this.state.externalAccountManagementUrl) {
+            const { hostname } = new URL(this.state.externalAccountManagementUrl);
+
+            externalAccountManagement = (
+                <>
+                    <p className="mx_SettingsTab_subsectionText" data-testid="external-account-management-outer">
+                        {_t(
+                            "Your account details are managed separately at <code>%(hostname)s</code>.",
+                            { hostname },
+                            { code: (sub) => <code>{sub}</code> },
+                        )}
+                    </p>
+                    <AccessibleButton
+                        onClick={null}
+                        element="a"
+                        kind="primary"
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        href={this.state.externalAccountManagementUrl}
+                        data-testid="external-account-management-link"
+                    >
+                        {_t("Manage account")}
+                    </AccessibleButton>
+                </>
+            );
+        }
         return (
             <div className="mx_SettingsTab_section mx_GeneralUserSettingsTab_accountSection">
                 <span className="mx_SettingsTab_subheading">{_t("Account")}</span>
+                {externalAccountManagement}
                 <p className="mx_SettingsTab_subsectionText">{passwordChangeText}</p>
                 {passwordChangeForm}
                 {threepidSection}
