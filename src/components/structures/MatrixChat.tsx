@@ -1520,12 +1520,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             // Auto-join to some FOSDEM spaces
             const fosdemSpaces = {
-                '!BlToLWACcXqAvpatvj:fosdem.org': '#fosdem2022:fosdem.org',
-                '!afEFtdsEUAFQNIAqiV:fosdem.org': '#space-infodesk:fosdem.org',
-                '!naMQjKkVXFboyCgZJk:fosdem.org': '#space-main-tracks:fosdem.org',
-                '!sgvHsecpjxfyPEWmiK:fosdem.org': '#space-devrooms:fosdem.org',
-                '!KSTwGnsgCMvuSbSaJi:fosdem.org': '#space-stands:fosdem.org',
-                '!kQgoXrJBHOsvAOIKaW:fosdem.org': '#space-bofs:fosdem.org',
+                '!JtsIvQBImEUcxXdcEq:fosdem.org': '#fosdem2023:fosdem.org',
+                '!RomMjGfUoEGEfiOeLa:fosdem.org': '#space-infodesk:fosdem.org',
+                '!BbyfkWqQeTAnPkLSdA:fosdem.org': '#space-main-tracks:fosdem.org',
+                '!EBhIunHWOcfczzoGfM:fosdem.org': '#space-devrooms:fosdem.org',
                 '!FrKXOQOxVcNCUAhJnu:fosdem.org': '#space-social:fosdem.org',
             };
             const cli = MatrixClientPeg.get();
