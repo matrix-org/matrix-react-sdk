@@ -45,7 +45,7 @@ describe("<MPollEndBody />", () => {
         relations: jest.fn(),
         fetchRoomEvent: jest.fn(),
     });
-    const pollStartEvent = makePollStartEvent("Question?", userId, undefined, roomId);
+    const pollStartEvent = makePollStartEvent("Question?", userId, undefined, { roomId });
     const pollEndEvent = makePollEndEvent(pollStartEvent.getId()!, roomId, userId, 123);
 
     const setupRoomWithEventsTimeline = async (pollEnd: MatrixEvent, pollStart?: MatrixEvent): Promise<Room> => {

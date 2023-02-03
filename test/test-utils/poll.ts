@@ -23,13 +23,16 @@ import { uuid4 } from "@sentry/utils";
 
 import { flushPromises } from "./utilities";
 
+type Options = {
+    roomId: string;
+    ts: number;
+    id: string;
+};
 export const makePollStartEvent = (
     question: string,
     sender: string,
     answers?: PollAnswer[],
-    roomId?: string,
-    ts?: number,
-    id?: string,
+    { roomId, ts, id }: Partial<Options> = {},
 ): MatrixEvent => {
     if (!answers) {
         answers = [
