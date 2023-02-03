@@ -28,6 +28,8 @@ export const makePollStartEvent = (
     sender: string,
     answers?: PollAnswer[],
     roomId?: string,
+    ts?: number,
+    id?: string,
 ): MatrixEvent => {
     if (!answers) {
         answers = [
@@ -37,7 +39,7 @@ export const makePollStartEvent = (
     }
 
     return new MatrixEvent({
-        event_id: "$mypoll",
+        event_id: id || "$mypoll",
         room_id: roomId || "#myroom:example.com",
         sender: sender,
         type: M_POLL_START.name,
@@ -51,6 +53,7 @@ export const makePollStartEvent = (
             },
             [M_TEXT.name]: `${question}: answers`,
         },
+        origin_server_ts: ts || 0,
     });
 };
 
