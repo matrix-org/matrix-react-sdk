@@ -17,26 +17,17 @@ limitations under the License.
 import "@testing-library/jest-dom";
 import React from "react";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { EventTimeline, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import MatrixClientContext from "../../../../../src/contexts/MatrixClientContext";
 import RoomContext from "../../../../../src/contexts/RoomContext";
 import defaultDispatcher from "../../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../../src/dispatcher/actions";
-import { IRoomState } from "../../../../../src/components/structures/RoomView";
-import {
-    createTestClient,
-    flushPromises,
-    getRoomContext,
-    mkEvent,
-    mkStubRoom,
-    mockPlatformPeg,
-} from "../../../../test-utils";
+import { flushPromises } from "../../../../test-utils";
 import { SendWysiwygComposer } from "../../../../../src/components/views/rooms/wysiwyg_composer/";
 import { aboveLeftOf } from "../../../../../src/components/structures/ContextMenu";
 import { ComposerInsertPayload, ComposerType } from "../../../../../src/dispatcher/payloads/ComposerInsertPayload";
 import { setSelection } from "../../../../../src/components/views/rooms/wysiwyg_composer/utils/selection";
-import * as EventUtils from "../../../../../src/utils/EventUtils";
+import { createMocks } from "./utils";
 
 jest.mock("../../../../../src/components/views/rooms/EmojiButton", () => ({
     EmojiButton: ({ addEmoji }: { addEmoji: (emoji: string) => void }) => {
@@ -53,22 +44,7 @@ describe("SendWysiwygComposer", () => {
         jest.resetAllMocks();
     });
 
-    const mockClient = createTestClient();
-    const mockEvent = mkEvent({
-        type: "m.room.message",
-        room: "myfakeroom",
-        user: "myfakeuser",
-        content: { msgtype: "m.text", body: "Replying to this" },
-        event: true,
-    });
-    const mockRoom = mkStubRoom("myfakeroom", "myfakeroom", mockClient) as any;
-    mockRoom.findEventById = jest.fn((eventId) => {
-        return eventId === mockEvent.getId() ? mockEvent : null;
-    });
-
-    const defaultRoomContext: IRoomState = getRoomContext(mockRoom, {
-        liveTimeline: { getEvents: (): MatrixEvent[] => [] } as unknown as EventTimeline,
-    });
+    const { defaultRoomContext, mockClient } = createMocks();
 
     const registerId = defaultDispatcher.register((payload) => {
         switch (payload.action) {
@@ -348,51 +324,4 @@ describe("SendWysiwygComposer", () => {
             });
         },
     );
-
-    describe("Keyboard navigation", () => {
-        const setup = async () => {
-            const spyDispatcher = jest.spyOn(defaultDispatcher, "dispatch");
-            customRender();
-            await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
-            return { textbox: screen.getByRole("textbox"), spyDispatcher };
-        };
-
-        beforeEach(() => {
-            mockPlatformPeg({ overrideBrowserShortcuts: jest.fn().mockReturnValue(false) });
-            jest.spyOn(EventUtils, "findEditableEvent").mockReturnValue(mockEvent);
-        });
-
-        it("Should not moving when the composer is filled", async () => {
-            // When
-            const { textbox, spyDispatcher } = await setup();
-            fireEvent.input(textbox, {
-                data: "word",
-                inputType: "insertText",
-            });
-
-            // Move at the beginning of the composer
-            fireEvent.keyDown(textbox, {
-                key: "ArrowUp",
-            });
-
-            // Then
-            expect(spyDispatcher).toBeCalledTimes(0);
-        });
-
-        it("Should moving when the composer is empty", async () => {
-            // When
-            const { textbox, spyDispatcher } = await setup();
-
-            fireEvent.keyDown(textbox, {
-                key: "ArrowUp",
-            });
-
-            // Then
-            expect(spyDispatcher).toBeCalledWith({
-                action: Action.EditEvent,
-                event: mockEvent,
-                timelineRenderingType: defaultRoomContext.timelineRenderingType,
-            });
-        });
-    });
 });
