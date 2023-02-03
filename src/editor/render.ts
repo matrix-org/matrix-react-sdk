@@ -30,9 +30,9 @@ export function needsCaretNodeAfter(part: Part, isLastOfLine: boolean): boolean 
 function insertAfter(node: HTMLElement, nodeToInsert: HTMLElement): void {
     const next = node.nextSibling;
     if (next) {
-        node.parentElement.insertBefore(nodeToInsert, next);
+        node.parentElement!.insertBefore(nodeToInsert, next);
     } else {
-        node.parentElement.appendChild(nodeToInsert);
+        node.parentElement!.appendChild(nodeToInsert);
     }
 }
 
@@ -59,10 +59,10 @@ function updateCaretNode(node: HTMLElement): void {
 }
 
 export function isCaretNode(node: HTMLElement): boolean {
-    return node && node.tagName === "SPAN" && node.className === "caretNode";
+    return node?.tagName === "SPAN" && node.className === "caretNode";
 }
 
-function removeNextSiblings(node: ChildNode): void {
+function removeNextSiblings(node: ChildNode | null): void {
     if (!node) {
         return;
     }
@@ -83,8 +83,8 @@ function removeChildren(parent: HTMLElement): void {
 }
 
 function reconcileLine(lineContainer: ChildNode, parts: Part[]): void {
-    let currentNode;
-    let prevPart;
+    let currentNode: ChildNode | null | undefined;
+    let prevPart: Part | undefined;
     const lastPart = parts[parts.length - 1];
 
     for (const part of parts) {
@@ -150,7 +150,7 @@ function reconcileEmptyLine(lineContainer: HTMLElement): void {
 }
 
 export function renderModel(editor: HTMLDivElement, model: EditorModel): void {
-    const lines = model.parts.reduce(
+    const lines = model.parts.reduce<Part[][]>(
         (linesArr, part) => {
             if (part.type === Type.Newline) {
                 linesArr.push([]);
