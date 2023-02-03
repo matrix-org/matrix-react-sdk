@@ -468,7 +468,7 @@ describe("MessagePanel", function () {
         const events = mkCreationEvents();
         const createEvent = events.find((event) => event.getType() === "m.room.create");
         const encryptionEvent = events.find((event) => event.getType() === "m.room.encryption");
-        client.getRoom.mockImplementation((id) => (id === createEvent.getRoomId() ? room : null));
+        client.getRoom.mockImplementation((id) => (id === createEvent!.getRoomId() ? room : null));
         TestUtilsMatrix.upsertRoomStateEvents(room, events);
 
         const { container } = render(getComponent({ events }));
@@ -512,7 +512,7 @@ describe("MessagePanel", function () {
     it("should hide read-marker at the end of creation event summary", function () {
         const events = mkCreationEvents();
         const createEvent = events.find((event) => event.getType() === "m.room.create");
-        client.getRoom.mockImplementation((id) => (id === createEvent.getRoomId() ? room : null));
+        client.getRoom.mockImplementation((id) => (id === createEvent!.getRoomId() ? room : null));
         TestUtilsMatrix.upsertRoomStateEvents(room, events);
 
         const { container } = render(
