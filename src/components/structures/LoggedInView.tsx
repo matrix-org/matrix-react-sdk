@@ -341,7 +341,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         const serverNoticeList = RoomListStore.instance.orderedLists[DefaultTagID.ServerNotice];
         if (!serverNoticeList) return;
 
-        const events = [];
+        const events: MatrixEvent[] = [];
         let pinnedEventTs = 0;
         for (const room of serverNoticeList) {
             const pinStateEvent = room.currentState.getStateEvents("m.room.pinned_events", "");

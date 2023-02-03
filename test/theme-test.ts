@@ -26,20 +26,16 @@ describe("theme", () => {
         beforeEach(() => {
             const styles = [
                 {
-                    attributes: {
-                        "data-mx-theme": {
-                            value: "light",
-                        },
+                    dataset: {
+                        mxTheme: "light",
                     },
                     disabled: true,
                     href: "urlLight",
                     onload: (): void => void 0,
                 } as unknown as HTMLStyleElement,
                 {
-                    attributes: {
-                        "data-mx-theme": {
-                            value: "dark",
-                        },
+                    dataset: {
+                        mxTheme: "dark",
                     },
                     disabled: true,
                     href: "urlDark",
