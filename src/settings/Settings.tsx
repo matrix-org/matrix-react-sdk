@@ -484,7 +484,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("Rust cryptography implementation"),
         description: _td("Under active development. Can currently only be enabled via config.json"),
         // shouldWarn: true,
-        default: false,
+        default: true,
         controller: new RustCryptoSdkController(),
     },
     "baseFontSize": {
