@@ -21,8 +21,8 @@ import { Optional } from "matrix-events-sdk";
 import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { GroupCallIntent } from "matrix-js-sdk/src/webrtc/groupCall";
-import SettingsStore from "../settings/SettingsStore";
 
+import SettingsStore from "../settings/SettingsStore";
 import EditorStateTransfer from "../utils/EditorStateTransfer";
 import { RoomPermalinkCreator } from "../utils/permalinks/Permalinks";
 import LegacyCallEventGrouper from "../components/structures/LegacyCallEventGrouper";

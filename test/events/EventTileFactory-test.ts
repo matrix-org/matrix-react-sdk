@@ -58,8 +58,8 @@ describe("pickFactory", () => {
             user: client.getUserId()!,
             room: roomId,
             content: {
-                "creator": client.getUserId()!,
-                "room_version": "9"
+                creator: client.getUserId()!,
+                room_version: "9",
             },
         });
         createEventWithPredecessor = mkEvent({
@@ -68,11 +68,11 @@ describe("pickFactory", () => {
             user: client.getUserId()!,
             room: roomId,
             content: {
-                "creator": client.getUserId()!,
-                "room_version": "9",
-                "predecessor": {
-                    "room_id": "roomid1",
-                    "event_id": null,
+                creator: client.getUserId()!,
+                room_version: "9",
+                predecessor: {
+                    room_id: "roomid1",
+                    event_id: null,
                 },
             },
         });
@@ -83,10 +83,10 @@ describe("pickFactory", () => {
             room: roomId,
             skey: "",
             content: {
-                "predecessor_room_id": "roomid2",
-                "last_known_event_id": null
+                predecessor_room_id: "roomid2",
+                last_known_event_id: null,
             },
-        })
+        });
         voiceBroadcastStartedEvent = mkVoiceBroadcastInfoStateEvent(
             roomId,
             VoiceBroadcastInfoState.Started,
@@ -189,24 +189,32 @@ describe("pickFactory", () => {
             });
 
             it("should return undefined for a room without predecessor", () => {
-                room.currentState.events.set(EventType.RoomCreate,
-                    new Map([[createEventWithoutPredecessor.getStateKey(), createEventWithoutPredecessor]]));
+                room.currentState.events.set(
+                    EventType.RoomCreate,
+                    new Map([[createEventWithoutPredecessor.getStateKey(), createEventWithoutPredecessor]]),
+                );
                 room.currentState.events.set(EventType.RoomPredecessor, new Map());
                 expect(pickFactory(createEventWithoutPredecessor, client, false)).toBeUndefined();
             });
 
             it("should return a RoomCreateFactory for a room with fixed predecessor", () => {
-                room.currentState.events.set(EventType.RoomCreate,
-                    new Map([[createEventWithPredecessor.getStateKey(), createEventWithPredecessor]]));
+                room.currentState.events.set(
+                    EventType.RoomCreate,
+                    new Map([[createEventWithPredecessor.getStateKey(), createEventWithPredecessor]]),
+                );
                 room.currentState.events.set(EventType.RoomPredecessor, new Map());
                 expect(pickFactory(createEventWithPredecessor, client, false)).toBe(RoomCreateEventFactory);
             });
 
             it("should return undefined for a room with dynamic predecessor", () => {
-                room.currentState.events.set(EventType.RoomCreate,
-                    new Map([[createEventWithoutPredecessor.getStateKey(), createEventWithoutPredecessor]]));
-                room.currentState.events.set(EventType.RoomPredecessor,
-                    new Map([[dynamicPredecessorEvent.getStateKey(), dynamicPredecessorEvent]]));
+                room.currentState.events.set(
+                    EventType.RoomCreate,
+                    new Map([[createEventWithoutPredecessor.getStateKey(), createEventWithoutPredecessor]]),
+                );
+                room.currentState.events.set(
+                    EventType.RoomPredecessor,
+                    new Map([[dynamicPredecessorEvent.getStateKey(), dynamicPredecessorEvent]]),
+                );
                 expect(pickFactory(createEventWithoutPredecessor, client, false)).toBeUndefined();
             });
         });
@@ -219,24 +227,32 @@ describe("pickFactory", () => {
             });
 
             it("should return undefined for a room without predecessor", () => {
-                room.currentState.events.set(EventType.RoomCreate,
-                    new Map([[createEventWithoutPredecessor.getStateKey(), createEventWithoutPredecessor]]));
+                room.currentState.events.set(
+                    EventType.RoomCreate,
+                    new Map([[createEventWithoutPredecessor.getStateKey(), createEventWithoutPredecessor]]),
+                );
                 room.currentState.events.set(EventType.RoomPredecessor, new Map());
                 expect(pickFactory(createEventWithoutPredecessor, client, false)).toBeUndefined();
             });
 
             it("should return a RoomCreateFactory for a room with fixed predecessor", () => {
-                room.currentState.events.set(EventType.RoomCreate,
-                    new Map([[createEventWithPredecessor.getStateKey(), createEventWithPredecessor]]));
+                room.currentState.events.set(
+                    EventType.RoomCreate,
+                    new Map([[createEventWithPredecessor.getStateKey(), createEventWithPredecessor]]),
+                );
                 room.currentState.events.set(EventType.RoomPredecessor, new Map());
                 expect(pickFactory(createEventWithPredecessor, client, false)).toBe(RoomCreateEventFactory);
             });
 
             it("should return a RoomCreateFactory for a room with dynamic predecessor", () => {
-                room.currentState.events.set(EventType.RoomCreate,
-                    new Map([[createEventWithoutPredecessor.getStateKey(), createEventWithoutPredecessor]]));
-                room.currentState.events.set(EventType.RoomPredecessor,
-                    new Map([[dynamicPredecessorEvent.getStateKey(), dynamicPredecessorEvent]]));
+                room.currentState.events.set(
+                    EventType.RoomCreate,
+                    new Map([[createEventWithoutPredecessor.getStateKey(), createEventWithoutPredecessor]]),
+                );
+                room.currentState.events.set(
+                    EventType.RoomPredecessor,
+                    new Map([[dynamicPredecessorEvent.getStateKey(), dynamicPredecessorEvent]]),
+                );
                 expect(pickFactory(createEventWithoutPredecessor, client, false)).toBe(RoomCreateEventFactory);
             });
         });
