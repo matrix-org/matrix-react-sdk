@@ -292,7 +292,7 @@ describe("Notifier", () => {
 
         it("should display the expected notification for a broadcast chunk with sequence = 1", () => {
             const audioEvent = mkAudioEvent({ sequence: 1 });
-            Notifier._displayPopupNotification(audioEvent, testRoom);
+            Notifier.displayPopupNotification(audioEvent, testRoom);
             expect(MockPlatform.displayNotification).toHaveBeenCalledWith(
                 "@user:example.com (!room1:server)",
                 "@user:example.com started a voice broadcast",
@@ -527,8 +527,8 @@ describe("Notifier", () => {
                 "ABC123",
             );
 
-            Notifier._evaluateEvent(broadcastStartedEvent);
-            expect(Notifier._displayPopupNotification).not.toHaveBeenCalled();
+            Notifier.evaluateEvent(broadcastStartedEvent);
+            expect(Notifier.displayPopupNotification).not.toHaveBeenCalled();
         });
     });
 
