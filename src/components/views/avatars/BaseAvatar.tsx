@@ -118,7 +118,6 @@ const BaseAvatar: React.FC<IProps> = (props) => {
 
     const [imageUrl, onError] = useImageUrl({ url, urls });
 
-    if (!imageUrl && defaultToInitialLetter && name && idName?.match(/@\d+:/)) {
     if (!imageUrl && defaultToInitialLetter && name) {
         const initialLetter = AvatarLogic.getInitialLetter(name);
         const textNode = (
