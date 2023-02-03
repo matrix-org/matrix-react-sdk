@@ -91,7 +91,9 @@ const colorToDataURLCache = new Map<string, string>();
 export function defaultAvatarUrlForString(s: string): string {
     if (!s) return ""; // XXX: should never happen but empirically does by evidence of a rageshake
 
-    return dataUrlFOSDEM;
+    if (s?.match(/@\d+:/)) {
+        return dataUrlFOSDEM;
+    }
     
     const defaultColors = ["#0DBD8B", "#368bd6", "#ac3ba8"];
     let total = 0;
