@@ -38,12 +38,7 @@ import { setSelection } from "../../../../../../src/components/views/rooms/wysiw
 import { parseEditorStateTransfer } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/useInitialContent";
 
 describe("WysiwygComposer", () => {
-    const customRender = (
-        onChange = (_content: string) => void 0,
-        onSend = () => void 0,
-        disabled = false,
-        initialContent?: string,
-    ) => {
+    const customRender = (onChange = jest.fn(), onSend = jest.fn(), disabled = false, initialContent?: string) => {
         return render(
             <WysiwygComposer onChange={onChange} onSend={onSend} disabled={disabled} initialContent={initialContent} />,
         );
