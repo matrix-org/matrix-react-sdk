@@ -175,7 +175,7 @@ function withinCurrentYear(prevDate: Date, nextDate: Date): boolean {
     return prevDate.getFullYear() === nextDate.getFullYear();
 }
 
-export function wantsDateSeparator(prevEventDate: Date, nextEventDate: Date): boolean {
+export function wantsDateSeparator(prevEventDate: Date | undefined, nextEventDate: Date | undefined): boolean {
     if (!nextEventDate || !prevEventDate) {
         return false;
     }
@@ -269,3 +269,16 @@ export function formatPreciseDuration(durationMs: number): string {
     }
     return _t("%(value)ss", { value: seconds });
 }
+
+/**
+ * Formats a timestamp to a short date
+ * (eg 25/12/22 in uk locale)
+ * localised by system locale
+ * @param timestamp - epoch timestamp
+ * @returns {string} formattedDate
+ */
+export const formatLocalDateShort = (timestamp: number): string =>
+    new Intl.DateTimeFormat(
+        undefined, // locales
+        { day: "2-digit", month: "2-digit", year: "2-digit" },
+    ).format(timestamp);

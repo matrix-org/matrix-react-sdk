@@ -265,7 +265,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             // We don't use highlightElement here because we can't force language detection
             // off. It should use the one we've found in the CSS class but we'd rather pass
             // it in explicitly to make sure.
-            code.innerHTML = highlight.highlight(advertisedLang, code.textContent).value;
+            code.innerHTML = highlight.highlight(code.textContent, { language: advertisedLang }).value;
         } else if (
             SettingsStore.getValue("enableSyntaxHighlightLanguageDetection") &&
             code.parentElement instanceof HTMLPreElement
@@ -436,7 +436,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
     private onBodyLinkClick = (e: MouseEvent): void => {
         let target = e.target as HTMLLinkElement;
         // links processed by linkifyjs have their own handler so don't handle those here
-        if (target.classList.contains(linkifyOpts.className)) return;
+        if (target.classList.contains(linkifyOpts.className as string)) return;
         if (target.nodeName !== "A") {
             // Jump to parent as the `<a>` may contain children, e.g. an anchor wrapping an inline code section
             target = target.closest<HTMLLinkElement>("a");
