@@ -125,6 +125,7 @@ describe("Decryption Failure Bar", () => {
 
                     const verificationRequestPromise = waitForVerificationRequest(otherDevice);
                     cy.get(".mx_CompleteSecurity_actionRow .mx_AccessibleButton").click();
+                    cy.contains("To proceed, please accept the verification request on your other device.");
                     cy.wrap(verificationRequestPromise).then((verificationRequest: VerificationRequest) => {
                         cy.wrap(verificationRequest.accept());
                         handleVerificationRequest(verificationRequest).then((emojis) => {
