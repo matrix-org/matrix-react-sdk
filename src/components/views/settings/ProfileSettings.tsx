@@ -185,7 +185,8 @@ export default class ProfileSettings extends React.Component<{}, IState> {
             withDisplayName: true,
         });
 
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string - false negative
+        // False negative result from no-base-to-string rule, doesn't seem to account for Symbol.toStringTag
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         const avatarUrl = this.state.avatarUrl?.toString();
 
         return (
