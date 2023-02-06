@@ -185,6 +185,9 @@ export default class ProfileSettings extends React.Component<{}, IState> {
             withDisplayName: true,
         });
 
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string - false negative
+        const avatarUrl = this.state.avatarUrl?.toString();
+
         return (
             <form onSubmit={this.saveProfile} autoComplete="off" noValidate={true} className="mx_ProfileSettings">
                 <input
@@ -216,7 +219,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
                         </p>
                     </div>
                     <AvatarSetting
-                        avatarUrl={this.state.avatarUrl?.toString()}
+                        avatarUrl={avatarUrl}
                         avatarName={this.state.displayName || this.state.userId}
                         avatarAltText={_t("Profile picture")}
                         uploadAvatar={this.uploadAvatar}
