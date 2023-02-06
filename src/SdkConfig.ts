@@ -70,7 +70,7 @@ export default class SdkConfig {
     public static get<K extends keyof IConfigOptions>(key: K, altCaseName?: string): IConfigOptions[K];
     public static get<K extends keyof IConfigOptions = never>(
         key?: K,
-        altCaseName?: string,
+        altCaseName: string,
     ): IConfigOptions | IConfigOptions[K] {
         if (key === undefined) {
             // safe to cast as a fallback - we want to break the runtime contract in this case
