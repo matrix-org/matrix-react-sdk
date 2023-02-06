@@ -113,9 +113,8 @@ describe("Decryption Failure Bar", () => {
                 })
                 .then(() => {
                     cy.botSendMessage(bot, roomId, "test");
-                    cy.wait(5000);
-                    cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline").should(
-                        "have.text",
+                    cy.contains(
+                        ".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline",
                         "Verify this device to access all messages",
                     );
 
@@ -172,9 +171,8 @@ describe("Decryption Failure Bar", () => {
             );
 
             cy.botSendMessage(bot, roomId, "test");
-            cy.wait(5000);
-            cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline").should(
-                "have.text",
+            cy.contains(
+                ".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline",
                 "Reset your keys to prevent future decryption errors",
             );
 
