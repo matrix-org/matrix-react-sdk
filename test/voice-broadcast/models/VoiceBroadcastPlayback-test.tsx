@@ -573,6 +573,19 @@ describe("VoiceBroadcastPlayback", () => {
                     });
                 });
 
+                describe("and the chunk playback progresses across the actual time", () => {
+                    // This can be the case if the meta data is out of sync with the actual audio data.
+
+                    beforeEach(() => {
+                        chunk1Playback.clockInfo.liveData.update([15]);
+                    });
+
+                    it("should update the time", () => {
+                        expect(playback.timeSeconds).toBe(15);
+                        expect(playback.timeLeftSeconds).toBe(0);
+                    });
+                });
+
                 describe("and skipping to the middle of the second chunk", () => {
                     const middleOfSecondChunk = (chunk1Length + chunk2Length / 2) / 1000;
 
