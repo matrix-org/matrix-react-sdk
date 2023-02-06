@@ -243,6 +243,30 @@ export async function setTheme(theme?: string): Promise<void> {
         setCustomThemeVars(customTheme);
     }
 
+    // Clear the previous theme used
+    document.body.className = "";
+    // If we're not using the system default we want to add a class to the
+    // top-most element, to override the CSS properties
+    if (!SettingsStore.getValue("use_system_theme")) {
+        if (theme.indexOf("dark") > -1) {
+            if (theme.indexOf("high-contrast") > -1) {
+                document.body.classList.add("cpd-theme-dark-hc");
+            } else {
+                document.body.classList.add("cpd-theme-dark");
+            }
+        } else {
+            if (theme.indexOf("high-contrast") > -1) {
+                document.body.classList.add("cpd-theme-light-hc");
+            } else {
+                // All the "custom themes" are considered legacy and will fallback
+                // to the light theme for now.
+                // This is a backwards compatibility question for when we starting
+                // to fully rely on tokens
+                document.body.classList.add("cpd-theme-light");
+            }
+        }
+    }
+
     // look for the stylesheet elements.
     // styleElements is a map from style name to HTMLLinkElement.
     const styleElements = new Map<string, HTMLLinkElement>();
