@@ -1803,8 +1803,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private getOldRoom(): Room | null {
-        const { roomId } = this.state.room.findPredecessor(this.state.msc3946ProcessDynamicPredecessor) || {};
-        return this.context.client.getRoom(roomId);
+        const { roomId } = this.state.room?.findPredecessor(this.state.msc3946ProcessDynamicPredecessor) || {};
+        return this.context.client?.getRoom(roomId) || null;
     }
 
     public getHiddenHighlightCount(): number {
