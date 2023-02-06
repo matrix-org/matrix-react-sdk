@@ -507,7 +507,7 @@ export default class EventListSummary extends React.Component<IProps> {
         eventsToRender.forEach((e, index) => {
             const type = e.getType();
 
-            let userKey = e.getSender();
+            let userKey = e.getSender()!;
             if (type === EventType.RoomThirdPartyInvite) {
                 userKey = e.getContent().display_name;
             } else if (type === EventType.RoomMember) {
@@ -523,7 +523,7 @@ export default class EventListSummary extends React.Component<IProps> {
 
             let displayName = userKey;
             if (e.isRedacted()) {
-                const sender = this.context?.room.getMember(userKey);
+                const sender = this.context?.room?.getMember(userKey);
                 if (sender) {
                     displayName = sender.name;
                     latestUserAvatarMember.set(userKey, sender);
