@@ -52,6 +52,8 @@ const handleVerificationRequest = (request: VerificationRequest): Chainable<Emoj
             verifier.on("show_sas", onShowSas);
             verifier.verify();
         }),
+        // extra timeout, as this sometimes takes a while
+        { timeout: 30_000 },
     );
 };
 
