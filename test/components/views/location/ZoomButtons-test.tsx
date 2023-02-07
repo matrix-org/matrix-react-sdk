@@ -34,7 +34,7 @@ describe("<ZoomButtons />", () => {
 
     it("renders buttons", () => {
         const component = getComponent();
-        expect(component.container).toMatchSnapshot();
+        expect(component.asFragment()).toMatchSnapshot();
     });
 
     it("calls map zoom in on zoom in click", () => {
