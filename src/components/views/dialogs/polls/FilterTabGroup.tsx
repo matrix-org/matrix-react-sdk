@@ -36,9 +36,9 @@ export const FilterTabGroup = <T extends string = string>({
 }: FilterTabGroupProps<T>): JSX.Element => (
     <fieldset {...rest} className="mx_FilterTabGroup">
         {tabs.map(({ label, id }) => (
-            <label key={id}>
+            <label data-testid={`filter-tab-${name}-${id}`} key={id}>
                 <input type="radio" name={name} value={id} onChange={() => onFilterChange(id)} checked={value === id} />
-                {label}
+                <span>{label}</span>
             </label>
         ))}
     </fieldset>

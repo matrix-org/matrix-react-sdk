@@ -6,30 +6,42 @@ exports[`<FilterTabGroup /> renders options 1`] = `
     class="mx_FilterTabGroup"
     data-testid="test"
   >
-    <label>
+    <label
+      data-testid="filter-tab-test-Apple"
+    >
       <input
         checked=""
         name="test"
         type="radio"
         value="Apple"
       />
-      Label for Apple
+      <span>
+        Label for Apple
+      </span>
     </label>
-    <label>
+    <label
+      data-testid="filter-tab-test-Banana"
+    >
       <input
         name="test"
         type="radio"
         value="Banana"
       />
-      Label for Banana
+      <span>
+        Label for Banana
+      </span>
     </label>
-    <label>
+    <label
+      data-testid="filter-tab-test-Orange"
+    >
       <input
         name="test"
         type="radio"
         value="Orange"
       />
-      Label for Orange
+      <span>
+        Label for Orange
+      </span>
     </label>
   </fieldset>
 </div>

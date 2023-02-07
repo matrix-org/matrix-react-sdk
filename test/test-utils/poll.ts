@@ -109,8 +109,8 @@ export const setupRoomWithPollEvents = async (
     mockClient.getRoom.mockReturnValue(room);
     mockClient.relations.mockImplementation(async (_roomId: string, eventId: string) => {
         return {
-            events: [...relationEvents, ...endEvents].filter(event => event.getRelation()?.event_id === eventId),
-        }
-});
+            events: [...relationEvents, ...endEvents].filter((event) => event.getRelation()?.event_id === eventId),
+        };
+    });
     return room;
 };

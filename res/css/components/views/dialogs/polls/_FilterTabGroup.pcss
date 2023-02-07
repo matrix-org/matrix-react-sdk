@@ -15,4 +15,32 @@ limitations under the License.
 */
 
 .mx_FilterTabGroup {
+    color: $primary-content;
+    label {
+        margin-right: $spacing-12;
+        cursor: pointer;
+        span {
+            display: inline-block;
+            line-height: $font-24px;
+        }
+    }
+    input[type="radio"] {
+        appearance: none;
+        margin: 0;
+        padding: 0;
+
+        &:focus,
+        &:hover {
+            & + span {
+                color: $secondary-content;
+            }
+        }
+
+        &:checked + span {
+            color: $accent;
+            font-weight: $font-semi-bold;
+            // underline
+            box-shadow: 0 1.5px 0 0 currentColor;
+        }
+    }
 }
