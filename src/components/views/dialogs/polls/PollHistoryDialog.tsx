@@ -30,13 +30,16 @@ type PollHistoryDialogProps = Pick<IDialogProps, "onFinished"> & {
     matrixClient: MatrixClient;
 };
 
+const sortEventsByLatest = (left: MatrixEvent, right: MatrixEvent): number => right.getTs() - left.getTs();
 const filterPolls =
     (filter: PollHistoryFilter) =>
     (poll: Poll): boolean =>
         (filter === "ACTIVE") !== poll.isEnded;
 const filterAndSortPolls = (polls: Map<string, Poll>, filter: PollHistoryFilter): MatrixEvent[] => {
-    // @TODO(kerrya) sort by latest
-    return [...polls.values()].filter(filterPolls(filter)).map((poll) => poll.rootEvent);
+    return [...polls.values()]
+        .filter(filterPolls(filter))
+        .map((poll) => poll.rootEvent)
+        .sort(sortEventsByLatest);
 };
 
 export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({ roomId, matrixClient, onFinished }) => {

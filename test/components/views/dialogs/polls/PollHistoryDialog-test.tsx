@@ -83,18 +83,18 @@ describe("<PollHistoryDialog />", () => {
     });
 
     it("renders a list of active polls when there are polls in the timeline", async () => {
-        const pollStart1 = makePollStartEvent("Question?", userId, undefined, { ts: 1675300825090, id: "$1" });
-        const pollStart2 = makePollStartEvent("Where?", userId, undefined, { ts: 1675300725090, id: "$2" });
-        const pollStart3 = makePollStartEvent("What?", userId, undefined, { ts: 1675200725090, id: "$3" });
-        const pollEnd3 = makePollEndEvent(pollStart3.getId()!, roomId, userId, 1675200725090 + 1);
-        await setupRoomWithPollEvents([pollStart1, pollStart2, pollStart3], [], [pollEnd3], mockClient, room);
+        const timestamp = 1675300825090;
+        const pollStart1 = makePollStartEvent("Question?", userId, undefined, { ts: timestamp, id: "$1" });
+        const pollStart2 = makePollStartEvent("Where?", userId, undefined, { ts: timestamp + 10000, id: "$2" });
+        const pollStart3 = makePollStartEvent("What?", userId, undefined, { ts: timestamp + 70000, id: "$3" });
+        const pollEnd3 = makePollEndEvent(pollStart3.getId()!, roomId, userId, timestamp + 1);
+        await setupRoomWithPollEvents([pollStart2, pollStart3, pollStart1], [], [pollEnd3], mockClient, room);
 
-        const { getByText, queryByText, getByTestId } = getComponent();
+        const { container, queryByText, getByTestId } = getComponent();
 
         expect(getByTestId("filter-tab-PollHistoryDialog_filter-ACTIVE").firstElementChild).toBeChecked();
 
-        expect(getByText("Question?")).toBeInTheDocument();
-        expect(getByText("Where?")).toBeInTheDocument();
+        expect(container).toMatchSnapshot();
         // this poll is ended, and default filter is ACTIVE
         expect(queryByText("What?")).not.toBeInTheDocument();
     });
