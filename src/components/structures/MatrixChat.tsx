@@ -136,9 +136,9 @@ import { SdkContextClass, SDKContext } from "../../contexts/SDKContext";
 import { viewUserDeviceSettings } from "../../actions/handlers/viewUserDeviceSettings";
 import { cleanUpBroadcasts, VoiceBroadcastResumer } from "../../voice-broadcast";
 import GenericToast from "../views/toasts/GenericToast";
-import { Linkify } from "../views/elements/Linkify";
 import RovingSpotlightDialog, { Filter } from "../views/dialogs/spotlight/SpotlightDialog";
 import { findDMForUser } from "../../utils/dm/findDMForUser";
+import { Linkify } from "../../HtmlUtils";
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -648,7 +648,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     onFinished: (confirm) => {
                         if (confirm) {
                             // FIXME: controller shouldn't be loading a view :(
-                            const modal = Modal.createDialog(Spinner, null, "mx_Dialog_spinner");
+                            const modal = Modal.createDialog(Spinner, undefined, "mx_Dialog_spinner");
 
                             MatrixClientPeg.get()
                                 .leave(payload.room_id)

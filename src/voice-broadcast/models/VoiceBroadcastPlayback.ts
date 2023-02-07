@@ -396,7 +396,11 @@ export class VoiceBroadcastPlayback
         }
 
         if (!this.playbacks.has(eventId)) {
+            // set to buffering while loading the chunk data
+            const currentState = this.getState();
+            this.setState(VoiceBroadcastPlaybackState.Buffering);
             await this.loadPlayback(event);
+            this.setState(currentState);
         }
 
         const playback = this.playbacks.get(eventId);
@@ -441,7 +445,9 @@ export class VoiceBroadcastPlayback
     }
 
     public get timeLeftSeconds(): number {
-        return Math.round(this.durationSeconds) - this.timeSeconds;
+        // Sometimes the meta data and the audio files are a little bit out of sync.
+        // Be sure it never returns a negative value.
+        return Math.max(0, Math.round(this.durationSeconds) - this.timeSeconds);
     }
 
     public async skipTo(timeSeconds: number): Promise<void> {
