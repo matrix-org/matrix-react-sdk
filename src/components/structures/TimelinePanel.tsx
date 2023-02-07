@@ -1789,10 +1789,27 @@ class TimelinePanel extends React.Component<IProps, IState> {
             const shouldIgnore =
                 !!ev.status || // local echo
                 (ignoreOwn && ev.getSender() === myUserId); // own message
+
+            /**
+             * Always ignore events that are related to the root event of a thread
+             * if they don't hold a `m.thread` relation type.
+             * We should send read receipts for those events from the main timeline
+             * Those events related to the root sometimes end up in a different DAG
+             * order than what is set on synapse, when that happens we run the risk
+             * of stuck notifications
+             * There are some changes to how we load events in a thread timeline
+             * that could help, but this is another layer of defence
+             */
+            const isThreadTimeline = this.context.timelineRenderingType === TimelineRenderingType.Thread;
+            const isRelationToRoot =
+                ev.relationEventId &&
+                ev.relationEventId === ev.getThread()?.id &&
+                ev.getRelation().rel_type !== RelationType.Thread;
+
             const isWithoutTile =
                 !haveRendererForEvent(ev, this.context?.showHiddenEvents) || shouldHideEvent(ev, this.context);
 
-            if (isWithoutTile || !node) {
+            if (isWithoutTile || !node || (isThreadTimeline && isRelationToRoot)) {
                 // don't start counting if the event should be ignored,
                 // but continue counting if we were already so the offset
                 // to the previous invisble event that didn't need to be ignored
