@@ -231,7 +231,7 @@ class PipContainerInner extends React.Component<IProps, IState> {
         }
     };
 
-    private updateShowWidgetInPip(): void {
+    public updateShowWidgetInPip(): void {
         const persistentWidgetId = ActiveWidgetStore.instance.getPersistentWidgetId();
         const persistentRoomId = ActiveWidgetStore.instance.getPersistentRoomId();
 
