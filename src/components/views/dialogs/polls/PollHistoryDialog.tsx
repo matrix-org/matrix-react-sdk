@@ -16,35 +16,37 @@ limitations under the License.
 
 import React, { useEffect, useState } from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixEvent, Poll } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../languageHandler";
 import BaseDialog from "../BaseDialog";
 import { IDialogProps } from "../IDialogProps";
 import { PollHistoryList } from "./PollHistoryList";
-import { usePolls } from "./usePollHistory";
 import { PollHistoryFilter } from "./types";
-import { MatrixEvent, Poll } from "matrix-js-sdk/src/matrix";
-import { FilterTabGroup } from "./FilterTabGroup";
+import { usePolls } from "./usePollHistory";
 
 type PollHistoryDialogProps = Pick<IDialogProps, "onFinished"> & {
     roomId: string;
     matrixClient: MatrixClient;
 };
 
-const filterPolls = (filter: PollHistoryFilter) => (poll: Poll): boolean => filter === 'ACTIVE' !== poll.isEnded;
+const filterPolls =
+    (filter: PollHistoryFilter) =>
+    (poll: Poll): boolean =>
+        (filter === "ACTIVE") !== poll.isEnded;
 const filterAndSortPolls = (polls: Map<string, Poll>, filter: PollHistoryFilter): MatrixEvent[] => {
     // @TODO(kerrya) sort by latest
-    return [ ...polls.values()].filter(filterPolls(filter)).map(poll => poll.rootEvent);
-}
+    return [...polls.values()].filter(filterPolls(filter)).map((poll) => poll.rootEvent);
+};
 
 export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({ roomId, matrixClient, onFinished }) => {
     const { polls } = usePolls(roomId, matrixClient);
-    const [filter, setFilter] = useState<PollHistoryFilter>('ACTIVE');
+    const [filter, setFilter] = useState<PollHistoryFilter>("ACTIVE");
     const [pollStartEvents, setPollStartEvents] = useState(filterAndSortPolls(polls, filter));
 
     useEffect(() => {
         setPollStartEvents(filterAndSortPolls(polls, filter));
-    }, [filter, polls])
+    }, [filter, polls]);
 
     return (
         <BaseDialog title={_t("Polls history")} onFinished={onFinished}>

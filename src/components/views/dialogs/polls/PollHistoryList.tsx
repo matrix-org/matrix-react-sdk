@@ -35,8 +35,8 @@ export const PollHistoryList: React.FC<PollHistoryListProps> = ({ pollStartEvent
                 value={filter}
                 onFilterChange={onFilterChange}
                 tabs={[
-                    { id: 'ACTIVE', label: 'Active polls'},
-                    { id: 'ENDED', label: 'Past polls'},
+                    { id: "ACTIVE", label: "Active polls" },
+                    { id: "ENDED", label: "Past polls" },
                 ]}
             />
             {!!pollStartEvents.length ? (
@@ -46,11 +46,11 @@ export const PollHistoryList: React.FC<PollHistoryListProps> = ({ pollStartEvent
                     ))}
                 </ol>
             ) : (
-                <span className="mx_PollHistoryList_noResults">{
-                    filter === 'ACTIVE' ?
-                    _t("There are no active polls in this room")
-                    : _t("There are no past polls in this room")
-                }</span>
+                <span className="mx_PollHistoryList_noResults">
+                    {filter === "ACTIVE"
+                        ? _t("There are no active polls in this room")
+                        : _t("There are no past polls in this room")}
+                </span>
             )}
         </div>
     );
