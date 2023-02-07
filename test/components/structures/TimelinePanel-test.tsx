@@ -45,7 +45,7 @@ import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import SettingsStore from "../../../src/settings/SettingsStore";
 import { isCallEvent } from "../../../src/components/structures/LegacyCallEventGrouper";
-import { flushPromises, mkMembership, mkRoom, stubClient } from "../../test-utils";
+import { flushPromises, mkMembership, mkReaction, mkRoom, stubClient } from "../../test-utils";
 import { mkThread } from "../../test-utils/threads";
 import { createMessageEventContent } from "../../test-utils/events";
 
@@ -194,6 +194,65 @@ describe("TimelinePanel", () => {
 
             renderPanel(room, events);
             expect(client.setRoomReadMarkers).toHaveBeenCalledWith(room.roomId, "", undefined, events[0]);
+        });
+
+        it.skip("should ignore relation to root event in thread timeline", async () => {
+            const [client] = setupTestData();
+            const getValueCopy = SettingsStore.getValue;
+            SettingsStore.getValue = jest.fn().mockImplementation((name: string) => {
+                if (name === "sendReadReceipts") return true;
+                if (name === "feature_threadenabled") return true;
+                return getValueCopy(name);
+            });
+
+            const room = new Room("!room1", client, "@bob:example.org", {
+                pendingEventOrdering: PendingEventOrdering.Detached,
+            });
+
+            Thread.hasServerSideSupport = FeatureSupport.None;
+            Thread.hasServerSideFwdPaginationSupport = FeatureSupport.None;
+
+            const authorId = "@alice:example.org";
+
+            const { thread, events } = mkThread({
+                room,
+                client,
+                authorId,
+                length: 3,
+                participantUserIds: [authorId],
+            });
+
+            const reaction = mkReaction(thread.rootEvent, "🚀", "@charlie:example.org");
+            thread.addEvent(reaction, false);
+
+            const { container } = render(
+                <MatrixClientContext.Provider value={client}>
+                    <TimelinePanel
+                        timelineSet={thread.getUnfilteredTimelineSet()}
+                        manageReadReceipts
+                        sendReadReceiptOnLoad
+                    />
+                </MatrixClientContext.Provider>,
+            );
+
+            await waitFor(() => expect(container).toHaveTextContent("🚀"));
+
+            await waitFor(() =>
+                expect(client.sendReadReceipt).toHaveBeenCalledWith(
+                    expect.objectContaining({
+                        event: {
+                            content: {
+                                // We're checking that the read receipt sent is
+                                // matching the last event in the thread and not
+                                // the relation to the rootEvent
+                                [events.at(-1).getId()]: expect.anything(),
+                            },
+                        },
+                    } as Partial<MatrixEvent>),
+                    ReceiptType.Read,
+                    false,
+                ),
+            );
         });
     });
 

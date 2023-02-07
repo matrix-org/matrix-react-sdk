@@ -327,6 +327,37 @@ export function mkEvent(opts: MakeEventProps): MatrixEvent {
 }
 
 /**
+ * Test helper to create a reaction
+ * @param relatedEvent the event this relation relates to
+ * @param key the reaction
+ * @param sender the sender, defaults to the relatedEvent sender
+ * @returns a MatrixEvent representation the reaction
+ */
+export function mkReaction(
+    relatedEvent: MatrixEvent,
+    key: string,
+    sender: string = relatedEvent.getSender(),
+): MatrixEvent {
+    return new MatrixEvent({
+        content: {
+            "m.relates_to": {
+                event_id: relatedEvent.getId()!,
+                key,
+                rel_type: "m.annotation",
+            },
+        },
+        origin_server_ts: relatedEvent.getTs(),
+        sender,
+        type: "m.reaction",
+        unsigned: {
+            age: 1,
+        },
+        event_id: "$" + Math.random() + "-" + Math.random(),
+        room_id: relatedEvent.getRoomId(),
+    });
+}
+
+/**
  * Create an m.room.encrypted event
  *
  * @param opts - Values for the event
