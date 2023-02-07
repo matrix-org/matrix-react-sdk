@@ -68,10 +68,18 @@ describe("<PollHistoryDialog />", () => {
         expect(() => getComponent()).toThrow("Cannot find room");
     });
 
-    it("renders a no polls message when there are no polls in the timeline", () => {
+    it("renders a no polls message when there are no active polls in the timeline", () => {
         const { getByText } = getComponent();
 
         expect(getByText("There are no active polls in this room")).toBeTruthy();
+    });
+
+    it("renders a no past polls message when there are no past polls in the timeline", () => {
+        const { getByText } = getComponent();
+
+        fireEvent.click(getByText("Past polls"));
+
+        expect(getByText("There are no past polls in this room")).toBeTruthy();
     });
 
     it("renders a list of active polls when there are polls in the timeline", async () => {
