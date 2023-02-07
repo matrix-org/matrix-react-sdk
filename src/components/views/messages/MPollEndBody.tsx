@@ -30,6 +30,13 @@ const getRelatedPollStartEventId = (event: MatrixEvent): string | undefined => {
     return relation?.event_id;
 };
 
+/**
+ * Attempt to retrieve the related poll start event for this end event
+ * If the event already exists in the rooms timeline, return it
+ * Otherwise try to fetch the event from the server
+ * @param event
+ * @returns
+ */
 const usePollStartEvent = (event: MatrixEvent): { pollStartEvent?: MatrixEvent; isLoadingPollStartEvent: boolean } => {
     const matrixClient = useContext(MatrixClientContext);
     const [pollStartEvent, setPollStartEvent] = useState<MatrixEvent>();
@@ -47,6 +54,8 @@ const usePollStartEvent = (event: MatrixEvent): { pollStartEvent?: MatrixEvent; 
                 // add the poll to the room polls state
                 room?.processPollEvents([startEvent, event]);
 
+                // end event is not a valid end to the related start event
+                // if not sent by the same user
                 if (startEvent.getSender() === event.getSender()) {
                     setPollStartEvent(startEvent);
                 }
@@ -68,6 +77,8 @@ const usePollStartEvent = (event: MatrixEvent): { pollStartEvent?: MatrixEvent; 
             .find((e) => e.getId() === pollStartEventId);
 
         if (localEvent) {
+            // end event is not a valid end to the related start event
+            // if not sent by the same user
             if (localEvent.getSender() === event.getSender()) {
                 setPollStartEvent(localEvent);
             }
@@ -87,10 +98,10 @@ export const MPollEndBody = React.forwardRef<any, IBodyProps>(({ mxEvent, ...pro
     if (!pollStartEvent) {
         const pollEndFallbackMessage = M_TEXT.findIn(mxEvent.getContent()) || textForEvent(mxEvent);
         return (
-            <div>
+            <>
                 <PollIcon className="mx_MPollEndBody_icon" />
                 {!isLoadingPollStartEvent && pollEndFallbackMessage}
-            </div>
+            </>
         );
     }
 

@@ -78,12 +78,11 @@ describe("<MPollEndBody />", () => {
     const defaultProps = {
         mxEvent: pollEndEvent,
         highlightLink: "unused",
-        highlights: [],
         mediaEventHelper: {} as unknown as MediaEventHelper,
         onHeightChanged: () => {},
         onMessageAllowed: () => {},
         permalinkCreator: {} as unknown as RoomPermalinkCreator,
-        ref: undefined,
+        ref: undefined as any,
     };
 
     const getComponent = (props: Partial<IBodyProps> = {}) =>

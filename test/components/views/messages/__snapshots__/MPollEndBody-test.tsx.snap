@@ -2,11 +2,9 @@
 
 exports[`<MPollEndBody /> when poll start event does not exist in current timeline fetches the related poll start event and displays a poll tile 1`] = `
 <div>
-  <div>
-    <div
-      class="mx_MPollEndBody_icon"
-    />
-  </div>
+  <div
+    class="mx_MPollEndBody_icon"
+  />
 </div>
 `;
 
