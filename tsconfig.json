@@ -16,8 +16,7 @@
         "lib": ["es2020", "dom", "dom.iterable"],
         "alwaysStrict": true,
         "strictBindCallApply": true,
-        "noImplicitThis": true,
-        "strict": true
+        "noImplicitThis": true
     },
     "include": ["./src/**/*.ts", "./src/**/*.tsx", "./test/**/*.ts", "./test/**/*.tsx"]
 }
