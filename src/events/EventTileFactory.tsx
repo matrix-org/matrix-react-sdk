@@ -94,8 +94,7 @@ export const JitsiEventFactory: Factory = (ref, props) => <MJitsiWidgetEvent ref
 export const JSONEventFactory: Factory = (ref, props) => <ViewSourceEvent ref={ref} {...props} />;
 export const RoomCreateEventFactory: Factory = (_ref, props) => <RoomPredecessorTile {...props} />;
 
-const EVENT_TILE_TYPES = new Map<string, Factory>();
-const tileTypes: [string, Factory][] = [
+const EVENT_TILE_TYPES = new Map<string, Factory>([
     [EventType.RoomMessage, MessageEventFactory], // note that verification requests are handled in pickFactory()
     [EventType.Sticker, MessageEventFactory],
     [M_POLL_START.name, MessageEventFactory],
@@ -105,11 +104,7 @@ const tileTypes: [string, Factory][] = [
     [EventType.KeyVerificationCancel, KeyVerificationConclFactory],
     [EventType.KeyVerificationDone, KeyVerificationConclFactory],
     [EventType.CallInvite, LegacyCallEventFactory], // note that this requires a special factory type
-];
-
-for (const [type, factory] of tileTypes) {
-    EVENT_TILE_TYPES.set(type, factory);
-}
+]);
 
 const STATE_EVENT_TILE_TYPES = new Map<string, Factory>([
     [EventType.RoomEncryption, (ref, props) => <EncryptionEvent ref={ref} {...props} />],
