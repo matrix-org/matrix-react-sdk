@@ -29,11 +29,7 @@ limitations under the License.
         }
     }
 
-    /*
-     overflow property is set as scroll to make sure
-     if Access Key length is large it won't overflow 
-     out of boundary
-    */
+    /* prevent the access token from overflowing the text box */
     div .mx_CopyableText {
         overflow: scroll;
     }
