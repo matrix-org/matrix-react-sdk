@@ -108,7 +108,10 @@ export default class Slider extends React.Component<IProps> {
             //put the inner dot to the correct position
             const innerDot = target.parentNode as any;
             if (!innerDot) return null;
-            innerDot.style.left = `${this.state.percent}%`;
+            // innerDot.style.left = `${this.state.percent}%`;
+            const offset = this.offset(this.props.values, this.props.values[value]);
+            innerDot.style.left = `calc(-1.195em + " + ${offset} + "%)`;
+
         };
 
         const onDragEnd = (e: any) => {
@@ -120,12 +123,14 @@ export default class Slider extends React.Component<IProps> {
             const slider = parent.parentNode as HTMLElement;
             const rect = slider.getBoundingClientRect();
             const x = e.clientX - rect.left; //x position within the element.
+            // console.log(x);
+            if(x < -10 || x > rect.width + 10)  return null;
             const width = rect.width;
 
             const percent = x / width;
             const value = Math.round(percent * (this.props.values.length - 1));
             const offset = this.offset(this.props.values, this.props.values[value]);
-            innerDot.style.left = `${offset}%`;
+            innerDot.style.left = `calc(-1.195em + " + ${offset} + "%)`;
             this.props.onSelectionChange(this.props.values[value]);
         };
 
