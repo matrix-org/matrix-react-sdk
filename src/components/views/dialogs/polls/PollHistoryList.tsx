@@ -18,10 +18,10 @@ import React from "react";
 import classNames from "classnames";
 import { MatrixEvent, Poll } from "matrix-js-sdk/src/matrix";
 
-import PollListItem from "./PollListItem";
 import { _t } from "../../../../languageHandler";
 import { PollHistoryFilter } from "./types";
 import { FilterTabGroup } from "./FilterTabGroup";
+import { PollListItem } from "./PollListItem";
 import { PollListItemEnded } from "./PollListItemEnded";
 
 type PollHistoryListProps = {
