@@ -25,17 +25,23 @@ jobs:
             - name: Install Deps
               run: "./scripts/ci/install-deps.sh --ignore-scripts"
 
+            - name: Jest Cache
+              uses: actions/cache@v3
+              with:
+                  path: /tmp/jest_rt
+                  key: ${{ hashFiles('**/yarn.lock') }}-${{ matrix.shard }}
+
             - name: Get number of CPU cores
               id: cpu-cores
               uses: SimenB/github-actions-cpu-cores@v1
 
             - name: Run tests with coverage and metrics
               if: github.ref == 'refs/heads/develop'
-              run: "yarn coverage --ci --reporters github-actions '--reporters=<rootDir>/test/slowReporter.js' --max-workers ${{ steps.cpu-cores.outputs.count }}"
+              run: "yarn coverage --ci --reporters github-actions '--reporters=<rootDir>/test/slowReporter.js' --max-workers ${{ steps.cpu-cores.outputs.count }} --shard=${{ matrix.shard }}"
 
             - name: Run tests with coverage
               if: github.ref != 'refs/heads/develop'
-              run: "yarn coverage --ci --reporters github-actions --max-workers ${{ steps.cpu-cores.outputs.count }}"
+              run: "yarn coverage --ci --reporters github-actions --max-workers ${{ steps.cpu-cores.outputs.count }} --shard=${{ matrix.shard }}"
 
             - name: Upload Artifact
               uses: actions/upload-artifact@v3
