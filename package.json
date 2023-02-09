@@ -254,7 +254,8 @@
             "text-summary",
             "lcov"
         ],
-        "testResultsProcessor": "@casualbot/jest-sonar-reporter"
+        "testResultsProcessor": "@casualbot/jest-sonar-reporter",
+        "cacheDirectory": "/tmp/jest_cache"
     },
     "@casualbot/jest-sonar-reporter": {
         "outputDirectory": "coverage",

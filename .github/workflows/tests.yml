@@ -28,7 +28,7 @@ jobs:
             - name: Jest Cache
               uses: actions/cache@v3
               with:
-                  path: /tmp/jest_rt
+                  path: /tmp/jest_cache
                   key: ${{ hashFiles('**/yarn.lock') }}-${{ matrix.shard }}
 
             - name: Get number of CPU cores
