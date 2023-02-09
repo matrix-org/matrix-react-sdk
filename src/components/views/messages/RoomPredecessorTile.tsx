@@ -90,7 +90,8 @@ export const RoomPredecessorTile: React.FC<IProps> = ({ mxEvent, timestamp }) =>
     if (prevRoom) {
         permalinkCreator.load();
     } else {
-        logger.warn(`Creating permalink for unknown predecessor room ${predecessor.roomId}, unlikely to be successful`);
+        logger.warn(`Creating permalink for unknown predecessor room ${predecessor.roomId},`+
+            'unlikely to be successful as rooms without via servers are usually not routable');
     }
     let predecessorPermalink: string;
     if (predecessor.eventId) {
