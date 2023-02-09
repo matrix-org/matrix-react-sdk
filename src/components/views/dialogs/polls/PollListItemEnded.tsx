@@ -50,7 +50,7 @@ const getWinningAnswers = (poll: Poll, responseRelations: Relations): EndedPollS
             .filter((answer) => votes.get(answer.id) === winCount)
             .map((answer) => ({
                 answer,
-                voteCount: votes.get(answer.id),
+                voteCount: votes.get(answer.id) || 0,
             })),
     };
 };
@@ -69,7 +69,8 @@ const usePollVotes = (poll: Poll): Partial<EndedPollState> => {
             const responseRelations = await poll.getResponses();
             setResults(getWinningAnswers(poll, responseRelations));
         };
-        const onPollResponses = (responseRelations): void => setResults(getWinningAnswers(poll, responseRelations));
+        const onPollResponses = (responseRelations: Relations): void =>
+            setResults(getWinningAnswers(poll, responseRelations));
         poll.on(PollEvent.Responses, onPollResponses);
 
         getResponses();
