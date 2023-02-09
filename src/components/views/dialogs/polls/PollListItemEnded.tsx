@@ -55,6 +55,12 @@ const getWinningAnswers = (poll: Poll, responseRelations: Relations): EndedPollS
     };
 };
 
+/**
+ * Get deduplicated and validated poll responses
+ * Will use cached responses from Poll instance when existing
+ * Updates on changes to Poll responses (paging relations or from sync)
+ * Returns winning answers and total vote count
+ */
 const usePollVotes = (poll: Poll): Partial<EndedPollState> => {
     const [results, setResults] = useState({ totalVoteCount: 0 });
 
@@ -76,6 +82,11 @@ const usePollVotes = (poll: Poll): Partial<EndedPollState> => {
     return results;
 };
 
+/**
+ * Render an ended poll with the winning answer and vote count
+ * @param event - the poll start MatrixEvent
+ * @param poll - Poll instance
+ */
 export const PollListItemEnded: React.FC<Props> = ({ event, poll }) => {
     const pollEvent = poll.pollEvent;
     const { winningAnswers, totalVoteCount } = usePollVotes(poll);
