@@ -57,7 +57,7 @@ export const WysiwygComposer = memo(function WysiwygComposer({
         }
     }, [onChange, content, disabled]);
 
-    const isReady = isWysiwygReady && Boolean(!disabled);
+    const isReady = isWysiwygReady && !disabled;
     useSetCursorPosition(!isReady, ref);
 
     const { isFocused, onFocus } = useIsFocused();
