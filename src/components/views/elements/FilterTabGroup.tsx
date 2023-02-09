@@ -21,12 +21,20 @@ export type FilterTab<T> = {
     id: T;
 };
 type FilterTabGroupProps<T extends string = string> = FieldsetHTMLAttributes<any> & {
+    // group name used for radio buttons
     name: string;
     onFilterChange: (id: T) => void;
+    // active tab's id
     value: T;
+    // tabs to display
     tabs: FilterTab<T>[];
 };
 
+/**
+ * Styles a set of content filters as tabs
+ * Accepts type T for the group's value property
+ * (example in Poll History)
+ */
 export const FilterTabGroup = <T extends string = string>({
     name,
     value,
