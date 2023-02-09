@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 import { fireEvent, render } from "@testing-library/react";
 
-import { FilterTabGroup } from "../../../../../src/components/views/dialogs/polls/FilterTabGroup";
+import { FilterTabGroup } from "../../../../src/components/views/elements/FilterTabGroup";
 
 describe("<FilterTabGroup />", () => {
     enum TestOption {

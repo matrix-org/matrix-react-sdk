@@ -19,8 +19,8 @@ import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import PollListItem from "./PollListItem";
 import { _t } from "../../../../languageHandler";
+import { FilterTabGroup } from "../../elements/FilterTabGroup";
 import { PollHistoryFilter } from "./types";
-import { FilterTabGroup } from "./FilterTabGroup";
 
 type PollHistoryListProps = {
     pollStartEvents: MatrixEvent[];
