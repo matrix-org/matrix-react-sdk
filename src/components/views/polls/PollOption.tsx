@@ -76,7 +76,7 @@ const ActivePollOption: React.FC<Omit<PollOptionProps, "voteCount" | "totalVoteC
         name={`poll_answer_select-${pollId}`}
         value={answer.id}
         checked={isChecked}
-        onChange={() => onOptionSelected(answer.id)}
+        onChange={() => onOptionSelected?.(answer.id)}
     >
         {children}
     </StyledRadioButton>
@@ -101,7 +101,7 @@ export const PollOption: React.FC<PollOptionProps> = ({
     const answerPercent = totalVoteCount === 0 ? 0 : Math.round((100.0 * voteCount) / totalVoteCount);
     const PollOptionWrapper = isEnded ? EndedPollOption : ActivePollOption;
     return (
-        <div data-testid={`pollOption-${answer.id}`} className={cls} onClick={() => onOptionSelected(answer.id)}>
+        <div data-testid={`pollOption-${answer.id}`} className={cls} onClick={() => onOptionSelected?.(answer.id)}>
             <PollOptionWrapper
                 pollId={pollId}
                 answer={answer}
