@@ -15,11 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/*
-     overflow-x and overflow-y is set to scrollable for 
-     .max_CopyableText class under div tag which is for Access Key
-     field, So it won't go outside boundary.
-*/
 .mx_HelpUserSettingsTab {
     code {
         word-break: break-all;
@@ -34,8 +29,12 @@ limitations under the License.
         }
     }
 
+    /*
+     overflow property is set as scroll to make sure
+     if Access Key length is large it won't overflow 
+     out of boundary
+    */
     div .mx_CopyableText {
-        overflow-x: scroll;
-        overflow-y: scroll;
+        overflow: scroll;
     }
 }
