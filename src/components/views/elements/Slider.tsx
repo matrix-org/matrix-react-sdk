@@ -35,6 +35,12 @@ interface IProps {
 }
 
 export default class Slider extends React.Component<IProps> {
+    // state to keep track of the current index and percent
+    state = {
+        index: this.props.values.indexOf(this.props.value),
+        percent: this.offset(this.props.values, this.props.value),
+    };
+
     // offset is a terrible inverse approximation.
     // if the values represents some function f(x) = y where x is the
     // index of the array and y = values[x] then offset(f, y) = x
@@ -83,17 +89,67 @@ export default class Slider extends React.Component<IProps> {
 
         let selection = null;
 
+        const onDrag = (e: React.DragEvent) => {
+            //  console.log(e.target.parentNode.parentNode)
+
+            const target = e.target as HTMLElement;
+            if (!target.parentNode) return null;
+            const parent = target.parentNode as HTMLElement;
+            if (!parent.parentNode) return null;
+            const slider = parent.parentNode as HTMLElement;
+            const rect = slider.getBoundingClientRect();
+
+            const x = e.clientX - rect.left; //x position within the element.
+            const width = rect.width;
+            const percent = x / width;
+            const value = Math.round(percent * (this.props.values.length - 1));
+            this.setState({ index: value, percent: percent * 100 });
+
+            //put the inner dot to the correct position
+            const innerDot = target.parentNode as any;
+            if (!innerDot) return null;
+            innerDot.style.left = `${this.state.percent}%`;
+        };
+
+        const onDragEnd = (e: any) => {
+            const innerDot = e.target.parentNode;
+            const target = e.target as HTMLElement;
+            if (!target.parentNode) return null;
+            const parent = target.parentNode as HTMLElement;
+            if (!parent.parentNode) return null;
+            const slider = parent.parentNode as HTMLElement;
+            const rect = slider.getBoundingClientRect();
+            const x = e.clientX - rect.left; //x position within the element.
+            const width = rect.width;
+
+            const percent = x / width;
+            const value = Math.round(percent * (this.props.values.length - 1));
+            const offset = this.offset(this.props.values, this.props.values[value]);
+            innerDot.style.left = `${offset}%`;
+            this.props.onSelectionChange(this.props.values[value]);
+        };
+
         if (!this.props.disabled) {
             const offset = this.offset(this.props.values, this.props.value);
             selection = (
                 <div className="mx_Slider_selection">
                     <div className="mx_Slider_selectionDot" style={{ left: "calc(-1.195em + " + offset + "%)" }}>
+                        <div
+                            onDrag={onDrag}
+                            onDragEnd={onDragEnd}
+                            draggable={true}
+                            className="mx_Slider_selectionDotInner"
+                        ></div>
                         <div className="mx_Slider_selectionText">{this.props.value}</div>
                     </div>
                     <hr style={{ width: offset + "%" }} />
                 </div>
             );
         }
+
+        //todo:
+        //make a new element for dragging
+        //immplement drag
 
         return (
             <div className="mx_Slider">
