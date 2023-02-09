@@ -29,8 +29,8 @@ import { getFunctionalMembers } from "../room/getFunctionalMembers";
  * @returns {Room} Room if found
  */
 export function findDMForUser(client: MatrixClient, userId: string): Room {
-    const roomIds = DMRoomMap.shared().getDMRoomsForUserId(userId);
-    const rooms = roomIds.map((id) => client.getRoom(id));
+    const roomIds = DMRoomMap.shared().getRoomIds();
+    const rooms = Array.from(roomIds).map((id) => client.getRoom(id));
     const suitableDMRooms = rooms
         .filter((r) => {
             // Validate that we are joined and the other person is also joined. We'll also make sure

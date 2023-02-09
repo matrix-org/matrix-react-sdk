@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
-import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import { EventType, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 
 import DMRoomMap from "../../../src/utils/DMRoomMap";
-import { createTestClient, makeMembershipEvent } from "../../test-utils";
+import { createTestClient, makeMembershipEvent, mkEvent } from "../../test-utils";
 import { LocalRoom } from "../../../src/models/LocalRoom";
 import { findDMForUser } from "../../../src/utils/dm/findDMForUser";
 import { getFunctionalMembers } from "../../../src/utils/room/getFunctionalMembers";
@@ -38,6 +38,19 @@ describe("findDMForUser", () => {
     let room5: Room;
     let dmRoomMap: DMRoomMap;
     let mockClient: MatrixClient;
+
+    const setUpMDirect = (mDirect: { [key: string]: string[] }) => {
+        const mDirectEvent = mkEvent({
+            event: true,
+            type: EventType.Direct,
+            user: mockClient.getSafeUserId(),
+            content: mDirect,
+        });
+        mocked(mockClient).getAccountData.mockReturnValue(mDirectEvent);
+
+        dmRoomMap = new DMRoomMap(mockClient);
+        jest.spyOn(DMRoomMap, "shared").mockReturnValue(dmRoomMap);
+    };
 
     beforeEach(() => {
         mockClient = createTestClient();
@@ -87,24 +100,15 @@ describe("findDMForUser", () => {
                 [room5.roomId]: room5,
             }[roomId];
         });
+    });
 
-        dmRoomMap = {
-            getDMRoomForIdentifiers: jest.fn(),
-            getDMRoomsForUserId: jest.fn(),
-        } as unknown as DMRoomMap;
-        jest.spyOn(DMRoomMap, "shared").mockReturnValue(dmRoomMap);
-        mocked(dmRoomMap.getDMRoomsForUserId).mockReturnValue([
-            room1.roomId,
-            room2.roomId,
-            room3.roomId,
-            room4.roomId,
-            room5.roomId,
-        ]);
+    afterAll(() => {
+        jest.restoreAllMocks();
     });
 
     describe("for an empty DM room list", () => {
         beforeEach(() => {
-            mocked(dmRoomMap.getDMRoomsForUserId).mockReturnValue([]);
+            setUpMDirect({});
         });
 
         it("should return undefined", () => {
@@ -112,17 +116,32 @@ describe("findDMForUser", () => {
         });
     });
 
-    it("should find a room ordered by last activity 1", () => {
-        room1.getLastActiveTimestamp = () => 2;
-        room3.getLastActiveTimestamp = () => 1;
+    describe("when there are soom rooms", () => {
+        beforeEach(() => {
+            setUpMDirect({
+                [userId1]: [room1.roomId, room2.roomId, room3.roomId, room4.roomId, room5.roomId],
+            });
+        });
 
-        expect(findDMForUser(mockClient, userId1)).toBe(room1);
-    });
+        it("should find a room ordered by last activity 1", () => {
+            room1.getLastActiveTimestamp = () => 2;
+            room3.getLastActiveTimestamp = () => 1;
 
-    it("should find a room ordered by last activity 2", () => {
-        room1.getLastActiveTimestamp = () => 1;
-        room3.getLastActiveTimestamp = () => 2;
+            expect(findDMForUser(mockClient, userId1)).toBe(room1);
+        });
 
-        expect(findDMForUser(mockClient, userId1)).toBe(room3);
+        it("should find a room ordered by last activity 2", () => {
+            room1.getLastActiveTimestamp = () => 1;
+            room3.getLastActiveTimestamp = () => 2;
+
+            expect(findDMForUser(mockClient, userId1)).toBe(room3);
+        });
+
+        it("should find a room for a user without an m.direct entry but a DM-like room exists", () => {
+            room1.getLastActiveTimestamp = () => 1;
+            room3.getLastActiveTimestamp = () => 2;
+
+            expect(findDMForUser(mockClient, userId2)).toBe(room3);
+        });
     });
 });
