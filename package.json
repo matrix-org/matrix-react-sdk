@@ -210,7 +210,7 @@
         "prettier": "2.8.0",
         "raw-loader": "^4.0.2",
         "react-test-renderer": "^17.0.2",
-        "rimraf": "^3.0.2",
+        "rimraf": "^4.0.0",
         "stylelint": "^14.9.1",
         "stylelint-config-prettier": "^9.0.4",
         "stylelint-config-standard": "^29.0.0",
