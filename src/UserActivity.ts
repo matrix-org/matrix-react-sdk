@@ -186,7 +186,7 @@ export default class UserActivity {
         // ignore anything if the window isn't focused
         if (!this.document.hasFocus()) return;
 
-        if (this.isMouseEvent(event)) {
+        if (event.type === "mousemove" && this.isMouseEvent(event)) {
             if (event.screenX === this.lastScreenX && event.screenY === this.lastScreenY) {
                 // mouse hasn't actually moved
                 return;
