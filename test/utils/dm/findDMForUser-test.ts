@@ -38,6 +38,7 @@ describe("findDMForUser", () => {
     let room4: Room;
     let room5: Room;
     let room6: Room;
+    const room7Id = "!room7:example.com";
     let dmRoomMap: DMRoomMap;
     let mockClient: MatrixClient;
 
@@ -89,29 +90,37 @@ describe("findDMForUser", () => {
         ]);
 
         mocked(mockClient.getRoom).mockImplementation((roomId: string) => {
-            return {
-                [room1.roomId]: room1,
-                [room2.roomId]: room2,
-                [room3.roomId]: room3,
-                [room4.roomId]: room4,
-                [room5.roomId]: room5,
-                [room6.roomId]: room6,
-            }[roomId];
+            return (
+                {
+                    [room1.roomId]: room1,
+                    [room2.roomId]: room2,
+                    [room3.roomId]: room3,
+                    [room4.roomId]: room4,
+                    [room5.roomId]: room5,
+                    [room6.roomId]: room6,
+                }[roomId] || null
+            );
         });
 
         dmRoomMap = {
             getDMRoomForIdentifiers: jest.fn(),
             getDMRoomsForUserId: jest.fn(),
-            getRoomIds: jest
-                .fn()
-                .mockReturnValue(
-                    new Set([room1.roomId, room2.roomId, room3.roomId, room4.roomId, room5.roomId, room6.roomId]),
-                ),
+            getRoomIds: jest.fn().mockReturnValue(
+                new Set([
+                    room1.roomId,
+                    room2.roomId,
+                    room3.roomId,
+                    room4.roomId,
+                    room5.roomId,
+                    room6.roomId,
+                    room7Id, // this room does not exist in client
+                ]),
+            ),
         } as unknown as DMRoomMap;
         jest.spyOn(DMRoomMap, "shared").mockReturnValue(dmRoomMap);
         mocked(dmRoomMap.getDMRoomsForUserId).mockImplementation((userId: string) => {
             if (userId === userId1) {
-                return [room1.roomId, room2.roomId, room3.roomId, room4.roomId, room5.roomId];
+                return [room1.roomId, room2.roomId, room3.roomId, room4.roomId, room5.roomId, room7Id];
             }
 
             return [];

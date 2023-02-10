@@ -35,7 +35,7 @@ function extractSuitableRoom(rooms: Room[], userId: string): Room | undefined {
                 const functionalUsers = getFunctionalMembers(r);
                 const members = r.currentState.getMembers();
                 const joinedMembers = members.filter(
-                    (m) => !functionalUsers.includes(m.userId) && isJoinedOrNearlyJoined(m.membership),
+                    (m) => !functionalUsers.includes(m.userId) && m.membership && isJoinedOrNearlyJoined(m.membership),
                 );
                 const otherMember = joinedMembers.find((m) => m.userId === userId);
                 return otherMember && joinedMembers.length === 2;
@@ -62,7 +62,7 @@ function extractSuitableRoom(rooms: Room[], userId: string): Room | undefined {
  */
 export function findDMForUser(client: MatrixClient, userId: string): Room | undefined {
     const roomIdsForUserId = DMRoomMap.shared().getDMRoomsForUserId(userId);
-    const roomsForUserId = roomIdsForUserId.map((id) => client.getRoom(id));
+    const roomsForUserId = roomIdsForUserId.map((id) => client.getRoom(id)).filter((r): r is Room => r !== null);
     const suitableRoomForUserId = extractSuitableRoom(roomsForUserId, userId);
 
     if (suitableRoomForUserId) {
@@ -71,6 +71,8 @@ export function findDMForUser(client: MatrixClient, userId: string): Room | unde
 
     // Try to find in all rooms as a fallback
     const allRoomIds = DMRoomMap.shared().getRoomIds();
-    const allRooms = Array.from(allRoomIds).map((id) => client.getRoom(id));
+    const allRooms = Array.from(allRoomIds)
+        .map((id) => client.getRoom(id))
+        .filter((r): r is Room => r !== null);
     return extractSuitableRoom(allRooms, userId);
 }
