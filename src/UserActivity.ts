@@ -182,17 +182,20 @@ export default class UserActivity {
         this.activeRecentlyTimeout.abort();
     };
 
-    private onUserActivity = (event: MouseEvent): void => {
+    private onUserActivity = (event: Event): void => {
         // ignore anything if the window isn't focused
         if (!this.document.hasFocus()) return;
 
-        if (event.screenX && event.type === "mousemove") {
-            if (event.screenX === this.lastScreenX && event.screenY === this.lastScreenY) {
+        if (event.type === "mousemove" && (event as MouseEvent).screenX) {
+            if (
+                (event as MouseEvent).screenX === this.lastScreenX &&
+                (event as MouseEvent).screenY === this.lastScreenY
+            ) {
                 // mouse hasn't actually moved
                 return;
             }
-            this.lastScreenX = event.screenX;
-            this.lastScreenY = event.screenY;
+            this.lastScreenX = (event as MouseEvent).screenX;
+            this.lastScreenY = (event as MouseEvent).screenY;
         }
 
         dis.dispatch({ action: "user_activity" });
