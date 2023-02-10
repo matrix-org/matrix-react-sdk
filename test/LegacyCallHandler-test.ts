@@ -225,8 +225,18 @@ describe("LegacyCallHandler", () => {
                     return null;
                 }
             },
-            getRoomIds: () => {
-                return [NATIVE_ROOM_ALICE, NATIVE_ROOM_BOB, NATIVE_ROOM_CHARLIE, VIRTUAL_ROOM_BOB];
+            getDMRoomsForUserId: (userId: string) => {
+                if (userId === NATIVE_ALICE) {
+                    return [NATIVE_ROOM_ALICE];
+                } else if (userId === NATIVE_BOB) {
+                    return [NATIVE_ROOM_BOB];
+                } else if (userId === NATIVE_CHARLIE) {
+                    return [NATIVE_ROOM_CHARLIE];
+                } else if (userId === VIRTUAL_BOB) {
+                    return [VIRTUAL_ROOM_BOB];
+                } else {
+                    return [];
+                }
             },
         } as unknown as DMRoomMap;
         DMRoomMap.setShared(dmRoomMap);

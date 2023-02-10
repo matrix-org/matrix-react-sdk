@@ -21,17 +21,8 @@ import { isLocalRoom } from "../localRoom/isLocalRoom";
 import { isJoinedOrNearlyJoined } from "../membership";
 import { getFunctionalMembers } from "../room/getFunctionalMembers";
 
-/**
- * Tries to find a DM room with a specific user.
- *
- * @param {MatrixClient} client
- * @param {string} userId ID of the user to find the DM for
- * @returns {Room} Room if found
- */
-export function findDMForUser(client: MatrixClient, userId: string): Room {
-    const roomIds = DMRoomMap.shared().getRoomIds();
-    const rooms = Array.from(roomIds).map((id) => client.getRoom(id));
-    const suitableDMRooms = rooms
+function extractSuitableRoom(rooms: Room[], userId: string): Room | undefined {
+    const suitableRooms = rooms
         .filter((r) => {
             // Validate that we are joined and the other person is also joined. We'll also make sure
             // that the room also looks like a DM (until we have canonical DMs to tell us). For now,
@@ -54,7 +45,32 @@ export function findDMForUser(client: MatrixClient, userId: string): Room {
         .sort((r1, r2) => {
             return r2.getLastActiveTimestamp() - r1.getLastActiveTimestamp();
         });
-    if (suitableDMRooms.length) {
-        return suitableDMRooms[0];
+
+    if (suitableRooms.length) {
+        return suitableRooms[0];
     }
+
+    return undefined;
+}
+
+/**
+ * Tries to find a DM room with a specific user.
+ *
+ * @param {MatrixClient} client
+ * @param {string} userId ID of the user to find the DM for
+ * @returns {Room | undefined} Room if found
+ */
+export function findDMForUser(client: MatrixClient, userId: string): Room | undefined {
+    const roomIdsForUserId = DMRoomMap.shared().getDMRoomsForUserId(userId);
+    const roomsForUserId = roomIdsForUserId.map((id) => client.getRoom(id));
+    const suitableRoomForUserId = extractSuitableRoom(roomsForUserId, userId);
+
+    if (suitableRoomForUserId) {
+        return suitableRoomForUserId;
+    }
+
+    // Try to find in all rooms as a fallback
+    const allRoomIds = DMRoomMap.shared().getRoomIds();
+    const allRooms = Array.from(allRoomIds).map((id) => client.getRoom(id));
+    return extractSuitableRoom(allRooms, userId);
 }
