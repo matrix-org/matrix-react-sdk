@@ -564,7 +564,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     /**
      * Find the next event in the list, and the next visible event in the list.
      *
-     * @param event      - the list of events to look in and whether they are shown
+     * @param events     - the list of events to look in and whether they are shown
      * @param i          - where in the list we are now
      *
      * @returns { nextEvent, nextTile }
@@ -615,16 +615,16 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
         let lastShownNonLocalEchoIndex = -1;
         for (let i = events.length - 1; i >= 0; i--) {
-            const { event: mxEv, shouldShow } = events[i];
+            const { event, shouldShow } = events[i];
             if (!shouldShow) {
                 continue;
             }
 
             if (lastShownEvent === undefined) {
-                lastShownEvent = mxEv;
+                lastShownEvent = event;
             }
 
-            if (mxEv.status) {
+            if (event.status) {
                 // this is a local echo
                 continue;
             }
@@ -647,14 +647,14 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         let grouper: BaseGrouper | null = null;
 
         for (let i = 0; i < events.length; i++) {
-            const { event: mxEv, shouldShow } = events[i];
-            const eventId = mxEv.getId();
-            const last = mxEv === lastShownEvent;
+            const { event, shouldShow } = events[i];
+            const eventId = event.getId();
+            const last = event === lastShownEvent;
             const { nextEvent, nextTile } = this.getNextEventInfo(events, i);
 
             if (grouper) {
-                if (grouper.shouldGroup(mxEv)) {
-                    grouper.add(mxEv);
+                if (grouper.shouldGroup(event)) {
+                    grouper.add(event);
                     continue;
                 } else {
                     // not part of group, so get the group tiles, close the
@@ -666,8 +666,8 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             }
 
             for (const Grouper of groupers) {
-                if (Grouper.canStartGroup(this, mxEv) && !this.props.disableGrouping) {
-                    grouper = new Grouper(this, mxEv, prevEvent, lastShownEvent, nextEvent, nextTile);
+                if (Grouper.canStartGroup(this, event) && !this.props.disableGrouping) {
+                    grouper = new Grouper(this, event, prevEvent, lastShownEvent, nextEvent, nextTile);
                     break; // break on first grouper
                 }
             }
@@ -677,8 +677,8 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                     // make sure we unpack the array returned by getTilesForEvent,
                     // otherwise React will auto-generate keys, and we will end up
                     // replacing all the DOM elements every time we paginate.
-                    ret.push(...this.getTilesForEvent(prevEvent, mxEv, last, false, nextEvent, nextTile));
-                    prevEvent = mxEv;
+                    ret.push(...this.getTilesForEvent(prevEvent, event, last, false, nextEvent, nextTile));
+                    prevEvent = event;
                 }
 
                 const readMarker = this.readMarkerForEvent(eventId, i >= lastShownNonLocalEchoIndex);
