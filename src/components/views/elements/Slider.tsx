@@ -152,10 +152,6 @@ export default class Slider extends React.Component<IProps> {
             );
         }
 
-        //todo:
-        //make a new element for dragging
-        //immplement drag
-
         return (
             <div className="mx_Slider">
                 <div>
