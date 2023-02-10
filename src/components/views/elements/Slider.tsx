@@ -90,7 +90,6 @@ export default class Slider extends React.Component<IProps> {
         let selection = null;
 
         const onDrag = (e: React.DragEvent) => {
-            //  console.log(e.target.parentNode.parentNode)
 
             const target = e.target as HTMLElement;
             if (!target.parentNode) return null;
