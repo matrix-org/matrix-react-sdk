@@ -2848,7 +2848,7 @@
     "Waiting for partner to confirm...": "Waiting for partner to confirm...",
     "Incoming Verification Request": "Incoming Verification Request",
     "Integrations are disabled": "Integrations are disabled",
-    "Enable 'Manage Integrations' in Settings to do this.": "Enable 'Manage Integrations' in Settings to do this.",
+    "Enable '%(manageIntegrations)s' in Settings to do this.": "Enable '%(manageIntegrations)s' in Settings to do this.",
     "Integrations not allowed": "Integrations not allowed",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.",
     "To continue, use Single Sign On to prove your identity.": "To continue, use Single Sign On to prove your identity.",
