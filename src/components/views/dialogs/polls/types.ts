@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 /**
- * Used to set filters in poll history
+ * Possible values for the "filter" setting in the poll history dialog
+ *
  * Ended polls have a valid M_POLL_END event
  */
 export type PollHistoryFilter = "ACTIVE" | "ENDED";
