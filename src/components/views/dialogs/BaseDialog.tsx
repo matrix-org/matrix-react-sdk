@@ -119,11 +119,14 @@ export default class BaseDialog extends React.Component<IProps> {
         let cancelButton;
         if (this.props.hasCancel) {
             cancelButton = (
-                <AccessibleButton
-                    onClick={this.onCancelClick}
-                    className="mx_Dialog_cancelButton"
-                    aria-label={_t("Close dialog")}
-                />
+                <div className="mx_Dialog_cancelButton_wrapper" onClick={this.onCancelClick}>
+                    <AccessibleButton
+                        onClick={this.onCancelClick}
+                        className="mx_Dialog_cancelButton"
+                        aria-label={_t("Close dialog")}
+                    />
+                </div>
+               
             );
         }
 
