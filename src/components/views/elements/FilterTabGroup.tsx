@@ -31,9 +31,13 @@ type FilterTabGroupProps<T extends string = string> = FieldsetHTMLAttributes<any
 };
 
 /**
- * Styles a set of content filters as tabs
- * Accepts type T for the group's value property
- * (example in Poll History)
+ * React component which styles a set of content filters as tabs
+ *
+ * This is used in displays which show a list of content items, and the user can select between one of several
+ * filters for those items. For example, in the Poll History dialog, the user can select between "Active" and "Ended"
+ * polls.
+ *
+ * Type `T` is used for the `value` attribute for the buttons in the radio group.
  */
 export const FilterTabGroup = <T extends string = string>({
     name,
