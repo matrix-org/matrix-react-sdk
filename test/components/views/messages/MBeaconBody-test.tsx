@@ -117,7 +117,7 @@ describe("<MBeaconBody />", () => {
             );
             makeRoomWithStateEvents([beaconInfoEvent], { roomId, mockClient });
             const component = getComponent({ mxEvent: beaconInfoEvent });
-            expect(component.text()).toEqual("Loading live location...");
+            expect(component.text()).toEqual("Loading live location…");
         });
 
         it("does not open maximised map when on click when beacon is stopped", () => {
@@ -224,7 +224,7 @@ describe("<MBeaconBody />", () => {
             makeRoomWithStateEvents([aliceBeaconInfo], { roomId, mockClient });
             const component = getComponent({ mxEvent: aliceBeaconInfo });
 
-            expect(component.text()).toEqual("Loading live location...");
+            expect(component.text()).toEqual("Loading live location…");
         });
 
         it("does nothing on click when a beacon has no location", () => {
