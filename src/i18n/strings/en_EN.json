@@ -1457,7 +1457,7 @@
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.",
     "Connect this session to Key Backup": "Connect this session to Key Backup",
-    "Backing up %(sessionsRemaining)s keys...": "Backing up %(sessionsRemaining)s keys...",
+    "Backing up %(sessionsRemaining)s keys…": "Backing up %(sessionsRemaining)s keys…",
     "All keys backed up": "All keys backed up",
     "Backup has a <validity>valid</validity> signature from this user": "Backup has a <validity>valid</validity> signature from this user",
     "Backup has a <validity>invalid</validity> signature from this user": "Backup has a <validity>invalid</validity> signature from this user",
