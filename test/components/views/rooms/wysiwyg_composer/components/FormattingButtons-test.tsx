@@ -168,8 +168,8 @@ describe("FormattingButtons", () => {
         expect(screen.queryByLabelText("Indent decrease")).not.toBeInTheDocument();
     });
 
-    it("Shows indent and unindent buttons when either list is reversed", () => {
-        const orderedListActive = { ...createActionStates("reversed"), orderedList: "active" };
+    it("Shows indent and unindent buttons when either a single list type is 'reversed'", () => {
+        const orderedListActive = { ...defaultActionStates, orderedList: "reversed" };
         renderComponent({ actionStates: orderedListActive });
 
         expect(screen.getByLabelText("Indent increase")).toBeInTheDocument();
@@ -177,7 +177,7 @@ describe("FormattingButtons", () => {
 
         cleanup();
 
-        const unorderedListActive = { ...createActionStates("reversed"), unorderedList: "active" };
+        const unorderedListActive = { ...defaultActionStates, unorderedList: "reversed" };
 
         renderComponent({ actionStates: unorderedListActive });
 
