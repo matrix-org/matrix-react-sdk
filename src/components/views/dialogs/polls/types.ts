@@ -14,4 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * Possible values for the "filter" setting in the poll history dialog
+ *
+ * Ended polls have a valid M_POLL_END event
+ */
 export type PollHistoryFilter = "ACTIVE" | "ENDED";
