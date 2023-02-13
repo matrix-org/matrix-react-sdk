@@ -18,6 +18,7 @@ import { Poll, PollEvent } from "matrix-js-sdk/src/matrix";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { useEventEmitterState } from "../../../../hooks/useEventEmitter";
+import { useEffect } from "react";
 
 /**
  * Get poll instances from a room
@@ -37,7 +38,8 @@ export const usePolls = (
         throw new Error("Cannot find room");
     }
 
-    const polls = useEventEmitterState(room, PollEvent.New, () => room.polls);
+    // copy room.polls map so changes can be detected
+    const polls = useEventEmitterState(room, PollEvent.New, () => new Map<string, Poll>(room.polls));
 
     // @TODO(kerrya) watch polls for end events, trigger refiltering
 

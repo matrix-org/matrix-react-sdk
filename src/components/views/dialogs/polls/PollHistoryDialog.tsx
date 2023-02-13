@@ -24,6 +24,7 @@ import { IDialogProps } from "../IDialogProps";
 import { PollHistoryList } from "./PollHistoryList";
 import { PollHistoryFilter } from "./types";
 import { usePolls } from "./usePollHistory";
+import { useFetchPastPolls } from "./fetchPastPolls";
 
 type PollHistoryDialogProps = Pick<IDialogProps, "onFinished"> & {
     roomId: string;
@@ -51,10 +52,18 @@ export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({ roomId, ma
         setPollStartEvents(filterAndSortPolls(polls, filter));
     }, [filter, polls]);
 
+    const room = matrixClient.getRoom(roomId)!;
+    const { isLoading } = useFetchPastPolls(room, matrixClient);
+
     return (
         <BaseDialog title={_t("Polls history")} onFinished={onFinished}>
             <div className="mx_PollHistoryDialog_content">
-                <PollHistoryList pollStartEvents={pollStartEvents} filter={filter} onFilterChange={setFilter} />
+                <PollHistoryList
+                    pollStartEvents={pollStartEvents}
+                    isLoading={isLoading}
+                    filter={filter}
+                    onFilterChange={setFilter}
+                    />
             </div>
         </BaseDialog>
     );
