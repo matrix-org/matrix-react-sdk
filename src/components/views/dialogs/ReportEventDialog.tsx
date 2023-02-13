@@ -352,7 +352,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                         subtitle = _t(
                             "This room is dedicated to illegal or toxic content " +
                                 "or the moderators fail to moderate illegal or toxic content.\n" +
-                                " This will be reported to the administrators of %(homeserver)s.",
+                                "This will be reported to the administrators of %(homeserver)s.",
                             { homeserver: homeServerName },
                         );
                     }
