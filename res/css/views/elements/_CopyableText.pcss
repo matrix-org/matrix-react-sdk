@@ -41,6 +41,11 @@ limitations under the License.
         /* center to first line */
         position: relative;
         top: 0.15em;
+        /* Make copy button stick to the right while scrolling */
+        position: sticky;
+        right: 0;
+        z-index: 100;
+        background: white;
 
         &::before {
             content: "";
