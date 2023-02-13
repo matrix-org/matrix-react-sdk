@@ -457,7 +457,7 @@ class AtRoomPillPart extends RoomPillPart {
 }
 
 class UserPillPart extends PillPart {
-    public constructor(userId: string, displayName: string, private member: RoomMember) {
+    public constructor(userId: string, displayName: string, private member?: RoomMember) {
         super(userId, displayName);
     }
 
@@ -627,7 +627,7 @@ export class PartCreator {
 
     public userPill(displayName: string, userId: string): UserPillPart {
         const member = this.room.getMember(userId);
-        return new UserPillPart(userId, displayName, member);
+        return new UserPillPart(userId, displayName, member || undefined);
     }
 
     private static isRegionalIndicator(c: string): boolean {
