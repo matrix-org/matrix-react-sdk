@@ -124,7 +124,7 @@ describe("MessagePanel", function () {
     });
 
     function mkEvents() {
-        const events = [];
+        const events: MatrixEvent[] = [];
         const ts0 = Date.now();
         for (let i = 0; i < 10; i++) {
             events.push(
@@ -141,7 +141,7 @@ describe("MessagePanel", function () {
 
     // Just to avoid breaking Dateseparator tests that might run at 00hrs
     function mkOneDayEvents() {
-        const events = [];
+        const events: MatrixEvent[] = [];
         const ts0 = Date.parse("09 May 2004 00:12:00 GMT");
         for (let i = 0; i < 10; i++) {
             events.push(
@@ -158,7 +158,7 @@ describe("MessagePanel", function () {
 
     // make a collection of events with some member events that should be collapsed with an EventListSummary
     function mkMelsEvents() {
-        const events = [];
+        const events: MatrixEvent[] = [];
         const ts0 = Date.now();
 
         let i = 0;
@@ -200,7 +200,7 @@ describe("MessagePanel", function () {
 
     // A list of membership events only with nothing else
     function mkMelsEventsOnly() {
-        const events = [];
+        const events: MatrixEvent[] = [];
         const ts0 = Date.now();
 
         let i = 0;

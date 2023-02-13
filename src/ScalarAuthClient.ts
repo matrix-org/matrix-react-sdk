@@ -32,8 +32,8 @@ const imApiVersion = "1.1";
 // TODO: Generify the name of this class and all components within - it's not just for Scalar.
 
 export default class ScalarAuthClient {
-    private scalarToken: string;
-    private termsInteractionCallback: TermsInteractionCallback;
+    private scalarToken: string | null;
+    private termsInteractionCallback?: TermsInteractionCallback;
     private isDefaultManager: boolean;
 
     public constructor(private apiUrl: string, private uiUrl: string) {

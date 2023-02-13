@@ -34,7 +34,7 @@ export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedR
         super(context, (k) => this.properties.get(k));
     }
 
-    protected onClientChanged(oldClient: MatrixClient, newClient: MatrixClient): void {
+    protected onClientChanged(oldClient: MatrixClient | null, newClient: MatrixClient | null): void {
         this.properties.clear();
         oldClient?.removeListener(ClientEvent.AccountData, this.onAccountData);
         if (newClient) {
