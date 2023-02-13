@@ -25,6 +25,7 @@ import {
     PushRuleActionName,
 } from "matrix-js-sdk/src/matrix";
 import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
+import { act } from "react-dom/test-utils";
 import { fireEvent, getByTestId, render, screen, waitFor } from "@testing-library/react";
 
 import Notifications from "../../../../src/components/views/settings/Notifications";
@@ -409,8 +410,10 @@ describe("<Notifications />", () => {
             // and is kind: 'underride'
             const oneToOneRuleElement = screen.getByTestId(section + oneToOneRule.rule_id);
 
-            const offToggle = oneToOneRuleElement.querySelector('input[type="radio"]')!;
-            fireEvent.click(offToggle);
+            await act(async () => {
+                const offToggle = oneToOneRuleElement.querySelector('input[type="radio"]')!;
+                fireEvent.click(offToggle);
+            });
 
             expect(mockClient.setPushRuleEnabled).toHaveBeenCalledWith(
                 "global",

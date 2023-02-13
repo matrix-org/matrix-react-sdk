@@ -874,7 +874,8 @@ export const Commands = [
             const cli = MatrixClientPeg.get();
             const room = cli.getRoom(SdkContextClass.instance.roomViewStore.getRoomId());
             return (
-                !!room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getUserId()) && !isLocalRoom(room)
+                !!room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getUserId()!) &&
+                !isLocalRoom(room)
             );
         },
         runFn: function (roomId, args) {
@@ -916,7 +917,8 @@ export const Commands = [
             const cli = MatrixClientPeg.get();
             const room = cli.getRoom(SdkContextClass.instance.roomViewStore.getRoomId());
             return (
-                !!room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getUserId()) && !isLocalRoom(room)
+                !!room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getUserId()!) &&
+                !isLocalRoom(room)
             );
         },
         runFn: function (roomId, args) {

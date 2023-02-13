@@ -416,7 +416,7 @@ export class StopGapWidget extends EventEmitter {
                         }),
                     });
                 }
-                this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{});
+                this.messaging?.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{});
             });
         }
     }

@@ -253,7 +253,6 @@ describe("ForwardDialog", () => {
                 [M_ASSET.name]: { type: LocationAssetType.Pin },
                 [M_LOCATION.name]: {
                     uri: geoUri,
-                    description: undefined!,
                 },
             };
             expect(mockClient.sendEvent).toHaveBeenCalledWith(
@@ -280,7 +279,6 @@ describe("ForwardDialog", () => {
                 [M_ASSET.name]: { type: LocationAssetType.Pin },
                 [M_LOCATION.name]: {
                     uri: geoUri,
-                    description: undefined!,
                 },
             };
             expect(mockClient.sendEvent).toHaveBeenCalledWith(
@@ -301,7 +299,6 @@ describe("ForwardDialog", () => {
                 [M_ASSET.name]: { type: LocationAssetType.Pin },
                 [M_LOCATION.name]: {
                     uri: geoUri,
-                    description: undefined!,
                 },
                 geo_uri: geoUri,
                 [M_TIMESTAMP.name]: timestamp,
