@@ -352,7 +352,7 @@ const topicSanitizeHtmlParams: IExtendedSanitizeOptions = {
 };
 
 abstract class BaseHighlighter<T extends React.ReactNode> {
-    public constructor(public highlightClass: string, public highlightLink: string) {}
+    public constructor(public highlightClass: string, public highlightLink?: string) {}
 
     /**
      * apply the highlights to a section of text
@@ -532,7 +532,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         bodyHasEmoji = mightContainEmoji(isFormattedBody ? formattedBody! : plainBody);
 
         const highlighter = safeHighlights?.length
-            ? new HtmlHighlighter("mx_EventTile_searchHighlight", opts.highlightLink!)
+            ? new HtmlHighlighter("mx_EventTile_searchHighlight", opts.highlightLink)
             : null;
 
         if (isFormattedBody) {
