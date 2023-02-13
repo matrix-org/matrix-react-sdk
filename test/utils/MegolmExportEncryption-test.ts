@@ -133,7 +133,7 @@ cissyYBxjsfsAn
 
         // TODO find a subtlecrypto shim which doesn't break this test
         it.skip("should decrypt a range of inputs", function () {
-            function next(i: number): unknown {
+            function next(i: number): Promise<string | undefined> | undefined {
                 if (i >= TEST_VECTORS.length) {
                     return;
                 }
@@ -144,7 +144,7 @@ cissyYBxjsfsAn
                     return next(i + 1);
                 });
             }
-            return next(0);
+            next(0);
         });
     });
 
