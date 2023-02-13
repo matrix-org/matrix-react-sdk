@@ -799,7 +799,7 @@ function textForMjolnirEvent(event: MatrixEvent): (() => string) | null {
         );
 }
 
-export function textForLocationEvent(event: MatrixEvent): (() => string) | null {
+export function textForLocationEvent(event: MatrixEvent): () => string {
     return () =>
         _t("%(senderName)s has shared their location", {
             senderName: getSenderName(event),

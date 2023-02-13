@@ -59,7 +59,7 @@ export default class ScalarAuthClient {
         }
     }
 
-    private readTokenFromStore(): string {
+    private readTokenFromStore(): string | null {
         let token = window.localStorage.getItem("mx_scalar_token_at_" + this.apiUrl);
         if (!token && this.isDefaultManager) {
             token = window.localStorage.getItem("mx_scalar_token");
@@ -67,7 +67,7 @@ export default class ScalarAuthClient {
         return token;
     }
 
-    private readToken(): string {
+    private readToken(): string | null {
         if (this.scalarToken) return this.scalarToken;
         return this.readTokenFromStore();
     }

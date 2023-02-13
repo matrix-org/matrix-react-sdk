@@ -46,7 +46,7 @@ jest.mock("../../../src/utils/beacon", () => ({
 const roomId = "!roomId:server_name";
 
 describe("MessagePanel", function () {
-    let clock: FakeTimers.InstalledClock | null = null;
+    let clock: FakeTimers.InstalledClock;
     const realSetTimeout = window.setTimeout;
     const events = mkEvents();
     const userId = "@me:here";
@@ -117,10 +117,7 @@ describe("MessagePanel", function () {
     });
 
     afterEach(function () {
-        if (clock) {
-            clock.uninstall();
-            clock = null;
-        }
+        clock?.uninstall();
     });
 
     function mkEvents() {
@@ -323,7 +320,7 @@ describe("MessagePanel", function () {
     }
 
     function isReadMarkerVisible(rmContainer?: Element) {
-        return rmContainer?.children.length > 0;
+        return !!rmContainer?.children.length;
     }
 
     it("should show the events", function () {
@@ -466,8 +463,8 @@ describe("MessagePanel", function () {
 
     it("should collapse creation events", function () {
         const events = mkCreationEvents();
-        const createEvent = events.find((event) => event.getType() === "m.room.create");
-        const encryptionEvent = events.find((event) => event.getType() === "m.room.encryption");
+        const createEvent = events.find((event) => event.getType() === "m.room.create")!;
+        const encryptionEvent = events.find((event) => event.getType() === "m.room.encryption")!;
         client.getRoom.mockImplementation((id) => (id === createEvent!.getRoomId() ? room : null));
         TestUtilsMatrix.upsertRoomStateEvents(room, events);
 
@@ -493,8 +490,8 @@ describe("MessagePanel", function () {
 
     it("should not collapse beacons as part of creation events", function () {
         const events = mkCreationEvents();
-        const creationEvent = events.find((event) => event.getType() === "m.room.create");
-        const beaconInfoEvent = makeBeaconInfoEvent(creationEvent.getSender(), creationEvent.getRoomId(), {
+        const creationEvent = events.find((event) => event.getType() === "m.room.create")!;
+        const beaconInfoEvent = makeBeaconInfoEvent(creationEvent.getSender()!, creationEvent.getRoomId()!, {
             isLive: true,
         });
         const combinedEvents = [...events, beaconInfoEvent];
@@ -550,7 +547,7 @@ describe("MessagePanel", function () {
         let els = container.getElementsByClassName("mx_GenericEventListSummary");
         expect(els.length).toEqual(1);
         expect(els[0].getAttribute("data-testid")).toEqual("eventlistsummary-" + events[0].getId());
-        expect(els[0].getAttribute("data-scroll-tokens").split(",").length).toEqual(10);
+        expect(els[0].getAttribute("data-scroll-tokens")?.split(",")).toHaveLength(10);
 
         const updatedEvents = [
             ...events,
@@ -570,7 +567,7 @@ describe("MessagePanel", function () {
         els = container.getElementsByClassName("mx_GenericEventListSummary");
         expect(els.length).toEqual(1);
         expect(els[0].getAttribute("data-testid")).toEqual("eventlistsummary-" + events[0].getId());
-        expect(els[0].getAttribute("data-scroll-tokens").split(",").length).toEqual(11);
+        expect(els[0].getAttribute("data-scroll-tokens")?.split(",")).toHaveLength(11);
     });
 
     it("prepends events into summaries during backward pagination without changing key", () => {
@@ -580,7 +577,7 @@ describe("MessagePanel", function () {
         let els = container.getElementsByClassName("mx_GenericEventListSummary");
         expect(els.length).toEqual(1);
         expect(els[0].getAttribute("data-testid")).toEqual("eventlistsummary-" + events[0].getId());
-        expect(els[0].getAttribute("data-scroll-tokens").split(",").length).toEqual(10);
+        expect(els[0].getAttribute("data-scroll-tokens")?.split(",")).toHaveLength(10);
 
         const updatedEvents = [
             TestUtilsMatrix.mkMembership({
@@ -600,7 +597,7 @@ describe("MessagePanel", function () {
         els = container.getElementsByClassName("mx_GenericEventListSummary");
         expect(els.length).toEqual(1);
         expect(els[0].getAttribute("data-testid")).toEqual("eventlistsummary-" + events[0].getId());
-        expect(els[0].getAttribute("data-scroll-tokens").split(",").length).toEqual(11);
+        expect(els[0].getAttribute("data-scroll-tokens")?.split(",")).toHaveLength(11);
     });
 
     it("assigns different keys to summaries that get split up", () => {
@@ -610,7 +607,7 @@ describe("MessagePanel", function () {
         let els = container.getElementsByClassName("mx_GenericEventListSummary");
         expect(els.length).toEqual(1);
         expect(els[0].getAttribute("data-testid")).toEqual(`eventlistsummary-${events[0].getId()}`);
-        expect(els[0].getAttribute("data-scroll-tokens").split(",").length).toEqual(10);
+        expect(els[0].getAttribute("data-scroll-tokens")?.split(",")).toHaveLength(10);
 
         const updatedEvents = [
             ...events.slice(0, 5),
@@ -628,10 +625,10 @@ describe("MessagePanel", function () {
         els = container.getElementsByClassName("mx_GenericEventListSummary");
         expect(els.length).toEqual(2);
         expect(els[0].getAttribute("data-testid")).toEqual(`eventlistsummary-${events[0].getId()}`);
-        expect(els[0].getAttribute("data-scroll-tokens").split(",").length).toEqual(5);
+        expect(els[0].getAttribute("data-scroll-tokens")?.split(",")).toHaveLength(5);
 
         expect(els[1].getAttribute("data-testid")).toEqual(`eventlistsummary-${events[5].getId()}`);
-        expect(els[1].getAttribute("data-scroll-tokens").split(",").length).toEqual(5);
+        expect(els[1].getAttribute("data-scroll-tokens")?.split(",")).toHaveLength(5);
     });
 
     // We test this because setting lookups can be *slow*, and we don't want
@@ -681,7 +678,7 @@ describe("MessagePanel", function () {
 
         const els = container.getElementsByClassName("mx_GenericEventListSummary");
         expect(els.length).toEqual(1);
-        expect(els[0].getAttribute("data-scroll-tokens").split(",").length).toEqual(3);
+        expect(els[0].getAttribute("data-scroll-tokens")?.split(",")).toHaveLength(3);
     });
 });
 
