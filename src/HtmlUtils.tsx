@@ -504,7 +504,7 @@ function formatEmojis(message: string, isHtmlMessage: boolean): (JSX.Element | s
 export function bodyToHtml(content: IContent, highlights: Optional<string[]>, opts: IOptsReturnString): string;
 export function bodyToHtml(content: IContent, highlights: Optional<string[]>, opts: IOptsReturnNode): ReactNode;
 export function bodyToHtml(content: IContent, highlights: Optional<string[]>, opts: IOpts = {}): ReactNode | string {
-    const isFormattedBody = content.format === "org.matrix.custom.html" && !!content.formatted_body;
+    const isFormattedBody = content.format === "org.matrix.custom.html" && typeof content.formatted_body === "string";
     let bodyHasEmoji = false;
     let isHtmlMessage = false;
 
