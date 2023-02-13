@@ -3135,7 +3135,7 @@
     "Failed to decrypt %(failedCount)s sessions!": "Failed to decrypt %(failedCount)s sessions!",
     "Successfully restored %(sessionCount)s keys": "Successfully restored %(sessionCount)s keys",
     "Enter Security Phrase": "Enter Security Phrase",
-    "<b>Warning</b>: You should only set up key backup from a trusted computer.": "<b>Warning</b>: You should only set up key backup from a trusted computer.",
+    "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Warning</b>: you should only set up key backup from a trusted computer.",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "Access your secure message history and set up secure messaging by entering your Security Phrase.",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>",
     "Enter Security Key": "Enter Security Key",
