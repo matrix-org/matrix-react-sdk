@@ -234,7 +234,7 @@ export class IndexedDBLogStore {
             };
             txn.onerror = () => {
                 logger.error("Failed to flush logs : ", txn.error);
-                reject(new Error("Failed to write logs: " + txn.error));
+                reject(new Error("Failed to write logs: " + txn.error.message));
             };
             objStore.add(this.generateLogEntry(lines));
             const lastModStore = txn.objectStore("logslastmod");
@@ -267,7 +267,7 @@ export class IndexedDBLogStore {
                 const query = objectStore.index("id").openCursor(IDBKeyRange.only(id), "prev");
                 let lines = "";
                 query.onerror = () => {
-                    reject(new Error("Query failed: " + query.error));
+                    reject(new Error("Query failed: " + query.error.message));
                 };
                 query.onsuccess = () => {
                     const cursor = query.result;
@@ -322,7 +322,7 @@ export class IndexedDBLogStore {
                     resolve();
                 };
                 txn.onerror = () => {
-                    reject(new Error("Failed to delete logs for " + `'${id}' : ${query.error}`));
+                    reject(new Error("Failed to delete logs for " + `'${id}' : ${query.error.message}`));
                 };
                 // delete last modified entries
                 const lastModStore = txn.objectStore("logslastmod");
@@ -408,7 +408,7 @@ function selectQuery<T>(
     return new Promise((resolve, reject) => {
         const results: T[] = [];
         query.onerror = () => {
-            reject(new Error("Query failed: " + query.error));
+            reject(new Error("Query failed: " + query.error.message));
         };
         // collect results
         query.onsuccess = () => {

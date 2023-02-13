@@ -653,7 +653,9 @@ export default class SettingsStore {
                     const value = handler.getValue(settingName, roomId);
                     logger.log(`---     ${handlerName}@${roomId || "<no_room>"} = ${JSON.stringify(value)}`);
                 } catch (e) {
-                    logger.log(`---     ${handler}@${roomId || "<no_room>"} THREW ERROR: ${e.message}`);
+                    logger.log(
+                        `---     ${handler.constructor.name}@${roomId || "<no_room>"} THREW ERROR: ${e.message}`,
+                    );
                     logger.error(e);
                 }
 
@@ -662,7 +664,7 @@ export default class SettingsStore {
                         const value = handler.getValue(settingName, null);
                         logger.log(`---     ${handlerName}@<no_room> = ${JSON.stringify(value)}`);
                     } catch (e) {
-                        logger.log(`---     ${handler}@<no_room> THREW ERROR: ${e.message}`);
+                        logger.log(`---     ${handler.constructor.name}@<no_room> THREW ERROR: ${e.message}`);
                         logger.error(e);
                     }
                 }
