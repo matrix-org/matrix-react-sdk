@@ -17,7 +17,6 @@ limitations under the License.
 import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
 import { NotificationCountType } from "matrix-js-sdk/src/models/room";
 import { ConditionKind, PushRuleActionName, PushRuleKind, TweakName } from "matrix-js-sdk/src/@types/PushRules";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import type { IPushRule } from "matrix-js-sdk/src/@types/PushRules";
 import type { Room } from "matrix-js-sdk/src/models/room";
@@ -26,7 +25,8 @@ import { MatrixClientPeg } from "./MatrixClientPeg";
 import { NotificationColor } from "./stores/notifications/NotificationColor";
 import { getUnsentMessages } from "./components/structures/RoomStatusBar";
 import { doesRoomHaveUnreadMessages, doesRoomOrThreadHaveUnreadMessages } from "./Unread";
-import { getEffectiveMembership, EffectiveMembership } from "./utils/membership";
+import { EffectiveMembership, getEffectiveMembership } from "./utils/membership";
+import SettingsStore from "./settings/SettingsStore";
 
 export enum RoomNotifState {
     AllMessagesLoud = "all_messages_loud",
@@ -86,11 +86,11 @@ export function getUnreadNotificationCount(room: Room, type: NotificationCountTy
     // Check notification counts in the old room just in case there's some lost
     // there. We only go one level down to avoid performance issues, and theory
     // is that 1st generation rooms will have already been read by the 3rd generation.
-    const createEvent = room.currentState.getStateEvents(EventType.RoomCreate, "");
-    const predecessor = createEvent?.getContent().predecessor;
+    const msc3946ProcessDynamicPredecessor = SettingsStore.getValue("feature_dynamic_room_predecessors");
+    const predecessor = room.findPredecessor(msc3946ProcessDynamicPredecessor);
     // Exclude threadId, as the same thread can't continue over a room upgrade
-    if (!threadId && predecessor) {
-        const oldRoomId = predecessor.room_id;
+    if (!threadId && predecessor?.roomId) {
+        const oldRoomId = predecessor.roomId;
         const oldRoom = MatrixClientPeg.get().getRoom(oldRoomId);
         if (oldRoom) {
             // We only ever care if there's highlights in the old room. No point in
@@ -202,9 +202,13 @@ function isMuteRule(rule: IPushRule): boolean {
 }
 
 export function determineUnreadState(
-    room: Room,
+    room?: Room,
     threadId?: string,
 ): { color: NotificationColor; symbol: string | null; count: number } {
+    if (!room) {
+        return { symbol: null, count: 0, color: NotificationColor.None };
+    }
+
     if (getUnsentMessages(room, threadId).length > 0) {
         return { symbol: "!", count: 1, color: NotificationColor.Unsent };
     }

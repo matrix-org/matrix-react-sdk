@@ -14,26 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useLayoutEffect, useRef } from "react";
+import { MatrixClient, MatrixEvent, RelationType } from "matrix-js-sdk/src/matrix";
 
-import { linkifyElement } from "../../../HtmlUtils";
+import { VoiceBroadcastInfoEventType } from "../types";
 
-interface Props {
-    as?: string;
-    children: React.ReactNode;
-    onClick?: (ev: MouseEvent) => void;
-}
+export const isRelatedToVoiceBroadcast = (event: MatrixEvent, client: MatrixClient): boolean => {
+    const relation = event.getRelation();
 
-export function Linkify({ as = "div", children, onClick }: Props): JSX.Element {
-    const ref = useRef();
-
-    useLayoutEffect(() => {
-        linkifyElement(ref.current);
-    }, [children]);
-
-    return React.createElement(as, {
-        children,
-        ref,
-        onClick,
-    });
-}
+    return (
+        relation?.rel_type === RelationType.Reference &&
+        !!relation.event_id &&
+        client.getRoom(event.getRoomId())?.findEventById(relation.event_id)?.getType() === VoiceBroadcastInfoEventType
+    );
+};

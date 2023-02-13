@@ -33,7 +33,7 @@ import dis from "./dispatcher/dispatcher";
 import { _t, _td, ITranslatableError, newTranslatableError } from "./languageHandler";
 import Modal from "./Modal";
 import MultiInviter from "./utils/MultiInviter";
-import { linkifyElement, topicToHtml } from "./HtmlUtils";
+import { Linkify, topicToHtml } from "./HtmlUtils";
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import WidgetUtils from "./utils/WidgetUtils";
 import { textToHtmlRainbow } from "./utils/colour";
@@ -501,14 +501,11 @@ export const Commands = [
                 ? ContentHelpers.parseTopicContent(content)
                 : { text: _t("This room has no topic.") };
 
-            const ref = (e): void => {
-                if (e) linkifyElement(e);
-            };
-            const body = topicToHtml(topic.text, topic.html, ref, true);
+            const body = topicToHtml(topic.text, topic.html, undefined, true);
 
             Modal.createDialog(InfoDialog, {
                 title: room.name,
-                description: <div ref={ref}>{body}</div>,
+                description: <Linkify>{body}</Linkify>,
                 hasCloseButton: true,
                 className: "markdown-body",
             });
@@ -1045,7 +1042,7 @@ export const Commands = [
                                     throw newTranslatableError("Session already verified!");
                                 } else {
                                     throw newTranslatableError(
-                                        "WARNING: Session already verified, but keys do NOT MATCH!",
+                                        "WARNING: session already verified, but keys do NOT MATCH!",
                                     );
                                 }
                             }

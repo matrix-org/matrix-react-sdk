@@ -22,8 +22,7 @@ import MatrixClientContext from "../../../../../src/contexts/MatrixClientContext
 import RoomContext from "../../../../../src/contexts/RoomContext";
 import defaultDispatcher from "../../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../../src/dispatcher/actions";
-import { IRoomState } from "../../../../../src/components/structures/RoomView";
-import { createTestClient, flushPromises, getRoomContext, mkEvent, mkStubRoom } from "../../../../test-utils";
+import { flushPromises, mkEvent } from "../../../../test-utils";
 import { EditWysiwygComposer } from "../../../../../src/components/views/rooms/wysiwyg_composer";
 import EditorStateTransfer from "../../../../../src/utils/EditorStateTransfer";
 import { Emoji } from "../../../../../src/components/views/rooms/wysiwyg_composer/components/Emoji";
@@ -32,38 +31,24 @@ import dis from "../../../../../src/dispatcher/dispatcher";
 import { ComposerInsertPayload, ComposerType } from "../../../../../src/dispatcher/payloads/ComposerInsertPayload";
 import { ActionPayload } from "../../../../../src/dispatcher/payloads";
 import * as EmojiButton from "../../../../../src/components/views/rooms/EmojiButton";
+import { createMocks } from "./utils";
 
 describe("EditWysiwygComposer", () => {
     afterEach(() => {
         jest.resetAllMocks();
     });
 
-    const mockClient = createTestClient();
-    const mockEvent = mkEvent({
-        type: "m.room.message",
-        room: "myfakeroom",
-        user: "myfakeuser",
-        content: {
-            msgtype: "m.text",
-            body: "Replying to this",
-            format: "org.matrix.custom.html",
-            formatted_body: "Replying <b>to</b> this new content",
-        },
-        event: true,
-    });
-    const mockRoom = mkStubRoom("myfakeroom", "myfakeroom", mockClient) as any;
-    mockRoom.findEventById = jest.fn((eventId) => {
-        return eventId === mockEvent.getId() ? mockEvent : null;
-    });
+    const { editorStateTransfer, defaultRoomContext, mockClient, mockEvent } = createMocks();
 
-    const defaultRoomContext: IRoomState = getRoomContext(mockRoom, {});
-
-    const editorStateTransfer = new EditorStateTransfer(mockEvent);
-
-    const customRender = (disabled = false, _editorStateTransfer = editorStateTransfer) => {
+    const customRender = (
+        disabled = false,
+        _editorStateTransfer = editorStateTransfer,
+        client = mockClient,
+        roomContext = defaultRoomContext,
+    ) => {
         return render(
-            <MatrixClientContext.Provider value={mockClient}>
-                <RoomContext.Provider value={defaultRoomContext}>
+            <MatrixClientContext.Provider value={client}>
+                <RoomContext.Provider value={roomContext}>
                     <EditWysiwygComposer disabled={disabled} editorStateTransfer={_editorStateTransfer} />
                 </RoomContext.Provider>
             </MatrixClientContext.Provider>,
@@ -176,12 +161,13 @@ describe("EditWysiwygComposer", () => {
     });
 
     describe("Edit and save actions", () => {
+        let spyDispatcher: jest.SpyInstance<void, [payload: ActionPayload, sync?: boolean]>;
         beforeEach(async () => {
+            spyDispatcher = jest.spyOn(defaultDispatcher, "dispatch");
             customRender();
             await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
         });
 
-        const spyDispatcher = jest.spyOn(defaultDispatcher, "dispatch");
         afterEach(() => {
             spyDispatcher.mockRestore();
         });
@@ -204,7 +190,6 @@ describe("EditWysiwygComposer", () => {
 
         it("Should send message on save button click", async () => {
             // When
-            const spyDispatcher = jest.spyOn(defaultDispatcher, "dispatch");
             fireEvent.input(screen.getByRole("textbox"), {
                 data: "foo bar",
                 inputType: "insertText",
