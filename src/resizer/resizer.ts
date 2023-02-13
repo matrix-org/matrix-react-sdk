@@ -106,11 +106,11 @@ export default class Resizer<C extends IConfig = IConfig> {
     }
 
     public isReverseResizeHandle(el: HTMLElement): boolean {
-        return el && el.classList.contains(this.classNames.reverse!);
+        return el.classList.contains(this.classNames.reverse!);
     }
 
     public isResizeHandle(el: HTMLElement): boolean {
-        return el && el.classList.contains(this.classNames.handle!);
+        return el.classList.contains(this.classNames.handle!);
     }
 
     private onMouseDown = (event: MouseEvent): void => {
