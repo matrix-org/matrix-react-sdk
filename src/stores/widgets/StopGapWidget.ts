@@ -33,6 +33,7 @@ import {
     WidgetApiFromWidgetAction,
     WidgetKind,
 } from "matrix-widget-api";
+import { Optional } from "matrix-events-sdk";
 import { EventEmitter } from "events";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
@@ -66,7 +67,6 @@ import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import Modal from "../../Modal";
 import ErrorDialog from "../../components/views/dialogs/ErrorDialog";
 import { SdkContextClass } from "../../contexts/SDKContext";
-import { Optional } from "matrix-events-sdk";
 
 // TODO: Destroy all of this code
 

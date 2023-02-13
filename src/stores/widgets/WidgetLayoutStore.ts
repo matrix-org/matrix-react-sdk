@@ -148,7 +148,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
 
     private updateAllRooms = (): void => {
         this.byRoom = {};
-        for (const room of this.matrixClient?.getVisibleRooms()) {
+        for (const room of this.matrixClient.getVisibleRooms()) {
             this.recalculateRoom(room);
         }
     };
