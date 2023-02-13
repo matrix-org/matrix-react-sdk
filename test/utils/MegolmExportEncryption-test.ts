@@ -22,7 +22,7 @@ import type * as MegolmExportEncryptionExport from "../../src/utils/MegolmExport
 
 const webCrypto = new Crypto();
 
-function getRandomValues<T extends ArrayBufferView>(buf: T): T {
+function getRandomValues<T extends ArrayBufferView | null>(buf: T): T {
     // @ts-ignore fussy generics
     return nodeCrypto.randomFillSync(buf);
 }
