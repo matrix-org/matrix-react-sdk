@@ -189,7 +189,17 @@ export default class DMRoomMap {
         return Object.keys(this.roomToUser)
             .map((r) => ({ userId: this.getUserIdForRoomId(r), room: this.matrixClient.getRoom(r) }))
             .filter((r) => r.userId && r.room && r.room.getInvitedAndJoinedMemberCount() === 2)
-            .reduce((obj, r) => (obj[r.userId] = r.room) && obj, {});
+            .reduce((obj, r) => (obj[r.userId] = r.room) && obj, {} as Record<string, Room>);
+    }
+
+    /**
+     * @returns all room Ids from m.direct
+     */
+    public getRoomIds(): Set<string> {
+        return Object.values(this.mDirectEvent).reduce((prevRoomIds: Set<string>, roomIds: string[]): Set<string> => {
+            roomIds.forEach((roomId) => prevRoomIds.add(roomId));
+            return prevRoomIds;
+        }, new Set<string>());
     }
 
     private getUserToRooms(): { [key: string]: string[] } {
