@@ -110,7 +110,7 @@ export const PollListItemEnded: React.FC<Props> = ({ event, poll }) => {
                             key={answer.id}
                             answer={answer}
                             voteCount={voteCount}
-                            totalVoteCount={totalVoteCount}
+                            totalVoteCount={totalVoteCount!}
                             pollId={poll.pollId}
                             displayVoteCount
                             isChecked
