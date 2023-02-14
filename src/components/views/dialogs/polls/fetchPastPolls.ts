@@ -14,41 +14,47 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { useEffect, useState } from "react";
 import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Direction, EventTimeline, EventTimelineSet, Room } from "matrix-js-sdk/src/matrix";
+import { EventTimeline, EventTimelineSet, Room } from "matrix-js-sdk/src/matrix";
 import { Filter, IFilterDefinition } from "matrix-js-sdk/src/filter";
-import { useEffect, useRef, useState } from "react";
 
-const pagePolls = async (timelineSet: EventTimelineSet, matrixClient: MatrixClient, endOfHistoryPeriodTimestamp: number): Promise<void> => {
+const pagePolls = async (
+    timelineSet: EventTimelineSet,
+    matrixClient: MatrixClient,
+    endOfHistoryPeriodTimestamp: number,
+): Promise<void> => {
     const liveTimeline = timelineSet.getLiveTimeline();
     const events = liveTimeline.getEvents();
     const oldestEventTimestamp = events[0]?.getTs() || Date.now();
     const hasMorePages = !!liveTimeline.getPaginationToken(EventTimeline.BACKWARDS);
-    console.log('hhh token', liveTimeline.getPaginationToken(EventTimeline.BACKWARDS));
-    console.log('hhhhh', { hasMorePages, oldestEventTimestamp, endOfHistoryPeriodTimestamp, oldestEventD: new Date(oldestEventTimestamp).toISOString() })
+
     if (!hasMorePages || oldestEventTimestamp <= endOfHistoryPeriodTimestamp) {
         return;
     }
 
     await matrixClient.paginateEventTimeline(liveTimeline, {
-        backwards: true
+        backwards: true,
     });
 
     return pagePolls(timelineSet, matrixClient, endOfHistoryPeriodTimestamp);
-}
+};
 
 const ONE_DAY_MS = 60000 * 60 * 24;
-const useFilteredRoomHistory = (timelineSet: EventTimelineSet | null, matrixClient: MatrixClient, historyPeriodDays: number): { isLoading: boolean } => {
-    const [isLoading, setIsLoading] = useState(false);
+const useFilteredRoomHistory = (
+    timelineSet: EventTimelineSet | null,
+    matrixClient: MatrixClient,
+    historyPeriodDays: number,
+): { isLoading: boolean } => {
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        console.log('hhh useFilteredRoomHistory', {timelineSet})
         if (!timelineSet) {
             return;
         }
         // @TODO(kerrya) maybe set this to start of current day - days
-        const endOfHistoryPeriodTimestamp = Date.now() - (ONE_DAY_MS * historyPeriodDays);
+        const endOfHistoryPeriodTimestamp = Date.now() - ONE_DAY_MS * historyPeriodDays;
 
         const doFetchHistory = async (): Promise<void> => {
             setIsLoading(true);
@@ -57,40 +63,41 @@ const useFilteredRoomHistory = (timelineSet: EventTimelineSet | null, matrixClie
             } finally {
                 setIsLoading(false);
             }
-        }
+        };
         doFetchHistory();
-    }, [timelineSet]);
+    }, [timelineSet, historyPeriodDays, matrixClient]);
 
     return { isLoading };
-}
+};
 
-export const useFetchPastPolls = (room: Room, matrixClient: MatrixClient, historyPeriodDays = 30): { isLoading: boolean; } => {
-    console.log('hhh', { room });
-
-    const filterDefinition: IFilterDefinition = {
-        room: {
-            timeline: {
-                types: [M_POLL_START.name, M_POLL_START.altName]
-            },
+const filterDefinition: IFilterDefinition = {
+    room: {
+        timeline: {
+            types: [M_POLL_START.name, M_POLL_START.altName, "m.room.encrypted"],
         },
-    };
-
+    },
+};
+export const useFetchPastPolls = (
+    room: Room,
+    matrixClient: MatrixClient,
+    historyPeriodDays = 30,
+): { isLoading: boolean } => {
     const [timelineSet, setTimelineSet] = useState<EventTimelineSet>(null);
 
     useEffect(() => {
         const filter = new Filter(matrixClient.getSafeUserId());
         filter.setDefinition(filterDefinition);
-        const getFilteredTimelineSet = async () => {
+        const getFilteredTimelineSet = async (): Promise<void> => {
             const filterId = await matrixClient.getOrCreateFilter(`POLL_HISTORY_FILTER_${room.roomId}}`, filter);
             filter.filterId = filterId;
             const timelineSet = room.getOrCreateFilteredTimelineSet(filter);
             setTimelineSet(timelineSet);
-        }
-    
+        };
+
         getFilteredTimelineSet();
-    }, [room]);
+    }, [room, matrixClient]);
 
     const { isLoading } = useFilteredRoomHistory(timelineSet, matrixClient, historyPeriodDays);
 
     return { isLoading };
-}
+};
