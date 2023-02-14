@@ -325,7 +325,7 @@ describe("<RoomPreviewBar />", () => {
                 { medium: "not-email", address: "address 2" },
             ];
 
-            const testJoinButton = (props: ComponentProps<typeof RoomPreviewBar>) => async () => {
+            const testJoinButton = (props: Omit<ComponentProps<typeof RoomPreviewBar>, 'roomId'>) => async () => {
                 const onJoinClick = jest.fn();
                 const onRejectClick = jest.fn();
                 const component = getComponent({ ...props, onJoinClick, onRejectClick });
