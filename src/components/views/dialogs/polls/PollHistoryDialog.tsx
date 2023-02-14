@@ -51,7 +51,6 @@ export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({ roomId, ma
     const { isLoading } = useFetchPastPolls(room, matrixClient);
 
     useEffect(() => {
-        console.log("hhh", "new polls or filter", [...polls.values()]);
         setPollStartEvents(filterAndSortPolls(polls, filter));
     }, [filter, polls]);
 

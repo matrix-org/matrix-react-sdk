@@ -22,6 +22,7 @@ import { useEventEmitterState } from "../../../../hooks/useEventEmitter";
 
 /**
  * Get poll instances from a room
+ * Updates to include new polls
  * @param roomId - id of room to retrieve polls for
  * @param matrixClient - client
  * @returns {Map<string, Poll>} - Map of Poll instances
@@ -44,6 +45,17 @@ export const usePolls = (
     return { polls };
 };
 
+/**
+ * Get all poll instances from a room
+ * Fetch their responses (using cached poll responses)
+ * Updates on:
+ * - new polls added to room
+ * - new responses added to polls
+ * - changes to poll ended state
+ * @param roomId - id of room to retrieve polls for
+ * @param matrixClient - client
+ * @returns {Map<string, Poll>} - Map of Poll instances
+ */
 export const usePollsWithRelations = (
     roomId: string,
     matrixClient: MatrixClient,
@@ -54,27 +66,31 @@ export const usePollsWithRelations = (
     const [pollsWithRelations, setPollsWithRelations] = useState<Map<string, Poll>>(polls);
 
     useEffect(() => {
-        const onPollEnd = async (): Promise<void> => {
+        const onPollUpdate = async (): Promise<void> => {
             // trigger rerender by creating a new poll map
             setPollsWithRelations(new Map(polls));
         };
         if (polls) {
             for (const poll of polls.values()) {
-                poll.on(PollEvent.End, onPollEnd);
+                // listen to changes in responses and end state
+                poll.on(PollEvent.End, onPollUpdate);
+                poll.on(PollEvent.Responses, onPollUpdate);
+                // trigger request to get all responses
+                // if they are not already in cache
                 poll.getResponses();
             }
             setPollsWithRelations(polls);
         }
+        // unsubscribe
         () => {
             if (polls) {
                 for (const poll of polls.values()) {
-                    poll.off(PollEvent.End, onPollEnd);
+                    poll.off(PollEvent.End, onPollUpdate);
+                    poll.off(PollEvent.Responses, onPollUpdate);
                 }
             }
         };
     }, [polls, setPollsWithRelations]);
-
-    // @TODO(kerrya) watch polls for end events, trigger refiltering
 
     return { polls: pollsWithRelations };
 };

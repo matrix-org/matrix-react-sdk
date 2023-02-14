@@ -106,7 +106,7 @@ exports[`<PollHistoryDialog /> renders a list of active polls when there are pol
               class="mx_InlineSpinner"
             >
               <div
-                aria-label="Loading..."
+                aria-label="Loading…"
                 class="mx_InlineSpinner_icon mx_Spinner_icon"
                 style="width: 16px; height: 16px;"
               />
