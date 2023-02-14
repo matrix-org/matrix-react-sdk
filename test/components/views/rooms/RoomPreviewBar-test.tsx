@@ -71,8 +71,9 @@ describe("<RoomPreviewBar />", () => {
     const inviterUserId = "@inviter:test.com";
     const otherUserId = "@othertester:test.com";
 
-    const getComponent = (props: ComponentProps<typeof RoomPreviewBar> = {}) => {
+    const getComponent = (props: Omit<ComponentProps<typeof RoomPreviewBar>, 'roomId'> = {}) => {
         const defaultProps = {
+            roomId,
             room: createRoom(roomId, userId),
         };
         return render(<RoomPreviewBar {...defaultProps} {...props} />);

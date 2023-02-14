@@ -57,7 +57,9 @@ enum MessageCase {
 }
 
 interface IProps {
+    // The id of the room to be previewed
     roomId: string;
+
     // if inviterName is specified, the preview bar will shown an invite to the room.
     // You should also specify onRejectClick if specifying inviterName
     inviterName?: string;
@@ -77,6 +79,8 @@ interface IProps {
 
     canPreview?: boolean;
     previewLoading?: boolean;
+
+    // The room to be previewed
     room?: Room;
 
     loading?: boolean;
