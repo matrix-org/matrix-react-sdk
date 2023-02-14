@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -189,7 +189,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
     };
 
     // The user has written down a freeform description of the abuse.
-    private onReasonChange = ({ target: { value: reason } }): void => {
+    private onReasonChange = ({ target: { value: reason } }: ChangeEvent<HTMLTextAreaElement>): void => {
         this.setState({ reason });
     };
 
@@ -273,7 +273,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
         }
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let error = null;
         if (this.state.err) {
             error = <div className="error">{this.state.err}</div>;
@@ -321,8 +321,8 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                     subtitle = _t(
                         "This user is displaying toxic behaviour, " +
                             "for instance by insulting other users or sharing " +
-                            " adult-only content in a family-friendly room " +
-                            " or otherwise violating the rules of this room.\n" +
+                            "adult-only content in a family-friendly room " +
+                            "or otherwise violating the rules of this room.\n" +
                             "This will be reported to the room moderators.",
                     );
                     break;
@@ -352,7 +352,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                         subtitle = _t(
                             "This room is dedicated to illegal or toxic content " +
                                 "or the moderators fail to moderate illegal or toxic content.\n" +
-                                " This will be reported to the administrators of %(homeserver)s.",
+                                "This will be reported to the administrators of %(homeserver)s.",
                             { homeserver: homeServerName },
                         );
                     }
