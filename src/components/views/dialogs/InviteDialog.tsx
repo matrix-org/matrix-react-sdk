@@ -684,7 +684,8 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                                 display_name: profile.displayname,
                                 avatar_url: profile.avatar_url,
                             }),
-                            userId: lookup.mxid,
+                            // Use the search term as identifier, so that it shows up in suggestions.
+                            userId: term,
                         },
                     ],
                 });
@@ -865,14 +866,6 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             sectionName = kind === "recents" ? _t("Recently Direct Messaged") : _t("Suggestions");
         }
 
-        // Do some simple filtering on the input before going much further.
-        if (this.state.filterText) {
-            const filterBy = this.state.filterText.toLowerCase();
-            sourceMembers = sourceMembers.filter(
-                (m) => m.user.name.toLowerCase().includes(filterBy) || m.userId.toLowerCase().includes(filterBy),
-            );
-        }
-
         // Mix in the server results if we have any, but only if we're searching. We track the additional
         // members separately because we want to filter sourceMembers but trust the mixin arrays to have
         // the right members in them.
@@ -895,9 +888,17 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         }
         const hasAdditionalMembers = priorityAdditionalMembers.length > 0 || otherAdditionalMembers.length > 0;
 
-        if (sourceMembers.length === 0 && !hasAdditionalMembers) {
-            if (this.state.filterText) {
-                // There was a search without results. Tell about it.
+        // Hide the section if there's nothing to filter by
+        if (sourceMembers.length === 0 && !hasAdditionalMembers) return null;
+
+        // Do some simple filtering on the input before going much further. If we get no results, say so.
+        if (this.state.filterText) {
+            const filterBy = this.state.filterText.toLowerCase();
+            sourceMembers = sourceMembers.filter(
+                (m) => m.user.name.toLowerCase().includes(filterBy) || m.userId.toLowerCase().includes(filterBy),
+            );
+
+            if (sourceMembers.length === 0 && !hasAdditionalMembers) {
                 return (
                     <div className="mx_InviteDialog_section">
                         <h3>{sectionName}</h3>
@@ -905,9 +906,6 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                     </div>
                 );
             }
-
-            // Hide section if there was no search and there are no results.
-            return null;
         }
 
         // Now we mix in the additional members. Again, we presume these have already been filtered. We
@@ -937,7 +935,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             <DMRoomTile
                 member={r.user}
                 lastActiveTs={lastActive(r)}
-                key={r.userId}
+                key={r.user.userId}
                 onToggle={this.toggleMember}
                 highlightWord={this.state.filterText}
                 isSelected={this.state.targets.some((t) => t.userId === r.userId)}
