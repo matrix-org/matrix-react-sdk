@@ -48,13 +48,32 @@ export default function RoomNotifications({ onBack }: IDevtoolsProps): JSX.Eleme
                         )}
                     </li>
                     <li>
-                        {_t("Notification state is")} <strong>{notificationState}</strong>
+                        {_t(
+                            "Notification state is <strong>%(notificationState)s</strong>",
+                            {
+                                notificationState,
+                            },
+                            {
+                                strong: (sub) => <strong>{sub}</strong>,
+                            },
+                        )}
                     </li>
                     <li>
-                        {_t("Room is ")}
-                        <strong>
-                            {cli.isRoomEncrypted(room.roomId!) ? _t("encrypted ✅") : _t("not encrypted 🚨")}
-                        </strong>
+                        {cli.isRoomEncrypted(room.roomId!)
+                            ? _t(
+                                  "Room is <strong>encrypted ✅</strong>",
+                                  {},
+                                  {
+                                      strong: (sub) => <strong>{sub}</strong>,
+                                  },
+                              )
+                            : _t(
+                                  "Room is <strong>not encrypted 🚨</strong>",
+                                  {},
+                                  {
+                                      strong: (sub) => <strong>{sub}</strong>,
+                                  },
+                              )}
                     </li>
                 </ul>
             </section>
