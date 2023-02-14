@@ -52,13 +52,13 @@ const pagePolls = async (
 
 const ONE_DAY_MS = 60000 * 60 * 24;
 /**
- *
+ * Fetches timeline history for given number of days in past
  * @param timelineSet - timelineset to page
  * @param matrixClient - client
  * @param historyPeriodDays - number of days of history to fetch, from current day
  * @returns isLoading - true while fetching history
  */
-const useFilteredRoomHistory = (
+const useTimelineHistory = (
     timelineSet: EventTimelineSet | null,
     matrixClient: MatrixClient,
     historyPeriodDays: number,
@@ -120,7 +120,7 @@ export const useFetchPastPolls = (
         getFilteredTimelineSet();
     }, [room, matrixClient]);
 
-    const { isLoading } = useFilteredRoomHistory(timelineSet, matrixClient, historyPeriodDays);
+    const { isLoading } = useTimelineHistory(timelineSet, matrixClient, historyPeriodDays);
 
     return { isLoading };
 };
