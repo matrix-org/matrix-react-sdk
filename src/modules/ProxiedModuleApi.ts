@@ -150,7 +150,7 @@ export class ProxiedModuleApi implements ModuleApi {
                 guest: false,
             },
             true,
-        ).then(() => true);
+        );
     }
 
     /**

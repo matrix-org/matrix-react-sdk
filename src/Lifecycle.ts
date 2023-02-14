@@ -61,7 +61,6 @@ import SdkConfig from "./SdkConfig";
 import { DialogOpener } from "./utils/DialogOpener";
 import { Action } from "./dispatcher/actions";
 import AbstractLocalStorageSettingsHandler from "./settings/handlers/AbstractLocalStorageSettingsHandler";
-import { OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPayload";
 import { SdkContextClass } from "./contexts/SDKContext";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
@@ -71,10 +70,6 @@ dis.register((payload) => {
     if (payload.action === Action.TriggerLogout) {
         // noinspection JSIgnoredPromiseFromCall - we don't care if it fails
         onLoggedOut();
-    } else if (payload.action === Action.OverwriteLogin) {
-        const typed = <OverwriteLoginPayload>payload;
-        // noinspection JSIgnoredPromiseFromCall - we don't care if it fails
-        doSetLoggedIn(typed.credentials, true);
     }
 });
 
