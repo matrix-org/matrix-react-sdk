@@ -16,7 +16,7 @@ limitations under the License.
 
 import { waitFor } from "@testing-library/react";
 import { renderHook, act } from "@testing-library/react-hooks/dom";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { IRoomDirectoryOptions, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { usePublicRoomDirectory } from "../../src/hooks/usePublicRoomDirectory";
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
@@ -35,19 +35,23 @@ describe("usePublicRoomDirectory", () => {
 
         MatrixClientPeg.getHomeserverName = () => "matrix.org";
         cli.getThirdpartyProtocols = () => Promise.resolve({});
-        cli.publicRooms = ({ filter: { generic_search_term: query } }) =>
-            Promise.resolve({
-                chunk: [
-                    {
-                        room_id: "hello world!",
-                        name: query,
-                        world_readable: true,
-                        guest_can_join: true,
-                        num_joined_members: 1,
-                    },
-                ],
+        cli.publicRooms = ({ filter }: IRoomDirectoryOptions) => {
+            const chunk = filter?.generic_search_term
+                ? [
+                      {
+                          room_id: "hello world!",
+                          name: filter.generic_search_term,
+                          world_readable: true,
+                          guest_can_join: true,
+                          num_joined_members: 1,
+                      },
+                  ]
+                : [];
+            return Promise.resolve({
+                chunk,
                 total_room_count_estimate: 1,
             });
+        };
     });
 
     it("should display public rooms when searching", async () => {
