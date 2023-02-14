@@ -20,6 +20,7 @@ import escapeHtml from "escape-html";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
 import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
+import { M_POLL_END } from "matrix-js-sdk/src/@types/polls";
 
 import { PERMITTED_URL_SCHEMES } from "../HtmlUtils";
 import { makeUserPermalink, RoomPermalinkCreator } from "./permalinks/Permalinks";
@@ -96,8 +97,8 @@ export function getNestedReplyText(
 
     // dev note: do not rely on `body` being safe for HTML usage below.
 
-    const evLink = permalinkCreator.forEvent(ev.getId());
-    const userLink = makeUserPermalink(ev.getSender());
+    const evLink = permalinkCreator.forEvent(ev.getId()!);
+    const userLink = makeUserPermalink(ev.getSender()!);
     const mxid = ev.getSender();
 
     if (M_BEACON_INFO.matches(ev.getType())) {
@@ -107,6 +108,15 @@ export function getNestedReplyText(
                 `<mx-reply><blockquote><a href="${evLink}">In reply to</a> <a href="${userLink}">${mxid}</a>` +
                 `<br>shared ${aTheir} live location.</blockquote></mx-reply>`,
             body: `> <${mxid}> shared ${aTheir} live location.\n\n`,
+        };
+    }
+
+    if (M_POLL_END.matches(ev.getType())) {
+        return {
+            html:
+                `<mx-reply><blockquote><a href="${evLink}">In reply to</a> <a href="${userLink}">${mxid}</a>` +
+                `<br>Ended poll</blockquote></mx-reply>`,
+            body: `> <${mxid}>Ended poll\n\n`,
         };
     }
 
@@ -191,8 +201,8 @@ export function makeReplyMixIn(ev?: MatrixEvent): IEventRelation {
             // with those that do. They should set the m.in_reply_to part as usual, and then add on
             // "rel_type": "m.thread" and "event_id": "$thread_root", copying $thread_root from the replied-to event.
             const relation = ev.getRelation();
-            mixin.rel_type = relation.rel_type;
-            mixin.event_id = relation.event_id;
+            mixin.rel_type = relation?.rel_type;
+            mixin.event_id = relation?.event_id;
         }
     }
 
