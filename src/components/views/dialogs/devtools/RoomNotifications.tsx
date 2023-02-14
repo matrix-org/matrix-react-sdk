@@ -39,11 +39,26 @@ export default function RoomNotifications({ onBack }: IDevtoolsProps): JSX.Eleme
                 <h2>{_t("Room status")}</h2>
                 <ul>
                     <li>
-                        {_t("Room unread status: ")}
-                        <strong>{humanReadableNotificationColor(color)}</strong>
+                        {_t(
+                            "Room unread status: <strong>%(roomUnreadStatus)s</strong>",
+                            {
+                                roomUnreadStatus: humanReadableNotificationColor(color),
+                            },
+                            {
+                                strong: (sub) => <strong>{sub}</strong>,
+                            },
+                        )}
                         {count > 0 && (
                             <>
-                                {_t(", count:")} <strong>{count}</strong>
+                                {_t(
+                                    ", count: <strong>%(roomUnreadCount)s</strong>",
+                                    {
+                                        roomUnreadCount: count,
+                                    },
+                                    {
+                                        strong: (sub) => <strong>{sub}</strong>,
+                                    },
+                                )}
                             </>
                         )}
                     </li>
