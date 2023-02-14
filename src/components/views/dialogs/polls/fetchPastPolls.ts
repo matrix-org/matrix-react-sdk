@@ -20,6 +20,15 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 import { EventTimeline, EventTimelineSet, Room } from "matrix-js-sdk/src/matrix";
 import { Filter, IFilterDefinition } from "matrix-js-sdk/src/filter";
 
+/**
+ * Page timeline backwards until either:
+ * - event older than endOfHistoryPeriodTimestamp is encountered
+ * - end of timeline is reached
+ * @param timelineSet - timelineset to page
+ * @param matrixClient - client
+ * @param endOfHistoryPeriodTimestamp - epoch timestamp to fetch until
+ * @returns void
+ */
 const pagePolls = async (
     timelineSet: EventTimelineSet,
     matrixClient: MatrixClient,
@@ -42,6 +51,13 @@ const pagePolls = async (
 };
 
 const ONE_DAY_MS = 60000 * 60 * 24;
+/**
+ *
+ * @param timelineSet - timelineset to page
+ * @param matrixClient - client
+ * @param historyPeriodDays - number of days of history to fetch, from current day
+ * @returns isLoading - true while fetching history
+ */
 const useFilteredRoomHistory = (
     timelineSet: EventTimelineSet | null,
     matrixClient: MatrixClient,
@@ -53,7 +69,6 @@ const useFilteredRoomHistory = (
         if (!timelineSet) {
             return;
         }
-        // @TODO(kerrya) maybe set this to start of current day - days
         const endOfHistoryPeriodTimestamp = Date.now() - ONE_DAY_MS * historyPeriodDays;
 
         const doFetchHistory = async (): Promise<void> => {
@@ -77,6 +92,14 @@ const filterDefinition: IFilterDefinition = {
         },
     },
 };
+
+/**
+ * Fetch poll start events in the last N days of room history
+ * @param room - room to fetch history for
+ * @param matrixClient - client
+ * @param historyPeriodDays - number of days of history to fetch, from current day
+ * @returns isLoading - true while fetching history
+ */
 export const useFetchPastPolls = (
     room: Room,
     matrixClient: MatrixClient,
