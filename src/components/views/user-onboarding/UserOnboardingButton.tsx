@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import React, { useCallback } from "react";
+import React, { ReactNode, useCallback } from "react";
 
 import { Action } from "../../../dispatcher/actions";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
@@ -34,7 +34,7 @@ interface Props {
     minimized: boolean;
 }
 
-export function UserOnboardingButton({ selected, minimized }: Props): JSX.Element {
+export function UserOnboardingButton({ selected, minimized }: Props): ReactNode {
     const useCase = useSettingValue<UseCase | null>("FTUE.useCaseSelection");
     const visible = useSettingValue<boolean>("FTUE.userOnboardingButton");
 

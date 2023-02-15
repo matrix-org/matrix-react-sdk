@@ -143,7 +143,7 @@ describe("useProfileInfo", () => {
     });
 
     it("should be able to handle an empty result", async () => {
-        cli.getProfileInfo = () => null;
+        cli.getProfileInfo = () => Promise.resolve({});
         const query = "@user:home.server";
 
         const wrapper = mount(

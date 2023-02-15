@@ -545,7 +545,7 @@ export function mkStubRoom(
         isSpaceRoom: jest.fn().mockReturnValue(false),
         loadMembersIfNeeded: jest.fn(),
         maySendMessage: jest.fn().mockReturnValue(true),
-        myUserId: client?.getUserId(),
+        myUserId: client?.getUserId()!,
         name,
         normalizedName: normalize(name || ""),
         off: jest.fn(),

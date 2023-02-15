@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 
 import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";
@@ -24,7 +24,7 @@ import Heading from "../../views/typography/Heading";
 import FeedbackDialog from "../dialogs/FeedbackDialog";
 import { shouldShowFeedback } from "../../../utils/Feedback";
 
-export function UserOnboardingFeedback(): JSX.Element {
+export function UserOnboardingFeedback(): ReactNode {
     if (!shouldShowFeedback()) {
         return null;
     }
