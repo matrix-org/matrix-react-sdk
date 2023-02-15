@@ -51,7 +51,7 @@ describe("<PollHistoryDialog />", () => {
     expectedFilter.setDefinition({
         room: {
             timeline: {
-                types: [M_POLL_START.name, M_POLL_START.altName, "m.room.encrypted"],
+                types: [M_POLL_START.name, M_POLL_START.altName],
             },
         },
     });

@@ -39,11 +39,6 @@ const pagePolls = async (
     const oldestEventTimestamp = events[0]?.getTs() || Date.now();
     const hasMorePages = !!liveTimeline.getPaginationToken(EventTimeline.BACKWARDS);
 
-    console.log("hhh", {
-        oldest: new Date(oldestEventTimestamp).toISOString(),
-        limit: new Date(endOfHistoryPeriodTimestamp).toISOString(),
-    });
-
     if (!hasMorePages || oldestEventTimestamp <= endOfHistoryPeriodTimestamp) {
         return;
     }
@@ -93,7 +88,7 @@ const useTimelineHistory = (
 const filterDefinition: IFilterDefinition = {
     room: {
         timeline: {
-            types: [M_POLL_START.name, M_POLL_START.altName, "m.room.encrypted"],
+            types: [M_POLL_START.name, M_POLL_START.altName],
         },
     },
 };
