@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import React, { ReactNode, useCallback } from "react";
+import React, { useCallback } from "react";
 
 import { Action } from "../../../dispatcher/actions";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
