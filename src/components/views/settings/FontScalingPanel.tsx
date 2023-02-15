@@ -75,6 +75,15 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
         });
     }
 
+    public async componentDidUpdate(): Promise<void> {
+        //Update the layout for the preview window according to the user selection
+        if (this.state.layout !== SettingsStore.getValue("layout")) {
+            this.setState({
+                layout: SettingsStore.getValue("layout"),
+            });
+        }
+    }
+
     public componentWillUnmount(): void {
         this.unmounted = true;
     }
