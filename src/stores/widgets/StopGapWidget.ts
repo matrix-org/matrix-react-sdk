@@ -214,9 +214,9 @@ export class StopGapWidget extends EventEmitter {
         const fromCustomisation = WidgetVariableCustomisations?.provideVariables?.() ?? {};
         const defaults: ITemplateParams = {
             widgetRoomId: this.roomId,
-            currentUserId: this.client.getUserId(),
-            userDisplayName: OwnProfileStore.instance.displayName,
-            userHttpAvatarUrl: OwnProfileStore.instance.getHttpAvatarUrl(),
+            currentUserId: this.client.getUserId()!,
+            userDisplayName: OwnProfileStore.instance.displayName ?? undefined,
+            userHttpAvatarUrl: OwnProfileStore.instance.getHttpAvatarUrl() ?? undefined,
             clientId: ELEMENT_CLIENT_ID,
             clientTheme: SettingsStore.getValue("theme"),
             clientLanguage: getUserLanguage(),

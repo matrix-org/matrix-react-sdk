@@ -163,7 +163,7 @@ export class ThreepidMember extends Member {
 
 export interface IDMUserTileProps {
     member: Member;
-    onRemove(member: Member): void;
+    onRemove?(member: Member): void;
 }
 
 /**
