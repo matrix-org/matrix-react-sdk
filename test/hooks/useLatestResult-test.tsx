@@ -41,8 +41,8 @@ describe("useLatestResult", () => {
             return query;
         };
         const { rerender } = render(<LatestResultsComponent query={0} doRequest={doRequest} />);
-
         await act(() => sleep(100));
+
         expect(screen.getByText("0")).toBeInTheDocument();
 
         rerender(<LatestResultsComponent query={1} doRequest={doRequest} />);
@@ -53,6 +53,7 @@ describe("useLatestResult", () => {
         expect(screen.getByText("0")).toBeInTheDocument();
 
         await act(() => sleep(120));
+
         expect(screen.getByText("2")).toBeInTheDocument();
     });
 
@@ -62,8 +63,8 @@ describe("useLatestResult", () => {
             return query;
         };
         const { rerender } = render(<LatestResultsComponent query={0} doRequest={doRequest} />);
-
         await act(() => sleep(5));
+
         expect(screen.getByText("0")).toBeInTheDocument();
 
         rerender(<LatestResultsComponent query={50} doRequest={doRequest} />);
@@ -74,6 +75,7 @@ describe("useLatestResult", () => {
         expect(screen.getByText("1")).toBeInTheDocument();
 
         await act(() => sleep(50));
+
         expect(screen.getByText("1")).toBeInTheDocument();
     });
 });
