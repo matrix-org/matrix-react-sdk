@@ -24,6 +24,7 @@ import { IDialogProps } from "../IDialogProps";
 import { PollHistoryList } from "./PollHistoryList";
 import { PollHistoryFilter } from "./types";
 import { usePolls } from "./usePollHistory";
+import { PollDetailHeader } from "./PollDetailHeader";
 
 type PollHistoryDialogProps = Pick<IDialogProps, "onFinished"> & {
     roomId: string;
@@ -46,15 +47,31 @@ export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({ roomId, ma
     const { polls } = usePolls(roomId, matrixClient);
     const [filter, setFilter] = useState<PollHistoryFilter>("ACTIVE");
     const [pollStartEvents, setPollStartEvents] = useState(filterAndSortPolls(polls, filter));
+    const [focusedPollId, setFocusedPollId] = useState<string | null>(null);
 
     useEffect(() => {
         setPollStartEvents(filterAndSortPolls(polls, filter));
     }, [filter, polls]);
 
+    const title = focusedPollId ? (
+        <PollDetailHeader filter={filter} onNavigateBack={() => setFocusedPollId(null)} />
+    ) : (
+        _t("Polls history")
+    );
+
     return (
-        <BaseDialog title={_t("Polls history")} onFinished={onFinished}>
+        <BaseDialog title={title} onFinished={onFinished}>
             <div className="mx_PollHistoryDialog_content">
-                <PollHistoryList pollStartEvents={pollStartEvents} filter={filter} onFilterChange={setFilter} />
+                {focusedPollId ? (
+                    <div>Focused poll: {focusedPollId}</div>
+                ) : (
+                    <PollHistoryList
+                        pollStartEvents={pollStartEvents}
+                        filter={filter}
+                        onFilterChange={setFilter}
+                        onItemClick={setFocusedPollId}
+                    />
+                )}
             </div>
         </BaseDialog>
     );

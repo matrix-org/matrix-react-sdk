@@ -23,9 +23,10 @@ import { formatLocalDateShort } from "../../../../DateUtils";
 
 interface Props {
     event: MatrixEvent;
+    onClick: () => void;
 }
 
-const PollListItem: React.FC<Props> = ({ event }) => {
+const PollListItem: React.FC<Props> = ({ event, onClick }) => {
     const pollEvent = event.unstableExtensibleEvent as unknown as PollStartEvent;
     if (!pollEvent) {
         return null;
@@ -33,9 +34,11 @@ const PollListItem: React.FC<Props> = ({ event }) => {
     const formattedDate = formatLocalDateShort(event.getTs());
     return (
         <li data-testid={`pollListItem-${event.getId()!}`} className="mx_PollListItem">
-            <span>{formattedDate}</span>
-            <PollIcon className="mx_PollListItem_icon" />
-            <span className="mx_PollListItem_question">{pollEvent.question.text}</span>
+            <a role="button" className="mx_PollListItem_link" onClick={onClick}>
+                <span>{formattedDate}</span>
+                <PollIcon className="mx_PollListItem_icon" />
+                <span className="mx_PollListItem_question">{pollEvent.question.text}</span>
+            </a>
         </li>
     );
 };

@@ -26,8 +26,14 @@ type PollHistoryListProps = {
     pollStartEvents: MatrixEvent[];
     filter: PollHistoryFilter;
     onFilterChange: (filter: PollHistoryFilter) => void;
+    onItemClick: (pollId: string) => void;
 };
-export const PollHistoryList: React.FC<PollHistoryListProps> = ({ pollStartEvents, filter, onFilterChange }) => {
+export const PollHistoryList: React.FC<PollHistoryListProps> = ({
+    pollStartEvents,
+    filter,
+    onFilterChange,
+    onItemClick,
+}) => {
     return (
         <div className="mx_PollHistoryList">
             <FilterTabGroup<PollHistoryFilter>
@@ -42,7 +48,11 @@ export const PollHistoryList: React.FC<PollHistoryListProps> = ({ pollStartEvent
             {!!pollStartEvents.length ? (
                 <ol className="mx_PollHistoryList_list">
                     {pollStartEvents.map((pollStartEvent) => (
-                        <PollListItem key={pollStartEvent.getId()!} event={pollStartEvent} />
+                        <PollListItem
+                            key={pollStartEvent.getId()!}
+                            onClick={() => onItemClick(pollStartEvent.getId()!)}
+                            event={pollStartEvent}
+                        />
                     ))}
                 </ol>
             ) : (
