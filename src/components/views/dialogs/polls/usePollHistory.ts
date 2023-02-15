@@ -82,7 +82,7 @@ export const usePollsWithRelations = (
             setPollsWithRelations(polls);
         }
         // unsubscribe
-        () => {
+        return () => {
             if (polls) {
                 for (const poll of polls.values()) {
                     poll.off(PollEvent.End, onPollUpdate);
