@@ -24,9 +24,9 @@ import Heading from "../../views/typography/Heading";
 import FeedbackDialog from "../dialogs/FeedbackDialog";
 import { shouldShowFeedback } from "../../../utils/Feedback";
 
-export function UserOnboardingFeedback(): ReactNode {
+export function UserOnboardingFeedback(): JSX.Element {
     if (!shouldShowFeedback()) {
-        return null;
+        return <></>;
     }
 
     return (

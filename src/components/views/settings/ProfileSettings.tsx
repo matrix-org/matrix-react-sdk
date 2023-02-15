@@ -97,7 +97,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
         this.setState({ enableProfileSave: false });
 
         const client = MatrixClientPeg.get();
-        const newState: IState = {};
+        const newState: Partial<IState> = {};
 
         const displayName = this.state.displayName.trim();
         try {
@@ -114,7 +114,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
                 );
                 const { content_uri: uri } = await client.uploadContent(this.state.avatarFile);
                 await client.setAvatarUrl(uri);
-                newState.avatarUrl = mediaFromMxc(uri).getSquareThumbnailHttp(96);
+                newState.avatarUrl = mediaFromMxc(uri).getSquareThumbnailHttp(96) ?? undefined;
                 newState.originalAvatarUrl = newState.avatarUrl;
                 newState.avatarFile = null;
             } else if (this.state.originalAvatarUrl !== this.state.avatarUrl) {
@@ -128,7 +128,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
             });
         }
 
-        this.setState(newState);
+        this.setState<any>(newState);
     };
 
     private onDisplayNameChanged = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -141,7 +141,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
     private onAvatarChanged = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if (!e.target.files || !e.target.files.length) {
             this.setState({
-                avatarUrl: this.state.originalAvatarUrl,
+                avatarUrl: this.state.originalAvatarUrl ?? undefined,
                 avatarFile: null,
                 enableProfileSave: false,
             });
@@ -152,7 +152,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
         const reader = new FileReader();
         reader.onload = (ev) => {
             this.setState({
-                avatarUrl: ev.target.result,
+                avatarUrl: ev.target?.result,
                 avatarFile: file,
                 enableProfileSave: true,
             });

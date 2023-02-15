@@ -34,12 +34,12 @@ interface Props {
     minimized: boolean;
 }
 
-export function UserOnboardingButton({ selected, minimized }: Props): ReactNode {
+export function UserOnboardingButton({ selected, minimized }: Props): JSX.Element {
     const useCase = useSettingValue<UseCase | null>("FTUE.useCaseSelection");
     const visible = useSettingValue<boolean>("FTUE.userOnboardingButton");
 
     if (!visible || minimized || !showUserOnboardingPage(useCase)) {
-        return null;
+        return <></>;
     }
 
     return <UserOnboardingButtonInternal selected={selected} minimized={minimized} />;
