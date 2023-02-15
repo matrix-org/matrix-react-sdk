@@ -39,6 +39,11 @@ const pagePolls = async (
     const oldestEventTimestamp = events[0]?.getTs() || Date.now();
     const hasMorePages = !!liveTimeline.getPaginationToken(EventTimeline.BACKWARDS);
 
+    console.log("hhh", {
+        oldest: new Date(oldestEventTimestamp).toISOString(),
+        limit: new Date(endOfHistoryPeriodTimestamp).toISOString(),
+    });
+
     if (!hasMorePages || oldestEventTimestamp <= endOfHistoryPeriodTimestamp) {
         return;
     }

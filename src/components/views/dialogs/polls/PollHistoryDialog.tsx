@@ -35,7 +35,10 @@ const sortEventsByLatest = (left: MatrixEvent, right: MatrixEvent): number => ri
 const filterPolls =
     (filter: PollHistoryFilter) =>
     (poll: Poll): boolean =>
-        (filter === "ACTIVE") !== poll.isEnded;
+        // exclude polls while they are still loading
+        // to avoid jitter in list
+        !poll.isFetchingResponses && (filter === "ACTIVE") !== poll.isEnded;
+
 const filterAndSortPolls = (polls: Map<string, Poll>, filter: PollHistoryFilter): MatrixEvent[] => {
     return [...polls.values()]
         .filter(filterPolls(filter))
@@ -44,14 +47,16 @@ const filterAndSortPolls = (polls: Map<string, Poll>, filter: PollHistoryFilter)
 };
 
 export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({ roomId, matrixClient, onFinished }) => {
+    const room = matrixClient.getRoom(roomId)!;
+    const { isLoading } = useFetchPastPolls(room, matrixClient);
     const { polls } = usePollsWithRelations(roomId, matrixClient);
     const [filter, setFilter] = useState<PollHistoryFilter>("ACTIVE");
     const [pollStartEvents, setPollStartEvents] = useState(filterAndSortPolls(polls, filter));
-    const room = matrixClient.getRoom(roomId)!;
-    const { isLoading } = useFetchPastPolls(room, matrixClient);
+    const [isLoadingPollResponses, setIsLoadingPollResponses] = useState(false);
 
     useEffect(() => {
         setPollStartEvents(filterAndSortPolls(polls, filter));
+        setIsLoadingPollResponses([...polls.values()].some((poll) => poll.isFetchingResponses));
     }, [filter, polls]);
 
     return (
@@ -59,7 +64,7 @@ export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({ roomId, ma
             <div className="mx_PollHistoryDialog_content">
                 <PollHistoryList
                     pollStartEvents={pollStartEvents}
-                    isLoading={isLoading}
+                    isLoading={isLoading || isLoadingPollResponses}
                     filter={filter}
                     onFilterChange={setFilter}
                 />

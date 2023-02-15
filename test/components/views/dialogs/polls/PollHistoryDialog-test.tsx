@@ -254,6 +254,9 @@ describe("<PollHistoryDialog />", () => {
 
         const { container, queryByText, getByTestId } = getComponent();
 
+        // flush relations calls for polls
+        await flushPromises();
+
         expect(getByTestId("filter-tab-PollHistoryDialog_filter-ACTIVE").firstElementChild).toBeChecked();
 
         expect(container).toMatchSnapshot();
@@ -270,6 +273,9 @@ describe("<PollHistoryDialog />", () => {
 
         const { getByText } = getComponent();
 
+        // wait for relations
+        await flushPromises();
+
         expect(getByText("Question?")).toBeInTheDocument();
 
         // add another poll
@@ -277,6 +283,10 @@ describe("<PollHistoryDialog />", () => {
         // call this with new events
         await room.processPollEvents([pollStart2]);
         // flush decryption promises
+        await flushPromises();
+        // loading relations for new poll
+        expect(getByText("Loading polls")).toBeInTheDocument();
+        // await relations for new poll
         await flushPromises();
 
         expect(getByText("Question?")).toBeInTheDocument();

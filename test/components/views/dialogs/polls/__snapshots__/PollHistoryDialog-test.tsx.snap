@@ -99,20 +99,6 @@ exports[`<PollHistoryDialog /> renders a list of active polls when there are pol
               Question?
             </span>
           </li>
-          <div
-            class="mx_PollHistoryList_loading"
-          >
-            <div
-              class="mx_InlineSpinner"
-            >
-              <div
-                aria-label="Loading…"
-                class="mx_InlineSpinner_icon mx_Spinner_icon"
-                style="width: 16px; height: 16px;"
-              />
-            </div>
-            Loading polls
-          </div>
         </ol>
       </div>
     </div>
