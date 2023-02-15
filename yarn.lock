@@ -1584,15 +1584,15 @@
   resolved "https://registry.yarnpkg.com/@matrix-org/analytics-events/-/analytics-events-0.4.0.tgz#ec75400ac41272cd2d47774da433437aba789bcf"
   integrity sha512-tLeak2pYiyxn431o7EdOJGwRjj2DApybOLZ0YtFMuhv87pBQhc3lz+IKCJ2c8NwV6e7kf4YNaTdXeygBvFPGFw==
 
-"@matrix-org/matrix-sdk-crypto-js@^0.1.0-alpha.2":
-  version "0.1.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-sdk-crypto-js/-/matrix-sdk-crypto-js-0.1.0-alpha.2.tgz#a09d0fea858e817da971a3c9f904632ef7b49eb6"
-  integrity sha512-oVkBCh9YP7H9i4gAoQbZzswniczfo/aIptNa4dxRi4Ff9lSvUCFv6Hvzi7C+90c0/PWZLXjIDTIAWZYmwyd2fA==
+"@matrix-org/matrix-sdk-crypto-js@^0.1.0-alpha.3":
+  version "0.1.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-sdk-crypto-js/-/matrix-sdk-crypto-js-0.1.0-alpha.4.tgz#1b20294e0354c3dcc9c7dc810d883198a4042f04"
+  integrity sha512-mdaDKrw3P5ZVCpq0ioW0pV6ihviDEbS8ZH36kpt9stLKHwwDSopPogE6CkQhi0B1jn1yBUtOYi32mBV/zcOR7g==
 
-"@matrix-org/matrix-wysiwyg@^0.23.0":
-  version "0.23.0"
-  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-wysiwyg/-/matrix-wysiwyg-0.23.0.tgz#32242b18ae9dbb28d920c31f50bbac87ff4317fe"
-  integrity sha512-wO5KYznlfsSIMo0R8tyZqfvZrPkQMaL1qBHzhaeKIsC4vK4MnJ9mj6JiS6+XiuHJyc9nqN+IdeUjKyJOnStHaA==
+"@matrix-org/matrix-wysiwyg@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-wysiwyg/-/matrix-wysiwyg-1.1.1.tgz#a07b13097e72a9bae220a647527d6418c5423827"
+  integrity sha512-pp7poyd3vfC/P34ZRj6u2oyLJuex77egeSsIA1MPowBqtrIAmHkji9xviBdXPcDss2zEI4EZuX77JWXtAfaz7Q==
 
 "@matrix-org/olm@https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.14.tgz":
   version "3.2.14"
@@ -6533,11 +6533,11 @@ matrix-events-sdk@0.0.1:
   integrity sha512-1QEOsXO+bhyCroIe2/A5OwaxHvBm7EsSQ46DEDn8RBIfQwN5HWBpFvyWWR4QY0KHPPnnJdI99wgRiAl7Ad5qaA==
 
 "matrix-js-sdk@github:matrix-org/matrix-js-sdk#develop":
-  version "23.2.0"
-  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/1c26dc02339c6b7c67b030b1701248a2d68c24c0"
+  version "23.3.0"
+  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/108f1573249b733870d287e11ce38531a73e15b0"
   dependencies:
     "@babel/runtime" "^7.12.5"
-    "@matrix-org/matrix-sdk-crypto-js" "^0.1.0-alpha.2"
+    "@matrix-org/matrix-sdk-crypto-js" "^0.1.0-alpha.3"
     another-json "^0.2.0"
     bs58 "^5.0.0"
     content-type "^1.0.4"
