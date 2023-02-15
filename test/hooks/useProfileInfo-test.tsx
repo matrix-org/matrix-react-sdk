@@ -16,6 +16,7 @@ limitations under the License.
 
 import { waitFor } from "@testing-library/react";
 import { renderHook, act } from "@testing-library/react-hooks/dom";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { useProfileInfo } from "../../src/hooks/useProfileInfo";
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
@@ -101,7 +102,7 @@ describe("useProfileInfo", () => {
     });
 
     it("should be able to handle an empty result", async () => {
-        cli.getProfileInfo = () => null;
+        cli.getProfileInfo = () => Promise.resolve({});
         const query = "@user:home.server";
 
         const { result } = render();
@@ -112,6 +113,6 @@ describe("useProfileInfo", () => {
 
         await waitFor(() => expect(result.current.ready).toBe(true));
 
-        expect(result.current.profile).toBeNull();
+        expect(result.current.profile?.display_name).toBeUndefined();
     });
 });
