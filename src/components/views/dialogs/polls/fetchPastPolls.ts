@@ -110,7 +110,7 @@ export const useFetchPastPolls = (
     matrixClient: MatrixClient,
     historyPeriodDays = 30,
 ): { isLoading: boolean } => {
-    const [timelineSet, setTimelineSet] = useState<EventTimelineSet>(null);
+    const [timelineSet, setTimelineSet] = useState<EventTimelineSet | null>(null);
 
     useEffect(() => {
         const filter = new Filter(matrixClient.getSafeUserId());

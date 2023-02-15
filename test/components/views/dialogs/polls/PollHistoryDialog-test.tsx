@@ -74,7 +74,7 @@ describe("<PollHistoryDialog />", () => {
         const timeline = room.getLiveTimeline();
         jest.spyOn(timeline, "getEvents").mockReturnValue([]);
         jest.spyOn(room, "getOrCreateFilteredTimelineSet");
-        mockClient.getOrCreateFilter.mockResolvedValue(expectedFilter.filterId);
+        mockClient.getOrCreateFilter.mockResolvedValue(expectedFilter.filterId!);
         mockClient.paginateEventTimeline.mockReset().mockResolvedValue(false);
 
         jest.spyOn(Date, "now").mockReturnValue(now);
@@ -216,7 +216,7 @@ describe("<PollHistoryDialog />", () => {
         // but we are still fetching history, diaply loader
         expect(getByText("Loading polls")).toBeInTheDocument();
 
-        resolvePagination2(true);
+        resolvePagination2!(true);
         await flushPromises();
 
         // additional results addeds
