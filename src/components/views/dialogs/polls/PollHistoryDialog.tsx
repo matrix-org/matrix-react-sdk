@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { MatrixEvent, Poll } from "matrix-js-sdk/src/matrix";
 
@@ -51,13 +51,9 @@ export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({ roomId, ma
     const { isLoading } = useFetchPastPolls(room, matrixClient);
     const { polls } = usePollsWithRelations(roomId, matrixClient);
     const [filter, setFilter] = useState<PollHistoryFilter>("ACTIVE");
-    const [pollStartEvents, setPollStartEvents] = useState(filterAndSortPolls(polls, filter));
-    const [isLoadingPollResponses, setIsLoadingPollResponses] = useState(false);
 
-    useEffect(() => {
-        setPollStartEvents(filterAndSortPolls(polls, filter));
-        setIsLoadingPollResponses([...polls.values()].some((poll) => poll.isFetchingResponses));
-    }, [filter, polls]);
+    const pollStartEvents = filterAndSortPolls(polls, filter);
+    const isLoadingPollResponses = [...polls.values()].some((poll) => poll.isFetchingResponses);
 
     return (
         <BaseDialog title={_t("Polls history")} onFinished={onFinished}>

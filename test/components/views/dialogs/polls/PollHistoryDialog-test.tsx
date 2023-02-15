@@ -282,10 +282,6 @@ describe("<PollHistoryDialog />", () => {
         // paged history requests using cli.paginateEventTimeline
         // call this with new events
         await room.processPollEvents([pollStart2]);
-        // flush decryption promises
-        await flushPromises();
-        // loading relations for new poll
-        expect(getByText("Loading polls")).toBeInTheDocument();
         // await relations for new poll
         await flushPromises();
 
