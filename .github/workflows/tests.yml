@@ -24,7 +24,6 @@ jobs:
               uses: actions/checkout@v3
               with:
                   repository: ${{ inputs.matrix-js-sdk-sha && 'matrix-org/matrix-react-sdk' || github.repository }}
-                  ref: ${{ inputs.matrix-js-sdk-sha && 't3chguy/downstreamtests' || github.ref }} # TEST
 
             - name: Yarn cache
               uses: actions/setup-node@v3
@@ -64,7 +63,6 @@ jobs:
             - uses: actions/checkout@v3
               with:
                   repository: ${{ inputs.matrix-js-sdk-sha && 'matrix-org/matrix-react-sdk' || github.repository }}
-                  ref: ${{ inputs.matrix-js-sdk-sha && 't3chguy/downstreamtests' || github.ref }} # TEST
 
             - uses: actions/setup-node@v3
               with:
