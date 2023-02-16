@@ -21,7 +21,7 @@ import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { logger } from "matrix-js-sdk/src/logger";
 import { DeviceTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { sleep } from "matrix-js-sdk/src/utils";
+import { defer, sleep } from "matrix-js-sdk/src/utils";
 import {
     ClientEvent,
     IMyDevice,
@@ -927,12 +927,9 @@ describe("<SessionManagerTab />", () => {
                 // get a handle for resolving the delete call
                 // because promise flushing after the confirm modal is resolving this too
                 // and we want to test the loading state here
-                let resolveDeleteRequest: (v?: IAuthData) => void;
+                const resolveDeleteRequest = defer<IAuthData>();
                 mockClient.deleteMultipleDevices.mockImplementation(() => {
-                    const promise = new Promise<IAuthData>((resolve) => {
-                        resolveDeleteRequest = resolve;
-                    });
-                    return promise;
+                    return resolveDeleteRequest.promise;
                 });
 
                 const { getByTestId } = render(getComponent());
@@ -972,7 +969,7 @@ describe("<SessionManagerTab />", () => {
                     undefined,
                 );
 
-                resolveDeleteRequest?.();
+                resolveDeleteRequest.resolve({});
             });
 
             it("signs out of all other devices from other sessions context menu", async () => {
@@ -1351,17 +1348,7 @@ describe("<SessionManagerTab />", () => {
             });
         });
 
-        it("does not render qr code login section when disabled", () => {
-            settingsValueSpy.mockReturnValue(false);
-            const { queryByText } = render(getComponent());
-
-            expect(settingsValueSpy).toHaveBeenCalledWith("feature_qr_signin_reciprocate_show");
-
-            expect(queryByText("Sign in with QR code")).toBeFalsy();
-        });
-
-        it("renders qr code login section when enabled", async () => {
-            settingsValueSpy.mockImplementation((settingName) => settingName === "feature_qr_signin_reciprocate_show");
+        it("renders qr code login section", async () => {
             const { getByText } = render(getComponent());
 
             // wait for versions call to settle
@@ -1371,7 +1358,6 @@ describe("<SessionManagerTab />", () => {
         });
 
         it("enters qr code login section when show QR code button clicked", async () => {
-            settingsValueSpy.mockImplementation((settingName) => settingName === "feature_qr_signin_reciprocate_show");
             const { getByText, getByTestId } = render(getComponent());
             // wait for versions call to settle
             await flushPromises();
