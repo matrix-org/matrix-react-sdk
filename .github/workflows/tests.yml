@@ -5,6 +5,12 @@ on:
         branches: [develop, master]
     repository_dispatch:
         types: [upstream-sdk-notify]
+    workflow_call:
+      inputs:
+        matrix-js-sdk-sha:
+          type: string
+          required: false
+          description: "The matrix-js-sdk SHA to use"
 env:
     # These must be set for fetchdep.sh to get the right branch
     REPOSITORY: ${{ github.repository }}
@@ -24,6 +30,8 @@ jobs:
 
             - name: Install Deps
               run: "./scripts/ci/install-deps.sh --ignore-scripts"
+              env:
+                GITHUB_BASE_REF: ${{ inputs.matrix-js-sdk-sha }}
 
             - name: Get number of CPU cores
               id: cpu-cores
@@ -38,6 +46,7 @@ jobs:
               run: "yarn coverage --ci --reporters github-actions --max-workers ${{ steps.cpu-cores.outputs.count }}"
 
             - name: Upload Artifact
+              if: github.event_name != 'workflow_call'
               uses: actions/upload-artifact@v3
               with:
                   name: coverage
