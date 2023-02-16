@@ -14,188 +14,120 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { render, screen } from "@testing-library/react";
-import { waitFor } from "@testing-library/react";
-import { renderHook } from "@testing-library/react-hooks/dom"; // add act
-import { sleep } from "matrix-js-sdk/src/utils";
-import React, { useEffect, useState } from "react";
-import { act } from "react-dom/test-utils";
+import { renderHook } from "@testing-library/react-hooks/dom";
 
 import { useLatestResult } from "../../src/hooks/useLatestResult";
 
-// function LatestResultsComponent({ query, doRequest }: { query: number; doRequest(query: number): Promise<number> }) {
-//     const [value, setValueInternal] = useState<number>(0);
-//     const [updateQuery, updateResult] = useLatestResult(setValueInternal);
-//     useEffect(() => {
-//         updateQuery(query);
-//         doRequest(query).then((it: number) => {
-//             updateResult(query, it);
-//         });
-//     }, [doRequest, query, updateQuery, updateResult]);
-
-//     return <div>{value}</div>;
-// }
-
-// describe("useLatestResult", () => {
-//     it("should return results", async () => {
-//         const doRequest = async (query: number) => {
-//             await sleep(180);
-//             return query;
-//         };
-//         const { rerender } = render(<LatestResultsComponent query={0} doRequest={doRequest} />);
-//         expect(screen.getByText("0")).toBeInTheDocument();
-//         await act(() => sleep(100));
-
-//         expect(screen.getByText("0")).toBeInTheDocument();
-
-//         rerender(<LatestResultsComponent query={1} doRequest={doRequest} />);
-//         await act(() => sleep(70));
-//         rerender(<LatestResultsComponent query={2} doRequest={doRequest} />);
-//         await act(() => sleep(70));
-
-//         expect(screen.getByText("0")).toBeInTheDocument();
-
-//         await act(() => sleep(120));
-
-//         expect(screen.getByText("2")).toBeInTheDocument();
-//     });
-
-//     it("should prevent out-of-order results", async () => {
-//         const doRequest = async (query: number) => {
-//             await sleep(query);
-//             return query;
-//         };
-//         const { rerender } = render(<LatestResultsComponent query={0} doRequest={doRequest} />);
-//         await act(() => sleep(5));
-
-//         expect(screen.getByText("0")).toBeInTheDocument();
-
-//         rerender(<LatestResultsComponent query={50} doRequest={doRequest} />);
-//         await act(() => sleep(5));
-//         rerender(<LatestResultsComponent query={1} doRequest={doRequest} />);
-//         await act(() => sleep(5));
-
-//         expect(screen.getByText("1")).toBeInTheDocument();
-
-//         await act(() => sleep(50));
-
-//         expect(screen.getByText("1")).toBeInTheDocument();
-//     });
-// });
-
+// All tests use fake timers throughout, comments will show the elapsed time in ms
 jest.useFakeTimers();
+
+const mockSetter = jest.fn();
+
+beforeEach(() => {
+    mockSetter.mockClear();
+});
+
+function simulateRequest(hookResult, { id, delayInMs, result }: { id: string; delayInMs: number; result: string }) {
+    const [setQuery, setResult] = hookResult.current;
+
+    setQuery(id);
+    setTimeout(() => setResult(id, result), delayInMs);
+}
 
 describe("renderhook tests", () => {
     it("should return a result", () => {
-        const mockSetter = jest.fn();
         const { result } = renderHook(() => useLatestResult(mockSetter));
-        const [setQuery, setResult] = result.current;
 
-        const query = { query: "query1", delayInMs: 100, result: "result1" };
+        const query = { id: "query1", delayInMs: 100, result: "result1" };
+        simulateRequest(result, query);
 
-        // firstly set a query and a timeout for the result
-        setQuery(query.query);
-        setTimeout(() => setResult(query.query, query.result), query.delayInMs);
+        // check we have made no calls to the setter
+        expect(mockSetter).not.toHaveBeenCalled();
 
-        // now advance the timers, check the setter is called
-        jest.advanceTimersByTime(query.delayInMs);
+        // advance timer until the timeout elapses, check we have called the setter
+        jest.advanceTimersToNextTimer();
+        expect(mockSetter).toHaveBeenCalledTimes(1);
         expect(mockSetter).toHaveBeenLastCalledWith(query.result);
     });
 
     it("should not let a slower response to an earlier query overwrite the result of a later query", () => {
-        const mockSetter = jest.fn();
         const { result } = renderHook(() => useLatestResult(mockSetter));
-        const [setQuery, setResult] = result.current;
 
-        const slowQuery = { query: "slowQuery", delayInMs: 500, result: "slowResult" };
-        const fastQuery = { query: "fastQuery", delayInMs: 100, result: "fastResult" };
+        const slowQuery = { id: "slowQuery", delayInMs: 500, result: "slowResult" };
+        const fastQuery = { id: "fastQuery", delayInMs: 100, result: "fastResult" };
 
-        // firstly set a query and a timeout for the result
-        setQuery(slowQuery.query);
-        setTimeout(() => setResult(slowQuery.query, slowQuery.result), slowQuery.delayInMs);
+        simulateRequest(result, slowQuery);
+        simulateRequest(result, fastQuery);
 
-        setQuery(fastQuery.query);
-        setTimeout(() => setResult(fastQuery.query, fastQuery.result), fastQuery.delayInMs);
-
-        // check we have no calls
-        expect(mockSetter).not.toHaveBeenCalled();
-
-        // advance until fastQuery has responded, check the setter is called
-        // with the result
+        // advance to fastQuery response, check the setter call
         jest.advanceTimersToNextTimer();
         expect(mockSetter).toHaveBeenCalledTimes(1);
         expect(mockSetter).toHaveBeenLastCalledWith(fastQuery.result);
 
-        // advance time to after the slow query has returned, check the setter
-        // has not been recalled and the result is still from the fast query
+        // advance time to slowQuery response, check the setter has _not_ been
+        // called again and that the result is still from the fast query
         jest.advanceTimersToNextTimer();
         expect(mockSetter).toHaveBeenCalledTimes(1);
         expect(mockSetter).toHaveBeenLastCalledWith(fastQuery.result);
     });
 
     it("should return expected results when all response times simiar", () => {
-        const mockSetter = jest.fn();
         const { result } = renderHook(() => useLatestResult(mockSetter));
-        const [setQuery, setResult] = result.current;
 
         const commonDelayInMs = 180;
-        const query1 = { query: "q1", result: "r1" };
-        const query2 = { query: "q2", result: "r2" };
-        const query3 = { query: "q3", result: "r3" };
+        const query1 = { id: "q1", delayInMs: commonDelayInMs, result: "r1" };
+        const query2 = { id: "q2", delayInMs: commonDelayInMs, result: "r2" };
+        const query3 = { id: "q3", delayInMs: commonDelayInMs, result: "r3" };
 
-        // firstly set a query and a timeout for the result
-        setQuery(query1.query);
-        setTimeout(() => setResult(query1.query, query1.result), commonDelayInMs);
-        jest.advanceTimersByTime(commonDelayInMs - 80);
+        // ELAPSED: 0ms, no queries sent
+        simulateRequest(result, query1);
+        jest.advanceTimersByTime(100);
 
+        // ELAPSED: 100ms, query1 sent, no responses
+        expect(mockSetter).not.toHaveBeenCalled();
+        simulateRequest(result, query2);
+        jest.advanceTimersByTime(70);
+
+        // ELAPSED: 170ms, query1 and query2 sent, no responses
+        expect(mockSetter).not.toHaveBeenCalled();
+        simulateRequest(result, query3);
+        jest.advanceTimersByTime(70);
+
+        // ELAPSED: 240ms, all queries sent, responses for query1 and query2
         expect(mockSetter).not.toHaveBeenCalled();
 
-        setQuery(query2.query);
-        setTimeout(() => setResult(query2.query, query2.result), commonDelayInMs);
-        jest.advanceTimersByTime(70);
-
-        expect(mockSetter).not.toHaveBeenCalled(); // TTE 170ms
-
-        setQuery(query3.query);
-        setTimeout(() => setResult(query3.query, query3.result), commonDelayInMs);
-        jest.advanceTimersByTime(70);
-
-        // check we have no calls
-        expect(mockSetter).toHaveBeenCalledTimes(0); // TTE 280ms
-
-        jest.advanceTimersByTime(120); // TTE 400ms
-        expect(mockSetter).toHaveBeenLastCalledWith(query3.result); // TTE 280ms
+        // ELAPSED: 360ms, all queries sent, all queries have responses
+        jest.advanceTimersByTime(120);
+        expect(mockSetter).toHaveBeenLastCalledWith(query3.result);
     });
 
     it("should prevent out of order results", () => {
-        const mockSetter = jest.fn();
         const { result } = renderHook(() => useLatestResult(mockSetter));
-        const [setQuery, setResult] = result.current;
 
-        const query1 = { query: "q1", delayInMs: 0, result: "r1" };
-        const query2 = { query: "q2", delayInMs: 50, result: "r2" };
-        const query3 = { query: "q3", delayInMs: 1, result: "r3" };
+        const query1 = { id: "q1", delayInMs: 0, result: "r1" };
+        const query2 = { id: "q2", delayInMs: 50, result: "r2" };
+        const query3 = { id: "q3", delayInMs: 1, result: "r3" };
 
-        // firstly set a query and a timeout for the result
-        setQuery(query1.query);
-        setTimeout(() => setResult(query1.query, query1.result), query1.delayInMs);
+        // ELAPSED: 0ms, no queries sent
+        simulateRequest(result, query1);
         jest.advanceTimersByTime(5);
 
+        // ELAPSED: 5ms, query1 sent, response from query1
         expect(mockSetter).toHaveBeenCalledTimes(1);
         expect(mockSetter).toHaveBeenLastCalledWith(query1.result);
-
-        setQuery(query2.query);
-        setTimeout(() => setResult(query2.query, query2.result), query2.delayInMs);
+        simulateRequest(result, query2);
         jest.advanceTimersByTime(5);
 
-        setQuery(query3.query);
-        setTimeout(() => setResult(query3.query, query3.result), query3.delayInMs);
+        // ELAPSED: 10ms, query1 and query2 sent, response from query1
+        simulateRequest(result, query3);
         jest.advanceTimersByTime(5);
 
+        // ELAPSED: 15ms, all queries sent, responses from query1 and query3
         expect(mockSetter).toHaveBeenCalledTimes(2);
-        expect(mockSetter).toHaveBeenLastCalledWith(query3.result); // TTE 170ms
+        expect(mockSetter).toHaveBeenLastCalledWith(query3.result);
 
+        // ELAPSED: 65ms, all queries sent, all queries have responses
         jest.advanceTimersByTime(50);
-        expect(mockSetter).toHaveBeenLastCalledWith(query3.result); // TTE 170ms
+        expect(mockSetter).toHaveBeenLastCalledWith(query3.result);
     });
 });
