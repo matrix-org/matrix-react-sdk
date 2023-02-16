@@ -33,7 +33,7 @@ jobs:
             - name: Install Deps
               run: "./scripts/ci/install-deps.sh --ignore-scripts"
               env:
-                  GITHUB_BASE_REF: ${{ inputs.matrix-js-sdk-sha }}
+                  JS_SDK_GITHUB_BASE_REF: ${{ inputs.matrix-js-sdk-sha }}
 
             - name: Get number of CPU cores
               id: cpu-cores
@@ -70,3 +70,5 @@ jobs:
 
             - name: Run tests
               run: "./scripts/ci/app-tests.sh"
+              env:
+                  JS_SDK_GITHUB_BASE_REF: ${{ inputs.matrix-js-sdk-sha }}

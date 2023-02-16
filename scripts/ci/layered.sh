@@ -14,7 +14,7 @@ set -ex
 # for the primary repo (react-sdk in this case).
 
 # Set up the js-sdk first
-scripts/fetchdep.sh matrix-org matrix-js-sdk
+GITHUB_BASE_REF=$JS_SDK_GITHUB_BASE_REF scripts/fetchdep.sh matrix-org matrix-js-sdk
 pushd matrix-js-sdk
 yarn link
 yarn install --pure-lockfile
