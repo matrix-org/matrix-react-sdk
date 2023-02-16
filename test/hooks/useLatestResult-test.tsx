@@ -28,10 +28,7 @@ beforeEach(() => {
 });
 
 function simulateRequest(
-    hookResult: RenderHookResult<
-        () => {},
-        [(query: string) => void, (query: string, result: string) => void]
-    >["result"],
+    hookResult: RenderHookResult<typeof useLatestResult, ReturnType<typeof useLatestResult>>["result"],
     { id, delayInMs, result }: { id: string; delayInMs: number; result: string },
 ) {
     const [setQuery, setResult] = hookResult.current;
