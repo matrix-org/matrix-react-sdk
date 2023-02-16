@@ -102,7 +102,7 @@ describe("renderhook tests", () => {
         expect(mockSetter).toHaveBeenLastCalledWith(query.result);
     });
 
-    it("should not let a slower response to an earlier query overwrie the result of a later query", () => {
+    it("should not let a slower response to an earlier query overwrite the result of a later query", () => {
         const mockSetter = jest.fn();
         const { result } = renderHook(() => useLatestResult(mockSetter));
         const [setQuery, setResult] = result.current;
@@ -132,28 +132,37 @@ describe("renderhook tests", () => {
         expect(mockSetter).toHaveBeenCalledTimes(1);
         expect(mockSetter).toHaveBeenLastCalledWith(fastQuery.result);
     });
-    it("should return results", async () => {
+    it("should return expected results when all response times simiar", async () => {
         const mockSetter = jest.fn();
         const { result } = renderHook(() => useLatestResult(mockSetter));
-        // now have [setQuery, setResult] = result.current;
+        const [setQuery, setResult] = result.current;
 
-        const query = { query: "query1", delayInMs: 100, result: "result1" };
+        const commonDelayInMs = 180;
+        const query1 = { query: "q1", result: "r1" };
+        const query2 = { query: "q2", result: "r2" };
+        const query3 = { query: "q3", result: "r3" };
 
         // firstly set a query and a timeout for the result
-        result.current[0](query.query);
-        setTimeout(() => result.current[1](query.query, query.result), query.delayInMs);
+        setQuery(query1.query);
+        setTimeout(() => setResult(query1.query, query1.result), commonDelayInMs);
+        jest.advanceTimersByTime(commonDelayInMs - 80);
 
-        // now advance the timers, check the setter is called
-        jest.advanceTimersByTime(query.delayInMs);
-        expect(mockSetter).toHaveBeenLastCalledWith(query.result);
+        expect(mockSetter).not.toHaveBeenCalled();
 
-        // fire two more queries with short delays
-        const quickQuery1 = { query: "qq1", delayInMs: 30, result: "qr1" };
-        const quickQuery2 = { query: "qq2", delayInMs: 30, result: "qr2" };
+        setQuery(query2.query);
+        setTimeout(() => setResult(query2.query, query2.result), commonDelayInMs);
+        jest.advanceTimersByTime(70);
 
-        result.current[0](quickQuery1.query);
-        setTimeout(() => result.current[1](quickQuery1.query, quickQuery1.result), quickQuery1.delayInMs);
-        jest.advanceTimersByTime(quickQuery1.delayInMs);
-        expect(mockSetter).toHaveBeenLastCalledWith(query.result);
+        expect(mockSetter).not.toHaveBeenCalled(); // TTE 170ms
+
+        setQuery(query3.query);
+        setTimeout(() => setResult(query3.query, query3.result), commonDelayInMs);
+        jest.advanceTimersByTime(70);
+
+        // check we have no calls
+        expect(mockSetter).toHaveBeenCalledTimes(0); // TTE 280ms
+
+        jest.advanceTimersByTime(120); // TTE 400ms
+        expect(mockSetter).toHaveBeenLastCalledWith(query3.result); // TTE 280ms
     });
 });
