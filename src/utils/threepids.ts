@@ -70,9 +70,9 @@ export const lookupThreePids = async (
         token,
     );
 
-    return lookedUp.threepids.map((l: [threePidType: string, threePidId: string, mxid: string][]) => ({
-        threePidId: l[1],
-        mxid: l[2],
+    return lookedUp.threepids.map(([threePidType, threePidId, mxid]) => ({
+        threePidId,
+        mxid,
     }));
 };
 
