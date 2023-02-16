@@ -23,7 +23,7 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v3
               with:
-                repository: ${{ github.event_name == 'workflow_call' && 'matrix-org/matrix-react-sdk' || github.repository }}
+                repository: ${{ github.matrix-js-sdk-sha && 'matrix-org/matrix-react-sdk' || github.repository }}
 
             - name: Yarn cache
               uses: actions/setup-node@v3
@@ -62,7 +62,7 @@ jobs:
         steps:
             - uses: actions/checkout@v3
               with:
-                repository: ${{ github.event_name == 'workflow_call' && 'matrix-org/matrix-react-sdk' || github.repository }}
+                repository: ${{ github.matrix-js-sdk-sha && 'matrix-org/matrix-react-sdk' || github.repository }}
 
             - uses: actions/setup-node@v3
               with:
