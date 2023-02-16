@@ -112,7 +112,7 @@ export function inviteUsersToRoom(
 ): Promise<void> {
     return inviteMultipleToRoom(roomId, userIds, sendSharedHistoryKeys, progressCallback)
         .then((result) => {
-            const room = MatrixClientPeg.get().getRoom(roomId);
+            const room = MatrixClientPeg.get().getRoom(roomId)!;
             showAnyInviteErrors(result.states, room, result.inviter);
         })
         .catch((err) => {
@@ -142,7 +142,7 @@ export function showAnyInviteErrors(
         });
         return false;
     } else {
-        const errorList = [];
+        const errorList: string[] = [];
         for (const addr of failedUsers) {
             if (states[addr] === "error") {
                 const reason = inviter.getErrorText(addr);
@@ -173,16 +173,19 @@ export function showAnyInviteErrors(
                                 <div key={addr} className="mx_InviteDialog_tile mx_InviteDialog_tile--inviterError">
                                     <div className="mx_InviteDialog_tile_avatarStack">
                                         <BaseAvatar
-                                            url={avatarUrl ? mediaFromMxc(avatarUrl).getSquareThumbnailHttp(24) : null}
-                                            name={name}
-                                            idName={user.userId}
+                                            url={
+                                                (avatarUrl && mediaFromMxc(avatarUrl).getSquareThumbnailHttp(24)) ??
+                                                undefined
+                                            }
+                                            name={name!}
+                                            idName={user?.userId}
                                             width={36}
                                             height={36}
                                         />
                                     </div>
                                     <div className="mx_InviteDialog_tile_nameStack">
                                         <span className="mx_InviteDialog_tile_nameStack_name">{name}</span>
-                                        <span className="mx_InviteDialog_tile_nameStack_userId">{user.userId}</span>
+                                        <span className="mx_InviteDialog_tile_nameStack_userId">{user?.userId}</span>
                                     </div>
                                     <div className="mx_InviteDialog_tile--inviterError_errorText">
                                         {inviter.getErrorText(addr)}

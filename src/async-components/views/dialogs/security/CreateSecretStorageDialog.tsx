@@ -621,7 +621,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             <form onSubmit={this.onPassPhraseNextClick}>
                 <p>
                     {_t(
-                        "Enter a security phrase only you know, as it's used to safeguard your data. " +
+                        "Enter a Security Phrase only you know, as it's used to safeguard your data. " +
                             "To be secure, you shouldn't re-use your account password.",
                     )}
                 </p>
@@ -842,7 +842,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         }
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let content;
         if (this.state.error) {
             content = (
