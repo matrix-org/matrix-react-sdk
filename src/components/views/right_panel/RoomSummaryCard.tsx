@@ -52,9 +52,11 @@ import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { PollHistoryDialog } from "../dialogs/polls/PollHistoryDialog";
+import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 
 interface IProps {
     room: Room;
+    permalinkCreator: RoomPermalinkCreator;
     onClose(): void;
 }
 
@@ -268,7 +270,7 @@ const onRoomSettingsClick = (ev: ButtonEvent): void => {
     PosthogTrackers.trackInteraction("WebRightPanelRoomInfoSettingsButton", ev);
 };
 
-const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
+const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) => {
     const cli = useContext(MatrixClientContext);
 
     const onShareRoomClick = (): void => {
@@ -287,6 +289,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
         Modal.createDialog(PollHistoryDialog, {
             roomId: room.roomId,
             matrixClient: cli,
+            permalinkCreator,
         });
     };
 

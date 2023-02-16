@@ -71,33 +71,49 @@ exports[`<PollHistoryDialog /> renders a list of active polls when there are pol
             class="mx_PollListItem"
             data-testid="pollListItem-$2"
           >
-            <span>
-              02/02/23
-            </span>
             <div
-              class="mx_PollListItem_icon"
-            />
-            <span
-              class="mx_PollListItem_question"
+              tabindex="0"
             >
-              Where?
-            </span>
+              <div
+                class="mx_PollListItem_content"
+              >
+                <span>
+                  02/02/23
+                </span>
+                <div
+                  class="mx_PollListItem_icon"
+                />
+                <span
+                  class="mx_PollListItem_question"
+                >
+                  Where?
+                </span>
+              </div>
+            </div>
           </li>
           <li
             class="mx_PollListItem"
             data-testid="pollListItem-$1"
           >
-            <span>
-              02/02/23
-            </span>
             <div
-              class="mx_PollListItem_icon"
-            />
-            <span
-              class="mx_PollListItem_question"
+              tabindex="0"
             >
-              Question?
-            </span>
+              <div
+                class="mx_PollListItem_content"
+              >
+                <span>
+                  02/02/23
+                </span>
+                <div
+                  class="mx_PollListItem_icon"
+                />
+                <span
+                  class="mx_PollListItem_question"
+                >
+                  Question?
+                </span>
+              </div>
+            </div>
           </li>
         </ol>
       </div>

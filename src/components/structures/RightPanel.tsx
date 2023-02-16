@@ -262,7 +262,13 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 break;
 
             case RightPanelPhases.RoomSummary:
-                card = <RoomSummaryCard room={this.props.room} onClose={this.onClose} />;
+                card = (
+                    <RoomSummaryCard
+                        room={this.props.room}
+                        onClose={this.onClose}
+                        permalinkCreator={this.props.permalinkCreator}
+                    />
+                );
                 break;
 
             case RightPanelPhases.Widget:

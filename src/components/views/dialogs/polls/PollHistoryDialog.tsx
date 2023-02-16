@@ -25,10 +25,13 @@ import { PollHistoryList } from "./PollHistoryList";
 import { PollHistoryFilter } from "./types";
 import { usePolls } from "./usePollHistory";
 import { PollDetailHeader } from "./PollDetailHeader";
+import { PollDetail } from "./PollDetail";
+import { RoomPermalinkCreator } from "../../../../utils/permalinks/Permalinks";
 
 type PollHistoryDialogProps = Pick<IDialogProps, "onFinished"> & {
     roomId: string;
     matrixClient: MatrixClient;
+    permalinkCreator: RoomPermalinkCreator;
 };
 
 const sortEventsByLatest = (left: MatrixEvent, right: MatrixEvent): number => right.getTs() - left.getTs();
@@ -43,7 +46,12 @@ const filterAndSortPolls = (polls: Map<string, Poll>, filter: PollHistoryFilter)
         .sort(sortEventsByLatest);
 };
 
-export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({ roomId, matrixClient, onFinished }) => {
+export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({
+    roomId,
+    matrixClient,
+    permalinkCreator,
+    onFinished,
+}) => {
     const { polls } = usePolls(roomId, matrixClient);
     const [filter, setFilter] = useState<PollHistoryFilter>("ACTIVE");
     const [pollStartEvents, setPollStartEvents] = useState(filterAndSortPolls(polls, filter));
@@ -53,7 +61,8 @@ export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({ roomId, ma
         setPollStartEvents(filterAndSortPolls(polls, filter));
     }, [filter, polls]);
 
-    const title = focusedPollId ? (
+    const focusedPoll = focusedPollId ? polls.get(focusedPollId) : undefined;
+    const title = focusedPoll ? (
         <PollDetailHeader filter={filter} onNavigateBack={() => setFocusedPollId(null)} />
     ) : (
         _t("Polls history")
@@ -62,8 +71,8 @@ export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({ roomId, ma
     return (
         <BaseDialog title={title} onFinished={onFinished}>
             <div className="mx_PollHistoryDialog_content">
-                {focusedPollId ? (
-                    <div>Focused poll: {focusedPollId}</div>
+                {focusedPoll ? (
+                    <PollDetail poll={focusedPoll} permalinkCreator={permalinkCreator} requestModalClose={onFinished} />
                 ) : (
                     <PollHistoryList
                         pollStartEvents={pollStartEvents}
