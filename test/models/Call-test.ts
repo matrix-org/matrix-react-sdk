@@ -107,7 +107,7 @@ const setUpClientRoomAndStores = (): {
             content,
         });
         room.addLiveEvents([event]);
-        return { event_id: event.getId() };
+        return { event_id: event.getId()! };
     });
 
     setupAsyncStoreWithClient(WidgetStore.instance, client);
@@ -383,7 +383,7 @@ describe("JitsiCall", () => {
             await waitFor(
                 () =>
                     expect(
-                        room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId).getContent(),
+                        room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId)?.getContent(),
                     ).toEqual({
                         devices: [client.getDeviceId()],
                         expires_ts: now1 + call.STUCK_DEVICE_TIMEOUT_MS,
@@ -396,7 +396,7 @@ describe("JitsiCall", () => {
             await waitFor(
                 () =>
                     expect(
-                        room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId).getContent(),
+                        room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId)?.getContent(),
                     ).toEqual({
                         devices: [],
                         expires_ts: now2 + call.STUCK_DEVICE_TIMEOUT_MS,
@@ -495,7 +495,7 @@ describe("JitsiCall", () => {
             });
             const expectDevices = (devices: IMyDevice[]) =>
                 expect(
-                    room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId).getContent(),
+                    room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId)?.getContent(),
                 ).toEqual({
                     expires_ts: expect.any(Number),
                     devices: devices.map((d) => d.device_id),
