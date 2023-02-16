@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { sleep } from "matrix-js-sdk/src/utils";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -169,7 +169,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         return MatrixClientPeg.get()
             .getRooms()
             .filter((r) => {
-                return r.hasMembershipState(MatrixClientPeg.get().getUserId(), "invite");
+                return r.hasMembershipState(MatrixClientPeg.get().getUserId()!, "invite");
             });
     };
 
@@ -247,7 +247,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         );
     }
 
-    private renderManageInvites(): JSX.Element {
+    private renderManageInvites(): ReactNode {
         const { invitedRoomIds } = this.state;
 
         if (invitedRoomIds.size === 0) {
@@ -381,7 +381,6 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         }
 
         const useNewSessionManager = SettingsStore.getValue("feature_new_device_manager");
-        const showQrCodeEnabled = SettingsStore.getValue("feature_qr_signin_reciprocate_show");
         const devicesSection = useNewSessionManager ? null : (
             <>
                 <div className="mx_SettingsTab_heading">{_t("Where you're signed in")}</div>
@@ -394,15 +393,13 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     </span>
                     <DevicesPanel />
                 </div>
-                {showQrCodeEnabled ? (
-                    <LoginWithQRSection onShowQr={this.onShowQRClicked} versions={this.state.versions} />
-                ) : null}
+                <LoginWithQRSection onShowQr={this.onShowQRClicked} versions={this.state.versions} />
             </>
         );
 
         const client = MatrixClientPeg.get();
 
-        if (showQrCodeEnabled && this.state.showLoginWithQR) {
+        if (this.state.showLoginWithQR) {
             return (
                 <div className="mx_SettingsTab mx_SecurityUserSettingsTab">
                     <LoginWithQR
