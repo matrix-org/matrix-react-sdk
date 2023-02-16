@@ -26,11 +26,6 @@ clone() {
     fi
 }
 
-# This path is used by downstream testing CI to skip auto branch matching but reuse the rest of the code paths
-if [ -n "$SPECIFIC_GIT_SHA" ]; then
-    clone $deforg $defrepo $SPECIFIC_GIT_SHA
-fi
-
 # A function that gets info about a PR from the GitHub API based on its number
 getPRInfo() {
     number=$1
