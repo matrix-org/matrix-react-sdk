@@ -27,7 +27,10 @@ beforeEach(() => {
     mockSetter.mockClear();
 });
 
-function simulateRequest(hookResult, { id, delayInMs, result }: { id: string; delayInMs: number; result: string }) {
+function simulateRequest(
+    hookResult: any,
+    { id, delayInMs, result }: { id: string; delayInMs: number; result: string },
+) {
     const [setQuery, setResult] = hookResult.current;
 
     setQuery(id);
