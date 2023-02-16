@@ -55,7 +55,7 @@ describe("<PollListItem />", () => {
         const onClick = jest.fn();
         const { getByText } = getComponent({ onClick });
 
-        fireEvent.click(getByText('Question?'));
+        fireEvent.click(getByText("Question?"));
 
         expect(onClick).toHaveBeenCalled();
     });

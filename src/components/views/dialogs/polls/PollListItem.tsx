@@ -20,6 +20,9 @@ import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { Icon as PollIcon } from "../../../../../res/img/element-icons/room/composer/poll.svg";
 import { formatLocalDateShort } from "../../../../DateUtils";
+import TooltipTarget from "../../elements/TooltipTarget";
+import { _t } from "../../../../languageHandler";
+import { Alignment } from "../../elements/Tooltip";
 
 interface Props {
     event: MatrixEvent;
@@ -33,12 +36,14 @@ const PollListItem: React.FC<Props> = ({ event, onClick }) => {
     }
     const formattedDate = formatLocalDateShort(event.getTs());
     return (
-        <li data-testid={`pollListItem-${event.getId()!}`} className="mx_PollListItem">
-            <a role="button" className="mx_PollListItem_link" onClick={onClick}>
-                <span>{formattedDate}</span>
-                <PollIcon className="mx_PollListItem_icon" />
-                <span className="mx_PollListItem_question">{pollEvent.question.text}</span>
-            </a>
+        <li data-testid={`pollListItem-${event.getId()!}`} className="mx_PollListItem" onClick={onClick}>
+            <TooltipTarget label={_t("View poll")} alignment={Alignment.Top}>
+                <div className="mx_PollListItem_content" >
+                    <span>{formattedDate}</span>
+                    <PollIcon className="mx_PollListItem_icon" />
+                    <span className="mx_PollListItem_question">{pollEvent.question.text}</span>
+                </div>
+            </TooltipTarget>
         </li>
     );
 };
