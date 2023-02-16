@@ -14,20 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Poll } from "matrix-js-sdk/src/matrix";
 import React from "react";
+import { Poll } from "matrix-js-sdk/src/matrix";
 
-import { Icon as LeftCaretIcon } from "../../../../../res/img/element-icons/caret-left.svg";
 import { _t } from "../../../../languageHandler";
-import AccessibleButton from "../../elements/AccessibleButton";
-import MPollBody from "../../messages/MPollBody";
-import { IBodyProps } from "../../messages/IBodyProps";
-import { PollHistoryFilter } from "./types";
 import dispatcher from "../../../../dispatcher/dispatcher";
 import { Action } from "../../../../dispatcher/actions";
 import { ViewRoomPayload } from "../../../../dispatcher/payloads/ViewRoomPayload";
 import { RoomPermalinkCreator } from "../../../../utils/permalinks/Permalinks";
 import { MediaEventHelper } from "../../../../utils/MediaEventHelper";
+import AccessibleButton from "../../elements/AccessibleButton";
+import MPollBody from "../../messages/MPollBody";
 
 interface Props {
     poll: Poll;
@@ -35,20 +32,20 @@ interface Props {
     permalinkCreator: RoomPermalinkCreator;
 }
 
-const NOOP = () => {};
+const NOOP = (): void => {};
 
 export const PollDetail: React.FC<Props> = ({ poll, permalinkCreator, requestModalClose }) => {
     // link to end event for ended polls
     const eventIdToLinkTo = poll.isEnded ? poll.endEventId! : poll.pollId;
     const linkToTimeline = permalinkCreator.forEvent(eventIdToLinkTo);
 
-    const onLinkClick = (e: React.MouseEvent) => {
+    const onLinkClick = (e: React.MouseEvent): void => {
         if (e.ctrlKey || e.metaKey) {
             // native behavior for link on ctrl/cmd + click
             return;
         }
+        // otherwise handle navigation in the app
         e.preventDefault();
-
         dispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             event_id: eventIdToLinkTo,

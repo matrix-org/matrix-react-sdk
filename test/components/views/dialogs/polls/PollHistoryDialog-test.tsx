@@ -28,6 +28,7 @@ import {
     setupRoomWithPollEvents,
     unmockIntlDateTimeFormat,
 } from "../../../../test-utils";
+import { RoomPermalinkCreator } from "../../../../../src/utils/permalinks/Permalinks";
 
 describe("<PollHistoryDialog />", () => {
     const userId = "@alice:domain.org";
@@ -43,6 +44,7 @@ describe("<PollHistoryDialog />", () => {
     const defaultProps = {
         roomId,
         matrixClient: mockClient,
+        permalinkCreator: new RoomPermalinkCreator(room),
         onFinished: jest.fn(),
     };
     const getComponent = () => render(<PollHistoryDialog {...defaultProps} />);

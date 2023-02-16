@@ -37,6 +37,7 @@ import WidgetAvatar from "../avatars/WidgetAvatar";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import WidgetStore, { IApp } from "../../../stores/WidgetStore";
 import { E2EStatus } from "../../../utils/ShieldUtils";
+import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import RoomContext from "../../../contexts/RoomContext";
 import { UIComponent, UIFeature } from "../../../settings/UIFeature";
 import { ChevronFace, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
@@ -52,7 +53,6 @@ import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { PollHistoryDialog } from "../dialogs/polls/PollHistoryDialog";
-import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 
 interface IProps {
     room: Room;

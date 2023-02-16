@@ -20,8 +20,8 @@ import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { Icon as PollIcon } from "../../../../../res/img/element-icons/room/composer/poll.svg";
 import { formatLocalDateShort } from "../../../../DateUtils";
-import TooltipTarget from "../../elements/TooltipTarget";
 import { _t } from "../../../../languageHandler";
+import TooltipTarget from "../../elements/TooltipTarget";
 import { Alignment } from "../../elements/Tooltip";
 
 interface Props {
