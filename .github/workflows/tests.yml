@@ -6,11 +6,11 @@ on:
     repository_dispatch:
         types: [upstream-sdk-notify]
     workflow_call:
-      inputs:
-        matrix-js-sdk-sha:
-          type: string
-          required: false
-          description: "The matrix-js-sdk SHA to use"
+        inputs:
+            matrix-js-sdk-sha:
+                type: string
+                required: false
+                description: "The matrix-js-sdk SHA to use"
 env:
     # These must be set for fetchdep.sh to get the right branch
     REPOSITORY: ${{ github.repository }}
@@ -31,7 +31,7 @@ jobs:
             - name: Install Deps
               run: "./scripts/ci/install-deps.sh --ignore-scripts"
               env:
-                GITHUB_BASE_REF: ${{ inputs.matrix-js-sdk-sha }}
+                  GITHUB_BASE_REF: ${{ inputs.matrix-js-sdk-sha }}
 
             - name: Get number of CPU cores
               id: cpu-cores
