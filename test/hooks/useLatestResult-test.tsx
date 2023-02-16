@@ -86,7 +86,7 @@ import { useLatestResult } from "../../src/hooks/useLatestResult";
 jest.useFakeTimers();
 
 describe("renderhook tests", () => {
-    it("should return a result", async () => {
+    it("should return a result", () => {
         const mockSetter = jest.fn();
         const { result } = renderHook(() => useLatestResult(mockSetter));
         const [setQuery, setResult] = result.current;
@@ -132,7 +132,8 @@ describe("renderhook tests", () => {
         expect(mockSetter).toHaveBeenCalledTimes(1);
         expect(mockSetter).toHaveBeenLastCalledWith(fastQuery.result);
     });
-    it("should return expected results when all response times simiar", async () => {
+
+    it("should return expected results when all response times simiar", () => {
         const mockSetter = jest.fn();
         const { result } = renderHook(() => useLatestResult(mockSetter));
         const [setQuery, setResult] = result.current;
@@ -164,5 +165,37 @@ describe("renderhook tests", () => {
 
         jest.advanceTimersByTime(120); // TTE 400ms
         expect(mockSetter).toHaveBeenLastCalledWith(query3.result); // TTE 280ms
+    });
+
+    it("should prevent out of order results", () => {
+        const mockSetter = jest.fn();
+        const { result } = renderHook(() => useLatestResult(mockSetter));
+        const [setQuery, setResult] = result.current;
+
+        const query1 = { query: "q1", delayInMs: 0, result: "r1" };
+        const query2 = { query: "q2", delayInMs: 50, result: "r2" };
+        const query3 = { query: "q3", delayInMs: 1, result: "r3" };
+
+        // firstly set a query and a timeout for the result
+        setQuery(query1.query);
+        setTimeout(() => setResult(query1.query, query1.result), query1.delayInMs);
+        jest.advanceTimersByTime(5);
+
+        expect(mockSetter).toHaveBeenCalledTimes(1);
+        expect(mockSetter).toHaveBeenLastCalledWith(query1.result);
+
+        setQuery(query2.query);
+        setTimeout(() => setResult(query2.query, query2.result), query2.delayInMs);
+        jest.advanceTimersByTime(5);
+
+        setQuery(query3.query);
+        setTimeout(() => setResult(query3.query, query3.result), query3.delayInMs);
+        jest.advanceTimersByTime(5);
+
+        expect(mockSetter).toHaveBeenCalledTimes(2);
+        expect(mockSetter).toHaveBeenLastCalledWith(query3.result); // TTE 170ms
+
+        jest.advanceTimersByTime(50);
+        expect(mockSetter).toHaveBeenLastCalledWith(query3.result); // TTE 170ms
     });
 });
