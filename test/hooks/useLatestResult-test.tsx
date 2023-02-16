@@ -73,7 +73,7 @@ describe("renderhook tests", () => {
         expect(mockSetter).toHaveBeenLastCalledWith(fastQuery.result);
     });
 
-    it("should return expected results when all response times simiar", () => {
+    it("should return expected results when all response times similar", () => {
         const { result } = renderHook(() => useLatestResult(mockSetter));
 
         const commonDelayInMs = 180;
