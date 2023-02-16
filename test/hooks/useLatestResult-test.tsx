@@ -129,6 +129,7 @@ describe("renderhook tests", () => {
         expect(mockSetter).toHaveBeenLastCalledWith(query3.result);
 
         // ELAPSED: 65ms, all queries sent, all queries have responses
+        // so check that the result is still from query3, not query2
         jest.advanceTimersByTime(50);
         expect(mockSetter).toHaveBeenLastCalledWith(query3.result);
     });
