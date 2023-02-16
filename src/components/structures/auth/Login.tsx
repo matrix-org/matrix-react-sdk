@@ -563,7 +563,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         );
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const loader =
             this.isBusy() && !this.state.busyLoggingIn ? (
                 <div className="mx_Login_loader">
@@ -594,7 +594,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 <div className="mx_AuthBody_paddedFooter">
                     <div className="mx_AuthBody_paddedFooter_title">
                         <InlineSpinner w={20} h={20} />
-                        {this.props.isSyncing ? _t("Syncing...") : _t("Signing In...")}
+                        {this.props.isSyncing ? _t("Syncing…") : _t("Signing In…")}
                     </div>
                     {this.props.isSyncing && (
                         <div className="mx_AuthBody_paddedFooter_subtitle">

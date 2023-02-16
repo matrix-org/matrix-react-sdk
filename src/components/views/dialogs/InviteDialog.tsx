@@ -100,7 +100,7 @@ class DMUserTile extends React.PureComponent<IDMUserTileProps> {
         this.props.onRemove(this.props.member);
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const avatarSize = 20;
         const avatar = <SearchResultAvatar user={this.props.member} size={avatarSize} />;
 
@@ -187,7 +187,7 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
         return result;
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let timestamp = null;
         if (this.props.lastActiveTs) {
             const humanTs = humanizeTime(this.props.lastActiveTs);
@@ -469,10 +469,14 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
     }
 
     private startDm = async (): Promise<void> => {
+        this.setState({
+            busy: true,
+        });
+
         try {
             const cli = MatrixClientPeg.get();
             const targets = this.convertFilter();
-            startDmOnFirstMessage(cli, targets);
+            await startDmOnFirstMessage(cli, targets);
             this.props.onFinished(true);
         } catch (err) {
             logger.error(err);
@@ -684,7 +688,8 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                                 display_name: profile.displayname,
                                 avatar_url: profile.avatar_url,
                             }),
-                            userId: lookup.mxid,
+                            // Use the search term as identifier, so that it shows up in suggestions.
+                            userId: term,
                         },
                     ],
                 });
@@ -934,7 +939,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             <DMRoomTile
                 member={r.user}
                 lastActiveTs={lastActive(r)}
-                key={r.userId}
+                key={r.user.userId}
                 onToggle={this.toggleMember}
                 highlightWord={this.state.filterText}
                 isSelected={this.state.targets.some((t) => t.userId === r.userId)}
@@ -1082,7 +1087,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         }
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let spinner = null;
         if (this.state.busy) {
             spinner = <Spinner w={20} h={20} />;

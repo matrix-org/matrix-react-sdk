@@ -243,7 +243,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
         return (
             <div>
                 <Spinner />
-                <p>{_t("Waiting for partner to confirm...")}</p>
+                <p>{_t("Waiting for partner to confirm…")}</p>
             </div>
         );
     }
@@ -256,7 +256,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
         return <VerificationCancelled onDone={this.onCancelClick} />;
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let body;
         switch (this.state.phase) {
             case PHASE_START:

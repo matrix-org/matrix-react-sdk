@@ -182,13 +182,13 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
             });
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let error = null;
         if (this.state.errStr) {
             error = <div className="error">{this.state.errStr}</div>;
         }
 
-        let auth = <div>{_t("Loading...")}</div>;
+        let auth = <div>{_t("Loading…")}</div>;
         if (this.state.authData && this.state.authEnabled) {
             auth = (
                 <div>
