@@ -19,6 +19,7 @@ import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { EventTimeline, EventTimelineSet, Room } from "matrix-js-sdk/src/matrix";
 import { Filter, IFilterDefinition } from "matrix-js-sdk/src/filter";
+import { logger } from "matrix-js-sdk/src/logger";
 
 /**
  * Page timeline backwards until either:
@@ -75,6 +76,8 @@ const useTimelineHistory = (
             setIsLoading(true);
             try {
                 await pagePolls(timelineSet, matrixClient, endOfHistoryPeriodTimestamp);
+            } catch (error) {
+                logger.error("Failed to fetch room polls history", error);
             } finally {
                 setIsLoading(false);
             }
