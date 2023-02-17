@@ -24,7 +24,7 @@ import SettingsStore from "../../../../settings/SettingsStore";
 
 interface IProps {
     onShowQr: () => void;
-    versions: IServerVersions;
+    versions?: IServerVersions;
 }
 
 export default class LoginWithQRSection extends React.Component<IProps> {

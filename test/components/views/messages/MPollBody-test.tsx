@@ -65,7 +65,7 @@ describe("MPollBody", () => {
         expect(allVotes(newVoteRelations([]))).toEqual([]);
     });
 
-    xit("renders a loader while responses are still loading", async () => {
+    it("renders a loader while responses are still loading", async () => {
         const votes = [
             responseEvent("@me:example.com", "pizza"),
             responseEvent("@bellc:example.com", "pizza"),
@@ -76,7 +76,7 @@ describe("MPollBody", () => {
         const renderResult = await newMPollBody(votes, [], undefined, undefined, false);
 
         // spinner rendered
-        expect(renderResult.getByTestId("spinner")).toBeTruthy();
+        expect(renderResult.getByTestId("spinner")).toBeInTheDocument();
     });
 
     it("renders no votes if none were made", async () => {
