@@ -779,7 +779,7 @@ describe("MPollBody", () => {
             responseEvent("@qr:example.com", "italian", 16),
         ];
 
-        jest.spyOn(votes[1], 'isDecryptionFailure').mockReturnValue(true);
+        jest.spyOn(votes[1], "isDecryptionFailure").mockReturnValue(true);
         const { getByText } = await newMPollBody(votes);
         expect(getByText("Due to decryption errors, some votes may not be counted")).toBeInTheDocument();
     });
