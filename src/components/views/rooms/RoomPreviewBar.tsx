@@ -58,7 +58,7 @@ enum MessageCase {
 
 interface IProps {
     // The id of the room to be previewed
-    roomId: string;
+    roomId?: string;
 
     // if inviterName is specified, the preview bar will shown an invite to the room.
     // You should also specify onRejectClick if specifying inviterName
@@ -315,7 +315,9 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
             }
             case MessageCase.NotLoggedIn: {
                 const opts: RoomPreviewOpts = { canJoin: false };
-                ModuleRunner.instance.invoke(RoomViewLifecycle.PreviewRoomNotLoggedIn, opts, this.props.roomId);
+                if (this.props.roomId) {
+                    ModuleRunner.instance.invoke(RoomViewLifecycle.PreviewRoomNotLoggedIn, opts, this.props.roomId);
+                }
                 if (opts.canJoin) {
                     title = _t("Join the room to participate");
                     primaryActionLabel = _t("Join");
