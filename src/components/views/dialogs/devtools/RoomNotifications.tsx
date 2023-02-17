@@ -20,7 +20,7 @@ import React, { useContext } from "react";
 
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import { useNotificationState } from "../../../../hooks/useRoomNotificationState";
-import { _t } from "../../../../languageHandler";
+import { _t, _td } from "../../../../languageHandler";
 import { determineUnreadState } from "../../../../RoomNotifs";
 import { humanReadableNotificationColor } from "../../../../stores/notifications/NotificationColor";
 import { doesRoomOrThreadHaveUnreadMessages } from "../../../../Unread";
@@ -40,26 +40,14 @@ export default function RoomNotifications({ onBack }: IDevtoolsProps): JSX.Eleme
                 <ul>
                     <li>
                         {_t(
-                            "Room unread status: <strong>%(roomUnreadStatus)s</strong>",
+                            "Room unread status: <strong>%(status)s</strong>, count: <strong>%(count)s</strong>",
                             {
-                                roomUnreadStatus: humanReadableNotificationColor(color),
+                                status: humanReadableNotificationColor(color),
+                                count,
                             },
                             {
                                 strong: (sub) => <strong>{sub}</strong>,
                             },
-                        )}
-                        {count > 0 && (
-                            <>
-                                {_t(
-                                    ", count: <strong>%(roomUnreadCount)s</strong>",
-                                    {
-                                        roomUnreadCount: count,
-                                    },
-                                    {
-                                        strong: (sub) => <strong>{sub}</strong>,
-                                    },
-                                )}
-                            </>
                         )}
                     </li>
                     <li>
@@ -74,21 +62,15 @@ export default function RoomNotifications({ onBack }: IDevtoolsProps): JSX.Eleme
                         )}
                     </li>
                     <li>
-                        {cli.isRoomEncrypted(room.roomId!)
-                            ? _t(
-                                  "Room is <strong>encrypted ✅</strong>",
-                                  {},
-                                  {
-                                      strong: (sub) => <strong>{sub}</strong>,
-                                  },
-                              )
-                            : _t(
-                                  "Room is <strong>not encrypted 🚨</strong>",
-                                  {},
-                                  {
-                                      strong: (sub) => <strong>{sub}</strong>,
-                                  },
-                              )}
+                        {_t(
+                            cli.isRoomEncrypted(room.roomId!)
+                                ? _td("Room is <strong>encrypted ✅</strong>")
+                                : _td("Room is <strong>not encrypted 🚨</strong>"),
+                            {},
+                            {
+                                strong: (sub) => <strong>{sub}</strong>,
+                            },
+                        )}
                     </li>
                 </ul>
             </section>
