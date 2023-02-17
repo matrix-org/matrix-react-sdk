@@ -1933,7 +1933,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                                 invitedEmail={invitedEmail}
                                 oobData={this.props.oobData}
                                 signUrl={this.props.threepidInvite?.signUrl}
-                                room={this.state.room}
                                 roomId={this.state.roomId}
                             />
                         </ErrorBoundary>
