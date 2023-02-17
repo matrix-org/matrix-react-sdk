@@ -42,7 +42,7 @@ export interface ITestEvent extends IPosthogEvent {
 
 describe("PosthogAnalytics", () => {
     let fakePosthog: PostHog;
-    const shaHashes = {
+    const shaHashes: Record<string, string> = {
         "42": "73475cb40a568e8da8a045ced110137e159f890ac4da883b6b17dc651b3a8049",
         "some": "a6b46dd0d1ae5e86cbc8f37e75ceeb6760230c1ca4ffbcb0c97b96dd7d9c464b",
         "pii": "bd75b3e080945674c0351f75e0db33d1e90986fa07b318ea7edf776f5eef38d4",
@@ -54,10 +54,10 @@ describe("PosthogAnalytics", () => {
 
         window.crypto = {
             subtle: {
-                digest: async (_, encodedMessage) => {
+                digest: async (_: AlgorithmIdentifier, encodedMessage: BufferSource) => {
                     const message = new TextDecoder().decode(encodedMessage);
                     const hexHash = shaHashes[message];
-                    const bytes = [];
+                    const bytes: number[] = [];
                     for (let c = 0; c < hexHash.length; c += 2) {
                         bytes.push(parseInt(hexHash.slice(c, c + 2), 16));
                     }
@@ -68,6 +68,7 @@ describe("PosthogAnalytics", () => {
     });
 
     afterEach(() => {
+        // @ts-ignore
         window.crypto = null;
         SdkConfig.unset(); // we touch the config, so clean up
     });
@@ -116,7 +117,7 @@ describe("PosthogAnalytics", () => {
                 foo: "bar",
             });
             expect(mocked(fakePosthog).capture.mock.calls[0][0]).toBe("JestTestEvents");
-            expect(mocked(fakePosthog).capture.mock.calls[0][1]["foo"]).toEqual("bar");
+            expect(mocked(fakePosthog).capture.mock.calls[0][1]!["foo"]).toEqual("bar");
         });
 
         it("Should not track events if anonymous", async () => {
@@ -209,7 +210,7 @@ describe("PosthogAnalytics", () => {
             analytics.trackEvent<ITestEvent>({
                 eventName: "JestTestEvents",
             });
-            expect(mocked(fakePosthog).capture.mock.calls[0][1]["$set"]).toStrictEqual({
+            expect(mocked(fakePosthog).capture.mock.calls[0][1]!["$set"]).toStrictEqual({
                 WebLayout: "IRC",
             });
         });
@@ -226,7 +227,7 @@ describe("PosthogAnalytics", () => {
             analytics.trackEvent<ITestEvent>({
                 eventName: "JestTestEvents",
             });
-            expect(mocked(fakePosthog).capture.mock.calls[0][1]["$set"]).toStrictEqual({
+            expect(mocked(fakePosthog).capture.mock.calls[0][1]!["$set"]).toStrictEqual({
                 WebLayout: "Bubble",
             });
         });
@@ -243,7 +244,7 @@ describe("PosthogAnalytics", () => {
             analytics.trackEvent<ITestEvent>({
                 eventName: "JestTestEvents",
             });
-            expect(mocked(fakePosthog).capture.mock.calls[0][1]["$set"]).toStrictEqual({
+            expect(mocked(fakePosthog).capture.mock.calls[0][1]!["$set"]).toStrictEqual({
                 WebLayout: "Group",
             });
         });
@@ -261,7 +262,7 @@ describe("PosthogAnalytics", () => {
             analytics.trackEvent<ITestEvent>({
                 eventName: "JestTestEvents",
             });
-            expect(mocked(fakePosthog).capture.mock.calls[0][1]["$set"]).toStrictEqual({
+            expect(mocked(fakePosthog).capture.mock.calls[0][1]!["$set"]).toStrictEqual({
                 WebLayout: "Compact",
             });
         });

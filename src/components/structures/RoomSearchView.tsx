@@ -99,8 +99,6 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                                 return b.length - a.length;
                             });
 
-                            // Process all thread roots returned in this batch of search results
-                            // XXX: This won't work for results coming from Seshat which won't include the bundled relationship
                             for (const result of results.results) {
                                 for (const event of result.context.getTimeline()) {
                                     const bundledRelationship =
@@ -109,11 +107,11 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                                         );
                                     if (!bundledRelationship || event.getThread()) continue;
                                     const room = client.getRoom(event.getRoomId());
-                                    const thread = room.findThreadForEvent(event);
+                                    const thread = room?.findThreadForEvent(event);
                                     if (thread) {
                                         event.setThread(thread);
                                     } else {
-                                        room.createThread(event.getId(), event, [], true);
+                                        room?.createThread(event.getId()!, event, [], true);
                                     }
                                 }
                             }
@@ -211,7 +209,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
             scrollPanel?.checkScroll();
         };
 
-        let lastRoomId: string;
+        let lastRoomId: string | undefined;
         let mergedTimeline: MatrixEvent[] = [];
         let ourEventsIndexes: number[] = [];
 

@@ -38,7 +38,7 @@ describe("WidgetPermissionStore", () => {
         type: "m.custom",
         url: "https://invalid.address.here",
     });
-    let settings = {}; // key value store
+    let settings: Record<string, any> = {}; // key value store
 
     beforeEach(() => {
         settings = {}; // clear settings
@@ -59,22 +59,22 @@ describe("WidgetPermissionStore", () => {
     });
 
     it("should persist OIDCState.Allowed for a widget", () => {
-        widgetPermissionStore.setOIDCState(w, WidgetKind.Account, null, OIDCState.Allowed);
+        widgetPermissionStore.setOIDCState(w, WidgetKind.Account, roomId, OIDCState.Allowed);
         // check it remembered the value
-        expect(widgetPermissionStore.getOIDCState(w, WidgetKind.Account, null)).toEqual(OIDCState.Allowed);
+        expect(widgetPermissionStore.getOIDCState(w, WidgetKind.Account, roomId)).toEqual(OIDCState.Allowed);
     });
 
     it("should persist OIDCState.Denied for a widget", () => {
-        widgetPermissionStore.setOIDCState(w, WidgetKind.Account, null, OIDCState.Denied);
+        widgetPermissionStore.setOIDCState(w, WidgetKind.Account, roomId, OIDCState.Denied);
         // check it remembered the value
-        expect(widgetPermissionStore.getOIDCState(w, WidgetKind.Account, null)).toEqual(OIDCState.Denied);
+        expect(widgetPermissionStore.getOIDCState(w, WidgetKind.Account, roomId)).toEqual(OIDCState.Denied);
     });
 
     it("should update OIDCState for a widget", () => {
-        widgetPermissionStore.setOIDCState(w, WidgetKind.Account, null, OIDCState.Allowed);
-        widgetPermissionStore.setOIDCState(w, WidgetKind.Account, null, OIDCState.Denied);
+        widgetPermissionStore.setOIDCState(w, WidgetKind.Account, roomId, OIDCState.Allowed);
+        widgetPermissionStore.setOIDCState(w, WidgetKind.Account, roomId, OIDCState.Denied);
         // check it remembered the latest value
-        expect(widgetPermissionStore.getOIDCState(w, WidgetKind.Account, null)).toEqual(OIDCState.Denied);
+        expect(widgetPermissionStore.getOIDCState(w, WidgetKind.Account, roomId)).toEqual(OIDCState.Denied);
     });
 
     it("should scope the location for a widget when setting OIDC state", () => {

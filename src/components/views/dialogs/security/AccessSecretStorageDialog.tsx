@@ -41,7 +41,7 @@ const KEY_FILE_MAX_SIZE = 128;
 const VALIDATION_THROTTLE_MS = 200;
 
 interface IProps extends IDialogProps {
-    keyInfo: ISecretStorageKeyInfo;
+    keyInfo?: ISecretStorageKeyInfo;
     checkPrivateKey: (k: { passphrase?: string; recoveryKey?: string }) => boolean;
 }
 
@@ -62,7 +62,7 @@ interface IState {
 export default class AccessSecretStorageDialog extends React.PureComponent<IProps, IState> {
     private fileUpload = React.createRef<HTMLInputElement>();
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -137,7 +137,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
     };
 
     private onRecoveryKeyFileChange = async (ev: ChangeEvent<HTMLInputElement>): Promise<void> => {
-        if (ev.target.files.length === 0) return;
+        if (!ev.target.files?.length) return;
 
         const f = ev.target.files[0];
 
@@ -170,7 +170,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
     };
 
     private onRecoveryKeyFileUploadClick = (): void => {
-        this.fileUpload.current.click();
+        this.fileUpload.current?.click();
     };
 
     private onPassPhraseNext = async (ev: FormEvent<HTMLFormElement> | React.MouseEvent): Promise<void> => {
@@ -268,16 +268,12 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         }
     }
 
-    public render(): JSX.Element {
-        const hasPassphrase =
-            this.props.keyInfo &&
-            this.props.keyInfo.passphrase &&
-            this.props.keyInfo.passphrase.salt &&
-            this.props.keyInfo.passphrase.iterations;
+    public render(): React.ReactNode {
+        const hasPassphrase = this.props.keyInfo?.passphrase?.salt && this.props.keyInfo?.passphrase?.iterations;
 
         const resetButton = (
             <div className="mx_AccessSecretStorageDialog_reset">
-                {_t("Forgotten or lost all recovery methods? <a>Reset all</a>", null, {
+                {_t("Forgotten or lost all recovery methods? <a>Reset all</a>", undefined, {
                     a: (sub) => (
                         <AccessibleButton
                             kind="link_inline"
@@ -405,7 +401,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                                     value={this.state.recoveryKey}
                                     onChange={this.onRecoveryKeyChange}
                                     autoFocus={true}
-                                    forceValidity={this.state.recoveryKeyCorrect}
+                                    forceValidity={this.state.recoveryKeyCorrect ?? undefined}
                                     autoComplete="off"
                                 />
                             </div>

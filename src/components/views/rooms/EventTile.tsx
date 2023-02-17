@@ -608,8 +608,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
     }
 
     private propsEqual(objA: EventTileProps, objB: EventTileProps): boolean {
-        const keysA = Object.keys(objA);
-        const keysB = Object.keys(objB);
+        const keysA = Object.keys(objA) as Array<keyof EventTileProps>;
+        const keysB = Object.keys(objB) as Array<keyof EventTileProps>;
 
         if (keysA.length !== keysB.length) {
             return false;
@@ -864,7 +864,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         );
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const msgtype = this.props.mxEvent.getContent().msgtype;
         const eventType = this.props.mxEvent.getType();
         const {
@@ -1479,7 +1479,7 @@ class E2ePadlock extends React.Component<IE2ePadlockProps, IE2ePadlockState> {
         this.setState({ hover: false });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let tooltip = null;
         if (this.state.hover) {
             tooltip = <Tooltip className="mx_EventTile_e2eIcon_tooltip" label={this.props.title} />;
@@ -1511,9 +1511,9 @@ function SentReceipt({ messageState }: ISentReceiptProps): JSX.Element {
         nonCssBadge = <NotificationBadge notification={StaticNotificationState.RED_EXCLAMATION} />;
     }
 
-    let label = _t("Sending your message...");
+    let label = _t("Sending your message…");
     if (messageState === "encrypting") {
-        label = _t("Encrypting your message...");
+        label = _t("Encrypting your message…");
     } else if (isSent) {
         label = _t("Your message was sent");
     } else if (isFailed) {

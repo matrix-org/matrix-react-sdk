@@ -41,15 +41,13 @@ class VectorPushRuleDefinition {
     }
 
     // Translate the rule actions and its enabled value into vector state
-    public ruleToVectorState(rule: IAnnotatedPushRule): VectorState {
+    public ruleToVectorState(rule: IAnnotatedPushRule): VectorState | undefined {
         let enabled = false;
         if (rule) {
             enabled = rule.enabled;
         }
 
-        for (const stateKey in PushRuleVectorState.states) {
-            // eslint-disable-line guard-for-in
-            const state: VectorState = PushRuleVectorState.states[stateKey];
+        for (const state of Object.values(PushRuleVectorState.states)) {
             const vectorStateToActions = this.vectorStateToActions[state];
 
             if (!vectorStateToActions) {
@@ -85,7 +83,7 @@ export type { VectorPushRuleDefinition };
 /**
  * The descriptions of rules managed by the Vector UI.
  */
-export const VectorPushRulesDefinitions = {
+export const VectorPushRulesDefinitions: Record<string, VectorPushRuleDefinition> = {
     // Messages containing user's display name
     ".m.rule.contains_display_name": new VectorPushRuleDefinition({
         description: _td("Messages containing my display name"), // passed through _t() translation in src/components/views/settings/Notifications.js

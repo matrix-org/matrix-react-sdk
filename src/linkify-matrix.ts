@@ -19,7 +19,7 @@ import * as linkifyjs from "linkifyjs";
 import { Opts, registerCustomProtocol, registerPlugin } from "linkifyjs";
 import linkifyElement from "linkify-element";
 import linkifyString from "linkify-string";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { User } from "matrix-js-sdk/src/matrix";
 
 import {
     parsePermalink,
@@ -105,13 +105,9 @@ function matrixOpaqueIdLinkifyParser({
 
 function onUserClick(event: MouseEvent, userId: string): void {
     event.preventDefault();
-    const member = new RoomMember(null, userId);
-    if (!member) {
-        return;
-    }
     dis.dispatch<ViewUserPayload>({
         action: Action.ViewUser,
-        member: member,
+        member: new User(userId),
     });
 }
 
@@ -230,7 +226,7 @@ export const options: Opts = {
 };
 
 // Run the plugins
-registerPlugin(Type.RoomAlias, ({ scanner, parser, utils }) => {
+registerPlugin(Type.RoomAlias, ({ scanner, parser, utils }: any) => {
     const token = scanner.tokens.POUND as "#";
     matrixOpaqueIdLinkifyParser({
         scanner,
@@ -241,7 +237,7 @@ registerPlugin(Type.RoomAlias, ({ scanner, parser, utils }) => {
     });
 });
 
-registerPlugin(Type.UserId, ({ scanner, parser, utils }) => {
+registerPlugin(Type.UserId, ({ scanner, parser, utils }: any) => {
     const token = scanner.tokens.AT as "@";
     matrixOpaqueIdLinkifyParser({
         scanner,
