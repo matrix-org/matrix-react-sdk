@@ -17,6 +17,7 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { IPresenceOpts } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import dis from "./dispatcher/dispatcher";
@@ -97,12 +98,19 @@ class Presence {
         const oldState = this.state;
         this.state = newState;
 
-        if (MatrixClientPeg.get().isGuest()) {
+        const client = MatrixClientPeg.get();
+        if (client.isGuest()) {
             return; // don't try to set presence when a guest; it won't work.
         }
 
         try {
-            await MatrixClientPeg.get().setPresence({ presence: this.state });
+            // Keep old status_msg, potentially set by other clients
+            const oldRemote = await client.getPresence(client.getUserId());
+            const request: IPresenceOpts = { presence: this.state };
+            if (oldRemote.status_msg) {
+                request.status_msg = oldRemote.status_msg;
+            }
+            await client.setPresence(request);
             logger.info("Presence:", newState);
         } catch (err) {
             logger.error("Failed to set presence:", err);
