@@ -44,18 +44,19 @@ describe("VoiceBroadcastRecordingsStore", () => {
             if (roomId === room.roomId) {
                 return room;
             }
+            return null;
         });
         infoEvent = mkVoiceBroadcastInfoStateEvent(
             roomId,
             VoiceBroadcastInfoState.Started,
-            client.getUserId(),
-            client.getDeviceId(),
+            client.getUserId()!,
+            client.getDeviceId()!,
         );
         otherInfoEvent = mkVoiceBroadcastInfoStateEvent(
             roomId,
             VoiceBroadcastInfoState.Started,
-            client.getUserId(),
-            client.getDeviceId(),
+            client.getUserId()!,
+            client.getDeviceId()!,
         );
         recording = new VoiceBroadcastRecording(infoEvent, client);
         otherRecording = new VoiceBroadcastRecording(otherInfoEvent, client);

@@ -24,6 +24,7 @@ import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 
 interface IProps extends IDialogProps {
+    top?: ReactNode;
     title?: string;
     description?: ReactNode;
     className?: string;
@@ -44,11 +45,12 @@ export default class InfoDialog extends React.Component<IProps> {
         this.props.onFinished();
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <BaseDialog
                 className="mx_InfoDialog"
                 onFinished={this.props.onFinished}
+                top={this.props.top}
                 title={this.props.title}
                 contentId="mx_Dialog_content"
                 hasCancel={this.props.hasCloseButton}

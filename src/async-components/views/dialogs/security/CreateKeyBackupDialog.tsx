@@ -239,7 +239,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             <form onSubmit={this.onPassPhraseNextClick}>
                 <p>
                     {_t(
-                        "<b>Warning</b>: You should only set up key backup from a trusted computer.",
+                        "<b>Warning</b>: you should only set up key backup from a trusted computer.",
                         {},
                         { b: (sub) => <b>{sub}</b> },
                     )}
@@ -327,7 +327,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
                                 onChange={this.onPassPhraseConfirmChange}
                                 value={this.state.passPhraseConfirm}
                                 className="mx_CreateKeyBackupDialog_passPhraseInput"
-                                placeholder={_t("Repeat your Security Phrase...")}
+                                placeholder={_t("Repeat your Security Phrase…")}
                                 autoFocus={true}
                             />
                         </div>
@@ -451,7 +451,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             case Phase.KeepItSafe:
                 return _t("Make a copy of your Security Key");
             case Phase.BackingUp:
-                return _t("Starting backup...");
+                return _t("Starting backup…");
             case Phase.Done:
                 return _t("Success!");
             default:
@@ -459,7 +459,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         }
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let content;
         if (this.state.error) {
             content = (

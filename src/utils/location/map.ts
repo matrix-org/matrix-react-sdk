@@ -24,7 +24,7 @@ import { parseGeoUri } from "./parseGeoUri";
 import { findMapStyleUrl } from "./findMapStyleUrl";
 import { LocationShareError } from "./LocationShareErrors";
 
-export const createMap = (interactive: boolean, bodyId: string, onError: (error: Error) => void): maplibregl.Map => {
+export const createMap = (interactive: boolean, bodyId: string, onError?: (error: Error) => void): maplibregl.Map => {
     try {
         const styleUrl = findMapStyleUrl();
 
@@ -54,7 +54,7 @@ export const createMap = (interactive: boolean, bodyId: string, onError: (error:
                 "Failed to load map: check map_style_url in config.json has a " + "valid URL and API key",
                 e.error,
             );
-            onError(new Error(LocationShareError.MapStyleUrlNotReachable));
+            onError?.(new Error(LocationShareError.MapStyleUrlNotReachable));
         });
 
         return map;
@@ -83,7 +83,7 @@ export const makeMapSiteLink = (coords: GeolocationCoordinates): string => {
 };
 
 export const createMapSiteLinkFromEvent = (event: MatrixEvent): string => {
-    const content: Object = event.getContent();
+    const content = event.getContent();
     const mLocation = content[M_LOCATION.name];
     if (mLocation !== undefined) {
         const uri = mLocation["uri"];

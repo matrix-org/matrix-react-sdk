@@ -42,7 +42,7 @@ import MPollBody from "../../../../src/components/views/messages/MPollBody";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import { MediaEventHelper } from "../../../../src/utils/MediaEventHelper";
 
-const CHECKED = "mx_MPollBody_option_checked";
+const CHECKED = "mx_PollOption_checked";
 const userId = "@me:example.com";
 
 const mockClient = getMockClientWithEventEmitter({
@@ -75,13 +75,8 @@ describe("MPollBody", () => {
         // render without waiting for responses
         const renderResult = await newMPollBody(votes, [], undefined, undefined, false);
 
-        // votes still displayed
-        expect(votesCount(renderResult, "pizza")).toBe("2 votes");
-        expect(votesCount(renderResult, "poutine")).toBe("1 vote");
-        expect(votesCount(renderResult, "italian")).toBe("0 votes");
-        expect(votesCount(renderResult, "wings")).toBe("1 vote");
         // spinner rendered
-        expect(renderResult.getByTestId("totalVotes").innerHTML).toMatchSnapshot();
+        expect(renderResult.getByTestId("spinner")).toBeInTheDocument();
     });
 
     it("renders no votes if none were made", async () => {
@@ -227,7 +222,7 @@ describe("MPollBody", () => {
             content: newPollStart(undefined, undefined, true),
         });
         const props = getMPollBodyPropsFromEvent(mxEvent);
-        const room = await setupRoomWithPollEvents(mxEvent, votes, [], mockClient);
+        const room = await setupRoomWithPollEvents([mxEvent], votes, [], mockClient);
         const renderResult = renderMPollBodyWithWrapper(props);
         // wait for /relations promise to resolve
         await flushPromises();
@@ -255,7 +250,7 @@ describe("MPollBody", () => {
             content: newPollStart(undefined, undefined, true),
         });
         const props = getMPollBodyPropsFromEvent(mxEvent);
-        const room = await setupRoomWithPollEvents(mxEvent, votes, [], mockClient);
+        const room = await setupRoomWithPollEvents([mxEvent], votes, [], mockClient);
         const renderResult = renderMPollBodyWithWrapper(props);
         // wait for /relations promise to resolve
         await flushPromises();
@@ -383,7 +378,7 @@ describe("MPollBody", () => {
         const votes: MatrixEvent[] = [];
         const ends: MatrixEvent[] = [];
         const { container } = await newMPollBody(votes, ends, answers);
-        expect(container.querySelectorAll(".mx_MPollBody_option").length).toBe(20);
+        expect(container.querySelectorAll(".mx_PollOption").length).toBe(20);
     });
 
     it("hides scores if I voted but the poll is undisclosed", async () => {
@@ -429,7 +424,7 @@ describe("MPollBody", () => {
         ];
         const ends = [newPollEndEvent("@me:example.com", 12)];
         const renderResult = await newMPollBody(votes, ends, undefined, false);
-        expect(endedVotesCount(renderResult, "pizza")).toBe("3 votes");
+        expect(endedVotesCount(renderResult, "pizza")).toBe('<div class="mx_PollOption_winnerIcon"></div>3 votes');
         expect(endedVotesCount(renderResult, "poutine")).toBe("1 vote");
         expect(endedVotesCount(renderResult, "italian")).toBe("0 votes");
         expect(endedVotesCount(renderResult, "wings")).toBe("1 vote");
@@ -531,9 +526,9 @@ describe("MPollBody", () => {
         const ends = [newPollEndEvent("@me:example.com", 25)];
         const renderResult = await newMPollBody(votes, ends);
         expect(endedVotesCount(renderResult, "pizza")).toBe("0 votes");
-        expect(endedVotesCount(renderResult, "poutine")).toBe("1 vote");
+        expect(endedVotesCount(renderResult, "poutine")).toBe('<div class="mx_PollOption_winnerIcon"></div>1 vote');
         expect(endedVotesCount(renderResult, "italian")).toBe("0 votes");
-        expect(endedVotesCount(renderResult, "wings")).toBe("1 vote");
+        expect(endedVotesCount(renderResult, "wings")).toBe('<div class="mx_PollOption_winnerIcon"></div>1 vote');
         expect(renderResult.getByTestId("totalVotes").innerHTML).toBe("Final result based on 2 votes");
     });
 
@@ -542,7 +537,7 @@ describe("MPollBody", () => {
         const ends = [newPollEndEvent("@me:example.com", 25)];
         const renderResult = await newMPollBody(votes, ends);
         expect(endedVotesCount(renderResult, "pizza")).toBe("0 votes");
-        expect(endedVotesCount(renderResult, "poutine")).toBe("1 vote");
+        expect(endedVotesCount(renderResult, "poutine")).toBe('<div class="mx_PollOption_winnerIcon"></div>1 vote');
         expect(endedVotesCount(renderResult, "italian")).toBe("0 votes");
         expect(endedVotesCount(renderResult, "wings")).toBe("0 votes");
         expect(renderResult.getByTestId("totalVotes").innerHTML).toBe("Final result based on 1 vote");
@@ -564,7 +559,7 @@ describe("MPollBody", () => {
         expect(endedVotesCount(renderResult, "pizza")).toBe("2 votes");
         expect(endedVotesCount(renderResult, "poutine")).toBe("0 votes");
         expect(endedVotesCount(renderResult, "italian")).toBe("0 votes");
-        expect(endedVotesCount(renderResult, "wings")).toBe("3 votes");
+        expect(endedVotesCount(renderResult, "wings")).toBe('<div class="mx_PollOption_winnerIcon"></div>3 votes');
         expect(renderResult.getByTestId("totalVotes").innerHTML).toBe("Final result based on 5 votes");
     });
 
@@ -584,7 +579,7 @@ describe("MPollBody", () => {
         expect(endedVotesCount(renderResult, "pizza")).toBe("2 votes");
         expect(endedVotesCount(renderResult, "poutine")).toBe("0 votes");
         expect(endedVotesCount(renderResult, "italian")).toBe("0 votes");
-        expect(endedVotesCount(renderResult, "wings")).toBe("3 votes");
+        expect(endedVotesCount(renderResult, "wings")).toBe('<div class="mx_PollOption_winnerIcon"></div>3 votes');
         expect(renderResult.getByTestId("totalVotes").innerHTML).toBe("Final result based on 5 votes");
     });
 
@@ -607,7 +602,7 @@ describe("MPollBody", () => {
         expect(endedVotesCount(renderResult, "pizza")).toBe("2 votes");
         expect(endedVotesCount(renderResult, "poutine")).toBe("0 votes");
         expect(endedVotesCount(renderResult, "italian")).toBe("0 votes");
-        expect(endedVotesCount(renderResult, "wings")).toBe("3 votes");
+        expect(endedVotesCount(renderResult, "wings")).toBe('<div class="mx_PollOption_winnerIcon"></div>3 votes');
         expect(renderResult.getByTestId("totalVotes").innerHTML).toBe("Final result based on 5 votes");
     });
 
@@ -634,7 +629,7 @@ describe("MPollBody", () => {
         expect(endedVotesCount(renderResult, "pizza")).toBe("2 votes");
         expect(endedVotesCount(renderResult, "poutine")).toBe("0 votes");
         expect(endedVotesCount(renderResult, "italian")).toBe("0 votes");
-        expect(endedVotesCount(renderResult, "wings")).toBe("3 votes");
+        expect(endedVotesCount(renderResult, "wings")).toBe('<div class="mx_PollOption_winnerIcon"></div>3 votes');
         expect(renderResult.getByTestId("totalVotes").innerHTML).toBe("Final result based on 5 votes");
     });
 
@@ -653,8 +648,8 @@ describe("MPollBody", () => {
         expect(endedVoteChecked(renderResult, "pizza")).toBe(false);
 
         // Double-check by looking for the endedOptionWinner class
-        expect(endedVoteDiv(renderResult, "wings").className.includes("mx_MPollBody_endedOptionWinner")).toBe(true);
-        expect(endedVoteDiv(renderResult, "pizza").className.includes("mx_MPollBody_endedOptionWinner")).toBe(false);
+        expect(endedVoteDiv(renderResult, "wings").className.includes("mx_PollOption_endedOptionWinner")).toBe(true);
+        expect(endedVoteDiv(renderResult, "pizza").className.includes("mx_PollOption_endedOptionWinner")).toBe(false);
     });
 
     it("highlights multiple winning votes", async () => {
@@ -670,13 +665,13 @@ describe("MPollBody", () => {
         expect(endedVoteChecked(renderResult, "wings")).toBe(true);
         expect(endedVoteChecked(renderResult, "poutine")).toBe(true);
         expect(endedVoteChecked(renderResult, "italian")).toBe(false);
-        expect(renderResult.container.getElementsByClassName("mx_MPollBody_option_checked")).toHaveLength(3);
+        expect(renderResult.container.getElementsByClassName(CHECKED)).toHaveLength(3);
     });
 
     it("highlights nothing if poll has no votes", async () => {
         const ends = [newPollEndEvent("@me:example.com", 25)];
         const renderResult = await newMPollBody([], ends);
-        expect(renderResult.container.getElementsByClassName("mx_MPollBody_option_checked")).toHaveLength(0);
+        expect(renderResult.container.getElementsByClassName(CHECKED)).toHaveLength(0);
     });
 
     it("says poll is not ended if there is no end event", async () => {
@@ -700,7 +695,7 @@ describe("MPollBody", () => {
         });
         const ends = [newPollEndEvent("@me:example.com", 25)];
 
-        await setupRoomWithPollEvents(pollEvent, [], ends, mockClient);
+        await setupRoomWithPollEvents([pollEvent], [], ends, mockClient);
         const poll = mockClient.getRoom(pollEvent.getRoomId()!)!.polls.get(pollEvent.getId()!)!;
         // start fetching, dont await
         poll.getResponses();
@@ -745,7 +740,7 @@ describe("MPollBody", () => {
         expect(inputs[0].getAttribute("value")).toEqual("n1");
         expect(inputs[1].getAttribute("value")).toEqual("n2");
         expect(inputs[2].getAttribute("value")).toEqual("n3");
-        const options = container.querySelectorAll(".mx_MPollBody_optionText");
+        const options = container.querySelectorAll(".mx_PollOption_optionText");
         expect(options).toHaveLength(3);
         expect(options[0].innerHTML).toEqual("new answer 1");
         expect(options[1].innerHTML).toEqual("new answer 2");
@@ -920,7 +915,7 @@ async function newMPollBodyFromEvent(
 ): Promise<RenderResult> {
     const props = getMPollBodyPropsFromEvent(mxEvent);
 
-    await setupRoomWithPollEvents(mxEvent, relationEvents, endEvents, mockClient);
+    await setupRoomWithPollEvents([mxEvent], relationEvents, endEvents, mockClient);
 
     return renderMPollBodyWithWrapper(props);
 }
@@ -934,11 +929,11 @@ function voteButton({ getByTestId }: RenderResult, value: string): Element {
 }
 
 function votesCount({ getByTestId }: RenderResult, value: string): string {
-    return getByTestId(`pollOption-${value}`).querySelector(".mx_MPollBody_optionVoteCount")!.innerHTML;
+    return getByTestId(`pollOption-${value}`).querySelector(".mx_PollOption_optionVoteCount")!.innerHTML;
 }
 
 function endedVoteChecked({ getByTestId }: RenderResult, value: string): boolean {
-    return getByTestId(`pollOption-${value}`).className.includes("mx_MPollBody_option_checked");
+    return getByTestId(`pollOption-${value}`).className.includes(CHECKED);
 }
 
 function endedVoteDiv({ getByTestId }: RenderResult, value: string): Element {
@@ -1036,7 +1031,7 @@ async function runIsPollEnded(ends: MatrixEvent[]) {
         content: newPollStart(),
     });
 
-    await setupRoomWithPollEvents(pollEvent, [], ends, mockClient);
+    await setupRoomWithPollEvents([pollEvent], [], ends, mockClient);
 
     return isPollEnded(pollEvent, mockClient);
 }

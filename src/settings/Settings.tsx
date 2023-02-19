@@ -118,10 +118,9 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     // Display name can also be an object for different levels.
     displayName?:
         | string
-        | {
-              // @ts-ignore - TS wants the key to be a string, but we know better
-              [level: SettingLevel]: string;
-          };
+        | Partial<{
+              [level in SettingLevel]: string;
+          }>;
 
     // Optional description which will be shown as microCopy under SettingsFlags
     description?: string | (() => ReactNode);
@@ -486,9 +485,9 @@ export const SETTINGS: { [setting: string]: ISetting } = {
             title: _td("New session manager"),
             caption: () => (
                 <>
-                    <p>{_td("Have greater visibility and control over all your sessions.")}</p>
+                    <p>{_t("Have greater visibility and control over all your sessions.")}</p>
                     <p>
-                        {_td(
+                        {_t(
                             "Our new sessions manager provides better visibility of all your sessions, " +
                                 "and greater control over them including the ability to remotely toggle push notifications.",
                         )}
@@ -496,16 +495,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
                 </>
             ),
         },
-    },
-    "feature_qr_signin_reciprocate_show": {
-        isFeature: true,
-        labsGroup: LabGroup.Experimental,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td(
-            "Allow a QR code to be shown in session manager to sign in another device " +
-                "(requires compatible homeserver)",
-        ),
-        default: false,
     },
     "feature_rust_crypto": {
         // use the rust matrix-sdk-crypto-js for crypto.
