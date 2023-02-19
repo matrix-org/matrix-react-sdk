@@ -181,7 +181,7 @@ describe("LocationPicker", () => {
                     expect(maplibregl.Marker).toHaveBeenCalled();
                     expect(mockMarker.setLngLat).toHaveBeenCalledWith(new maplibregl.LngLat(12.4, 43.2));
                     // submit button is enabled when position is truthy
-                    expect(getByTestId("location-picker-submit-button").hasAttribute("disabled")).toBeFalsy();
+                    expect(getByTestId("location-picker-submit-button")).not.toBeDisabled();
                     expect(container.querySelector(".mx_BaseAvatar")).toBeInTheDocument();
                 });
 
@@ -190,7 +190,7 @@ describe("LocationPicker", () => {
                     const { getByTestId } = getComponent({ shareType, onChoose });
 
                     // button is disabled
-                    expect(getByTestId("location-picker-submit-button").hasAttribute("disabled")).toBeTruthy();
+                    expect(getByTestId("location-picker-submit-button")).toBeDisabled();
                     fireEvent.click(getByTestId("location-picker-submit-button"));
                     // nothing happens on button click
                     expect(onChoose).not.toHaveBeenCalled();
@@ -201,7 +201,7 @@ describe("LocationPicker", () => {
                     });
 
                     // submit button is enabled when position is truthy
-                    expect(getByTestId("location-picker-submit-button").hasAttribute("disabled")).toBeFalsy();
+                    expect(getByTestId("location-picker-submit-button")).not.toBeDisabled();
                 });
 
                 it("submits location", () => {
