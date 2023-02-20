@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { MatrixEvent, Poll } from "matrix-js-sdk/src/matrix";
 
@@ -23,10 +23,11 @@ import BaseDialog from "../BaseDialog";
 import { IDialogProps } from "../IDialogProps";
 import { PollHistoryList } from "./PollHistoryList";
 import { PollHistoryFilter } from "./types";
-import { usePolls } from "./usePollHistory";
 import { PollDetailHeader } from "./PollDetailHeader";
 import { PollDetail } from "./PollDetail";
 import { RoomPermalinkCreator } from "../../../../utils/permalinks/Permalinks";
+import { usePollsWithRelations } from "./usePollHistory";
+import { useFetchPastPolls } from "./fetchPastPolls";
 
 type PollHistoryDialogProps = Pick<IDialogProps, "onFinished"> & {
     roomId: string;
@@ -38,7 +39,10 @@ const sortEventsByLatest = (left: MatrixEvent, right: MatrixEvent): number => ri
 const filterPolls =
     (filter: PollHistoryFilter) =>
     (poll: Poll): boolean =>
-        (filter === "ACTIVE") !== poll.isEnded;
+        // exclude polls while they are still loading
+        // to avoid jitter in list
+        !poll.isFetchingResponses && (filter === "ACTIVE") !== poll.isEnded;
+
 const filterAndSortPolls = (polls: Map<string, Poll>, filter: PollHistoryFilter): MatrixEvent[] => {
     return [...polls.values()]
         .filter(filterPolls(filter))
@@ -52,14 +56,14 @@ export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({
     permalinkCreator,
     onFinished,
 }) => {
-    const { polls } = usePolls(roomId, matrixClient);
+    const { polls } = usePollsWithRelations(roomId, matrixClient);
     const [filter, setFilter] = useState<PollHistoryFilter>("ACTIVE");
-    const [pollStartEvents, setPollStartEvents] = useState(filterAndSortPolls(polls, filter));
     const [focusedPollId, setFocusedPollId] = useState<string | null>(null);
+    const room = matrixClient.getRoom(roomId)!;
+    const { isLoading } = useFetchPastPolls(room, matrixClient);
 
-    useEffect(() => {
-        setPollStartEvents(filterAndSortPolls(polls, filter));
-    }, [filter, polls]);
+    const pollStartEvents = filterAndSortPolls(polls, filter);
+    const isLoadingPollResponses = [...polls.values()].some((poll) => poll.isFetchingResponses);
 
     const focusedPoll = focusedPollId ? polls.get(focusedPollId) : undefined;
     const title = focusedPoll ? (
@@ -76,6 +80,8 @@ export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({
                 ) : (
                     <PollHistoryList
                         pollStartEvents={pollStartEvents}
+                        isLoading={isLoading || isLoadingPollResponses}
+                        polls={polls}
                         filter={filter}
                         onFilterChange={setFilter}
                         onItemClick={setFocusedPollId}

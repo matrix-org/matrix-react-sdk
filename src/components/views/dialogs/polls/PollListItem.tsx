@@ -29,7 +29,7 @@ interface Props {
     onClick: () => void;
 }
 
-const PollListItem: React.FC<Props> = ({ event, onClick }) => {
+export const PollListItem: React.FC<Props> = ({ event, onClick }) => {
     const pollEvent = event.unstableExtensibleEvent as unknown as PollStartEvent;
     if (!pollEvent) {
         return null;
@@ -47,5 +47,3 @@ const PollListItem: React.FC<Props> = ({ event, onClick }) => {
         </li>
     );
 };
-
-export default PollListItem;
