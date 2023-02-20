@@ -32,7 +32,7 @@ import {
 } from "../../../editor/operations";
 import { getCaretOffsetAndText, getRangeForSelection } from "../../../editor/dom";
 import Autocomplete, { generateCompletionDomId } from "../rooms/Autocomplete";
-import { getAutoCompleteCreator, Part, Type } from "../../../editor/parts";
+import { getAutoCompleteCreator, Part, SerializedPart, Type } from "../../../editor/parts";
 import { parseEvent, parsePlainTextMessage } from "../../../editor/deserialize";
 import { renderModel } from "../../../editor/render";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -107,7 +107,7 @@ interface IProps {
     initialCaret?: DocumentOffset;
     disabled?: boolean;
 
-    onChange?();
+    onChange?(): void;
     onPaste?(event: ClipboardEvent<HTMLDivElement>, model: EditorModel): boolean;
 }
 
@@ -140,7 +140,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     private readonly surroundWithHandle: string;
     private readonly historyManager = new HistoryManager();
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             showPillAvatar: SettingsStore.getValue("Pill.shouldShowPillAvatar"),
@@ -191,16 +191,19 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     public replaceEmoticon(caretPosition: DocumentPosition, regex: RegExp): number {
         const { model } = this.props;
         const range = model.startRange(caretPosition);
-        // expand range max 8 characters backwards from caretPosition,
+        // expand range max 9 characters backwards from caretPosition,
         // as a space to look for an emoticon
-        let n = 8;
+        let n = 9;
         range.expandBackwardsWhile((index, offset) => {
             const part = model.parts[index];
             n -= 1;
             return n >= 0 && [Type.Plain, Type.PillCandidate, Type.Newline].includes(part.type);
         });
         const emoticonMatch = regex.exec(range.text);
-        if (emoticonMatch) {
+        // ignore matches at start of proper substrings
+        // so xd will not match if the string was "mixd 123456"
+        // and we are lookinh at xd 123456 part of the string
+        if (emoticonMatch && (n >= 0 || emoticonMatch.index !== 0)) {
             const query = emoticonMatch[1].replace("-", "");
             // try both exact match and lower-case, this means that xd won't match xD but :P will match :p
             const data = EMOTICON_TO_EMOJI.get(query) || EMOTICON_TO_EMOJI.get(query.toLowerCase());
@@ -364,7 +367,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         let parts: Part[];
         if (partsText) {
             const serializedTextParts = JSON.parse(partsText);
-            parts = serializedTextParts.map((p) => partCreator.deserializePart(p));
+            parts = serializedTextParts.map((p: SerializedPart) => partCreator.deserializePart(p));
         } else {
             parts = parsePlainTextMessage(plainText, partCreator, { shouldEscape: false });
         }
@@ -746,7 +749,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         formatRange(range, action);
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let autoComplete;
         if (this.state.autoComplete) {
             const query = this.state.query;

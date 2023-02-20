@@ -15,8 +15,10 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { Mocked } from "jest-mock";
 
 import {
+    GenericPosition,
     GeolocationError,
     getGeoUri,
     mapGeolocationError,
@@ -27,7 +29,7 @@ import { getCurrentPosition } from "../../../src/utils/beacon/geolocation";
 import { makeGeolocationPosition, mockGeolocation, getMockGeolocationPositionError } from "../../test-utils";
 
 describe("geolocation utilities", () => {
-    let geolocation;
+    let geolocation: Mocked<Geolocation>;
     const defaultPosition = makeGeolocationPosition({});
 
     // 14.03.2022 16:15
@@ -45,7 +47,7 @@ describe("geolocation utilities", () => {
 
     describe("getGeoUri", () => {
         it("Renders a URI with only lat and lon", () => {
-            const pos = {
+            const pos: GenericPosition = {
                 latitude: 43.2,
                 longitude: 12.4,
                 altitude: undefined,
@@ -57,11 +59,9 @@ describe("geolocation utilities", () => {
         });
 
         it("Nulls in location are not shown in URI", () => {
-            const pos = {
+            const pos: GenericPosition = {
                 latitude: 43.2,
                 longitude: 12.4,
-                altitude: null,
-                accuracy: null,
 
                 timestamp: 12334,
             };
@@ -69,7 +69,7 @@ describe("geolocation utilities", () => {
         });
 
         it("Renders a URI with 3 coords", () => {
-            const pos = {
+            const pos: GenericPosition = {
                 latitude: 43.2,
                 longitude: 12.4,
                 altitude: 332.54,
@@ -80,7 +80,7 @@ describe("geolocation utilities", () => {
         });
 
         it("Renders a URI with accuracy", () => {
-            const pos = {
+            const pos: GenericPosition = {
                 latitude: 43.2,
                 longitude: 12.4,
                 altitude: undefined,
@@ -193,9 +193,10 @@ describe("geolocation utilities", () => {
         it("maps geolocation position error and calls error handler", () => {
             // suppress expected errors from test log
             jest.spyOn(logger, "error").mockImplementation(() => {});
-            geolocation.watchPosition.mockImplementation((_callback, error) =>
-                error(getMockGeolocationPositionError(1, "message")),
-            );
+            geolocation.watchPosition.mockImplementation((_callback, error) => {
+                error!(getMockGeolocationPositionError(1, "message"));
+                return -1;
+            });
             const positionHandler = jest.fn();
             const errorHandler = jest.fn();
             watchPosition(positionHandler, errorHandler);
@@ -221,7 +222,7 @@ describe("geolocation utilities", () => {
             jest.spyOn(logger, "error").mockImplementation(() => {});
 
             const timeoutError = getMockGeolocationPositionError(3, "message");
-            geolocation.getCurrentPosition.mockImplementation((callback, error) => error(timeoutError));
+            geolocation.getCurrentPosition.mockImplementation((callback, error) => error!(timeoutError));
 
             await expect(() => getCurrentPosition()).rejects.toThrow(GeolocationError.Timeout);
         });

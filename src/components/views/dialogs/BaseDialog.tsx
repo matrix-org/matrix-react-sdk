@@ -50,6 +50,9 @@ interface IProps extends IDialogProps {
     // determine its size. Default: true.
     "fixedWidth"?: boolean;
 
+    // To be displayed at the top of the dialog. Even above the title.
+    "top"?: React.ReactNode;
+
     // Title for the dialog.
     "title"?: JSX.Element | string;
     // Specific aria label to use, if not provided will set aria-labelledBy to mx_Dialog_title
@@ -88,7 +91,7 @@ export default class BaseDialog extends React.Component<IProps> {
         fixedWidth: true,
     };
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.matrixClient = MatrixClientPeg.get();
@@ -115,7 +118,7 @@ export default class BaseDialog extends React.Component<IProps> {
         this.props.onFinished(false);
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let cancelButton;
         if (this.props.hasCancel) {
             cancelButton = (
@@ -132,7 +135,7 @@ export default class BaseDialog extends React.Component<IProps> {
             headerImage = <img className="mx_Dialog_titleImage" src={this.props.headerImage} alt="" />;
         }
 
-        const lockProps = {
+        const lockProps: Record<string, any> = {
             "onKeyDown": this.onKeyDown,
             "role": "dialog",
             // This should point to a node describing the dialog.
@@ -161,6 +164,7 @@ export default class BaseDialog extends React.Component<IProps> {
                         mx_Dialog_fixedWidth: this.props.fixedWidth,
                     })}
                 >
+                    {this.props.top}
                     <div
                         className={classNames("mx_Dialog_header", {
                             mx_Dialog_headerWithButton: !!this.props.headerButton,

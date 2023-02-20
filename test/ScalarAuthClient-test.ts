@@ -16,6 +16,7 @@ limitations under the License.
 
 import { mocked } from "jest-mock";
 import fetchMock from "fetch-mock-jest";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import ScalarAuthClient from "../src/ScalarAuthClient";
 import { stubClient } from "./test-utils";
@@ -32,7 +33,7 @@ describe("ScalarAuthClient", function () {
         expires_in: 999,
     };
 
-    let client;
+    let client: MatrixClient;
     beforeEach(function () {
         jest.clearAllMocks();
         client = stubClient();
@@ -52,7 +53,7 @@ describe("ScalarAuthClient", function () {
         client.getOpenIdToken = jest.fn().mockResolvedValue(tokenObject);
 
         sac.exchangeForScalarToken = jest.fn((arg) => {
-            if (arg === tokenObject) return Promise.resolve("wokentoken");
+            return Promise.resolve(arg === tokenObject ? "wokentoken" : "othertoken");
         });
 
         await sac.connect();

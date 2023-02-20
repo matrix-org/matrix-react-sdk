@@ -46,7 +46,7 @@ describe("RolesRoomSettingsTab", () => {
     });
 
     describe("Element Call", () => {
-        const mockPowerLevels = (events): void => {
+        const mockPowerLevels = (events: Record<string, number>): void => {
             jest.spyOn(room.currentState, "getStateEvents").mockReturnValue({
                 getContent: () => ({
                     events,
@@ -55,7 +55,7 @@ describe("RolesRoomSettingsTab", () => {
         };
 
         const getElementCallSwitch = (tab: RenderResult): HTMLElement => {
-            return tab.container.querySelector("[data-testid='element-call-switch']");
+            return tab.container.querySelector("[data-testid='element-call-switch']")!;
         };
 
         describe("correct state", () => {
@@ -87,7 +87,7 @@ describe("RolesRoomSettingsTab", () => {
 
                     const tab = renderTab();
 
-                    fireEvent.click(getElementCallSwitch(tab).querySelector(".mx_ToggleSwitch"));
+                    fireEvent.click(getElementCallSwitch(tab).querySelector(".mx_ToggleSwitch")!);
                     await waitFor(() =>
                         expect(cli.sendStateEvent).toHaveBeenCalledWith(
                             room.roomId,
@@ -107,7 +107,7 @@ describe("RolesRoomSettingsTab", () => {
 
                     const tab = renderTab();
 
-                    fireEvent.click(getElementCallSwitch(tab).querySelector(".mx_ToggleSwitch"));
+                    fireEvent.click(getElementCallSwitch(tab).querySelector(".mx_ToggleSwitch")!);
                     await waitFor(() =>
                         expect(cli.sendStateEvent).toHaveBeenCalledWith(
                             room.roomId,
@@ -128,7 +128,7 @@ describe("RolesRoomSettingsTab", () => {
 
                 const tab = renderTab();
 
-                fireEvent.click(getElementCallSwitch(tab).querySelector(".mx_ToggleSwitch"));
+                fireEvent.click(getElementCallSwitch(tab).querySelector(".mx_ToggleSwitch")!);
                 await waitFor(() =>
                     expect(cli.sendStateEvent).toHaveBeenCalledWith(
                         room.roomId,

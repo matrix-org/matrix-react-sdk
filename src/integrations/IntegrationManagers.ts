@@ -16,7 +16,7 @@ limitations under the License.
 
 import url from "url";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
+import { ClientEvent, IClientWellKnown, MatrixClient } from "matrix-js-sdk/src/client";
 import { compare } from "matrix-js-sdk/src/utils";
 
 import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
@@ -36,11 +36,11 @@ const KIND_PREFERENCE = [
 ];
 
 export class IntegrationManagers {
-    private static instance;
+    private static instance?: IntegrationManagers;
 
     private managers: IntegrationManagerInstance[] = [];
     private client: MatrixClient;
-    private primaryManager: IntegrationManagerInstance;
+    private primaryManager: IntegrationManagerInstance | null;
 
     public static sharedInstance(): IntegrationManagers {
         if (!IntegrationManagers.instance) {
@@ -83,7 +83,7 @@ export class IntegrationManagers {
         }
     }
 
-    private setupHomeserverManagers = async (discoveryResponse): Promise<void> => {
+    private setupHomeserverManagers = async (discoveryResponse: IClientWellKnown): Promise<void> => {
         logger.log("Updating homeserver-configured integration managers...");
         if (discoveryResponse && discoveryResponse["m.integrations"]) {
             let managers = discoveryResponse["m.integrations"]["managers"];
@@ -146,7 +146,7 @@ export class IntegrationManagers {
     }
 
     public getOrderedManagers(): IntegrationManagerInstance[] {
-        const ordered = [];
+        const ordered: IntegrationManagerInstance[] = [];
         for (const kind of KIND_PREFERENCE) {
             const managers = this.managers.filter((m) => m.kind === kind);
             if (!managers || !managers.length) continue;
@@ -161,7 +161,7 @@ export class IntegrationManagers {
         return ordered;
     }
 
-    public getPrimaryManager(): IntegrationManagerInstance {
+    public getPrimaryManager(): IntegrationManagerInstance | null {
         if (this.hasManager()) {
             if (this.primaryManager) return this.primaryManager;
 
@@ -195,14 +195,14 @@ export class IntegrationManagers {
      * @returns {Promise<IntegrationManagerInstance>} Resolves to an integration manager instance,
      * or null if none was found.
      */
-    public async tryDiscoverManager(domainName: string): Promise<IntegrationManagerInstance> {
+    public async tryDiscoverManager(domainName: string): Promise<IntegrationManagerInstance | null> {
         logger.log("Looking up integration manager via .well-known");
         if (domainName.startsWith("http:") || domainName.startsWith("https:")) {
             // trim off the scheme and just use the domain
             domainName = url.parse(domainName).host;
         }
 
-        let wkConfig: object;
+        let wkConfig: IClientWellKnown;
         try {
             const result = await fetch(`https://${domainName}/.well-known/matrix/integrations`);
             wkConfig = await result.json();

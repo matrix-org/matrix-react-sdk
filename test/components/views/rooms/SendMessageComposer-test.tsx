@@ -78,6 +78,7 @@ describe("<SendMessageComposer/>", () => {
         resizing: false,
         narrow: false,
         activeCall: null,
+        msc3946ProcessDynamicPredecessor: false,
     };
     describe("createMessageContent", () => {
         const permalinkCreator = jest.fn() as any;
@@ -87,7 +88,7 @@ describe("<SendMessageComposer/>", () => {
             const documentOffset = new DocumentOffset(11, true);
             model.update("hello world", "insertText", documentOffset);
 
-            const content = createMessageContent(model, null, undefined, permalinkCreator);
+            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "hello world",
@@ -100,7 +101,7 @@ describe("<SendMessageComposer/>", () => {
             const documentOffset = new DocumentOffset(13, true);
             model.update("hello *world*", "insertText", documentOffset);
 
-            const content = createMessageContent(model, null, undefined, permalinkCreator);
+            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "hello *world*",
@@ -115,7 +116,7 @@ describe("<SendMessageComposer/>", () => {
             const documentOffset = new DocumentOffset(22, true);
             model.update("/me blinks __quickly__", "insertText", documentOffset);
 
-            const content = createMessageContent(model, null, undefined, permalinkCreator);
+            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "blinks __quickly__",
@@ -131,7 +132,7 @@ describe("<SendMessageComposer/>", () => {
             model.update("/me ✨sparkles✨", "insertText", documentOffset);
             expect(model.parts.length).toEqual(4); // Emoji count as non-text
 
-            const content = createMessageContent(model, null, undefined, permalinkCreator);
+            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "✨sparkles✨",
@@ -145,7 +146,7 @@ describe("<SendMessageComposer/>", () => {
 
             model.update("//dev/null is my favourite place", "insertText", documentOffset);
 
-            const content = createMessageContent(model, null, undefined, permalinkCreator);
+            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "/dev/null is my favourite place",
@@ -215,7 +216,7 @@ describe("<SendMessageComposer/>", () => {
 
             // ensure the right state was persisted to localStorage
             unmount();
-            expect(JSON.parse(localStorage.getItem(key))).toStrictEqual({
+            expect(JSON.parse(localStorage.getItem(key)!)).toStrictEqual({
                 parts: [{ type: "plain", text: "Test Text" }],
                 replyEventId: mockEvent.getId(),
             });
@@ -248,7 +249,7 @@ describe("<SendMessageComposer/>", () => {
 
             // ensure the right state was persisted to localStorage
             window.dispatchEvent(new Event("beforeunload"));
-            expect(JSON.parse(localStorage.getItem(key))).toStrictEqual({
+            expect(JSON.parse(localStorage.getItem(key)!)).toStrictEqual({
                 parts: [{ type: "plain", text: "Hello World" }],
             });
         });
@@ -259,7 +260,7 @@ describe("<SendMessageComposer/>", () => {
             const { container } = getComponent({ replyToEvent: mockEvent });
 
             addTextToComposer(container, "This is a message");
-            fireEvent.keyDown(container.querySelector(".mx_SendMessageComposer"), { key: "Enter" });
+            fireEvent.keyDown(container.querySelector(".mx_SendMessageComposer")!, { key: "Enter" });
 
             await waitFor(() => {
                 expect(spyDispatcher).toHaveBeenCalledWith({
@@ -270,7 +271,7 @@ describe("<SendMessageComposer/>", () => {
             });
 
             expect(container.textContent).toBe("");
-            const str = sessionStorage.getItem(`mx_cider_history_${mockRoom.roomId}[0]`);
+            const str = sessionStorage.getItem(`mx_cider_history_${mockRoom.roomId}[0]`)!;
             expect(JSON.parse(str)).toStrictEqual({
                 parts: [{ type: "plain", text: "This is a message" }],
                 replyEventId: mockEvent.getId(),
@@ -288,7 +289,7 @@ describe("<SendMessageComposer/>", () => {
             const { container } = getComponent();
 
             addTextToComposer(container, "test message");
-            fireEvent.keyDown(container.querySelector(".mx_SendMessageComposer"), { key: "Enter" });
+            fireEvent.keyDown(container.querySelector(".mx_SendMessageComposer")!, { key: "Enter" });
 
             expect(mockClient.sendMessage).toHaveBeenCalledWith("myfakeroom", null, {
                 body: "test message",
