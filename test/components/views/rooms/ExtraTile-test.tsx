@@ -17,7 +17,8 @@ limitations under the License.
 import { getByRole, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
-import { ExtraTile, ExtraTileProps } from "../../../../src/components/views/rooms/ExtraTile";
+
+import ExtraTile, { ExtraTileProps } from "../../../../src/components/views/rooms/ExtraTile";
 
 describe("ExtraTile", () => {
     function renderComponent(props: Partial<ExtraTileProps> = {}) {
@@ -34,6 +35,14 @@ describe("ExtraTile", () => {
     it("renders", () => {
         const { asFragment } = renderComponent();
         expect(asFragment()).toMatchSnapshot();
+    });
+
+    it("hides text when minimized", () => {
+        const { container } = renderComponent({
+            isMinimized: true,
+            displayName: "testDisplayName",
+        });
+        expect(container).not.toHaveTextContent("testDisplayName");
     });
 
     it("registers clicks", async () => {

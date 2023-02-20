@@ -32,14 +32,14 @@ export interface ExtraTileProps {
     onClick: (ev: ButtonEvent) => void;
 }
 
-export function ExtraTile({
+export default function ExtraTile({
     isSelected,
     isMinimized,
     notificationState,
     displayName,
     onClick,
     avatar,
-}: ExtraTileProps) {
+}: ExtraTileProps): JSX.Element {
     const [, { onMouseOver, onMouseLeave }] = useHover(() => false);
 
     // XXX: We copy classes because it's easier
