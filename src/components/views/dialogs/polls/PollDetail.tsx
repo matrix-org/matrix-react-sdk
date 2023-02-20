@@ -70,15 +70,17 @@ export const PollDetail: React.FC<Props> = ({ poll, permalinkCreator, requestMod
                 mediaEventHelper={{} as unknown as MediaEventHelper}
             />
             <br />
-            <AccessibleButton
-                kind="link_inline"
-                element="a"
-                href={linkToTimeline}
-                onClick={onLinkClick}
-                rel="noreferrer noopener"
-            >
-                {_t("View poll in timeline")}
-            </AccessibleButton>
+            <div>
+                <AccessibleButton
+                    kind="link_inline"
+                    element="a"
+                    href={linkToTimeline}
+                    onClick={onLinkClick}
+                    rel="noreferrer noopener"
+                >
+                    {_t("View poll in timeline")}
+                </AccessibleButton>
+            </div>
         </>
     );
 };

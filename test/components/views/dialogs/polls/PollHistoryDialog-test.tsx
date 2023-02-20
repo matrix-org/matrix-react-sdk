@@ -321,7 +321,7 @@ describe("<PollHistoryDialog />", () => {
         expect(getByText("What?")).toBeInTheDocument();
     });
 
-    fdescribe("Poll detail", () => {
+    describe("Poll detail", () => {
         const timestamp = 1675300825090;
         const pollStart1 = makePollStartEvent("Question?", userId, undefined, { ts: timestamp, id: "$1" });
         const pollStart2 = makePollStartEvent("Where?", userId, undefined, { ts: timestamp + 10000, id: "$2" });
@@ -332,6 +332,7 @@ describe("<PollHistoryDialog />", () => {
             await setupRoomWithPollEvents([pollStart1, pollStart2, pollStart3], [], [pollEnd3], mockClient, room);
 
             const { getByText, queryByText } = getComponent();
+            await flushPromises();
 
             fireEvent.click(getByText("Question?"));
 
@@ -346,6 +347,7 @@ describe("<PollHistoryDialog />", () => {
             await setupRoomWithPollEvents([pollStart1, pollStart2, pollStart3], [], [pollEnd3], mockClient, room);
 
             const { getByText } = getComponent();
+            await flushPromises();
 
             fireEvent.click(getByText("Question?"));
 
@@ -359,6 +361,7 @@ describe("<PollHistoryDialog />", () => {
             await setupRoomWithPollEvents([pollStart1, pollStart2, pollStart3], [], [pollEnd3], mockClient, room);
 
             const { getByText } = getComponent();
+            await flushPromises();
 
             fireEvent.click(getByText("Question?"));
 
@@ -384,6 +387,7 @@ describe("<PollHistoryDialog />", () => {
             await setupRoomWithPollEvents([pollStart1, pollStart2, pollStart3], [], [pollEnd3], mockClient, room);
 
             const { getByText } = getComponent();
+            await flushPromises();
 
             fireEvent.click(getByText("Question?"));
 
@@ -400,6 +404,7 @@ describe("<PollHistoryDialog />", () => {
             await setupRoomWithPollEvents([pollStart1, pollStart2, pollStart3], [], [pollEnd3], mockClient, room);
 
             const { getByText, queryByText, getByTestId, container } = getComponent();
+            await flushPromises();
 
             fireEvent.click(getByText("Question?"));
 
@@ -424,6 +429,7 @@ describe("<PollHistoryDialog />", () => {
             await setupRoomWithPollEvents([pollStart1, pollStart2, pollStart3], [], [pollEnd3], mockClient, room);
 
             const { getByText } = getComponent();
+            await flushPromises();
 
             fireEvent.click(getByText("Past polls"));
 
@@ -437,6 +443,7 @@ describe("<PollHistoryDialog />", () => {
             await setupRoomWithPollEvents([pollStart1, pollStart2, pollStart3], [], [pollEnd3], mockClient, room);
 
             const { getByText } = getComponent();
+            await flushPromises();
 
             fireEvent.click(getByText("Past polls"));
 
@@ -453,6 +460,7 @@ describe("<PollHistoryDialog />", () => {
             await setupRoomWithPollEvents([pollStart1, pollStart2, pollStart3], [], [pollEnd3], mockClient, room);
 
             const { getByText, queryByText, getByTestId, container } = getComponent();
+            await flushPromises();
 
             fireEvent.click(getByText("Question?"));
 

@@ -77,6 +77,7 @@ export const PollHistoryList: React.FC<PollHistoryListProps> = ({
                                 key={pollStartEvent.getId()!}
                                 event={pollStartEvent}
                                 poll={polls.get(pollStartEvent.getId()!)!}
+                                onClick={() => onItemClick(pollStartEvent.getId()!)}
                             />
                         ),
                     )}
