@@ -24,6 +24,8 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { textForEvent } from "../../../TextForEvent";
 import { IBodyProps } from "./IBodyProps";
 import MPollBody from "./MPollBody";
+import { Caption } from "../typography/Caption";
+import { _t } from "../../../languageHandler";
 
 const getRelatedPollStartEventId = (event: MatrixEvent): string | undefined => {
     const relation = event.getRelation();
@@ -105,5 +107,8 @@ export const MPollEndBody = React.forwardRef<any, IBodyProps>(({ mxEvent, ...pro
         );
     }
 
-    return <MPollBody mxEvent={pollStartEvent} {...props} />;
+    return <div>
+        <Caption>{_t("Ended a poll")}</Caption>
+        <MPollBody mxEvent={pollStartEvent} {...props} />
+    </div>
 });
