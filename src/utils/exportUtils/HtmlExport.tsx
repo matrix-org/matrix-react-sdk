@@ -132,22 +132,19 @@ export default class HTMLExporter extends Exporter {
 
         const topicText = topic ? _t("Topic: %(topic)s", { topic }) : "";
         const previousMessagesLink = renderToStaticMarkup(
-                currentPage !== 0 ? (
-                    <div style={{ textAlign: "center" }}>
-                        <a
-                            href={`./messages${currentPage === 1 ? "" : (currentPage)}.html`}
-                            style={{ fontWeight: "bold" }}
-                        >
-                            Previous group of messages
-                        </a>
-                    </div>
-                ) : (
-                    <></>
-                )
+            currentPage !== 0 ? (
+                <div style={{ textAlign: "center" }}>
+                    <a href={`./messages${currentPage === 1 ? "" : currentPage}.html`} style={{ fontWeight: "bold" }}>
+                        Previous group of messages
+                    </a>
+                </div>
+            ) : (
+                <></>
+            ),
         );
 
         const nextMessagesLink = renderToStaticMarkup(
-            currentPage !== (nbPages - 1) ? (
+            currentPage !== nbPages - 1 ? (
                 <div style={{ textAlign: "center", margin: "10px" }}>
                     <a href={"./messages" + (currentPage + 2) + ".html"} style={{ fontWeight: "bold" }}>
                         Next group of messages
@@ -155,7 +152,7 @@ export default class HTMLExporter extends Exporter {
                 </div>
             ) : (
                 <></>
-            )
+            ),
         );
 
         return `
@@ -216,13 +213,17 @@ export default class HTMLExporter extends Exporter {
                                     aria-live="polite"
                                     role="list"
                                 >
-                                <div class="mx_NewRoomIntro">
-                                    ${roomAvatar}
-                                    <h2> ${this.room.name} </h2>
-                                    <p> ${createdText} <br/><br/> ${exportedText} </p>
-                                    <br/>
-                                    <p> ${topicText} </p>
-                                </div>
+                                ${
+                                    currentPage == 0
+                                        ? `<div class="mx_NewRoomIntro">
+                                        ${roomAvatar}
+                                        <h2> ${this.room.name} </h2>
+                                        <p> ${createdText} <br/><br/> ${exportedText} </p>
+                                        <br/>
+                                        <p> ${topicText} </p>
+                                    </div>`
+                                        : ""
+                                }
                                 ${content}
                                 </ol>
                                 </div>
