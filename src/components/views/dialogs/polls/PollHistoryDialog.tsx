@@ -61,6 +61,7 @@ export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({ roomId, ma
                 <PollHistoryList
                     pollStartEvents={pollStartEvents}
                     isLoading={isLoading || isLoadingPollResponses}
+                    polls={polls}
                     filter={filter}
                     onFilterChange={setFilter}
                 />

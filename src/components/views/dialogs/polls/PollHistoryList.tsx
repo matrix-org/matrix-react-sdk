@@ -15,14 +15,15 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
+import { MatrixEvent, Poll } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../languageHandler";
 import { FilterTabGroup } from "../../elements/FilterTabGroup";
 import InlineSpinner from "../../elements/InlineSpinner";
 import { PollHistoryFilter } from "./types";
-import PollListItem from "./PollListItem";
+import { PollListItem } from "./PollListItem";
+import { PollListItemEnded } from "./PollListItemEnded";
 
 const LoadingPolls: React.FC<{ noResultsYet?: boolean }> = ({ noResultsYet }) => (
     <div
@@ -37,12 +38,14 @@ const LoadingPolls: React.FC<{ noResultsYet?: boolean }> = ({ noResultsYet }) =>
 
 type PollHistoryListProps = {
     pollStartEvents: MatrixEvent[];
+    polls: Map<string, Poll>;
     filter: PollHistoryFilter;
     onFilterChange: (filter: PollHistoryFilter) => void;
     isLoading?: boolean;
 };
 export const PollHistoryList: React.FC<PollHistoryListProps> = ({
     pollStartEvents,
+    polls,
     filter,
     isLoading,
     onFilterChange,
@@ -59,14 +62,20 @@ export const PollHistoryList: React.FC<PollHistoryListProps> = ({
                 ]}
             />
             {!!pollStartEvents.length && (
-                <>
-                    <ol className="mx_PollHistoryList_list">
-                        {pollStartEvents.map((pollStartEvent) => (
+                <ol className={classNames("mx_PollHistoryList_list", `mx_PollHistoryList_list_${filter}`)}>
+                    {pollStartEvents.map((pollStartEvent) =>
+                        filter === "ACTIVE" ? (
                             <PollListItem key={pollStartEvent.getId()!} event={pollStartEvent} />
-                        ))}
-                        {isLoading && <LoadingPolls />}
-                    </ol>
-                </>
+                        ) : (
+                            <PollListItemEnded
+                                key={pollStartEvent.getId()!}
+                                event={pollStartEvent}
+                                poll={polls.get(pollStartEvent.getId()!)!}
+                            />
+                        ),
+                    )}
+                    {isLoading && <LoadingPolls />}
+                </ol>
             )}
             {!pollStartEvents.length && !isLoading && (
                 <span className="mx_PollHistoryList_noResults">
