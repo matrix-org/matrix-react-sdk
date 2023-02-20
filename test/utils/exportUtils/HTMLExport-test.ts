@@ -326,22 +326,34 @@ describe("HTMLExport", () => {
             },
             () => {},
         );
-        
+
+        // test link to the first page
         //@ts-ignore private access
-        const firstPage = exporter.wrapHTML("", 0, 3).then((res) => {
-            expect(res).not.toContain('Previous group of messages');
-            expect(res).toContain('<div style="text-align:center;margin:10px"><a href="./messages2.html" style="font-weight:bold">Next group of messages</a></div>');
+        exporter.wrapHTML("", 0, 3).then((res) => {
+            expect(res).not.toContain("Previous group of messages");
+            expect(res).toContain(
+                '<div style="text-align:center;margin:10px"><a href="./messages2.html" style="font-weight:bold">Next group of messages</a></div>',
+            );
         });
+
+        // test link for a middle page
         //@ts-ignore private access
-        const middlePage = exporter.wrapHTML("", 1, 3).then((res) => {
-            expect(res).toContain('<div style="text-align:center"><a href="./messages.html" style="font-weight:bold">Previous group of messages</a></div>');
-            expect(res).toContain('<div style="text-align:center;margin:10px"><a href="./messages3.html" style="font-weight:bold">Next group of messages</a></div>');
+        exporter.wrapHTML("", 1, 3).then((res) => {
+            expect(res).toContain(
+                '<div style="text-align:center"><a href="./messages.html" style="font-weight:bold">Previous group of messages</a></div>',
+            );
+            expect(res).toContain(
+                '<div style="text-align:center;margin:10px"><a href="./messages3.html" style="font-weight:bold">Next group of messages</a></div>',
+            );
         });
+
+        // test link for last page
         //@ts-ignore private access
-        const lastPage = exporter.wrapHTML("", 2, 3).then((res) => {
-            expect(res).toContain('<div style="text-align:center"><a href="./messages2.html" style="font-weight:bold">Previous group of messages</a></div>');
-            expect(res).not.toContain('Next group of messages');
+        exporter.wrapHTML("", 2, 3).then((res) => {
+            expect(res).toContain(
+                '<div style="text-align:center"><a href="./messages2.html" style="font-weight:bold">Previous group of messages</a></div>',
+            );
+            expect(res).not.toContain("Next group of messages");
         });
-       
     });
 });
