@@ -388,7 +388,7 @@ export function allVotes(voteRelations: Relations): Array<UserVote> {
  * @param {string?} selected Local echo selected option for the userId
  * @returns a Map of user ID to their vote info
  */
-function collectUserVotes(
+export function collectUserVotes(
     userResponses: Array<UserVote>,
     userId?: string | null | undefined,
     selected?: string | null | undefined,
@@ -409,7 +409,7 @@ function collectUserVotes(
     return userVotes;
 }
 
-function countVotes(userVotes: Map<string, UserVote>, pollStart: PollStartEvent): Map<string, number> {
+export function countVotes(userVotes: Map<string, UserVote>, pollStart: PollStartEvent): Map<string, number> {
     const collected = new Map<string, number>();
 
     for (const response of userVotes.values()) {
