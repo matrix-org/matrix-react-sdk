@@ -18,7 +18,7 @@ import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType, EVENT_VISIBILITY_CHANGE_TYPE, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
-import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
+import { M_POLL_END, M_POLL_START } from "matrix-js-sdk/src/@types/polls";
 import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
@@ -57,6 +57,7 @@ export function isContentActionable(mxEvent: MatrixEvent): boolean {
         } else if (
             mxEvent.getType() === "m.sticker" ||
             M_POLL_START.matches(mxEvent.getType()) ||
+            M_POLL_END.matches(mxEvent.getType()) ||
             M_BEACON_INFO.matches(mxEvent.getType()) ||
             (mxEvent.getType() === VoiceBroadcastInfoEventType &&
                 mxEvent.getContent()?.state === VoiceBroadcastInfoState.Started)
@@ -160,7 +161,7 @@ const getMsc3531Enabled = (): boolean => {
     if (msc3531Enabled === null) {
         msc3531Enabled = SettingsStore.getValue("feature_msc3531_hide_messages_pending_moderation");
     }
-    return msc3531Enabled;
+    return msc3531Enabled!;
 };
 
 /**
@@ -192,14 +193,14 @@ export function getMessageModerationState(mxEvent: MatrixEvent, client?: MatrixC
     const room = client.getRoom(mxEvent.getRoomId());
     if (
         EVENT_VISIBILITY_CHANGE_TYPE.name &&
-        room.currentState.maySendStateEvent(EVENT_VISIBILITY_CHANGE_TYPE.name, client.getUserId())
+        room?.currentState.maySendStateEvent(EVENT_VISIBILITY_CHANGE_TYPE.name, client.getUserId()!)
     ) {
         // We're a moderator (as indicated by prefixed event name), show the message.
         return MessageModerationState.SEE_THROUGH_FOR_CURRENT_USER;
     }
     if (
         EVENT_VISIBILITY_CHANGE_TYPE.altName &&
-        room.currentState.maySendStateEvent(EVENT_VISIBILITY_CHANGE_TYPE.altName, client.getUserId())
+        room?.currentState.maySendStateEvent(EVENT_VISIBILITY_CHANGE_TYPE.altName, client.getUserId()!)
     ) {
         // We're a moderator (as indicated by unprefixed event name), show the message.
         return MessageModerationState.SEE_THROUGH_FOR_CURRENT_USER;
@@ -219,7 +220,7 @@ export async function fetchInitialEvent(
     roomId: string,
     eventId: string,
 ): Promise<MatrixEvent | null> {
-    let initialEvent: MatrixEvent;
+    let initialEvent: MatrixEvent | null;
 
     try {
         const eventData = await client.fetchRoomEvent(roomId, eventId);
@@ -230,12 +231,12 @@ export async function fetchInitialEvent(
     }
 
     if (client.supportsThreads() && initialEvent?.isRelation(THREAD_RELATION_TYPE.name) && !initialEvent.getThread()) {
-        const threadId = initialEvent.threadRootId;
+        const threadId = initialEvent.threadRootId!;
         const room = client.getRoom(roomId);
         const mapper = client.getEventMapper();
-        const rootEvent = room.findEventById(threadId) ?? mapper(await client.fetchRoomEvent(roomId, threadId));
+        const rootEvent = room?.findEventById(threadId) ?? mapper(await client.fetchRoomEvent(roomId, threadId));
         try {
-            room.createThread(threadId, rootEvent, [initialEvent], true);
+            room?.createThread(threadId, rootEvent, [initialEvent], true);
         } catch (e) {
             logger.warn("Could not find root event: " + threadId);
         }
@@ -270,12 +271,12 @@ export const isLocationEvent = (event: MatrixEvent): boolean => {
     const eventType = event.getType();
     return (
         M_LOCATION.matches(eventType) ||
-        (eventType === EventType.RoomMessage && M_LOCATION.matches(event.getContent().msgtype))
+        (eventType === EventType.RoomMessage && M_LOCATION.matches(event.getContent().msgtype!))
     );
 };
 
 export function hasThreadSummary(event: MatrixEvent): boolean {
-    return event.isThreadRoot && event.getThread()?.length && !!event.getThread().replyToEvent;
+    return event.isThreadRoot && !!event.getThread()?.length && !!event.getThread()!.replyToEvent;
 }
 
 export function canPinEvent(event: MatrixEvent): boolean {

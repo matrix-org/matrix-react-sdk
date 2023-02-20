@@ -48,7 +48,8 @@ export default class ServerOfflineDialog extends React.PureComponent<IProps> {
     private renderTimeline(): React.ReactElement[] {
         return EchoStore.instance.contexts.map((c, i) => {
             if (!c.firstFailedTime) return null; // not useful
-            if (!(c instanceof RoomEchoContext)) throw new Error("Cannot render unknown context: " + c);
+            if (!(c instanceof RoomEchoContext))
+                throw new Error("Cannot render unknown context: " + c.constructor.name);
             const header = (
                 <div className="mx_ServerOfflineDialog_content_context_timeline_header">
                     <RoomAvatar width={24} height={24} room={c.room} />
@@ -87,7 +88,7 @@ export default class ServerOfflineDialog extends React.PureComponent<IProps> {
         });
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let timeline = this.renderTimeline().filter((c) => !!c); // remove nulls for next check
         if (timeline.length === 0) {
             timeline = [<div key={1}>{_t("You're all caught up.")}</div>];

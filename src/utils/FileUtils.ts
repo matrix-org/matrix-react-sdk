@@ -37,7 +37,7 @@ export function presentableTextForFile(
     shortened = false,
 ): string {
     let text = fallbackText;
-    if (content.body?.length > 0) {
+    if (content.body?.length) {
         // The content body should be the name of the file including a
         // file extension.
         text = content.body;
@@ -69,7 +69,7 @@ export function presentableTextForFile(
         // it since it is "ugly", users generally aren't aware what it
         // means and the type of the attachment can usually be inferred
         // from the file extension.
-        text += " (" + filesize(content.info.size) + ")";
+        text += " (" + <string>filesize(content.info.size) + ")";
     }
     return text;
 }

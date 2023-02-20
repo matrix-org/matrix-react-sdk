@@ -37,7 +37,7 @@ export function untilDispatch(
     dispatcher = defaultDispatcher,
     timeout = 1000,
 ): Promise<ActionPayload> {
-    const callerLine = new Error().stack.toString().split("\n")[2];
+    const callerLine = new Error().stack!.toString().split("\n")[2];
     if (typeof waitForAction === "string") {
         const action = waitForAction;
         waitForAction = (payload) => {
@@ -47,7 +47,7 @@ export function untilDispatch(
     const callback = waitForAction as (payload: ActionPayload) => boolean;
     return new Promise((resolve, reject) => {
         let fulfilled = false;
-        let timeoutId;
+        let timeoutId: number;
         // set a timeout handler if needed
         if (timeout > 0) {
             timeoutId = window.setTimeout(() => {
@@ -89,13 +89,13 @@ export function untilDispatch(
 export function untilEmission(
     emitter: EventEmitter,
     eventName: string,
-    check: (...args: any[]) => boolean = undefined,
+    check?: (...args: any[]) => boolean,
     timeout = 1000,
 ): Promise<void> {
-    const callerLine = new Error().stack.toString().split("\n")[2];
+    const callerLine = new Error().stack!.toString().split("\n")[2];
     return new Promise((resolve, reject) => {
         let fulfilled = false;
-        let timeoutId;
+        let timeoutId: number;
         // set a timeout handler if needed
         if (timeout > 0) {
             timeoutId = window.setTimeout(() => {

@@ -24,26 +24,26 @@ export const addTextToComposer = (container: HTMLElement, text: string) =>
     act(() => {
         // couldn't get input event on contenteditable to work
         // paste works without illegal private method access
-        const pasteEvent = {
+        const pasteEvent: Partial<ClipboardEvent> = {
             clipboardData: {
                 types: [],
                 files: [],
-                getData: (type) => (type === "text/plain" ? text : undefined),
-            },
+                getData: (type: string) => (type === "text/plain" ? text : undefined),
+            } as unknown as DataTransfer,
         };
-        fireEvent.paste(container.querySelector('[role="textbox"]'), pasteEvent);
+        fireEvent.paste(container.querySelector('[role="textbox"]')!, pasteEvent);
     });
 
 export const addTextToComposerEnzyme = (wrapper: ReactWrapper, text: string) =>
     act(() => {
         // couldn't get input event on contenteditable to work
         // paste works without illegal private method access
-        const pasteEvent = {
+        const pasteEvent: Partial<ClipboardEvent> = {
             clipboardData: {
                 types: [],
                 files: [],
-                getData: (type) => (type === "text/plain" ? text : undefined),
-            },
+                getData: (type: string) => (type === "text/plain" ? text : undefined),
+            } as unknown as DataTransfer,
         };
         wrapper.find('[role="textbox"]').simulate("paste", pasteEvent);
         wrapper.update();

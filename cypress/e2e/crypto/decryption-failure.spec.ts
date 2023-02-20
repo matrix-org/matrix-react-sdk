@@ -52,6 +52,8 @@ const handleVerificationRequest = (request: VerificationRequest): Chainable<Emoj
             verifier.on("show_sas", onShowSas);
             verifier.verify();
         }),
+        // extra timeout, as this sometimes takes a while
+        { timeout: 30_000 },
     );
 };
 
@@ -111,9 +113,8 @@ describe("Decryption Failure Bar", () => {
                 })
                 .then(() => {
                     cy.botSendMessage(bot, roomId, "test");
-                    cy.wait(5000);
-                    cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline").should(
-                        "have.text",
+                    cy.contains(
+                        ".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline",
                         "Verify this device to access all messages",
                     );
 
@@ -124,6 +125,7 @@ describe("Decryption Failure Bar", () => {
 
                     const verificationRequestPromise = waitForVerificationRequest(otherDevice);
                     cy.get(".mx_CompleteSecurity_actionRow .mx_AccessibleButton").click();
+                    cy.contains("To proceed, please accept the verification request on your other device.");
                     cy.wrap(verificationRequestPromise).then((verificationRequest: VerificationRequest) => {
                         cy.wrap(verificationRequest.accept());
                         handleVerificationRequest(verificationRequest).then((emojis) => {
@@ -170,9 +172,8 @@ describe("Decryption Failure Bar", () => {
             );
 
             cy.botSendMessage(bot, roomId, "test");
-            cy.wait(5000);
-            cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline").should(
-                "have.text",
+            cy.contains(
+                ".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline",
                 "Reset your keys to prevent future decryption errors",
             );
 
@@ -180,12 +181,14 @@ describe("Decryption Failure Bar", () => {
 
             cy.contains(".mx_DecryptionFailureBar_button", "Reset").click();
 
+            // Set up key backup
             cy.get(".mx_Dialog").within(() => {
                 cy.contains(".mx_Dialog_primary", "Continue").click();
                 cy.get(".mx_CreateSecretStorageDialog_recoveryKey code").invoke("text").as("securityKey");
                 // Clicking download instead of Copy because of https://github.com/cypress-io/cypress/issues/2851
                 cy.contains(".mx_AccessibleButton", "Download").click();
                 cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
+                cy.contains("Done").click();
             });
 
             cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline").should(

@@ -193,11 +193,11 @@ export default abstract class BasePlatform {
     public displayNotification(
         title: string,
         msg: string,
-        avatarUrl: string,
+        avatarUrl: string | null,
         room: Room,
         ev?: MatrixEvent,
     ): Notification {
-        const notifBody = {
+        const notifBody: NotificationOptions = {
             body: msg,
             silent: true, // we play our own sounds
         };

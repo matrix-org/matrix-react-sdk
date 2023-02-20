@@ -95,7 +95,7 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
         element.addEventListener("resize", this.onResize);
     };
 
-    private updateFeed(oldFeed: CallFeed, newFeed: CallFeed): void {
+    private updateFeed(oldFeed: CallFeed | null, newFeed: CallFeed | null): void {
         if (oldFeed === newFeed) return;
 
         if (oldFeed) {
@@ -171,13 +171,13 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
         });
     };
 
-    private onResize = (e): void => {
+    private onResize = (e: Event): void => {
         if (this.props.onResize && !this.props.feed.isLocal()) {
             this.props.onResize(e);
         }
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const { pipMode, primary, secondary, feed } = this.props;
 
         const wrapperClasses = classnames("mx_VideoFeed", {

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
@@ -65,7 +65,7 @@ export default class HTMLExporter extends Exporter {
         this.threadsEnabled = SettingsStore.getValue("feature_threadenabled");
     }
 
-    protected async getRoomAvatar(): Promise<ReactNode> {
+    protected async getRoomAvatar(): Promise<string> {
         let blob: Blob | undefined = undefined;
         const avatarUrl = Avatar.avatarUrlForRoom(this.room, 32, 32, "crop");
         const avatarPath = "room.png";
@@ -217,10 +217,10 @@ export default class HTMLExporter extends Exporter {
         </html>`;
     }
 
-    protected getAvatarURL(event: MatrixEvent): string | undefined {
+    protected getAvatarURL(event: MatrixEvent): string | null {
         const member = event.sender;
         const avatarUrl = member?.getMxcAvatarUrl();
-        return avatarUrl ? mediaFromMxc(avatarUrl).getThumbnailOfSourceHttp(30, 30, "crop") : undefined;
+        return avatarUrl ? mediaFromMxc(avatarUrl).getThumbnailOfSourceHttp(30, 30, "crop") : null;
     }
 
     protected async saveAvatarIfNeeded(event: MatrixEvent): Promise<void> {
@@ -386,7 +386,7 @@ export default class HTMLExporter extends Exporter {
 
     protected async createHTML(events: MatrixEvent[], start: number): Promise<string> {
         let content = "";
-        let prevEvent = null;
+        let prevEvent: MatrixEvent | null = null;
         for (let i = start; i < Math.min(start + 1000, events.length); i++) {
             const event = events[i];
             this.updateProgress(
@@ -413,7 +413,7 @@ export default class HTMLExporter extends Exporter {
     }
 
     public async export(): Promise<void> {
-        this.updateProgress(_t("Starting export..."));
+        this.updateProgress(_t("Starting export…"));
 
         const fetchStart = performance.now();
         const res = await this.getRequiredEvents();
@@ -428,7 +428,7 @@ export default class HTMLExporter extends Exporter {
             false,
         );
 
-        this.updateProgress(_t("Creating HTML..."));
+        this.updateProgress(_t("Creating HTML…"));
 
         const usedClasses = new Set<string>();
         for (let page = 0; page < res.length / 1000; page++) {
