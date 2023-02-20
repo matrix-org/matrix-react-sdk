@@ -23,6 +23,10 @@ $irc-line-height: $font-18px;
 
     line-height: $irc-line-height !important;
 
+    blockquote {
+        margin: 0;
+    }
+
     .mx_EventTile[data-layout="irc"] {
         --EventTile_irc_line-padding-block: 1px;
 
@@ -172,10 +176,6 @@ $irc-line-height: $font-18px;
         .mx_EventTile_avatar {
             margin-left: calc(var(--name-width) + var(--icon-width) + var(--right-padding));
         }
-    }
-
-    blockquote {
-        margin: 0;
     }
 
     .mx_ReplyChain {
