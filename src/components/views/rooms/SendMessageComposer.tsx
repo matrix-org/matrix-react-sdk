@@ -1,5 +1,5 @@
 /*
-Copyright 2019 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -73,7 +73,7 @@ export function attachRelation(content: IContent, relation?: IEventRelation): vo
 // exported for tests
 export function createMessageContent(
     model: EditorModel,
-    replyToEvent: MatrixEvent,
+    replyToEvent: MatrixEvent | undefined,
     relation: IEventRelation | undefined,
     permalinkCreator: RoomPermalinkCreator,
     includeReplyLegacyFallback = true,
@@ -148,8 +148,8 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
     private readonly prepareToEncrypt?: DebouncedFunc<() => void>;
     private readonly editorRef = createRef<BasicMessageComposer>();
-    private model: EditorModel = null;
-    private currentlyComposedEditorState: SerializedPart[] = null;
+    private model: EditorModel;
+    private currentlyComposedEditorState: SerializedPart[] | null = null;
     private dispatcherRef: string;
     private sendHistoryManager: SendHistoryManager;
 
@@ -299,7 +299,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 const lastMessage = events[i];
                 const userId = MatrixClientPeg.get().getUserId();
                 const messageReactions = this.props.room.relations.getChildEventsForEvent(
-                    lastMessage.getId(),
+                    lastMessage.getId()!,
                     RelationType.Annotation,
                     EventType.Reaction,
                 );
@@ -314,7 +314,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     shouldReact = !myReactionKeys.includes(reaction);
                 }
                 if (shouldReact) {
-                    MatrixClientPeg.get().sendEvent(lastMessage.getRoomId(), EventType.Reaction, {
+                    MatrixClientPeg.get().sendEvent(lastMessage.getRoomId()!, EventType.Reaction, {
                         "m.relates_to": {
                             rel_type: RelationType.Annotation,
                             event_id: lastMessage.getId(),
@@ -359,7 +359,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
         const replyToEvent = this.props.replyToEvent;
         let shouldSend = true;
-        let content: IContent;
+        let content: IContent | null = null;
 
         if (!containsEmote(model) && isSlashCommand(this.model)) {
             const [cmd, args, commandText] = getSlashCommand(this.model);
@@ -385,9 +385,15 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 } else {
                     shouldSend = false;
                 }
-            } else if (!(await shouldSendAnyway(commandText))) {
+            } else {
+                const sendAnyway = await shouldSendAnyway(commandText);
+                // re-focus the composer after QuestionDialog is closed
+                dis.dispatch({
+                    action: Action.FocusAComposer,
+                    context: this.context.timelineRenderingType,
+                });
                 // if !sendAnyway bail to let the user edit the composer and try again
-                return;
+                if (!sendAnyway) return;
             }
         }
 
@@ -437,7 +443,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     // For initial threads launch, chat effects are disabled
                     // see #19731
                     const isNotThread = this.props.relation?.rel_type !== THREAD_RELATION_TYPE.name;
-                    if (!SettingsStore.getValue("feature_threadenabled") || isNotThread) {
+                    if (isNotThread) {
                         dis.dispatch({ action: `effects.${effect.command}` });
                     }
                 }
@@ -481,7 +487,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         localStorage.removeItem(this.editorStateKey);
     }
 
-    private restoreStoredEditorState(partCreator: PartCreator): Part[] {
+    private restoreStoredEditorState(partCreator: PartCreator): Part[] | null {
         const replyingToThread = this.props.relation?.key === THREAD_RELATION_TYPE.name;
         if (replyingToThread) {
             return null;
@@ -504,6 +510,8 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 logger.error(e);
             }
         }
+
+        return null;
     }
 
     // should save state when editor has contents or reply is open
@@ -563,6 +571,8 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             );
             return true; // to skip internal onPaste handler
         }
+
+        return false;
     };
 
     private onChange = (): void => {
@@ -575,7 +585,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
     public render(): React.ReactNode {
         const threadId =
-            this.props.relation?.rel_type === THREAD_RELATION_TYPE.name ? this.props.relation.event_id : null;
+            this.props.relation?.rel_type === THREAD_RELATION_TYPE.name ? this.props.relation.event_id : undefined;
         return (
             <div className="mx_SendMessageComposer" onClick={this.focusComposer} onKeyDown={this.onKeyDown}>
                 <BasicMessageComposer
