@@ -217,7 +217,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
     public async sendEvent(
         eventType: string,
         content: IContent,
-        stateKey?: string,
+        stateKey?: string | null,
         targetRoomId?: string,
     ): Promise<ISendEventDetails> {
         const client = MatrixClientPeg.get();
