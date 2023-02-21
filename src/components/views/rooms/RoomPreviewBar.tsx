@@ -57,7 +57,8 @@ enum MessageCase {
 }
 
 interface IProps {
-    // The id of the room to be previewed
+    // The id of the room to be previewed, if it is known.
+    // (It may be unknown if we are waiting for an alias to be resolved.)
     roomId?: string;
 
     // if inviterName is specified, the preview bar will shown an invite to the room.
