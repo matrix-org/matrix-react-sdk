@@ -214,6 +214,10 @@ describe("Decryption Failure Bar", () => {
         cy.get(".mx_DecryptionFailureBar").should("exist");
         cy.get(".mx_DecryptionFailureBar .mx_Spinner").should("exist");
 
+        cy.get(".mx_DecryptionFailureBar").percySnapshotElement("DecryptionFailureBar displays loading spinner", {
+            allowSpinners: true,
+        });
+
         cy.wait(5000);
         cy.get(".mx_DecryptionFailureBar .mx_Spinner").should("not.exist");
         cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_icon").should("exist");
