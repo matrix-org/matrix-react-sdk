@@ -16,17 +16,15 @@ limitations under the License.
 
 import EmojiPicker from "../../../../src/components/views/emojipicker/EmojiPicker";
 import { stubClient } from "../../../test-utils";
-import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 
 describe("EmojiPicker", function () {
     stubClient();
-    MatrixClientPeg.get();
 
     it("sort emojis by shortcode and size", function () {
         const ep = new EmojiPicker(null);
 
         //@ts-ignore private access
-        for (let cat of ep.categories) {
+        for (const cat of ep.categories) {
             //@ts-ignore private access
             cat.ref.current = { disabled: false };
         }

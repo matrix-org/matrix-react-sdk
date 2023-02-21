@@ -149,11 +149,11 @@ export default class EmojiProvider extends AutocompleteProvider {
             //if there is an exact shortcode match in the frequently used emojis, it goes before everything
             for (let i = 0; i < recentlyUsedAutocomplete.length; i++) {
                 if (recentlyUsedAutocomplete[i].emoji.shortcodes[0] === trimmedMatch) {
-                    let good = recentlyUsedAutocomplete[i];
+                    const exactMatchEmoji = recentlyUsedAutocomplete[i];
                     for (let j = i; j > 0; j--) {
                         recentlyUsedAutocomplete[j] = recentlyUsedAutocomplete[j - 1];
                     }
-                    recentlyUsedAutocomplete[0] = good;
+                    recentlyUsedAutocomplete[0] = exactMatchEmoji;
                     break;
                 }
             }

@@ -76,7 +76,7 @@ describe("EmojiProvider", function () {
         add("😍"); //heart_eyes
 
         const ep = new EmojiProvider(null);
-        let completionsList = await ep.getCompletions(":heart", { beginning: true, start: 0, end: 6 });
+        const completionsList = await ep.getCompletions(":heart", { beginning: true, start: 0, end: 6 });
         expect(completionsList[0].component.props.title).toEqual(":heartpulse:");
         expect(completionsList[1].component.props.title).toEqual(":heart_eyes:");
     });
@@ -89,8 +89,7 @@ describe("EmojiProvider", function () {
 
         add("❤️"); //heart
         const ep = new EmojiProvider(null);
-        let completionsList = await ep.getCompletions(":heart", { beginning: true, start: 0, end: 6 });
-        completionsList.map((elt) => console.log(elt.component.props.title));
+        const completionsList = await ep.getCompletions(":heart", { beginning: true, start: 0, end: 6 });
 
         expect(completionsList[0].component.props.title).toEqual(":heart:");
         expect(completionsList[1].component.props.title).toEqual(":heartpulse:");
