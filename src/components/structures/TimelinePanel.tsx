@@ -59,6 +59,10 @@ import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
 
+
+// @ts-ignore
+import { JoinedRoom as JoinedRoomEvent } from "@matrix-org/analytics-events/types/typescript/JoinedRoom";
+
 const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
 const READ_RECEIPT_INTERVAL_MS = 500;
@@ -1059,6 +1063,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 cli.setRoomReadMarkers(
                     roomId,
                     this.state.readMarkerEventId ?? "",
+                    // this.state.readMarkerEventId ?? JoinedRoomEvent(cli)[0],
+
                     sendRRs ? lastReadEvent ?? undefined : undefined, // Public read receipt (could be null)
                     lastReadEvent ?? undefined, // Private read receipt (could be null)
                 ).catch(async (e): Promise<void> => {
