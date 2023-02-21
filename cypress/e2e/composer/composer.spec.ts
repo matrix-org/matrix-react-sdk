@@ -202,5 +202,5 @@ describe("Composer", () => {
 
             cy.contains(".mx_EventTile_body", "😇");
         });
-    })
+    });
 });
