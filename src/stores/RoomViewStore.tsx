@@ -606,12 +606,18 @@ export class RoomViewStore extends EventEmitter {
             // provide a more detailed error than "No known servers" when attempting to
             // join using a room ID and no via servers
             if (roomId === this.state.roomId && this.state.viaServers.length === 0) {
-                description = <div>
-                    {_t("You attempted to join using a room ID without providing a list " +
-                        "of servers to join through. Room IDs are internal identifiers and " +
-                        "cannot be used to join a room without additional information.")}<br /><br />
-                    {_t("If you know a room address, try joining through that instead.")}
-                </div>
+                description = (
+                    <div>
+                        {_t(
+                            "You attempted to join using a room ID without providing a list " +
+                                "of servers to join through. Room IDs are internal identifiers and " +
+                                "cannot be used to join a room without additional information.",
+                        )}
+                        <br />
+                        <br />
+                        {_t("If you know a room address, try joining through that instead.")}
+                    </div>
+                );
             }
         }
 
