@@ -186,10 +186,6 @@ describe("Timeline", () => {
             );
 
             cy.get(".mx_Spinner").should("not.exist");
-            // Exclude timestamp from snapshot
-            const percyCSS =
-                ".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp " + "{ visibility: hidden !important; }";
-            cy.percySnapshot("Expanded generic event list summary (GELS) on IRC layout", { percyCSS });
         });
 
         it("should have an expanded generic event list summary (GELS) on compact modern/group layout", () => {
