@@ -745,7 +745,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "SpotlightSearch.showNsfwPublicRooms": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Show NSFW public rooms"),
+        displayName: _td("Show NSFW content"),
         default: false,
     },
     "room_directory_servers": {

@@ -39,8 +39,9 @@ export interface IPublicRoomsOpts {
 
 let thirdParty: Protocols;
 
-const NSFW_KEYWORD = 'nsfw';
-const cheapNsfwFilter = (room: IPublicRoomsChunkRoom): boolean => !room.name?.toLocaleLowerCase().includes(NSFW_KEYWORD) && !room.topic?.toLocaleLowerCase().includes(NSFW_KEYWORD);
+const NSFW_KEYWORD = "nsfw";
+const cheapNsfwFilter = (room: IPublicRoomsChunkRoom): boolean =>
+    !room.name?.toLocaleLowerCase().includes(NSFW_KEYWORD) && !room.topic?.toLocaleLowerCase().includes(NSFW_KEYWORD);
 
 export const usePublicRoomDirectory = (): {
     ready: boolean;
@@ -140,8 +141,6 @@ export const usePublicRoomDirectory = (): {
         const lsRoomServer = localStorage.getItem(LAST_SERVER_KEY);
         const lsInstanceId: string | undefined = localStorage.getItem(LAST_INSTANCE_KEY) ?? undefined;
 
-        const showNsfwPublicRooms = SettingsStore.getValue("SpotlightSearch.showNsfwPublicRooms");
-
         let roomServer: string = myHomeserver;
         if (
             SdkConfig.getObject("room_directory")?.get("servers")?.includes(lsRoomServer) ||
@@ -162,7 +161,7 @@ export const usePublicRoomDirectory = (): {
         }
 
         setReady(true);
-        setConfigInternal({ roomServer, instanceId, showNsfwPublicRooms });
+        setConfigInternal({ roomServer, instanceId });
     }, [protocols]);
 
     useEffect(() => {
