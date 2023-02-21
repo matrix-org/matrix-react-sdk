@@ -179,7 +179,7 @@ describe("Timeline", () => {
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=true]").should("exist");
 
             // Check the height of expanded GELS line
-            cy.get(".mx_GenericEventListSummary[data-layout=irc] .mx_GenericEventListSummary_line").should(
+            cy.get(".mx_GenericEventListSummary[data-layout=irc] .mx_GenericEventListSummary_spacer").should(
                 "have.css",
                 "line-height",
                 "18px", // $irc-line-height: $font-18px (See: _IRCLayout.pcss)
@@ -212,7 +212,7 @@ describe("Timeline", () => {
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=true]").should("exist");
 
             // Check the height of expanded GELS line
-            cy.get(".mx_GenericEventListSummary[data-layout=group] .mx_GenericEventListSummary_line").should(
+            cy.get(".mx_GenericEventListSummary[data-layout=group] .mx_GenericEventListSummary_spacer").should(
                 "have.css",
                 "line-height",
                 "22px", // $font-22px (See: _GenericEventListSummary.pcss)
