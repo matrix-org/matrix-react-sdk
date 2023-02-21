@@ -64,7 +64,7 @@ export default function ExtraTile({
         mx_RoomTile_titleHasUnreadEvents: notificationState?.isUnread,
     });
 
-    let nameContainer = (
+    let nameContainer: JSX.Element | null = (
         <div className="mx_RoomTile_titleContainer">
             <div title={name} className={nameClasses} tabIndex={-1} dir="auto">
                 {name}
