@@ -144,7 +144,7 @@ export default class HTMLExporter extends Exporter {
         );
 
         const nextMessagesLink = renderToStaticMarkup(
-            currentPage !== nbPages - 1 ? (
+            currentPage < nbPages - 1 ? (
                 <div style={{ textAlign: "center", margin: "10px" }}>
                     <a href={"./messages" + (currentPage + 2) + ".html"} style={{ fontWeight: "bold" }}>
                         Next group of messages

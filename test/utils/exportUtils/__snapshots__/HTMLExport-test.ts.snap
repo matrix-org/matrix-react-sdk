@@ -78,7 +78,7 @@ exports[`HTMLExport should export 1`] = `
                             </div>
                         </div>
                         </div>
-                        <div style="text-align:center;margin:10px"><a href="./messages2.html" style="font-weight:bold">Next group of messages</a></div>
+                        
                     </main>
                     </div>
                 </div>
