@@ -120,6 +120,9 @@ describe("Decryption Failure Bar", () => {
 
                     cy.get(".mx_DecryptionFailureBar").percySnapshotElement(
                         "DecryptionFailureBar prompts user to verify",
+                        {
+                            widths: [260, 500],
+                        },
                     );
 
                     cy.contains(".mx_DecryptionFailureBar_button", "Resend key requests").should("not.exist");
@@ -150,6 +153,9 @@ describe("Decryption Failure Bar", () => {
 
             cy.get(".mx_DecryptionFailureBar").percySnapshotElement(
                 "DecryptionFailureBar prompts user to open another device, with Resend Key Requests button",
+                {
+                    widths: [260, 500],
+                },
             );
 
             cy.intercept("/_matrix/client/r0/sendToDevice/m.room_key_request/*").as("keyRequest");
@@ -159,6 +165,9 @@ describe("Decryption Failure Bar", () => {
 
             cy.get(".mx_DecryptionFailureBar").percySnapshotElement(
                 "DecryptionFailureBar prompts user to open another device, " + "without Resend Key Requests button",
+                {
+                    widths: [260, 500],
+                },
             );
         },
     );
@@ -179,7 +188,9 @@ describe("Decryption Failure Bar", () => {
                 "Reset your keys to prevent future decryption errors",
             );
 
-            cy.get(".mx_DecryptionFailureBar").percySnapshotElement("DecryptionFailureBar prompts user to reset keys");
+            cy.get(".mx_DecryptionFailureBar").percySnapshotElement("DecryptionFailureBar prompts user to reset keys", {
+                widths: [260, 500],
+            });
 
             cy.contains(".mx_DecryptionFailureBar_button", "Reset").click();
 
@@ -200,6 +211,9 @@ describe("Decryption Failure Bar", () => {
 
             cy.get(".mx_DecryptionFailureBar").percySnapshotElement(
                 "DecryptionFailureBar displays general message with no call to action",
+                {
+                    widths: [260, 500],
+                },
             );
         },
     );
@@ -216,6 +230,7 @@ describe("Decryption Failure Bar", () => {
 
         cy.get(".mx_DecryptionFailureBar").percySnapshotElement("DecryptionFailureBar displays loading spinner", {
             allowSpinners: true,
+            widths: [260, 500],
         });
 
         cy.wait(5000);
