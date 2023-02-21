@@ -40,7 +40,7 @@ interface IProps {
 
 interface IState {
     currentSound: string;
-    uploadedFile: File;
+    uploadedFile: File | null;
 }
 
 export default class NotificationsSettingsTab extends React.Component<IProps, IState> {
@@ -71,7 +71,7 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
         e.stopPropagation();
         e.preventDefault();
 
-        this.soundUpload.current.click();
+        this.soundUpload.current?.click();
     };
 
     private onSoundUploadChanged = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -155,8 +155,8 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
         });
     };
 
-    public render(): JSX.Element {
-        let currentUploadedFile = null;
+    public render(): React.ReactNode {
+        let currentUploadedFile: JSX.Element | undefined;
         if (this.state.uploadedFile) {
             currentUploadedFile = (
                 <div>

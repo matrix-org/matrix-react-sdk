@@ -68,6 +68,7 @@ describe("RecentAlgorithm", () => {
 
         it("returns a fake ts for rooms without a timeline", () => {
             const room = mkRoom(cli, "!new:example.org");
+            // @ts-ignore
             room.timeline = undefined;
             expect(algorithm.getLastTs(room, "@john:matrix.org")).toBe(Number.MAX_SAFE_INTEGER);
         });
@@ -172,8 +173,8 @@ describe("RecentAlgorithm", () => {
                 room: room1.roomId,
                 event: true,
                 msg: `hello world`,
-                rootEventId: rootEvent.getId(),
-                replyToEventId: rootEvent.getId(),
+                rootEventId: rootEvent.getId()!,
+                replyToEventId: rootEvent.getId()!,
                 // replies are 1ms after each other
                 ts: 50,
             });

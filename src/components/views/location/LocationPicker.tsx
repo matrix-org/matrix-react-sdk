@@ -23,10 +23,9 @@ import { ClientEvent, IClientWellKnown } from "matrix-js-sdk/src/client";
 import { _t } from "../../../languageHandler";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import Modal from "../../../Modal";
-import SdkConfig from "../../../SdkConfig";
 import { tileServerFromWellKnown } from "../../../utils/WellKnownUtils";
 import { GenericPosition, genericPositionFromGeolocation, getGeoUri } from "../../../utils/beacon";
-import { LocationShareError, findMapStyleUrl } from "../../../utils/location";
+import { LocationShareError, findMapStyleUrl, positionFailureMessage } from "../../../utils/location";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import AccessibleButton from "../elements/AccessibleButton";
 import { MapError } from "./MapError";
@@ -208,7 +207,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         this.props.onFinished();
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         if (this.state.error) {
             return (
                 <div className="mx_LocationPicker mx_LocationPicker_hasError">
@@ -232,7 +231,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                             <LiveDurationDropdown onChange={this.onTimeoutChange} timeout={this.state.timeout} />
                         )}
                         <AccessibleButton
-                            data-test-id="location-picker-submit-button"
+                            data-testid="location-picker-submit-button"
                             type="submit"
                             element="button"
                             kind="primary"
@@ -266,21 +265,3 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
 }
 
 export default LocationPicker;
-
-function positionFailureMessage(code: number): string {
-    const brand = SdkConfig.get().brand;
-    switch (code) {
-        case 1:
-            return _t(
-                "%(brand)s was denied permission to fetch your location. " +
-                    "Please allow location access in your browser settings.",
-                { brand },
-            );
-        case 2:
-            return _t("Failed to fetch your location. Please try again later.");
-        case 3:
-            return _t("Timed out trying to fetch your location. Please try again later.");
-        case 4:
-            return _t("Unknown error fetching location. Please try again later.");
-    }
-}

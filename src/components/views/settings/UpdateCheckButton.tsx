@@ -27,7 +27,7 @@ import AccessibleButton from "../../../components/views/elements/AccessibleButto
 import { CheckUpdatesPayload } from "../../../dispatcher/payloads/CheckUpdatesPayload";
 
 function installUpdate(): void {
-    PlatformPeg.get().installUpdate();
+    PlatformPeg.get()?.installUpdate();
 }
 
 function getStatusText(status: UpdateCheckStatus, errorDetail?: string): ReactNode {
@@ -35,11 +35,11 @@ function getStatusText(status: UpdateCheckStatus, errorDetail?: string): ReactNo
         case UpdateCheckStatus.Error:
             return _t("Error encountered (%(errorDetail)s).", { errorDetail });
         case UpdateCheckStatus.Checking:
-            return _t("Checking for an update...");
+            return _t("Checking for an update…");
         case UpdateCheckStatus.NotAvailable:
             return _t("No update available.");
         case UpdateCheckStatus.Downloading:
-            return _t("Downloading update...");
+            return _t("Downloading update…");
         case UpdateCheckStatus.Ready:
             return _t(
                 "New version available. <a>Update now.</a>",
@@ -58,11 +58,11 @@ function getStatusText(status: UpdateCheckStatus, errorDetail?: string): ReactNo
 const doneStatuses = [UpdateCheckStatus.Ready, UpdateCheckStatus.Error, UpdateCheckStatus.NotAvailable];
 
 const UpdateCheckButton: React.FC = () => {
-    const [state, setState] = useState<CheckUpdatesPayload>(null);
+    const [state, setState] = useState<CheckUpdatesPayload | null>(null);
 
     const onCheckForUpdateClick = (): void => {
         setState(null);
-        PlatformPeg.get().startUpdateCheck();
+        PlatformPeg.get()?.startUpdateCheck();
     };
 
     useDispatcher(dis, ({ action, ...params }) => {
@@ -71,9 +71,9 @@ const UpdateCheckButton: React.FC = () => {
         }
     });
 
-    const busy = state && !doneStatuses.includes(state.status);
+    const busy = !!state && !doneStatuses.includes(state.status);
 
-    let suffix;
+    let suffix: JSX.Element | undefined;
     if (state) {
         suffix = (
             <span className="mx_UpdateCheckButton_summary">
