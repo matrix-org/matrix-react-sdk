@@ -139,10 +139,10 @@ export default class EmojiProvider extends AutocompleteProvider {
             completions = completions.slice(0, LIMIT);
 
             // Do a second sort to place emoji matching with frequently used one on top
-            const recentlyUsedAutocomplete = [];
+            const recentlyUsedAutocomplete: ISortedEmoji[] = [];
             this.recentlyUsed.forEach((emoji) => {
                 if (emoji.shortcodes[0].indexOf(trimmedMatch) === 0) {
-                    recentlyUsedAutocomplete.push({ emoji: emoji });
+                    recentlyUsedAutocomplete.push({ emoji: emoji, _orderBy: 0 });
                 }
             });
 
