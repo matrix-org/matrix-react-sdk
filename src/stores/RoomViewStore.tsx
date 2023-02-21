@@ -603,31 +603,15 @@ export class RoomViewStore extends EventEmitter {
                 }
             }
 
-            // if joined through room ID and didn't provide any via servers, provide
-            // a more detailed error than "No known servers"
-            if (roomId === this.state.roomId && !this.state.viaServers?.length) {
+            // provide a more detailed error than "No known servers" when attempting to
+            // join using a room ID and no via servers
+            if (roomId === this.state.roomId && this.state.viaServers.length === 0) {
                 description = <div>
-                    { _t("This Room ID (%(id)s) cannot be joined. Try to join using a Room " +
-                         "Alias (#room:example.com) instead.", {
-                        id: this.state.roomId,
-                    }) }<br /><br />
-
-                    <details>
-                        <summary>{ _t("Why?") }</summary><br />
-
-                        { _t("A Room ID alone cannot be used to join a room unless your " +
-                             "homeserver already participates in that room.") }<br /><br />
-
-                        { _t("For a Room ID to be joinable over federation, a list of " +
-                             "homeservers to attempt to join through must be provided. " +
-                             "You didn't provide any.") }<br /><br />
-
-                        { _t("The sole purpose of the domain at the end of a Room ID " +
-                             "is to ensure it is unique.") }<br /><br />
-
-                        { _t("For these reasons, Room Aliases are the recommended way to join rooms.") }
-                    </details>
-                </div>;
+                    {_t("You attempted to join using a room ID without providing a list " +
+                        "of servers to join through. Room IDs are internal identifiers and " +
+                        "cannot be used to join a room without additional information.")}<br /><br />
+                    {_t("If you know a room address, try joining through that instead.")}
+                </div>
             }
         }
 
