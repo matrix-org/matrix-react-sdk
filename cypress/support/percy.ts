@@ -38,6 +38,7 @@ declare global {
 }
 
 Cypress.Commands.add("percySnapshotElement", { prevSubject: "element" }, (subject, name, options) => {
+    cy.get(".mx_Spinner").should("not.exist"); // Await spinners to vanish
     cy.percySnapshot(name, {
         domTransformation: (documentClone) => scope(documentClone, subject.selector),
         ...options,
