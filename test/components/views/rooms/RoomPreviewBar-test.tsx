@@ -71,7 +71,7 @@ describe("<RoomPreviewBar />", () => {
     const inviterUserId = "@inviter:test.com";
     const otherUserId = "@othertester:test.com";
 
-    const getComponent = (props: Omit<ComponentProps<typeof RoomPreviewBar>, 'roomId'> = {}) => {
+    const getComponent = (props: Omit<ComponentProps<typeof RoomPreviewBar>, "roomId"> = {}) => {
         const defaultProps = {
             roomId,
             room: createRoom(roomId, userId),
@@ -325,7 +325,7 @@ describe("<RoomPreviewBar />", () => {
                 { medium: "not-email", address: "address 2" },
             ];
 
-            const testJoinButton = (props: Omit<ComponentProps<typeof RoomPreviewBar>, 'roomId'>) => async () => {
+            const testJoinButton = (props: Omit<ComponentProps<typeof RoomPreviewBar>, "roomId">) => async () => {
                 const onJoinClick = jest.fn();
                 const onRejectClick = jest.fn();
                 const component = getComponent({ ...props, onJoinClick, onRejectClick });
