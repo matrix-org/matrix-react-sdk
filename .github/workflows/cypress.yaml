@@ -5,6 +5,9 @@ on:
         workflows: ["Element Web - Build"]
         types:
             - completed
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.head_branch || github.ref_name }}
+  cancel-in-progress: true
 jobs:
     prepare:
         name: Prepare
