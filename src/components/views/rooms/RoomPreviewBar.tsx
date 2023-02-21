@@ -81,6 +81,7 @@ interface IProps {
     previewLoading?: boolean;
 
     // The room to be previewed
+    // If given, the room passed is peekable
     room?: Room;
 
     loading?: boolean;
