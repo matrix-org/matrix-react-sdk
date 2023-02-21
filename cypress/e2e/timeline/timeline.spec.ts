@@ -163,7 +163,7 @@ describe("Timeline", () => {
             cy.percySnapshot("Configured room on IRC layout");
         });
 
-        it("should have a generic event list summary on IRC layout", () => {
+        it("should have an expanded generic event list summary (GELS) on IRC layout", () => {
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
 
@@ -189,7 +189,36 @@ describe("Timeline", () => {
             // Exclude timestamp from snapshot
             const percyCSS =
                 ".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp " + "{ visibility: hidden !important; }";
-            cy.percySnapshot("Expanded event line with inline start margin on IRC layout", { percyCSS });
+            cy.percySnapshot("Expanded generic event list summary (GELS) on IRC layout", { percyCSS });
+        });
+
+        it("should have an expanded generic event list summary (GELS) on compact modern/group layout", () => {
+            sendEvent(roomId);
+            cy.visit("/#/room/" + roomId);
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group).setSettingValue(
+                "useCompactLayout",
+                null,
+                SettingLevel.DEVICE,
+                true,
+            );
+            cy.contains(
+                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
+                "created and configured the room.",
+            ).should("exist");
+
+            // Click "expand" link button
+            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
+            // Make sure the "expand" link button worked
+            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=true]").should("exist");
+
+            // Check the height of expanded GELS line
+            cy.get(".mx_GenericEventListSummary[data-layout=group] .mx_GenericEventListSummary_line").should(
+                "have.css",
+                "line-height",
+                "22px", // $font-22px (See: _GenericEventListSummary.pcss)
+            );
+
+            cy.get(".mx_Spinner").should("not.exist");
         });
 
         it("should add inline start margin to an event line on IRC layout", () => {
