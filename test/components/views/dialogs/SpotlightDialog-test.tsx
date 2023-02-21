@@ -76,7 +76,9 @@ function mockClient({
                 !searchTerm ||
                 it.room_id.toLowerCase().includes(searchTerm) ||
                 it.name?.toLowerCase().includes(searchTerm) ||
-                sanitizeHtml(it?.topic, { allowedTags: [] }).toLowerCase().includes(searchTerm) ||
+                sanitizeHtml(it?.topic || "", { allowedTags: [] })
+                    .toLowerCase()
+                    .includes(searchTerm) ||
                 it.canonical_alias?.toLowerCase().includes(searchTerm) ||
                 it.aliases?.find((alias) => alias.toLowerCase().includes(searchTerm)),
         );
@@ -161,11 +163,11 @@ describe("Spotlight Dialog", () => {
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
 
-            const filterChip = document.querySelector("div.mx_SpotlightDialog_filter");
+            const filterChip = document.querySelector("div.mx_SpotlightDialog_filter")!;
             expect(filterChip).toBeInTheDocument();
             expect(filterChip.innerHTML).toContain("Public rooms");
 
-            const content = document.querySelector("#mx_SpotlightDialog_content");
+            const content = document.querySelector("#mx_SpotlightDialog_content")!;
             const options = content.querySelectorAll("div.mx_SpotlightDialog_option");
             expect(options.length).toBe(1);
             expect(options[0].innerHTML).toContain(testPublicRoom.name);
@@ -183,11 +185,11 @@ describe("Spotlight Dialog", () => {
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
 
-            const filterChip = document.querySelector("div.mx_SpotlightDialog_filter");
+            const filterChip = document.querySelector("div.mx_SpotlightDialog_filter")!;
             expect(filterChip).toBeInTheDocument();
             expect(filterChip.innerHTML).toContain("People");
 
-            const content = document.querySelector("#mx_SpotlightDialog_content");
+            const content = document.querySelector("#mx_SpotlightDialog_content")!;
             const options = content.querySelectorAll("div.mx_SpotlightDialog_option");
             expect(options.length).toBeGreaterThanOrEqual(1);
             expect(options[0]!.innerHTML).toContain(testPerson.display_name);
@@ -223,11 +225,11 @@ describe("Spotlight Dialog", () => {
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
 
-            const filterChip = document.querySelector("div.mx_SpotlightDialog_filter");
+            const filterChip = document.querySelector("div.mx_SpotlightDialog_filter")!;
             expect(filterChip).toBeInTheDocument();
             expect(filterChip.innerHTML).toContain("Public rooms");
 
-            const content = document.querySelector("#mx_SpotlightDialog_content");
+            const content = document.querySelector("#mx_SpotlightDialog_content")!;
             const options = content.querySelectorAll("div.mx_SpotlightDialog_option");
             expect(options.length).toBe(1);
             expect(options[0]!.innerHTML).toContain(testPublicRoom.name);
@@ -246,11 +248,11 @@ describe("Spotlight Dialog", () => {
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
 
-            const filterChip = document.querySelector("div.mx_SpotlightDialog_filter");
+            const filterChip = document.querySelector("div.mx_SpotlightDialog_filter")!;
             expect(filterChip).toBeInTheDocument();
             expect(filterChip.innerHTML).toContain("People");
 
-            const content = document.querySelector("#mx_SpotlightDialog_content");
+            const content = document.querySelector("#mx_SpotlightDialog_content")!;
             const options = content.querySelectorAll("div.mx_SpotlightDialog_option");
             expect(options.length).toBeGreaterThanOrEqual(1);
             expect(options[0]!.innerHTML).toContain(testPerson.display_name);
@@ -264,15 +266,15 @@ describe("Spotlight Dialog", () => {
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
 
-            let filterChip = document.querySelector("div.mx_SpotlightDialog_filter");
+            let filterChip = document.querySelector("div.mx_SpotlightDialog_filter")!;
             expect(filterChip).toBeInTheDocument();
             expect(filterChip.innerHTML).toContain("Public rooms");
 
-            fireEvent.click(filterChip.querySelector("div.mx_SpotlightDialog_filter--close"));
+            fireEvent.click(filterChip.querySelector("div.mx_SpotlightDialog_filter--close")!);
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
 
-            filterChip = document.querySelector("div.mx_SpotlightDialog_filter");
+            filterChip = document.querySelector("div.mx_SpotlightDialog_filter")!;
             expect(filterChip).not.toBeInTheDocument();
         });
         it("with people filter", async () => {
@@ -289,9 +291,9 @@ describe("Spotlight Dialog", () => {
 
             let filterChip = document.querySelector("div.mx_SpotlightDialog_filter");
             expect(filterChip).toBeInTheDocument();
-            expect(filterChip.innerHTML).toContain("People");
+            expect(filterChip!.innerHTML).toContain("People");
 
-            fireEvent.click(filterChip.querySelector("div.mx_SpotlightDialog_filter--close"));
+            fireEvent.click(filterChip!.querySelector("div.mx_SpotlightDialog_filter--close")!);
             jest.advanceTimersByTime(1);
             await flushPromisesWithFakeTimers();
 
@@ -309,7 +311,7 @@ describe("Spotlight Dialog", () => {
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
 
-            const content = document.querySelector("#mx_SpotlightDialog_content");
+            const content = document.querySelector("#mx_SpotlightDialog_content")!;
             options = content.querySelectorAll("div.mx_SpotlightDialog_option");
         });
 
