@@ -121,7 +121,7 @@ describe("Decryption Failure Bar", () => {
                     cy.get(".mx_DecryptionFailureBar").percySnapshotElement(
                         "DecryptionFailureBar prompts user to verify",
                         {
-                            widths: [260, 500],
+                            widths: [320, 640],
                         },
                     );
 
@@ -154,7 +154,7 @@ describe("Decryption Failure Bar", () => {
             cy.get(".mx_DecryptionFailureBar").percySnapshotElement(
                 "DecryptionFailureBar prompts user to open another device, with Resend Key Requests button",
                 {
-                    widths: [260, 500],
+                    widths: [320, 640],
                 },
             );
 
@@ -166,7 +166,7 @@ describe("Decryption Failure Bar", () => {
             cy.get(".mx_DecryptionFailureBar").percySnapshotElement(
                 "DecryptionFailureBar prompts user to open another device, " + "without Resend Key Requests button",
                 {
-                    widths: [260, 500],
+                    widths: [320, 640],
                 },
             );
         },
@@ -189,7 +189,7 @@ describe("Decryption Failure Bar", () => {
             );
 
             cy.get(".mx_DecryptionFailureBar").percySnapshotElement("DecryptionFailureBar prompts user to reset keys", {
-                widths: [260, 500],
+                widths: [320, 640],
             });
 
             cy.contains(".mx_DecryptionFailureBar_button", "Reset").click();
@@ -212,7 +212,7 @@ describe("Decryption Failure Bar", () => {
             cy.get(".mx_DecryptionFailureBar").percySnapshotElement(
                 "DecryptionFailureBar displays general message with no call to action",
                 {
-                    widths: [260, 500],
+                    widths: [320, 640],
                 },
             );
         },
@@ -230,7 +230,7 @@ describe("Decryption Failure Bar", () => {
 
         cy.get(".mx_DecryptionFailureBar").percySnapshotElement("DecryptionFailureBar displays loading spinner", {
             allowSpinners: true,
-            widths: [260, 500],
+            widths: [320, 640],
         });
 
         cy.wait(5000);
