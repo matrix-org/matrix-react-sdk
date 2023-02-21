@@ -15,13 +15,12 @@ limitations under the License.
 */
 
 .mx_ToastContainer {
-    position: absolute;
-    top: 0;
-    left: 70px;
-    z-index: 101;
-    padding: 4px;
     display: grid;
     grid-template-rows: 1fr 14px 6px;
+    left: $spacing-32;
+    position: absolute;
+    top: $spacing-4;
+    z-index: 101;
 
     &.mx_ToastContainer_stacked::before {
         content: "";
@@ -45,14 +44,14 @@ limitations under the License.
         grid-template-columns: 22px 1fr;
         column-gap: 8px;
         row-gap: 4px;
-        padding: 8px;
+        padding: $spacing-16;
 
         &.mx_Toast_hasIcon {
             &::before,
             &::after {
                 content: "";
-                width: 22px;
-                height: 22px;
+                width: 20px;
+                height: 20px;
                 grid-column: 1;
                 grid-row: 1;
                 mask-size: 100%;
@@ -60,6 +59,8 @@ limitations under the License.
                 mask-repeat: no-repeat;
                 background-size: 100%;
                 background-repeat: no-repeat;
+                position: relative;
+                top: 1px;
             }
 
             &.mx_Toast_icon_verification::after {
@@ -104,21 +105,18 @@ limitations under the License.
             }
         }
 
-        .mx_Toast_title,
-        .mx_Toast_description {
-            padding-right: 8px;
-        }
-
         .mx_Toast_title {
-            display: flex;
             align-items: center;
-            column-gap: 8px;
-            width: 100%;
             box-sizing: border-box;
+            column-gap: 8px;
+            display: flex;
+            margin-bottom: $spacing-16;
+            mask-border: $spacing-16;
+            width: 100%;
 
             h2 {
                 margin: 0;
-                font-size: $font-15px;
+                font-size: $font-18px;
                 font-weight: 600;
                 display: inline;
                 width: auto;
@@ -138,22 +136,24 @@ limitations under the License.
         }
 
         .mx_Toast_buttons {
+            column-gap: $spacing-8;
             display: flex;
             justify-content: flex-end;
-            column-gap: 5px;
+            margin-top: $spacing-32;
 
             .mx_AccessibleButton {
-                min-width: 96px;
                 box-sizing: border-box;
             }
         }
 
         .mx_Toast_description {
+            font-size: $font-15px;
+            font-weight: 600;
+            margin: 0;
             max-width: 272px;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin: 4px 0 11px 0;
-            font-size: $font-12px;
+            white-space: nowrap;
 
             a {
                 text-decoration: none;
@@ -162,6 +162,9 @@ limitations under the License.
 
         .mx_Toast_detail {
             color: $secondary-content;
+            font-size: $font-12px;
+            font-weight: 400;
+            max-width: 272px;
         }
 
         .mx_Toast_deviceID {
