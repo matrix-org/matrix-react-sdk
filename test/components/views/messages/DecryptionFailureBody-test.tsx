@@ -54,7 +54,7 @@ describe("DecryptionFailureBody", () => {
             },
             event: true,
         });
-        event.isEncryptedDisabledForUnverifiedDevices = jest.fn().mockReturnValue(true);
+        jest.spyOn(event, "isEncryptedDisabledForUnverifiedDevices", "get").mockReturnValue(true);
         const { container } = customRender(event);
 
         // Then

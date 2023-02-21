@@ -21,7 +21,7 @@ import { _t } from "../../../languageHandler";
 import { IBodyProps } from "./IBodyProps";
 
 function getErrorMessage(mxEvent?: MatrixEvent): string {
-    return mxEvent?.isEncryptedDisabledForUnverifiedDevices()
+    return mxEvent?.isEncryptedDisabledForUnverifiedDevices
         ? _t("The sender has blocked you from receiving this message")
         : _t("Unable to decrypt message");
 }
