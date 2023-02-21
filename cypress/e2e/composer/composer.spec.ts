@@ -186,4 +186,21 @@ describe("Composer", () => {
             });
         });
     });
+
+    describe("emoji picker", () => {
+        it("should allow user to input emoji via graphical picker", () => {
+            cy.getComposer(false).within(() => {
+                cy.get('[aria-label="Emoji"]').click();
+            });
+
+            cy.get('[data-testid="mx_EmojiPicker"]').within(() => {
+                cy.contains(".mx_EmojiPicker_item", "😇").click();
+            });
+
+            cy.get(".mx_ContextualMenu_background").click(); // Close emoji picker
+            cy.get("div[contenteditable=true]").type("{enter}"); // Send message
+
+            cy.contains(".mx_EventTile_body", "😇");
+        });
+    })
 });
