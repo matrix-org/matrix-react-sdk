@@ -176,17 +176,22 @@ export default class LegacyCallEventGrouper extends EventEmitter {
         this.call.addListener(CallEvent.LengthChanged, this.onLengthChanged);
     }
 
-    private setState = (): void => {
-        if (CONNECTING_STATES.includes(this.call?.state)) {
-            this.state = CallState.Connecting;
-        } else if (SUPPORTED_STATES.includes(this.call?.state)) {
-            this.state = this.call.state;
+    private setState = (newState?: CallState | CustomCallState): void => {
+        if (newState) {
+            this.state = newState;
         } else {
-            if (this.callWasMissed) this.state = CustomCallState.Missed;
-            else if (this.reject) this.state = CallState.Ended;
-            else if (this.hangup) this.state = CallState.Ended;
-            else if (this.invite && this.call) this.state = CallState.Connecting;
+            if (CONNECTING_STATES.includes(this.call?.state)) {
+                this.state = CallState.Connecting;
+            } else if (SUPPORTED_STATES.includes(this.call?.state)) {
+                this.state = this.call.state;
+            } else {
+                if (this.callWasMissed) this.state = CustomCallState.Missed;
+                else if (this.reject) this.state = CallState.Ended;
+                else if (this.hangup) this.state = CallState.Ended;
+                else if (this.invite) this.state = CallState.Connecting;
+            }
         }
+
         this.emit(LegacyCallEventGrouperEvent.StateChanged, this.state);
     };
 
