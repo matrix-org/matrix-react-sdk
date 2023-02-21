@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export const parseGeoUri = (uri: string): GeolocationCoordinates => {
-    function parse(s: string): number {
+export const parseGeoUri = (uri: string): GeolocationCoordinates | undefined => {
+    function parse(s: string): number | undefined {
         const ret = parseFloat(s);
         if (Number.isNaN(ret)) {
             return undefined;
@@ -26,9 +26,9 @@ export const parseGeoUri = (uri: string): GeolocationCoordinates => {
 
     const m = uri.match(/^\s*geo:(.*?)\s*$/);
     if (!m) return;
-    const parts = m[1].split(';');
-    const coords = parts[0].split(',');
-    let uncertainty: number;
+    const parts = m[1].split(";");
+    const coords = parts[0].split(",");
+    let uncertainty: number | undefined;
     for (const param of parts.slice(1)) {
         const m = param.match(/u=(.*)/);
         if (m) uncertainty = parse(m[1]);

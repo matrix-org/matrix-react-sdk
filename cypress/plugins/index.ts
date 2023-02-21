@@ -18,15 +18,21 @@ limitations under the License.
 
 import PluginEvents = Cypress.PluginEvents;
 import PluginConfigOptions = Cypress.PluginConfigOptions;
-import { performance } from "./performance";
 import { synapseDocker } from "./synapsedocker";
+import { dendriteDocker } from "./dendritedocker";
+import { slidingSyncProxyDocker } from "./sliding-sync";
 import { webserver } from "./webserver";
+import { docker } from "./docker";
+import { log } from "./log";
 
 /**
  * @type {Cypress.PluginConfig}
  */
-export default function(on: PluginEvents, config: PluginConfigOptions) {
-    performance(on, config);
+export default function (on: PluginEvents, config: PluginConfigOptions) {
+    docker(on, config);
     synapseDocker(on, config);
+    dendriteDocker(on, config);
+    slidingSyncProxyDocker(on, config);
     webserver(on, config);
+    log(on, config);
 }

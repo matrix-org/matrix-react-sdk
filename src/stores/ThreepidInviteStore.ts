@@ -56,7 +56,7 @@ export interface IOOBData {
     inviterName?: string; // The display name of the person who invited us to the room
     // eslint-disable-next-line camelcase
     room_name?: string; // The name of the room, to be used until we are told better by the server
-    roomType?: RoomType; // The type of the room, to be used until we are told better by the server
+    roomType?: RoomType | string; // The type of the room, to be used until we are told better by the server
 }
 
 const STORAGE_PREFIX = "mx_threepid_invite_";
@@ -89,7 +89,7 @@ export default class ThreepidInviteStore extends EventEmitter {
     }
 
     public getInvites(): IThreepidInvite[] {
-        return this.getWireInvites().map(i => this.translateInvite(i));
+        return this.getWireInvites().map((i) => this.translateInvite(i));
     }
 
     // Currently Element can only handle one invite at a time, so handle that
@@ -97,7 +97,7 @@ export default class ThreepidInviteStore extends EventEmitter {
         return this.getInvites()[0];
     }
 
-    public resolveInvite(invite: IThreepidInvite) {
+    public resolveInvite(invite: IThreepidInvite): void {
         localStorage.removeItem(`${STORAGE_PREFIX}${invite.id}`);
     }
 

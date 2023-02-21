@@ -31,7 +31,7 @@ const localStorage = window.localStorage;
 
 // just *accessing* indexedDB throws an exception in firefox with
 // indexeddb disabled.
-let indexedDB;
+let indexedDB: IDBFactory;
 try {
     indexedDB = window.indexedDB;
 } catch (e) {}
@@ -62,9 +62,7 @@ export default function createMatrixClient(opts: ICreateClientOpts): MatrixClien
     }
 
     if (indexedDB) {
-        storeOpts.cryptoStore = new IndexedDBCryptoStore(
-            indexedDB, "matrix-js-sdk:crypto",
-        );
+        storeOpts.cryptoStore = new IndexedDBCryptoStore(indexedDB, "matrix-js-sdk:crypto");
     } else if (localStorage) {
         storeOpts.cryptoStore = new LocalStorageCryptoStore(localStorage);
     } else {

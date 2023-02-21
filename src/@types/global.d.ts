@@ -23,7 +23,7 @@ import ContentMessages from "../ContentMessages";
 import { IMatrixClientPeg } from "../MatrixClientPeg";
 import ToastStore from "../stores/ToastStore";
 import DeviceListener from "../DeviceListener";
-import { RoomListStoreClass } from "../stores/room-list/RoomListStore";
+import { RoomListStore } from "../stores/room-list/Interface";
 import { PlatformPeg } from "../PlatformPeg";
 import RoomListLayoutStore from "../stores/room-list/RoomListLayoutStore";
 import { IntegrationManagers } from "../integrations/IntegrationManagers";
@@ -33,7 +33,7 @@ import { Notifier } from "../Notifier";
 import type { Renderer } from "react-dom";
 import RightPanelStore from "../stores/right-panel/RightPanelStore";
 import WidgetStore from "../stores/WidgetStore";
-import CallHandler from "../CallHandler";
+import LegacyCallHandler from "../LegacyCallHandler";
 import UserActivity from "../UserActivity";
 import { ModalWidgetStore } from "../stores/ModalWidgetStore";
 import { WidgetLayoutStore } from "../stores/widgets/WidgetLayoutStore";
@@ -73,13 +73,13 @@ declare global {
         // https://github.com/microsoft/TypeScript-DOM-lib-generator/issues/1029#issuecomment-869224737
         // https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas
         OffscreenCanvas?: {
-            new(width: number, height: number): OffscreenCanvas;
+            new (width: number, height: number): OffscreenCanvas;
         };
 
         mxContentMessages: ContentMessages;
         mxToastStore: ToastStore;
         mxDeviceListener: DeviceListener;
-        mxRoomListStore: RoomListStoreClass;
+        mxRoomListStore: RoomListStore;
         mxRoomListLayoutStore: RoomListLayoutStore;
         mxPlatformPeg: PlatformPeg;
         mxIntegrationManagers: typeof IntegrationManagers;
@@ -89,7 +89,7 @@ declare global {
         mxRightPanelStore: RightPanelStore;
         mxWidgetStore: WidgetStore;
         mxWidgetLayoutStore: WidgetLayoutStore;
-        mxCallHandler: CallHandler;
+        mxLegacyCallHandler: LegacyCallHandler;
         mxUserActivity: UserActivity;
         mxModalWidgetStore: ModalWidgetStore;
         mxVoipUserMapper: VoipUserMapper;
@@ -149,14 +149,7 @@ declare global {
 
     // https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas
     interface OffscreenCanvas {
-        height: number;
-        width: number;
-        getContext: HTMLCanvasElement["getContext"];
-        convertToBlob(opts?: {
-            type?: string;
-            quality?: number;
-        }): Promise<Blob>;
-        transferToImageBitmap(): ImageBitmap;
+        convertToBlob(opts?: { type?: string; quality?: number }): Promise<Blob>;
     }
 
     interface HTMLAudioElement {
@@ -171,10 +164,6 @@ declare global {
         // sinkId & setSinkId are experimental and typescript doesn't know about them
         sinkId: string;
         setSinkId(outputId: string): void;
-    }
-
-    interface HTMLStyleElement {
-        disabled?: boolean;
     }
 
     // Add Chrome-specific `instant` ScrollBehaviour
@@ -209,11 +198,7 @@ declare global {
     // https://github.com/microsoft/TypeScript/issues/28308#issuecomment-650802278
     interface AudioWorkletProcessor {
         readonly port: MessagePort;
-        process(
-            inputs: Float32Array[][],
-            outputs: Float32Array[][],
-            parameters: Record<string, Float32Array>
-        ): boolean;
+        process(inputs: Float32Array[][], outputs: Float32Array[][], parameters: Record<string, Float32Array>): boolean;
     }
 
     // https://github.com/microsoft/TypeScript/issues/28308#issuecomment-650802278
@@ -230,12 +215,10 @@ declare global {
     // https://github.com/microsoft/TypeScript/issues/28308#issuecomment-650802278
     function registerProcessor(
         name: string,
-        processorCtor: (new (
-            options?: AudioWorkletNodeOptions
-        ) => AudioWorkletProcessor) & {
+        processorCtor: (new (options?: AudioWorkletNodeOptions) => AudioWorkletProcessor) & {
             parameterDescriptors?: AudioParamDescriptor[];
-        }
-    );
+        },
+    ): void;
 
     // eslint-disable-next-line no-var
     var grecaptcha:

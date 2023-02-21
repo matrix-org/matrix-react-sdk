@@ -15,14 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
-import Modal from '../../../../Modal';
-import AddThreepid from '../../../../AddThreepid';
+import Modal from "../../../../Modal";
+import AddThreepid, { Binding } from "../../../../AddThreepid";
 import ErrorDialog from "../../dialogs/ErrorDialog";
 import AccessibleButton from "../../elements/AccessibleButton";
 
@@ -54,7 +54,7 @@ interface IEmailAddressState {
 }
 
 export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddressState> {
-    constructor(props: IEmailAddressProps) {
+    public constructor(props: IEmailAddressProps) {
         super(props);
 
         const { bound } = props.email;
@@ -67,14 +67,14 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         };
     }
 
-    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    // eslint-disable-next-line @typescript-eslint/naming-convention, camelcase
-    public UNSAFE_componentWillReceiveProps(nextProps: IEmailAddressProps): void {
-        const { bound } = nextProps.email;
-        this.setState({ bound });
+    public componentDidUpdate(prevProps: Readonly<IEmailAddressProps>): void {
+        if (this.props.email !== prevProps.email) {
+            const { bound } = this.props.email;
+            this.setState({ bound });
+        }
     }
 
-    private async changeBinding({ bind, label, errorTitle }): Promise<void> {
+    private async changeBinding({ bind, label, errorTitle }: Binding): Promise<void> {
         if (!(await MatrixClientPeg.get().doesServerSupportSeparateAddAndBind())) {
             return this.changeBindingTangledAddBind({ bind, label, errorTitle });
         }
@@ -106,12 +106,12 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description: ((err && err.message) ? err.message : _t("Operation failed")),
+                description: err && err.message ? err.message : _t("Operation failed"),
             });
         }
     }
 
-    private async changeBindingTangledAddBind({ bind, label, errorTitle }): Promise<void> {
+    private async changeBindingTangledAddBind({ bind, label, errorTitle }: Binding): Promise<void> {
         const { medium, address } = this.props.email;
 
         const task = new AddThreepid();
@@ -141,7 +141,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description: ((err && err.message) ? err.message : _t("Operation failed")),
+                description: err && err.message ? err.message : _t("Operation failed"),
             });
         }
     }
@@ -180,61 +180,68 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             });
         } catch (err) {
             this.setState({ continueDisabled: false });
-            if (err.errcode === 'M_THREEPID_AUTH_FAILED') {
+            if (err.errcode === "M_THREEPID_AUTH_FAILED") {
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Your email address hasn't been verified yet"),
-                    description: _t("Click the link in the email you received to verify " +
-                        "and then click continue again."),
+                    description: _t(
+                        "Click the link in the email you received to verify " + "and then click continue again.",
+                    ),
                 });
             } else {
                 logger.error("Unable to verify email address: " + err);
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Unable to verify email address."),
-                    description: ((err && err.message) ? err.message : _t("Operation failed")),
+                    description: err && err.message ? err.message : _t("Operation failed"),
                 });
             }
         }
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const { address } = this.props.email;
         const { verifying, bound } = this.state;
 
         let status;
         if (verifying) {
-            status = <span>
-                { _t("Verify the link in your inbox") }
+            status = (
+                <span>
+                    {_t("Verify the link in your inbox")}
+                    <AccessibleButton
+                        className="mx_ExistingEmailAddress_confirmBtn"
+                        kind="primary_sm"
+                        onClick={this.onContinueClick}
+                        disabled={this.state.continueDisabled}
+                    >
+                        {_t("Complete")}
+                    </AccessibleButton>
+                </span>
+            );
+        } else if (bound) {
+            status = (
+                <AccessibleButton
+                    className="mx_ExistingEmailAddress_confirmBtn"
+                    kind="danger_sm"
+                    onClick={this.onRevokeClick}
+                >
+                    {_t("Revoke")}
+                </AccessibleButton>
+            );
+        } else {
+            status = (
                 <AccessibleButton
                     className="mx_ExistingEmailAddress_confirmBtn"
                     kind="primary_sm"
-                    onClick={this.onContinueClick}
-                    disabled={this.state.continueDisabled}
+                    onClick={this.onShareClick}
                 >
-                    { _t("Complete") }
+                    {_t("Share")}
                 </AccessibleButton>
-            </span>;
-        } else if (bound) {
-            status = <AccessibleButton
-                className="mx_ExistingEmailAddress_confirmBtn"
-                kind="danger_sm"
-                onClick={this.onRevokeClick}
-            >
-                { _t("Revoke") }
-            </AccessibleButton>;
-        } else {
-            status = <AccessibleButton
-                className="mx_ExistingEmailAddress_confirmBtn"
-                kind="primary_sm"
-                onClick={this.onShareClick}
-            >
-                { _t("Share") }
-            </AccessibleButton>;
+            );
         }
 
         return (
             <div className="mx_ExistingEmailAddress">
-                <span className="mx_ExistingEmailAddress_email">{ address }</span>
-                { status }
+                <span className="mx_ExistingEmailAddress_email">{address}</span>
+                {status}
             </div>
         );
     }
@@ -244,22 +251,20 @@ interface IProps {
 }
 
 export default class EmailAddresses extends React.Component<IProps> {
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let content;
         if (this.props.emails.length > 0) {
             content = this.props.emails.map((e) => {
                 return <EmailAddress email={e} key={e.address} />;
             });
         } else {
-            content = <span className="mx_SettingsTab_subsectionText">
-                { _t("Discovery options will appear once you have added an email above.") }
-            </span>;
+            content = (
+                <span className="mx_SettingsTab_subsectionText">
+                    {_t("Discovery options will appear once you have added an email above.")}
+                </span>
+            );
         }
 
-        return (
-            <div className="mx_EmailAddresses">
-                { content }
-            </div>
-        );
+        return <div className="mx_EmailAddresses">{content}</div>;
     }
 }

@@ -15,16 +15,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { Widget, WidgetKind } from "matrix-widget-api";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
-import { OIDCState, WidgetPermissionStore } from "../../../stores/widgets/WidgetPermissionStore";
+import { OIDCState } from "../../../stores/widgets/WidgetPermissionStore";
 import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
+import { SdkContextClass } from "../../../contexts/SDKContext";
 
 interface IProps extends IDialogProps {
     widget: Widget;
@@ -37,7 +38,7 @@ interface IState {
 }
 
 export default class WidgetOpenIDPermissionsDialog extends React.PureComponent<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -57,8 +58,10 @@ export default class WidgetOpenIDPermissionsDialog extends React.PureComponent<I
         if (this.state.rememberSelection) {
             logger.log(`Remembering ${this.props.widget.id} as allowed=${allowed} for OpenID`);
 
-            WidgetPermissionStore.instance.setOIDCState(
-                this.props.widget, this.props.widgetKind, this.props.inRoomId,
+            SdkContextClass.instance.widgetPermissionStore.setOIDCState(
+                this.props.widget,
+                this.props.widgetKind,
+                this.props.inRoomId,
                 allowed ? OIDCState.Allowed : OIDCState.Denied,
             );
         }
@@ -70,21 +73,19 @@ export default class WidgetOpenIDPermissionsDialog extends React.PureComponent<I
         this.setState({ rememberSelection: newVal });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <BaseDialog
-                className='mx_WidgetOpenIDPermissionsDialog'
+                className="mx_WidgetOpenIDPermissionsDialog"
                 hasCancel={true}
                 onFinished={this.props.onFinished}
                 title={_t("Allow this widget to verify your identity")}
             >
-                <div className='mx_WidgetOpenIDPermissionsDialog_content'>
-                    <p>
-                        { _t("The widget will verify your user ID, but won't be able to perform actions for you:") }
-                    </p>
+                <div className="mx_WidgetOpenIDPermissionsDialog_content">
+                    <p>{_t("The widget will verify your user ID, but won't be able to perform actions for you:")}</p>
                     <p className="text-muted">
-                        { /* cheap trim to just get the path */ }
-                        { this.props.widget.templateUrl.split("?")[0].split("#")[0] }
+                        {/* cheap trim to just get the path */}
+                        {this.props.widget.templateUrl.split("?")[0].split("#")[0]}
                     </p>
                 </div>
                 <DialogButtons
@@ -96,7 +97,9 @@ export default class WidgetOpenIDPermissionsDialog extends React.PureComponent<I
                             value={this.state.rememberSelection}
                             toggleInFront={true}
                             onChange={this.onRememberSelectionChange}
-                            label={_t("Remember this")} />}
+                            label={_t("Remember this")}
+                        />
+                    }
                 />
             </BaseDialog>
         );

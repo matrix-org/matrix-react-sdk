@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import classNames from 'classnames';
-import { SERVICE_TYPES } from 'matrix-js-sdk/src/service-types';
+import classNames from "classnames";
+import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { MatrixClientPeg } from './MatrixClientPeg';
-import Modal from './Modal';
+import { MatrixClientPeg } from "./MatrixClientPeg";
+import Modal from "./Modal";
 import TermsDialog from "./components/views/dialogs/TermsDialog";
 
 export class TermsNotSignedError extends Error {}
@@ -34,8 +34,7 @@ export class Service {
      * @param {string} baseUrl The Base URL of the service (ie. before '/_matrix')
      * @param {string} accessToken The user's access token for the service
      */
-    constructor(public serviceType: SERVICE_TYPES, public baseUrl: string, public accessToken: string) {
-    }
+    public constructor(public serviceType: SERVICE_TYPES, public baseUrl: string, public accessToken: string) {}
 }
 
 export interface LocalisedPolicy {
@@ -53,11 +52,13 @@ export type Policies = {
     [policy: string]: Policy;
 };
 
+export type ServicePolicyPair = {
+    policies: Policies;
+    service: Service;
+};
+
 export type TermsInteractionCallback = (
-    policiesAndServicePairs: {
-        service: Service;
-        policies: Policies;
-    }[],
+    policiesAndServicePairs: ServicePolicyPair[],
     agreedUrls: string[],
     extraClassNames?: string,
 ) => Promise<string[]>;
@@ -76,10 +77,8 @@ export type TermsInteractionCallback = (
 export async function startTermsFlow(
     services: Service[],
     interactionCallback: TermsInteractionCallback = dialogTermsInteractionCallback,
-) {
-    const termsPromises = services.map(
-        (s) => MatrixClientPeg.get().getTerms(s.serviceType, s.baseUrl),
-    );
+): Promise<void> {
+    const termsPromises = services.map((s) => MatrixClientPeg.get().getTerms(s.serviceType, s.baseUrl));
 
     /*
      * a /terms response looks like:
@@ -101,10 +100,12 @@ export async function startTermsFlow(
      */
 
     const terms: { policies: Policies }[] = await Promise.all(termsPromises);
-    const policiesAndServicePairs = terms.map((t, i) => { return { 'service': services[i], 'policies': t.policies }; });
+    const policiesAndServicePairs = terms.map((t, i) => {
+        return { service: services[i], policies: t.policies };
+    });
 
     // fetch the set of agreed policy URLs from account data
-    const currentAcceptedTerms = await MatrixClientPeg.get().getAccountData('m.accepted_terms');
+    const currentAcceptedTerms = await MatrixClientPeg.get().getAccountData("m.accepted_terms");
     let agreedUrlSet: Set<string>;
     if (!currentAcceptedTerms || !currentAcceptedTerms.getContent() || !currentAcceptedTerms.getContent().accepted) {
         agreedUrlSet = new Set();
@@ -118,13 +119,13 @@ export async function startTermsFlow(
     // but then they'd assume they can un-check the boxes to un-agree to a policy,
     // but that is not a thing the API supports, so probably best to just show
     // things they've not agreed to yet.
-    const unagreedPoliciesAndServicePairs = [];
+    const unagreedPoliciesAndServicePairs: ServicePolicyPair[] = [];
     for (const { service, policies } of policiesAndServicePairs) {
-        const unagreedPolicies = {};
+        const unagreedPolicies: Policies = {};
         for (const [policyName, policy] of Object.entries(policies)) {
             let policyAgreed = false;
             for (const lang of Object.keys(policy)) {
-                if (lang === 'version') continue;
+                if (lang === "version") continue;
                 if (agreedUrlSet.has(policy[lang].url)) {
                     policyAgreed = true;
                     break;
@@ -143,7 +144,7 @@ export async function startTermsFlow(
         const newlyAgreedUrls = await interactionCallback(unagreedPoliciesAndServicePairs, [...agreedUrlSet]);
         logger.log("User has agreed to URLs", newlyAgreedUrls);
         // Merge with previously agreed URLs
-        newlyAgreedUrls.forEach(url => agreedUrlSet.add(url));
+        newlyAgreedUrls.forEach((url) => agreedUrlSet.add(url));
     } else {
         logger.log("User has already agreed to all required policies");
     }
@@ -151,7 +152,7 @@ export async function startTermsFlow(
     // We only ever add to the set of URLs, so if anything has changed then we'd see a different length
     if (agreedUrlSet.size !== numAcceptedBeforeAgreement) {
         const newAcceptedTerms = { accepted: Array.from(agreedUrlSet) };
-        await MatrixClientPeg.get().setAccountData('m.accepted_terms', newAcceptedTerms);
+        await MatrixClientPeg.get().setAccountData("m.accepted_terms", newAcceptedTerms);
     }
 
     const agreePromises = policiesAndServicePairs.map((policiesAndService) => {
@@ -161,7 +162,7 @@ export async function startTermsFlow(
         const urlsForService = Array.from(agreedUrlSet).filter((url) => {
             for (const policy of Object.values(policiesAndService.policies)) {
                 for (const lang of Object.keys(policy)) {
-                    if (lang === 'version') continue;
+                    if (lang === "version") continue;
                     if (policy[lang].url === url) return true;
                 }
             }
@@ -177,7 +178,7 @@ export async function startTermsFlow(
             urlsForService,
         );
     });
-    return Promise.all(agreePromises);
+    await Promise.all(agreePromises);
 }
 
 export async function dialogTermsInteractionCallback(
@@ -190,10 +191,14 @@ export async function dialogTermsInteractionCallback(
 ): Promise<string[]> {
     logger.log("Terms that need agreement", policiesAndServicePairs);
 
-    const { finished } = Modal.createDialog<[boolean, string[]]>(TermsDialog, {
-        policiesAndServicePairs,
-        agreedUrls,
-    }, classNames("mx_TermsDialog", extraClassNames));
+    const { finished } = Modal.createDialog<[boolean, string[]]>(
+        TermsDialog,
+        {
+            policiesAndServicePairs,
+            agreedUrls,
+        },
+        classNames("mx_TermsDialog", extraClassNames),
+    );
 
     const [done, _agreedUrls] = await finished;
     if (!done) {

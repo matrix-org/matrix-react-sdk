@@ -19,7 +19,7 @@ import { AsyncStore } from "./AsyncStore";
 import { ActionPayload } from "../dispatcher/payloads";
 
 interface IState {
-    hostSignupActive?: boolean;
+    hostSignupActive: boolean;
 }
 
 export class HostSignupStore extends AsyncStore<IState> {
@@ -37,13 +37,13 @@ export class HostSignupStore extends AsyncStore<IState> {
         return this.state.hostSignupActive;
     }
 
-    public async setHostSignupActive(status: boolean) {
+    public async setHostSignupActive(status: boolean): Promise<void> {
         return this.updateState({
             hostSignupActive: status,
         });
     }
 
-    protected onDispatch(payload: ActionPayload) {
+    protected onDispatch(payload: ActionPayload): void {
         // Nothing to do
     }
 }

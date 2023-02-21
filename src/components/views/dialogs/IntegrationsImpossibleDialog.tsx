@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
@@ -29,23 +29,23 @@ export default class IntegrationsImpossibleDialog extends React.Component<IProps
         this.props.onFinished();
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const brand = SdkConfig.get().brand;
 
         return (
             <BaseDialog
-                className='mx_IntegrationsImpossibleDialog'
+                className="mx_IntegrationsImpossibleDialog"
                 hasCancel={false}
                 onFinished={this.props.onFinished}
                 title={_t("Integrations not allowed")}
             >
-                <div className='mx_IntegrationsImpossibleDialog_content'>
+                <div className="mx_IntegrationsImpossibleDialog_content">
                     <p>
-                        { _t(
+                        {_t(
                             "Your %(brand)s doesn't allow you to use an integration manager to do this. " +
-                            "Please contact an admin.",
+                                "Please contact an admin.",
                             { brand },
-                        ) }
+                        )}
                     </p>
                 </div>
                 <DialogButtons

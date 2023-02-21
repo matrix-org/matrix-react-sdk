@@ -16,15 +16,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import request from 'browser-request';
-import sanitizeHtml from 'sanitize-html';
-import classnames from 'classnames';
+import React from "react";
+import sanitizeHtml from "sanitize-html";
+import classnames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../languageHandler';
-import dis from '../../dispatcher/dispatcher';
-import { MatrixClientPeg } from '../../MatrixClientPeg';
+import { _t } from "../../languageHandler";
+import dis from "../../dispatcher/dispatcher";
+import { MatrixClientPeg } from "../../MatrixClientPeg";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import { ActionPayload } from "../../dispatcher/payloads";
@@ -49,16 +48,47 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
     private unmounted = false;
     private dispatcherRef: string = null;
 
-    constructor(props: IProps, context: typeof MatrixClientContext) {
+    public constructor(props: IProps, context: typeof MatrixClientContext) {
         super(props, context);
 
         this.state = {
-            page: '',
+            page: "",
         };
     }
 
     private translate(s: string): string {
         return sanitizeHtml(_t(s));
+    }
+
+    private async fetchEmbed(): Promise<void> {
+        let res: Response;
+
+        try {
+            res = await fetch(this.props.url, { method: "GET" });
+        } catch (err) {
+            if (this.unmounted) return;
+            logger.warn(`Error loading page: ${err}`);
+            this.setState({ page: _t("Couldn't load page") });
+            return;
+        }
+
+        if (this.unmounted) return;
+
+        if (!res.ok) {
+            logger.warn(`Error loading page: ${res.status}`);
+            this.setState({ page: _t("Couldn't load page") });
+            return;
+        }
+
+        let body = (await res.text()).replace(/_t\(['"]([\s\S]*?)['"]\)/gm, (match, g1) => this.translate(g1));
+
+        if (this.props.replaceMap) {
+            Object.keys(this.props.replaceMap).forEach((key) => {
+                body = body.split(key).join(this.props.replaceMap[key]);
+            });
+        }
+
+        this.setState({ page: body });
     }
 
     public componentDidMount(): void {
@@ -68,34 +98,10 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
             return;
         }
 
-        // we use request() to inline the page into the react component
+        // We use fetch to inline the page into the react component
         // so that it can inherit CSS and theming easily rather than mess around
         // with iframes and trying to synchronise document.stylesheets.
-
-        request(
-            { method: "GET", url: this.props.url },
-            (err, response, body) => {
-                if (this.unmounted) {
-                    return;
-                }
-
-                if (err || response.status < 200 || response.status >= 300) {
-                    logger.warn(`Error loading page: ${err}`);
-                    this.setState({ page: _t("Couldn't load page") });
-                    return;
-                }
-
-                body = body.replace(/_t\(['"]([\s\S]*?)['"]\)/mg, (match, g1) => this.translate(g1));
-
-                if (this.props.replaceMap) {
-                    Object.keys(this.props.replaceMap).forEach(key => {
-                        body = body.split(key).join(this.props.replaceMap[key]);
-                    });
-                }
-
-                this.setState({ page: body });
-            },
-        );
+        this.fetchEmbed();
 
         this.dispatcherRef = dis.register(this.onAction);
     }
@@ -107,12 +113,12 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
 
     private onAction = (payload: ActionPayload): void => {
         // HACK: Workaround for the context's MatrixClient not being set up at render time.
-        if (payload.action === 'client_started') {
+        if (payload.action === "client_started") {
             this.forceUpdate();
         }
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         // HACK: Workaround for the context's MatrixClient not updating.
         const client = this.context || MatrixClientPeg.get();
         const isGuest = client ? client.isGuest() : true;
@@ -123,18 +129,12 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
             [`${className}_loggedIn`]: !!client,
         });
 
-        const content = <div className={`${className}_body`}
-            dangerouslySetInnerHTML={{ __html: this.state.page }}
-        />;
+        const content = <div className={`${className}_body`} dangerouslySetInnerHTML={{ __html: this.state.page }} />;
 
         if (this.props.scrollbar) {
-            return <AutoHideScrollbar className={classes}>
-                { content }
-            </AutoHideScrollbar>;
+            return <AutoHideScrollbar className={classes}>{content}</AutoHideScrollbar>;
         } else {
-            return <div className={classes}>
-                { content }
-            </div>;
+            return <div className={classes}>{content}</div>;
         }
     }
 }

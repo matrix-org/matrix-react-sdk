@@ -14,7 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentClass, createContext, forwardRef, useContext } from "react";
+import React, {
+    ComponentClass,
+    createContext,
+    forwardRef,
+    PropsWithoutRef,
+    ForwardRefExoticComponent,
+    useContext,
+    RefAttributes,
+} from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
 const MatrixClientContext = createContext<MatrixClient>(undefined);
@@ -25,22 +33,27 @@ export interface MatrixClientProps {
     mxClient: MatrixClient;
 }
 
+export function useMatrixClientContext(): MatrixClient {
+    return useContext(MatrixClientContext);
+}
+
 const matrixHOC = <ComposedComponentProps extends {}>(
     ComposedComponent: ComponentClass<ComposedComponentProps>,
-) => {
+): ForwardRefExoticComponent<
+    PropsWithoutRef<Omit<ComposedComponentProps, "mxClient">> &
+        RefAttributes<InstanceType<ComponentClass<ComposedComponentProps>>>
+> => {
     type ComposedComponentInstance = InstanceType<typeof ComposedComponent>;
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
 
     const TypedComponent = ComposedComponent;
 
-    return forwardRef<ComposedComponentInstance, Omit<ComposedComponentProps, 'mxClient'>>(
-        (props, ref) => {
-            const client = useContext(MatrixClientContext);
+    return forwardRef<ComposedComponentInstance, Omit<ComposedComponentProps, "mxClient">>((props, ref) => {
+        const client = useContext(MatrixClientContext);
 
-            // @ts-ignore
-            return <TypedComponent ref={ref} {...props} mxClient={client} />;
-        },
-    );
+        // @ts-ignore
+        return <TypedComponent ref={ref} {...props} mxClient={client} />;
+    });
 };
 export const withMatrixClientHOC = matrixHOC;

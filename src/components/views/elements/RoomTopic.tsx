@@ -29,33 +29,32 @@ import InfoDialog from "../dialogs/InfoDialog";
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AccessibleButton from "./AccessibleButton";
-import { Linkify } from "./Linkify";
 import TooltipTarget from "./TooltipTarget";
-import { topicToHtml } from "../../../HtmlUtils";
+import { Linkify, topicToHtml } from "../../../HtmlUtils";
 
 interface IProps extends React.HTMLProps<HTMLDivElement> {
     room?: Room;
 }
 
-export default function RoomTopic({
-    room,
-    ...props
-}: IProps) {
+export default function RoomTopic({ room, ...props }: IProps): JSX.Element {
     const client = useContext(MatrixClientContext);
     const ref = useRef<HTMLDivElement>();
 
     const topic = useTopic(room);
     const body = topicToHtml(topic?.text, topic?.html, ref);
 
-    const onClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-        props.onClick?.(e);
-        const target = e.target as HTMLElement;
-        if (target.tagName.toUpperCase() === "A") {
-            return;
-        }
+    const onClick = useCallback(
+        (e: React.MouseEvent<HTMLDivElement>) => {
+            props.onClick?.(e);
+            const target = e.target as HTMLElement;
+            if (target.tagName.toUpperCase() === "A") {
+                return;
+            }
 
-        dis.fire(Action.ShowRoomTopic);
-    }, [props]);
+            dis.fire(Action.ShowRoomTopic);
+        },
+        [props],
+    );
 
     const ignoreHover = (ev: React.MouseEvent): boolean => {
         return (ev.target as HTMLElement).tagName.toUpperCase() === "A";
@@ -68,26 +67,33 @@ export default function RoomTopic({
 
             const modal = Modal.createDialog(InfoDialog, {
                 title: room.name,
-                description: <div>
-                    <Linkify
-                        as="p"
-                        onClick={(ev: MouseEvent) => {
-                            if ((ev.target as HTMLElement).tagName.toUpperCase() === "A") {
-                                modal.close();
-                            }
-                        }}
-                    >
-                        { body }
-                    </Linkify>
-                    { canSetTopic && <AccessibleButton
-                        kind="primary_outline"
-                        onClick={() => {
-                            modal.close();
-                            dis.dispatch({ action: "open_room_settings" });
-                        }}>
-                        { _t("Edit topic") }
-                    </AccessibleButton> }
-                </div>,
+                description: (
+                    <div>
+                        <Linkify
+                            options={{
+                                attributes: {
+                                    onClick() {
+                                        modal.close();
+                                    },
+                                },
+                            }}
+                            as="p"
+                        >
+                            {body}
+                        </Linkify>
+                        {canSetTopic && (
+                            <AccessibleButton
+                                kind="primary_outline"
+                                onClick={() => {
+                                    modal.close();
+                                    dis.dispatch({ action: "open_room_settings" });
+                                }}
+                            >
+                                {_t("Edit topic")}
+                            </AccessibleButton>
+                        )}
+                    </div>
+                ),
                 hasCloseButton: true,
                 button: false,
             });
@@ -96,16 +102,11 @@ export default function RoomTopic({
 
     const className = classNames(props.className, "mx_RoomTopic");
 
-    return <div {...props}
-        ref={ref}
-        onClick={onClick}
-        dir="auto"
-        className={className}
-    >
-        <TooltipTarget label={_t("Click to read topic")} alignment={Alignment.Bottom} ignoreHover={ignoreHover}>
-            <Linkify>
-                { body }
-            </Linkify>
-        </TooltipTarget>
-    </div>;
+    return (
+        <div {...props} ref={ref} onClick={onClick} dir="auto" className={className}>
+            <TooltipTarget label={_t("Click to read topic")} alignment={Alignment.Bottom} ignoreHover={ignoreHover}>
+                <Linkify>{body}</Linkify>
+            </TooltipTarget>
+        </div>
+    );
 }

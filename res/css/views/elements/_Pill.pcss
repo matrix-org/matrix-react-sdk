@@ -1,0 +1,72 @@
+/*
+Copyright 2021 Šimon Brandner <simon.bra.ag@gmail.com>
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+.mx_Pill {
+    padding: $font-1px 0.4em $font-1px 0.4em;
+    line-height: $font-17px;
+    border-radius: $font-16px;
+    vertical-align: text-top;
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow: hidden;
+    cursor: pointer;
+
+    color: $accent-fg-color !important; /* To override .markdown-body */
+    background-color: $pill-bg-color !important; /* To override .markdown-body */
+
+    &.mx_UserPill_me,
+    &.mx_AtRoomPill {
+        background-color: $alert !important; /* To override .markdown-body */
+    }
+
+    &:hover {
+        background-color: $pill-hover-bg-color !important; /* To override .markdown-body */
+    }
+
+    &.mx_UserPill_me:hover {
+        background-color: #ff6b75 !important; /* To override .markdown-body | same on both themes */
+    }
+
+    /* We don't want to indicate clickability */
+    &.mx_AtRoomPill:hover {
+        background-color: $alert !important; /* To override .markdown-body */
+        cursor: unset;
+    }
+
+    &::before,
+    .mx_BaseAvatar {
+        margin-inline-start: -0.3em; /* Otherwise the gap is too large */
+        margin-inline-end: 0.2em;
+        min-width: $font-16px; /* ensure the avatar is not compressed */
+    }
+
+    .mx_Pill_linkText {
+        white-space: nowrap; /* enforce the pill text to be a single line */
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        pointer-events: none; /* ensure clicks on the pills go through the anchor */
+    }
+
+    a& {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        text-decoration: none !important; /* To override .markdown-body */
+    }
+}

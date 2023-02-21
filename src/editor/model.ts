@@ -51,13 +51,13 @@ type ManualTransformCallback = () => Caret;
 export default class EditorModel {
     private _parts: Part[];
     private readonly _partCreator: PartCreator;
-    private activePartIdx: number = null;
-    private _autoComplete: AutocompleteWrapperModel = null;
-    private autoCompletePartIdx: number = null;
+    private activePartIdx: number | null = null;
+    private _autoComplete: AutocompleteWrapperModel | null = null;
+    private autoCompletePartIdx: number | null = null;
     private autoCompletePartCount = 0;
-    private transformCallback: TransformCallback = null;
+    private transformCallback: TransformCallback | null = null;
 
-    constructor(parts: Part[], partCreator: PartCreator, private updateCallback: UpdateCallback = null) {
+    public constructor(parts: Part[], partCreator: PartCreator, private updateCallback: UpdateCallback | null = null) {
         this._parts = parts;
         this._partCreator = partCreator;
         this.transformCallback = null;
@@ -91,7 +91,7 @@ export default class EditorModel {
     }
 
     public clone(): EditorModel {
-        const clonedParts = this.parts.map(p => this.partCreator.deserializePart(p.serialize()));
+        const clonedParts = this.parts.map((p) => this.partCreator.deserializePart(p.serialize()));
         return new EditorModel(clonedParts, this._partCreator, this.updateCallback);
     }
 
@@ -127,7 +127,7 @@ export default class EditorModel {
         return this._parts;
     }
 
-    public get autoComplete(): AutocompleteWrapperModel {
+    public get autoComplete(): AutocompleteWrapperModel | null {
         if (this.activePartIdx === this.autoCompletePartIdx) {
             return this._autoComplete;
         }
@@ -146,7 +146,7 @@ export default class EditorModel {
     }
 
     public serializeParts(): SerializedPart[] {
-        return this._parts.map(p => p.serialize());
+        return this._parts.map((p) => p.serialize());
     }
 
     private diff(newValue: string, inputType: string, caret: DocumentOffset): IDiff {
@@ -160,7 +160,7 @@ export default class EditorModel {
     }
 
     public reset(serializedParts: SerializedPart[], caret?: Caret, inputType?: string): void {
-        this._parts = serializedParts.map(p => this._partCreator.deserializePart(p));
+        this._parts = serializedParts.map((p) => this._partCreator.deserializePart(p));
         if (!caret) {
             caret = this.getPositionAtEnd();
         }
@@ -212,13 +212,13 @@ export default class EditorModel {
             const transformAddedLen = this.getTransformAddedLen(newPosition, inputType, diff);
             newPosition = this.positionForOffset(caretOffset + transformAddedLen, true);
         }
-        this.updateCallback(newPosition, inputType, diff);
+        this.updateCallback?.(newPosition, inputType, diff);
         return acPromise;
     }
 
     private getTransformAddedLen(newPosition: DocumentPosition, inputType: string, diff: IDiff): number {
-        const result = this.transformCallback(newPosition, inputType, diff);
-        return Number.isFinite(result) ? result as number : 0;
+        const result = this.transformCallback?.(newPosition, inputType, diff);
+        return Number.isFinite(result) ? (result as number) : 0;
     }
 
     private setActivePart(pos: DocumentPosition, canOpenAutoComplete: boolean): Promise<void> {
@@ -268,15 +268,15 @@ export default class EditorModel {
         // rerender even if editor contents didn't change
         // to make sure the MessageEditor checks
         // model.autoComplete being empty and closes it
-        this.updateCallback(pos);
+        this.updateCallback?.(pos);
     };
 
     private mergeAdjacentParts(): void {
-        let prevPart;
+        let prevPart: Part | undefined;
         for (let i = 0; i < this._parts.length; ++i) {
-            let part = this._parts[i];
+            let part: Part | undefined = this._parts[i];
             const isEmpty = !part.text.length;
-            const isMerged = !isEmpty && prevPart && prevPart.merge(part);
+            const isMerged = !isEmpty && prevPart && prevPart.merge?.(part);
             if (isEmpty || isMerged) {
                 // remove empty or merged part
                 part = prevPart;
@@ -397,11 +397,11 @@ export default class EditorModel {
 
     public positionForOffset(totalOffset: number, atPartEnd = false): DocumentPosition {
         let currentOffset = 0;
-        const index = this._parts.findIndex(part => {
+        const index = this._parts.findIndex((part) => {
             const partLen = part.text.length;
             if (
-                (atPartEnd && (currentOffset + partLen) >= totalOffset) ||
-                (!atPartEnd && (currentOffset + partLen) > totalOffset)
+                (atPartEnd && currentOffset + partLen >= totalOffset) ||
+                (!atPartEnd && currentOffset + partLen > totalOffset)
             ) {
                 return true;
             }
@@ -452,13 +452,13 @@ export default class EditorModel {
      */
     public transform(callback: ManualTransformCallback): Promise<void> {
         const pos = callback();
-        let acPromise: Promise<void> = null;
+        let acPromise: Promise<void> | null = null;
         if (!(pos instanceof Range)) {
             acPromise = this.setActivePart(pos, true);
         } else {
             acPromise = Promise.resolve();
         }
-        this.updateCallback(pos);
+        this.updateCallback?.(pos);
         return acPromise;
     }
 }

@@ -20,7 +20,6 @@ import defaultDispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 import Modal from "../Modal";
 import RoomSettingsDialog from "../components/views/dialogs/RoomSettingsDialog";
-import { RoomViewStore } from "../stores/RoomViewStore";
 import ForwardDialog from "../components/views/dialogs/ForwardDialog";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { Action } from "../dispatcher/actions";
@@ -32,6 +31,7 @@ import AddExistingToSpaceDialog from "../components/views/dialogs/AddExistingToS
 import { ButtonEvent } from "../components/views/elements/AccessibleButton";
 import PosthogTrackers from "../PosthogTrackers";
 import { showAddExistingSubspace, showCreateNewRoom } from "./space";
+import { SdkContextClass } from "../contexts/SDKContext";
 
 /**
  * Auxiliary class to listen for dialog opening over the dispatcher and
@@ -43,24 +43,29 @@ export class DialogOpener {
 
     private isRegistered = false;
 
-    private constructor() {
-    }
+    private constructor() {}
 
     // We could do this in the constructor, but then we wouldn't have
     // a function to call from Lifecycle to capture the class.
-    public prepare() {
+    public prepare(): void {
         if (this.isRegistered) return;
         defaultDispatcher.register(this.onDispatch);
         this.isRegistered = true;
     }
 
-    private onDispatch = (payload: ActionPayload) => {
+    private onDispatch = (payload: ActionPayload): void => {
         switch (payload.action) {
-            case 'open_room_settings':
-                Modal.createDialog(RoomSettingsDialog, {
-                    roomId: payload.room_id || RoomViewStore.instance.getRoomId(),
-                    initialTabId: payload.initial_tab_id,
-                }, /*className=*/null, /*isPriority=*/false, /*isStatic=*/true);
+            case "open_room_settings":
+                Modal.createDialog(
+                    RoomSettingsDialog,
+                    {
+                        roomId: payload.room_id || SdkContextClass.instance.roomViewStore.getRoomId(),
+                        initialTabId: payload.initial_tab_id,
+                    },
+                    /*className=*/ undefined,
+                    /*isPriority=*/ false,
+                    /*isStatic=*/ true,
+                );
                 break;
             case Action.OpenForwardDialog:
                 Modal.createDialog(ForwardDialog, {
@@ -70,31 +75,52 @@ export class DialogOpener {
                 });
                 break;
             case Action.OpenReportEventDialog:
-                Modal.createDialog(ReportEventDialog, {
-                    mxEvent: payload.event,
-                }, 'mx_Dialog_reportEvent');
+                Modal.createDialog(
+                    ReportEventDialog,
+                    {
+                        mxEvent: payload.event,
+                    },
+                    "mx_Dialog_reportEvent",
+                );
                 break;
             case Action.OpenSpacePreferences:
-                Modal.createDialog(SpacePreferencesDialog, {
-                    initialTabId: payload.initalTabId,
-                    space: payload.space,
-                }, null, false, true);
+                Modal.createDialog(
+                    SpacePreferencesDialog,
+                    {
+                        initialTabId: payload.initalTabId,
+                        space: payload.space,
+                    },
+                    undefined,
+                    false,
+                    true,
+                );
                 break;
             case Action.OpenSpaceSettings:
-                Modal.createDialog(SpaceSettingsDialog, {
-                    matrixClient: payload.space.client,
-                    space: payload.space,
-                }, /*className=*/null, /*isPriority=*/false, /*isStatic=*/true);
+                Modal.createDialog(
+                    SpaceSettingsDialog,
+                    {
+                        matrixClient: payload.space.client,
+                        space: payload.space,
+                    },
+                    /*className=*/ undefined,
+                    /*isPriority=*/ false,
+                    /*isStatic=*/ true,
+                );
                 break;
             case Action.OpenInviteDialog:
-                Modal.createDialog(InviteDialog, {
-                    kind: payload.kind,
-                    call: payload.call,
-                    roomId: payload.roomId,
-                }, classnames("mx_InviteDialog_flexWrapper", payload.className), false, true).finished
-                    .then((results) => {
-                        payload.onFinishedCallback?.(results);
-                    });
+                Modal.createDialog(
+                    InviteDialog,
+                    {
+                        kind: payload.kind,
+                        call: payload.call,
+                        roomId: payload.roomId,
+                    },
+                    classnames("mx_InviteDialog_flexWrapper", payload.className),
+                    false,
+                    true,
+                ).finished.then((results) => {
+                    payload.onFinishedCallback?.(results);
+                });
                 break;
             case Action.OpenAddToExistingSpaceDialog: {
                 const space = payload.space;
@@ -108,7 +134,7 @@ export class DialogOpener {
                         onAddSubspaceClick: () => showAddExistingSubspace(space),
                         space,
                         onFinished: (added: boolean) => {
-                            if (added && RoomViewStore.instance.getRoomId() === space.roomId) {
+                            if (added && SdkContextClass.instance.roomViewStore.getRoomId() === space.roomId) {
                                 defaultDispatcher.fire(Action.UpdateSpaceHierarchy);
                             }
                         },

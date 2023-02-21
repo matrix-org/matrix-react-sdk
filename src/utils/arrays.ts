@@ -70,7 +70,7 @@ export function arraySmoothingResample(input: number[], points: number): number[
         // never end, and we can over-average the data. Instead, we'll get as far as
         // we can and do a followup fast resample (the neighbouring points will be close
         // to the actual waveform, so we can get away with this safely).
-        while (samples.length > (points * 2) || samples.length === 0) {
+        while (samples.length > points * 2 || samples.length === 0) {
             samples = [];
             for (let i = 1; i < input.length - 1; i += 2) {
                 const prevPoint = input[i - 1];
@@ -102,7 +102,7 @@ export function arraySmoothingResample(input: number[], points: number): number[
 export function arrayRescale(input: number[], newMin: number, newMax: number): number[] {
     const min: number = Math.min(...input);
     const max: number = Math.max(...input);
-    return input.map(v => percentageWithin(percentageOf(v, min, max), newMin, newMax));
+    return input.map((v) => percentageWithin(percentageOf(v, min, max), newMin, newMax));
 }
 
 /**
@@ -174,8 +174,8 @@ export function arrayHasDiff(a: any[], b: any[]): boolean {
     if (a.length === b.length) {
         // When the lengths are equal, check to see if either array is missing
         // an element from the other.
-        if (b.some(i => !a.includes(i))) return true;
-        if (a.some(i => !b.includes(i))) return true;
+        if (b.some((i) => !a.includes(i))) return true;
+        if (a.some((i) => !b.includes(i))) return true;
 
         // if all the keys are common, say so
         return false;
@@ -184,7 +184,7 @@ export function arrayHasDiff(a: any[], b: any[]): boolean {
     }
 }
 
-export type Diff<T> = { added: T[], removed: T[] };
+export type Diff<T> = { added: T[]; removed: T[] };
 
 /**
  * Performs a diff on two arrays. The result is what is different with the
@@ -196,8 +196,8 @@ export type Diff<T> = { added: T[], removed: T[] };
  */
 export function arrayDiff<T>(a: T[], b: T[]): Diff<T> {
     return {
-        added: b.filter(i => !a.includes(i)),
-        removed: a.filter(i => !b.includes(i)),
+        added: b.filter((i) => !a.includes(i)),
+        removed: a.filter((i) => !b.includes(i)),
     };
 }
 
@@ -208,7 +208,7 @@ export function arrayDiff<T>(a: T[], b: T[]): Diff<T> {
  * @returns The intersection of the arrays.
  */
 export function arrayIntersection<T>(a: T[], b: T[]): T[] {
-    return a.filter(i => b.includes(i));
+    return a.filter((i) => b.includes(i));
 }
 
 /**
@@ -217,10 +217,12 @@ export function arrayIntersection<T>(a: T[], b: T[]): T[] {
  * @returns The union of all given arrays.
  */
 export function arrayUnion<T>(...a: T[][]): T[] {
-    return Array.from(a.reduce((c, v) => {
-        v.forEach(i => c.add(i));
-        return c;
-    }, new Set<T>()));
+    return Array.from(
+        a.reduce((c, v) => {
+            v.forEach((i) => c.add(i));
+            return c;
+        }, new Set<T>()),
+    );
 }
 
 /**
@@ -246,8 +248,7 @@ export class ArrayUtil<T> {
      * Create a new array helper.
      * @param a The array to help. Can be modified in-place.
      */
-    constructor(private a: T[]) {
-    }
+    public constructor(private a: T[]) {}
 
     /**
      * The value of this array, after all appropriate alterations.
@@ -265,7 +266,7 @@ export class ArrayUtil<T> {
         const obj = this.a.reduce((rv: Map<K, T[]>, val: T) => {
             const k = fn(val);
             if (!rv.has(k)) rv.set(k, []);
-            rv.get(k).push(val);
+            rv.get(k)!.push(val);
             return rv;
         }, new Map<K, T[]>());
         return new GroupedArray(obj);
@@ -280,8 +281,7 @@ export class GroupedArray<K, T> {
      * Creates a new group helper.
      * @param val The group to help. Can be modified in-place.
      */
-    constructor(private val: Map<K, T[]>) {
-    }
+    public constructor(private val: Map<K, T[]>) {}
 
     /**
      * The value of this group, after all applicable alterations.
@@ -299,8 +299,27 @@ export class GroupedArray<K, T> {
         const a: T[] = [];
         for (const k of keyOrder) {
             if (!this.val.has(k)) continue;
-            a.push(...this.val.get(k));
+            a.push(...this.val.get(k)!);
         }
         return new ArrayUtil(a);
     }
+}
+
+export const concat = (...arrays: Uint8Array[]): Uint8Array => {
+    return arrays.reduce((concatenatedSoFar: Uint8Array, toBeConcatenated: Uint8Array) => {
+        const concatenated = new Uint8Array(concatenatedSoFar.length + toBeConcatenated.length);
+        concatenated.set(concatenatedSoFar, 0);
+        concatenated.set(toBeConcatenated, concatenatedSoFar.length);
+        return concatenated;
+    }, new Uint8Array(0));
+};
+
+/**
+ * Async version of Array.every.
+ */
+export async function asyncEvery<T>(values: T[], predicate: (value: T) => Promise<boolean>): Promise<boolean> {
+    for (const value of values) {
+        if (!(await predicate(value))) return false;
+    }
+    return true;
 }

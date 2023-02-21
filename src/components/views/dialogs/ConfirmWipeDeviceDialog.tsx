@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 import { _t } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
@@ -33,20 +33,20 @@ export default class ConfirmWipeDeviceDialog extends React.Component<IProps> {
         this.props.onFinished(false);
     };
 
-    render() {
+    public render(): React.ReactNode {
         return (
             <BaseDialog
-                className='mx_ConfirmWipeDeviceDialog'
+                className="mx_ConfirmWipeDeviceDialog"
                 hasCancel={true}
                 onFinished={this.props.onFinished}
                 title={_t("Clear all data in this session?")}
             >
-                <div className='mx_ConfirmWipeDeviceDialog_content'>
+                <div className="mx_ConfirmWipeDeviceDialog_content">
                     <p>
-                        { _t(
+                        {_t(
                             "Clearing all data from this session is permanent. Encrypted messages will be lost " +
-                            "unless their keys have been backed up.",
-                        ) }
+                                "unless their keys have been backed up.",
+                        )}
                     </p>
                 </div>
                 <DialogButtons

@@ -27,6 +27,7 @@ import {
     KEYBOARD_SHORTCUTS,
     MAC_ONLY_SHORTCUTS,
 } from "./KeyboardShortcuts";
+import { IBaseSetting } from "../settings/Settings";
 
 /**
  * This function gets the keyboard shortcuts that should be presented in the UI
@@ -34,7 +35,7 @@ import {
  * have to be manually mirrored in KeyBindingDefaults.
  */
 const getUIOnlyShortcuts = (): IKeyboardShortcuts => {
-    const ctrlEnterToSend = SettingsStore.getValue('MessageComposerInput.ctrlEnterToSend');
+    const ctrlEnterToSend = SettingsStore.getValue("MessageComposerInput.ctrlEnterToSend");
 
     const keyboardShortcuts: IKeyboardShortcuts = {
         [KeyBindingAction.SendMessage]: {
@@ -72,7 +73,7 @@ const getUIOnlyShortcuts = (): IKeyboardShortcuts => {
         },
     };
 
-    if (PlatformPeg.get().overrideBrowserShortcuts()) {
+    if (PlatformPeg.get()?.overrideBrowserShortcuts()) {
         // XXX: This keyboard shortcut isn't manually added to
         // KeyBindingDefaults as it can't be easily handled by the
         // KeyBindingManager
@@ -92,28 +93,30 @@ const getUIOnlyShortcuts = (): IKeyboardShortcuts => {
  * This function gets keyboard shortcuts that can be consumed by the KeyBindingDefaults.
  */
 export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
-    const overrideBrowserShortcuts = PlatformPeg.get().overrideBrowserShortcuts();
+    const overrideBrowserShortcuts = PlatformPeg.get()?.overrideBrowserShortcuts();
 
-    return Object.keys(KEYBOARD_SHORTCUTS).filter((k: KeyBindingAction) => {
-        if (KEYBOARD_SHORTCUTS[k]?.controller?.settingDisabled) return false;
-        if (MAC_ONLY_SHORTCUTS.includes(k) && !IS_MAC) return false;
-        if (DESKTOP_SHORTCUTS.includes(k) && !overrideBrowserShortcuts) return false;
+    return Object.keys(KEYBOARD_SHORTCUTS)
+        .filter((k: KeyBindingAction) => {
+            if (KEYBOARD_SHORTCUTS[k]?.controller?.settingDisabled) return false;
+            if (MAC_ONLY_SHORTCUTS.includes(k) && !IS_MAC) return false;
+            if (DESKTOP_SHORTCUTS.includes(k) && !overrideBrowserShortcuts) return false;
 
-        return true;
-    }).reduce((o, key) => {
-        o[key] = KEYBOARD_SHORTCUTS[key];
-        return o;
-    }, {} as IKeyboardShortcuts);
+            return true;
+        })
+        .reduce((o, key) => {
+            o[key as KeyBindingAction] = KEYBOARD_SHORTCUTS[key as KeyBindingAction];
+            return o;
+        }, {} as IKeyboardShortcuts);
 };
 
 /**
  * Gets keyboard shortcuts that should be presented to the user in the UI.
  */
 export const getKeyboardShortcutsForUI = (): IKeyboardShortcuts => {
-    const entries = [
-        ...Object.entries(getUIOnlyShortcuts()),
-        ...Object.entries(getKeyboardShortcuts()),
-    ];
+    const entries = [...Object.entries(getUIOnlyShortcuts()), ...Object.entries(getKeyboardShortcuts())] as [
+        KeyBindingAction,
+        IBaseSetting<KeyCombo>,
+    ][];
 
     return entries.reduce((acc, [key, value]) => {
         acc[key] = value;
@@ -121,11 +124,11 @@ export const getKeyboardShortcutsForUI = (): IKeyboardShortcuts => {
     }, {} as IKeyboardShortcuts);
 };
 
-export const getKeyboardShortcutValue = (name: string): KeyCombo => {
+export const getKeyboardShortcutValue = (name: KeyBindingAction): KeyCombo | undefined => {
     return getKeyboardShortcutsForUI()[name]?.default;
 };
 
-export const getKeyboardShortcutDisplayName = (name: string): string | null => {
+export const getKeyboardShortcutDisplayName = (name: KeyBindingAction): string | undefined => {
     const keyboardShortcutDisplayName = getKeyboardShortcutsForUI()[name]?.displayName;
-    return keyboardShortcutDisplayName && _t(keyboardShortcutDisplayName);
+    return keyboardShortcutDisplayName && _t(keyboardShortcutDisplayName as string);
 };

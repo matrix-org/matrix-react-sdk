@@ -39,7 +39,7 @@ export interface IPublicRoomDirectoryConfig {
 }
 
 const validServer = withValidation<undefined, { error?: MatrixError }>({
-    deriveData: async ({ value }) => {
+    deriveData: async ({ value }): Promise<{ error?: MatrixError }> => {
         try {
             // check if we can successfully load this server's room directory
             await MatrixClientPeg.get().publicRooms({
@@ -56,14 +56,16 @@ const validServer = withValidation<undefined, { error?: MatrixError }>({
             key: "required",
             test: async ({ value }) => !!value,
             invalid: () => _t("Enter a server name"),
-        }, {
+        },
+        {
             key: "available",
             final: true,
             test: async (_, { error }) => !error,
             valid: () => _t("Looks good"),
-            invalid: ({ error }) => error?.errcode === "M_FORBIDDEN"
-                ? _t("You are not allowed to view this server's rooms list")
-                : _t("Can't find this server or its room list"),
+            invalid: ({ error }) =>
+                error?.errcode === "M_FORBIDDEN"
+                    ? _t("You are not allowed to view this server's rooms list")
+                    : _t("Can't find this server or its room list"),
         },
     ],
 });
@@ -76,7 +78,7 @@ function useSettingsValueWithSetter<T>(
 ): [T, (value: T) => Promise<void>] {
     const [value, setValue] = useState(SettingsStore.getValue<T>(settingName, roomId ?? undefined, excludeDefault));
     const setter = useCallback(
-        async (value: T) => {
+        async (value: T): Promise<void> => {
             setValue(value);
             SettingsStore.setValue(settingName, roomId, level, value);
         },
@@ -103,7 +105,7 @@ interface ServerList {
     setUserDefinedServers: (servers: string[]) => void;
 }
 
-function removeAll<T>(target: Set<T>, ...toRemove: T[]) {
+function removeAll<T>(target: Set<T>, ...toRemove: T[]): void {
     for (const value of toRemove) {
         target.delete(value);
     }
@@ -116,9 +118,7 @@ function useServers(): ServerList {
     );
 
     const homeServer = MatrixClientPeg.getHomeserverName();
-    const configServers = new Set<string>(
-        SdkConfig.getObject("room_directory")?.get("servers") ?? [],
-    );
+    const configServers = new Set<string>(SdkConfig.getObject("room_directory")?.get("servers") ?? []);
     removeAll(configServers, homeServer);
     // configured servers take preference over user-defined ones, if one occurs in both ignore the latter one.
     const removableServers = new Set(userDefinedServers);
@@ -144,10 +144,10 @@ interface IProps {
     setConfig: (value: IPublicRoomDirectoryConfig | null) => void;
 }
 
-export const NetworkDropdown = ({ protocols, config, setConfig }: IProps) => {
+export const NetworkDropdown: React.FC<IProps> = ({ protocols, config, setConfig }) => {
     const { allServers, homeServer, userDefinedServers, setUserDefinedServers } = useServers();
 
-    const options: GenericDropdownMenuItem<IPublicRoomDirectoryConfig | null>[] = allServers.map(roomServer => ({
+    const options: GenericDropdownMenuItem<IPublicRoomDirectoryConfig | null>[] = allServers.map((roomServer) => ({
         key: { roomServer, instanceId: null },
         label: roomServer,
         description: roomServer === homeServer ? _t("Your server") : null,
@@ -156,74 +156,88 @@ export const NetworkDropdown = ({ protocols, config, setConfig }: IProps) => {
                 key: { roomServer, instanceId: undefined },
                 label: _t("Matrix"),
             },
-            ...(roomServer === homeServer && protocols ? Object.values(protocols)
-                .flatMap(protocol => protocol.instances)
-                .map(instance => ({
-                    key: { roomServer, instanceId: instance.instance_id },
-                    label: instance.desc,
-                })) : []),
+            ...(roomServer === homeServer && protocols
+                ? Object.values(protocols)
+                      .flatMap((protocol) => protocol.instances)
+                      .map((instance) => ({
+                          key: { roomServer, instanceId: instance.instance_id },
+                          label: instance.desc,
+                      }))
+                : []),
         ],
-        ...(userDefinedServers.includes(roomServer) ? ({
-            adornment: (
-                <AccessibleButton
-                    className="mx_NetworkDropdown_removeServer"
-                    alt={_t("Remove server “%(roomServer)s”", { roomServer })}
-                    onClick={() => setUserDefinedServers(without(userDefinedServers, roomServer))}
-                />
-            ),
-        }) : {}),
+        ...(userDefinedServers.includes(roomServer)
+            ? {
+                  adornment: (
+                      <AccessibleButton
+                          className="mx_NetworkDropdown_removeServer"
+                          alt={_t("Remove server “%(roomServer)s”", { roomServer })}
+                          onClick={() => setUserDefinedServers(without(userDefinedServers, roomServer))}
+                      />
+                  ),
+              }
+            : {}),
     }));
 
-    const addNewServer = useCallback(({ closeMenu }) => (
-        <>
-            <span className="mx_GenericDropdownMenu_divider" />
-            <MenuItemRadio
-                active={false}
-                className="mx_GenericDropdownMenu_Option mx_GenericDropdownMenu_Option--item"
-                onClick={async () => {
-                    closeMenu();
-                    const { finished } = Modal.createDialog(TextInputDialog, {
-                        title: _t("Add a new server"),
-                        description: _t("Enter the name of a new server you want to explore."),
-                        button: _t("Add"),
-                        hasCancel: false,
-                        placeholder: _t("Server name"),
-                        validator: validServer,
-                        fixedWidth: false,
-                    }, "mx_NetworkDropdown_dialog");
+    const addNewServer = useCallback(
+        ({ closeMenu }) => (
+            <>
+                <span className="mx_GenericDropdownMenu_divider" />
+                <MenuItemRadio
+                    active={false}
+                    className="mx_GenericDropdownMenu_Option mx_GenericDropdownMenu_Option--item"
+                    onClick={async (): Promise<void> => {
+                        closeMenu();
+                        const { finished } = Modal.createDialog(
+                            TextInputDialog,
+                            {
+                                title: _t("Add a new server"),
+                                description: _t("Enter the name of a new server you want to explore."),
+                                button: _t("Add"),
+                                hasCancel: false,
+                                placeholder: _t("Server name"),
+                                validator: validServer,
+                                fixedWidth: false,
+                            },
+                            "mx_NetworkDropdown_dialog",
+                        );
 
-                    const [ok, newServer] = await finished;
-                    if (!ok) return;
+                        const [ok, newServer] = await finished;
+                        if (!ok) return;
 
-                    if (!allServers.includes(newServer)) {
-                        setUserDefinedServers([...userDefinedServers, newServer]);
-                        setConfig({
-                            roomServer: newServer,
-                        });
-                    }
-                }}
-            >
-                <div className="mx_GenericDropdownMenu_Option--label">
-                    <span className="mx_NetworkDropdown_addServer">
-                        { _t("Add new server…") }
-                    </span>
-                </div>
-            </MenuItemRadio>
-        </>
-    ), [allServers, setConfig, setUserDefinedServers, userDefinedServers]);
+                        if (!allServers.includes(newServer)) {
+                            setUserDefinedServers([...userDefinedServers, newServer]);
+                            setConfig({
+                                roomServer: newServer,
+                            });
+                        }
+                    }}
+                >
+                    <div className="mx_GenericDropdownMenu_Option--label">
+                        <span className="mx_NetworkDropdown_addServer">{_t("Add new server…")}</span>
+                    </div>
+                </MenuItemRadio>
+            </>
+        ),
+        [allServers, setConfig, setUserDefinedServers, userDefinedServers],
+    );
 
     return (
         <GenericDropdownMenu
             className="mx_NetworkDropdown_wrapper"
             value={config}
             toKey={(config: IPublicRoomDirectoryConfig | null) =>
-                config ? `${config.roomServer}-${config.instanceId}` : "null"}
+                config ? `${config.roomServer}-${config.instanceId}` : "null"
+            }
             options={options}
             onChange={(option) => setConfig(option)}
-            selectedLabel={option => option?.key ? _t("Show: %(instance)s rooms (%(server)s)", {
-                server: option.key.roomServer,
-                instance: option.key.instanceId ? option.label : "Matrix",
-            }) : _t("Show: Matrix rooms")}
+            selectedLabel={(option) =>
+                option?.key
+                    ? _t("Show: %(instance)s rooms (%(server)s)", {
+                          server: option.key.roomServer,
+                          instance: option.key.instanceId ? option.label : "Matrix",
+                      })
+                    : _t("Show: Matrix rooms")
+            }
             AdditionalOptions={addNewServer}
         />
     );

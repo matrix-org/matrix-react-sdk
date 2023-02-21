@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 import { _t } from "../../../languageHandler";
-import dis from '../../../dispatcher/dispatcher';
+import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
@@ -35,16 +35,20 @@ export default class IntegrationsDisabledDialog extends React.Component<IProps> 
         dis.fire(Action.ViewUserSettings);
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <BaseDialog
-                className='mx_IntegrationsDisabledDialog'
+                className="mx_IntegrationsDisabledDialog"
                 hasCancel={true}
                 onFinished={this.props.onFinished}
                 title={_t("Integrations are disabled")}
             >
-                <div className='mx_IntegrationsDisabledDialog_content'>
-                    <p>{ _t("Enable 'Manage Integrations' in Settings to do this.") }</p>
+                <div className="mx_IntegrationsDisabledDialog_content">
+                    <p>
+                        {_t("Enable '%(manageIntegrations)s' in Settings to do this.", {
+                            manageIntegrations: _t("Manage integrations"),
+                        })}
+                    </p>
                 </div>
                 <DialogButtons
                     primaryButton={_t("Settings")}

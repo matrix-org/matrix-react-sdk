@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactInstance } from "react";
 import ReactDom from "react-dom";
 
 interface IChildProps {
@@ -41,13 +41,13 @@ interface IProps {
  * automatic positional animation, look at react-shuffle or similar libraries.
  */
 export default class NodeAnimator extends React.Component<IProps> {
-    private nodes = {};
+    private nodes: Record<string, ReactInstance> = {};
     private children: { [key: string]: React.DetailedReactHTMLElement<any, HTMLElement> };
     public static defaultProps: Partial<IProps> = {
         startStyles: [],
     };
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.updateChildren(this.props.children);
@@ -65,7 +65,7 @@ export default class NodeAnimator extends React.Component<IProps> {
      */
     private applyStyles(node: HTMLElement, styles: React.CSSProperties): void {
         Object.entries(styles).forEach(([property, value]) => {
-            node.style[property] = value;
+            node.style[property as keyof Omit<CSSStyleDeclaration, "length" | "parentRule">] = value;
         });
     }
 
@@ -79,7 +79,6 @@ export default class NodeAnimator extends React.Component<IProps> {
 
                 if (oldNode && (oldNode as HTMLElement).style.left !== c.props.style.left) {
                     this.applyStyles(oldNode as HTMLElement, { left: c.props.style.left });
-                    // console.log("translation: "+oldNode.style.left+" -> "+c.props.style.left);
                 }
                 // clone the old element with the props (and children) of the new element
                 // so prop updates are still received by the children.
@@ -94,12 +93,9 @@ export default class NodeAnimator extends React.Component<IProps> {
                 if (startStyles.length > 0) {
                     const startStyle = startStyles[0];
                     newProps.style = startStyle;
-                    // console.log("mounted@startstyle0: "+JSON.stringify(startStyle));
                 }
 
-                newProps.ref = ((n) => this.collectNode(
-                    c.key, n, restingStyle,
-                ));
+                newProps.ref = (n) => this.collectNode(c.key, n, restingStyle);
 
                 this.children[c.key] = React.cloneElement(c, newProps);
             }
@@ -107,36 +103,24 @@ export default class NodeAnimator extends React.Component<IProps> {
     }
 
     private collectNode(k: string, node: React.ReactInstance, restingStyle: React.CSSProperties): void {
-        if (
-            node &&
-            this.nodes[k] === undefined &&
-            this.props.startStyles.length > 0
-        ) {
+        if (node && this.nodes[k] === undefined && this.props.startStyles.length > 0) {
             const startStyles = this.props.startStyles;
             const domNode = ReactDom.findDOMNode(node);
             // start from startStyle 1: 0 is the one we gave it
             // to start with, so now we animate 1 etc.
             for (let i = 1; i < startStyles.length; ++i) {
                 this.applyStyles(domNode as HTMLElement, startStyles[i]);
-                // console.log("start:"
-                //             JSON.stringify(startStyles[i]),
-                //             );
             }
 
             // and then we animate to the resting state
-            setTimeout(() => {
+            window.setTimeout(() => {
                 this.applyStyles(domNode as HTMLElement, restingStyle);
             }, 0);
-
-            // console.log("enter:",
-            //             JSON.stringify(restingStyle));
         }
         this.nodes[k] = node;
     }
 
-    public render(): JSX.Element {
-        return (
-            <>{ Object.values(this.children) }</>
-        );
+    public render(): React.ReactNode {
+        return <>{Object.values(this.children)}</>;
     }
 }

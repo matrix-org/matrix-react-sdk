@@ -16,20 +16,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps } from 'react';
+import React, { ComponentProps, ReactNode } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { EventType } from 'matrix-js-sdk/src/@types/event';
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
-import { _t } from '../../../languageHandler';
-import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
+import { _t } from "../../../languageHandler";
+import { formatCommaSeparatedList } from "../../../utils/FormattingUtils";
 import { isValid3pidInvite } from "../../../RoomInvite";
 import GenericEventListSummary from "./GenericEventListSummary";
-import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
-import { jsxJoin } from '../../../utils/ReactUtils';
-import { Layout } from '../../../settings/enums/Layout';
-import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
-import AccessibleButton from './AccessibleButton';
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
+import { jsxJoin } from "../../../utils/ReactUtils";
+import { Layout } from "../../../settings/enums/Layout";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+import AccessibleButton from "./AccessibleButton";
 import RoomContext from "../../../contexts/RoomContext";
 
 const onPinnedMessagesClick = (): void => {
@@ -79,17 +79,17 @@ enum TransitionType {
 const SEP = ",";
 
 export default class EventListSummary extends React.Component<IProps> {
-    static contextType = RoomContext;
+    public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
 
-    static defaultProps = {
+    public static defaultProps = {
         summaryLength: 1,
         threshold: 3,
         avatarsMaxLength: 5,
         layout: Layout.Group,
     };
 
-    shouldComponentUpdate(nextProps: IProps): boolean {
+    public shouldComponentUpdate(nextProps: IProps): boolean {
         // Update if
         //  - The number of summarised events has changed
         //  - or if the summary is about to toggle to become collapsed
@@ -128,14 +128,12 @@ export default class EventListSummary extends React.Component<IProps> {
             const coalescedTransitions = EventListSummary.coalesceRepeatedTransitions(canonicalTransitions);
 
             const descs = coalescedTransitions.map((t) => {
-                return EventListSummary.getDescriptionForTransition(
-                    t.transitionType, userNames.length, t.repeats,
-                );
+                return EventListSummary.getDescriptionForTransition(t.transitionType, userNames.length, t.repeats);
             });
 
             const desc = formatCommaSeparatedList(descs);
 
-            return _t('%(nameList)s %(transitionList)s', { nameList, transitionList: desc });
+            return _t("%(nameList)s %(transitionList)s", { nameList, transitionList: desc });
         });
 
         if (!summaries) {
@@ -151,7 +149,7 @@ export default class EventListSummary extends React.Component<IProps> {
      * more items in `users` than `this.props.summaryLength`, which is the number of names
      * included before "and [n] others".
      */
-    private renderNameList(users: string[]) {
+    private renderNameList(users: string[]): string {
         return formatCommaSeparatedList(users, this.props.summaryLength);
     }
 
@@ -163,7 +161,15 @@ export default class EventListSummary extends React.Component<IProps> {
      * @returns {string[]} an array of transitions.
      */
     private static getCanonicalTransitions(transitions: TransitionType[]): TransitionType[] {
-        const modMap = {
+        const modMap: Partial<
+            Record<
+                TransitionType,
+                {
+                    after: TransitionType;
+                    newTransition: TransitionType;
+                }
+            >
+        > = {
             [TransitionType.Joined]: {
                 after: TransitionType.Left,
                 newTransition: TransitionType.JoinedAndLeft,
@@ -172,10 +178,6 @@ export default class EventListSummary extends React.Component<IProps> {
                 after: TransitionType.Joined,
                 newTransition: TransitionType.LeftAndJoined,
             },
-            // $currentTransition : {
-            //     'after' : $nextTransition,
-            //     'newTransition' : 'new_transition_type',
-            // },
         };
         const res: TransitionType[] = [];
 
@@ -209,18 +211,21 @@ export default class EventListSummary extends React.Component<IProps> {
      * @param {string[]} transitions the array of transitions to transform.
      * @returns {object[]} an array of coalesced transitions.
      */
-    private static coalesceRepeatedTransitions(transitions: TransitionType[]) {
+    private static coalesceRepeatedTransitions(transitions: TransitionType[]): {
+        transitionType: TransitionType;
+        repeats: number;
+    }[] {
         const res: {
             transitionType: TransitionType;
             repeats: number;
         }[] = [];
 
-        for (let i = 0; i < transitions.length; i++) {
-            if (res.length > 0 && res[res.length - 1].transitionType === transitions[i]) {
+        for (const transition of transitions) {
+            if (res.length > 0 && res[res.length - 1].transitionType === transition) {
                 res[res.length - 1].repeats += 1;
             } else {
                 res.push({
-                    transitionType: transitions[i],
+                    transitionType: transition,
                     repeats: 1,
                 });
             }
@@ -236,128 +241,146 @@ export default class EventListSummary extends React.Component<IProps> {
      * @param {number} repeats the number of times the transition was repeated in a row.
      * @returns {string} the written Human Readable equivalent of the transition.
      */
-    private static getDescriptionForTransition(
-        t: TransitionType,
-        userCount: number,
-        count: number,
-    ): string | JSX.Element {
+    private static getDescriptionForTransition(t: TransitionType, userCount: number, count: number): ReactNode | null {
         // The empty interpolations 'severalUsers' and 'oneUser'
         // are there only to show translators to non-English languages
         // that the verb is conjugated to plural or singular Subject.
-        let res = null;
+        let res: ReactNode | undefined;
         switch (t) {
             case TransitionType.Joined:
-                res = (userCount > 1)
-                    ? _t("%(severalUsers)sjoined %(count)s times", { severalUsers: "", count })
-                    : _t("%(oneUser)sjoined %(count)s times", { oneUser: "", count });
+                res =
+                    userCount > 1
+                        ? _t("%(severalUsers)sjoined %(count)s times", { severalUsers: "", count })
+                        : _t("%(oneUser)sjoined %(count)s times", { oneUser: "", count });
                 break;
             case TransitionType.Left:
-                res = (userCount > 1)
-                    ? _t("%(severalUsers)sleft %(count)s times", { severalUsers: "", count })
-                    : _t("%(oneUser)sleft %(count)s times", { oneUser: "", count });
+                res =
+                    userCount > 1
+                        ? _t("%(severalUsers)sleft %(count)s times", { severalUsers: "", count })
+                        : _t("%(oneUser)sleft %(count)s times", { oneUser: "", count });
                 break;
             case TransitionType.JoinedAndLeft:
-                res = (userCount > 1)
-                    ? _t("%(severalUsers)sjoined and left %(count)s times", { severalUsers: "", count })
-                    : _t("%(oneUser)sjoined and left %(count)s times", { oneUser: "", count });
+                res =
+                    userCount > 1
+                        ? _t("%(severalUsers)sjoined and left %(count)s times", { severalUsers: "", count })
+                        : _t("%(oneUser)sjoined and left %(count)s times", { oneUser: "", count });
                 break;
             case TransitionType.LeftAndJoined:
-                res = (userCount > 1)
-                    ? _t("%(severalUsers)sleft and rejoined %(count)s times", { severalUsers: "", count })
-                    : _t("%(oneUser)sleft and rejoined %(count)s times", { oneUser: "", count });
+                res =
+                    userCount > 1
+                        ? _t("%(severalUsers)sleft and rejoined %(count)s times", { severalUsers: "", count })
+                        : _t("%(oneUser)sleft and rejoined %(count)s times", { oneUser: "", count });
                 break;
             case TransitionType.InviteReject:
-                res = (userCount > 1)
-                    ? _t("%(severalUsers)srejected their invitations %(count)s times", {
-                        severalUsers: "",
-                        count,
-                    })
-                    : _t("%(oneUser)srejected their invitation %(count)s times", { oneUser: "", count });
+                res =
+                    userCount > 1
+                        ? _t("%(severalUsers)srejected their invitations %(count)s times", {
+                              severalUsers: "",
+                              count,
+                          })
+                        : _t("%(oneUser)srejected their invitation %(count)s times", { oneUser: "", count });
                 break;
             case TransitionType.InviteWithdrawal:
-                res = (userCount > 1)
-                    ? _t("%(severalUsers)shad their invitations withdrawn %(count)s times", {
-                        severalUsers: "",
-                        count,
-                    })
-                    : _t("%(oneUser)shad their invitation withdrawn %(count)s times", { oneUser: "", count });
+                res =
+                    userCount > 1
+                        ? _t("%(severalUsers)shad their invitations withdrawn %(count)s times", {
+                              severalUsers: "",
+                              count,
+                          })
+                        : _t("%(oneUser)shad their invitation withdrawn %(count)s times", { oneUser: "", count });
                 break;
             case TransitionType.Invited:
-                res = (userCount > 1)
-                    ? _t("were invited %(count)s times", { count })
-                    : _t("was invited %(count)s times", { count });
+                res =
+                    userCount > 1
+                        ? _t("were invited %(count)s times", { count })
+                        : _t("was invited %(count)s times", { count });
                 break;
             case TransitionType.Banned:
-                res = (userCount > 1)
-                    ? _t("were banned %(count)s times", { count })
-                    : _t("was banned %(count)s times", { count });
+                res =
+                    userCount > 1
+                        ? _t("were banned %(count)s times", { count })
+                        : _t("was banned %(count)s times", { count });
                 break;
             case TransitionType.Unbanned:
-                res = (userCount > 1)
-                    ? _t("were unbanned %(count)s times", { count })
-                    : _t("was unbanned %(count)s times", { count });
+                res =
+                    userCount > 1
+                        ? _t("were unbanned %(count)s times", { count })
+                        : _t("was unbanned %(count)s times", { count });
                 break;
             case TransitionType.Kicked:
-                res = (userCount > 1)
-                    ? _t("were removed %(count)s times", { count })
-                    : _t("was removed %(count)s times", { count });
+                res =
+                    userCount > 1
+                        ? _t("were removed %(count)s times", { count })
+                        : _t("was removed %(count)s times", { count });
                 break;
             case TransitionType.ChangedName:
-                res = (userCount > 1)
-                    ? _t("%(severalUsers)schanged their name %(count)s times", { severalUsers: "", count })
-                    : _t("%(oneUser)schanged their name %(count)s times", { oneUser: "", count });
+                res =
+                    userCount > 1
+                        ? _t("%(severalUsers)schanged their name %(count)s times", { severalUsers: "", count })
+                        : _t("%(oneUser)schanged their name %(count)s times", { oneUser: "", count });
                 break;
             case TransitionType.ChangedAvatar:
-                res = (userCount > 1)
-                    ? _t("%(severalUsers)schanged their avatar %(count)s times", { severalUsers: "", count })
-                    : _t("%(oneUser)schanged their avatar %(count)s times", { oneUser: "", count });
+                res =
+                    userCount > 1
+                        ? _t("%(severalUsers)schanged their avatar %(count)s times", { severalUsers: "", count })
+                        : _t("%(oneUser)schanged their avatar %(count)s times", { oneUser: "", count });
                 break;
             case TransitionType.NoChange:
-                res = (userCount > 1)
-                    ? _t("%(severalUsers)smade no changes %(count)s times", { severalUsers: "", count })
-                    : _t("%(oneUser)smade no changes %(count)s times", { oneUser: "", count });
+                res =
+                    userCount > 1
+                        ? _t("%(severalUsers)smade no changes %(count)s times", { severalUsers: "", count })
+                        : _t("%(oneUser)smade no changes %(count)s times", { oneUser: "", count });
                 break;
             case TransitionType.ServerAcl:
-                res = (userCount > 1)
-                    ? _t("%(severalUsers)schanged the server ACLs %(count)s times",
-                        { severalUsers: "", count })
-                    : _t("%(oneUser)schanged the server ACLs %(count)s times", { oneUser: "", count });
+                res =
+                    userCount > 1
+                        ? _t("%(severalUsers)schanged the server ACLs %(count)s times", { severalUsers: "", count })
+                        : _t("%(oneUser)schanged the server ACLs %(count)s times", { oneUser: "", count });
                 break;
             case TransitionType.ChangedPins:
-                res = (userCount > 1)
-                    ? _t("%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times",
-                        { severalUsers: "", count },
-                        {
-                            "a": (sub) => <AccessibleButton kind='link_inline' onClick={onPinnedMessagesClick}>
-                                { sub }
-                            </AccessibleButton>,
-                        })
-                    : _t("%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times",
-                        { oneUser: "", count },
-                        {
-                            "a": (sub) => <AccessibleButton kind='link_inline' onClick={onPinnedMessagesClick}>
-                                { sub }
-                            </AccessibleButton>,
-                        });
+                res =
+                    userCount > 1
+                        ? _t(
+                              "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times",
+                              { severalUsers: "", count },
+                              {
+                                  a: (sub) => (
+                                      <AccessibleButton kind="link_inline" onClick={onPinnedMessagesClick}>
+                                          {sub}
+                                      </AccessibleButton>
+                                  ),
+                              },
+                          )
+                        : _t(
+                              "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times",
+                              { oneUser: "", count },
+                              {
+                                  a: (sub) => (
+                                      <AccessibleButton kind="link_inline" onClick={onPinnedMessagesClick}>
+                                          {sub}
+                                      </AccessibleButton>
+                                  ),
+                              },
+                          );
                 break;
             case TransitionType.MessageRemoved:
-                res = (userCount > 1)
-                    ? _t("%(severalUsers)sremoved a message %(count)s times",
-                        { severalUsers: "", count })
-                    : _t("%(oneUser)sremoved a message %(count)s times", { oneUser: "", count });
+                res =
+                    userCount > 1
+                        ? _t("%(severalUsers)sremoved a message %(count)s times", { severalUsers: "", count })
+                        : _t("%(oneUser)sremoved a message %(count)s times", { oneUser: "", count });
                 break;
             case TransitionType.HiddenEvent:
-                res = (userCount > 1)
-                    ? _t("%(severalUsers)ssent %(count)s hidden messages",
-                        { severalUsers: "", count })
-                    : _t("%(oneUser)ssent %(count)s hidden messages", { oneUser: "", count });
+                res =
+                    userCount > 1
+                        ? _t("%(severalUsers)ssent %(count)s hidden messages", { severalUsers: "", count })
+                        : _t("%(oneUser)ssent %(count)s hidden messages", { oneUser: "", count });
                 break;
         }
 
-        return res;
+        return res ?? null;
     }
 
-    private static getTransitionSequence(events: IUserEvents[]) {
+    private static getTransitionSequence(events: IUserEvents[]): TransitionType[] {
         return events.map(EventListSummary.getTransition);
     }
 
@@ -390,21 +413,22 @@ export default class EventListSummary extends React.Component<IProps> {
 
             case EventType.RoomMember:
                 switch (e.mxEvent.getContent().membership) {
-                    case 'invite': return TransitionType.Invited;
-                    case 'ban': return TransitionType.Banned;
-                    case 'join':
-                        if (e.mxEvent.getPrevContent().membership === 'join') {
+                    case "invite":
+                        return TransitionType.Invited;
+                    case "ban":
+                        return TransitionType.Banned;
+                    case "join":
+                        if (e.mxEvent.getPrevContent().membership === "join") {
                             if (e.mxEvent.getContent().displayname !== e.mxEvent.getPrevContent().displayname) {
                                 return TransitionType.ChangedName;
                             } else if (e.mxEvent.getContent().avatar_url !== e.mxEvent.getPrevContent().avatar_url) {
                                 return TransitionType.ChangedAvatar;
                             }
-                            // console.log("MELS ignoring duplicate membership join event");
                             return TransitionType.NoChange;
                         } else {
                             return TransitionType.Joined;
                         }
-                    case 'leave':
+                    case "leave":
                         if (e.mxEvent.getSender() === e.mxEvent.getStateKey()) {
                             if (e.mxEvent.getPrevContent().membership === "invite") {
                                 return TransitionType.InviteReject;
@@ -412,12 +436,16 @@ export default class EventListSummary extends React.Component<IProps> {
                             return TransitionType.Left;
                         }
                         switch (e.mxEvent.getPrevContent().membership) {
-                            case 'invite': return TransitionType.InviteWithdrawal;
-                            case 'ban': return TransitionType.Unbanned;
+                            case "invite":
+                                return TransitionType.InviteWithdrawal;
+                            case "ban":
+                                return TransitionType.Unbanned;
                             // sender is not target and made the target leave, if not from invite/ban then this is a kick
-                            default: return TransitionType.Kicked;
+                            default:
+                                return TransitionType.Kicked;
                         }
-                    default: return null;
+                    default:
+                        return null;
                 }
 
             default:
@@ -426,7 +454,10 @@ export default class EventListSummary extends React.Component<IProps> {
         }
     }
 
-    getAggregate(userEvents: Record<string, IUserEvents[]>) {
+    public getAggregate(userEvents: Record<string, IUserEvents[]>): {
+        names: Record<string, string[]>;
+        indices: Record<string, number>;
+    } {
         // A map of aggregate type to arrays of display names. Each aggregate type
         // is a comma-delimited string of transitions, e.g. "joined,left,kicked".
         // The array of display names is the array of users who went through that
@@ -441,26 +472,22 @@ export default class EventListSummary extends React.Component<IProps> {
         };
 
         const users = Object.keys(userEvents);
-        users.forEach(
-            (userId) => {
-                const firstEvent = userEvents[userId][0];
-                const displayName = firstEvent.displayName;
+        users.forEach((userId) => {
+            const firstEvent = userEvents[userId][0];
+            const displayName = firstEvent.displayName;
 
-                const seq = EventListSummary.getTransitionSequence(userEvents[userId]).join(SEP);
-                if (!aggregate[seq]) {
-                    aggregate[seq] = [];
-                    aggregateIndices[seq] = -1;
-                }
+            const seq = EventListSummary.getTransitionSequence(userEvents[userId]).join(SEP);
+            if (!aggregate[seq]) {
+                aggregate[seq] = [];
+                aggregateIndices[seq] = -1;
+            }
 
-                aggregate[seq].push(displayName);
+            aggregate[seq].push(displayName);
 
-                if (aggregateIndices[seq] === -1 ||
-                    firstEvent.index < aggregateIndices[seq]
-                ) {
-                    aggregateIndices[seq] = firstEvent.index;
-                }
-            },
-        );
+            if (aggregateIndices[seq] === -1 || firstEvent.index < aggregateIndices[seq]) {
+                aggregateIndices[seq] = firstEvent.index;
+            }
+        });
 
         return {
             names: aggregate,
@@ -468,7 +495,7 @@ export default class EventListSummary extends React.Component<IProps> {
         };
     }
 
-    render() {
+    public render(): React.ReactNode {
         const eventsToRender = this.props.events;
 
         // Map user IDs to latest Avatar Member. ES6 Maps are ordered by when the key was created,
@@ -480,39 +507,36 @@ export default class EventListSummary extends React.Component<IProps> {
         eventsToRender.forEach((e, index) => {
             const type = e.getType();
 
-            let userId = e.getSender();
-            if (type === EventType.RoomMember) {
-                userId = e.getStateKey();
+            let userKey = e.getSender()!;
+            if (type === EventType.RoomThirdPartyInvite) {
+                userKey = e.getContent().display_name;
+            } else if (type === EventType.RoomMember) {
+                userKey = e.getStateKey();
             } else if (e.isRedacted()) {
-                userId = e.getUnsigned()?.redacted_because?.sender;
+                userKey = e.getUnsigned()?.redacted_because?.sender;
             }
 
             // Initialise a user's events
-            if (!userEvents[userId]) {
-                userEvents[userId] = [];
+            if (!userEvents[userKey]) {
+                userEvents[userKey] = [];
             }
 
-            let displayName = userId;
-            if (type === EventType.RoomThirdPartyInvite) {
-                displayName = e.getContent().display_name;
-                if (e.sender) {
-                    latestUserAvatarMember.set(userId, e.sender);
-                }
-            } else if (e.isRedacted()) {
-                const sender = this.context?.room.getMember(userId);
+            let displayName = userKey;
+            if (e.isRedacted()) {
+                const sender = this.context?.room?.getMember(userKey);
                 if (sender) {
                     displayName = sender.name;
-                    latestUserAvatarMember.set(userId, sender);
+                    latestUserAvatarMember.set(userKey, sender);
                 }
             } else if (e.target && TARGET_AS_DISPLAY_NAME_EVENTS.includes(type as EventType)) {
                 displayName = e.target.name;
-                latestUserAvatarMember.set(userId, e.target);
-            } else if (e.sender) {
+                latestUserAvatarMember.set(userKey, e.target);
+            } else if (e.sender && type !== EventType.RoomThirdPartyInvite) {
                 displayName = e.sender.name;
-                latestUserAvatarMember.set(userId, e.sender);
+                latestUserAvatarMember.set(userKey, e.sender);
             }
 
-            userEvents[userId].push({
+            userEvents[userKey].push({
                 mxEvent: e,
                 displayName,
                 index: index,
@@ -526,15 +550,18 @@ export default class EventListSummary extends React.Component<IProps> {
             (seq1, seq2) => aggregate.indices[seq1] - aggregate.indices[seq2],
         );
 
-        return <GenericEventListSummary
-            data-testid={this.props['data-testid']}
-            events={this.props.events}
-            threshold={this.props.threshold}
-            onToggle={this.props.onToggle}
-            startExpanded={this.props.startExpanded}
-            children={this.props.children}
-            summaryMembers={[...latestUserAvatarMember.values()]}
-            layout={this.props.layout}
-            summaryText={this.generateSummary(aggregate.names, orderedTransitionSequences)} />;
+        return (
+            <GenericEventListSummary
+                data-testid={this.props["data-testid"]}
+                events={this.props.events}
+                threshold={this.props.threshold}
+                onToggle={this.props.onToggle}
+                startExpanded={this.props.startExpanded}
+                children={this.props.children}
+                summaryMembers={[...latestUserAvatarMember.values()]}
+                layout={this.props.layout}
+                summaryText={this.generateSummary(aggregate.names, orderedTransitionSequences)}
+            />
+        );
     }
 }

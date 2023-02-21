@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -ex
+
 # Creates a layered environment with the full repo for the app and SDKs cloned
 # and linked. This gives an element-web dev environment ready to build with
 # the current react-sdk branch and any matching branches of react-sdk's dependencies
@@ -14,6 +16,7 @@
 # Set up the js-sdk first
 scripts/fetchdep.sh matrix-org matrix-js-sdk
 pushd matrix-js-sdk
+[ -n "$JS_SDK_GITHUB_BASE_REF" ] && git fetch --depth 1 origin $JS_SDK_GITHUB_BASE_REF && git checkout $JS_SDK_GITHUB_BASE_REF
 yarn link
 yarn install --pure-lockfile
 popd

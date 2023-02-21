@@ -25,7 +25,6 @@ import { DefaultTagID, TagID } from "../room-list/models";
 import { FetchRoomFn, ListNotificationState } from "./ListNotificationState";
 import { RoomNotificationState } from "./RoomNotificationState";
 import { SummarizedNotificationState } from "./SummarizedNotificationState";
-import { ThreadsRoomNotificationState } from "./ThreadsRoomNotificationState";
 import { VisibilityProvider } from "../room-list/filters/VisibilityProvider";
 import { PosthogAnalytics } from "../../PosthogAnalytics";
 
@@ -34,10 +33,13 @@ interface IState {}
 export const UPDATE_STATUS_INDICATOR = Symbol("update-status-indicator");
 
 export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
-    private static internalInstance = new RoomNotificationStateStore();
-
+    private static readonly internalInstance = (() => {
+        const instance = new RoomNotificationStateStore();
+        instance.start();
+        return instance;
+    })();
     private roomMap = new Map<Room, RoomNotificationState>();
-    private roomThreadsMap = new Map<Room, ThreadsRoomNotificationState>();
+
     private listMap = new Map<TagID, ListNotificationState>();
     private _globalState = new SummarizedNotificationState();
 
@@ -60,7 +62,7 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
      */
     public getListState(tagId: TagID): ListNotificationState {
         if (this.listMap.has(tagId)) {
-            return this.listMap.get(tagId);
+            return this.listMap.get(tagId)!;
         }
 
         // TODO: Update if/when invites move out of the room list.
@@ -82,29 +84,16 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
      */
     public getRoomState(room: Room): RoomNotificationState {
         if (!this.roomMap.has(room)) {
-            // Not very elegant, but that way we ensure that we start tracking
-            // threads notification at the same time at rooms.
-            // There are multiple entry points, and it's unclear which one gets
-            // called first
-            const threadState = new ThreadsRoomNotificationState(room);
-            this.roomThreadsMap.set(room, threadState);
-            this.roomMap.set(room, new RoomNotificationState(room, threadState));
+            this.roomMap.set(room, new RoomNotificationState(room));
         }
-        return this.roomMap.get(room);
-    }
-
-    public getThreadsRoomState(room: Room): ThreadsRoomNotificationState {
-        if (!this.roomThreadsMap.has(room)) {
-            this.roomThreadsMap.set(room, new ThreadsRoomNotificationState(room));
-        }
-        return this.roomThreadsMap.get(room);
+        return this.roomMap.get(room)!;
     }
 
     public static get instance(): RoomNotificationStateStore {
         return RoomNotificationStateStore.internalInstance;
     }
 
-    private onSync = (state: SyncState, prevState?: SyncState, data?: ISyncStateData) => {
+    private onSync = (state: SyncState, prevState: SyncState | null, data?: ISyncStateData): void => {
         // Only count visible rooms to not torment the user with notification counts in rooms they can't see.
         // This will include highlights from the previous version of the room internally
         const globalState = new SummarizedNotificationState();
@@ -121,7 +110,8 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
 
         PosthogAnalytics.instance.setProperty("numFavouriteRooms", numFavourites);
 
-        if (this.globalState.symbol !== globalState.symbol ||
+        if (
+            this.globalState.symbol !== globalState.symbol ||
             this.globalState.count !== globalState.count ||
             this.globalState.color !== globalState.color ||
             this.globalState.numUnreadStates !== globalState.numUnreadStates ||
@@ -132,7 +122,7 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
         }
     };
 
-    protected async onReady() {
+    protected async onReady(): Promise<void> {
         this.matrixClient.on(ClientEvent.Sync, this.onSync);
     }
 
@@ -144,6 +134,5 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
     }
 
     // We don't need this, but our contract says we do.
-    protected async onAction(payload: ActionPayload): Promise<void> {
-    }
+    protected async onAction(payload: ActionPayload): Promise<void> {}
 }

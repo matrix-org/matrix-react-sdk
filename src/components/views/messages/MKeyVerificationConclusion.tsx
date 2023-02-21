@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import {
     VerificationRequest,
@@ -24,9 +24,9 @@ import {
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { _t } from '../../../languageHandler';
-import { getNameForEventRoom, userLabelForEventRoom } from '../../../utils/KeyVerificationStateObserver';
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t } from "../../../languageHandler";
+import { getNameForEventRoom, userLabelForEventRoom } from "../../../utils/KeyVerificationStateObserver";
 import EventTileBubble from "./EventTileBubble";
 
 interface IProps {
@@ -36,7 +36,7 @@ interface IProps {
 }
 
 export default class MKeyVerificationConclusion extends React.Component<IProps> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
     }
 
@@ -72,7 +72,7 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
         this.forceUpdate();
     };
 
-    public static shouldRender(mxEvent: MatrixEvent, request: VerificationRequest): boolean {
+    public static shouldRender(mxEvent: MatrixEvent, request?: VerificationRequest): boolean {
         // normally should not happen
         if (!request) {
             return false;
@@ -99,9 +99,9 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
         return true;
     }
 
-    public render(): JSX.Element {
+    public render(): JSX.Element | null {
         const { mxEvent } = this.props;
-        const request = mxEvent.verificationRequest;
+        const request = mxEvent.verificationRequest!;
 
         if (!MKeyVerificationConclusion.shouldRender(mxEvent, request)) {
             return null;
@@ -110,21 +110,20 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
         const client = MatrixClientPeg.get();
         const myUserId = client.getUserId();
 
-        let title;
+        let title: string | undefined;
 
         if (request.done) {
-            title = _t(
-                "You verified %(name)s",
-                { name: getNameForEventRoom(request.otherUserId, mxEvent.getRoomId()) },
-            );
+            title = _t("You verified %(name)s", {
+                name: getNameForEventRoom(request.otherUserId, mxEvent.getRoomId()),
+            });
         } else if (request.cancelled) {
             const userId = request.cancellingUserId;
             if (userId === myUserId) {
-                title = _t("You cancelled verifying %(name)s",
-                    { name: getNameForEventRoom(request.otherUserId, mxEvent.getRoomId()) });
+                title = _t("You cancelled verifying %(name)s", {
+                    name: getNameForEventRoom(request.otherUserId, mxEvent.getRoomId()),
+                });
             } else {
-                title = _t("%(name)s cancelled verifying",
-                    { name: getNameForEventRoom(userId, mxEvent.getRoomId()) });
+                title = _t("%(name)s cancelled verifying", { name: getNameForEventRoom(userId, mxEvent.getRoomId()) });
             }
         }
 
@@ -132,12 +131,14 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
             const classes = classNames("mx_cryptoEvent mx_cryptoEvent_icon", {
                 mx_cryptoEvent_icon_verified: request.done,
             });
-            return <EventTileBubble
-                className={classes}
-                title={title}
-                subtitle={userLabelForEventRoom(request.otherUserId, mxEvent.getRoomId())}
-                timestamp={this.props.timestamp}
-            />;
+            return (
+                <EventTileBubble
+                    className={classes}
+                    title={title}
+                    subtitle={userLabelForEventRoom(request.otherUserId, mxEvent.getRoomId())}
+                    timestamp={this.props.timestamp}
+                />
+            );
         }
 
         return null;

@@ -30,6 +30,7 @@ const notLoggedInMap: Record<Exclude<Views, Views.LOGGED_IN>, ScreenName> = {
     [Views.WELCOME]: "Welcome",
     [Views.LOGIN]: "Login",
     [Views.REGISTER]: "Register",
+    [Views.USE_CASE_SELECTION]: "UseCaseSelection",
     [Views.FORGOT_PASSWORD]: "ForgotPassword",
     [Views.COMPLETE_SECURITY]: "CompleteSecurity",
     [Views.E2E_SETUP]: "E2ESetup",
@@ -40,7 +41,6 @@ const loggedInPageTypeMap: Record<PageType, ScreenName> = {
     [PageType.HomePage]: "Home",
     [PageType.RoomView]: "Room",
     [PageType.UserView]: "User",
-    [PageType.LegacyGroupView]: "Group",
 };
 
 export default class PosthogTrackers {
@@ -65,9 +65,8 @@ export default class PosthogTrackers {
     }
 
     private trackPage(durationMs?: number): void {
-        const screenName = this.view === Views.LOGGED_IN
-            ? loggedInPageTypeMap[this.pageType]
-            : notLoggedInMap[this.view];
+        const screenName =
+            this.view === Views.LOGGED_IN ? loggedInPageTypeMap[this.pageType] : notLoggedInMap[this.view];
         PosthogAnalytics.instance.trackEvent<ScreenEvent>({
             eventName: "$pageview",
             $current_url: screenName,
@@ -108,20 +107,20 @@ export default class PosthogTrackers {
 }
 
 export class PosthogScreenTracker extends PureComponent<{ screenName: ScreenName }> {
-    componentDidMount() {
+    public componentDidMount(): void {
         PosthogTrackers.instance.trackOverride(this.props.screenName);
     }
 
-    componentDidUpdate() {
+    public componentDidUpdate(): void {
         // We do not clear the old override here so that we do not send the non-override screen as a transition
         PosthogTrackers.instance.trackOverride(this.props.screenName);
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         PosthogTrackers.instance.clearOverride(this.props.screenName);
     }
 
-    render() {
+    public render(): React.ReactNode {
         return null; // no need to render anything, we just need to hook into the React lifecycle
     }
 }

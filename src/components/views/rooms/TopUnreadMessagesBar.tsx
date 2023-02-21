@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { _t } from '../../../languageHandler';
-import AccessibleButton from '../elements/AccessibleButton';
+import { _t } from "../../../languageHandler";
+import AccessibleButton from "../elements/AccessibleButton";
 
 interface IProps {
     onScrollUpClick?: (e: React.MouseEvent) => void;
@@ -25,17 +25,17 @@ interface IProps {
 }
 
 export default class TopUnreadMessagesBar extends React.PureComponent<IProps> {
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <div className="mx_TopUnreadMessagesBar">
                 <AccessibleButton
                     className="mx_TopUnreadMessagesBar_scrollUp"
-                    title={_t('Jump to first unread message.')}
+                    title={_t("Jump to first unread message.")}
                     onClick={this.props.onScrollUpClick}
                 />
                 <AccessibleButton
                     className="mx_TopUnreadMessagesBar_markAsRead"
-                    title={_t('Mark all as read')}
+                    title={_t("Mark all as read")}
                     onClick={this.props.onCloseClick}
                 />
             </div>

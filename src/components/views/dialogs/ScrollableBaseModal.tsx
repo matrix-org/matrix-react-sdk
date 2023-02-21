@@ -35,8 +35,10 @@ export interface IScrollableBaseState {
 /**
  * Scrollable dialog base from Compound (Web Components).
  */
-export default abstract class ScrollableBaseModal<TProps extends IDialogProps, TState extends IScrollableBaseState>
-    extends React.PureComponent<TProps, TState> {
+export default abstract class ScrollableBaseModal<
+    TProps extends IDialogProps,
+    TState extends IScrollableBaseState,
+> extends React.PureComponent<TProps, TState> {
     protected constructor(props: TProps) {
         super(props);
     }
@@ -56,11 +58,11 @@ export default abstract class ScrollableBaseModal<TProps extends IDialogProps, T
         }
     };
 
-    private onCancel = () => {
+    private onCancel = (): void => {
         this.cancel();
     };
 
-    private onSubmit = (e: MouseEvent | FormEvent) => {
+    private onSubmit = (e: MouseEvent | FormEvent): void => {
         e.stopPropagation();
         e.preventDefault();
         if (!this.state.canSubmit) return; // pretend the submit button was disabled
@@ -71,7 +73,7 @@ export default abstract class ScrollableBaseModal<TProps extends IDialogProps, T
     protected abstract submit(): void;
     protected abstract renderContent(): React.ReactNode;
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <MatrixClientContext.Provider value={this.matrixClient}>
                 <FocusLock
@@ -87,20 +89,18 @@ export default abstract class ScrollableBaseModal<TProps extends IDialogProps, T
                     className="mx_CompoundDialog mx_ScrollableBaseDialog"
                 >
                     <div className="mx_CompoundDialog_header">
-                        <h1>{ this.state.title }</h1>
+                        <h1>{this.state.title}</h1>
                         <AccessibleButton
                             onClick={this.onCancel}
                             className="mx_CompoundDialog_cancelButton"
                             aria-label={_t("Close dialog")}
                         />
                     </div>
-                    <form onSubmit={this.onSubmit}>
-                        <div className="mx_CompoundDialog_content">
-                            { this.renderContent() }
-                        </div>
+                    <form onSubmit={this.onSubmit} className="mx_CompoundDialog_form">
+                        <div className="mx_CompoundDialog_content">{this.renderContent()}</div>
                         <div className="mx_CompoundDialog_footer">
                             <AccessibleButton onClick={this.onCancel} kind="primary_outline">
-                                { _t("Cancel") }
+                                {_t("Cancel")}
                             </AccessibleButton>
                             <AccessibleButton
                                 onClick={this.onSubmit}
@@ -110,7 +110,7 @@ export default abstract class ScrollableBaseModal<TProps extends IDialogProps, T
                                 element="button"
                                 className="mx_Dialog_nonDialogButton"
                             >
-                                { this.state.actionLabel }
+                                {this.state.actionLabel}
                             </AccessibleButton>
                         </div>
                     </form>

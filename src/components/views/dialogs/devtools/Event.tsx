@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext, useMemo, useRef, useState } from "react";
+import React, { ChangeEvent, useContext, useMemo, useRef, useState } from "react";
 import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import { _t, _td } from "../../../../languageHandler";
@@ -60,18 +60,20 @@ const validateEventContent = withValidation<any, Error | undefined>({
             return e;
         }
     },
-    rules: [{
-        key: "validJson",
-        test: ({ value }, error) => {
-            if (!value) return true;
-            return !error;
+    rules: [
+        {
+            key: "validJson",
+            test: ({ value }, error) => {
+                if (!value) return true;
+                return !error;
+            },
+            invalid: (error) => _t("Doesn't look like valid JSON.") + " " + error,
         },
-        invalid: (error) => _t("Doesn't look like valid JSON.") + " " + error,
-    }],
+    ],
 });
 
-export const EventEditor = ({ fieldDefs, defaultContent = "{\n\n}", onSend, onBack }: IEventEditorProps) => {
-    const [fieldData, setFieldData] = useState<string[]>(fieldDefs.map(def => def.default ?? ""));
+export const EventEditor: React.FC<IEventEditorProps> = ({ fieldDefs, defaultContent = "{\n\n}", onSend, onBack }) => {
+    const [fieldData, setFieldData] = useState<string[]>(fieldDefs.map((def) => def.default ?? ""));
     const [content, setContent] = useState<string>(defaultContent);
     const contentField = useRef<Field>();
 
@@ -85,14 +87,16 @@ export const EventEditor = ({ fieldDefs, defaultContent = "{\n\n}", onSend, onBa
             type="text"
             autoComplete="on"
             value={fieldData[i]}
-            onChange={ev => setFieldData(data => {
-                data[i] = ev.target.value;
-                return [...data];
-            })}
+            onChange={(ev: ChangeEvent<HTMLInputElement>) =>
+                setFieldData((data) => {
+                    data[i] = ev.target.value;
+                    return [...data];
+                })
+            }
         />
     ));
 
-    const onAction = async () => {
+    const onAction = async (): Promise<string> => {
         const valid = await contentField.current.validate({});
 
         if (!valid) {
@@ -110,29 +114,25 @@ export const EventEditor = ({ fieldDefs, defaultContent = "{\n\n}", onSend, onBa
         return _t("Event sent!");
     };
 
-    return <BaseTool
-        actionLabel={_t("Send")}
-        onAction={onAction}
-        onBack={onBack}
-    >
-        <div className="mx_DevTools_eventTypeStateKeyGroup">
-            { fields }
-        </div>
+    return (
+        <BaseTool actionLabel={_t("Send")} onAction={onAction} onBack={onBack}>
+            <div className="mx_DevTools_eventTypeStateKeyGroup">{fields}</div>
 
-        <Field
-            id="evContent"
-            label={_t("Event Content")}
-            type="text"
-            className="mx_DevTools_textarea"
-            autoComplete="off"
-            value={content}
-            onChange={ev => setContent(ev.target.value)}
-            element="textarea"
-            onValidate={validateEventContent}
-            ref={contentField}
-            autoFocus={!!defaultContent}
-        />
-    </BaseTool>;
+            <Field
+                id="evContent"
+                label={_t("Event Content")}
+                type="text"
+                className="mx_DevTools_textarea"
+                autoComplete="off"
+                value={content}
+                onChange={(ev) => setContent(ev.target.value)}
+                element="textarea"
+                onValidate={validateEventContent}
+                ref={contentField}
+                autoFocus={!!defaultContent}
+            />
+        </BaseTool>
+    );
 };
 
 export interface IEditorProps extends Pick<IDevtoolsProps, "onBack"> {
@@ -143,25 +143,25 @@ interface IViewerProps extends Required<IEditorProps> {
     Editor: React.FC<Required<IEditorProps>>;
 }
 
-export const EventViewer = ({ mxEvent, onBack, Editor }: IViewerProps) => {
+export const EventViewer: React.FC<IViewerProps> = ({ mxEvent, onBack, Editor }) => {
     const [editing, setEditing] = useState(false);
 
     if (editing) {
-        const onBack = () => {
+        const onBack = (): void => {
             setEditing(false);
         };
         return <Editor mxEvent={mxEvent} onBack={onBack} />;
     }
 
-    const onAction = async () => {
+    const onAction = async (): Promise<void> => {
         setEditing(true);
     };
 
-    return <BaseTool onBack={onBack} actionLabel={_t("Edit")} onAction={onAction}>
-        <SyntaxHighlight language="json">
-            { stringify(mxEvent.event) }
-        </SyntaxHighlight>
-    </BaseTool>;
+    return (
+        <BaseTool onBack={onBack} actionLabel={_t("Edit")} onAction={onAction}>
+            <SyntaxHighlight language="json">{stringify(mxEvent.event)}</SyntaxHighlight>
+        </BaseTool>
+    );
 };
 
 // returns the id of the initial message, not the id of the previous edit
@@ -171,15 +171,13 @@ const getBaseEventId = (baseEvent: MatrixEvent): string => {
     return mxEvent.getWireContent()["m.relates_to"]?.event_id ?? baseEvent.getId();
 };
 
-export const TimelineEventEditor = ({ mxEvent, onBack }: IEditorProps) => {
+export const TimelineEventEditor: React.FC<IEditorProps> = ({ mxEvent, onBack }) => {
     const context = useContext(DevtoolsContext);
     const cli = useContext(MatrixClientContext);
 
-    const fields = useMemo(() => [
-        eventTypeField(mxEvent?.getType()),
-    ], [mxEvent]);
+    const fields = useMemo(() => [eventTypeField(mxEvent?.getType())], [mxEvent]);
 
-    const onSend = ([eventType]: string[], content?: IContent) => {
+    const onSend = ([eventType]: string[], content?: IContent): Promise<unknown> => {
         return cli.sendEvent(context.room.roomId, eventType, content);
     };
 

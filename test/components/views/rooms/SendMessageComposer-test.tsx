@@ -15,15 +15,13 @@ limitations under the License.
 */
 
 import React from "react";
-import { act } from "react-dom/test-utils";
-import { sleep } from "matrix-js-sdk/src/utils";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
-import { mount } from 'enzyme';
+import { fireEvent, render, waitFor } from "@testing-library/react";
+import { MatrixClient, MsgType } from "matrix-js-sdk/src/matrix";
+import { mocked } from "jest-mock";
 
 import SendMessageComposer, {
     createMessageContent,
     isQuickReaction,
-    SendMessageComposer as SendMessageComposerClass,
 } from "../../../../src/components/views/rooms/SendMessageComposer";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import RoomContext, { TimelineRenderingType } from "../../../../src/contexts/RoomContext";
@@ -32,22 +30,20 @@ import { createPartCreator, createRenderer } from "../../../editor/mock";
 import { createTestClient, mkEvent, mkStubRoom } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
-import DocumentOffset from '../../../../src/editor/offset';
-import { Layout } from '../../../../src/settings/enums/Layout';
+import DocumentOffset from "../../../../src/editor/offset";
+import { Layout } from "../../../../src/settings/enums/Layout";
 import { IRoomState } from "../../../../src/components/structures/RoomView";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import { mockPlatformPeg } from "../../../test-utils/platform";
+import { doMaybeLocalRoomAction } from "../../../../src/utils/local-room";
+import { addTextToComposer } from "../../../test-utils/composer";
+import dis from "../../../../src/dispatcher/dispatcher";
 
-const WrapWithProviders: React.FC<{
-    roomContext: IRoomState;
-    client: MatrixClient;
-}> = ({ children, roomContext, client }) => <MatrixClientContext.Provider value={client}>
-    <RoomContext.Provider value={roomContext}>
-        { children }
-    </RoomContext.Provider>
-</MatrixClientContext.Provider>;
+jest.mock("../../../../src/utils/local-room", () => ({
+    doMaybeLocalRoomAction: jest.fn(),
+}));
 
-describe('<SendMessageComposer/>', () => {
+describe("<SendMessageComposer/>", () => {
     const defaultRoomContext: IRoomState = {
         roomLoading: true,
         peekLoading: false,
@@ -82,6 +78,8 @@ describe('<SendMessageComposer/>', () => {
         canSelfRedact: false,
         resizing: false,
         narrow: false,
+        activeCall: null,
+        msc3946ProcessDynamicPredecessor: false,
     };
     describe("createMessageContent", () => {
         const permalinkCreator = jest.fn() as any;
@@ -91,7 +89,7 @@ describe('<SendMessageComposer/>', () => {
             const documentOffset = new DocumentOffset(11, true);
             model.update("hello world", "insertText", documentOffset);
 
-            const content = createMessageContent(model, null, undefined, permalinkCreator);
+            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "hello world",
@@ -104,7 +102,7 @@ describe('<SendMessageComposer/>', () => {
             const documentOffset = new DocumentOffset(13, true);
             model.update("hello *world*", "insertText", documentOffset);
 
-            const content = createMessageContent(model, null, undefined, permalinkCreator);
+            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "hello *world*",
@@ -119,7 +117,7 @@ describe('<SendMessageComposer/>', () => {
             const documentOffset = new DocumentOffset(22, true);
             model.update("/me blinks __quickly__", "insertText", documentOffset);
 
-            const content = createMessageContent(model, null, undefined, permalinkCreator);
+            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "blinks __quickly__",
@@ -135,7 +133,7 @@ describe('<SendMessageComposer/>', () => {
             model.update("/me ✨sparkles✨", "insertText", documentOffset);
             expect(model.parts.length).toEqual(4); // Emoji count as non-text
 
-            const content = createMessageContent(model, null, undefined, permalinkCreator);
+            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "✨sparkles✨",
@@ -149,7 +147,7 @@ describe('<SendMessageComposer/>', () => {
 
             model.update("//dev/null is my favourite place", "insertText", documentOffset);
 
-            const content = createMessageContent(model, null, undefined, permalinkCreator);
+            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "/dev/null is my favourite place",
@@ -160,16 +158,16 @@ describe('<SendMessageComposer/>', () => {
 
     describe("functions correctly mounted", () => {
         const mockClient = createTestClient();
-        jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient);
-        const mockRoom = mkStubRoom('myfakeroom', 'myfakeroom', mockClient) as any;
+        jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
+        const mockRoom = mkStubRoom("myfakeroom", "myfakeroom", mockClient) as any;
         const mockEvent = mkEvent({
             type: "m.room.message",
-            room: 'myfakeroom',
-            user: 'myfakeuser',
-            content: { "msgtype": "m.text", "body": "Replying to this" },
+            room: "myfakeroom",
+            user: "myfakeuser",
+            content: { msgtype: "m.text", body: "Replying to this" },
             event: true,
         });
-        mockRoom.findEventById = jest.fn(eventId => {
+        mockRoom.findEventById = jest.fn((eventId) => {
             return eventId === mockEvent.getId() ? mockEvent : null;
         });
 
@@ -180,63 +178,53 @@ describe('<SendMessageComposer/>', () => {
             spyDispatcher.mockReset();
         });
 
-        const addTextToComposer = (wrapper, text) => act(() => {
-            // couldn't get input event on contenteditable to work
-            // paste works without illegal private method access
-            const pasteEvent = {
-                clipboardData: {
-                    types: [],
-                    files: [],
-                    getData: type => type === "text/plain" ? text : undefined,
-                },
-            };
-            wrapper.find('[role="textbox"]').simulate('paste', pasteEvent);
-            wrapper.update();
-        });
-
         const defaultProps = {
             room: mockRoom,
             toggleStickerPickerOpen: jest.fn(),
             permalinkCreator: new RoomPermalinkCreator(mockRoom),
         };
+        const getRawComponent = (props = {}, roomContext = defaultRoomContext, client = mockClient) => (
+            <MatrixClientContext.Provider value={client}>
+                <RoomContext.Provider value={roomContext}>
+                    <SendMessageComposer {...defaultProps} {...props} />
+                </RoomContext.Provider>
+            </MatrixClientContext.Provider>
+        );
         const getComponent = (props = {}, roomContext = defaultRoomContext, client = mockClient) => {
-            return mount(<SendMessageComposer {...defaultProps} {...props} />, {
-                wrappingComponent: WrapWithProviders,
-                wrappingComponentProps: { roomContext, client },
-            });
+            return render(getRawComponent(props, roomContext, client));
         };
 
         it("renders text and placeholder correctly", () => {
-            const wrapper = getComponent({ placeholder: "placeholder string" });
+            const { container } = getComponent({ placeholder: "placeholder string" });
 
-            expect(wrapper.find('[aria-label="placeholder string"]')).toHaveLength(1);
+            expect(container.querySelectorAll('[aria-label="placeholder string"]')).toHaveLength(1);
 
-            addTextToComposer(wrapper, "Test Text");
+            addTextToComposer(container, "Test Text");
 
-            expect(wrapper.text()).toBe("Test Text");
+            expect(container.textContent).toBe("Test Text");
         });
 
         it("correctly persists state to and from localStorage", () => {
-            const wrapper = getComponent({ replyToEvent: mockEvent });
+            const props = { replyToEvent: mockEvent };
+            const { container, unmount, rerender } = getComponent(props);
 
-            addTextToComposer(wrapper, "Test Text");
+            addTextToComposer(container, "Test Text");
 
-            // @ts-ignore
-            const key = wrapper.find(SendMessageComposerClass).instance().editorStateKey;
+            const key = "mx_cider_state_myfakeroom";
 
-            expect(wrapper.text()).toBe("Test Text");
+            expect(container.textContent).toBe("Test Text");
             expect(localStorage.getItem(key)).toBeNull();
 
             // ensure the right state was persisted to localStorage
-            wrapper.unmount();
-            expect(JSON.parse(localStorage.getItem(key))).toStrictEqual({
-                parts: [{ "type": "plain", "text": "Test Text" }],
+            unmount();
+            expect(JSON.parse(localStorage.getItem(key)!)).toStrictEqual({
+                parts: [{ type: "plain", text: "Test Text" }],
                 replyEventId: mockEvent.getId(),
             });
 
             // ensure the correct model is re-loaded
-            wrapper.mount();
-            expect(wrapper.text()).toBe("Test Text");
+            rerender(getRawComponent(props));
+            expect(container.textContent).toBe("Test Text");
             expect(spyDispatcher).toHaveBeenCalledWith({
                 action: "reply_to_event",
                 event: mockEvent,
@@ -244,67 +232,118 @@ describe('<SendMessageComposer/>', () => {
             });
 
             // now try with localStorage wiped out
-            wrapper.unmount();
+            unmount();
             localStorage.removeItem(key);
-            wrapper.mount();
-            expect(wrapper.text()).toBe("");
+            rerender(getRawComponent(props));
+            expect(container.textContent).toBe("");
         });
 
         it("persists state correctly without replyToEvent onbeforeunload", () => {
-            const wrapper = getComponent();
+            const { container } = getComponent();
 
-            addTextToComposer(wrapper, "Hello World");
+            addTextToComposer(container, "Hello World");
 
-            // @ts-ignore
-            const key = wrapper.find(SendMessageComposerClass).instance().editorStateKey;
+            const key = "mx_cider_state_myfakeroom";
 
-            expect(wrapper.text()).toBe("Hello World");
+            expect(container.textContent).toBe("Hello World");
             expect(localStorage.getItem(key)).toBeNull();
 
             // ensure the right state was persisted to localStorage
-            window.dispatchEvent(new Event('beforeunload'));
-            expect(JSON.parse(localStorage.getItem(key))).toStrictEqual({
-                parts: [{ "type": "plain", "text": "Hello World" }],
+            window.dispatchEvent(new Event("beforeunload"));
+            expect(JSON.parse(localStorage.getItem(key)!)).toStrictEqual({
+                parts: [{ type: "plain", text: "Hello World" }],
             });
         });
 
         it("persists to session history upon sending", async () => {
             mockPlatformPeg({ overrideBrowserShortcuts: jest.fn().mockReturnValue(false) });
 
-            const wrapper = getComponent({ replyToEvent: mockEvent });
+            const { container } = getComponent({ replyToEvent: mockEvent });
 
-            addTextToComposer(wrapper, "This is a message");
-            act(() => {
-                wrapper.find(".mx_SendMessageComposer").simulate("keydown", { key: "Enter" });
-                wrapper.update();
-            });
-            await sleep(10); // await the async _sendMessage
-            wrapper.update();
-            expect(spyDispatcher).toHaveBeenCalledWith({
-                action: "reply_to_event",
-                event: null,
-                context: TimelineRenderingType.Room,
+            addTextToComposer(container, "This is a message");
+            fireEvent.keyDown(container.querySelector(".mx_SendMessageComposer")!, { key: "Enter" });
+
+            await waitFor(() => {
+                expect(spyDispatcher).toHaveBeenCalledWith({
+                    action: "reply_to_event",
+                    event: null,
+                    context: TimelineRenderingType.Room,
+                });
             });
 
-            expect(wrapper.text()).toBe("");
-            const str = sessionStorage.getItem(`mx_cider_history_${mockRoom.roomId}[0]`);
+            expect(container.textContent).toBe("");
+            const str = sessionStorage.getItem(`mx_cider_history_${mockRoom.roomId}[0]`)!;
             expect(JSON.parse(str)).toStrictEqual({
-                parts: [{ "type": "plain", "text": "This is a message" }],
+                parts: [{ type: "plain", text: "This is a message" }],
                 replyEventId: mockEvent.getId(),
             });
         });
 
-        it('correctly sets the editorStateKey for threads', () => {
-            const relation = {
-                rel_type: "m.thread",
-                event_id: "myFakeThreadId",
-            };
-            const includeReplyLegacyFallback = false;
-            const wrapper = getComponent({ relation, includeReplyLegacyFallback });
-            const instance = wrapper.find(SendMessageComposerClass).instance();
-            // @ts-ignore
-            const key = instance.editorStateKey;
-            expect(key).toEqual('mx_cider_state_myfakeroom_myFakeThreadId');
+        it("correctly sends a message", () => {
+            mocked(doMaybeLocalRoomAction).mockImplementation(
+                <T extends {}>(roomId: string, fn: (actualRoomId: string) => Promise<T>, _client?: MatrixClient) => {
+                    return fn(roomId);
+                },
+            );
+
+            mockPlatformPeg({ overrideBrowserShortcuts: jest.fn().mockReturnValue(false) });
+            const { container } = getComponent();
+
+            addTextToComposer(container, "test message");
+            fireEvent.keyDown(container.querySelector(".mx_SendMessageComposer")!, { key: "Enter" });
+
+            expect(mockClient.sendMessage).toHaveBeenCalledWith("myfakeroom", null, {
+                body: "test message",
+                msgtype: MsgType.Text,
+            });
+        });
+
+        it("shows chat effects on message sending", () => {
+            mocked(doMaybeLocalRoomAction).mockImplementation(
+                <T extends {}>(roomId: string, fn: (actualRoomId: string) => Promise<T>, _client?: MatrixClient) => {
+                    return fn(roomId);
+                },
+            );
+
+            mockPlatformPeg({ overrideBrowserShortcuts: jest.fn().mockReturnValue(false) });
+            const { container } = getComponent();
+
+            addTextToComposer(container, "🎉");
+            fireEvent.keyDown(container.querySelector(".mx_SendMessageComposer")!, { key: "Enter" });
+
+            expect(mockClient.sendMessage).toHaveBeenCalledWith("myfakeroom", null, {
+                body: "test message",
+                msgtype: MsgType.Text,
+            });
+
+            expect(dis.dispatch).toHaveBeenCalledWith({ action: `effects.confetti` });
+        });
+
+        it("not to send chat effects on message sending for threads", () => {
+            mocked(doMaybeLocalRoomAction).mockImplementation(
+                <T extends {}>(roomId: string, fn: (actualRoomId: string) => Promise<T>, _client?: MatrixClient) => {
+                    return fn(roomId);
+                },
+            );
+
+            mockPlatformPeg({ overrideBrowserShortcuts: jest.fn().mockReturnValue(false) });
+            const { container } = getComponent({
+                relation: {
+                    rel_type: "m.thread",
+                    event_id: "$yolo",
+                    is_falling_back: true,
+                },
+            });
+
+            addTextToComposer(container, "🎉");
+            fireEvent.keyDown(container.querySelector(".mx_SendMessageComposer")!, { key: "Enter" });
+
+            expect(mockClient.sendMessage).toHaveBeenCalledWith("myfakeroom", null, {
+                body: "test message",
+                msgtype: MsgType.Text,
+            });
+
+            expect(dis.dispatch).not.toHaveBeenCalledWith({ action: `effects.confetti` });
         });
     });
 
@@ -344,4 +383,3 @@ describe('<SendMessageComposer/>', () => {
         });
     });
 });
-

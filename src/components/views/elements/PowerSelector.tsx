@@ -14,13 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import * as Roles from '../../../Roles';
-import { _t } from '../../../languageHandler';
+import * as Roles from "../../../Roles";
+import { _t } from "../../../languageHandler";
 import Field from "./Field";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { objectHasDiff } from "../../../utils/objects";
 
 const CUSTOM_VALUE = "SELECT_VALUE_CUSTOM";
 
@@ -44,14 +45,13 @@ interface IProps {
 }
 
 interface IState {
-    levelRoleMap: {};
+    levelRoleMap: Partial<Record<number | "undefined", string>>;
     // List of power levels to show in the drop-down
     options: number[];
 
     customValue: number;
     selectValue: number | string;
     custom?: boolean;
-    customLevel?: number;
 }
 
 export default class PowerSelector extends React.Component<IProps, IState> {
@@ -60,7 +60,7 @@ export default class PowerSelector extends React.Component<IProps, IState> {
         usersDefault: 0,
     };
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -73,36 +73,35 @@ export default class PowerSelector extends React.Component<IProps, IState> {
         };
     }
 
-    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    // eslint-disable-next-line camelcase, @typescript-eslint/naming-convention
-    public UNSAFE_componentWillMount(): void {
-        this.initStateFromProps(this.props);
+    public componentDidMount(): void {
+        this.initStateFromProps();
     }
 
-    // eslint-disable-next-line camelcase, @typescript-eslint/naming-convention
-    public UNSAFE_componentWillReceiveProps(newProps: IProps): void {
-        this.initStateFromProps(newProps);
+    public componentDidUpdate(prevProps: Readonly<IProps>): void {
+        if (objectHasDiff(this.props, prevProps)) {
+            this.initStateFromProps();
+        }
     }
 
-    private initStateFromProps(newProps: IProps): void {
+    private initStateFromProps(): void {
         // This needs to be done now because levelRoleMap has translated strings
-        const levelRoleMap = Roles.levelRoleMap(newProps.usersDefault);
-        const options = Object.keys(levelRoleMap).filter(level => {
-            return (
-                level === undefined ||
-                parseInt(level) <= newProps.maxValue ||
-                parseInt(level) == newProps.value
-            );
-        }).map(level => parseInt(level));
+        const levelRoleMap = Roles.levelRoleMap(this.props.usersDefault);
+        const options = Object.keys(levelRoleMap)
+            .filter((level) => {
+                return (
+                    level === undefined || parseInt(level) <= this.props.maxValue || parseInt(level) == this.props.value
+                );
+            })
+            .map((level) => parseInt(level));
 
-        const isCustom = levelRoleMap[newProps.value] === undefined;
+        const isCustom = levelRoleMap[this.props.value] === undefined;
 
         this.setState({
             levelRoleMap,
             options,
             custom: isCustom,
-            customLevel: newProps.value,
-            selectValue: isCustom ? CUSTOM_VALUE : newProps.value,
+            customValue: this.props.value,
+            selectValue: isCustom ? CUSTOM_VALUE : this.props.value,
         });
     }
 
@@ -125,7 +124,11 @@ export default class PowerSelector extends React.Component<IProps, IState> {
         event.preventDefault();
         event.stopPropagation();
 
-        this.props.onChange(this.state.customValue, this.props.powerLevelKey);
+        if (Number.isFinite(this.state.customValue)) {
+            this.props.onChange(this.state.customValue, this.props.powerLevelKey);
+        } else {
+            this.initStateFromProps(); // reset, invalid input
+        }
     };
 
     private onCustomKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -145,7 +148,7 @@ export default class PowerSelector extends React.Component<IProps, IState> {
         }
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let picker;
         const label = typeof this.props.label === "undefined" ? _t("Power level") : this.props.label;
         if (this.state.custom) {
@@ -171,7 +174,11 @@ export default class PowerSelector extends React.Component<IProps, IState> {
             });
             options.push({ value: CUSTOM_VALUE, text: _t("Custom level") });
             const optionsElements = options.map((op) => {
-                return <option value={op.value} key={op.value}>{ op.text }</option>;
+                return (
+                    <option value={op.value} key={op.value} data-testid={`power-level-option-${op.value}`}>
+                        {op.text}
+                    </option>
+                );
             });
 
             picker = (
@@ -181,16 +188,13 @@ export default class PowerSelector extends React.Component<IProps, IState> {
                     onChange={this.onSelectChange}
                     value={String(this.state.selectValue)}
                     disabled={this.props.disabled}
+                    data-testid="power-level-select-element"
                 >
-                    { optionsElements }
+                    {optionsElements}
                 </Field>
             );
         }
 
-        return (
-            <div className="mx_PowerSelector">
-                { picker }
-            </div>
-        );
+        return <div className="mx_PowerSelector">{picker}</div>;
     }
 }

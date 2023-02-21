@@ -1,7 +1,6 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2015, 2016, 2019, 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,7 +22,7 @@ import SyntaxHighlight from "../views/elements/SyntaxHighlight";
 import { _t } from "../../languageHandler";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { canEditContent } from "../../utils/EventUtils";
-import { MatrixClientPeg } from '../../MatrixClientPeg';
+import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { IDialogProps } from "../views/dialogs/IDialogProps";
 import BaseDialog from "../views/dialogs/BaseDialog";
 import { DevtoolsContext } from "../views/dialogs/devtools/BaseTool";
@@ -40,7 +39,7 @@ interface IState {
 }
 
 export default class ViewSource extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -75,26 +74,22 @@ export default class ViewSource extends React.Component<IProps, IState> {
                 <>
                     <details open className="mx_ViewSource_details">
                         <summary>
-                            <span className="mx_ViewSource_heading">
-                                { _t("Decrypted event source") }
-                            </span>
+                            <span className="mx_ViewSource_heading">{_t("Decrypted event source")}</span>
                         </summary>
-                        <CopyableText getTextToCopy={copyDecryptedFunc}>
-                            <SyntaxHighlight language="json">
-                                { stringify(decryptedEventSource) }
-                            </SyntaxHighlight>
-                        </CopyableText>
+                        {decryptedEventSource ? (
+                            <CopyableText getTextToCopy={copyDecryptedFunc}>
+                                <SyntaxHighlight language="json">{stringify(decryptedEventSource)}</SyntaxHighlight>
+                            </CopyableText>
+                        ) : (
+                            <div>{_t("Decrypted source unavailable")}</div>
+                        )}
                     </details>
                     <details className="mx_ViewSource_details">
                         <summary>
-                            <span className="mx_ViewSource_heading">
-                                { _t("Original event source") }
-                            </span>
+                            <span className="mx_ViewSource_heading">{_t("Original event source")}</span>
                         </summary>
                         <CopyableText getTextToCopy={copyOriginalFunc}>
-                            <SyntaxHighlight language="json">
-                                { stringify(originalEventSource) }
-                            </SyntaxHighlight>
+                            <SyntaxHighlight language="json">{stringify(originalEventSource)}</SyntaxHighlight>
                         </CopyableText>
                     </details>
                 </>
@@ -102,13 +97,9 @@ export default class ViewSource extends React.Component<IProps, IState> {
         } else {
             return (
                 <>
-                    <div className="mx_ViewSource_heading">
-                        { _t("Original event source") }
-                    </div>
+                    <div className="mx_ViewSource_heading">{_t("Original event source")}</div>
                     <CopyableText getTextToCopy={copyOriginalFunc}>
-                        <SyntaxHighlight language="json">
-                            { stringify(originalEventSource) }
-                        </SyntaxHighlight>
+                        <SyntaxHighlight language="json">{stringify(originalEventSource)}</SyntaxHighlight>
                     </CopyableText>
                 </>
             );
@@ -125,22 +116,22 @@ export default class ViewSource extends React.Component<IProps, IState> {
         if (isStateEvent) {
             return (
                 <MatrixClientContext.Consumer>
-                    { (cli) => (
+                    {(cli) => (
                         <DevtoolsContext.Provider value={{ room: cli.getRoom(roomId) }}>
                             <StateEventEditor onBack={this.onBack} mxEvent={mxEvent} />
                         </DevtoolsContext.Provider>
-                    ) }
+                    )}
                 </MatrixClientContext.Consumer>
             );
         }
 
         return (
             <MatrixClientContext.Consumer>
-                { (cli) => (
+                {(cli) => (
                     <DevtoolsContext.Provider value={{ room: cli.getRoom(roomId) }}>
                         <TimelineEventEditor onBack={this.onBack} mxEvent={mxEvent} />
                     </DevtoolsContext.Provider>
-                ) }
+                )}
             </MatrixClientContext.Consumer>
         );
     }
@@ -151,7 +142,7 @@ export default class ViewSource extends React.Component<IProps, IState> {
         return room.currentState.mayClientSendStateEvent(mxEvent.getType(), cli);
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const mxEvent = this.props.mxEvent.replacingEvent() || this.props.mxEvent; // show the replacing event, not the original, if it is an edit
 
         const isEditing = this.state.isEditing;
@@ -162,18 +153,25 @@ export default class ViewSource extends React.Component<IProps, IState> {
             <BaseDialog className="mx_ViewSource" onFinished={this.props.onFinished} title={_t("View Source")}>
                 <div className="mx_ViewSource_header">
                     <CopyableText getTextToCopy={() => roomId} border={false}>
-                        { _t("Room ID: %(roomId)s", { roomId }) }
+                        {_t("Room ID: %(roomId)s", { roomId })}
                     </CopyableText>
                     <CopyableText getTextToCopy={() => eventId} border={false}>
-                        { _t("Event ID: %(eventId)s", { eventId }) }
+                        {_t("Event ID: %(eventId)s", { eventId })}
                     </CopyableText>
+                    {mxEvent.threadRootId && (
+                        <CopyableText getTextToCopy={() => mxEvent.threadRootId!} border={false}>
+                            {_t("Thread root ID: %(threadRootId)s", {
+                                threadRootId: mxEvent.threadRootId,
+                            })}
+                        </CopyableText>
+                    )}
                 </div>
-                { isEditing ? this.editSourceContent() : this.viewSourceContent() }
-                { !isEditing && canEdit && (
+                {isEditing ? this.editSourceContent() : this.viewSourceContent()}
+                {!isEditing && canEdit && (
                     <div className="mx_Dialog_buttons">
-                        <button onClick={() => this.onEdit()}>{ _t("Edit") }</button>
+                        <button onClick={() => this.onEdit()}>{_t("Edit")}</button>
                     </div>
-                ) }
+                )}
             </BaseDialog>
         );
     }

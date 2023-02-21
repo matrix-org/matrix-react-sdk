@@ -15,8 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { _t } from '../languageHandler';
-import { jsxJoin } from './ReactUtils';
+import { ReactElement, ReactNode } from "react";
+
+import { _t } from "../languageHandler";
+import { jsxJoin } from "./ReactUtils";
 
 /**
  * formats numbers to fit into ~3 characters, suitable for badge counts
@@ -45,15 +47,15 @@ export function formatCountLong(count: number): string {
  * e.g: 1024 -> 1.00 KB
  */
 export function formatBytes(bytes: number, decimals = 2): string {
-    if (bytes === 0) return '0 Bytes';
+    if (bytes === 0) return "0 Bytes";
 
     const k = 1024;
     const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
 
     const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
 }
 
 /**
@@ -64,7 +66,7 @@ export function formatBytes(bytes: number, decimals = 2): string {
  * @return {string}
  */
 export function formatCryptoKey(key: string): string {
-    return key.match(/.{1,4}/g).join(" ");
+    return key.match(/.{1,4}/g)!.join(" ");
 }
 /**
  * calculates a numeric hash for a given string
@@ -82,7 +84,7 @@ export function hashCode(str: string): number {
     }
     for (i = 0; i < str.length; i++) {
         chr = str.charCodeAt(i);
-        hash = ((hash << 5) - hash) + chr;
+        hash = (hash << 5) - hash + chr;
         hash |= 0;
     }
     return Math.abs(hash);
@@ -105,12 +107,10 @@ export function getUserNameColorClass(userId: string): string {
  * between each item, but with the last item appended as " and [lastItem]".
  */
 export function formatCommaSeparatedList(items: string[], itemLimit?: number): string;
-export function formatCommaSeparatedList(items: JSX.Element[], itemLimit?: number): JSX.Element;
-export function formatCommaSeparatedList(items: Array<JSX.Element | string>, itemLimit?: number): JSX.Element | string;
-export function formatCommaSeparatedList(items: Array<JSX.Element | string>, itemLimit?: number): JSX.Element | string {
-    const remaining = itemLimit === undefined ? 0 : Math.max(
-        items.length - itemLimit, 0,
-    );
+export function formatCommaSeparatedList(items: ReactElement[], itemLimit?: number): ReactElement;
+export function formatCommaSeparatedList(items: ReactNode[], itemLimit?: number): ReactNode;
+export function formatCommaSeparatedList(items: ReactNode[], itemLimit?: number): ReactNode {
+    const remaining = itemLimit === undefined ? 0 : Math.max(items.length - itemLimit, 0);
     if (items.length === 0) {
         return "";
     } else if (items.length === 1) {
@@ -124,7 +124,7 @@ export function formatCommaSeparatedList(items: Array<JSX.Element | string>, ite
         }
 
         let joinedItems;
-        if (items.every(e => typeof e === "string")) {
+        if (items.every((e) => typeof e === "string")) {
             joinedItems = items.join(", ");
         } else {
             joinedItems = jsxJoin(items, ", ");

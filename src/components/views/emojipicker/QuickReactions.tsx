@@ -15,14 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import { getEmojiFromUnicode, IEmoji } from "../../../emoji";
 import Emoji from "./Emoji";
 
 // We use the variation-selector Heart in Quick Reactions for some reason
-const QUICK_REACTIONS = ["👍", "👎", "😄", "🎉", "😕", "❤️", "🚀", "👀"].map(emoji => {
+const QUICK_REACTIONS = ["👍", "👎", "😄", "🎉", "😕", "❤️", "🚀", "👀"].map((emoji) => {
     const data = getEmojiFromUnicode(emoji);
     if (!data) {
         throw new Error(`Emoji ${emoji} doesn't exist in emojibase`);
@@ -40,39 +40,40 @@ interface IState {
 }
 
 class QuickReactions extends React.Component<IProps, IState> {
-    constructor(props) {
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             hover: null,
         };
     }
 
-    private onMouseEnter = (emoji: IEmoji) => {
+    private onMouseEnter = (emoji: IEmoji): void => {
         this.setState({
             hover: emoji,
         });
     };
 
-    private onMouseLeave = () => {
+    private onMouseLeave = (): void => {
         this.setState({
             hover: null,
         });
     };
 
-    render() {
+    public render(): React.ReactNode {
         return (
             <section className="mx_EmojiPicker_footer mx_EmojiPicker_quick mx_EmojiPicker_category">
                 <h2 className="mx_EmojiPicker_quick_header mx_EmojiPicker_category_label">
-                    { !this.state.hover
-                        ? _t("Quick Reactions")
-                        : <React.Fragment>
-                            <span className="mx_EmojiPicker_name">{ this.state.hover.label }</span>
-                            <span className="mx_EmojiPicker_shortcode">{ this.state.hover.shortcodes[0] }</span>
+                    {!this.state.hover ? (
+                        _t("Quick Reactions")
+                    ) : (
+                        <React.Fragment>
+                            <span className="mx_EmojiPicker_name">{this.state.hover.label}</span>
+                            <span className="mx_EmojiPicker_shortcode">{this.state.hover.shortcodes[0]}</span>
                         </React.Fragment>
-                    }
+                    )}
                 </h2>
                 <ul className="mx_EmojiPicker_list" aria-label={_t("Quick Reactions")}>
-                    { QUICK_REACTIONS.map(emoji => (
+                    {QUICK_REACTIONS.map((emoji) => (
                         <Emoji
                             key={emoji.hexcode}
                             emoji={emoji}
@@ -81,7 +82,7 @@ class QuickReactions extends React.Component<IProps, IState> {
                             onMouseLeave={this.onMouseLeave}
                             selectedEmojis={this.props.selectedEmojis}
                         />
-                    )) }
+                    ))}
                 </ul>
             </section>
         );
