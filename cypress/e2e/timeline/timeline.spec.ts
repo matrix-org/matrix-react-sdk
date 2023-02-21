@@ -337,6 +337,16 @@ describe("Timeline", () => {
             // Click "expand" link button
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
 
+            // Make sure the "expand" link button worked
+            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=true]").should("exist");
+
+            // Make sure spacer is not displayed on bubble layout
+            cy.get(".mx_GenericEventListSummary[data-layout=bubble] .mx_GenericEventListSummary_spacer").should(
+                "have.css",
+                "display",
+                "none", // See: _GenericEventListSummary.pcss
+            );
+
             // Click "collapse" link button on the first hovered info event line
             cy.get(".mx_GenericEventListSummary_unstyledList .mx_EventTile_info:first-of-type").realHover();
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=true]").click({ force: false });
