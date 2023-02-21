@@ -146,7 +146,7 @@ describe("Timeline", () => {
         });
     });
 
-    describe("message displaying", () => {
+    describe("configure room", () => {
         beforeEach(() => {
             cy.injectAxe();
         });
@@ -249,6 +249,12 @@ describe("Timeline", () => {
                 ".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp " + "{ visibility: hidden !important; }";
             cy.percySnapshot("Event line with inline start margin on IRC layout", { percyCSS });
             cy.checkA11y();
+        });
+    });
+
+    describe("message displaying", () => {
+        beforeEach(() => {
+            cy.injectAxe();
         });
 
         it("should set inline start padding to a hidden event line", () => {
