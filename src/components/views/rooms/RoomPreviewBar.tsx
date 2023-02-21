@@ -81,8 +81,7 @@ interface IProps {
     canPreview?: boolean;
     previewLoading?: boolean;
 
-    // The room to be previewed
-    // If given, the room passed is peekable
+    // A `Room` object for the room to be previewed, if we have one.
     room?: Room;
 
     loading?: boolean;
