@@ -69,7 +69,7 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
         );
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let title = "";
         let titleIcon: JSX.Element | undefined;
         let main: JSX.Element | undefined;
@@ -203,7 +203,7 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                 main = this.simpleSpinner();
                 break;
             case Phase.Connecting:
-                main = this.simpleSpinner(_t("Connecting..."));
+                main = this.simpleSpinner(_t("Connecting…"));
                 buttons = this.cancelButton();
                 break;
             case Phase.WaitingForDevice:

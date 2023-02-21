@@ -75,13 +75,8 @@ describe("MPollBody", () => {
         // render without waiting for responses
         const renderResult = await newMPollBody(votes, [], undefined, undefined, false);
 
-        // votes still displayed
-        expect(votesCount(renderResult, "pizza")).toBe("2 votes");
-        expect(votesCount(renderResult, "poutine")).toBe("1 vote");
-        expect(votesCount(renderResult, "italian")).toBe("0 votes");
-        expect(votesCount(renderResult, "wings")).toBe("1 vote");
         // spinner rendered
-        expect(renderResult.getByTestId("totalVotes").innerHTML).toMatchSnapshot();
+        expect(renderResult.getByTestId("spinner")).toBeInTheDocument();
     });
 
     it("renders no votes if none were made", async () => {

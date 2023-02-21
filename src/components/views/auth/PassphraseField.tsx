@@ -88,7 +88,7 @@ class PassphraseField extends PureComponent<IProps> {
                         return null;
                     }
                     const { feedback } = complexity;
-                    return feedback.warning || feedback.suggestions[0] || _t("Keep going...");
+                    return feedback.warning || feedback.suggestions[0] || _t("Keep going…");
                 },
             },
         ],
@@ -102,7 +102,7 @@ class PassphraseField extends PureComponent<IProps> {
         return result;
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <Field
                 id={this.props.id}
