@@ -42,7 +42,7 @@ describe("StopGapWidget", () => {
                 id: "test",
                 creatorUserId: "@alice:example.org",
                 type: "example",
-                url: "https://example.org",
+                url: "https://example.org?user-id=$matrix_user_id&device-id=$org.matrix.msc3819.device_id",
                 roomId: "!1:example.org",
             },
             room: mkRoom(client, "!1:example.org"),
@@ -58,6 +58,12 @@ describe("StopGapWidget", () => {
 
     afterEach(() => {
         widget.stopMessaging();
+    });
+
+    it("should replace parameters in widget url template", () => {
+        expect(widget.embedUrl).toBe(
+            "https://example.org/?user-id=%40userId%3Amatrix.org&device-id=ABCDEFGHI&widgetId=test&parentUrl=http%3A%2F%2Flocalhost%2F",
+        );
     });
 
     it("feeds incoming to-device messages to the widget", async () => {
