@@ -270,7 +270,11 @@ $left-gutter: 64px;
     }
 
     &[data-layout="irc"] {
-        --EventTile_irc_line_info-margin-inline-start: calc(var(--name-width) + 10px + var(--icon-width));
+        /* add --right-padding value of MessageTimestamp only */
+        /* stylelint-disable-next-line declaration-colon-space-after */
+        --EventTile_irc_line_info-margin-inline-start: calc(
+            var(--name-width) + var(--icon-width) + 1 * var(--right-padding)
+        );
 
         .mx_EventTile_msgOption {
             .mx_ReadReceiptGroup {
@@ -493,10 +497,10 @@ $left-gutter: 64px;
 
         /* Apply only collapsed events block */
         > .mx_EventTile_line {
-            /* 15 px of padding */
+            /* add --right-padding value of MessageTimestamp and avatar only */
             /* stylelint-disable-next-line declaration-colon-space-after */
             padding-left: calc(
-                var(--name-width) + var(--icon-width) + $MessageTimestamp_width + 3 * var(--right-padding)
+                var(--name-width) + var(--icon-width) + $MessageTimestamp_width + 2 * var(--right-padding)
             );
         }
     }
