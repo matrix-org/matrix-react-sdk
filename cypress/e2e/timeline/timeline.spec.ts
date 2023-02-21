@@ -179,10 +179,11 @@ describe("Timeline", () => {
             // Check the event line has margin instead of inset property
             // cf. _EventTile.pcss
             //  --EventTile_irc_line_info-margin-inline-start
-            //  = calc(var(--name-width) + 10px + var(--icon-width))
-            //  = 80 + 10 + 14 = 104px
+            //  = calc(var(--name-width) + var(--icon-width) + 1 * var(--right-padding))
+            //  = 80 + 14 + 5 = 99px
+
             cy.get(".mx_EventTile[data-layout=irc].mx_EventTile_info:first-of-type .mx_EventTile_line")
-                .should("have.css", "margin-inline-start", "104px")
+                .should("have.css", "margin-inline-start", "99px")
                 .should("have.css", "inset-inline-start", "0px");
 
             cy.get(".mx_Spinner").should("not.exist");
