@@ -39,7 +39,7 @@ declare global {
 }
 
 Cypress.Commands.add("percySnapshotElement", { prevSubject: "element" }, (subject, name, options) => {
-    if (!options.allowSpinners) {
+    if (!options?.allowSpinners) {
         // Await spinners to vanish
         cy.get(".mx_Spinner").should("not.exist");
     }
