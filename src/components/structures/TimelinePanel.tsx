@@ -1062,8 +1062,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
             } else {
                 cli.setRoomReadMarkers(
                     roomId,
-                    this.state.readMarkerEventId ?? "",
+                    // this.state.readMarkerEventId ?? "",
                     // this.state.readMarkerEventId ?? JoinedRoomEvent(cli)[0],
+                    this.state.readMarkerEventId ?? RoomEvent.Name,
+
 
                     sendRRs ? lastReadEvent ?? undefined : undefined, // Public read receipt (could be null)
                     lastReadEvent ?? undefined, // Private read receipt (could be null)
