@@ -88,12 +88,6 @@ describe("UnverifiedSessionToast", () => {
             });
 
             itShouldDismissTheDevice();
-
-            it("should start the verification", () => {
-                expect(client.requestVerification).toHaveBeenCalledWith(client.getSafeUserId(), [
-                    otherDevice.device_id,
-                ]);
-            });
         });
 
         describe("and dismissing the login", () => {

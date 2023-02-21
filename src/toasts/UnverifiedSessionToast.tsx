@@ -23,8 +23,6 @@ import DeviceListener from "../DeviceListener";
 import ToastStore from "../stores/ToastStore";
 import GenericToast from "../components/views/toasts/GenericToast";
 import { Action } from "../dispatcher/actions";
-import Modal from "../Modal";
-import VerificationRequestDialog from "../components/views/dialogs/VerificationRequestDialog";
 import { isDeviceVerified } from "../utils/device/isDeviceVerified";
 import { DeviceType } from "../utils/device/parseUserAgent";
 import { DeviceMetaData } from "../components/views/settings/devices/DeviceMetaData";
@@ -38,16 +36,6 @@ export const showToast = async (deviceId: string): Promise<void> => {
 
     const onAccept = (): void => {
         DeviceListener.sharedInstance().dismissUnverifiedSessions([deviceId]);
-        const cli = MatrixClientPeg.get();
-        const userId = cli.getUserId();
-        const verificationRequestPromise = cli.requestVerification(userId, [deviceId]);
-        Modal.createDialog(VerificationRequestDialog, {
-            verificationRequestPromise,
-            member: cli.getUser(userId),
-            onFinished: async (): Promise<void> => {
-                (await verificationRequestPromise).cancel();
-            },
-        });
     };
 
     const onReject = (): void => {
