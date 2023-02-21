@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import SettingsStore from "../src/settings/SettingsStore";
 import { setTheme } from "../src/theme";
 
 describe("theme", () => {
@@ -36,6 +37,22 @@ describe("theme", () => {
                 {
                     dataset: {
                         mxTheme: "dark",
+                    },
+                    disabled: true,
+                    href: "urlDark",
+                    onload: (): void => void 0,
+                } as unknown as HTMLStyleElement,
+                {
+                    dataset: {
+                        mxTheme: "light-high-contrast",
+                    },
+                    disabled: true,
+                    href: "urlLight",
+                    onload: (): void => void 0,
+                } as unknown as HTMLStyleElement,
+                {
+                    dataset: {
+                        mxTheme: "dark-high-contrast",
                     },
                     disabled: true,
                     href: "urlDark",
@@ -86,6 +103,8 @@ describe("theme", () => {
             // Then
             expect(lightTheme.disabled).toBe(false);
             expect(darkTheme.disabled).toBe(true);
+
+            expect(document.body.className).toBe("");
         });
 
         it("should switch theme if CSS is loaded during pooling", async () => {
@@ -108,6 +127,22 @@ describe("theme", () => {
                 setTheme("light").catch(resolve);
                 jest.advanceTimersByTime(200 * 10);
             });
+        });
+
+        it.each([
+            { name: "light", className: "cpd-theme-light" },
+            { name: "light-high-contrast", className: "cpd-theme-light-hc" },
+            { name: "dark", className: "cpd-theme-dark" },
+            { name: "dark-high-contrast", className: "cpd-theme-dark-hc" },
+        ])("overrides the default system theme when needed", ({ name, className }) => {
+            // for `use_system_theme`
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+            jest.spyOn(document.body.classList, "add");
+
+            setTheme(name);
+
+            expect(document.body.classList.add).toHaveBeenCalledWith(className);
+            expect(document.body.className).toContain(className);
         });
     });
 });
