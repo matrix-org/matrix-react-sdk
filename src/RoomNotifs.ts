@@ -18,9 +18,7 @@ import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
 import { NotificationCountType } from "matrix-js-sdk/src/models/room";
 import { ConditionKind, PushRuleActionName, PushRuleKind, TweakName } from "matrix-js-sdk/src/@types/PushRules";
 
-import type { IPushRule } from "matrix-js-sdk/src/@types/PushRules";
-import type { Room } from "matrix-js-sdk/src/models/room";
-import type { MatrixClient } from "matrix-js-sdk/src/matrix";
+import type { Room, MatrixClient, IPushRule } from "matrix-js-sdk/src/matrix";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { NotificationColor } from "./stores/notifications/NotificationColor";
 import { getUnsentMessages } from "./components/structures/RoomStatusBar";
@@ -155,11 +153,16 @@ function setRoomNotifsStateUnmuted(roomId: string, newState: RoomNotifState): Pr
                 actions: [PushRuleActionName.DontNotify],
             }),
         );
-        // https://matrix.org/jira/browse/SPEC-400
-        promises.push(cli.setPushRuleEnabled("global", PushRuleKind.RoomSpecific, roomId, true));
     } else if (newState === RoomNotifState.AllMessagesLoud) {
         promises.push(
             cli.addPushRule("global", PushRuleKind.RoomSpecific, roomId, {
+                conditions: [
+                    {
+                        kind: ConditionKind.EventMatch,
+                        key: "type",
+                        pattern: "m.room.message",
+                    },
+                ],
                 actions: [
                     PushRuleActionName.Notify,
                     {
@@ -169,8 +172,6 @@ function setRoomNotifsStateUnmuted(roomId: string, newState: RoomNotifState): Pr
                 ],
             }),
         );
-        // https://matrix.org/jira/browse/SPEC-400
-        promises.push(cli.setPushRuleEnabled("global", PushRuleKind.RoomSpecific, roomId, true));
     }
 
     return Promise.all(promises);
