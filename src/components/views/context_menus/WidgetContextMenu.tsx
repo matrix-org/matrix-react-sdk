@@ -38,7 +38,7 @@ import { getConfigLivestreamUrl, startJitsiAudioLivestream } from "../../../Live
 import { ModuleRunner } from "../../../modules/ModuleRunner";
 import { ElementWidget } from "../../../stores/widgets/StopGapWidget";
 
-export interface WidgetContextMenuProps extends React.ComponentProps<typeof IconizedContextMenu> {
+interface IProps extends React.ComponentProps<typeof IconizedContextMenu> {
     app: IApp;
     userWidget?: boolean;
     showUnpin?: boolean;
@@ -48,7 +48,7 @@ export interface WidgetContextMenuProps extends React.ComponentProps<typeof Icon
     onEditClick?(): void;
 }
 
-export const WidgetContextMenu: React.FC<WidgetContextMenuProps> = ({
+export const WidgetContextMenu: React.FC<IProps> = ({
     onFinished,
     app,
     userWidget,

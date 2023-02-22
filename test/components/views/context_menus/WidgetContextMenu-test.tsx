@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ComponentProps } from "react";
 import { screen, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MatrixClient } from "matrix-js-sdk/src/client";
@@ -26,10 +26,7 @@ import {
     WidgetLifecycle,
 } from "@matrix-org/react-sdk-module-api/lib/lifecycles/WidgetLifecycle";
 
-import {
-    WidgetContextMenu,
-    WidgetContextMenuProps,
-} from "../../../../src/components/views/context_menus/WidgetContextMenu";
+import { WidgetContextMenu } from "../../../../src/components/views/context_menus/WidgetContextMenu";
 import { IApp } from "../../../../src/stores/WidgetStore";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import WidgetUtils from "../../../../src/utils/WidgetUtils";
@@ -68,7 +65,7 @@ describe("<WidgetContextMenu />", () => {
         jest.restoreAllMocks();
     });
 
-    function getComponent(props: Partial<WidgetContextMenuProps> = {}): JSX.Element {
+    function getComponent(props: Partial<ComponentProps<typeof WidgetContextMenu>> = {}): JSX.Element {
         return (
             <MatrixClientContext.Provider value={mockClient}>
                 <WidgetContextMenu app={app} onFinished={onFinished} {...props} />
