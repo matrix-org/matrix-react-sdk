@@ -26,7 +26,7 @@ interface IResult {
     text: string;
 }
 
-interface IRule<T, D = void> {
+interface IRule<T, D = undefined> {
     key: string;
     final?: boolean;
     skip?(this: T, data: Data, derivedData: D): boolean;
@@ -94,7 +94,8 @@ export default function withValidation<T = void, D = void>({
         }
 
         const data = { value, allowEmpty };
-        const derivedData: D | undefined = deriveData ? await deriveData.call(this, data) : undefined;
+        // We know that if deriveData is set then D will not be undefined
+        const derivedData: D = (await deriveData?.call(this, data)) as D;
 
         const results: IResult[] = [];
         let valid = true;
@@ -108,13 +109,13 @@ export default function withValidation<T = void, D = void>({
                     continue;
                 }
 
-                if (rule.skip?.call(this, data, derivedData!)) {
+                if (rule.skip?.call(this, data, derivedData)) {
                     continue;
                 }
 
                 // We're setting `this` to whichever component holds the validation
                 // function. That allows rules to access the state of the component.
-                const ruleValid: boolean = await rule.test.call(this, data, derivedData!);
+                const ruleValid: boolean = await rule.test.call(this, data, derivedData);
                 valid = valid && ruleValid;
                 if (ruleValid && rule.valid) {
                     // If the rule's result is valid and has text to show for

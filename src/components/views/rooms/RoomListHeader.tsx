@@ -140,9 +140,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
     const spaceName = useTypedEventEmitterState(activeSpace ?? undefined, RoomEvent.Name, () => activeSpace?.name);
 
     useEffect(() => {
-        if (onVisibilityChange) {
-            onVisibilityChange();
-        }
+        onVisibilityChange?.();
     }, [onVisibilityChange]);
 
     const canExploreRooms = shouldShowComponent(UIComponent.ExploreRooms);
@@ -372,8 +370,8 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
     }
 
     let title: string;
-    if (activeSpace) {
-        title = spaceName!;
+    if (activeSpace && spaceName) {
+        title = spaceName;
     } else {
         title = getMetaSpaceName(spaceKey as MetaSpace, allRoomsInHome);
     }
