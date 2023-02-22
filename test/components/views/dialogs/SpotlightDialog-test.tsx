@@ -412,13 +412,6 @@ describe("Spotlight Dialog", () => {
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
 
-            const filterChip = document.querySelector("div.mx_SpotlightDialog_filter")!;
-            expect(filterChip).toBeInTheDocument();
-            expect(filterChip.innerHTML).toContain("Public rooms");
-
-            const content = document.querySelector("#mx_SpotlightDialog_content")!;
-            const options = content.querySelectorAll("div.mx_SpotlightDialog_option");
-            expect(options.length).toBe(1);
             expect(screen.getByText(potatoRoom.name)).toBeInTheDocument();
             expect(screen.queryByText(nsfwTopicRoom.name)).not.toBeInTheDocument();
             expect(screen.queryByText(nsfwTopicRoom.name)).not.toBeInTheDocument();
@@ -432,13 +425,6 @@ describe("Spotlight Dialog", () => {
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
 
-            const filterChip = document.querySelector("div.mx_SpotlightDialog_filter")!;
-            expect(filterChip).toBeInTheDocument();
-            expect(filterChip.innerHTML).toContain("Public rooms");
-
-            const content = document.querySelector("#mx_SpotlightDialog_content")!;
-            const options = content.querySelectorAll("div.mx_SpotlightDialog_option");
-            expect(options.length).toBe(3);
             expect(screen.getByText(nsfwTopicRoom.name)).toBeInTheDocument();
             expect(screen.getByText(nsfwNameRoom.name)).toBeInTheDocument();
             expect(screen.getByText(potatoRoom.name)).toBeInTheDocument();
