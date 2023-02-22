@@ -74,9 +74,7 @@ describe("Login", () => {
             cy.get('[aria-label="User menu"]').click();
 
             // give a change for the outstanding requests queue to settle before logging out
-            cy.wait(2000);
-
-            cy.get(".mx_UserMenu_contextMenu").within(() => {
+            cy.get(".mx_UserMenu_contextMenu", { timeout: 2000 }).within(() => {
                 cy.get(".mx_UserMenu_iconSignOut").click();
             });
 
@@ -96,9 +94,7 @@ describe("Login", () => {
             cy.get('[aria-label="User menu"]').click();
 
             // give a change for the outstanding requests queue to settle before logging out
-            cy.wait(2000);
-
-            cy.get(".mx_UserMenu_contextMenu").within(() => {
+            cy.get(".mx_UserMenu_contextMenu", { timeout: 2000 }).within(() => {
                 cy.get(".mx_UserMenu_iconSignOut").click();
             });
 
