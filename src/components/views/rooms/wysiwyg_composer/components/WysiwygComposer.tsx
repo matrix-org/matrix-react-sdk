@@ -20,13 +20,13 @@ import classNames from "classnames";
 
 import { useRoomContext } from "../../../../../contexts/RoomContext";
 import Autocomplete from "../../Autocomplete";
-import AutocompleteWrapperModel from "../../../../../editor/autocomplete";
-import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { getKeyBindingsManager } from "../../../../../KeyBindingsManager";
 import { FormattingButtons } from "./FormattingButtons";
 import { Editor } from "./Editor";
 import { useInputEventProcessor } from "../hooks/useInputEventProcessor";
 import { useSetCursorPosition } from "../hooks/useSetCursorPosition";
 import { useIsFocused } from "../hooks/useIsFocused";
+import { KeyBindingAction } from "../../../../../accessibility/KeyboardShortcuts";
 
 interface WysiwygComposerProps {
     disabled?: boolean;
@@ -56,9 +56,41 @@ export const WysiwygComposer = memo(function WysiwygComposer({
     const { ref, isWysiwygReady, content, actionStates, wysiwyg } = useWysiwyg({ initialContent, inputEventProcessor });
 
     const autocompleteRef = useRef<Autocomplete>(null);
+    const autocompleteIndexRef = useRef<number>(0);
 
     const onKeyDown = (event: React.KeyboardEvent): void => {
-        console.log(`<<< key down!`);
+        let handled = false;
+        const autocompleteAction = getKeyBindingsManager().getAutocompleteAction(event);
+        const component = autocompleteRef.current;
+        if (component && component.countCompletions() > 0) {
+            switch (autocompleteAction) {
+                case KeyBindingAction.ForceCompleteAutocomplete:
+                case KeyBindingAction.CompleteAutocomplete:
+                    autocompleteRef.current.onConfirmCompletion();
+                    handled = true;
+                    break;
+                case KeyBindingAction.PrevSelectionInAutocomplete:
+                    autocompleteRef.current.moveSelection(-1);
+                    handled = true;
+                    break;
+                case KeyBindingAction.NextSelectionInAutocomplete:
+                    autocompleteRef.current.moveSelection(1);
+                    handled = true;
+                    break;
+                case KeyBindingAction.CancelAutocomplete:
+                    autocompleteRef.current.onEscape(event);
+                    handled = true;
+                    break;
+                default:
+                    return; // don't preventDefault on anything else
+            }
+        }
+
+        if (handled) {
+            event.preventDefault();
+            event.stopPropagation();
+            return;
+        }
     };
 
     useEffect(() => {
@@ -86,9 +118,11 @@ export const WysiwygComposer = memo(function WysiwygComposer({
                 <Autocomplete
                     ref={autocompleteRef}
                     query={query}
-                    onConfirm={() => {}}
-                    // onSelectionChange={this.onAutoCompleteSelectionChange}
-                    selection={{ beginning: true, end: 1, start: 0 }}
+                    onConfirm={({ completion, href }) => {
+                        console.log("selected something", completion, href);
+                    }}
+                    onSelectionChange={(compIndex) => (autocompleteIndexRef.current = compIndex)}
+                    selection={{ beginning: true, end: query.length, start: query.length }}
                     room={room}
                 />
             </div>
