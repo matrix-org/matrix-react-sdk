@@ -175,6 +175,7 @@ describe("Timeline", () => {
 
             // Click "expand" link button
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
+
             // Make sure the "expand" link button worked
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=true]").should("exist");
 
@@ -191,12 +192,16 @@ describe("Timeline", () => {
         it("should have an expanded generic event list summary (GELS) on compact modern/group layout", () => {
             sendEvent(roomId);
             cy.visit("/#/room/" + roomId);
+
+            // Set compact modern layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group).setSettingValue(
                 "useCompactLayout",
                 null,
                 SettingLevel.DEVICE,
                 true,
             );
+
+            // Wait until configuration is finished
             cy.contains(
                 ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
                 "created and configured the room.",
@@ -204,6 +209,7 @@ describe("Timeline", () => {
 
             // Click "expand" link button
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
+
             // Make sure the "expand" link button worked
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=true]").should("exist");
 
@@ -240,6 +246,7 @@ describe("Timeline", () => {
                 .should("have.css", "inset-inline-start", "0px");
 
             cy.get(".mx_Spinner").should("not.exist");
+
             // Exclude timestamp from snapshot
             const percyCSS =
                 ".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp " + "{ visibility: hidden !important; }";
@@ -336,11 +343,9 @@ describe("Timeline", () => {
             // Make sure the "expand" link button worked
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=true]").should("exist");
 
-            // Make sure spacer is not displayed on bubble layout
+            // Make sure spacer is not visible on bubble layout
             cy.get(".mx_GenericEventListSummary[data-layout=bubble] .mx_GenericEventListSummary_spacer").should(
-                "have.css",
-                "display",
-                "none", // See: _GenericEventListSummary.pcss
+                "not.be.visible", // See: _GenericEventListSummary.pcss
             );
 
             // Click "collapse" link button on the first hovered info event line
