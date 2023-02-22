@@ -75,10 +75,10 @@ describe("EmojiProvider", function () {
         add("💗"); //heartpulse
         add("😍"); //heart_eyes
 
-        const ep = new EmojiProvider(null);
+        const ep = new EmojiProvider(testRoom);
         const completionsList = await ep.getCompletions(":heart", { beginning: true, start: 0, end: 6 });
-        expect(completionsList[0].component.props.title).toEqual(":heartpulse:");
-        expect(completionsList[1].component.props.title).toEqual(":heart_eyes:");
+        expect(completionsList[0]?.component?.props.title).toEqual(":heartpulse:");
+        expect(completionsList[1]?.component?.props.title).toEqual(":heart_eyes:");
     });
 
     it("Exact match in recently used takes the lead", async function () {
@@ -88,11 +88,11 @@ describe("EmojiProvider", function () {
         add("😍"); //heart_eyes
 
         add("❤️"); //heart
-        const ep = new EmojiProvider(null);
+        const ep = new EmojiProvider(testRoom);
         const completionsList = await ep.getCompletions(":heart", { beginning: true, start: 0, end: 6 });
 
-        expect(completionsList[0].component.props.title).toEqual(":heart:");
-        expect(completionsList[1].component.props.title).toEqual(":heartpulse:");
-        expect(completionsList[2].component.props.title).toEqual(":heart_eyes:");
+        expect(completionsList[0]?.component?.props.title).toEqual(":heart:");
+        expect(completionsList[1]?.component?.props.title).toEqual(":heartpulse:");
+        expect(completionsList[2]?.component?.props.title).toEqual(":heart_eyes:");
     });
 });

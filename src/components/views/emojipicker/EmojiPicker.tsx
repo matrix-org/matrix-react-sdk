@@ -215,7 +215,9 @@ class EmojiPicker extends React.Component<IProps, IState> {
             this.memoizedDataByCategory[cat.id] = emojis;
             cat.enabled = emojis.length > 0;
             // The setState below doesn't re-render the header and we already have the refs for updateVisibility, so...
-            cat.ref.current.disabled = !cat.enabled;
+            if (cat.ref.current) {
+                cat.ref.current.disabled = !cat.enabled;
+            }
         }
         this.setState({ filter });
         // Header underlines need to be updated, but updating requires knowing
