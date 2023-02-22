@@ -30,7 +30,7 @@ import { ActionPayload } from "../../dispatcher/payloads";
 
 interface IProps {
     // URL to request embedded page content from
-    url: string;
+    url?: string;
     // Class name prefix to apply for a given instance
     className?: string;
     // Whether to wrap the page in a scrollbar
@@ -64,7 +64,7 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
         let res: Response;
 
         try {
-            res = await fetch(this.props.url, { method: "GET" });
+            res = await fetch(this.props.url!, { method: "GET" });
         } catch (err) {
             if (this.unmounted) return;
             logger.warn(`Error loading page: ${err}`);

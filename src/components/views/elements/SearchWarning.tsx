@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import EventIndexPeg from "../../../indexing/EventIndexPeg";
@@ -69,7 +69,7 @@ export default function SearchWarning({ isRoomEncrypted, kind }: IProps): JSX.El
     const brand = SdkConfig.get("brand");
     const desktopBuilds = SdkConfig.getObject("desktop_builds");
 
-    let text: JSX.Element | undefined;
+    let text: ReactNode | undefined;
     let logo: JSX.Element | undefined;
     if (desktopBuilds.get("available")) {
         logo = <img src={desktopBuilds.get("logo")} />;

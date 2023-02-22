@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -145,7 +145,7 @@ export default class BridgeTile extends React.PureComponent<IProps> {
         } else {
             networkIcon = <div className="mx_RoomSettingsDialog_noProtocolIcon" />;
         }
-        let networkItem: JSX.Element | undefined;
+        let networkItem: ReactNode | undefined;
         if (network) {
             const networkName = network.displayname || network.id;
             let networkLink = <span>{networkName}</span>;
