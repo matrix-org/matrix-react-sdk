@@ -47,7 +47,7 @@ describe("AdvancedRoomSettingsTab", () => {
         mocked(dis.dispatch).mockReset();
         mocked(room.findPredecessor).mockImplementation((msc3946: boolean) =>
             msc3946
-                ? { roomId: "old_room_id_via_predecessor", eventId: null }
+                ? { roomId: "old_room_id_via_predecessor" }
                 : { roomId: "old_room_id", eventId: "tombstone_event_id" },
         );
     });

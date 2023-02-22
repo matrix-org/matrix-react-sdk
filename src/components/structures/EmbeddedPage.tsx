@@ -30,7 +30,7 @@ import { ActionPayload } from "../../dispatcher/payloads";
 
 interface IProps {
     // URL to request embedded page content from
-    url?: string;
+    url: string;
     // Class name prefix to apply for a given instance
     className?: string;
     // Whether to wrap the page in a scrollbar
@@ -46,7 +46,7 @@ interface IState {
 export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
     public static contextType = MatrixClientContext;
     private unmounted = false;
-    private dispatcherRef: string = null;
+    private dispatcherRef: string | null = null;
 
     public constructor(props: IProps, context: typeof MatrixClientContext) {
         super(props, context);
@@ -84,7 +84,7 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
 
         if (this.props.replaceMap) {
             Object.keys(this.props.replaceMap).forEach((key) => {
-                body = body.split(key).join(this.props.replaceMap[key]);
+                body = body.split(key).join(this.props.replaceMap![key]);
             });
         }
 
@@ -123,8 +123,7 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
         const client = this.context || MatrixClientPeg.get();
         const isGuest = client ? client.isGuest() : true;
         const className = this.props.className;
-        const classes = classnames({
-            [className]: true,
+        const classes = classnames(className, {
             [`${className}_guest`]: isGuest,
             [`${className}_loggedIn`]: !!client,
         });

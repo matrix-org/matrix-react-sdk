@@ -185,7 +185,6 @@ describe("RovingTabIndex", () => {
             const ref4 = React.createRef<HTMLElement>();
 
             let state: IState = {
-                activeRef: null,
                 refs: [ref1, ref2, ref3, ref4],
             };
 
@@ -250,7 +249,6 @@ describe("RovingTabIndex", () => {
             );
 
             let state: IState = {
-                activeRef: null,
                 refs: [],
             };
 
