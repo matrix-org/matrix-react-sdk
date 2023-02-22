@@ -44,8 +44,10 @@ const GenericToast: React.FC<XOR<IPropsExtended, IProps>> = ({
 
     return (
         <div>
-            <div className="mx_Toast_description">{description}</div>
-            {detailContent}
+            <div className="mx_Toast_description">
+                {description}
+                {detailContent}
+            </div>
             <div className="mx_Toast_buttons" aria-live="off">
                 {onReject && rejectLabel && (
                     <AccessibleButton kind="danger_outline" onClick={onReject}>
