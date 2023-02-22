@@ -46,9 +46,9 @@ describe("SetupEncryptionStore", () => {
         const makeRequest = jest.fn();
         client.hasSecretStorageKey.mockResolvedValue(true);
         client.bootstrapCrossSigning.mockImplementation(async (opts: IBootstrapCrossSigningOpts) => {
-            await opts.authUploadDeviceSigningKeys(makeRequest);
+            await opts?.authUploadDeviceSigningKeys(makeRequest);
         });
-        mocked(accessSecretStorage).mockImplementation(async (func) => {
+        mocked(accessSecretStorage).mockImplementation(async (func: () => Promise<void>) => {
             await func();
         });
 

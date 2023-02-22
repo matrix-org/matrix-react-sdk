@@ -26,7 +26,7 @@ describe("AccountPasswordStore", () => {
     });
 
     it("should not have a password by default", () => {
-        expect(accountPasswordStore.getPassword()).toBeNull();
+        expect(accountPasswordStore.getPassword()).toBeUndefined();
     });
 
     describe("when setting a password", () => {
@@ -44,7 +44,7 @@ describe("AccountPasswordStore", () => {
             });
 
             it("should clear the password", () => {
-                expect(accountPasswordStore.getPassword()).toBeNull();
+                expect(accountPasswordStore.getPassword()).toBeUndefined();
             });
         });
 

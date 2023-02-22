@@ -22,8 +22,8 @@ const PASSWORD_TIMEOUT = 5 * 60 * 1000; // five minutes
  * to avoid requestin the password all the time for instance during e2ee setup.
  */
 export class AccountPasswordStore {
-    private password: string = null;
-    private passwordTimeoutId: number = null;
+    private password?: string;
+    private passwordTimeoutId?: ReturnType<typeof setTimeout>;
 
     public setPassword(password: string): void {
         this.password = password;
@@ -31,13 +31,13 @@ export class AccountPasswordStore {
         this.passwordTimeoutId = setTimeout(this.clearPassword, PASSWORD_TIMEOUT);
     }
 
-    public getPassword(): string | null {
+    public getPassword(): string | undefined {
         return this.password;
     }
 
     public clearPassword = (): void => {
         clearTimeout(this.passwordTimeoutId);
-        this.passwordTimeoutId = null;
-        this.password = null;
+        this.passwordTimeoutId = undefined;
+        this.password = undefined;
     };
 }
