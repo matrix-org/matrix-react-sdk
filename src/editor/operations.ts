@@ -37,11 +37,6 @@ export function formatRange(range: Range, action: Formatting): void {
         range.trim();
     }
 
-    // Edge case when just selecting whitespace or new line.
-    // There should be no reason to format whitespace, so we can just return.
-    if (range.length === 0) {
-        return;
-    }
 
     switch (action) {
         case Formatting.Bold:
@@ -301,6 +296,13 @@ export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix
     // If the user didn't select something initially, we want to just restore
     // the caret position instead of making a new selection.
     if (range.wasInitializedEmpty() && prefix === suffix) {
+
+    // Edge case when just selecting whitespace or new line.
+    
+    if (range.length === 0) {
+        parts.splice(0, 0, partCreator.plain(suffix)); // splice in the later one first to not change offset
+        parts.splice(1, 0, partCreator.plain(prefix));
+    }
         // Check if we need to add a offset for a toggle or untoggle
         const hasFormatting = range.text.startsWith(prefix) && range.text.endsWith(suffix);
         replaceRangeAndAutoAdjustCaret(range, parts, hasFormatting, prefix.length);
