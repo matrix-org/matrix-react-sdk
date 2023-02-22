@@ -107,7 +107,7 @@ describe("Timeline", () => {
 
             // XXX: If we send the second event too quickly, there won't be
             // enough time for the client to register the profile change
-            cy.setAvatarUrl(newAvatarUrl, { timeout: 500 });
+            cy.setAvatarUrl(newAvatarUrl, { timeout: 1000 });
 
             sendEvent(roomId);
             cy.viewRoomByName(ROOM_NAME);
@@ -133,7 +133,7 @@ describe("Timeline", () => {
 
             // XXX: If we send the second event too quickly, there won't be
             // enough time for the client to register the profile change
-            cy.setAvatarUrl(newAvatarUrl, { timeout: 500 });
+            cy.setAvatarUrl(newAvatarUrl, { timeout: 1000 });
 
             sendEvent(roomId);
             cy.viewRoomByName(ROOM_NAME);

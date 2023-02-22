@@ -299,7 +299,7 @@ describe("Spaces", () => {
 
         cy.getSpacePanelButton("Test Space").should("exist");
         // without this we can end up clicking too quickly and it ends up having no effect
-        cy.viewSpaceByName("Test Space", { timeout: 500 });
+        cy.viewSpaceByName("Test Space", { timeout: 1000 });
         cy.contains(".mx_AccessibleButton", "Accept").click();
 
         cy.contains(".mx_SpaceHierarchy_roomTile.mx_AccessibleButton", "Test Room").within(() => {
