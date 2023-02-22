@@ -212,8 +212,7 @@ describe("Decryption Failure Bar", () => {
 
         cy.percySnapshot("DecryptionFailureBar displays loading spinner");
 
-        cy.wait(5000);
-        cy.get(".mx_DecryptionFailureBar .mx_Spinner").should("not.exist");
+        cy.get(".mx_DecryptionFailureBar .mx_Spinner").should("not.exist", { timeout: 5000 });
         cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_icon").should("exist");
 
         cy.get(".mx_RoomView_messagePanel").scrollTo("top");
