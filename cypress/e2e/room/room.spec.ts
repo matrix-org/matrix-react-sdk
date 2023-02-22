@@ -63,7 +63,10 @@ describe("Room Directory", () => {
             });
         });
 
-        cy.viewRoomByName("Bob", { timeout: 1000 }); // let the room list settle
+        // let the room list settle
+        cy.get(".mx_RoomList", { timeout: 1000 });
+
+        cy.viewRoomByName("Bob");
 
         // short timeout because loader is only visible for short period
         // we want to make sure it is never displayed when switching these rooms

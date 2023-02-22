@@ -220,7 +220,8 @@ describe("Threads", () => {
         cy.get(".mx_ThreadView_timelinePanelWrapper").should("have.length", 1);
 
         cy.openMessageComposerOptions(true).find(`[aria-label="Voice Message"]`).click();
-        cy.getComposer(true, { timeout: 3000 }).find(".mx_MessageComposer_sendMessage").click();
+        cy.get(".mx_MessageComposer_actions", { timeout: 3000 });
+        cy.getComposer(true).find(".mx_MessageComposer_sendMessage").click();
 
         cy.get(".mx_ThreadView .mx_MVoiceMessageBody").should("have.length", 1);
     });

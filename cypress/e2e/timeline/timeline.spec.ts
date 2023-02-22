@@ -104,11 +104,10 @@ describe("Timeline", () => {
             cy.setSettingValue("useOnlyCurrentProfiles", null, SettingLevel.ACCOUNT, false);
             sendEvent(roomId);
             cy.setDisplayName("Alan (away)");
-
+            cy.setAvatarUrl(newAvatarUrl);
             // XXX: If we send the second event too quickly, there won't be
             // enough time for the client to register the profile change
-            cy.setAvatarUrl(newAvatarUrl, { timeout: 1000 });
-
+            cy.wait(500);
             sendEvent(roomId);
             cy.viewRoomByName(ROOM_NAME);
 
@@ -130,11 +129,10 @@ describe("Timeline", () => {
             cy.setSettingValue("useOnlyCurrentProfiles", null, SettingLevel.ACCOUNT, true);
             sendEvent(roomId);
             cy.setDisplayName(NEW_NAME);
-
+            cy.setAvatarUrl(newAvatarUrl);
             // XXX: If we send the second event too quickly, there won't be
             // enough time for the client to register the profile change
-            cy.setAvatarUrl(newAvatarUrl, { timeout: 1000 });
-
+            cy.wait(500);
             sendEvent(roomId);
             cy.viewRoomByName(ROOM_NAME);
 

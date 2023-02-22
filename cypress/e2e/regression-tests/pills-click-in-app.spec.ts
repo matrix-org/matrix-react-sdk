@@ -63,8 +63,11 @@ describe("Pills", () => {
                 // verify we landed at a sane place
                 cy.url().should("contain", localUrl);
 
+                // let the room list settle
+                cy.get(".mx_RoomList", { timeout: 1000 });
+
                 // go back to the message room and try to click on the pill text, as a user would
-                cy.viewRoomByName(messageRoom, { timeout: 1000 }); // let the room list settle
+                cy.viewRoomByName(messageRoom);
                 cy.get(".mx_EventTile_body .mx_Pill .mx_Pill_linkText")
                     .should("have.css", "pointer-events", "none")
                     .click({ force: true }); // force is to ensure we bypass pointer-events
