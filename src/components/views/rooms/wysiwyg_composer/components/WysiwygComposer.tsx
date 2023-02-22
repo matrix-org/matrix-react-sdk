@@ -109,7 +109,7 @@ export const WysiwygComposer = memo(function WysiwygComposer({
 
     // pull the query out like it's done currently
     const indexOfAt = ref.current?.textContent?.lastIndexOf("@");
-    const contentContainsQuery = indexOfAt && indexOfAt > -1;
+    const contentContainsQuery = indexOfAt !== undefined && indexOfAt > -1;
     const query = ref.current?.textContent?.slice(indexOfAt);
 
     const autocomplete =
@@ -119,7 +119,24 @@ export const WysiwygComposer = memo(function WysiwygComposer({
                     ref={autocompleteRef}
                     query={query}
                     onConfirm={({ completion, href }) => {
+                        /**
+                         * export interface ICompletion {
+                            type?: "at-room" | "command" | "community" | "room" | "user";
+                            completion: string;
+                            completionId?: string;
+                            component?: ReactElement;
+                            range: ISelectionRange;
+                            command?: string;
+                            suffix?: string;
+                            // If provided, apply a LINK entity to the completion with the
+                            // data = { url: href }.
+                            href?: string;
+                         */
+                        // do something with the output here with the rust model
                         console.log("selected something", completion, href);
+                        ref.current?.dispatchEvent(
+                            new InputEvent("input", { data: completion, inputType: "insertText" }),
+                        );
                     }}
                     onSelectionChange={(compIndex) => (autocompleteIndexRef.current = compIndex)}
                     selection={{ beginning: true, end: query.length, start: query.length }}
