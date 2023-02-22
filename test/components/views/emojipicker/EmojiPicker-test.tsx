@@ -21,7 +21,7 @@ describe("EmojiPicker", function () {
     stubClient();
 
     it("sort emojis by shortcode and size", function () {
-        const ep = new EmojiPicker({onChoose: (str: String) => false});
+        const ep = new EmojiPicker({ onChoose: (str: String) => false });
 
         //@ts-ignore private access
         ep.onChangeFilter("heart");
