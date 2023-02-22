@@ -122,8 +122,8 @@ Cypress.Commands.add("startDM", (name: string) => {
     cy.openSpotlightDialog().within(() => {
         cy.spotlightFilter(Filter.People);
         cy.spotlightSearch().clear().type(name);
-        cy.wait(1000); // wait for the dialog code to settle
-        cy.get(".mx_Spinner").should("not.exist");
+        // wait for the dialog code to settle
+        cy.get(".mx_Spinner", { timeout: 1000 }).should("not.exist");
         cy.spotlightResults().should("have.length", 1);
         cy.spotlightResults().eq(0).should("contain", name);
         cy.spotlightResults().eq(0).click();
@@ -231,8 +231,8 @@ describe("Spotlight", () => {
         cy.openSpotlightDialog()
             .within(() => {
                 cy.spotlightSearch().clear().type(room1Name);
-                cy.wait(3000); // wait for the dialog code to settle
-                cy.spotlightResults().should("have.length", 1);
+                // wait for the dialog code to settle
+                cy.spotlightResults({ timeout: 3000 }).should("have.length", 1);
                 cy.spotlightResults().eq(0).should("contain", room1Name);
                 cy.spotlightResults().eq(0).click();
                 cy.url().should("contain", room1Id);
@@ -247,8 +247,8 @@ describe("Spotlight", () => {
             .within(() => {
                 cy.spotlightFilter(Filter.PublicRooms);
                 cy.spotlightSearch().clear().type(room1Name);
-                cy.wait(3000); // wait for the dialog code to settle
-                cy.spotlightResults().should("have.length", 1);
+                // wait for the dialog code to settle
+                cy.spotlightResults({ timeout: 3000 }).should("have.length", 1);
                 cy.spotlightResults().eq(0).should("contain", room1Name);
                 cy.spotlightResults().eq(0).should("contain", "View");
                 cy.spotlightResults().eq(0).click();
@@ -264,8 +264,8 @@ describe("Spotlight", () => {
             .within(() => {
                 cy.spotlightFilter(Filter.PublicRooms);
                 cy.spotlightSearch().clear().type(room2Name);
-                cy.wait(3000); // wait for the dialog code to settle
-                cy.spotlightResults().should("have.length", 1);
+                // wait for the dialog code to settle
+                cy.spotlightResults({ timeout: 3000 }).should("have.length", 1);
                 cy.spotlightResults().eq(0).should("contain", room2Name);
                 cy.spotlightResults().eq(0).should("contain", "Join");
                 cy.spotlightResults().eq(0).click();
@@ -282,8 +282,8 @@ describe("Spotlight", () => {
             .within(() => {
                 cy.spotlightFilter(Filter.PublicRooms);
                 cy.spotlightSearch().clear().type(room3Name);
-                cy.wait(3000); // wait for the dialog code to settle
-                cy.spotlightResults().should("have.length", 1);
+                // wait for the dialog code to settle
+                cy.spotlightResults({ timeout: 3000 }).should("have.length", 1);
                 cy.spotlightResults().eq(0).should("contain", room3Name);
                 cy.spotlightResults().eq(0).should("contain", "View");
                 cy.spotlightResults().eq(0).click();
@@ -323,8 +323,8 @@ describe("Spotlight", () => {
             .within(() => {
                 cy.spotlightFilter(Filter.People);
                 cy.spotlightSearch().clear().type(bot1Name);
-                cy.wait(3000); // wait for the dialog code to settle
-                cy.spotlightResults().should("have.length", 1);
+                // wait for the dialog code to settle
+                cy.spotlightResults({ timeout: 3000 }).should("have.length", 1);
                 cy.spotlightResults().eq(0).should("contain", bot1Name);
                 cy.spotlightResults().eq(0).click();
             })
@@ -338,8 +338,8 @@ describe("Spotlight", () => {
             .within(() => {
                 cy.spotlightFilter(Filter.People);
                 cy.spotlightSearch().clear().type(bot2Name);
-                cy.wait(3000); // wait for the dialog code to settle
-                cy.spotlightResults().should("have.length", 1);
+                // wait for the dialog code to settle
+                cy.spotlightResults({ timeout: 3000 }).should("have.length", 1);
                 cy.spotlightResults().eq(0).should("contain", bot2Name);
                 cy.spotlightResults().eq(0).click();
             })
@@ -356,8 +356,8 @@ describe("Spotlight", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.People);
             cy.spotlightSearch().clear().type(bot2Name);
-            cy.wait(3000); // wait for the dialog code to settle
-            cy.spotlightResults().should("have.length", 1);
+            // wait for the dialog code to settle
+            cy.spotlightResults({ timeout: 3000 }).should("have.length", 1);
             cy.spotlightResults().eq(0).should("contain", bot2Name);
             cy.spotlightResults().eq(0).click();
         });
@@ -385,8 +385,8 @@ describe("Spotlight", () => {
                 cy.openSpotlightDialog().within(() => {
                     cy.spotlightFilter(Filter.People);
                     cy.spotlightSearch().clear().type(bot1.getUserId());
-                    cy.wait(1000); // wait for the dialog code to settle
-                    cy.spotlightResults().should("have.length", 2);
+                    // wait for the dialog code to settle
+                    cy.spotlightResults({ timeout: 1000 }).should("have.length", 2);
                     cy.contains(
                         ".mx_SpotlightDialog_section.mx_SpotlightDialog_results .mx_SpotlightDialog_option",
                         groupDm.name,
@@ -397,8 +397,8 @@ describe("Spotlight", () => {
                 cy.openSpotlightDialog().within(() => {
                     cy.spotlightFilter(Filter.People);
                     cy.spotlightSearch().clear().type(bot2.getUserId());
-                    cy.wait(1000); // wait for the dialog code to settle
-                    cy.spotlightResults().should("have.length", 2);
+                    // wait for the dialog code to settle
+                    cy.spotlightResults({ timeout: 1000 }).should("have.length", 2);
                     cy.contains(
                         ".mx_SpotlightDialog_section.mx_SpotlightDialog_results .mx_SpotlightDialog_option",
                         groupDm.name,
@@ -420,8 +420,8 @@ describe("Spotlight", () => {
             for (let i = 0; i < 2; i++) {
                 cy.log("Iteration: " + i);
                 cy.spotlightSearch().clear().type(bot1.getUserId());
-                cy.wait(1000); // wait for the dialog code to settle
-                cy.spotlightResults().should("have.length", 1);
+                // wait for the dialog code to settle
+                cy.spotlightResults({ timeout: 1000 }).should("have.length", 1);
                 cy.spotlightResults().eq(0).should("contain", bot1.getUserId());
             }
         });
@@ -432,8 +432,8 @@ describe("Spotlight", () => {
             .within(() => {
                 cy.spotlightFilter(Filter.People);
                 cy.spotlightSearch().clear().type(bot2Name);
-                cy.wait(3000); // wait for the dialog code to settle
-                cy.spotlightResults().should("have.length", 1);
+                // wait for the dialog code to settle
+                cy.spotlightResults({ timeout: 3000 }).should("have.length", 1);
                 cy.spotlightResults().eq(0).should("contain", bot2Name);
                 cy.get(".mx_SpotlightDialog_startGroupChat").should("contain", "Start a group chat");
                 cy.get(".mx_SpotlightDialog_startGroupChat").click();
@@ -455,8 +455,8 @@ describe("Spotlight", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.People);
             cy.spotlightSearch().clear().type(bot1Name);
-            cy.wait(3000); // wait for the dialog code to settle
-            cy.get(".mx_Spinner").should("not.exist");
+            // wait for the dialog code to settle
+            cy.get(".mx_Spinner", { timeout: 3000 }).should("not.exist");
             cy.spotlightResults().should("have.length", 1);
         });
     });
@@ -467,8 +467,7 @@ describe("Spotlight", () => {
             cy.spotlightSearch().clear().type("b");
             // our debouncing logic only starts the search after a short timeout,
             // so we wait a few milliseconds.
-            cy.wait(1000);
-            cy.get(".mx_Spinner")
+            cy.get(".mx_Spinner", { timeout: 1000 })
                 .should("not.exist")
                 .then(() => {
                     cy.spotlightResults()
