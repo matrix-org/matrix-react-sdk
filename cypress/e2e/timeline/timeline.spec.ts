@@ -104,10 +104,11 @@ describe("Timeline", () => {
             cy.setSettingValue("useOnlyCurrentProfiles", null, SettingLevel.ACCOUNT, false);
             sendEvent(roomId);
             cy.setDisplayName("Alan (away)");
-            cy.setAvatarUrl(newAvatarUrl);
+
             // XXX: If we send the second event too quickly, there won't be
             // enough time for the client to register the profile change
-            cy.wait(500);
+            cy.setAvatarUrl(newAvatarUrl, { timeout: 500 });
+
             sendEvent(roomId);
             cy.viewRoomByName(ROOM_NAME);
 
@@ -129,10 +130,11 @@ describe("Timeline", () => {
             cy.setSettingValue("useOnlyCurrentProfiles", null, SettingLevel.ACCOUNT, true);
             sendEvent(roomId);
             cy.setDisplayName(NEW_NAME);
-            cy.setAvatarUrl(newAvatarUrl);
+
             // XXX: If we send the second event too quickly, there won't be
             // enough time for the client to register the profile change
-            cy.wait(500);
+            cy.setAvatarUrl(newAvatarUrl, { timeout: 500 });
+
             sendEvent(roomId);
             cy.viewRoomByName(ROOM_NAME);
 
@@ -372,8 +374,7 @@ describe("Timeline", () => {
             cy.openMessageComposerOptions().within(() => {
                 cy.get(`[aria-label="Voice Message"]`).click();
             });
-            cy.wait(3000);
-            cy.get(".mx_RoomView_body .mx_MessageComposer .mx_MessageComposer_sendMessage").click();
+            cy.get(".mx_RoomView_body .mx_MessageComposer .mx_MessageComposer_sendMessage", { timeout: 3000 }).click();
 
             cy.get(".mx_RoomView_body .mx_EventTile .mx_EventTile_line .mx_ReplyTile .mx_MTextBody").should(
                 "contain",
