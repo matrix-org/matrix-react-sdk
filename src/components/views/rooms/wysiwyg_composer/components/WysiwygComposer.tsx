@@ -14,10 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { memo, MutableRefObject, ReactNode, useEffect } from "react";
+import React, { memo, MutableRefObject, ReactNode, useEffect, useRef } from "react";
 import { useWysiwyg, FormattingFunctions } from "@matrix-org/matrix-wysiwyg";
 import classNames from "classnames";
 
+import { useRoomContext } from "../../../../../contexts/RoomContext";
+import Autocomplete from "../../Autocomplete";
+import AutocompleteWrapperModel from "../../../../../editor/autocomplete";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { FormattingButtons } from "./FormattingButtons";
 import { Editor } from "./Editor";
 import { useInputEventProcessor } from "../hooks/useInputEventProcessor";
@@ -51,6 +55,12 @@ export const WysiwygComposer = memo(function WysiwygComposer({
 
     const { ref, isWysiwygReady, content, actionStates, wysiwyg } = useWysiwyg({ initialContent, inputEventProcessor });
 
+    const autocompleteRef = useRef<Autocomplete>(null);
+
+    const onKeyDown = (event: React.KeyboardEvent): void => {
+        console.log(`<<< key down!`);
+    };
+
     useEffect(() => {
         if (!disabled && content !== null) {
             onChange?.(content);
@@ -63,13 +73,30 @@ export const WysiwygComposer = memo(function WysiwygComposer({
     const { isFocused, onFocus } = useIsFocused();
     const computedPlaceholder = (!content && placeholder) || undefined;
 
+    const { room } = useRoomContext();
+    const autocomplete =
+        Number(content?.length) > 0 && room ? (
+            <div className="mx_WysiwygComposer_AutoCompleteWrapper">
+                <Autocomplete
+                    ref={autocompleteRef}
+                    query="@a"
+                    onConfirm={() => {}}
+                    // onSelectionChange={this.onAutoCompleteSelectionChange}
+                    selection={{ beginning: true, end: 1, start: 0 }}
+                    room={room}
+                />
+            </div>
+        ) : null;
+
     return (
         <div
             data-testid="WysiwygComposer"
             className={classNames(className, { [`${className}-focused`]: isFocused })}
             onFocus={onFocus}
             onBlur={onFocus}
+            onKeyDown={onKeyDown}
         >
+            {autocomplete}
             <FormattingButtons composer={wysiwyg} actionStates={actionStates} />
             <Editor
                 ref={ref}
