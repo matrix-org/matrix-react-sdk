@@ -195,7 +195,6 @@ describe("RovingTabIndex", () => {
                 },
             });
             expect(state).toStrictEqual({
-                activeRef: null,
                 refs: [ref1, ref3, ref4],
             });
 
@@ -206,7 +205,6 @@ describe("RovingTabIndex", () => {
                 },
             });
             expect(state).toStrictEqual({
-                activeRef: null,
                 refs: [ref1, ref4],
             });
 
@@ -217,7 +215,6 @@ describe("RovingTabIndex", () => {
                 },
             });
             expect(state).toStrictEqual({
-                activeRef: null,
                 refs: [ref1],
             });
 
@@ -228,7 +225,6 @@ describe("RovingTabIndex", () => {
                 },
             });
             expect(state).toStrictEqual({
-                activeRef: null,
                 refs: [],
             });
         });

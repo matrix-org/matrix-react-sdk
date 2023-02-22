@@ -291,7 +291,7 @@ describe("StopGapWidgetDriver", () => {
                     msgtype: MsgType.Text,
                     body: "🎉",
                 },
-                undefined,
+                null,
             );
 
             expect(dis.dispatch).toHaveBeenCalled();
@@ -307,7 +307,7 @@ describe("StopGapWidgetDriver", () => {
                         event_id: "$123",
                     },
                 },
-                undefined,
+                null,
             );
 
             expect(dis.dispatch).not.toHaveBeenCalled();

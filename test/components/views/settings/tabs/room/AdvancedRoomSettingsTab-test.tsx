@@ -136,7 +136,7 @@ describe("AdvancedRoomSettingsTab", () => {
             fireEvent.click(link);
             expect(dis.dispatch).toHaveBeenCalledWith({
                 action: Action.ViewRoom,
-                event_id: null,
+                event_id: undefined,
                 room_id: "old_room_id_via_predecessor",
                 metricsTrigger: "WebPredecessorSettings",
                 metricsViaKeyboard: false,

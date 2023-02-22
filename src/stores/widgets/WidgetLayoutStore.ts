@@ -99,7 +99,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         [roomId: string]: Partial<{
             [container in Container]: {
                 ordered: IApp[];
-                height?: number;
+                height?: number | null;
                 distributions?: number[];
             };
         }>;
@@ -259,7 +259,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
 
         // Determine width distribution and height of the top container now (the only relevant one)
         const widths: number[] = [];
-        let maxHeight: number | undefined; // undefined == default
+        let maxHeight: number | null = null; // null == default
         let doAutobalance = true;
         for (let i = 0; i < topWidgets.length; i++) {
             const widget = topWidgets[i];
@@ -402,8 +402,8 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         this.updateUserLayout(room, localLayout);
     }
 
-    public getContainerHeight(room: Room, container: Container): number | undefined {
-        return this.byRoom[room.roomId]?.[container]?.height; // let the default get returned if needed
+    public getContainerHeight(room: Room, container: Container): number | null {
+        return this.byRoom[room.roomId]?.[container]?.height ?? null; // let the default get returned if needed
     }
 
     public setContainerHeight(room: Room, container: Container, height?: number): void {
