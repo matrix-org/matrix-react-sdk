@@ -27,12 +27,11 @@ interface EditorProps {
     placeholder?: string;
     leftComponent?: ReactNode;
     rightComponent?: ReactNode;
-    autocompleteComponent?: ReactNode;
 }
 
 export const Editor = memo(
     forwardRef<HTMLDivElement, EditorProps>(function Editor(
-        { disabled, placeholder, leftComponent, rightComponent, autocompleteComponent }: EditorProps,
+        { disabled, placeholder, leftComponent, rightComponent }: EditorProps,
         ref,
     ) {
         const isExpanded = useIsExpanded(ref as MutableRefObject<HTMLDivElement | null>, HEIGHT_BREAKING_POINT);
@@ -46,7 +45,6 @@ export const Editor = memo(
             >
                 {leftComponent}
                 <div className="mx_WysiwygComposer_Editor_container">
-                    {autocompleteComponent}
                     <div
                         className={classNames("mx_WysiwygComposer_Editor_content", {
                             mx_WysiwygComposer_Editor_content_placeholder: Boolean(placeholder),

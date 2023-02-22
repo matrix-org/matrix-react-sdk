@@ -74,12 +74,18 @@ export const WysiwygComposer = memo(function WysiwygComposer({
     const computedPlaceholder = (!content && placeholder) || undefined;
 
     const { room } = useRoomContext();
+
+    // pull the query out like it's done currently
+    const indexOfAt = ref.current?.textContent?.lastIndexOf("@");
+    const contentContainsQuery = indexOfAt && indexOfAt > -1;
+    const query = ref.current?.textContent?.slice(indexOfAt);
+
     const autocomplete =
-        Number(content?.length) > 0 && room ? (
+        contentContainsQuery && query && room ? (
             <div className="mx_WysiwygComposer_AutoCompleteWrapper">
                 <Autocomplete
                     ref={autocompleteRef}
-                    query="@a"
+                    query={query}
                     onConfirm={() => {}}
                     // onSelectionChange={this.onAutoCompleteSelectionChange}
                     selection={{ beginning: true, end: 1, start: 0 }}
