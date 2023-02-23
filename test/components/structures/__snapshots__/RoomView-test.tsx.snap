@@ -814,3 +814,216 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
   </div>
 </div>
 `;
+
+exports[`RoomView when rendering a DM room with a single third-party invite should render the »third-party invite waiting room« 1`] = `
+<DocumentFragment>
+  <div
+    class="mx_RoomView mx_RoomView--local"
+  >
+    <header
+      class="mx_RoomHeader light-panel"
+    >
+      <div
+        class="mx_RoomHeader_wrapper"
+      >
+        <div
+          class="mx_RoomHeader_avatar"
+        >
+          <div
+            class="mx_DecoratedRoomAvatar"
+          >
+            <span
+              class="mx_BaseAvatar"
+              role="presentation"
+            >
+              <span
+                aria-hidden="true"
+                class="mx_BaseAvatar_initial"
+                style="font-size: 15.600000000000001px; width: 24px; line-height: 24px;"
+              >
+                !
+              </span>
+              <img
+                alt=""
+                aria-hidden="true"
+                class="mx_BaseAvatar_image"
+                data-testid="avatar-img"
+                src="data:image/png;base64,00"
+                style="width: 24px; height: 24px;"
+              />
+            </span>
+          </div>
+        </div>
+        <div
+          class="mx_E2EIcon mx_E2EIcon_normal mx_RoomHeader_icon"
+        />
+        <div
+          class="mx_RoomHeader_name mx_RoomHeader_name--textonly"
+        >
+          <div
+            aria-level="1"
+            class="mx_RoomHeader_nametext mx_RoomHeader_settingsHint"
+            dir="auto"
+            role="heading"
+            title="!0:example.org"
+          >
+            !0:example.org
+          </div>
+        </div>
+        <div
+          class="mx_RoomHeader_topic mx_RoomTopic"
+          dir="auto"
+        >
+          <div
+            tabindex="0"
+          >
+            <span
+              dir="auto"
+            />
+          </div>
+        </div>
+      </div>
+    </header>
+    <main
+      class="mx_RoomView_body"
+    >
+      <div
+        class="mx_RoomView_timeline"
+      >
+        <div
+          class="mx_AutoHideScrollbar mx_ScrollPanel mx_RoomView_messagePanel"
+          tabindex="-1"
+        >
+          <div
+            class="mx_RoomView_messageListWrapper"
+          >
+            <ol
+              aria-live="polite"
+              class="mx_RoomView_MessageList"
+              style="height: 400px;"
+            >
+              <div
+                class="mx_EventTileBubble mx_cryptoEvent mx_cryptoEvent_icon"
+              >
+                <div
+                  class="mx_EventTileBubble_title"
+                >
+                  Waiting for users to join Element
+                </div>
+                <div
+                  class="mx_EventTileBubble_subtitle"
+                >
+                  Once users invited have joined Element, you will be able to chat and the room will be end-to end encrypted
+                </div>
+              </div>
+              <li
+                class="mx_NewRoomIntro"
+              >
+                <span
+                  aria-label="Avatar"
+                  aria-live="off"
+                  class="mx_AccessibleButton mx_BaseAvatar"
+                  role="button"
+                  tabindex="0"
+                >
+                  <span
+                    aria-hidden="true"
+                    class="mx_BaseAvatar_initial"
+                    style="font-size: 33.800000000000004px; width: 52px; line-height: 52px;"
+                  >
+                    !
+                  </span>
+                  <img
+                    alt=""
+                    aria-hidden="true"
+                    class="mx_BaseAvatar_image"
+                    data-testid="avatar-img"
+                    src="data:image/png;base64,00"
+                    style="width: 52px; height: 52px;"
+                  />
+                </span>
+                <h2>
+                  !0:example.org
+                </h2>
+                <p>
+                  Once everyone has joined, you’ll be able to chat
+                </p>
+              </li>
+              <li
+                aria-atomic="true"
+                aria-live="off"
+                class="mx_EventTile mx_EventTile_info"
+                data-event-id="$0.5764239840748386-0.2965564705678758"
+                data-has-reply="false"
+                data-layout="group"
+                data-scroll-tokens="$0.5764239840748386-0.2965564705678758"
+                data-self="true"
+                tabindex="-1"
+              >
+                <div
+                  class="mx_EventTile_avatar"
+                >
+                  <span
+                    aria-label="Avatar"
+                    aria-live="off"
+                    class="mx_AccessibleButton mx_BaseAvatar"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="mx_BaseAvatar_initial"
+                      style="font-size: 9.1px; width: 14px; line-height: 14px;"
+                    >
+                      U
+                    </span>
+                    <img
+                      alt=""
+                      aria-hidden="true"
+                      class="mx_BaseAvatar_image"
+                      data-testid="avatar-img"
+                      src="data:image/png;base64,00"
+                      style="width: 14px; height: 14px;"
+                      title="@userId:matrix.org"
+                    />
+                  </span>
+                </div>
+                <div
+                  class="mx_EventTile_line"
+                >
+                  <a
+                    aria-label="00:00"
+                    href="#"
+                  />
+                  <div
+                    class="mx_TextualEvent"
+                  >
+                    @userId:matrix.org revoked the invitation for Someone to join the room.
+                  </div>
+                  <div
+                    aria-label="Message Actions"
+                    aria-live="off"
+                    class="mx_MessageActionBar"
+                    role="toolbar"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-haspopup="true"
+                      aria-label="Options"
+                      class="mx_AccessibleButton mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <div />
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</DocumentFragment>
+`;

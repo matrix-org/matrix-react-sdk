@@ -116,6 +116,9 @@ import VoipUserMapper from "../../VoipUserMapper";
 import { isCallEvent } from "./LegacyCallEventGrouper";
 import { WidgetType } from "../../widgets/WidgetType";
 import WidgetUtils from "../../utils/WidgetUtils";
+import EventTileBubble from "../views/messages/EventTileBubble";
+import { UnwrappedEventTile } from "../views/rooms/EventTile";
+import { shouldEncryptRoomWithSingle3rdPartyInvite } from "../../utils/room/shouldEncryptRoomWithSingle3rdPartyInvite";
 
 const DEBUG = false;
 const PREVENT_MULTIPLE_JITSI_WITHIN = 30_000;
@@ -236,6 +239,58 @@ interface LocalRoomViewProps {
     roomView: RefObject<HTMLElement>;
     onFileDrop: (dataTransfer: DataTransfer) => Promise<void>;
 }
+
+interface WaitingForThirdPartyRoomViewProps {
+    roomView: RefObject<HTMLElement>;
+    resizeNotifier: ResizeNotifier;
+    inviteEvent: MatrixEvent;
+}
+
+const WaitingForThirdPartyRoomView: React.FC<WaitingForThirdPartyRoomViewProps> = ({
+    roomView,
+    resizeNotifier,
+    inviteEvent,
+}) => {
+    const context = useContext(RoomContext);
+
+    return (
+        <div className="mx_RoomView mx_RoomView--local">
+            <ErrorBoundary>
+                <RoomHeader
+                    room={context.room}
+                    inRoom={true}
+                    onSearchClick={null}
+                    onInviteClick={null}
+                    onForgetClick={null}
+                    e2eStatus={E2EStatus.Normal}
+                    onAppsClick={null}
+                    appsShown={false}
+                    excludedRightPanelPhaseButtons={[]}
+                    showButtons={false}
+                    enableRoomOptionsMenu={false}
+                    viewingCall={false}
+                    activeCall={null}
+                />
+                <main className="mx_RoomView_body" ref={roomView}>
+                    <div className="mx_RoomView_timeline">
+                        <ScrollPanel className="mx_RoomView_messagePanel" resizeNotifier={resizeNotifier}>
+                            <EventTileBubble
+                                className="mx_cryptoEvent mx_cryptoEvent_icon"
+                                title={_t("Waiting for users to join Element")}
+                                subtitle={_t(
+                                    "Once users invited have joined Element, " +
+                                        "you will be able to chat and the room will be end-to end encrypted",
+                                )}
+                            />
+                            <NewRoomIntro />
+                            <UnwrappedEventTile mxEvent={inviteEvent} />
+                        </ScrollPanel>
+                    </div>
+                </main>
+            </ErrorBoundary>
+        </div>
+    );
+};
 
 /**
  * Local room view. Uses only the bits necessary to display a local room view like room header or composer.
@@ -1933,6 +1988,18 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         );
     }
 
+    private renderWaitingForThirdPartyRoomView(inviteEvent: MatrixEvent): ReactElement {
+        return (
+            <RoomContext.Provider value={this.state}>
+                <WaitingForThirdPartyRoomView
+                    resizeNotifier={this.props.resizeNotifier}
+                    roomView={this.roomView}
+                    inviteEvent={inviteEvent}
+                />
+            </RoomContext.Provider>
+        );
+    }
+
     public render(): React.ReactNode {
         if (this.state.room instanceof LocalRoom) {
             if (this.state.room.state === LocalRoomState.CREATING) {
@@ -1940,6 +2007,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             }
 
             return this.renderLocalRoomView();
+        }
+
+        if (this.state.room) {
+            const { shouldEncrypt, inviteEvent } = shouldEncryptRoomWithSingle3rdPartyInvite(this.state.room);
+
+            if (shouldEncrypt) {
+                return this.renderWaitingForThirdPartyRoomView(inviteEvent);
+            }
         }
 
         if (!this.state.room) {

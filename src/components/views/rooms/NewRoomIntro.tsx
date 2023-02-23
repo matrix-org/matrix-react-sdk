@@ -39,12 +39,25 @@ import { shouldShowComponent } from "../../../customisations/helpers/UIComponent
 import { UIComponent } from "../../../settings/UIFeature";
 import { privateShouldBeEncrypted } from "../../../utils/rooms";
 import { LocalRoom } from "../../../models/LocalRoom";
+import { shouldEncryptRoomWithSingle3rdPartyInvite } from "../../../utils/room/shouldEncryptRoomWithSingle3rdPartyInvite";
 
 function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): boolean {
     const isEncrypted: boolean = matrixClient.isRoomEncrypted(room.roomId);
     const isPublic: boolean = room.getJoinRule() === "public";
     return isPublic || !privateShouldBeEncrypted() || isEncrypted;
 }
+
+const determineIntroMessage = (room: Room, encryptedSingle3rdPartyInvite: boolean): string => {
+    if (room instanceof LocalRoom) {
+        return _t("Send your first message to invite <displayName/> to chat");
+    }
+
+    if (encryptedSingle3rdPartyInvite) {
+        return _t("Once everyone has joined, you’ll be able to chat");
+    }
+
+    return _t("This is the beginning of your direct message history with <displayName/>.");
+};
 
 const NewRoomIntro: React.FC = () => {
     const cli = useContext(MatrixClientContext);
@@ -55,12 +68,15 @@ const NewRoomIntro: React.FC = () => {
 
     let body: JSX.Element;
     if (dmPartner) {
-        let introMessage = _t("This is the beginning of your direct message history with <displayName/>.");
+        const { shouldEncrypt: encryptedSingle3rdPartyInvite } = shouldEncryptRoomWithSingle3rdPartyInvite(room);
+        const introMessage = determineIntroMessage(room, encryptedSingle3rdPartyInvite);
         let caption: string | undefined;
 
-        if (isLocalRoom) {
-            introMessage = _t("Send your first message to invite <displayName/> to chat");
-        } else if (room.getJoinedMemberCount() + room.getInvitedMemberCount() === 2) {
+        if (
+            !(room instanceof LocalRoom) &&
+            !encryptedSingle3rdPartyInvite &&
+            room.getJoinedMemberCount() + room.getInvitedMemberCount() === 2
+        ) {
             caption = _t("Only the two of you are in this conversation, unless either of you invites anyone to join.");
         }
 
