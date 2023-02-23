@@ -429,7 +429,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private roomView = createRef<HTMLElement>();
     private searchResultsPanel = createRef<ScrollPanel>();
-    private messagePanel: TimelinePanel;
+    private messagePanel?: TimelinePanel;
     private roomViewBody = createRef<HTMLDivElement>();
 
     public static contextType = SDKContext;
@@ -438,15 +438,19 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     public constructor(props: IRoomProps, context: React.ContextType<typeof SDKContext>) {
         super(props, context);
 
+        if (!context.client) {
+            throw new Error("Unable to create RoomView without MatrixClient");
+        }
+
         const llMembers = context.client.hasLazyLoadMembersEnabled();
         this.state = {
-            roomId: null,
+            roomId: undefined,
             roomLoading: true,
             peekLoading: false,
             shouldPeek: true,
             membersLoaded: !llMembers,
             numUnreadMessages: 0,
-            callState: null,
+            callState: undefined,
             activeCall: null,
             canPeek: false,
             canSelfRedact: false,
