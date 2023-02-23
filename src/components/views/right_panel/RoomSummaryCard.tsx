@@ -56,7 +56,7 @@ import { PollHistoryDialog } from "../dialogs/polls/PollHistoryDialog";
 
 interface IProps {
     room: Room;
-    permalinkCreator: RoomPermalinkCreator;
+    permalinkCreator?: RoomPermalinkCreator;
     onClose(): void;
 }
 

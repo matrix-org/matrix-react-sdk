@@ -34,6 +34,9 @@ interface Props {
 
 const NOOP = (): void => {};
 
+/**
+ * Content of the PollHistoryDialog when a specific poll is selected
+ */
 export const PollDetail: React.FC<Props> = ({ poll, permalinkCreator, requestModalClose }) => {
     // link to end event for ended polls
     const eventIdToLinkTo = poll.isEnded ? poll.endEventId! : poll.pollId;
