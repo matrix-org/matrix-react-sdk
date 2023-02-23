@@ -244,7 +244,7 @@ describe("Timeline", () => {
             // $MessageTimestamp_width should be applied
             cy.get(".mx_EventTile > a").should("have.css", "min-width", "46px");
             // Record alignment of collapsed GELS and messages on messagePanel
-            cy.get(".mx_IRCLayout").percySnapshotElement("Collapsed GELS and messages on IRC layout", { percyCSS });
+            cy.get(".mx_MainSplit").percySnapshotElement("Collapsed GELS and messages on IRC layout", { percyCSS });
 
             // 2. Alignment of expanded GELS and messages
             // Click "expand" link button
@@ -256,7 +256,7 @@ describe("Timeline", () => {
                 // = 80 + 14 + 1 * 5
                 .should("have.css", "margin-inline-start", "99px");
             // Record alignment of expanded GELS and messages on messagePanel
-            cy.get(".mx_IRCLayout").percySnapshotElement("Expanded GELS and messages on IRC layout", { percyCSS });
+            cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS and messages on IRC layout", { percyCSS });
 
             // 3. Alignment of expanded GELS and placeholder of deleted message
             // Delete the second (last) message
@@ -277,7 +277,7 @@ describe("Timeline", () => {
             cy.get(".mx_GenericEventListSummary .mx_EventTile_last .mx_RedactedBody").should("be.visible");
             cy.get(".mx_GenericEventListSummary .mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
             // Record alignment of expanded GELS and placeholder of deleted message on messagePanel
-            cy.get(".mx_IRCLayout").percySnapshotElement("Expanded GELS and with placeholder of deleted message", {
+            cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS and with placeholder of deleted message", {
                 percyCSS,
             });
         });
