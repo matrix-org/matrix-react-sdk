@@ -16,13 +16,13 @@ limitations under the License.
 
 import { getByRole, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React from "react";
+import React, { ComponentProps } from "react";
 
-import ExtraTile, { ExtraTileProps } from "../../../../src/components/views/rooms/ExtraTile";
+import ExtraTile from "../../../../src/components/views/rooms/ExtraTile";
 
 describe("ExtraTile", () => {
-    function renderComponent(props: Partial<ExtraTileProps> = {}) {
-        const defaultProps: ExtraTileProps = {
+    function renderComponent(props: Partial<ComponentProps<typeof ExtraTile>> = {}) {
+        const defaultProps: ComponentProps<typeof ExtraTile> = {
             isMinimized: false,
             isSelected: false,
             displayName: "test",

@@ -23,7 +23,7 @@ import { NotificationState } from "../../../stores/notifications/NotificationSta
 import { ButtonEvent } from "../elements/AccessibleButton";
 import useHover from "../../../hooks/useHover";
 
-export interface ExtraTileProps {
+interface ExtraTileProps {
     isMinimized: boolean;
     isSelected: boolean;
     displayName: string;
