@@ -82,7 +82,7 @@ interface IProps {
     alwaysVisible?: boolean;
     forceExpanded?: boolean;
     resizeNotifier: ResizeNotifier;
-    extraTiles?: ReactComponentElement<typeof ExtraTile>[];
+    extraTiles?: ReactComponentElement<typeof ExtraTile>[] | null;
     onListCollapse?: (isExpanded: boolean) => void;
 }
 
