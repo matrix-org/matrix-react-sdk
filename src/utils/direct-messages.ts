@@ -29,7 +29,7 @@ import { createDmLocalRoom } from "./dm/createDmLocalRoom";
 import { startDm } from "./dm/startDm";
 import { resolveThreePids } from "./threepids";
 
-export async function startDmOnFirstMessage(client: MatrixClient, targets: Member[]): Promise<string> {
+export async function startDmOnFirstMessage(client: MatrixClient, targets: Member[]): Promise<string | null> {
     let resolvedTargets = targets;
 
     try {
@@ -86,6 +86,8 @@ export async function createRoomFromLocalRoom(client: MatrixClient, localRoom: L
 
     return startDm(client, localRoom.targets, false).then(
         (roomId) => {
+            if (!roomId) throw new Error(`startDm for local room ${localRoom.roomId} didn't return a room Id`);
+
             localRoom.actualRoomId = roomId;
             return waitForRoomReadyAndApplyAfterCreateCallbacks(client, localRoom);
         },

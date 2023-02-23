@@ -234,6 +234,7 @@ export interface IRoomState {
 }
 
 interface LocalRoomViewProps {
+    localRoom: LocalRoom;
     resizeNotifier: ResizeNotifier;
     permalinkCreator: RoomPermalinkCreator;
     roomView: RefObject<HTMLElement>;
@@ -301,7 +302,7 @@ const WaitingForThirdPartyRoomView: React.FC<WaitingForThirdPartyRoomViewProps> 
 function LocalRoomView(props: LocalRoomViewProps): ReactElement {
     const context = useContext(RoomContext);
     const room = context.room as LocalRoom;
-    const encryptionEvent = context.room.currentState.getStateEvents(EventType.RoomEncryption)[0];
+    const encryptionEvent = props.localRoom.currentState.getStateEvents(EventType.RoomEncryption)[0];
     let encryptionTile: ReactNode;
 
     if (encryptionEvent) {
@@ -316,8 +317,8 @@ function LocalRoomView(props: LocalRoomViewProps): ReactElement {
         });
     };
 
-    let statusBar: ReactElement;
-    let composer: ReactElement;
+    let statusBar: ReactElement | null = null;
+    let composer: ReactElement | null = null;
 
     if (room.isError) {
         const buttons = (
@@ -336,7 +337,7 @@ function LocalRoomView(props: LocalRoomViewProps): ReactElement {
     } else {
         composer = (
             <MessageComposer
-                room={context.room}
+                room={props.localRoom}
                 resizeNotifier={props.resizeNotifier}
                 permalinkCreator={props.permalinkCreator}
             />
@@ -348,7 +349,7 @@ function LocalRoomView(props: LocalRoomViewProps): ReactElement {
             <ErrorBoundary>
                 <RoomHeader
                     room={context.room}
-                    searchInfo={null}
+                    searchInfo={undefined}
                     inRoom={true}
                     onSearchClick={null}
                     onInviteClick={null}
@@ -397,7 +398,7 @@ function LocalRoomCreateLoader(props: ILocalRoomCreateLoaderProps): ReactElement
             <ErrorBoundary>
                 <RoomHeader
                     room={context.room}
-                    searchInfo={null}
+                    searchInfo={undefined}
                     inRoom={true}
                     onSearchClick={null}
                     onInviteClick={null}
@@ -1975,10 +1976,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         );
     }
 
-    private renderLocalRoomView(): ReactElement {
+    private renderLocalRoomView(localRoom: LocalRoom): ReactElement {
         return (
             <RoomContext.Provider value={this.state}>
                 <LocalRoomView
+                    localRoom={localRoom}
                     resizeNotifier={this.props.resizeNotifier}
                     permalinkCreator={this.permalinkCreator}
                     roomView={this.roomView}
@@ -2006,7 +2008,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 return this.renderLocalRoomCreateLoader();
             }
 
-            return this.renderLocalRoomView();
+            return this.renderLocalRoomView(this.state.room);
         }
 
         if (this.state.room) {

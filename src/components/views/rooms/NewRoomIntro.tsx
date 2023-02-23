@@ -63,6 +63,10 @@ const NewRoomIntro: React.FC = () => {
     const cli = useContext(MatrixClientContext);
     const { room, roomId } = useContext(RoomContext);
 
+    if (!room || !roomId) {
+        throw new Error("Unable to create a NewRoomIntro without room and roomId");
+    }
+
     const isLocalRoom = room instanceof LocalRoom;
     const dmPartner = isLocalRoom ? room.targets[0]?.userId : DMRoomMap.shared().getUserIdForRoomId(roomId);
 
@@ -114,7 +118,7 @@ const NewRoomIntro: React.FC = () => {
     } else {
         const inRoom = room && room.getMyMembership() === "join";
         const topic = room.currentState.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic;
-        const canAddTopic = inRoom && room.currentState.maySendStateEvent(EventType.RoomTopic, cli.getUserId());
+        const canAddTopic = inRoom && room.currentState.maySendStateEvent(EventType.RoomTopic, cli.getSafeUserId());
 
         const onTopicClick = (): void => {
             defaultDispatcher.dispatch(
@@ -126,7 +130,7 @@ const NewRoomIntro: React.FC = () => {
             );
             // focus the topic field to help the user find it as it'll gain an outline
             setImmediate(() => {
-                window.document.getElementById("profileTopic").focus();
+                window.document.getElementById("profileTopic")?.focus();
             });
         };
 
