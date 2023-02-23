@@ -28,7 +28,7 @@ describe("AskInviteaAnywayDialog", () => {
     const onGiveUp: jest.Mock<any, any> = jest.fn();
     const onInviteAnyways: jest.Mock<any, any> = jest.fn();
 
-    function getComponent(props: Partial<AskInviteAnywayDialogProps> = {}): RenderResult {
+    function renderComponent(props: Partial<AskInviteAnywayDialogProps> = {}): RenderResult {
         return render(
             <AskInviteAnywayDialog
                 onFinished={onFinished}
@@ -40,6 +40,7 @@ describe("AskInviteaAnywayDialog", () => {
                         errorText: "🤷‍♂️",
                     },
                 ]}
+                {...props}
             />,
         );
     }
@@ -49,7 +50,7 @@ describe("AskInviteaAnywayDialog", () => {
     });
 
     it("remembers to not warn again", async () => {
-        const { container } = getComponent();
+        const { container } = renderComponent();
 
         jest.spyOn(SettingsStore, "setValue").mockImplementation(async (): Promise<void> => {});
 
@@ -67,7 +68,7 @@ describe("AskInviteaAnywayDialog", () => {
     });
 
     it("invites anyway", async () => {
-        const { container } = getComponent();
+        const { container } = renderComponent();
 
         jest.spyOn(SettingsStore, "setValue");
 
@@ -79,7 +80,7 @@ describe("AskInviteaAnywayDialog", () => {
     });
 
     it("gives up", async () => {
-        const { container } = getComponent();
+        const { container } = renderComponent();
 
         jest.spyOn(SettingsStore, "setValue");
 
