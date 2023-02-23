@@ -72,10 +72,6 @@ const fetchHistoryUntilTimestamp = async (
     canPageBackward: boolean,
     oldestEventTimestamp?: number,
 ): Promise<void> => {
-    console.log("hhh fetch until", {
-        t: new Date(timestamp).toISOString(),
-        oldest: new Date(oldestEventTimestamp || 0).toISOString(),
-    });
     if (!canPageBackward || (oldestEventTimestamp && oldestEventTimestamp < timestamp)) {
         return;
     }
@@ -118,15 +114,10 @@ const useTimelineHistory = (
     const loadTimelineHistory = useCallback(async () => {
         const endOfHistoryPeriodTimestamp = Date.now() - ONE_DAY_MS * historyPeriodDays;
         setIsLoading(true);
-        debugger;
         try {
             const liveTimeline = timelineSet?.getLiveTimeline();
             const canPageBackward = !!liveTimeline?.getPaginationToken(Direction.Backward);
             const oldestEventTimestamp = getOldestEventTimestamp(timelineSet);
-            console.log("hhh lvetimelime", liveTimeline, liveTimeline?.getEvents(), {
-                canPageBackward,
-                oldestEventTimestamp,
-            });
 
             await fetchHistoryUntilTimestamp(
                 timelineSet,
@@ -139,7 +130,6 @@ const useTimelineHistory = (
             setCanPageBackward(!!timelineSet?.getLiveTimeline()?.getPaginationToken(EventTimeline.BACKWARDS));
             setOldestEventTimestamp(getOldestEventTimestamp(timelineSet));
         } catch (error) {
-            console.log("hhhh errrr", error);
             logger.error("Failed to fetch room polls history", error);
         } finally {
             setIsLoading(false);

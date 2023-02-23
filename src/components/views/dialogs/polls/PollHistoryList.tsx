@@ -37,12 +37,48 @@ const LoadingPolls: React.FC<{ noResultsYet?: boolean }> = ({ noResultsYet }) =>
     </div>
 );
 
-const LoadMorePolls: React.FC<{ loadMorePolls?: () => void }> = ({ loadMorePolls }) =>
+const LoadMorePolls: React.FC<{ loadMorePolls?: () => void, isLoading: boolean }> = ({ isLoading, loadMorePolls }) =>
     loadMorePolls ? (
-        <AccessibleButton kind="link_inline" onClick={() => loadMorePolls()}>
+        <AccessibleButton className="mx_PollHistoryList_loadMorePolls" kind="link_inline" onClick={() => loadMorePolls()}>
             {_t("Load more polls")}
+            { isLoading && <InlineSpinner /> }
         </AccessibleButton>
     ) : null;
+
+const NoResults: React.FC<{
+    filter: PollHistoryFilter;
+    oldestEventTimestamp?: number;
+    loadMorePolls?: () => void;
+    isLoading?: boolean;
+}> = ({
+    filter, isLoading, loadMorePolls
+}) => {
+    // we can't page the timeline anymore
+    if (!loadMorePolls) {
+        if (isLoading) {
+            return <LoadingPolls noResultsYet />;
+        }
+        return <span className="mx_PollHistoryList_noResults">
+                    {filter === "ACTIVE"
+                        ? _t("There are no active polls in this room")
+                        : _t("There are no past polls in this room")}
+                </span>
+    }
+
+    return <span className="mx_PollHistoryList_noResults">
+                    {filter === "ACTIVE"
+                        ? _t("There are no active polls in this room")
+                        : _t("There are no past polls in this room")}
+
+                        <LoadMorePolls loadMorePolls={loadMorePolls} isLoading={isLoading} />
+                </span>
+
+// There are no past polls for the past X days. Load more polls to view polls for previous months
+
+
+};
+
+
 
 type PollHistoryListProps = {
     pollStartEvents: MatrixEvent[];
@@ -84,18 +120,15 @@ export const PollHistoryList: React.FC<PollHistoryListProps> = ({
                             />
                         ),
                     )}
-                    {isLoading && <LoadingPolls />}
-                    {!isLoading && <LoadMorePolls loadMorePolls={loadMorePolls} />}
+                    {isLoading && !loadMorePolls && <LoadingPolls />}
+                    {!!loadMorePolls && <LoadMorePolls loadMorePolls={loadMorePolls} isLoading={isLoading} />}
                 </ol>
             )}
-            {!pollStartEvents.length && !isLoading && (
-                <span className="mx_PollHistoryList_noResults">
-                    {filter === "ACTIVE"
-                        ? _t("There are no active polls in this room")
-                        : _t("There are no past polls in this room")}
-                </span>
-            )}
-            {!pollStartEvents.length && isLoading && <LoadingPolls noResultsYet />}
+            {!pollStartEvents.length && <NoResults 
+                isLoading={isLoading}
+                filter={filter}
+                loadMorePolls={loadMorePolls}
+                />}
         </div>
     );
 };

@@ -25,7 +25,6 @@ import { PollHistoryList } from "./PollHistoryList";
 import { PollHistoryFilter } from "./types";
 import { usePollsWithRelations } from "./usePollHistory";
 import { useFetchPastPolls } from "./fetchPastPolls";
-import AccessibleButton from "../../elements/AccessibleButton";
 
 type PollHistoryDialogProps = Pick<IDialogProps, "onFinished"> & {
     roomId: string;
