@@ -23,7 +23,7 @@ import { Action } from "../../../../dispatcher/actions";
 import { ViewRoomPayload } from "../../../../dispatcher/payloads/ViewRoomPayload";
 import { RoomPermalinkCreator } from "../../../../utils/permalinks/Permalinks";
 import { MediaEventHelper } from "../../../../utils/MediaEventHelper";
-import AccessibleButton from "../../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../elements/AccessibleButton";
 import MPollBody from "../../messages/MPollBody";
 
 interface Props {
@@ -39,8 +39,8 @@ export const PollDetail: React.FC<Props> = ({ poll, permalinkCreator, requestMod
     const eventIdToLinkTo = poll.isEnded ? poll.endEventId! : poll.pollId;
     const linkToTimeline = permalinkCreator.forEvent(eventIdToLinkTo);
 
-    const onLinkClick = (e: React.MouseEvent): void => {
-        if (e.ctrlKey || e.metaKey) {
+    const onLinkClick = (e: ButtonEvent): void => {
+        if ((e as React.MouseEvent).ctrlKey || (e as React.MouseEvent).metaKey) {
             // native behavior for link on ctrl/cmd + click
             return;
         }
