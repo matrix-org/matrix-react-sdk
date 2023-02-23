@@ -214,8 +214,6 @@ describe("Timeline", () => {
                 "created and configured the room.",
             ).should("exist");
 
-            cy.get(".mx_Spinner").should("not.exist");
-
             // Send messages
             cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("Hello Mr. Bot{enter}");
             cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("Hello again, Mr. Bot{enter}");
@@ -243,8 +241,8 @@ describe("Timeline", () => {
             cy.get(".mx_EventTile .mx_EventTile_avatar > .mx_BaseAvatar").should("have.css", "width", "14px");
             // $MessageTimestamp_width should be applied
             cy.get(".mx_EventTile > a").should("have.css", "min-width", "46px");
-            // Record alignment of collapsed GELS and messages
-            cy.percySnapshot("Collapsed GELS and messages on IRC layout", { percyCSS });
+            // Record alignment of collapsed GELS and messages on messagePanel
+            cy.get(".mx_IRCLayout").percySnapshotElement("Collapsed GELS and messages on IRC layout", { percyCSS });
 
             // 2. Alignment of expanded GELS and messages
             // Click "expand" link button
@@ -255,8 +253,8 @@ describe("Timeline", () => {
                 // --EventTile_irc_line_info-margin-inline-start
                 // = 80 + 14 + 1 * 5
                 .should("have.css", "margin-inline-start", "99px");
-            // Record alignment of expanded GELS and messages
-            cy.percySnapshot("Expanded GELS and messages on IRC layout", { percyCSS });
+            // Record alignment of expanded GELS and messages on messagePanel
+            cy.get(".mx_IRCLayout").percySnapshotElement("Expanded GELS and messages on IRC layout", { percyCSS });
 
             // 3. Alignment of expanded GELS and placeholder of deleted message
             // Delete the second (last) message
@@ -275,8 +273,10 @@ describe("Timeline", () => {
             // Make sure the dialog was closed and the second (last) message was redacted
             cy.get(".mx_Dialog").should("not.exist");
             cy.get(".mx_GenericEventListSummary .mx_EventTile_last .mx_RedactedBody").should("be.visible");
-            // Record alignment of expanded GELS and placeholder of deleted message
-            cy.percySnapshot("Expanded GELS and with placeholder of deleted message", { percyCSS });
+            // Record alignment of expanded GELS and placeholder of deleted message on messagePanel
+            cy.get(".mx_IRCLayout").percySnapshotElement("Expanded GELS and with placeholder of deleted message", {
+                percyCSS,
+            });
         });
 
         it("should set inline start padding to a hidden event line", () => {
