@@ -632,7 +632,9 @@ export class RoomViewStore extends EventEmitter {
             joining: false,
             joinError: payload.err,
         });
-        this.showJoinRoomError(payload.err, payload.roomId);
+        if (payload.err) {
+            this.showJoinRoomError(payload.err, payload.roomId);
+        }
     }
 
     public reset(): void {
