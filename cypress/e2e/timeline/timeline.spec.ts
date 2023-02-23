@@ -195,11 +195,12 @@ describe("Timeline", () => {
             cy.checkA11y();
         });
 
-        it("should align generic event list summary with messages on IRC layout", () => {
+        it("should align generic event list summary with messages and emote on IRC layout", () => {
             // This test aims to check:
             // 1. Alignment of collapsed GELS (generic event list summary) and messages
             // 2. Alignment of expanded GELS and messages
             // 3. Alignment of expanded GELS and placeholder of deleted message
+            // 4. Alignment of expanded GELS, placeholder of deleted message, and emote
 
             // Exclude timestamp from snapshot
             const percyCSS =
@@ -280,6 +281,26 @@ describe("Timeline", () => {
             cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS and with placeholder of deleted message", {
                 percyCSS,
             });
+
+            // 4. Alignment of expanded GELS, placeholder of deleted message, and emote
+            // Send a emote
+            cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("/me says hello to Mr. Bot{enter}");
+            // Check inline start margin of its avatar
+            // Here --right-padding is for the avatar on the message line
+            // See: _IRCLayout.pcss
+            // .mx_IRCLayout .mx_EventTile_emote .mx_EventTile_avatar
+            // = calc(var(--name-width) + var(--icon-width) + 1 * var(--right-padding))
+            // = 80 + 14 + 1 * 5
+            cy.get(".mx_EventTile_emote .mx_EventTile_avatar").should("have.css", "margin-left", "99px");
+            // Make sure emote was sent
+            cy.get(".mx_EventTile_last.mx_EventTile_emote .mx_EventTile_receiptSent").should("be.visible");
+            // Record alignment of expanded GELS, placeholder of deleted message, and emote
+            cy.get(".mx_MainSplit").percySnapshotElement(
+                "Expanded GELS and with emote and placeholder of deleted message",
+                {
+                    percyCSS,
+                },
+            );
         });
 
         it("should set inline start padding to a hidden event line", () => {
