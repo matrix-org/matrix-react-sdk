@@ -147,6 +147,10 @@ describe("Timeline", () => {
     });
 
     describe("configure room", () => {
+        // Exclude timestamp from snapshot
+        const percyCSS =
+            ".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp { visibility: hidden !important; }";
+
         beforeEach(() => {
             cy.injectAxe();
         });
@@ -186,7 +190,9 @@ describe("Timeline", () => {
                 "18px", // $irc-line-height: $font-18px (See: _IRCLayout.pcss)
             );
 
-            cy.get(".mx_Spinner").should("not.exist");
+            cy.get(".mx_MainSplit").percySnapshotElement("Expanded generic event list summary on IRC layout", {
+                percyCSS,
+            });
         });
 
         it("should have an expanded generic event list summary (GELS) on compact modern/group layout", () => {
@@ -220,7 +226,9 @@ describe("Timeline", () => {
                 "22px", // $font-22px (See: _GenericEventListSummary.pcss)
             );
 
-            cy.get(".mx_Spinner").should("not.exist");
+            cy.get(".mx_MainSplit").percySnapshotElement("Expanded generic event list summary on modern layout", {
+                percyCSS,
+            });
         });
 
         it("should add inline start margin to an event line on IRC layout", () => {
@@ -245,9 +253,6 @@ describe("Timeline", () => {
                 .should("have.css", "margin-inline-start", "104px")
                 .should("have.css", "inset-inline-start", "0px");
 
-            // Exclude timestamp from snapshot
-            const percyCSS =
-                ".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp { visibility: hidden !important; }";
             cy.get(".mx_MainSplit").percySnapshotElement("Event line with inline start margin on IRC layout", {
                 percyCSS,
             });
