@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { mocked } from "jest-mock";
 import { MatrixError, Room } from "matrix-js-sdk/src/matrix";
 import { sleep } from "matrix-js-sdk/src/utils";
 
@@ -293,8 +294,8 @@ describe("RoomViewStore", function () {
         const error = new MatrixError(undefined, 404);
         roomViewStore.showJoinRoomError(error, roomId);
 
-        // Then
-        expect(Modal.createDialog).toMatchSnapshot();
+        // Check the modal props
+        expect(mocked(Modal).createDialog.mock.calls[0][1]).toMatchSnapshot();
     });
 
     describe("when listening to a voice broadcast", () => {

@@ -1,27 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`RoomViewStore should display an error message when the room is unreachable via the roomId 1`] = `
-[MockFunction] {
-  "calls": [
-    [
-      [Function],
-      {
-        "description": <div>
-          You attempted to join using a room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.
-          <br />
-          <br />
-          If you know a room address, try joining through that instead.
-        </div>,
-        "title": "Failed to join",
-      },
-    ],
-  ],
-  "results": [
-    {
-      "type": "return",
-      "value": undefined,
-    },
-  ],
+{
+  "description": <div>
+    You attempted to join using a room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.
+    <br />
+    <br />
+    If you know a room address, try joining through that instead.
+  </div>,
+  "title": "Failed to join",
 }
 `;
 
