@@ -12,6 +12,13 @@ exports[`RoomViewStore should display an error message when the room is unreacha
 }
 `;
 
+exports[`RoomViewStore should display the generic error message when the roomId doesnt match 1`] = `
+{
+  "description": "MatrixError: [404] my 404 error",
+  "title": "Failed to join",
+}
+`;
+
 exports[`RoomViewStore when recording a voice broadcast and trying to view a call, it should not actually view it and show the info dialog 1`] = `
 [MockFunction] {
   "calls": [

@@ -298,6 +298,16 @@ describe("RoomViewStore", function () {
         expect(mocked(Modal).createDialog.mock.calls[0][1]).toMatchSnapshot();
     });
 
+    it("should display the generic error message when the roomId doesnt match", async () => {
+        // When
+        // Generate error to display the expected error message
+        const error = new MatrixError({ error: "my 404 error" }, 404);
+        roomViewStore.showJoinRoomError(error, roomId);
+
+        // Check the modal props
+        expect(mocked(Modal).createDialog.mock.calls[0][1]).toMatchSnapshot();
+    });
+
     describe("when listening to a voice broadcast", () => {
         let voiceBroadcastPlayback: VoiceBroadcastPlayback;
 
