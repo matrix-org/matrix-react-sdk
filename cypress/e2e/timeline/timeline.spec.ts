@@ -148,8 +148,7 @@ describe("Timeline", () => {
 
     describe("configure room", () => {
         // Exclude timestamp from snapshot
-        const percyCSS =
-            ".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp { visibility: hidden !important; }";
+        const percyCSS = ".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp { visibility: hidden !important; }";
 
         beforeEach(() => {
             cy.injectAxe();
