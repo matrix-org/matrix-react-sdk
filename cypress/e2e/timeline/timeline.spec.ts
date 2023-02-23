@@ -271,7 +271,7 @@ describe("Timeline", () => {
             cy.get(".mx_IconizedContextMenu_item[aria-label=Remove]").should("be.visible").click({ force: false });
             // Confirm deletion
             cy.get(".mx_Dialog_buttons button[data-testid=dialog-primary-button]")
-                .should("be.visible")
+                .should("have.text", "Remove")
                 .click({ force: false });
             // Make sure the dialog was closed and the second (last) message was redacted
             cy.get(".mx_Dialog").should("not.exist");
