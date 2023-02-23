@@ -24,6 +24,7 @@ import InlineSpinner from "../../elements/InlineSpinner";
 import { PollHistoryFilter } from "./types";
 import { PollListItem } from "./PollListItem";
 import { PollListItemEnded } from "./PollListItemEnded";
+import AccessibleButton from "../../elements/AccessibleButton";
 
 const LoadingPolls: React.FC<{ noResultsYet?: boolean }> = ({ noResultsYet }) => (
     <div
@@ -36,11 +37,19 @@ const LoadingPolls: React.FC<{ noResultsYet?: boolean }> = ({ noResultsYet }) =>
     </div>
 );
 
+const LoadMorePolls: React.FC<{ loadMorePolls?: () => void }> = ({ loadMorePolls }) =>
+    loadMorePolls ? (
+        <AccessibleButton kind="link_inline" onClick={() => loadMorePolls()}>
+            {_t("Load more polls")}
+        </AccessibleButton>
+    ) : null;
+
 type PollHistoryListProps = {
     pollStartEvents: MatrixEvent[];
     polls: Map<string, Poll>;
     filter: PollHistoryFilter;
     onFilterChange: (filter: PollHistoryFilter) => void;
+    loadMorePolls?: () => void;
     isLoading?: boolean;
 };
 export const PollHistoryList: React.FC<PollHistoryListProps> = ({
@@ -49,6 +58,7 @@ export const PollHistoryList: React.FC<PollHistoryListProps> = ({
     filter,
     isLoading,
     onFilterChange,
+    loadMorePolls,
 }) => {
     return (
         <div className="mx_PollHistoryList">
@@ -75,6 +85,7 @@ export const PollHistoryList: React.FC<PollHistoryListProps> = ({
                         ),
                     )}
                     {isLoading && <LoadingPolls />}
+                    {!isLoading && <LoadMorePolls loadMorePolls={loadMorePolls} />}
                 </ol>
             )}
             {!pollStartEvents.length && !isLoading && (
