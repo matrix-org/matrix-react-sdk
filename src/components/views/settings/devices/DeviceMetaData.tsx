@@ -41,9 +41,10 @@ const formatLastActivity = (timestamp: number, now = new Date().getTime()): stri
 const getInactiveMetadata = (device: ExtendedDevice): { id: string; value: React.ReactNode } | undefined => {
     const isInactive = isDeviceInactive(device);
 
-    if (!isInactive) {
+    if (!isInactive || !device.last_seen_ts) {
         return undefined;
     }
+
     return {
         id: "inactive",
         value: (

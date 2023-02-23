@@ -20,6 +20,10 @@ export const isDeviceVerified = (device: IMyDevice, client: MatrixClient): boole
     try {
         const crossSigningInfo = client.getStoredCrossSigningForUser(client.getSafeUserId());
         const deviceInfo = client.getStoredDevice(client.getSafeUserId(), device.device_id);
+
+        // no cross-signing or device info available
+        if (!crossSigningInfo || !deviceInfo) return false;
+
         return crossSigningInfo.checkDeviceTrust(crossSigningInfo, deviceInfo, false, true).isCrossSigningVerified();
     } catch (e) {
         console.error("Error getting device cross-signing info", e);

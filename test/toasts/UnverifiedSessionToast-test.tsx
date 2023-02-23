@@ -45,11 +45,15 @@ describe("UnverifiedSessionToast", () => {
             if (deviceId === otherDevice.device_id) {
                 return otherDevice;
             }
+
+            throw new Error(`Unknown device ${deviceId}`);
         });
         client.getStoredDevice.mockImplementation((userId: string, deviceId: string) => {
             if (deviceId === otherDevice.device_id) {
                 return otherDeviceInfo;
             }
+
+            return null;
         });
         client.getStoredCrossSigningForUser.mockReturnValue({
             checkDeviceTrust: jest.fn().mockReturnValue({
