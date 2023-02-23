@@ -217,6 +217,8 @@ describe("Timeline", () => {
             // Send messages
             cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("Hello Mr. Bot{enter}");
             cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("Hello again, Mr. Bot{enter}");
+            // Make sure the second message was sent
+            cy.get(".mx_RoomView_MessageList > .mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
 
             // 1. Alignment of collapsed GELS (generic event list summary) and messages
             // Check inline start spacing of collapsed GELS
@@ -273,6 +275,7 @@ describe("Timeline", () => {
             // Make sure the dialog was closed and the second (last) message was redacted
             cy.get(".mx_Dialog").should("not.exist");
             cy.get(".mx_GenericEventListSummary .mx_EventTile_last .mx_RedactedBody").should("be.visible");
+            cy.get(".mx_GenericEventListSummary .mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
             // Record alignment of expanded GELS and placeholder of deleted message on messagePanel
             cy.get(".mx_IRCLayout").percySnapshotElement("Expanded GELS and with placeholder of deleted message", {
                 percyCSS,
