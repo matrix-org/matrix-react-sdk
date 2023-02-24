@@ -42,15 +42,22 @@ describe("Set integration manager on General settings tab", () => {
         cy.get(".mx_SetIntegrationManager .mx_ToggleSwitch_enabled").should("exist");
 
         // Check the default margin set to mx_SettingsTab_heading on the settings tab
-        cy.get(".mx_SettingsTab > .mx_SettingsTab_heading").should("have.css", "margin-right", "100px")
+        cy.get(".mx_SettingsTab > .mx_SettingsTab_heading").should("have.css", "margin-right", "100px");
 
         // Make sure margin of headers on "Manage integrations" row is set to zero
-        cy.get(".mx_SettingsTab .mx_SetIntegrationManager_heading_manager > .mx_SettingsTab_heading")
-            .should("have.css", "margin-inline-end", "0px")
-        cy.get(".mx_SettingsTab .mx_SetIntegrationManager_heading_manager > .mx_SettingsTab_subheading")
-            .should("have.css", "margin-inline-end", "0px")
+        cy.get(".mx_SettingsTab .mx_SetIntegrationManager_heading_manager > .mx_SettingsTab_heading").should(
+            "have.css",
+            "margin-inline-end",
+            "0px",
+        );
+        cy.get(".mx_SettingsTab .mx_SetIntegrationManager_heading_manager > .mx_SettingsTab_subheading").should(
+            "have.css",
+            "margin-inline-end",
+            "0px",
+        );
 
-        cy.get(".mx_SettingsTab .mx_SetIntegrationManager_heading_manager")
-            .percySnapshotElement("'Manage integrations' on General settings tab");
+        cy.get(".mx_SettingsTab .mx_SetIntegrationManager_heading_manager").percySnapshotElement(
+            "'Manage integrations' on General settings tab",
+        );
     });
 });
