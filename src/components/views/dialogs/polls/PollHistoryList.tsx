@@ -37,53 +37,78 @@ const LoadingPolls: React.FC<{ noResultsYet?: boolean }> = ({ noResultsYet }) =>
     </div>
 );
 
-const LoadMorePolls: React.FC<{ loadMorePolls?: () => void, isLoading: boolean }> = ({ isLoading, loadMorePolls }) =>
+const LoadMorePolls: React.FC<{ loadMorePolls?: () => void; isLoading: boolean }> = ({ isLoading, loadMorePolls }) =>
     loadMorePolls ? (
-        <AccessibleButton className="mx_PollHistoryList_loadMorePolls" kind="link_inline" onClick={() => loadMorePolls()}>
+        <AccessibleButton
+            className="mx_PollHistoryList_loadMorePolls"
+            kind="link_inline"
+            onClick={() => loadMorePolls()}
+        >
             {_t("Load more polls")}
-            { isLoading && <InlineSpinner /> }
+            {isLoading && <InlineSpinner />}
         </AccessibleButton>
     ) : null;
+
+const ONE_DAY_MS = 60000 * 60 * 24;
+const getNoResultsMessage = (
+    filter: PollHistoryFilter,
+    oldestEventTimestamp?: number,
+    loadMorePolls?: () => void,
+): string => {
+    if (!loadMorePolls) {
+        return filter === "ACTIVE"
+            ? _t("There are no active polls in this room")
+            : _t("There are no past polls in this room");
+    }
+
+    if (!oldestEventTimestamp) {
+        return filter === "ACTIVE"
+            ? _t("There are no active polls. Load more polls to view polls for previous months")
+            : _t("There are no past polls. Load more polls to view polls for previous months");
+    }
+
+    const fetchedHistoryDaysCount = Math.ceil((Date.now() - oldestEventTimestamp) / ONE_DAY_MS);
+    return filter === "ACTIVE"
+        ? _t(
+              "There are no active polls for the past %(count)s days. Load more polls to view polls for previous months",
+              { count: fetchedHistoryDaysCount },
+          )
+        : _t("There are no past polls for the past %(count)s days. Load more polls to view polls for previous months", {
+              count: fetchedHistoryDaysCount,
+          });
+};
 
 const NoResults: React.FC<{
     filter: PollHistoryFilter;
     oldestEventTimestamp?: number;
     loadMorePolls?: () => void;
     isLoading?: boolean;
-}> = ({
-    filter, isLoading, loadMorePolls
-}) => {
+}> = ({ filter, isLoading, oldestEventTimestamp, loadMorePolls }) => {
     // we can't page the timeline anymore
-    if (!loadMorePolls) {
-        if (isLoading) {
-            return <LoadingPolls noResultsYet />;
-        }
-        return <span className="mx_PollHistoryList_noResults">
-                    {filter === "ACTIVE"
-                        ? _t("There are no active polls in this room")
-                        : _t("There are no past polls in this room")}
-                </span>
+    if (!loadMorePolls && isLoading) {
+        return <LoadingPolls noResultsYet />;
     }
 
-    return <span className="mx_PollHistoryList_noResults">
-                    {filter === "ACTIVE"
-                        ? _t("There are no active polls in this room")
-                        : _t("There are no past polls in this room")}
+    return (
+        <span className="mx_PollHistoryList_noResults">
+            {getNoResultsMessage(filter, oldestEventTimestamp, loadMorePolls)}
 
-                        <LoadMorePolls loadMorePolls={loadMorePolls} isLoading={isLoading} />
-                </span>
-
-// There are no past polls for the past X days. Load more polls to view polls for previous months
-
-
+            {!!loadMorePolls && <LoadMorePolls loadMorePolls={loadMorePolls} isLoading={isLoading} />}
+        </span>
+    );
 };
-
-
 
 type PollHistoryListProps = {
     pollStartEvents: MatrixEvent[];
     polls: Map<string, Poll>;
     filter: PollHistoryFilter;
+    /**
+     * server ts of the oldest fetched poll
+     * ignoring filter
+     * used to render no results in last x days message
+     * undefined when no polls are found
+     */
+    oldestFetchedEventTimestamp?: number;
     onFilterChange: (filter: PollHistoryFilter) => void;
     loadMorePolls?: () => void;
     isLoading?: boolean;
@@ -93,6 +118,7 @@ export const PollHistoryList: React.FC<PollHistoryListProps> = ({
     polls,
     filter,
     isLoading,
+    oldestFetchedEventTimestamp,
     onFilterChange,
     loadMorePolls,
 }) => {
@@ -124,11 +150,14 @@ export const PollHistoryList: React.FC<PollHistoryListProps> = ({
                     {!!loadMorePolls && <LoadMorePolls loadMorePolls={loadMorePolls} isLoading={isLoading} />}
                 </ol>
             )}
-            {!pollStartEvents.length && <NoResults 
-                isLoading={isLoading}
-                filter={filter}
-                loadMorePolls={loadMorePolls}
-                />}
+            {!pollStartEvents.length && (
+                <NoResults
+                    oldestFetchedEventTimestamp={oldestFetchedEventTimestamp}
+                    isLoading={isLoading}
+                    filter={filter}
+                    loadMorePolls={loadMorePolls}
+                />
+            )}
         </div>
     );
 };

@@ -55,7 +55,7 @@ export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({ roomId, ma
     const pollStartEvents = filterAndSortPolls(polls, filter);
     const isLoadingPollResponses = [...polls.values()].some((poll) => poll.isFetchingResponses);
 
-    console.log("hhh", { isLoading, loadMorePolls, oldestEventTimestamp });
+    console.log('hhh', { isLoading, isLoadingPollResponses });
 
     return (
         <BaseDialog title={_t("Polls history")} onFinished={onFinished}>
@@ -63,6 +63,7 @@ export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({ roomId, ma
                 <PollHistoryList
                     pollStartEvents={pollStartEvents}
                     isLoading={isLoading || isLoadingPollResponses}
+                    oldestFetchedEventTimestamp={oldestEventTimestamp}
                     polls={polls}
                     filter={filter}
                     onFilterChange={setFilter}
