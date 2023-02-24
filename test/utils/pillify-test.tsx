@@ -18,6 +18,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { ConditionKind, EventType, PushRuleActionName, Room, TweakName } from "matrix-js-sdk/src/matrix";
+import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
 
 import { pillifyLinks } from "../../src/utils/pillify";
 import { stubClient } from "../test-utils";
@@ -38,29 +39,31 @@ describe("pillify", () => {
         stubClient();
         const cli = MatrixClientPeg.get();
         (cli.getRoom as jest.Mock).mockReturnValue(new Room(roomId, cli, cli.getUserId()!));
-        cli.pushRules!.global = {
-            override: [
-                {
-                    rule_id: ".m.rule.roomnotif",
-                    default: true,
-                    enabled: true,
-                    conditions: [
-                        {
-                            kind: ConditionKind.EventMatch,
-                            key: "content.body",
-                            pattern: "@room",
-                        },
-                    ],
-                    actions: [
-                        PushRuleActionName.Notify,
-                        {
-                            set_tweak: TweakName.Highlight,
-                            value: true,
-                        },
-                    ],
-                },
-            ],
-        };
+        cli.pushRules = PushProcessor.rewriteDefaultRules({
+            global: {
+                override: [
+                    {
+                        rule_id: ".m.rule.roomnotif",
+                        default: true,
+                        enabled: true,
+                        conditions: [
+                            {
+                                kind: ConditionKind.EventMatch,
+                                key: "content.body",
+                                pattern: "@room",
+                            },
+                        ],
+                        actions: [
+                            PushRuleActionName.Notify,
+                            {
+                                set_tweak: TweakName.Highlight,
+                                value: true,
+                            },
+                        ],
+                    },
+                ],
+            },
+        });
 
         DMRoomMap.makeShared();
     });
