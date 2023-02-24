@@ -543,14 +543,26 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
         } else if (secondaryFeed) {
             return (
                 <div className="mx_LegacyCallView_content" onMouseMove={this.onMouseMove}>
-                    <VideoFeed feed={primaryFeed} call={call} pipMode={pipMode} onResize={onResize} primary={true} />
+                    <VideoFeed
+                        feed={primaryFeed as CallFeed}
+                        call={call}
+                        pipMode={pipMode}
+                        onResize={onResize}
+                        primary={true}
+                    />
                     {secondaryFeedElement}
                 </div>
             );
         } else {
             return (
                 <div className="mx_LegacyCallView_content" onMouseMove={this.onMouseMove}>
-                    <VideoFeed feed={primaryFeed} call={call} pipMode={pipMode} onResize={onResize} primary={true} />
+                    <VideoFeed
+                        feed={primaryFeed as CallFeed}
+                        call={call}
+                        pipMode={pipMode}
+                        onResize={onResize}
+                        primary={true}
+                    />
                     {sidebarShown && <LegacyCallViewSidebar feeds={sidebarFeeds} call={call} pipMode={pipMode} />}
                 </div>
             );
