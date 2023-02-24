@@ -287,7 +287,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) 
 
     const onRoomPollHistoryClick = (): void => {
         Modal.createDialog(PollHistoryDialog, {
-            roomId: room.roomId,
+            room,
             matrixClient: cli,
             permalinkCreator,
         });

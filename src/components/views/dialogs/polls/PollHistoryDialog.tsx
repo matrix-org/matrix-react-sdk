@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { useState } from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { MatrixEvent, Poll } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, Poll, Room } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../languageHandler";
 import BaseDialog from "../BaseDialog";
@@ -30,7 +30,7 @@ import { usePollsWithRelations } from "./usePollHistory";
 import { useFetchPastPolls } from "./fetchPastPolls";
 
 type PollHistoryDialogProps = Pick<IDialogProps, "onFinished"> & {
-    roomId: string;
+    room: Room;
     matrixClient: MatrixClient;
     permalinkCreator: RoomPermalinkCreator;
 };
@@ -51,15 +51,14 @@ const filterAndSortPolls = (polls: Map<string, Poll>, filter: PollHistoryFilter)
 };
 
 export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({
-    roomId,
+    room,
     matrixClient,
     permalinkCreator,
     onFinished,
 }) => {
-    const { polls } = usePollsWithRelations(roomId, matrixClient);
+    const { polls } = usePollsWithRelations(room.roomId, matrixClient);
     const [filter, setFilter] = useState<PollHistoryFilter>("ACTIVE");
     const [focusedPollId, setFocusedPollId] = useState<string | null>(null);
-    const room = matrixClient.getRoom(roomId)!;
     const { isLoading } = useFetchPastPolls(room, matrixClient);
 
     const pollStartEvents = filterAndSortPolls(polls, filter);

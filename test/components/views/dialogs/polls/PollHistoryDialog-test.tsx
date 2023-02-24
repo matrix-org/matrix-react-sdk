@@ -60,7 +60,7 @@ describe("<PollHistoryDialog />", () => {
     });
 
     const defaultProps = {
-        roomId,
+        room,
         matrixClient: mockClient,
         permalinkCreator: new RoomPermalinkCreator(room),
         onFinished: jest.fn(),
@@ -74,6 +74,7 @@ describe("<PollHistoryDialog />", () => {
     beforeEach(() => {
         room = new Room(roomId, mockClient, userId);
         mockClient.getRoom.mockReturnValue(room);
+        defaultProps.room = room;
         mockClient.relations.mockResolvedValue({ events: [] });
         const timeline = room.getLiveTimeline();
         jest.spyOn(timeline, "getEvents").mockReturnValue([]);
