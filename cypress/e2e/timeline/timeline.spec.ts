@@ -338,7 +338,8 @@ describe("Timeline", () => {
 
             // Exclude timestamp from snapshot
             const percyCSS =
-                ".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp { visibility: hidden !important; }";
+                ".mx_RoomView_body .mx_EventTile .mx_EventTile_line .mx_MessageTimestamp " +
+                "{ visibility: hidden !important; }";
             cy.get(".mx_EventTile_last").percySnapshotElement("URL Preview", {
                 percyCSS,
                 widths: [800, 400],
