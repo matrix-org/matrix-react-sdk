@@ -563,7 +563,9 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
                         onResize={onResize}
                         primary={true}
                     />
-                    {sidebarShown && <LegacyCallViewSidebar feeds={sidebarFeeds} call={call} pipMode={pipMode} />}
+                    {sidebarShown && (
+                        <LegacyCallViewSidebar feeds={sidebarFeeds} call={call} pipMode={Boolean(pipMode)} />
+                    )}
                 </div>
             );
         }
