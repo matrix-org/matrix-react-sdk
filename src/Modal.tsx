@@ -27,11 +27,11 @@ import AsyncWrapper from "./AsyncWrapper";
 const DIALOG_CONTAINER_ID = "mx_Dialog_Container";
 const STATIC_DIALOG_CONTAINER_ID = "mx_Dialog_StaticContainer";
 
-type ComponentType = React.ComponentType<{
+export type ComponentType = React.ComponentType<{
     onFinished?(...args: any): void;
 }>;
 
-type ComponentProps<C extends ComponentType> = Omit<React.ComponentProps<C>, "onFinished"> &
+export type ComponentProps<C extends ComponentType> = Omit<React.ComponentProps<C>, "onFinished"> &
     Partial<Pick<React.ComponentProps<C>, "onFinished">>;
 
 export interface IModal<C extends ComponentType> {
