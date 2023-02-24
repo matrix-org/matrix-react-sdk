@@ -431,7 +431,7 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
         const { isLocalOnHold, isRemoteOnHold, sidebarShown, primaryFeed, secondaryFeed, sidebarFeeds } = this.state;
 
         const callRoomId = LegacyCallHandler.instance.roomIdForCall(call);
-        const callRoom = callRoomId ? MatrixClientPeg.get().getRoom(callRoomId) : null;
+        const callRoom = callRoomId ? MatrixClientPeg.get().getRoom(callRoomId) : undefined;
         const avatarSize = pipMode ? 76 : 160;
         const transfereeCall = LegacyCallHandler.instance.getTransfereeForCallId(call.callId);
         const isOnHold = isLocalOnHold || isRemoteOnHold;

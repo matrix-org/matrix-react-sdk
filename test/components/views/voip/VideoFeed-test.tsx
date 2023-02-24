@@ -44,7 +44,7 @@ describe("VideoFeed", () => {
     });
 
     afterAll(() => {
-        DMRoomMap.shared = undefined;
+        jest.restoreAllMocks();
     });
 
     it("Displays the room avatar when no video is available", () => {
