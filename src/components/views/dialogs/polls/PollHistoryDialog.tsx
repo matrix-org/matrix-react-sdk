@@ -55,8 +55,6 @@ export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({ roomId, ma
     const pollStartEvents = filterAndSortPolls(polls, filter);
     const isLoadingPollResponses = [...polls.values()].some((poll) => poll.isFetchingResponses);
 
-    console.log('hhh', { isLoading, isLoadingPollResponses });
-
     return (
         <BaseDialog title={_t("Polls history")} onFinished={onFinished}>
             <div className="mx_PollHistoryDialog_content">

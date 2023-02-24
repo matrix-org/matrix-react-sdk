@@ -56,7 +56,6 @@ const pagePollHistory = async (
 
     await matrixClient.paginateEventTimeline(liveTimeline, {
         backwards: true,
-        limit: 1,
     });
 
     return {
@@ -92,7 +91,10 @@ const ONE_DAY_MS = 60000 * 60 * 24;
  * @param timelineSet - timelineset to page
  * @param matrixClient - client
  * @param historyPeriodDays - number of days of history to fetch, from current day
- * @returns isLoading - true while fetching history
+ * @returns isLoading - true while fetching
+ * @returns oldestEventTimestamp - timestamp of oldest encountered poll, undefined when no polls found in timeline so far
+ * @returns loadMorePolls - function to page timeline backwards, undefined when timeline cannot be paged backwards
+ * @returns loadTimelineHistory - loads timeline history for the given history period
  */
 const useTimelineHistory = (
     timelineSet: EventTimelineSet | null,
@@ -100,16 +102,13 @@ const useTimelineHistory = (
     historyPeriodDays: number,
 ): {
     isLoading: boolean;
-    canPageBackward: boolean;
     oldestEventTimestamp?: number;
     loadTimelineHistory: () => Promise<void>;
     loadMorePolls?: () => Promise<void>;
 } => {
     const [isLoading, setIsLoading] = useState(true);
-    const [oldestEventTimestamp, setOldestEventTimestamp] = useState<number>(getOldestEventTimestamp(timelineSet));
-    const [canPageBackward, setCanPageBackward] = useState(
-        !!timelineSet?.getLiveTimeline()?.getPaginationToken(EventTimeline.BACKWARDS),
-    );
+    const [oldestEventTimestamp, setOldestEventTimestamp] = useState<number | undefined>(undefined);
+    const [canPageBackward, setCanPageBackward] = useState(false);
 
     const loadTimelineHistory = useCallback(async () => {
         const endOfHistoryPeriodTimestamp = Date.now() - ONE_DAY_MS * historyPeriodDays;
@@ -134,7 +133,7 @@ const useTimelineHistory = (
         } finally {
             setIsLoading(false);
         }
-    }, [pagePollHistory, historyPeriodDays, timelineSet, matrixClient]);
+    }, [historyPeriodDays, timelineSet, matrixClient]);
 
     const loadMorePolls = useCallback(async () => {
         setIsLoading(true);
@@ -152,7 +151,6 @@ const useTimelineHistory = (
 
     return {
         isLoading,
-        canPageBackward,
         oldestEventTimestamp,
         loadTimelineHistory,
         loadMorePolls: canPageBackward ? loadMorePolls : undefined,
@@ -177,7 +175,7 @@ const filterDefinition: IFilterDefinition = {
 export const useFetchPastPolls = (
     room: Room,
     matrixClient: MatrixClient,
-    historyPeriodDays = 0,
+    historyPeriodDays = 30,
 ): {
     isLoading: boolean;
     oldestEventTimestamp?: number;

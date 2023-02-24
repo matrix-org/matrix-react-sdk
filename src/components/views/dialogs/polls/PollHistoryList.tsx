@@ -80,10 +80,10 @@ const getNoResultsMessage = (
 
 const NoResults: React.FC<{
     filter: PollHistoryFilter;
-    oldestEventTimestamp?: number;
+    oldestFetchedEventTimestamp?: number;
     loadMorePolls?: () => void;
     isLoading?: boolean;
-}> = ({ filter, isLoading, oldestEventTimestamp, loadMorePolls }) => {
+}> = ({ filter, isLoading, oldestFetchedEventTimestamp, loadMorePolls }) => {
     // we can't page the timeline anymore
     if (!loadMorePolls && isLoading) {
         return <LoadingPolls noResultsYet />;
@@ -91,7 +91,7 @@ const NoResults: React.FC<{
 
     return (
         <span className="mx_PollHistoryList_noResults">
-            {getNoResultsMessage(filter, oldestEventTimestamp, loadMorePolls)}
+            {getNoResultsMessage(filter, oldestFetchedEventTimestamp, loadMorePolls)}
 
             {!!loadMorePolls && <LoadMorePolls loadMorePolls={loadMorePolls} isLoading={isLoading} />}
         </span>
