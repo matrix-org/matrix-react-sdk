@@ -277,7 +277,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
             {
                 email: this.state.email,
                 errorText: this.state.errorText,
-                onCloseClick: () => {
+                onFinished: () => {
                     modal.close();
                     this.setState({ phase: Phase.PasswordInput });
                 },
@@ -368,7 +368,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
     }
 
     public async renderConfirmLogoutDevicesDialog(): Promise<boolean> {
-        const { finished } = Modal.createDialog<[boolean]>(QuestionDialog, {
+        const { finished } = Modal.createDialog(QuestionDialog, {
             title: _t("Warning!"),
             description: (
                 <div>

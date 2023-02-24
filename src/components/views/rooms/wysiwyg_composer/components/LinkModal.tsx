@@ -35,7 +35,7 @@ export function openLinkModal(
         {
             composerContext,
             composer,
-            onClose: () => modal.close(),
+            onFinished: () => modal.close(),
             isTextEnabled: isSelectionEmpty(),
             isEditing,
         },
@@ -52,18 +52,18 @@ function isEmpty(text: string): boolean {
 interface LinkModalProps {
     composer: FormattingFunctions;
     isTextEnabled: boolean;
-    onClose: () => void;
+    onFinished: () => void;
     composerContext: ComposerContextState;
     isEditing: boolean;
 }
 
-export function LinkModal({
+export const LinkModal: React.FC<LinkModalProps> = ({
     composer,
     isTextEnabled,
-    onClose,
+    onFinished,
     composerContext,
     isEditing,
-}: LinkModalProps): JSX.Element {
+}) => {
     const [hasLinkChanged, setHasLinkChanged] = useState(false);
     const [fields, setFields] = useState({ text: "", link: isEditing ? composer.getLink() : "" });
     const hasText = !isEditing && isTextEnabled;
@@ -74,7 +74,7 @@ export function LinkModal({
             className="mx_LinkModal"
             title={isEditing ? _t("Edit link") : _t("Create a link")}
             hasCancel={true}
-            onFinished={onClose}
+            onFinished={onFinished}
         >
             <form
                 className="mx_LinkModal_content"
@@ -82,7 +82,7 @@ export function LinkModal({
                     evt.preventDefault();
                     evt.stopPropagation();
 
-                    onClose();
+                    onFinished();
 
                     // When submitting is done when pressing enter when the link field has the focus,
                     // The link field is getting back the focus (due to react-focus-lock)
@@ -126,7 +126,7 @@ export function LinkModal({
                             className="danger"
                             onClick={() => {
                                 composer.removeLinks();
-                                onClose();
+                                onFinished();
                             }}
                         >
                             {_t("Remove")}
@@ -136,10 +136,10 @@ export function LinkModal({
                         primaryButton={_t("Save")}
                         primaryDisabled={isSaveDisabled}
                         primaryIsSubmit={true}
-                        onCancel={onClose}
+                        onCancel={onFinished}
                     />
                 </div>
             </form>
         </BaseDialog>
     );
-}
+};

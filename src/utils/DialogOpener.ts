@@ -32,6 +32,7 @@ import { ButtonEvent } from "../components/views/elements/AccessibleButton";
 import PosthogTrackers from "../PosthogTrackers";
 import { showAddExistingSubspace, showCreateNewRoom } from "./space";
 import { SdkContextClass } from "../contexts/SDKContext";
+import { ComponentProps } from "react";
 
 /**
  * Auxiliary class to listen for dialog opening over the dispatcher and
@@ -114,7 +115,7 @@ export class DialogOpener {
                         kind: payload.kind,
                         call: payload.call,
                         roomId: payload.roomId,
-                    },
+                    } as Omit<ComponentProps<typeof InviteDialog>, "onFinished">,
                     classnames("mx_InviteDialog_flexWrapper", payload.className),
                     false,
                     true,

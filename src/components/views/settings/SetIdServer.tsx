@@ -221,8 +221,8 @@ export default class SetIdServer extends React.Component<IProps, IState> {
         });
     };
 
-    private showNoTermsWarning(fullUrl: string): Promise<[boolean]> {
-        const { finished } = Modal.createDialog<[boolean]>(QuestionDialog, {
+    private showNoTermsWarning(fullUrl: string): Promise<[ok?: boolean]> {
+        const { finished } = Modal.createDialog(QuestionDialog, {
             title: _t("Identity server has no terms of service"),
             description: (
                 <div>
@@ -265,7 +265,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
         title: string;
         unboundMessage: ReactNode;
         button: string;
-    }): Promise<[boolean]> {
+    }): Promise<[ok?: boolean]> {
         const { currentClientIdServer } = this.state;
 
         let threepids: IThreepid[] = [];
@@ -350,7 +350,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
             message = unboundMessage;
         }
 
-        const { finished } = Modal.createDialog<[boolean]>(QuestionDialog, {
+        const { finished } = Modal.createDialog(QuestionDialog, {
             title,
             description: message,
             button,

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 
 import { _t } from "../../../../languageHandler";
 import AccessibleButton from "../../../views/elements/AccessibleButton";
@@ -26,8 +26,8 @@ import { ErrorMessage } from "../../ErrorMessage";
 
 interface Props {
     email: string;
-    errorText: string | null;
-    onCloseClick: () => void;
+    errorText: ReactNode | null;
+    onFinished: () => void;
     onReEnterEmailClick: () => void;
     onResendClick: () => Promise<boolean>;
 }
@@ -35,7 +35,7 @@ interface Props {
 export const VerifyEmailModal: React.FC<Props> = ({
     email,
     errorText,
-    onCloseClick,
+    onFinished,
     onReEnterEmailClick,
     onResendClick,
 }) => {
@@ -84,11 +84,7 @@ export const VerifyEmailModal: React.FC<Props> = ({
                 </AccessibleButton>
             </div>
 
-            <AccessibleButton
-                onClick={onCloseClick}
-                className="mx_Dialog_cancelButton"
-                aria-label={_t("Close dialog")}
-            />
+            <AccessibleButton onClick={onFinished} className="mx_Dialog_cancelButton" aria-label={_t("Close dialog")} />
         </>
     );
 };

@@ -24,10 +24,10 @@ import BaseDialog from "./BaseDialog";
 import EncryptionPanel from "../right_panel/EncryptionPanel";
 
 interface IProps {
-    verificationRequest: VerificationRequest;
-    verificationRequestPromise: Promise<VerificationRequest>;
+    verificationRequest?: VerificationRequest;
+    verificationRequestPromise?: Promise<VerificationRequest>;
     onFinished: () => void;
-    member: User;
+    member?: User;
 }
 
 interface IState {
