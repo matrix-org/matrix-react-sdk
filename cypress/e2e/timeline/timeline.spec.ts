@@ -202,16 +202,15 @@ describe("Timeline", () => {
             // 3. Alignment of expanded GELS and placeholder of deleted message
             // 4. Alignment of expanded GELS, placeholder of deleted message, and emote
 
-            // Exclude timestamp from snapshot
-            const percyCSS =
-                ".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp " + "{ visibility: hidden !important; }";
+            // Exclude timestamp from snapshot of mx_MainSplit
+            const percyCSS = ".mx_MainSplit .mx_MessageTimestamp { visibility: hidden !important; }";
 
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
 
             // Wait until configuration is finished
             cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary " + ".mx_GenericEventListSummary_summary",
+                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
                 "created and configured the room.",
             ).should("exist");
 
