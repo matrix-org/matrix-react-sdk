@@ -47,7 +47,7 @@ const SpaceSettingsVisibilityTab: React.FC<IProps> = ({ matrixClient: cli, space
         false,
     );
 
-    const userId = cli.getUserId();
+    const userId = cli.getUserId()!;
 
     const joinRule = useRoomState(space, (state) => state.getJoinRule());
     const [guestAccessEnabled, setGuestAccessEnabled] = useLocalEcho<boolean>(
@@ -93,7 +93,7 @@ const SpaceSettingsVisibilityTab: React.FC<IProps> = ({ matrixClient: cli, space
         advancedSection = (
             <div>
                 <AccessibleButton
-                    data-test-id="toggle-guest-access-btn"
+                    data-testid="toggle-guest-access-btn"
                     onClick={toggleAdvancedSection}
                     kind="link"
                     className="mx_SettingsTab_showAdvanced"
@@ -120,7 +120,7 @@ const SpaceSettingsVisibilityTab: React.FC<IProps> = ({ matrixClient: cli, space
         );
     }
 
-    let addressesSection;
+    let addressesSection: JSX.Element | undefined;
     if (space.getJoinRule() === JoinRule.Public) {
         addressesSection = (
             <>
@@ -129,7 +129,7 @@ const SpaceSettingsVisibilityTab: React.FC<IProps> = ({ matrixClient: cli, space
                     roomId={space.roomId}
                     canSetCanonicalAlias={canSetCanonical}
                     canSetAliases={true}
-                    canonicalAliasEvent={canonicalAliasEv}
+                    canonicalAliasEvent={canonicalAliasEv ?? undefined}
                     hidePublishSetting={!serverSupportsExploringSpaces}
                 />
             </>
@@ -141,13 +141,13 @@ const SpaceSettingsVisibilityTab: React.FC<IProps> = ({ matrixClient: cli, space
             <div className="mx_SettingsTab_heading">{_t("Visibility")}</div>
 
             {error && (
-                <div data-test-id="space-settings-error" className="mx_SpaceRoomView_errorText">
+                <div data-testid="space-settings-error" className="mx_SpaceRoomView_errorText">
                     {error}
                 </div>
             )}
 
             <SettingsFieldset
-                data-test-id="access-fieldset"
+                data-testid="access-fieldset"
                 legend={_t("Access")}
                 description={_t("Decide who can view and join %(spaceName)s.", { spaceName: space.name })}
             >

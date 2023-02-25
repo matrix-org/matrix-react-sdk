@@ -19,7 +19,7 @@ import * as linkifyjs from "linkifyjs";
 import { Opts, registerCustomProtocol, registerPlugin } from "linkifyjs";
 import linkifyElement from "linkify-element";
 import linkifyString from "linkify-string";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { User } from "matrix-js-sdk/src/matrix";
 
 import {
     parsePermalink,
@@ -105,13 +105,9 @@ function matrixOpaqueIdLinkifyParser({
 
 function onUserClick(event: MouseEvent, userId: string): void {
     event.preventDefault();
-    const member = new RoomMember(null, userId);
-    if (!member) {
-        return;
-    }
     dis.dispatch<ViewUserPayload>({
         action: Action.ViewUser,
-        member: member,
+        member: new User(userId),
     });
 }
 
@@ -176,16 +172,16 @@ export const options: Opts = {
                 return {
                     // @ts-ignore see https://linkify.js.org/docs/options.html
                     click: function (e: MouseEvent) {
-                        const userId = parsePermalink(href).userId;
-                        onUserClick(e, userId);
+                        const userId = parsePermalink(href)?.userId;
+                        if (userId) onUserClick(e, userId);
                     },
                 };
             case Type.RoomAlias:
                 return {
                     // @ts-ignore see https://linkify.js.org/docs/options.html
                     click: function (e: MouseEvent) {
-                        const alias = parsePermalink(href).roomIdOrAlias;
-                        onAliasClick(e, alias);
+                        const alias = parsePermalink(href)?.roomIdOrAlias;
+                        if (alias) onAliasClick(e, alias);
                     },
                 };
         }

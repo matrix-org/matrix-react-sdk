@@ -97,11 +97,17 @@ export function createTestClient(): MatrixClient {
         getSafeUserId: jest.fn().mockReturnValue("@userId:matrix.org"),
         getUserIdLocalpart: jest.fn().mockResolvedValue("userId"),
         getUser: jest.fn().mockReturnValue({ on: jest.fn() }),
+        getDevice: jest.fn(),
         getDeviceId: jest.fn().mockReturnValue("ABCDEFGHI"),
+        getStoredCrossSigningForUser: jest.fn(),
+        getStoredDevice: jest.fn(),
+        requestVerification: jest.fn(),
         deviceId: "ABCDEFGHI",
         getDevices: jest.fn().mockResolvedValue({ devices: [{ device_id: "ABCDEFGHI" }] }),
         getSessionId: jest.fn().mockReturnValue("iaszphgvfku"),
         credentials: { userId: "@userId:matrix.org" },
+        bootstrapCrossSigning: jest.fn(),
+        hasSecretStorageKey: jest.fn(),
 
         store: {
             getPendingEvents: jest.fn().mockResolvedValue([]),
@@ -180,6 +186,7 @@ export function createTestClient(): MatrixClient {
         getPushRules: jest.fn().mockResolvedValue(undefined),
         getPushers: jest.fn().mockResolvedValue({ pushers: [] }),
         getThreePids: jest.fn().mockResolvedValue({ threepids: [] }),
+        bulkLookupThreePids: jest.fn().mockResolvedValue({ threepids: [] }),
         setPusher: jest.fn().mockResolvedValue(undefined),
         setPushRuleEnabled: jest.fn().mockResolvedValue(undefined),
         setPushRuleActions: jest.fn().mockResolvedValue(undefined),
@@ -214,6 +221,15 @@ export function createTestClient(): MatrixClient {
 
         createMessagesRequest: jest.fn().mockResolvedValue({
             chunk: [],
+        }),
+        sendEvent: jest.fn().mockImplementation((roomId, type, content) => {
+            return new MatrixEvent({
+                type,
+                sender: "@me:localhost",
+                content,
+                event_id: "$9999999999999999999999999999999999999999999",
+                room_id: roomId,
+            });
         }),
     } as unknown as MatrixClient;
 

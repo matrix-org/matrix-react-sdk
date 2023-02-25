@@ -40,15 +40,12 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
     const progressCallback = opts.progressCallback || ((): void => {});
 
     progressCallback(_t("Collecting app version information"));
-    let version = "UNKNOWN";
+    let version: string | undefined;
     try {
-        version = await PlatformPeg.get().getAppVersion();
+        version = await PlatformPeg.get()?.getAppVersion();
     } catch (err) {} // PlatformPeg already logs this.
 
-    let userAgent = "UNKNOWN";
-    if (window.navigator && window.navigator.userAgent) {
-        userAgent = window.navigator.userAgent;
-    }
+    const userAgent = window.navigator?.userAgent ?? "UNKNOWN";
 
     let installedPWA = "UNKNOWN";
     try {
@@ -69,7 +66,7 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
     const body = new FormData();
     body.append("text", opts.userText || "User did not supply any additional text.");
     body.append("app", opts.customApp || "element-web");
-    body.append("version", version);
+    body.append("version", version ?? "UNKNOWN");
     body.append("user_agent", userAgent);
     body.append("installed_pwa", installedPWA);
     body.append("touch_input", touchInput);
@@ -81,8 +78,8 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
     }
 
     if (client) {
-        body.append("user_id", client.credentials.userId);
-        body.append("device_id", client.deviceId);
+        body.append("user_id", client.credentials.userId!);
+        body.append("device_id", client.deviceId!);
 
         // TODO: make this work with rust crypto
         if (client.isCryptoEnabled() && client.crypto) {
@@ -181,7 +178,7 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
         }
     }
 
-    body.append("mx_local_settings", localStorage.getItem("mx_local_settings"));
+    body.append("mx_local_settings", localStorage.getItem("mx_local_settings")!);
 
     if (opts.sendLogs) {
         progressCallback(_t("Collecting logs"));
@@ -293,9 +290,9 @@ export async function submitFeedback(
     canContact = false,
     extraData: Record<string, string> = {},
 ): Promise<void> {
-    let version = "UNKNOWN";
+    let version: string | undefined;
     try {
-        version = await PlatformPeg.get().getAppVersion();
+        version = await PlatformPeg.get()?.getAppVersion();
     } catch (err) {} // PlatformPeg already logs this.
 
     const body = new FormData();
@@ -304,7 +301,7 @@ export async function submitFeedback(
     body.append("can_contact", canContact ? "yes" : "no");
 
     body.append("app", "element-web");
-    body.append("version", version);
+    body.append("version", version || "UNKNOWN");
     body.append("platform", PlatformPeg.get().getHumanReadableName());
     body.append("user_id", MatrixClientPeg.get()?.getUserId());
 

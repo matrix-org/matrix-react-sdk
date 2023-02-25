@@ -1,5 +1,5 @@
 /*
-Copyright 2019-2022 The Matrix.org Foundation C.I.C.
+Copyright 2019-2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -58,20 +58,20 @@ export default class RightPanelStore extends ReadyWatchingStore {
      * Resets the store. Intended for test usage only.
      */
     public reset(): void {
-        this.global = null;
+        this.global = undefined;
         this.byRoom = {};
         this.viewedRoomId = null;
     }
 
     protected async onReady(): Promise<any> {
         this.viewedRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
-        this.matrixClient.on(CryptoEvent.VerificationRequest, this.onVerificationRequestUpdate);
+        this.matrixClient?.on(CryptoEvent.VerificationRequest, this.onVerificationRequestUpdate);
         this.loadCacheFromSettings();
         this.emitAndUpdateSettings();
     }
 
     protected async onNotReady(): Promise<any> {
-        this.matrixClient.off(CryptoEvent.VerificationRequest, this.onVerificationRequestUpdate);
+        this.matrixClient?.off(CryptoEvent.VerificationRequest, this.onVerificationRequestUpdate);
     }
 
     protected onDispatcherAction(payload: ActionPayload): void {
@@ -160,7 +160,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         }
     }
 
-    public setCards(cards: IRightPanelCard[], allowClose = true, roomId: string = null): void {
+    public setCards(cards: IRightPanelCard[], allowClose = true, roomId: string | null = null): void {
         // This function sets the history of the right panel and shows the right panel if not already visible.
         const rId = roomId ?? this.viewedRoomId;
         const history = cards.map((c) => ({ phase: c.phase, state: c.state ?? {} }));
@@ -170,7 +170,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     // Appends a card to the history and shows the right panel if not already visible
-    public pushCard(card: IRightPanelCard, allowClose = true, roomId: string = null): void {
+    public pushCard(card: IRightPanelCard, allowClose = true, roomId: string | null = null): void {
         const rId = roomId ?? this.viewedRoomId;
         const redirect = this.getVerificationRedirect(card);
         const targetPhase = redirect?.phase ?? card.phase;
@@ -196,7 +196,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         this.emitAndUpdateSettings();
     }
 
-    public popCard(roomId: string = null): IRightPanelCard {
+    public popCard(roomId: string | null = null): IRightPanelCard | undefined {
         const rId = roomId ?? this.viewedRoomId;
         if (!this.byRoom[rId]) return;
 
@@ -277,11 +277,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         // or potentially other errors.
         // (A nicer fix could be to indicate, that the right panel is loading if there is missing state data and re-emit if the data is available)
         switch (card.phase) {
-            case RightPanelPhases.ThreadPanel:
-                if (!SettingsStore.getValue("feature_threadenabled")) return false;
-                break;
             case RightPanelPhases.ThreadView:
-                if (!SettingsStore.getValue("feature_threadenabled")) return false;
                 if (!card.state.threadHeadEvent) {
                     logger.warn("removed card from right panel because of missing threadHeadEvent in card state");
                 }
@@ -308,7 +304,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         return true;
     }
 
-    private getVerificationRedirect(card: IRightPanelCard): IRightPanelCard {
+    private getVerificationRedirect(card: IRightPanelCard): IRightPanelCard | null {
         if (card.phase === RightPanelPhases.RoomMemberInfo && card.state) {
             // RightPanelPhases.RoomMemberInfo -> needs to be changed to RightPanelPhases.EncryptionPanel if there is a pending verification request
             const { member } = card.state;
@@ -326,8 +322,8 @@ export default class RightPanelStore extends ReadyWatchingStore {
         return null;
     }
 
-    private isPhaseValid(targetPhase: RightPanelPhases, isViewingRoom: boolean): boolean {
-        if (!RightPanelPhases[targetPhase]) {
+    private isPhaseValid(targetPhase: RightPanelPhases | null, isViewingRoom: boolean): boolean {
+        if (!targetPhase || !RightPanelPhases[targetPhase]) {
             logger.warn(`Tried to switch right panel to unknown phase: ${targetPhase}`);
             return false;
         }
@@ -376,7 +372,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         // the room member list.
         if (SettingsStore.getValue("feature_right_panel_default_open") && !this.byRoom[this.viewedRoomId]?.isOpen) {
             const history = [{ phase: RightPanelPhases.RoomMemberList }];
-            const room = this.viewedRoomId && this.mxClient?.getRoom(this.viewedRoomId);
+            const room = this.viewedRoomId ? this.mxClient?.getRoom(this.viewedRoomId) : undefined;
             if (!room?.isSpaceRoom()) {
                 history.unshift({ phase: RightPanelPhases.RoomSummary });
             }

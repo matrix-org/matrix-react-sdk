@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { IAnnotatedPushRule, IPusher, PushRuleAction, PushRuleKind, RuleId } from "matrix-js-sdk/src/@types/PushRules";
 import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -152,7 +152,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         // the master rule is *enabled* it means all other rules are *disabled* (or
         // inhibited). Conversely, when the master rule is *disabled* then all other rules
         // are *enabled* (or operate fine).
-        return this.state.masterPushRule?.enabled;
+        return !!this.state.masterPushRule?.enabled;
     }
 
     public componentDidMount(): void {
@@ -328,7 +328,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         this.setState({ phase: Phase.Persisting });
 
         try {
-            const masterRule = this.state.masterPushRule;
+            const masterRule = this.state.masterPushRule!;
             await MatrixClientPeg.get().setPushRuleEnabled("global", masterRule.kind, masterRule.rule_id, !checked);
             await this.refreshFromServer();
         } catch (e) {
@@ -396,8 +396,8 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             if (rule.ruleId === KEYWORD_RULE_ID) {
                 // Update all the keywords
                 for (const rule of this.state.vectorKeywordRuleInfo.rules) {
-                    let enabled: boolean;
-                    let actions: PushRuleAction[];
+                    let enabled: boolean | undefined;
+                    let actions: PushRuleAction[] | undefined;
                     if (checkedState === VectorState.On) {
                         if (rule.actions.length !== 1) {
                             // XXX: Magic number
@@ -622,12 +622,12 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         );
     }
 
-    private renderCategory(category: RuleClass): JSX.Element {
+    private renderCategory(category: RuleClass): ReactNode {
         if (category !== RuleClass.VectorOther && this.isInhibited) {
             return null; // nothing to show for the section
         }
 
-        let clearNotifsButton: JSX.Element;
+        let clearNotifsButton: JSX.Element | undefined;
         if (
             category === RuleClass.VectorOther &&
             MatrixClientPeg.get()
@@ -660,7 +660,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             return null;
         }
 
-        let keywordComposer: JSX.Element;
+        let keywordComposer: JSX.Element | undefined;
         if (category === RuleClass.VectorMentions) {
             keywordComposer = (
                 <TagComposer
@@ -691,7 +691,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             />
         );
 
-        const fieldsetRows = this.state.vectorPushRules[category].map((r) => (
+        const fieldsetRows = this.state.vectorPushRules[category]?.map((r) => (
             <fieldset
                 key={category + r.ruleId}
                 data-testid={category + r.ruleId}
@@ -736,10 +736,10 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         );
     }
 
-    private renderTargets(): JSX.Element {
+    private renderTargets(): ReactNode {
         if (this.isInhibited) return null; // no targets if there's no notifications
 
-        const rows = this.state.pushers.map((p) => (
+        const rows = this.state.pushers?.map((p) => (
             <tr key={p.kind + p.pushkey}>
                 <td>{p.app_display_name}</td>
                 <td>{p.device_display_name}</td>

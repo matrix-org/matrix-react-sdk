@@ -2,7 +2,7 @@
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd.
 Copyright 2017, 2018, 2019 New Vector Ltd
-Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -166,7 +166,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         }
 
         try {
-            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time"), 10);
+            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time")!, 10);
             const diff = Date.now() - registrationTime;
             return diff / 36e5 <= hours;
         } catch (e) {
@@ -176,7 +176,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
 
     public userRegisteredAfter(timestamp: Date): boolean {
         try {
-            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time"), 10);
+            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time")!, 10);
             return timestamp.getTime() <= registrationTime;
         } catch (e) {
             return false;
@@ -218,7 +218,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         opts.pendingEventOrdering = PendingEventOrdering.Detached;
         opts.lazyLoadMembers = true;
         opts.clientWellKnownPollPeriod = 2 * 60 * 60; // 2 hours
-        opts.threadSupport = SettingsStore.getValue("feature_threadenabled");
+        opts.threadSupport = true;
 
         if (SettingsStore.getValue("feature_sliding_sync")) {
             const proxyUrl = SettingsStore.getValue("feature_sliding_sync_proxy_url");
@@ -292,7 +292,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     }
 
     public getCredentials(): IMatrixClientCreds {
-        let copiedCredentials = this.currentClientCreds;
+        let copiedCredentials: IMatrixClientCreds | null = this.currentClientCreds;
         if (this.currentClientCreds?.userId !== this.matrixClient?.credentials?.userId) {
             // cached credentials belong to a different user - don't use them
             copiedCredentials = null;

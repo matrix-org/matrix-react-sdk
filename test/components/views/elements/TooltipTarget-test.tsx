@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { renderIntoDocument, Simulate } from "react-dom/test-utils";
-import { act } from "react-dom/test-utils";
+import { act, renderIntoDocument, Simulate } from "react-dom/test-utils";
 
 import { Alignment } from "../../../../src/components/views/elements/Tooltip";
 import TooltipTarget from "../../../../src/components/views/elements/TooltipTarget";
@@ -36,7 +35,7 @@ describe("<TooltipTarget />", () => {
         // clean up renderer tooltips
         const wrapper = document.querySelector(".mx_Tooltip_wrapper");
         while (wrapper?.firstChild) {
-            wrapper.removeChild(wrapper.lastChild);
+            wrapper.removeChild(wrapper.lastChild!);
         }
     });
 
@@ -62,7 +61,7 @@ describe("<TooltipTarget />", () => {
 
     const alignmentKeys = Object.keys(Alignment).filter((o: any) => isNaN(o));
     it.each(alignmentKeys)("displays %s aligned tooltip on mouseover", async (alignment: any) => {
-        const wrapper = getComponent({ alignment: Alignment[alignment] });
+        const wrapper = getComponent({ alignment: Alignment[alignment] })!;
         act(() => {
             Simulate.mouseOver(wrapper);
         });
@@ -70,7 +69,7 @@ describe("<TooltipTarget />", () => {
     });
 
     it("hides tooltip on mouseleave", () => {
-        const wrapper = getComponent();
+        const wrapper = getComponent()!;
         act(() => {
             Simulate.mouseOver(wrapper);
         });
@@ -82,7 +81,7 @@ describe("<TooltipTarget />", () => {
     });
 
     it("displays tooltip on focus", () => {
-        const wrapper = getComponent();
+        const wrapper = getComponent()!;
         act(() => {
             Simulate.focus(wrapper);
         });
@@ -90,7 +89,7 @@ describe("<TooltipTarget />", () => {
     });
 
     it("hides tooltip on blur", async () => {
-        const wrapper = getComponent();
+        const wrapper = getComponent()!;
         act(() => {
             Simulate.focus(wrapper);
         });

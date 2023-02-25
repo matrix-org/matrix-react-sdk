@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from "react";
-import { fireEvent, render } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import { act, fireEvent, render } from "@testing-library/react";
 import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { sleep } from "matrix-js-sdk/src/utils";
@@ -74,7 +73,7 @@ describe("<DevicesPanel />", () => {
 
         const toggleDeviceSelection = (container: HTMLElement, deviceId: string) =>
             act(() => {
-                const checkbox = container.querySelector(`#device-tile-checkbox-${deviceId}`);
+                const checkbox = container.querySelector(`#device-tile-checkbox-${deviceId}`)!;
                 fireEvent.click(checkbox);
             });
 
@@ -204,7 +203,7 @@ describe("<DevicesPanel />", () => {
 
             // close the modal without submission
             act(() => {
-                const modalCloseButton = document.querySelector('[aria-label="Close dialog"]');
+                const modalCloseButton = document.querySelector('[aria-label="Close dialog"]')!;
                 fireEvent.click(modalCloseButton);
             });
 

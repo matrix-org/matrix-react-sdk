@@ -37,6 +37,7 @@ import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalink
 import { mockPlatformPeg } from "../../../test-utils/platform";
 import { doMaybeLocalRoomAction } from "../../../../src/utils/local-room";
 import { addTextToComposer } from "../../../test-utils/composer";
+import dis from "../../../../src/dispatcher/dispatcher";
 
 jest.mock("../../../../src/utils/local-room", () => ({
     doMaybeLocalRoomAction: jest.fn(),
@@ -88,7 +89,7 @@ describe("<SendMessageComposer/>", () => {
             const documentOffset = new DocumentOffset(11, true);
             model.update("hello world", "insertText", documentOffset);
 
-            const content = createMessageContent(model, null, undefined, permalinkCreator);
+            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "hello world",
@@ -101,7 +102,7 @@ describe("<SendMessageComposer/>", () => {
             const documentOffset = new DocumentOffset(13, true);
             model.update("hello *world*", "insertText", documentOffset);
 
-            const content = createMessageContent(model, null, undefined, permalinkCreator);
+            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "hello *world*",
@@ -116,7 +117,7 @@ describe("<SendMessageComposer/>", () => {
             const documentOffset = new DocumentOffset(22, true);
             model.update("/me blinks __quickly__", "insertText", documentOffset);
 
-            const content = createMessageContent(model, null, undefined, permalinkCreator);
+            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "blinks __quickly__",
@@ -132,7 +133,7 @@ describe("<SendMessageComposer/>", () => {
             model.update("/me ✨sparkles✨", "insertText", documentOffset);
             expect(model.parts.length).toEqual(4); // Emoji count as non-text
 
-            const content = createMessageContent(model, null, undefined, permalinkCreator);
+            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "✨sparkles✨",
@@ -146,7 +147,7 @@ describe("<SendMessageComposer/>", () => {
 
             model.update("//dev/null is my favourite place", "insertText", documentOffset);
 
-            const content = createMessageContent(model, null, undefined, permalinkCreator);
+            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "/dev/null is my favourite place",
@@ -216,7 +217,7 @@ describe("<SendMessageComposer/>", () => {
 
             // ensure the right state was persisted to localStorage
             unmount();
-            expect(JSON.parse(localStorage.getItem(key))).toStrictEqual({
+            expect(JSON.parse(localStorage.getItem(key)!)).toStrictEqual({
                 parts: [{ type: "plain", text: "Test Text" }],
                 replyEventId: mockEvent.getId(),
             });
@@ -249,7 +250,7 @@ describe("<SendMessageComposer/>", () => {
 
             // ensure the right state was persisted to localStorage
             window.dispatchEvent(new Event("beforeunload"));
-            expect(JSON.parse(localStorage.getItem(key))).toStrictEqual({
+            expect(JSON.parse(localStorage.getItem(key)!)).toStrictEqual({
                 parts: [{ type: "plain", text: "Hello World" }],
             });
         });
@@ -260,7 +261,7 @@ describe("<SendMessageComposer/>", () => {
             const { container } = getComponent({ replyToEvent: mockEvent });
 
             addTextToComposer(container, "This is a message");
-            fireEvent.keyDown(container.querySelector(".mx_SendMessageComposer"), { key: "Enter" });
+            fireEvent.keyDown(container.querySelector(".mx_SendMessageComposer")!, { key: "Enter" });
 
             await waitFor(() => {
                 expect(spyDispatcher).toHaveBeenCalledWith({
@@ -271,7 +272,7 @@ describe("<SendMessageComposer/>", () => {
             });
 
             expect(container.textContent).toBe("");
-            const str = sessionStorage.getItem(`mx_cider_history_${mockRoom.roomId}[0]`);
+            const str = sessionStorage.getItem(`mx_cider_history_${mockRoom.roomId}[0]`)!;
             expect(JSON.parse(str)).toStrictEqual({
                 parts: [{ type: "plain", text: "This is a message" }],
                 replyEventId: mockEvent.getId(),
@@ -280,7 +281,7 @@ describe("<SendMessageComposer/>", () => {
 
         it("correctly sends a message", () => {
             mocked(doMaybeLocalRoomAction).mockImplementation(
-                <T extends {}>(roomId: string, fn: (actualRoomId: string) => Promise<T>, _client?: MatrixClient) => {
+                <T,>(roomId: string, fn: (actualRoomId: string) => Promise<T>, _client?: MatrixClient) => {
                     return fn(roomId);
                 },
             );
@@ -289,12 +290,60 @@ describe("<SendMessageComposer/>", () => {
             const { container } = getComponent();
 
             addTextToComposer(container, "test message");
-            fireEvent.keyDown(container.querySelector(".mx_SendMessageComposer"), { key: "Enter" });
+            fireEvent.keyDown(container.querySelector(".mx_SendMessageComposer")!, { key: "Enter" });
 
             expect(mockClient.sendMessage).toHaveBeenCalledWith("myfakeroom", null, {
                 body: "test message",
                 msgtype: MsgType.Text,
             });
+        });
+
+        it("shows chat effects on message sending", () => {
+            mocked(doMaybeLocalRoomAction).mockImplementation(
+                <T,>(roomId: string, fn: (actualRoomId: string) => Promise<T>, _client?: MatrixClient) => {
+                    return fn(roomId);
+                },
+            );
+
+            mockPlatformPeg({ overrideBrowserShortcuts: jest.fn().mockReturnValue(false) });
+            const { container } = getComponent();
+
+            addTextToComposer(container, "🎉");
+            fireEvent.keyDown(container.querySelector(".mx_SendMessageComposer")!, { key: "Enter" });
+
+            expect(mockClient.sendMessage).toHaveBeenCalledWith("myfakeroom", null, {
+                body: "test message",
+                msgtype: MsgType.Text,
+            });
+
+            expect(dis.dispatch).toHaveBeenCalledWith({ action: `effects.confetti` });
+        });
+
+        it("not to send chat effects on message sending for threads", () => {
+            mocked(doMaybeLocalRoomAction).mockImplementation(
+                <T,>(roomId: string, fn: (actualRoomId: string) => Promise<T>, _client?: MatrixClient) => {
+                    return fn(roomId);
+                },
+            );
+
+            mockPlatformPeg({ overrideBrowserShortcuts: jest.fn().mockReturnValue(false) });
+            const { container } = getComponent({
+                relation: {
+                    rel_type: "m.thread",
+                    event_id: "$yolo",
+                    is_falling_back: true,
+                },
+            });
+
+            addTextToComposer(container, "🎉");
+            fireEvent.keyDown(container.querySelector(".mx_SendMessageComposer")!, { key: "Enter" });
+
+            expect(mockClient.sendMessage).toHaveBeenCalledWith("myfakeroom", null, {
+                body: "test message",
+                msgtype: MsgType.Text,
+            });
+
+            expect(dis.dispatch).not.toHaveBeenCalledWith({ action: `effects.confetti` });
         });
     });
 
