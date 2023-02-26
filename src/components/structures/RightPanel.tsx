@@ -266,7 +266,8 @@ export default class RightPanel extends React.Component<IProps, IState> {
                     <RoomSummaryCard
                         room={this.props.room}
                         onClose={this.onClose}
-                        permalinkCreator={this.props.permalinkCreator}
+                        // whenever RightPanel is passed a room it is passed a permalinkcreator
+                        permalinkCreator={this.props.permalinkCreator!}
                     />
                 );
                 break;
