@@ -80,6 +80,22 @@ const mockRoom = mocked({
     getEventReadUpTo: jest.fn(),
 } as unknown as Room);
 
+const mockSpace = mocked({
+    roomId: "!fkfk",
+    getType: jest.fn().mockReturnValue("m.space"),
+    isSpaceRoom: jest.fn().mockReturnValue(true),
+    getMember: jest.fn().mockReturnValue(undefined),
+    getMxcAvatarUrl: jest.fn().mockReturnValue("mock-avatar-url"),
+    name: "test room",
+    on: jest.fn(),
+    off: jest.fn(),
+    currentState: {
+        getStateEvents: jest.fn(),
+        on: jest.fn(),
+    },
+    getEventReadUpTo: jest.fn(),
+} as unknown as Room);
+
 const mockClient = mocked({
     getUser: jest.fn(),
     isGuest: jest.fn().mockReturnValue(false),
@@ -722,14 +738,14 @@ describe("<RoomKickButton />", () => {
     it("clicking the kick button calls Modal.createDialog with the correct arguments", async () => {
         createDialogSpy.mockReturnValueOnce({ finished: Promise.resolve([]), close: jest.fn() });
 
-        renderComponent({ member: memberWithInviteMembership });
+        renderComponent({ room: mockSpace, member: memberWithInviteMembership });
         await userEvent.click(screen.getByText(/disinvite from/i));
 
         // check the last call arguments and the presence of the spaceChildFilter callback
         expect(createDialogSpy).toHaveBeenLastCalledWith(
             expect.any(Function),
             expect.objectContaining({ spaceChildFilter: expect.any(Function) }),
-            undefined,
+            "mx_ConfirmSpaceUserActionDialog_wrapper",
         );
 
         // test the spaceChildFilter callback
@@ -806,14 +822,14 @@ describe("<BanToggleButton />", () => {
     it("clicking the ban or unban button calls Modal.createDialog with the correct arguments if user is not banned", async () => {
         createDialogSpy.mockReturnValueOnce({ finished: Promise.resolve([]), close: jest.fn() });
 
-        renderComponent();
+        renderComponent({ room: mockSpace });
         await userEvent.click(screen.getByText(/ban from/i));
 
         // check the last call arguments and the presence of the spaceChildFilter callback
         expect(createDialogSpy).toHaveBeenLastCalledWith(
             expect.any(Function),
             expect.objectContaining({ spaceChildFilter: expect.any(Function) }),
-            undefined,
+            "mx_ConfirmSpaceUserActionDialog_wrapper",
         );
 
         // test the spaceChildFilter callback
@@ -844,14 +860,14 @@ describe("<BanToggleButton />", () => {
     it("clicking the ban or unban button calls Modal.createDialog with the correct arguments if user _is_ banned", async () => {
         createDialogSpy.mockReturnValueOnce({ finished: Promise.resolve([]), close: jest.fn() });
 
-        renderComponent({ member: memberWithBanMembership });
+        renderComponent({ room: mockSpace, member: memberWithBanMembership });
         await userEvent.click(screen.getByText(/ban from/i));
 
         // check the last call arguments and the presence of the spaceChildFilter callback
         expect(createDialogSpy).toHaveBeenLastCalledWith(
             expect.any(Function),
             expect.objectContaining({ spaceChildFilter: expect.any(Function) }),
-            undefined,
+            "mx_ConfirmSpaceUserActionDialog_wrapper",
         );
 
         // test the spaceChildFilter callback

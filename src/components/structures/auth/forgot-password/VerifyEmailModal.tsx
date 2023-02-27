@@ -27,11 +27,19 @@ import { ErrorMessage } from "../../ErrorMessage";
 interface Props {
     email: string;
     errorText: ReactNode | null;
-    onFinished: (reEnter?: boolean) => void;
+    onFinished(): void; // This modal is weird in that the way you close it signals intent
+    onCloseClick: () => void;
+    onReEnterEmailClick: () => void;
     onResendClick: () => Promise<boolean>;
 }
 
-export const VerifyEmailModal: React.FC<Props> = ({ email, errorText, onFinished, onResendClick }) => {
+export const VerifyEmailModal: React.FC<Props> = ({
+    email,
+    errorText,
+    onCloseClick,
+    onReEnterEmailClick,
+    onResendClick,
+}) => {
     const { toggle: toggleTooltipVisible, value: tooltipVisible } = useTimeoutToggle(false, 2500);
 
     const onResendClickFn = async (): Promise<void> => {
@@ -72,13 +80,13 @@ export const VerifyEmailModal: React.FC<Props> = ({ email, errorText, onFinished
 
             <div className="mx_AuthBody_did-not-receive">
                 <span className="mx_VerifyEMailDialog_text-light">{_t("Wrong email address?")}</span>
-                <AccessibleButton className="mx_AuthBody_resend-button" kind="link" onClick={() => onFinished(true)}>
+                <AccessibleButton className="mx_AuthBody_resend-button" kind="link" onClick={onReEnterEmailClick}>
                     {_t("Re-enter email address")}
                 </AccessibleButton>
             </div>
 
             <AccessibleButton
-                onClick={() => onFinished()}
+                onClick={onCloseClick}
                 className="mx_Dialog_cancelButton"
                 aria-label={_t("Close dialog")}
             />
