@@ -118,7 +118,9 @@ export const WysiwygComposer = memo(function WysiwygComposer({
                 <Autocomplete
                     ref={autocompleteRef}
                     query={query}
-                    onConfirm={({ completion, href }) => {
+                    onConfirm={(thing) => {
+                        console.log(thing);
+                        const { component, completion, href } = thing;
                         /**
                          * export interface ICompletion {
                             type?: "at-room" | "command" | "community" | "room" | "user";
@@ -134,9 +136,7 @@ export const WysiwygComposer = memo(function WysiwygComposer({
                          */
                         // do something with the output here with the rust model
                         console.log("selected something", completion, href);
-                        ref.current?.dispatchEvent(
-                            new InputEvent("input", { data: completion, inputType: "insertText" }),
-                        );
+                        wysiwyg.link(href, completion);
                     }}
                     onSelectionChange={(compIndex) => (autocompleteIndexRef.current = compIndex)}
                     selection={{ beginning: true, end: query.length, start: query.length }}
