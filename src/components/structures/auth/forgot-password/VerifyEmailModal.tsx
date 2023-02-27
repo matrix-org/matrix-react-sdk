@@ -27,18 +27,11 @@ import { ErrorMessage } from "../../ErrorMessage";
 interface Props {
     email: string;
     errorText: ReactNode | null;
-    onFinished: () => void;
-    onReEnterEmailClick: () => void;
+    onFinished: (reEnter?: boolean) => void;
     onResendClick: () => Promise<boolean>;
 }
 
-export const VerifyEmailModal: React.FC<Props> = ({
-    email,
-    errorText,
-    onFinished,
-    onReEnterEmailClick,
-    onResendClick,
-}) => {
+export const VerifyEmailModal: React.FC<Props> = ({ email, errorText, onFinished, onResendClick }) => {
     const { toggle: toggleTooltipVisible, value: tooltipVisible } = useTimeoutToggle(false, 2500);
 
     const onResendClickFn = async (): Promise<void> => {
@@ -79,12 +72,16 @@ export const VerifyEmailModal: React.FC<Props> = ({
 
             <div className="mx_AuthBody_did-not-receive">
                 <span className="mx_VerifyEMailDialog_text-light">{_t("Wrong email address?")}</span>
-                <AccessibleButton className="mx_AuthBody_resend-button" kind="link" onClick={onReEnterEmailClick}>
+                <AccessibleButton className="mx_AuthBody_resend-button" kind="link" onClick={() => onFinished(true)}>
                     {_t("Re-enter email address")}
                 </AccessibleButton>
             </div>
 
-            <AccessibleButton onClick={onFinished} className="mx_Dialog_cancelButton" aria-label={_t("Close dialog")} />
+            <AccessibleButton
+                onClick={() => onFinished()}
+                className="mx_Dialog_cancelButton"
+                aria-label={_t("Close dialog")}
+            />
         </>
     );
 };

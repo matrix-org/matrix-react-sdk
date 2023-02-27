@@ -18,7 +18,7 @@ import { FormattingFunctions } from "@matrix-org/matrix-wysiwyg";
 import React, { ChangeEvent, useState } from "react";
 
 import { _t } from "../../../../../languageHandler";
-import Modal, { IHandle } from "../../../../../Modal";
+import Modal from "../../../../../Modal";
 import Field from "../../../elements/Field";
 import { ComposerContextState } from "../ComposerContext";
 import { isSelectionEmpty, setSelection } from "../utils/selection";
@@ -30,12 +30,11 @@ export function openLinkModal(
     composerContext: ComposerContextState,
     isEditing: boolean,
 ): void {
-    const modal: IHandle<typeof LinkModal> = Modal.createDialog(
+    Modal.createDialog(
         LinkModal,
         {
             composerContext,
             composer,
-            onFinished: () => modal.close(),
             isTextEnabled: isSelectionEmpty(),
             isEditing,
         },

@@ -277,13 +277,12 @@ export default class ForgotPassword extends React.Component<Props, State> {
             {
                 email: this.state.email,
                 errorText: this.state.errorText,
-                onFinished: () => {
-                    modal.close();
-                    this.setState({ phase: Phase.PasswordInput });
-                },
-                onReEnterEmailClick: () => {
-                    modal.close();
-                    this.setState({ phase: Phase.EnterEmail });
+                onFinished: (reEnter?: boolean) => {
+                    if (reEnter) {
+                        this.setState({ phase: Phase.EnterEmail });
+                    } else {
+                        this.setState({ phase: Phase.PasswordInput });
+                    }
                 },
                 onResendClick: this.sendVerificationMail,
             },
