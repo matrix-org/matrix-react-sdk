@@ -151,7 +151,7 @@ describe("EventListSummary", function () {
 
         const { container } = renderComponent(props); // matrix cli context wrapper
 
-        const children = container.querySelector(".mx_GenericEventListSummary_unstyledList").children;
+        const children = container.querySelector(".mx_GenericEventListSummary_unstyledList")!.children;
         expect(children).toHaveLength(1);
         expect(children[0]).toHaveTextContent("Expanded membership");
     });
@@ -171,7 +171,7 @@ describe("EventListSummary", function () {
 
         const { container } = renderComponent(props); // matrix cli context wrapper
 
-        const children = container.querySelector(".mx_GenericEventListSummary_unstyledList").children;
+        const children = container.querySelector(".mx_GenericEventListSummary_unstyledList")!.children;
         expect(children).toHaveLength(2);
         expect(children[0]).toHaveTextContent("Expanded membership");
         expect(children[1]).toHaveTextContent("Expanded membership");

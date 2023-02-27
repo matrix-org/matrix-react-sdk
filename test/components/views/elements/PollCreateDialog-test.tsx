@@ -67,7 +67,7 @@ describe("PollCreateDialog", () => {
         const dialog = render(<PollCreateDialog room={createRoom()} onFinished={jest.fn()} />);
         expect(dialog.container.querySelector("#poll-topic-input")).toHaveFocus();
 
-        fireEvent.click(dialog.container.querySelector("div.mx_PollCreateDialog_addOption"));
+        fireEvent.click(dialog.container.querySelector("div.mx_PollCreateDialog_addOption")!);
 
         expect(dialog.container.querySelector("#poll-topic-input")).not.toHaveFocus();
         expect(dialog.container.querySelector("#pollcreate_option_1")).not.toHaveFocus();
@@ -82,7 +82,7 @@ describe("PollCreateDialog", () => {
         changeValue(dialog, "Question or topic", "How many turnips is the optimal number?");
         changeValue(dialog, "Option 1", "As many as my neighbour");
         changeValue(dialog, "Option 2", "The question is meaningless");
-        fireEvent.click(dialog.container.querySelector("div.mx_PollCreateDialog_addOption"));
+        fireEvent.click(dialog.container.querySelector("div.mx_PollCreateDialog_addOption")!);
         changeValue(dialog, "Option 3", "Mu");
         expect(dialog.asFragment()).toMatchSnapshot();
     });
@@ -165,7 +165,7 @@ describe("PollCreateDialog", () => {
         changeValue(dialog, "Option 2", "A2");
         expect(dialog.container.querySelector(".mx_Spinner")).toBeFalsy();
 
-        fireEvent.click(dialog.container.querySelector("button"));
+        fireEvent.click(dialog.container.querySelector("button")!);
         expect(dialog.container.querySelector(".mx_Spinner")).toBeDefined();
     });
 
@@ -175,7 +175,7 @@ describe("PollCreateDialog", () => {
         changeValue(dialog, "Option 1", "A1");
         changeValue(dialog, "Option 2", "A2");
 
-        fireEvent.click(dialog.container.querySelector("button"));
+        fireEvent.click(dialog.container.querySelector("button")!);
         const [, , eventType, sentEventContent] = mockClient.sendEvent.mock.calls[0];
         expect(M_POLL_START.matches(eventType)).toBeTruthy();
         expect(sentEventContent).toEqual({
@@ -217,7 +217,7 @@ describe("PollCreateDialog", () => {
         changeValue(dialog, "Question or topic", "Poll Q updated");
         changeValue(dialog, "Option 2", "Answer 2 updated");
         changeKind(dialog, M_POLL_KIND_UNDISCLOSED.name);
-        fireEvent.click(dialog.container.querySelector("button"));
+        fireEvent.click(dialog.container.querySelector("button")!);
 
         const [, , eventType, sentEventContent] = mockClient.sendEvent.mock.calls[0];
         expect(M_POLL_START.matches(eventType)).toBeTruthy();
@@ -264,7 +264,7 @@ describe("PollCreateDialog", () => {
         );
 
         changeValue(dialog, "Question or topic", "Poll Q updated");
-        fireEvent.click(dialog.container.querySelector("button"));
+        fireEvent.click(dialog.container.querySelector("button")!);
 
         const [, , eventType, sentEventContent] = mockClient.sendEvent.mock.calls[0];
         expect(M_POLL_START.matches(eventType)).toBeTruthy();
@@ -278,13 +278,13 @@ function createRoom(): Room {
 }
 
 function changeValue(wrapper: RenderResult, labelText: string, value: string) {
-    fireEvent.change(wrapper.container.querySelector(`input[label="${labelText}"]`), {
+    fireEvent.change(wrapper.container.querySelector(`input[label="${labelText}"]`)!, {
         target: { value: value },
     });
 }
 
 function changeKind(wrapper: RenderResult, value: string) {
-    fireEvent.change(wrapper.container.querySelector("select"), { target: { value: value } });
+    fireEvent.change(wrapper.container.querySelector("select")!, { target: { value: value } });
 }
 
 function expectSubmitToBeDisabled(wrapper: RenderResult, disabled: boolean) {

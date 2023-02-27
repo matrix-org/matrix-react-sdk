@@ -71,14 +71,14 @@ describe("InteractiveAuthComponent", function () {
         expect(submitNode).toHaveAttribute("aria-disabled", "true");
 
         // put something in the registration token box
-        fireEvent.change(registrationTokenNode, { target: { value: "s3kr3t" } });
+        fireEvent.change(registrationTokenNode!, { target: { value: "s3kr3t" } });
 
         expect(getRegistrationTokenInput(wrapper)).toHaveValue("s3kr3t");
         expect(submitNode).not.toHaveAttribute("disabled");
         expect(submitNode).not.toHaveAttribute("aria-disabled", "true");
 
         // hit enter; that should trigger a request
-        fireEvent.submit(formNode);
+        fireEvent.submit(formNode!);
 
         // wait for auth request to resolve
         await flushPromises();

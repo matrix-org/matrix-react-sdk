@@ -131,7 +131,7 @@ describe("<MBeaconBody />", () => {
             );
             makeRoomWithStateEvents([beaconInfoEvent], { roomId, mockClient });
             const component = getComponent({ mxEvent: beaconInfoEvent });
-            fireEvent.click(component.container.querySelector(".mx_MBeaconBody_map"));
+            fireEvent.click(component.container.querySelector(".mx_MBeaconBody_map")!);
 
             expect(modalSpy).not.toHaveBeenCalled();
         });
@@ -226,7 +226,7 @@ describe("<MBeaconBody />", () => {
             makeRoomWithStateEvents([aliceBeaconInfo], { roomId, mockClient });
             const component = getComponent({ mxEvent: aliceBeaconInfo });
 
-            fireEvent.click(component.container.querySelector(".mx_MBeaconBody_map"));
+            fireEvent.click(component.container.querySelector(".mx_MBeaconBody_map")!);
 
             expect(modalSpy).not.toHaveBeenCalled();
         });
@@ -246,7 +246,7 @@ describe("<MBeaconBody />", () => {
             beaconInstance.addLocations([location1]);
             const component = getComponent({ mxEvent: aliceBeaconInfo });
 
-            fireEvent.click(component.container.querySelector(".mx_Map"));
+            fireEvent.click(component.container.querySelector(".mx_Map")!);
 
             // opens modal
             expect(modalSpy).toHaveBeenCalled();
@@ -256,7 +256,7 @@ describe("<MBeaconBody />", () => {
             makeRoomWithStateEvents([aliceBeaconInfo], { roomId, mockClient });
             const component = getComponent({ mxEvent: aliceBeaconInfo });
 
-            fireEvent.click(component.container.querySelector(".mx_MBeaconBody_map"));
+            fireEvent.click(component.container.querySelector(".mx_MBeaconBody_map")!);
 
             expect(modalSpy).not.toHaveBeenCalled();
         });
