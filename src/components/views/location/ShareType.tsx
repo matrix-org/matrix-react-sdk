@@ -28,11 +28,11 @@ import StyledLiveBeaconIcon from "../beacon/StyledLiveBeaconIcon";
 
 const UserAvatar: React.FC = () => {
     const matrixClient = useContext(MatrixClientContext);
-    const userId = matrixClient.getUserId();
-    const displayName = OwnProfileStore.instance.displayName;
+    const userId = matrixClient.getSafeUserId();
+    const displayName = OwnProfileStore.instance.displayName ?? undefined;
     // 40 - 2px border
     const avatarSize = 36;
-    const avatarUrl = OwnProfileStore.instance.getHttpAvatarUrl(avatarSize);
+    const avatarUrl = OwnProfileStore.instance.getHttpAvatarUrl(avatarSize) ?? undefined;
 
     return (
         <div className={`mx_ShareType_option-icon ${LocationShareType.Own}`}>
