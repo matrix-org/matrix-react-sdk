@@ -21,8 +21,7 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 import { RelationType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { M_ASSET, LocationAssetType } from "matrix-js-sdk/src/@types/location";
-import { act } from "react-dom/test-utils";
-import { fireEvent, render, RenderResult } from "@testing-library/react";
+import { act, fireEvent, render, RenderResult } from "@testing-library/react";
 import * as maplibregl from "maplibre-gl";
 
 import LocationShareMenu from "../../../../src/components/views/location/LocationShareMenu";
@@ -147,7 +146,7 @@ describe("<LocationShareMenu />", () => {
     const setLocationGeolocate = () => {
         // get the callback LocationShareMenu registered for geolocate
         expect(mocked(mockGeolocate.on)).toHaveBeenCalledWith("geolocate", expect.any(Function));
-        const [, onGeolocateCallback] = mocked(mockGeolocate.on).mock.calls.find(([event]) => event === "geolocate");
+        const [, onGeolocateCallback] = mocked(mockGeolocate.on).mock.calls.find(([event]) => event === "geolocate")!;
 
         // set the location
         onGeolocateCallback(position);
@@ -156,7 +155,7 @@ describe("<LocationShareMenu />", () => {
     const setLocationClick = () => {
         // get the callback LocationShareMenu registered for geolocate
         expect(mocked(mockMap.on)).toHaveBeenCalledWith("click", expect.any(Function));
-        const [, onMapClickCallback] = mocked(mockMap.on).mock.calls.find(([event]) => event === "click");
+        const [, onMapClickCallback] = mocked(mockMap.on).mock.calls.find(([event]) => event === "click")!;
 
         const event = {
             lngLat: { lng: position.coords.longitude, lat: position.coords.latitude },
