@@ -97,7 +97,6 @@ export default class SetIdServer extends React.Component<IProps, IState> {
             defaultIdServer,
             currentClientIdServer: MatrixClientPeg.get().getIdentityServerUrl(),
             idServer: "",
-            error: null,
             busy: false,
             disconnectBusy: false,
             checking: false,
@@ -193,7 +192,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
                     const [confirmed] = await this.showServerChangeWarning({
                         title: _t("Change identity server"),
                         unboundMessage: _t(
-                            "Disconnect from the identity server <current /> and " + "connect to <new /> instead?",
+                            "Disconnect from the identity server <current /> and connect to <new /> instead?",
                             {},
                             {
                                 current: (sub) => <b>{abbreviateUrl(currentClientIdServer)}</b>,
@@ -331,7 +330,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
                 <div>
                     <p>
                         {_t(
-                            "You are still <b>sharing your personal data</b> on the identity " + "server <idserver />.",
+                            "You are still <b>sharing your personal data</b> on the identity server <idserver />.",
                             {},
                             messageElements,
                         )}

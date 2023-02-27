@@ -38,7 +38,7 @@ interface IProps {
 interface IState {
     shouldLoadBackupStatus: boolean;
     loading: boolean;
-    backupInfo: IKeyBackupInfo;
+    backupInfo: IKeyBackupInfo | null;
     error?: string;
 }
 
@@ -57,7 +57,6 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
             shouldLoadBackupStatus: shouldLoadBackupStatus,
             loading: shouldLoadBackupStatus,
             backupInfo: null,
-            error: null,
         };
 
         if (shouldLoadBackupStatus) {
@@ -105,14 +104,20 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
             // A key backup exists for this account, but the creating device is not
             // verified, so restore the backup which will give us the keys from it and
             // allow us to trust it (ie. upload keys to it)
-            Modal.createDialog(RestoreKeyBackupDialog, null, null, /* priority = */ false, /* static = */ true);
+            Modal.createDialog(
+                RestoreKeyBackupDialog,
+                undefined,
+                undefined,
+                /* priority = */ false,
+                /* static = */ true,
+            );
         } else {
             Modal.createDialogAsync(
                 import("../../../async-components/views/dialogs/security/CreateKeyBackupDialog") as unknown as Promise<
                     typeof CreateKeyBackupDialog
                 >,
-                null,
-                null,
+                undefined,
+                undefined,
                 /* priority = */ false,
                 /* static = */ true,
             );

@@ -737,7 +737,7 @@ export default class LegacyCallHandler extends EventEmitter {
         );
         if (!stats) {
             logger.debug(
-                "Call statistics are undefined. The call has " + "probably failed before a peerConn was established",
+                "Call statistics are undefined. The call has probably failed before a peerConn was established",
             );
             return;
         }
@@ -1024,12 +1024,11 @@ export default class LegacyCallHandler extends EventEmitter {
     }
 
     public answerCall(roomId: string): void {
-        const call = this.calls.get(roomId);
-
-        this.stopRingingIfPossible(call.callId);
-
         // no call to answer
         if (!this.calls.has(roomId)) return;
+
+        const call = this.calls.get(roomId)!;
+        this.stopRingingIfPossible(call.callId);
 
         if (this.getAllActiveCalls().length > 1) {
             Modal.createDialog(ErrorDialog, {
