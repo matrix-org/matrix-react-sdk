@@ -256,6 +256,7 @@ export default class AddThreepid {
             }
             throw err;
         }
+        return [];
     }
 
     /**

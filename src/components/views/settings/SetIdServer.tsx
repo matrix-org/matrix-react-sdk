@@ -127,7 +127,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
         this.setState({ idServer: u });
     };
 
-    private getTooltip = (): JSX.Element => {
+    private getTooltip = (): ReactNode => {
         if (this.state.checking) {
             return (
                 <div>
@@ -153,7 +153,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
         });
         this.setState({
             busy: false,
-            error: null,
+            error: undefined,
             currentClientIdServer: fullUrl,
             idServer: "",
         });
@@ -163,7 +163,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
         e.preventDefault();
         const { idServer, currentClientIdServer } = this.state;
 
-        this.setState({ busy: true, checking: true, error: null });
+        this.setState({ busy: true, checking: true, error: undefined });
 
         const fullUrl = unabbreviateUrl(idServer);
 
@@ -183,7 +183,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
                 const hasTerms = await doesIdentityServerHaveTerms(fullUrl);
                 if (!hasTerms) {
                     const [confirmed] = await this.showNoTermsWarning(fullUrl);
-                    save = confirmed;
+                    save = !!confirmed;
                 }
 
                 // Show a general warning, possibly with details about any bound
@@ -201,7 +201,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
                         ),
                         button: _t("Continue"),
                     });
-                    save = confirmed;
+                    save = !!confirmed;
                 }
 
                 if (save) {
@@ -215,7 +215,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
         this.setState({
             busy: false,
             checking: false,
-            error: errStr,
+            error: errStr ?? undefined,
             currentClientIdServer: MatrixClientPeg.get().getIdentityServerUrl(),
         });
     };
@@ -374,7 +374,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
 
         this.setState({
             busy: false,
-            error: null,
+            error: undefined,
             currentClientIdServer: MatrixClientPeg.get().getIdentityServerUrl(),
             idServer: newFieldVal,
         });
@@ -452,7 +452,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
                     tooltipContent={this.getTooltip()}
                     tooltipClassName="mx_SetIdServer_tooltip"
                     disabled={this.state.busy}
-                    forceValidity={this.state.error ? false : null}
+                    forceValidity={this.state.error ? false : undefined}
                 />
                 <AccessibleButton
                     type="submit"

@@ -26,7 +26,7 @@ type AsyncImport<T> = { default: T };
 
 interface IProps {
     // A promise which resolves with the real component
-    prom: Promise<ComponentType | AsyncImport<ComponentType>>;
+    prom: Promise<ComponentType<any> | AsyncImport<ComponentType<any>>>;
     onFinished(): void;
 }
 
