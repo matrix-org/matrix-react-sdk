@@ -37,7 +37,7 @@ const LoadingPolls: React.FC<{ noResultsYet?: boolean }> = ({ noResultsYet }) =>
     </div>
 );
 
-const LoadMorePolls: React.FC<{ loadMorePolls?: () => void; isLoading: boolean }> = ({ isLoading, loadMorePolls }) =>
+const LoadMorePolls: React.FC<{ loadMorePolls?: () => void; isLoading?: boolean }> = ({ isLoading, loadMorePolls }) =>
     loadMorePolls ? (
         <AccessibleButton
             className="mx_PollHistoryList_loadMorePolls"

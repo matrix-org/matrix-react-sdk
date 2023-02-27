@@ -49,7 +49,7 @@ const pagePollHistory = async (
     canPageBackward: boolean;
 }> => {
     if (!timelineSet) {
-        return;
+        return { canPageBackward: false };
     }
 
     const liveTimeline = timelineSet.getLiveTimeline();
@@ -65,13 +65,13 @@ const pagePollHistory = async (
 };
 
 const fetchHistoryUntilTimestamp = async (
-    timelineSet: EventTimelineSet,
+    timelineSet: EventTimelineSet | undefined,
     matrixClient: MatrixClient,
     timestamp: number,
     canPageBackward: boolean,
     oldestEventTimestamp?: number,
 ): Promise<void> => {
-    if (!canPageBackward || (oldestEventTimestamp && oldestEventTimestamp < timestamp)) {
+    if (!timelineSet || !canPageBackward || (oldestEventTimestamp && oldestEventTimestamp < timestamp)) {
         return;
     }
     const result = await pagePollHistory(timelineSet, matrixClient);
@@ -97,7 +97,7 @@ const ONE_DAY_MS = 60000 * 60 * 24;
  * @returns loadTimelineHistory - loads timeline history for the given history period
  */
 const useTimelineHistory = (
-    timelineSet: EventTimelineSet | null,
+    timelineSet: EventTimelineSet | undefined,
     matrixClient: MatrixClient,
     historyPeriodDays: number,
 ): {
@@ -136,6 +136,9 @@ const useTimelineHistory = (
     }, [historyPeriodDays, timelineSet, matrixClient]);
 
     const loadMorePolls = useCallback(async () => {
+        if (!timelineSet) {
+            return;
+        }
         setIsLoading(true);
         try {
             const result = await pagePollHistory(timelineSet, matrixClient);
@@ -181,7 +184,7 @@ export const useFetchPastPolls = (
     oldestEventTimestamp?: number;
     loadMorePolls?: () => Promise<void>;
 } => {
-    const [timelineSet, setTimelineSet] = useState<EventTimelineSet | null>(null);
+    const [timelineSet, setTimelineSet] = useState<EventTimelineSet | undefined>(undefined);
 
     useEffect(() => {
         const filter = new Filter(matrixClient.getSafeUserId());
