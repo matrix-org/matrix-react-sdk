@@ -21,16 +21,6 @@ import { Direction, EventTimeline, EventTimelineSet, Room } from "matrix-js-sdk/
 import { Filter, IFilterDefinition } from "matrix-js-sdk/src/filter";
 import { logger } from "matrix-js-sdk/src/logger";
 
-/**
- * Page timeline backwards until either:
- * - event older than endOfHistoryPeriodTimestamp is encountered
- * - end of timeline is reached
- * @param timelineSet - timelineset to page
- * @param matrixClient - client
- * @param endOfHistoryPeriodTimestamp - epoch timestamp to fetch until
- * @returns void
- */
-
 const getOldestEventTimestamp = (timelineSet?: EventTimelineSet): number | undefined => {
     if (!timelineSet) {
         return;
@@ -41,6 +31,13 @@ const getOldestEventTimestamp = (timelineSet?: EventTimelineSet): number | undef
     return events[0]?.getTs();
 };
 
+/**
+ * Page backwards in timeline history
+ * @param timelineSet - timelineset to page
+ * @param matrixClient - client
+ * @param canPageBackward - whether the timeline has more pages
+ * @param oldestEventTimestamp - server ts of the oldest encountered event
+ */
 const pagePollHistory = async (
     timelineSet: EventTimelineSet,
     matrixClient: MatrixClient,
@@ -64,6 +61,16 @@ const pagePollHistory = async (
     };
 };
 
+/**
+ * Page timeline backwards until either:
+ * - event older than timestamp is encountered
+ * - end of timeline is reached
+ * @param timelineSet - timeline set to page
+ * @param matrixClient - client
+ * @param timestamp - epoch timestamp to page until
+ * @param canPageBackward - whether the timeline has more pages
+ * @param oldestEventTimestamp - server ts of the oldest encountered event
+ */
 const fetchHistoryUntilTimestamp = async (
     timelineSet: EventTimelineSet | undefined,
     matrixClient: MatrixClient,
@@ -169,11 +176,13 @@ const filterDefinition: IFilterDefinition = {
 };
 
 /**
- * Fetch poll start events in the last N days of room history
+ * Fetches poll start events in the last N days of room history
  * @param room - room to fetch history for
  * @param matrixClient - client
  * @param historyPeriodDays - number of days of history to fetch, from current day
  * @returns isLoading - true while fetching history
+ * @returns oldestEventTimestamp - timestamp of oldest encountered poll, undefined when no polls found in timeline so far
+ * @returns loadMorePolls - function to page timeline backwards, undefined when timeline cannot be paged backwards
  */
 export const useFetchPastPolls = (
     room: Room,

@@ -61,6 +61,7 @@ const getNoResultsMessage = (
             : _t("There are no past polls in this room");
     }
 
+    // we don't know how much history has been fetched
     if (!oldestEventTimestamp) {
         return filter === "ACTIVE"
             ? _t("There are no active polls. Load more polls to view polls for previous months")
@@ -85,6 +86,7 @@ const NoResults: React.FC<{
     isLoading?: boolean;
 }> = ({ filter, isLoading, oldestFetchedEventTimestamp, loadMorePolls }) => {
     // we can't page the timeline anymore
+    // just use plain loader
     if (!loadMorePolls && isLoading) {
         return <LoadingPolls noResultsYet />;
     }
