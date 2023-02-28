@@ -272,6 +272,7 @@ describe("InviteDialog", () => {
 
         // Start with an email → should convert to a pill
         await enterIntoSearchField(aliceEmail);
+        expect(screen.getByText("Invites by email can only be sent one at a time")).toBeInTheDocument();
         expectPill(aliceEmail);
 
         // Everything else from now on should not convert to a pill
@@ -291,10 +292,12 @@ describe("InviteDialog", () => {
 
         // Start with a MXID → should convert to a pill
         await enterIntoSearchField("@carol:example.com");
+        expect(screen.queryByText("Invites by email can only be sent one at a time")).not.toBeInTheDocument();
         expectPill("@carol:example.com");
 
         // Add an email → should not convert to a pill
         await enterIntoSearchField(bobEmail);
+        expect(screen.getByText("Invites by email can only be sent one at a time")).toBeInTheDocument();
         expectNoPill(bobEmail);
     });
 });
