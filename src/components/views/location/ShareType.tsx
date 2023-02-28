@@ -20,7 +20,7 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { _t } from "../../../languageHandler";
 import { OwnProfileStore } from "../../../stores/OwnProfileStore";
 import BaseAvatar from "../avatars/BaseAvatar";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import Heading from "../typography/Heading";
 import { Icon as LocationIcon } from "../../../../res/img/element-icons/location.svg";
 import { LocationShareType } from "./shareLocation";
@@ -49,9 +49,13 @@ const UserAvatar: React.FC = () => {
     );
 };
 
-type ShareTypeOptionProps = HTMLAttributes<Element> & { label: string; shareType: LocationShareType };
+type ShareTypeOptionProps = HTMLAttributes<Element> & {
+    label: string;
+    shareType: LocationShareType;
+    onClick?: ((e: ButtonEvent) => void | Promise<void>) | null;
+};
 const ShareTypeOption: React.FC<ShareTypeOptionProps> = ({ onClick, label, shareType, ...rest }) => (
-    <AccessibleButton element="button" className="mx_ShareType_option" onClick={onClick} {...rest}>
+    <AccessibleButton element="button" className="mx_ShareType_option" onClick={onClick ?? null} {...rest}>
         {shareType === LocationShareType.Own && <UserAvatar />}
         {shareType === LocationShareType.Pin && (
             <LocationIcon className={`mx_ShareType_option-icon ${LocationShareType.Pin}`} />

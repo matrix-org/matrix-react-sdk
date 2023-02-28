@@ -95,7 +95,7 @@ const getDefaultErrorParams = (
     return { modalParams, errorMessage };
 };
 
-const handleShareError = (error: Error, openMenu: () => void, shareType: LocationShareType): void => {
+const handleShareError = (error: unknown, openMenu: () => void, shareType: LocationShareType): void => {
     const { modalParams, errorMessage } =
         (error as MatrixError).errcode === "M_FORBIDDEN"
             ? getPermissionsErrorParams(shareType)

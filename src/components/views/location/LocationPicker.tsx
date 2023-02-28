@@ -120,7 +120,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         } catch (e) {
             logger.error("Failed to render map", e);
             const errorType =
-                e?.message === LocationShareError.MapStyleUrlNotConfigured
+                (e as Error)?.message === LocationShareError.MapStyleUrlNotConfigured
                     ? LocationShareError.MapStyleUrlNotConfigured
                     : LocationShareError.Default;
             this.setState({ error: errorType });
