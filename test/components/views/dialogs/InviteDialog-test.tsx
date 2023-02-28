@@ -198,7 +198,7 @@ describe("InviteDialog", () => {
         mockClient.getIdentityServerUrl.mockReturnValue("https://identity-server");
         mockClient.lookupThreePid.mockResolvedValue({});
 
-        render(<InviteDialog kind={KIND_INVITE} roomId={roomId} onFinished={jest.fn()} />);
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
 
         const input = screen.getByTestId("invite-dialog-input");
         input.focus();
