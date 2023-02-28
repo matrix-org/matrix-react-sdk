@@ -27,10 +27,12 @@ import AsyncWrapper from "./AsyncWrapper";
 const DIALOG_CONTAINER_ID = "mx_Dialog_Container";
 const STATIC_DIALOG_CONTAINER_ID = "mx_Dialog_StaticContainer";
 
+// Type which accepts a React Component which looks like a Modal (accepts an onFinished prop)
 export type ComponentType = React.ComponentType<{
     onFinished?(...args: any): void;
 }>;
 
+// Generic type which returns the props of the Modal component with the onFinished being optional.
 export type ComponentProps<C extends ComponentType> = Omit<React.ComponentProps<C>, "onFinished"> &
     Partial<Pick<React.ComponentProps<C>, "onFinished">>;
 
