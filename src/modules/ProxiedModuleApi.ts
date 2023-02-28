@@ -108,10 +108,11 @@ export class ProxiedModuleApi implements ModuleApi {
         const req: IRegisterRequestParams = {
             username,
             password,
+            display_name: displayName,
             initial_device_display_name: deviceName,
             auth: undefined,
             inhibit_login: false,
-        };
+        } as IRegisterRequestParams;
         const creds = await client.registerRequest(req).catch((resp) =>
             client.registerRequest({
                 ...req,

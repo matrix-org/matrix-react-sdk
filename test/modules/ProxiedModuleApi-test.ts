@@ -15,6 +15,9 @@ limitations under the License.
 */
 
 import { TranslationStringsObject } from "@matrix-org/react-sdk-module-api/lib/types/translations";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { mocked } from "jest-mock";
+import * as Matrix from "matrix-js-sdk/src/matrix";
 
 import { ProxiedModuleApi } from "../../src/modules/ProxiedModuleApi";
 import { stubClient } from "../test-utils";
@@ -42,6 +45,34 @@ describe("ProxiedApiModule", () => {
             };
             api.registerTranslations(translations);
             expect(api.translations).toBe(translations);
+        });
+
+        it("should registerSimpleAccount", () => {
+            const registerRequest = jest.fn();
+            const mockClient = mocked({
+                registerRequest,
+                setDisplayName: jest.fn(),
+            } as unknown as MatrixClient);
+
+            jest.spyOn(Matrix, "createClient").mockReturnValue(mockClient);
+
+            mockClient.registerRequest.mockResolvedValue({
+                user_id: "@some_user_id",
+                device_id: "some_device_id",
+                access_token: "some_access_token",
+            });
+
+            const api = new ProxiedModuleApi();
+            api.registerSimpleAccount("user", "secret", "User");
+
+            expect(registerRequest).toBeCalledWith({
+                username: "user",
+                password: "secret",
+                display_name: "User",
+                initial_device_display_name: undefined,
+                auth: undefined,
+                inhibit_login: false,
+            });
         });
 
         describe("integration", () => {
