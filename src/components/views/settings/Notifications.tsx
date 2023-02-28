@@ -419,7 +419,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
      * Updated syncedRuleIds from rule definition
      * If a rule does not exist it is ignored
      * Synced rules are updated sequentially
-     * and stop silently at first error
+     * and stop at first error
      */
     private updateSyncedRules = async (
         syncedRuleIds: VectorPushRuleDefinition["syncedRuleIds"],
@@ -427,19 +427,20 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         actions?: PushRuleAction[],
     ) => {
         console.log("hhh updateSyncedRules", { syncedRuleIds, actions });
-        const syncedRules = syncedRuleIds?.map((ruleId) => this.pushProcessor.getPushRuleByKindAndId(ruleId, rule.rule.kind)).filter(Boolean);
+        const syncedRules: ReturnType<PushProcessor["getPushRuleAndKindById"]>[] = syncedRuleIds
+            ?.map((ruleId) => this.pushProcessor.getPushRuleAndKindById(ruleId))
+            .filter(Boolean);
         console.log("hhh syncedRules", { syncedRuleIds, syncedRules });
         if (!syncedRules?.length) {
             return;
         }
-        try {
-            for (let syncedRule of syncedRules) {
-                console.log("hhh", { syncedRule });
-                await this.setPushRuleActions(syncedRule.rule_id, rule.rule.kind, actions);
-            }
-        } catch (error) {
-            logger.error(`Failed to update all synced rules for ${rule.ruleId}`, error);
+        // try {
+        for (let { kind, rule: syncedRule } of syncedRules) {
+            await this.setPushRuleActions(syncedRule.rule_id, kind, actions);
         }
+        // } catch (error) {
+        //     logger.error(`Failed to update all synced rules for ${rule.ruleId}`, error);
+        // }
     };
 
     private onRadioChecked = async (rule: IVectorPushRule, checkedState: VectorState): Promise<void> => {
