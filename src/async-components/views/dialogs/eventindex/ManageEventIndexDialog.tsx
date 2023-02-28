@@ -64,7 +64,7 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
         let stats: IIndexStats | undefined;
 
         try {
-            stats = await eventIndex!.getStats();
+            stats = await eventIndex.getStats();
         } catch {
             // This call may fail if sporadically, not a huge issue as we will
             // try later again and probably succeed.
@@ -103,7 +103,6 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
         let currentRoom: string | null = null;
 
         const eventIndex = EventIndexPeg.get();
-        if (!eventIndex) return;
 
         if (eventIndex !== null) {
             eventIndex.on("changedCheckpoint", this.updateCurrentRoom);
