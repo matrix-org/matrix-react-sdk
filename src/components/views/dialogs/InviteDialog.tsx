@@ -801,7 +801,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             ...this.state.serverResultsMixin,
             ...this.state.threepidResultsMixin,
         ];
-        const toAdd: Member[] = [];
+        const toAdd: (Member | RoomMember)[] = [];
         const failed: string[] = [];
 
         // Addresses that could not be added.
@@ -1145,7 +1145,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
      *
      * @param targets - Optional member list to check. Uses targets from state if not provided.
      */
-    private canInviteMore(targets?: Member[]): boolean {
+    private canInviteMore(targets?: (Member | RoomMember)[]): boolean {
         targets = targets || this.state.targets;
         return this.canInviteThirdParty(targets) || !targets.some((t) => t instanceof ThreepidMember);
     }
@@ -1160,7 +1160,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
      *
      * @param targets - Optional member list to check. Uses targets from state if not provided.
      */
-    private canInviteThirdParty(targets?: Member[]): boolean {
+    private canInviteThirdParty(targets?: (Member | RoomMember)[]): boolean {
         targets = targets || this.state.targets;
         return this.props.kind !== InviteKind.Dm || targets.length === 0 || !this.encryptionByDefault;
     }
