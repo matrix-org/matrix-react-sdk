@@ -26,22 +26,21 @@ exports[`UnverifiedSessionToast when rendering the toast should render as expect
           <div>
             <div
               class="mx_Toast_description"
+            />
+            <div
+              class="mx_Toast_detail"
             >
-              <div
-                class="mx_Toast_detail"
+              <span
+                data-testid="device-metadata-isVerified"
               >
-                <span
-                  data-testid="device-metadata-isVerified"
-                >
-                  Verified
-                </span>
-                 · 
-                <span
-                  data-testid="device-metadata-deviceId"
-                >
-                  ABC123
-                </span>
-              </div>
+                Verified
+              </span>
+               · 
+              <span
+                data-testid="device-metadata-deviceId"
+              >
+                ABC123
+              </span>
             </div>
             <div
               aria-live="off"
