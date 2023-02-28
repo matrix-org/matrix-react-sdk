@@ -112,6 +112,7 @@ type PollHistoryListProps = {
      */
     oldestFetchedEventTimestamp?: number;
     onFilterChange: (filter: PollHistoryFilter) => void;
+    onItemClick: (pollId: string) => void;
     loadMorePolls?: () => void;
     isLoading?: boolean;
 };
@@ -123,6 +124,7 @@ export const PollHistoryList: React.FC<PollHistoryListProps> = ({
     oldestFetchedEventTimestamp,
     onFilterChange,
     loadMorePolls,
+    onItemClick,
 }) => {
     return (
         <div className="mx_PollHistoryList">
@@ -139,12 +141,17 @@ export const PollHistoryList: React.FC<PollHistoryListProps> = ({
                 <ol className={classNames("mx_PollHistoryList_list", `mx_PollHistoryList_list_${filter}`)}>
                     {pollStartEvents.map((pollStartEvent) =>
                         filter === "ACTIVE" ? (
-                            <PollListItem key={pollStartEvent.getId()!} event={pollStartEvent} />
+                            <PollListItem
+                                key={pollStartEvent.getId()!}
+                                event={pollStartEvent}
+                                onClick={() => onItemClick(pollStartEvent.getId()!)}
+                            />
                         ) : (
                             <PollListItemEnded
                                 key={pollStartEvent.getId()!}
                                 event={pollStartEvent}
                                 poll={polls.get(pollStartEvent.getId()!)!}
+                                onClick={() => onItemClick(pollStartEvent.getId()!)}
                             />
                         ),
                     )}
