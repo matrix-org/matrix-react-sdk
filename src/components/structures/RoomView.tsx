@@ -51,7 +51,7 @@ import WidgetEchoStore from "../../stores/WidgetEchoStore";
 import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
-import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
+import RoomContext, { TimelineRenderingType, useRoomContext } from "../../contexts/RoomContext";
 import { E2EStatus, shieldStatusForRoom } from "../../utils/ShieldUtils";
 import { Action } from "../../dispatcher/actions";
 import { IMatrixClientCreds } from "../../MatrixClientPeg";
@@ -252,7 +252,7 @@ const WaitingForThirdPartyRoomView: React.FC<WaitingForThirdPartyRoomViewProps> 
     resizeNotifier,
     inviteEvent,
 }) => {
-    const context = useContext(RoomContext);
+    const context = useRoomContext();
 
     return (
         <div className="mx_RoomView mx_RoomView--local">
@@ -279,8 +279,7 @@ const WaitingForThirdPartyRoomView: React.FC<WaitingForThirdPartyRoomViewProps> 
                                 className="mx_cryptoEvent mx_cryptoEvent_icon"
                                 title={_t("Waiting for users to join Element")}
                                 subtitle={_t(
-                                    "Once users invited have joined Element, " +
-                                        "you will be able to chat and the room will be end-to end encrypted",
+                                    "Once users invited have joined Element, you will be able to chat and the room will be end-to end encrypted",
                                 )}
                             />
                             <NewRoomIntro />
