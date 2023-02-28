@@ -23,7 +23,7 @@ import { User } from "matrix-js-sdk/src/models/user";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import RoomContext from "../../../contexts/RoomContext";
 import DMRoomMap from "../../../utils/DMRoomMap";
-import { _t } from "../../../languageHandler";
+import { _t, _td } from "../../../languageHandler";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import MiniAvatarUploader, { AVATAR_SIZE } from "../elements/MiniAvatarUploader";
 import RoomAvatar from "../avatars/RoomAvatar";
@@ -49,14 +49,14 @@ function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): 
 
 const determineIntroMessage = (room: Room, encryptedSingle3rdPartyInvite: boolean): string => {
     if (room instanceof LocalRoom) {
-        return _t("Send your first message to invite <displayName/> to chat");
+        return _td("Send your first message to invite <displayName/> to chat");
     }
 
     if (encryptedSingle3rdPartyInvite) {
-        return _t("Once everyone has joined, you’ll be able to chat");
+        return _td("Once everyone has joined, you’ll be able to chat");
     }
 
-    return _t("This is the beginning of your direct message history with <displayName/>.");
+    return _td("This is the beginning of your direct message history with <displayName/>.");
 };
 
 const NewRoomIntro: React.FC = () => {
