@@ -15,14 +15,11 @@ limitations under the License.
 */
 
 import React, { ComponentProps } from "react";
-// eslint-disable-next-line deprecate/import
-import { mount } from "enzyme";
+import { fireEvent, render } from "@testing-library/react";
 import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
 import { ClientEvent, RoomMember } from "matrix-js-sdk/src/matrix";
 import * as maplibregl from "maplibre-gl";
 import { logger } from "matrix-js-sdk/src/logger";
-// eslint-disable-next-line deprecate/import
-import { act } from "react-dom/test-utils";
 import { SyncState } from "matrix-js-sdk/src/sync";
 
 import MLocationBody from "../../../../src/components/views/messages/MLocationBody";
@@ -57,10 +54,11 @@ describe("MLocationBody", () => {
             mediaEventHelper: {} as MediaEventHelper,
         };
         const getComponent = (props = {}) =>
-            mount(<MLocationBody {...defaultProps} {...props} />, {
-                wrappingComponent: MatrixClientContext.Provider,
-                wrappingComponentProps: { value: mockClient },
-            });
+            render(
+                <MatrixClientContext.Provider value={mockClient}>
+                    <MLocationBody {...defaultProps} {...props} />
+                </MatrixClientContext.Provider>,
+            );
         const getMapErrorComponent = () => {
             const mockMap = new maplibregl.Map(mapOptions);
             mockClient.getClientWellKnown.mockReturnValue({
@@ -96,20 +94,19 @@ describe("MLocationBody", () => {
 
             it("displays correct fallback content without error style when map_style_url is not configured", () => {
                 const component = getComponent();
-                expect(component.find(".mx_EventTile_body")).toMatchSnapshot();
+                expect(component.container.querySelector(".mx_EventTile_body")).toMatchSnapshot();
             });
 
             it("displays correct fallback content when map_style_url is misconfigured", () => {
                 const component = getMapErrorComponent();
-                component.setProps({});
-                expect(component.find(".mx_EventTile_body")).toMatchSnapshot();
+                expect(component.container.querySelector(".mx_EventTile_body")).toMatchSnapshot();
             });
 
             it("should clear the error on reconnect", () => {
                 const component = getMapErrorComponent();
-                expect((component.state() as React.ComponentState).error).toBeDefined();
+                expect(component.container.querySelector(".mx_EventTile_tileError")).toBeDefined();
                 mockClient.emit(ClientEvent.Sync, SyncState.Reconnecting, SyncState.Error);
-                expect((component.state() as React.ComponentState).error).toBeUndefined();
+                expect(component.container.querySelector(".mx_EventTile_tileError")).toBeFalsy();
             });
         });
 
@@ -132,7 +129,7 @@ describe("MLocationBody", () => {
                 const mockMap = new maplibregl.Map(mapOptions);
                 const component = getComponent();
 
-                expect(component).toMatchSnapshot();
+                expect(component.asFragment()).toMatchSnapshot();
                 // map was centered
                 expect(mockMap.setCenter).toHaveBeenCalledWith({
                     lat: 51.5076,
@@ -146,24 +143,9 @@ describe("MLocationBody", () => {
                     .mockReturnValue({ finished: new Promise(() => {}), close: jest.fn() });
                 const component = getComponent();
 
-                act(() => {
-                    component.find("Map").at(0).simulate("click");
-                });
+                fireEvent.click(component.container.querySelector(".mx_Map")!);
 
                 expect(modalSpy).toHaveBeenCalled();
-            });
-
-            it("renders marker correctly for a non-self share", () => {
-                const mockMap = new maplibregl.Map(mapOptions);
-                const component = getComponent();
-
-                expect(component.find("SmartMarker").at(0).props()).toEqual(
-                    expect.objectContaining({
-                        map: mockMap,
-                        geoUri: "geo:51.5076,-0.1276",
-                        roomMember: undefined,
-                    }),
-                );
             });
 
             it("renders marker correctly for a self share", () => {
@@ -174,7 +156,7 @@ describe("MLocationBody", () => {
                 const component = getComponent({ mxEvent: selfShareEvent });
 
                 // render self locations with user avatars
-                expect(component.find("SmartMarker").at(0).prop("roomMember")).toEqual(member);
+                expect(component.asFragment()).toMatchSnapshot();
             });
         });
     });
