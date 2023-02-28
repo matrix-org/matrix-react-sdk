@@ -37,7 +37,7 @@ interface IState {
     eventCount: number;
     crawlingRoomsCount: number;
     roomCount: number;
-    currentRoom: string;
+    currentRoom: string | null;
     crawlerSleepTime: number;
 }
 
@@ -60,17 +60,18 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
 
     public updateCurrentRoom = async (room: Room): Promise<void> => {
         const eventIndex = EventIndexPeg.get();
-        let stats: IIndexStats;
+        if (!eventIndex) return;
+        let stats: IIndexStats | undefined;
 
         try {
-            stats = await eventIndex.getStats();
+            stats = await eventIndex!.getStats();
         } catch {
             // This call may fail if sporadically, not a huge issue as we will
             // try later again and probably succeed.
             return;
         }
 
-        let currentRoom = null;
+        let currentRoom: string | null = null;
 
         if (room) currentRoom = room.name;
         const roomStats = eventIndex.crawlingRooms();
@@ -78,8 +79,8 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
         const roomCount = roomStats.totalRooms.size;
 
         this.setState({
-            eventIndexSize: stats.size,
-            eventCount: stats.eventCount,
+            eventIndexSize: stats?.size ?? 0,
+            eventCount: stats?.eventCount ?? 0,
             crawlingRoomsCount: crawlingRoomsCount,
             roomCount: roomCount,
             currentRoom: currentRoom,
@@ -99,17 +100,20 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
         let crawlingRoomsCount = 0;
         let roomCount = 0;
         let eventCount = 0;
-        let currentRoom = null;
+        let currentRoom: string | null = null;
 
         const eventIndex = EventIndexPeg.get();
+        if (!eventIndex) return;
 
         if (eventIndex !== null) {
             eventIndex.on("changedCheckpoint", this.updateCurrentRoom);
 
             try {
                 const stats = await eventIndex.getStats();
-                eventIndexSize = stats.size;
-                eventCount = stats.eventCount;
+                if (stats) {
+                    eventIndexSize = stats.size;
+                    eventCount = stats.eventCount;
+                }
             } catch {
                 // This call may fail if sporadically, not a huge issue as we
                 // will try later again in the updateCurrentRoom call and
@@ -135,7 +139,7 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
 
     private onDisable = async (): Promise<void> => {
         const DisableEventIndexDialog = (await import("./DisableEventIndexDialog")).default;
-        Modal.createDialog(DisableEventIndexDialog, null, null, /* priority = */ false, /* static = */ true);
+        Modal.createDialog(DisableEventIndexDialog, undefined, undefined, /* priority = */ false, /* static = */ true);
     };
 
     private onCrawlerSleepTimeChange = (e: ChangeEvent<HTMLInputElement>): void => {

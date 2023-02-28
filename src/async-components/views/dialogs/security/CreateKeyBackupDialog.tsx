@@ -48,7 +48,7 @@ const PASSWORD_MIN_SCORE = 4; // So secure, many characters, much complex, wow, 
 interface IProps extends IDialogProps {}
 
 interface IState {
-    secureSecretStorage: boolean;
+    secureSecretStorage: boolean | null;
     phase: Phase;
     passPhrase: string;
     passPhraseValid: boolean;
@@ -120,7 +120,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         const { secureSecretStorage } = this.state;
         this.setState({
             phase: Phase.BackingUp,
-            error: null,
+            error: undefined,
         });
         let info;
         try {
@@ -218,7 +218,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
 
     private onPassPhraseValidate = (result: IValidationResult): void => {
         this.setState({
-            passPhraseValid: result.valid,
+            passPhraseValid: !!result.valid,
         });
     };
 
@@ -305,7 +305,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             changeText = _t("Go back to set it again.");
         }
 
-        let passPhraseMatch = null;
+        let passPhraseMatch: JSX.Element | undefined;
         if (matchText) {
             passPhraseMatch = (
                 <div className="mx_CreateKeyBackupDialog_passPhraseMatch">
