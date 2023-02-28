@@ -51,7 +51,7 @@ import WidgetEchoStore from "../../stores/WidgetEchoStore";
 import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
-import RoomContext, { TimelineRenderingType, useRoomContext } from "../../contexts/RoomContext";
+import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import { E2EStatus, shieldStatusForRoom } from "../../utils/ShieldUtils";
 import { Action } from "../../dispatcher/actions";
 import { IMatrixClientCreds } from "../../MatrixClientPeg";
@@ -116,9 +116,8 @@ import VoipUserMapper from "../../VoipUserMapper";
 import { isCallEvent } from "./LegacyCallEventGrouper";
 import { WidgetType } from "../../widgets/WidgetType";
 import WidgetUtils from "../../utils/WidgetUtils";
-import EventTileBubble from "../views/messages/EventTileBubble";
-import { UnwrappedEventTile } from "../views/rooms/EventTile";
 import { shouldEncryptRoomWithSingle3rdPartyInvite } from "../../utils/room/shouldEncryptRoomWithSingle3rdPartyInvite";
+import { WaitingForThirdPartyRoomView } from "./WaitingForThirdPartyRoomView";
 
 const DEBUG = false;
 const PREVENT_MULTIPLE_JITSI_WITHIN = 30_000;
@@ -240,57 +239,6 @@ interface LocalRoomViewProps {
     roomView: RefObject<HTMLElement>;
     onFileDrop: (dataTransfer: DataTransfer) => Promise<void>;
 }
-
-interface WaitingForThirdPartyRoomViewProps {
-    roomView: RefObject<HTMLElement>;
-    resizeNotifier: ResizeNotifier;
-    inviteEvent: MatrixEvent;
-}
-
-const WaitingForThirdPartyRoomView: React.FC<WaitingForThirdPartyRoomViewProps> = ({
-    roomView,
-    resizeNotifier,
-    inviteEvent,
-}) => {
-    const context = useRoomContext();
-
-    return (
-        <div className="mx_RoomView mx_RoomView--local">
-            <ErrorBoundary>
-                <RoomHeader
-                    room={context.room}
-                    inRoom={true}
-                    onSearchClick={null}
-                    onInviteClick={null}
-                    onForgetClick={null}
-                    e2eStatus={E2EStatus.Normal}
-                    onAppsClick={null}
-                    appsShown={false}
-                    excludedRightPanelPhaseButtons={[]}
-                    showButtons={false}
-                    enableRoomOptionsMenu={false}
-                    viewingCall={false}
-                    activeCall={null}
-                />
-                <main className="mx_RoomView_body" ref={roomView}>
-                    <div className="mx_RoomView_timeline">
-                        <ScrollPanel className="mx_RoomView_messagePanel" resizeNotifier={resizeNotifier}>
-                            <EventTileBubble
-                                className="mx_cryptoEvent mx_cryptoEvent_icon"
-                                title={_t("Waiting for users to join Element")}
-                                subtitle={_t(
-                                    "Once users invited have joined Element, you will be able to chat and the room will be end-to end encrypted",
-                                )}
-                            />
-                            <NewRoomIntro />
-                            <UnwrappedEventTile mxEvent={inviteEvent} />
-                        </ScrollPanel>
-                    </div>
-                </main>
-            </ErrorBoundary>
-        </div>
-    );
-};
 
 /**
  * Local room view. Uses only the bits necessary to display a local room view like room header or composer.
