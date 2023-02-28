@@ -265,7 +265,7 @@ describe("DecryptionFailureTracker", function () {
         done();
     });
 
-    xit("should not track a failure for an event that was tracked in a previous session", (done) => {
+    it.skip("should not track a failure for an event that was tracked in a previous session", (done) => {
         // This test uses localStorage, clear it beforehand
         localStorage.clear();
 
