@@ -96,12 +96,18 @@ export function createTestClient(): MatrixClient {
         getUserId: jest.fn().mockReturnValue("@userId:matrix.org"),
         getSafeUserId: jest.fn().mockReturnValue("@userId:matrix.org"),
         getUserIdLocalpart: jest.fn().mockResolvedValue("userId"),
-        getUser: jest.fn().mockReturnValue({ on: jest.fn() }),
+        getUser: jest.fn().mockReturnValue({ on: jest.fn(), off: jest.fn() }),
+        getDevice: jest.fn(),
         getDeviceId: jest.fn().mockReturnValue("ABCDEFGHI"),
+        getStoredCrossSigningForUser: jest.fn(),
+        getStoredDevice: jest.fn(),
+        requestVerification: jest.fn(),
         deviceId: "ABCDEFGHI",
         getDevices: jest.fn().mockResolvedValue({ devices: [{ device_id: "ABCDEFGHI" }] }),
         getSessionId: jest.fn().mockReturnValue("iaszphgvfku"),
         credentials: { userId: "@userId:matrix.org" },
+        bootstrapCrossSigning: jest.fn(),
+        hasSecretStorageKey: jest.fn(),
 
         store: {
             getPendingEvents: jest.fn().mockResolvedValue([]),
@@ -215,6 +221,15 @@ export function createTestClient(): MatrixClient {
 
         createMessagesRequest: jest.fn().mockResolvedValue({
             chunk: [],
+        }),
+        sendEvent: jest.fn().mockImplementation((roomId, type, content) => {
+            return new MatrixEvent({
+                type,
+                sender: "@me:localhost",
+                content,
+                event_id: "$9999999999999999999999999999999999999999999",
+                room_id: roomId,
+            });
         }),
     } as unknown as MatrixClient;
 
@@ -440,6 +455,7 @@ export function mkRoomMember(roomId: string, userId: string, membership = "join"
         getAvatarUrl: () => {},
         getMxcAvatarUrl: () => {},
         getDMInviter: () => {},
+        off: () => {},
     } as unknown as RoomMember;
 }
 

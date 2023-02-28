@@ -14,27 +14,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { MatrixEvent, Poll } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, Poll, Room } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../languageHandler";
 import BaseDialog from "../BaseDialog";
-import { IDialogProps } from "../IDialogProps";
 import { PollHistoryList } from "./PollHistoryList";
 import { PollHistoryFilter } from "./types";
-import { usePolls } from "./usePollHistory";
+import { PollDetailHeader } from "./PollDetailHeader";
+import { PollDetail } from "./PollDetail";
+import { RoomPermalinkCreator } from "../../../../utils/permalinks/Permalinks";
+import { usePollsWithRelations } from "./usePollHistory";
+import { useFetchPastPolls } from "./fetchPastPolls";
 
-type PollHistoryDialogProps = Pick<IDialogProps, "onFinished"> & {
-    roomId: string;
+type PollHistoryDialogProps = {
+    room: Room;
     matrixClient: MatrixClient;
+    permalinkCreator: RoomPermalinkCreator;
+    onFinished(): void;
 };
 
 const sortEventsByLatest = (left: MatrixEvent, right: MatrixEvent): number => right.getTs() - left.getTs();
 const filterPolls =
     (filter: PollHistoryFilter) =>
     (poll: Poll): boolean =>
-        (filter === "ACTIVE") !== poll.isEnded;
+        // exclude polls while they are still loading
+        // to avoid jitter in list
+        !poll.isFetchingResponses && (filter === "ACTIVE") !== poll.isEnded;
+
 const filterAndSortPolls = (polls: Map<string, Poll>, filter: PollHistoryFilter): MatrixEvent[] => {
     return [...polls.values()]
         .filter(filterPolls(filter))
@@ -42,19 +50,44 @@ const filterAndSortPolls = (polls: Map<string, Poll>, filter: PollHistoryFilter)
         .sort(sortEventsByLatest);
 };
 
-export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({ roomId, matrixClient, onFinished }) => {
-    const { polls } = usePolls(roomId, matrixClient);
+export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({
+    room,
+    matrixClient,
+    permalinkCreator,
+    onFinished,
+}) => {
+    const { polls } = usePollsWithRelations(room.roomId, matrixClient);
+    const { isLoading, loadMorePolls, oldestEventTimestamp } = useFetchPastPolls(room, matrixClient);
     const [filter, setFilter] = useState<PollHistoryFilter>("ACTIVE");
-    const [pollStartEvents, setPollStartEvents] = useState(filterAndSortPolls(polls, filter));
+    const [focusedPollId, setFocusedPollId] = useState<string | null>(null);
 
-    useEffect(() => {
-        setPollStartEvents(filterAndSortPolls(polls, filter));
-    }, [filter, polls]);
+    const pollStartEvents = filterAndSortPolls(polls, filter);
+    const isLoadingPollResponses = [...polls.values()].some((poll) => poll.isFetchingResponses);
+
+    const focusedPoll = focusedPollId ? polls.get(focusedPollId) : undefined;
+    const title = focusedPoll ? (
+        <PollDetailHeader filter={filter} onNavigateBack={() => setFocusedPollId(null)} />
+    ) : (
+        _t("Polls history")
+    );
 
     return (
-        <BaseDialog title={_t("Polls history")} onFinished={onFinished}>
+        <BaseDialog title={title} onFinished={onFinished}>
             <div className="mx_PollHistoryDialog_content">
-                <PollHistoryList pollStartEvents={pollStartEvents} filter={filter} onFilterChange={setFilter} />
+                {focusedPoll ? (
+                    <PollDetail poll={focusedPoll} permalinkCreator={permalinkCreator} requestModalClose={onFinished} />
+                ) : (
+                    <PollHistoryList
+                        onItemClick={setFocusedPollId}
+                        pollStartEvents={pollStartEvents}
+                        isLoading={isLoading || isLoadingPollResponses}
+                        oldestFetchedEventTimestamp={oldestEventTimestamp}
+                        polls={polls}
+                        filter={filter}
+                        onFilterChange={setFilter}
+                        loadMorePolls={loadMorePolls}
+                    />
+                )}
             </div>
         </BaseDialog>
     );

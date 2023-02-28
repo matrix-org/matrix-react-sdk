@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 - 2022 The Matrix.org Foundation C.I.C.
+ * Copyright 2020 - 2023 The Matrix.org Foundation C.I.C.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +39,11 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 import { Direction } from "matrix-js-sdk/src/matrix";
+import {
+    ApprovalOpts,
+    CapabilitiesOpts,
+    WidgetLifecycle,
+} from "@matrix-org/react-sdk-module-api/lib/lifecycles/WidgetLifecycle";
 
 import SdkConfig, { DEFAULTS } from "../../SdkConfig";
 import { iterableDiff, iterableIntersection } from "../../utils/iterables";
@@ -52,10 +57,10 @@ import { WidgetType } from "../../widgets/WidgetType";
 import { CHAT_EFFECTS } from "../../effects";
 import { containsEmoji } from "../../effects/utils";
 import dis from "../../dispatcher/dispatcher";
-import SettingsStore from "../../settings/SettingsStore";
 import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
 import { navigateToPermalink } from "../../utils/permalinks/navigator";
 import { SdkContextClass } from "../../contexts/SDKContext";
+import { ModuleRunner } from "../../modules/ModuleRunner";
 
 // TODO: Purge this from the universe
 
@@ -172,27 +177,27 @@ export class StopGapWidgetDriver extends WidgetDriver {
             allowedSoFar.add(cap);
             missing.delete(cap);
         });
+
+        let approved: Set<string> | undefined;
         if (WidgetPermissionCustomisations.preapproveCapabilities) {
-            const approved = await WidgetPermissionCustomisations.preapproveCapabilities(this.forWidget, requested);
-            if (approved) {
-                approved.forEach((cap) => {
-                    allowedSoFar.add(cap);
-                    missing.delete(cap);
-                });
-            }
+            approved = await WidgetPermissionCustomisations.preapproveCapabilities(this.forWidget, requested);
+        } else {
+            const opts: CapabilitiesOpts = { approvedCapabilities: undefined };
+            ModuleRunner.instance.invoke(WidgetLifecycle.CapabilitiesRequest, opts, this.forWidget, requested);
+            approved = opts.approvedCapabilities;
         }
+        if (approved) {
+            approved.forEach((cap) => {
+                allowedSoFar.add(cap);
+                missing.delete(cap);
+            });
+        }
+
         // TODO: Do something when the widget requests new capabilities not yet asked for
         let rememberApproved = false;
         if (missing.size > 0) {
             try {
-                const [result] = await Modal.createDialog<
-                    [
-                        {
-                            approved: Capability[];
-                            remember: boolean;
-                        },
-                    ]
-                >(WidgetCapabilitiesPromptDialog, {
+                const [result] = await Modal.createDialog(WidgetCapabilitiesPromptDialog, {
                     requestedCapabilities: missing,
                     widget: this.forWidget,
                     widgetKind: this.forWidgetKind,
@@ -218,7 +223,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
     public async sendEvent(
         eventType: string,
         content: IContent,
-        stateKey?: string,
+        stateKey?: string | null,
         targetRoomId?: string,
     ): Promise<ISendEventDetails> {
         const client = MatrixClientPeg.get();
@@ -243,7 +248,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
                         // For initial threads launch, chat effects are disabled
                         // see #19731
                         const isNotThread = content["m.relates_to"]?.rel_type !== THREAD_RELATION_TYPE.name;
-                        if (!SettingsStore.getValue("feature_threadenabled") || isNotThread) {
+                        if (isNotThread) {
                             dis.dispatch({ action: `effects.${effect.command}` });
                         }
                     }
@@ -367,6 +372,15 @@ export class StopGapWidgetDriver extends WidgetDriver {
     }
 
     public async askOpenID(observer: SimpleObservable<IOpenIDUpdate>): Promise<void> {
+        const opts: ApprovalOpts = { approved: undefined };
+        ModuleRunner.instance.invoke(WidgetLifecycle.IdentityRequest, opts, this.forWidget);
+        if (opts.approved) {
+            return observer.update({
+                state: OpenIDRequestState.Allowed,
+                token: await MatrixClientPeg.get().getOpenIdToken(),
+            });
+        }
+
         const oidcState = SdkContextClass.instance.widgetPermissionStore.getOIDCState(
             this.forWidget,
             this.forWidgetKind,

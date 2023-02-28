@@ -65,7 +65,7 @@ describe("MPollBody", () => {
         expect(allVotes(newVoteRelations([]))).toEqual([]);
     });
 
-    xit("renders a loader while responses are still loading", async () => {
+    it("renders a loader while responses are still loading", async () => {
         const votes = [
             responseEvent("@me:example.com", "pizza"),
             responseEvent("@bellc:example.com", "pizza"),
@@ -75,13 +75,8 @@ describe("MPollBody", () => {
         // render without waiting for responses
         const renderResult = await newMPollBody(votes, [], undefined, undefined, false);
 
-        // votes still displayed
-        expect(votesCount(renderResult, "pizza")).toBe("2 votes");
-        expect(votesCount(renderResult, "poutine")).toBe("1 vote");
-        expect(votesCount(renderResult, "italian")).toBe("0 votes");
-        expect(votesCount(renderResult, "wings")).toBe("1 vote");
         // spinner rendered
-        expect(renderResult.getByTestId("totalVotes").innerHTML).toMatchSnapshot();
+        expect(renderResult.getByTestId("spinner")).toBeInTheDocument();
     });
 
     it("renders no votes if none were made", async () => {
@@ -768,6 +763,20 @@ describe("MPollBody", () => {
         ];
         const { container } = await newMPollBody(votes);
         expect(container).toMatchSnapshot();
+    });
+
+    it("renders a warning message when poll has undecryptable relations", async () => {
+        const votes = [
+            responseEvent("@op:example.com", "pizza", 12),
+            responseEvent("@op:example.com", [], 13),
+            responseEvent("@op:example.com", "italian", 14),
+            responseEvent("@me:example.com", "wings", 15),
+            responseEvent("@qr:example.com", "italian", 16),
+        ];
+
+        jest.spyOn(votes[1], "isDecryptionFailure").mockReturnValue(true);
+        const { getByText } = await newMPollBody(votes);
+        expect(getByText("Due to decryption errors, some votes may not be counted")).toBeInTheDocument();
     });
 
     it("renders a poll with local, non-local and invalid votes", async () => {

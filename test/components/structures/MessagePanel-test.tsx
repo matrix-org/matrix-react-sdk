@@ -16,7 +16,6 @@ limitations under the License.
 */
 
 import React from "react";
-import ReactDOM from "react-dom";
 import { EventEmitter } from "events";
 import { MatrixEvent, Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import FakeTimers from "@sinonjs/fake-timers";
@@ -58,6 +57,7 @@ describe("MessagePanel", function () {
         isRoomEncrypted: jest.fn().mockReturnValue(false),
         getRoom: jest.fn(),
         getClientWellKnown: jest.fn().mockReturnValue({}),
+        supportsThreads: jest.fn().mockReturnValue(true),
     });
     jest.spyOn(MatrixClientPeg, "get").mockReturnValue(client);
 
@@ -357,7 +357,7 @@ describe("MessagePanel", function () {
         const [rm] = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
 
         // it should follow the <li> which wraps the event tile for event 4
-        const eventContainer = ReactDOM.findDOMNode(tiles[4]);
+        const eventContainer = tiles[4];
         expect(rm.previousSibling).toEqual(eventContainer);
     });
 
@@ -713,16 +713,16 @@ describe("shouldFormContinuation", () => {
             msg: "And here's another message in the main timeline after the thread root",
         });
 
-        expect(shouldFormContinuation(message1, message2, false, true)).toEqual(true);
-        expect(shouldFormContinuation(message2, threadRoot, false, true)).toEqual(true);
-        expect(shouldFormContinuation(threadRoot, message3, false, true)).toEqual(true);
+        expect(shouldFormContinuation(message1, message2, false)).toEqual(true);
+        expect(shouldFormContinuation(message2, threadRoot, false)).toEqual(true);
+        expect(shouldFormContinuation(threadRoot, message3, false)).toEqual(true);
 
         const thread = {
             length: 1,
             replyToEvent: {},
         } as unknown as Thread;
         jest.spyOn(threadRoot, "getThread").mockReturnValue(thread);
-        expect(shouldFormContinuation(message2, threadRoot, false, true)).toEqual(false);
-        expect(shouldFormContinuation(threadRoot, message3, false, true)).toEqual(false);
+        expect(shouldFormContinuation(message2, threadRoot, false)).toEqual(false);
+        expect(shouldFormContinuation(threadRoot, message3, false)).toEqual(false);
     });
 });

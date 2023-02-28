@@ -1,5 +1,5 @@
 /*
-Copyright 2016 - 2022 The Matrix.org Foundation C.I.C.
+Copyright 2016 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -1473,9 +1473,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                         "do not have permission to view the message in question.",
                 );
             } else {
-                description = _t(
-                    "Tried to load a specific point in this room's timeline, but was " + "unable to find it.",
-                );
+                description = _t("Tried to load a specific point in this room's timeline, but was unable to find it.");
             }
 
             Modal.createDialog(ErrorDialog, {
@@ -1689,8 +1687,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         /* Threads do not have server side support for read receipts and the concept
         is very tied to the main room timeline, we are forcing the timeline to
         send read receipts for threaded events */
-        const isThreadTimeline = this.context.timelineRenderingType === TimelineRenderingType.Thread;
-        if (SettingsStore.getValue("feature_threadenabled") && isThreadTimeline) {
+        if (this.context.timelineRenderingType === TimelineRenderingType.Thread) {
             return 0;
         }
         const index = this.state.events.findIndex((ev) => ev.getId() === evId);

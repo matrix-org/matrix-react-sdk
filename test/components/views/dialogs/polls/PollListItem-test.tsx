@@ -15,16 +15,16 @@ limitations under the License.
 */
 
 import React from "react";
-import { render } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
-import PollListItem from "../../../../../src/components/views/dialogs/polls/PollListItem";
+import { PollListItem } from "../../../../../src/components/views/dialogs/polls/PollListItem";
 import { makePollStartEvent, mockIntlDateTimeFormat, unmockIntlDateTimeFormat } from "../../../../test-utils";
 
 describe("<PollListItem />", () => {
     const event = makePollStartEvent("Question?", "@me:domain.org");
     event.getContent().origin;
-    const defaultProps = { event };
+    const defaultProps = { event, onClick: jest.fn() };
     const getComponent = (props = {}) => render(<PollListItem {...defaultProps} {...props} />);
 
     beforeAll(() => {
@@ -49,5 +49,14 @@ describe("<PollListItem />", () => {
         });
         const { container } = getComponent({ event });
         expect(container.firstElementChild).toBeFalsy();
+    });
+
+    it("calls onClick handler on click", () => {
+        const onClick = jest.fn();
+        const { getByText } = getComponent({ onClick });
+
+        fireEvent.click(getByText("Question?"));
+
+        expect(onClick).toHaveBeenCalled();
     });
 });

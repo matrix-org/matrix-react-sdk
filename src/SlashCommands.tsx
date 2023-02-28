@@ -82,6 +82,7 @@ const singleMxcUpload = async (): Promise<string | null> => {
         fileSelector.setAttribute("type", "file");
         fileSelector.onchange = (ev: HTMLInputEvent) => {
             const file = ev.target.files?.[0];
+            if (!file) return;
 
             Modal.createDialog(UploadConfirmDialog, {
                 file,
@@ -197,7 +198,7 @@ function reject(error?: any): RunResult {
     return { error };
 }
 
-function success(promise?: Promise<any>): RunResult {
+function success(promise: Promise<any> = Promise.resolve()): RunResult {
     return { promise };
 }
 
@@ -220,7 +221,7 @@ export const Commands = [
         command: "spoiler",
         args: "<message>",
         description: _td("Sends the given message as a spoiler"),
-        runFn: function (roomId, message) {
+        runFn: function (roomId, message = "") {
             return successSync(ContentHelpers.makeHtmlMessage(message, `<span data-mx-spoiler>${message}</span>`));
         },
         category: CommandCategories.messages,
@@ -281,7 +282,7 @@ export const Commands = [
         command: "plain",
         args: "<message>",
         description: _td("Sends a message as plain text, without interpreting it as markdown"),
-        runFn: function (roomId, messages) {
+        runFn: function (roomId, messages = "") {
             return successSync(ContentHelpers.makeTextMessage(messages));
         },
         category: CommandCategories.messages,
@@ -290,7 +291,7 @@ export const Commands = [
         command: "html",
         args: "<message>",
         description: _td("Sends a message as html, without interpreting it as markdown"),
-        runFn: function (roomId, messages) {
+        runFn: function (roomId, messages = "") {
             return successSync(ContentHelpers.makeHtmlMessage(messages, messages));
         },
         category: CommandCategories.messages,
@@ -304,7 +305,7 @@ export const Commands = [
             if (args) {
                 const cli = MatrixClientPeg.get();
                 const room = cli.getRoom(roomId);
-                if (!room.currentState.mayClientSendStateEvent("m.room.tombstone", cli)) {
+                if (!room?.currentState.mayClientSendStateEvent("m.room.tombstone", cli)) {
                     return reject(
                         newTranslatableError("You do not have the required permissions to use this command."),
                     );
@@ -313,7 +314,7 @@ export const Commands = [
                 const { finished } = Modal.createDialog(
                     RoomUpgradeWarningDialog,
                     { roomId: roomId, targetVersion: args },
-                    /*className=*/ null,
+                    /*className=*/ undefined,
                     /*isPriority=*/ false,
                     /*isStatic=*/ true,
                 );
@@ -550,7 +551,7 @@ export const Commands = [
                     ) {
                         const defaultIdentityServerUrl = getDefaultIdentityServerUrl();
                         if (defaultIdentityServerUrl) {
-                            const { finished } = Modal.createDialog<[boolean]>(QuestionDialog, {
+                            const { finished } = Modal.createDialog(QuestionDialog, {
                                 title: _t("Use an identity server"),
                                 description: (
                                     <p>
@@ -1199,7 +1200,7 @@ export const Commands = [
         description: _td("Switches to this room's virtual room, if it has one"),
         category: CommandCategories.advanced,
         isEnabled(): boolean {
-            return LegacyCallHandler.instance.getSupportsVirtualRooms() && !isCurrentLocalRoom();
+            return !!LegacyCallHandler.instance.getSupportsVirtualRooms() && !isCurrentLocalRoom();
         },
         runFn: (roomId) => {
             return success(
@@ -1389,7 +1390,7 @@ export function parseCommandString(input: string): { cmd?: string; args?: string
 
     const bits = input.match(/^(\S+?)(?:[ \n]+((.|\n)*))?$/);
     let cmd: string;
-    let args: string;
+    let args: string | undefined;
     if (bits) {
         cmd = bits[1].substring(1).toLowerCase();
         args = bits[2];
@@ -1414,7 +1415,7 @@ interface ICmd {
 export function getCommand(input: string): ICmd {
     const { cmd, args } = parseCommandString(input);
 
-    if (CommandMap.has(cmd) && CommandMap.get(cmd)!.isEnabled()) {
+    if (cmd && CommandMap.has(cmd) && CommandMap.get(cmd)!.isEnabled()) {
         return {
             cmd: CommandMap.get(cmd),
             args,

@@ -1,5 +1,5 @@
 /*
-Copyright 2019 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -368,7 +368,12 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     this.props.relation?.rel_type === THREAD_RELATION_TYPE.name ? this.props.relation?.event_id : null;
 
                 let commandSuccessful: boolean;
-                [content, commandSuccessful] = await runSlashCommand(cmd, args, this.props.room.roomId, threadId);
+                [content, commandSuccessful] = await runSlashCommand(
+                    cmd,
+                    args,
+                    this.props.room.roomId,
+                    threadId ?? null,
+                );
                 if (!commandSuccessful) {
                     return; // errored
                 }
@@ -385,9 +390,15 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 } else {
                     shouldSend = false;
                 }
-            } else if (!(await shouldSendAnyway(commandText))) {
+            } else {
+                const sendAnyway = await shouldSendAnyway(commandText);
+                // re-focus the composer after QuestionDialog is closed
+                dis.dispatch({
+                    action: Action.FocusAComposer,
+                    context: this.context.timelineRenderingType,
+                });
                 // if !sendAnyway bail to let the user edit the composer and try again
-                return;
+                if (!sendAnyway) return;
             }
         }
 
@@ -419,7 +430,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
             const prom = doMaybeLocalRoomAction(
                 roomId,
-                (actualRoomId: string) => this.props.mxClient.sendMessage(actualRoomId, threadId, content),
+                (actualRoomId: string) => this.props.mxClient.sendMessage(actualRoomId, threadId ?? null, content!),
                 this.props.mxClient,
             );
             if (replyToEvent) {
@@ -433,11 +444,11 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             }
             dis.dispatch({ action: "message_sent" });
             CHAT_EFFECTS.forEach((effect) => {
-                if (containsEmoji(content, effect.emojis)) {
+                if (containsEmoji(content!, effect.emojis)) {
                     // For initial threads launch, chat effects are disabled
                     // see #19731
                     const isNotThread = this.props.relation?.rel_type !== THREAD_RELATION_TYPE.name;
-                    if (!SettingsStore.getValue("feature_threadenabled") || isNotThread) {
+                    if (isNotThread) {
                         dis.dispatch({ action: `effects.${effect.command}` });
                     }
                 }

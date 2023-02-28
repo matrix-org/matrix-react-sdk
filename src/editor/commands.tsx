@@ -45,7 +45,7 @@ export function isSlashCommand(model: EditorModel): boolean {
     return false;
 }
 
-export function getSlashCommand(model: EditorModel): [Command, string, string] {
+export function getSlashCommand(model: EditorModel): [Command | undefined, string | undefined, string] {
     const commandText = model.parts.reduce((text, part) => {
         // use mxid to textify user pills in a command and room alias/id for room pills
         if (part.type === Type.UserPill || part.type === Type.RoomPill) {
@@ -59,7 +59,7 @@ export function getSlashCommand(model: EditorModel): [Command, string, string] {
 
 export async function runSlashCommand(
     cmd: Command,
-    args: string,
+    args: string | undefined,
     roomId: string,
     threadId: string | null,
 ): Promise<[content: IContent | null, success: boolean]> {
@@ -69,7 +69,7 @@ export async function runSlashCommand(
     if (result.promise) {
         try {
             if (cmd.category === CommandCategories.messages || cmd.category === CommandCategories.effects) {
-                messageContent = await result.promise;
+                messageContent = (await result.promise) ?? null;
             } else {
                 await result.promise;
             }

@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { MatrixClient } from "../../global";
 import Chainable = Cypress.Chainable;
 
-const hideTimestampCSS = ".mx_MessageTimestamp { visibility: hidden !important; }";
+const hidePercyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
 
 describe("Polls", () => {
     let homeserver: HomeserverInstance;
@@ -83,7 +83,6 @@ describe("Polls", () => {
     };
 
     beforeEach(() => {
-        cy.enableLabsFeature("feature_threadenabled");
         cy.window().then((win) => {
             win.localStorage.setItem("mx_lhs_size", "0"); // Collapse left panel for these tests
         });
@@ -134,7 +133,7 @@ describe("Polls", () => {
             .as("pollId");
 
         cy.get<string>("@pollId").then((pollId) => {
-            getPollTile(pollId).percySnapshotElement("Polls Timeline tile - no votes", { percyCSS: hideTimestampCSS });
+            getPollTile(pollId).percySnapshotElement("Polls Timeline tile - no votes", { percyCSS: hidePercyCSS });
 
             // Bot votes 'Maybe' in the poll
             botVoteForOption(bot, roomId, pollId, pollParams.options[2]);
