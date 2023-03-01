@@ -189,9 +189,7 @@ describe("Timeline", () => {
                 "18px", // $irc-line-height: $font-18px (See: _IRCLayout.pcss)
             );
 
-            cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on IRC layout", {
-                percyCSS,
-            });
+            cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on IRC layout", { percyCSS });
         });
 
         it("should have an expanded generic event list summary (GELS) on compact modern/group layout", () => {
@@ -225,9 +223,7 @@ describe("Timeline", () => {
                 "22px", // $font-22px (See: _GenericEventListSummary.pcss)
             );
 
-            cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on modern layout", {
-                percyCSS,
-            });
+            cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on modern layout", { percyCSS });
         });
 
         it("should add inline start margin to an event line on IRC layout", () => {
