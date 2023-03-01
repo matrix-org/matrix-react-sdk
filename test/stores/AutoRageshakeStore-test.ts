@@ -94,7 +94,7 @@ describe("AutoRageshakeStore", () => {
                         },
                       ],
                     ]
-                `.replace("utd_event_id", utdEvent.getId()),
+                `.replace("utd_event_id", utdEvent.getId()!),
                 );
             });
         });
