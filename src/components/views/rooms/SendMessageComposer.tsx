@@ -60,26 +60,56 @@ import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { addReplyToMessageContent } from "../../../utils/Reply";
 import { doMaybeLocalRoomAction } from "../../../utils/local-room";
 
-// Search the editor model for room or user pills and fill in the mentions object.
-function attachMentions(content: IContent, model: EditorModel): void {
-    const userMentions = [];
-    let isRoomMention = false;
-    for (const part of model.parts) {
-        if (part.type === Type.UserPill) {
-            // XXX This should handle duplicate users and such.
-            userMentions.push(part.resourceId);
-        } else if (part.type === Type.AtRoomPill) {
-            isRoomMention = true;
+/**
+ * Build the mentions information based on the editor model (and any related events):
+ *
+ * 1. Search the model parts for room or user pills and fill in the mentions object.
+ * 2. If this is a reply to another event, include any user mentions from that
+ *    (but do not include a room mention).
+ *
+ * @param sender - The Matrix ID of the user sending the event.
+ * @param content - The event content.
+ * @param model - The editor model to search for mentions.
+ * @param replyToEvent - The event being replied to or undefined if it is not a reply.
+ */
+export function attachMentions(
+    sender: string,
+    content: IContent,
+    model: EditorModel,
+    replyToEvent: MatrixEvent | undefined,
+): void {
+    // The mentions property *always* gets included to disable legacy push rules.
+    const mentions: IMentions = (content["org.matrix.msc3952.mentions"] = {});
+
+    const userMentions = new Set<string>();
+
+    // If there's a reply, initialize the mentioned users as the sender of that
+    // event + any mentioned users in that event.
+    if (replyToEvent) {
+        userMentions.add(replyToEvent.sender!.userId);
+        // TODO What do we do if the prely event *doeesn't* have this property?
+        // Try to fish out replies from the contents?
+        const userIds = replyToEvent.getContent()["org.matrix.msc3952.mentions"]?.user_ids;
+        if (Array.isArray(userIds)) {
+            userIds.forEach((userId) => userMentions.add(userId));
         }
     }
-    if (userMentions.length || isRoomMention) {
-        const mentions: IMentions = (content["org.matrix.msc3952.mentions"] = {});
-        if (userMentions.length) {
-            mentions.user_ids = userMentions;
+
+    // Add any mentioned users in the current content.
+    for (const part of model.parts) {
+        if (part.type === Type.UserPill) {
+            userMentions.add(part.resourceId);
+        } else if (part.type === Type.AtRoomPill) {
+            mentions.room = true;
         }
-        if (isRoomMention) {
-            mentions.room = isRoomMention;
-        }
+    }
+
+    // Ensure the *current* user isn't listed in the mentioned users.
+    userMentions.delete(sender);
+
+    // Only include the users if there are any.
+    if (userMentions.size) {
+        mentions.user_ids = [...userMentions];
     }
 }
 
@@ -95,6 +125,7 @@ export function attachRelation(content: IContent, relation?: IEventRelation): vo
 
 // exported for tests
 export function createMessageContent(
+    sender: string,
     model: EditorModel,
     replyToEvent: MatrixEvent | undefined,
     relation: IEventRelation | undefined,
@@ -125,8 +156,8 @@ export function createMessageContent(
         content.formatted_body = formattedBody;
     }
 
-    // Check for mentions by iterating each part of the model for @-mentions.
-    attachMentions(content, model);
+    // Build the mentions property and add it to the event content.
+    attachMentions(sender, content, model, replyToEvent);
 
     attachRelation(content, relation);
     if (replyToEvent) {
@@ -405,6 +436,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 }
 
                 if (cmd.category === CommandCategories.messages || cmd.category === CommandCategories.effects) {
+                    // TODO Do we need to attachMentions?
                     attachRelation(content, this.props.relation);
                     if (replyToEvent) {
                         addReplyToMessageContent(content, replyToEvent, {
@@ -437,6 +469,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             const { roomId } = this.props.room;
             if (!content) {
                 content = createMessageContent(
+                    this.props.mxClient.getUserId()!,
                     model,
                     replyToEvent,
                     this.props.relation,

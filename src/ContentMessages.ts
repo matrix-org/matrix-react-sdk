@@ -487,6 +487,7 @@ export default class ContentMessages {
             msgtype: MsgType.File, // set more specifically later
         };
 
+        // TODO Do we need to attachMentions?
         attachRelation(content, relation);
         if (replyToEvent) {
             addReplyToMessageContent(content, replyToEvent, {

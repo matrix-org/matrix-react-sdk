@@ -16,10 +16,11 @@ limitations under the License.
 
 import React from "react";
 import { fireEvent, render, waitFor } from "@testing-library/react";
-import { MatrixClient, MsgType } from "matrix-js-sdk/src/matrix";
+import { IContent, MatrixClient, MsgType } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 
 import SendMessageComposer, {
+    attachMentions,
     createMessageContent,
     isQuickReaction,
 } from "../../../../src/components/views/rooms/SendMessageComposer";
@@ -89,11 +90,12 @@ describe("<SendMessageComposer/>", () => {
             const documentOffset = new DocumentOffset(11, true);
             model.update("hello world", "insertText", documentOffset);
 
-            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
+            const content = createMessageContent("@alice:test", model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
-                body: "hello world",
-                msgtype: "m.text",
+                "body": "hello world",
+                "msgtype": "m.text",
+                "org.matrix.msc3952.mentions": {},
             });
         });
 
@@ -102,13 +104,14 @@ describe("<SendMessageComposer/>", () => {
             const documentOffset = new DocumentOffset(13, true);
             model.update("hello *world*", "insertText", documentOffset);
 
-            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
+            const content = createMessageContent("@alice:test", model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
-                body: "hello *world*",
-                msgtype: "m.text",
-                format: "org.matrix.custom.html",
-                formatted_body: "hello <em>world</em>",
+                "body": "hello *world*",
+                "msgtype": "m.text",
+                "format": "org.matrix.custom.html",
+                "formatted_body": "hello <em>world</em>",
+                "org.matrix.msc3952.mentions": {},
             });
         });
 
@@ -117,13 +120,14 @@ describe("<SendMessageComposer/>", () => {
             const documentOffset = new DocumentOffset(22, true);
             model.update("/me blinks __quickly__", "insertText", documentOffset);
 
-            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
+            const content = createMessageContent("@alice:test", model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
-                body: "blinks __quickly__",
-                msgtype: "m.emote",
-                format: "org.matrix.custom.html",
-                formatted_body: "blinks <strong>quickly</strong>",
+                "body": "blinks __quickly__",
+                "msgtype": "m.emote",
+                "format": "org.matrix.custom.html",
+                "formatted_body": "blinks <strong>quickly</strong>",
+                "org.matrix.msc3952.mentions": {},
             });
         });
 
@@ -133,11 +137,12 @@ describe("<SendMessageComposer/>", () => {
             model.update("/me ✨sparkles✨", "insertText", documentOffset);
             expect(model.parts.length).toEqual(4); // Emoji count as non-text
 
-            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
+            const content = createMessageContent("@alice:test", model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
-                body: "✨sparkles✨",
-                msgtype: "m.emote",
+                "body": "✨sparkles✨",
+                "msgtype": "m.emote",
+                "org.matrix.msc3952.mentions": {},
             });
         });
 
@@ -147,11 +152,109 @@ describe("<SendMessageComposer/>", () => {
 
             model.update("//dev/null is my favourite place", "insertText", documentOffset);
 
-            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
+            const content = createMessageContent("@alice:test", model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
-                body: "/dev/null is my favourite place",
-                msgtype: "m.text",
+                "body": "/dev/null is my favourite place",
+                "msgtype": "m.text",
+                "org.matrix.msc3952.mentions": {},
+            });
+        });
+    });
+
+    describe("attachMentions", () => {
+        const partsCreator = createPartCreator();
+
+        it("no mentions", () => {
+            const model = new EditorModel([], partsCreator);
+            const content: IContent = {};
+            attachMentions("@alice:test", content, model, undefined);
+            expect(content).toEqual({
+                "org.matrix.msc3952.mentions": {},
+            });
+        });
+
+        it("test user mentions", () => {
+            const model = new EditorModel([partsCreator.userPill("Bob", "@bob:test")], partsCreator);
+            const content: IContent = {};
+            attachMentions("@alice:test", content, model, undefined);
+            expect(content).toEqual({
+                "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] },
+            });
+        });
+
+        it("test reply", () => {
+            // Replying to an event adds the sender to the list of mentioned users.
+            const model = new EditorModel([], partsCreator);
+            let replyToEvent = mkEvent({
+                type: "m.room.message",
+                user: "@bob:test",
+                room: "!abc:test",
+                content: { "org.matrix.msc3952.mentions": {} },
+                event: true,
+            });
+            let content: IContent = {};
+            attachMentions("@alice:test", content, model, replyToEvent);
+            expect(content).toEqual({
+                "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] },
+            });
+
+            // It also adds any other mentioned users, but removes yourself.
+            replyToEvent = mkEvent({
+                type: "m.room.message",
+                user: "@bob:test",
+                room: "!abc:test",
+                content: { "org.matrix.msc3952.mentions": { user_ids: ["@alice:test", "@charlie:test"] } },
+                event: true,
+            });
+            content = {};
+            attachMentions("@alice:test", content, model, replyToEvent);
+            expect(content).toEqual({
+                "org.matrix.msc3952.mentions": { user_ids: ["@bob:test", "@charlie:test"] },
+            });
+        });
+
+        it("test room mention", () => {
+            const model = new EditorModel([partsCreator.atRoomPill("@room")], partsCreator);
+            const content: IContent = {};
+            attachMentions("@alice:test", content, model, undefined);
+            expect(content).toEqual({
+                "org.matrix.msc3952.mentions": { room: true },
+            });
+        });
+
+        it("test reply to room mention", () => {
+            // Replying to a room mention shouldn't automatically be a room mention.
+            const model = new EditorModel([], partsCreator);
+            const replyToEvent = mkEvent({
+                type: "m.room.message",
+                user: "@alice:test",
+                room: "!abc:test",
+                content: { "org.matrix.msc3952.mentions": { room: true } },
+                event: true,
+            });
+            const content: IContent = {};
+            attachMentions("@alice:test", content, model, replyToEvent);
+            expect(content).toEqual({
+                "org.matrix.msc3952.mentions": {},
+            });
+        });
+
+        it("test broken mentions", () => {
+            // Replying to a room mention shouldn't automatically be a room mention.
+            const model = new EditorModel([], partsCreator);
+            const replyToEvent = mkEvent({
+                type: "m.room.message",
+                user: "@alice:test",
+                room: "!abc:test",
+                // @ts-ignore - Purposefully testing invalid data.
+                content: { "org.matrix.msc3952.mentions": { user_ids: "@bob:test" } },
+                event: true,
+            });
+            const content: IContent = {};
+            attachMentions("@alice:test", content, model, replyToEvent);
+            expect(content).toEqual({
+                "org.matrix.msc3952.mentions": {},
             });
         });
     });
@@ -293,8 +396,9 @@ describe("<SendMessageComposer/>", () => {
             fireEvent.keyDown(container.querySelector(".mx_SendMessageComposer")!, { key: "Enter" });
 
             expect(mockClient.sendMessage).toHaveBeenCalledWith("myfakeroom", null, {
-                body: "test message",
-                msgtype: MsgType.Text,
+                "body": "test message",
+                "msgtype": MsgType.Text,
+                "org.matrix.msc3952.mentions": {},
             });
         });
 
@@ -312,8 +416,9 @@ describe("<SendMessageComposer/>", () => {
             fireEvent.keyDown(container.querySelector(".mx_SendMessageComposer")!, { key: "Enter" });
 
             expect(mockClient.sendMessage).toHaveBeenCalledWith("myfakeroom", null, {
-                body: "test message",
-                msgtype: MsgType.Text,
+                "body": "test message",
+                "msgtype": MsgType.Text,
+                "org.matrix.msc3952.mentions": {},
             });
 
             expect(dis.dispatch).toHaveBeenCalledWith({ action: `effects.confetti` });
@@ -339,8 +444,9 @@ describe("<SendMessageComposer/>", () => {
             fireEvent.keyDown(container.querySelector(".mx_SendMessageComposer")!, { key: "Enter" });
 
             expect(mockClient.sendMessage).toHaveBeenCalledWith("myfakeroom", null, {
-                body: "test message",
-                msgtype: MsgType.Text,
+                "body": "test message",
+                "msgtype": MsgType.Text,
+                "org.matrix.msc3952.mentions": {},
             });
 
             expect(dis.dispatch).not.toHaveBeenCalledWith({ action: `effects.confetti` });

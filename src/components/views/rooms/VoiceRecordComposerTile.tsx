@@ -129,6 +129,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
                 this.state.recorder.getPlayback().thumbnailWaveform.map((v) => Math.round(v * 1024)),
             );
 
+            // TODO Do we need to attachMentions?
             attachRelation(content, relation);
             if (replyToEvent) {
                 addReplyToMessageContent(content, replyToEvent, {
