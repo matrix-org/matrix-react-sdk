@@ -357,12 +357,21 @@ describe("Timeline", () => {
                 "not.be.visible", // See: _GenericEventListSummary.pcss
             );
 
+            // Exclude timestamp from snapshot
+            const percyCSS = ".mx_MessageTimestamp { visibility: hidden !important; }";
+
+            // Save snapshot of expanded generic event list summary on bubble layout
+            cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on bubble layout", { percyCSS });
+
             // Click "collapse" link button on the first hovered info event line
             cy.get(".mx_GenericEventListSummary_unstyledList .mx_EventTile_info:first-of-type").realHover();
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=true]").click({ force: false });
 
             // Make sure "collapse" link button worked
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").should("exist");
+
+            // Save snapshot of collapsed generic event list summary on bubble layout
+            cy.get(".mx_MainSplit").percySnapshotElement("Collapsed GELS on bubble layout", { percyCSS });
         });
 
         it("should highlight search result words regardless of formatting", () => {
