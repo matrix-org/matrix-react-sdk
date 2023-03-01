@@ -62,7 +62,7 @@ describe("Create Room", () => {
         cy.contains(".mx_RoomHeader_topic", topic);
     });
 
-    it("should create a room with a long room name with horizontal ellipsis", () => {
+    it("should create a room with a long room name, which is displayed with ellipsis", () => {
         let roomId: string;
         const LONG_ROOM_NAME =
             "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore " +
