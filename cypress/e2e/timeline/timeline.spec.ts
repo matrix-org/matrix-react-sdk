@@ -292,7 +292,7 @@ describe("Timeline", () => {
             cy.get(".mx_GenericEventListSummary[data-layout=irc] .mx_EventTile .mx_ViewSourceEvent")
                 .should("exist")
                 .realHover()
-                .percySnapshotElement("Hovered hidden event line on IRC layout", { percyCSS })
+                .percySnapshotElement("Hovered hidden event line on IRC layout", { percyCSS });
 
             // Click view source event toggle
             cy.get(".mx_GenericEventListSummary[data-layout=irc] .mx_EventTile .mx_ViewSourceEvent")
