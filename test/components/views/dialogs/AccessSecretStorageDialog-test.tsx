@@ -134,5 +134,10 @@ describe("AccessSecretStorageDialog", () => {
                 "👎 Unable to access secret storage. Please verify that you entered the correct Security Phrase.",
             ),
         ).toBeInTheDocument();
+
+
+        expect(
+            document.activeElement
+        ).toEqual(screen.getByPlaceholderText("Security Phrase"))
     });
 });
