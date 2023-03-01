@@ -238,7 +238,11 @@ describe("Timeline", () => {
             });
         });
 
-        it("should click view source toggle on IRC layout", () => {
+        it("should click view source event toggle", () => {
+            // This test checks:
+            // 1. clickability of top left of view source event toggle
+            // 2. clickability of view source toggle on IRC layout
+
             sendEvent(roomId);
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
@@ -253,6 +257,25 @@ describe("Timeline", () => {
                 cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
             });
             cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", "MessageEdit").should("exist");
+
+            // 1. clickability of top left of view source event toggle
+
+            // Click top left of the event toggle, which should not be covered by MessageActionBar's safe area
+            cy.get(".mx_EventTile:not(:first-child) .mx_ViewSourceEvent")
+                .should("exist")
+                .realHover()
+                .within(() => {
+                    cy.get(".mx_ViewSourceEvent_toggle").click("topLeft", { force: false });
+                });
+
+            // Make sure the expand toggle worked
+            cy.get(".mx_EventTile .mx_ViewSourceEvent_expanded .mx_ViewSourceEvent_toggle").should("be.visible");
+
+            // 2. clickability of view source toggle on IRC layout
+
+            // Click again to restore the default status
+            cy.get(".mx_EventTile:not(:first-child) .mx_ViewSourceEvent .mx_ViewSourceEvent_toggle")
+                .click("topLeft", { force: false });
 
             // Enable IRC layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
@@ -276,33 +299,6 @@ describe("Timeline", () => {
 
             // Make sure the expand toggle worked
             cy.get(".mx_EventTile[data-layout=irc] .mx_ViewSourceEvent_expanded").should("be.visible");
-
-        it("should click top left of view source event toggle", () => {
-            sendEvent(roomId);
-            cy.visit("/#/room/" + roomId);
-            cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary " + ".mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
-
-            // Edit message
-            cy.contains(".mx_RoomView_body .mx_EventTile .mx_EventTile_line", "Message").within(() => {
-                cy.get('[aria-label="Edit"]').click({ force: true }); // Cypress has no ability to hover
-                cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
-            });
-            cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", "MessageEdit").should("exist");
-
-            // Click top left of the event toggle, which should not be covered by MessageActionBar's safe area
-            cy.get(".mx_EventTile:not(:first-child) .mx_ViewSourceEvent")
-                .should("exist")
-                .realHover()
-                .within(() => {
-                    cy.get(".mx_ViewSourceEvent_toggle").click("topLeft", { force: false });
-                });
-
-            // Make sure the expand toggle worked
-            cy.get(".mx_EventTile .mx_ViewSourceEvent_expanded .mx_ViewSourceEvent_toggle").should("be.visible");
         });
 
         it("should click 'collapse' link button on the first hovered info event line on bubble layout", () => {
