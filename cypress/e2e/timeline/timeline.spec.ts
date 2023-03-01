@@ -238,6 +238,45 @@ describe("Timeline", () => {
             });
         });
 
+        it("should click view source toggle on IRC layout", () => {
+            sendEvent(roomId);
+            cy.visit("/#/room/" + roomId);
+            cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
+            cy.contains(
+                ".mx_RoomView_body .mx_GenericEventListSummary " + ".mx_GenericEventListSummary_summary",
+                "created and configured the room.",
+            ).should("exist");
+
+            // Edit message
+            cy.contains(".mx_RoomView_body .mx_EventTile .mx_EventTile_line", "Message").within(() => {
+                cy.get('[aria-label="Edit"]').click({ force: true }); // Cypress has no ability to hover
+                cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
+            });
+            cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", "MessageEdit").should("exist");
+
+            // Enable IRC layout
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
+
+            // Exclude timestamp from snapshot
+            const percyCSS = ".mx_MessageTimestamp { visibility: hidden !important; }";
+
+            // Hover the view source toggle on IRC layout
+            cy.get(".mx_GenericEventListSummary[data-layout=irc] .mx_EventTile .mx_ViewSourceEvent")
+                .should("exist")
+                .realHover()
+                .percySnapshotElement("Hovered hidden event line on IRC layout", { percyCSS })
+
+            // Click view source event toggle
+            cy.get(".mx_GenericEventListSummary[data-layout=irc] .mx_EventTile .mx_ViewSourceEvent")
+                .should("exist")
+                .realHover()
+                .within(() => {
+                    cy.get(".mx_ViewSourceEvent_toggle").click("topLeft", { force: false });
+                });
+
+            // Make sure the expand toggle worked
+            cy.get(".mx_EventTile[data-layout=irc] .mx_ViewSourceEvent_expanded").should("be.visible");
+
         it("should click top left of view source event toggle", () => {
             sendEvent(roomId);
             cy.visit("/#/room/" + roomId);
