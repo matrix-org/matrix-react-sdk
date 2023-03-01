@@ -261,7 +261,7 @@ describe("Timeline", () => {
             // 1. clickability of top left of view source event toggle
 
             // Click top left of the event toggle, which should not be covered by MessageActionBar's safe area
-            cy.get(".mx_EventTile:not(:first-child) .mx_ViewSourceEvent")
+            cy.get(".mx_GenericEventListSummary[layout=group] .mx_EventTile .mx_ViewSourceEvent")
                 .should("exist")
                 .realHover()
                 .within(() => {
@@ -272,7 +272,7 @@ describe("Timeline", () => {
             cy.get(".mx_EventTile .mx_ViewSourceEvent_expanded .mx_ViewSourceEvent_toggle").should("be.visible");
 
             // Click again to collapse the source
-            cy.get(".mx_EventTile:not(:first-child) .mx_ViewSourceEvent")
+            cy.get(".mx_GenericEventListSummary[layout=group] .mx_EventTile .mx_ViewSourceEvent")
                 .should("exist")
                 .realHover()
                 .within(() => {
