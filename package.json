@@ -82,6 +82,7 @@
         "filesize": "10.0.5",
         "flux": "4.0.3",
         "focus-visible": "^5.2.0",
+        "fzf": "^0.5.1",
         "gfm.css": "^1.1.2",
         "glob-to-regexp": "^0.4.1",
         "highlight.js": "^11.3.1",

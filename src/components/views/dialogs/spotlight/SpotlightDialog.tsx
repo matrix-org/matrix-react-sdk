@@ -20,7 +20,6 @@ import { capitalize, sum } from "lodash";
 import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
 import { IPublicRoomsChunkRoom, MatrixClient, RoomMember, RoomType } from "matrix-js-sdk/src/matrix";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { normalize } from "matrix-js-sdk/src/utils";
 import React, {
     ChangeEvent,
     KeyboardEvent,
@@ -33,6 +32,7 @@ import React, {
     useState,
 } from "react";
 import sanitizeHtml from "sanitize-html";
+import { Fzf } from "fzf";
 
 import { KeyBindingAction } from "../../../../accessibility/KeyboardShortcuts";
 import { Ref } from "../../../../accessibility/roving/types";
@@ -175,11 +175,11 @@ const toPublicRoomResult = (publicRoom: IPublicRoomsChunkRoom): IPublicRoomResul
     section: Section.PublicRooms,
     filter: [Filter.PublicRooms],
     query: filterBoolean([
-        publicRoom.room_id.toLowerCase(),
-        publicRoom.canonical_alias?.toLowerCase(),
-        publicRoom.name?.toLowerCase(),
-        sanitizeHtml(publicRoom.topic?.toLowerCase() ?? "", { allowedTags: [] }),
-        ...(publicRoom.aliases?.map((it) => it.toLowerCase()) || []),
+        publicRoom.room_id,
+        publicRoom.canonical_alias,
+        publicRoom.name,
+        sanitizeHtml(publicRoom.topic ?? "", { allowedTags: [] }),
+        ...(publicRoom.aliases?.map((it) => it) || []),
     ]),
 });
 
@@ -189,10 +189,7 @@ const toRoomResult = (room: Room): IRoomResult => {
 
     if (otherUserId) {
         const otherMembers = room.getMembers().filter((it) => it.userId !== myUserId);
-        const query = [
-            ...otherMembers.map((it) => it.name.toLowerCase()),
-            ...otherMembers.map((it) => it.userId.toLowerCase()),
-        ].filter(Boolean);
+        const query = [...otherMembers.map((it) => it.name), ...otherMembers.map((it) => it.userId)].filter(Boolean);
         return {
             room,
             section: Section.People,
@@ -218,7 +215,7 @@ const toMemberResult = (member: Member | RoomMember): IMemberResult => ({
     member,
     section: Section.Suggestions,
     filter: [Filter.People],
-    query: [member.userId.toLowerCase(), member.name.toLowerCase()].filter(Boolean),
+    query: [member.userId, member.name].filter(Boolean),
 });
 
 const recentAlgorithm = new RecentAlgorithm();
@@ -398,29 +395,24 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             [Section.PublicRooms]: [],
         };
 
-        // Group results in their respective sections
         if (trimmedQuery) {
-            const lcQuery = trimmedQuery.toLowerCase();
-            const normalizedQuery = normalize(trimmedQuery);
+            const fzf = new Fzf(possibleResults, {
+                selector: (entry: Result) => {
+                    if (isRoomResult(entry)) {
+                        return [entry.room.name, entry.room.getCanonicalAlias(), entry.query || []]
+                            .filter(Boolean)
+                            .join(" ");
+                    } else if (isMemberResult(entry) || isPublicRoomResult(entry)) {
+                        return (entry.query || []).join(" ");
+                    }
 
-            possibleResults.forEach((entry) => {
-                if (isRoomResult(entry)) {
-                    if (
-                        !entry.room.normalizedName?.includes(normalizedQuery) &&
-                        !entry.room.getCanonicalAlias()?.toLowerCase().includes(lcQuery) &&
-                        !entry.query?.some((q) => q.includes(lcQuery))
-                    )
-                        return; // bail, does not match query
-                } else if (isMemberResult(entry)) {
-                    if (!entry.query?.some((q) => q.includes(lcQuery))) return; // bail, does not match query
-                } else if (isPublicRoomResult(entry)) {
-                    if (!entry.query?.some((q) => q.includes(lcQuery))) return; // bail, does not match query
-                } else {
-                    if (!entry.name.toLowerCase().includes(lcQuery) && !entry.query?.some((q) => q.includes(lcQuery)))
-                        return; // bail, does not match query
-                }
+                    return `${entry.name} ${(entry.query || []).join(" ")}`;
+                },
+            });
 
-                results[entry.section].push(entry);
+            const fuzzyResults = fzf.find(trimmedQuery);
+            fuzzyResults.forEach((r) => {
+                results[r.item.section].push(r.item);
             });
         } else if (filter === Filter.PublicRooms) {
             // return all results for public rooms if no query is given
