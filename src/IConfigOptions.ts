@@ -148,7 +148,6 @@ export interface IConfigOptions {
     analytics_owner?: string; // defaults to `brand`
     privacy_policy_url?: string; // location for cookie policy
 
-
     enable_presence_by_hs_url?: Record<string, boolean>; // <HomeserverName, Enabled>
 
     terms_and_conditions_links?: { url: string; text: string }[];
