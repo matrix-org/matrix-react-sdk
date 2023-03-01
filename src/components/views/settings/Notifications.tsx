@@ -26,6 +26,7 @@ import {
 import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
+import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
 
 import Spinner from "../elements/Spinner";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -50,7 +51,6 @@ import TagComposer from "../elements/TagComposer";
 import { objectClone } from "../../../utils/objects";
 import { arrayDiff } from "../../../utils/arrays";
 import { clearAllNotifications, getLocalNotificationAccountDataEventType } from "../../../utils/notifications";
-import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
 
 // TODO: this "view" component still has far too much application logic in it,
 // which should be factored out to other files.
@@ -100,6 +100,9 @@ interface IVectorPushRule {
     rule?: IAnnotatedPushRule;
     description: TranslatedString | string;
     vectorState: VectorState;
+    // loudest vectorState of a rule and its synced rules
+    // undefined when rule has no synced rules
+    syncedVectorState?: VectorState;
 }
 
 interface IProps {}
@@ -123,6 +126,48 @@ interface IState {
 
     clearingNotifications: boolean;
 }
+const findInDefaultRules = (ruleId: RuleId | string, defaultRules): IAnnotatedPushRule | undefined => {
+    for (const category in defaultRules) {
+        const rule = defaultRules[category].find((rule) => rule.rule_id === ruleId);
+        if (rule) {
+            return rule;
+        }
+    }
+};
+const OrderedVectorStates = [VectorState.Off, VectorState.On, VectorState.Loud];
+/**
+ * Find the 'loudest' vector state assigned to a rule
+ * and it's synced rules
+ * If rules have fallen out of sync,
+ * the loudest rule can determine the display value
+ * @param defaultRules
+ * @param rule - parent rule
+ * @param definition - definition of parent rule
+ * @returns VectorState - the maximum/loudest state for the parent and synced rules
+ */
+const maximumVectorState = (defaultRules, rule, definition: VectorPushRuleDefinition): VectorState | undefined => {
+    if (!definition.syncedRuleIds?.length) {
+        return undefined;
+    }
+    const vectorState = definition.syncedRuleIds.reduce<VectorState>((maxVectorState, ruleId) => {
+        // already set to maximum
+        if (maxVectorState === VectorState.Loud) {
+            return maxVectorState;
+        }
+        const syncedRule = findInDefaultRules(ruleId, defaultRules);
+        if (syncedRule) {
+            const syncedRuleVectorState = definition.ruleToVectorState(syncedRule);
+            // if syncedRule is 'louder' than current maximum
+            // set maximum to louder vectorState
+            if (OrderedVectorStates.indexOf(syncedRuleVectorState) > OrderedVectorStates.indexOf(maxVectorState)) {
+                return syncedRuleVectorState;
+            }
+        }
+        return maxVectorState;
+    }, definition.ruleToVectorState(rule));
+
+    return vectorState;
+};
 
 export default class Notifications extends React.PureComponent<IProps, IState> {
     private settingWatchers: string[];
@@ -292,6 +337,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                     ruleId: rule.rule_id,
                     rule,
                     vectorState,
+                    syncedVectorState: maximumVectorState(defaultRules, rule, definition),
                     description: _t(definition.description),
                 });
             }
@@ -425,22 +471,18 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         syncedRuleIds: VectorPushRuleDefinition["syncedRuleIds"],
         rule: IVectorPushRule,
         actions?: PushRuleAction[],
-    ) => {
-        console.log("hhh updateSyncedRules", { syncedRuleIds, actions });
+    ): Promise<void> => {
+        // get synced rules that exist for user
         const syncedRules: ReturnType<PushProcessor["getPushRuleAndKindById"]>[] = syncedRuleIds
             ?.map((ruleId) => this.pushProcessor.getPushRuleAndKindById(ruleId))
             .filter(Boolean);
-        console.log("hhh syncedRules", { syncedRuleIds, syncedRules });
+
         if (!syncedRules?.length) {
             return;
         }
-        // try {
-        for (let { kind, rule: syncedRule } of syncedRules) {
+        for (const { kind, rule: syncedRule } of syncedRules) {
             await this.setPushRuleActions(syncedRule.rule_id, kind, actions);
         }
-        // } catch (error) {
-        //     logger.error(`Failed to update all synced rules for ${rule.ruleId}`, error);
-        // }
     };
 
     private onRadioChecked = async (rule: IVectorPushRule, checkedState: VectorState): Promise<void> => {
@@ -735,7 +777,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             <StyledRadioButton
                 key={r.ruleId + s}
                 name={r.ruleId}
-                checked={r.vectorState === s}
+                checked={(r.syncedVectorState ?? r.vectorState) === s}
                 onChange={this.onRadioChecked.bind(this, r, s)}
                 disabled={this.state.phase === Phase.Persisting}
                 aria-label={VectorStateToLabel[s]}

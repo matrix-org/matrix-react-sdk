@@ -39,12 +39,12 @@ interface IVectorPushRuleDefinition {
 class VectorPushRuleDefinition {
     public readonly description: string;
     public readonly vectorStateToActions: StateToActionsMap;
-    public readonly syncedRuleIds: (RuleId | string)[];
+    public readonly syncedRuleIds?: (RuleId | string)[];
 
     public constructor(opts: IVectorPushRuleDefinition) {
         this.description = opts.description;
         this.vectorStateToActions = opts.vectorStateToActions;
-        this.syncedRuleIds = opts.syncedRuleIds || [];
+        this.syncedRuleIds = opts.syncedRuleIds;
     }
 
     // Translate the rule actions and its enabled value into vector state
