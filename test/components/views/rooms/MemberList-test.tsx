@@ -78,7 +78,7 @@ describe("MemberList", () => {
         let prevMember: RoomMember | undefined;
         for (const tile of memberTiles) {
             const memberA = prevMember;
-            const memberB = memberListRoom.currentState.members[tile.getAttribute("title").split(" ")[0]];
+            const memberB = memberListRoom.currentState.members[tile.getAttribute("title")!.split(" ")[0]];
             prevMember = memberB; // just in case an expect fails, set this early
             if (!memberA) {
                 continue;
