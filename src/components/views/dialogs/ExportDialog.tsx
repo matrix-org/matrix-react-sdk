@@ -112,7 +112,7 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
     const [exportSuccessful, setExportSuccessful] = useState(false);
     const [exporter, setExporter] = useStateCallback<Exporter | null>(
         null,
-        async (exporter: Exporter): Promise<void> => {
+        async (exporter: Exporter | null): Promise<void> => {
             await exporter?.export().then(() => {
                 if (!exportCancelled) setExportSuccessful(true);
             });
