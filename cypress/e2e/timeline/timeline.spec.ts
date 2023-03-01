@@ -178,8 +178,14 @@ describe("Timeline", () => {
 
             // Click "expand" link button
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
-        });
 
+            // Check the position of timestamp wrapper anchor of the info event line
+            cy.get(".mx_EventTile_info.mx_EventTile_last[data-layout=bubble] .mx_EventTile_line > a").should(
+                "have.css",
+                "inset-inline-start",
+                "-70px",
+            );
+        });
 
         it("should add inline start margin to an event line on IRC layout", () => {
             cy.visit("/#/room/" + roomId);
