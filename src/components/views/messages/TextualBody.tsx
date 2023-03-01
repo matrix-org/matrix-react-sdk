@@ -86,21 +86,21 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
     }
 
     private applyFormatting(): void {
-        const showLineNumbers = SettingsStore.getValue("showCodeLineNumbers");
-        this.activateSpoilers([this.contentRef.current]);
+        // Function is only called from render / componentDidMount → contentRef is set
+        const content = this.contentRef.current!;
 
-        // pillifyLinks BEFORE linkifyElement because plain room/user URLs in the composer
-        // are still sent as plaintext URLs. If these are ever pillified in the composer,
-        // we should be pillify them here by doing the linkifying BEFORE the pillifying.
-        pillifyLinks([this.contentRef.current], this.props.mxEvent, this.pills);
-        HtmlUtils.linkifyElement(this.contentRef.current);
+        const showLineNumbers = SettingsStore.getValue("showCodeLineNumbers");
+        this.activateSpoilers([content]);
+
+        HtmlUtils.linkifyElement(content);
+        pillifyLinks([content], this.props.mxEvent, this.pills);
 
         this.calculateUrlPreview();
 
         // tooltipifyLinks AFTER calculateUrlPreview because the DOM inside the tooltip
         // container is empty before the internal component has mounted so calculateUrlPreview
         // won't find any anchors
-        tooltipifyLinks([this.contentRef.current], this.pills, this.tooltips);
+        tooltipifyLinks([content], this.pills, this.tooltips);
 
         if (this.props.mxEvent.getContent().format === "org.matrix.custom.html") {
             // Handle expansion and add buttons

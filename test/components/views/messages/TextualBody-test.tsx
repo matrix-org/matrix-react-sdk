@@ -38,9 +38,11 @@ describe("<TextualBody />", () => {
     beforeEach(() => {
         defaultMatrixClient = getMockClientWithEventEmitter({
             getRoom: () => defaultRoom,
+            getRooms: () => [defaultRoom],
             getAccountData: (): MatrixEvent | undefined => undefined,
             isGuest: () => false,
             mxcUrlToHttp: (s: string) => s,
+            getUserId: () => "@user:example.com",
         });
     });
 
@@ -153,6 +155,44 @@ describe("<TextualBody />", () => {
                 '<span class="mx_EventTile_body" dir="auto">' +
                     'Visit <a href="https://matrix.org/" class="linkified" target="_blank" rel="noreferrer noopener">' +
                     "https://matrix.org/</a></span>",
+            );
+        });
+
+        it("pillification of MXIDs get applied correctly into the DOM", () => {
+            const ev = mkEvent({
+                type: "m.room.message",
+                room: "room_id",
+                user: "sender",
+                content: {
+                    body: "Chat with @user:example.com",
+                    msgtype: "m.text",
+                },
+                event: true,
+            });
+
+            const { container } = getComponent({ mxEvent: ev });
+            const content = container.querySelector(".mx_EventTile_body");
+            expect(content.innerHTML).toMatchInlineSnapshot(
+                `"Chat with <span><bdi><a class="mx_Pill mx_UserPill"><img class="mx_BaseAvatar mx_BaseAvatar_image" src="mxc://avatar.url/image.png" style="width: 16px; height: 16px;" alt="" data-testid="avatar-img" aria-hidden="true"><span class="mx_Pill_linkText">Member</span></a></bdi></span>"`,
+            );
+        });
+
+        it("pillification of room aliases get applied correctly into the DOM", () => {
+            const ev = mkEvent({
+                type: "m.room.message",
+                room: "room_id",
+                user: "sender",
+                content: {
+                    body: "Visit #room:example.com",
+                    msgtype: "m.text",
+                },
+                event: true,
+            });
+
+            const { container } = getComponent({ mxEvent: ev });
+            const content = container.querySelector(".mx_EventTile_body");
+            expect(content.innerHTML).toMatchInlineSnapshot(
+                `"Visit <span><bdi><a class="mx_Pill mx_RoomPill" href="https://matrix.to/#/#room:example.com"><span class="mx_Pill_linkText">#room:example.com</span></a></bdi></span>"`,
             );
         });
     });
