@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,6 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export interface IDialogProps {
-    onFinished(...args: any): void;
-}
+import { looksValid } from "../src/email";
+
+describe("looksValid", () => {
+    it.each([
+        ["", false],
+        ["alice", false],
+        ["@", false],
+        ["@alice:example.com", false],
+        ["@b.org", false],
+        ["alice@example", false],
+        ["a@b.org", true],
+        ["alice@example.com", true],
+    ])("for »%s« should return %s", (value: string, expected: boolean) => {
+        expect(looksValid(value)).toBe(expected);
+    });
+});
