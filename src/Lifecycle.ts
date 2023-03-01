@@ -73,8 +73,9 @@ dis.register((payload) => {
         onLoggedOut();
     } else if (payload.action === Action.OverwriteLogin) {
         const typed = <OverwriteLoginPayload>payload;
+        // is invoked without dispatching of "on_logging_in"
         // noinspection JSIgnoredPromiseFromCall - we don't care if it fails
-        doSetLoggedIn(typed.credentials, true);
+        doSetLoggedIn(typed.credentials, true, false);
     }
 });
 
@@ -573,10 +574,14 @@ export async function hydrateSession(credentials: IMatrixClientCreds): Promise<M
  *
  * @param {IMatrixClientCreds} credentials
  * @param {Boolean} clearStorageEnabled
- *
+ * @param {Boolean} dispatchOnLoggingIn if true then "on_logging_in" is dispatched
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
-async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnabled: boolean): Promise<MatrixClient> {
+async function doSetLoggedIn(
+    credentials: IMatrixClientCreds,
+    clearStorageEnabled: boolean,
+    dispatchOnLoggingIn = true,
+): Promise<MatrixClient> {
     credentials.guest = Boolean(credentials.guest);
 
     const softLogout = isSoftLogout();
@@ -602,7 +607,12 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
     //
     // we fire it *synchronously* to make sure it fires before on_logged_in.
     // (dis.dispatch uses `window.setTimeout`, which does not guarantee ordering.)
-    dis.dispatch({ action: "on_logging_in" }, true);
+    //
+    // can be disabled to resolve "Cannot dispatch in the middle of a dispatch."
+    // error when it is invoked via another dispatch that is not yet finished.
+    if (dispatchOnLoggingIn) {
+        dis.dispatch({ action: "on_logging_in" }, true);
+    }
 
     if (clearStorageEnabled) {
         await clearStorage();

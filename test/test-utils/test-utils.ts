@@ -231,6 +231,9 @@ export function createTestClient(): MatrixClient {
                 room_id: roomId,
             });
         }),
+        startClient: jest.fn().mockResolvedValue(undefined),
+        stopClient: jest.fn().mockReturnValue(undefined),
+        removeAllListeners: jest.fn().mockReturnValue(undefined),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
