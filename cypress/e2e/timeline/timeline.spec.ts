@@ -261,7 +261,7 @@ describe("Timeline", () => {
             // 1. clickability of top left of view source event toggle
 
             // Click top left of the event toggle, which should not be covered by MessageActionBar's safe area
-            cy.get(".mx_GenericEventListSummary[layout=group] .mx_EventTile .mx_ViewSourceEvent")
+            cy.get(".mx_EventTile_last[data-layout=group] .mx_ViewSourceEvent")
                 .should("exist")
                 .realHover()
                 .within(() => {
@@ -269,16 +269,16 @@ describe("Timeline", () => {
                 });
 
             // Make sure the expand toggle worked
-            cy.get(".mx_EventTile .mx_ViewSourceEvent_expanded .mx_ViewSourceEvent_toggle").should("be.visible");
+            cy.get(".mx_EventTile .mx_ViewSourceEvent_expanded").should("be.visible");
 
             // Click again to collapse the source
-            cy.get(".mx_GenericEventListSummary[layout=group] .mx_EventTile .mx_ViewSourceEvent")
+            cy.get(".mx_EventTile_last[data-layout=group] .mx_ViewSourceEvent")
                 .should("exist")
                 .realHover()
                 .within(() => {
                     cy.get(".mx_ViewSourceEvent_toggle").click("topLeft", { force: false });
                 });
-            cy.get(".mx_EventTile .mx_ViewSourceEvent_expanded .mx_ViewSourceEvent_toggle").should("not.exist");
+            cy.get(".mx_EventTile .mx_ViewSourceEvent_expanded").should("not.exist");
 
             // 2. clickability of view source toggle on IRC layout
 
