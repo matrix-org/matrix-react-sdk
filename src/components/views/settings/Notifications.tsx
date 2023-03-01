@@ -126,7 +126,12 @@ interface IState {
 
     clearingNotifications: boolean;
 }
-const findInDefaultRules = (ruleId: RuleId | string, defaultRules): IAnnotatedPushRule | undefined => {
+const findInDefaultRules = (
+    ruleId: RuleId | string,
+    defaultRules: {
+        [k in RuleClass]: IAnnotatedPushRule[];
+    },
+): IAnnotatedPushRule | undefined => {
     for (const category in defaultRules) {
         const rule = defaultRules[category].find((rule) => rule.rule_id === ruleId);
         if (rule) {
@@ -145,7 +150,13 @@ const OrderedVectorStates = [VectorState.Off, VectorState.On, VectorState.Loud];
  * @param definition - definition of parent rule
  * @returns VectorState - the maximum/loudest state for the parent and synced rules
  */
-const maximumVectorState = (defaultRules, rule, definition: VectorPushRuleDefinition): VectorState | undefined => {
+const maximumVectorState = (
+    defaultRules: {
+        [k in RuleClass]: IAnnotatedPushRule[];
+    },
+    rule: IAnnotatedPushRule,
+    definition: VectorPushRuleDefinition,
+): VectorState | undefined => {
     if (!definition.syncedRuleIds?.length) {
         return undefined;
     }
@@ -469,7 +480,6 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
      */
     private updateSyncedRules = async (
         syncedRuleIds: VectorPushRuleDefinition["syncedRuleIds"],
-        rule: IVectorPushRule,
         actions?: PushRuleAction[],
     ): Promise<void> => {
         // get synced rules that exist for user
@@ -526,7 +536,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 const definition: VectorPushRuleDefinition = VectorPushRulesDefinitions[rule.ruleId];
                 const actions = definition.vectorStateToActions[checkedState];
                 await this.setPushRuleActions(rule.rule.rule_id, rule.rule.kind, actions);
-                await this.updateSyncedRules(definition.syncedRuleIds, rule, actions);
+                await this.updateSyncedRules(definition.syncedRuleIds, actions);
             }
 
             await this.refreshFromServer();
