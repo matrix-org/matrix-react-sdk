@@ -366,4 +366,40 @@ describe("StopGapWidgetDriver", () => {
             expect(dis.dispatch).not.toHaveBeenCalled();
         });
     });
+
+    describe("searchUserDirectory", () => {
+        let driver: WidgetDriver;
+
+        beforeEach(() => {
+            driver = mkDefaultDriver();
+        });
+
+        it("searches for users in the user directory", async () => {
+            client.searchUserDirectory.mockResolvedValue({
+                limited: false,
+                results: [],
+            });
+
+            await expect(driver.searchUserDirectory("foo")).resolves.toEqual({
+                limited: false,
+                results: [],
+            });
+
+            expect(client.searchUserDirectory).toBeCalledWith({ term: "foo", limit: undefined });
+        });
+
+        it("searches for users with a custom limit", async () => {
+            client.searchUserDirectory.mockResolvedValue({
+                limited: true,
+                results: [],
+            });
+
+            await expect(driver.searchUserDirectory("foo", 25)).resolves.toEqual({
+                limited: true,
+                results: [],
+            });
+
+            expect(client.searchUserDirectory).toBeCalledWith({ term: "foo", limit: 25 });
+        });
+    });
 });
