@@ -163,6 +163,24 @@ describe("Timeline", () => {
             cy.get(".mx_MainSplit").percySnapshotElement("Configured room on IRC layout");
         });
 
+        it("should create and configure a room on bubble layout", () => {
+            cy.visit("/#/room/" + roomId);
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
+            cy.contains(
+                ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=bubble] " +
+                    ".mx_GenericEventListSummary_summary",
+                "created and configured the room.",
+            ).should("exist");
+
+            // Exclude timestamp and read marker from snapshot
+            const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
+            cy.get(".mx_MainSplit").percySnapshotElement("Configured room on bubble layout", { percyCSS });
+
+            // Click "expand" link button
+            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
+        });
+
+
         it("should add inline start margin to an event line on IRC layout", () => {
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
