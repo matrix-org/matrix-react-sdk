@@ -148,7 +148,7 @@ describe("Timeline", () => {
 
     describe("configure room", () => {
         // Exclude timestamp from snapshot
-        const percyCSS = ".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp { visibility: hidden !important; }";
+        const percyCSS = ".mx_RoomView_body .mx_MessageTimestamp { visibility: hidden !important; }";
 
         beforeEach(() => {
             cy.injectAxe();
@@ -189,7 +189,7 @@ describe("Timeline", () => {
                 "18px", // $irc-line-height: $font-18px (See: _IRCLayout.pcss)
             );
 
-            cy.get(".mx_MainSplit").percySnapshotElement("Expanded generic event list summary on IRC layout", {
+            cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on IRC layout", {
                 percyCSS,
             });
         });
@@ -225,7 +225,7 @@ describe("Timeline", () => {
                 "22px", // $font-22px (See: _GenericEventListSummary.pcss)
             );
 
-            cy.get(".mx_MainSplit").percySnapshotElement("Expanded generic event list summary on modern layout", {
+            cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on modern layout", {
                 percyCSS,
             });
         });
