@@ -271,11 +271,16 @@ describe("Timeline", () => {
             // Make sure the expand toggle worked
             cy.get(".mx_EventTile .mx_ViewSourceEvent_expanded .mx_ViewSourceEvent_toggle").should("be.visible");
 
-            // 2. clickability of view source toggle on IRC layout
+            // Click again to collapse the source
+            cy.get(".mx_EventTile:not(:first-child) .mx_ViewSourceEvent")
+                .should("exist")
+                .realHover()
+                .within(() => {
+                    cy.get(".mx_ViewSourceEvent_toggle").click("topLeft", { force: false });
+                });
+            cy.get(".mx_EventTile .mx_ViewSourceEvent_expanded .mx_ViewSourceEvent_toggle").should("not.exist");
 
-            // Click again to restore the default status
-            cy.get(".mx_EventTile:not(:first-child) .mx_ViewSourceEvent .mx_ViewSourceEvent_toggle")
-                .click("topLeft", { force: false });
+            // 2. clickability of view source toggle on IRC layout
 
             // Enable IRC layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
