@@ -193,6 +193,73 @@ describe("Timeline", () => {
             cy.checkA11y();
         });
 
+        it("should redact a message with hidden events enabled on each layout", () => {
+            cy.visit("/#/room/" + roomId);
+
+            cy.contains(
+                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
+                "created and configured the room.",
+            ).should("exist");
+
+            // Send a message
+            cy.getComposer().type("Hello{enter}");
+
+            // Confirm the message was sent
+            cy.get(".mx_RoomView_MessageList > .mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
+
+            // Delete the message
+            cy.get(".mx_RoomView_MessageList > .mx_EventTile_last").realHover();
+            cy.get(".mx_RoomView_MessageList > .mx_EventTile_last .mx_MessageActionBar_optionsButton", {
+                timeout: 1000,
+            })
+                .should("exist")
+                .realHover()
+                .click({ force: false });
+            cy.get(".mx_IconizedContextMenu_item[aria-label=Remove]", { timeout: 1000 })
+                .should("be.visible")
+                .click({ force: false });
+
+            // Confirm deletion
+            cy.get(".mx_Dialog_buttons button[data-testid=dialog-primary-button]")
+                .should("have.text", "Remove")
+                .click({ force: false });
+
+            // Make sure the message was redacted
+            cy.get(".mx_Dialog").should("not.exist");
+            cy.get(".mx_GenericEventListSummary .mx_EventTile_line .mx_RedactedBody").should(
+                "have.text",
+                "Message deleted",
+            );
+            cy.get(".mx_GenericEventListSummary .mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
+
+            // Display the hidden event for deletion
+            cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
+            cy.get(".mx_GenericEventListSummary .mx_EventTile.mx_EventTile_info .mx_ViewSourceEvent").contains(
+                "m.room.redaction",
+            );
+
+            // Exclude timestamp from snapshots
+            const percyCSS = ".mx_MessageTimestamp { visibility: hidden !important; }";
+
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group)
+                .get(".mx_GenericEventListSummary .mx_EventTile.mx_EventTile_info")
+                .realHover()
+                // Snapshot of hovered hidden event line on modern/group layout
+                .percySnapshotElement("Hovered hidden event line on modern/group layout", { percyCSS });
+
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC)
+                .get(".mx_GenericEventListSummary .mx_EventTile.mx_EventTile_info")
+                .realHover()
+                // Snapshot of hovered hidden event line on IRC layout
+                .percySnapshotElement("Hovered hidden event line on IRC layout", { percyCSS });
+
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble)
+                .get(".mx_GenericEventListSummary .mx_EventTile.mx_EventTile_info")
+                .realHover()
+                // Snapshot of hovered hidden event line on bubble layout
+                .percySnapshotElement("Hovered hidden event line on bubble layout", { percyCSS });
+        });
+
         it("should set inline start padding to a hidden event line", () => {
             sendEvent(roomId);
             cy.visit("/#/room/" + roomId);
