@@ -177,10 +177,10 @@ module.exports = {
                 // eliminated, we should enforce this.
                 "jest/no-disabled-tests": "off",
                 // TODO: There are many tests with invalid expects that should be fixed,
-                // https://github.com/matrix-org/matrix-js-sdk/issues/2976
+                // https://github.com/vector-im/element-web/issues/24709
                 "jest/valid-expect": "off",
                 // TODO: There are many cases to refactor away,
-                // https://github.com/matrix-org/matrix-js-sdk/issues/2978
+                // https://github.com/vector-im/element-web/issues/24710
                 "jest/no-conditional-expect": "off",
                 // Also treat "oldBackendOnly" as a test function.
                 // Used in some crypto tests.
