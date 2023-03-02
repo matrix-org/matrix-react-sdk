@@ -47,6 +47,11 @@ describe("General user settings tab", () => {
         cy.get(".mx_GeneralUserSettingsTab_accountSection .mx_Spinner").should("not.exist");
         cy.get(".mx_GeneralUserSettingsTab_discovery .mx_Spinner").should("not.exist");
 
+        // Check input areas for password change are displayed
+        cy.get("form.mx_GeneralUserSettingsTab_changePassword input[label='Current password']").should("be.visible");
+        cy.get("form.mx_GeneralUserSettingsTab_changePassword input[label='New password']").should("be.visible");
+        cy.get("form.mx_GeneralUserSettingsTab_changePassword input[label='Confirm password']").should("be.visible");
+
         // Make sure integration manager's toggle switch is enabled
         cy.get(".mx_GeneralUserSettingsTab .mx_SetIntegrationManager .mx_ToggleSwitch_enabled").should("exist");
 
