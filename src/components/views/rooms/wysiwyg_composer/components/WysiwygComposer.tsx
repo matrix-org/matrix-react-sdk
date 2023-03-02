@@ -110,17 +110,28 @@ export const WysiwygComposer = memo(function WysiwygComposer({
 
     const { room } = useRoomContext();
 
-    function buildQuery(suggestion: SuggestionPattern): string {
+    function buildQuery(suggestion: SuggestionPattern | null): string {
+        if (suggestion === null) {
+            return "";
+        }
+
+        // TODO we are not yet supporting / commands, so can't support this key
+        if (suggestion.key === 2) {
+            return "";
+        }
+
         const keys = ["@", "#", "/"];
         return `${keys[suggestion.key]}${suggestion.text}`;
     }
 
+    const query = buildQuery(suggestion);
+
     const autocomplete =
-        suggestion && room ? (
+        suggestion && room && query ? (
             <div className="mx_WysiwygComposer_AutoCompleteWrapper">
                 <Autocomplete
                     ref={autocompleteRef}
-                    query={buildQuery(suggestion)}
+                    query={query}
                     onConfirm={(completion) => {
                         switch (completion.type) {
                             case "user":
