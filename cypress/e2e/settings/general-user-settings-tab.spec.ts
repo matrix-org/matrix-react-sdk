@@ -62,6 +62,9 @@ describe("General user settings tab", () => {
         // Check language dropdown menu
         cy.get(".mx_GeneralUserSettingsTab_languageInput").should("have.text", "English");
 
+        // Check an input area for identity server exists
+        cy.get("form.mx_SetIdServer input[label='Enter a new identity server']").should("exist");
+
         // Make sure integration manager's toggle switch is enabled
         cy.get(".mx_GeneralUserSettingsTab .mx_SetIntegrationManager .mx_ToggleSwitch_enabled").should("exist");
 
