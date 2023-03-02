@@ -15,8 +15,6 @@ limitations under the License.
 */
 
 .mx_GeneralUserSettingsTab {
-    --GeneralUserSettingsTab_SettingsTab_subheading-margin-top: $spacing-24;
-
     .mx_GeneralUserSettingsTab_changePassword {
         .mx_Field {
             margin-inline-end: var(--SettingsTab_fullWidthField-margin-inline-end);
@@ -37,7 +35,7 @@ limitations under the License.
     .mx_GeneralUserSettingsTab_discovery {
         .mx_Spinner {
             /* Move the spinner to the left side of the container (default center) */
-            justify-content: left;
+            justify-content: flex-start;
         }
     }
 
@@ -54,6 +52,6 @@ limitations under the License.
     }
 
     .mx_SettingsTab_section_spellcheck .mx_ToggleSwitch {
-        float: right;
+        float: inline-end;
     }
 }
