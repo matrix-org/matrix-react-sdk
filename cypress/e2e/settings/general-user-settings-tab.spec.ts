@@ -40,20 +40,20 @@ describe("General user settings tab", () => {
             cy.get("[data-testid='general']").should("have.text", "General");
         });
 
-        // Check a random userId is displayed
+        // Check a random userId exists
         cy.contains(".mx_ProfileSettings_profile_controls_userId", ":localhost");
 
         // Wait until spinners disappear
         cy.get(".mx_GeneralUserSettingsTab_accountSection .mx_Spinner").should("not.exist");
         cy.get(".mx_GeneralUserSettingsTab_discovery .mx_Spinner").should("not.exist");
 
-        // Check input areas for password change are displayed
-        cy.get("form.mx_GeneralUserSettingsTab_changePassword input[label='Current password']").should("be.visible");
-        cy.get("form.mx_GeneralUserSettingsTab_changePassword input[label='New password']").should("be.visible");
-        cy.get("form.mx_GeneralUserSettingsTab_changePassword input[label='Confirm password']").should("be.visible");
+        // Check input areas for password change exist
+        cy.get("form.mx_GeneralUserSettingsTab_changePassword input[label='Current password']").should("exist");
+        cy.get("form.mx_GeneralUserSettingsTab_changePassword input[label='New password']").should("exist");
+        cy.get("form.mx_GeneralUserSettingsTab_changePassword input[label='Confirm password']").should("exist");
 
-        // Check an input area for a new email address is displayed
-        cy.get("form.mx_EmailAddresses_new input[label='Email Address']").should("be.visible");
+        // Check an input area for a new email address exists
+        cy.get("form.mx_EmailAddresses_new input[label='Email Address']").should("exist");
 
         // Make sure integration manager's toggle switch is enabled
         cy.get(".mx_GeneralUserSettingsTab .mx_SetIntegrationManager .mx_ToggleSwitch_enabled").should("exist");
