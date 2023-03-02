@@ -89,4 +89,6 @@ const WysiwygAutocomplete = forwardRef(
     },
 );
 
+WysiwygAutocomplete.displayName = "WysiwygAutocomplete";
+
 export { WysiwygAutocomplete };
