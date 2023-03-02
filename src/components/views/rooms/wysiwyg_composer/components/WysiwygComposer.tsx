@@ -52,6 +52,7 @@ export const WysiwygComposer = memo(function WysiwygComposer({
     children,
 }: WysiwygComposerProps) {
     const autocompleteRef = useRef<Autocomplete>(null);
+    const autocompleteIndexRef = useRef<number>(0);
 
     const inputEventProcessor = useInputEventProcessor(onSend, autocompleteRef, initialContent);
 
@@ -59,8 +60,6 @@ export const WysiwygComposer = memo(function WysiwygComposer({
         initialContent,
         inputEventProcessor,
     });
-
-    const autocompleteIndexRef = useRef<number>(0);
 
     const onKeyDown = (event: React.KeyboardEvent): void => {
         let handled = false;
@@ -125,7 +124,6 @@ export const WysiwygComposer = memo(function WysiwygComposer({
         return `${keys[suggestion.key]}${suggestion.text}`;
     }
 
-    const query = buildQuery(suggestion);
     return (
         <div
             data-testid="WysiwygComposer"
@@ -134,31 +132,7 @@ export const WysiwygComposer = memo(function WysiwygComposer({
             onBlur={onFocus}
             onKeyDown={onKeyDown}
         >
-            <div className="mx_WysiwygComposer_AutoCompleteWrapper">
-                <Autocomplete
-                    ref={autocompleteRef}
-                    query={query}
-                    onConfirm={(completion) => {
-                        switch (completion.type) {
-                            case "user":
-                            case "room":
-                                if (completion.href !== undefined) {
-                                    wysiwyg.mention(completion.href, completion.completion);
-                                }
-                                break;
-                            case "command":
-                                // TODO - need to build this function into rte first
-                                console.log("/command functionality not yet in place");
-                                break;
-                            default:
-                                break;
-                        }
-                    }}
-                    onSelectionChange={(compIndex) => (autocompleteIndexRef.current = compIndex)}
-                    selection={{ start: suggestion?.start ?? 0, end: suggestion?.end ?? 0 }}
-                    room={room}
-                />
-            </div>
+            <WysiwygAutocomplete />
             <FormattingButtons composer={wysiwyg} actionStates={actionStates} />
             <Editor
                 ref={ref}
@@ -171,3 +145,33 @@ export const WysiwygComposer = memo(function WysiwygComposer({
         </div>
     );
 });
+
+function WysiwygAutocomplete() {
+    return (
+        <div className="mx_WysiwygComposer_AutoCompleteWrapper">
+            <Autocomplete
+                ref={autocompleteRef}
+                query={buildQuery(suggestion)}
+                onConfirm={(completion) => {
+                    switch (completion.type) {
+                        case "user":
+                        case "room":
+                            if (completion.href !== undefined) {
+                                wysiwyg.mention(completion.href, completion.completion);
+                            }
+                            break;
+                        case "command":
+                            // TODO - need to build this function into rte first
+                            console.log("/command functionality not yet in place");
+                            break;
+                        default:
+                            break;
+                    }
+                }}
+                onSelectionChange={(compIndex) => (autocompleteIndexRef.current = compIndex)}
+                selection={{ start: suggestion?.start ?? 0, end: suggestion?.end ?? 0 }}
+                room={room}
+            />
+        </div>
+    );
+}
