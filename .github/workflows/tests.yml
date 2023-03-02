@@ -43,7 +43,7 @@ jobs:
               uses: actions/cache@v3
               with:
                   path: /tmp/jest_cache
-                  key: ${{ hashFiles('**/yarn.lock') }}-${{ matrix.shard }}
+                  key: ${{ hashFiles('**/yarn.lock') }}
 
             - name: Get number of CPU cores
               id: cpu-cores
