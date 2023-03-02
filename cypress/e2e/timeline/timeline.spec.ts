@@ -223,6 +223,9 @@ describe("Timeline", () => {
                 "0px",
             );
 
+            // Select the event line to highlight it
+            cy.get(".mx_EventTile[data-layout=irc].mx_EventTile_info .mx_MessageTimestamp").click();
+
             cy.get(".mx_MainSplit").percySnapshotElement("Hidden event line with zero padding on IRC layout", {
                 percyCSS,
             });
