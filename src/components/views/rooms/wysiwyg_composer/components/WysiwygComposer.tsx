@@ -175,7 +175,8 @@ const WysiwygAutocomplete = forwardRef(
                         }
                     }}
                     onSelectionChange={(compIndex) => (autocompleteIndexRef.current = compIndex)}
-                    selection={{ start: suggestion?.start ?? 0, end: suggestion?.end ?? 0 }}
+                    selection={{ start: 0, end: 0 }} // don't ask why these both need to be zero, I don't know, but
+                    // if you try to use the suggestion start/end points, then we can only enter mentions at the beginning of the composer
                     room={room}
                 />
             </div>
