@@ -60,7 +60,6 @@ export const WysiwygComposer = memo(function WysiwygComposer({
         inputEventProcessor,
     });
 
-    console.log(autocompleteRef.current);
     const autocompleteIndexRef = useRef<number>(0);
 
     const onKeyDown = (event: React.KeyboardEvent): void => {
@@ -149,9 +148,10 @@ export const WysiwygComposer = memo(function WysiwygComposer({
                             default:
                                 break;
                         }
+                        // TODO figure out why we can only do one mention at the moment
                     }}
                     onSelectionChange={(compIndex) => (autocompleteIndexRef.current = compIndex)}
-                    selection={{ beginning: true, start: suggestion.start, end: suggestion.end }}
+                    selection={{ beginning: true, start: suggestion.end, end: suggestion.end }}
                     room={room}
                 />
             </div>
