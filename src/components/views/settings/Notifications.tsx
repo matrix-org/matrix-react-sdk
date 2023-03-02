@@ -258,6 +258,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 phase: Phase.Ready,
             });
         } catch (e) {
+            console.log(e);
             logger.error("Error setting up notifications for settings: ", e);
             this.setState({ phase: Phase.Error });
         }
@@ -374,7 +375,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             }
         }
 
-        console.log("hhh", { preparedNewState, ruleSets }, MatrixClientPeg.get().pushRules);
+        console.log("hhh", { preparedNewState, ruleSets }, MatrixClientPeg.get().pushRules.global.underride);
 
         return preparedNewState;
     }
@@ -482,6 +483,8 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         syncedRuleIds: VectorPushRuleDefinition["syncedRuleIds"],
         actions?: PushRuleAction[],
     ): Promise<void> => {
+        console.log('updatesynedce', syncedRuleIds, syncedRuleIds
+        ?.map((ruleId) => this.pushProcessor.getPushRuleAndKindById(ruleId)))
         // get synced rules that exist for user
         const syncedRules: ReturnType<PushProcessor["getPushRuleAndKindById"]>[] = syncedRuleIds
             ?.map((ruleId) => this.pushProcessor.getPushRuleAndKindById(ruleId))

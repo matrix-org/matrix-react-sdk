@@ -65,6 +65,13 @@ const encryptedOneToOneRule: IPushRule = {
     default: true,
     enabled: true,
 } as IPushRule;
+const groupRule = {
+    conditions: [{ kind: "event_match", key: "type", pattern: "m.room.message" }],
+    actions: ["notify", { set_tweak: "sound", value: "default" }, { set_tweak: "highlight", value: false }],
+    rule_id: ".m.rule.message",
+    default: true,
+    enabled: true,
+};
 const encryptedGroupRule: IPushRule = {
     conditions: [{ kind: "event_match", key: "type", pattern: "m.room.encrypted" }],
     actions: ["dont_notify"],
@@ -84,13 +91,7 @@ const pushRules: IPushRules = {
             },
             oneToOneRule,
             encryptedOneToOneRule,
-            {
-                conditions: [{ kind: "event_match", key: "type", pattern: "m.room.message" }],
-                actions: ["notify", { set_tweak: "sound", value: "default" }, { set_tweak: "highlight", value: false }],
-                rule_id: ".m.rule.message",
-                default: true,
-                enabled: true,
-            },
+            groupRule,
             encryptedGroupRule,
             {
                 conditions: [
@@ -231,6 +232,8 @@ describe("<Notifications />", () => {
         mockClient.getPushers.mockClear().mockResolvedValue({ pushers: [] });
         mockClient.getThreePids.mockClear().mockResolvedValue({ threepids: [] });
         mockClient.setPusher.mockClear().mockResolvedValue({});
+        mockClient.setPushRuleActions.mockClear().mockResolvedValue({});
+        mockClient.pushRules = pushRules;
     });
 
     it("renders spinner while loading", async () => {
@@ -428,6 +431,176 @@ describe("<Notifications />", () => {
                 oneToOneRule.rule_id,
                 StandardActions.ACTION_DONT_NOTIFY,
             );
+        });
+
+        describe("synced rules", () => {
+            const pollStartOneToOne = {
+                conditions: [
+                    {
+                        kind: "room_member_count",
+                        is: "2",
+                    },
+                    {
+                        kind: "event_match",
+                        key: "type",
+                        pattern: "org.matrix.msc3381.poll.start",
+                    },
+                ],
+                actions: [PushRuleActionName.DontNotify],
+                rule_id: ".org.matrix.msc3930.rule.poll_start_one_to_one",
+                default: true,
+                enabled: true,
+            };
+            const pollStartGroup = {
+                conditions: [
+                    {
+                        kind: "event_match",
+                        key: "type",
+                        pattern: "org.matrix.msc3381.poll.start",
+                    },
+                ],
+                actions: ["notify"],
+                rule_id: ".org.matrix.msc3930.rule.poll_start",
+                default: true,
+                enabled: true,
+            };
+            const pollEndOneToOne = {
+                conditions: [
+                    {
+                        kind: "room_member_count",
+                        is: "2",
+                    },
+                    {
+                        kind: "event_match",
+                        key: "type",
+                        pattern: "org.matrix.msc3381.poll.end",
+                    },
+                ],
+                actions: [PushRuleActionName.Notify,
+                    { set_tweak: "highlight", value: false },
+                    { set_tweak: "sound", value: "default" }
+                ],
+                rule_id: ".org.matrix.msc3930.rule.poll_end_one_to_one",
+                default: true,
+                enabled: true,
+            };
+
+            const setPushRuleMock = (rules: IPushRule[] = []): void => {
+                const combinedRules = {
+                    ...pushRules,
+                    global: {
+                        ...pushRules.global,
+                        underride: [...pushRules.global.underride!, ...rules],
+                    },
+                };
+                mockClient.getPushRules.mockClear().mockResolvedValue(combinedRules);
+                mockClient.pushRules = combinedRules;
+            };
+
+            // ".m.rule.room_one_to_one" and ".m.rule.message" have synced rules
+            it("succeeds when no synced rules exist for user", async () => {
+                await getComponentAndWait();
+                const section = "vector_global";
+
+                const oneToOneRuleElement = screen.getByTestId(section + oneToOneRule.rule_id);
+
+                const offToggle = oneToOneRuleElement.querySelector('input[type="radio"]')!;
+                fireEvent.click(offToggle);
+
+                await flushPromises();
+
+                // didnt attempt to update any non-existant rules
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledTimes(1);
+
+                // no error
+                expect(screen.queryByTestId("error-message")).not.toBeInTheDocument();
+            });
+
+            it("updates synced rules when they exist for user", async () => {
+                setPushRuleMock([pollStartOneToOne, pollStartGroup]);
+                await getComponentAndWait();
+                const section = "vector_global";
+                const oneToOneRuleElement = screen.getByTestId(section + oneToOneRule.rule_id);
+
+                const offToggle = oneToOneRuleElement.querySelector('input[type="radio"]')!;
+                fireEvent.click(offToggle);
+
+                await flushPromises();
+
+                // updated synced rule
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledWith(
+                    'global', 'underride', oneToOneRule.rule_id, [PushRuleActionName.DontNotify]
+                );
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledWith(
+                    'global', 'underride', pollStartOneToOne.rule_id, [PushRuleActionName.DontNotify]
+                );
+                // only called for parent rule and one existing synced rule
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledTimes(2);
+
+                // no error
+                expect(screen.queryByTestId("error-message")).not.toBeInTheDocument();
+            });
+
+            it("does not update synced rules when main rule update fails", async () => {
+                setPushRuleMock([pollStartOneToOne]);
+                await getComponentAndWait();
+                const section = "vector_global";
+                const oneToOneRuleElement = screen.getByTestId(section + oneToOneRule.rule_id);
+                // have main rule update fail
+                mockClient.setPushRuleActions.mockRejectedValue('oups')
+
+                const offToggle = oneToOneRuleElement.querySelector('input[type="radio"]')!;
+                fireEvent.click(offToggle);
+
+                await flushPromises();
+
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledWith(
+                    'global', 'underride', oneToOneRule.rule_id, [PushRuleActionName.DontNotify]
+                );
+                // only called for parent rule
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledTimes(1);
+
+                expect(screen.queryByTestId("error-message")).toBeInTheDocument();
+            });
+
+            it("sets the UI toggle to rule value when no synced rule exist for the user", async () => {
+                setPushRuleMock([]);
+                await getComponentAndWait();
+                const section = "vector_global";
+                const oneToOneRuleElement = screen.getByTestId(section + oneToOneRule.rule_id);
+                
+                // loudest state of synced rules should be the toggle value
+                expect(oneToOneRuleElement.querySelector('input[aria-label="On"]')).toBeChecked();
+            });
+
+            it("sets the UI toggle to the loudest synced rule value", async () => {
+                // oneToOneRule is set to 'On'
+                // pollEndOneToOne is set to 'Loud'
+                setPushRuleMock([pollStartOneToOne, pollEndOneToOne]);
+                await getComponentAndWait();
+                const section = "vector_global";
+                const oneToOneRuleElement = screen.getByTestId(section + oneToOneRule.rule_id);
+
+                // loudest state of synced rules should be the toggle value
+                expect(oneToOneRuleElement.querySelector('input[aria-label="Noisy"]')).toBeChecked();
+
+                console.log('ONONONONONONON')
+
+                const onToggle = oneToOneRuleElement.querySelector('input[aria-label="On"]')!;
+                fireEvent.click(onToggle);
+
+                await flushPromises();
+
+                // called for all 3 rules
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledTimes(3);
+                const expectedActions = [
+                    PushRuleActionName.Notify, { set_tweak: "highlight", value: false }
+                ]
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledWith("global", "underride", oneToOneRule.rule_id, expectedActions);
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledWith("global", "underride", pollStartOneToOne.rule_id, expectedActions);
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledWith("global", "underride", pollEndOneToOne.rule_id, expectedActions);
+            });
+            
         });
     });
 
