@@ -125,7 +125,9 @@ export const WysiwygComposer = memo(function WysiwygComposer({
                         switch (completion.type) {
                             case "user":
                             case "room":
-                                wysiwyg.mention(completion.href, completion.completion);
+                                if (completion.href !== undefined) {
+                                    wysiwyg.mention(completion.href, completion.completion);
+                                }
                                 break;
                             case "command":
                                 // TODO - need to build this function into rte first
