@@ -133,7 +133,9 @@ const findInDefaultRules = (
     },
 ): IAnnotatedPushRule | undefined => {
     for (const category in defaultRules) {
-        const rule = defaultRules[category].find((rule) => rule.rule_id === ruleId);
+        const rule: IAnnotatedPushRule | undefined = defaultRules[category as RuleClass].find(
+            (rule) => rule.rule_id === ruleId,
+        );
         if (rule) {
             return rule;
         }
