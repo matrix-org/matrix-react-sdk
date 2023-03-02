@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { IKeyBackupInfo, IKeyBackupRestoreResult } from "matrix-js-sdk/src/crypto/keybackup";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
@@ -24,7 +24,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t } from "../../../../languageHandler";
 import { accessSecretStorage } from "../../../../SecurityManager";
-import { IDialogProps } from "../IDialogProps";
 import Spinner from "../../elements/Spinner";
 import DialogButtons from "../../elements/DialogButtons";
 import AccessibleButton from "../../elements/AccessibleButton";
@@ -42,13 +41,14 @@ enum ProgressState {
     LoadKeys = "load_keys",
 }
 
-interface IProps extends IDialogProps {
+interface IProps {
     // if false, will close the dialog as soon as the restore completes successfully
     // default: true
     showSummary?: boolean;
     // If specified, gather the key from the user but then call the function with the backup
     // key rather than actually (necessarily) restoring the backup.
     keyCallback?: (key: Uint8Array) => void;
+    onFinished(done?: boolean): void;
 }
 
 interface IState {
@@ -77,11 +77,11 @@ interface IState {
  * Dialog for restoring e2e keys from a backup and the user's recovery key
  */
 export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, IState> {
-    public static defaultProps = {
+    public static defaultProps: Partial<IProps> = {
         showSummary: true,
     };
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             backupInfo: null,
@@ -117,7 +117,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
         });
     };
 
-    private progressCallback = (data): void => {
+    private progressCallback = (data: IState["progress"]): void => {
         this.setState({
             progress: data,
         });
@@ -128,7 +128,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
         accessSecretStorage(async (): Promise<void> => {}, /* forceReset = */ true);
     };
 
-    private onRecoveryKeyChange = (e): void => {
+    private onRecoveryKeyChange = (e: ChangeEvent<HTMLInputElement>): void => {
         this.setState({
             recoveryKey: e.target.value,
             recoveryKeyValid: MatrixClientPeg.get().isValidRecoveryKey(e.target.value),
@@ -213,7 +213,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
         }
     };
 
-    private onPassPhraseChange = (e): void => {
+    private onPassPhraseChange = (e: ChangeEvent<HTMLInputElement>): void => {
         this.setState({
             passPhrase: e.target.value,
         });
@@ -247,7 +247,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
         }
     }
 
-    private async restoreWithCachedKey(backupInfo): Promise<boolean> {
+    private async restoreWithCachedKey(backupInfo?: IKeyBackupInfo): Promise<boolean> {
         if (!backupInfo) return false;
         try {
             const recoverInfo = await MatrixClientPeg.get().restoreKeyBackupWithCache(
@@ -308,7 +308,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
         }
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const backupHasPassphrase =
             this.state.backupInfo &&
             this.state.backupInfo.auth_data &&
@@ -321,12 +321,12 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
             title = _t("Restoring keys from backup");
             let details;
             if (this.state.progress.stage === ProgressState.Fetch) {
-                details = _t("Fetching keys from server...");
+                details = _t("Fetching keys from server…");
             } else if (this.state.progress.stage === ProgressState.LoadKeys) {
                 const { total, successes, failures } = this.state.progress;
                 details = _t("%(completed)s of %(total)s keys restored", { total, completed: successes + failures });
             } else if (this.state.progress.stage === ProgressState.PreFetch) {
-                details = _t("Fetching keys from server...");
+                details = _t("Fetching keys from server…");
             }
             content = (
                 <div>
@@ -405,7 +405,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                 <div>
                     <p>
                         {_t(
-                            "<b>Warning</b>: you should only set up key backup " + "from a trusted computer.",
+                            "<b>Warning</b>: you should only set up key backup from a trusted computer.",
                             {},
                             { b: (sub) => <b>{sub}</b> },
                         )}
@@ -480,7 +480,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                 <div>
                     <p>
                         {_t(
-                            "<b>Warning</b>: You should only set up key backup " + "from a trusted computer.",
+                            "<b>Warning</b>: you should only set up key backup from a trusted computer.",
                             {},
                             { b: (sub) => <b>{sub}</b> },
                         )}

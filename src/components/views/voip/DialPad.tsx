@@ -18,6 +18,7 @@ import * as React from "react";
 
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import { _t } from "../../../languageHandler";
+import { XOR } from "../../../@types/common";
 
 const BUTTONS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#"];
 const BUTTON_LETTERS = ["", "ABC", "DEF", "GHI", "JKL", "MNO", "PQRS", "TUV", "WXYZ", "", "+", ""];
@@ -31,7 +32,7 @@ interface IButtonProps {
     kind: DialPadButtonKind;
     digit?: string;
     digitSubtext?: string;
-    onButtonPress: (digit: string, ev: ButtonEvent) => void;
+    onButtonPress: (digit: string | undefined, ev: ButtonEvent) => void;
 }
 
 class DialPadButton extends React.PureComponent<IButtonProps> {
@@ -39,7 +40,7 @@ class DialPadButton extends React.PureComponent<IButtonProps> {
         this.props.onButtonPress(this.props.digit, ev);
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         switch (this.props.kind) {
             case DialPadButtonKind.Digit:
                 return (
@@ -60,16 +61,24 @@ class DialPadButton extends React.PureComponent<IButtonProps> {
     }
 }
 
-interface IProps {
+interface IBaseProps {
     onDigitPress: (digit: string, ev: ButtonEvent) => void;
-    hasDial: boolean;
     onDeletePress?: (ev: ButtonEvent) => void;
-    onDialPress?: () => void;
+    hasDial: boolean;
 }
 
-export default class Dialpad extends React.PureComponent<IProps> {
-    public render(): JSX.Element {
-        const buttonNodes = [];
+interface IProps extends IBaseProps {
+    hasDial: false;
+}
+
+interface IDialProps extends IBaseProps {
+    hasDial: true;
+    onDialPress: () => void;
+}
+
+export default class Dialpad extends React.PureComponent<XOR<IProps, IDialProps>> {
+    public render(): React.ReactNode {
+        const buttonNodes: JSX.Element[] = [];
 
         for (let i = 0; i < BUTTONS.length; i++) {
             const button = BUTTONS[i];

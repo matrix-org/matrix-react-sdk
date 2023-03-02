@@ -368,7 +368,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
     }
 
     public async renderConfirmLogoutDevicesDialog(): Promise<boolean> {
-        const { finished } = Modal.createDialog<[boolean]>(QuestionDialog, {
+        const { finished } = Modal.createDialog(QuestionDialog, {
             title: _t("Warning!"),
             description: (
                 <div>
@@ -487,7 +487,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
         );
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let resetPasswordJsx: JSX.Element;
 
         switch (this.state.phase) {

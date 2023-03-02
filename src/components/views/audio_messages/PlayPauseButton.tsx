@@ -35,7 +35,7 @@ interface IProps extends Omit<React.ComponentProps<typeof AccessibleTooltipButto
  * to be displayed in reference to a recording.
  */
 export default class PlayPauseButton extends React.PureComponent<IProps> {
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
     }
 
@@ -60,7 +60,7 @@ export default class PlayPauseButton extends React.PureComponent<IProps> {
 
         return (
             <AccessibleTooltipButton
-                data-test-id="play-pause-button"
+                data-testid="play-pause-button"
                 className={classes}
                 title={isPlaying ? _t("Pause") : _t("Play")}
                 onClick={this.onClick}

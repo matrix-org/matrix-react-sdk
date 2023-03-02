@@ -68,7 +68,7 @@ interface IState {
 }
 
 export default class MemberList extends React.Component<IProps, IState> {
-    private showPresence = true;
+    private readonly showPresence: boolean;
     private mounted = false;
 
     public static contextType = SDKContext;
@@ -195,7 +195,8 @@ export default class MemberList extends React.Component<IProps, IState> {
         { leading: true, trailing: true },
     );
 
-    private async updateListNow(showLoadingSpinner: boolean): Promise<void> {
+    // XXX: exported for tests
+    public async updateListNow(showLoadingSpinner?: boolean): Promise<void> {
         if (!this.mounted) {
             return;
         }
@@ -257,32 +258,6 @@ export default class MemberList extends React.Component<IProps, IState> {
             truncateAtInvited: this.state.truncateAtInvited + SHOW_MORE_INCREMENT,
         });
     };
-
-    /**
-     * SHOULD ONLY BE USED BY TESTS
-     */
-    public memberString(member: RoomMember): string {
-        if (!member) {
-            return "(null)";
-        } else {
-            const u = member.user;
-            return (
-                "(" +
-                member.name +
-                ", " +
-                member.powerLevel +
-                ", " +
-                (u ? u.lastActiveAgo : "<null>") +
-                ", " +
-                (u ? u.getLastActiveTs() : "<null>") +
-                ", " +
-                (u ? u.currentlyActive : "<null>") +
-                ", " +
-                (u ? u.presence : "<null>") +
-                ")"
-            );
-        }
-    }
 
     public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any): void {
         if (prevProps.searchQuery !== this.props.searchQuery) {
@@ -359,7 +334,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         return this.state.filteredInvitedMembers.length + (this.getPending3PidInvites() || []).length;
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         if (this.state.loading) {
             return (
                 <BaseCard className="mx_MemberList" onClose={this.props.onClose}>

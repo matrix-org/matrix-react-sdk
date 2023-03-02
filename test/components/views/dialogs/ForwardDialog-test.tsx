@@ -15,11 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
-import { act } from "react-dom/test-utils";
 import { MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { LocationAssetType, M_ASSET, M_LOCATION, M_TIMESTAMP } from "matrix-js-sdk/src/@types/location";
 import { M_TEXT } from "matrix-js-sdk/src/@types/extensible_events";
-import { fireEvent, getByTestId, render, RenderResult, screen } from "@testing-library/react";
+import { act, fireEvent, getByTestId, render, RenderResult, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -74,13 +73,13 @@ describe("ForwardDialog", () => {
 
     const mountForwardDialog = (message = defaultMessage, rooms = defaultRooms) => {
         mockClient.getVisibleRooms.mockReturnValue(rooms);
-        mockClient.getRoom.mockImplementation((roomId) => rooms.find((room) => room.roomId === roomId));
+        mockClient.getRoom.mockImplementation((roomId) => rooms.find((room) => room.roomId === roomId) || null);
 
         const wrapper: RenderResult = render(
             <ForwardDialog
                 matrixClient={mockClient}
                 event={message}
-                permalinkCreator={new RoomPermalinkCreator(undefined, sourceRoom)}
+                permalinkCreator={new RoomPermalinkCreator(undefined!, sourceRoom)}
                 onFinished={jest.fn()}
             />,
         );
@@ -125,8 +124,8 @@ describe("ForwardDialog", () => {
         const { container } = mountForwardDialog();
 
         // Make sendEvent require manual resolution so we can see the sending state
-        let finishSend;
-        let cancelSend;
+        let finishSend: (arg?: any) => void;
+        let cancelSend: () => void;
         mockClient.sendEvent.mockImplementation(
             <T extends {}>() =>
                 new Promise<T>((resolve, reject) => {
@@ -135,8 +134,8 @@ describe("ForwardDialog", () => {
                 }),
         );
 
-        let firstButton;
-        let secondButton;
+        let firstButton!: Element;
+        let secondButton!: Element;
         const update = () => {
             [firstButton, secondButton] = container.querySelectorAll(".mx_ForwardList_sendButton");
         };
@@ -253,7 +252,6 @@ describe("ForwardDialog", () => {
                 [M_ASSET.name]: { type: LocationAssetType.Pin },
                 [M_LOCATION.name]: {
                     uri: geoUri,
-                    description: undefined,
                 },
             };
             expect(mockClient.sendEvent).toHaveBeenCalledWith(
@@ -269,7 +267,7 @@ describe("ForwardDialog", () => {
             expect(container.querySelector(".mx_MLocationBody")).toBeTruthy();
             sendToFirstRoom(container);
 
-            const timestamp = M_TIMESTAMP.findIn<number>(modernLocationEvent.getContent());
+            const timestamp = M_TIMESTAMP.findIn<number>(modernLocationEvent.getContent())!;
             // text and description from original event are removed
             // text gets new default message from event values
             const text = `Location ${geoUri} at ${new Date(timestamp).toISOString()}`;
@@ -280,7 +278,6 @@ describe("ForwardDialog", () => {
                 [M_ASSET.name]: { type: LocationAssetType.Pin },
                 [M_LOCATION.name]: {
                     uri: geoUri,
-                    description: undefined,
                 },
             };
             expect(mockClient.sendEvent).toHaveBeenCalledWith(
@@ -301,7 +298,6 @@ describe("ForwardDialog", () => {
                 [M_ASSET.name]: { type: LocationAssetType.Pin },
                 [M_LOCATION.name]: {
                     uri: geoUri,
-                    description: undefined,
                 },
                 geo_uri: geoUri,
                 [M_TIMESTAMP.name]: timestamp,

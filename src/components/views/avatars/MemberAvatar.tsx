@@ -65,7 +65,7 @@ export default function MemberAvatar({
 
     const name = member?.name ?? fallbackUserId;
     let title: string | undefined = props.title;
-    let imageUrl: string | undefined;
+    let imageUrl: string | null | undefined;
     if (member?.name) {
         if (member.getMxcAvatarUrl()) {
             imageUrl = mediaFromMxc(member.getMxcAvatarUrl() ?? "").getThumbnailOfSourceHttp(
@@ -109,7 +109,7 @@ export default function MemberAvatar({
 }
 
 export class LegacyMemberAvatar extends React.Component<IProps> {
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return <MemberAvatar {...this.props}>{this.props.children}</MemberAvatar>;
     }
 }

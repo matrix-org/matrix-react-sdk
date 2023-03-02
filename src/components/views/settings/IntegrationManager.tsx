@@ -26,10 +26,10 @@ import Heading from "../typography/Heading";
 
 interface IProps {
     // false to display an error saying that we couldn't connect to the integration manager
-    connected: boolean;
+    connected?: boolean;
 
     // true to display a loading spinner
-    loading: boolean;
+    loading?: boolean;
 
     // The source URL to load
     url?: string;
@@ -45,7 +45,7 @@ interface IState {
 export default class IntegrationManager extends React.Component<IProps, IState> {
     private dispatcherRef: string;
 
-    public static defaultProps = {
+    public static defaultProps: Partial<IProps> = {
         connected: true,
         loading: false,
     };
@@ -85,11 +85,11 @@ export default class IntegrationManager extends React.Component<IProps, IState> 
         this.setState({ errored: true });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         if (this.props.loading) {
             return (
                 <div className="mx_IntegrationManager_loading">
-                    <Heading size="h3">{_t("Connecting to integration manager...")}</Heading>
+                    <Heading size="h3">{_t("Connecting to integration manager…")}</Heading>
                     <Spinner />
                 </div>
             );

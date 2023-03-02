@@ -112,8 +112,8 @@ export interface INativeOnChangeInputProps extends IProps, InputHTMLAttributes<H
 type PropShapes = IInputProps | ISelectProps | ITextareaProps | INativeOnChangeInputProps;
 
 interface IState {
-    valid: boolean;
-    feedback: React.ReactNode;
+    valid?: boolean;
+    feedback?: React.ReactNode;
     feedbackVisible: boolean;
     focused: boolean;
 }
@@ -145,11 +145,9 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         });
     }, VALIDATION_THROTTLE_MS);
 
-    public constructor(props) {
+    public constructor(props: PropShapes) {
         super(props);
         this.state = {
-            valid: undefined,
-            feedback: undefined,
             feedbackVisible: false,
             focused: false,
         };
@@ -165,7 +163,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         });
     }
 
-    private onFocus = (ev): void => {
+    private onFocus = (ev: React.FocusEvent<any>): void => {
         this.setState({
             focused: true,
         });
@@ -175,22 +173,18 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
             });
         }
         // Parent component may have supplied its own `onFocus` as well
-        if (this.props.onFocus) {
-            this.props.onFocus(ev);
-        }
+        this.props.onFocus?.(ev);
     };
 
-    private onChange = (ev): void => {
+    private onChange = (ev: React.ChangeEvent<any>): void => {
         if (this.props.validateOnChange) {
             this.validateOnChange();
         }
         // Parent component may have supplied its own `onChange` as well
-        if (this.props.onChange) {
-            this.props.onChange(ev);
-        }
+        this.props.onChange?.(ev);
     };
 
-    private onBlur = (ev): void => {
+    private onBlur = (ev: React.FocusEvent<any>): void => {
         this.setState({
             focused: false,
         });
@@ -200,12 +194,10 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
             });
         }
         // Parent component may have supplied its own `onBlur` as well
-        if (this.props.onBlur) {
-            this.props.onBlur(ev);
-        }
+        this.props.onBlur?.(ev);
     };
 
-    public async validate({ focused, allowEmpty = true }: IValidateOpts): Promise<boolean> {
+    public async validate({ focused, allowEmpty = true }: IValidateOpts): Promise<boolean | undefined> {
         if (!this.props.onValidate) {
             return;
         }
@@ -238,7 +230,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         return valid;
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
         const {
             element,
@@ -274,11 +266,11 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
 
         const fieldInput = React.createElement(this.props.element, inputProps_, children);
 
-        let prefixContainer = null;
+        let prefixContainer: JSX.Element | undefined;
         if (prefixComponent) {
             prefixContainer = <span className="mx_Field_prefix">{prefixComponent}</span>;
         }
-        let postfixContainer = null;
+        let postfixContainer: JSX.Element | undefined;
         if (postfixComponent) {
             postfixContainer = <span className="mx_Field_postfix">{postfixComponent}</span>;
         }

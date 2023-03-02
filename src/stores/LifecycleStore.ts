@@ -22,10 +22,10 @@ import { ActionPayload } from "../dispatcher/payloads";
 import { DoAfterSyncPreparedPayload } from "../dispatcher/payloads/DoAfterSyncPreparedPayload";
 
 interface IState {
-    deferredAction: any;
+    deferredAction: ActionPayload | null;
 }
 
-const INITIAL_STATE = {
+const INITIAL_STATE: IState = {
     deferredAction: null,
 };
 
@@ -83,8 +83,8 @@ class LifecycleStore extends Store<ActionPayload> {
     }
 }
 
-let singletonLifecycleStore = null;
+let singletonLifecycleStore: LifecycleStore | null = null;
 if (!singletonLifecycleStore) {
     singletonLifecycleStore = new LifecycleStore();
 }
-export default singletonLifecycleStore;
+export default singletonLifecycleStore!;

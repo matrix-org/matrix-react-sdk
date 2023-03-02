@@ -21,12 +21,12 @@ import { _t } from "../../../languageHandler";
 import ContentMessages from "../../../ContentMessages";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
-import { IDialogProps } from "./IDialogProps";
 
-interface IProps extends IDialogProps {
+interface IProps {
     badFiles: File[];
     totalFiles: number;
     contentMessages: ContentMessages;
+    onFinished(upload?: boolean): void;
 }
 
 /*
@@ -43,7 +43,7 @@ export default class UploadFailureDialog extends React.Component<IProps> {
         this.props.onFinished(true);
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let message;
         let preview;
         let buttons;

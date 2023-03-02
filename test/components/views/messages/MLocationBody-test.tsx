@@ -14,13 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ComponentProps } from "react";
 // eslint-disable-next-line deprecate/import
 import { mount } from "enzyme";
 import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
 import { ClientEvent, RoomMember } from "matrix-js-sdk/src/matrix";
 import * as maplibregl from "maplibre-gl";
 import { logger } from "matrix-js-sdk/src/logger";
+// eslint-disable-next-line deprecate/import
 import { act } from "react-dom/test-utils";
 import { SyncState } from "matrix-js-sdk/src/sync";
 
@@ -46,7 +47,7 @@ describe("MLocationBody", () => {
             isGuest: jest.fn().mockReturnValue(false),
         });
         const defaultEvent = makeLocationEvent("geo:51.5076,-0.1276", LocationAssetType.Pin);
-        const defaultProps = {
+        const defaultProps: ComponentProps<typeof MLocationBody> = {
             mxEvent: defaultEvent,
             highlights: [],
             highlightLink: "",
@@ -79,7 +80,7 @@ describe("MLocationBody", () => {
         });
 
         describe("with error", () => {
-            let sdkConfigSpy;
+            let sdkConfigSpy: jest.SpyInstance<any>;
 
             beforeEach(() => {
                 // eat expected errors to keep console clean
@@ -140,7 +141,9 @@ describe("MLocationBody", () => {
             });
 
             it("opens map dialog on click", () => {
-                const modalSpy = jest.spyOn(Modal, "createDialog").mockReturnValue(undefined);
+                const modalSpy = jest
+                    .spyOn(Modal, "createDialog")
+                    .mockReturnValue({ finished: new Promise(() => {}), close: jest.fn() });
                 const component = getComponent();
 
                 act(() => {
@@ -171,7 +174,7 @@ describe("MLocationBody", () => {
                 const component = getComponent({ mxEvent: selfShareEvent });
 
                 // render self locations with user avatars
-                expect(component.find("SmartMarker").at(0).props()["roomMember"]).toEqual(member);
+                expect(component.find("SmartMarker").at(0).prop("roomMember")).toEqual(member);
             });
         });
     });

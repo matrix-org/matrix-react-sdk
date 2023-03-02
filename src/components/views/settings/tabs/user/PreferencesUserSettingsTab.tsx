@@ -89,13 +89,15 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         "useOnlyCurrentProfiles",
     ];
 
+    private static ROOM_DIRECTORY_SETTINGS = ["SpotlightSearch.showNsfwPublicRooms"];
+
     private static GENERAL_SETTINGS = [
         "promptBeforeInviteUnknownUsers",
         // Start automatically after startup (electron-only)
         // Autocomplete delay (niche text box)
     ];
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -151,7 +153,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const useCase = SettingsStore.getValue<UseCase | null>("FTUE.useCaseSelection");
         const roomListSettings = PreferencesUserSettingsTab.ROOM_LIST_SETTINGS
             // Only show the breadcrumbs setting if breadcrumbs v2 is disabled
@@ -232,6 +234,11 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{_t("Timeline")}</span>
                     {this.renderGroup(PreferencesUserSettingsTab.TIMELINE_SETTINGS)}
+                </div>
+
+                <div className="mx_SettingsTab_section">
+                    <span className="mx_SettingsTab_subheading">{_t("Room directory")}</span>
+                    {this.renderGroup(PreferencesUserSettingsTab.ROOM_DIRECTORY_SETTINGS)}
                 </div>
 
                 <div className="mx_SettingsTab_section">

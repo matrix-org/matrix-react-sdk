@@ -18,17 +18,16 @@ limitations under the License.
 
 import React from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { IAuthData } from "matrix-js-sdk/src/interactive-auth";
+import { AuthType, IAuthData } from "matrix-js-sdk/src/interactive-auth";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import InteractiveAuth, { ERROR_USER_CANCELLED, InteractiveAuthCallback } from "../../structures/InteractiveAuth";
 import { SSOAuthEntry } from "../auth/InteractiveAuthEntryComponents";
 import BaseDialog from "./BaseDialog";
-import { IDialogProps } from "./IDialogProps";
 
-interface IDialogAesthetics {
-    [x: string]: {
+type DialogAesthetics = Partial<{
+    [x in AuthType]: {
         [x: number]: {
             title: string;
             body: string;
@@ -36,9 +35,9 @@ interface IDialogAesthetics {
             continueKind: string;
         };
     };
-}
+}>;
 
-export interface InteractiveAuthDialogProps extends IDialogProps {
+export interface InteractiveAuthDialogProps {
     // matrix client to use for UI auth requests
     matrixClient: MatrixClient;
 
@@ -71,15 +70,17 @@ export interface InteractiveAuthDialogProps extends IDialogProps {
     // }
     //
     // Default is defined in _getDefaultDialogAesthetics()
-    aestheticsForStagePhases?: IDialogAesthetics;
+    aestheticsForStagePhases?: DialogAesthetics;
+
+    onFinished(success?: boolean, result?: IAuthData | Error | null): void;
 }
 
 interface IState {
     authError: Error;
 
     // See _onUpdateStagePhase()
-    uiaStage: number | string;
-    uiaStagePhase: number | string;
+    uiaStage: AuthType | null;
+    uiaStagePhase: number | null;
 }
 
 export default class InteractiveAuthDialog extends React.Component<InteractiveAuthDialogProps, IState> {
@@ -95,7 +96,7 @@ export default class InteractiveAuthDialog extends React.Component<InteractiveAu
         };
     }
 
-    private getDefaultDialogAesthetics(): IDialogAesthetics {
+    private getDefaultDialogAesthetics(): DialogAesthetics {
         const ssoAesthetics = {
             [SSOAuthEntry.PHASE_PREAUTH]: {
                 title: _t("Use Single Sign On to continue"),
@@ -125,13 +126,13 @@ export default class InteractiveAuthDialog extends React.Component<InteractiveAu
                 this.props.onFinished(false, null);
             } else {
                 this.setState({
-                    authError: result,
+                    authError: result as Error,
                 });
             }
         }
     };
 
-    private onUpdateStagePhase = (newStage: string | number, newPhase: string | number): void => {
+    private onUpdateStagePhase = (newStage: AuthType, newPhase: number): void => {
         // We copy the stage and stage phase params into state for title selection in render()
         this.setState({ uiaStage: newStage, uiaStagePhase: newPhase });
     };
@@ -140,7 +141,7 @@ export default class InteractiveAuthDialog extends React.Component<InteractiveAu
         this.props.onFinished(false);
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         // Let's pick a title, body, and other params text that we'll show to the user. The order
         // is most specific first, so stagePhase > our props > defaults.
 
@@ -152,14 +153,14 @@ export default class InteractiveAuthDialog extends React.Component<InteractiveAu
         if (!this.state.authError && dialogAesthetics) {
             if (dialogAesthetics[this.state.uiaStage]) {
                 const aesthetics = dialogAesthetics[this.state.uiaStage][this.state.uiaStagePhase];
-                if (aesthetics && aesthetics.title) title = aesthetics.title;
-                if (aesthetics && aesthetics.body) body = aesthetics.body;
-                if (aesthetics && aesthetics.continueText) continueText = aesthetics.continueText;
-                if (aesthetics && aesthetics.continueKind) continueKind = aesthetics.continueKind;
+                if (aesthetics?.title) title = aesthetics.title;
+                if (aesthetics?.body) body = aesthetics.body;
+                if (aesthetics?.continueText) continueText = aesthetics.continueText;
+                if (aesthetics?.continueKind) continueKind = aesthetics.continueKind;
             }
         }
 
-        let content;
+        let content: JSX.Element;
         if (this.state.authError) {
             content = (
                 <div id="mx_Dialog_content">

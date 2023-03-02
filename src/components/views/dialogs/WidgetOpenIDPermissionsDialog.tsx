@@ -22,15 +22,15 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { _t } from "../../../languageHandler";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import { OIDCState } from "../../../stores/widgets/WidgetPermissionStore";
-import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 
-interface IProps extends IDialogProps {
+interface IProps {
     widget: Widget;
     widgetKind: WidgetKind;
     inRoomId?: string;
+    onFinished(allowed?: boolean): void;
 }
 
 interface IState {
@@ -73,7 +73,7 @@ export default class WidgetOpenIDPermissionsDialog extends React.PureComponent<I
         this.setState({ rememberSelection: newVal });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <BaseDialog
                 className="mx_WidgetOpenIDPermissionsDialog"

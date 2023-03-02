@@ -16,7 +16,7 @@ limitations under the License.
 
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { Room } from "matrix-js-sdk/src/models/room";
-import React, { ComponentType, createRef, ReactComponentElement, RefObject } from "react";
+import React, { ComponentType, createRef, ReactComponentElement, RefObject, SyntheticEvent } from "react";
 
 import { IState as IRovingTabIndexState, RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -102,10 +102,9 @@ interface ITagAesthetics {
     defaultHidden: boolean;
 }
 
-interface ITagAestheticsMap {
-    // @ts-ignore - TS wants this to be a string but we know better
-    [tagId: TagID]: ITagAesthetics;
-}
+type TagAestheticsMap = Partial<{
+    [tagId in TagID]: ITagAesthetics;
+}>;
 
 const auxButtonContextMenuPosition = (handle: RefObject<HTMLDivElement>): MenuProps => {
     const rect = handle.current.getBoundingClientRect();
@@ -118,7 +117,7 @@ const auxButtonContextMenuPosition = (handle: RefObject<HTMLDivElement>): MenuPr
 
 const DmAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex, dispatcher = defaultDispatcher }) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
-    const activeSpace: Room = useEventEmitterState(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
+    const activeSpace = useEventEmitterState(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
         return SpaceStore.instance.activeSpaceRoom;
     });
 
@@ -126,7 +125,7 @@ const DmAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex, dispatcher = default
     const showInviteUsers = shouldShowComponent(UIComponent.InviteUsers);
 
     if (activeSpace && (showCreateRooms || showInviteUsers)) {
-        let contextMenu: JSX.Element;
+        let contextMenu: JSX.Element | undefined;
         if (menuDisplayed) {
             const canInvite = shouldShowSpaceInvite(activeSpace);
 
@@ -209,7 +208,7 @@ const DmAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex, dispatcher = default
 
 const UntaggedAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex }) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
-    const activeSpace = useEventEmitterState<Room>(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
+    const activeSpace = useEventEmitterState<Room | null>(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
         return SpaceStore.instance.activeSpaceRoom;
     });
 
@@ -217,11 +216,11 @@ const UntaggedAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex }) => {
     const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
     const elementCallVideoRoomsEnabled = useFeatureEnabled("feature_element_call_video_rooms");
 
-    let contextMenuContent: JSX.Element | null = null;
+    let contextMenuContent: JSX.Element | undefined;
     if (menuDisplayed && activeSpace) {
         const canAddRooms = activeSpace.currentState.maySendStateEvent(
             EventType.SpaceChild,
-            MatrixClientPeg.get().getUserId(),
+            MatrixClientPeg.get().getUserId()!,
         );
 
         contextMenuContent = (
@@ -380,7 +379,7 @@ const UntaggedAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex }) => {
     );
 };
 
-const TAG_AESTHETICS: ITagAestheticsMap = {
+const TAG_AESTHETICS: TagAestheticsMap = {
     [DefaultTagID.Invite]: {
         sectionLabel: _td("Invites"),
         isInvite: true,
@@ -434,7 +433,7 @@ const TAG_AESTHETICS: ITagAestheticsMap = {
 };
 
 export default class RoomList extends React.PureComponent<IProps, IState> {
-    private dispatcherRef;
+    private dispatcherRef?: string;
     private treeRef = createRef<HTMLDivElement>();
     private favouriteMessageWatcher: string;
 
@@ -470,13 +469,13 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         SpaceStore.instance.off(UPDATE_SUGGESTED_ROOMS, this.updateSuggestedRooms);
         RoomListStore.instance.off(LISTS_UPDATE_EVENT, this.updateLists);
         SettingsStore.unwatchSetting(this.favouriteMessageWatcher);
-        defaultDispatcher.unregister(this.dispatcherRef);
+        if (this.dispatcherRef) defaultDispatcher.unregister(this.dispatcherRef);
         SdkContextClass.instance.roomViewStore.off(UPDATE_EVENT, this.onRoomViewStoreUpdate);
     }
 
     private onRoomViewStoreUpdate = (): void => {
         this.setState({
-            currentRoomId: SdkContextClass.instance.roomViewStore.getRoomId(),
+            currentRoomId: SdkContextClass.instance.roomViewStore.getRoomId() ?? undefined,
         });
     };
 
@@ -573,7 +572,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                     resizeMethod="crop"
                 />
             );
-            const viewRoom = (ev): void => {
+            const viewRoom = (ev: SyntheticEvent): void => {
                 defaultDispatcher.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     room_alias: room.canonical_alias || room.aliases?.[0],
@@ -630,7 +629,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
             Object.values(RoomListStore.instance.orderedLists).every((list) => !list?.length);
 
         return TAG_ORDER.map((orderedTagId) => {
-            let extraTiles = null;
+            let extraTiles: ReactComponentElement<typeof ExtraTile>[] | undefined;
             if (orderedTagId === DefaultTagID.Suggested) {
                 extraTiles = this.renderSuggestedRooms();
             } else if (this.state.feature_favourite_messages && orderedTagId === DefaultTagID.SavedItems) {
@@ -688,7 +687,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         [...treeItems].find((e) => e.offsetParent !== null)?.focus();
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const sublists = this.renderSublists();
         return (
             <RovingTabIndexProvider handleHomeEnd handleUpDown onKeyDown={this.props.onKeyDown}>

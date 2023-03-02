@@ -20,14 +20,14 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import Modal from "../../../Modal";
 import { _t } from "../../../languageHandler";
 import { upgradeRoom } from "../../../utils/RoomUpgrade";
-import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import ErrorDialog from "./ErrorDialog";
 import DialogButtons from "../elements/DialogButtons";
 import Spinner from "../elements/Spinner";
 
-interface IProps extends IDialogProps {
+interface IProps {
     room: Room;
+    onFinished(upgrade?: boolean): void;
 }
 
 interface IState {
@@ -68,7 +68,7 @@ export default class RoomUpgradeDialog extends React.Component<IProps, IState> {
             });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let buttons;
         if (this.state.busy) {
             buttons = <Spinner />;

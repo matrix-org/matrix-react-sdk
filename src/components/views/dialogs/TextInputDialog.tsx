@@ -21,9 +21,8 @@ import { _t, _td } from "../../../languageHandler";
 import { IFieldState, IValidationResult } from "../elements/Validation";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
-import { IDialogProps } from "./IDialogProps";
 
-interface IProps extends IDialogProps {
+interface IProps {
     title?: string;
     description?: React.ReactNode;
     value?: string;
@@ -34,6 +33,7 @@ interface IProps extends IDialogProps {
     hasCancel?: boolean;
     validator?: (fieldState: IFieldState) => Promise<IValidationResult>; // result of withValidation
     fixedWidth?: boolean;
+    onFinished(ok?: boolean, text?: string): void;
 }
 
 interface IState {
@@ -45,11 +45,11 @@ interface IState {
 export default class TextInputDialog extends React.Component<IProps, IState> {
     private field = createRef<Field>();
 
-    public static defaultProps = {
+    public static defaultProps: Partial<IProps> = {
         title: "",
         value: "",
         description: "",
-        busyMessage: _td("Loading..."),
+        busyMessage: _td("Loading…"),
         focus: true,
         hasCancel: true,
     };
@@ -106,7 +106,7 @@ export default class TextInputDialog extends React.Component<IProps, IState> {
         return result;
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <BaseDialog
                 className="mx_TextInputDialog"

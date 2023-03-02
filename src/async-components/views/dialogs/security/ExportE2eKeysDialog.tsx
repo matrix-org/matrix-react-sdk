@@ -16,13 +16,12 @@ limitations under the License.
 */
 
 import FileSaver from "file-saver";
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../languageHandler";
 import * as MegolmExportEncryption from "../../../../utils/MegolmExportEncryption";
-import { IDialogProps } from "../../../../components/views/dialogs/IDialogProps";
 import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
 import Field from "../../../../components/views/elements/Field";
 import { KeysStartingWith } from "../../../../@types/common";
@@ -32,13 +31,14 @@ enum Phase {
     Exporting = "exporting",
 }
 
-interface IProps extends IDialogProps {
+interface IProps {
     matrixClient: MatrixClient;
+    onFinished(doExport?: boolean): void;
 }
 
 interface IState {
     phase: Phase;
-    errStr: string;
+    errStr: string | null;
     passphrase1: string;
     passphrase2: string;
 }
@@ -127,7 +127,7 @@ export default class ExportE2eKeysDialog extends React.Component<IProps, IState>
         } as Pick<IState, AnyPassphrase>);
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const disableForm = this.state.phase === Phase.Exporting;
 
         return (
@@ -163,7 +163,9 @@ export default class ExportE2eKeysDialog extends React.Component<IProps, IState>
                                 <Field
                                     label={_t("Enter passphrase")}
                                     value={this.state.passphrase1}
-                                    onChange={(e) => this.onPassphraseChange(e, "passphrase1")}
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                                        this.onPassphraseChange(e, "passphrase1")
+                                    }
                                     autoFocus={true}
                                     size={64}
                                     type="password"
@@ -174,7 +176,9 @@ export default class ExportE2eKeysDialog extends React.Component<IProps, IState>
                                 <Field
                                     label={_t("Confirm passphrase")}
                                     value={this.state.passphrase2}
-                                    onChange={(e) => this.onPassphraseChange(e, "passphrase2")}
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                                        this.onPassphraseChange(e, "passphrase2")
+                                    }
                                     size={64}
                                     type="password"
                                     disabled={disableForm}

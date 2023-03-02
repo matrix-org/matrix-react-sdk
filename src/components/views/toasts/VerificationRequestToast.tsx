@@ -49,7 +49,7 @@ interface IState {
 export default class VerificationRequestToast extends React.PureComponent<IProps, IState> {
     private intervalHandle: number;
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
         this.state = { counter: Math.ceil(props.request.timeout / 1000) };
     }
@@ -77,7 +77,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
             const device = await cli.getDevice(request.channel.deviceId);
             const ip = device.last_seen_ip;
             this.setState({
-                device: cli.getStoredDevice(cli.getUserId(), request.channel.deviceId),
+                device: cli.getStoredDevice(cli.getUserId()!, request.channel.deviceId),
                 ip,
             });
         }
@@ -137,7 +137,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
                             request.cancel();
                         },
                     },
-                    null,
+                    undefined,
                     /* priority = */ false,
                     /* static = */ true,
                 );
@@ -148,7 +148,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
         }
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const { request } = this.props;
         let description;
         let detail;
@@ -174,13 +174,13 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
             }
         }
         const declineLabel =
-            this.state.counter === 0 ? _t("Decline") : _t("Decline (%(counter)s)", { counter: this.state.counter });
+            this.state.counter === 0 ? _t("Ignore") : _t("Ignore (%(counter)s)", { counter: this.state.counter });
 
         return (
             <GenericToast
                 description={description}
                 detail={detail}
-                acceptLabel={_t("Accept")}
+                acceptLabel={_t("Verify Session")}
                 onAccept={this.accept}
                 rejectLabel={declineLabel}
                 onReject={this.cancel}

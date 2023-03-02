@@ -1,6 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<PollHistoryDialog /> renders a list of polls when there are polls in the timeline 1`] = `
+exports[`<PollHistoryDialog /> Poll detail displays poll detail on active poll list item click 1`] = `
+<h2
+  data-testid="pollQuestion"
+>
+  Question?
+</h2>
+`;
+
+exports[`<PollHistoryDialog /> Poll detail displays poll detail on past poll list item click 1`] = `
+<h2
+  data-testid="pollQuestion"
+>
+  What?
+</h2>
+`;
+
+exports[`<PollHistoryDialog /> Poll detail navigates back to poll list from detail view on header click 1`] = `
+<div
+  class="mx_AccessibleButton mx_PollDetailHeader mx_AccessibleButton_hasKind mx_AccessibleButton_kind_content_inline"
+  role="button"
+  tabindex="0"
+>
+  <div
+    class="mx_PollDetailHeader_icon"
+  />
+  Active polls
+</div>
+`;
+
+exports[`<PollHistoryDialog /> renders a list of active polls when there are polls in the room 1`] = `
 <div>
   <div
     data-focus-guard="true"
@@ -35,56 +64,85 @@ exports[`<PollHistoryDialog /> renders a list of polls when there are polls in t
       <div
         class="mx_PollHistoryList"
       >
-        <ol
-          class="mx_PollHistoryList_list"
+        <fieldset
+          class="mx_FilterTabGroup"
         >
-          <li
-            class="mx_PollListItem"
-            data-testid="pollListItem-$1"
+          <label
+            data-testid="filter-tab-PollHistoryDialog_filter-ACTIVE"
           >
-            <span>
-              02/02/23
-            </span>
-            <div
-              class="mx_PollListItem_icon"
+            <input
+              checked=""
+              name="PollHistoryDialog_filter"
+              type="radio"
+              value="ACTIVE"
             />
-            <span
-              class="mx_PollListItem_question"
-            >
-              Question?
+            <span>
+              Active polls
             </span>
-          </li>
+          </label>
+          <label
+            data-testid="filter-tab-PollHistoryDialog_filter-ENDED"
+          >
+            <input
+              name="PollHistoryDialog_filter"
+              type="radio"
+              value="ENDED"
+            />
+            <span>
+              Past polls
+            </span>
+          </label>
+        </fieldset>
+        <ol
+          class="mx_PollHistoryList_list mx_PollHistoryList_list_ACTIVE"
+        >
           <li
             class="mx_PollListItem"
             data-testid="pollListItem-$2"
           >
-            <span>
-              02/02/23
-            </span>
             <div
-              class="mx_PollListItem_icon"
-            />
-            <span
-              class="mx_PollListItem_question"
+              tabindex="0"
             >
-              Where?
-            </span>
+              <div
+                class="mx_PollListItem_content"
+              >
+                <span>
+                  02/02/23
+                </span>
+                <div
+                  class="mx_PollListItem_icon"
+                />
+                <span
+                  class="mx_PollListItem_question"
+                >
+                  Where?
+                </span>
+              </div>
+            </div>
           </li>
           <li
             class="mx_PollListItem"
-            data-testid="pollListItem-$3"
+            data-testid="pollListItem-$1"
           >
-            <span>
-              31/01/23
-            </span>
             <div
-              class="mx_PollListItem_icon"
-            />
-            <span
-              class="mx_PollListItem_question"
+              tabindex="0"
             >
-              What?
-            </span>
+              <div
+                class="mx_PollListItem_content"
+              >
+                <span>
+                  02/02/23
+                </span>
+                <div
+                  class="mx_PollListItem_icon"
+                />
+                <span
+                  class="mx_PollListItem_question"
+                >
+                  Question?
+                </span>
+              </div>
+            </div>
           </li>
         </ol>
       </div>
@@ -95,5 +153,34 @@ exports[`<PollHistoryDialog /> renders a list of polls when there are polls in t
     style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
     tabindex="0"
   />
+</div>
+`;
+
+exports[`<PollHistoryDialog /> renders a no polls message and a load more button when not at end of timeline 1`] = `
+<div
+  class="mx_AccessibleButton mx_PollHistoryList_loadMorePolls mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
+  role="button"
+  tabindex="0"
+>
+  Load more polls
+  <div
+    class="mx_InlineSpinner"
+  >
+    <div
+      aria-label="Loading…"
+      class="mx_InlineSpinner_icon mx_Spinner_icon"
+      style="width: 16px; height: 16px;"
+    />
+  </div>
+</div>
+`;
+
+exports[`<PollHistoryDialog /> renders a no polls message and a load more button when not at end of timeline 2`] = `
+<div
+  class="mx_AccessibleButton mx_PollHistoryList_loadMorePolls mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
+  role="button"
+  tabindex="0"
+>
+  Load more polls
 </div>
 `;

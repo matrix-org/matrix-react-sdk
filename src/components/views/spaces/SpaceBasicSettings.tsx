@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useRef, useState } from "react";
+import React, { ChangeEvent, useRef, useState } from "react";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -24,11 +24,11 @@ import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 interface IProps {
     avatarUrl?: string;
     avatarDisabled?: boolean;
-    name?: string;
+    name: string;
     nameDisabled?: boolean;
     topic?: string;
     topicDisabled?: boolean;
-    setAvatar(avatar: File): void;
+    setAvatar(avatar?: File): void;
     setName(name: string): void;
     setTopic(topic: string): void;
 }
@@ -102,7 +102,7 @@ export const SpaceAvatar: React.FC<Pick<IProps, "avatarUrl" | "avatarDisabled" |
                     setAvatar(file);
                     const reader = new FileReader();
                     reader.onload = (ev) => {
-                        setAvatarDataUrl(ev.target.result as string);
+                        setAvatarDataUrl(ev.target?.result as string);
                     };
                     reader.readAsDataURL(file);
                 }}
@@ -132,7 +132,7 @@ const SpaceBasicSettings: React.FC<IProps> = ({
                 label={_t("Name")}
                 autoFocus={true}
                 value={name}
-                onChange={(ev) => setName(ev.target.value)}
+                onChange={(ev: ChangeEvent<HTMLInputElement>) => setName(ev.target.value)}
                 disabled={nameDisabled}
             />
 
@@ -141,7 +141,7 @@ const SpaceBasicSettings: React.FC<IProps> = ({
                 element="textarea"
                 label={_t("Description")}
                 value={topic}
-                onChange={(ev) => setTopic(ev.target.value)}
+                onChange={(ev: ChangeEvent<HTMLTextAreaElement>) => setTopic(ev.target.value)}
                 rows={3}
                 disabled={topicDisabled}
             />

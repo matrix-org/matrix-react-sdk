@@ -22,7 +22,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { _t } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Modal from "../../../../Modal";
-import AddThreepid from "../../../../AddThreepid";
+import AddThreepid, { Binding } from "../../../../AddThreepid";
 import ErrorDialog from "../../dialogs/ErrorDialog";
 import AccessibleButton from "../../elements/AccessibleButton";
 
@@ -48,9 +48,9 @@ interface IEmailAddressProps {
 
 interface IEmailAddressState {
     verifying: boolean;
-    addTask: any; // FIXME: When AddThreepid is TSfied
+    addTask: AddThreepid | null;
     continueDisabled: boolean;
-    bound: boolean;
+    bound?: boolean;
 }
 
 export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddressState> {
@@ -74,7 +74,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         }
     }
 
-    private async changeBinding({ bind, label, errorTitle }): Promise<void> {
+    private async changeBinding({ bind, label, errorTitle }: Binding): Promise<void> {
         if (!(await MatrixClientPeg.get().doesServerSupportSeparateAddAndBind())) {
             return this.changeBindingTangledAddBind({ bind, label, errorTitle });
         }
@@ -111,7 +111,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         }
     }
 
-    private async changeBindingTangledAddBind({ bind, label, errorTitle }): Promise<void> {
+    private async changeBindingTangledAddBind({ bind, label, errorTitle }: Binding): Promise<void> {
         const { medium, address } = this.props.email;
 
         const task = new AddThreepid();
@@ -172,7 +172,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
 
         this.setState({ continueDisabled: true });
         try {
-            await this.state.addTask.checkEmailLinkClicked();
+            await this.state.addTask?.checkEmailLinkClicked();
             this.setState({
                 addTask: null,
                 continueDisabled: false,
@@ -184,7 +184,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Your email address hasn't been verified yet"),
                     description: _t(
-                        "Click the link in the email you received to verify " + "and then click continue again.",
+                        "Click the link in the email you received to verify and then click continue again.",
                     ),
                 });
             } else {
@@ -197,7 +197,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         }
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const { address } = this.props.email;
         const { verifying, bound } = this.state;
 
@@ -251,7 +251,7 @@ interface IProps {
 }
 
 export default class EmailAddresses extends React.Component<IProps> {
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let content;
         if (this.props.emails.length > 0) {
             content = this.props.emails.map((e) => {

@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import { fireEvent, render } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import React, { ComponentProps } from "react";
+import { act, fireEvent, render } from "@testing-library/react";
 
 import DialogSidebar from "../../../../src/components/views/beacon/DialogSidebar";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
@@ -29,7 +28,7 @@ import {
 } from "../../../test-utils";
 
 describe("<DialogSidebar />", () => {
-    const defaultProps = {
+    const defaultProps: ComponentProps<typeof DialogSidebar> = {
         beacons: [],
         requestClose: jest.fn(),
         onBeaconClick: jest.fn(),

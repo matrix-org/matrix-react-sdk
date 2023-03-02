@@ -215,7 +215,7 @@ const CreateSpaceButton: React.FC<Pick<IInnerSpacePanelProps, "isPanelCollapsed"
         }
     }, [isPanelCollapsed]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    let contextMenu = null;
+    let contextMenu: JSX.Element | undefined;
     if (menuDisplayed) {
         contextMenu = <SpaceCreateMenu onFinished={closeMenu} />;
     }
@@ -233,6 +233,7 @@ const CreateSpaceButton: React.FC<Pick<IInnerSpacePanelProps, "isPanelCollapsed"
                 collapsed: isPanelCollapsed,
             })}
             role="treeitem"
+            aria-selected={false}
         >
             <SpaceButton
                 data-testid="create-space-button"

@@ -15,16 +15,15 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { useRef, useState } from "react";
+import { SyntheticEvent, useRef, useState } from "react";
 
 import { _t, _td } from "../../../languageHandler";
-import { IDialogProps } from "./IDialogProps";
 import Field from "../elements/Field";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import EmailField from "../auth/EmailField";
 
-interface IProps extends IDialogProps {
+interface IProps {
     onFinished(continued: boolean, email?: string): void;
 }
 
@@ -32,7 +31,7 @@ const RegistrationEmailPromptDialog: React.FC<IProps> = ({ onFinished }) => {
     const [email, setEmail] = useState("");
     const fieldRef = useRef<Field>();
 
-    const onSubmit = async (e): Promise<void> => {
+    const onSubmit = async (e: SyntheticEvent): Promise<void> => {
         e.preventDefault();
         if (email) {
             const valid = await fieldRef.current.validate({});

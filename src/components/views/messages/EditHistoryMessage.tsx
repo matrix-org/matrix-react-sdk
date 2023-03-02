@@ -80,7 +80,9 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
         Modal.createDialog(
             ConfirmAndWaitRedactDialog,
             {
-                redact: () => cli.redactEvent(event.getRoomId(), event.getId()),
+                redact: async () => {
+                    await cli.redactEvent(event.getRoomId(), event.getId());
+                },
             },
             "mx_Dialog_confirmredact",
         );
@@ -152,7 +154,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
         );
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const { mxEvent } = this.props;
         const content = getReplacedContent(mxEvent);
         let contentContainer;

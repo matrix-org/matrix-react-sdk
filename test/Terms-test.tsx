@@ -49,7 +49,7 @@ describe("Terms", function () {
 
     beforeEach(function () {
         jest.clearAllMocks();
-        mockClient.getAccountData.mockReturnValue(null);
+        mockClient.getAccountData.mockReturnValue(undefined);
         mockClient.getTerms.mockResolvedValue(null);
         mockClient.setAccountData.mockResolvedValue({});
     });
@@ -59,7 +59,7 @@ describe("Terms", function () {
     });
 
     it("should prompt for all terms & services if no account data", async function () {
-        mockClient.getAccountData.mockReturnValue(null);
+        mockClient.getAccountData.mockReturnValue(undefined);
         mockClient.getTerms.mockResolvedValue({
             policies: {
                 policy_the_first: POLICY_ONE,
@@ -68,7 +68,7 @@ describe("Terms", function () {
         const interactionCallback = jest.fn().mockResolvedValue([]);
         await startTermsFlow([IM_SERVICE_ONE], interactionCallback);
 
-        expect(interactionCallback).toBeCalledWith(
+        expect(interactionCallback).toHaveBeenCalledWith(
             [
                 {
                     service: IM_SERVICE_ONE,
@@ -100,7 +100,7 @@ describe("Terms", function () {
         await startTermsFlow([IM_SERVICE_ONE], interactionCallback);
 
         expect(interactionCallback).not.toHaveBeenCalled();
-        expect(mockClient.agreeToTerms).toBeCalledWith(SERVICE_TYPES.IM, "https://imone.test", "a token token", [
+        expect(mockClient.agreeToTerms).toHaveBeenCalledWith(SERVICE_TYPES.IM, "https://imone.test", "a token token", [
             "http://example.com/one",
         ]);
     });
@@ -124,7 +124,7 @@ describe("Terms", function () {
         const interactionCallback = jest.fn().mockResolvedValue(["http://example.com/one", "http://example.com/two"]);
         await startTermsFlow([IM_SERVICE_ONE], interactionCallback);
 
-        expect(interactionCallback).toBeCalledWith(
+        expect(interactionCallback).toHaveBeenCalledWith(
             [
                 {
                     service: IM_SERVICE_ONE,
@@ -135,7 +135,7 @@ describe("Terms", function () {
             ],
             ["http://example.com/one"],
         );
-        expect(mockClient.agreeToTerms).toBeCalledWith(SERVICE_TYPES.IM, "https://imone.test", "a token token", [
+        expect(mockClient.agreeToTerms).toHaveBeenCalledWith(SERVICE_TYPES.IM, "https://imone.test", "a token token", [
             "http://example.com/one",
             "http://example.com/two",
         ]);
@@ -170,7 +170,7 @@ describe("Terms", function () {
         const interactionCallback = jest.fn().mockResolvedValue(["http://example.com/one", "http://example.com/two"]);
         await startTermsFlow([IM_SERVICE_ONE, IM_SERVICE_TWO], interactionCallback);
 
-        expect(interactionCallback).toBeCalledWith(
+        expect(interactionCallback).toHaveBeenCalledWith(
             [
                 {
                     service: IM_SERVICE_TWO,
@@ -181,10 +181,10 @@ describe("Terms", function () {
             ],
             ["http://example.com/one"],
         );
-        expect(mockClient.agreeToTerms).toBeCalledWith(SERVICE_TYPES.IM, "https://imone.test", "a token token", [
+        expect(mockClient.agreeToTerms).toHaveBeenCalledWith(SERVICE_TYPES.IM, "https://imone.test", "a token token", [
             "http://example.com/one",
         ]);
-        expect(mockClient.agreeToTerms).toBeCalledWith(SERVICE_TYPES.IM, "https://imtwo.test", "a token token", [
+        expect(mockClient.agreeToTerms).toHaveBeenCalledWith(SERVICE_TYPES.IM, "https://imtwo.test", "a token token", [
             "http://example.com/two",
         ]);
     });

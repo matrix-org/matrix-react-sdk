@@ -27,10 +27,10 @@ import ErrorDialog from "./ErrorDialog";
 import QuestionDialog from "./QuestionDialog";
 import BaseDialog from "./BaseDialog";
 import EditableText from "../elements/EditableText";
-import { IDialogProps } from "./IDialogProps";
 
-interface IProps extends IDialogProps {
+interface IProps {
     title: string;
+    onFinished(ok?: boolean): void;
 }
 
 interface IState {
@@ -138,7 +138,7 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
         );
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const emailInput = this.state.emailBusy ? (
             <Spinner />
         ) : (

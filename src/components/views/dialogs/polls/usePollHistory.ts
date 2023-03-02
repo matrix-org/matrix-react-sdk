@@ -14,27 +14,83 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { useEffect, useState } from "react";
+import { Poll, PollEvent } from "matrix-js-sdk/src/matrix";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
+import { useEventEmitterState } from "../../../../hooks/useEventEmitter";
+
 /**
- * Get poll start events in a rooms live timeline
+ * Get poll instances from a room
+ * Updates to include new polls
  * @param roomId - id of room to retrieve polls for
  * @param matrixClient - client
- * @returns {MatrixEvent[]} - array fo poll start events
+ * @returns {Map<string, Poll>} - Map of Poll instances
  */
-export const getPolls = (roomId: string, matrixClient: MatrixClient): MatrixEvent[] => {
+export const usePolls = (
+    roomId: string,
+    matrixClient: MatrixClient,
+): {
+    polls: Map<string, Poll>;
+} => {
     const room = matrixClient.getRoom(roomId);
 
     if (!room) {
         throw new Error("Cannot find room");
     }
 
-    // @TODO(kerrya) poll history will be actively fetched in PSG-1043
-    // for now, just display polls that are in the current timeline
-    const timelineEvents = room.getLiveTimeline().getEvents();
-    const pollStartEvents = timelineEvents.filter((event) => M_POLL_START.matches(event.getType()));
+    // copy room.polls map so changes can be detected
+    const polls = useEventEmitterState(room, PollEvent.New, () => new Map<string, Poll>(room.polls));
 
-    return pollStartEvents;
+    return { polls };
+};
+
+/**
+ * Get all poll instances from a room
+ * Fetch their responses (using cached poll responses)
+ * Updates on:
+ * - new polls added to room
+ * - new responses added to polls
+ * - changes to poll ended state
+ * @param roomId - id of room to retrieve polls for
+ * @param matrixClient - client
+ * @returns {Map<string, Poll>} - Map of Poll instances
+ */
+export const usePollsWithRelations = (
+    roomId: string,
+    matrixClient: MatrixClient,
+): {
+    polls: Map<string, Poll>;
+} => {
+    const { polls } = usePolls(roomId, matrixClient);
+    const [pollsWithRelations, setPollsWithRelations] = useState<Map<string, Poll>>(polls);
+
+    useEffect(() => {
+        const onPollUpdate = async (): Promise<void> => {
+            // trigger rerender by creating a new poll map
+            setPollsWithRelations(new Map(polls));
+        };
+        if (polls) {
+            for (const poll of polls.values()) {
+                // listen to changes in responses and end state
+                poll.on(PollEvent.End, onPollUpdate);
+                poll.on(PollEvent.Responses, onPollUpdate);
+                // trigger request to get all responses
+                // if they are not already in cache
+                poll.getResponses();
+            }
+            setPollsWithRelations(polls);
+        }
+        // unsubscribe
+        return () => {
+            if (polls) {
+                for (const poll of polls.values()) {
+                    poll.off(PollEvent.End, onPollUpdate);
+                    poll.off(PollEvent.Responses, onPollUpdate);
+                }
+            }
+        };
+    }, [polls, setPollsWithRelations]);
+
+    return { polls: pollsWithRelations };
 };

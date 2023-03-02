@@ -16,6 +16,7 @@ limitations under the License.
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { parseEvent } from "../../src/editor/deserialize";
+import { Part } from "../../src/editor/parts";
 import { createPartCreator } from "./mock";
 
 const FOUR_SPACES = " ".repeat(4);
@@ -50,12 +51,12 @@ function textMessageReply(body: string, msgtype = "m.text") {
     } as unknown as MatrixEvent;
 }
 
-function mergeAdjacentParts(parts) {
-    let prevPart;
+function mergeAdjacentParts(parts: Part[]) {
+    let prevPart: Part | undefined;
     for (let i = 0; i < parts.length; ++i) {
-        let part = parts[i];
+        let part: Part | undefined = parts[i];
         const isEmpty = !part.text.length;
-        const isMerged = !isEmpty && prevPart && prevPart.merge(part);
+        const isMerged = !isEmpty && prevPart && prevPart.merge?.(part);
         if (isEmpty || isMerged) {
             // remove empty or merged part
             part = prevPart;
@@ -67,7 +68,7 @@ function mergeAdjacentParts(parts) {
     }
 }
 
-function normalize(parts) {
+function normalize(parts: Part[]) {
     // merge adjacent parts as this will happen
     // in the model anyway, and whether 1 or multiple
     // plain parts are returned is an implementation detail
@@ -214,7 +215,7 @@ describe("editor/deserialize", function () {
             expect(parts[4]).toStrictEqual({ type: "plain", text: "```" });
         });
         // failing likely because of https://github.com/vector-im/element-web/issues/10316
-        xit("code block with no trailing text and no newlines", function () {
+        it.skip("code block with no trailing text and no newlines", function () {
             const html = "<pre><code>0xDEADBEEF</code></pre>";
             const parts = normalize(parseEvent(htmlMessage(html), createPartCreator()));
             expect(parts.length).toBe(5);
@@ -411,7 +412,7 @@ describe("editor/deserialize", function () {
                 text: "> <del>no formatting here</del>",
             });
         });
-        it("it strips plaintext replies", () => {
+        it("strips plaintext replies", () => {
             const body = "> Sender: foo\n\nMessage";
             const parts = normalize(parseEvent(textMessageReply(body), createPartCreator(), { shouldEscape: false }));
             expect(parts.length).toBe(1);

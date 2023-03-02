@@ -280,7 +280,7 @@ const Tile: React.FC<ITileProps> = ({
         );
 
         if (showChildren) {
-            const onChildrenKeyDown = (e): void => {
+            const onChildrenKeyDown = (e: React.KeyboardEvent): void => {
                 const action = getKeyBindingsManager().getAccessibilityAction(e);
                 switch (action) {
                     case KeyBindingAction.ArrowLeft:
@@ -332,6 +332,7 @@ const Tile: React.FC<ITileProps> = ({
         <li
             className="mx_SpaceHierarchy_roomTileWrapper"
             role="treeitem"
+            aria-selected={selected}
             aria-expanded={children ? showChildren : undefined}
         >
             <AccessibleButton
@@ -654,7 +655,7 @@ const ManageButtons: React.FC<IManageButtonsProps> = ({ hierarchy, selected, set
         };
     }
 
-    let buttonText = _t("Saving...");
+    let buttonText = _t("Saving…");
     if (!saving) {
         buttonText = selectionAllSuggested ? _t("Mark as not suggested") : _t("Mark as suggested");
     }
@@ -694,7 +695,7 @@ const ManageButtons: React.FC<IManageButtonsProps> = ({ hierarchy, selected, set
                 kind="danger_outline"
                 disabled={disabled}
             >
-                {removing ? _t("Removing...") : _t("Remove")}
+                {removing ? _t("Removing…") : _t("Remove")}
             </Button>
             <Button
                 {...props}

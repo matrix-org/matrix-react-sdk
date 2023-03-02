@@ -43,7 +43,7 @@ describe("Permalinks", function () {
         serverACLContent?: { deny?: string[]; allow?: string[] },
     ): Room {
         members.forEach((m) => (m.membership = "join"));
-        const powerLevelsUsers = members.reduce((pl, member) => {
+        const powerLevelsUsers = members.reduce<Record<string, number>>((pl, member) => {
             if (Number.isFinite(member.powerLevel)) {
                 pl[member.userId] = member.powerLevel;
             }
@@ -74,7 +74,7 @@ describe("Permalinks", function () {
 
         jest.spyOn(room, "getCanonicalAlias").mockReturnValue(null);
         jest.spyOn(room, "getJoinedMembers").mockReturnValue(members);
-        jest.spyOn(room, "getMember").mockImplementation((userId) => members.find((m) => m.userId === userId));
+        jest.spyOn(room, "getMember").mockImplementation((userId) => members.find((m) => m.userId === userId) || null);
 
         return room;
     }
@@ -91,7 +91,7 @@ describe("Permalinks", function () {
         const creator = new RoomPermalinkCreator(room);
         creator.load();
         expect(creator.serverCandidates).toBeTruthy();
-        expect(creator.serverCandidates.length).toBe(0);
+        expect(creator.serverCandidates!.length).toBe(0);
     });
 
     it("should gracefully handle invalid MXIDs", () => {
@@ -112,8 +112,8 @@ describe("Permalinks", function () {
         const creator = new RoomPermalinkCreator(room);
         creator.load();
         expect(creator.serverCandidates).toBeTruthy();
-        expect(creator.serverCandidates.length).toBe(3);
-        expect(creator.serverCandidates[0]).toBe("pl_95");
+        expect(creator.serverCandidates!.length).toBe(3);
+        expect(creator.serverCandidates![0]).toBe("pl_95");
         // we don't check the 2nd and 3rd servers because that is done by the next test
     });
 
@@ -128,15 +128,15 @@ describe("Permalinks", function () {
         ]);
         const creator = new RoomPermalinkCreator(room, null);
         creator.load();
-        expect(creator.serverCandidates[0]).toBe("pl_95");
+        expect(creator.serverCandidates![0]).toBe("pl_95");
         member95.membership = "left";
         // @ts-ignore illegal private property
         creator.onRoomStateUpdate();
-        expect(creator.serverCandidates[0]).toBe("pl_75");
+        expect(creator.serverCandidates![0]).toBe("pl_75");
         member95.membership = "join";
         // @ts-ignore illegal private property
         creator.onRoomStateUpdate();
-        expect(creator.serverCandidates[0]).toBe("pl_95");
+        expect(creator.serverCandidates![0]).toBe("pl_95");
     });
 
     it("should pick candidate servers based on user population", function () {
@@ -152,10 +152,10 @@ describe("Permalinks", function () {
         const creator = new RoomPermalinkCreator(room);
         creator.load();
         expect(creator.serverCandidates).toBeTruthy();
-        expect(creator.serverCandidates.length).toBe(3);
-        expect(creator.serverCandidates[0]).toBe("first");
-        expect(creator.serverCandidates[1]).toBe("second");
-        expect(creator.serverCandidates[2]).toBe("third");
+        expect(creator.serverCandidates!.length).toBe(3);
+        expect(creator.serverCandidates![0]).toBe("first");
+        expect(creator.serverCandidates![1]).toBe("second");
+        expect(creator.serverCandidates![2]).toBe("third");
     });
 
     it("should pick prefer candidate servers with higher power levels", function () {
@@ -168,10 +168,10 @@ describe("Permalinks", function () {
         ]);
         const creator = new RoomPermalinkCreator(room);
         creator.load();
-        expect(creator.serverCandidates.length).toBe(3);
-        expect(creator.serverCandidates[0]).toBe("first");
-        expect(creator.serverCandidates[1]).toBe("second");
-        expect(creator.serverCandidates[2]).toBe("third");
+        expect(creator.serverCandidates!.length).toBe(3);
+        expect(creator.serverCandidates![0]).toBe("first");
+        expect(creator.serverCandidates![1]).toBe("second");
+        expect(creator.serverCandidates![2]).toBe("third");
     });
 
     it("should pick a maximum of 3 candidate servers", function () {
@@ -186,7 +186,7 @@ describe("Permalinks", function () {
         const creator = new RoomPermalinkCreator(room);
         creator.load();
         expect(creator.serverCandidates).toBeTruthy();
-        expect(creator.serverCandidates.length).toBe(3);
+        expect(creator.serverCandidates!.length).toBe(3);
     });
 
     it("should not consider IPv4 hosts", function () {
@@ -195,7 +195,7 @@ describe("Permalinks", function () {
         const creator = new RoomPermalinkCreator(room);
         creator.load();
         expect(creator.serverCandidates).toBeTruthy();
-        expect(creator.serverCandidates.length).toBe(0);
+        expect(creator.serverCandidates!.length).toBe(0);
     });
 
     it("should not consider IPv6 hosts", function () {
@@ -204,7 +204,7 @@ describe("Permalinks", function () {
         const creator = new RoomPermalinkCreator(room);
         creator.load();
         expect(creator.serverCandidates).toBeTruthy();
-        expect(creator.serverCandidates.length).toBe(0);
+        expect(creator.serverCandidates!.length).toBe(0);
     });
 
     it("should not consider IPv4 hostnames with ports", function () {
@@ -213,7 +213,7 @@ describe("Permalinks", function () {
         const creator = new RoomPermalinkCreator(room);
         creator.load();
         expect(creator.serverCandidates).toBeTruthy();
-        expect(creator.serverCandidates.length).toBe(0);
+        expect(creator.serverCandidates!.length).toBe(0);
     });
 
     it("should not consider IPv6 hostnames with ports", function () {
@@ -222,7 +222,7 @@ describe("Permalinks", function () {
         const creator = new RoomPermalinkCreator(room);
         creator.load();
         expect(creator.serverCandidates).toBeTruthy();
-        expect(creator.serverCandidates.length).toBe(0);
+        expect(creator.serverCandidates!.length).toBe(0);
     });
 
     it("should work with hostnames with ports", function () {
@@ -232,8 +232,8 @@ describe("Permalinks", function () {
         const creator = new RoomPermalinkCreator(room);
         creator.load();
         expect(creator.serverCandidates).toBeTruthy();
-        expect(creator.serverCandidates.length).toBe(1);
-        expect(creator.serverCandidates[0]).toBe("example.org:8448");
+        expect(creator.serverCandidates!.length).toBe(1);
+        expect(creator.serverCandidates![0]).toBe("example.org:8448");
     });
 
     it("should not consider servers explicitly denied by ACLs", function () {
@@ -252,7 +252,7 @@ describe("Permalinks", function () {
         const creator = new RoomPermalinkCreator(room);
         creator.load();
         expect(creator.serverCandidates).toBeTruthy();
-        expect(creator.serverCandidates.length).toBe(0);
+        expect(creator.serverCandidates!.length).toBe(0);
     });
 
     it("should not consider servers not allowed by ACLs", function () {
@@ -271,7 +271,7 @@ describe("Permalinks", function () {
         const creator = new RoomPermalinkCreator(room);
         creator.load();
         expect(creator.serverCandidates).toBeTruthy();
-        expect(creator.serverCandidates.length).toBe(0);
+        expect(creator.serverCandidates!.length).toBe(0);
     });
 
     it("should consider servers not explicitly banned by ACLs", function () {
@@ -290,8 +290,8 @@ describe("Permalinks", function () {
         const creator = new RoomPermalinkCreator(room);
         creator.load();
         expect(creator.serverCandidates).toBeTruthy();
-        expect(creator.serverCandidates.length).toBe(1);
-        expect(creator.serverCandidates[0]).toEqual("evilcorp.com");
+        expect(creator.serverCandidates!.length).toBe(1);
+        expect(creator.serverCandidates![0]).toEqual("evilcorp.com");
     });
 
     it("should consider servers not disallowed by ACLs", function () {
@@ -310,8 +310,8 @@ describe("Permalinks", function () {
         const creator = new RoomPermalinkCreator(room);
         creator.load();
         expect(creator.serverCandidates).toBeTruthy();
-        expect(creator.serverCandidates.length).toBe(1);
-        expect(creator.serverCandidates[0]).toEqual("evilcorp.com");
+        expect(creator.serverCandidates!.length).toBe(1);
+        expect(creator.serverCandidates![0]).toEqual("evilcorp.com");
     });
 
     it("should generate an event permalink for room IDs with no candidate servers", function () {
@@ -369,22 +369,22 @@ describe("Permalinks", function () {
 
     it("should correctly parse room permalinks with a via argument", () => {
         const result = parsePermalink("https://matrix.to/#/!room_id:server?via=some.org");
-        expect(result.roomIdOrAlias).toBe("!room_id:server");
-        expect(result.viaServers).toEqual(["some.org"]);
+        expect(result?.roomIdOrAlias).toBe("!room_id:server");
+        expect(result?.viaServers).toEqual(["some.org"]);
     });
 
     it("should correctly parse room permalink via arguments", () => {
         const result = parsePermalink("https://matrix.to/#/!room_id:server?via=foo.bar&via=bar.foo");
-        expect(result.roomIdOrAlias).toBe("!room_id:server");
-        expect(result.viaServers).toEqual(["foo.bar", "bar.foo"]);
+        expect(result?.roomIdOrAlias).toBe("!room_id:server");
+        expect(result?.viaServers).toEqual(["foo.bar", "bar.foo"]);
     });
 
     it("should correctly parse event permalink via arguments", () => {
         const result = parsePermalink(
             "https://matrix.to/#/!room_id:server/$event_id/some_thing_here/foobar" + "?via=m1.org&via=m2.org",
         );
-        expect(result.eventId).toBe("$event_id/some_thing_here/foobar");
-        expect(result.roomIdOrAlias).toBe("!room_id:server");
-        expect(result.viaServers).toEqual(["m1.org", "m2.org"]);
+        expect(result?.eventId).toBe("$event_id/some_thing_here/foobar");
+        expect(result?.roomIdOrAlias).toBe("!room_id:server");
+        expect(result?.viaServers).toEqual(["m1.org", "m2.org"]);
     });
 });

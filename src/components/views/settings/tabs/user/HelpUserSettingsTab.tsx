@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import AccessibleButton from "../../../elements/AccessibleButton";
@@ -37,12 +37,12 @@ interface IProps {
 }
 
 interface IState {
-    appVersion: string;
+    appVersion: string | null;
     canUpdate: boolean;
 }
 
 export default class HelpUserSettingsTab extends React.Component<IProps, IState> {
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -53,13 +53,13 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
 
     public componentDidMount(): void {
         PlatformPeg.get()
-            .getAppVersion()
+            ?.getAppVersion()
             .then((ver) => this.setState({ appVersion: ver }))
             .catch((e) => {
                 logger.error("Error getting vector version: ", e);
             });
         PlatformPeg.get()
-            .canSelfUpdate()
+            ?.canSelfUpdate()
             .then((v) => this.setState({ canUpdate: v }))
             .catch((e) => {
                 logger.error("Error getting self updatability: ", e);
@@ -80,7 +80,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         };
     }
 
-    private onClearCacheAndReload = (e): void => {
+    private onClearCacheAndReload = (): void => {
         if (!PlatformPeg.get()) return;
 
         // Dev note: please keep this log line, it's useful when troubleshooting a MatrixClient suddenly
@@ -90,15 +90,15 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         MatrixClientPeg.get()
             .store.deleteAllData()
             .then(() => {
-                PlatformPeg.get().reload();
+                PlatformPeg.get()?.reload();
             });
     };
 
-    private onBugReport = (e): void => {
+    private onBugReport = (): void => {
         Modal.createDialog(BugReportDialog, {});
     };
 
-    private onStartBotChat = (e): void => {
+    private onStartBotChat = (): void => {
         this.props.closeSettingsFn();
         createRoom({
             dmUserId: SdkConfig.get("welcome_user_id"),
@@ -106,11 +106,11 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         });
     };
 
-    private renderLegal(): JSX.Element {
+    private renderLegal(): ReactNode {
         const tocLinks = SdkConfig.get().terms_and_conditions_links;
         if (!tocLinks) return null;
 
-        const legalLinks = [];
+        const legalLinks: JSX.Element[] = [];
         for (const tocEntry of tocLinks) {
             legalLinks.push(
                 <div key={tocEntry.url}>
@@ -206,7 +206,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const brand = SdkConfig.get().brand;
 
         let faqText = _t(
@@ -248,7 +248,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
             );
         }
 
-        let updateButton = null;
+        let updateButton: JSX.Element | undefined;
         if (this.state.canUpdate) {
             updateButton = <UpdateCheckButton />;
         }
@@ -327,10 +327,26 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                     <span className="mx_SettingsTab_subheading">{_t("Advanced")}</span>
                     <div className="mx_SettingsTab_subsectionText">
                         <div>
-                            {_t("Homeserver is")} <code>{MatrixClientPeg.get().getHomeserverUrl()}</code>
+                            {_t(
+                                "Homeserver is <code>%(homeserverUrl)s</code>",
+                                {
+                                    homeserverUrl: MatrixClientPeg.get().getHomeserverUrl(),
+                                },
+                                {
+                                    code: (sub) => <code>{sub}</code>,
+                                },
+                            )}
                         </div>
                         <div>
-                            {_t("Identity server is")} <code>{MatrixClientPeg.get().getIdentityServerUrl()}</code>
+                            {_t(
+                                "Identity server is <code>%(identityServerUrl)s</code>",
+                                {
+                                    identityServerUrl: MatrixClientPeg.get().getIdentityServerUrl(),
+                                },
+                                {
+                                    code: (sub) => <code>{sub}</code>,
+                                },
+                            )}
                         </div>
                         <details>
                             <summary>{_t("Access Token")}</summary>

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { getByTestId, render, RenderResult, waitFor } from "@testing-library/react";
+import { act, getByTestId, render, RenderResult, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
 import { MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
@@ -23,7 +23,6 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 import React, { useState } from "react";
-import { act } from "react-dom/test-utils";
 
 import ThreadView from "../../../src/components/structures/ThreadView";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
@@ -83,7 +82,7 @@ describe("ThreadView", () => {
         return renderResult;
     }
 
-    async function sendMessage(container, text): Promise<void> {
+    async function sendMessage(container: HTMLElement, text: string): Promise<void> {
         const composer = getByTestId(container, "basicmessagecomposer");
         await userEvent.click(composer);
         await userEvent.keyboard(text);
@@ -91,7 +90,7 @@ describe("ThreadView", () => {
         await userEvent.click(sendMessageBtn);
     }
 
-    function expectedMessageBody(rootEvent, message) {
+    function expectedMessageBody(rootEvent: MatrixEvent, message: string) {
         return {
             "body": message,
             "m.relates_to": {
@@ -99,10 +98,10 @@ describe("ThreadView", () => {
                 "is_falling_back": true,
                 "m.in_reply_to": {
                     event_id: rootEvent
-                        .getThread()
+                        .getThread()!
                         .lastReply((ev: MatrixEvent) => {
                             return ev.isRelation(THREAD_RELATION_TYPE.name);
-                        })
+                        })!
                         .getId(),
                 },
                 "rel_type": RelationType.Thread,
@@ -126,8 +125,8 @@ describe("ThreadView", () => {
         const res = mkThread({
             room,
             client: mockClient,
-            authorId: mockClient.getUserId(),
-            participantUserIds: [mockClient.getUserId()],
+            authorId: mockClient.getUserId()!,
+            participantUserIds: [mockClient.getUserId()!],
         });
 
         rootEvent = res.rootEvent;
@@ -148,14 +147,14 @@ describe("ThreadView", () => {
         );
     });
 
-    it("sends a message with the correct fallback", async () => {
+    it("sends a thread message with the correct fallback", async () => {
         const { container } = await getComponent();
 
         const { rootEvent: rootEvent2 } = mkThread({
             room,
             client: mockClient,
-            authorId: mockClient.getUserId(),
-            participantUserIds: [mockClient.getUserId()],
+            authorId: mockClient.getUserId()!,
+            participantUserIds: [mockClient.getUserId()!],
         });
 
         act(() => {

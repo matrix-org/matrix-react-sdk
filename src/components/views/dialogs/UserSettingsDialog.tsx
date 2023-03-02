@@ -32,14 +32,14 @@ import SdkConfig from "../../../SdkConfig";
 import MjolnirUserSettingsTab from "../settings/tabs/user/MjolnirUserSettingsTab";
 import { UIFeature } from "../../../settings/UIFeature";
 import BaseDialog from "./BaseDialog";
-import { IDialogProps } from "./IDialogProps";
 import SidebarUserSettingsTab from "../settings/tabs/user/SidebarUserSettingsTab";
 import KeyboardUserSettingsTab from "../settings/tabs/user/KeyboardUserSettingsTab";
 import SessionManagerTab from "../settings/tabs/user/SessionManagerTab";
 import { UserTab } from "./UserTab";
 
-interface IProps extends IDialogProps {
+interface IProps {
     initialTabId?: UserTab;
+    onFinished(): void;
 }
 
 interface IState {
@@ -50,7 +50,7 @@ interface IState {
 export default class UserSettingsDialog extends React.Component<IProps, IState> {
     private settingsWatchers: string[] = [];
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -202,7 +202,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
                 UserTab.Help,
                 _td("Help & About"),
                 "mx_UserSettingsDialog_helpIcon",
-                <HelpUserSettingsTab closeSettingsFn={() => this.props.onFinished(true)} />,
+                <HelpUserSettingsTab closeSettingsFn={() => this.props.onFinished()} />,
                 "UserSettingsHelpAbout",
             ),
         );
@@ -210,7 +210,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
         return tabs;
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <BaseDialog
                 className="mx_UserSettingsDialog"

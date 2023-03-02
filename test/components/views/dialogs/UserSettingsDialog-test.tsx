@@ -22,7 +22,6 @@ import SettingsStore, { CallbackFn } from "../../../../src/settings/SettingsStor
 import SdkConfig from "../../../../src/SdkConfig";
 import { UserTab } from "../../../../src/components/views/dialogs/UserTab";
 import UserSettingsDialog from "../../../../src/components/views/dialogs/UserSettingsDialog";
-import { IDialogProps } from "../../../../src/components/views/dialogs/IDialogProps";
 import {
     getMockClientWithEventEmitter,
     mockClientMethodsUser,
@@ -62,7 +61,7 @@ describe("<UserSettingsDialog />", () => {
     });
 
     const defaultProps = { onFinished: jest.fn() };
-    const getComponent = (props: Partial<IDialogProps & { initialTabId?: UserTab }> = {}): ReactElement => (
+    const getComponent = (props: Partial<typeof defaultProps & { initialTabId?: UserTab }> = {}): ReactElement => (
         <UserSettingsDialog {...defaultProps} {...props} />
     );
 
@@ -73,8 +72,9 @@ describe("<UserSettingsDialog />", () => {
         mockSdkConfig.get.mockReturnValue({ brand: "Test" });
     });
 
-    const getActiveTabLabel = (container) => container.querySelector(".mx_TabbedView_tabLabel_active").textContent;
-    const getActiveTabHeading = (container) => container.querySelector(".mx_SettingsTab_heading").textContent;
+    const getActiveTabLabel = (container: Element) =>
+        container.querySelector(".mx_TabbedView_tabLabel_active")?.textContent;
+    const getActiveTabHeading = (container: Element) => container.querySelector(".mx_SettingsTab_heading")?.textContent;
 
     it("should render general settings tab when no initialTabId", () => {
         const { container } = render(getComponent());

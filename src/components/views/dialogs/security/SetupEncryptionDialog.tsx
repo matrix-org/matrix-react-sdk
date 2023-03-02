@@ -20,7 +20,6 @@ import SetupEncryptionBody from "../../../structures/auth/SetupEncryptionBody";
 import BaseDialog from "../BaseDialog";
 import { _t } from "../../../../languageHandler";
 import { SetupEncryptionStore, Phase } from "../../../../stores/SetupEncryptionStore";
-import { IDialogProps } from "../IDialogProps";
 
 function iconFromPhase(phase: Phase): string {
     if (phase === Phase.Done) {
@@ -30,7 +29,9 @@ function iconFromPhase(phase: Phase): string {
     }
 }
 
-interface IProps extends IDialogProps {}
+interface IProps {
+    onFinished(): void;
+}
 interface IState {
     icon: string;
 }
@@ -57,7 +58,7 @@ export default class SetupEncryptionDialog extends React.Component<IProps, IStat
         this.setState({ icon: iconFromPhase(this.store.phase) });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <BaseDialog
                 headerImage={this.state.icon}

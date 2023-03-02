@@ -33,7 +33,6 @@ import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import { normalizeWheelEvent } from "../../../utils/Mouse";
-import { IDialogProps } from "../dialogs/IDialogProps";
 import UIStore from "../../../stores/UIStore";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
@@ -56,7 +55,7 @@ const getPanelHeight = (): number => {
     return parseInt(value.slice(0, value.length - 2));
 };
 
-interface IProps extends IDialogProps {
+interface IProps {
     src: string; // the source of the image being displayed
     name?: string; // the main title ('name') for the image
     link?: string; // the link (if any) applied to the name of the image
@@ -77,6 +76,7 @@ interface IProps extends IDialogProps {
         width: number;
         height: number;
     };
+    onFinished(): void;
 }
 
 interface IState {
@@ -91,7 +91,7 @@ interface IState {
 }
 
 export default class ImageView extends React.Component<IProps, IState> {
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         const { thumbnailInfo } = this.props;
@@ -411,7 +411,7 @@ export default class ImageView extends React.Component<IProps, IState> {
         return <React.Fragment>{contextMenu}</React.Fragment>;
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const showEventMeta = !!this.props.mxEvent;
 
         let transitionClassName;

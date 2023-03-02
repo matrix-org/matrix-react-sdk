@@ -41,7 +41,7 @@ import { MPollEndBody } from "./MPollEndBody";
 import MLocationBody from "./MLocationBody";
 import MjolnirBody from "./MjolnirBody";
 import MBeaconBody from "./MBeaconBody";
-import DecryptionFailureBody from "./DecryptionFailureBody";
+import { DecryptionFailureBody } from "./DecryptionFailureBody";
 import { GetRelationsForEvent, IEventTileOps } from "../rooms/EventTile";
 import { VoiceBroadcastBody, VoiceBroadcastInfoEventType, VoiceBroadcastInfoState } from "../../../voice-broadcast";
 
@@ -149,7 +149,7 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
         this.forceUpdate();
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const content = this.props.mxEvent.getContent();
         const type = this.props.mxEvent.getType();
         const msgtype = content.msgtype;

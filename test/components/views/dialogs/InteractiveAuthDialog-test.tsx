@@ -16,9 +16,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { act } from "react-dom/test-utils";
-// eslint-disable-next-line deprecate/import
-import { mount, ReactWrapper } from "enzyme";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import InteractiveAuthDialog from "../../../../src/components/views/dialogs/InteractiveAuthDialog";
 import { flushPromises, getMockClientWithEventEmitter, unmockClientPeg } from "../../../test-utils";
@@ -33,18 +32,19 @@ describe("InteractiveAuthDialog", function () {
         makeRequest: jest.fn().mockResolvedValue(undefined),
         onFinished: jest.fn(),
     };
-    const getComponent = (props = {}) => mount(<InteractiveAuthDialog {...defaultProps} {...props} />);
+
+    const renderComponent = (props = {}) => render(<InteractiveAuthDialog {...defaultProps} {...props} />);
+    const getPasswordField = () => screen.getByLabelText("Password");
+    const getSubmitButton = () => screen.getByRole("button", { name: "Continue" });
 
     beforeEach(function () {
         jest.clearAllMocks();
-        mockClient.credentials = null;
+        mockClient.credentials = { userId: null };
     });
 
     afterAll(() => {
         unmockClientPeg();
     });
-
-    const getSubmitButton = (wrapper: ReactWrapper) => wrapper.find('[type="submit"]').at(0);
 
     it("Should successfully complete a password flow", async () => {
         const onFinished = jest.fn();
@@ -56,37 +56,30 @@ describe("InteractiveAuthDialog", function () {
             flows: [{ stages: ["m.login.password"] }],
         };
 
-        const wrapper = getComponent({ makeRequest, onFinished, authData });
+        renderComponent({ makeRequest, onFinished, authData });
 
-        const passwordNode = wrapper.find('input[type="password"]').at(0);
-        const submitNode = getSubmitButton(wrapper);
+        const passwordField = getPasswordField();
+        const submitButton = getSubmitButton();
 
-        const formNode = wrapper.find("form").at(0);
-        expect(passwordNode).toBeTruthy();
-        expect(submitNode).toBeTruthy();
+        expect(passwordField).toBeTruthy();
+        expect(submitButton).toBeTruthy();
 
         // submit should be disabled
-        expect(submitNode.props().disabled).toBe(true);
+        expect(submitButton).toBeDisabled();
 
         // put something in the password box
-        act(() => {
-            passwordNode.simulate("change", { target: { value: "s3kr3t" } });
-            wrapper.setProps({});
-        });
+        await userEvent.type(passwordField, "s3kr3t");
 
-        expect(wrapper.find('input[type="password"]').at(0).props().value).toEqual("s3kr3t");
-        expect(getSubmitButton(wrapper).props().disabled).toBe(false);
+        expect(submitButton).not.toBeDisabled();
 
         // hit enter; that should trigger a request
-        act(() => {
-            formNode.simulate("submit");
-        });
+        await userEvent.click(submitButton);
 
         // wait for auth request to resolve
         await flushPromises();
 
         expect(makeRequest).toHaveBeenCalledTimes(1);
-        expect(makeRequest).toBeCalledWith(
+        expect(makeRequest).toHaveBeenCalledWith(
             expect.objectContaining({
                 session: "sess",
                 type: "m.login.password",
@@ -98,7 +91,7 @@ describe("InteractiveAuthDialog", function () {
             }),
         );
 
-        expect(onFinished).toBeCalledTimes(1);
-        expect(onFinished).toBeCalledWith(true, { a: 1 });
+        expect(onFinished).toHaveBeenCalledTimes(1);
+        expect(onFinished).toHaveBeenCalledWith(true, { a: 1 });
     });
 });

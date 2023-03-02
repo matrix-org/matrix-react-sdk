@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// eslint-disable-next-line deprecate/import
-import { ReactWrapper } from "enzyme";
 import EventEmitter from "events";
 
 import { ActionPayload } from "../../src/dispatcher/payloads";
@@ -37,7 +35,7 @@ export function untilDispatch(
     dispatcher = defaultDispatcher,
     timeout = 1000,
 ): Promise<ActionPayload> {
-    const callerLine = new Error().stack.toString().split("\n")[2];
+    const callerLine = new Error().stack!.toString().split("\n")[2];
     if (typeof waitForAction === "string") {
         const action = waitForAction;
         waitForAction = (payload) => {
@@ -47,7 +45,7 @@ export function untilDispatch(
     const callback = waitForAction as (payload: ActionPayload) => boolean;
     return new Promise((resolve, reject) => {
         let fulfilled = false;
-        let timeoutId;
+        let timeoutId: number;
         // set a timeout handler if needed
         if (timeout > 0) {
             timeoutId = window.setTimeout(() => {
@@ -89,13 +87,13 @@ export function untilDispatch(
 export function untilEmission(
     emitter: EventEmitter,
     eventName: string,
-    check: (...args: any[]) => boolean = undefined,
+    check?: (...args: any[]) => boolean,
     timeout = 1000,
 ): Promise<void> {
-    const callerLine = new Error().stack.toString().split("\n")[2];
+    const callerLine = new Error().stack!.toString().split("\n")[2];
     return new Promise((resolve, reject) => {
         let fulfilled = false;
-        let timeoutId;
+        let timeoutId: number;
         // set a timeout handler if needed
         if (timeout > 0) {
             timeoutId = window.setTimeout(() => {
@@ -127,17 +125,6 @@ export function untilEmission(
         emitter.on(eventName, callback);
     });
 }
-
-export const findByAttr = (attr: string) => (component: ReactWrapper, value: string) =>
-    component.find(`[${attr}="${value}"]`);
-export const findByTestId = findByAttr("data-test-id");
-export const findById = findByAttr("id");
-export const findByAriaLabel = findByAttr("aria-label");
-
-const findByTagAndAttr = (attr: string) => (component: ReactWrapper, value: string, tag: string) =>
-    component.find(`${tag}[${attr}="${value}"]`);
-
-export const findByTagAndTestId = findByTagAndAttr("data-test-id");
 
 export const flushPromises = async () => await new Promise((resolve) => window.setTimeout(resolve));
 

@@ -31,7 +31,7 @@ import { _t } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
 
 interface IProps {
-    onFinished: (success: boolean) => void;
+    onFinished: (success?: boolean) => void;
     title?: string;
     description?: React.ReactNode;
     button?: string;
@@ -44,18 +44,15 @@ interface IState {
 }
 
 export default class ErrorDialog extends React.Component<IProps, IState> {
-    public static defaultProps = {
+    public static defaultProps: Partial<IProps> = {
         focus: true,
-        title: null,
-        description: null,
-        button: null,
     };
 
     private onClick = (): void => {
         this.props.onFinished(true);
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <BaseDialog
                 className="mx_ErrorDialog"

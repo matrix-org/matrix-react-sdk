@@ -84,7 +84,7 @@ export class RoomPermalinkCreator {
     private populationMap: { [serverName: string]: number } | null = null;
     private bannedHostsRegexps: RegExp[] | null = null;
     private allowedHostsRegexps: RegExp[] | null = null;
-    private _serverCandidates: string[] | null = null;
+    private _serverCandidates?: string[];
     private started = false;
 
     // We support being given a roomId as a fallback in the event the `room` object
@@ -124,7 +124,7 @@ export class RoomPermalinkCreator {
         this.started = false;
     }
 
-    public get serverCandidates(): string[] {
+    public get serverCandidates(): string[] | undefined {
         return this._serverCandidates;
     }
 
@@ -208,7 +208,7 @@ export class RoomPermalinkCreator {
     }
 
     private updateAllowedServers(): void {
-        const bannedHostsRegexps = [];
+        const bannedHostsRegexps: RegExp[] = [];
         let allowedHostsRegexps = [ANY_REGEX]; // default allow everyone
         if (this.room.currentState) {
             const aclEvent = this.room.currentState.getStateEvents(EventType.RoomServerAcl, "");
@@ -216,10 +216,10 @@ export class RoomPermalinkCreator {
                 const getRegex = (hostname: string): RegExp =>
                     new RegExp("^" + utils.globToRegexp(hostname, false) + "$");
 
-                const denied = aclEvent.getContent().deny || [];
+                const denied = aclEvent.getContent<{ deny: string[] }>().deny || [];
                 denied.forEach((h) => bannedHostsRegexps.push(getRegex(h)));
 
-                const allowed = aclEvent.getContent().allow || [];
+                const allowed = aclEvent.getContent<{ allow: string[] }>().allow || [];
                 allowedHostsRegexps = []; // we don't want to use the default rule here
                 allowed.forEach((h) => allowedHostsRegexps.push(getRegex(h)));
             }

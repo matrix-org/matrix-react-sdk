@@ -20,10 +20,11 @@ import { _t, pickBestLanguage } from "../../../languageHandler";
 import { objectClone } from "../../../utils/objects";
 import StyledCheckbox from "../elements/StyledCheckbox";
 import AccessibleButton from "../elements/AccessibleButton";
+import { ServicePolicyPair } from "../../../Terms";
 
 interface IProps {
-    policiesAndServicePairs: any[];
-    onFinished: (string) => void;
+    policiesAndServicePairs: ServicePolicyPair[];
+    onFinished: (accepted: string[]) => void;
     agreedUrls: string[]; // array of URLs the user has accepted
     introElement: React.ReactNode;
 }
@@ -82,7 +83,7 @@ export default class InlineTermsAgreement extends React.Component<IProps, IState
     };
 
     private renderCheckboxes(): React.ReactNode[] {
-        const rendered = [];
+        const rendered: JSX.Element[] = [];
         for (let i = 0; i < this.state.policies.length; i++) {
             const policy = this.state.policies[i];
             const introText = _t(

@@ -40,10 +40,10 @@ export function wrapRequestWithDialog<R, A = any>(
                     Modal.createDialog(InteractiveAuthDialog, {
                         ...opts,
                         authData: error.data,
-                        makeRequest: (authData) => boundFunction(authData, ...args),
+                        makeRequest: (authData?: IAuthData) => boundFunction(authData, ...args),
                         onFinished: (success, result) => {
                             if (success) {
-                                resolve(result);
+                                resolve(result as R);
                             } else {
                                 reject(result);
                             }

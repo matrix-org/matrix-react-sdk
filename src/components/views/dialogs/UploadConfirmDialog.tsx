@@ -26,7 +26,7 @@ import DialogButtons from "../elements/DialogButtons";
 
 interface IProps {
     file: File;
-    currentIndex: number;
+    currentIndex?: number;
     totalFiles?: number;
     onFinished: (uploadConfirmed: boolean, uploadAll?: boolean) => void;
 }
@@ -35,11 +35,11 @@ export default class UploadConfirmDialog extends React.Component<IProps> {
     private readonly objectUrl: string;
     private readonly mimeType: string;
 
-    public static defaultProps = {
+    public static defaultProps: Partial<IProps> = {
         totalFiles: 1,
     };
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         // Create a fresh `Blob` for previewing (even though `File` already is
@@ -65,7 +65,7 @@ export default class UploadConfirmDialog extends React.Component<IProps> {
         this.props.onFinished(true, true);
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let title: string;
         if (this.props.totalFiles > 1 && this.props.currentIndex !== undefined) {
             title = _t("Upload files (%(current)s of %(total)s)", {

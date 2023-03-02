@@ -1,6 +1,6 @@
 /*
 Copyright 2017 Travis Ralston
-Copyright 2018 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2018 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -42,7 +42,6 @@ import { ImageSize } from "./enums/ImageSize";
 import { MetaSpace } from "../stores/spaces";
 import SdkConfig from "../SdkConfig";
 import SlidingSyncController from "./controllers/SlidingSyncController";
-import ThreadBetaController from "./controllers/ThreadBetaController";
 import { FontWatcher } from "./watchers/FontWatcher";
 import RustCryptoSdkController from "./controllers/RustCryptoSdkController";
 
@@ -118,17 +117,16 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     // Display name can also be an object for different levels.
     displayName?:
         | string
-        | {
-              // @ts-ignore - TS wants the key to be a string, but we know better
-              [level: SettingLevel]: string;
-          };
+        | Partial<{
+              [level in SettingLevel]: string;
+          }>;
 
     // Optional description which will be shown as microCopy under SettingsFlags
     description?: string | (() => ReactNode);
 
     // The supported levels are required. Preferably, use the preset arrays
     // at the top of this file to define this rather than a custom array.
-    supportedLevels?: SettingLevel[];
+    supportedLevels: SettingLevel[];
 
     // Required. Can be any data type. The value specified here should match
     // the data being stored (ie: if a boolean is used, the setting should
@@ -256,36 +254,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("Message Pinning"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
-    },
-    "feature_threadenabled": {
-        isFeature: true,
-        labsGroup: LabGroup.Messaging,
-        controller: new ThreadBetaController(),
-        displayName: _td("Threaded messages"),
-        supportedLevels: LEVELS_FEATURE,
-        default: true,
-        betaInfo: {
-            title: _td("Threaded messages"),
-            caption: () => (
-                <>
-                    <p>{_t("Keep discussions organised with threads.")}</p>
-                    <p>
-                        {_t(
-                            "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.",
-                            {},
-                            {
-                                a: (sub) => (
-                                    <a href="https://element.io/help#threads" rel="noreferrer noopener" target="_blank">
-                                        {sub}
-                                    </a>
-                                ),
-                            },
-                        )}
-                    </p>
-                </>
-            ),
-            requiresRefresh: true,
-        },
     },
     "feature_wysiwyg_composer": {
         isFeature: true,
@@ -486,9 +454,9 @@ export const SETTINGS: { [setting: string]: ISetting } = {
             title: _td("New session manager"),
             caption: () => (
                 <>
-                    <p>{_td("Have greater visibility and control over all your sessions.")}</p>
+                    <p>{_t("Have greater visibility and control over all your sessions.")}</p>
                     <p>
-                        {_td(
+                        {_t(
                             "Our new sessions manager provides better visibility of all your sessions, " +
                                 "and greater control over them including the ability to remotely toggle push notifications.",
                         )}
@@ -496,16 +464,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
                 </>
             ),
         },
-    },
-    "feature_qr_signin_reciprocate_show": {
-        isFeature: true,
-        labsGroup: LabGroup.Experimental,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td(
-            "Allow a QR code to be shown in session manager to sign in another device " +
-                "(requires compatible homeserver)",
-        ),
-        default: false,
     },
     "feature_rust_crypto": {
         // use the rust matrix-sdk-crypto-js for crypto.
@@ -784,6 +742,11 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         // not really a setting
         supportedLevels: [SettingLevel.ACCOUNT],
         default: [], // list of room IDs, most recent first
+    },
+    "SpotlightSearch.showNsfwPublicRooms": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td("Show NSFW content"),
+        default: false,
     },
     "room_directory_servers": {
         supportedLevels: [SettingLevel.ACCOUNT],

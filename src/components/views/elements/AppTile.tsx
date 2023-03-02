@@ -18,11 +18,12 @@ limitations under the License.
 */
 
 import url from "url";
-import React, { ContextType, createRef, MutableRefObject, ReactNode } from "react";
+import React, { ContextType, createRef, CSSProperties, MutableRefObject, ReactNode } from "react";
 import classNames from "classnames";
 import { MatrixCapabilities } from "matrix-widget-api";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
+import { ApprovalOpts, WidgetLifecycle } from "@matrix-org/react-sdk-module-api/lib/lifecycles/WidgetLifecycle";
 
 import AccessibleButton from "./AccessibleButton";
 import { _t } from "../../../languageHandler";
@@ -36,7 +37,7 @@ import { aboveLeftOf, ContextMenuButton } from "../../structures/ContextMenu";
 import PersistedElement, { getPersistKey } from "./PersistedElement";
 import { WidgetType } from "../../../widgets/WidgetType";
 import { ElementWidget, StopGapWidget } from "../../../stores/widgets/StopGapWidget";
-import WidgetContextMenu from "../context_menus/WidgetContextMenu";
+import { WidgetContextMenu } from "../context_menus/WidgetContextMenu";
 import WidgetAvatar from "../avatars/WidgetAvatar";
 import LegacyCallHandler from "../../../LegacyCallHandler";
 import { IApp } from "../../../stores/WidgetStore";
@@ -50,6 +51,7 @@ import { Action } from "../../../dispatcher/actions";
 import { ElementWidgetCapabilities } from "../../../stores/widgets/ElementWidgetCapabilities";
 import { WidgetMessagingStore } from "../../../stores/widgets/WidgetMessagingStore";
 import { SdkContextClass } from "../../../contexts/SDKContext";
+import { ModuleRunner } from "../../../modules/ModuleRunner";
 
 interface IProps {
     app: IApp;
@@ -81,7 +83,7 @@ interface IProps {
     // Is this an instance of a user widget
     userWidget: boolean;
     // sets the pointer-events property on the iframe
-    pointerEvents?: string;
+    pointerEvents?: CSSProperties["pointerEvents"];
     widgetPageTitle?: string;
     showLayoutButtons?: boolean;
     // Handle to manually notify the PersistedElement that it needs to move
@@ -162,6 +164,9 @@ export default class AppTile extends React.Component<IProps, IState> {
     private hasPermissionToLoad = (props: IProps): boolean => {
         if (this.usingLocalWidget()) return true;
         if (!props.room) return true; // user widgets always have permissions
+        const opts: ApprovalOpts = { approved: undefined };
+        ModuleRunner.instance.invoke(WidgetLifecycle.PreLoadRequest, opts, new ElementWidget(this.props.app));
+        if (opts.approved) return true;
 
         const currentlyAllowedWidgets = SettingsStore.getValue("allowedWidgets", props.room.roomId);
         const allowed = props.app.eventId !== undefined && (currentlyAllowedWidgets[props.app.eventId] ?? false);
@@ -544,7 +549,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         this.setState({ menuDisplayed: false });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let appTileBody;
 
         // Note that there is advice saying allow-scripts shouldn't be used with allow-same-origin
@@ -562,14 +567,14 @@ export default class AppTile extends React.Component<IProps, IState> {
             "microphone; camera; encrypted-media; autoplay; display-capture; clipboard-write; " + "clipboard-read;";
 
         const appTileBodyClass = "mx_AppTileBody" + (this.props.miniMode ? "_mini  " : " ");
-        const appTileBodyStyles = {};
+        const appTileBodyStyles: CSSProperties = {};
         if (this.props.pointerEvents) {
-            appTileBodyStyles["pointerEvents"] = this.props.pointerEvents;
+            appTileBodyStyles.pointerEvents = this.props.pointerEvents;
         }
 
         const loadingElement = (
             <div className="mx_AppLoading_spinner_fadeIn">
-                <Spinner message={_t("Loading...")} />
+                <Spinner message={_t("Loading…")} />
             </div>
         );
 
