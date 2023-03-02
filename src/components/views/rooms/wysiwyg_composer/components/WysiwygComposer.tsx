@@ -60,41 +60,6 @@ export const WysiwygComposer = memo(function WysiwygComposer({
         inputEventProcessor,
     });
 
-    const onKeyDown = (event: React.KeyboardEvent): void => {
-        let handled = false;
-        const autocompleteAction = getKeyBindingsManager().getAutocompleteAction(event);
-        const component = autocompleteRef.current;
-        if (component && component.countCompletions() > 0) {
-            switch (autocompleteAction) {
-                case KeyBindingAction.ForceCompleteAutocomplete:
-                case KeyBindingAction.CompleteAutocomplete:
-                    autocompleteRef.current.onConfirmCompletion();
-                    handled = true;
-                    break;
-                case KeyBindingAction.PrevSelectionInAutocomplete:
-                    autocompleteRef.current.moveSelection(-1);
-                    handled = true;
-                    break;
-                case KeyBindingAction.NextSelectionInAutocomplete:
-                    autocompleteRef.current.moveSelection(1);
-                    handled = true;
-                    break;
-                case KeyBindingAction.CancelAutocomplete:
-                    autocompleteRef.current.onEscape(event);
-                    handled = true;
-                    break;
-                default:
-                    return; // don't preventDefault on anything else
-            }
-        }
-
-        if (handled) {
-            event.preventDefault();
-            event.stopPropagation();
-            return;
-        }
-    };
-
     useEffect(() => {
         if (!disabled && content !== null) {
             onChange?.(content);
@@ -113,7 +78,6 @@ export const WysiwygComposer = memo(function WysiwygComposer({
             className={classNames(className, { [`${className}-focused`]: isFocused })}
             onFocus={onFocus}
             onBlur={onFocus}
-            onKeyDown={onKeyDown}
         >
             <WysiwygAutocomplete ref={autocompleteRef} suggestion={suggestion} handleMention={wysiwyg.mention} />
             <FormattingButtons composer={wysiwyg} actionStates={actionStates} />

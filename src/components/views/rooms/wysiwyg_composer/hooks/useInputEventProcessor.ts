@@ -51,12 +51,12 @@ export function useInputEventProcessor(
             }
 
             const send = (): void => {
-                // do not send the message if we have the autocomplete open, regardless of settings
-                if (autocompleteRef && !autocompleteRef.current.state.hide) {
-                    return;
-                }
                 event.stopPropagation?.();
                 event.preventDefault?.();
+                // do not send the message if we have the autocomplete open, regardless of settings
+                if (autocompleteRef !== null && !autocompleteRef.current.state.hide) {
+                    return;
+                }
                 onSend();
             };
 
@@ -71,6 +71,7 @@ export function useInputEventProcessor(
                     roomContext,
                     composerContext,
                     mxClient,
+                    autocompleteRef,
                 );
             } else {
                 return handleInputEvent(event, send, isCtrlEnterToSend);
@@ -91,11 +92,50 @@ function handleKeyboardEvent(
     roomContext: IRoomState,
     composerContext: ComposerContextState,
     mxClient: MatrixClient,
+    autocompleteRef: React.MutableRefObject<Autocomplete> | null,
 ): KeyboardEvent | null {
     const { editorStateTransfer } = composerContext;
     const isEditing = Boolean(editorStateTransfer);
     const isEditorModified = isEditing ? initialContent !== composer.content() : composer.content().length !== 0;
     const action = getKeyBindingsManager().getMessageComposerAction(event);
+
+    const autocompleteIsOpen = autocompleteRef !== null && !autocompleteRef.current.state.hide;
+
+    // we need autocomplete to take priority when it is open for using enter to select
+    if (autocompleteIsOpen) {
+        let handled = false;
+        const autocompleteAction = getKeyBindingsManager().getAutocompleteAction(event);
+        const component = autocompleteRef.current;
+        if (component && component.countCompletions() > 0) {
+            switch (autocompleteAction) {
+                case KeyBindingAction.ForceCompleteAutocomplete:
+                case KeyBindingAction.CompleteAutocomplete:
+                    autocompleteRef.current.onConfirmCompletion();
+                    handled = true;
+                    break;
+                case KeyBindingAction.PrevSelectionInAutocomplete:
+                    autocompleteRef.current.moveSelection(-1);
+                    handled = true;
+                    break;
+                case KeyBindingAction.NextSelectionInAutocomplete:
+                    autocompleteRef.current.moveSelection(1);
+                    handled = true;
+                    break;
+                case KeyBindingAction.CancelAutocomplete:
+                    autocompleteRef.current.onEscape(event);
+                    handled = true;
+                    break;
+                default:
+                    return; // don't preventDefault on anything else
+            }
+        }
+
+        if (handled) {
+            event.preventDefault();
+            event.stopPropagation();
+            return event;
+        }
+    }
 
     switch (action) {
         case KeyBindingAction.SendMessage:
