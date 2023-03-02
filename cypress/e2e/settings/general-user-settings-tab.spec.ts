@@ -40,14 +40,18 @@ describe("General user settings tab", () => {
             cy.get("[data-testid='general']").should("have.text", "General");
         });
 
+        // Check a random userId is displayed
+        cy.contains(".mx_ProfileSettings_profile_controls_userId", ":localhost");
+
         // Wait until spinners disappear
         cy.get(".mx_GeneralUserSettingsTab_accountSection .mx_Spinner").should("not.exist");
         cy.get(".mx_GeneralUserSettingsTab_discovery .mx_Spinner").should("not.exist");
 
         // Make sure integration manager's toggle switch is enabled
-        cy.get(".mx_SetIntegrationManager .mx_ToggleSwitch_enabled").should("exist");
+        cy.get(".mx_GeneralUserSettingsTab .mx_SetIntegrationManager .mx_ToggleSwitch_enabled").should("exist");
 
-        // Snapshot of mx_GeneralUserSettingsTab
+        // Exclude the random userId from snapshot
+        const percyCSS = ".mx_ProfileSettings_profile_controls_userId { visibility: hidden !important; }";
         cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab").percySnapshotElement("General user settings tab");
     });
 });
