@@ -126,7 +126,7 @@ function handleKeyboardEvent(
                     handled = true;
                     break;
                 default:
-                    return; // don't preventDefault on anything else
+                    break; // don't return anything, allow event to pass through
             }
         }
 
