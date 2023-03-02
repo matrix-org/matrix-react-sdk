@@ -399,7 +399,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                             <PassphraseField
                                 fieldRef={(field) => (this[FIELD_NEW_PASSWORD] = field)}
                                 type="password"
-                                label={_td("New Password")}
+                                label={_td("New password")}
                                 minScore={PASSWORD_MIN_SCORE}
                                 value={this.state.newPassword}
                                 autoFocus={this.props.autoFocusNewPasswordInput}
