@@ -1115,6 +1115,10 @@ $left-gutter: 64px;
                 /* Align with message text and summary text */
                 margin-inline-start: var(--ThreadView_group_spacing-start);
             }
+
+            &.mx_EventTile_continuation {
+                padding-block-start: 0; /* Cancel padding-block-start */
+            }
         }
 
         &[data-layout="group"] {
