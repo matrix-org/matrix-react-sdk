@@ -1092,6 +1092,11 @@ $left-gutter: 64px;
         &[data-layout="group"] {
             padding-block-start: $spacing-16;
 
+            .mx_EventTile_line,
+            .mx_ReactionsRow {
+                margin-inline-end: var(--ThreadView_group_spacing-end);
+            }
+
             .mx_EventTile_line {
                 padding-block: var(--BaseCard_EventTile_line-padding-block);
 
@@ -1104,11 +1109,6 @@ $left-gutter: 64px;
                         padding-inline-start: 0; /* align start of first letter with that of the event body */
                     }
                 }
-            }
-
-            .mx_EventTile_line,
-            .mx_ReactionsRow {
-                margin-inline-end: var(--ThreadView_group_spacing-end);
             }
 
             .mx_ReactionsRow {
