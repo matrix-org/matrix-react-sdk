@@ -185,6 +185,7 @@ $irc-line-height: $font-18px;
     .mx_ReplyChain {
         .mx_DisambiguatedProfile {
             order: unset;
+            flex-shrink: unset; /* Unset flex-shrink to prevent long display name blowout */
             width: unset;
             background: transparent;
         }
