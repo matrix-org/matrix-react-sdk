@@ -141,7 +141,10 @@ const findInDefaultRules = (
         }
     }
 };
+
+// Vector notification states ordered by loudness in ascending order
 const OrderedVectorStates = [VectorState.Off, VectorState.On, VectorState.Loud];
+
 /**
  * Find the 'loudest' vector state assigned to a rule
  * and it's synced rules
@@ -260,7 +263,6 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 phase: Phase.Ready,
             });
         } catch (e) {
-            console.log(e);
             logger.error("Error setting up notifications for settings: ", e);
             this.setState({ phase: Phase.Error });
         }
@@ -483,11 +485,6 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         syncedRuleIds: VectorPushRuleDefinition["syncedRuleIds"],
         actions?: PushRuleAction[],
     ): Promise<void> => {
-        console.log(
-            "updatesynedce",
-            syncedRuleIds,
-            syncedRuleIds?.map((ruleId) => this.pushProcessor.getPushRuleAndKindById(ruleId)),
-        );
         // get synced rules that exist for user
         const syncedRules: ReturnType<PushProcessor["getPushRuleAndKindById"]>[] = syncedRuleIds
             ?.map((ruleId) => this.pushProcessor.getPushRuleAndKindById(ruleId))
