@@ -65,6 +65,9 @@ describe("General user settings tab", () => {
         // Check an input area for identity server exists
         cy.get("form.mx_SetIdServer input[label='Enter a new identity server']").should("exist");
 
+        // Check default integration manager
+        cy.contains(".mx_SetIntegrationManager .mx_SetIntegrationManager_heading_manager", "scalar.vector.im");
+
         // Make sure integration manager's toggle switch is enabled
         cy.get(".mx_GeneralUserSettingsTab .mx_SetIntegrationManager .mx_ToggleSwitch_enabled").should("exist");
 
