@@ -126,9 +126,14 @@ export const WysiwygComposer = memo(function WysiwygComposer({
     }
 
     const query = buildQuery(suggestion);
-
-    const autocomplete =
-        suggestion && room && query ? (
+    return (
+        <div
+            data-testid="WysiwygComposer"
+            className={classNames(className, { [`${className}-focused`]: isFocused })}
+            onFocus={onFocus}
+            onBlur={onFocus}
+            onKeyDown={onKeyDown}
+        >
             <div className="mx_WysiwygComposer_AutoCompleteWrapper">
                 <Autocomplete
                     ref={autocompleteRef}
@@ -148,24 +153,12 @@ export const WysiwygComposer = memo(function WysiwygComposer({
                             default:
                                 break;
                         }
-                        // TODO figure out why we can only do one mention at the moment
                     }}
                     onSelectionChange={(compIndex) => (autocompleteIndexRef.current = compIndex)}
-                    selection={{ beginning: true, start: suggestion.end, end: suggestion.end }}
+                    selection={{ start: suggestion?.start ?? 0, end: suggestion?.end ?? 0 }}
                     room={room}
                 />
             </div>
-        ) : null;
-
-    return (
-        <div
-            data-testid="WysiwygComposer"
-            className={classNames(className, { [`${className}-focused`]: isFocused })}
-            onFocus={onFocus}
-            onBlur={onFocus}
-            onKeyDown={onKeyDown}
-        >
-            {autocomplete}
             <FormattingButtons composer={wysiwyg} actionStates={actionStates} />
             <Editor
                 ref={ref}

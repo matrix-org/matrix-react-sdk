@@ -52,7 +52,7 @@ export function useInputEventProcessor(
 
             const send = (): void => {
                 // do not send the message if we have the autocomplete open, regardless of settings
-                if (autocompleteRef && autocompleteRef.current) {
+                if (autocompleteRef && !autocompleteRef.current.state.hide) {
                     return;
                 }
                 event.stopPropagation?.();
