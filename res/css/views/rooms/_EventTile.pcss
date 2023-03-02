@@ -1095,8 +1095,9 @@ $left-gutter: 64px;
             .mx_EventTile_line {
                 padding-block: var(--BaseCard_EventTile_line-padding-block);
 
-                /* Use padding here. See: .mx_EventTile[data-layout="group"] .mx_EventTile_line */
-                padding-inline-start: var(--ThreadView_group_spacing-start); /* align message text with summary text */
+                /* Add padding to align message text with summary text */
+                /* See: .mx_EventTile[data-layout="group"] .mx_EventTile_line */
+                padding-inline-start: var(--ThreadView_group_spacing-start);
 
                 .mx_EventTile_content {
                     &.mx_EditMessageComposer {
