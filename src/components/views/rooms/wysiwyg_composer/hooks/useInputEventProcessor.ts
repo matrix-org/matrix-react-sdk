@@ -76,7 +76,7 @@ export function useInputEventProcessor(
                 return handleInputEvent(event, send, isCtrlEnterToSend);
             }
         },
-        [isCtrlEnterToSend, onSend, initialContent, roomContext, composerContext, mxClient],
+        [isCtrlEnterToSend, onSend, initialContent, roomContext, composerContext, mxClient, autocompleteRef],
     );
 }
 
