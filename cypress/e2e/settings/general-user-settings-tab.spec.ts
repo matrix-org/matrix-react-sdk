@@ -59,6 +59,9 @@ describe("General user settings tab", () => {
         cy.get("form.mx_PhoneNumbers_new input[label='Phone Number']").should("exist");
         cy.contains("#mx_CountryDropdown_value", "+44");
 
+        // Check language dropdown menu
+        cy.get(".mx_GeneralUserSettingsTab_languageInput").should("have.text", "English");
+
         // Make sure integration manager's toggle switch is enabled
         cy.get(".mx_GeneralUserSettingsTab .mx_SetIntegrationManager .mx_ToggleSwitch_enabled").should("exist");
 
