@@ -52,6 +52,9 @@ describe("General user settings tab", () => {
         cy.get("form.mx_GeneralUserSettingsTab_changePassword input[label='New password']").should("be.visible");
         cy.get("form.mx_GeneralUserSettingsTab_changePassword input[label='Confirm password']").should("be.visible");
 
+        // Check an input area for a new email address is displayed
+        cy.get("form.mx_EmailAddresses_new input[label='Email Address']").should("be.visible");
+
         // Make sure integration manager's toggle switch is enabled
         cy.get(".mx_GeneralUserSettingsTab .mx_SetIntegrationManager .mx_ToggleSwitch_enabled").should("exist");
 
