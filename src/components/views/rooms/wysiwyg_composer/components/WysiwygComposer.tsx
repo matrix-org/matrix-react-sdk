@@ -14,19 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { forwardRef, memo, MutableRefObject, ReactNode, RefObject, useEffect, useRef } from "react";
-import { useWysiwyg, FormattingFunctions, SuggestionPattern } from "@matrix-org/matrix-wysiwyg";
+import React, { memo, MutableRefObject, ReactNode, useEffect, useRef } from "react";
+import { useWysiwyg, FormattingFunctions } from "@matrix-org/matrix-wysiwyg";
 import classNames from "classnames";
 
-import { useRoomContext } from "../../../../../contexts/RoomContext";
 import Autocomplete from "../../Autocomplete";
-import { getKeyBindingsManager } from "../../../../../KeyBindingsManager";
+import { WysiwygAutocomplete } from "./WysiwygAutocomplete";
 import { FormattingButtons } from "./FormattingButtons";
 import { Editor } from "./Editor";
 import { useInputEventProcessor } from "../hooks/useInputEventProcessor";
 import { useSetCursorPosition } from "../hooks/useSetCursorPosition";
 import { useIsFocused } from "../hooks/useIsFocused";
-import { KeyBindingAction } from "../../../../../accessibility/KeyboardShortcuts";
 
 interface WysiwygComposerProps {
     disabled?: boolean;
@@ -54,23 +52,22 @@ export const WysiwygComposer = memo(function WysiwygComposer({
     const autocompleteRef = useRef<Autocomplete>(null);
 
     const inputEventProcessor = useInputEventProcessor(onSend, autocompleteRef, initialContent);
-
     const { ref, isWysiwygReady, content, actionStates, wysiwyg, suggestion } = useWysiwyg({
         initialContent,
         inputEventProcessor,
     });
+    const { isFocused, onFocus } = useIsFocused();
+
+    const isReady = isWysiwygReady && !disabled;
+    const computedPlaceholder = (!content && placeholder) || undefined;
+
+    useSetCursorPosition(!isReady, ref);
 
     useEffect(() => {
         if (!disabled && content !== null) {
             onChange?.(content);
         }
     }, [onChange, content, disabled]);
-
-    const isReady = isWysiwygReady && !disabled;
-    useSetCursorPosition(!isReady, ref);
-
-    const { isFocused, onFocus } = useIsFocused();
-    const computedPlaceholder = (!content && placeholder) || undefined;
 
     return (
         <div
@@ -92,58 +89,3 @@ export const WysiwygComposer = memo(function WysiwygComposer({
         </div>
     );
 });
-
-interface WysiwygAutocompleteProps {
-    suggestion: SuggestionPattern;
-    handleMention: FormattingFunctions["mention"];
-}
-
-const WysiwygAutocomplete = forwardRef(
-    ({ suggestion, handleMention }: WysiwygAutocompleteProps, ref: RefObject<Autocomplete>): JSX.Element => {
-        const autocompleteIndexRef = useRef<number>(0);
-
-        const { room } = useRoomContext();
-
-        function buildQuery(suggestion: SuggestionPattern | null): string {
-            if (suggestion === null) {
-                return "";
-            }
-
-            // TODO we are not yet supporting / commands, so can't support this key
-            if (suggestion.key === 2) {
-                return "";
-            }
-
-            const keys = ["@", "#", "/"];
-            return `${keys[suggestion.key]}${suggestion.text}`;
-        }
-        return (
-            <div className="mx_WysiwygComposer_AutoCompleteWrapper">
-                <Autocomplete
-                    ref={ref}
-                    query={buildQuery(suggestion)}
-                    onConfirm={(completion) => {
-                        switch (completion.type) {
-                            case "user":
-                            case "room":
-                                if (completion.href !== undefined) {
-                                    handleMention(completion.href, completion.completion);
-                                }
-                                break;
-                            case "command":
-                                // TODO - need to build this function into rte first
-                                console.log("/command functionality not yet in place");
-                                break;
-                            default:
-                                break;
-                        }
-                    }}
-                    onSelectionChange={(compIndex) => (autocompleteIndexRef.current = compIndex)}
-                    selection={{ start: 0, end: 0 }} // don't ask why these both need to be zero, I don't know, but
-                    // if you try to use the suggestion start/end points, then we can only enter mentions at the beginning of the composer
-                    room={room}
-                />
-            </div>
-        );
-    },
-);
