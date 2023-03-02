@@ -377,8 +377,6 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             }
         }
 
-        console.log("hhh", { preparedNewState, ruleSets }, MatrixClientPeg.get().pushRules.global.underride);
-
         return preparedNewState;
     }
 
