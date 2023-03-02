@@ -67,7 +67,6 @@ export const WysiwygComposer = memo(function WysiwygComposer({
         let handled = false;
         const autocompleteAction = getKeyBindingsManager().getAutocompleteAction(event);
         const component = autocompleteRef.current;
-        console.log(autocompleteAction, "<<< auto action");
         if (component && component.countCompletions() > 0) {
             switch (autocompleteAction) {
                 case KeyBindingAction.ForceCompleteAutocomplete:
