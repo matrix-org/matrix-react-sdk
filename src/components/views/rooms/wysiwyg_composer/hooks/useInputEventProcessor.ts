@@ -32,9 +32,11 @@ import { useMatrixClientContext } from "../../../../../contexts/MatrixClientCont
 import { isCaretAtEnd, isCaretAtStart } from "../utils/selection";
 import { getEventsFromEditorStateTransfer, getEventsFromRoom } from "../utils/event";
 import { endEditing } from "../utils/editing";
+import Autocomplete from "../../Autocomplete";
 
 export function useInputEventProcessor(
     onSend: () => void,
+    autocompleteRef: React.MutableRefObject<Autocomplete> | null,
     initialContent?: string,
 ): (event: WysiwygEvent, composer: Wysiwyg, editor: HTMLElement) => WysiwygEvent | null {
     const roomContext = useRoomContext();
@@ -49,6 +51,10 @@ export function useInputEventProcessor(
             }
 
             const send = (): void => {
+                // do not send the message if we have the autocomplete open, regardless of settings
+                if (autocompleteRef && autocompleteRef.current) {
+                    return;
+                }
                 event.stopPropagation?.();
                 event.preventDefault?.();
                 onSend();

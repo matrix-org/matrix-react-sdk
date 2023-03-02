@@ -51,20 +51,23 @@ export const WysiwygComposer = memo(function WysiwygComposer({
     rightComponent,
     children,
 }: WysiwygComposerProps) {
-    const inputEventProcessor = useInputEventProcessor(onSend, initialContent);
+    const autocompleteRef = useRef<Autocomplete>(null);
+
+    const inputEventProcessor = useInputEventProcessor(onSend, autocompleteRef, initialContent);
 
     const { ref, isWysiwygReady, content, actionStates, wysiwyg, suggestion } = useWysiwyg({
         initialContent,
         inputEventProcessor,
     });
 
-    const autocompleteRef = useRef<Autocomplete>(null);
+    console.log(autocompleteRef.current);
     const autocompleteIndexRef = useRef<number>(0);
 
     const onKeyDown = (event: React.KeyboardEvent): void => {
         let handled = false;
         const autocompleteAction = getKeyBindingsManager().getAutocompleteAction(event);
         const component = autocompleteRef.current;
+        console.log(autocompleteAction, "<<< auto action");
         if (component && component.countCompletions() > 0) {
             switch (autocompleteAction) {
                 case KeyBindingAction.ForceCompleteAutocomplete:
