@@ -26,7 +26,7 @@ import SettingsFlag from "../../../elements/SettingsFlag";
 import { LabGroup, labGroupNames } from "../../../../../settings/Settings";
 import { EnhancedMap } from "../../../../../utils/maps";
 
-export default class LabsUserSettingsTab extends React.Component<void> {
+export default class LabsUserSettingsTab extends React.Component {
     public render(): React.ReactNode {
         const features = SettingsStore.getFeatureSettingNames().filter((f) => SettingsStore.isEnabled(f));
         const [labs, betas] = features.reduce(
