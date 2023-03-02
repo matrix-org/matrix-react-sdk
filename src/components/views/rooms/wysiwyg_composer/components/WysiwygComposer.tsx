@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { memo, MutableRefObject, ReactNode, useEffect, useRef } from "react";
-import { useWysiwyg, FormattingFunctions } from "@matrix-org/matrix-wysiwyg";
+import { useWysiwyg, FormattingFunctions, SuggestionPattern } from "@matrix-org/matrix-wysiwyg";
 import classNames from "classnames";
 
 import { useRoomContext } from "../../../../../contexts/RoomContext";
@@ -53,7 +53,10 @@ export const WysiwygComposer = memo(function WysiwygComposer({
 }: WysiwygComposerProps) {
     const inputEventProcessor = useInputEventProcessor(onSend, initialContent);
 
-    const { ref, isWysiwygReady, content, actionStates, wysiwyg } = useWysiwyg({ initialContent, inputEventProcessor });
+    const { ref, isWysiwygReady, content, actionStates, wysiwyg, suggestion } = useWysiwyg({
+        initialContent,
+        inputEventProcessor,
+    });
 
     const autocompleteRef = useRef<Autocomplete>(null);
     const autocompleteIndexRef = useRef<number>(0);
@@ -107,39 +110,33 @@ export const WysiwygComposer = memo(function WysiwygComposer({
 
     const { room } = useRoomContext();
 
-    // pull the query out like it's done currently
-    const indexOfAt = ref.current?.textContent?.lastIndexOf("@");
-    const contentContainsQuery = indexOfAt !== undefined && indexOfAt > -1;
-    const query = ref.current?.textContent?.slice(indexOfAt);
+    function buildQuery(suggestion: SuggestionPattern): string {
+        const keys = ["@", "#", "/"];
+        return `${keys[suggestion.key]}${suggestion.text}`;
+    }
 
     const autocomplete =
-        contentContainsQuery && query && room ? (
+        suggestion && room ? (
             <div className="mx_WysiwygComposer_AutoCompleteWrapper">
                 <Autocomplete
                     ref={autocompleteRef}
-                    query={query}
-                    onConfirm={(thing) => {
-                        console.log(thing);
-                        const { component, completion, href } = thing;
-                        /**
-                         * export interface ICompletion {
-                            type?: "at-room" | "command" | "community" | "room" | "user";
-                            completion: string;
-                            completionId?: string;
-                            component?: ReactElement;
-                            range: ISelectionRange;
-                            command?: string;
-                            suffix?: string;
-                            // If provided, apply a LINK entity to the completion with the
-                            // data = { url: href }.
-                            href?: string;
-                         */
-                        // do something with the output here with the rust model
-                        console.log("selected something", completion, href);
-                        wysiwyg.link(href, completion);
+                    query={buildQuery(suggestion)}
+                    onConfirm={(completion) => {
+                        switch (completion.type) {
+                            case "user":
+                            case "room":
+                                wysiwyg.mention(completion.href, completion.completion);
+                                break;
+                            case "command":
+                                // TODO - need to build this function into rte first
+                                console.log("/command functionality not yet in place");
+                                break;
+                            default:
+                                break;
+                        }
                     }}
                     onSelectionChange={(compIndex) => (autocompleteIndexRef.current = compIndex)}
-                    selection={{ beginning: true, end: query.length, start: query.length }}
+                    selection={{ beginning: true, start: suggestion.start, end: suggestion.end }}
                     room={room}
                 />
             </div>
