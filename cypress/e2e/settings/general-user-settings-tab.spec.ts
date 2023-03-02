@@ -55,6 +55,10 @@ describe("General user settings tab", () => {
         // Check an input area for a new email address exists
         cy.get("form.mx_EmailAddresses_new input[label='Email Address']").should("exist");
 
+        // Check an input area for a new phone exists
+        cy.get("form.mx_PhoneNumbers_new input[label='Phone Number']").should("exist");
+        cy.contains("#mx_CountryDropdown_value", "+44");
+
         // Make sure integration manager's toggle switch is enabled
         cy.get(".mx_GeneralUserSettingsTab .mx_SetIntegrationManager .mx_ToggleSwitch_enabled").should("exist");
 
