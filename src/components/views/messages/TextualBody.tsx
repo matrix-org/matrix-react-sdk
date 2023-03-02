@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, SyntheticEvent, MouseEvent, ReactNode } from "react";
+import React, { createRef, SyntheticEvent, MouseEvent } from "react";
 import ReactDOM from "react-dom";
 import highlight from "highlight.js";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
@@ -578,18 +578,16 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
         // only strip reply if this is the original replying event, edits thereafter do not have the fallback
         const stripReply = !mxEvent.replacingEvent() && !!getParentEventId(mxEvent);
-        let body: ReactNode;
-        if (!body) {
-            isEmote = content.msgtype === MsgType.Emote;
-            isNotice = content.msgtype === MsgType.Notice;
-            body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
-                disableBigEmoji: isEmote || !SettingsStore.getValue<boolean>("TextualBody.enableBigEmoji"),
-                // Part of Replies fallback support
-                stripReplyFallback: stripReply,
-                ref: this.contentRef,
-                returnString: false,
-            });
-        }
+        isEmote = content.msgtype === MsgType.Emote;
+        isNotice = content.msgtype === MsgType.Notice;
+        let body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
+            disableBigEmoji: isEmote || !SettingsStore.getValue<boolean>("TextualBody.enableBigEmoji"),
+            // Part of Replies fallback support
+            stripReplyFallback: stripReply,
+            ref: this.contentRef,
+            returnString: false,
+        });
+
         if (this.props.replacingEventId) {
             body = (
                 <>
