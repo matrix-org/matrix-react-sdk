@@ -71,6 +71,10 @@ describe("General user settings tab", () => {
         // Make sure integration manager's toggle switch is enabled
         cy.get(".mx_GeneralUserSettingsTab .mx_SetIntegrationManager .mx_ToggleSwitch_enabled").should("exist");
 
+        // Make sure the account deactivation button is displayed
+        cy.get(".mx_SettingsTab_section[data-testid='account-management-section'] .mx_AccessibleButton_kind_danger")
+            .should("have.text", "Deactivate Account");
+
         // Exclude the random userId from snapshot
         const percyCSS = ".mx_ProfileSettings_profile_controls_userId { visibility: hidden !important; }";
         cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab").percySnapshotElement("General user settings tab");
