@@ -23,6 +23,9 @@ import {
     Room,
     NotificationCountType,
     PushRuleActionName,
+    TweakName,
+    ConditionKind,
+    IPushRuleCondition,
 } from "matrix-js-sdk/src/matrix";
 import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { act, fireEvent, getByTestId, render, screen, waitFor } from "@testing-library/react";
@@ -47,34 +50,42 @@ const masterRule: IPushRule = {
 };
 const oneToOneRule: IPushRule = {
     conditions: [
-        { kind: "room_member_count", is: "2" },
-        { kind: "event_match", key: "type", pattern: "m.room.message" },
+        { kind: ConditionKind.RoomMemberCount, is: "2" },
+        { kind: ConditionKind.EventMatch, key: "type", pattern: "m.room.message" },
     ],
-    actions: ["notify", { set_tweak: "highlight", value: false }],
+    actions: [PushRuleActionName.Notify, { set_tweak: TweakName.Highlight, value: false }],
     rule_id: ".m.rule.room_one_to_one",
     default: true,
     enabled: true,
 } as IPushRule;
 const encryptedOneToOneRule: IPushRule = {
     conditions: [
-        { kind: "room_member_count", is: "2" },
-        { kind: "event_match", key: "type", pattern: "m.room.encrypted" },
+        { kind: ConditionKind.RoomMemberCount, is: "2" },
+        { kind: ConditionKind.EventMatch, key: "type", pattern: "m.room.encrypted" },
     ],
-    actions: ["notify", { set_tweak: "sound", value: "default" }, { set_tweak: "highlight", value: false }],
+    actions: [
+        PushRuleActionName.Notify,
+        { set_tweak: TweakName.Sound, value: "default" },
+        { set_tweak: TweakName.Highlight, value: false },
+    ],
     rule_id: ".m.rule.encrypted_room_one_to_one",
     default: true,
     enabled: true,
 } as IPushRule;
 const groupRule = {
-    conditions: [{ kind: "event_match", key: "type", pattern: "m.room.message" }],
-    actions: ["notify", { set_tweak: "sound", value: "default" }, { set_tweak: "highlight", value: false }],
+    conditions: [{ kind: ConditionKind.EventMatch, key: "type", pattern: "m.room.message" }],
+    actions: [
+        PushRuleActionName.Notify,
+        { set_tweak: TweakName.Sound, value: "default" },
+        { set_tweak: TweakName.Highlight, value: false },
+    ],
     rule_id: ".m.rule.message",
     default: true,
     enabled: true,
 };
 const encryptedGroupRule: IPushRule = {
-    conditions: [{ kind: "event_match", key: "type", pattern: "m.room.encrypted" }],
-    actions: ["dont_notify"],
+    conditions: [{ kind: ConditionKind.EventMatch, key: "type", pattern: "m.room.encrypted" }],
+    actions: [PushRuleActionName.DontNotify],
     rule_id: ".m.rule.encrypted",
     default: true,
     enabled: true,
@@ -83,8 +94,12 @@ const pushRules: IPushRules = {
     global: {
         underride: [
             {
-                conditions: [{ kind: "event_match", key: "type", pattern: "m.call.invite" }],
-                actions: ["notify", { set_tweak: "sound", value: "ring" }, { set_tweak: "highlight", value: false }],
+                conditions: [{ kind: ConditionKind.EventMatch, key: "type", pattern: "m.call.invite" }],
+                actions: [
+                    PushRuleActionName.Notify,
+                    { set_tweak: TweakName.Sound, value: "ring" },
+                    { set_tweak: TweakName.Highlight, value: false },
+                ],
                 rule_id: ".m.rule.call",
                 default: true,
                 enabled: true,
@@ -95,28 +110,39 @@ const pushRules: IPushRules = {
             encryptedGroupRule,
             {
                 conditions: [
-                    { kind: "event_match", key: "type", pattern: "im.vector.modular.widgets" },
-                    { kind: "event_match", key: "content.type", pattern: "jitsi" },
-                    { kind: "event_match", key: "state_key", pattern: "*" },
+                    { kind: ConditionKind.EventMatch, key: "type", pattern: "im.vector.modular.widgets" },
+                    { kind: ConditionKind.EventMatch, key: "content.type", pattern: "jitsi" },
+                    { kind: ConditionKind.EventMatch, key: "state_key", pattern: "*" },
                 ],
-                actions: ["notify", { set_tweak: "highlight", value: false }],
+                actions: [PushRuleActionName.Notify, { set_tweak: TweakName.Highlight, value: false }],
                 rule_id: ".im.vector.jitsi",
                 default: true,
                 enabled: true,
             },
         ],
         sender: [],
-        room: [{ actions: ["dont_notify"], rule_id: "!zJPyWqpMorfCcWObge:matrix.org", default: false, enabled: true }],
+        room: [
+            {
+                actions: [PushRuleActionName.DontNotify],
+                rule_id: "!zJPyWqpMorfCcWObge:matrix.org",
+                default: false,
+                enabled: true,
+            },
+        ],
         content: [
             {
-                actions: ["notify", { set_tweak: "highlight", value: false }],
+                actions: [PushRuleActionName.Notify, { set_tweak: TweakName.Highlight, value: false }],
                 pattern: "banana",
                 rule_id: "banana",
                 default: false,
                 enabled: true,
             },
             {
-                actions: ["notify", { set_tweak: "sound", value: "default" }, { set_tweak: "highlight" }],
+                actions: [
+                    PushRuleActionName.Notify,
+                    { set_tweak: TweakName.Sound, value: "default" },
+                    { set_tweak: TweakName.Highlight },
+                ],
                 pattern: "kadev1",
                 rule_id: ".m.rule.contains_user_name",
                 default: true,
@@ -124,62 +150,76 @@ const pushRules: IPushRules = {
             },
         ],
         override: [
-            { conditions: [], actions: ["dont_notify"], rule_id: ".m.rule.master", default: true, enabled: false },
             {
-                conditions: [{ kind: "event_match", key: "content.msgtype", pattern: "m.notice" }],
-                actions: ["dont_notify"],
+                conditions: [],
+                actions: [PushRuleActionName.DontNotify],
+                rule_id: ".m.rule.master",
+                default: true,
+                enabled: false,
+            },
+            {
+                conditions: [{ kind: ConditionKind.EventMatch, key: "content.msgtype", pattern: "m.notice" }],
+                actions: [PushRuleActionName.DontNotify],
                 rule_id: ".m.rule.suppress_notices",
                 default: true,
                 enabled: true,
             },
             {
                 conditions: [
-                    { kind: "event_match", key: "type", pattern: "m.room.member" },
-                    { kind: "event_match", key: "content.membership", pattern: "invite" },
-                    { kind: "event_match", key: "state_key", pattern: "@kadev1:matrix.org" },
+                    { kind: ConditionKind.EventMatch, key: "type", pattern: "m.room.member" },
+                    { kind: ConditionKind.EventMatch, key: "content.membership", pattern: "invite" },
+                    { kind: ConditionKind.EventMatch, key: "state_key", pattern: "@kadev1:matrix.org" },
                 ],
-                actions: ["notify", { set_tweak: "sound", value: "default" }, { set_tweak: "highlight", value: false }],
+                actions: [
+                    PushRuleActionName.Notify,
+                    { set_tweak: TweakName.Sound, value: "default" },
+                    { set_tweak: TweakName.Highlight, value: false },
+                ],
                 rule_id: ".m.rule.invite_for_me",
                 default: true,
                 enabled: true,
             },
             {
-                conditions: [{ kind: "event_match", key: "type", pattern: "m.room.member" }],
-                actions: ["dont_notify"],
+                conditions: [{ kind: ConditionKind.EventMatch, key: "type", pattern: "m.room.member" }],
+                actions: [PushRuleActionName.DontNotify],
                 rule_id: ".m.rule.member_event",
                 default: true,
                 enabled: true,
             },
             {
                 conditions: [{ kind: "contains_display_name" }],
-                actions: ["notify", { set_tweak: "sound", value: "default" }, { set_tweak: "highlight" }],
+                actions: [
+                    PushRuleActionName.Notify,
+                    { set_tweak: TweakName.Sound, value: "default" },
+                    { set_tweak: TweakName.Highlight },
+                ],
                 rule_id: ".m.rule.contains_display_name",
                 default: true,
                 enabled: true,
             },
             {
                 conditions: [
-                    { kind: "event_match", key: "content.body", pattern: "@room" },
+                    { kind: ConditionKind.EventMatch, key: "content.body", pattern: "@room" },
                     { kind: "sender_notification_permission", key: "room" },
                 ],
-                actions: ["notify", { set_tweak: "highlight", value: true }],
+                actions: [PushRuleActionName.Notify, { set_tweak: TweakName.Highlight, value: true }],
                 rule_id: ".m.rule.roomnotif",
                 default: true,
                 enabled: true,
             },
             {
                 conditions: [
-                    { kind: "event_match", key: "type", pattern: "m.room.tombstone" },
-                    { kind: "event_match", key: "state_key", pattern: "" },
+                    { kind: ConditionKind.EventMatch, key: "type", pattern: "m.room.tombstone" },
+                    { kind: ConditionKind.EventMatch, key: "state_key", pattern: "" },
                 ],
-                actions: ["notify", { set_tweak: "highlight", value: true }],
+                actions: [PushRuleActionName.Notify, { set_tweak: TweakName.Highlight, value: true }],
                 rule_id: ".m.rule.tombstone",
                 default: true,
                 enabled: true,
             },
             {
-                conditions: [{ kind: "event_match", key: "type", pattern: "m.reaction" }],
-                actions: ["dont_notify"],
+                conditions: [{ kind: ConditionKind.EventMatch, key: "type", pattern: "m.reaction" }],
+                actions: [PushRuleActionName.DontNotify],
                 rule_id: ".m.rule.reaction",
                 default: true,
                 enabled: true,
@@ -437,53 +477,54 @@ describe("<Notifications />", () => {
             const pollStartOneToOne = {
                 conditions: [
                     {
-                        kind: "room_member_count",
+                        kind: ConditionKind.RoomMemberCount,
                         is: "2",
-                    },
+                    } as IPushRuleCondition<ConditionKind.RoomMemberCount>,
                     {
-                        kind: "event_match",
+                        kind: ConditionKind.EventMatch,
                         key: "type",
                         pattern: "org.matrix.msc3381.poll.start",
-                    },
+                    } as IPushRuleCondition<ConditionKind.EventMatch>,
                 ],
                 actions: [PushRuleActionName.DontNotify],
                 rule_id: ".org.matrix.msc3930.rule.poll_start_one_to_one",
                 default: true,
                 enabled: true,
-            };
+            } as IPushRule;
             const pollStartGroup = {
                 conditions: [
                     {
-                        kind: "event_match",
+                        kind: ConditionKind.EventMatch,
                         key: "type",
                         pattern: "org.matrix.msc3381.poll.start",
                     },
                 ],
-                actions: ["notify"],
+                actions: [PushRuleActionName.Notify],
                 rule_id: ".org.matrix.msc3930.rule.poll_start",
                 default: true,
                 enabled: true,
-            };
+            } as IPushRule;
             const pollEndOneToOne = {
                 conditions: [
                     {
-                        kind: "room_member_count",
+                        kind: ConditionKind.RoomMemberCount,
                         is: "2",
                     },
                     {
-                        kind: "event_match",
+                        kind: ConditionKind.EventMatch,
                         key: "type",
                         pattern: "org.matrix.msc3381.poll.end",
                     },
                 ],
-                actions: [PushRuleActionName.Notify,
-                    { set_tweak: "highlight", value: false },
-                    { set_tweak: "sound", value: "default" }
+                actions: [
+                    PushRuleActionName.Notify,
+                    { set_tweak: TweakName.Highlight, value: false },
+                    { set_tweak: TweakName.Sound, value: "default" },
                 ],
                 rule_id: ".org.matrix.msc3930.rule.poll_end_one_to_one",
                 default: true,
                 enabled: true,
-            };
+            } as IPushRule;
 
             const setPushRuleMock = (rules: IPushRule[] = []): void => {
                 const combinedRules = {
@@ -529,10 +570,16 @@ describe("<Notifications />", () => {
 
                 // updated synced rule
                 expect(mockClient.setPushRuleActions).toHaveBeenCalledWith(
-                    'global', 'underride', oneToOneRule.rule_id, [PushRuleActionName.DontNotify]
+                    "global",
+                    "underride",
+                    oneToOneRule.rule_id,
+                    [PushRuleActionName.DontNotify],
                 );
                 expect(mockClient.setPushRuleActions).toHaveBeenCalledWith(
-                    'global', 'underride', pollStartOneToOne.rule_id, [PushRuleActionName.DontNotify]
+                    "global",
+                    "underride",
+                    pollStartOneToOne.rule_id,
+                    [PushRuleActionName.DontNotify],
                 );
                 // only called for parent rule and one existing synced rule
                 expect(mockClient.setPushRuleActions).toHaveBeenCalledTimes(2);
@@ -547,7 +594,7 @@ describe("<Notifications />", () => {
                 const section = "vector_global";
                 const oneToOneRuleElement = screen.getByTestId(section + oneToOneRule.rule_id);
                 // have main rule update fail
-                mockClient.setPushRuleActions.mockRejectedValue('oups')
+                mockClient.setPushRuleActions.mockRejectedValue("oups");
 
                 const offToggle = oneToOneRuleElement.querySelector('input[type="radio"]')!;
                 fireEvent.click(offToggle);
@@ -555,7 +602,10 @@ describe("<Notifications />", () => {
                 await flushPromises();
 
                 expect(mockClient.setPushRuleActions).toHaveBeenCalledWith(
-                    'global', 'underride', oneToOneRule.rule_id, [PushRuleActionName.DontNotify]
+                    "global",
+                    "underride",
+                    oneToOneRule.rule_id,
+                    [PushRuleActionName.DontNotify],
                 );
                 // only called for parent rule
                 expect(mockClient.setPushRuleActions).toHaveBeenCalledTimes(1);
@@ -568,7 +618,7 @@ describe("<Notifications />", () => {
                 await getComponentAndWait();
                 const section = "vector_global";
                 const oneToOneRuleElement = screen.getByTestId(section + oneToOneRule.rule_id);
-                
+
                 // loudest state of synced rules should be the toggle value
                 expect(oneToOneRuleElement.querySelector('input[aria-label="On"]')).toBeChecked();
             });
@@ -584,8 +634,6 @@ describe("<Notifications />", () => {
                 // loudest state of synced rules should be the toggle value
                 expect(oneToOneRuleElement.querySelector('input[aria-label="Noisy"]')).toBeChecked();
 
-                console.log('ONONONONONONON')
-
                 const onToggle = oneToOneRuleElement.querySelector('input[aria-label="On"]')!;
                 fireEvent.click(onToggle);
 
@@ -593,14 +641,26 @@ describe("<Notifications />", () => {
 
                 // called for all 3 rules
                 expect(mockClient.setPushRuleActions).toHaveBeenCalledTimes(3);
-                const expectedActions = [
-                    PushRuleActionName.Notify, { set_tweak: "highlight", value: false }
-                ]
-                expect(mockClient.setPushRuleActions).toHaveBeenCalledWith("global", "underride", oneToOneRule.rule_id, expectedActions);
-                expect(mockClient.setPushRuleActions).toHaveBeenCalledWith("global", "underride", pollStartOneToOne.rule_id, expectedActions);
-                expect(mockClient.setPushRuleActions).toHaveBeenCalledWith("global", "underride", pollEndOneToOne.rule_id, expectedActions);
+                const expectedActions = [PushRuleActionName.Notify, { set_tweak: TweakName.Highlight, value: false }];
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    "underride",
+                    oneToOneRule.rule_id,
+                    expectedActions,
+                );
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    "underride",
+                    pollStartOneToOne.rule_id,
+                    expectedActions,
+                );
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    "underride",
+                    pollEndOneToOne.rule_id,
+                    expectedActions,
+                );
             });
-            
         });
     });
 

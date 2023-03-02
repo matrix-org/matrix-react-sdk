@@ -483,8 +483,11 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         syncedRuleIds: VectorPushRuleDefinition["syncedRuleIds"],
         actions?: PushRuleAction[],
     ): Promise<void> => {
-        console.log('updatesynedce', syncedRuleIds, syncedRuleIds
-        ?.map((ruleId) => this.pushProcessor.getPushRuleAndKindById(ruleId)))
+        console.log(
+            "updatesynedce",
+            syncedRuleIds,
+            syncedRuleIds?.map((ruleId) => this.pushProcessor.getPushRuleAndKindById(ruleId)),
+        );
         // get synced rules that exist for user
         const syncedRules: ReturnType<PushProcessor["getPushRuleAndKindById"]>[] = syncedRuleIds
             ?.map((ruleId) => this.pushProcessor.getPushRuleAndKindById(ruleId))
