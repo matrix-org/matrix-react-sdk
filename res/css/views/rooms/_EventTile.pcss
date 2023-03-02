@@ -1097,6 +1097,12 @@ $left-gutter: 64px;
 
                 /* Use padding here. See: .mx_EventTile[data-layout="group"] .mx_EventTile_line */
                 padding-inline-start: var(--ThreadView_group_spacing-start); /* align message text with summary text */
+
+                .mx_EventTile_content {
+                    &.mx_EditMessageComposer {
+                        padding-inline-start: 0; /* align start of first letter with that of the event body */
+                    }
+                }
             }
 
             .mx_EventTile_line,
@@ -1106,14 +1112,6 @@ $left-gutter: 64px;
 
             .mx_ReactionsRow {
                 margin-inline-start: var(--ThreadView_group_spacing-start); /* align with message text and summary text */
-            }
-
-            .mx_EventTile_line {
-                .mx_EventTile_content {
-                    &.mx_EditMessageComposer {
-                        padding-inline-start: 0; /* align start of first letter with that of the event body */
-                    }
-                }
             }
         }
 
