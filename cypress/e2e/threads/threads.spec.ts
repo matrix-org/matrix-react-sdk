@@ -299,7 +299,7 @@ describe("Threads", () => {
         cy.get(".mx_ThreadView .mx_MVoiceMessageBody").should("have.length", 1);
     });
 
-    it("should send location on ThreadView", () => {
+    it("should send location and reply to the location on ThreadView", () => {
         // See: location.spec.ts
         const selectLocationShareTypeOption = (shareType: string): Chainable<JQuery> => {
             return cy.get(`[data-test-id="share-location-option-${shareType}"]`);
@@ -324,8 +324,9 @@ describe("Threads", () => {
             cy.visit("/#/room/" + roomId);
         });
 
-        // Exclude timestamp and read marker from snapshots
-        const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
+        // Exclude timestamp, read marker, and mapboxgl-map from snapshots
+        const percyCSS =
+            ".mx_MessageTimestamp, .mx_RoomView_myReadMarker, .mapboxgl-map { visibility: hidden !important; }";
 
         // User sends message
         cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("Hello Mr. Bot{enter}");
@@ -353,6 +354,26 @@ describe("Threads", () => {
         cy.get("#mx_LocationPicker_map").click("center");
         submitShareLocation();
         cy.get(".mx_ThreadView .mx_EventTile_last .mx_MLocationBody", { timeout: 10000 }).should("exist");
+
+        // User reply to the location
+        cy.get(".mx_ThreadView").within(() => {
+            cy.get(".mx_EventTile_last")
+                .realHover()
+                .within(() => {
+                    cy.get("[aria-label='Reply']").click({ force: false });
+                });
+        });
+
+        // Send a reply message
+        cy.get(".mx_ThreadView").within(() => {
+            cy.get(".mx_BasicMessageComposer_input").type("Please come here.{enter}");
+
+            // Wait until the reply is sent
+            cy.get(".mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
+        });
+
+        // Take a snapshot of reply to the shared location
+        cy.get(".mx_ThreadView").percySnapshotElement("Reply to the location on ThreadView", { percyCSS });
     });
 
     it("right panel behaves correctly", () => {
