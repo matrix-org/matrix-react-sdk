@@ -119,6 +119,9 @@ describe("Threads", () => {
         cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_sender").should("contain", "Tom");
         cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_content").should("contain", "Test");
 
+        // Enable hidden events to make the event for reaction displayed
+        cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
+
         // User reacts to message instead
         cy.contains(".mx_ThreadView .mx_EventTile .mx_EventTile_line", "Hello there")
             .find('[aria-label="React"]')
@@ -134,6 +137,9 @@ describe("Threads", () => {
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
         cy.get(".mx_ThreadView .mx_EventTile[data-layout='bubble']").should("be.visible");
         cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with reaction on bubble layout", { percyCSS });
+
+        // Disable hidden events
+        cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, false);
 
         // Set the group layout
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
