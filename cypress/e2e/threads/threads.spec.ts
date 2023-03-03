@@ -148,6 +148,19 @@ describe("Threads", () => {
             cy.contains(".mx_Dialog_primary", "Remove").click();
         });
 
+        // Wait until the response is redacted
+        cy.get(".mx_ThreadView .mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
+
+        // Take Percy snapshots in group layout and bubble layout (IRC layout on ThreadView is not available)
+        cy.get(".mx_ThreadView .mx_EventTile[data-layout='group']").should("be.visible");
+        cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with redacted messages on group layout", { percyCSS });
+        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
+        cy.get(".mx_ThreadView .mx_EventTile[data-layout='bubble']").should("be.visible");
+        cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with redacted messages on bubble layout", { percyCSS });
+
+        // Set the group layout
+        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+
         // User asserts summary was updated correctly
         cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_sender").should("contain", "BotBob");
         cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_content").should("contain", "Hello there");
