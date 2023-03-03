@@ -18,6 +18,8 @@ limitations under the License.
 
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { MatrixClient } from "../../global";
+import { SettingLevel } from "../../../src/settings/SettingLevel";
+import { Layout } from "../../../src/settings/enums/Layout";
 
 describe("Threads", () => {
     let homeserver: HomeserverInstance;
@@ -57,6 +59,8 @@ describe("Threads", () => {
         // --MessageTimestamp-color = #acacac = rgb(172, 172, 172)
         // See: _MessageTimestamp.pcss
         const MessageTimestampColor = "rgb(172, 172, 172)";
+        // Exclude timestamp and read marker from snapshot
+        const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
 
         // User sends message
         cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("Hello Mr. Bot{enter}");
@@ -85,6 +89,20 @@ describe("Threads", () => {
         cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_sender").should("contain", "BotBob");
         cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_content").should("contain", "Hello there");
         cy.get(".mx_RoomView_body .mx_ThreadSummary").click();
+
+        // Wait until the both messages are read
+        cy.get(".mx_ThreadView .mx_EventTile_last .mx_EventTile_line .mx_MTextBody").should("have.text", "Hello there");
+        cy.get(".mx_ThreadView .mx_EventTile_last .mx_ReadReceiptGroup .mx_BaseAvatar_image").should("be.visible");
+
+        // Take Percy snapshots in group layout and bubble layout (IRC layout on ThreadView is not available)
+        cy.get(".mx_ThreadView .mx_EventTile[data-layout='group']").should("be.visible");
+        cy.get(".mx_ThreadView").percySnapshotElement("Initial ThreadView on group layout", { percyCSS });
+        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
+        cy.get(".mx_ThreadView .mx_EventTile[data-layout='bubble']").should("be.visible");
+        cy.get(".mx_ThreadView").percySnapshotElement("Initial ThreadView on bubble layout", { percyCSS });
+
+        // Set the group layout
+        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
 
         // User responds in thread
         cy.get(".mx_ThreadView .mx_BasicMessageComposer_input").type("Test{enter}");
