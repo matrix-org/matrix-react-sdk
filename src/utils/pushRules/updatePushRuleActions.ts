@@ -16,10 +16,11 @@ limitations under the License.
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { IPushRule, PushRuleAction, PushRuleKind } from "matrix-js-sdk/src/matrix";
+import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
 
 /**
  * Sets the actions for a given push rule id and kind
- * Where there are no actions, disables the rule
+ * When actions are falsy, disables the rule
  * @param matrixClient - cli
  * @param ruleId - rule id to update
  * @param kind - PushRuleKind
@@ -38,3 +39,30 @@ export const updatePushRuleActions = async (
         await matrixClient.setPushRuleEnabled("global", kind, ruleId, true);
     }
 };
+
+/**
+ * Update push rules with given actions
+ * Where they already exist for current user
+ * Rules are updated sequentially and stop at first error
+ * @param matrixClient - cli
+ * @param ruleIds - RuleIds of push rules to attempt to set actions for
+ * @param actions - push rule actions to set for rule
+ */
+export const updateExistingPushRulesWithActions = async (
+    matrixClient: MatrixClient,
+    ruleIds: IPushRule['rule_id'][],
+    actions?: PushRuleAction[],
+): Promise<void> => {
+    const pushProcessor = new PushProcessor(matrixClient);
+
+    const rules: ReturnType<PushProcessor["getPushRuleAndKindById"]>[] = ruleIds
+        ?.map((ruleId) => pushProcessor.getPushRuleAndKindById(ruleId))
+        .filter(Boolean);
+
+    if (!rules?.length) {
+        return;
+    }
+    for (const { kind, rule } of rules) {
+        await updatePushRuleActions(matrixClient, rule.rule_id, kind, actions);
+    }
+}

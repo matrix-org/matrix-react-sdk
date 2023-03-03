@@ -19,7 +19,6 @@ import {
     IAnnotatedPushRule,
     IPusher,
     PushRuleAction,
-    IPushRule,
     PushRuleKind,
     RuleId,
 } from "matrix-js-sdk/src/@types/PushRules";
@@ -51,7 +50,7 @@ import TagComposer from "../elements/TagComposer";
 import { objectClone } from "../../../utils/objects";
 import { arrayDiff } from "../../../utils/arrays";
 import { clearAllNotifications, getLocalNotificationAccountDataEventType } from "../../../utils/notifications";
-import { updatePushRuleActions } from "../../../utils/pushRules/updatePushRuleActions";
+import { updateExistingPushRulesWithActions, updatePushRuleActions } from "../../../utils/pushRules/updatePushRuleActions";
 
 // TODO: this "view" component still has far too much application logic in it,
 // which should be factored out to other files.
@@ -462,30 +461,6 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         await SettingsStore.setValue("audioNotificationsEnabled", null, SettingLevel.DEVICE, checked);
     };
 
-    /**
-     * Updated syncedRuleIds from rule definition
-     * If a rule does not exist it is ignored
-     * Synced rules are updated sequentially
-     * and stop at first error
-     */
-    private updateSyncedRules = async (
-        syncedRuleIds: VectorPushRuleDefinition["syncedRuleIds"],
-        actions?: PushRuleAction[],
-    ): Promise<void> => {
-        // get synced rules that exist for user
-        const syncedRules: ReturnType<PushProcessor["getPushRuleAndKindById"]>[] = syncedRuleIds
-            ?.map((ruleId) => this.pushProcessor.getPushRuleAndKindById(ruleId))
-            .filter(Boolean);
-
-        if (!syncedRules?.length) {
-            return;
-        }
-        const cli = MatrixClientPeg.get();
-        for (const { kind, rule: syncedRule } of syncedRules) {
-            await updatePushRuleActions(cli, syncedRule.rule_id, kind, actions);
-        }
-    };
-
     private onRadioChecked = async (rule: IVectorPushRule, checkedState: VectorState): Promise<void> => {
         this.setState({ phase: Phase.Persisting });
 
@@ -527,7 +502,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 const definition: VectorPushRuleDefinition = VectorPushRulesDefinitions[rule.ruleId];
                 const actions = definition.vectorStateToActions[checkedState];
                 await updatePushRuleActions(cli, rule.rule.rule_id, rule.rule.kind, actions);
-                await this.updateSyncedRules(definition.syncedRuleIds, actions);
+                await updateExistingPushRulesWithActions(cli, definition.syncedRuleIds, actions);
             }
 
             await this.refreshFromServer();
