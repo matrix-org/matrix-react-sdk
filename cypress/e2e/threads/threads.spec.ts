@@ -20,6 +20,7 @@ import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { MatrixClient } from "../../global";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { Layout } from "../../../src/settings/enums/Layout";
+import Chainable = Cypress.Chainable;
 
 describe("Threads", () => {
     let homeserver: HomeserverInstance;
