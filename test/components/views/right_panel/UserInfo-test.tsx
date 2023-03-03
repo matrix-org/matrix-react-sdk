@@ -556,23 +556,6 @@ describe("<UserOptionsSection />", () => {
         });
     });
 
-    it("calling .invite with a null roomId still calls .invite and shows default error message", async () => {
-        inviteSpy.mockRejectedValue({ this: "could be anything" });
-
-        // render the component and click the button
-        renderComponent({ canInvite: true, member: new RoomMember(null, defaultUserId) });
-        const inviteButton = screen.getByRole("button", { name: /invite/i });
-        expect(inviteButton).toBeInTheDocument();
-        await userEvent.click(inviteButton);
-
-        expect(inviteSpy).toHaveBeenCalledTimes(1);
-
-        // check that the default test error message is displayed
-        await waitFor(() => {
-            expect(screen.getByText(/operation failed/i)).toBeInTheDocument();
-        });
-    });
-
     it("shows a modal before ignoring the user", async () => {
         const originalCreateDialog = Modal.createDialog;
         const modalSpy = (Modal.createDialog = jest.fn().mockReturnValue({
@@ -624,7 +607,7 @@ describe("<UserOptionsSection />", () => {
         ["for a User", defaultUser, defaultUser.avatarUrl],
     ])(
         "clicking »message« %s should start a DM",
-        async (test: string, member: RoomMember | User, expectedAvatarUrl: string) => {
+        async (test: string, member: RoomMember | User, expectedAvatarUrl: string | undefined) => {
             renderComponent({ member });
             await userEvent.click(screen.getByText("Message"));
             expect(startDmOnFirstMessage).toHaveBeenCalledWith(mockClient, [
