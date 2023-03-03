@@ -121,13 +121,13 @@ export const getE2EStatus = (cli: MatrixClient, userId: string, devices: IDevice
     return anyDeviceUnverified ? E2EStatus.Warning : E2EStatus.Verified;
 };
 
-async function openDMForUser(matrixClient: MatrixClient, user: RoomMember): Promise<void> {
-    const startDMUser = new DirectoryMember({
+async function openDmForUser(matrixClient: MatrixClient, user: RoomMember): Promise<void> {
+    const startDmUser = new DirectoryMember({
         user_id: user.userId,
         display_name: user.rawDisplayName,
         avatar_url: user.getMxcAvatarUrl(),
     });
-    startDmOnFirstMessage(matrixClient, [startDMUser]);
+    startDmOnFirstMessage(matrixClient, [startDmUser]);
 }
 
 type SetUpdating = (updating: boolean) => void;
@@ -320,7 +320,7 @@ const MessageButton = ({ member }: { member: RoomMember }): JSX.Element => {
             onClick={async () => {
                 if (busy) return;
                 setBusy(true);
-                await openDMForUser(cli, member);
+                await openDmForUser(cli, member);
                 setBusy(false);
             }}
             className="mx_UserInfo_field"
