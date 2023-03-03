@@ -194,8 +194,14 @@ describe("Threads", () => {
             cy.get(".mx_EventTile_body").should("contain", "Hello Mr. Bot");
             cy.get(".mx_ThreadSummary_content").should("contain", "How are things?");
 
+            // Check the number of the replies
+            cy.get(".mx_ThreadPanel_replies_amount").should("have.text", "2");
+
             // Check the colour of timestamp on thread list
             cy.get(".mx_EventTile_details .mx_MessageTimestamp").should("have.css", "color", MessageTimestampColor);
+
+            // Make sure the notification dot is visible
+            cy.get(".mx_NotificationBadge_visible").should("be.visible");
 
             // User opens thread via threads list
             cy.get(".mx_EventTile_line").click();
