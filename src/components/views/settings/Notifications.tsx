@@ -51,6 +51,7 @@ import TagComposer from "../elements/TagComposer";
 import { objectClone } from "../../../utils/objects";
 import { arrayDiff } from "../../../utils/arrays";
 import { clearAllNotifications, getLocalNotificationAccountDataEventType } from "../../../utils/notifications";
+import { updatePushRuleActions } from "../../../utils/pushRules/updatePushRuleActions";
 
 // TODO: this "view" component still has far too much application logic in it,
 // which should be factored out to other files.
@@ -461,20 +462,6 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         await SettingsStore.setValue("audioNotificationsEnabled", null, SettingLevel.DEVICE, checked);
     };
 
-    private setPushRuleActions = async (
-        ruleId: IPushRule["rule_id"],
-        kind: PushRuleKind,
-        actions?: PushRuleAction[],
-    ): Promise<void> => {
-        const cli = MatrixClientPeg.get();
-        if (!actions) {
-            await cli.setPushRuleEnabled("global", kind, ruleId, false);
-        } else {
-            await cli.setPushRuleActions("global", kind, ruleId, actions);
-            await cli.setPushRuleEnabled("global", kind, ruleId, true);
-        }
-    };
-
     /**
      * Updated syncedRuleIds from rule definition
      * If a rule does not exist it is ignored
@@ -493,8 +480,9 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         if (!syncedRules?.length) {
             return;
         }
+        const cli = MatrixClientPeg.get();
         for (const { kind, rule: syncedRule } of syncedRules) {
-            await this.setPushRuleActions(syncedRule.rule_id, kind, actions);
+            await updatePushRuleActions(cli, syncedRule.rule_id, kind, actions);
         }
     };
 
@@ -538,7 +526,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             } else {
                 const definition: VectorPushRuleDefinition = VectorPushRulesDefinitions[rule.ruleId];
                 const actions = definition.vectorStateToActions[checkedState];
-                await this.setPushRuleActions(rule.rule.rule_id, rule.rule.kind, actions);
+                await updatePushRuleActions(cli, rule.rule.rule_id, rule.rule.kind, actions);
                 await this.updateSyncedRules(definition.syncedRuleIds, actions);
             }
 
