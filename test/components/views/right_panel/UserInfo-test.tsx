@@ -43,6 +43,12 @@ import MultiInviter from "../../../../src/utils/MultiInviter";
 import * as mockVerification from "../../../../src/verification";
 import Modal from "../../../../src/Modal";
 import { E2EStatus } from "../../../../src/utils/ShieldUtils";
+import { DirectoryMember, startDmOnFirstMessage } from "../../../../src/utils/direct-messages";
+
+jest.mock("../../../../src/utils/direct-messages", () => ({
+    ...jest.requireActual("../../../../src/utils/direct-messages"),
+    startDmOnFirstMessage: jest.fn(),
+}));
 
 jest.mock("../../../../src/dispatcher/dispatcher");
 
@@ -121,7 +127,7 @@ const mockClient = mocked({
     setPowerLevel: jest.fn(),
 } as unknown as MatrixClient);
 
-const defaultUserId = "@test:test";
+const defaultUserId = "@user:example.com";
 const defaultUser = new User(defaultUserId);
 
 beforeEach(() => {
@@ -554,7 +560,7 @@ describe("<UserOptionsSection />", () => {
         inviteSpy.mockRejectedValue({ this: "could be anything" });
 
         // render the component and click the button
-        renderComponent({ canInvite: true, member: { ...member, roomId: null } });
+        renderComponent({ canInvite: true, member: new RoomMember(null, defaultUserId) });
         const inviteButton = screen.getByRole("button", { name: /invite/i });
         expect(inviteButton).toBeInTheDocument();
         await userEvent.click(inviteButton);
@@ -612,6 +618,24 @@ describe("<UserOptionsSection />", () => {
         await userEvent.click(screen.getByRole("button", { name: "Unignore" }));
         expect(mockClient.setIgnoredUsers).toHaveBeenCalledWith([]);
     });
+
+    it.each([
+        ["for a RoomMember", member, member.getMxcAvatarUrl()],
+        ["for a User", defaultUser, defaultUser.avatarUrl],
+    ])(
+        "clicking »message« %s should start a DM",
+        async (test: string, member: RoomMember | User, expectedAvatarUrl: string) => {
+            renderComponent({ member });
+            await userEvent.click(screen.getByText("Message"));
+            expect(startDmOnFirstMessage).toHaveBeenCalledWith(mockClient, [
+                new DirectoryMember({
+                    user_id: member.userId,
+                    display_name: member.rawDisplayName,
+                    avatar_url: expectedAvatarUrl,
+                }),
+            ]);
+        },
+    );
 });
 
 describe("<PowerLevelEditor />", () => {
