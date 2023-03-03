@@ -127,6 +127,16 @@ describe("Threads", () => {
             cy.contains('[role="menuitem"]', "👋").click();
         });
 
+        // Take Percy snapshots in group layout and bubble layout (IRC layout on ThreadView is not available)
+        cy.get(".mx_ThreadView .mx_EventTile[data-layout='group']").should("be.visible");
+        cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with reaction on group layout", { percyCSS });
+        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
+        cy.get(".mx_ThreadView .mx_EventTile[data-layout='bubble']").should("be.visible");
+        cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with reaction on bubble layout", { percyCSS });
+
+        // Set the group layout
+        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+
         // User redacts their prior response
         cy.contains(".mx_ThreadView .mx_EventTile .mx_EventTile_line", "Test")
             .find('[aria-label="Options"]')
