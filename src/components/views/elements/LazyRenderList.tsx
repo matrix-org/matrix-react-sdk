@@ -17,11 +17,7 @@ limitations under the License.
 import React from "react";
 
 class ItemRange {
-    constructor(
-        public topCount: number,
-        public renderCount: number,
-        public bottomCount: number,
-    ) { }
+    public constructor(public topCount: number, public renderCount: number, public bottomCount: number) {}
 
     public contains(range: ItemRange): boolean {
         // don't contain empty ranges
@@ -30,8 +26,9 @@ class ItemRange {
         if (!range.renderCount && this.renderCount) {
             return false;
         }
-        return range.topCount >= this.topCount &&
-            (range.topCount + range.renderCount) <= (this.topCount + this.renderCount);
+        return (
+            range.topCount >= this.topCount && range.topCount + range.renderCount <= this.topCount + this.renderCount
+        );
     }
 
     public expand(amount: number): ItemRange {
@@ -88,7 +85,7 @@ export default class LazyRenderList<T = any> extends React.Component<IProps<T>, 
         overflowMargin: 5,
     };
 
-    constructor(props: IProps<T>) {
+    public constructor(props: IProps<T>) {
         super(props);
 
         this.state = {
@@ -120,24 +117,20 @@ export default class LazyRenderList<T = any> extends React.Component<IProps<T>, 
         return new ItemRange(topCount, renderCount, bottomCount);
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const { itemHeight, items, renderItem } = this.props;
         const { renderRange } = this.state;
         const { topCount, renderCount, bottomCount } = renderRange;
 
         const paddingTop = topCount * itemHeight;
         const paddingBottom = bottomCount * itemHeight;
-        const renderedItems = (items || []).slice(
-            topCount,
-            topCount + renderCount,
-        );
+        const renderedItems = (items || []).slice(topCount, topCount + renderCount);
 
         const element = this.props.element || "div";
         const elementProps = {
-            "style": { paddingTop: `${paddingTop}px`, paddingBottom: `${paddingBottom}px` },
-            "className": this.props.className,
+            style: { paddingTop: `${paddingTop}px`, paddingBottom: `${paddingBottom}px` },
+            className: this.props.className,
         };
         return React.createElement(element, elementProps, renderedItems.map(renderItem));
     }
 }
-

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 
 import { _t } from "../../../../languageHandler";
 import Field from "../../elements/Field";
@@ -29,7 +29,7 @@ interface IProps {
     onChange(value: string): void;
 }
 
-const FilteredList = ({ children, query, onChange }: IProps) => {
+const FilteredList: React.FC<IProps> = ({ children, query, onChange }) => {
     const [truncateAt, setTruncateAt] = useState<number>(INITIAL_LOAD_TILES);
     const [filteredChildren, setFilteredChildren] = useState<React.ReactElement[]>(children);
 
@@ -51,40 +51,45 @@ const FilteredList = ({ children, query, onChange }: IProps) => {
         return filteredChildren.length;
     };
 
-    const createOverflowElement = (overflowCount: number, totalCount: number) => {
-        const showMore = () => {
-            setTruncateAt(num => num + LOAD_TILES_STEP_SIZE);
+    const createOverflowElement = (overflowCount: number, totalCount: number): JSX.Element => {
+        const showMore = (): void => {
+            setTruncateAt((num) => num + LOAD_TILES_STEP_SIZE);
         };
 
-        return <button className="mx_DevTools_button" onClick={showMore}>
-            { _t("and %(count)s others...", { count: overflowCount }) }
-        </button>;
+        return (
+            <button className="mx_DevTools_button" onClick={showMore}>
+                {_t("and %(count)s others...", { count: overflowCount })}
+            </button>
+        );
     };
 
-    return <>
-        <Field
-            label={_t('Filter results')}
-            autoFocus={true}
-            size={64}
-            type="text"
-            autoComplete="off"
-            value={query}
-            onChange={ev => onChange(ev.target.value)}
-            className="mx_TextInputDialog_input mx_DevTools_RoomStateExplorer_query"
-            // force re-render so that autoFocus is applied when this component is re-used
-            key={children?.[0]?.key ?? ''}
-        />
-
-        { filteredChildren.length < 1
-            ? _t("No results found")
-            : <TruncatedList
-                getChildren={getChildren}
-                getChildCount={getChildCount}
-                truncateAt={truncateAt}
-                createOverflowElement={createOverflowElement}
+    return (
+        <>
+            <Field
+                label={_t("Filter results")}
+                autoFocus={true}
+                size={64}
+                type="text"
+                autoComplete="off"
+                value={query}
+                onChange={(ev: ChangeEvent<HTMLInputElement>) => onChange(ev.target.value)}
+                className="mx_TextInputDialog_input mx_DevTools_RoomStateExplorer_query"
+                // force re-render so that autoFocus is applied when this component is re-used
+                key={children?.[0]?.key ?? ""}
             />
-        }
-    </>;
+
+            {filteredChildren.length < 1 ? (
+                _t("No results found")
+            ) : (
+                <TruncatedList
+                    getChildren={getChildren}
+                    getChildCount={getChildCount}
+                    truncateAt={truncateAt}
+                    createOverflowElement={createOverflowElement}
+                />
+            )}
+        </>
+    );
 };
 
 export default FilteredList;

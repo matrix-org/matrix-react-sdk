@@ -18,7 +18,7 @@ limitations under the License.
 // or when the timeout of ms is reached with the value of given timeoutValue
 export async function timeout<T, Y>(promise: Promise<T>, timeoutValue: Y, ms: number): Promise<T | Y> {
     const timeoutPromise = new Promise<T | Y>((resolve) => {
-        const timeoutId = setTimeout(resolve, ms, timeoutValue);
+        const timeoutId = window.setTimeout(resolve, ms, timeoutValue);
         promise.then(() => {
             clearTimeout(timeoutId);
         });
@@ -33,7 +33,7 @@ export async function retry<T, E extends Error>(
     num: number,
     predicate?: (e: E) => boolean,
 ): Promise<T> {
-    let lastErr: E;
+    let lastErr!: E;
     for (let i = 0; i < num; i++) {
         try {
             const v = await fn();

@@ -31,12 +31,16 @@ describe("ImageSize", () => {
             expect(size).toStrictEqual({ w: 800, h: 400 });
         });
         it("returns max values if content size is not specified", () => {
-            const size = suggestedSize(ImageSize.Normal, { w: null, h: null });
+            const size = suggestedSize(ImageSize.Normal, {});
             expect(size).toStrictEqual({ w: 324, h: 324 });
         });
         it("returns integer values", () => {
             const size = suggestedSize(ImageSize.Normal, { w: 642, h: 350 }); // does not divide evenly
             expect(size).toStrictEqual({ w: 324, h: 176 });
+        });
+        it("returns integer values for portrait images", () => {
+            const size = suggestedSize(ImageSize.Normal, { w: 720, h: 1280 });
+            expect(size).toStrictEqual({ w: 182, h: 324 });
         });
     });
 });

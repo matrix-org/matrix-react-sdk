@@ -17,7 +17,8 @@ limitations under the License.
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 /**
  * Approximation of a membership status for a given room.
@@ -43,10 +44,9 @@ export enum EffectiveMembership {
     Leave = "LEAVE",
 }
 
-export interface MembershipSplit {
-    // @ts-ignore - TS wants this to be a string key, but we know better.
-    [state: EffectiveMembership]: Room[];
-}
+export type MembershipSplit = Partial<{
+    [state in EffectiveMembership]: Room[];
+}>;
 
 export function splitRoomsByMembership(rooms: Room[]): MembershipSplit {
     const split: MembershipSplit = {
@@ -63,9 +63,9 @@ export function splitRoomsByMembership(rooms: Room[]): MembershipSplit {
 }
 
 export function getEffectiveMembership(membership: string): EffectiveMembership {
-    if (membership === 'invite') {
+    if (membership === "invite") {
         return EffectiveMembership.Invite;
-    } else if (membership === 'join') {
+    } else if (membership === "join") {
         // TODO: Include knocks? Update docs as needed in the enum. https://github.com/vector-im/element-web/issues/14237
         return EffectiveMembership.Join;
     } else {
@@ -84,11 +84,17 @@ export function isJoinedOrNearlyJoined(membership: string): boolean {
  * NOTE: this assumes you've just created the room and there's not been an opportunity
  * for other code to run, so we shouldn't miss RoomState.newMember when it comes by.
  */
-export async function waitForMember(client: MatrixClient, roomId: string, userId: string, opts = { timeout: 1500 }) {
+export async function waitForMember(
+    client: MatrixClient,
+    roomId: string,
+    userId: string,
+    opts = { timeout: 1500 },
+): Promise<boolean> {
     const { timeout } = opts;
-    let handler;
-    return new Promise((resolve) => {
-        handler = function(_, __, member: RoomMember) { // eslint-disable-line @typescript-eslint/naming-convention
+    let handler: (event: MatrixEvent, state: RoomState, member: RoomMember) => void;
+    return new Promise<boolean>((resolve) => {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        handler = function (_, __, member: RoomMember) {
             if (member.userId !== userId) return;
             if (member.roomId !== roomId) return;
             resolve(true);
@@ -97,7 +103,7 @@ export async function waitForMember(client: MatrixClient, roomId: string, userId
 
         /* We don't want to hang if this goes wrong, so we proceed and hope the other
            user is already in the megolm session */
-        setTimeout(resolve, timeout, false);
+        window.setTimeout(resolve, timeout, false);
     }).finally(() => {
         client.removeListener(RoomStateEvent.NewMember, handler);
     });

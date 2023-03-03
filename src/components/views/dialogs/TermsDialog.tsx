@@ -14,13 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import url from 'url';
-import React from 'react';
+import url from "url";
+import React from "react";
 import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
 
-import { _t, pickBestLanguage } from '../../../languageHandler';
+import { _t, pickBestLanguage } from "../../../languageHandler";
 import DialogButtons from "../elements/DialogButtons";
 import BaseDialog from "./BaseDialog";
+import { ServicePolicyPair } from "../../../Terms";
 
 interface ITermsCheckboxProps {
     onChange: (url: string, checked: boolean) => void;
@@ -33,11 +34,8 @@ class TermsCheckbox extends React.PureComponent<ITermsCheckboxProps> {
         this.props.onChange(this.props.url, ev.currentTarget.checked);
     };
 
-    render() {
-        return <input type="checkbox"
-            onChange={this.onChange}
-            checked={this.props.checked}
-        />;
+    public render(): React.ReactNode {
+        return <input type="checkbox" onChange={this.onChange} checked={this.props.checked} />;
     }
 }
 
@@ -46,7 +44,7 @@ interface ITermsDialogProps {
      * Array of [Service, policies] pairs, where policies is the response from the
      * /terms endpoint for that service
      */
-    policiesAndServicePairs: any[];
+    policiesAndServicePairs: ServicePolicyPair[];
 
     /**
      * urls that the user has already agreed to
@@ -66,7 +64,7 @@ interface IState {
 }
 
 export default class TermsDialog extends React.PureComponent<ITermsDialogProps, IState> {
-    constructor(props) {
+    public constructor(props: ITermsDialogProps) {
         super(props);
         this.state = {
             // url -> boolean
@@ -82,40 +80,53 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
     };
 
     private onNextClick = (): void => {
-        this.props.onFinished(true, Object.keys(this.state.agreedUrls).filter((url) => this.state.agreedUrls[url]));
+        this.props.onFinished(
+            true,
+            Object.keys(this.state.agreedUrls).filter((url) => this.state.agreedUrls[url]),
+        );
     };
 
     private nameForServiceType(serviceType: SERVICE_TYPES, host: string): JSX.Element {
         switch (serviceType) {
             case SERVICE_TYPES.IS:
-                return <div>{ _t("Identity server") }<br />({ host })</div>;
+                return (
+                    <div>
+                        {_t("Identity server")}
+                        <br />({host})
+                    </div>
+                );
             case SERVICE_TYPES.IM:
-                return <div>{ _t("Integration manager") }<br />({ host })</div>;
+                return (
+                    <div>
+                        {_t("Integration manager")}
+                        <br />({host})
+                    </div>
+                );
         }
     }
 
     private summaryForServiceType(serviceType: SERVICE_TYPES): JSX.Element {
         switch (serviceType) {
             case SERVICE_TYPES.IS:
-                return <div>
-                    { _t("Find others by phone or email") }
-                    <br />
-                    { _t("Be found by phone or email") }
-                </div>;
+                return (
+                    <div>
+                        {_t("Find others by phone or email")}
+                        <br />
+                        {_t("Be found by phone or email")}
+                    </div>
+                );
             case SERVICE_TYPES.IM:
-                return <div>
-                    { _t("Use bots, bridges, widgets and sticker packs") }
-                </div>;
+                return <div>{_t("Use bots, bridges, widgets and sticker packs")}</div>;
         }
     }
 
-    private onTermsCheckboxChange = (url: string, checked: boolean) => {
+    private onTermsCheckboxChange = (url: string, checked: boolean): void => {
         this.setState({
             agreedUrls: Object.assign({}, this.state.agreedUrls, { [url]: checked }),
         });
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const rows = [];
         for (const policiesAndService of this.props.policiesAndServicePairs) {
             const parsedBaseUrl = url.parse(policiesAndService.service.baseUrl);
@@ -123,31 +134,33 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
             const policyValues = Object.values(policiesAndService.policies);
             for (let i = 0; i < policyValues.length; ++i) {
                 const termDoc = policyValues[i];
-                const termsLang = pickBestLanguage(Object.keys(termDoc).filter((k) => k !== 'version'));
+                const termsLang = pickBestLanguage(Object.keys(termDoc).filter((k) => k !== "version"));
                 let serviceName;
                 let summary;
                 if (i === 0) {
                     serviceName = this.nameForServiceType(policiesAndService.service.serviceType, parsedBaseUrl.host);
-                    summary = this.summaryForServiceType(
-                        policiesAndService.service.serviceType,
-                    );
+                    summary = this.summaryForServiceType(policiesAndService.service.serviceType);
                 }
 
-                rows.push(<tr key={termDoc[termsLang].url}>
-                    <td className="mx_TermsDialog_service">{ serviceName }</td>
-                    <td className="mx_TermsDialog_summary">{ summary }</td>
-                    <td>
-                        { termDoc[termsLang].name }
-                        <a rel="noreferrer noopener" target="_blank" href={termDoc[termsLang].url}>
-                            <span className="mx_TermsDialog_link" />
-                        </a>
-                    </td>
-                    <td><TermsCheckbox
-                        url={termDoc[termsLang].url}
-                        onChange={this.onTermsCheckboxChange}
-                        checked={Boolean(this.state.agreedUrls[termDoc[termsLang].url])}
-                    /></td>
-                </tr>);
+                rows.push(
+                    <tr key={termDoc[termsLang].url}>
+                        <td className="mx_TermsDialog_service">{serviceName}</td>
+                        <td className="mx_TermsDialog_summary">{summary}</td>
+                        <td>
+                            {termDoc[termsLang].name}
+                            <a rel="noreferrer noopener" target="_blank" href={termDoc[termsLang].url}>
+                                <span className="mx_TermsDialog_link" />
+                            </a>
+                        </td>
+                        <td>
+                            <TermsCheckbox
+                                url={termDoc[termsLang].url}
+                                onChange={this.onTermsCheckboxChange}
+                                checked={Boolean(this.state.agreedUrls[termDoc[termsLang].url])}
+                            />
+                        </td>
+                    </tr>,
+                );
             }
         }
 
@@ -159,7 +172,7 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
             for (const terms of Object.values(policiesAndService.policies)) {
                 let docAgreed = false;
                 for (const lang of Object.keys(terms)) {
-                    if (lang === 'version') continue;
+                    if (lang === "version") continue;
                     if (this.state.agreedUrls[terms[lang].url]) {
                         docAgreed = true;
                         break;
@@ -180,24 +193,27 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
                 fixedWidth={false}
                 onFinished={this.onCancelClick}
                 title={_t("Terms of Service")}
-                contentId='mx_Dialog_content'
+                contentId="mx_Dialog_content"
                 hasCancel={false}
             >
-                <div id='mx_Dialog_content'>
-                    <p>{ _t("To continue you need to accept the terms of this service.") }</p>
+                <div id="mx_Dialog_content">
+                    <p>{_t("To continue you need to accept the terms of this service.")}</p>
 
-                    <table className="mx_TermsDialog_termsTable"><tbody>
-                        <tr className="mx_TermsDialog_termsTableHeader">
-                            <th>{ _t("Service") }</th>
-                            <th>{ _t("Summary") }</th>
-                            <th>{ _t("Document") }</th>
-                            <th>{ _t("Accept") }</th>
-                        </tr>
-                        { rows }
-                    </tbody></table>
+                    <table className="mx_TermsDialog_termsTable">
+                        <tbody>
+                            <tr className="mx_TermsDialog_termsTableHeader">
+                                <th>{_t("Service")}</th>
+                                <th>{_t("Summary")}</th>
+                                <th>{_t("Document")}</th>
+                                <th>{_t("Accept")}</th>
+                            </tr>
+                            {rows}
+                        </tbody>
+                    </table>
                 </div>
 
-                <DialogButtons primaryButton={_t('Next')}
+                <DialogButtons
+                    primaryButton={_t("Next")}
                     hasCancel={true}
                     onCancel={this.onCancelClick}
                     onPrimaryButtonClick={this.onNextClick}

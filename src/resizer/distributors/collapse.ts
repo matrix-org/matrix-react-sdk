@@ -26,21 +26,17 @@ export interface ICollapseConfig extends IConfig {
 }
 
 class CollapseItem extends ResizeItem<ICollapseConfig> {
-    notifyCollapsed(collapsed: boolean) {
-        const callback = this.resizer.config.onCollapsed;
-        if (callback) {
-            callback(collapsed, this.id, this.domNode);
-        }
+    public notifyCollapsed(collapsed: boolean): void {
+        this.resizer.config?.onCollapsed?.(collapsed, this.id, this.domNode);
     }
 
-    get isCollapsed() {
-        const isItemCollapsed = this.resizer.config.isItemCollapsed;
-        return isItemCollapsed(this.domNode);
+    public get isCollapsed(): boolean {
+        return this.resizer.config?.isItemCollapsed?.(this.domNode) ?? false;
     }
 }
 
 export default class CollapseDistributor extends FixedDistributor<ICollapseConfig, CollapseItem> {
-    static createItem(
+    public static createItem(
         resizeHandle: HTMLDivElement,
         resizer: Resizer<ICollapseConfig>,
         sizer: Sizer,
@@ -52,13 +48,13 @@ export default class CollapseDistributor extends FixedDistributor<ICollapseConfi
     private readonly toggleSize: number;
     private isCollapsed: boolean;
 
-    constructor(item: CollapseItem) {
+    public constructor(item: CollapseItem) {
         super(item);
         this.toggleSize = item.resizer?.config?.toggleSize;
         this.isCollapsed = item.isCollapsed;
     }
 
-    public resize(newSize: number) {
+    public resize(newSize: number): void {
         const isCollapsedSize = newSize < this.toggleSize;
         if (isCollapsedSize !== this.isCollapsed) {
             this.isCollapsed = isCollapsedSize;

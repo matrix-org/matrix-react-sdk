@@ -14,20 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import maplibregl from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 import { logger } from "matrix-js-sdk/src/logger";
 
+import { _t } from "../../languageHandler";
 import { parseGeoUri } from "./parseGeoUri";
 import { findMapStyleUrl } from "./findMapStyleUrl";
 import { LocationShareError } from "./LocationShareErrors";
 
-export const createMap = (
-    interactive: boolean,
-    bodyId: string,
-    onError: (error: Error) => void,
-): maplibregl.Map => {
+export const createMap = (interactive: boolean, bodyId: string, onError?: (error: Error) => void): maplibregl.Map => {
     try {
         const styleUrl = findMapStyleUrl();
 
@@ -36,15 +33,25 @@ export const createMap = (
             style: styleUrl,
             zoom: 15,
             interactive,
+            attributionControl: false,
+            locale: {
+                "AttributionControl.ToggleAttribution": _t("Toggle attribution"),
+                "AttributionControl.MapFeedback": _t("Map feedback"),
+                "FullscreenControl.Enter": _t("Enter fullscreen"),
+                "FullscreenControl.Exit": _t("Exit fullscreen"),
+                "GeolocateControl.FindMyLocation": _t("Find my location"),
+                "GeolocateControl.LocationNotAvailable": _t("Location not available"),
+                "LogoControl.Title": _t("Mapbox logo"),
+                "NavigationControl.ResetBearing": _t("Reset bearing to north"),
+                "NavigationControl.ZoomIn": _t("Zoom in"),
+                "NavigationControl.ZoomOut": _t("Zoom out"),
+            },
         });
+        map.addControl(new maplibregl.AttributionControl(), "top-right");
 
-        map.on('error', (e) => {
-            logger.error(
-                "Failed to load map: check map_style_url in config.json has a "
-                + "valid URL and API key",
-                e.error,
-            );
-            onError(new Error(LocationShareError.MapStyleUrlNotReachable));
+        map.on("error", (e) => {
+            logger.error("Failed to load map: check map_style_url in config.json has a valid URL and API key", e.error);
+            onError?.(new Error(LocationShareError.MapStyleUrlNotReachable));
         });
 
         return map;
@@ -57,46 +64,13 @@ export const createMap = (
 export const createMarker = (coords: GeolocationCoordinates, element: HTMLElement): maplibregl.Marker => {
     const marker = new maplibregl.Marker({
         element,
-        anchor: 'bottom',
+        anchor: "bottom",
         offset: [0, -1],
     }).setLngLat({ lon: coords.longitude, lat: coords.latitude });
     return marker;
 };
 
-export const createMapWithCoords = (
-    coords: GeolocationCoordinates,
-    interactive: boolean,
-    bodyId: string,
-    markerId: string,
-    onError: (error: Error) => void,
-): maplibregl.Map => {
-    try {
-        const map = createMap(interactive, bodyId, onError);
-
-        const coordinates = new maplibregl.LngLat(coords.longitude, coords.latitude);
-        // center on coordinates
-        map.setCenter(coordinates);
-
-        const marker = createMarker(coords, document.getElementById(markerId));
-        marker.addTo(map);
-
-        map.on('error', (e) => {
-            logger.error(
-                "Failed to load map: check map_style_url in config.json has a "
-                + "valid URL and API key",
-                e.error,
-            );
-            onError(new Error(LocationShareError.MapStyleUrlNotReachable));
-        });
-
-        return map;
-    } catch (e) {
-        logger.error("Failed to render map", e);
-        onError(e);
-    }
-};
-
-const makeLink = (coords: GeolocationCoordinates): string => {
+export const makeMapSiteLink = (coords: GeolocationCoordinates): string => {
     return (
         "https://www.openstreetmap.org/" +
         `?mlat=${coords.latitude}` +
@@ -105,18 +79,18 @@ const makeLink = (coords: GeolocationCoordinates): string => {
     );
 };
 
-export const createMapSiteLink = (event: MatrixEvent): string => {
-    const content: Object = event.getContent();
+export const createMapSiteLinkFromEvent = (event: MatrixEvent): string => {
+    const content = event.getContent();
     const mLocation = content[M_LOCATION.name];
     if (mLocation !== undefined) {
         const uri = mLocation["uri"];
         if (uri !== undefined) {
-            return makeLink(parseGeoUri(uri));
+            return makeMapSiteLink(parseGeoUri(uri));
         }
     } else {
         const geoUri = content["geo_uri"];
         if (geoUri) {
-            return makeLink(parseGeoUri(geoUri));
+            return makeMapSiteLink(parseGeoUri(geoUri));
         }
     }
     return null;

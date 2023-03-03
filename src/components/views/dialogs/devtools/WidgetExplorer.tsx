@@ -25,7 +25,7 @@ import { UPDATE_EVENT } from "../../../../stores/AsyncStore";
 import FilteredList from "./FilteredList";
 import { StateEventEditor } from "./RoomState";
 
-const WidgetExplorer = ({ onBack }: IDevtoolsProps) => {
+const WidgetExplorer: React.FC<IDevtoolsProps> = ({ onBack }) => {
     const context = useContext(DevtoolsContext);
     const [query, setQuery] = useState("");
     const [widget, setWidget] = useState<IApp>(null);
@@ -35,7 +35,7 @@ const WidgetExplorer = ({ onBack }: IDevtoolsProps) => {
     });
 
     if (widget && widgets.includes(widget)) {
-        const onBack = () => {
+        const onBack = (): void => {
             setWidget(null);
         };
 
@@ -43,26 +43,30 @@ const WidgetExplorer = ({ onBack }: IDevtoolsProps) => {
             Array.from(context.room.currentState.events.values()).map((e: Map<string, MatrixEvent>) => {
                 return e.values();
             }),
-        ).reduce((p, c) => { p.push(...c); return p; }, []);
-        const event = allState.find(ev => ev.getId() === widget.eventId);
-        if (!event) { // "should never happen"
-            return <BaseTool onBack={onBack}>
-                { _t("There was an error finding this widget.") }
-            </BaseTool>;
+        ).reduce((p, c) => {
+            p.push(...c);
+            return p;
+        }, []);
+        const event = allState.find((ev) => ev.getId() === widget.eventId);
+        if (!event) {
+            // "should never happen"
+            return <BaseTool onBack={onBack}>{_t("There was an error finding this widget.")}</BaseTool>;
         }
 
         return <StateEventEditor mxEvent={event} onBack={onBack} />;
     }
 
-    return <BaseTool onBack={onBack}>
-        <FilteredList query={query} onChange={setQuery}>
-            { widgets.map(w => (
-                <button className="mx_DevTools_button" key={w.url + w.eventId} onClick={() => setWidget(w)}>
-                    { w.url }
-                </button>
-            )) }
-        </FilteredList>
-    </BaseTool>;
+    return (
+        <BaseTool onBack={onBack}>
+            <FilteredList query={query} onChange={setQuery}>
+                {widgets.map((w) => (
+                    <button className="mx_DevTools_button" key={w.url + w.eventId} onClick={() => setWidget(w)}>
+                        {w.url}
+                    </button>
+                ))}
+            </FilteredList>
+        </BaseTool>
+    );
 };
 
 export default WidgetExplorer;

@@ -17,7 +17,7 @@ limitations under the License.
 
 import { IClientWellKnown } from "matrix-js-sdk/src/matrix";
 
-import { ValidatedServerConfig } from "./utils/AutoDiscoveryUtils";
+import { ValidatedServerConfig } from "./utils/ValidatedServerConfig";
 
 // Convention decision: All config options are lower_snake_case
 // We use an isolated file for the interface so we can mess around with the eslint options.
@@ -57,7 +57,7 @@ export interface IConfigOptions {
     branding?: {
         welcome_background_url?: string | string[]; // chosen at random if array
         auth_header_logo_url?: string;
-        auth_footer_links?: {text: string, url: string}[];
+        auth_footer_links?: { text: string; url: string }[];
     };
 
     map_style_url?: string; // for location-shared maps
@@ -99,7 +99,7 @@ export interface IConfigOptions {
     features?: Record<string, boolean>; // <FeatureName, EnabledBool>
 
     bug_report_endpoint_url?: string; // omission disables bug reporting
-    uisi_autorageshake_app?: string;
+    uisi_autorageshake_app?: string; // defaults to "element-auto-uisi"
     sentry?: {
         dsn: string;
         environment?: string; // "production", etc
@@ -115,6 +115,12 @@ export interface IConfigOptions {
     };
     voip?: {
         obey_asserted_identity?: boolean; // MSC3086
+    };
+    element_call: {
+        url?: string;
+        use_exclusively?: boolean;
+        participant_limit?: number;
+        brand?: string;
     };
 
     logout_redirect_url?: string;
@@ -135,52 +141,51 @@ export interface IConfigOptions {
         servers: string[];
     };
 
-    // piwik (matomo) is deprecated in favour of posthog
-    piwik?: false | {
-        url: string; // piwik instance
-        site_id: string;
-        policy_url: string; // cookie policy
-        whitelisted_hs_urls: string[];
-    };
     posthog?: {
         project_api_key: string;
         api_host: string; // hostname
     };
     analytics_owner?: string; // defaults to `brand`
-
-    // Server hosting upsell options
-    hosting_signup_link?: string; // slightly different from `host_signup`
-    host_signup?: {
-        brand?: string; // acts as the enabled flag too (truthy == show)
-
-        // Required-ness denotes when `brand` is truthy
-        cookie_policy_url: string;
-        privacy_policy_url: string;
-        terms_of_service_url: string;
-        url: string;
-        domains?: string[];
-    };
+    privacy_policy_url?: string; // location for cookie policy
 
     enable_presence_by_hs_url?: Record<string, boolean>; // <HomeserverName, Enabled>
 
-    terms_and_conditions_links?: { url: string, text: string }[];
+    terms_and_conditions_links?: { url: string; text: string }[];
 
     latex_maths_delims?: {
         inline?: {
             left?: string;
             right?: string;
+            pattern?: {
+                tex?: string;
+                latex?: string;
+            };
         };
         display?: {
             left?: string;
             right?: string;
+            pattern?: {
+                tex?: string;
+                latex?: string;
+            };
         };
     };
 
     sync_timeline_limit?: number;
     dangerously_allow_unsafe_and_insecure_passwords?: boolean; // developer option
 
-    // XXX: Undocumented URL for the "Learn more about spaces" link in the "Communities don't exist" messaging.
-    spaces_learn_more_url?: string;
+    voice_broadcast?: {
+        // length per voice chunk in seconds
+        chunk_length?: number;
+        // max voice broadcast length in seconds
+        max_length?: number;
+    };
+
+    user_notice?: {
+        title: string;
+        description: string;
+        show_once?: boolean;
+    };
 }
 
 export interface ISsoRedirectOptions {

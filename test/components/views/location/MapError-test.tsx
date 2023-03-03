@@ -14,29 +14,46 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { mount } from 'enzyme';
+import React from "react";
+import { render, RenderResult } from "@testing-library/react";
 
-import { MapError } from '../../../../src/components/views/location/MapError';
-import { LocationShareError } from '../../../../src/utils/location';
+import { MapError, MapErrorProps } from "../../../../src/components/views/location/MapError";
+import { LocationShareError } from "../../../../src/utils/location";
 
-describe('<MapError />', () => {
+describe("<MapError />", () => {
     const defaultProps = {
         onFinished: jest.fn(),
         error: LocationShareError.MapStyleUrlNotConfigured,
+        className: "test",
     };
-    const getComponent = (props = {}) =>
-        mount(<MapError {...defaultProps} {...props} />);
+    const getComponent = (props: Partial<MapErrorProps> = {}): RenderResult =>
+        render(<MapError {...defaultProps} {...props} />);
 
-    it('renders correctly for MapStyleUrlNotConfigured', () => {
-        const component = getComponent();
-        expect(component).toMatchSnapshot();
+    it("renders correctly for MapStyleUrlNotConfigured", () => {
+        const { container } = getComponent();
+        expect(container).toMatchSnapshot();
     });
 
-    it('renders correctly for MapStyleUrlNotReachable', () => {
-        const component = getComponent({
+    it("renders correctly for MapStyleUrlNotReachable", () => {
+        const { container } = getComponent({
             error: LocationShareError.MapStyleUrlNotReachable,
         });
-        expect(component).toMatchSnapshot();
+        expect(container).toMatchSnapshot();
+    });
+
+    it("does not render button when onFinished falsy", () => {
+        const { queryByText } = getComponent({
+            error: LocationShareError.MapStyleUrlNotReachable,
+            onFinished: undefined,
+        });
+        // no button
+        expect(queryByText("OK")).toBeFalsy();
+    });
+
+    it("applies class when isMinimised is truthy", () => {
+        const { container } = getComponent({
+            isMinimised: true,
+        });
+        expect(container).toMatchSnapshot();
     });
 });

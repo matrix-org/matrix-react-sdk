@@ -18,7 +18,7 @@ import React from "react";
 
 import { ALTERNATE_KEY_NAME, KEY_ICON } from "../../../accessibility/KeyboardShortcuts";
 import { KeyCombo } from "../../../KeyBindingsManager";
-import { isMac, Key } from "../../../Keyboard";
+import { IS_MAC, Key } from "../../../Keyboard";
 import { _t } from "../../../languageHandler";
 
 interface IKeyboardKeyProps {
@@ -30,22 +30,25 @@ export const KeyboardKey: React.FC<IKeyboardKeyProps> = ({ name, last }) => {
     const icon = KEY_ICON[name];
     const alternateName = ALTERNATE_KEY_NAME[name];
 
-    return <React.Fragment>
-        <kbd> { icon || (alternateName && _t(alternateName)) || name } </kbd>
-        { !last && "+" }
-    </React.Fragment>;
+    return (
+        <React.Fragment>
+            <kbd> {icon || (alternateName && _t(alternateName)) || name} </kbd>
+            {!last && "+"}
+        </React.Fragment>
+    );
 };
 
 interface IKeyboardShortcutProps {
     value: KeyCombo;
+    className?: string;
 }
 
-export const KeyboardShortcut: React.FC<IKeyboardShortcutProps> = ({ value }) => {
+export const KeyboardShortcut: React.FC<IKeyboardShortcutProps> = ({ value, className = "mx_KeyboardShortcut" }) => {
     if (!value) return null;
 
     const modifiersElement = [];
     if (value.ctrlOrCmdKey) {
-        modifiersElement.push(<KeyboardKey key="ctrlOrCmdKey" name={isMac ? Key.META : Key.CONTROL} />);
+        modifiersElement.push(<KeyboardKey key="ctrlOrCmdKey" name={IS_MAC ? Key.META : Key.CONTROL} />);
     } else if (value.ctrlKey) {
         modifiersElement.push(<KeyboardKey key="ctrlKey" name={Key.CONTROL} />);
     } else if (value.metaKey) {
@@ -58,10 +61,10 @@ export const KeyboardShortcut: React.FC<IKeyboardShortcutProps> = ({ value }) =>
         modifiersElement.push(<KeyboardKey key="shiftKey" name={Key.SHIFT} />);
     }
 
-    return <div className="mx_KeyboardShortcut">
-        { modifiersElement }
-        <KeyboardKey name={value.key} last />
-    </div>;
+    return (
+        <div className={className}>
+            {modifiersElement}
+            <KeyboardKey name={value.key} last />
+        </div>
+    );
 };
-
-export default KeyboardShortcut;

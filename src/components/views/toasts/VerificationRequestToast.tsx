@@ -22,9 +22,9 @@ import {
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
+import { _t } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import { userLabelForEventRoom } from "../../../utils/KeyVerificationStateObserver";
 import dis from "../../../dispatcher/dispatcher";
 import ToastStore from "../../../stores/ToastStore";
@@ -49,15 +49,15 @@ interface IState {
 export default class VerificationRequestToast extends React.PureComponent<IProps, IState> {
     private intervalHandle: number;
 
-    constructor(props) {
+    public constructor(props: IProps) {
         super(props);
         this.state = { counter: Math.ceil(props.request.timeout / 1000) };
     }
 
-    async componentDidMount() {
+    public async componentDidMount(): Promise<void> {
         const { request } = this.props;
         if (request.timeout && request.timeout > 0) {
-            this.intervalHandle = setInterval(() => {
+            this.intervalHandle = window.setInterval(() => {
                 let { counter } = this.state;
                 counter = Math.max(0, counter - 1);
                 this.setState({ counter });
@@ -66,7 +66,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
         request.on(VerificationRequestEvent.Change, this.checkRequestIsPending);
         // We should probably have a separate class managing the active verification toasts,
         // rather than monitoring this in the toast component itself, since we'll get problems
-        // like the toasdt not going away when the verification is cancelled unless it's the
+        // like the toast not going away when the verification is cancelled unless it's the
         // one on the top (ie. the one that's mounted).
         // As a quick & dirty fix, check the toast is still relevant when it mounts (this prevents
         // a toast hanging around after logging in if you did a verification as part of login).
@@ -77,26 +77,26 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
             const device = await cli.getDevice(request.channel.deviceId);
             const ip = device.last_seen_ip;
             this.setState({
-                device: cli.getStoredDevice(cli.getUserId(), request.channel.deviceId),
+                device: cli.getStoredDevice(cli.getUserId()!, request.channel.deviceId),
                 ip,
             });
         }
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         clearInterval(this.intervalHandle);
         const { request } = this.props;
         request.off(VerificationRequestEvent.Change, this.checkRequestIsPending);
     }
 
-    private checkRequestIsPending = () => {
+    private checkRequestIsPending = (): void => {
         const { request } = this.props;
         if (!request.canAccept) {
             ToastStore.sharedInstance().dismissToast(this.props.toastKey);
         }
     };
 
-    cancel = () => {
+    public cancel = (): void => {
         ToastStore.sharedInstance().dismissToast(this.props.toastKey);
         try {
             this.props.request.cancel();
@@ -105,7 +105,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
         }
     };
 
-    accept = async () => {
+    public accept = async (): Promise<void> => {
         ToastStore.sharedInstance().dismissToast(this.props.toastKey);
         const { request } = this.props;
         // no room id for to_device requests
@@ -129,12 +129,18 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
                     request.channel.roomId,
                 );
             } else {
-                Modal.createTrackedDialog('Incoming Verification', '', VerificationRequestDialog, {
-                    verificationRequest: request,
-                    onFinished: () => {
-                        request.cancel();
+                Modal.createDialog(
+                    VerificationRequestDialog,
+                    {
+                        verificationRequest: request,
+                        onFinished: () => {
+                            request.cancel();
+                        },
                     },
-                }, null, /* priority = */ false, /* static = */ true);
+                    undefined,
+                    /* priority = */ false,
+                    /* static = */ true,
+                );
             }
             await request.accept();
         } catch (err) {
@@ -142,7 +148,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
         }
     };
 
-    render() {
+    public render(): React.ReactNode {
         const { request } = this.props;
         let description;
         let detail;
@@ -167,17 +173,18 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
                 }
             }
         }
-        const declineLabel = this.state.counter === 0 ?
-            _t("Decline") :
-            _t("Decline (%(counter)s)", { counter: this.state.counter });
+        const declineLabel =
+            this.state.counter === 0 ? _t("Ignore") : _t("Ignore (%(counter)s)", { counter: this.state.counter });
 
-        return <GenericToast
-            description={description}
-            detail={detail}
-            acceptLabel={_t("Accept")}
-            onAccept={this.accept}
-            rejectLabel={declineLabel}
-            onReject={this.cancel}
-        />;
+        return (
+            <GenericToast
+                description={description}
+                detail={detail}
+                acceptLabel={_t("Verify Session")}
+                onAccept={this.accept}
+                rejectLabel={declineLabel}
+                onReject={this.cancel}
+            />
+        );
     }
 }

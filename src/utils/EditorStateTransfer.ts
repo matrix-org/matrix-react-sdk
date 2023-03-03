@@ -25,12 +25,12 @@ import DocumentOffset from "../editor/offset";
  * upon receiving the remote echo for an unsent event.
  */
 export default class EditorStateTransfer {
-    private serializedParts: SerializedPart[] = null;
-    private caret: DocumentOffset = null;
+    private serializedParts: SerializedPart[] | null = null;
+    private caret: DocumentOffset | null = null;
 
-    constructor(private readonly event: MatrixEvent) {}
+    public constructor(private readonly event: MatrixEvent) {}
 
-    public setEditorState(caret: DocumentOffset, serializedParts: SerializedPart[]) {
+    public setEditorState(caret: DocumentOffset, serializedParts: SerializedPart[]): void {
         this.caret = caret;
         this.serializedParts = serializedParts;
     }
@@ -39,11 +39,11 @@ export default class EditorStateTransfer {
         return !!this.serializedParts;
     }
 
-    public getSerializedParts(): SerializedPart[] {
+    public getSerializedParts(): SerializedPart[] | null {
         return this.serializedParts;
     }
 
-    public getCaret(): DocumentOffset {
+    public getCaret(): DocumentOffset | null {
         return this.caret;
     }
 

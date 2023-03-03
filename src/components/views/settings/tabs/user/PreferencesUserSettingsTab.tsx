@@ -15,191 +15,132 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 import { _t } from "../../../../../languageHandler";
-import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
+import { UseCase } from "../../../../../settings/enums/UseCase";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import Field from "../../../elements/Field";
-import PlatformPeg from "../../../../../PlatformPeg";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
-import SettingsFlag from '../../../elements/SettingsFlag';
+import SettingsFlag from "../../../elements/SettingsFlag";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import dis from "../../../../../dispatcher/dispatcher";
 import { UserTab } from "../../../dialogs/UserTab";
 import { OpenToTabPayload } from "../../../../../dispatcher/payloads/OpenToTabPayload";
 import { Action } from "../../../../../dispatcher/actions";
+import SdkConfig from "../../../../../SdkConfig";
+import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
+import { showUserOnboardingPage } from "../../../user-onboarding/UserOnboardingPage";
 
 interface IProps {
     closeSettingsFn(success: boolean): void;
 }
 
 interface IState {
-    autoLaunch: boolean;
-    autoLaunchSupported: boolean;
-    warnBeforeExit: boolean;
-    warnBeforeExitSupported: boolean;
-    alwaysShowMenuBarSupported: boolean;
-    alwaysShowMenuBar: boolean;
-    minimizeToTraySupported: boolean;
-    minimizeToTray: boolean;
+    disablingReadReceiptsSupported: boolean;
     autocompleteDelay: string;
     readMarkerInViewThresholdMs: string;
     readMarkerOutOfViewThresholdMs: string;
 }
 
 export default class PreferencesUserSettingsTab extends React.Component<IProps, IState> {
-    static ROOM_LIST_SETTINGS = [
-        'breadcrumbs',
+    private static ROOM_LIST_SETTINGS = ["breadcrumbs", "FTUE.userOnboardingButton"];
+
+    private static SPACES_SETTINGS = ["Spaces.allRoomsInHome"];
+
+    private static KEYBINDINGS_SETTINGS = ["ctrlFForSearch"];
+
+    private static PRESENCE_SETTINGS = [
+        "sendTypingNotifications",
+        // sendReadReceipts - handled specially due to server needing support
     ];
 
-    static SPACES_SETTINGS = [
-        "Spaces.allRoomsInHome",
+    private static COMPOSER_SETTINGS = [
+        "MessageComposerInput.autoReplaceEmoji",
+        "MessageComposerInput.useMarkdown",
+        "MessageComposerInput.suggestEmoji",
+        "MessageComposerInput.ctrlEnterToSend",
+        "MessageComposerInput.surroundWith",
+        "MessageComposerInput.showStickersButton",
+        "MessageComposerInput.insertTrailingColon",
     ];
 
-    static KEYBINDINGS_SETTINGS = [
-        'ctrlFForSearch',
+    private static TIME_SETTINGS = ["showTwelveHourTimestamps", "alwaysShowTimestamps"];
+
+    private static CODE_BLOCKS_SETTINGS = [
+        "enableSyntaxHighlightLanguageDetection",
+        "expandCodeByDefault",
+        "showCodeLineNumbers",
     ];
 
-    static COMPOSER_SETTINGS = [
-        'MessageComposerInput.autoReplaceEmoji',
-        'MessageComposerInput.suggestEmoji',
-        'sendTypingNotifications',
-        'MessageComposerInput.ctrlEnterToSend',
-        'MessageComposerInput.surroundWith',
-        'MessageComposerInput.showStickersButton',
-        'MessageComposerInput.insertTrailingColon',
+    private static IMAGES_AND_VIDEOS_SETTINGS = ["urlPreviewsEnabled", "autoplayGifs", "autoplayVideo", "showImages"];
+
+    private static TIMELINE_SETTINGS = [
+        "showTypingNotifications",
+        "showRedactions",
+        "showReadReceipts",
+        "showJoinLeaves",
+        "showDisplaynameChanges",
+        "showChatEffects",
+        "showAvatarChanges",
+        "Pill.shouldShowPillAvatar",
+        "TextualBody.enableBigEmoji",
+        "scrollToBottomOnMessageSent",
+        "useOnlyCurrentProfiles",
     ];
 
-    static TIME_SETTINGS = [
-        'showTwelveHourTimestamps',
-        'alwaysShowTimestamps',
-    ];
-    static CODE_BLOCKS_SETTINGS = [
-        'enableSyntaxHighlightLanguageDetection',
-        'expandCodeByDefault',
-        'showCodeLineNumbers',
-    ];
-    static IMAGES_AND_VIDEOS_SETTINGS = [
-        'urlPreviewsEnabled',
-        'autoplayGifs',
-        'autoplayVideo',
-        'showImages',
-    ];
-    static TIMELINE_SETTINGS = [
-        'showTypingNotifications',
-        'showRedactions',
-        'showReadReceipts',
-        'showJoinLeaves',
-        'showDisplaynameChanges',
-        'showChatEffects',
-        'showAvatarChanges',
-        'Pill.shouldShowPillAvatar',
-        'TextualBody.enableBigEmoji',
-        'scrollToBottomOnMessageSent',
-    ];
-    static GENERAL_SETTINGS = [
-        'promptBeforeInviteUnknownUsers',
+    private static ROOM_DIRECTORY_SETTINGS = ["SpotlightSearch.showNsfwPublicRooms"];
+
+    private static GENERAL_SETTINGS = [
+        "promptBeforeInviteUnknownUsers",
         // Start automatically after startup (electron-only)
         // Autocomplete delay (niche text box)
     ];
 
-    constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
-            autoLaunch: false,
-            autoLaunchSupported: false,
-            warnBeforeExit: true,
-            warnBeforeExitSupported: false,
-            alwaysShowMenuBar: true,
-            alwaysShowMenuBarSupported: false,
-            minimizeToTray: true,
-            minimizeToTraySupported: false,
-            autocompleteDelay:
-                SettingsStore.getValueAt(SettingLevel.DEVICE, 'autocompleteDelay').toString(10),
-            readMarkerInViewThresholdMs:
-                SettingsStore.getValueAt(SettingLevel.DEVICE, 'readMarkerInViewThresholdMs').toString(10),
-            readMarkerOutOfViewThresholdMs:
-                SettingsStore.getValueAt(SettingLevel.DEVICE, 'readMarkerOutOfViewThresholdMs').toString(10),
+            disablingReadReceiptsSupported: false,
+            autocompleteDelay: SettingsStore.getValueAt(SettingLevel.DEVICE, "autocompleteDelay").toString(10),
+            readMarkerInViewThresholdMs: SettingsStore.getValueAt(
+                SettingLevel.DEVICE,
+                "readMarkerInViewThresholdMs",
+            ).toString(10),
+            readMarkerOutOfViewThresholdMs: SettingsStore.getValueAt(
+                SettingLevel.DEVICE,
+                "readMarkerOutOfViewThresholdMs",
+            ).toString(10),
         };
     }
 
-    async componentDidMount() {
-        const platform = PlatformPeg.get();
-
-        const autoLaunchSupported = await platform.supportsAutoLaunch();
-        let autoLaunch = false;
-        if (autoLaunchSupported) {
-            autoLaunch = await platform.getAutoLaunchEnabled();
-        }
-
-        const warnBeforeExitSupported = await platform.supportsWarnBeforeExit();
-        let warnBeforeExit = false;
-        if (warnBeforeExitSupported) {
-            warnBeforeExit = await platform.shouldWarnBeforeExit();
-        }
-
-        const alwaysShowMenuBarSupported = await platform.supportsAutoHideMenuBar();
-        let alwaysShowMenuBar = true;
-        if (alwaysShowMenuBarSupported) {
-            alwaysShowMenuBar = !(await platform.getAutoHideMenuBarEnabled());
-        }
-
-        const minimizeToTraySupported = await platform.supportsMinimizeToTray();
-        let minimizeToTray = true;
-        if (minimizeToTraySupported) {
-            minimizeToTray = await platform.getMinimizeToTrayEnabled();
-        }
+    public async componentDidMount(): Promise<void> {
+        const cli = MatrixClientPeg.get();
 
         this.setState({
-            autoLaunch,
-            autoLaunchSupported,
-            warnBeforeExit,
-            warnBeforeExitSupported,
-            alwaysShowMenuBarSupported,
-            alwaysShowMenuBar,
-            minimizeToTraySupported,
-            minimizeToTray,
+            disablingReadReceiptsSupported:
+                (await cli.doesServerSupportUnstableFeature("org.matrix.msc2285.stable")) ||
+                (await cli.isVersionSupported("v1.4")),
         });
     }
 
-    private onAutoLaunchChange = (checked: boolean) => {
-        PlatformPeg.get().setAutoLaunchEnabled(checked).then(() => this.setState({ autoLaunch: checked }));
-    };
-
-    private onWarnBeforeExitChange = (checked: boolean) => {
-        PlatformPeg.get().setWarnBeforeExit(checked).then(() => this.setState({ warnBeforeExit: checked }));
-    };
-
-    private onAlwaysShowMenuBarChange = (checked: boolean) => {
-        PlatformPeg.get().setAutoHideMenuBarEnabled(!checked).then(() => this.setState({ alwaysShowMenuBar: checked }));
-    };
-
-    private onMinimizeToTrayChange = (checked: boolean) => {
-        PlatformPeg.get().setMinimizeToTrayEnabled(checked).then(() => this.setState({ minimizeToTray: checked }));
-    };
-
-    private onAutocompleteDelayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    private onAutocompleteDelayChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({ autocompleteDelay: e.target.value });
         SettingsStore.setValue("autocompleteDelay", null, SettingLevel.DEVICE, e.target.value);
     };
 
-    private onReadMarkerInViewThresholdMs = (e: React.ChangeEvent<HTMLInputElement>) => {
+    private onReadMarkerInViewThresholdMs = (e: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({ readMarkerInViewThresholdMs: e.target.value });
         SettingsStore.setValue("readMarkerInViewThresholdMs", null, SettingLevel.DEVICE, e.target.value);
     };
 
-    private onReadMarkerOutOfViewThresholdMs = (e: React.ChangeEvent<HTMLInputElement>) => {
+    private onReadMarkerOutOfViewThresholdMs = (e: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({ readMarkerOutOfViewThresholdMs: e.target.value });
         SettingsStore.setValue("readMarkerOutOfViewThresholdMs", null, SettingLevel.DEVICE, e.target.value);
     };
 
-    private renderGroup(
-        settingIds: string[],
-        level = SettingLevel.ACCOUNT,
-    ): React.ReactNodeArray {
-        return settingIds.map(i => {
+    private renderGroup(settingIds: string[], level = SettingLevel.ACCOUNT): React.ReactNodeArray {
+        return settingIds.map((i) => {
             const disabled = !SettingsStore.isEnabled(i);
             return <SettingsFlag key={i} name={i} level={level} disabled={disabled} />;
         });
@@ -212,114 +153,129 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         });
     };
 
-    render() {
-        let autoLaunchOption = null;
-        if (this.state.autoLaunchSupported) {
-            autoLaunchOption = <LabelledToggleSwitch
-                value={this.state.autoLaunch}
-                onChange={this.onAutoLaunchChange}
-                label={_t('Start automatically after system login')} />;
-        }
-
-        let warnBeforeExitOption = null;
-        if (this.state.warnBeforeExitSupported) {
-            warnBeforeExitOption = <LabelledToggleSwitch
-                value={this.state.warnBeforeExit}
-                onChange={this.onWarnBeforeExitChange}
-                label={_t('Warn before quitting')} />;
-        }
-
-        let autoHideMenuOption = null;
-        if (this.state.alwaysShowMenuBarSupported) {
-            autoHideMenuOption = <LabelledToggleSwitch
-                value={this.state.alwaysShowMenuBar}
-                onChange={this.onAlwaysShowMenuBarChange}
-                label={_t('Always show the window menu bar')} />;
-        }
-
-        let minimizeToTrayOption = null;
-        if (this.state.minimizeToTraySupported) {
-            minimizeToTrayOption = <LabelledToggleSwitch
-                value={this.state.minimizeToTray}
-                onChange={this.onMinimizeToTrayChange}
-                label={_t('Show tray icon and minimise window to it on close')} />;
-        }
+    public render(): React.ReactNode {
+        const useCase = SettingsStore.getValue<UseCase | null>("FTUE.useCaseSelection");
+        const roomListSettings = PreferencesUserSettingsTab.ROOM_LIST_SETTINGS
+            // Only show the breadcrumbs setting if breadcrumbs v2 is disabled
+            .filter((it) => it !== "breadcrumbs" || !SettingsStore.getValue("feature_breadcrumbs_v2"))
+            // Only show the user onboarding setting if the user should see the user onboarding page
+            .filter((it) => it !== "FTUE.userOnboardingButton" || showUserOnboardingPage(useCase));
 
         return (
             <div className="mx_SettingsTab mx_PreferencesUserSettingsTab">
-                <div className="mx_SettingsTab_heading">{ _t("Preferences") }</div>
+                <div className="mx_SettingsTab_heading">{_t("Preferences")}</div>
 
-                { !SettingsStore.getValue("feature_breadcrumbs_v2") &&
+                {roomListSettings.length > 0 && (
                     <div className="mx_SettingsTab_section">
-                        <span className="mx_SettingsTab_subheading">{ _t("Room list") }</span>
-                        { this.renderGroup(PreferencesUserSettingsTab.ROOM_LIST_SETTINGS) }
+                        <span className="mx_SettingsTab_subheading">{_t("Room list")}</span>
+                        {this.renderGroup(roomListSettings)}
                     </div>
-                }
+                )}
 
                 <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{ _t("Spaces") }</span>
-                    { this.renderGroup(PreferencesUserSettingsTab.SPACES_SETTINGS, SettingLevel.ACCOUNT) }
+                    <span className="mx_SettingsTab_subheading">{_t("Spaces")}</span>
+                    {this.renderGroup(PreferencesUserSettingsTab.SPACES_SETTINGS, SettingLevel.ACCOUNT)}
                 </div>
 
                 <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{ _t("Keyboard shortcuts") }</span>
+                    <span className="mx_SettingsTab_subheading">{_t("Keyboard shortcuts")}</span>
                     <div className="mx_SettingsFlag">
-                        { _t("To view all keyboard shortcuts, <a>click here</a>.", {}, {
-                            a: sub => <AccessibleButton kind="link" onClick={this.onKeyboardShortcutsClicked}>
-                                { sub }
-                            </AccessibleButton>,
-                        }) }
+                        {_t(
+                            "To view all keyboard shortcuts, <a>click here</a>.",
+                            {},
+                            {
+                                a: (sub) => (
+                                    <AccessibleButton kind="link_inline" onClick={this.onKeyboardShortcutsClicked}>
+                                        {sub}
+                                    </AccessibleButton>
+                                ),
+                            },
+                        )}
                     </div>
-                    { this.renderGroup(PreferencesUserSettingsTab.KEYBINDINGS_SETTINGS) }
+                    {this.renderGroup(PreferencesUserSettingsTab.KEYBINDINGS_SETTINGS)}
                 </div>
 
                 <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{ _t("Displaying time") }</span>
-                    { this.renderGroup(PreferencesUserSettingsTab.TIME_SETTINGS) }
+                    <span className="mx_SettingsTab_subheading">{_t("Displaying time")}</span>
+                    {this.renderGroup(PreferencesUserSettingsTab.TIME_SETTINGS)}
                 </div>
 
                 <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{ _t("Composer") }</span>
-                    { this.renderGroup(PreferencesUserSettingsTab.COMPOSER_SETTINGS) }
+                    <span className="mx_SettingsTab_subheading">{_t("Presence")}</span>
+                    <span className="mx_SettingsTab_subsectionText">
+                        {_t("Share your activity and status with others.")}
+                    </span>
+                    <SettingsFlag
+                        disabled={
+                            !this.state.disablingReadReceiptsSupported && SettingsStore.getValue("sendReadReceipts") // Make sure the feature can always be enabled
+                        }
+                        disabledDescription={_t("Your server doesn't support disabling sending read receipts.")}
+                        name="sendReadReceipts"
+                        level={SettingLevel.ACCOUNT}
+                    />
+                    {this.renderGroup(PreferencesUserSettingsTab.PRESENCE_SETTINGS)}
                 </div>
 
                 <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{ _t("Code blocks") }</span>
-                    { this.renderGroup(PreferencesUserSettingsTab.CODE_BLOCKS_SETTINGS) }
+                    <span className="mx_SettingsTab_subheading">{_t("Composer")}</span>
+                    {this.renderGroup(PreferencesUserSettingsTab.COMPOSER_SETTINGS)}
                 </div>
 
                 <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{ _t("Images, GIFs and videos") }</span>
-                    { this.renderGroup(PreferencesUserSettingsTab.IMAGES_AND_VIDEOS_SETTINGS) }
+                    <span className="mx_SettingsTab_subheading">{_t("Code blocks")}</span>
+                    {this.renderGroup(PreferencesUserSettingsTab.CODE_BLOCKS_SETTINGS)}
                 </div>
 
                 <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{ _t("Timeline") }</span>
-                    { this.renderGroup(PreferencesUserSettingsTab.TIMELINE_SETTINGS) }
+                    <span className="mx_SettingsTab_subheading">{_t("Images, GIFs and videos")}</span>
+                    {this.renderGroup(PreferencesUserSettingsTab.IMAGES_AND_VIDEOS_SETTINGS)}
                 </div>
 
                 <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{ _t("General") }</span>
-                    { this.renderGroup(PreferencesUserSettingsTab.GENERAL_SETTINGS) }
-                    { minimizeToTrayOption }
-                    { autoHideMenuOption }
-                    { autoLaunchOption }
-                    { warnBeforeExitOption }
+                    <span className="mx_SettingsTab_subheading">{_t("Timeline")}</span>
+                    {this.renderGroup(PreferencesUserSettingsTab.TIMELINE_SETTINGS)}
+                </div>
+
+                <div className="mx_SettingsTab_section">
+                    <span className="mx_SettingsTab_subheading">{_t("Room directory")}</span>
+                    {this.renderGroup(PreferencesUserSettingsTab.ROOM_DIRECTORY_SETTINGS)}
+                </div>
+
+                <div className="mx_SettingsTab_section">
+                    <span className="mx_SettingsTab_subheading">{_t("General")}</span>
+                    {this.renderGroup(PreferencesUserSettingsTab.GENERAL_SETTINGS)}
+
+                    <SettingsFlag name="Electron.showTrayIcon" level={SettingLevel.PLATFORM} hideIfCannotSet />
+                    <SettingsFlag
+                        name="Electron.enableHardwareAcceleration"
+                        level={SettingLevel.PLATFORM}
+                        hideIfCannotSet
+                        label={_t("Enable hardware acceleration (restart %(appName)s to take effect)", {
+                            appName: SdkConfig.get().brand,
+                        })}
+                    />
+                    <SettingsFlag name="Electron.alwaysShowMenuBar" level={SettingLevel.PLATFORM} hideIfCannotSet />
+                    <SettingsFlag name="Electron.autoLaunch" level={SettingLevel.PLATFORM} hideIfCannotSet />
+                    <SettingsFlag name="Electron.warnBeforeExit" level={SettingLevel.PLATFORM} hideIfCannotSet />
+
                     <Field
-                        label={_t('Autocomplete delay (ms)')}
-                        type='number'
+                        label={_t("Autocomplete delay (ms)")}
+                        type="number"
                         value={this.state.autocompleteDelay}
-                        onChange={this.onAutocompleteDelayChange} />
+                        onChange={this.onAutocompleteDelayChange}
+                    />
                     <Field
-                        label={_t('Read Marker lifetime (ms)')}
-                        type='number'
+                        label={_t("Read Marker lifetime (ms)")}
+                        type="number"
                         value={this.state.readMarkerInViewThresholdMs}
-                        onChange={this.onReadMarkerInViewThresholdMs} />
+                        onChange={this.onReadMarkerInViewThresholdMs}
+                    />
                     <Field
-                        label={_t('Read Marker off-screen lifetime (ms)')}
-                        type='number'
+                        label={_t("Read Marker off-screen lifetime (ms)")}
+                        type="number"
                         value={this.state.readMarkerOutOfViewThresholdMs}
-                        onChange={this.onReadMarkerOutOfViewThresholdMs} />
+                        onChange={this.onReadMarkerOutOfViewThresholdMs}
+                    />
                 </div>
             </div>
         );

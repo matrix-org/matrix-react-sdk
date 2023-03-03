@@ -31,7 +31,7 @@ export default class HistoryManager {
     private newlyTypedCharCount = 0;
     private currentIndex = -1;
     private changedSinceLastPush = false;
-    private lastCaret: Caret = null;
+    private lastCaret: Caret | null = null;
     private nonWordBoundarySinceLastPush = false;
     private addedSinceLastPush = false;
     private removedSinceLastPush = false;
@@ -47,15 +47,14 @@ export default class HistoryManager {
         this.removedSinceLastPush = false;
     }
 
-    private shouldPush(inputType, diff) {
+    private shouldPush(inputType: string, diff: IDiff): boolean {
         // right now we can only push a step after
         // the input has been applied to the model,
         // so we can't push the state before something happened.
         // not ideal but changing this would be harder to fit cleanly into
         // the editor model.
-        const isNonBulkInput = inputType === "insertText" ||
-                               inputType === "deleteContentForward" ||
-                               inputType === "deleteContentBackward";
+        const isNonBulkInput =
+            inputType === "insertText" || inputType === "deleteContentForward" || inputType === "deleteContentBackward";
         if (diff && isNonBulkInput) {
             if (diff.added) {
                 this.addedSinceLastPush = true;
@@ -66,7 +65,7 @@ export default class HistoryManager {
             // as long as you've only been adding or removing since the last push
             if (this.addedSinceLastPush !== this.removedSinceLastPush) {
                 // add steps by word boundary, up to MAX_STEP_LENGTH characters
-                const str = diff.added ? diff.added : diff.removed;
+                const str = diff.added ? diff.added : diff.removed!;
                 const isWordBoundary = str === " " || str === "\t" || str === "\n";
                 if (this.nonWordBoundarySinceLastPush && isWordBoundary) {
                     return true;
@@ -86,9 +85,9 @@ export default class HistoryManager {
         }
     }
 
-    private pushState(model: EditorModel, caret: Caret) {
+    private pushState(model: EditorModel, caret: Caret): void {
         // remove all steps after current step
-        while (this.currentIndex < (this.stack.length - 1)) {
+        while (this.currentIndex < this.stack.length - 1) {
             this.stack.pop();
         }
         const parts = model.serializeParts();
@@ -132,7 +131,7 @@ export default class HistoryManager {
     }
 
     public canRedo(): boolean {
-        return this.currentIndex < (this.stack.length - 1);
+        return this.currentIndex < this.stack.length - 1;
     }
 
     // returns state that should be applied to model

@@ -14,28 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { IContent, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 
 import { _t } from "../../../languageHandler";
 import { CardContext } from "../right_panel/context";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
-import { showThread } from "../../../dispatcher/dispatch-actions/threads";
 import PosthogTrackers from "../../../PosthogTrackers";
-import { useTypedEventEmitterState } from "../../../hooks/useEventEmitter";
+import { useTypedEventEmitter, useTypedEventEmitterState } from "../../../hooks/useEventEmitter";
 import RoomContext from "../../../contexts/RoomContext";
 import { MessagePreviewStore } from "../../../stores/room-list/MessagePreviewStore";
 import MemberAvatar from "../avatars/MemberAvatar";
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { Action } from "../../../dispatcher/actions";
+import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
+import defaultDispatcher from "../../../dispatcher/dispatcher";
 
 interface IProps {
     mxEvent: MatrixEvent;
     thread: Thread;
 }
 
-const ThreadSummary = ({ mxEvent, thread }: IProps) => {
+const ThreadSummary: React.FC<IProps> = ({ mxEvent, thread, ...props }) => {
     const roomContext = useContext(RoomContext);
     const cardContext = useContext(CardContext);
     const count = useTypedEventEmitterState(thread, ThreadEvent.Update, () => thread.length);
@@ -48,9 +50,11 @@ const ThreadSummary = ({ mxEvent, thread }: IProps) => {
 
     return (
         <AccessibleButton
-            className="mx_ThreadInfo"
+            {...props}
+            className="mx_ThreadSummary"
             onClick={(ev: ButtonEvent) => {
-                showThread({
+                defaultDispatcher.dispatch<ShowThreadPayload>({
+                    action: Action.ShowThread,
                     rootEvent: mxEvent,
                     push: cardContext.isCard,
                 });
@@ -58,11 +62,9 @@ const ThreadSummary = ({ mxEvent, thread }: IProps) => {
             }}
             aria-label={_t("Open thread")}
         >
-            <span className="mx_ThreadInfo_threads-amount">
-                { countSection }
-            </span>
+            <span className="mx_ThreadSummary_replies_amount">{countSection}</span>
             <ThreadMessagePreview thread={thread} showDisplayname={!roomContext.narrow} />
-            <div className="mx_ThreadInfo_chevron" />
+            <div className="mx_ThreadSummary_chevron" />
         </AccessibleButton>
     );
 };
@@ -72,41 +74,56 @@ interface IPreviewProps {
     showDisplayname?: boolean;
 }
 
-export const ThreadMessagePreview = ({ thread, showDisplayname = false }: IPreviewProps) => {
+export const ThreadMessagePreview: React.FC<IPreviewProps> = ({ thread, showDisplayname = false }) => {
     const cli = useContext(MatrixClientContext);
 
-    const lastReply = useTypedEventEmitterState(thread, ThreadEvent.Update, () => thread.replyToEvent);
-    // track the replacing event id as a means to regenerate the thread message preview
-    const replacingEventId = useTypedEventEmitterState(
-        lastReply,
-        MatrixEventEvent.Replaced,
-        () => lastReply?.replacingEventId(),
-    );
+    const lastReply = useTypedEventEmitterState(thread, ThreadEvent.Update, () => thread.replyToEvent) ?? undefined;
+    // track the content as a means to regenerate the thread message preview upon edits & decryption
+    const [content, setContent] = useState<IContent | undefined>(lastReply?.getContent());
+    useTypedEventEmitter(lastReply, MatrixEventEvent.Replaced, () => {
+        setContent(lastReply!.getContent());
+    });
+    const awaitDecryption = lastReply?.shouldAttemptDecryption() || lastReply?.isBeingDecrypted();
+    useTypedEventEmitter(awaitDecryption ? lastReply : undefined, MatrixEventEvent.Decrypted, () => {
+        setContent(lastReply!.getContent());
+    });
 
-    const preview = useAsyncMemo(async () => {
+    const preview = useAsyncMemo(async (): Promise<string | undefined> => {
         if (!lastReply) return;
         await cli.decryptEventIfNeeded(lastReply);
         return MessagePreviewStore.instance.generatePreviewForEvent(lastReply);
-    }, [lastReply, replacingEventId]);
-    if (!preview) return null;
+    }, [lastReply, content]);
+    if (!preview || !lastReply) {
+        return null;
+    }
 
-    return <>
-        <MemberAvatar
-            member={lastReply.sender}
-            fallbackUserId={lastReply.getSender()}
-            width={24}
-            height={24}
-            className="mx_ThreadInfo_avatar"
-        />
-        { showDisplayname && <div className="mx_ThreadInfo_sender">
-            { lastReply.sender?.name ?? lastReply.getSender() }
-        </div> }
-        <div className="mx_ThreadInfo_content">
-            <span className="mx_ThreadInfo_message-preview">
-                { preview }
-            </span>
-        </div>
-    </>;
+    return (
+        <>
+            <MemberAvatar
+                member={lastReply.sender}
+                fallbackUserId={lastReply.getSender()}
+                width={24}
+                height={24}
+                className="mx_ThreadSummary_avatar"
+            />
+            {showDisplayname && (
+                <div className="mx_ThreadSummary_sender">{lastReply.sender?.name ?? lastReply.getSender()}</div>
+            )}
+
+            {lastReply.isDecryptionFailure() ? (
+                <div
+                    className="mx_ThreadSummary_content mx_DecryptionFailureBody"
+                    title={_t("Unable to decrypt message")}
+                >
+                    <span className="mx_ThreadSummary_message-preview">{_t("Unable to decrypt message")}</span>
+                </div>
+            ) : (
+                <div className="mx_ThreadSummary_content" title={preview}>
+                    <span className="mx_ThreadSummary_message-preview">{preview}</span>
+                </div>
+            )}
+        </>
+    );
 };
 
 export default ThreadSummary;

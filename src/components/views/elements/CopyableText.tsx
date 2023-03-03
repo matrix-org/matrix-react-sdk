@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import React, { useState } from "react";
+import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
 import { copyPlaintext } from "../../../utils/strings";
@@ -23,34 +24,42 @@ import { ButtonEvent } from "./AccessibleButton";
 import AccessibleTooltipButton from "./AccessibleTooltipButton";
 
 interface IProps {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     getTextToCopy: () => string;
+    border?: boolean;
+    className?: string;
 }
 
-const CopyableText: React.FC<IProps> = ({ children, getTextToCopy }) => {
+const CopyableText: React.FC<IProps> = ({ children, getTextToCopy, border = true, className }) => {
     const [tooltip, setTooltip] = useState<string | undefined>(undefined);
 
-    const onCopyClickInternal = async (e: ButtonEvent) => {
+    const onCopyClickInternal = async (e: ButtonEvent): Promise<void> => {
         e.preventDefault();
         const successful = await copyPlaintext(getTextToCopy());
-        setTooltip(successful ? _t('Copied!') : _t('Failed to copy'));
+        setTooltip(successful ? _t("Copied!") : _t("Failed to copy"));
     };
 
-    const onHideTooltip = () => {
+    const onHideTooltip = (): void => {
         if (tooltip) {
             setTooltip(undefined);
         }
     };
 
-    return <div className="mx_CopyableText">
-        { children }
-        <AccessibleTooltipButton
-            title={tooltip ?? _t("Copy")}
-            onClick={onCopyClickInternal}
-            className="mx_CopyableText_copyButton"
-            onHideTooltip={onHideTooltip}
-        />
-    </div>;
+    const combinedClassName = classNames("mx_CopyableText", className, {
+        mx_CopyableText_border: border,
+    });
+
+    return (
+        <div className={combinedClassName}>
+            {children}
+            <AccessibleTooltipButton
+                title={tooltip ?? _t("Copy")}
+                onClick={onCopyClickInternal}
+                className="mx_CopyableText_copyButton"
+                onHideTooltip={onHideTooltip}
+            />
+        </div>
+    );
 };
 
 export default CopyableText;

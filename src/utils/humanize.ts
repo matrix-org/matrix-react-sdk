@@ -30,13 +30,14 @@ const HOURS_1_DAY = 26;
  * @returns {string} The humanized time.
  */
 export function humanizeTime(timeMillis: number): string {
-    const now = (new Date()).getTime();
+    const now = Date.now();
     let msAgo = now - timeMillis;
     const minutes = Math.abs(Math.ceil(msAgo / 60000));
     const hours = Math.ceil(minutes / 60);
     const days = Math.ceil(hours / 24);
 
-    if (msAgo >= 0) { // Past
+    if (msAgo >= 0) {
+        // Past
         if (msAgo <= MILLISECONDS_RECENT) return _t("a few seconds ago");
         if (msAgo <= MILLISECONDS_1_MIN) return _t("about a minute ago");
         if (minutes <= MINUTES_UNDER_1_HOUR) return _t("%(num)s minutes ago", { num: minutes });
@@ -44,7 +45,8 @@ export function humanizeTime(timeMillis: number): string {
         if (hours <= HOURS_UNDER_1_DAY) return _t("%(num)s hours ago", { num: hours });
         if (hours <= HOURS_1_DAY) return _t("about a day ago");
         return _t("%(num)s days ago", { num: days });
-    } else { // Future
+    } else {
+        // Future
         msAgo = Math.abs(msAgo);
         if (msAgo <= MILLISECONDS_RECENT) return _t("a few seconds from now");
         if (msAgo <= MILLISECONDS_1_MIN) return _t("about a minute from now");

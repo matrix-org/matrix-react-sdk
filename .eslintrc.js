@@ -1,12 +1,9 @@
 module.exports = {
-    plugins: [
-        "matrix-org",
-    ],
-    extends: [
-        "plugin:matrix-org/babel",
-        "plugin:matrix-org/react",
-        "plugin:matrix-org/a11y",
-    ],
+    plugins: ["matrix-org"],
+    extends: ["plugin:matrix-org/babel", "plugin:matrix-org/react", "plugin:matrix-org/a11y"],
+    parserOptions: {
+        project: ["./tsconfig.json"],
+    },
     env: {
         browser: true,
         node: true,
@@ -19,7 +16,6 @@ module.exports = {
         "no-constant-condition": "off",
         "prefer-promise-reject-errors": "off",
         "no-async-promise-executor": "off",
-        "quotes": "off",
         "no-extra-boolean-cast": "off",
 
         // Bind or arrow functions in props causes performance issues (but we
@@ -41,34 +37,47 @@ module.exports = {
         ],
 
         // Ban matrix-js-sdk/src imports in favour of matrix-js-sdk/src/matrix imports to prevent unleashing hell.
-        "no-restricted-imports": ["error", {
-            "paths": [{
-                "name": "matrix-js-sdk",
-                "message": "Please use matrix-js-sdk/src/matrix instead",
-            }, {
-                "name": "matrix-js-sdk/",
-                "message": "Please use matrix-js-sdk/src/matrix instead",
-            }, {
-                "name": "matrix-js-sdk/src",
-                "message": "Please use matrix-js-sdk/src/matrix instead",
-            }, {
-                "name": "matrix-js-sdk/src/",
-                "message": "Please use matrix-js-sdk/src/matrix instead",
-            }, {
-                "name": "matrix-js-sdk/src/index",
-                "message": "Please use matrix-js-sdk/src/matrix instead",
-            }, {
-                "name": "matrix-react-sdk",
-                "message": "Please use matrix-react-sdk/src/index instead",
-            }, {
-                "name": "matrix-react-sdk/",
-                "message": "Please use matrix-react-sdk/src/index instead",
-            }],
-            "patterns": [{
-                "group": ["matrix-js-sdk/lib", "matrix-js-sdk/lib/", "matrix-js-sdk/lib/**"],
-                "message": "Please use matrix-js-sdk/src/* instead",
-            }],
-        }],
+        "no-restricted-imports": [
+            "error",
+            {
+                paths: [
+                    {
+                        name: "matrix-js-sdk",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/index",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-react-sdk",
+                        message: "Please use matrix-react-sdk/src/index instead",
+                    },
+                    {
+                        name: "matrix-react-sdk/",
+                        message: "Please use matrix-react-sdk/src/index instead",
+                    },
+                ],
+                patterns: [
+                    {
+                        group: ["matrix-js-sdk/lib", "matrix-js-sdk/lib/", "matrix-js-sdk/lib/**"],
+                        message: "Please use matrix-js-sdk/src/* instead",
+                    },
+                ],
+            },
+        ],
 
         // There are too many a11y violations to fix at once
         // Turn violated rules off until they are fixed
@@ -86,22 +95,23 @@ module.exports = {
         "jsx-a11y/no-static-element-interactions": "off",
         "jsx-a11y/role-supports-aria-props": "off",
         "jsx-a11y/tabindex-no-positive": "off",
+
+        "matrix-org/require-copyright-header": "error",
     },
     overrides: [
         {
-            files: [
-                "src/**/*.{ts,tsx}",
-                "test/**/*.{ts,tsx}",
-                "cypress/**/*.ts",
-            ],
-            extends: [
-                "plugin:matrix-org/typescript",
-                "plugin:matrix-org/react",
-            ],
+            files: ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}", "cypress/**/*.ts"],
+            extends: ["plugin:matrix-org/typescript", "plugin:matrix-org/react"],
             rules: {
+                "@typescript-eslint/explicit-function-return-type": [
+                    "error",
+                    {
+                        allowExpressions: true,
+                    },
+                ],
+
                 // Things we do that break the ideal style
                 "prefer-promise-reject-errors": "off",
-                "quotes": "off",
                 "no-extra-boolean-cast": "off",
 
                 // Remove Babel things manually due to override limitations
@@ -113,6 +123,8 @@ module.exports = {
                 "@typescript-eslint/no-explicit-any": "off",
                 // We'd rather not do this but we do
                 "@typescript-eslint/ban-ts-comment": "off",
+                // We're okay with assertion errors when we ask for them
+                "@typescript-eslint/no-non-null-assertion": "off",
             },
         },
         // temporary override for offending icon require files
@@ -145,12 +157,52 @@ module.exports = {
                 "src/components/views/rooms/MessageComposer.tsx",
                 "src/components/views/rooms/ReplyPreview.tsx",
                 "src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx",
-                "src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx"
+                "src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx",
             ],
             rules: {
                 "@typescript-eslint/no-var-requires": "off",
             },
-        }
+        },
+        {
+            files: ["test/**/*.{ts,tsx}", "cypress/**/*.ts"],
+            extends: ["plugin:matrix-org/jest"],
+            rules: {
+                // We don't need super strict typing in test utilities
+                "@typescript-eslint/explicit-function-return-type": "off",
+                "@typescript-eslint/explicit-member-accessibility": "off",
+
+                // Jest/Cypress specific
+
+                // Disabled tests are a reality for now but as soon as all of the xits are
+                // eliminated, we should enforce this.
+                "jest/no-disabled-tests": "off",
+                // TODO: There are many tests with invalid expects that should be fixed,
+                // https://github.com/vector-im/element-web/issues/24709
+                "jest/valid-expect": "off",
+                // TODO: There are many cases to refactor away,
+                // https://github.com/vector-im/element-web/issues/24710
+                "jest/no-conditional-expect": "off",
+                // Also treat "oldBackendOnly" as a test function.
+                // Used in some crypto tests.
+                "jest/no-standalone-expect": [
+                    "error",
+                    {
+                        additionalTestBlockFunctions: ["beforeAll", "beforeEach", "oldBackendOnly"],
+                    },
+                ],
+            },
+        },
+        {
+            files: ["cypress/**/*.ts"],
+            parserOptions: {
+                project: ["./cypress/tsconfig.json"],
+            },
+            rules: {
+                // Cypress "promises" work differently - disable some related rules
+                "jest/valid-expect-in-promise": "off",
+                "jest/no-done-callback": "off",
+            },
+        },
     ],
     settings: {
         react: {
@@ -160,7 +212,7 @@ module.exports = {
 };
 
 function buildRestrictedPropertiesOptions(properties, message) {
-    return properties.map(prop => {
+    return properties.map((prop) => {
         let [object, property] = prop.split(".");
         if (object === "*") {
             object = undefined;

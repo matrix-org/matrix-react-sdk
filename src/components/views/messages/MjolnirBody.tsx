@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
-import { _t } from '../../../languageHandler';
-import AccessibleButton from '../elements/AccessibleButton';
+import { _t } from "../../../languageHandler";
+import AccessibleButton from "../elements/AccessibleButton";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -35,16 +35,23 @@ export default class MjolnirBody extends React.Component<IProps> {
         this.props.onMessageAllowed();
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
-            <div className='mx_MjolnirBody'><i>{ _t(
-                "You have ignored this user, so their message is hidden. <a>Show anyways.</a>",
-                {}, {
-                    a: (sub) => <AccessibleButton kind="link_inline" onClick={this.onAllowClick}>
-                        { sub }
-                    </AccessibleButton>,
-                },
-            ) }</i></div>
+            <div className="mx_MjolnirBody">
+                <i>
+                    {_t(
+                        "You have ignored this user, so their message is hidden. <a>Show anyways.</a>",
+                        {},
+                        {
+                            a: (sub) => (
+                                <AccessibleButton kind="link_inline" onClick={this.onAllowClick}>
+                                    {sub}
+                                </AccessibleButton>
+                            ),
+                        },
+                    )}
+                </i>
+            </div>
         );
     }
 }

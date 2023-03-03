@@ -31,7 +31,7 @@ import { ensureDMExists } from "../../../createRoom";
 import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
 import Modal from "../../../Modal";
 import { _t } from "../../../languageHandler";
-import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import ErrorDialog from "../dialogs/ErrorDialog";
 
@@ -41,21 +41,14 @@ const MISMATCHES = ["m.key_mismatch", "m.user_error", "m.mismatched_sas"];
 interface IProps {
     member: RoomMember | User;
     onClose: () => void;
-    verificationRequest: VerificationRequest;
+    verificationRequest?: VerificationRequest;
     verificationRequestPromise?: Promise<VerificationRequest>;
     layout: string;
     isRoomEncrypted: boolean;
 }
 
 const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
-    const {
-        verificationRequest,
-        verificationRequestPromise,
-        member,
-        onClose,
-        layout,
-        isRoomEncrypted,
-    } = props;
+    const { verificationRequest, verificationRequestPromise, member, onClose, layout, isRoomEncrypted } = props;
     const [request, setRequest] = useState(verificationRequest);
     // state to show a spinner immediately after clicking "start verification",
     // before we have a request
@@ -70,7 +63,7 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
     }, [verificationRequest]);
 
     useEffect(() => {
-        async function awaitPromise() {
+        async function awaitPromise(): Promise<void> {
             setRequesting(true);
             const requestFromPromise = await verificationRequestPromise;
             setRequesting(false);
@@ -84,18 +77,20 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
     const changeHandler = useCallback(() => {
         // handle transitions -> cancelled for mismatches which fire a modal instead of showing a card
         if (request && request.cancelled && MISMATCHES.includes(request.cancellationCode)) {
-            Modal.createTrackedDialog("Verification failed", "insecure", ErrorDialog, {
-                headerImage: require("../../../../res/img/e2e/warning.svg").default,
+            Modal.createDialog(ErrorDialog, {
+                headerImage: require("../../../../res/img/e2e/warning-deprecated.svg").default,
                 title: _t("Your messages are not secure"),
-                description: <div>
-                    { _t("One of the following may be compromised:") }
-                    <ul>
-                        <li>{ _t("Your homeserver") }</li>
-                        <li>{ _t("The homeserver the user you're verifying is connected to") }</li>
-                        <li>{ _t("Yours, or the other users' internet connection") }</li>
-                        <li>{ _t("Yours, or the other users' session") }</li>
-                    </ul>
-                </div>,
+                description: (
+                    <div>
+                        {_t("One of the following may be compromised:")}
+                        <ul>
+                            <li>{_t("Your homeserver")}</li>
+                            <li>{_t("The homeserver the user you're verifying is connected to")}</li>
+                            <li>{_t("Yours, or the other users' internet connection")}</li>
+                            <li>{_t("Yours, or the other users' session")}</li>
+                        </ul>
+                    </div>
+                ),
                 onFinished: onClose,
             });
             return; // don't update phase here as we will be transitioning away from this view shortly
@@ -108,11 +103,24 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
 
     useTypedEventEmitter(request, VerificationRequestEvent.Change, changeHandler);
 
-    const onStartVerification = useCallback(async () => {
+    const onStartVerification = useCallback(async (): Promise<void> => {
         setRequesting(true);
         const cli = MatrixClientPeg.get();
-        const roomId = await ensureDMExists(cli, member.userId);
-        const verificationRequest_ = await cli.requestVerificationDM(member.userId, roomId);
+        let verificationRequest_: VerificationRequest;
+        try {
+            const roomId = await ensureDMExists(cli, member.userId);
+            verificationRequest_ = await cli.requestVerificationDM(member.userId, roomId);
+        } catch (e) {
+            console.error("Error starting verification", e);
+            setRequesting(false);
+
+            Modal.createDialog(ErrorDialog, {
+                headerImage: require("../../../../res/img/e2e/warning.svg").default,
+                title: _t("Error starting verification"),
+                description: _t("We were unable to start a chat with the other user."),
+            });
+            return;
+        }
         setRequest(verificationRequest_);
         setPhase(verificationRequest_.phase);
         // Notify the RightPanelStore about this
@@ -122,15 +130,15 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
                 state: { member, verificationRequest: verificationRequest_ },
             });
         }
-        if (!RightPanelStore.instance.isOpen) RightPanelStore.instance.togglePanel();
+        if (!RightPanelStore.instance.isOpen) RightPanelStore.instance.togglePanel(null);
     }, [member]);
 
     const requested =
         (!request && isRequesting) ||
         (request && (phase === PHASE_REQUESTED || phase === PHASE_UNSENT || phase === undefined));
-    const isSelfVerification = request ?
-        request.isSelfVerification :
-        member.userId === MatrixClientPeg.get().getUserId();
+    const isSelfVerification = request
+        ? request.isSelfVerification
+        : member.userId === MatrixClientPeg.get().getUserId();
 
     if (!request || requested) {
         const initiatedByMe = (!request && isRequesting) || (request && request.initiatedByMe);
@@ -142,7 +150,8 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
                 isSelfVerification={isSelfVerification}
                 waitingForOtherParty={requested && initiatedByMe}
                 waitingForNetwork={requested && !initiatedByMe}
-                inDialog={layout === "dialog"} />
+                inDialog={layout === "dialog"}
+            />
         );
     } else {
         return (
