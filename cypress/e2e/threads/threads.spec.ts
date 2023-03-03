@@ -94,7 +94,7 @@ describe("Threads", () => {
         cy.get(".mx_ThreadView .mx_EventTile_last .mx_EventTile_line .mx_MTextBody").should("have.text", "Hello there");
         cy.get(".mx_ThreadView .mx_EventTile_last .mx_ReadReceiptGroup .mx_BaseAvatar_image").should("be.visible");
 
-        // Take Percy snapshots in group layout and bubble layout (IRC layout on ThreadView is not available)
+        // Take Percy snapshots in group layout and bubble layout (IRC layout is not available on ThreadView)
         cy.get(".mx_ThreadView .mx_EventTile[data-layout='group']").should("be.visible");
         cy.get(".mx_ThreadView").percySnapshotElement("Initial ThreadView on group layout", { percyCSS });
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
@@ -127,7 +127,7 @@ describe("Threads", () => {
             cy.contains('[role="menuitem"]', "👋").click();
         });
 
-        // Take Percy snapshots in group layout and bubble layout (IRC layout on ThreadView is not available)
+        // Take Percy snapshots in group layout and bubble layout (IRC layout is not available on ThreadView)
         cy.get(".mx_ThreadView .mx_EventTile[data-layout='group']").should("be.visible");
         cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with reaction on group layout", { percyCSS });
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
@@ -151,7 +151,7 @@ describe("Threads", () => {
         // Wait until the response is redacted
         cy.get(".mx_ThreadView .mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
 
-        // Take Percy snapshots in group layout and bubble layout (IRC layout on ThreadView is not available)
+        // Take Percy snapshots in group layout and bubble layout (IRC layout is not available on ThreadView)
         cy.get(".mx_ThreadView .mx_EventTile[data-layout='group']").should("be.visible");
         cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with redacted messages on group layout", {
             percyCSS,
