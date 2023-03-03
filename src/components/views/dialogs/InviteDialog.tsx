@@ -286,7 +286,7 @@ interface InviteCallProps extends BaseProps {
 type Props = InviteDMProps | InviteRoomProps | InviteCallProps;
 
 interface IInviteDialogState {
-    targets: Member[]; // array of Member objects (see interface above)
+    targets: (Member | RoomMember)[]; // array of Member objects (see interface above)
     filterText: string;
     recents: Result[];
     numRecentsShown: number;
