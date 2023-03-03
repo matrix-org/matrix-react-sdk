@@ -59,7 +59,7 @@ describe("Threads", () => {
         // --MessageTimestamp-color = #acacac = rgb(172, 172, 172)
         // See: _MessageTimestamp.pcss
         const MessageTimestampColor = "rgb(172, 172, 172)";
-        // Exclude timestamp and read marker from snapshot
+        // Exclude timestamp and read marker from snapshots
         const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
 
         // User sends message
@@ -153,10 +153,14 @@ describe("Threads", () => {
 
         // Take Percy snapshots in group layout and bubble layout (IRC layout on ThreadView is not available)
         cy.get(".mx_ThreadView .mx_EventTile[data-layout='group']").should("be.visible");
-        cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with redacted messages on group layout", { percyCSS });
+        cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with redacted messages on group layout", {
+            percyCSS,
+        });
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
         cy.get(".mx_ThreadView .mx_EventTile[data-layout='bubble']").should("be.visible");
-        cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with redacted messages on bubble layout", { percyCSS });
+        cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with redacted messages on bubble layout", {
+            percyCSS,
+        });
 
         // Set the group layout
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
