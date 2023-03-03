@@ -362,17 +362,14 @@ describe("Threads", () => {
         submitShareLocation();
         cy.get(".mx_ThreadView .mx_EventTile_last .mx_MLocationBody", { timeout: 10000 }).should("exist");
 
-        // User reply to the location
+        // User replies to the location
         cy.get(".mx_ThreadView").within(() => {
             cy.get(".mx_EventTile_last")
                 .realHover()
                 .within(() => {
                     cy.get("[aria-label='Reply']").click({ force: false });
                 });
-        });
 
-        // Send a reply message
-        cy.get(".mx_ThreadView").within(() => {
             cy.get(".mx_BasicMessageComposer_input").type("Please come here.{enter}");
 
             // Wait until the reply is sent
