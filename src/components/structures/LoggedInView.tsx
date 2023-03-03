@@ -71,6 +71,7 @@ import { IConfigOptions } from "../../IConfigOptions";
 import LeftPanelLiveShareWarning from "../views/beacon/LeftPanelLiveShareWarning";
 import { UserOnboardingPage } from "../views/user-onboarding/UserOnboardingPage";
 import { PipContainer } from "./PipContainer";
+import { monitorSyncedPushRules } from "../../utils/pushRules/monitorSyncedPushRules";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -166,6 +167,8 @@ class LoggedInView extends React.Component<IProps, IState> {
         this.updateServerNoticeEvents();
 
         this._matrixClient.on(ClientEvent.AccountData, this.onAccountData);
+        monitorSyncedPushRules(this._matrixClient.getAccountData('m.push_rules'), this._matrixClient);
+        console.log('hhh componentDidMount LoggedInView');
         this._matrixClient.on(ClientEvent.Sync, this.onSync);
         // Call `onSync` with the current state as well
         this.onSync(this._matrixClient.getSyncState(), null, this._matrixClient.getSyncStateData());
@@ -280,6 +283,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         if (event.getType() === "m.ignored_user_list") {
             dis.dispatch({ action: "ignore_state_changed" });
         }
+        monitorSyncedPushRules(event, this._matrixClient)
     };
 
     private onCompactLayoutChanged = (): void => {

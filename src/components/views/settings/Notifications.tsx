@@ -25,7 +25,6 @@ import {
 import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
-import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
 
 import Spinner from "../elements/Spinner";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -187,7 +186,6 @@ const maximumVectorState = (
 
 export default class Notifications extends React.PureComponent<IProps, IState> {
     private settingWatchers: string[];
-    private pushProcessor: PushProcessor;
 
     public constructor(props: IProps) {
         super(props);
@@ -215,8 +213,6 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 this.setState({ audioNotifications: value as boolean }),
             ),
         ];
-
-        this.pushProcessor = new PushProcessor(MatrixClientPeg.get());
     }
 
     private get isInhibited(): boolean {
@@ -502,7 +498,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 const definition: VectorPushRuleDefinition = VectorPushRulesDefinitions[rule.ruleId];
                 const actions = definition.vectorStateToActions[checkedState];
                 await updatePushRuleActions(cli, rule.rule.rule_id, rule.rule.kind, actions);
-                await updateExistingPushRulesWithActions(cli, definition.syncedRuleIds, actions);
+                // await updateExistingPushRulesWithActions(cli, definition.syncedRuleIds, actions);
             }
 
             await this.refreshFromServer();
