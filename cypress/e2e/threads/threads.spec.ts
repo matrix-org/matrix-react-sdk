@@ -299,6 +299,62 @@ describe("Threads", () => {
         cy.get(".mx_ThreadView .mx_MVoiceMessageBody").should("have.length", 1);
     });
 
+    it("should send location on ThreadView", () => {
+        // See: location.spec.ts
+        const selectLocationShareTypeOption = (shareType: string): Chainable<JQuery> => {
+            return cy.get(`[data-test-id="share-location-option-${shareType}"]`);
+        };
+        const submitShareLocation = (): void => {
+            cy.get('[data-testid="location-picker-submit-button"]').click();
+        };
+
+        let bot: MatrixClient;
+        cy.getBot(homeserver, {
+            displayName: "BotBob",
+            autoAcceptInvites: false,
+        }).then((_bot) => {
+            bot = _bot;
+        });
+
+        let roomId: string;
+        cy.createRoom({}).then((_roomId) => {
+            roomId = _roomId;
+            cy.inviteUser(roomId, bot.getUserId());
+            bot.joinRoom(roomId);
+            cy.visit("/#/room/" + roomId);
+        });
+
+        // Exclude timestamp and read marker from snapshots
+        const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
+
+        // User sends message
+        cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("Hello Mr. Bot{enter}");
+
+        // Wait for message to send, get its ID and save as @threadId
+        cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", "Hello Mr. Bot")
+            .invoke("attr", "data-scroll-tokens")
+            .as("threadId");
+
+        // Bot starts thread
+        cy.get<string>("@threadId").then((threadId) => {
+            bot.sendMessage(roomId, threadId, {
+                body: "Hello there",
+                msgtype: "m.text",
+            });
+        });
+
+        // User clicks thread summary
+        cy.get(".mx_RoomView_body .mx_ThreadSummary").click();
+
+        // User sends location on ThreadView
+        cy.get(".mx_ThreadView").should("exist");
+        cy.openMessageComposerOptions(true).find("[aria-label='Location']").click();
+        selectLocationShareTypeOption("Pin").click();
+        cy.get("#mx_LocationPicker_map").click("center");
+        submitShareLocation();
+        cy.get(".mx_ThreadView .mx_EventTile_last .mx_MLocationBody", { timeout: 10000 }).should("exist");
+    });
+
     it("right panel behaves correctly", () => {
         // Create room
         let roomId: string;
