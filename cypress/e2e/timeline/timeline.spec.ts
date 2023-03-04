@@ -21,6 +21,7 @@ import type { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { Layout } from "../../../src/settings/enums/Layout";
+import { MatrixClient } from "../../global";
 import Chainable = Cypress.Chainable;
 
 // The avatar size used in the timeline
