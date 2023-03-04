@@ -566,7 +566,7 @@ describe("Timeline", () => {
             const LONG_STRING =
                 "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut " +
                 "et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut " +
-                "aliquip ex";
+                "aliquip";
 
             // Create a bot with a long display name
             let bot: MatrixClient;
@@ -593,8 +593,9 @@ describe("Timeline", () => {
                 "created and configured the room.",
             ).should("exist");
 
-            // Set display name to LONG_STRING
-            cy.setDisplayName(`${LONG_STRING}`);
+            // Set the display name to "LONG_STRING 2" in order to avoid a warning in Percy tests from being triggered
+            // due to the generated random mxid being displayed inside the GELS summary.
+            cy.setDisplayName(`${LONG_STRING} 2`);
 
             // Have the bot send a long message
             cy.get<string>("@testRoomId").then((roomId) => {
