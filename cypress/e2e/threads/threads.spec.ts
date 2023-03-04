@@ -127,6 +127,10 @@ describe("Threads", () => {
         cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_sender").should("contain", "Tom");
         cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_content").should("contain", "Test");
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Check reactions and hidden events
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         // Enable hidden events to make the event for reaction displayed
         cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
 
@@ -146,31 +150,47 @@ describe("Threads", () => {
             ThreadViewGroupSpacingStart,
         );
 
-        // Make sure the CSS style for spacing is applied to mx_EventTile_line for hidden event on group/modern layout
+        // Make sure the CSS style for spacing is applied to the hidden event on group/modern layout
         cy.get(
             ".mx_ThreadView .mx_GenericEventListSummary[data-layout=group] .mx_EventTile_info.mx_EventTile_last " +
                 ".mx_EventTile_line",
         ).should("have.css", "padding-inline-start", ThreadViewGroupSpacingStart);
 
-        // Take Percy snapshots in group layout and bubble layout (IRC layout is not available on ThreadView)
+        // Take Percy snapshot of group layout (IRC layout is not available on ThreadView)
         cy.get(".mx_ThreadView .mx_EventTile[data-layout='group']").should("be.visible");
-        cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with reaction on group layout", { percyCSS });
-        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
-        cy.get(".mx_ThreadView .mx_EventTile[data-layout='bubble']").should("be.visible");
-        cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with reaction on bubble layout", { percyCSS });
+        cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with reaction and a hidden event on group layout", {
+            percyCSS,
+        });
 
-        // Make sure the CSS style for spacing is applied to mx_EventTile_line for hidden event on bubble layout
-        // 76px: ThreadViewGroupSpacingStart + 14px + 6px. See: _EventTile.pcss
-        cy.get(
-            ".mx_ThreadView .mx_GenericEventListSummary[data-layout=bubble] .mx_EventTile_info.mx_EventTile_last " +
-                ".mx_EventTile_line",
-        ).should("have.css", "margin-inline-start", "76px");
+        // Enable bubble layout
+        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
+
+        // Make sure the CSS style for spacing is applied to the hidden event on bubble layout
+        cy.get(".mx_ThreadView .mx_GenericEventListSummary[data-layout=bubble]").within(() => {
+            cy.get(".mx_EventTile_info.mx_EventTile_last .mx_EventTile_line .mx_EventTile_content")
+                // 76px: ThreadViewGroupSpacingStart + 14px + 6px
+                // 14px: avatar width
+                // See: _EventTile.pcss
+                .should("have.css", "margin-inline-start", "76px");
+            cy.get(".mx_EventTile_info.mx_EventTile_last .mx_EventTile_line")
+                // Make sure the margin is NOT applied to mx_EventTile_line
+                .should("have.css", "margin-inline-start", "0px");
+        });
+
+        // Take Percy snapshot of bubble layout
+        cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with reaction and a hidden event on bubble layout", {
+            percyCSS,
+        });
 
         // Disable hidden events
         cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, false);
 
-        // Set the group layout
+        // Reset to the group layout
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Check redactions
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // User redacts their prior response
         cy.contains(".mx_ThreadView .mx_EventTile .mx_EventTile_line", "Test")
