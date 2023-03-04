@@ -1057,8 +1057,6 @@ $left-gutter: 64px;
                 .mx_EventTile_content,
                 .mx_RedactedBody {
                     width: auto;
-                    /* 14px: avatar width, 6px: 20px - 14px */
-                    margin-inline-start: calc(14px + 6px);
                     font-size: $line-height;
                 }
             }
@@ -1075,11 +1073,28 @@ $left-gutter: 64px;
                 .mx_MessageTimestamp {
                     top: 2px; /* Align with avatar */
                 }
+
+                &.mx_EventTile_selected .mx_EventTile_line,
+                .mx_EventTile_line {
+                    .mx_EventTile_content,
+                    .mx_RedactedBody {
+                        /* 14px: avatar width, 6px: 20px - 14px */
+                        margin-inline-start: calc(14px + 6px);
+                    }
+                }
             }
 
             &[data-layout="bubble"] {
                 .mx_EventTile_avatar {
                     inset-inline-start: 0;
+                }
+
+                &.mx_EventTile_selected .mx_EventTile_line,
+                .mx_EventTile_line {
+                    .mx_EventTile_content,
+                    .mx_RedactedBody {
+                        margin-inline-start: calc(var(--ThreadView_group_spacing-start) + 14px + 6px);
+                    }
                 }
             }
         }

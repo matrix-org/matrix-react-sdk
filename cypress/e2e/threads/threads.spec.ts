@@ -142,7 +142,7 @@ describe("Threads", () => {
         // Make sure the CSS style for spacing is applied to mx_ReactionsRow on group/modern layout
         cy.get(".mx_ThreadView .mx_EventTile[data-layout=group] .mx_ReactionsRow").should(
             "have.css",
-            "margin-inline-start", // Not padding-inline-start. See: _EventTile.pcss
+            "margin-inline-start",
             ThreadViewGroupSpacingStart,
         );
 
@@ -158,6 +158,13 @@ describe("Threads", () => {
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
         cy.get(".mx_ThreadView .mx_EventTile[data-layout='bubble']").should("be.visible");
         cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with reaction on bubble layout", { percyCSS });
+
+        // Make sure the CSS style for spacing is applied to mx_EventTile_line for hidden event on bubble layout
+        // 76px: ThreadViewGroupSpacingStart + 14px + 6px. See: _EventTile.pcss
+        cy.get(
+            ".mx_ThreadView .mx_GenericEventListSummary[data-layout=bubble] .mx_EventTile_info.mx_EventTile_last " +
+                ".mx_EventTile_line",
+        ).should("have.css", "margin-inline-start", "76px");
 
         // Disable hidden events
         cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, false);
