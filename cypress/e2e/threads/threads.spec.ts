@@ -60,6 +60,7 @@ describe("Threads", () => {
         // --MessageTimestamp-color = #acacac = rgb(172, 172, 172)
         // See: _MessageTimestamp.pcss
         const MessageTimestampColor = "rgb(172, 172, 172)";
+        const ThreadViewGroupSpacingStart = "56px"; // --ThreadView_group_spacing-start
         // Exclude timestamp and read marker from snapshots
         const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
 
@@ -94,6 +95,13 @@ describe("Threads", () => {
         // Wait until the both messages are read
         cy.get(".mx_ThreadView .mx_EventTile_last .mx_EventTile_line .mx_MTextBody").should("have.text", "Hello there");
         cy.get(".mx_ThreadView .mx_EventTile_last .mx_ReadReceiptGroup .mx_BaseAvatar_image").should("be.visible");
+
+        // Make sure the CSS style for spacing is applied to mx_EventTile_line on group/modern layout
+        cy.get(".mx_ThreadView .mx_EventTile_last[data-layout=group] .mx_EventTile_line").should(
+            "have.css",
+            "padding-inline-start",
+            ThreadViewGroupSpacingStart,
+        );
 
         // Take Percy snapshots in group layout and bubble layout (IRC layout is not available on ThreadView)
         cy.get(".mx_ThreadView .mx_EventTile[data-layout='group']").should("be.visible");
@@ -130,6 +138,19 @@ describe("Threads", () => {
             cy.get('input[type="text"]').type("wave");
             cy.contains('[role="menuitem"]', "👋").click();
         });
+
+        // Make sure the CSS style for spacing is applied to mx_ReactionsRow on group/modern layout
+        cy.get(".mx_ThreadView .mx_EventTile[data-layout=group] .mx_ReactionsRow").should(
+            "have.css",
+            "margin-inline-start", // Not padding-inline-start. See: _EventTile.pcss
+            ThreadViewGroupSpacingStart,
+        );
+
+        // Make sure the CSS style for spacing is applied to mx_EventTile_line for hidden event on group/modern layout
+        cy.get(
+            ".mx_ThreadView .mx_GenericEventListSummary[data-layout=group] .mx_EventTile_info.mx_EventTile_last " +
+                ".mx_EventTile_line",
+        ).should("have.css", "padding-inline-start", ThreadViewGroupSpacingStart);
 
         // Take Percy snapshots in group layout and bubble layout (IRC layout is not available on ThreadView)
         cy.get(".mx_ThreadView .mx_EventTile[data-layout='group']").should("be.visible");
