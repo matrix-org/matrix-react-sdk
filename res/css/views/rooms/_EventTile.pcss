@@ -1092,28 +1092,38 @@ $left-gutter: 64px;
             }
 
             &[data-layout="bubble"] {
+                /* Same setting as the main timeline */
                 margin-inline: var(--EventTile_bubble-margin-inline-start) 0;
 
-                /* Override "flex-direction: column" for .mx_ThreadView .mx_EventTile */
-                /* Required to place mx_EventTile_senderDetails and mx_EventTile_line horizontally with flexbox */
+                /* Override "flex-direction: column" of ".mx_ThreadView .mx_EventTile" */
+                /* Required to place mx_EventTile_senderDetails and mx_EventTile_line horizontally */
                 flex-direction: row;
 
+                /* Align shadow on hover */
                 &::before {
+                    /* Apply the same value as the main timeline */
                     inset-inline-start: calc(-1 * var(--EventTile_bubble-margin-inline-start));
-                    inset-inline-end: calc(-1 * var(--EventTile_bubble-margin-inline-end));
-                }
-
-                .mx_EventTile_avatar {
-                    margin-inline-end: var(--EventTile_bubble_gap-inline);
+                    inset-inline-end: 0;
                 }
 
                 .mx_EventTile_line {
+                    /* Not available on the actual UI anyway as the hidden event expand button is hidden above */
+                    .mx_ViewSourceEvent {
+                        flex: auto; /* Fill the line */
+                    }
+
                     .mx_MessageActionBar {
+                        /* Align with MessageActionBar of normal bubbles */
                         /* stylelint-disable-next-line declaration-colon-space-after */
                         inset-inline-end: calc(
                             var(--BaseCard_EventTile-spacing-inline) + var(--EventTile_bubble_line-margin-inline-end)
                         );
                     }
+                }
+
+                &[data-self="true"] {
+                    /* Override "align-items: flex-end" to align the avatar and mx_EventTile_line at the center */
+                    align-items: center;
                 }
             }
         }
