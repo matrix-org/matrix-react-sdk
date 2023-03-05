@@ -1,5 +1,5 @@
 /*
-Copyright 2021-2022 The Matrix.org Foundation C.I.C.
+Copyright 2021-2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -93,6 +93,7 @@ import { shouldShowFeedback } from "../../../../utils/Feedback";
 import RoomAvatar from "../../avatars/RoomAvatar";
 import { useFeatureEnabled } from "../../../../hooks/useSettings";
 import { filterBoolean } from "../../../../utils/arrays";
+import { HighlightChars } from "../../../HightlightChars";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -143,6 +144,7 @@ interface IBaseResult {
     section: Section;
     filter: Filter[];
     query?: string[]; // extra fields to query match, stored as lowercase
+    positions?: Set<number>;
 }
 
 interface IPublicRoomResult extends IBaseResult {
@@ -165,6 +167,12 @@ interface IResult extends IBaseResult {
 }
 
 type Result = IRoomResult | IPublicRoomResult | IMemberResult | IResult;
+
+interface SearchItem {
+    result: Result;
+    value: string;
+    visible: boolean;
+}
 
 const isRoomResult = (result: any): result is IRoomResult => !!result?.room;
 const isPublicRoomResult = (result: any): result is IPublicRoomResult => !!result?.publicRoom;
@@ -396,24 +404,118 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         };
 
         if (trimmedQuery) {
-            const fzf = new Fzf(possibleResults, {
-                selector: (entry: Result) => {
-                    if (isRoomResult(entry)) {
-                        return [entry.room.name, entry.room.getCanonicalAlias(), entry.query || []]
-                            .filter(Boolean)
-                            .join(" ");
-                    } else if (isMemberResult(entry) || isPublicRoomResult(entry)) {
-                        return (entry.query || []).join(" ");
+            const searchItems = possibleResults.reduce((items: SearchItem[], possibleResult: Result): SearchItem[] => {
+                possibleResult.query?.forEach((query) => {
+                    items.push({
+                        result: possibleResult,
+                        value: query,
+                        visible: false,
+                    });
+                });
+
+                if (isRoomResult(possibleResult)) {
+                    items.push({
+                        result: possibleResult,
+                        value: possibleResult.room.name,
+                        visible: true,
+                    });
+
+                    const canonicalAlias = possibleResult.room.getCanonicalAlias();
+
+                    if (canonicalAlias) {
+                        items.push({
+                            result: possibleResult,
+                            value: possibleResult.room.getCanonicalAlias(),
+                            visible: false,
+                        });
                     }
 
-                    return `${entry.name} ${(entry.query || []).join(" ")}`;
-                },
+                    return items;
+                }
+
+                if (isMemberResult(possibleResult)) {
+                    items.push({
+                        result: possibleResult,
+                        value: possibleResult.member.name,
+                        visible: true,
+                    });
+
+                    items.push({
+                        result: possibleResult,
+                        value: possibleResult.member.userId,
+                        visible: false,
+                    });
+                }
+
+                if (isPublicRoomResult(possibleResult)) {
+                    items.push({
+                        result: possibleResult,
+                        value: possibleResult.publicRoom.name,
+                        visible: true,
+                    });
+
+                    if (possibleResult.publicRoom.canonical_alias) {
+                        items.push({
+                            result: possibleResult,
+                            value: possibleResult.publicRoom.canonical_alias,
+                            visible: false,
+                        });
+                    }
+
+                    items.push({
+                        result: possibleResult,
+                        value: possibleResult.publicRoom.room_id,
+                        visible: false,
+                    });
+
+                    if (possibleResult.publicRoom.topic) {
+                        items.push({
+                            result: possibleResult,
+                            value: sanitizeHtml(possibleResult.publicRoom.topic, { allowedTags: [] }),
+                            visible: false,
+                        });
+                    }
+
+                    possibleResult.publicRoom.aliases?.forEach((alias) => {
+                        items.push({
+                            result: possibleResult,
+                            value: alias,
+                            visible: false,
+                        });
+                    });
+                }
+
+                return items;
+            }, [] as SearchItem[]);
+
+            const fzf = new Fzf(searchItems, {
+                selector: (item: SearchItem) => item.value,
             });
 
             const fuzzyResults = fzf.find(trimmedQuery);
-            fuzzyResults.forEach((r) => {
-                results[r.item.section].push(r.item);
-            });
+            const results2 = fuzzyResults.reduce((results, result) => {
+                const searchResult = result.item.result;
+
+                if (!results.has(searchResult)) {
+                    results.set(searchResult, result);
+                    return results;
+                }
+
+                if (result.item.visible) {
+                    results.get(searchResult).item.visible = true;
+                    return results;
+                }
+
+                return results;
+            }, new Map());
+
+            for (const r of results2.values()) {
+                if (r.item.visible) {
+                    r.item.result.positions = r.positions;
+                }
+
+                results[r.item.result.section].push(r.item.result);
+            }
         } else if (filter === Filter.PublicRooms) {
             // return all results for public rooms if no query is given
             possibleResults.forEach((entry) => {
@@ -559,6 +661,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     "aria-label": unreadLabel ? `${result.room.name} ${unreadLabel}` : result.room.name,
                     "aria-describedby": `mx_SpotlightDialog_button_result_${result.room.roomId}_details`,
                 };
+
+                const displayValue = result.positions ? (
+                    <HighlightChars str={result.room.name} highlightIndices={result.positions} />
+                ) : (
+                    result.room.name
+                );
+
                 return (
                     <Option
                         id={`mx_SpotlightDialog_button_result_${result.room.roomId}`}
@@ -574,7 +683,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                             avatarSize={AVATAR_SIZE}
                             tooltipProps={{ tabIndex: -1 }}
                         />
-                        {result.room.name}
+                        {displayValue}
                         <NotificationBadge notification={notification} />
                         <RoomContextDetails
                             id={`mx_SpotlightDialog_button_result_${result.room.roomId}_details`}
@@ -585,6 +694,14 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 );
             }
             if (isMemberResult(result)) {
+                const rawDisplayValue =
+                    result.member instanceof RoomMember ? result.member.rawDisplayName : result.member.name;
+                const displayValue = result.positions ? (
+                    <HighlightChars str={rawDisplayValue} highlightIndices={result.positions} />
+                ) : (
+                    rawDisplayValue
+                );
+
                 return (
                     <Option
                         id={`mx_SpotlightDialog_button_result_${result.member.userId}`}
@@ -599,7 +716,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         aria-describedby={`mx_SpotlightDialog_button_result_${result.member.userId}_details`}
                     >
                         <SearchResultAvatar user={result.member} size={AVATAR_SIZE} />
-                        {result.member instanceof RoomMember ? result.member.rawDisplayName : result.member.name}
+                        {displayValue}
                         <div
                             id={`mx_SpotlightDialog_button_result_${result.member.userId}_details`}
                             className="mx_SpotlightDialog_result_details"
@@ -672,7 +789,12 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 );
             }
 
-            // IResult case
+            const name = result.positions ? (
+                <HighlightChars str={result.name} highlightIndices={result.positions} />
+            ) : (
+                result.name
+            );
+
             return (
                 <Option
                     id={`mx_SpotlightDialog_button_result_${result.name}`}
@@ -680,7 +802,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     onClick={result.onClick}
                 >
                     {result.avatar}
-                    {result.name}
+                    {name}
                     {result.description}
                 </Option>
             );
