@@ -48,9 +48,11 @@ describe("General user settings tab", () => {
         cy.get(".mx_GeneralUserSettingsTab_discovery .mx_Spinner").should("not.exist");
 
         // Check input areas for password change exist
-        cy.get("form.mx_GeneralUserSettingsTab_changePassword input[label='Current password']").should("exist");
-        cy.get("form.mx_GeneralUserSettingsTab_changePassword input[label='New password']").should("exist");
-        cy.get("form.mx_GeneralUserSettingsTab_changePassword input[label='Confirm password']").should("exist");
+        cy.get("form.mx_GeneralUserSettingsTab_changePassword").within(() => {
+            cy.get("input[label='Current password']").should("exist");
+            cy.get("input[label='New password']").should("exist");
+            cy.get("input[label='Confirm password']").should("exist");
+        });
 
         // Check an input area for a new email address exists
         cy.get("form.mx_EmailAddresses_new input[label='Email Address']").should("exist");
