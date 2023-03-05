@@ -1197,8 +1197,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                             <a href={permalink} onClick={this.onPermalinkClicked}>
                                 {timestamp}
                             </a>
-                            {msgOption}
                         </div>,
+                        msgOption,
                         reactionsRow,
                     ],
                 );
