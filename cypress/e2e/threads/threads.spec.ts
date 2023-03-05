@@ -88,23 +88,22 @@ describe("Threads", () => {
         });
 
         // User asserts timeline thread summary visible & clicks it
-        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_sender").should("contain", "BotBob");
-        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_content").should("contain", "Hello there");
-        cy.get(".mx_RoomView_body .mx_ThreadSummary").click();
+        cy.get(".mx_RoomView_body").within(() => {
+            cy.get(".mx_ThreadSummary .mx_ThreadSummary_sender").should("contain", "BotBob");
+            cy.get(".mx_ThreadSummary .mx_ThreadSummary_content").should("contain", "Hello there");
+            cy.get(".mx_ThreadSummary").click();
+        });
 
         // Wait until the both messages are read
-        cy.get(".mx_ThreadView .mx_EventTile_last .mx_EventTile_line .mx_MTextBody").should("have.text", "Hello there");
-        cy.get(".mx_ThreadView .mx_EventTile_last .mx_ReadReceiptGroup .mx_BaseAvatar_image").should("be.visible");
+        cy.get(".mx_ThreadView .mx_EventTile_last[data-layout=group]").within(() => {
+            cy.get(".mx_EventTile_line .mx_MTextBody").should("have.text", "Hello there");
+            cy.get(".mx_ReadReceiptGroup .mx_BaseAvatar_image").should("be.visible");
 
-        // Make sure the CSS style for spacing is applied to mx_EventTile_line on group/modern layout
-        cy.get(".mx_ThreadView .mx_EventTile_last[data-layout=group] .mx_EventTile_line").should(
-            "have.css",
-            "padding-inline-start",
-            ThreadViewGroupSpacingStart,
-        );
+            // Make sure the CSS style for spacing is applied to mx_EventTile_line on group/modern layout
+            cy.get(".mx_EventTile_line").should("have.css", "padding-inline-start", ThreadViewGroupSpacingStart);
+        });
 
         // Take Percy snapshots in group layout and bubble layout (IRC layout is not available on ThreadView)
-        cy.get(".mx_ThreadView .mx_EventTile[data-layout='group']").should("be.visible");
         cy.get(".mx_ThreadView").percySnapshotElement("Initial ThreadView on group layout", { percyCSS });
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
         cy.get(".mx_ThreadView .mx_EventTile[data-layout='bubble']").should("be.visible");
@@ -124,8 +123,10 @@ describe("Threads", () => {
         );
 
         // User asserts summary was updated correctly
-        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_sender").should("contain", "Tom");
-        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_content").should("contain", "Test");
+        cy.get(".mx_RoomView_body .mx_ThreadSummary").within(() => {
+            cy.get(".mx_ThreadSummary_sender").should("contain", "Tom");
+            cy.get(".mx_ThreadSummary_content").should("contain", "Test");
+        });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Check reactions and hidden events
@@ -143,21 +144,22 @@ describe("Threads", () => {
             cy.contains('[role="menuitem"]', "👋").click();
         });
 
-        // Make sure the CSS style for spacing is applied to mx_ReactionsRow on group/modern layout
-        cy.get(".mx_ThreadView .mx_EventTile[data-layout=group] .mx_ReactionsRow").should(
-            "have.css",
-            "margin-inline-start",
-            ThreadViewGroupSpacingStart,
-        );
+        cy.get(".mx_ThreadView").within(() => {
+            // Make sure the CSS style for spacing is applied to mx_ReactionsRow on group/modern layout
+            cy.get(".mx_EventTile[data-layout=group] .mx_ReactionsRow").should(
+                "have.css",
+                "margin-inline-start",
+                ThreadViewGroupSpacingStart,
+            );
 
-        // Make sure the CSS style for spacing is applied to the hidden event on group/modern layout
-        cy.get(
-            ".mx_ThreadView .mx_GenericEventListSummary[data-layout=group] .mx_EventTile_info.mx_EventTile_last " +
-                ".mx_EventTile_line",
-        ).should("have.css", "padding-inline-start", ThreadViewGroupSpacingStart);
+            // Make sure the CSS style for spacing is applied to the hidden event on group/modern layout
+            cy.get(
+                ".mx_GenericEventListSummary[data-layout=group] .mx_EventTile_info.mx_EventTile_last " +
+                    ".mx_EventTile_line",
+            ).should("have.css", "padding-inline-start", ThreadViewGroupSpacingStart);
+        });
 
         // Take Percy snapshot of group layout (IRC layout is not available on ThreadView)
-        cy.get(".mx_ThreadView .mx_EventTile[data-layout='group']").should("be.visible");
         cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with reaction and a hidden event on group layout", {
             percyCSS,
         });
