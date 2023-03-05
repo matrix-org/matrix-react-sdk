@@ -15,13 +15,7 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import {
-    IAnnotatedPushRule,
-    IPusher,
-    PushRuleAction,
-    PushRuleKind,
-    RuleId,
-} from "matrix-js-sdk/src/@types/PushRules";
+import { IAnnotatedPushRule, IPusher, PushRuleAction, PushRuleKind, RuleId } from "matrix-js-sdk/src/@types/PushRules";
 import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
@@ -49,7 +43,10 @@ import TagComposer from "../elements/TagComposer";
 import { objectClone } from "../../../utils/objects";
 import { arrayDiff } from "../../../utils/arrays";
 import { clearAllNotifications, getLocalNotificationAccountDataEventType } from "../../../utils/notifications";
-import { updateExistingPushRulesWithActions, updatePushRuleActions } from "../../../utils/pushRules/updatePushRuleActions";
+import {
+    updateExistingPushRulesWithActions,
+    updatePushRuleActions,
+} from "../../../utils/pushRules/updatePushRuleActions";
 
 // TODO: this "view" component still has far too much application logic in it,
 // which should be factored out to other files.
@@ -498,7 +495,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 const definition: VectorPushRuleDefinition = VectorPushRulesDefinitions[rule.ruleId];
                 const actions = definition.vectorStateToActions[checkedState];
                 await updatePushRuleActions(cli, rule.rule.rule_id, rule.rule.kind, actions);
-                // await updateExistingPushRulesWithActions(cli, definition.syncedRuleIds, actions);
+                await updateExistingPushRulesWithActions(cli, definition.syncedRuleIds, actions);
             }
 
             await this.refreshFromServer();

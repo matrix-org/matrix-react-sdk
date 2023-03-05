@@ -50,7 +50,7 @@ export const updatePushRuleActions = async (
  */
 export const updateExistingPushRulesWithActions = async (
     matrixClient: MatrixClient,
-    ruleIds: IPushRule['rule_id'][],
+    ruleIds: IPushRule["rule_id"][],
     actions?: PushRuleAction[],
 ): Promise<void> => {
     const pushProcessor = new PushProcessor(matrixClient);
@@ -65,4 +65,4 @@ export const updateExistingPushRulesWithActions = async (
     for (const { kind, rule } of rules) {
         await updatePushRuleActions(matrixClient, rule.rule_id, kind, actions);
     }
-}
+};

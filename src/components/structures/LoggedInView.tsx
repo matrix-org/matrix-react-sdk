@@ -167,8 +167,8 @@ class LoggedInView extends React.Component<IProps, IState> {
         this.updateServerNoticeEvents();
 
         this._matrixClient.on(ClientEvent.AccountData, this.onAccountData);
-        monitorSyncedPushRules(this._matrixClient.getAccountData('m.push_rules'), this._matrixClient);
-        console.log('hhh componentDidMount LoggedInView');
+        // check push rules on start up as well
+        monitorSyncedPushRules(this._matrixClient.getAccountData("m.push_rules"), this._matrixClient);
         this._matrixClient.on(ClientEvent.Sync, this.onSync);
         // Call `onSync` with the current state as well
         this.onSync(this._matrixClient.getSyncState(), null, this._matrixClient.getSyncStateData());
@@ -283,7 +283,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         if (event.getType() === "m.ignored_user_list") {
             dis.dispatch({ action: "ignore_state_changed" });
         }
-        monitorSyncedPushRules(event, this._matrixClient)
+        monitorSyncedPushRules(event, this._matrixClient);
     };
 
     private onCompactLayoutChanged = (): void => {
