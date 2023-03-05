@@ -1122,6 +1122,11 @@ $left-gutter: 64px;
                     }
                 }
 
+                .mx_ReadReceiptGroup {
+                    /* Move read receipt group inside ThreadView */
+                    inset-inline-end: 0;
+                }
+
                 &[data-self="true"] {
                     /* Override "align-items: flex-end" to align the avatar and mx_EventTile_line at the center */
                     align-items: center;
@@ -1215,6 +1220,11 @@ $left-gutter: 64px;
                 padding-block: 0;
                 padding-inline-start: 0;
                 max-width: var(--EventBubbleTile_line-max-width);
+            }
+
+            .mx_ReadReceiptGroup {
+                /* 42px: magic number. Need to replace with a variable */
+                inset-inline-end: calc(-1 * calc(var(--ReadReceiptGroup_EventBubbleTile-spacing-end) - 42px));
             }
 
             &[data-self="true"] {
