@@ -32,6 +32,13 @@ import { TILE_SERVER_WK_KEY } from "../../../../src/utils/WellKnownUtils";
 import { makeLocationEvent } from "../../../test-utils/location";
 import { getMockClientWithEventEmitter } from "../../../test-utils";
 
+// Fake random strings to give a predictable snapshot
+jest.mock("matrix-js-sdk/src/randomstring", () => {
+    return {
+        randomString: () => "abdefghi",
+    };
+});
+
 describe("MLocationBody", () => {
     const mapOptions = { container: {} as unknown as HTMLElement, style: "" };
     describe("<MLocationBody>", () => {
