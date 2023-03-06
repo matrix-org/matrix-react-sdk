@@ -150,7 +150,7 @@ export interface IConfigOptions {
 
     enable_presence_by_hs_url?: Record<string, boolean>; // <HomeserverName, Enabled>
 
-    terms_and_conditions_links?: { url: string; text: string }[];
+    terms_and_conditions_links?: { url?: string; text: string }[];
 
     latex_maths_delims?: {
         inline?: {
