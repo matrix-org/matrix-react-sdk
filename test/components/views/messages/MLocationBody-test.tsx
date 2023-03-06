@@ -137,13 +137,13 @@ describe("MLocationBody", () => {
                 });
             });
 
-            it("opens map dialog on click", () => {
+            it("opens map dialog on click", async () => {
                 const modalSpy = jest
                     .spyOn(Modal, "createDialog")
                     .mockReturnValue({ finished: new Promise(() => {}), close: jest.fn() });
                 const component = getComponent();
 
-                fireEvent.click(component.container.querySelector(".mx_Map")!);
+                await fireEvent.click(component.container.querySelector(".mx_Map")!);
 
                 expect(modalSpy).toHaveBeenCalled();
             });
