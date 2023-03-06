@@ -168,13 +168,15 @@ describe("Threads", () => {
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
 
         // Make sure the CSS style for spacing is applied to the hidden event on bubble layout
-        cy.get(".mx_ThreadView .mx_GenericEventListSummary[data-layout=bubble]").within(() => {
-            cy.get(".mx_EventTile_info.mx_EventTile_last .mx_EventTile_line .mx_EventTile_content")
+        cy.get(
+            ".mx_ThreadView .mx_GenericEventListSummary[data-layout=bubble] .mx_EventTile_info.mx_EventTile_last",
+        ).within(() => {
+            cy.get(".mx_EventTile_line .mx_EventTile_content")
                 // 76px: ThreadViewGroupSpacingStart + 14px + 6px
                 // 14px: avatar width
                 // See: _EventTile.pcss
                 .should("have.css", "margin-inline-start", "76px");
-            cy.get(".mx_EventTile_info.mx_EventTile_last .mx_EventTile_line")
+            cy.get(".mx_EventTile_line")
                 // Make sure the margin is NOT applied to mx_EventTile_line
                 .should("have.css", "margin-inline-start", "0px");
         });
