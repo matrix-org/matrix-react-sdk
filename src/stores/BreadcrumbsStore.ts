@@ -65,6 +65,13 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
         return !!this.state.enabled && this.meetsRoomRequirement;
     }
 
+    /**
+     * Do we have enough rooms to justify showing the breadcrumbs?
+     * (Or is the labs feature enabled?)
+     *
+     * @returns true if there are at least 20 visible rooms or
+     *          feature_breadcrumbs_v2 is enabled.
+     */
     public get meetsRoomRequirement(): boolean {
         if (SettingsStore.getValue("feature_breadcrumbs_v2")) return true;
         return this.matrixClient?.getVisibleRooms().length >= 20;
