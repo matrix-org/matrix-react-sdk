@@ -16,10 +16,13 @@ limitations under the License.
 
 import { mocked } from "jest-mock";
 import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import { act } from "react-dom/test-utils";
 
-import { createTestClient, setupAsyncStoreWithClient } from "../test-utils";
+import { createTestClient, flushPromises, setupAsyncStoreWithClient } from "../test-utils";
 import SettingsStore from "../../src/settings/SettingsStore";
 import { BreadcrumbsStore } from "../../src/stores/BreadcrumbsStore";
+import { Action } from "../../src/dispatcher/actions";
+import { defaultDispatcher } from "../../src/dispatcher/dispatcher";
 
 describe("BreadcrumbsStore", () => {
     let store: BreadcrumbsStore;
@@ -29,6 +32,7 @@ describe("BreadcrumbsStore", () => {
         jest.resetAllMocks();
         store = BreadcrumbsStore.instance;
         setupAsyncStoreWithClient(store, client);
+        jest.spyOn(SettingsStore, "setValue").mockImplementation(() => Promise.resolve());
     });
 
     describe("If the feature_breadcrumbs_v2 feature is not enabled", () => {
@@ -67,6 +71,60 @@ describe("BreadcrumbsStore", () => {
             expect(store.meetsRoomRequirement).toBe(true);
         });
     });
+
+    it("Appends a room when you join", async () => {
+        // Sanity: no rooms initially
+        expect(store.rooms).toEqual([]);
+
+        // Given a room
+        const room = fakeRoom();
+        mocked(client.getRoom).mockReturnValue(room);
+        mocked(client.getRoomUpgradeHistory).mockReturnValue([]);
+
+        // When we hear that we have joined it
+        await dispatchJoinRoom(room.roomId);
+
+        // It is stored in the store's room list
+        expect(store.rooms.map((r) => r.roomId)).toEqual([room.roomId]);
+    });
+
+    it("Replaces the old room when a newer one joins", async () => {
+        // Given an old room and a new room
+        const oldRoom = fakeRoom();
+        const newRoom = fakeRoom();
+        mocked(client.getRoom).mockImplementation((roomId) => {
+            if (roomId === oldRoom.roomId) return oldRoom;
+            return newRoom;
+        });
+        // Where the new one is a predecessor of the old one
+        mocked(client.getRoomUpgradeHistory).mockReturnValue([oldRoom, newRoom]);
+
+        // When we hear that we joined the old room, then the new one
+        await dispatchJoinRoom(oldRoom.roomId);
+        await dispatchJoinRoom(newRoom.roomId);
+
+        // The store only has the new one
+        expect(store.rooms.map((r) => r.roomId)).toEqual([newRoom.roomId]);
+    });
+
+    /**
+     * Send a JoinRoom event via the dispatcher, and wait for it to process.
+     */
+    async function dispatchJoinRoom(roomId: string) {
+        defaultDispatcher.dispatch(
+            {
+                action: Action.JoinRoom,
+                roomId,
+                metricsTrigger: null,
+            },
+            true, // synchronous dispatch
+        );
+
+        // Wait for event dispatch to happen
+        await act(async () => {
+            await flushPromises();
+        });
+    }
 
     /**
      * Create as many fake rooms in an array as you ask for.
