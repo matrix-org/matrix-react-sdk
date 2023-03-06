@@ -80,7 +80,7 @@ import { privateShouldBeEncrypted } from "../../../utils/rooms";
 
 interface Result {
     userId: string;
-    user: RoomMember | DirectoryMember | ThreepidMember;
+    user: Member;
     lastActive?: number;
 }
 
@@ -130,6 +130,20 @@ class DMUserTile extends React.PureComponent<IDMUserTileProps> {
         );
     }
 }
+
+/**
+ * Converts a RoomMember to a Member.
+ * Returns the Member if it is already a Member.
+ */
+const toMember = (member: RoomMember | Member): Member => {
+    return member instanceof RoomMember
+        ? new DirectoryMember({
+              user_id: member.userId,
+              display_name: member.name,
+              avatar_url: member.getMxcAvatarUrl(),
+          })
+        : member;
+};
 
 interface IDMRoomTileProps {
     member: Member;
@@ -233,7 +247,7 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
 
         const caption = (this.props.member as ThreepidMember).isEmail
             ? _t("Invite by email")
-            : this.highlightName(userIdentifier);
+            : this.highlightName(userIdentifier || this.props.member.userId);
 
         return (
             <div className="mx_InviteDialog_tile mx_InviteDialog_tile--room" onClick={this.onClick}>
@@ -286,7 +300,7 @@ interface InviteCallProps extends BaseProps {
 type Props = InviteDMProps | InviteRoomProps | InviteCallProps;
 
 interface IInviteDialogState {
-    targets: (Member | RoomMember)[]; // array of Member objects (see interface above)
+    targets: Member[]; // array of Member objects (see interface above)
     filterText: string;
     recents: Result[];
     numRecentsShown: number;
@@ -326,7 +340,10 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             throw new Error("When using InviteKind.CallTransfer a call is required for an InviteDialog");
         }
 
-        const alreadyInvited = new Set([MatrixClientPeg.get().getUserId()!, SdkConfig.get("welcome_user_id")]);
+        const alreadyInvited = new Set([MatrixClientPeg.get().getUserId()!]);
+        const welcomeUserId = SdkConfig.get("welcome_user_id");
+        if (welcomeUserId) alreadyInvited.add(welcomeUserId);
+
         if (isRoomInvite(props)) {
             const room = MatrixClientPeg.get().getRoom(props.roomId);
             if (!room) throw new Error("Room ID given to InviteDialog does not look like a room");
@@ -391,9 +408,10 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
 
         const recents: {
             userId: string;
-            user: RoomMember;
+            user: Member;
             lastActive: number;
         }[] = [];
+
         for (const userId in rooms) {
             // Filter out user IDs that are already in the room / should be excluded
             if (excludedTargetIds.has(userId)) {
@@ -402,8 +420,8 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             }
 
             const room = rooms[userId];
-            const member = room.getMember(userId);
-            if (!member) {
+            const roomMember = room.getMember(userId);
+            if (!roomMember) {
                 // just skip people who don't have memberships for some reason
                 logger.warn(`[Invite:Recents] ${userId} is missing a member object in their own DM (${room.roomId})`);
                 continue;
@@ -429,7 +447,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 continue;
             }
 
-            recents.push({ userId, user: member, lastActive: lastEventTs });
+            recents.push({ userId, user: toMember(roomMember), lastActive: lastEventTs });
         }
         if (!recents) logger.warn("[Invite:Recents] No recents to suggest!");
 
@@ -439,17 +457,18 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         return recents;
     }
 
-    private buildSuggestions(excludedTargetIds: Set<string>): { userId: string; user: RoomMember }[] {
+    private buildSuggestions(excludedTargetIds: Set<string>): { userId: string; user: Member }[] {
         const cli = MatrixClientPeg.get();
         const activityScores = buildActivityScores(cli);
         const memberScores = buildMemberScores(cli);
+
         const memberComparator = compareMembers(activityScores, memberScores);
 
         return Object.values(memberScores)
             .map(({ member }) => member)
             .filter((member) => !excludedTargetIds.has(member.userId))
             .sort(memberComparator)
-            .map((member) => ({ userId: member.userId, user: member }));
+            .map((member) => ({ userId: member.userId, user: toMember(member) }));
     }
 
     private shouldAbortAfterInviteError(result: IInviteResult, room: Room): boolean {
@@ -678,6 +697,9 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             try {
                 const authClient = new IdentityAuthClient();
                 const token = await authClient.getAccessToken();
+                // No token → unable to try a lookup
+                if (!token) return;
+
                 if (term !== this.state.filterText) return; // abandon hope
 
                 const lookup = await MatrixClientPeg.get().lookupThreePid("email", term, token);
@@ -801,7 +823,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             ...this.state.serverResultsMixin,
             ...this.state.threepidResultsMixin,
         ];
-        const toAdd: (Member | RoomMember)[] = [];
+        const toAdd: Member[] = [];
         const failed: string[] = [];
 
         // Addresses that could not be added.
