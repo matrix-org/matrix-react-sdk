@@ -17,10 +17,11 @@ limitations under the License.
 import { parsePermalink } from "../utils/permalinks/Permalinks";
 
 /**
- * Return the roomId or alias of an element or matrix room link
+ * Parse a search string and return either a room ID/alias or the original search term if it does
+ * not look like a permalink.
  * E.g https://matrix.to/#/#element-dev:matrix.org returns #element-dev:matrix.org
- * @param {string} searchTerm The searchterm.
- * @returns {string} Tranforms the string to its roomid or alias if it is a matrix or element link.
+ * @param {string} searchTerm The search term.
+ * @returns {string} The room ID or alias, or the original search term if it doesn't look like a permalink.
  */
 export function transformSearchTerm(searchTerm: string): string {
     const parseLink = parsePermalink(searchTerm);
