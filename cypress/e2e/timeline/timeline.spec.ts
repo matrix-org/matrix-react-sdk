@@ -605,7 +605,7 @@ describe("Timeline", () => {
 
                 // Make sure the bot joined the room
                 cy.contains(
-                    ".mx_GenericEventListSummary .mx_EventTile_info.mx_EventTile_last ",
+                    ".mx_GenericEventListSummary .mx_EventTile_info.mx_EventTile_last",
                     "BotBob joined the room",
                 ).should("exist");
 
