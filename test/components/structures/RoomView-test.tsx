@@ -387,8 +387,7 @@ describe("RoomView", () => {
             expect(screen.getByText("Waiting for users to join Element")).toBeInTheDocument();
             expect(
                 screen.getByText(
-                    "Once users invited have joined Element, " +
-                        "you will be able to chat and the room will be end-to end encrypted",
+                    "Once invited users have joined Element, you will be able to chat and the room will be end-to-end encrypted",
                 ),
             ).toBeInTheDocument();
 

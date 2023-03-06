@@ -68,7 +68,7 @@ export const WaitingForThirdPartyRoomView: React.FC<Props> = ({ roomView, resize
                                 className="mx_cryptoEvent mx_cryptoEvent_icon"
                                 title={_t("Waiting for users to join Element")}
                                 subtitle={_t(
-                                    "Once users invited have joined Element, you will be able to chat and the room will be end-to end encrypted",
+                                    "Once invited users have joined Element, you will be able to chat and the room will be end-to-end encrypted",
                                 )}
                             />
                             <NewRoomIntro />
