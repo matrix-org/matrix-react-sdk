@@ -21,6 +21,7 @@ import type { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { Layout } from "../../../src/settings/enums/Layout";
+import { MatrixClient } from "../../global";
 import Chainable = Cypress.Chainable;
 
 // The avatar size used in the timeline
@@ -500,6 +501,7 @@ describe("Timeline", () => {
 
     describe("message sending", () => {
         const MESSAGE = "Hello world";
+        const reply = "Reply";
         const viewRoomSendMessageAndSetupReply = () => {
             // View room
             cy.visit("/#/room/" + roomId);
@@ -514,7 +516,6 @@ describe("Timeline", () => {
         };
 
         it("can reply with a text message", () => {
-            const reply = "Reply";
             viewRoomSendMessageAndSetupReply();
 
             cy.getComposer().type(`${reply}{enter}`);
@@ -565,6 +566,31 @@ describe("Timeline", () => {
             cy.get(".mx_RoomView_body .mx_EventTile .mx_EventTile_line .mx_MTextBody .mx_EventTile_bigEmoji")
                 .children()
                 .should("have.length", 4);
+        });
+
+        it("should display a reply chain", () => {
+            let bot: MatrixClient;
+
+            cy.visit("/#/room/" + roomId).as("testRoomId");
+
+            // Wait until configuration is finished
+            cy.contains(
+                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
+                "created and configured the room.",
+            ).should("exist");
+
+            // Create a bot and invite it
+            cy.getBot(homeserver, {
+                displayName: "BotBob",
+                autoAcceptInvites: false,
+            }).then((_bot) => {
+                bot = _bot;
+                cy.inviteUser(roomId, bot.getUserId());
+                bot.joinRoom(roomId);
+
+                // Have bot send MESSAGE to roomId
+                cy.botSendMessage(bot, roomId, MESSAGE);
+            });
         });
     });
 });
