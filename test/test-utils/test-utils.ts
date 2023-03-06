@@ -512,6 +512,7 @@ export function mkStubRoom(
     return {
         canInvite: jest.fn(),
         client,
+        findThreadForEvent: jest.fn(),
         createThreadsTimelineSets: jest.fn().mockReturnValue(new Promise(() => {})),
         currentState: {
             getStateEvents: jest.fn((_type, key) => (key === undefined ? [] : null)),
@@ -689,6 +690,19 @@ export const mkRoomMemberJoinEvent = (user: string, room: string): MatrixEvent =
             membership: "join",
         },
         skey: user,
+        user,
+        room,
+    });
+};
+
+export const mkThirdPartyInviteEvent = (user: string, displayName: string, room: string): MatrixEvent => {
+    return mkEvent({
+        event: true,
+        type: EventType.RoomThirdPartyInvite,
+        content: {
+            display_name: displayName,
+        },
+        skey: "test" + Math.random(),
         user,
         room,
     });
