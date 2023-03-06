@@ -51,6 +51,29 @@ describe("BreadcrumbsStore", () => {
             mocked(client.getVisibleRooms).mockReturnValue(fakeRooms(25));
             expect(store.meetsRoomRequirement).toBe(true);
         });
+
+        describe("And the feature_dynamic_room_predecessors is enabled", () => {
+            beforeEach(() => {
+                // Turn on feature_dynamic_room_predecessors setting
+                jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                    (settingName) => settingName === "feature_dynamic_room_predecessors",
+                );
+            });
+
+            it("passes through the dynamic room precessors flag", () => {
+                mocked(client.getVisibleRooms).mockReturnValue(fakeRooms(25));
+                store.meetsRoomRequirement;
+                expect(client.getVisibleRooms).toHaveBeenCalledWith(true);
+            });
+        });
+
+        describe("And the feature_dynamic_room_predecessors is not enabled", () => {
+            it("passes through the dynamic room precessors flag", () => {
+                mocked(client.getVisibleRooms).mockReturnValue(fakeRooms(25));
+                store.meetsRoomRequirement;
+                expect(client.getVisibleRooms).toHaveBeenCalledWith(false);
+            });
+        });
     });
 
     describe("If the feature_breadcrumbs_v2 feature is enabled", () => {
@@ -72,39 +95,80 @@ describe("BreadcrumbsStore", () => {
         });
     });
 
-    it("Appends a room when you join", async () => {
-        // Sanity: no rooms initially
-        expect(store.rooms).toEqual([]);
+    describe("If the feature_dynamic_room_predecessors is not enabled", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+        });
 
-        // Given a room
-        const room = fakeRoom();
-        mocked(client.getRoom).mockReturnValue(room);
-        mocked(client.getRoomUpgradeHistory).mockReturnValue([]);
+        it("Appends a room when you join", async () => {
+            // Sanity: no rooms initially
+            expect(store.rooms).toEqual([]);
 
-        // When we hear that we have joined it
-        await dispatchJoinRoom(room.roomId);
+            // Given a room
+            const room = fakeRoom();
+            mocked(client.getRoom).mockReturnValue(room);
+            mocked(client.getRoomUpgradeHistory).mockReturnValue([]);
 
-        // It is stored in the store's room list
-        expect(store.rooms.map((r) => r.roomId)).toEqual([room.roomId]);
+            // When we hear that we have joined it
+            await dispatchJoinRoom(room.roomId);
+
+            // It is stored in the store's room list
+            expect(store.rooms.map((r) => r.roomId)).toEqual([room.roomId]);
+        });
+
+        it("Replaces the old room when a newer one joins", async () => {
+            // Given an old room and a new room
+            const oldRoom = fakeRoom();
+            const newRoom = fakeRoom();
+            mocked(client.getRoom).mockImplementation((roomId) => {
+                if (roomId === oldRoom.roomId) return oldRoom;
+                return newRoom;
+            });
+            // Where the new one is a predecessor of the old one
+            mocked(client.getRoomUpgradeHistory).mockReturnValue([oldRoom, newRoom]);
+
+            // When we hear that we joined the old room, then the new one
+            await dispatchJoinRoom(oldRoom.roomId);
+            await dispatchJoinRoom(newRoom.roomId);
+
+            // The store only has the new one
+            expect(store.rooms.map((r) => r.roomId)).toEqual([newRoom.roomId]);
+        });
+
+        it("Passes through the dynamic predecessor setting", async () => {
+            // Given a room
+            const room = fakeRoom();
+            mocked(client.getRoom).mockReturnValue(room);
+            mocked(client.getRoomUpgradeHistory).mockReturnValue([]);
+
+            // When we signal that we have joined
+            await dispatchJoinRoom(room.roomId);
+
+            // We pass the value of the dynamic predecessor setting through
+            expect(client.getRoomUpgradeHistory).toHaveBeenCalledWith(room.roomId, false, false);
+        });
     });
 
-    it("Replaces the old room when a newer one joins", async () => {
-        // Given an old room and a new room
-        const oldRoom = fakeRoom();
-        const newRoom = fakeRoom();
-        mocked(client.getRoom).mockImplementation((roomId) => {
-            if (roomId === oldRoom.roomId) return oldRoom;
-            return newRoom;
+    describe("If the feature_dynamic_room_predecessors is enabled", () => {
+        beforeEach(() => {
+            // Turn on feature_dynamic_room_predecessors setting
+            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                (settingName) => settingName === "feature_dynamic_room_predecessors",
+            );
         });
-        // Where the new one is a predecessor of the old one
-        mocked(client.getRoomUpgradeHistory).mockReturnValue([oldRoom, newRoom]);
 
-        // When we hear that we joined the old room, then the new one
-        await dispatchJoinRoom(oldRoom.roomId);
-        await dispatchJoinRoom(newRoom.roomId);
+        it("Passes through the dynamic predecessor setting", async () => {
+            // Given a room
+            const room = fakeRoom();
+            mocked(client.getRoom).mockReturnValue(room);
+            mocked(client.getRoomUpgradeHistory).mockReturnValue([]);
 
-        // The store only has the new one
-        expect(store.rooms.map((r) => r.roomId)).toEqual([newRoom.roomId]);
+            // When we signal that we have joined
+            await dispatchJoinRoom(room.roomId);
+
+            // We pass the value of the dynamic predecessor setting through
+            expect(client.getRoomUpgradeHistory).toHaveBeenCalledWith(room.roomId, false, true);
+        });
     });
 
     /**
