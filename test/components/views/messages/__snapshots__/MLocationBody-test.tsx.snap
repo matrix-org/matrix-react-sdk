@@ -38,44 +38,12 @@ exports[`MLocationBody <MLocationBody> without error renders map correctly 1`] =
     >
       <div
         class="mx_Map mx_MLocationBody_map"
-        id="mx_Map_mx_MLocationBody_$2_HHHHHHHH"
+        id="mx_Map_mx_MLocationBody_$2_abdefghi"
       >
         <span>
           <div
             class="mx_Marker mx_Marker_defaultColor"
-            id="mx_MLocationBody_$2_HHHHHHHH-marker"
-          >
-            <div
-              class="mx_Marker_border"
-            >
-              <div
-                class="mx_Marker_icon"
-              />
-            </div>
-          </div>
-        </span>
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
-exports[`MLocationBody <MLocationBody> without error renders marker correctly for a non-self share 1`] = `
-<DocumentFragment>
-  <div
-    class="mx_MLocationBody"
-  >
-    <div
-      tabindex="0"
-    >
-      <div
-        class="mx_Map mx_MLocationBody_map"
-        id="mx_Map_mx_MLocationBody_$2_HHHHHHHH"
-      >
-        <span>
-          <div
-            class="mx_Marker mx_Marker_defaultColor"
-            id="mx_MLocationBody_$2_HHHHHHHH-marker"
+            id="mx_MLocationBody_$2_abdefghi-marker"
           >
             <div
               class="mx_Marker_border"
