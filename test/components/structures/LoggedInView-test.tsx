@@ -318,7 +318,7 @@ describe("<LoggedInView />", () => {
 
                 mockClient.emit(ClientEvent.AccountData, pushRulesEvent);
 
-                // set to match primary rule
+                // not called
                 expect(mockClient.setPushRuleActions).not.toHaveBeenCalled();
             });
         });

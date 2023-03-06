@@ -44,9 +44,9 @@ const monitorSyncedRule = async (
     if (!primaryRule) {
         return;
     }
-    const syncedRules: IAnnotatedPushRule[] = definition.syncedRuleIds
+    const syncedRules: IAnnotatedPushRule[] | undefined = definition.syncedRuleIds
         ?.map((ruleId) => pushRuleAndKindToAnnotated(pushProcessor.getPushRuleAndKindById(ruleId)))
-        .filter(Boolean);
+        .filter((n?: IAnnotatedPushRule): n is IAnnotatedPushRule => Boolean(n));
 
     // no synced rules to manage
     if (!syncedRules?.length) {
@@ -70,7 +70,7 @@ const monitorSyncedRule = async (
 };
 
 export const monitorSyncedPushRules = async (
-    accountDataEvent: MatrixEvent,
+    accountDataEvent: MatrixEvent | undefined,
     matrixClient: MatrixClient,
 ): Promise<void> => {
     if (accountDataEvent?.getType() !== EventType.PushRules) {

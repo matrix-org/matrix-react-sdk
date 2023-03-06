@@ -40,6 +40,11 @@ export const updatePushRuleActions = async (
     }
 };
 
+interface PushRuleAndKind {
+    rule: IPushRule;
+    kind: PushRuleKind;
+}
+
 /**
  * Update push rules with given actions
  * Where they already exist for current user
@@ -50,14 +55,14 @@ export const updatePushRuleActions = async (
  */
 export const updateExistingPushRulesWithActions = async (
     matrixClient: MatrixClient,
-    ruleIds: IPushRule["rule_id"][],
+    ruleIds?: IPushRule["rule_id"][],
     actions?: PushRuleAction[],
 ): Promise<void> => {
     const pushProcessor = new PushProcessor(matrixClient);
 
-    const rules: ReturnType<PushProcessor["getPushRuleAndKindById"]>[] = ruleIds
+    const rules: PushRuleAndKind[] | undefined = ruleIds
         ?.map((ruleId) => pushProcessor.getPushRuleAndKindById(ruleId))
-        .filter(Boolean);
+        .filter((n: PushRuleAndKind | null): n is PushRuleAndKind => Boolean(n));
 
     if (!rules?.length) {
         return;

@@ -494,6 +494,10 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             } else {
                 const definition: VectorPushRuleDefinition = VectorPushRulesDefinitions[rule.ruleId];
                 const actions = definition.vectorStateToActions[checkedState];
+                // we should not encounter this
+                if (!rule.rule) {
+                    throw new Error("Unable to update rule without rule_id");
+                }
                 await updatePushRuleActions(cli, rule.rule.rule_id, rule.rule.kind, actions);
                 await updateExistingPushRulesWithActions(cli, definition.syncedRuleIds, actions);
             }
