@@ -15,8 +15,11 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, RenderResult, waitFor } from "@testing-library/react";
+// eslint-disable-next-line deprecate/import
+import { mount, ReactWrapper } from "enzyme";
 import { mocked } from "jest-mock";
+// eslint-disable-next-line deprecate/import
+import { act } from "react-dom/test-utils";
 import { Room } from "matrix-js-sdk/src/matrix";
 
 import ExportDialog from "../../../../src/components/views/dialogs/ExportDialog";
@@ -56,28 +59,49 @@ describe("<ExportDialog />", () => {
         onFinished: jest.fn(),
     };
 
-    const getComponent = (props = {}) => render(<ExportDialog {...defaultProps} {...props} />);
+    const getComponent = (props = {}) => mount(<ExportDialog {...defaultProps} {...props} />);
 
-    const getSizeInput = ({ container }: RenderResult) => container.querySelector('input[id="size-limit"]')!;
-    const getExportTypeInput = ({ container }: RenderResult) => container.querySelector('select[id="export-type"]')!;
-    const getAttachmentsCheckbox = ({ container }: RenderResult) =>
-        container.querySelector('input[id="include-attachments"]')!;
-    const getMessageCountInput = ({ container }: RenderResult) => container.querySelector('input[id="message-count"]')!;
-    const getExportFormatInput = ({ container }: RenderResult, format: ExportFormat) =>
-        container.querySelector(`input[id="exportFormat-${format}"]`)!;
-    const getPrimaryButton = ({ getByTestId }: RenderResult) => getByTestId("dialog-primary-button")!;
-    const getSecondaryButton = ({ getByTestId }: RenderResult) => getByTestId("dialog-cancel-button")!;
+    const getSizeInput = (component: ReactWrapper) => component.find('input[id="size-limit"]');
+    const getExportTypeInput = (component: ReactWrapper) => component.find('select[id="export-type"]');
+    const getAttachmentsCheckbox = (component: ReactWrapper) => component.find('input[id="include-attachments"]');
+    const getMessageCountInput = (component: ReactWrapper) => component.find('input[id="message-count"]');
+    const getExportFormatInput = (component: ReactWrapper, format: ExportFormat) =>
+        component.find(`input[id="exportFormat-${format}"]`);
+    const getPrimaryButton = (component: ReactWrapper) => component.find('[data-testid="dialog-primary-button"]');
+    const getSecondaryButton = (component: ReactWrapper) => component.find('[data-testid="dialog-cancel-button"]');
 
-    const submitForm = async (component: RenderResult) => fireEvent.click(getPrimaryButton(component));
-    const selectExportFormat = async (component: RenderResult, format: ExportFormat) =>
-        fireEvent.click(getExportFormatInput(component, format));
-    const selectExportType = async (component: RenderResult, type: ExportType) =>
-        fireEvent.change(getExportTypeInput(component), { target: { value: type } });
-    const setMessageCount = async (component: RenderResult, count: number) =>
-        fireEvent.change(getMessageCountInput(component), { target: { value: count } });
+    const submitForm = async (component: ReactWrapper) =>
+        act(async () => {
+            getPrimaryButton(component).simulate("click");
+            component.setProps({});
+        });
+    const selectExportFormat = async (component: ReactWrapper, format: ExportFormat) =>
+        act(async () => {
+            getExportFormatInput(component, format).simulate("change");
+            component.setProps({});
+        });
+    const selectExportType = async (component: ReactWrapper, type: ExportType) =>
+        act(async () => {
+            getExportTypeInput(component).simulate("change", { target: { value: type } });
+            component.setProps({});
+        });
+    const setMessageCount = async (component: ReactWrapper, count: number) =>
+        act(async () => {
+            getMessageCountInput(component).simulate("change", { target: { value: count } });
+            component.setProps({});
+        });
 
-    const setSizeLimit = async (component: RenderResult, limit: number) =>
-        fireEvent.change(getSizeInput(component), { target: { value: limit } });
+    const setSizeLimit = async (component: ReactWrapper, limit: number) =>
+        act(async () => {
+            getSizeInput(component).simulate("change", { target: { value: limit } });
+            component.setProps({});
+        });
+
+    const setIncludeAttachments = async (component: ReactWrapper, checked: boolean) =>
+        act(async () => {
+            getAttachmentsCheckbox(component).simulate("change", { target: { checked } });
+            component.setProps({});
+        });
 
     beforeEach(() => {
         HTMLExporterMock.mockClear().mockImplementation(jest.fn().mockReturnValue(htmlExporterInstance));
@@ -91,13 +115,15 @@ describe("<ExportDialog />", () => {
 
     it("renders export dialog", () => {
         const component = getComponent();
-        expect(component.container.querySelector(".mx_ExportDialog")).toMatchSnapshot();
+        expect(component.find(".mx_ExportDialog")).toMatchSnapshot();
     });
 
     it("calls onFinished when cancel button is clicked", () => {
         const onFinished = jest.fn();
         const component = getComponent({ onFinished });
-        fireEvent.click(getSecondaryButton(component));
+        act(() => {
+            getSecondaryButton(component).simulate("click");
+        });
         expect(onFinished).toHaveBeenCalledWith(false);
     });
 
@@ -105,19 +131,17 @@ describe("<ExportDialog />", () => {
         const component = getComponent();
         await submitForm(component);
 
-        await waitFor(() => {
-            // 4th arg is an component function
-            const exportConstructorProps = HTMLExporterMock.mock.calls[0].slice(0, 3);
-            expect(exportConstructorProps).toEqual([
-                defaultProps.room,
-                ExportType.Timeline,
-                {
-                    attachmentsIncluded: false,
-                    maxSize: 8388608, // 8MB to bytes
-                    numberOfMessages: 100,
-                },
-            ]);
-        });
+        // 4th arg is an component function
+        const exportConstructorProps = HTMLExporterMock.mock.calls[0].slice(0, 3);
+        expect(exportConstructorProps).toEqual([
+            defaultProps.room,
+            ExportType.Timeline,
+            {
+                attachmentsIncluded: false,
+                maxSize: 8388608, // 8MB to bytes
+                numberOfMessages: 100,
+            },
+        ]);
         expect(htmlExporterInstance.export).toHaveBeenCalled();
     });
 
@@ -149,28 +173,29 @@ describe("<ExportDialog />", () => {
     it("renders success screen when export is finished", async () => {
         const component = getComponent();
         await submitForm(component);
+        component.setProps({});
 
         jest.runAllTimers();
 
-        expect(component.container.querySelector(".mx_InfoDialog .mx_Dialog_content")).toMatchSnapshot();
+        expect(component.find(".mx_InfoDialog .mx_Dialog_content")).toMatchSnapshot();
     });
 
     describe("export format", () => {
         it("renders export format with html selected by default", () => {
             const component = getComponent();
-            expect(getExportFormatInput(component, ExportFormat.Html)).toBeChecked();
+            expect(getExportFormatInput(component, ExportFormat.Html).props().checked).toBeTruthy();
         });
 
         it("sets export format on radio button click", async () => {
             const component = getComponent();
             await selectExportFormat(component, ExportFormat.PlainText);
-            expect(getExportFormatInput(component, ExportFormat.PlainText)).toBeChecked();
-            expect(getExportFormatInput(component, ExportFormat.Html)).not.toBeChecked();
+            expect(getExportFormatInput(component, ExportFormat.PlainText).props().checked).toBeTruthy();
+            expect(getExportFormatInput(component, ExportFormat.Html).props().checked).toBeFalsy();
         });
 
         it("hides export format input when format is valid in ForceRoomExportParameters", () => {
             const component = getComponent();
-            expect(getExportFormatInput(component, ExportFormat.Html)).toBeChecked();
+            expect(getExportFormatInput(component, ExportFormat.Html).props().checked).toBeTruthy();
         });
 
         it("does not render export format when set in ForceRoomExportParameters", () => {
@@ -178,20 +203,20 @@ describe("<ExportDialog />", () => {
                 format: ExportFormat.PlainText,
             });
             const component = getComponent();
-            expect(getExportFormatInput(component, ExportFormat.Html)).toBeFalsy();
+            expect(getExportFormatInput(component, ExportFormat.Html).length).toBeFalsy();
         });
     });
 
     describe("export type", () => {
         it("renders export type with timeline selected by default", () => {
             const component = getComponent();
-            expect(getExportTypeInput(component)).toHaveValue(ExportType.Timeline);
+            expect(getExportTypeInput(component).props().value).toEqual(ExportType.Timeline);
         });
 
         it("sets export type on change", async () => {
             const component = getComponent();
             await selectExportType(component, ExportType.Beginning);
-            expect(getExportTypeInput(component)).toHaveValue(ExportType.Beginning);
+            expect(getExportTypeInput(component).props().value).toEqual(ExportType.Beginning);
         });
 
         it("does not render export type when set in ForceRoomExportParameters", () => {
@@ -199,25 +224,25 @@ describe("<ExportDialog />", () => {
                 range: ExportType.Beginning,
             });
             const component = getComponent();
-            expect(getExportTypeInput(component)).toBeFalsy();
+            expect(getExportTypeInput(component).length).toBeFalsy();
         });
 
         it("does not render message count input", async () => {
             const component = getComponent();
-            expect(getMessageCountInput(component)).toBeFalsy();
+            expect(getMessageCountInput(component).length).toBeFalsy();
         });
 
         it("renders message count input with default value 100 when export type is lastNMessages", async () => {
             const component = getComponent();
             await selectExportType(component, ExportType.LastNMessages);
-            expect(getMessageCountInput(component)).toHaveValue(100);
+            expect(getMessageCountInput(component).props().value).toEqual("100");
         });
 
         it("sets message count on change", async () => {
             const component = getComponent();
             await selectExportType(component, ExportType.LastNMessages);
             await setMessageCount(component, 10);
-            expect(getMessageCountInput(component)).toHaveValue(10);
+            expect(getMessageCountInput(component).props().value).toEqual("10");
         });
 
         it("does not export when export type is lastNMessages and message count is falsy", async () => {
@@ -245,22 +270,20 @@ describe("<ExportDialog />", () => {
             await selectExportType(component, ExportType.Timeline);
             await submitForm(component);
 
-            await waitFor(() => {
-                expect(htmlExporterInstance.export).toHaveBeenCalled();
-            });
+            expect(htmlExporterInstance.export).toHaveBeenCalled();
         });
     });
 
     describe("size limit", () => {
         it("renders size limit input with default value", () => {
             const component = getComponent();
-            expect(getSizeInput(component)).toHaveValue(8);
+            expect(getSizeInput(component).props().value).toEqual("8");
         });
 
         it("updates size limit on change", async () => {
             const component = getComponent();
             await setSizeLimit(component, 20);
-            expect(getSizeInput(component)).toHaveValue(20);
+            expect(getSizeInput(component).props().value).toEqual("20");
         });
 
         it("does not export when size limit is falsy", async () => {
@@ -284,9 +307,7 @@ describe("<ExportDialog />", () => {
             await setSizeLimit(component, 2000);
             await submitForm(component);
 
-            await waitFor(() => {
-                expect(htmlExporterInstance.export).toHaveBeenCalled();
-            });
+            expect(htmlExporterInstance.export).toHaveBeenCalled();
         });
 
         it("does not render size limit input when set in ForceRoomExportParameters", () => {
@@ -294,7 +315,7 @@ describe("<ExportDialog />", () => {
                 sizeMb: 10000,
             });
             const component = getComponent();
-            expect(getSizeInput(component)).toBeFalsy();
+            expect(getSizeInput(component).length).toBeFalsy();
         });
 
         /**
@@ -314,13 +335,13 @@ describe("<ExportDialog />", () => {
     describe("include attachments", () => {
         it("renders input with default value of false", () => {
             const component = getComponent();
-            expect(getAttachmentsCheckbox(component)).not.toBeChecked();
+            expect(getAttachmentsCheckbox(component).props().checked).toEqual(false);
         });
 
         it("updates include attachments on change", async () => {
             const component = getComponent();
-            fireEvent.click(getAttachmentsCheckbox(component));
-            expect(getAttachmentsCheckbox(component)).toBeChecked();
+            await setIncludeAttachments(component, true);
+            expect(getAttachmentsCheckbox(component).props().checked).toEqual(true);
         });
 
         it("does not render input when set in ForceRoomExportParameters", () => {
@@ -328,7 +349,7 @@ describe("<ExportDialog />", () => {
                 includeAttachments: false,
             });
             const component = getComponent();
-            expect(getAttachmentsCheckbox(component)).toBeFalsy();
+            expect(getAttachmentsCheckbox(component).length).toBeFalsy();
         });
     });
 });
