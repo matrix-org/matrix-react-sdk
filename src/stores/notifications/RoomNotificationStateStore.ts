@@ -27,6 +27,7 @@ import { RoomNotificationState } from "./RoomNotificationState";
 import { SummarizedNotificationState } from "./SummarizedNotificationState";
 import { VisibilityProvider } from "../room-list/filters/VisibilityProvider";
 import { PosthogAnalytics } from "../../PosthogAnalytics";
+import SettingsStore from "../../settings/SettingsStore";
 
 interface IState {}
 
@@ -96,8 +97,9 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
     private onSync = (state: SyncState, prevState: SyncState | null, data?: ISyncStateData): void => {
         // Only count visible rooms to not torment the user with notification counts in rooms they can't see.
         // This will include highlights from the previous version of the room internally
+        const msc3946ProcessDynamicPredecessor = SettingsStore.getValue("feature_dynamic_room_predecessors");
         const globalState = new SummarizedNotificationState();
-        const visibleRooms = this.matrixClient.getVisibleRooms();
+        const visibleRooms = this.matrixClient.getVisibleRooms(msc3946ProcessDynamicPredecessor);
 
         let numFavourites = 0;
         for (const room of visibleRooms) {
