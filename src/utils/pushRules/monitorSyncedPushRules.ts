@@ -78,9 +78,9 @@ export const monitorSyncedPushRules = async (
     }
     const pushProcessor = new PushProcessor(matrixClient);
 
-    Object.entries(VectorPushRulesDefinitions).map(([ruleId, definition]) => {
+    Object.entries(VectorPushRulesDefinitions).forEach(async ([ruleId, definition]) => {
         try {
-            monitorSyncedRule(matrixClient, pushProcessor, ruleId, definition);
+            await monitorSyncedRule(matrixClient, pushProcessor, ruleId, definition);
         } catch (error) {
             logger.error(`Failed to fully synchronise push rules for ${ruleId}`, error);
         }
