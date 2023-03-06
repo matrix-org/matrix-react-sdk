@@ -302,6 +302,37 @@ describe("Timeline", () => {
             );
         });
 
+        it("should render EventTiles on modern layout", () => {
+            sendEvent(roomId);
+            cy.visit("/#/room/" + roomId);
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+
+            // Wait until configuration is finished
+            cy.contains(
+                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
+                "created and configured the room.",
+            ).should("exist");
+
+            // Exclude timestamp and read marker from snapshot
+            const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
+
+            // Send the second message
+            sendEvent(roomId);
+
+            // Check that block start padding of the second message is not overridden by anything
+            cy.get(".mx_EventTile_continuation").should("have.css", "padding-block-start", "0px");
+
+            cy.get(".mx_MainSplit").percySnapshotElement("Continued EventTile on modern layout", { percyCSS });
+
+            // Check the same thing for compact layout
+            cy.setSettingValue("useCompactLayout", null, SettingLevel.DEVICE, true);
+            cy.get(".mx_MatrixChat_useCompactLayout .mx_EventTile_continuation").should(
+                "have.css",
+                "padding-block-start",
+                "0px",
+            );
+        });
+
         it("should set inline start padding to a hidden event line", () => {
             sendEvent(roomId);
             cy.visit("/#/room/" + roomId);
