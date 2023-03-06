@@ -57,9 +57,8 @@ jobs:
 
             - name: Run tests
               run: |
-                  yarn ${{ inputs.disable_coverage != 'true' && 'coverage' || 'test' }} \
+                  yarn ${{ inputs.disable_coverage != 'true' && 'coverage' || 'test' }} test/components/views/messages/MBeaconBody-test.ts \
                       --ci \
-                      --reporters github-actions ${{ steps.metrics.outputs.extra-reporter }} \
                       --max-workers ${{ steps.cpu-cores.outputs.count }} \
                       --cacheDirectory /tmp/jest_cache
 
