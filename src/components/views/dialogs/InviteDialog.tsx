@@ -1384,6 +1384,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         let onlyOneThreepidNote: React.ReactNode | null = null;
 
         if (!this.canInviteMore() || (this.hasFilterAtLeastOneEmail() && !this.canInviteThirdParty())) {
+            // We are in DM case here, because of the checks in canInviteMore() / canInviteThirdParty().
             onlyOneThreepidNote = (
                 <div className="mx_InviteDialog_oneThreepid">
                     {_t("Invites by email can only be sent one at a time")}
