@@ -66,10 +66,10 @@ describe("Lifecycle", () => {
     });
 
     it("should setLoggedIn", async () => {
-        // promise to wait 'on_logging_in'
-        const loggingInPromise = new Promise((resolve, reject) => {
+        // promise to wait 'on_logged_in'
+        const loggedInPromise = new Promise((resolve, reject) => {
             defaultDispatcher.register((payload: ActionPayload) => {
-                if (payload.action === "on_logging_in") {
+                if (payload.action === Action.OnLoggedIn) {
                     resolve(undefined);
                 }
             });
@@ -81,6 +81,6 @@ describe("Lifecycle", () => {
             userId: "@some_user_id",
         });
 
-        await expect(loggingInPromise).resolves.toBeUndefined();
+        await expect(loggedInPromise).resolves.toBeUndefined();
     });
 });
