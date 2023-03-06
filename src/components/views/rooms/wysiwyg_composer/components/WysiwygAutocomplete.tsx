@@ -15,35 +15,28 @@ limitations under the License.
 */
 
 import React, { forwardRef, RefObject, useRef } from "react";
-import { FormattingFunctions, SuggestionPattern } from "@matrix-org/matrix-wysiwyg";
+import { FormattingFunctions, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 
 import { useRoomContext } from "../../../../../contexts/RoomContext";
 import Autocomplete from "../../Autocomplete";
 import { ICompletion } from "../../../../../autocomplete/Autocompleter";
 
 interface WysiwygAutocompleteProps {
-    suggestion: SuggestionPattern;
+    suggestion: MappedSuggestion;
     handleMention: FormattingFunctions["mention"];
 }
 
 // Helper function that takes the rust suggestion and builds the query for the
 // Autocomplete. This will change as we implement / commands.
 // Returns an empty string if we don't want to show the suggestion menu.
-function buildQuery(suggestion: SuggestionPattern | null): string {
-    // The suggestion.key refers to a rust enum, so the value of the key is a
-    // number referring to the following keys
-    const rustKeys = ["@", "#", "/"];
-
-    if (suggestion === null) {
+function buildQuery(suggestion: MappedSuggestion | null): string {
+    if (!suggestion || !suggestion.keyChar || suggestion.type === "command") {
+        // if we have an empty key character, we do not build a query
+        // TODO implement the command functionality
         return "";
     }
 
-    // TODO we are not yet supporting / commands, so can't support this key
-    if (suggestion.key === 2) {
-        return "";
-    }
-
-    return `${rustKeys[suggestion.key]}${suggestion.text}`;
+    return `${suggestion.keyChar}${suggestion.text}`;
 }
 
 const WysiwygAutocomplete = forwardRef(
@@ -61,7 +54,7 @@ const WysiwygAutocomplete = forwardRef(
                     }
                     break;
                 case "command":
-                    // TODO - need to build this function into rte first
+                    // TODO implement the command functionality
                     console.log("/command functionality not yet in place");
                     break;
                 default:
