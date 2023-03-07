@@ -57,7 +57,7 @@ describe("RoomNotificationStateStore", function () {
         client.emit(ClientEvent.Sync, null, null);
 
         // Then we emit an event from the store
-        expect(store.emit).toHaveBeenCalledWith(UPDATE_STATUS_INDICATOR, expect.anything(), null, null, undefined);
+        expect(store.emit).toHaveBeenCalledWith(UPDATE_STATUS_INDICATOR, expect.anything(), null);
     });
 
     describe("If the feature_dynamic_room_predecessors is not enabled", () => {
