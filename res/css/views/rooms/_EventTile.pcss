@@ -643,17 +643,18 @@ $left-gutter: 64px;
             list-style-type: disc;
         }
 
+        /* Remove top and bottom margin for better display in rich text editor output */
+        :is(blockquote > p, ol, ul) {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        /* Apply to every layout */
         .mx_EventTile & {
             /* Apply to paragraph below ul or ol */
             :is(ul, ol) + p {
                 margin-top: $spacing-16;
             }
-        }
-
-        /* Remove top and bottom margin for better display in rich text editor output */
-        :is(blockquote > p, ol, ul) {
-            margin-top: 0;
-            margin-bottom: 0;
         }
 
         /* Apply to compact modern layout */
