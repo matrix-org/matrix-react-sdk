@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { parsePermalink } from "../utils/permalinks/Permalinks";
+import { parsePermalink } from "./permalinks/Permalinks";
 
 /**
- * Parse a search string and return either a room ID/alias or the original search term if it does
+ * Parse a search string and return either a room ID/alias/userId or the original search term if it does
  * not look like a permalink.
  * E.g https://matrix.to/#/#element-dev:matrix.org returns #element-dev:matrix.org
  * @param {string} searchTerm The search term.
