@@ -21,7 +21,7 @@ import userEvent from "@testing-library/user-event";
 
 import { WysiwygComposer } from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/WysiwygComposer";
 import SettingsStore from "../../../../../../src/settings/SettingsStore";
-import { createTestClient, flushPromises, mockPlatformPeg } from "../../../../../test-utils";
+import { createTestClient, flushPromises, mockPlatformPeg, stubClient } from "../../../../../test-utils";
 import defaultDispatcher from "../../../../../../src/dispatcher/dispatcher";
 import * as EventUtils from "../../../../../../src/utils/EventUtils";
 import { Action } from "../../../../../../src/dispatcher/actions";
@@ -36,6 +36,8 @@ import EditorStateTransfer from "../../../../../../src/utils/EditorStateTransfer
 import { SubSelection } from "../../../../../../src/components/views/rooms/wysiwyg_composer/types";
 import { setSelection } from "../../../../../../src/components/views/rooms/wysiwyg_composer/utils/selection";
 import { parseEditorStateTransfer } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/useInitialContent";
+import { MatrixClientPeg } from "../../../../../../src/MatrixClientPeg";
+import { SettingLevel } from "../../../../../../src/settings/SettingLevel";
 
 describe("WysiwygComposer", () => {
     const customRender = (onChange = jest.fn(), onSend = jest.fn(), disabled = false, initialContent?: string) => {
@@ -244,6 +246,8 @@ describe("WysiwygComposer", () => {
             roomContext = defaultRoomContext,
         ) => {
             const spyDispatcher = jest.spyOn(defaultDispatcher, "dispatch");
+            stubClient();
+
             customRender(client, roomContext, editorState);
             await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
             return { textbox: screen.getByRole("textbox"), spyDispatcher };
