@@ -333,6 +333,26 @@ describe("Timeline", () => {
                 "have.text",
                 "Paragraph below lists",
             );
+
+            // Check block margin values of paragraphs and lists on modern layout
+            cy.get(".mx_EventTile[data-layout=group] .markdown-body").within(() => {
+                cy.get("ul").should("have.css", "margin-block", "0px");
+                cy.get("ol").should("have.css", "margin-block", "0px");
+                cy.get("p:first-of-type").should("have.css", "margin-block", "0px 16px"); // Paragraph above lists
+                cy.get("p:nth-of-type(2)").should("have.css", "margin-block", "16px"); // Paragraph between lists
+                cy.get("p:last-of-type").should("have.css", "margin-block", "16px 0px"); // Paragraph below lists
+            });
+
+            // Check block margin values of paragraphs and lists on compact modern layout
+            cy.setSettingValue("useCompactLayout", null, SettingLevel.DEVICE, true);
+            cy.get(".mx_EventTile[data-layout=group] .markdown-body").within(() => {
+                cy.get("ul").should("have.css", "margin-block", "0px 4px");
+                cy.get("ol").should("have.css", "margin-block", "0px 4px");
+                cy.get("p:first-of-type").should("have.css", "margin-block", "0px 4px"); // Paragraph above lists
+                cy.get("p:nth-of-type(2)").should("have.css", "margin-block", "4px"); // Paragraph between lists
+                cy.get("p:last-of-type").should("have.css", "margin-block", "4px 0px"); // Paragraph below lists
+            });
+            cy.setSettingValue("useCompactLayout", null, SettingLevel.DEVICE, false);
         });
 
         it("should set inline start padding to a hidden event line", () => {
