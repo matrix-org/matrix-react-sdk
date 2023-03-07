@@ -295,7 +295,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
                     visible={(this.state.focused && forceTooltipVisible) || this.state.feedbackVisible}
                     label={tooltipContent || this.state.feedback}
                     alignment={Tooltip.Alignment.Right}
-                    role={tooltipContent ? 'tooltip' : this.state.valid ? 'status' : 'alert'}
+                    role={tooltipContent ? "tooltip" : this.state.valid ? "status" : "alert"}
                 />
             );
         }

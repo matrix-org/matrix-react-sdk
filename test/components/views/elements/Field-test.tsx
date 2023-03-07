@@ -95,7 +95,7 @@ describe("Field", () => {
                     value=""
                     validateOnFocus
                     onValidate={() => Promise.resolve({ valid: true, feedback: "Valid" })}
-                    tooltipContent={"Tooltip"}
+                    tooltipContent="Tooltip"
                 />,
             );
 
