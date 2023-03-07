@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { forwardRef, RefObject, useRef } from "react";
+import React, { ForwardedRef, forwardRef, useRef } from "react";
 import { FormattingFunctions, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 
 import { useRoomContext } from "../../../../../contexts/RoomContext";
@@ -40,7 +40,7 @@ function buildQuery(suggestion: MappedSuggestion | null): string {
 }
 
 const WysiwygAutocomplete = forwardRef(
-    ({ suggestion, handleMention }: WysiwygAutocompleteProps, ref: RefObject<Autocomplete>): JSX.Element => {
+    ({ suggestion, handleMention }: WysiwygAutocompleteProps, ref: ForwardedRef<Autocomplete>): JSX.Element | null => {
         const { room } = useRoomContext();
 
         const autocompleteIndexRef = useRef<number>(0);
@@ -70,19 +70,18 @@ const WysiwygAutocomplete = forwardRef(
             autocompleteIndexRef.current = completionIndex;
         }
 
-        return (
+        return room ? (
             <div className="mx_WysiwygComposer_AutoCompleteWrapper">
                 <Autocomplete
                     ref={ref}
                     query={buildQuery(suggestion)}
                     onConfirm={handleConfirm}
                     onSelectionChange={handleSelectionChange}
-                    selection={{ start: 0, end: 0 }} // don't ask why these both need to be zero, I don't know, but
-                    // if you try to use the suggestion start/end points, then we can only enter mentions at the beginning of the composer
+                    selection={{ start: 0, end: 0 }}
                     room={room}
                 />
             </div>
-        );
+        ) : null;
     },
 );
 
