@@ -48,6 +48,10 @@ const WysiwygAutocomplete = forwardRef(
         function handleConfirm(completion: ICompletion): void {
             switch (completion.type) {
                 case "user":
+                    if (completion.href !== undefined) {
+                        handleMention(completion.href, `@${completion.completion}`);
+                    }
+                    break;
                 case "room":
                     if (completion.href !== undefined) {
                         handleMention(completion.href, completion.completion);
