@@ -340,7 +340,7 @@ describe("Timeline", () => {
                 cy.get("ol").should("have.css", "margin-block", "0px");
             };
 
-            // This is to check block margin of paragraphs around the lists
+            // This is to check block margin of paragraphs around the lists except on compact modern layout
             const checkMarginParagraphsWide = () => {
                 cy.get("p:first-of-type").should("have.css", "margin-block", "0px 16px"); // Paragraph above lists
                 cy.get("p:nth-of-type(2)").should("have.css", "margin-block", "16px"); // Paragraph between lists
