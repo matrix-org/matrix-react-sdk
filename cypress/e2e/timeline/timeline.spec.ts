@@ -353,6 +353,10 @@ describe("Timeline", () => {
                 checkMarginParagraphsWide();
             });
 
+            // Exclude timestamp and read marker from snapshot
+            const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
+            cy.get(".mx_MainSplit").percySnapshotElement("Lists with paragraphs on modern layout", { percyCSS });
+
             // Check block margin values of paragraphs and lists on compact modern layout
             cy.setSettingValue("useCompactLayout", null, SettingLevel.DEVICE, true);
             cy.get(".mx_EventTile[data-layout=group] .markdown-body").within(() => {
@@ -364,6 +368,10 @@ describe("Timeline", () => {
             });
             cy.setSettingValue("useCompactLayout", null, SettingLevel.DEVICE, false);
 
+            cy.get(".mx_MainSplit").percySnapshotElement("Lists with paragraphs on compact modern layout", {
+                percyCSS,
+            });
+
             // Check block margin values of paragraphs and lists on IRC layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
             cy.get(".mx_EventTile[data-layout=irc] .markdown-body").within(() => {
@@ -371,12 +379,16 @@ describe("Timeline", () => {
                 checkMarginParagraphsWide();
             });
 
+            cy.get(".mx_MainSplit").percySnapshotElement("Lists with paragraphs on IRC layout", { percyCSS });
+
             // Check block margin values of paragraphs and lists on bubble layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
             cy.get(".mx_EventTile[data-layout=bubble] .markdown-body").within(() => {
                 checkMarginList();
                 checkMarginParagraphsWide();
             });
+
+            cy.get(".mx_MainSplit").percySnapshotElement("Lists with paragraphs on bubble layout", { percyCSS });
         });
 
         it("should set inline start padding to a hidden event line", () => {
