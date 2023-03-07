@@ -94,7 +94,6 @@ export default class UserMenu extends React.Component<IProps, IState> {
     public constructor(props: IProps, context: React.ContextType<typeof SDKContext>) {
         super(props, context);
 
-        this.context = context;
         this.state = {
             contextMenuPosition: null,
             isDarkTheme: this.isUserOnDarkTheme(),

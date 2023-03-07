@@ -159,7 +159,6 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
     public constructor(props: ISendMessageComposerProps, context: React.ContextType<typeof RoomContext>) {
         super(props, context);
-        this.context = context; // otherwise React will only set it prior to render due to type def above
 
         if (this.props.mxClient.isCryptoEnabled() && this.props.mxClient.isRoomEncrypted(this.props.room.roomId)) {
             this.prepareToEncrypt = throttle(
