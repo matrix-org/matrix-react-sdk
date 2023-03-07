@@ -97,7 +97,7 @@ function mockClient({
         );
         return Promise.resolve({
             results: results.slice(0, limit ?? +Infinity),
-            limited: limit && limit < results.length,
+            limited: !!limit && limit < results.length,
         });
     });
     cli.getProfileInfo = jest.fn(async (userId) => {
@@ -412,9 +412,9 @@ describe("Spotlight Dialog", () => {
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
 
-            expect(screen.getByText(potatoRoom.name)).toBeInTheDocument();
-            expect(screen.queryByText(nsfwTopicRoom.name)).not.toBeInTheDocument();
-            expect(screen.queryByText(nsfwTopicRoom.name)).not.toBeInTheDocument();
+            expect(screen.getByText(potatoRoom.name!)).toBeInTheDocument();
+            expect(screen.queryByText(nsfwTopicRoom.name!)).not.toBeInTheDocument();
+            expect(screen.queryByText(nsfwTopicRoom.name!)).not.toBeInTheDocument();
         });
 
         it("displays rooms with nsfw keywords in results when showNsfwPublicRooms is truthy", async () => {
@@ -425,9 +425,9 @@ describe("Spotlight Dialog", () => {
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
 
-            expect(screen.getByText(nsfwTopicRoom.name)).toBeInTheDocument();
-            expect(screen.getByText(nsfwNameRoom.name)).toBeInTheDocument();
-            expect(screen.getByText(potatoRoom.name)).toBeInTheDocument();
+            expect(screen.getByText(nsfwTopicRoom.name!)).toBeInTheDocument();
+            expect(screen.getByText(nsfwNameRoom.name!)).toBeInTheDocument();
+            expect(screen.getByText(potatoRoom.name!)).toBeInTheDocument();
         });
     });
 });

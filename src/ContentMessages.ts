@@ -152,7 +152,7 @@ async function infoForImageFile(
     // For lesser supported image types, always include the thumbnail even if it is larger
     if (!ALWAYS_INCLUDE_THUMBNAIL.includes(imageFile.type)) {
         // we do all sizing checks here because we still rely on thumbnail generation for making a blurhash from.
-        const sizeDifference = imageFile.size - imageInfo.thumbnail_info.size;
+        const sizeDifference = imageFile.size - imageInfo.thumbnail_info!.size;
         if (
             // image is small enough already
             imageFile.size <= IMAGE_SIZE_THRESHOLD_THUMBNAIL ||
@@ -389,7 +389,7 @@ export default class ContentMessages {
         }
 
         if (tooBigFiles.length > 0) {
-            const { finished } = Modal.createDialog<[boolean]>(UploadFailureDialog, {
+            const { finished } = Modal.createDialog(UploadFailureDialog, {
                 badFiles: tooBigFiles,
                 totalFiles: files.length,
                 contentMessages: this,
@@ -407,7 +407,7 @@ export default class ContentMessages {
             const loopPromiseBefore = promBefore;
 
             if (!uploadAll) {
-                const { finished } = Modal.createDialog<[boolean, boolean]>(UploadConfirmDialog, {
+                const { finished } = Modal.createDialog(UploadConfirmDialog, {
                     file,
                     currentIndex: i,
                     totalFiles: okFiles.length,
@@ -546,7 +546,7 @@ export default class ContentMessages {
             if (upload.cancelled) throw new UploadCanceledError();
             const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation.event_id : null;
 
-            const response = await matrixClient.sendMessage(roomId, threadId, content);
+            const response = await matrixClient.sendMessage(roomId, threadId ?? null, content);
 
             if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
                 sendRoundTripMetric(matrixClient, roomId, response.event_id);
