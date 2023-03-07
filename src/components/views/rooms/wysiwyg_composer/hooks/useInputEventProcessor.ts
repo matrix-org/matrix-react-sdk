@@ -36,7 +36,7 @@ import Autocomplete from "../../Autocomplete";
 
 export function useInputEventProcessor(
     onSend: () => void,
-    autocompleteRef: React.MutableRefObject<Autocomplete> | null,
+    autocompleteRef: React.RefObject<Autocomplete>,
     initialContent?: string,
 ): (event: WysiwygEvent, composer: Wysiwyg, editor: HTMLElement) => WysiwygEvent | null {
     const roomContext = useRoomContext();
@@ -54,7 +54,7 @@ export function useInputEventProcessor(
                 event.stopPropagation?.();
                 event.preventDefault?.();
                 // do not send the message if we have the autocomplete open, regardless of settings
-                if (autocompleteRef !== null && !autocompleteRef.current.state.hide) {
+                if (autocompleteRef?.current && !autocompleteRef.current.state.hide) {
                     return;
                 }
                 onSend();
@@ -92,14 +92,14 @@ function handleKeyboardEvent(
     roomContext: IRoomState,
     composerContext: ComposerContextState,
     mxClient: MatrixClient,
-    autocompleteRef: React.MutableRefObject<Autocomplete> | null,
+    autocompleteRef: React.RefObject<Autocomplete>,
 ): KeyboardEvent | null {
     const { editorStateTransfer } = composerContext;
     const isEditing = Boolean(editorStateTransfer);
     const isEditorModified = isEditing ? initialContent !== composer.content() : composer.content().length !== 0;
     const action = getKeyBindingsManager().getMessageComposerAction(event);
 
-    const autocompleteIsOpen = autocompleteRef !== null && !autocompleteRef.current.state.hide;
+    const autocompleteIsOpen = autocompleteRef?.current && !autocompleteRef.current.state.hide;
 
     // we need autocomplete to take priority when it is open for using enter to select
     if (autocompleteIsOpen) {

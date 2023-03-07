@@ -22,7 +22,7 @@ import Autocomplete from "../../Autocomplete";
 import { ICompletion } from "../../../../../autocomplete/Autocompleter";
 
 interface WysiwygAutocompleteProps {
-    suggestion: MappedSuggestion;
+    suggestion: MappedSuggestion | null;
     handleMention: FormattingFunctions["mention"];
 }
 
