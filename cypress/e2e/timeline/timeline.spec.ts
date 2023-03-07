@@ -147,8 +147,8 @@ describe("Timeline", () => {
     });
 
     describe("configure room", () => {
-        // Exclude timestamp from snapshot
-        const percyCSS = ".mx_RoomView_body .mx_MessageTimestamp { visibility: hidden !important; }";
+        // Exclude timestamp and read marker from snapshots
+        const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
 
         beforeEach(() => {
             cy.injectAxe();
@@ -193,7 +193,6 @@ describe("Timeline", () => {
         });
 
         it("should have an expanded generic event list summary (GELS) on compact modern/group layout", () => {
-            sendEvent(roomId);
             cy.visit("/#/room/" + roomId);
 
             // Set compact modern layout
