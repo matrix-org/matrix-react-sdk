@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Boluwatife Omosowon <boluomosowon@gmail.com>
+Copyright 2023 Boluwatife Omosowon <boluomosowon@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,6 +25,6 @@ import { parsePermalink } from "../utils/permalinks/Permalinks";
  */
 export function transformSearchTerm(searchTerm: string): string {
     const parseLink = parsePermalink(searchTerm);
-    if (parseLink) return parseLink.roomIdOrAlias;
+    if (parseLink) return parseLink.primaryEntityId;
     return searchTerm;
 }
