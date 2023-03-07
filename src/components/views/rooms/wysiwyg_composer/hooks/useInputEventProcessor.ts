@@ -122,7 +122,7 @@ function handleKeyboardEvent(
                     handled = true;
                     break;
                 case KeyBindingAction.CancelAutocomplete:
-                    autocompleteRef.current.onEscape(event);
+                    autocompleteRef.current.onEscape(event as {} as React.KeyboardEvent);
                     handled = true;
                     break;
                 default:
