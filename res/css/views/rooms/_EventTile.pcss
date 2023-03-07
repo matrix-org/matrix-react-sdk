@@ -649,15 +649,15 @@ $left-gutter: 64px;
             margin-bottom: 0;
         }
 
-        /* Apply to every layout */
+        /* EventTile on every layout */
         .mx_EventTile & {
-            /* Apply to paragraph below ul or ol */
+            /* Paragraph below ul or ol */
             :is(ul, ol) + p {
                 margin-block: $spacing-16;
             }
         }
 
-        /* Apply to compact modern layout */
+        /* EventTile on compact modern layout only */
         .mx_MatrixChat_useCompactLayout .mx_EventTile[data-layout="group"] & {
             p,
             ul,
@@ -669,7 +669,7 @@ $left-gutter: 64px;
                 margin-bottom: $spacing-4; /* 1/4 of the non-compact margin-bottom */
             }
 
-            /* Apply to paragraph below ul or ol */
+            /* Paragraph below ul or ol */
             :is(ul, ol) + p {
                 margin-block: $spacing-4;
             }
