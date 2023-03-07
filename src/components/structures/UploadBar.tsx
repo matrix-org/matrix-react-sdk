@@ -114,7 +114,7 @@ export default class UploadBar extends React.PureComponent<IProps, IState> {
             count: this.state.countFiles - 1,
         });
 
-        const uploadSize = filesize(this.state.currentTotal!);
+        const uploadSize = filesize(this.state.currentTotal!) as string;
         return (
             <div className="mx_UploadBar">
                 <div className="mx_UploadBar_filename">

@@ -107,7 +107,7 @@ interface IState {
 
 export default class MFileBody extends React.Component<IProps, IState> {
     public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
+    public declare context: React.ContextType<typeof RoomContext>;
 
     public static defaultProps = {
         showGenericPlaceholder: true,
@@ -350,7 +350,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
                             </a>
                             {this.context.timelineRenderingType === TimelineRenderingType.File && (
                                 <div className="mx_MImageBody_size">
-                                    {this.content.info?.size ? filesize(this.content.info.size) : ""}
+                                    {this.content.info?.size ? (filesize(this.content.info.size) as string) : ""}
                                 </div>
                             )}
                         </div>

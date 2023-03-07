@@ -52,8 +52,8 @@ export default class UploadFailureDialog extends React.Component<IProps> {
                 "This file is <b>too large</b> to upload. " +
                     "The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.",
                 {
-                    limit: filesize(this.props.contentMessages.getUploadLimit()),
-                    sizeOfThisFile: filesize(this.props.badFiles[0].size),
+                    limit: filesize(this.props.contentMessages.getUploadLimit()) as string,
+                    sizeOfThisFile: filesize(this.props.badFiles[0].size) as string,
                 },
                 {
                     b: (sub) => <b>{sub}</b>,
@@ -71,7 +71,7 @@ export default class UploadFailureDialog extends React.Component<IProps> {
             message = _t(
                 "These files are <b>too large</b> to upload. " + "The file size limit is %(limit)s.",
                 {
-                    limit: filesize(this.props.contentMessages.getUploadLimit()),
+                    limit: filesize(this.props.contentMessages.getUploadLimit()) as string,
                 },
                 {
                     b: (sub) => <b>{sub}</b>,
@@ -89,7 +89,7 @@ export default class UploadFailureDialog extends React.Component<IProps> {
             message = _t(
                 "Some files are <b>too large</b> to be uploaded. " + "The file size limit is %(limit)s.",
                 {
-                    limit: filesize(this.props.contentMessages.getUploadLimit()),
+                    limit: filesize(this.props.contentMessages.getUploadLimit()) as string,
                 },
                 {
                     b: (sub) => <b>{sub}</b>,

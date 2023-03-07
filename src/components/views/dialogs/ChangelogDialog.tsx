@@ -93,7 +93,7 @@ export default class ChangelogDialog extends React.Component<IProps, State> {
                 content = <Spinner key={repo} />;
             } else if (typeof this.state[repo] === "string") {
                 content = _t("Unable to load commit detail: %(msg)s", {
-                    msg: this.state[repo],
+                    msg: this.state[repo] as string,
                 });
             } else {
                 content = (this.state[repo] as Commit[]).map(this.elementsForCommit);

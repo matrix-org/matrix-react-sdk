@@ -23,6 +23,8 @@ import {
     setLanguage,
     setMissingEntryGenerator,
     substitute,
+    IVariables,
+    Tags,
 } from "../../src/languageHandler";
 import { stubClient } from "../test-utils";
 
@@ -34,7 +36,7 @@ describe("languageHandler", function () {
     const plurals = "and %(count)s others...";
     const variableSub = "You are now ignoring %(userId)s";
 
-    type TestCase = [string, string, Record<string, unknown>, Record<string, unknown> | undefined, TranslatedString];
+    type TestCase = [string, string, IVariables, Tags | undefined, TranslatedString];
     const testCasesEn: TestCase[] = [
         // description of the test case, translationString, variables, tags, expected result
         ["translates a basic string", basicString, {}, undefined, "Rooms"],

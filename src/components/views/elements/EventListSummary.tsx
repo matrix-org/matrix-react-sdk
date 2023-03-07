@@ -80,7 +80,7 @@ const SEP = ",";
 
 export default class EventListSummary extends React.Component<IProps> {
     public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
+    public declare context: React.ContextType<typeof RoomContext>;
 
     public static defaultProps = {
         summaryLength: 1,

@@ -16,15 +16,130 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Dispatcher } from "flux";
-
 import { Action } from "./actions";
 import { ActionPayload, AsyncActionPayload } from "./payloads";
 
+type DispatchToken = string;
+
+function invariant(cond: any, error: string): void {
+    if (cond) throw new Error(error);
+}
+
 /**
  * A dispatcher for ActionPayloads (the default within the SDK).
+ * Based on the old Flux dispatcher https://github.com/facebook/flux/blob/main/src/Dispatcher.js
  */
-export class MatrixDispatcher extends Dispatcher<ActionPayload> {
+export class MatrixDispatcher {
+    private readonly callbacks = new Map<DispatchToken, (payload: ActionPayload) => void>();
+    private readonly isHandled = new Map<DispatchToken, boolean>();
+    private readonly isPending = new Map<DispatchToken, boolean>();
+    private _isDispatching = false;
+    private pendingPayload?: ActionPayload;
+    private lastId = 1;
+
+    /**
+     * Registers a callback to be invoked with every dispatched payload. Returns
+     * a token that can be used with `waitFor()`.
+     */
+    public register(callback: (payload: ActionPayload) => void): DispatchToken {
+        const id = "ID_" + this.lastId++;
+        this.callbacks.set(id, callback);
+        return id;
+    }
+
+    /**
+     * Removes a callback based on its token.
+     */
+    public unregister(id: DispatchToken): void {
+        this.callbacks.delete(id);
+    }
+
+    /**
+     * Waits for the callbacks specified to be invoked before continuing execution
+     * of the current callback. This method should only be used by a callback in
+     * response to a dispatched payload.
+     */
+    public waitFor(ids: Array<DispatchToken>): void {
+        invariant(this._isDispatching, "Dispatcher.waitFor(...): Must be invoked while dispatching.");
+        for (let ii = 0; ii < ids.length; ii++) {
+            const id = ids[ii];
+            if (this.isPending.get(id)) {
+                invariant(
+                    this.isHandled.get(id),
+                    `Dispatcher.waitFor(...): Circular dependency detected while waiting for '${id}'.`,
+                );
+                continue;
+            }
+            invariant(
+                this.callbacks.get(id),
+                `Dispatcher.waitFor(...): '${id}' does not map to a registered callback.`,
+            );
+            this.invokeCallback(id);
+        }
+    }
+
+    /**
+     * Dispatches a payload to all registered callbacks.
+     */
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    private _dispatch(payload: ActionPayload): void {
+        invariant(!this._isDispatching, "Dispatch.dispatch(...): Cannot dispatch in the middle of a dispatch.");
+        this.startDispatching(payload);
+        try {
+            for (const id in this.callbacks) {
+                if (this.isPending.get(id)) {
+                    continue;
+                }
+                this.invokeCallback(id);
+            }
+        } finally {
+            this.stopDispatching();
+        }
+    }
+
+    /**
+     * Is this Dispatcher currently dispatching.
+     */
+    public isDispatching(): boolean {
+        return this._isDispatching;
+    }
+
+    /**
+     * Call the callback stored with the given id. Also do some internal
+     * bookkeeping.
+     *
+     * @internal
+     */
+    private invokeCallback(id: DispatchToken): void {
+        this.isPending.set(id, true);
+        this.callbacks.get(id)(this.pendingPayload);
+        this.isHandled.set(id, true);
+    }
+
+    /**
+     * Set up bookkeeping needed when dispatching.
+     *
+     * @internal
+     */
+    private startDispatching(payload: ActionPayload): void {
+        for (const id in this.callbacks) {
+            this.isPending.set(id, false);
+            this.isHandled.set(id, false);
+        }
+        this.pendingPayload = payload;
+        this._isDispatching = true;
+    }
+
+    /**
+     * Clear bookkeeping used for dispatching.
+     *
+     * @internal
+     */
+    private stopDispatching(): void {
+        this.pendingPayload = undefined;
+        this._isDispatching = false;
+    }
+
     /**
      * Dispatches an event on the dispatcher's event bus.
      * @param {ActionPayload} payload Required. The payload to dispatch.
@@ -42,14 +157,14 @@ export class MatrixDispatcher extends Dispatcher<ActionPayload> {
         }
 
         if (sync) {
-            super.dispatch(payload);
+            this._dispatch(payload);
         } else {
             // Unless the caller explicitly asked for us to dispatch synchronously,
             // we always set a timeout to do this: The flux dispatcher complains
             // if you dispatch from within a dispatch, so rather than action
             // handlers having to worry about not calling anything that might
             // then dispatch, we just do dispatches asynchronously.
-            window.setTimeout(super.dispatch.bind(this, payload), 0);
+            window.setTimeout(this._dispatch.bind(this, payload), 0);
         }
     }
 

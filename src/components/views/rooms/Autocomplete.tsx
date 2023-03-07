@@ -56,6 +56,7 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
     private containerRef = createRef<HTMLDivElement>();
 
     public static contextType = RoomContext;
+    public declare context: React.ContextType<typeof RoomContext>;
 
     public constructor(props: IProps) {
         super(props);

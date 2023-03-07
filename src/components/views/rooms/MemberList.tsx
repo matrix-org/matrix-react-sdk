@@ -72,7 +72,7 @@ export default class MemberList extends React.Component<IProps, IState> {
     private mounted = false;
 
     public static contextType = SDKContext;
-    public context!: React.ContextType<typeof SDKContext>;
+    public declare context: React.ContextType<typeof SDKContext>;
 
     public constructor(props: IProps, context: React.ContextType<typeof SDKContext>) {
         super(props);
