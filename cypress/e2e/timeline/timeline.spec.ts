@@ -334,13 +334,23 @@ describe("Timeline", () => {
                 "Paragraph below lists",
             );
 
-            // Check block margin values of paragraphs and lists on modern layout
-            cy.get(".mx_EventTile[data-layout=group] .markdown-body").within(() => {
+            // This is to check block margin of unordered & ordered lists
+            const checkMarginList = () => {
                 cy.get("ul").should("have.css", "margin-block", "0px");
                 cy.get("ol").should("have.css", "margin-block", "0px");
+            };
+
+            // This is to check block margin of paragraphs around the lists
+            const checkMarginParagraphsWide = () => {
                 cy.get("p:first-of-type").should("have.css", "margin-block", "0px 16px"); // Paragraph above lists
                 cy.get("p:nth-of-type(2)").should("have.css", "margin-block", "16px"); // Paragraph between lists
                 cy.get("p:last-of-type").should("have.css", "margin-block", "16px 0px"); // Paragraph below lists
+            };
+
+            // Check block margin values of paragraphs and lists on modern layout
+            cy.get(".mx_EventTile[data-layout=group] .markdown-body").within(() => {
+                checkMarginList();
+                checkMarginParagraphsWide();
             });
 
             // Check block margin values of paragraphs and lists on compact modern layout
@@ -357,21 +367,15 @@ describe("Timeline", () => {
             // Check block margin values of paragraphs and lists on IRC layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
             cy.get(".mx_EventTile[data-layout=irc] .markdown-body").within(() => {
-                cy.get("ul").should("have.css", "margin-block", "0px");
-                cy.get("ol").should("have.css", "margin-block", "0px");
-                cy.get("p:first-of-type").should("have.css", "margin-block", "0px 16px"); // Paragraph above lists
-                cy.get("p:nth-of-type(2)").should("have.css", "margin-block", "16px"); // Paragraph between lists
-                cy.get("p:last-of-type").should("have.css", "margin-block", "16px 0px"); // Paragraph below lists
+                checkMarginList();
+                checkMarginParagraphsWide();
             });
 
             // Check block margin values of paragraphs and lists on bubble layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
             cy.get(".mx_EventTile[data-layout=bubble] .markdown-body").within(() => {
-                cy.get("ul").should("have.css", "margin-block", "0px");
-                cy.get("ol").should("have.css", "margin-block", "0px");
-                cy.get("p:first-of-type").should("have.css", "margin-block", "0px 16px"); // Paragraph above lists
-                cy.get("p:nth-of-type(2)").should("have.css", "margin-block", "16px"); // Paragraph between lists
-                cy.get("p:last-of-type").should("have.css", "margin-block", "16px 0px"); // Paragraph below lists
+                checkMarginList();
+                checkMarginParagraphsWide();
             });
         });
 
