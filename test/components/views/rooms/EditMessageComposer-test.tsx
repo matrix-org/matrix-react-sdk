@@ -14,11 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { IContent } from "matrix-js-sdk/src/matrix";
+
 import { createEditContent } from "../../../../src/components/views/rooms/EditMessageComposer";
 import EditorModel from "../../../../src/editor/model";
 import { createPartCreator } from "../../../editor/mock";
 import { mkEvent } from "../../../test-utils";
 import DocumentOffset from "../../../../src/editor/offset";
+import { attachDifferentialMentions } from "../../../../src/components/views/rooms/EditMessageComposer";
 
 describe("<EditMessageComposer/>", () => {
     const editedEvent = mkEvent({
@@ -41,13 +44,15 @@ describe("<EditMessageComposer/>", () => {
                 "body": " * hello world",
                 "msgtype": "m.text",
                 "m.new_content": {
-                    body: "hello world",
-                    msgtype: "m.text",
+                    "body": "hello world",
+                    "msgtype": "m.text",
+                    "org.matrix.msc3952.mentions": {},
                 },
                 "m.relates_to": {
                     event_id: editedEvent.getId(),
                     rel_type: "m.replace",
                 },
+                "org.matrix.msc3952.mentions": {},
             });
         });
 
@@ -64,15 +69,17 @@ describe("<EditMessageComposer/>", () => {
                 "format": "org.matrix.custom.html",
                 "formatted_body": " * hello <em>world</em>",
                 "m.new_content": {
-                    body: "hello *world*",
-                    msgtype: "m.text",
-                    format: "org.matrix.custom.html",
-                    formatted_body: "hello <em>world</em>",
+                    "body": "hello *world*",
+                    "msgtype": "m.text",
+                    "format": "org.matrix.custom.html",
+                    "formatted_body": "hello <em>world</em>",
+                    "org.matrix.msc3952.mentions": {},
                 },
                 "m.relates_to": {
                     event_id: editedEvent.getId(),
                     rel_type: "m.replace",
                 },
+                "org.matrix.msc3952.mentions": {},
             });
         });
 
@@ -89,15 +96,17 @@ describe("<EditMessageComposer/>", () => {
                 "format": "org.matrix.custom.html",
                 "formatted_body": " * blinks <strong>quickly</strong>",
                 "m.new_content": {
-                    body: "blinks __quickly__",
-                    msgtype: "m.emote",
-                    format: "org.matrix.custom.html",
-                    formatted_body: "blinks <strong>quickly</strong>",
+                    "body": "blinks __quickly__",
+                    "msgtype": "m.emote",
+                    "format": "org.matrix.custom.html",
+                    "formatted_body": "blinks <strong>quickly</strong>",
+                    "org.matrix.msc3952.mentions": {},
                 },
                 "m.relates_to": {
                     event_id: editedEvent.getId(),
                     rel_type: "m.replace",
                 },
+                "org.matrix.msc3952.mentions": {},
             });
         });
 
@@ -113,13 +122,15 @@ describe("<EditMessageComposer/>", () => {
                 "body": " * ✨sparkles✨",
                 "msgtype": "m.emote",
                 "m.new_content": {
-                    body: "✨sparkles✨",
-                    msgtype: "m.emote",
+                    "body": "✨sparkles✨",
+                    "msgtype": "m.emote",
+                    "org.matrix.msc3952.mentions": {},
                 },
                 "m.relates_to": {
                     event_id: editedEvent.getId(),
                     rel_type: "m.replace",
                 },
+                "org.matrix.msc3952.mentions": {},
             });
         });
 
@@ -137,14 +148,71 @@ describe("<EditMessageComposer/>", () => {
                 "body": " * //dev/null is my favourite place",
                 "msgtype": "m.text",
                 "m.new_content": {
-                    body: "//dev/null is my favourite place",
-                    msgtype: "m.text",
+                    "body": "//dev/null is my favourite place",
+                    "msgtype": "m.text",
+                    "org.matrix.msc3952.mentions": {},
                 },
                 "m.relates_to": {
                     event_id: editedEvent.getId(),
                     rel_type: "m.replace",
                 },
+                "org.matrix.msc3952.mentions": {},
             });
+        });
+    });
+
+    describe("attachDifferentialMentions", () => {
+        const partsCreator = createPartCreator();
+
+        it("no mentions", () => {
+            const model = new EditorModel([], partsCreator);
+            const prevContent: IContent = {};
+            const mentions = attachDifferentialMentions("@alice:test", prevContent, model);
+            expect(mentions).toEqual({});
+        });
+
+        it("mentions do not propagate", () => {
+            const model = new EditorModel([], partsCreator);
+            const prevContent: IContent = { "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"], room: true } };
+            const mentions = attachDifferentialMentions("@alice:test", prevContent, model);
+            expect(mentions).toEqual({});
+        });
+
+        it("test user mentions", () => {
+            const model = new EditorModel([partsCreator.userPill("Bob", "@bob:test")], partsCreator);
+            const prevContent: IContent = {};
+            const mentions = attachDifferentialMentions("@alice:test", prevContent, model);
+            expect(mentions).toEqual({ user_ids: ["@bob:test"] });
+        });
+
+        it("test prev user mentions", () => {
+            const model = new EditorModel([partsCreator.userPill("Bob", "@bob:test")], partsCreator);
+            const prevContent: IContent = { "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] } };
+            const mentions = attachDifferentialMentions("@alice:test", prevContent, model);
+            expect(mentions).toEqual({});
+        });
+
+        it("test room mention", () => {
+            const model = new EditorModel([partsCreator.atRoomPill("@room")], partsCreator);
+            const prevContent: IContent = {};
+            const mentions = attachDifferentialMentions("@alice:test", prevContent, model);
+            expect(mentions).toEqual({ room: true });
+        });
+
+        it("test prev room mention", () => {
+            const model = new EditorModel([partsCreator.atRoomPill("@room")], partsCreator);
+            const prevContent: IContent = { "org.matrix.msc3952.mentions": { room: true } };
+            const mentions = attachDifferentialMentions("@alice:test", prevContent, model);
+            expect(mentions).toEqual({});
+        });
+
+        it("test broken mentions", () => {
+            // Replying to a room mention shouldn't automatically be a room mention.
+            const model = new EditorModel([], partsCreator);
+            // @ts-ignore - Purposefully testing invalid data.
+            const prevContent: IContent = { "org.matrix.msc3952.mentions": { user_ids: "@bob:test" } };
+            const mentions = attachDifferentialMentions("@alice:test", prevContent, model);
+            expect(mentions).toEqual({});
         });
     });
 });

@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { createRef, KeyboardEvent } from "react";
 import classNames from "classnames";
-import { EventStatus, IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { EventStatus, IContent, IMentions, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -29,7 +29,7 @@ import { getCaretOffsetAndText } from "../../../editor/dom";
 import { htmlSerializeIfNeeded, textSerialize, containsEmote, stripEmoteCommand } from "../../../editor/serialize";
 import { findEditableEvent } from "../../../utils/EventUtils";
 import { parseEvent } from "../../../editor/deserialize";
-import { CommandPartCreator, Part, PartCreator, SerializedPart } from "../../../editor/parts";
+import { CommandPartCreator, Part, PartCreator, SerializedPart, Type } from "../../../editor/parts";
 import EditorStateTransfer from "../../../utils/EditorStateTransfer";
 import BasicMessageComposer, { REGEX_EMOTICON } from "./BasicMessageComposer";
 import { CommandCategories } from "../../../SlashCommands";
@@ -48,6 +48,7 @@ import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { editorRoomKey, editorStateKey } from "../../../Editing";
 import DocumentOffset from "../../../editor/offset";
+import { attachMentions } from "./SendMessageComposer";
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
     const html = mxEvent.getContent().formatted_body;
@@ -66,6 +67,48 @@ function getTextReplyFallback(mxEvent: MatrixEvent): string {
         return `${lines[0]}\n\n`;
     }
     return "";
+}
+
+/**
+ * Build the mentions information based on the editor model and the previous version
+ * of the event to generate a differential between the two:
+ *
+ * 1. Fetch mentioned users from the original event.
+ * 2. Search the model parts for room or user pills and fill in the mentions object
+ *    if the users or room were not mentioned in the original event.
+ *
+ * @param sender - The Matrix ID of the user sending the event.
+ * @param editedContent - The previous event content.
+ * @param model - The editor model to search for mentions, null if there is no editor.
+ */
+export function attachDifferentialMentions(sender: string, editedContent: IContent, model: EditorModel): IMentions {
+    // The mentions from the original event.
+    const prevMentions = editedContent["org.matrix.msc3952.mentions"];
+    const prevUserMentions = new Set();
+    if (Array.isArray(prevMentions?.user_ids)) {
+        prevMentions!.user_ids.forEach((userId) => prevUserMentions.add(userId));
+    }
+
+    // Generate the differential mentions: users who were not previously mentioned
+    // and a room mention if the previous event was not a room mention.
+    const mentions: IMentions = {};
+    const newUserMentions = new Set<string>();
+    for (const part of model.parts) {
+        if (part.type === Type.UserPill && !prevUserMentions.has(part.resourceId)) {
+            newUserMentions.add(part.resourceId);
+        } else if (part.type === Type.AtRoomPill && !prevMentions?.room) {
+            mentions.room = true;
+        }
+    }
+
+    // Ensure the *current* user isn't listed in the mentioned users.
+    newUserMentions.delete(sender);
+
+    if (newUserMentions.size) {
+        mentions.user_ids = [...newUserMentions];
+    }
+
+    return mentions;
 }
 
 // exported for tests
@@ -105,6 +148,12 @@ export function createEditContent(model: EditorModel, editedEvent: MatrixEvent):
         contentBody.formatted_body = `${htmlPrefix} * ${formattedBody}`;
     }
 
+    // Build the mentions property for the *new* content (as if there was no edit).
+    //
+    // TODO If this is a reply we need to include all the users from it.
+    attachMentions(editedEvent.sender!.userId, newContent, model, undefined);
+    const mentions = attachDifferentialMentions(editedEvent.sender!.userId, editedEvent.getContent(), model);
+
     return Object.assign(
         {
             "m.new_content": newContent,
@@ -112,6 +161,7 @@ export function createEditContent(model: EditorModel, editedEvent: MatrixEvent):
                 rel_type: "m.replace",
                 event_id: editedEvent.getId(),
             },
+            "org.matrix.msc3952.mentions": mentions,
         },
         contentBody,
     );
