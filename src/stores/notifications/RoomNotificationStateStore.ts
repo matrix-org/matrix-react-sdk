@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/models/room";
-import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
+import { SyncState } from "matrix-js-sdk/src/sync";
 import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import { ActionPayload } from "../../dispatcher/payloads";
@@ -94,7 +94,7 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
         return RoomNotificationStateStore.internalInstance;
     }
 
-    private onSync = (state: SyncState, prevState: SyncState | null, data?: ISyncStateData): void => {
+    private onSync = (state: SyncState, prevState: SyncState | null): void => {
         // Only count visible rooms to not torment the user with notification counts in rooms they can't see.
         // This will include highlights from the previous version of the room internally
         const msc3946ProcessDynamicPredecessor = SettingsStore.getValue("feature_dynamic_room_predecessors");
@@ -120,7 +120,7 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
             state !== prevState
         ) {
             this._globalState = globalState;
-            this.emit(UPDATE_STATUS_INDICATOR, globalState, state, prevState, data);
+            this.emit(UPDATE_STATUS_INDICATOR, globalState, state);
         }
     };
 
