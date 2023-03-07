@@ -338,30 +338,22 @@ describe("StopGapWidgetDriver", () => {
         });
 
         it("sends chat effects", async () => {
-            await driver.sendEvent(
-                EventType.RoomMessage,
-                {
-                    msgtype: MsgType.Text,
-                    body: "🎉",
-                },
-                null,
-            );
+            await driver.sendEvent(EventType.RoomMessage, {
+                msgtype: MsgType.Text,
+                body: "🎉",
+            });
 
             expect(dis.dispatch).toHaveBeenCalled();
         });
 
         it("does not send chat effects in threads", async () => {
-            await driver.sendEvent(
-                EventType.RoomMessage,
-                {
-                    "body": "🎉",
-                    "m.relates_to": {
-                        rel_type: RelationType.Thread,
-                        event_id: "$123",
-                    },
+            await driver.sendEvent(EventType.RoomMessage, {
+                "body": "🎉",
+                "m.relates_to": {
+                    rel_type: RelationType.Thread,
+                    event_id: "$123",
                 },
-                null,
-            );
+            });
 
             expect(dis.dispatch).not.toHaveBeenCalled();
         });
