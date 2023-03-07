@@ -47,7 +47,7 @@ interface IState {
 
 export default class ReactionsRowButton extends React.PureComponent<IProps, IState> {
     public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
+    public declare context: React.ContextType<typeof MatrixClientContext>;
 
     public state = {
         tooltipRendered: false,

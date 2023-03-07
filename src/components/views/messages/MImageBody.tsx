@@ -64,7 +64,7 @@ interface IState {
 
 export default class MImageBody extends React.Component<IBodyProps, IState> {
     public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
+    public declare context: React.ContextType<typeof RoomContext>;
 
     private unmounted = true;
     private image = createRef<HTMLImageElement>();

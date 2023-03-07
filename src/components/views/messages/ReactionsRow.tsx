@@ -79,7 +79,7 @@ interface IState {
 
 export default class ReactionsRow extends React.PureComponent<IProps, IState> {
     public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
+    public declare context: React.ContextType<typeof RoomContext>;
 
     public constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
         super(props, context);

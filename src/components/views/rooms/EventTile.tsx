@@ -259,7 +259,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
     };
 
     public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
+    public declare context: React.ContextType<typeof RoomContext>;
 
     public constructor(props: EventTileProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);

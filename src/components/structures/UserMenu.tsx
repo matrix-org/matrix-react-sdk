@@ -84,7 +84,7 @@ const below = (rect: PartialDOMRect): MenuProps => {
 
 export default class UserMenu extends React.Component<IProps, IState> {
     public static contextType = SDKContext;
-    public context!: React.ContextType<typeof SDKContext>;
+    public declare context: React.ContextType<typeof SDKContext>;
 
     private dispatcherRef: string;
     private themeWatcherRef: string;
