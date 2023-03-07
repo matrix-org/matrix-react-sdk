@@ -353,6 +353,16 @@ describe("Timeline", () => {
                 cy.get("p:last-of-type").should("have.css", "margin-block", "4px 0px"); // Paragraph below lists
             });
             cy.setSettingValue("useCompactLayout", null, SettingLevel.DEVICE, false);
+
+            // Check block margin values of paragraphs and lists on IRC layout
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
+            cy.get(".mx_EventTile[data-layout=irc] .markdown-body").within(() => {
+                cy.get("ul").should("have.css", "margin-block", "0px");
+                cy.get("ol").should("have.css", "margin-block", "0px");
+                cy.get("p:first-of-type").should("have.css", "margin-block", "0px 16px"); // Paragraph above lists
+                cy.get("p:nth-of-type(2)").should("have.css", "margin-block", "16px"); // Paragraph between lists
+                cy.get("p:last-of-type").should("have.css", "margin-block", "16px 0px"); // Paragraph below lists
+            });
         });
 
         it("should set inline start padding to a hidden event line", () => {
