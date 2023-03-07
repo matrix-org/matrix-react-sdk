@@ -24,7 +24,6 @@ import { PosthogScreenTracker } from "../../../PosthogTrackers";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import SearchWarning, { WarningKind } from "../elements/SearchWarning";
-import { transformSearchTerm } from "../../../utils/SearchInput";
 
 interface IProps {
     onCancelClick: () => void;
@@ -80,7 +79,6 @@ export default class SearchBar extends React.Component<IProps, IState> {
 
     private onSearch = (): void => {
         if (!this.searchTerm.current?.value.trim()) return;
-        this.searchTerm.current.value = transformSearchTerm(this.searchTerm.current.value);
         this.props.onSearch(this.searchTerm.current.value, this.state.scope);
     };
 
