@@ -102,7 +102,7 @@ describe("Threads", () => {
 
         // Wait until the both messages are read
         cy.get(".mx_ThreadView .mx_EventTile_last[data-layout=group]").within(() => {
-            cy.get(".mx_EventTile_line .mx_MTextBody").should("have.text", "Hello there");
+            cy.get(".mx_EventTile_line .mx_MTextBody").should("have.text", MessageLong);
             cy.get(".mx_ReadReceiptGroup .mx_BaseAvatar_image").should("be.visible");
 
             // Make sure the CSS style for spacing is applied to mx_EventTile_line on group/modern layout
