@@ -655,6 +655,24 @@ $left-gutter: 64px;
             margin-top: 0;
             margin-bottom: 0;
         }
+
+        /* Apply to compact modern layout */
+        .mx_MatrixChat_useCompactLayout .mx_EventTile[data-layout="group"] & {
+            p,
+            ul,
+            ol,
+            dl,
+            blockquote,
+            pre,
+            table {
+                margin-bottom: $spacing-4; /* 1/4 of the non-compact margin-bottom */
+            }
+
+            /* Apply to paragraph below ul or ol */
+            :is(ul, ol) + p {
+                margin-block: $spacing-4;
+            }
+        }
     }
 }
 
@@ -1321,18 +1339,6 @@ $left-gutter: 64px;
                     /* This aligns the avatar with the last line of the */
                     /* message. We want to move it one line up - 2rem */
                     inset-block-start: -2rem;
-                }
-            }
-
-            .mx_EventTile_content .markdown-body {
-                p,
-                ul,
-                ol,
-                dl,
-                blockquote,
-                pre,
-                table {
-                    margin-bottom: $spacing-4; /* 1/4 of the non-compact margin-bottom */
                 }
             }
         }
