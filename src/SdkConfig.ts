@@ -81,7 +81,7 @@ export default class SdkConfig {
         key: K,
         altCaseName?: string,
     ): Optional<SnakedObject<NonNullable<IConfigOptions[K]>>> {
-        const val = SdkConfig.get(key, altCaseName)!;
+        const val = SdkConfig.get(key, altCaseName);
         if (val !== null && val !== undefined) {
             return new SnakedObject(val);
         }
