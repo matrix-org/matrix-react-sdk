@@ -36,8 +36,6 @@ import EditorStateTransfer from "../../../../../../src/utils/EditorStateTransfer
 import { SubSelection } from "../../../../../../src/components/views/rooms/wysiwyg_composer/types";
 import { setSelection } from "../../../../../../src/components/views/rooms/wysiwyg_composer/utils/selection";
 import { parseEditorStateTransfer } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/useInitialContent";
-import { MatrixClientPeg } from "../../../../../../src/MatrixClientPeg";
-import { SettingLevel } from "../../../../../../src/settings/SettingLevel";
 
 describe("WysiwygComposer", () => {
     const customRender = (onChange = jest.fn(), onSend = jest.fn(), disabled = false, initialContent?: string) => {
