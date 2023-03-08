@@ -1213,10 +1213,12 @@ $left-gutter: 64px;
         }
 
         &[data-layout="bubble"] {
-            margin-inline: var(--BaseCard_EventTile-spacing-inline);
+            margin-inline-start: var(--BaseCard_EventTile-spacing-inline);
+            margin-inline-end: var(--EventTile_bubble-margin-inline-end);
 
             &::before {
-                inset-inline: calc(-1 * var(--BaseCard_EventTile-spacing-inline));
+                inset-inline-start: calc(-1 * var(--BaseCard_EventTile-spacing-inline));
+                inset-inline-end: calc(-1 * var(--EventTile_bubble-margin-inline-end));
                 z-index: auto; /* enable background color on hover */
             }
 
@@ -1231,8 +1233,13 @@ $left-gutter: 64px;
             }
 
             .mx_ReadReceiptGroup {
-                /* 42px: magic number. Need to replace with a variable */
-                inset-inline-end: calc(-1 * calc(var(--ReadReceiptGroup_EventBubbleTile-spacing-end) - 42px));
+                /* Moving inside ThreadView, adding 8px space to the right edge of the ThreadPanel */
+                /* stylelint-disable-next-line declaration-colon-space-after */
+                inset-inline-end: calc(
+                    -1 * calc(
+                        var(--ReadReceiptGroup_EventBubbleTile-spacing-end) - $container-gap-width
+                        - var(--BaseCard_padding-inline))
+                );
             }
 
             &[data-self="true"] {
