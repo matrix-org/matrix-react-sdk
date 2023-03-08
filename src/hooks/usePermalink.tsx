@@ -80,7 +80,7 @@ export const usePermalink: (args: Args) => HookResult = ({
                 const newMember = new RoomMember(member.roomId, userId);
                 newMember.name = resp.displayname || userId;
                 newMember.rawDisplayName = resp.displayname || userId;
-                newMember.getMxcAvatarUrl;
+                newMember.getMxcAvatarUrl();
                 newMember.events.member = {
                     getContent: () => {
                         return { avatar_url: resp.avatar_url };
