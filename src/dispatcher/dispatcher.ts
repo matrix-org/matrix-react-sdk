@@ -86,7 +86,7 @@ export class MatrixDispatcher {
         invariant(!this.isDispatching(), "Dispatch.dispatch(...): Cannot dispatch in the middle of a dispatch.");
         this.startDispatching(payload);
         try {
-            for (const id in this.callbacks) {
+            for (const [id] of this.callbacks) {
                 if (this.isPending.get(id)) {
                     continue;
                 }
@@ -122,7 +122,7 @@ export class MatrixDispatcher {
      * @internal
      */
     private startDispatching(payload: ActionPayload): void {
-        for (const id in this.callbacks) {
+        for (const [id] of this.callbacks) {
             this.isPending.set(id, false);
             this.isHandled.set(id, false);
         }
