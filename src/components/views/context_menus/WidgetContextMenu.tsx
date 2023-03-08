@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext } from "react";
+import React, { ComponentProps, useContext } from "react";
 import { MatrixCapabilities } from "matrix-widget-api";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ApprovalOpts, WidgetLifecycle } from "@matrix-org/react-sdk-module-api/lib/lifecycles/WidgetLifecycle";
@@ -38,7 +38,7 @@ import { getConfigLivestreamUrl, startJitsiAudioLivestream } from "../../../Live
 import { ModuleRunner } from "../../../modules/ModuleRunner";
 import { ElementWidget } from "../../../stores/widgets/StopGapWidget";
 
-interface IProps extends React.ComponentProps<typeof IconizedContextMenu> {
+interface IProps extends Omit<ComponentProps<typeof IconizedContextMenu>, "children"> {
     app: IApp;
     userWidget?: boolean;
     showUnpin?: boolean;
@@ -67,7 +67,7 @@ export const WidgetContextMenu: React.FC<IProps> = ({
     if (getConfigLivestreamUrl() && WidgetType.JITSI.matches(app.type)) {
         const onStreamAudioClick = async (): Promise<void> => {
             try {
-                await startJitsiAudioLivestream(widgetMessaging, roomId);
+                await startJitsiAudioLivestream(widgetMessaging!, roomId);
             } catch (err) {
                 logger.error("Failed to start livestream", err);
                 // XXX: won't i18n well, but looks like widget api only support 'message'?
@@ -84,7 +84,7 @@ export const WidgetContextMenu: React.FC<IProps> = ({
         );
     }
 
-    const pinnedWidgets = WidgetLayoutStore.instance.getContainerWidgets(room, Container.Top);
+    const pinnedWidgets = room ? WidgetLayoutStore.instance.getContainerWidgets(room, Container.Top) : [];
     const widgetIndex = pinnedWidgets.findIndex((widget) => widget.id === app.id);
 
     let editButton;
@@ -196,6 +196,7 @@ export const WidgetContextMenu: React.FC<IProps> = ({
     let moveRightButton;
     if (showUnpin && widgetIndex < pinnedWidgets.length - 1) {
         const onClick = (): void => {
+            if (!room) throw new Error("room must be defined");
             WidgetLayoutStore.instance.moveWithinContainer(room, Container.Top, app, 1);
             onFinished();
         };

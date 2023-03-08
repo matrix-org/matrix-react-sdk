@@ -96,17 +96,22 @@ async function loadImageElement(imageFile: File): Promise<{
         // Thus we could slice the file down to only sniff the first 0x1000
         // bytes (but this makes extractPngChunks choke on the corrupt file)
         const headers = imageFile; //.slice(0, 0x1000);
-        parsePromise = readFileAsArrayBuffer(headers).then((arrayBuffer) => {
-            const buffer = new Uint8Array(arrayBuffer);
-            const chunks = extractPngChunks(buffer);
-            for (const chunk of chunks) {
-                if (chunk.name === "pHYs") {
-                    if (chunk.data.byteLength !== PHYS_HIDPI.length) return false;
-                    return chunk.data.every((val, i) => val === PHYS_HIDPI[i]);
+        parsePromise = readFileAsArrayBuffer(headers)
+            .then((arrayBuffer) => {
+                const buffer = new Uint8Array(arrayBuffer);
+                const chunks = extractPngChunks(buffer);
+                for (const chunk of chunks) {
+                    if (chunk.name === "pHYs") {
+                        if (chunk.data.byteLength !== PHYS_HIDPI.length) return false;
+                        return chunk.data.every((val, i) => val === PHYS_HIDPI[i]);
+                    }
                 }
-            }
-            return false;
-        });
+                return false;
+            })
+            .catch((e) => {
+                console.error("Failed to parse PNG", e);
+                return false;
+            });
     }
 
     const [hidpi] = await Promise.all([parsePromise, imgPromise]);
@@ -152,7 +157,7 @@ async function infoForImageFile(
     // For lesser supported image types, always include the thumbnail even if it is larger
     if (!ALWAYS_INCLUDE_THUMBNAIL.includes(imageFile.type)) {
         // we do all sizing checks here because we still rely on thumbnail generation for making a blurhash from.
-        const sizeDifference = imageFile.size - imageInfo.thumbnail_info.size;
+        const sizeDifference = imageFile.size - imageInfo.thumbnail_info!.size;
         if (
             // image is small enough already
             imageFile.size <= IMAGE_SIZE_THRESHOLD_THUMBNAIL ||
