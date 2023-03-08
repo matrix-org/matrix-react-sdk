@@ -33,6 +33,15 @@ const pushRuleAndKindToAnnotated = (
           }
         : undefined;
 
+/**
+ * Checks that any synced rules that exist a given rule are in sync
+ * And updates any that are out of sync
+ * Ignores ruleIds that do not exist for the user
+ * @param matrixClient - cli
+ * @param pushProcessor - processor used to retrieve current state of rules
+ * @param ruleId - primary rule
+ * @param definition - VectorPushRuleDefinition of the primary rule
+ */
 const monitorSyncedRule = async (
     matrixClient: MatrixClient,
     pushProcessor: PushProcessor,
