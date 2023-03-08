@@ -43,6 +43,11 @@ export class MatrixDispatcher {
     public register(callback: (payload: ActionPayload) => void): DispatchToken {
         const id = "ID_" + this.lastId++;
         this.callbacks.set(id, callback);
+        if (this.isDispatching()) {
+            // If there is a dispatch happening right now then the newly registered callback should be skipped
+            this.isPending.set(id, true);
+            this.isHandled.set(id, true);
+        }
         return id;
     }
 
