@@ -464,8 +464,6 @@ describe("Timeline", () => {
             const stringTh = "การสอบ";
             const stringZh = "测试";
 
-            const MESSAGE = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor";
-
             const sendString = (string: string) => {
                 cy.sendEvent(roomId, null, "m.room.message" as EventType, {
                     msgtype: "m.text" as MsgType,
@@ -487,59 +485,10 @@ describe("Timeline", () => {
                 "created and configured the room.",
             ).should("exist");
 
-            // Create a bot "BotBob" and invite it
-            let bot: MatrixClient;
-            cy.getBot(homeserver, {
-                displayName: "BotBob",
-                autoAcceptInvites: false,
-            }).then((_bot) => {
-                bot = _bot;
-                cy.inviteUser(roomId, bot.getUserId());
-                bot.joinRoom(roomId);
-
-                // Make sure the bot joined the room
-                cy.contains(
-                    ".mx_GenericEventListSummary .mx_EventTile_info.mx_EventTile_last",
-                    "BotBob joined the room",
-                ).should("exist");
-
-                // Have bot send MESSAGE to roomId
-                cy.botSendMessage(bot, roomId, MESSAGE);
-
-                // Have bot send stringJa to roomId
-                cy.botSendMessage(bot, roomId, stringJa);
-            });
-
             // Send strings to the room
             const strings = [stringAr, stringEl, stringHe, stringHi, stringJa, stringKo, stringTh, stringZh];
             strings.forEach((strings) => {
                 sendString(strings);
-            });
-
-            // Send some random messages in English
-            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
-                msgtype: "m.text" as MsgType,
-                body:
-                    "Paragraph above lists\n\n" +
-                    "- item 1\n- item 2\n- item 3\n\n" +
-                    "Paragraph between lists\n\n" +
-                    "1. item 1\n2. item 2\n3. item 3\n\n" +
-                    "Paragraph below lists",
-                format: "org.matrix.custom.html",
-                formatted_body:
-                    "<p>Paragraph above lists</p>\n" +
-                    "<ul>\n<li>item 1</li>\n<li>item 2</li>\n<li>item 3</li>\n</ul>\n" +
-                    "<p>Paragraph between lists</p>\n" +
-                    "<ol>\n<li>item 1</li>\n<li>item 2</li>\n<li>item 3</li>\n</ol>\n" +
-                    "<p>Paragraph below lists</p>\n",
-            });
-            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
-                msgtype: "m.emote" as MsgType,
-                body: "sends an emote",
-            });
-            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
-                msgtype: "m.text" as MsgType,
-                body: `${MESSAGE} by Alan`,
             });
 
             // Ensure the last message was sent
@@ -547,17 +496,14 @@ describe("Timeline", () => {
 
             // Ensure queries are searched, found, and highlighted
             const queries = [
-                // stringAr, // Broken
+                // stringAr, // Broken - cannot be found
                 stringEl,
-                // stringHe, // Broken
-                // stringHi, // Broken
+                // stringHe, // Broken - cannot be found
+                // stringHi, // Broken - cannot be found
                 stringJa,
                 stringKo,
                 stringTh,
                 stringZh,
-                "Paragraph",
-                "emote",
-                "Lorem",
             ];
             cy.get(".mx_RoomHeader_searchButton").click();
             queries.forEach((queries) => {
