@@ -16,7 +16,7 @@ limitations under the License.
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixEvent, Room, RoomMember } from "matrix-js-sdk/src/matrix";
-import React, { ReactElement, useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { ButtonEvent } from "../components/views/elements/AccessibleButton";
 import { PillType } from "../components/views/elements/Pill";
@@ -24,8 +24,6 @@ import { MatrixClientPeg } from "../MatrixClientPeg";
 import { parsePermalink } from "../utils/permalinks/Permalinks";
 import dis from "../dispatcher/dispatcher";
 import { Action } from "../dispatcher/actions";
-import RoomAvatar from "../components/views/avatars/RoomAvatar";
-import MemberAvatar from "../components/views/avatars/MemberAvatar";
 
 interface Args {
     /** Room in which the permalink should be displayed. */
@@ -37,13 +35,15 @@ interface Args {
 }
 
 interface HookResult {
-    /** Avatar of the permalinked resource. */
-    avatar: ReactElement | null;
+    /** Room member of a user mention permalink */
+    member: RoomMember | null;
     /** Displayable text of the permalink resource. Can for instance be a user or room name. */
     text: string | null;
     onClick: ((e: ButtonEvent) => void) | null;
     /** This can be for instance a user or room Id. */
     resourceId: string | null;
+    /** Room of the target of this permalink (room or event room). */
+    targetRoom: Room | null;
     type: PillType | "space" | null;
 }
 
@@ -139,15 +139,12 @@ export const usePermalink: (args: Args) => HookResult = ({ room, type: argType, 
     }, [doProfileLookup, type, resourceId, room]);
 
     let onClick: ((e: ButtonEvent) => void) | null = null;
-    let avatar: ReactElement | null = null;
     let text = resourceId;
 
     if (type === PillType.AtRoomMention && room) {
         text = "@room";
-        avatar = <RoomAvatar room={room} width={16} height={16} aria-hidden="true" />;
     } else if (type === PillType.UserMention && member) {
         text = member.name || resourceId;
-        avatar = <MemberAvatar member={member} width={16} height={16} aria-hidden="true" hideTitle />;
         onClick = (e: ButtonEvent): void => {
             e.preventDefault();
             dis.dispatch({
@@ -158,15 +155,15 @@ export const usePermalink: (args: Args) => HookResult = ({ room, type: argType, 
     } else if (type === PillType.RoomMention) {
         if (targetRoom) {
             text = targetRoom.name || resourceId;
-            avatar = <RoomAvatar room={targetRoom} width={16} height={16} aria-hidden="true" />;
         }
     }
 
     return {
-        avatar,
-        text,
+        member,
         onClick,
         resourceId,
+        targetRoom,
+        text,
         type,
     };
 };

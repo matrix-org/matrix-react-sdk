@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
 
@@ -22,6 +22,8 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import Tooltip, { Alignment } from "../elements/Tooltip";
 import { usePermalink } from "../../../hooks/usePermalink";
+import RoomAvatar from "../avatars/RoomAvatar";
+import MemberAvatar from "../avatars/MemberAvatar";
 
 export enum PillType {
     UserMention = "TYPE_USER_MENTION",
@@ -52,7 +54,7 @@ export interface PillProps {
 
 export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room, shouldShowPillAvatar }) => {
     const [hover, setHover] = useState(false);
-    const { avatar, onClick, resourceId, text, type } = usePermalink({
+    const { member, onClick, resourceId, targetRoom, text, type } = usePermalink({
         room,
         type: propType,
         url,
@@ -79,6 +81,37 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
     };
 
     const tip = hover && resourceId ? <Tooltip label={resourceId} alignment={Alignment.Right} /> : null;
+    let content: ReactElement | null = null;
+
+    switch (type) {
+        case PillType.AtRoomMention:
+        case PillType.RoomMention:
+            {
+                const avatar = <RoomAvatar room={targetRoom} width={16} height={16} aria-hidden="true" />;
+                content = (
+                    <>
+                        {shouldShowPillAvatar && avatar}
+                        <span className="mx_Pill_linkText">{text}</span>
+                    </>
+                );
+            }
+            break;
+        case PillType.UserMention:
+            {
+                const avatar = <MemberAvatar member={member} width={16} height={16} aria-hidden="true" hideTitle />;
+                content = (
+                    <>
+                        {shouldShowPillAvatar && avatar}
+                        <span className="mx_Pill_linkText">{text}</span>
+                    </>
+                );
+            }
+            break;
+    }
+
+    if (!content) {
+        return null;
+    }
 
     return (
         <bdi>
@@ -91,14 +124,12 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
                         onMouseOver={onMouseOver}
                         onMouseLeave={onMouseLeave}
                     >
-                        {shouldShowPillAvatar && avatar}
-                        <span className="mx_Pill_linkText">{text}</span>
+                        {content}
                         {tip}
                     </a>
                 ) : (
                     <span className={classes} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
-                        {shouldShowPillAvatar && avatar}
-                        <span className="mx_Pill_linkText">{text}</span>
+                        {content}
                         {tip}
                     </span>
                 )}
