@@ -130,14 +130,8 @@ describe("Threads", () => {
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
 
         cy.get(".mx_ThreadView .mx_EventTile[data-layout='bubble'].mx_EventTile_last").within(() => {
-            // TODO: remove this after fixing the issue of ReadReceiptGroup being hidden on the bubble layout
-            // See: https://github.com/vector-im/element-web/issues/23569
-            cy.get(".mx_ReadReceiptGroup .mx_BaseAvatar_image").should("exist");
-
             // Make sure the avatar inside ReadReceiptGroup is visible on bubble layout
-            // TODO: enable this after fixing the issue of ReadReceiptGroup being hidden on the bubble layout
-            // See: https://github.com/vector-im/element-web/issues/23569
-            // cy.get(".mx_ReadReceiptGroup .mx_BaseAvatar_image").should("be.visible");
+            cy.get(".mx_ReadReceiptGroup .mx_BaseAvatar_image").should("be.visible");
         });
 
         // Re-enable the group layout
