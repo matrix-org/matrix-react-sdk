@@ -18,7 +18,6 @@ import { defer } from "matrix-js-sdk/src/utils";
 
 import defaultDispatcher from "../../src/dispatcher/dispatcher";
 import { Action } from "../../src/dispatcher/actions";
-import { asyncAction } from "../../src/actions/actionCreators";
 import { AsyncActionPayload } from "../../src/dispatcher/payloads";
 
 describe("MatrixDispatcher", () => {
