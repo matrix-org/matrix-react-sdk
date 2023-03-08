@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from "react";
+import React, { createRef, ReactNode } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -48,12 +48,13 @@ import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import UserIdentifierCustomisations from "../../customisations/UserIdentifier";
 import PosthogTrackers from "../../PosthogTrackers";
 import { ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePayload";
-import { Icon as LiveIcon } from "../../../res/img/element-icons/live.svg";
+import { Icon as LiveIcon } from "../../../res/img/compound/live-8px.svg";
 import { VoiceBroadcastRecording, VoiceBroadcastRecordingsStoreEvent } from "../../voice-broadcast";
 import { SDKContext } from "../../contexts/SDKContext";
 
 interface IProps {
     isPanelCollapsed: boolean;
+    children?: ReactNode;
 }
 
 type PartialDOMRect = Pick<DOMRect, "width" | "left" | "top" | "height">;
