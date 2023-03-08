@@ -52,6 +52,8 @@ interface PushRuleAndKind {
  * @param matrixClient - cli
  * @param ruleIds - RuleIds of push rules to attempt to set actions for
  * @param actions - push rule actions to set for rule
+ * @returns resolves when all rules have been updated
+ * @returns rejects when a rule update fails
  */
 export const updateExistingPushRulesWithActions = async (
     matrixClient: MatrixClient,

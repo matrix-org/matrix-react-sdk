@@ -69,6 +69,17 @@ const monitorSyncedRule = async (
     }
 };
 
+/**
+ * On changes to m.push_rules account data,
+ * check that synced push rules are in sync with their primary rule,
+ * and update any out of sync rules.
+ * synced rules are defined in VectorPushRulesDefinitions
+ * If updating a rule fails for any reason,
+ * the error is caught and handled silently
+ * @param accountDataEvent - MatrixEvent
+ * @param matrixClient - cli
+ * @returns Resolves when updates are complete
+ */
 export const monitorSyncedPushRules = async (
     accountDataEvent: MatrixEvent | undefined,
     matrixClient: MatrixClient,

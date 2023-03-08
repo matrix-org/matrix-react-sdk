@@ -495,8 +495,9 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 const definition: VectorPushRuleDefinition = VectorPushRulesDefinitions[rule.ruleId];
                 const actions = definition.vectorStateToActions[checkedState];
                 // we should not encounter this
+                // satisfies types
                 if (!rule.rule) {
-                    throw new Error("Unable to update rule without rule_id");
+                    throw new Error("Cannot update rule: push rule data is incomplete.");
                 }
                 await updatePushRuleActions(cli, rule.rule.rule_id, rule.rule.kind, actions);
                 await updateExistingPushRulesWithActions(cli, definition.syncedRuleIds, actions);
