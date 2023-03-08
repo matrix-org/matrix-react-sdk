@@ -196,13 +196,11 @@ describe("Threads", () => {
         cy.get(
             ".mx_ThreadView .mx_GenericEventListSummary[data-layout=bubble] .mx_EventTile_info.mx_EventTile_last",
         ).within(() => {
-            cy.get(".mx_EventTile_line .mx_EventTile_content")
-                // 76px: ThreadViewGroupSpacingStart + 14px + 6px
-                // 14px: avatar width
-                // See: _EventTile.pcss
-                .should("have.css", "margin-inline-start", "76px");
             cy.get(".mx_EventTile_line")
-                // Make sure the margin is NOT applied to mx_EventTile_line
+                // 49px: --EventTile_bubble-margin-inline-start
+                .should("have.css", "margin-inline-start", "49px");
+            cy.get(".mx_EventTile_line .mx_EventTile_content")
+                // Make sure the margin is NOT applied to mx_EventTile_content
                 .should("have.css", "margin-inline-start", "0px");
         });
 
