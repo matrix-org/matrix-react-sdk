@@ -466,6 +466,20 @@ describe("Timeline", () => {
 
             const MESSAGE = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor";
 
+            const sendString = (string: string): Chainable<JQuery<HTMLElement>> => {
+                cy.sendEvent(roomId, null, "m.room.message" as EventType, {
+                    msgtype: "m.text" as MsgType,
+                    body: string,
+                });
+            };
+
+            const searchAndHighlight = (string: string) => {
+                cy.get(".mx_SearchBar_input input").clear().invoke("val", string).trigger("input");
+                cy.get(".mx_SearchBar_input input").type("{enter}");
+                cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
+            };
+
+            // Open roomId room
             cy.visit("/#/room/" + roomId);
 
             // Wait until configuration is finished
@@ -497,45 +511,10 @@ describe("Timeline", () => {
                 cy.botSendMessage(bot, roomId, stringJa);
             });
 
-            // Arabic
-            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
-                msgtype: "m.text" as MsgType,
-                body: stringAr,
-            });
-            // Greek
-            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
-                msgtype: "m.text" as MsgType,
-                body: stringEl,
-            });
-            // Hebrew
-            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
-                msgtype: "m.text" as MsgType,
-                body: stringHe,
-            });
-            // Hindi
-            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
-                msgtype: "m.text" as MsgType,
-                body: stringHi,
-            });
-            // Japanese
-            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
-                msgtype: "m.text" as MsgType,
-                body: stringJa,
-            });
-            // Korean
-            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
-                msgtype: "m.text" as MsgType,
-                body: stringKo,
-            });
-            // Thai
-            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
-                msgtype: "m.text" as MsgType,
-                body: stringTh,
-            });
-            // Chinese (Mandarin)
-            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
-                msgtype: "m.text" as MsgType,
-                body: stringZh,
+            // Send strings to the room
+            const strings = [stringAr, stringEl, stringHe, stringHi, stringJa, stringKo, stringTh, stringZh];
+            strings.forEach((strings) => {
+                sendString(strings);
             });
 
             // Send some random messages in English
@@ -567,58 +546,24 @@ describe("Timeline", () => {
             // Ensure the last message was sent
             cy.get(".mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
 
+            // Ensure queries are searched, found, and highlighted
+            const queries = [
+                // stringAr, // Broken
+                stringEl,
+                // stringHe, // Broken
+                // stringHi, // Broken
+                stringJa,
+                stringKo,
+                stringTh,
+                stringZh,
+                "Paragraph",
+                "emote",
+                "Lorem",
+            ];
             cy.get(".mx_RoomHeader_searchButton").click();
-
-            // Broken - Check stringAr is highlighted
-            // cy.get(".mx_SearchBar_input input").clear().invoke("val", stringAr).trigger("input");
-            // cy.get(".mx_SearchBar_input input").type("{enter}");
-            // cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
-
-            // Check stringEl is highlighted
-            cy.get(".mx_SearchBar_input input").clear().invoke("val", stringEl).trigger("input");
-            cy.get(".mx_SearchBar_input input").type("{enter}");
-            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
-
-            // Broken - Check stringHe is highlighted
-            // cy.get(".mx_SearchBar_input input").clear().invoke("val", stringHe).trigger("input");
-            // cy.get(".mx_SearchBar_input input").type("{enter}");
-            // cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
-
-            // Broken - Check stringHi is highlighted
-            // cy.get(".mx_SearchBar_input input").clear().invoke("val", stringHi).trigger("input");
-            // cy.get(".mx_SearchBar_input input").type("{enter}");
-            // cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
-
-            // Check two stringJa strings by the user and bot are highlighted
-            cy.get(".mx_SearchBar_input input").clear().invoke("val", stringJa).trigger("input");
-            cy.get(".mx_SearchBar_input input").type("{enter}");
-            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
-
-            // Check stringKo is highlighted
-            cy.get(".mx_SearchBar_input input").clear().invoke("val", stringKo).trigger("input");
-            cy.get(".mx_SearchBar_input input").type("{enter}");
-            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
-
-            // Check stringTh is highlighted
-            cy.get(".mx_SearchBar_input input").clear().invoke("val", stringTh).trigger("input");
-            cy.get(".mx_SearchBar_input input").type("{enter}");
-            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
-
-            // Check stringZh is highlighted
-            cy.get(".mx_SearchBar_input input").clear().invoke("val", stringZh).trigger("input");
-            cy.get(".mx_SearchBar_input input").type("{enter}");
-            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
-
-            // Check words of the random messages are highlighted
-            cy.get(".mx_SearchBar_input input").clear().invoke("val", "Paragraph").trigger("input");
-            cy.get(".mx_SearchBar_input input").type("{enter}");
-            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
-            cy.get(".mx_SearchBar_input input").clear().invoke("val", "emote").trigger("input");
-            cy.get(".mx_SearchBar_input input").type("{enter}");
-            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
-            cy.get(".mx_SearchBar_input input").clear().invoke("val", "Lorem").trigger("input");
-            cy.get(".mx_SearchBar_input input").type("{enter}");
-            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
+            queries.forEach((queries) => {
+                searchAndHighlight(queries);
+            });
         });
 
         it("should render url previews", () => {
