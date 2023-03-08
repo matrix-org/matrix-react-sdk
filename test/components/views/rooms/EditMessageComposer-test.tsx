@@ -16,7 +16,7 @@ limitations under the License.
 
 import { createEditContent } from "../../../../src/components/views/rooms/EditMessageComposer";
 import EditorModel from "../../../../src/editor/model";
-import { createPartCreator, createRenderer } from "../../../editor/mock";
+import { createPartCreator } from "../../../editor/mock";
 import { mkEvent } from "../../../test-utils";
 import DocumentOffset from "../../../../src/editor/offset";
 
@@ -31,7 +31,7 @@ describe("<EditMessageComposer/>", () => {
 
     describe("createEditContent", () => {
         it("sends plaintext messages correctly", () => {
-            const model = new EditorModel([], createPartCreator(), createRenderer());
+            const model = new EditorModel([], createPartCreator());
             const documentOffset = new DocumentOffset(11, true);
             model.update("hello world", "insertText", documentOffset);
 
@@ -52,7 +52,7 @@ describe("<EditMessageComposer/>", () => {
         });
 
         it("sends markdown messages correctly", () => {
-            const model = new EditorModel([], createPartCreator(), createRenderer());
+            const model = new EditorModel([], createPartCreator());
             const documentOffset = new DocumentOffset(13, true);
             model.update("hello *world*", "insertText", documentOffset);
 
@@ -77,7 +77,7 @@ describe("<EditMessageComposer/>", () => {
         });
 
         it("strips /me from messages and marks them as m.emote accordingly", () => {
-            const model = new EditorModel([], createPartCreator(), createRenderer());
+            const model = new EditorModel([], createPartCreator());
             const documentOffset = new DocumentOffset(22, true);
             model.update("/me blinks __quickly__", "insertText", documentOffset);
 
@@ -102,7 +102,7 @@ describe("<EditMessageComposer/>", () => {
         });
 
         it("allows emoting with non-text parts", () => {
-            const model = new EditorModel([], createPartCreator(), createRenderer());
+            const model = new EditorModel([], createPartCreator());
             const documentOffset = new DocumentOffset(16, true);
             model.update("/me ✨sparkles✨", "insertText", documentOffset);
             expect(model.parts.length).toEqual(4); // Emoji count as non-text
@@ -124,7 +124,7 @@ describe("<EditMessageComposer/>", () => {
         });
 
         it("allows sending double-slash escaped slash commands correctly", () => {
-            const model = new EditorModel([], createPartCreator(), createRenderer());
+            const model = new EditorModel([], createPartCreator());
             const documentOffset = new DocumentOffset(32, true);
 
             model.update("//dev/null is my favourite place", "insertText", documentOffset);
