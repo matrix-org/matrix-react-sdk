@@ -28,27 +28,29 @@ import RoomAvatar from "../components/views/avatars/RoomAvatar";
 import MemberAvatar from "../components/views/avatars/MemberAvatar";
 
 interface Args {
+    /** Room in which the permalink should be displayed. */
     room?: Room;
-    shouldShowPillAvatar?: boolean;
+    /** When set forces the permalink type. */
     type?: PillType;
+    /** Permalink URL. */
     url?: string;
 }
 
 interface HookResult {
+    /** Avatar of the permalinked resource. */
     avatar: ReactElement | null;
+    /** Displayable text of the permalink resource. Can for instance be a user or room name. */
     text: string | null;
     onClick: ((e: ButtonEvent) => void) | null;
+    /** This can be for instance a user or room Id. */
     resourceId: string | null;
-    room: Room | undefined;
     type: PillType | "space" | null;
 }
 
-export const usePermalink: (args: Args) => HookResult = ({
-    room,
-    shouldShowPillAvatar,
-    type: argType,
-    url,
-}): HookResult => {
+/**
+ * Can be used to retrieve all information to display a permalink.
+ */
+export const usePermalink: (args: Args) => HookResult = ({ room, type: argType, url }): HookResult => {
     const [member, setMember] = useState<RoomMember | null>(null);
     // room of the entity this pill points to
     const [targetRoom, setTargetRoom] = useState<Room | undefined | null>(room);
@@ -63,9 +65,9 @@ export const usePermalink: (args: Args) => HookResult = ({
         }
     }
     const prefix = resourceId ? resourceId[0] : "";
-
     const type =
         argType ||
+        // try to detect the permalink type from the URL prefix
         {
             "@": PillType.UserMention,
             "#": PillType.RoomMention,
@@ -137,20 +139,15 @@ export const usePermalink: (args: Args) => HookResult = ({
     }, [doProfileLookup, type, resourceId, room]);
 
     let onClick: ((e: ButtonEvent) => void) | null = null;
-
     let avatar: ReactElement | null = null;
     let text = resourceId;
 
     if (type === PillType.AtRoomMention && room) {
         text = "@room";
-        if (shouldShowPillAvatar) {
-            avatar = <RoomAvatar room={room} width={16} height={16} aria-hidden="true" />;
-        }
+        avatar = <RoomAvatar room={room} width={16} height={16} aria-hidden="true" />;
     } else if (type === PillType.UserMention && member) {
         text = member.name || resourceId;
-        if (shouldShowPillAvatar) {
-            avatar = <MemberAvatar member={member} width={16} height={16} aria-hidden="true" hideTitle />;
-        }
+        avatar = <MemberAvatar member={member} width={16} height={16} aria-hidden="true" hideTitle />;
         onClick = (e: ButtonEvent): void => {
             e.preventDefault();
             dis.dispatch({
@@ -161,9 +158,7 @@ export const usePermalink: (args: Args) => HookResult = ({
     } else if (type === PillType.RoomMention) {
         if (targetRoom) {
             text = targetRoom.name || resourceId;
-            if (shouldShowPillAvatar) {
-                avatar = <RoomAvatar room={targetRoom} width={16} height={16} aria-hidden="true" />;
-            }
+            avatar = <RoomAvatar room={targetRoom} width={16} height={16} aria-hidden="true" />;
         }
     }
 
@@ -172,7 +167,6 @@ export const usePermalink: (args: Args) => HookResult = ({
         text,
         onClick,
         resourceId,
-        room,
         type,
     };
 };

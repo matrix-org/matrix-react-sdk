@@ -54,7 +54,6 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
     const [hover, setHover] = useState(false);
     const { avatar, onClick, resourceId, text, type } = usePermalink({
         room,
-        shouldShowPillAvatar,
         type: propType,
         url,
     });
@@ -92,13 +91,13 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
                         onMouseOver={onMouseOver}
                         onMouseLeave={onMouseLeave}
                     >
-                        {avatar}
+                        {shouldShowPillAvatar && avatar}
                         <span className="mx_Pill_linkText">{text}</span>
                         {tip}
                     </a>
                 ) : (
                     <span className={classes} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
-                        {avatar}
+                        {shouldShowPillAvatar && avatar}
                         <span className="mx_Pill_linkText">{text}</span>
                         {tip}
                     </span>
