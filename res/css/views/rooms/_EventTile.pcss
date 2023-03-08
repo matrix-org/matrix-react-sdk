@@ -1226,9 +1226,8 @@ $left-gutter: 64px;
                 /* Moving inside ThreadView, adding 8px space to the right edge of the ThreadPanel */
                 /* stylelint-disable-next-line declaration-colon-space-after */
                 inset-inline-end: calc(
-                    -1 * calc(
-                        var(--ReadReceiptGroup_EventBubbleTile-spacing-end) - $container-gap-width
-                        - var(--BaseCard_padding-inline))
+                    -1 * calc(var(--ReadReceiptGroup_EventBubbleTile-spacing-end) - $container-gap-width -
+                                var(--BaseCard_padding-inline))
                 );
             }
 
