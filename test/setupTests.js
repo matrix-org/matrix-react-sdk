@@ -16,6 +16,7 @@ limitations under the License.
 
 import "@testing-library/jest-dom";
 import "blob-polyfill"; // https://github.com/jsdom/jsdom/issues/2555
+import canvasMock from "jest-canvas-mock/lib/mock/prototype.js";
 
 // Very carefully enable the mocks for everything else in
 // a specific order. We use this order to ensure we properly
@@ -26,3 +27,8 @@ import "blob-polyfill"; // https://github.com/jsdom/jsdom/issues/2555
 require("./setup/setupManualMocks"); // must be first
 require("./setup/setupLanguage");
 require("./setup/setupConfig");
+
+// Workaround for https://github.com/hustcc/jest-canvas-mock/issues/103
+beforeEach(() => {
+    canvasMock();
+});
