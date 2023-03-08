@@ -22,7 +22,7 @@ import { ActionPayload, AsyncActionPayload } from "./payloads";
 type DispatchToken = string;
 
 function invariant(cond: any, error: string): void {
-    if (cond) throw new Error(error);
+    if (!cond) throw new Error(error);
 }
 
 /**
@@ -33,7 +33,6 @@ export class MatrixDispatcher {
     private readonly callbacks = new Map<DispatchToken, (payload: ActionPayload) => void>();
     private readonly isHandled = new Map<DispatchToken, boolean>();
     private readonly isPending = new Map<DispatchToken, boolean>();
-    private _isDispatching = false;
     private pendingPayload?: ActionPayload;
     private lastId = 1;
 
@@ -51,6 +50,7 @@ export class MatrixDispatcher {
      * Removes a callback based on its token.
      */
     public unregister(id: DispatchToken): void {
+        invariant(this.callbacks.has(id), `Dispatcher.unregister(...): '${id}' does not map to a registered callback.`);
         this.callbacks.delete(id);
     }
 
@@ -60,7 +60,7 @@ export class MatrixDispatcher {
      * response to a dispatched payload.
      */
     public waitFor(ids: Array<DispatchToken>): void {
-        invariant(this._isDispatching, "Dispatcher.waitFor(...): Must be invoked while dispatching.");
+        invariant(this.isDispatching(), "Dispatcher.waitFor(...): Must be invoked while dispatching.");
         for (let ii = 0; ii < ids.length; ii++) {
             const id = ids[ii];
             if (this.isPending.get(id)) {
@@ -82,8 +82,8 @@ export class MatrixDispatcher {
      * Dispatches a payload to all registered callbacks.
      */
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    private _dispatch(payload: ActionPayload): void {
-        invariant(!this._isDispatching, "Dispatch.dispatch(...): Cannot dispatch in the middle of a dispatch.");
+    private _dispatch = (payload: ActionPayload): void => {
+        invariant(!this.isDispatching(), "Dispatch.dispatch(...): Cannot dispatch in the middle of a dispatch.");
         this.startDispatching(payload);
         try {
             for (const id in this.callbacks) {
@@ -95,13 +95,13 @@ export class MatrixDispatcher {
         } finally {
             this.stopDispatching();
         }
-    }
+    };
 
     /**
      * Is this Dispatcher currently dispatching.
      */
     public isDispatching(): boolean {
-        return this._isDispatching;
+        return !!this.pendingPayload;
     }
 
     /**
@@ -127,7 +127,6 @@ export class MatrixDispatcher {
             this.isHandled.set(id, false);
         }
         this.pendingPayload = payload;
-        this._isDispatching = true;
     }
 
     /**
@@ -137,7 +136,6 @@ export class MatrixDispatcher {
      */
     private stopDispatching(): void {
         this.pendingPayload = undefined;
-        this._isDispatching = false;
     }
 
     /**
@@ -164,7 +162,7 @@ export class MatrixDispatcher {
             // if you dispatch from within a dispatch, so rather than action
             // handlers having to worry about not calling anything that might
             // then dispatch, we just do dispatches asynchronously.
-            window.setTimeout(this._dispatch.bind(this, payload), 0);
+            window.setTimeout(this._dispatch, 0, payload);
         }
     }
 
