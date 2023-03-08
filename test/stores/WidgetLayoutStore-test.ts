@@ -265,6 +265,15 @@ describe("WidgetLayoutStore", () => {
         `);
     });
 
+    it("Can call onNotReady before onReady has been called", () => {
+        // Just to quieten SonarCloud :-(
+
+        // @ts-ignore bypass private ctor for tests
+        const store = new WidgetLayoutStore();
+        // @ts-ignore calling private method
+        store.onNotReady();
+    });
+
     describe("when feature_dynamic_room_predecessors is not enabled", () => {
         beforeAll(() => {
             jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
