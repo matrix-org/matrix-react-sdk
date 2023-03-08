@@ -453,6 +453,171 @@ describe("Timeline", () => {
             cy.get(".mx_RoomView_searchResultsPanel").percySnapshotElement("Highlighted search results");
         });
 
+        it("should find words in various languages and highlight them on search result", () => {
+            // "Test" in various languages
+            const stringAr = "اِمْتِحَان‎";
+            const stringEl = "εξέταση";
+            const stringHe = "מִבְחָן";
+            const stringHi = "आज़माइश";
+            const stringJa = "テスト";
+            const stringKo = "테스트";
+            const stringTh = "การสอบ";
+            const stringZh = "测试";
+
+            const MESSAGE = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor";
+
+            cy.visit("/#/room/" + roomId);
+
+            // Wait until configuration is finished
+            cy.contains(
+                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
+                "created and configured the room.",
+            ).should("exist");
+
+            // Create a bot "BotBob" and invite it
+            let bot: MatrixClient;
+            cy.getBot(homeserver, {
+                displayName: "BotBob",
+                autoAcceptInvites: false,
+            }).then((_bot) => {
+                bot = _bot;
+                cy.inviteUser(roomId, bot.getUserId());
+                bot.joinRoom(roomId);
+
+                // Make sure the bot joined the room
+                cy.contains(
+                    ".mx_GenericEventListSummary .mx_EventTile_info.mx_EventTile_last",
+                    "BotBob joined the room",
+                ).should("exist");
+
+                // Have bot send MESSAGE to roomId
+                cy.botSendMessage(bot, roomId, MESSAGE);
+            });
+
+            // Arabic
+            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
+                msgtype: "m.text" as MsgType,
+                body: stringAr,
+            });
+            // Greek
+            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
+                msgtype: "m.text" as MsgType,
+                body: stringEl,
+            });
+            // Hebrew
+            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
+                msgtype: "m.text" as MsgType,
+                body: stringHe,
+            });
+            // Hindi
+            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
+                msgtype: "m.text" as MsgType,
+                body: stringHi,
+            });
+            // Japanese
+            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
+                msgtype: "m.text" as MsgType,
+                body: stringJa,
+            });
+            // Korean
+            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
+                msgtype: "m.text" as MsgType,
+                body: stringKo,
+            });
+            // Thai
+            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
+                msgtype: "m.text" as MsgType,
+                body: stringTh,
+            });
+            // Chinese (Mandarin)
+            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
+                msgtype: "m.text" as MsgType,
+                body: stringZh,
+            });
+
+            // Send some random messages in English
+            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
+                msgtype: "m.text" as MsgType,
+                body:
+                    "Paragraph above lists\n\n" +
+                    "- item 1\n- item 2\n- item 3\n\n" +
+                    "Paragraph between lists\n\n" +
+                    "1. item 1\n2. item 2\n3. item 3\n\n" +
+                    "Paragraph below lists",
+                format: "org.matrix.custom.html",
+                formatted_body:
+                    "<p>Paragraph above lists</p>\n" +
+                    "<ul>\n<li>item 1</li>\n<li>item 2</li>\n<li>item 3</li>\n</ul>\n" +
+                    "<p>Paragraph between lists</p>\n" +
+                    "<ol>\n<li>item 1</li>\n<li>item 2</li>\n<li>item 3</li>\n</ol>\n" +
+                    "<p>Paragraph below lists</p>\n",
+            });
+            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
+                msgtype: "m.emote" as MsgType,
+                body: "sends an emote",
+            });
+            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
+                msgtype: "m.text" as MsgType,
+                body: `${MESSAGE} by Alan`,
+            });
+
+            // Ensure the last message was sent
+            cy.get(".mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
+
+            cy.get(".mx_RoomHeader_searchButton").click();
+
+            // Check stringAr is highlighted
+            cy.get(".mx_SearchBar_input input").clear().invoke("val", stringAr).trigger("input");
+            cy.get(".mx_SearchBar_input input").type("{enter}");
+            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
+
+            // Check stringEl is highlighted
+            cy.get(".mx_SearchBar_input input").clear().invoke("val", stringEl).trigger("input");
+            cy.get(".mx_SearchBar_input input").type("{enter}");
+            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
+
+            // Check stringHe is highlighted
+            cy.get(".mx_SearchBar_input input").clear().invoke("val", stringHe).trigger("input");
+            cy.get(".mx_SearchBar_input input").type("{enter}");
+            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
+
+            // Check stringHi is highlighted
+            cy.get(".mx_SearchBar_input input").clear().invoke("val", stringHi).trigger("input");
+            cy.get(".mx_SearchBar_input input").type("{enter}");
+            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
+
+            // Check stringJa is highlighted
+            cy.get(".mx_SearchBar_input input").clear().invoke("val", stringJa).trigger("input");
+            cy.get(".mx_SearchBar_input input").type("{enter}");
+            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
+
+            // Check stringKo is highlighted
+            cy.get(".mx_SearchBar_input input").clear().invoke("val", stringKo).trigger("input");
+            cy.get(".mx_SearchBar_input input").type("{enter}");
+            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
+
+            // Check stringTh is highlighted
+            cy.get(".mx_SearchBar_input input").clear().invoke("val", stringTh).trigger("input");
+            cy.get(".mx_SearchBar_input input").type("{enter}");
+            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
+
+            // Check stringZh is highlighted
+            cy.get(".mx_SearchBar_input input").clear().invoke("val", stringZh).trigger("input");
+            cy.get(".mx_SearchBar_input input").type("{enter}");
+            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
+
+            // Check words of the random messages are highlighted
+            cy.get(".mx_SearchBar_input input").clear().invoke("val", "Paragraph").trigger("input");
+            cy.get(".mx_SearchBar_input input").type("{enter}");
+            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
+            cy.get(".mx_SearchBar_input input").clear().invoke("val", "emote").trigger("input");
+            cy.get(".mx_SearchBar_input input").type("{enter}");
+            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
+            cy.get(".mx_SearchBar_input input").clear().invoke("val", "Lorem").trigger("input");
+            cy.get(".mx_SearchBar_input input").type("{enter}");
+            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
+        });
+
         it("should render url previews", () => {
             cy.intercept("**/_matrix/media/r0/thumbnail/matrix.org/2022-08-16_yaiSVSRIsNFfxDnV?*", {
                 statusCode: 200,
