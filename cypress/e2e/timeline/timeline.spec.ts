@@ -466,7 +466,7 @@ describe("Timeline", () => {
 
             const MESSAGE = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor";
 
-            const sendString = (string: string): Chainable<JQuery<HTMLElement>> => {
+            const sendString = (string: string) => {
                 cy.sendEvent(roomId, null, "m.room.message" as EventType, {
                     msgtype: "m.text" as MsgType,
                     body: string,
