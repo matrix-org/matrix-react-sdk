@@ -64,10 +64,9 @@ export class MatrixDispatcher {
      * of the current callback. This method should only be used by a callback in
      * response to a dispatched payload.
      */
-    public waitFor(ids: Array<DispatchToken>): void {
+    public waitFor(ids: DispatchToken[]): void {
         invariant(this.isDispatching(), "Dispatcher.waitFor(...): Must be invoked while dispatching.");
-        for (let ii = 0; ii < ids.length; ii++) {
-            const id = ids[ii];
+        for (const id of ids) {
             if (this.isPending.get(id)) {
                 invariant(
                     this.isHandled.get(id),
