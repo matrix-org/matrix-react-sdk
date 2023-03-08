@@ -336,13 +336,10 @@ describe("Timeline", () => {
             );
 
             // Cypress `within` callback function to check block margins
-            const checkMarginList = () => {
+            // Note this cannot be used for compact modern layout
+            const checkBlockMargin = () => {
                 cy.get("ul").should("have.css", "margin-block", "0px");
                 cy.get("ol").should("have.css", "margin-block", "0px");
-            };
-
-            // This is to check block margin of paragraphs around the lists except on compact modern layout
-            const checkMarginParagraphsWide = () => {
                 cy.get("p:first-of-type").should("have.css", "margin-block", "0px 16px"); // Paragraph above lists
                 cy.get("p:nth-of-type(2)").should("have.css", "margin-block", "16px"); // Paragraph between lists
                 cy.get("p:last-of-type").should("have.css", "margin-block", "16px 0px"); // Paragraph below lists
@@ -350,8 +347,7 @@ describe("Timeline", () => {
 
             // Check block margin values of paragraphs and lists on modern layout
             cy.get(".mx_EventTile[data-layout=group] .markdown-body").within(() => {
-                checkMarginList();
-                checkMarginParagraphsWide();
+                checkBlockMargin();
             });
 
             // Exclude timestamp and read marker from snapshot
@@ -376,8 +372,7 @@ describe("Timeline", () => {
             // Check block margin values of paragraphs and lists on IRC layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
             cy.get(".mx_EventTile[data-layout=irc] .markdown-body").within(() => {
-                checkMarginList();
-                checkMarginParagraphsWide();
+                checkBlockMargin();
             });
 
             cy.get(".mx_MainSplit").percySnapshotElement("Lists with paragraphs on IRC layout", { percyCSS });
@@ -385,8 +380,7 @@ describe("Timeline", () => {
             // Check block margin values of paragraphs and lists on bubble layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
             cy.get(".mx_EventTile[data-layout=bubble] .markdown-body").within(() => {
-                checkMarginList();
-                checkMarginParagraphsWide();
+                checkBlockMargin();
             });
 
             cy.get(".mx_MainSplit").percySnapshotElement("Lists with paragraphs on bubble layout", { percyCSS });
