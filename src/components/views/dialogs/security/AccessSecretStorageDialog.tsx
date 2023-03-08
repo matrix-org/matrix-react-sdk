@@ -364,6 +364,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                             value={this.state.passPhrase}
                             onChange={this.onPassPhraseChange}
                             autoFocus={true}
+                            autoComplete="new-password"
                         />
                         {keyStatus}
                         <DialogButtons
@@ -409,6 +410,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                                     onChange={this.onRecoveryKeyChange}
                                     autoFocus={true}
                                     forceValidity={this.state.recoveryKeyCorrect ?? undefined}
+                                    autoComplete="new-password"
                                 />
                             </div>
                             <span className="mx_AccessSecretStorageDialog_recoveryKeyEntry_entryControlSeparatorText">
