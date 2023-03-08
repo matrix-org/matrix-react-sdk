@@ -289,7 +289,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         // Handle displaying feedback on validity
         let fieldTooltip;
         if (tooltipContent || this.state.feedback) {
-            let role;
+            let role: React.AriaRole;
             if (tooltipContent) {
                 role = "tooltip";
             } else {
