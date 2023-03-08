@@ -16,7 +16,7 @@ limitations under the License.
 
 import { mocked } from "jest-mock";
 import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
-import { act } from "react-dom/test-utils";
+import { act } from "@testing-library/react";
 
 import { createTestClient, flushPromises, setupAsyncStoreWithClient } from "../test-utils";
 import SettingsStore from "../../src/settings/SettingsStore";
