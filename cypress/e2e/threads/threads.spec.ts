@@ -292,11 +292,27 @@ describe("Threads", () => {
         cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_sender").should("contain", "Tom");
         cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_content").should("contain", "Great!");
 
-        // User edits & asserts
+        // User edits
         cy.contains(".mx_ThreadView .mx_EventTile_last .mx_EventTile_line", "Great!").within(() => {
             cy.get('[aria-label="Edit"]').click({ force: true }); // Cypress has no ability to hover
-            cy.get(".mx_BasicMessageComposer_input").type(" How about yourself?{enter}");
+            cy.get(".mx_BasicMessageComposer_input").type(" How about yourself?");
         });
+
+        // Ensure the read receipt group on the edited message EventTile is visible
+        cy.get(".mx_ThreadView .mx_EventTile_isEditing .mx_EventTile_receiptSent").should("be.visible");
+
+        // Take snapshot of the edited EventTile on modern layout
+        cy.get(".mx_ThreadView .mx_EventTile_last[data-layout=group]").percySnapshotElement(
+            "EditMessageComposer on bubble layout",
+            {
+                percyCSS,
+            },
+        );
+
+        // User saves the edit
+        cy.get(".mx_ThreadView .mx_EventTile_last .mx_EventTile_line .mx_BasicMessageComposer_input").type("{enter}");
+
+        // User asserts
         cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_sender").should("contain", "Tom");
         cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_content").should(
             "contain",
