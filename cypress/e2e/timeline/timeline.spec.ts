@@ -453,6 +453,45 @@ describe("Timeline", () => {
             cy.get(".mx_RoomView_searchResultsPanel").percySnapshotElement("Highlighted search results");
         });
 
+        it("should not break a link by highlighting on search result", () => {
+            // Send a link to the room as a message to roomId
+            cy.sendEvent(roomId, null, "m.room.message" as EventType, {
+                msgtype: "m.text" as MsgType,
+                body: "localhost:8080/#room/" + roomId,
+            });
+
+            // Open the room
+            cy.visit("/#/room/" + roomId);
+
+            // Open search panel
+            cy.get(".mx_RoomHeader_searchButton").click();
+
+            // Search "localhost:8080/"
+            cy.get(".mx_SearchBar_input input")
+                .clear()
+                .invoke("val", "localhost:8080/")
+                .trigger("input")
+                .type("{enter}");
+
+            // Make sure the query is highlighted and the link works
+            cy.get(".mx_RoomView_searchResultsPanel").within(() => {
+                cy.get(".mx_EventTile_searchHighlight").should("exist");
+
+                // Ensure the link to the room works
+                // Broken; see https://github.com/vector-im/element-web/issues/17011
+                // Request localhost:8000/ instead for now
+                // cy.get(".mx_EventTile a[href*='localhost:8080/#room/" + roomId + "']")
+                cy.get(".mx_EventTile a[href*='localhost:8080/']")
+                    .should("exist")
+                    .then((link) => {
+                        // Make sure the request works
+                        cy.request(link.prop("href")).should((response) => {
+                            expect(response.status).to.eq(200);
+                        });
+                    });
+            });
+        });
+
         it("should render url previews", () => {
             cy.intercept("**/_matrix/media/r0/thumbnail/matrix.org/2022-08-16_yaiSVSRIsNFfxDnV?*", {
                 statusCode: 200,
