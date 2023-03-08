@@ -21,6 +21,7 @@ import WidgetStore, { IApp } from "../../src/stores/WidgetStore";
 import { Container, WidgetLayoutStore } from "../../src/stores/widgets/WidgetLayoutStore";
 import { stubClient } from "../test-utils";
 import defaultDispatcher from "../../src/dispatcher/dispatcher";
+import SettingsStore from "../../src/settings/SettingsStore";
 
 // setup test env values
 const roomId = "!room:server";
@@ -262,5 +263,37 @@ describe("WidgetLayoutStore", () => {
               ],
             ]
         `);
+    });
+
+    describe("when feature_dynamic_room_predecessors is not enabled", () => {
+        beforeAll(() => {
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+        });
+
+        it("passes the flag in to getVisibleRooms", async () => {
+            mocked(client.getVisibleRooms).mockRestore();
+            mocked(client.getVisibleRooms).mockReturnValue([]);
+            // @ts-ignore bypass private ctor for tests
+            const store = new WidgetLayoutStore();
+            await store.start();
+            expect(client.getVisibleRooms).toHaveBeenCalledWith(false);
+        });
+    });
+
+    describe("when feature_dynamic_room_predecessors is enabled", () => {
+        beforeAll(() => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                (settingName) => settingName === "feature_dynamic_room_predecessors",
+            );
+        });
+
+        it("passes the flag in to getVisibleRooms", async () => {
+            mocked(client.getVisibleRooms).mockRestore();
+            mocked(client.getVisibleRooms).mockReturnValue([]);
+            // @ts-ignore bypass private ctor for tests
+            const store = new WidgetLayoutStore();
+            await store.start();
+            expect(client.getVisibleRooms).toHaveBeenCalledWith(true);
+        });
     });
 });
