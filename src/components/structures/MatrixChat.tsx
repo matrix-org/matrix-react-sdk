@@ -32,6 +32,7 @@ import { throttle } from "lodash";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 import { DecryptionError } from "matrix-js-sdk/src/crypto/algorithms";
+import { BannerLifecycle, BannerOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/BannerLifecycle";
 
 // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by various components
 import "focus-visible";
@@ -143,6 +144,7 @@ import { findDMForUser } from "../../utils/dm/findDMForUser";
 import { Linkify } from "../../HtmlUtils";
 import { NotificationColor } from "../../stores/notifications/NotificationColor";
 import { UserTab } from "../views/dialogs/UserTab";
+import { ModuleRunner } from "../../modules/ModuleRunner";
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -2133,6 +2135,17 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         } else {
             logger.error(`Unknown view ${this.state.view}`);
             return null;
+        }
+
+        const opts: BannerOpts = { banner: undefined };
+        ModuleRunner.instance.invoke(BannerLifecycle.Banner, opts);
+        if (opts.banner) {
+            view = (
+                <div className="mx_MatrixChat_wrapper">
+                    <div className="mx_MatrixChat_wrapper_banner">{opts.banner}</div>
+                    <div className="mx_MatrixChat_wrapper_content">{view}</div>
+                </div>
+            );
         }
 
         return (
