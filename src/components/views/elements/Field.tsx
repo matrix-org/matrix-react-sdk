@@ -291,9 +291,9 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         if (tooltipContent || this.state.feedback) {
             let role;
             if (tooltipContent) {
-                role = 'tooltip';
+                role = "tooltip";
             } else {
-                role = this.state.valid ? 'status' : 'alert'
+                role = this.state.valid ? "status" : "alert";
             }
 
             fieldTooltip = (
