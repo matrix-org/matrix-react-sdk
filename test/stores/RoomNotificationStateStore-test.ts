@@ -46,7 +46,7 @@ describe("RoomNotificationStateStore", function () {
 
         // When we sync and the room is visible
         mocked(client.getVisibleRooms).mockReturnValue([room]);
-        client.emit(ClientEvent.Sync, null, null);
+        client.emit(ClientEvent.Sync, SyncState.Syncing, SyncState.Syncing);
 
         // Then we emit an event from the store
         expect(store.emit).not.toHaveBeenCalled();
@@ -58,10 +58,10 @@ describe("RoomNotificationStateStore", function () {
 
         // When we sync and the room is visible
         mocked(client.getVisibleRooms).mockReturnValue([room]);
-        client.emit(ClientEvent.Sync, null, null);
+        client.emit(ClientEvent.Sync, SyncState.Syncing, SyncState.Syncing);
 
         // Then we emit an event from the store
-        expect(store.emit).toHaveBeenCalledWith(UPDATE_STATUS_INDICATOR, expect.anything(), null);
+        expect(store.emit).toHaveBeenCalledWith(UPDATE_STATUS_INDICATOR, expect.anything(), "SYNCING");
     });
 
     it("Emits an event when a feature flag changes notification state", async () => {
@@ -69,7 +69,7 @@ describe("RoomNotificationStateStore", function () {
         let room = fakeRoom(0);
         mocked(store.emit).mockReset();
         mocked(client.getVisibleRooms).mockReturnValue([room]);
-        client.emit(ClientEvent.Sync, null, null);
+        client.emit(ClientEvent.Sync, SyncState.Syncing, SyncState.Syncing);
         expect(store.emit).not.toHaveBeenCalled();
 
         // When we update the feature flag and it makes us have a notification
@@ -91,7 +91,7 @@ describe("RoomNotificationStateStore", function () {
         it("Passes the dynamic predecessor flag to getVisibleRooms", async () => {
             // When we sync
             mocked(client.getVisibleRooms).mockReturnValue([]);
-            client.emit(ClientEvent.Sync, null, null);
+            client.emit(ClientEvent.Sync, SyncState.Syncing, SyncState.Syncing);
 
             // Then we check visible rooms, using the dynamic predecessor flag
             expect(client.getVisibleRooms).toHaveBeenCalledWith(false);
@@ -110,7 +110,7 @@ describe("RoomNotificationStateStore", function () {
         it("Passes the dynamic predecessor flag to getVisibleRooms", async () => {
             // When we sync
             mocked(client.getVisibleRooms).mockReturnValue([]);
-            client.emit(ClientEvent.Sync, null, null);
+            client.emit(ClientEvent.Sync, SyncState.Syncing, SyncState.Syncing);
 
             // Then we check visible rooms, using the dynamic predecessor flag
             expect(client.getVisibleRooms).toHaveBeenCalledWith(true);
