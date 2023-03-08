@@ -457,6 +457,7 @@ describe("Timeline", () => {
             // "Test" in various languages
             const stringAr = "اِمْتِحَان‎";
             const stringEl = "εξέταση";
+            const stringEn = "Test";
             const stringHe = "מִבְחָן";
             const stringHi = "आज़माइश";
             const stringJa = "テスト";
@@ -486,7 +487,7 @@ describe("Timeline", () => {
             ).should("exist");
 
             // Send strings to the room
-            const strings = [stringAr, stringEl, stringHe, stringHi, stringJa, stringKo, stringTh, stringZh];
+            const strings = [stringAr, stringEl, stringEn, stringHe, stringHi, stringJa, stringKo, stringTh, stringZh];
             strings.forEach((strings) => {
                 sendString(strings);
             });
@@ -498,6 +499,7 @@ describe("Timeline", () => {
             const queries = [
                 // stringAr, // Broken - cannot be found
                 stringEl,
+                stringEn,
                 // stringHe, // Broken - cannot be found
                 // stringHi, // Broken - cannot be found
                 stringJa,
