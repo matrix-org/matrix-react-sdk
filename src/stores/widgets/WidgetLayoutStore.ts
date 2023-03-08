@@ -406,7 +406,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         return this.byRoom[room.roomId]?.[container]?.height ?? null; // let the default get returned if needed
     }
 
-    public setContainerHeight(room: Room, container: Container, height?: number): void {
+    public setContainerHeight(room: Room, container: Container, height?: number | null): void {
         const widgets = this.getContainerWidgets(room, container);
         const widths = this.byRoom[room.roomId]?.[container]?.distributions;
         const localLayout: Record<string, IStoredLayout> = {};
