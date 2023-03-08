@@ -108,11 +108,12 @@ export class MatrixDispatcher {
      * Call the callback stored with the given id. Also do some internal
      * bookkeeping.
      *
+     * Must only be called with an id which has a callback and pendingPayload set
      * @internal
      */
     private invokeCallback(id: DispatchToken): void {
         this.isPending.set(id, true);
-        this.callbacks.get(id)(this.pendingPayload);
+        this.callbacks.get(id)!(this.pendingPayload!);
         this.isHandled.set(id, true);
     }
 
