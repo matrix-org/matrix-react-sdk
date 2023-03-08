@@ -1078,8 +1078,7 @@ $left-gutter: 64px;
                 }
 
                 .mx_ReadReceiptGroup {
-                    /* This aligns the avatar with the hidden event line by overriding the inherited value */
-                    inset-block-start: calc(-$font-22px);
+                    inset-block-start: calc(-$font-22px); /* Align with hidden event content */
                 }
 
                 &.mx_EventTile_selected .mx_EventTile_line,
@@ -1105,14 +1104,13 @@ $left-gutter: 64px;
             &[data-layout="bubble"] {
                 display: flex;
 
-                /* Same setting as the main timeline */
+                /* Same declaration as the main timeline */
                 margin-inline: var(--EventTile_bubble-margin-inline-start) 0;
 
-                /* Align shadow on hover */
+                /* Shadow on hover */
                 &::before {
                     /* Apply the same value as the main timeline */
-                    inset-inline-start: calc(-1 * var(--EventTile_bubble-margin-inline-start));
-                    inset-inline-end: 0;
+                    inset-inline: calc(-1 * var(--EventTile_bubble-margin-inline-start)) 0;
                 }
 
                 .mx_EventTile_line {
@@ -1136,7 +1134,7 @@ $left-gutter: 64px;
                 }
 
                 &[data-self="true"] {
-                    /* Override "align-items: flex-end" to align the avatar and mx_EventTile_line at the center */
+                    /* Align the avatar and mx_EventTile_line at the center on hidden event tile line */
                     align-items: center;
                 }
             }
