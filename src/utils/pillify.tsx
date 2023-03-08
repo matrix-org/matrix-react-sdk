@@ -23,6 +23,15 @@ import { MatrixClientPeg } from "../MatrixClientPeg";
 import SettingsStore from "../settings/SettingsStore";
 import { Pill, PillType, pillRoomNotifLen, pillRoomNotifPos } from "../components/views/elements/Pill";
 import { parsePermalink } from "./permalinks/Permalinks";
+import { PermalinkParts } from "./permalinks/PermalinkConstructor";
+
+/**
+ * If parts contain an event Id it is a link to an event.
+ * Custom label here means href !== text content of the a tag.
+ */
+const isEventLinkWithCustomLabel = (node: Element, parts: PermalinkParts): boolean => {
+    return parts.eventId && node.getAttribute("href") !== node.textContent;
+};
 
 /**
  * Recurses depth-first through a DOM tree, converting matrix.to links
@@ -51,11 +60,11 @@ export function pillifyLinks(nodes: ArrayLike<Element>, mxEvent: MatrixEvent, pi
         } else if (node.tagName === "A" && node.getAttribute("href")) {
             const href = node.getAttribute("href")!;
             const parts = parsePermalink(href);
-            // If the link is a (localised) matrix.to link, replace it with a pill
-            // We don't want to pill event permalinks, so those are ignored.
-            if (parts && !parts.eventId) {
-                const pillContainer = document.createElement("span");
 
+            if (parts && !isEventLinkWithCustomLabel(node, parts)) {
+                // If the link is a (localised) matrix.to link, replace it with a pill
+
+                const pillContainer = document.createElement("span");
                 const pill = (
                     <Pill url={href} inMessage={true} room={room} shouldShowPillAvatar={shouldShowPillAvatar} />
                 );

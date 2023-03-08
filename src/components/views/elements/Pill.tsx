@@ -22,13 +22,16 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import Tooltip, { Alignment } from "../elements/Tooltip";
 import { usePermalink } from "../../../hooks/usePermalink";
-import RoomAvatar from "../avatars/RoomAvatar";
 import MemberAvatar from "../avatars/MemberAvatar";
+import RoomAvatar from "../avatars/RoomAvatar";
+import { _t } from "../../../languageHandler";
 
 export enum PillType {
     UserMention = "TYPE_USER_MENTION",
     RoomMention = "TYPE_ROOM_MENTION",
     AtRoomMention = "TYPE_AT_ROOM_MENTION", // '@room' mention
+    EventInSameRoom = "TYPE_EVENT_IN_SAME_ROOM",
+    EventInOtherRoom = "TYPE_EVENT_IN_OTHER_ROOM",
 }
 
 export const pillRoomNotifPos = (text: string): number => {
@@ -70,6 +73,7 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
         mx_SpacePill: type === "space",
         mx_UserPill: type === PillType.UserMention,
         mx_UserPill_me: resourceId === MatrixClientPeg.get().getUserId(),
+        mx_EventPill: type === PillType.EventInOtherRoom || type === PillType.EventInSameRoom,
     });
 
     const onMouseOver = (): void => {
@@ -81,27 +85,62 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
     };
 
     const tip = hover && resourceId ? <Tooltip label={resourceId} alignment={Alignment.Right} /> : null;
-    let avatar: ReactElement | null = null;
+    let content: ReactElement | null = null;
 
     switch (type) {
+        case PillType.EventInOtherRoom:
+            {
+                const avatar = shouldShowPillAvatar && targetRoom && (
+                    <RoomAvatar room={targetRoom} width={16} height={16} aria-hidden="true" />
+                );
+                content = (
+                    <>
+                        {_t("Message in")}
+                        {avatar || " "}
+                        {text}
+                    </>
+                );
+            }
+            break;
+        case PillType.EventInSameRoom:
+            {
+                const avatar = shouldShowPillAvatar && member && (
+                    <MemberAvatar member={member} width={16} height={16} aria-hidden="true" hideTitle />
+                );
+                content = (
+                    <>
+                        {_t("Message from")}
+                        {avatar || " "}
+                        {text}
+                    </>
+                );
+            }
+            break;
         case PillType.AtRoomMention:
         case PillType.RoomMention:
         case "space":
-            avatar = targetRoom ? <RoomAvatar room={targetRoom} width={16} height={16} aria-hidden="true" /> : null;
+            content = (
+                <>
+                    {shouldShowPillAvatar && targetRoom && (
+                        <RoomAvatar room={targetRoom} width={16} height={16} aria-hidden="true" />
+                    )}
+                    {text}
+                </>
+            );
             break;
         case PillType.UserMention:
-            avatar = <MemberAvatar member={member} width={16} height={16} aria-hidden="true" hideTitle />;
+            content = (
+                <>
+                    {shouldShowPillAvatar && member && (
+                        <MemberAvatar member={member} width={16} height={16} aria-hidden="true" hideTitle />
+                    )}
+                    {text}
+                </>
+            );
             break;
         default:
             return null;
     }
-
-    const content = (
-        <>
-            {shouldShowPillAvatar && avatar}
-            <span className="mx_Pill_linkText">{text}</span>
-        </>
-    );
 
     return (
         <bdi>
@@ -114,12 +153,12 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
                         onMouseOver={onMouseOver}
                         onMouseLeave={onMouseLeave}
                     >
-                        {content}
+                        <span className="mx_Pill_content">{content}</span>
                         {tip}
                     </a>
                 ) : (
                     <span className={classes} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
-                        {content}
+                        <span className="mx_Pill_content">{content}</span>
                         {tip}
                     </span>
                 )}

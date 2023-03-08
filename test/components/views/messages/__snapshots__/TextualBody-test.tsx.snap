@@ -93,17 +93,17 @@ exports[`<TextualBody /> renders formatted m.text correctly pills get injected c
         class="mx_Pill mx_UserPill"
         href="https://matrix.to/#/@user:server"
       >
-        <img
-          alt=""
-          aria-hidden="true"
-          class="mx_BaseAvatar mx_BaseAvatar_image"
-          data-testid="avatar-img"
-          src="mxc://avatar.url/image.png"
-          style="width: 16px; height: 16px;"
-        />
         <span
-          class="mx_Pill_linkText"
+          class="mx_Pill_content"
         >
+          <img
+            alt=""
+            aria-hidden="true"
+            class="mx_BaseAvatar mx_BaseAvatar_image"
+            data-testid="avatar-img"
+            src="mxc://avatar.url/image.png"
+            style="width: 16px; height: 16px;"
+          />
           Member
         </span>
       </a>
