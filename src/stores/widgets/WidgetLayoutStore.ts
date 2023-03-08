@@ -104,9 +104,9 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         }>;
     } = {};
 
-    private pinnedRef: string;
-    private layoutRef: string;
-    private dynamicRef: string;
+    private pinnedRef: string | undefined;
+    private layoutRef: string | undefined;
+    private dynamicRef: string | undefined;
 
     private constructor() {
         super(defaultDispatcher);
@@ -146,9 +146,9 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         this.byRoom = {};
 
         this.matrixClient?.off(RoomStateEvent.Events, this.updateRoomFromState);
-        SettingsStore.unwatchSetting(this.pinnedRef);
-        SettingsStore.unwatchSetting(this.layoutRef);
-        SettingsStore.unwatchSetting(this.dynamicRef);
+        if (this.pinnedRef) SettingsStore.unwatchSetting(this.pinnedRef);
+        if (this.layoutRef) SettingsStore.unwatchSetting(this.layoutRef);
+        if (this.dynamicRef) SettingsStore.unwatchSetting(this.dynamicRef);
         WidgetStore.instance.off(UPDATE_EVENT, this.updateFromWidgetStore);
     }
 
@@ -176,7 +176,13 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         if (room) this.recalculateRoom(room);
     };
 
-    private updateFromSettings = (settingName: string, roomId: string /* and other stuff */): void => {
+    private updateFromSettings = (
+        _settingName: string,
+        roomId: string | null,
+        _atLevel: SettingLevel,
+        _newValAtLevel: any,
+        _newVal: any,
+    ): void => {
         if (roomId) {
             const room = this.matrixClient?.getRoom(roomId);
             if (room) this.recalculateRoom(room);
