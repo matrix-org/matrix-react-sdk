@@ -335,7 +335,7 @@ describe("Timeline", () => {
                 "Paragraph below lists",
             );
 
-            // This is to check block margin of unordered & ordered lists
+            // Cypress `within` callback function to check block margins
             const checkMarginList = () => {
                 cy.get("ul").should("have.css", "margin-block", "0px");
                 cy.get("ol").should("have.css", "margin-block", "0px");
