@@ -87,7 +87,9 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
         case PillType.AtRoomMention:
         case PillType.RoomMention:
             {
-                const avatar = <RoomAvatar room={targetRoom} width={16} height={16} aria-hidden="true" />;
+                const avatar = targetRoom ? (
+                    <RoomAvatar room={targetRoom} width={16} height={16} aria-hidden="true" />
+                ) : null;
                 content = (
                     <>
                         {shouldShowPillAvatar && avatar}

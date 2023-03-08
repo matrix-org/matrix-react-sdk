@@ -39,7 +39,7 @@ interface HookResult {
     member: RoomMember | null;
     /** Displayable text of the permalink resource. Can for instance be a user or room name. */
     text: string | null;
-    onClick: ((e: ButtonEvent) => void) | null;
+    onClick: (e: ButtonEvent) => void;
     /** This can be for instance a user or room Id. */
     resourceId: string | null;
     /** Room of the target of this permalink (room or event room). */
@@ -53,7 +53,7 @@ interface HookResult {
 export const usePermalink: (args: Args) => HookResult = ({ room, type: argType, url }): HookResult => {
     const [member, setMember] = useState<RoomMember | null>(null);
     // room of the entity this pill points to
-    const [targetRoom, setTargetRoom] = useState<Room | undefined | null>(room);
+    const [targetRoom, setTargetRoom] = useState<Room | null>(room || null);
 
     let resourceId: string | null = null;
 
@@ -101,9 +101,6 @@ export const usePermalink: (args: Args) => HookResult = ({ room, type: argType, 
 
     useMemo(() => {
         switch (type) {
-            case PillType.AtRoomMention:
-                setTargetRoom(room);
-                break;
             case PillType.UserMention:
                 {
                     if (resourceId) {
@@ -131,14 +128,14 @@ export const usePermalink: (args: Args) => HookResult = ({ room, type: argType, 
                                           );
                                       })
                                 : MatrixClientPeg.get().getRoom(resourceId);
-                        setTargetRoom(newRoom);
+                        setTargetRoom(newRoom || null);
                     }
                 }
                 break;
         }
     }, [doProfileLookup, type, resourceId, room]);
 
-    let onClick: ((e: ButtonEvent) => void) | null = null;
+    let onClick: (e: ButtonEvent) => void = () => {};
     let text = resourceId;
 
     if (type === PillType.AtRoomMention && room) {
