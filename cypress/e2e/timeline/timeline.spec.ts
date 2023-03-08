@@ -474,8 +474,7 @@ describe("Timeline", () => {
             };
 
             const searchAndHighlight = (string: string) => {
-                cy.get(".mx_SearchBar_input input").clear().invoke("val", string).trigger("input");
-                cy.get(".mx_SearchBar_input input").type("{enter}");
+                cy.get(".mx_SearchBar_input input").clear().invoke("val", string).trigger("input").type("{enter}");
                 cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
             };
 
