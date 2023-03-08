@@ -289,13 +289,20 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         // Handle displaying feedback on validity
         let fieldTooltip;
         if (tooltipContent || this.state.feedback) {
+            let role;
+            if (tooltipContent) {
+                role = 'tooltip';
+            } else {
+                role = this.state.valid ? 'status' : 'alert'
+            }
+
             fieldTooltip = (
                 <Tooltip
                     tooltipClassName={classNames("mx_Field_tooltip", "mx_Tooltip_noMargin", tooltipClassName)}
                     visible={(this.state.focused && forceTooltipVisible) || this.state.feedbackVisible}
                     label={tooltipContent || this.state.feedback}
                     alignment={Tooltip.Alignment.Right}
-                    role={tooltipContent ? "tooltip" : this.state.valid ? "status" : "alert"}
+                    role={role}
                 />
             );
         }

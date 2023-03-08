@@ -135,6 +135,6 @@ describe("AccessSecretStorageDialog", () => {
             ),
         ).toBeInTheDocument();
 
-        expect(document.activeElement).toEqual(screen.getByPlaceholderText("Security Phrase"));
+        expect(screen.getByPlaceholderText("Security Phrase")).toHaveFocus();
     });
 });
