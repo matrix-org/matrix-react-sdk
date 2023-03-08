@@ -492,6 +492,9 @@ describe("Timeline", () => {
 
                 // Have bot send MESSAGE to roomId
                 cy.botSendMessage(bot, roomId, MESSAGE);
+
+                // Have bot send stringJa to roomId
+                cy.botSendMessage(bot, roomId, stringJa);
             });
 
             // Arabic
@@ -586,7 +589,7 @@ describe("Timeline", () => {
             cy.get(".mx_SearchBar_input input").type("{enter}");
             cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
 
-            // Check stringJa is highlighted
+            // Check two stringJa strings by the user and bot are highlighted
             cy.get(".mx_SearchBar_input input").clear().invoke("val", stringJa).trigger("input");
             cy.get(".mx_SearchBar_input input").type("{enter}");
             cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
