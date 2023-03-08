@@ -69,13 +69,13 @@ import { doMaybeLocalRoomAction } from "../../../utils/local-room";
  *
  * @param sender - The Matrix ID of the user sending the event.
  * @param content - The event content.
- * @param model - The editor model to search for mentions.
+ * @param model - The editor model to search for mentions, null if there is no editor.
  * @param replyToEvent - The event being replied to or undefined if it is not a reply.
  */
 export function attachMentions(
     sender: string,
     content: IContent,
-    model: EditorModel,
+    model: EditorModel | null,
     replyToEvent: MatrixEvent | undefined,
 ): void {
     // The mentions property *always* gets included to disable legacy push rules.
@@ -95,12 +95,14 @@ export function attachMentions(
         }
     }
 
-    // Add any mentioned users in the current content.
-    for (const part of model.parts) {
-        if (part.type === Type.UserPill) {
-            userMentions.add(part.resourceId);
-        } else if (part.type === Type.AtRoomPill) {
-            mentions.room = true;
+    if (model) {
+        // Add any mentioned users in the current content.
+        for (const part of model.parts) {
+            if (part.type === Type.UserPill) {
+                userMentions.add(part.resourceId);
+            } else if (part.type === Type.AtRoomPill) {
+                mentions.room = true;
+            }
         }
     }
 
