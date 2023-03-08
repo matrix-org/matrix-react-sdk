@@ -467,11 +467,7 @@ describe("Timeline", () => {
             cy.get(".mx_RoomHeader_searchButton").click();
 
             // Search "localhost:8080/"
-            cy.get(".mx_SearchBar_input input")
-                .clear()
-                .invoke("val", "localhost:8080/")
-                .trigger("input")
-                .type("{enter}");
+            cy.get(".mx_SearchBar_input input").invoke("val", "localhost:8080/").trigger("input").type("{enter}");
 
             // Make sure the query is highlighted and the link works
             cy.get(".mx_RoomView_searchResultsPanel").within(() => {
