@@ -123,7 +123,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     /**
      * Ref returned from watchSetting for the MSC3946 labs flag
      */
-    private dynamicWatcherRef: string;
+    private dynamicWatcherRef: string | undefined;
 
     public constructor() {
         super(defaultDispatcher);
@@ -147,7 +147,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         this.matrixClient.removeListener(BeaconEvent.Update, this.onUpdateBeacon);
         this.matrixClient.removeListener(BeaconEvent.Destroy, this.onDestroyBeacon);
         this.matrixClient.removeListener(RoomStateEvent.Members, this.onRoomStateMembers);
-        SettingsStore.unwatchSetting(this.dynamicWatcherRef);
+        SettingsStore.unwatchSetting(this.dynamicWatcherRef ?? "");
 
         this.clearBeacons();
     }
