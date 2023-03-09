@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { MutableRefObject } from "react";
+import React, { RefObject } from "react";
 
 import { toLeftOrRightOf } from "../../structures/ContextMenu";
 import IconizedContextMenu, {
