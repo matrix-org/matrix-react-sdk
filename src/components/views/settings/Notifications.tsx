@@ -47,6 +47,7 @@ import {
     updateExistingPushRulesWithActions,
     updatePushRuleActions,
 } from "../../../utils/pushRules/updatePushRuleActions";
+import { Caption } from "../typography/Caption";
 
 // TODO: this "view" component still has far too much application logic in it,
 // which should be factored out to other files.
@@ -55,7 +56,10 @@ enum Phase {
     Loading = "loading",
     Ready = "ready",
     Persisting = "persisting", // technically a meta-state for Ready, but whatever
+    // unrecoverable error - eg can't load push rules
     Error = "error",
+    // error saving individual rule
+    SavingError = "savingError",
 }
 
 enum RuleClass {
@@ -121,6 +125,8 @@ interface IState {
     audioNotifications: boolean;
 
     clearingNotifications: boolean;
+
+    ruleIdsWithError: Record<RuleId | string, boolean>;
 }
 const findInDefaultRules = (
     ruleId: RuleId | string,
@@ -194,6 +200,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             desktopShowBody: SettingsStore.getValue("notificationBodyEnabled"),
             audioNotifications: SettingsStore.getValue("audioNotificationsEnabled"),
             clearingNotifications: false,
+            ruleIdsWithError: {},
         };
 
         this.settingWatchers = [
@@ -243,13 +250,9 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             ).reduce((p, c) => Object.assign(c, p), {});
 
             this.setState<
-                keyof Omit<
+                keyof Pick<
                     IState,
-                    | "deviceNotificationsEnabled"
-                    | "desktopNotifications"
-                    | "desktopShowBody"
-                    | "audioNotifications"
-                    | "clearingNotifications"
+                    "phase" | "vectorKeywordRuleInfo" | "vectorPushRules" | "pushers" | "threepids" | "masterPushRule"
                 >
             >({
                 ...newState,
@@ -393,15 +396,26 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
     private onMasterRuleChanged = async (checked: boolean): Promise<void> => {
         this.setState({ phase: Phase.Persisting });
 
+        const masterRule = this.state.masterPushRule!;
         try {
-            const masterRule = this.state.masterPushRule!;
             await MatrixClientPeg.get().setPushRuleEnabled("global", masterRule.kind, masterRule.rule_id, !checked);
             await this.refreshFromServer();
         } catch (e) {
-            this.setState({ phase: Phase.Error });
+            if (masterRule?.rule_id) {
+                this.setSavingError(masterRule.rule_id);
+            } else {
+                this.setState({ phase: Phase.Error });
+            }
             logger.error("Error updating master push rule:", e);
             this.showSaveError();
         }
+    };
+
+    private setSavingError = (ruleId: RuleId | string): void => {
+        this.setState(({ ruleIdsWithError }) => ({
+            phase: Phase.SavingError,
+            ruleIdsWithError: { ...ruleIdsWithError, [ruleId]: true },
+        }));
     };
 
     private updateDeviceNotifications = async (checked: boolean): Promise<void> => {
@@ -455,7 +469,10 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
     };
 
     private onRadioChecked = async (rule: IVectorPushRule, checkedState: VectorState): Promise<void> => {
-        this.setState({ phase: Phase.Persisting });
+        this.setState(({ ruleIdsWithError }) => ({
+            phase: Phase.Persisting,
+            ruleIdsWithError: { ...ruleIdsWithError, [rule.ruleId]: false },
+        }));
 
         try {
             const cli = MatrixClientPeg.get();
@@ -505,9 +522,8 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
             await this.refreshFromServer();
         } catch (e) {
-            this.setState({ phase: Phase.Error });
+            this.setSavingError(rule.ruleId);
             logger.error("Error updating push rule:", e);
-            this.showSaveError();
         }
     };
 
@@ -768,6 +784,15 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 {makeRadio(r, VectorState.Off)}
                 {makeRadio(r, VectorState.On)}
                 {makeRadio(r, VectorState.Loud)}
+                {this.state.ruleIdsWithError[r.ruleId] && (
+                    <div className="mx_UserNotifSettings_gridRowError">
+                        <Caption isError>
+                            {_t(
+                                "An error occurred when updating your notification preferences. Please try to toggle your option again.",
+                            )}
+                        </Caption>
+                    </div>
+                )}
             </fieldset>
         ));
 
