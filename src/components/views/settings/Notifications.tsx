@@ -477,6 +477,10 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         try {
             const cli = MatrixClientPeg.get();
             if (rule.ruleId === KEYWORD_RULE_ID) {
+                // should not encounter this
+                if (!this.state.vectorKeywordRuleInfo) {
+                    throw new Error("Notification data is incomplete.");
+                }
                 // Update all the keywords
                 for (const rule of this.state.vectorKeywordRuleInfo.rules) {
                     let enabled: boolean | undefined;
