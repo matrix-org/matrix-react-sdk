@@ -657,7 +657,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 <LabelledToggleSwitch
                     data-testid="notif-email-switch"
                     key={e.address}
-                    value={this.state.pushers.some((p) => p.kind === "email" && p.pushkey === e.address)}
+                    value={!!this.state.pushers?.some((p) => p.kind === "email" && p.pushkey === e.address)}
                     label={_t("Enable email notifications for %(email)s", { email: e.address })}
                     onChange={this.onEmailNotificationsChanged.bind(this, e.address)}
                     disabled={this.state.phase === Phase.Persisting}
