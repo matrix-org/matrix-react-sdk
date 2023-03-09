@@ -117,7 +117,7 @@ export const IconizedContextMenuCheckbox: React.FC<ICheckboxProps> = ({
 };
 
 export const IconizedContextMenuOption = forwardRef<HTMLElement, IOptionProps>(
-    ({ label, className, iconClassName, children, isDestructive, ...props }) => {
+    ({ label, className, iconClassName, children, isDestructive, ...props }, ref) => {
         return (
             <MenuItem
                 {...props}
@@ -126,6 +126,7 @@ export const IconizedContextMenuOption = forwardRef<HTMLElement, IOptionProps>(
                     mx_IconizedContextMenu_itemDestructive: isDestructive,
                 })}
                 label={label}
+                ref={ref}
             >
                 {iconClassName && <span className={classNames("mx_IconizedContextMenu_icon", iconClassName)} />}
                 <span className="mx_IconizedContextMenu_label">{label}</span>
