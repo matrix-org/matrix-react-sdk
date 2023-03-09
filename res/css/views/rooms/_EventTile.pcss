@@ -1083,13 +1083,17 @@ $left-gutter: 64px;
 
                 &.mx_EventTile_selected .mx_EventTile_line,
                 .mx_EventTile_line {
-                    padding-inline-start: var(--ThreadView_group_spacing-start);
-
                     .mx_EventTile_content,
                     .mx_RedactedBody {
                         /* 14px: avatar width, 6px: 20px - 14px */
                         margin-inline-start: calc(14px + 6px);
                     }
+                }
+
+                &.mx_EventTile_selected .mx_EventTile_line {
+                    /* Override .mx_EventTile[data-layout="group"].mx_EventTile_info.mx_EventTile_selected
+                    .mx_EventTile_line */
+                    padding-inline-start: var(--ThreadView_group_spacing-start);
                 }
 
                 &:hover {
