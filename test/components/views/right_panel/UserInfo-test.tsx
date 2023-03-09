@@ -15,13 +15,14 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, screen, waitFor, cleanup } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, cleanup, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
 import { Room, User, MatrixClient, RoomMember, MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { Phase, VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { DeviceTrustLevel, UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
+import { defer } from "matrix-js-sdk/src/utils";
 
 import UserInfo, {
     BanToggleButton,
@@ -44,6 +45,7 @@ import * as mockVerification from "../../../../src/verification";
 import Modal from "../../../../src/Modal";
 import { E2EStatus } from "../../../../src/utils/ShieldUtils";
 import { DirectoryMember, startDmOnFirstMessage } from "../../../../src/utils/direct-messages";
+import { flushPromises } from "../../../test-utils";
 
 jest.mock("../../../../src/utils/direct-messages", () => ({
     ...jest.requireActual("../../../../src/utils/direct-messages"),
@@ -326,7 +328,7 @@ describe("<DeviceItem />", () => {
     it("with unverified user and device, displays button without a label", () => {
         renderComponent();
 
-        expect(screen.getByRole("button", { name: device.getDisplayName() })).toBeInTheDocument;
+        expect(screen.getByRole("button", { name: device.getDisplayName()! })).toBeInTheDocument;
         expect(screen.queryByText(/trusted/i)).not.toBeInTheDocument();
     });
 
@@ -341,7 +343,7 @@ describe("<DeviceItem />", () => {
         setMockDeviceTrust(true);
         renderComponent();
 
-        expect(screen.getByText(device.getDisplayName())).toBeInTheDocument();
+        expect(screen.getByText(device.getDisplayName()!)).toBeInTheDocument();
         expect(screen.queryByText(/trusted/)).not.toBeInTheDocument();
     });
 
@@ -354,7 +356,7 @@ describe("<DeviceItem />", () => {
 
         // expect to see no button in this case
         expect(screen.queryByRole("button")).not.toBeInTheDocument;
-        expect(screen.getByText(device.getDisplayName())).toBeInTheDocument();
+        expect(screen.getByText(device.getDisplayName()!)).toBeInTheDocument();
     });
 
     it("with verified user and device, displays no button and a 'Trusted' label", () => {
@@ -363,7 +365,7 @@ describe("<DeviceItem />", () => {
         renderComponent();
 
         expect(screen.queryByRole("button")).not.toBeInTheDocument;
-        expect(screen.getByText(device.getDisplayName())).toBeInTheDocument();
+        expect(screen.getByText(device.getDisplayName()!)).toBeInTheDocument();
         expect(screen.getByText("Trusted")).toBeInTheDocument();
     });
 
@@ -371,7 +373,7 @@ describe("<DeviceItem />", () => {
         mockClient.getUser.mockReturnValueOnce(null);
         renderComponent();
 
-        const button = screen.getByRole("button", { name: device.getDisplayName() });
+        const button = screen.getByRole("button", { name: device.getDisplayName()! });
         expect(button).toBeInTheDocument;
         await userEvent.click(button);
 
@@ -385,7 +387,7 @@ describe("<DeviceItem />", () => {
         mockClient.isGuest.mockReturnValueOnce(true);
         renderComponent();
 
-        const button = screen.getByRole("button", { name: device.getDisplayName() });
+        const button = screen.getByRole("button", { name: device.getDisplayName()! });
         expect(button).toBeInTheDocument;
         await userEvent.click(button);
 
@@ -608,8 +610,15 @@ describe("<UserOptionsSection />", () => {
     ])(
         "clicking »message« %s should start a DM",
         async (test: string, member: RoomMember | User, expectedAvatarUrl: string | undefined) => {
+            const deferred = defer<string>();
+            mocked(startDmOnFirstMessage).mockReturnValue(deferred.promise);
+
             renderComponent({ member });
             await userEvent.click(screen.getByText("Message"));
+
+            // Checking the attribute, because the button is a DIV and toBeDisabled() does not work.
+            expect(screen.getByText("Message")).toHaveAttribute("disabled");
+
             expect(startDmOnFirstMessage).toHaveBeenCalledWith(mockClient, [
                 new DirectoryMember({
                     user_id: member.userId,
@@ -617,6 +626,14 @@ describe("<UserOptionsSection />", () => {
                     avatar_url: expectedAvatarUrl,
                 }),
             ]);
+
+            await act(async () => {
+                deferred.resolve("!dm:example.com");
+                await flushPromises();
+            });
+
+            // Checking the attribute, because the button is a DIV and toBeDisabled() does not work.
+            expect(screen.getByText("Message")).not.toHaveAttribute("disabled");
         },
     );
 });

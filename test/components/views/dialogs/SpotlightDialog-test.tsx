@@ -198,11 +198,17 @@ describe("Spotlight Dialog", () => {
 
     describe("when MSC3946 dynamic room predecessors is enabled", () => {
         beforeEach(() => {
-            SettingsStore.setValue("feature_dynamic_room_predecessors", null, SettingLevel.DEVICE, true);
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((settingName, roomId, excludeDefault) => {
+                if (settingName === "feature_dynamic_room_predecessors") {
+                    return true;
+                } else {
+                    return []; // SpotlightSearch.recentSearches
+                }
+            });
         });
 
         afterEach(() => {
-            SettingsStore.setValue("feature_dynamic_room_predecessors", null, SettingLevel.DEVICE, null);
+            jest.restoreAllMocks();
         });
 
         it("should call getVisibleRooms with MSC3946 dynamic room predecessors", async () => {
@@ -412,9 +418,9 @@ describe("Spotlight Dialog", () => {
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
 
-            expect(screen.getByText(potatoRoom.name)).toBeInTheDocument();
-            expect(screen.queryByText(nsfwTopicRoom.name)).not.toBeInTheDocument();
-            expect(screen.queryByText(nsfwTopicRoom.name)).not.toBeInTheDocument();
+            expect(screen.getByText(potatoRoom.name!)).toBeInTheDocument();
+            expect(screen.queryByText(nsfwTopicRoom.name!)).not.toBeInTheDocument();
+            expect(screen.queryByText(nsfwTopicRoom.name!)).not.toBeInTheDocument();
         });
 
         it("displays rooms with nsfw keywords in results when showNsfwPublicRooms is truthy", async () => {
@@ -425,9 +431,9 @@ describe("Spotlight Dialog", () => {
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
 
-            expect(screen.getByText(nsfwTopicRoom.name)).toBeInTheDocument();
-            expect(screen.getByText(nsfwNameRoom.name)).toBeInTheDocument();
-            expect(screen.getByText(potatoRoom.name)).toBeInTheDocument();
+            expect(screen.getByText(nsfwTopicRoom.name!)).toBeInTheDocument();
+            expect(screen.getByText(nsfwNameRoom.name!)).toBeInTheDocument();
+            expect(screen.getByText(potatoRoom.name!)).toBeInTheDocument();
         });
     });
 });
