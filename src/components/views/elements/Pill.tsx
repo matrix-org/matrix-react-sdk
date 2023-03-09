@@ -60,7 +60,7 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
         url,
     });
 
-    if (!type) {
+    if (!type || !text) {
         return null;
     }
 
@@ -81,39 +81,27 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
     };
 
     const tip = hover && resourceId ? <Tooltip label={resourceId} alignment={Alignment.Right} /> : null;
-    let content: ReactElement | null = null;
+    let avatar: ReactElement | null = null;
 
     switch (type) {
         case PillType.AtRoomMention:
         case PillType.RoomMention:
-            {
-                const avatar = targetRoom ? (
-                    <RoomAvatar room={targetRoom} width={16} height={16} aria-hidden="true" />
-                ) : null;
-                content = (
-                    <>
-                        {shouldShowPillAvatar && avatar}
-                        <span className="mx_Pill_linkText">{text}</span>
-                    </>
-                );
-            }
+        case "space":
+            avatar = targetRoom ? <RoomAvatar room={targetRoom} width={16} height={16} aria-hidden="true" /> : null;
             break;
         case PillType.UserMention:
-            {
-                const avatar = <MemberAvatar member={member} width={16} height={16} aria-hidden="true" hideTitle />;
-                content = (
-                    <>
-                        {shouldShowPillAvatar && avatar}
-                        <span className="mx_Pill_linkText">{text}</span>
-                    </>
-                );
-            }
+            avatar = <MemberAvatar member={member} width={16} height={16} aria-hidden="true" hideTitle />;
             break;
+        default:
+            return null;
     }
 
-    if (!content) {
-        return null;
-    }
+    const content = (
+        <>
+            {shouldShowPillAvatar && avatar}
+            <span className="mx_Pill_linkText">{text}</span>
+        </>
+    );
 
     return (
         <bdi>

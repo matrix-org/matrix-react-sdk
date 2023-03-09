@@ -76,7 +76,7 @@ interface HookResult {
 export const usePermalink: (args: Args) => HookResult = ({ room, type: argType, url }): HookResult => {
     const [member, setMember] = useState<RoomMember | null>(null);
     // room of the entity this pill points to
-    const [targetRoom, setTargetRoom] = useState<Room | null>(room || null);
+    const [targetRoom, setTargetRoom] = useState<Room | null>(room ?? null);
 
     let resourceId: string | null = null;
 
