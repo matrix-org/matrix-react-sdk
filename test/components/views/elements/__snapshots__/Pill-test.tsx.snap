@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Pill> should not render a non-permalinkk 1`] = `<DocumentFragment />`;
+exports[`<Pill> should not render a non-permalink 1`] = `<DocumentFragment />`;
 
 exports[`<Pill> should not render an avatar or link when called with inMessage = false and shouldShowPillAvatar = false 1`] = `
 <DocumentFragment>

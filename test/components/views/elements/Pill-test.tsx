@@ -122,7 +122,7 @@ describe("<Pill>", () => {
         });
     });
 
-    it("should not render a non-permalinkk", () => {
+    it("should not render a non-permalink", () => {
         renderPill({
             url: "https://example.com/hello",
         });
