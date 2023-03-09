@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { forwardRef, ReactElement } from "react";
+import { forwardRef, ReactElement } from "react";
 
 import { useRovingTabIndex } from "../RovingTabIndex";
 import { FocusHandler, Ref } from "./types";

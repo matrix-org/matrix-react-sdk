@@ -24,7 +24,7 @@ import { normalize } from "matrix-js-sdk/src/utils";
 import React, {
     ChangeEvent,
     KeyboardEvent,
-    RefObject,
+    MutableRefObject,
     useCallback,
     useContext,
     useEffect,
@@ -104,7 +104,7 @@ interface IProps {
     onFinished(): void;
 }
 
-function refIsForRecentlyViewed(ref: RefObject<HTMLElement>): boolean {
+function refIsForRecentlyViewed(ref: MutableRefObject<HTMLElement | null> | null): boolean {
     return ref.current?.id?.startsWith("mx_SpotlightDialog_button_recentlyViewed_") === true;
 }
 
@@ -1076,7 +1076,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 break;
         }
 
-        let ref: RefObject<HTMLElement> | undefined;
+        let ref: MutableRefObject<HTMLElement | null> | null | undefined;
         const accessibilityAction = getKeyBindingsManager().getAccessibilityAction(ev);
         switch (accessibilityAction) {
             case KeyBindingAction.Escape:

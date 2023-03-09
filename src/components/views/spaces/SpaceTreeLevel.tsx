@@ -22,7 +22,7 @@ import React, {
     InputHTMLAttributes,
     LegacyRef,
     forwardRef,
-    RefObject,
+    MutableRefObject,
 } from "react";
 import classNames from "classnames";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
@@ -79,7 +79,7 @@ export const SpaceButton = forwardRef<HTMLElement, IButtonProps>(
             ContextMenuComponent,
             ...props
         },
-        ref: RefObject<HTMLElement>,
+        ref: MutableRefObject<HTMLElement | null> | null,
     ) => {
         const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLElement>(ref);
         const [onFocus, isActive] = useRovingTabIndex(handle);

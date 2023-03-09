@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentPropsWithoutRef, forwardRef, RefObject, useContext } from "react";
+import React, { ComponentPropsWithoutRef, forwardRef, MutableRefObject, useContext } from "react";
 import classNames from "classnames";
 
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
@@ -28,7 +28,7 @@ interface ICollapsibleButtonProps extends ComponentPropsWithoutRef<typeof MenuIt
 }
 
 export const CollapsibleButton = forwardRef<HTMLElement, ICollapsibleButtonProps>(
-    ({ title, children, className, iconClassName, ...props }, ref: RefObject<HTMLElement>) => {
+    ({ title, children, className, iconClassName, ...props }, ref: MutableRefObject<HTMLElement | null> | null) => {
         const inOverflowMenu = !!useContext(OverflowMenuContext);
         if (inOverflowMenu) {
             return <IconizedContextMenuOption {...props} iconClassName={iconClassName} label={title} ref={ref} />;
