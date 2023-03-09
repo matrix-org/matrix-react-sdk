@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from "react";
+import React, { forwardRef, ReactNode } from "react";
 import classNames from "classnames";
 
 import ContextMenu, {
@@ -116,29 +116,24 @@ export const IconizedContextMenuCheckbox: React.FC<ICheckboxProps> = ({
     );
 };
 
-export const IconizedContextMenuOption: React.FC<IOptionProps> = ({
-    label,
-    className,
-    iconClassName,
-    children,
-    isDestructive,
-    ...props
-}) => {
-    return (
-        <MenuItem
-            {...props}
-            className={classNames(className, {
-                mx_IconizedContextMenu_item: true,
-                mx_IconizedContextMenu_itemDestructive: isDestructive,
-            })}
-            label={label}
-        >
-            {iconClassName && <span className={classNames("mx_IconizedContextMenu_icon", iconClassName)} />}
-            <span className="mx_IconizedContextMenu_label">{label}</span>
-            {children}
-        </MenuItem>
-    );
-};
+export const IconizedContextMenuOption = forwardRef<HTMLElement, IOptionProps>(
+    ({ label, className, iconClassName, children, isDestructive, ...props }) => {
+        return (
+            <MenuItem
+                {...props}
+                className={classNames(className, {
+                    mx_IconizedContextMenu_item: true,
+                    mx_IconizedContextMenu_itemDestructive: isDestructive,
+                })}
+                label={label}
+            >
+                {iconClassName && <span className={classNames("mx_IconizedContextMenu_icon", iconClassName)} />}
+                <span className="mx_IconizedContextMenu_label">{label}</span>
+                {children}
+            </MenuItem>
+        );
+    },
+);
 
 export const IconizedContextMenuOptionList: React.FC<IOptionListProps> = ({
     first,

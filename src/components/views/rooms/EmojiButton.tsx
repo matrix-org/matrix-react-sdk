@@ -64,7 +64,7 @@ export function EmojiButton({ addEmoji, menuPosition, className }: IEmojiButtonP
                 iconClassName="mx_EmojiButton_icon"
                 onClick={openMenu}
                 title={_t("Emoji")}
-                inputRef={button}
+                ref={button}
             />
 
             {contextMenu}

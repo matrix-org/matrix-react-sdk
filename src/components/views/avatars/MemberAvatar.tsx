@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode, useContext } from "react";
+import React, { forwardRef, ReactNode, useContext } from "react";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
 
@@ -45,72 +45,74 @@ interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | 
     children?: ReactNode;
 }
 
-export default function MemberAvatar({
-    width,
-    height,
-    resizeMethod = "crop",
-    viewUserOnClick,
-    forceHistorical,
-    fallbackUserId,
-    hideTitle,
-    member: propsMember,
-    ...props
-}: IProps): JSX.Element {
-    const card = useContext(CardContext);
+const MemberAvatar = forwardRef<HTMLImageElement & HTMLSpanElement, IProps>(
+    (
+        {
+            width,
+            height,
+            resizeMethod = "crop",
+            viewUserOnClick,
+            forceHistorical,
+            fallbackUserId,
+            hideTitle,
+            member: propsMember,
+            ...props
+        },
+        ref,
+    ) => {
+        const card = useContext(CardContext);
 
-    const member = useRoomMemberProfile({
-        userId: propsMember?.userId,
-        member: propsMember,
-        forceHistorical: forceHistorical,
-    });
+        const member = useRoomMemberProfile({
+            userId: propsMember?.userId,
+            member: propsMember,
+            forceHistorical: forceHistorical,
+        });
 
-    const name = member?.name ?? fallbackUserId;
-    let title: string | undefined = props.title;
-    let imageUrl: string | null | undefined;
-    if (member?.name) {
-        if (member.getMxcAvatarUrl()) {
-            imageUrl = mediaFromMxc(member.getMxcAvatarUrl() ?? "").getThumbnailOfSourceHttp(
-                width,
-                height,
-                resizeMethod,
-            );
-        }
-
-        if (!title) {
-            title =
-                UserIdentifierCustomisations.getDisplayUserIdentifier(member?.userId ?? "", {
-                    roomId: member?.roomId ?? "",
-                }) ?? fallbackUserId;
-        }
-    }
-
-    return (
-        <BaseAvatar
-            {...props}
-            width={width}
-            height={height}
-            resizeMethod={resizeMethod}
-            name={name ?? ""}
-            title={hideTitle ? undefined : title}
-            idName={member?.userId ?? fallbackUserId}
-            url={imageUrl}
-            onClick={
-                viewUserOnClick
-                    ? () => {
-                          dis.dispatch({
-                              action: Action.ViewUser,
-                              member: propsMember,
-                              push: card.isCard,
-                          });
-                      }
-                    : props.onClick
+        const name = member?.name ?? fallbackUserId;
+        let title: string | undefined = props.title;
+        let imageUrl: string | null | undefined;
+        if (member?.name) {
+            if (member.getMxcAvatarUrl()) {
+                imageUrl = mediaFromMxc(member.getMxcAvatarUrl() ?? "").getThumbnailOfSourceHttp(
+                    width,
+                    height,
+                    resizeMethod,
+                );
             }
-        />
-    );
-}
 
-export class LegacyMemberAvatar extends React.Component<IProps> {
-    public render(): React.ReactNode {
-        return <MemberAvatar {...this.props}>{this.props.children}</MemberAvatar>;
-    }
-}
+            if (!title) {
+                title =
+                    UserIdentifierCustomisations.getDisplayUserIdentifier(member?.userId ?? "", {
+                        roomId: member?.roomId ?? "",
+                    }) ?? fallbackUserId;
+            }
+        }
+
+        return (
+            <BaseAvatar
+                {...props}
+                width={width}
+                height={height}
+                resizeMethod={resizeMethod}
+                name={name ?? ""}
+                title={hideTitle ? undefined : title}
+                idName={member?.userId ?? fallbackUserId}
+                url={imageUrl}
+                onClick={
+                    viewUserOnClick
+                        ? () => {
+                              dis.dispatch({
+                                  action: Action.ViewUser,
+                                  member: propsMember,
+                                  push: card.isCard,
+                              });
+                          }
+                        : props.onClick
+                }
+                ref={ref}
+            />
+        );
+    },
+);
+
+export default MemberAvatar;

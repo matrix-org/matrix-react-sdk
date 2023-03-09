@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { forwardRef, useCallback, useContext, useEffect, useState } from "react";
 import classNames from "classnames";
 import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
 import { ClientEvent } from "matrix-js-sdk/src/client";
@@ -43,7 +43,6 @@ interface IProps {
     resizeMethod?: ResizeMethod;
     defaultToInitialLetter?: boolean; // true to add default url
     onClick?: React.MouseEventHandler;
-    inputRef?: React.RefObject<HTMLImageElement & HTMLSpanElement>;
     className?: string;
     tabIndex?: number;
 }
@@ -99,7 +98,7 @@ const useImageUrl = ({ url, urls }: { url?: string | null; urls?: string[] }): [
     return [imageUrl, onError];
 };
 
-const BaseAvatar: React.FC<IProps> = (props) => {
+const BaseAvatar = forwardRef<HTMLImageElement & HTMLSpanElement, IProps>((props, ref) => {
     const {
         name,
         idName,
@@ -111,7 +110,6 @@ const BaseAvatar: React.FC<IProps> = (props) => {
         resizeMethod = "crop", // eslint-disable-line @typescript-eslint/no-unused-vars
         defaultToInitialLetter = true,
         onClick,
-        inputRef,
         className,
         ...otherProps
     } = props;
@@ -158,7 +156,7 @@ const BaseAvatar: React.FC<IProps> = (props) => {
                     element="span"
                     className={classNames("mx_BaseAvatar", className)}
                     onClick={onClick}
-                    inputRef={inputRef}
+                    inputRef={ref}
                 >
                     {textNode}
                     {imgNode}
@@ -166,12 +164,7 @@ const BaseAvatar: React.FC<IProps> = (props) => {
             );
         } else {
             return (
-                <span
-                    className={classNames("mx_BaseAvatar", className)}
-                    ref={inputRef}
-                    {...otherProps}
-                    role="presentation"
-                >
+                <span className={classNames("mx_BaseAvatar", className)} ref={ref} {...otherProps} role="presentation">
                     {textNode}
                     {imgNode}
                 </span>
@@ -193,7 +186,7 @@ const BaseAvatar: React.FC<IProps> = (props) => {
                 }}
                 title={title}
                 alt={_t("Avatar")}
-                inputRef={inputRef}
+                inputRef={ref}
                 data-testid="avatar-img"
                 {...otherProps}
             />
@@ -210,13 +203,13 @@ const BaseAvatar: React.FC<IProps> = (props) => {
                 }}
                 title={title}
                 alt=""
-                ref={inputRef}
+                ref={ref}
                 data-testid="avatar-img"
                 {...otherProps}
             />
         );
     }
-};
+});
 
 export default BaseAvatar;
 export type BaseAvatarType = React.FC<IProps>;

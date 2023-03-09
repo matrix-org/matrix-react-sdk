@@ -62,7 +62,7 @@ type DynamicElementProps<T extends keyof JSX.IntrinsicElements> = Partial<
  *           implemented exactly like a normal onClick handler.
  */
 type IProps<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> & {
-    inputRef?: React.Ref<Element>;
+    inputRef?: React.Ref<HTMLElement>;
     element?: T;
     children?: ReactNode;
     // The kind of button, similar to how Bootstrap works.
@@ -79,7 +79,7 @@ type IProps<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> 
 };
 
 export interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
-    ref?: React.Ref<Element>;
+    ref?: React.Ref<HTMLElement>;
 }
 
 /**

@@ -14,28 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ComponentPropsWithoutRef, forwardRef, RefObject } from "react";
 
 import AccessibleButton from "../../components/views/elements/AccessibleButton";
 import { useRovingTabIndex } from "../RovingTabIndex";
-import { Ref } from "./types";
 
-interface IProps extends Omit<React.ComponentProps<typeof AccessibleButton>, "inputRef" | "tabIndex"> {
-    inputRef?: Ref;
-}
+interface IProps extends Omit<ComponentPropsWithoutRef<typeof AccessibleButton>, "inputRef" | "tabIndex"> {}
 
 // Wrapper to allow use of useRovingTabIndex for simple AccessibleButtons outside of React Functional Components.
-export const RovingAccessibleButton: React.FC<IProps> = ({ inputRef, onFocus, ...props }) => {
-    const [onFocusInternal, isActive, ref] = useRovingTabIndex(inputRef);
-    return (
-        <AccessibleButton
-            {...props}
-            onFocus={(event: React.FocusEvent) => {
-                onFocusInternal();
-                onFocus?.(event);
-            }}
-            inputRef={ref}
-            tabIndex={isActive ? 0 : -1}
-        />
-    );
-};
+export const RovingAccessibleButton = forwardRef<HTMLElement, IProps>(
+    ({ onFocus, ...props }, ref: RefObject<HTMLElement>) => {
+        const [onFocusInternal, isActive] = useRovingTabIndex(ref);
+        return (
+            <AccessibleButton
+                {...props}
+                onFocus={(event: React.FocusEvent) => {
+                    onFocusInternal();
+                    onFocus?.(event);
+                }}
+                inputRef={ref}
+                tabIndex={isActive ? 0 : -1}
+            />
+        );
+    },
+);

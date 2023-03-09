@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { forwardRef } from "react";
 
 import { RovingAccessibleButton, RovingAccessibleTooltipButton } from "../RovingTabIndex";
 
@@ -26,20 +26,20 @@ interface IProps extends React.ComponentProps<typeof RovingAccessibleButton> {
 }
 
 // Semantic component for representing a role=menuitem
-export const MenuItem: React.FC<IProps> = ({ children, label, tooltip, ...props }) => {
+export const MenuItem = forwardRef<HTMLElement, IProps>(({ children, label, tooltip, ...props }, ref) => {
     const ariaLabel = props["aria-label"] || label;
 
     if (tooltip) {
         return (
-            <RovingAccessibleTooltipButton {...props} role="menuitem" aria-label={ariaLabel} title={tooltip}>
+            <RovingAccessibleTooltipButton {...props} role="menuitem" aria-label={ariaLabel} title={tooltip} ref={ref}>
                 {children}
             </RovingAccessibleTooltipButton>
         );
     }
 
     return (
-        <RovingAccessibleButton {...props} role="menuitem" aria-label={ariaLabel}>
+        <RovingAccessibleButton {...props} role="menuitem" aria-label={ariaLabel} ref={ref}>
             {children}
         </RovingAccessibleButton>
     );
-};
+});

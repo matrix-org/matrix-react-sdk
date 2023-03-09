@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import React, { ComponentProps, ReactNode } from "react";
+import React, { ComponentProps, forwardRef, ReactNode, RefObject } from "react";
 
 import { RovingAccessibleButton } from "../../../../accessibility/roving/RovingAccessibleButton";
 import { useRovingTabIndex } from "../../../../accessibility/RovingTabIndex";
@@ -25,25 +25,27 @@ interface OptionProps extends ComponentProps<typeof RovingAccessibleButton> {
     endAdornment?: ReactNode;
 }
 
-export const Option: React.FC<OptionProps> = ({ inputRef, children, endAdornment, className, ...props }) => {
-    const [onFocus, isActive, ref] = useRovingTabIndex(inputRef);
-    return (
-        <AccessibleButton
-            {...props}
-            className={classNames(className, "mx_SpotlightDialog_option")}
-            onFocus={onFocus}
-            inputRef={ref}
-            tabIndex={-1}
-            aria-selected={isActive}
-            role="option"
-        >
-            {children}
-            <div className="mx_SpotlightDialog_option--endAdornment">
-                <kbd className="mx_SpotlightDialog_enterPrompt" aria-hidden>
-                    ↵
-                </kbd>
-                {endAdornment}
-            </div>
-        </AccessibleButton>
-    );
-};
+export const Option = forwardRef<HTMLElement, OptionProps>(
+    ({ children, endAdornment, className, ...props }, ref: RefObject<HTMLElement>) => {
+        const [onFocus, isActive] = useRovingTabIndex(ref);
+        return (
+            <AccessibleButton
+                {...props}
+                className={classNames(className, "mx_SpotlightDialog_option")}
+                onFocus={onFocus}
+                inputRef={ref}
+                tabIndex={-1}
+                aria-selected={isActive}
+                role="option"
+            >
+                {children}
+                <div className="mx_SpotlightDialog_option--endAdornment">
+                    <kbd className="mx_SpotlightDialog_enterPrompt" aria-hidden>
+                        ↵
+                    </kbd>
+                    {endAdornment}
+                </div>
+            </AccessibleButton>
+        );
+    },
+);

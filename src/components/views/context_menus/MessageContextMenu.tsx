@@ -646,7 +646,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                     iconClassName="mx_MessageContextMenu_iconReact"
                     label={_t("React")}
                     onClick={this.onReactClick}
-                    inputRef={this.reactButtonRef}
+                    ref={this.reactButtonRef}
                 />
             );
         }

@@ -15,27 +15,29 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import React, { ComponentProps, ReactNode } from "react";
+import React, { ComponentPropsWithoutRef, forwardRef, ReactNode, RefObject } from "react";
 
 import { RovingAccessibleTooltipButton } from "../../../../accessibility/roving/RovingAccessibleTooltipButton";
 import { useRovingTabIndex } from "../../../../accessibility/RovingTabIndex";
 import AccessibleTooltipButton from "../../elements/AccessibleTooltipButton";
 
-interface TooltipOptionProps extends ComponentProps<typeof RovingAccessibleTooltipButton> {
+interface TooltipOptionProps extends ComponentPropsWithoutRef<typeof RovingAccessibleTooltipButton> {
     endAdornment?: ReactNode;
 }
 
-export const TooltipOption: React.FC<TooltipOptionProps> = ({ inputRef, className, ...props }) => {
-    const [onFocus, isActive, ref] = useRovingTabIndex(inputRef);
-    return (
-        <AccessibleTooltipButton
-            {...props}
-            className={classNames(className, "mx_SpotlightDialog_option")}
-            onFocus={onFocus}
-            inputRef={ref}
-            tabIndex={-1}
-            aria-selected={isActive}
-            role="option"
-        />
-    );
-};
+export const TooltipOption = forwardRef<HTMLElement, TooltipOptionProps>(
+    ({ className, ...props }, ref: RefObject<HTMLElement>) => {
+        const [onFocus, isActive] = useRovingTabIndex(ref);
+        return (
+            <AccessibleTooltipButton
+                {...props}
+                className={classNames(className, "mx_SpotlightDialog_option")}
+                onFocus={onFocus}
+                inputRef={ref}
+                tabIndex={-1}
+                aria-selected={isActive}
+                role="option"
+            />
+        );
+    },
+);
