@@ -189,6 +189,19 @@ describe("Threads", () => {
             percyCSS,
         });
 
+        cy.get(".mx_ThreadView .mx_GenericEventListSummary[data-layout=group]").within(() => {
+            cy.get(".mx_EventTile_info.mx_EventTile_last .mx_EventTile_line")
+                // Select the hidden event
+                .rightclick();
+
+            // Ensure the same CSS style for spacing is applied to the selected hidden event
+            cy.get(".mx_EventTile_info.mx_EventTile_selected.mx_EventTile_last .mx_EventTile_line").should(
+                "have.css",
+                "padding-inline-start",
+                ThreadViewGroupSpacingStart,
+            );
+        });
+
         // Enable bubble layout
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
 
