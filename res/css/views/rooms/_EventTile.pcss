@@ -1065,7 +1065,7 @@ $left-gutter: 64px;
 
             &[data-layout="irc"],
             &[data-layout="group"] {
-                padding-block-start: 0; /* Override .mx_ThreadView .mx_EventTile[data-layout="group"] */
+                padding-block: 0; /* Override .mx_ThreadView .mx_EventTile[data-layout="group"] */
 
                 .mx_EventTile_avatar {
                     position: absolute;
@@ -1108,6 +1108,10 @@ $left-gutter: 64px;
             }
 
             &[data-layout="bubble"] {
+                /* Override
+                .mx_GenericEventListSummary[data-layout="bubble"][data-expanded="true"] .mx_EventTile_info */
+                padding-block: 0;
+
                 /* Same declaration as the main timeline */
                 margin-inline: var(--EventTile_bubble-margin-inline-start) 0;
 
@@ -1118,6 +1122,9 @@ $left-gutter: 64px;
                 }
 
                 .mx_EventTile_line {
+                    /* Apply the same declaration as mx_EventTile_line on IRC and modern layouts */
+                    padding-block: var(--BaseCard_EventTile_line-padding-block);
+
                     /* Not available on the actual UI anyway as the hidden event expand button is hidden above */
                     .mx_ViewSourceEvent {
                         flex: auto; /* Fill the line */
