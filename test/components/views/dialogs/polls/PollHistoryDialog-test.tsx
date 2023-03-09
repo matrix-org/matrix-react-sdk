@@ -17,8 +17,9 @@ limitations under the License.
 import React from "react";
 import { fireEvent, render } from "@testing-library/react";
 import { Filter } from "matrix-js-sdk/src/filter";
-import { EventTimeline, Room } from "matrix-js-sdk/src/matrix";
+import { EventTimeline, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
+import { mocked, MockedObject } from "jest-mock";
 
 import { PollHistoryDialog } from "../../../../../src/components/views/dialogs/polls/PollHistoryDialog";
 import {
@@ -40,15 +41,8 @@ describe("<PollHistoryDialog />", () => {
     const now = 1647270879403;
     const userId = "@alice:domain.org";
     const roomId = "!room:domain.org";
-    const mockClient = getMockClientWithEventEmitter({
-        ...mockClientMethodsUser(userId),
-        getRoom: jest.fn(),
-        relations: jest.fn(),
-        decryptEventIfNeeded: jest.fn(),
-        getOrCreateFilter: jest.fn(),
-        paginateEventTimeline: jest.fn(),
-    });
-    let room = new Room(roomId, mockClient, userId);
+    let mockClient: MockedObject<MatrixClient>;
+    let room: Room;
 
     const expectedFilter = new Filter(userId);
     expectedFilter.setDefinition({
@@ -62,9 +56,9 @@ describe("<PollHistoryDialog />", () => {
     const defaultProps = {
         room,
         matrixClient: mockClient,
-        permalinkCreator: new RoomPermalinkCreator(room),
+        permalinkCreator: null,
         onFinished: jest.fn(),
-    };
+    } as React.ComponentProps<typeof PollHistoryDialog>;
     const getComponent = () => render(<PollHistoryDialog {...defaultProps} />);
 
     beforeAll(() => {
@@ -72,14 +66,22 @@ describe("<PollHistoryDialog />", () => {
     });
 
     beforeEach(() => {
-        room = new Room(roomId, mockClient, userId);
+        defaultProps.matrixClient = mockClient = getMockClientWithEventEmitter({
+            ...mockClientMethodsUser(userId),
+            getRoom: jest.fn(),
+            relations: jest.fn(),
+            decryptEventIfNeeded: jest.fn(),
+            getOrCreateFilter: jest.fn(),
+            paginateEventTimeline: jest.fn(),
+        });
+        defaultProps.room = room = new Room(roomId, mockClient, userId);
+        defaultProps.permalinkCreator = new RoomPermalinkCreator(room);
         mockClient.getRoom.mockReturnValue(room);
-        defaultProps.room = room;
         mockClient.relations.mockResolvedValue({ events: [] });
         const timeline = room.getLiveTimeline();
         jest.spyOn(timeline, "getEvents").mockReturnValue([]);
         jest.spyOn(defaultDispatcher, "dispatch").mockClear();
-        defaultProps.onFinished.mockClear();
+        mocked(defaultProps.onFinished).mockClear();
         jest.spyOn(room, "getOrCreateFilteredTimelineSet");
         mockClient.getOrCreateFilter.mockResolvedValue(expectedFilter.filterId!);
         mockClient.paginateEventTimeline.mockReset().mockResolvedValue(false);
@@ -89,6 +91,7 @@ describe("<PollHistoryDialog />", () => {
 
     afterAll(() => {
         unmockIntlDateTimeFormat();
+        jest.restoreAllMocks();
     });
 
     it("throws when room is not found", () => {
@@ -191,11 +194,12 @@ describe("<PollHistoryDialog />", () => {
 
         jest.spyOn(liveTimeline, "getEvents").mockReset().mockReturnValueOnce([]).mockReturnValueOnce([pollStart]);
 
-        // mock three pages of timeline history
+        // mock four pages of timeline history
         jest.spyOn(liveTimeline, "getPaginationToken")
             .mockReturnValueOnce("test-pagination-token-1")
             .mockReturnValueOnce("test-pagination-token-2")
-            .mockReturnValueOnce("test-pagination-token-3");
+            .mockReturnValueOnce("test-pagination-token-3")
+            .mockReturnValueOnce("test-pagination-token-4");
 
         const { getByText } = getComponent();
         await flushPromises();

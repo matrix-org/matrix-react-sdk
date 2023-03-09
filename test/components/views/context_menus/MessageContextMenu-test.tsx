@@ -59,7 +59,7 @@ const roomId = "roomid";
 
 describe("MessageContextMenu", () => {
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
         stubClient();
     });
 

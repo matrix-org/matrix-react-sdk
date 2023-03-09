@@ -45,7 +45,7 @@ describe("WysiwygComposer", () => {
     };
 
     afterEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
     });
 
     it("Should have contentEditable at false when disabled", () => {
@@ -236,7 +236,7 @@ describe("WysiwygComposer", () => {
         };
 
         afterEach(() => {
-            jest.resetAllMocks();
+            jest.clearAllMocks();
         });
 
         const setup = async (

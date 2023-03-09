@@ -34,7 +34,7 @@ describe("createMessageContent", () => {
     });
 
     afterEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
     });
 
     it("Should create html message", async () => {

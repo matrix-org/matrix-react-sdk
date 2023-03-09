@@ -57,7 +57,7 @@ describe("message", () => {
     const spyDispatcher = jest.spyOn(defaultDispatcher, "dispatch");
 
     afterEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
     });
 
     describe("sendMessage", () => {

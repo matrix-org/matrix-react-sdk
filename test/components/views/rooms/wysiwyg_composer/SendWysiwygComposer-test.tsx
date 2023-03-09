@@ -41,7 +41,7 @@ jest.mock("../../../../../src/components/views/rooms/EmojiButton", () => ({
 
 describe("SendWysiwygComposer", () => {
     afterEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
     });
 
     const { defaultRoomContext, mockClient } = createMocks();
@@ -108,7 +108,7 @@ describe("SendWysiwygComposer", () => {
         "Should focus when receiving an Action.FocusSendMessageComposer action",
         ({ isRichTextEnabled }) => {
             afterEach(() => {
-                jest.resetAllMocks();
+                jest.clearAllMocks();
             });
 
             it("Should focus when receiving an Action.FocusSendMessageComposer action", async () => {
@@ -196,7 +196,7 @@ describe("SendWysiwygComposer", () => {
         "Placeholder when %s",
         ({ isRichTextEnabled }) => {
             afterEach(() => {
-                jest.resetAllMocks();
+                jest.clearAllMocks();
             });
 
             it("Should not has placeholder", async () => {
@@ -260,7 +260,7 @@ describe("SendWysiwygComposer", () => {
             });
 
             afterEach(() => {
-                jest.resetAllMocks();
+                jest.clearAllMocks();
             });
 
             it("Should add an emoji in an empty composer", async () => {

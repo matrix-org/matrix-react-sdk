@@ -72,12 +72,16 @@ describe("UserOnboardingPage", () => {
         });
 
         describe("and there is an explicit home page configured", () => {
+            let spy: jest.SpyInstance;
             beforeEach(() => {
-                jest.spyOn(SdkConfig, "get").mockReturnValue({
+                spy = jest.spyOn(SdkConfig, "get").mockReturnValue({
                     embedded_pages: {
                         home_url: "https://example.com/home",
                     },
                 });
+            });
+            afterEach(() => {
+                spy.mockRestore();
             });
 
             it("should render the configured page", async () => {

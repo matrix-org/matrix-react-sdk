@@ -40,7 +40,7 @@ describe("PreferencesUserSettingsTab", () => {
         });
 
         afterEach(() => {
-            jest.resetAllMocks();
+            jest.clearAllMocks();
         });
 
         const getToggle = () => renderTab().getByRole("switch", { name: "Send read receipts" });

@@ -50,7 +50,7 @@ describe("theme", () => {
         });
 
         afterEach(() => {
-            jest.clearAllMocks();
+            jest.resetAllMocks();
             jest.useRealTimers();
         });
 

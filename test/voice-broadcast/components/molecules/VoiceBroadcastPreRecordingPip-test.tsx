@@ -91,7 +91,7 @@ describe("VoiceBroadcastPreRecordingPip", () => {
     });
 
     afterAll(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
     });
 
     describe("when rendered", () => {

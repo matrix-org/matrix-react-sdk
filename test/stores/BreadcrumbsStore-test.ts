@@ -28,7 +28,7 @@ describe("BreadcrumbsStore", () => {
     const client: MatrixClient = createTestClient();
 
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
         store = BreadcrumbsStore.instance;
         setupAsyncStoreWithClient(store, client);
         jest.spyOn(SettingsStore, "setValue").mockImplementation(() => Promise.resolve());

@@ -73,7 +73,7 @@ const classes = {
 
 describe("FormattingButtons", () => {
     afterEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
     });
 
     it("Each button should not have active class when enabled", () => {

@@ -46,7 +46,7 @@ describe("AskInviteaAnywayDialog", () => {
     }
 
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
     });
 
     it("remembers to not warn again", async () => {

@@ -77,7 +77,7 @@ describe("MultiInviter", () => {
     let inviter: MultiInviter;
 
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
 
         TestUtilsMatrix.stubClient();
         client = MatrixClientPeg.get() as jest.Mocked<MatrixClient>;

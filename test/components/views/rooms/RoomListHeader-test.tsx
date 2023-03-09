@@ -104,7 +104,7 @@ describe("RoomListHeader", () => {
     let client: MatrixClient;
 
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
 
         const dmRoomMap = {
             getUserIdForRoomId: jest.fn(),

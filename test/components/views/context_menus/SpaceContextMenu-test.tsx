@@ -84,7 +84,7 @@ describe("<SpaceContextMenu />", () => {
         );
 
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
         mockClient.getUserId.mockReturnValue(userId);
     });
 

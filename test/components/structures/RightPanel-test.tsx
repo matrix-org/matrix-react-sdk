@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from "react";
-// eslint-disable-next-line deprecate/import
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { jest } from "@jest/globals";
@@ -66,7 +65,7 @@ describe("RightPanel", () => {
         await roomChanged;
 
         dis.fire(Action.OnLoggedOut, true); // Shut down the stores
-        jest.clearAllMocks();
+        jest.restoreAllMocks();
     });
 
     const spinUpStores = async () => {

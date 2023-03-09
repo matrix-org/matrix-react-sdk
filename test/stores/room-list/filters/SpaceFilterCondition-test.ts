@@ -55,7 +55,7 @@ describe("SpaceFilterCondition", () => {
             settings[settingName]?.[space] || false;
 
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
         SettingsStoreMock.getValue.mockClear().mockImplementation(makeMockGetValue());
         SpaceStoreInstanceMock.getSpaceFilteredUserIds.mockReturnValue(new Set([]));
         SpaceStoreInstanceMock.isRoomInSpace.mockReturnValue(true);

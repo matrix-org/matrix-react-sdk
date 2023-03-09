@@ -349,7 +349,7 @@ describe("Notifier", () => {
         });
 
         afterEach(() => {
-            jest.resetAllMocks();
+            jest.clearAllMocks();
         });
 
         const callOnEvent = (type?: string) => {

@@ -35,7 +35,7 @@ import { createMocks } from "./utils";
 
 describe("EditWysiwygComposer", () => {
     afterEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
     });
 
     const { editorStateTransfer, defaultRoomContext, mockClient, mockEvent } = createMocks();

@@ -30,7 +30,7 @@ describe("EventTileThreadToolbar", () => {
     }
 
     afterEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
     });
 
     it("renders", () => {

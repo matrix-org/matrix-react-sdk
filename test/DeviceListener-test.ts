@@ -93,6 +93,7 @@ describe("DeviceListener", () => {
             downloadKeys: jest.fn(),
             isRoomEncrypted: jest.fn(),
             getClientWellKnown: jest.fn(),
+            getDevice: jest.fn().mockReturnValue({}),
             getDeviceId: jest.fn().mockReturnValue(deviceId),
             setAccountData: jest.fn(),
             getAccountData: jest.fn(),

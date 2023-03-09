@@ -81,7 +81,7 @@ describe("getDeviceClientInformation()", () => {
     });
 
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
     });
 
     it("returns an empty object when no event exists for the device", () => {

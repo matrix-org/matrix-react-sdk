@@ -67,7 +67,7 @@ describe("VoiceRecording", () => {
     });
 
     afterEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
     });
 
     describe("when starting a recording", () => {

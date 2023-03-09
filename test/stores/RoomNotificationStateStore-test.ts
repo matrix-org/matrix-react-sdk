@@ -34,7 +34,7 @@ describe("RoomNotificationStateStore", function () {
     beforeEach(() => {
         client = createTestClient();
         dis = new MatrixDispatcher();
-        jest.resetAllMocks();
+        jest.clearAllMocks();
         store = RoomNotificationStateStore.testInstance(dis);
         store.emit = jest.fn();
         setupAsyncStoreWithClient(store, client);

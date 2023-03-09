@@ -75,7 +75,7 @@ describe("<LoginWithQR />", () => {
 
     beforeEach(() => {
         mockedFlow.mockReset();
-        jest.resetAllMocks();
+        jest.clearAllMocks();
         jest.spyOn(MSC3906Rendezvous.prototype, "generateCode").mockResolvedValue();
         // @ts-ignore
         // workaround for https://github.com/facebook/jest/issues/9675
