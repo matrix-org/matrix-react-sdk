@@ -1044,11 +1044,6 @@ $left-gutter: 64px;
                 height: 14px; /* avatar img size */
             }
 
-            .mx_ViewSourceEvent_toggle {
-                display: none; /* hide the hidden event expand button, not enough
-                space, view source can still be used */
-            }
-
             &.mx_EventTile_selected .mx_EventTile_line,
             .mx_EventTile_line {
                 $line-height: $font-12px;
@@ -1063,6 +1058,11 @@ $left-gutter: 64px;
                 }
             }
 
+            .mx_ViewSourceEvent_toggle {
+                display: none; /* hide the hidden event expand button, not enough
+                space, view source can still be used */
+            }
+
             &[data-layout="irc"],
             &[data-layout="group"] {
                 display: block; /* "flex" is applied to bubble layout */
@@ -1073,14 +1073,6 @@ $left-gutter: 64px;
                     top: 1.5px; /* Align with hidden event content */
                     left: calc($MessageTimestamp_width + 14px - 4px); /* 14px: avatar width, 4px: align with text */
                     z-index: 9; /* position above the hover styling */
-                }
-
-                .mx_MessageTimestamp {
-                    top: 2px; /* Align with avatar */
-                }
-
-                .mx_ReadReceiptGroup {
-                    inset-block-start: calc(-$font-22px); /* Align with hidden event content */
                 }
 
                 &.mx_EventTile_selected .mx_EventTile_line,
@@ -1097,6 +1089,14 @@ $left-gutter: 64px;
                     /* Override .mx_EventTile[data-layout="group"].mx_EventTile_info.mx_EventTile_selected
                     .mx_EventTile_line */
                     padding-inline-start: var(--ThreadView_group_spacing-start);
+                }
+
+                .mx_MessageTimestamp {
+                    top: 2px; /* Align with avatar */
+                }
+
+                .mx_ReadReceiptGroup {
+                    inset-block-start: calc(-$font-22px); /* Align with hidden event content */
                 }
 
                 &:hover {
