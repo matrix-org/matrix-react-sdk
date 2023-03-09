@@ -170,16 +170,12 @@ limitations under the License.
         flex-basis: 48px; /* 12 (padding on message list) + 36 (padding on event lines) */
     }
 
-    .mx_GenericEventListSummary_unstyledList, /* RR next to a message on the event list summary */
+    .mx_GenericEventListSummary_unstyledList,
     .mx_RoomView_MessageList {
-        /* RR next to a message on the messsge list */
         .mx_EventTile[data-layout="bubble"] {
+            /* RR next to a message on the event list summary and the messsge list */
             .mx_ReadReceiptGroup {
-                /* 6px: scroll bar width (magic number) */
-                /* stylelint-disable-next-line declaration-colon-space-after */
-                inset-inline-end: calc(
-                    -1 * var(--ReadReceiptGroup_EventBubbleTile-spacing-end) + $container-gap-width + 6px
-                );
+                inset-inline-end: var(--BaseCard_EventTile_bubble_RR-inset-inline-end);
             }
 
             &.mx_EventTile_info {

@@ -16,9 +16,15 @@ limitations under the License.
 
 .mx_BaseCard {
     --BaseCard_padding-inline: $spacing-8;
+    --BaseCard_header-button-size: 24px;
     --BaseCard_EventTile_line-padding-block: 2px;
     --BaseCard_EventTile-spacing-inline: 36px; /* TODO: Use a spacing variable */
-    --BaseCard_header-button-size: 24px;
+
+    /* Moving the read receipts group inside BaseCard */
+    /* stylelint-disable-next-line declaration-colon-space-after */
+    --BaseCard_EventTile_bubble_RR-inset-inline-end: calc(
+        -1 * var(--ReadReceiptGroup_EventBubbleTile-spacing-end) + $container-gap-width + var(--BaseCard_padding-inline)
+    );
 
     padding: 0 var(--BaseCard_padding-inline);
     overflow: hidden;

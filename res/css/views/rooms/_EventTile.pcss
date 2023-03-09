@@ -1230,12 +1230,7 @@ $left-gutter: 64px;
             }
 
             .mx_ReadReceiptGroup {
-                /* Moving inside ThreadView, creating 8px space between the right edge of the ThreadPanel */
-                /* stylelint-disable-next-line declaration-colon-space-after */
-                inset-inline-end: calc(
-                    -1 * calc(var(--ReadReceiptGroup_EventBubbleTile-spacing-end) - $container-gap-width -
-                                var(--BaseCard_padding-inline))
-                );
+                inset-inline-end: var(--BaseCard_EventTile_bubble_RR-inset-inline-end);
             }
 
             &[data-self="true"] {
