@@ -66,7 +66,7 @@ describe("RightPanel", () => {
         await roomChanged;
 
         dis.fire(Action.OnLoggedOut, true); // Shut down the stores
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     const spinUpStores = async () => {

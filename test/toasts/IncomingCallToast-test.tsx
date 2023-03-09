@@ -95,7 +95,7 @@ describe("IncomingCallEvent", () => {
         call.destroy();
         WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
         await Promise.all([CallStore.instance, WidgetMessagingStore.instance].map(resetAsyncStoreWithClient));
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     const renderToast = () => {

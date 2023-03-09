@@ -26,7 +26,7 @@ jest.useFakeTimers();
 describe("MatrixClientPeg", () => {
     afterEach(() => {
         localStorage.clear();
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     it("setJustRegisteredUserId", () => {

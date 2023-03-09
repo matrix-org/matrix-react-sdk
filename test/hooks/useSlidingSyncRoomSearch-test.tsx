@@ -26,7 +26,7 @@ import { SlidingSyncManager } from "../../src/SlidingSyncManager";
 
 describe("useSlidingSyncRoomSearch", () => {
     afterAll(() => {
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     it("should display rooms when searching", async () => {

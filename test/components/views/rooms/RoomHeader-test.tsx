@@ -119,7 +119,7 @@ describe("RoomHeader", () => {
     afterEach(async () => {
         await Promise.all([CallStore.instance, WidgetStore.instance].map(resetAsyncStoreWithClient));
         client.reEmitter.stopReEmitting(room, [RoomStateEvent.Events]);
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
         SdkConfig.put({});
     });
 

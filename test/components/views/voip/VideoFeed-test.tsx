@@ -44,7 +44,7 @@ describe("VideoFeed", () => {
     });
 
     afterAll(() => {
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     it("Displays the room avatar when no video is available", () => {

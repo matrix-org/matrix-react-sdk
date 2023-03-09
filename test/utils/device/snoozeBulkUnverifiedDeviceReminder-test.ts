@@ -40,7 +40,7 @@ describe("snooze bulk unverified device nag", () => {
     });
 
     afterAll(() => {
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     describe("snoozeBulkUnverifiedDeviceReminder()", () => {

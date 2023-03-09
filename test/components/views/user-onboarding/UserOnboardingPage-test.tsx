@@ -53,7 +53,7 @@ describe("UserOnboardingPage", () => {
 
     afterEach(() => {
         jest.useRealTimers();
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     describe("when the user registered before the cutoff date", () => {

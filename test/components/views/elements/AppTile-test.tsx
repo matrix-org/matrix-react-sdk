@@ -315,7 +315,7 @@ describe("AppTile", () => {
         await WidgetLayoutStore.instance.onNotReady();
         // @ts-ignore
         await RightPanelStore.instance.onNotReady();
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     describe("for a pinned widget", () => {

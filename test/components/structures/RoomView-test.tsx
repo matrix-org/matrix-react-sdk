@@ -93,7 +93,7 @@ describe("RoomView", () => {
 
     afterEach(() => {
         unmockPlatformPeg();
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     const mountRoomView = async (ref?: RefObject<_RoomView>): Promise<RenderResult> => {

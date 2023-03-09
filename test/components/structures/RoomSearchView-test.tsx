@@ -57,7 +57,7 @@ describe("<RoomSearchView/>", () => {
     });
 
     afterEach(async () => {
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     it("should show a spinner before the promise resolves", async () => {

@@ -47,7 +47,7 @@ describe("PlainTextComposer", () => {
     });
 
     afterEach(() => {
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     it("Should have contentEditable at false when disabled", () => {

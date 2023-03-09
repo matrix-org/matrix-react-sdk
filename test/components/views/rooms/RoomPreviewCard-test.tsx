@@ -62,7 +62,7 @@ describe("RoomPreviewCard", () => {
 
     afterEach(() => {
         client.reEmitter.stopReEmitting(room, [RoomStateEvent.Events]);
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     const renderPreview = async (): Promise<void> => {

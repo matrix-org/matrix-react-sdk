@@ -208,7 +208,7 @@ describe("Spotlight Dialog", () => {
         });
 
         afterEach(() => {
-            jest.restoreAllMocks();
+            jest.clearAllMocks();
         });
 
         it("should call getVisibleRooms with MSC3946 dynamic room predecessors", async () => {

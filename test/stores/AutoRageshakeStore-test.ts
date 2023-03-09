@@ -58,7 +58,7 @@ describe("AutoRageshakeStore", () => {
     });
 
     afterEach(() => {
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     describe("when the initial sync completed", () => {

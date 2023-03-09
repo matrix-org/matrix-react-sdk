@@ -66,7 +66,7 @@ describe("<LeftPanelLiveShareWarning />", () => {
     afterAll(() => {
         jest.spyOn(global.Date, "now").mockRestore();
 
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
     // 12h old, 12h left
     const beacon1 = new Beacon(

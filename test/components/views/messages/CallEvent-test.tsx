@@ -98,7 +98,7 @@ describe("CallEvent", () => {
         WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
         await Promise.all([CallStore.instance, WidgetMessagingStore.instance].map(resetAsyncStoreWithClient));
         client.reEmitter.stopReEmitting(room, [RoomStateEvent.Events]);
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     const renderEvent = () => {

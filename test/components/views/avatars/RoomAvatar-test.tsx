@@ -43,7 +43,7 @@ describe("RoomAvatar", () => {
     });
 
     afterAll(() => {
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     afterEach(() => {

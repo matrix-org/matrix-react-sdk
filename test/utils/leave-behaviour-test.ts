@@ -62,7 +62,7 @@ describe("leaveRoomBehaviour", () => {
     afterEach(async () => {
         SpaceStore.instance.setActiveSpace(MetaSpace.Home);
         await resetAsyncStoreWithClient(SpaceStore.instance);
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     const viewRoom = (room: Room) =>

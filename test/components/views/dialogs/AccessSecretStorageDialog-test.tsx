@@ -61,7 +61,7 @@ describe("AccessSecretStorageDialog", () => {
 
     afterAll(() => {
         jest.useRealTimers();
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     beforeEach(() => {

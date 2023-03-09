@@ -103,7 +103,7 @@ describe("direct-messages", () => {
     });
 
     afterEach(() => {
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
         jest.useRealTimers();
     });
 

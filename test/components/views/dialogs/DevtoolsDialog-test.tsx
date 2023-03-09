@@ -46,7 +46,7 @@ describe("DevtoolsDialog", () => {
     });
 
     afterAll(() => {
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     it("renders the devtools dialog", () => {

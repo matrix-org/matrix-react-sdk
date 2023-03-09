@@ -130,7 +130,7 @@ describe("InviteDialog", () => {
     });
 
     afterAll(() => {
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     it("should label with space name", () => {
