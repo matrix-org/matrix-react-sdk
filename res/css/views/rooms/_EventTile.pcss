@@ -1054,7 +1054,9 @@ $left-gutter: 64px;
                 $line-height: $font-12px;
                 line-height: $line-height;
 
+                /* hidden event content */
                 .mx_EventTile_content,
+                /* redacted hidden event */
                 .mx_RedactedBody {
                     width: auto;
                     font-size: $line-height;
@@ -1063,8 +1065,8 @@ $left-gutter: 64px;
 
             &[data-layout="irc"],
             &[data-layout="group"] {
-                display: block;
-                padding-top: 0;
+                display: block; /* "flex" is applied to bubble layout */
+                padding-block-start: 0; /* Override .mx_ThreadView .mx_EventTile[data-layout="group"] */
 
                 .mx_EventTile_avatar {
                     position: absolute;
@@ -1085,6 +1087,7 @@ $left-gutter: 64px;
                 .mx_EventTile_line {
                     .mx_EventTile_content,
                     .mx_RedactedBody {
+                        /* Add space between avatar and hidden event content */
                         /* 14px: avatar width, 6px: 20px - 14px */
                         margin-inline-start: calc(14px + 6px);
                     }
@@ -1100,13 +1103,13 @@ $left-gutter: 64px;
                     &.mx_EventTile_verified.mx_EventTile_info .mx_EventTile_line,
                     &.mx_EventTile_unverified.mx_EventTile_info .mx_EventTile_line,
                     &.mx_EventTile_unknown.mx_EventTile_info .mx_EventTile_line {
-                        padding-inline-start: var(--ThreadView_group_spacing-start);
+                        padding-inline-start: var(--ThreadView_group_spacing-start); /* Override */
                     }
                 }
             }
 
             &[data-layout="bubble"] {
-                display: flex;
+                display: flex; /* "block" is applied to IRC and group (modern) layout */
 
                 /* Same declaration as the main timeline */
                 margin-inline: var(--EventTile_bubble-margin-inline-start) 0;
@@ -1201,7 +1204,7 @@ $left-gutter: 64px;
                 &.mx_EventTile_verified.mx_EventTile_info .mx_EventTile_line,
                 &.mx_EventTile_unverified.mx_EventTile_info .mx_EventTile_line,
                 &.mx_EventTile_unknown.mx_EventTile_info .mx_EventTile_line {
-                    padding-inline-start: 0;
+                    padding-inline-start: 0; /* TODO: investigate where this is used */
                 }
             }
         }
