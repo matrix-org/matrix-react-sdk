@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { MatrixWidgetType } from "matrix-widget-api";
+import { mocked } from "jest-mock";
 
 import type { GroupCall } from "matrix-js-sdk/src/webrtc/groupCall";
 import type { Room } from "matrix-js-sdk/src/models/room";
@@ -106,6 +107,7 @@ export class MockedCall extends Call {
  * Sets up the call store to use mocked calls.
  */
 export const useMockedCalls = () => {
+    mocked(navigator.mediaDevices.enumerateDevices).mockResolvedValue([]);
     Call.get = (room) => MockedCall.get(room);
     JitsiCall.create = async (room) => MockedCall.create(room, "1");
     ElementCall.create = async (room) => MockedCall.create(room, "1");

@@ -50,13 +50,14 @@ describe("<WidgetContextMenu />", () => {
         avatar_url: undefined,
     };
 
-    const mockClient = {
-        getUserId: jest.fn().mockReturnValue(userId),
-    } as unknown as MatrixClient;
+    let mockClient: MatrixClient;
 
     let onFinished: () => void;
 
     beforeEach(() => {
+        mockClient = {
+            getUserId: jest.fn().mockReturnValue(userId),
+        } as unknown as MatrixClient;
         onFinished = jest.fn();
         jest.spyOn(WidgetUtils, "canUserModifyWidgets").mockReturnValue(true);
     });

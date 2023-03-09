@@ -18,6 +18,7 @@ import React from "react";
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ActionState, AllActionStates, FormattingFunctions } from "@matrix-org/matrix-wysiwyg";
+import { mocked } from "jest-mock";
 
 import { FormattingButtons } from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/FormattingButtons";
 import * as LinkModal from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/LinkModal";
@@ -36,6 +37,8 @@ const mockWysiwyg = {
     indent: jest.fn(),
     unIndent: jest.fn(),
 } as unknown as FormattingFunctions;
+
+const openLinkModalSpy = jest.spyOn(LinkModal, "openLinkModal");
 
 const createActionStates = (state: ActionState): AllActionStates => {
     return Object.fromEntries(
@@ -67,26 +70,18 @@ const classes = {
 };
 
 describe("FormattingButtons", () => {
-    afterEach(() => {
-        jest.restoreAllMocks();
-    });
-
     describe.each([
-        { key: "bold", label: "Bold", mockFormatFn: () => mockWysiwyg.bold },
-        { key: "italic", label: "Italic", mockFormatFn: () => mockWysiwyg.italic },
-        { key: "underline", label: "Underline", mockFormatFn: () => mockWysiwyg.underline },
-        { key: "strikeThrough", label: "Strikethrough", mockFormatFn: () => mockWysiwyg.strikeThrough },
-        { key: "inlineCode", label: "Code", mockFormatFn: () => mockWysiwyg.inlineCode },
-        { key: "codeBlock", label: "Code block", mockFormatFn: () => mockWysiwyg.inlineCode },
-        { key: "link", label: "Link", mockFormatFn: () => jest.spyOn(LinkModal, "openLinkModal") },
-        { key: "orderedList", label: "Numbered list", mockFormatFn: () => mockWysiwyg.orderedList },
-        { key: "unorderedList", label: "Bulleted list", mockFormatFn: () => mockWysiwyg.unorderedList },
-        { key: "quote", label: "Quote", mockFormatFn: () => mockWysiwyg.quote },
+        { key: "bold", label: "Bold", mockFormatFn: mockWysiwyg.bold },
+        { key: "italic", label: "Italic", mockFormatFn: mockWysiwyg.italic },
+        { key: "underline", label: "Underline", mockFormatFn: mockWysiwyg.underline },
+        { key: "strikeThrough", label: "Strikethrough", mockFormatFn: mockWysiwyg.strikeThrough },
+        { key: "inlineCode", label: "Code", mockFormatFn: mockWysiwyg.inlineCode },
+        { key: "codeBlock", label: "Code block", mockFormatFn: mockWysiwyg.inlineCode },
+        { key: "link", label: "Link", mockFormatFn: openLinkModalSpy },
+        { key: "orderedList", label: "Numbered list", mockFormatFn: mockWysiwyg.orderedList },
+        { key: "unorderedList", label: "Bulleted list", mockFormatFn: mockWysiwyg.unorderedList },
+        { key: "quote", label: "Quote", mockFormatFn: mockWysiwyg.quote },
     ])("$label", ({ key, label, mockFormatFn }) => {
-        afterEach(() => {
-            cleanup();
-        });
-
         it("Button should not have active class when enabled", () => {
             renderComponent();
             expect(screen.getByLabelText(label)).not.toHaveClass(classes.active);
@@ -109,9 +104,9 @@ describe("FormattingButtons", () => {
         it("Should call wysiwyg function on button click", async () => {
             const { getByLabelText } = renderComponent();
 
-            const fn = mockFormatFn();
+            mocked(mockFormatFn).mockImplementation(() => {});
             getByLabelText(label).click();
-            expect(fn).toHaveBeenCalledTimes(1);
+            expect(mockFormatFn).toHaveBeenCalledTimes(1);
         });
 
         it("Button should display the tooltip on mouse over when not disabled", async () => {

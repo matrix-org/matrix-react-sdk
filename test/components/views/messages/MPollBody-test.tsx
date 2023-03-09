@@ -59,10 +59,6 @@ describe("MPollBody", () => {
         });
     });
 
-    afterEach(() => {
-        jest.restoreAllMocks();
-    });
-
     it("finds no votes if there are none", () => {
         expect(allVotes(newVoteRelations([]))).toEqual([]);
     });
@@ -898,7 +894,6 @@ async function newMPollBody(
     const result = newMPollBodyFromEvent(mxEvent, relationEvents, endEvents);
     // flush promises from loading relations
     if (waitForResponsesLoad) {
-        await flushPromises();
         await flushPromises();
     }
     return result;

@@ -43,9 +43,6 @@ import { ConnectionState } from "../../../../src/models/Call";
 const CallEvent = wrapInMatrixClientContext(UnwrappedCallEvent);
 
 describe("CallEvent", () => {
-    useMockedCalls();
-    jest.spyOn(HTMLMediaElement.prototype, "play").mockImplementation(async () => {});
-
     let client: Mocked<MatrixClient>;
     let room: Room;
     let alice: RoomMember;
@@ -54,6 +51,8 @@ describe("CallEvent", () => {
     let widget: Widget;
 
     beforeEach(async () => {
+        useMockedCalls();
+        jest.spyOn(HTMLMediaElement.prototype, "play").mockImplementation(async () => {});
         jest.useFakeTimers();
         jest.setSystemTime(0);
 

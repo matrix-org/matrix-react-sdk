@@ -132,7 +132,7 @@ export const setupRoomWithPollEvents = async (
     existingRoom?: Room,
 ): Promise<Room> => {
     const room = existingRoom || new Room(pollStartEvents[0].getRoomId()!, mockClient, mockClient.getSafeUserId());
-    await room.processPollEvents([...pollStartEvents, ...relationEvents, ...endEvents]);
+    room.processPollEvents([...pollStartEvents, ...relationEvents, ...endEvents]);
 
     // set redaction allowed for current user only
     // poll end events are validated against this
