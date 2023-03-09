@@ -1065,7 +1065,6 @@ $left-gutter: 64px;
 
             &[data-layout="irc"],
             &[data-layout="group"] {
-                display: block; /* "flex" is applied to bubble layout */
                 padding-block-start: 0; /* Override .mx_ThreadView .mx_EventTile[data-layout="group"] */
 
                 .mx_EventTile_avatar {
@@ -1109,8 +1108,6 @@ $left-gutter: 64px;
             }
 
             &[data-layout="bubble"] {
-                display: flex; /* "block" is applied to IRC and group (modern) layout */
-
                 /* Same declaration as the main timeline */
                 margin-inline: var(--EventTile_bubble-margin-inline-start) 0;
 
@@ -1130,11 +1127,6 @@ $left-gutter: 64px;
                 .mx_ReadReceiptGroup {
                     /* Move read receipt group inside ThreadView */
                     inset-inline-end: 0;
-                }
-
-                &[data-self="true"] {
-                    /* Align the avatar and mx_EventTile_line at the center on hidden event tile line */
-                    align-items: center;
                 }
             }
         }
