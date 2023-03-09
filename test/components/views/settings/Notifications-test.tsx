@@ -90,6 +90,15 @@ const encryptedGroupRule: IPushRule = {
     default: true,
     enabled: true,
 } as IPushRule;
+
+const bananaRule = {
+    actions: [PushRuleActionName.Notify, { set_tweak: TweakName.Highlight, value: false }],
+    pattern: "banana",
+    rule_id: "banana",
+    default: false,
+    enabled: true,
+} as IPushRule;
+
 const pushRules: IPushRules = {
     global: {
         underride: [
@@ -130,13 +139,7 @@ const pushRules: IPushRules = {
             },
         ],
         content: [
-            {
-                actions: [PushRuleActionName.Notify, { set_tweak: TweakName.Highlight, value: false }],
-                pattern: "banana",
-                rule_id: "banana",
-                default: false,
-                enabled: true,
-            },
+            bananaRule,
             {
                 actions: [
                     PushRuleActionName.Notify,
@@ -393,6 +396,18 @@ describe("<Notifications />", () => {
                     kind: null,
                 });
             });
+        });
+
+        it("toggles master switch correctly", async () => {
+            await getComponentAndWait();
+
+            // master switch is on
+            expect(screen.getByLabelText("Enable notifications for this account")).toBeChecked();
+            fireEvent.click(screen.getByLabelText("Enable notifications for this account"));
+
+            await flushPromises();
+
+            expect(mockClient.setPushRuleEnabled).toHaveBeenCalledWith("global", "override", ".m.rule.master", true);
         });
 
         it("toggles and sets settings correctly", async () => {
@@ -740,6 +755,47 @@ describe("<Notifications />", () => {
                     expectedActions,
                 );
             });
+        });
+    });
+
+    describe("keywords", () => {
+        // keywords rule is not a real rule, but controls actions on keywords content rules
+        const keywordsRuleId = "_keywords";
+        it("updates individual keywords content rules when keywords rule is toggled", async () => {
+            await getComponentAndWait();
+            const section = "vector_mentions";
+
+            fireEvent.click(within(screen.getByTestId(section + keywordsRuleId)).getByLabelText("Off"));
+
+            expect(mockClient.setPushRuleEnabled).toHaveBeenCalledWith("global", "content", bananaRule.rule_id, false);
+
+            fireEvent.click(within(screen.getByTestId(section + keywordsRuleId)).getByLabelText("Noisy"));
+
+            expect(mockClient.setPushRuleActions).toHaveBeenCalledWith(
+                "global",
+                "content",
+                bananaRule.rule_id,
+                StandardActions.ACTION_HIGHLIGHT_DEFAULT_SOUND,
+            );
+        });
+
+        it("renders an error when updating keywords fails", async () => {
+            await getComponentAndWait();
+            const section = "vector_mentions";
+
+            mockClient.setPushRuleEnabled.mockRejectedValueOnce("oups");
+
+            fireEvent.click(within(screen.getByTestId(section + keywordsRuleId)).getByLabelText("Off"));
+
+            await flushPromises();
+
+            const rule = screen.getByTestId(section + keywordsRuleId);
+
+            expect(
+                within(rule).getByText(
+                    "An error occurred when updating your notification preferences. Please try to toggle your option again.",
+                ),
+            ).toBeInTheDocument();
         });
     });
 

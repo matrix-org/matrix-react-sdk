@@ -401,11 +401,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             await MatrixClientPeg.get().setPushRuleEnabled("global", masterRule.kind, masterRule.rule_id, !checked);
             await this.refreshFromServer();
         } catch (e) {
-            if (masterRule?.rule_id) {
-                this.setSavingError(masterRule.rule_id);
-            } else {
-                this.setState({ phase: Phase.Error });
-            }
+            this.setState({ phase: Phase.Error });
             logger.error("Error updating master push rule:", e);
             this.showSaveError();
         }
@@ -638,14 +634,16 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
     private renderTopSection(): JSX.Element {
         const masterSwitch = (
-            <LabelledToggleSwitch
-                data-testid="notif-master-switch"
-                value={!this.isInhibited}
-                label={_t("Enable notifications for this account")}
-                caption={_t("Turn off to disable notifications on all your devices and sessions")}
-                onChange={this.onMasterRuleChanged}
-                disabled={this.state.phase === Phase.Persisting}
-            />
+            <>
+                <LabelledToggleSwitch
+                    data-testid="notif-master-switch"
+                    value={!this.isInhibited}
+                    label={_t("Enable notifications for this account")}
+                    caption={_t("Turn off to disable notifications on all your devices and sessions")}
+                    onChange={this.onMasterRuleChanged}
+                    disabled={this.state.phase === Phase.Persisting}
+                />
+            </>
         );
 
         // If all the rules are inhibited, don't show anything.
