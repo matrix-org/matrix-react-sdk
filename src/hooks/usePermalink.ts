@@ -35,15 +35,38 @@ interface Args {
 }
 
 interface HookResult {
-    /** Room member of a user mention permalink */
+    /**
+     * Room member of a user mention permalink.
+     * null for other links, if the profile was not found or not yet loaded.
+     * This can change, for instance, from null to a RoomMember after the profile lookup completed.
+     */
     member: RoomMember | null;
-    /** Displayable text of the permalink resource. Can for instance be a user or room name. */
+    /**
+     * Displayable text of the permalink resource. Can for instance be a user or room name.
+     * null here means that there is nothing to display. Most likely if the URL was no permalink.
+     */
     text: string | null;
+    /**
+     * Should be used for click actions on the permalink.
+     * In case of a user permalink, a view profile action is dispatched.
+     */
     onClick: (e: ButtonEvent) => void;
-    /** This can be for instance a user or room Id. */
+    /**
+     * This can be for instance a user or room Id.
+     * null here means that the resource cannot be detected. Most likely if the URL was no permalink.
+     */
     resourceId: string | null;
-    /** Room of the target of this permalink (room or event room). */
+    /**
+     * Target room of the permalink:
+     * For an @room, this is the room where the permalink should be displayed.
+     * For a room permalink, it is the room from the permalink.
+     * null for other links or if the room cannot be found.
+     */
     targetRoom: Room | null;
+    /**
+     * Type of the pill plus "space" for spaces.
+     * null here means that the type cannot be detected. Most likely if the URL was no permalink.
+     */
     type: PillType | "space" | null;
 }
 
