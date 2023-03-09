@@ -62,7 +62,7 @@ describe("<WidgetContextMenu />", () => {
     });
 
     afterEach(() => {
-        jest.restoreAllMocks();
+        jest.resetAllMocks();
     });
 
     function getComponent(props: Partial<ComponentProps<typeof WidgetContextMenu>> = {}): JSX.Element {

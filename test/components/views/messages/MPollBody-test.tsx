@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { fireEvent, render, RenderResult } from "@testing-library/react";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import {
     M_POLL_KIND_DISCLOSED,
@@ -27,6 +27,7 @@ import {
     PollAnswer,
 } from "matrix-js-sdk/src/@types/polls";
 import { M_TEXT } from "matrix-js-sdk/src/@types/extensible_events";
+import { MockedObject } from "jest-mock";
 
 import { allVotes, findTopAnswer, isPollEnded } from "../../../../src/components/views/messages/MPollBody";
 import { IBodyProps } from "../../../../src/components/views/messages/IBodyProps";
@@ -45,20 +46,21 @@ import { MediaEventHelper } from "../../../../src/utils/MediaEventHelper";
 const CHECKED = "mx_PollOption_checked";
 const userId = "@me:example.com";
 
-const mockClient = getMockClientWithEventEmitter({
-    ...mockClientMethodsUser(userId),
-    sendEvent: jest.fn().mockReturnValue(Promise.resolve({ event_id: "fake_send_id" })),
-    getRoom: jest.fn(),
-    decryptEventIfNeeded: jest.fn().mockResolvedValue(true),
-    relations: jest.fn(),
-});
+let mockClient: MockedObject<MatrixClient>;
 
 describe("MPollBody", () => {
     beforeEach(() => {
-        mockClient.sendEvent.mockClear();
+        mockClient = getMockClientWithEventEmitter({
+            ...mockClientMethodsUser(userId),
+            sendEvent: jest.fn().mockReturnValue(Promise.resolve({ event_id: "fake_send_id" })),
+            getRoom: jest.fn().mockReturnValue(null),
+            decryptEventIfNeeded: jest.fn().mockResolvedValue(true),
+            relations: jest.fn().mockResolvedValue({ events: [] }),
+        });
+    });
 
-        mockClient.getRoom.mockReturnValue(null);
-        mockClient.relations.mockResolvedValue({ events: [] });
+    afterEach(() => {
+        jest.restoreAllMocks();
     });
 
     it("finds no votes if there are none", () => {
@@ -896,6 +898,7 @@ async function newMPollBody(
     const result = newMPollBodyFromEvent(mxEvent, relationEvents, endEvents);
     // flush promises from loading relations
     if (waitForResponsesLoad) {
+        await flushPromises();
         await flushPromises();
     }
     return result;
