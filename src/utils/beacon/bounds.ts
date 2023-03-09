@@ -37,8 +37,9 @@ export type Bounds = {
  */
 export const getBeaconBounds = (beacons: Beacon[]): Bounds | undefined => {
     const coords = beacons
-        .filter((beacon) => !!beacon.latestLocationState)
-        .map((beacon) => parseGeoUri(beacon.latestLocationState.uri));
+        .filter((beacon) => !!beacon.latestLocationState?.uri)
+        .map((beacon) => parseGeoUri(beacon.latestLocationState!.uri!))
+        .filter((coords: ReturnType<typeof parseGeoUri>): coords is GeolocationCoordinates => Boolean(coords));
 
     if (!coords.length) {
         return;
