@@ -129,9 +129,27 @@ describe("Threads", () => {
         // Enable the bubble layout
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
 
-        cy.get(".mx_ThreadView .mx_EventTile[data-layout='bubble'].mx_EventTile_last").within(() => {
+        cy.get(".mx_ThreadView").within(() => {
             // Make sure the avatar inside ReadReceiptGroup is visible on bubble layout
-            cy.get(".mx_ReadReceiptGroup .mx_BaseAvatar_image").should("be.visible");
+            cy.get(
+                ".mx_EventTile[data-layout='bubble'].mx_EventTile_last .mx_ReadReceiptGroup .mx_BaseAvatar_image",
+            ).should("be.visible");
+
+            // Make sure the option button of MessageActionBar on the left bubble is visible
+            cy.get(".mx_EventTile[data-layout='bubble'][data-self='false']")
+                .should("exist")
+                .realHover()
+                .within(() => {
+                    cy.get(".mx_MessageActionBar [aria-label='Options']").should("be.visible");
+                });
+
+            // Make sure the option button of MessageActionBar on the right bubble is visible
+            cy.get(".mx_EventTile[data-layout='bubble'][data-self='true']")
+                .should("exist")
+                .realHover()
+                .within(() => {
+                    cy.get(".mx_MessageActionBar [aria-label='Options']").should("be.visible");
+                });
         });
 
         // Re-enable the group layout
