@@ -210,6 +210,7 @@ describe("Threads", () => {
             cy.get(".mx_EventTile_info.mx_EventTile_last")
                 // 49px: --EventTile_bubble-margin-inline-start
                 .should("have.css", "margin-inline-start", "49px");
+
             cy.get(".mx_EventTile_info.mx_EventTile_last .mx_EventTile_line .mx_EventTile_content")
                 // Make sure the margin is NOT applied to mx_EventTile_content
                 .should("have.css", "margin-inline-start", "0px");
