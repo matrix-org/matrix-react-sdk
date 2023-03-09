@@ -14,12 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MutableRefObject, useEffect } from "react";
+import { RefObject, useEffect } from "react";
 
-export function usePlainTextInitialization(
-    initialContent = "",
-    ref: MutableRefObject<HTMLElement | null> | null,
-): void {
+export function usePlainTextInitialization(initialContent = "", ref: RefObject<HTMLElement> | null): void {
     useEffect(() => {
         if (ref.current) {
             ref.current.innerText = initialContent;

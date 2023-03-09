@@ -25,7 +25,7 @@ interface IProps {
 }
 
 // Wrapper to allow use of useRovingTabIndex outside of React Functional Components.
-export const RovingTabIndexWrapper = forwardRef<HTMLElement, IProps>(({ children }, ref: Ref) => {
-    const [onFocus, isActive] = useRovingTabIndex(ref);
+export const RovingTabIndexWrapper = forwardRef<HTMLElement, IProps>(({ children }, _ref: Ref) => {
+    const [onFocus, isActive, ref] = useRovingTabIndex(_ref);
     return children({ onFocus, isActive, ref });
 });

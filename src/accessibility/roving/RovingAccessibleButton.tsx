@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentPropsWithoutRef, forwardRef, MutableRefObject } from "react";
+import React, { ComponentPropsWithoutRef, forwardRef, RefObject } from "react";
 
 import AccessibleButton from "../../components/views/elements/AccessibleButton";
 import { useRovingTabIndex } from "../RovingTabIndex";
@@ -23,8 +23,8 @@ interface IProps extends Omit<ComponentPropsWithoutRef<typeof AccessibleButton>,
 
 // Wrapper to allow use of useRovingTabIndex for simple AccessibleButtons outside of React Functional Components.
 export const RovingAccessibleButton = forwardRef<HTMLElement, IProps>(
-    ({ onFocus, ...props }, ref: MutableRefObject<HTMLElement | null> | null) => {
-        const [onFocusInternal, isActive] = useRovingTabIndex(ref);
+    ({ onFocus, ...props }, _ref: RefObject<HTMLElement> | null) => {
+        const [onFocusInternal, isActive, ref] = useRovingTabIndex(_ref);
         return (
             <AccessibleButton
                 {...props}

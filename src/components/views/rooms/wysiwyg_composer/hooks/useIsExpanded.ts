@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MutableRefObject, useEffect, useState } from "react";
+import { RefObject, useEffect, useState } from "react";
 
-export function useIsExpanded(ref: MutableRefObject<HTMLElement | null>, breakingPoint: number): boolean {
+export function useIsExpanded(ref: RefObject<HTMLElement>, breakingPoint: number): boolean {
     const [isExpanded, setIsExpanded] = useState(false);
     useEffect(() => {
         if (ref.current) {

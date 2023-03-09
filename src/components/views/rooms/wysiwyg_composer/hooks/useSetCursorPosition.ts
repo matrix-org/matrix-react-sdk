@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MutableRefObject, useEffect } from "react";
+import { RefObject, useEffect } from "react";
 
 import { setCursorPositionAtTheEnd } from "./utils";
 
-export function useSetCursorPosition(disabled: boolean, ref: MutableRefObject<HTMLElement | null> | null): void {
+export function useSetCursorPosition(disabled: boolean, ref: RefObject<HTMLElement> | null): void {
     useEffect(() => {
         if (ref.current && !disabled) {
             setCursorPositionAtTheEnd(ref.current);

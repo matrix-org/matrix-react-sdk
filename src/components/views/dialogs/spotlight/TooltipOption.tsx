@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import React, { ComponentPropsWithoutRef, forwardRef, MutableRefObject, ReactNode } from "react";
+import React, { ComponentPropsWithoutRef, forwardRef, RefObject, ReactNode } from "react";
 
 import { RovingAccessibleTooltipButton } from "../../../../accessibility/roving/RovingAccessibleTooltipButton";
 import { useRovingTabIndex } from "../../../../accessibility/RovingTabIndex";
@@ -26,8 +26,8 @@ interface TooltipOptionProps extends ComponentPropsWithoutRef<typeof RovingAcces
 }
 
 export const TooltipOption = forwardRef<HTMLElement, TooltipOptionProps>(
-    ({ className, ...props }, ref: MutableRefObject<HTMLElement | null> | null) => {
-        const [onFocus, isActive] = useRovingTabIndex(ref);
+    ({ className, ...props }, _ref: RefObject<HTMLElement> | null) => {
+        const [onFocus, isActive, ref] = useRovingTabIndex(_ref);
         return (
             <AccessibleTooltipButton
                 {...props}

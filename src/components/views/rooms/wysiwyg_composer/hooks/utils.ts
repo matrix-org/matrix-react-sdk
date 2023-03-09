@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MutableRefObject } from "react";
+import { RefObject, MutableRefObject } from "react";
 
 import { TimelineRenderingType } from "../../../../../contexts/RoomContext";
 import { IRoomState } from "../../../../structures/RoomView";
 
 export function focusComposer(
-    composerElement: MutableRefObject<HTMLElement | null>,
+    composerElement: RefObject<HTMLElement>,
     renderingType: TimelineRenderingType,
     roomContext: IRoomState,
     timeoutId: MutableRefObject<number | null>,

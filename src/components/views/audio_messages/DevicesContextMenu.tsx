@@ -23,7 +23,7 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 
 interface Props {
-    containerRef: MutableRefObject<HTMLElement | null>;
+    containerRef: RefObject<HTMLElement>;
     currentDevice: MediaDeviceInfo | null;
     devices: MediaDeviceInfo[];
     onDeviceSelect: (device: MediaDeviceInfo) => void;

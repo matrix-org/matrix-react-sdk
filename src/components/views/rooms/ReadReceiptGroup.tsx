@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { PropsWithChildren, useRef } from "react";
+import React, { PropsWithChildren } from "react";
 import { User } from "matrix-js-sdk/src/matrix";
 
 import ReadReceiptMarker, { IReadReceiptInfo } from "./ReadReceiptMarker";
@@ -293,8 +293,7 @@ interface ISectionHeaderProps {
 }
 
 function SectionHeader({ className, children }: PropsWithChildren<ISectionHeaderProps>): JSX.Element {
-    const ref = useRef<HTMLHeadingElement>();
-    const [onFocus] = useRovingTabIndex(ref);
+    const [onFocus, , ref] = useRovingTabIndex<HTMLHeadingElement>();
 
     return (
         <h3 className={className} role="menuitem" onFocus={onFocus} tabIndex={-1} ref={ref}>

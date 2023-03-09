@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import React, { ComponentProps, forwardRef, MutableRefObject, ReactNode } from "react";
+import React, { ComponentProps, forwardRef, RefObject, ReactNode } from "react";
 
 import { RovingAccessibleButton } from "../../../../accessibility/roving/RovingAccessibleButton";
 import { useRovingTabIndex } from "../../../../accessibility/RovingTabIndex";
@@ -26,8 +26,8 @@ interface OptionProps extends ComponentProps<typeof RovingAccessibleButton> {
 }
 
 export const Option = forwardRef<HTMLElement, OptionProps>(
-    ({ children, endAdornment, className, ...props }, ref: MutableRefObject<HTMLElement | null> | null) => {
-        const [onFocus, isActive] = useRovingTabIndex(ref);
+    ({ children, endAdornment, className, ...props }, _ref: RefObject<HTMLElement> | null) => {
+        const [onFocus, isActive, ref] = useRovingTabIndex(_ref);
         return (
             <AccessibleButton
                 {...props}
