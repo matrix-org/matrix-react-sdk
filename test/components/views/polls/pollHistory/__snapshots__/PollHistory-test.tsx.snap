@@ -35,7 +35,7 @@ exports[`<PollHistory /> renders a list of active polls when there are polls in 
     class="mx_PollHistory_content"
   >
     <h2
-      class="mx_Heading_h2"
+      class="mx_Heading_h2 mx_PollHistory_header"
     >
       Polls history
     </h2>

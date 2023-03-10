@@ -69,7 +69,9 @@ export const PollHistory: React.FC<PollHistoryProps> = ({ room, matrixClient, pe
     return (
         <div className="mx_PollHistory_content">
             {/* @TODO this probably needs some style */}
-            <Heading size="h2">{title}</Heading>
+            <Heading className="mx_PollHistory_header" size="h2">
+                {title}
+            </Heading>
             {focusedPoll ? (
                 <PollDetail poll={focusedPoll} permalinkCreator={permalinkCreator} requestModalClose={onFinished} />
             ) : (
