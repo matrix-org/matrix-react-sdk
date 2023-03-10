@@ -21,6 +21,7 @@ import type { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { Layout } from "../../../src/settings/enums/Layout";
+import { MatrixClient } from "../../global";
 import Chainable = Cypress.Chainable;
 
 // The avatar size used in the timeline
@@ -500,6 +501,7 @@ describe("Timeline", () => {
 
     describe("message sending", () => {
         const MESSAGE = "Hello world";
+        const reply = "Reply";
         const viewRoomSendMessageAndSetupReply = () => {
             // View room
             cy.visit("/#/room/" + roomId);
@@ -514,7 +516,6 @@ describe("Timeline", () => {
         };
 
         it("can reply with a text message", () => {
-            const reply = "Reply";
             viewRoomSendMessageAndSetupReply();
 
             cy.getComposer().type(`${reply}{enter}`);
@@ -565,6 +566,194 @@ describe("Timeline", () => {
             cy.get(".mx_RoomView_body .mx_EventTile .mx_EventTile_line .mx_MTextBody .mx_EventTile_bigEmoji")
                 .children()
                 .should("have.length", 4);
+        });
+
+        it("should display a reply chain", () => {
+            let bot: MatrixClient;
+            const reply2 = "Reply again";
+
+            // For clicking the reply button on the last line
+            const clickButtonReply = () => {
+                cy.get(".mx_RoomView_MessageList").within(() => {
+                    cy.get(".mx_EventTile_last").realHover();
+                    cy.get(".mx_EventTile_last .mx_MessageActionBar_optionsButton", {
+                        timeout: 1000,
+                    })
+                        .should("exist")
+                        .realHover()
+                        .get('.mx_EventTile_last [aria-label="Reply"]')
+                        .click({ force: false });
+                });
+            };
+
+            cy.visit("/#/room/" + roomId);
+
+            // Wait until configuration is finished
+            cy.contains(
+                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
+                "created and configured the room.",
+            ).should("exist");
+
+            // Create a bot "BotBob" and invite it
+            cy.getBot(homeserver, {
+                displayName: "BotBob",
+                autoAcceptInvites: false,
+            }).then((_bot) => {
+                bot = _bot;
+                cy.inviteUser(roomId, bot.getUserId());
+                bot.joinRoom(roomId);
+
+                // Make sure the bot joined the room
+                cy.contains(
+                    ".mx_GenericEventListSummary .mx_EventTile_info.mx_EventTile_last",
+                    "BotBob joined the room",
+                ).should("exist");
+
+                // Have bot send MESSAGE to roomId
+                cy.botSendMessage(bot, roomId, MESSAGE);
+            });
+
+            // Reply to the message
+            clickButtonReply();
+            cy.getComposer().type(`${reply}{enter}`);
+
+            // Make sure 'reply' was sent
+            cy.contains(".mx_RoomView_MessageList .mx_EventTile_last", reply).should("exist");
+
+            // Reply again to create a replyChain
+            clickButtonReply();
+            cy.getComposer().type(`${reply2}{enter}`);
+
+            // Make sure 'reply2' was sent
+            cy.contains(".mx_RoomView_MessageList .mx_EventTile_last", reply2).should("exist");
+
+            // Exclude timestamp and read marker from snapshot
+            const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
+
+            // Check the margin value of ReplyChains of EventTile at the bottom on IRC layout
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
+            cy.get(".mx_EventTile_last[data-layout='irc'] .mx_ReplyChain").should("have.css", "margin", "0px");
+
+            // Take a snapshot on IRC layout
+            cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on IRC layout", {
+                percyCSS,
+            });
+
+            // Check the margin value of ReplyChains of EventTile at the bottom on group/modern layout
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+            cy.get(".mx_EventTile_last[data-layout='group'] .mx_ReplyChain").should("have.css", "margin-bottom", "8px");
+
+            // Take a snapshot on modern layout
+            cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on modern layout", {
+                percyCSS,
+            });
+
+            // Check the margin value of ReplyChains of EventTile at the bottom on group/modern compact layout
+            cy.setSettingValue("useCompactLayout", null, SettingLevel.DEVICE, true);
+            cy.get(".mx_EventTile_last[data-layout='group'] .mx_ReplyChain").should("have.css", "margin-bottom", "4px");
+
+            // Take a snapshot on compact modern layout
+            cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on compact modern layout", {
+                percyCSS,
+            });
+
+            // Check the margin value of ReplyChains of EventTile at the bottom on bubble layout
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
+            cy.get(".mx_EventTile_last[data-layout='bubble'] .mx_ReplyChain").should(
+                "have.css",
+                "margin-bottom",
+                "8px",
+            );
+
+            // Take a snapshot on bubble layout
+            cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on bubble layout", {
+                percyCSS,
+            });
+        });
+
+        it("should send, reply, and display long strings without overflowing", () => {
+            // Max 256 characters for display name
+            const LONG_STRING =
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut " +
+                "et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut " +
+                "aliquip";
+
+            // Create a bot with a long display name
+            let bot: MatrixClient;
+            cy.getBot(homeserver, {
+                displayName: LONG_STRING,
+                autoAcceptInvites: false,
+            }).then((_bot) => {
+                bot = _bot;
+            });
+
+            // Create another room with a long name, invite the bot, and open the room
+            cy.createRoom({ name: LONG_STRING })
+                .as("testRoomId")
+                .then((_roomId) => {
+                    roomId = _roomId;
+                    cy.inviteUser(roomId, bot.getUserId());
+                    bot.joinRoom(roomId);
+                    cy.visit("/#/room/" + roomId);
+                });
+
+            // Wait until configuration is finished
+            cy.contains(
+                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
+                "created and configured the room.",
+            ).should("exist");
+
+            // Set the display name to "LONG_STRING 2" in order to avoid a warning in Percy tests from being triggered
+            // due to the generated random mxid being displayed inside the GELS summary.
+            cy.setDisplayName(`${LONG_STRING} 2`);
+
+            // Have the bot send a long message
+            cy.get<string>("@testRoomId").then((roomId) => {
+                bot.sendMessage(roomId, {
+                    body: LONG_STRING,
+                    msgtype: "m.text",
+                });
+            });
+
+            // Wait until the message is rendered
+            cy.get(".mx_EventTile_last .mx_MTextBody .mx_EventTile_body").should("have.text", LONG_STRING);
+
+            // Reply to the message
+            cy.get(".mx_EventTile_last")
+                .realHover()
+                .within(() => {
+                    cy.get('[aria-label="Reply"]').click({ force: false });
+                });
+            cy.getComposer().type(`${reply}{enter}`);
+
+            // Make sure the reply tile and the reply are displayed
+            cy.get(".mx_EventTile_last").within(() => {
+                cy.get(".mx_ReplyTile .mx_MTextBody").should("have.text", LONG_STRING);
+                cy.get(".mx_EventTile_line > .mx_MTextBody").should("have.text", reply);
+            });
+
+            // Exclude timestamp and read marker from snapshots
+            const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
+
+            // Make sure the strings do not overflow on IRC layout
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
+            cy.get(".mx_MainSplit").percySnapshotElement("Long strings with a reply on IRC layout", { percyCSS });
+
+            // Make sure the strings do not overflow on modern layout
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+            cy.get(".mx_EventTile_last[data-layout='group'] .mx_EventTile_line > .mx_MTextBody").should(
+                "have.text",
+                reply,
+            );
+            cy.get(".mx_MainSplit").percySnapshotElement("Long strings with a reply on modern layout", { percyCSS });
+
+            // Make sure the strings do not overflow on bubble layout
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
+            cy.get(".mx_EventTile_last[data-layout='bubble'] .mx_EventTile_line > .mx_MTextBody").should(
+                "have.text",
+                reply,
+            );
+            cy.get(".mx_MainSplit").percySnapshotElement("Long strings with a reply on bubble layout", { percyCSS });
         });
     });
 });
