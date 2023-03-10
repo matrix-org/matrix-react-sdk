@@ -34,6 +34,7 @@ import {
 import { RoomPermalinkCreator } from "../../../../../src/utils/permalinks/Permalinks";
 import defaultDispatcher from "../../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../../src/dispatcher/actions";
+import MatrixClientContext from "../../../../../src/contexts/MatrixClientContext";
 
 describe("<PollHistory />", () => {
     // 14.03.2022 16:15
@@ -65,7 +66,12 @@ describe("<PollHistory />", () => {
         permalinkCreator: new RoomPermalinkCreator(room),
         onFinished: jest.fn(),
     };
-    const getComponent = () => render(<PollHistory {...defaultProps} />);
+    const getComponent = () =>
+        render(<PollHistory {...defaultProps} />, {
+            wrapper: ({ children }) => (
+                <MatrixClientContext.Provider value={mockClient}>{children}</MatrixClientContext.Provider>
+            ),
+        });
 
     beforeAll(() => {
         mockIntlDateTimeFormat();
