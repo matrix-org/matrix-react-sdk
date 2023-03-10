@@ -735,8 +735,11 @@ describe("Timeline", () => {
             // Exclude timestamp and read marker from snapshots
             const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
 
-            // Make sure the strings do not overflow on IRC layout
+            // Make sure the strings do not overflow and check room name line-height on IRC layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
+            cy.get(".mx_IRCLayout .mx_NewRoomIntro h2")
+                .should("have.text", LONG_STRING)
+                .should("have.css", "line-height", "normal"); // Check room name line-height is reset
             cy.get(".mx_MainSplit").percySnapshotElement("Long strings with a reply on IRC layout", { percyCSS });
 
             // Make sure the strings do not overflow on modern layout
