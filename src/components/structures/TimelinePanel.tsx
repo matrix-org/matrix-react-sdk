@@ -548,7 +548,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
     };
 
     // set off a pagination request.
-    private onMessageListFillRequest = (backwards: boolean): Promise<boolean | undefined> => {
+    private onMessageListFillRequest = (backwards: boolean): Promise<boolean> => {
         if (!this.shouldPaginate()) return Promise.resolve(false);
 
         const dir = backwards ? EventTimeline.BACKWARDS : EventTimeline.FORWARDS;
@@ -576,7 +576,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         return this.onPaginationRequest(this.timelineWindow, dir, PAGINATE_SIZE).then((r) => {
             if (this.unmounted) {
-                return;
+                return false;
             }
 
             debuglog("paginate complete backwards:" + backwards + "; success:" + r);
@@ -1745,7 +1745,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const wrapperRect = messagePanelNode.getBoundingClientRect();
         const myUserId = MatrixClientPeg.get().credentials.userId;
 
-        const isNodeInView = (node: HTMLElement): boolean => {
+        const isNodeInView = (node?: HTMLElement): boolean => {
             if (node) {
                 const boundingRect = node.getBoundingClientRect();
                 if (

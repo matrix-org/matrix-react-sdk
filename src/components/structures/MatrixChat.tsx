@@ -473,7 +473,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
     private getFallbackHsUrl(): string | null {
         if (this.props.serverConfig?.isDefault) {
-            return this.props.config.fallback_hs_url;
+            return this.props.config.fallback_hs_url ?? null;
         } else {
             return null;
         }
@@ -980,7 +980,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.setState(
             {
                 view: Views.LOGGED_IN,
-                currentRoomId: roomInfo.room_id,
+                currentRoomId: roomInfo.room_id ?? null,
                 page_type: PageType.RoomView,
                 threepidInvite: roomInfo.threepid_invite,
                 roomOobData: roomInfo.oob_data,

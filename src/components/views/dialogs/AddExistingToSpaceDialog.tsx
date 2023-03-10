@@ -57,7 +57,7 @@ interface IProps {
 export const Entry: React.FC<{
     room: Room;
     checked: boolean;
-    onChange(value: boolean): void;
+    onChange?(value: boolean): void;
 }> = ({ room, checked, onChange }) => {
     return (
         <label className="mx_AddExistingToSpace_entry">
