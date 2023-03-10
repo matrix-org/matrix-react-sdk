@@ -35,7 +35,7 @@ interface IProps {
 
     // should the user be able to change the value? false by default.
     disabled?: boolean;
-    onChange?: (value: number, powerLevelKey: string) => void;
+    onChange: (value: number, powerLevelKey?: string) => void;
 
     // Optional key to pass as the second argument to `onChange`
     powerLevelKey?: string;
