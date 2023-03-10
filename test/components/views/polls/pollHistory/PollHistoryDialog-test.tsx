@@ -20,7 +20,7 @@ import { Filter } from "matrix-js-sdk/src/filter";
 import { EventTimeline, Room } from "matrix-js-sdk/src/matrix";
 import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
 
-import { PollHistoryDialog } from "../../../../../src/components/views/dialogs/polls/PollHistoryDialog";
+import { PollHistoryDialog } from "../../../../../src/components/views/polls/pollHistory/PollHistoryDialog";
 import {
     flushPromises,
     getMockClientWithEventEmitter,
