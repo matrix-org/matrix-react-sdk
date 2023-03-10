@@ -641,7 +641,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         // to assume that sent receipts are to be shown more often.
         this.readReceiptsByEvent = {};
         if (this.props.showReadReceipts) {
-            this.readReceiptsByEvent = this.getReadReceiptsByShownEvent();
+            this.readReceiptsByEvent = this.getReadReceiptsByShownEvent(events);
         }
 
         let grouper: BaseGrouper | null = null;
@@ -861,7 +861,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     // Get an object that maps from event ID to a list of read receipts that
     // should be shown next to that event. If a hidden event has read receipts,
     // they are folded into the receipts of the last shown event.
-    private getReadReceiptsByShownEvent(): Record<string, IReadReceiptProps[]> {
+    private getReadReceiptsByShownEvent(events: EventAndShouldShow[]): Record<string, IReadReceiptProps[]> {
         const receiptsByEvent: Record<string, IReadReceiptProps[]> = {};
         const receiptsByUserId: Record<
             string,
@@ -872,8 +872,8 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         > = {};
 
         let lastShownEventId;
-        for (const event of this.props.events) {
-            if (this.shouldShowEvent(event)) {
+        for (const { event, shouldShow } of events) {
+            if (shouldShow) {
                 lastShownEventId = event.getId();
             }
             if (!lastShownEventId) {
