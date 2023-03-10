@@ -1399,6 +1399,10 @@ const groupers = [CreationGrouper, MainGrouper];
  * event that is >start items through the list, and is shown.
  */
 function findFirstShownAfter(start: number, events: EventAndShouldShow[]): MatrixEvent | null {
+    // Note: this could be done with something like:
+    // events.slice(i + 1).find((e) => e.shouldShow)?.event ?? null;
+    // but it is ~10% slower, and this is on the critical path.
+
     for (let n = start + 1; n < events.length; n++) {
         const { event, shouldShow } = events[n];
         if (shouldShow) {
