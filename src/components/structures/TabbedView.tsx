@@ -41,7 +41,7 @@ export class Tab {
     public constructor(
         public readonly id: string,
         public readonly label: string,
-        public readonly icon: string,
+        public readonly icon: string | null,
         public readonly body: React.ReactNode,
         public readonly screenName?: ScreenName,
     ) {}

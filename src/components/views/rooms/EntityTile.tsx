@@ -43,7 +43,7 @@ const PRESENCE_CLASS: Record<PresenceState, string> = {
     unavailable: "mx_EntityTile_unavailable",
 };
 
-function presenceClassForMember(presenceState?: PresenceState, lastActiveAgo: number, showPresence: boolean): string {
+function presenceClassForMember(presenceState?: PresenceState, lastActiveAgo?: number, showPresence?: boolean): string {
     if (showPresence === false) {
         return "mx_EntityTile_online_beenactive";
     }

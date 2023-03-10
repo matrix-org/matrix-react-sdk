@@ -189,7 +189,7 @@ interface IState {
     // what ID an alias points at.
     currentRoomId: string | null;
     // If we're trying to just view a user ID (i.e. /user URL), this is it
-    currentUserId?: string;
+    currentUserId: string | null;
     // this is persisted as mx_lhs_size, loaded in LoggedInView
     collapseLhs: boolean;
     // Parameters used in the registration dance with the IS
@@ -248,6 +248,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.state = {
             view: Views.LOADING,
             collapseLhs: false,
+            currentRoomId: null,
+            currentUserId: null,
 
             hideToSRUsers: false,
 
