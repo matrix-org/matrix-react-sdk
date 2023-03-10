@@ -20,7 +20,7 @@ import { Filter } from "matrix-js-sdk/src/filter";
 import { EventTimeline, Room } from "matrix-js-sdk/src/matrix";
 import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
 
-import { PollHistoryDialog } from "../../../../../src/components/views/polls/pollHistory/PollHistoryDialog";
+import { PollHistory } from "../../../../../src/components/views/polls/pollHistory/PollHistory";
 import {
     flushPromises,
     getMockClientWithEventEmitter,
@@ -35,7 +35,7 @@ import { RoomPermalinkCreator } from "../../../../../src/utils/permalinks/Permal
 import defaultDispatcher from "../../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../../src/dispatcher/actions";
 
-describe("<PollHistoryDialog />", () => {
+describe("<PollHistory />", () => {
     // 14.03.2022 16:15
     const now = 1647270879403;
     const userId = "@alice:domain.org";
@@ -65,7 +65,7 @@ describe("<PollHistoryDialog />", () => {
         permalinkCreator: new RoomPermalinkCreator(room),
         onFinished: jest.fn(),
     };
-    const getComponent = () => render(<PollHistoryDialog {...defaultProps} />);
+    const getComponent = () => render(<PollHistory {...defaultProps} />);
 
     beforeAll(() => {
         mockIntlDateTimeFormat();
@@ -239,7 +239,7 @@ describe("<PollHistoryDialog />", () => {
         // flush relations calls for polls
         await flushPromises();
 
-        expect(getByTestId("filter-tab-PollHistoryDialog_filter-ACTIVE").firstElementChild).toBeChecked();
+        expect(getByTestId("filter-tab-PollHistory_filter-ACTIVE").firstElementChild).toBeChecked();
 
         expect(container).toMatchSnapshot();
         // this poll is ended, and default filter is ACTIVE
@@ -288,7 +288,7 @@ describe("<PollHistoryDialog />", () => {
         expect(queryByText("What?")).not.toBeInTheDocument();
 
         fireEvent.click(getByText("Past polls"));
-        expect(getByTestId("filter-tab-PollHistoryDialog_filter-ENDED").firstElementChild).toBeChecked();
+        expect(getByTestId("filter-tab-PollHistory_filter-ENDED").firstElementChild).toBeChecked();
 
         // active polls no longer shown
         expect(queryByText("Question?")).not.toBeInTheDocument();
@@ -396,7 +396,7 @@ describe("<PollHistoryDialog />", () => {
             // main list header displayed again
             expect(getByText("Polls history")).toBeInTheDocument();
             // active filter still active
-            expect(getByTestId("filter-tab-PollHistoryDialog_filter-ACTIVE").firstElementChild).toBeChecked();
+            expect(getByTestId("filter-tab-PollHistory_filter-ACTIVE").firstElementChild).toBeChecked();
             // list displayed
             expect(container.getElementsByClassName("mx_PollHistoryList_list").length).toBeTruthy();
         });

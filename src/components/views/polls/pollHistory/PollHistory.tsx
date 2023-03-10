@@ -28,7 +28,7 @@ import { RoomPermalinkCreator } from "../../../../utils/permalinks/Permalinks";
 import { usePollsWithRelations } from "./usePollHistory";
 import { useFetchPastPolls } from "./fetchPastPolls";
 
-type PollHistoryDialogProps = {
+type PollHistoryProps = {
     room: Room;
     matrixClient: MatrixClient;
     permalinkCreator: RoomPermalinkCreator;
@@ -50,7 +50,7 @@ const filterAndSortPolls = (polls: Map<string, Poll>, filter: PollHistoryFilter)
         .sort(sortEventsByLatest);
 };
 
-export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({
+export const PollHistory: React.FC<PollHistoryProps> = ({
     room,
     matrixClient,
     permalinkCreator,
@@ -73,7 +73,7 @@ export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({
 
     return (
         <BaseDialog title={title} onFinished={onFinished}>
-            <div className="mx_PollHistoryDialog_content">
+            <div className="mx_PollHistory_content">
                 {focusedPoll ? (
                     <PollDetail poll={focusedPoll} permalinkCreator={permalinkCreator} requestModalClose={onFinished} />
                 ) : (
