@@ -34,7 +34,7 @@ import { getFunctionalMembers } from "../room/getFunctionalMembers";
  * @param [findRoomWithThirdpartyInvites] - Whether to find a DM for a pending thirdparty invite
  * @returns DM room if found or undefined if not
  */
-function extractSuitableRoom(rooms: Room[], userId: string, findRoomWithThirdpartyInvites = false): Room | undefined {
+function extractSuitableRoom(rooms: Room[], userId: string, findRoomWithThirdpartyInvites: boolean): Room | undefined {
     const suitableRooms = rooms
         .filter((r) => {
             // Validate that we are joined and the other person is also joined. We'll also make sure
@@ -98,5 +98,5 @@ export function findDMForUser(client: MatrixClient, userId: string): Room | unde
     const allRooms = Array.from(allRoomIds)
         .map((id) => client.getRoom(id))
         .filter((r): r is Room => r !== null);
-    return extractSuitableRoom(allRooms, userId);
+    return extractSuitableRoom(allRooms, userId, false);
 }
