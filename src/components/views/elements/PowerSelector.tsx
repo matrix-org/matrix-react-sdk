@@ -22,11 +22,10 @@ import Field from "./Field";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { objectHasDiff } from "../../../utils/objects";
-import { XOR } from "../../../@types/common";
 
 const CUSTOM_VALUE = "SELECT_VALUE_CUSTOM";
 
-interface BaseProps {
+interface Props<K extends undefined | string> {
     value: number;
     // The maximum value that can be set with the power selector
     maxValue: number;
@@ -39,21 +38,12 @@ interface BaseProps {
 
     // The name to annotate the selector with
     label?: string;
-}
 
-interface KeyProps extends BaseProps {
-    onChange(value: number, powerLevelKey: string): void;
+    onChange(value: number, powerLevelKey: K extends undefined ? void : K): void;
 
     // Optional key to pass as the second argument to `onChange`
-    powerLevelKey: string;
+    powerLevelKey: K extends undefined ? void : K;
 }
-
-interface NoKeyProps extends BaseProps {
-    onChange(value: number): void;
-    powerLevelKey?: void;
-}
-
-type Props = XOR<KeyProps, NoKeyProps>;
 
 interface IState {
     levelRoleMap: Partial<Record<number | "undefined", string>>;
@@ -65,13 +55,13 @@ interface IState {
     custom?: boolean;
 }
 
-export default class PowerSelector extends React.Component<Props, IState> {
-    public static defaultProps: Partial<Props> = {
+export default class PowerSelector<K extends undefined | string> extends React.Component<Props<K>, IState> {
+    public static defaultProps: Partial<Props<any>> = {
         maxValue: Infinity,
         usersDefault: 0,
     };
 
-    public constructor(props: Props) {
+    public constructor(props: Props<K>) {
         super(props);
 
         this.state = {
@@ -88,7 +78,7 @@ export default class PowerSelector extends React.Component<Props, IState> {
         this.initStateFromProps();
     }
 
-    public componentDidUpdate(prevProps: Readonly<Props>): void {
+    public componentDidUpdate(prevProps: Readonly<Props<K>>): void {
         if (objectHasDiff(this.props, prevProps)) {
             this.initStateFromProps();
         }
@@ -122,7 +112,7 @@ export default class PowerSelector extends React.Component<Props, IState> {
             this.setState({ custom: true });
         } else {
             const powerLevel = parseInt(event.target.value);
-            this.props.onChange(powerLevel, this.props.powerLevelKey!);
+            this.props.onChange(powerLevel, this.props.powerLevelKey);
             this.setState({ selectValue: powerLevel });
         }
     };
@@ -136,7 +126,7 @@ export default class PowerSelector extends React.Component<Props, IState> {
         event.stopPropagation();
 
         if (Number.isFinite(this.state.customValue)) {
-            this.props.onChange(this.state.customValue, this.props.powerLevelKey!);
+            this.props.onChange(this.state.customValue, this.props.powerLevelKey);
         } else {
             this.initStateFromProps(); // reset, invalid input
         }
