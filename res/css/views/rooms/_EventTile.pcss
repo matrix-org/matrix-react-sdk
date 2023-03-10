@@ -1053,7 +1053,6 @@ $left-gutter: 64px;
                 .mx_EventTile_content,
                 /* redacted hidden event */
                 .mx_RedactedBody {
-                    width: auto;
                     font-size: $line-height;
                 }
             }
@@ -1128,11 +1127,6 @@ $left-gutter: 64px;
                 &::before {
                     /* Apply the same value as the main timeline */
                     inset-inline: calc(-1 * var(--EventTile_bubble-margin-inline-start)) 0;
-                }
-
-                /* Not available on the actual UI anyway as the hidden event expand button is hidden above */
-                .mx_ViewSourceEvent {
-                    flex: auto; /* Fill the line */
                 }
 
                 .mx_ReadReceiptGroup {
