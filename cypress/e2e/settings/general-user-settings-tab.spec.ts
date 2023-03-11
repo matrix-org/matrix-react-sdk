@@ -38,7 +38,6 @@ describe("General user settings tab", () => {
         cy.openUserSettings("General");
         cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab").within(() => {
             cy.get("[data-testid='general']").should("have.text", "General");
-        });
 
         // Check a random userId exists
         cy.contains(".mx_ProfileSettings_profile_controls_userId", ":localhost");
@@ -71,12 +70,13 @@ describe("General user settings tab", () => {
         cy.contains(".mx_SetIntegrationManager .mx_SetIntegrationManager_heading_manager", "scalar.vector.im");
 
         // Make sure integration manager's toggle switch is enabled
-        cy.get(".mx_GeneralUserSettingsTab .mx_SetIntegrationManager .mx_ToggleSwitch_enabled").should("exist");
+        cy.get(".mx_SetIntegrationManager .mx_ToggleSwitch_enabled").should("exist");
 
         // Make sure the account deactivation button is displayed
         cy.get(
             ".mx_SettingsTab_section[data-testid='account-management-section'] .mx_AccessibleButton_kind_danger",
         ).should("have.text", "Deactivate Account");
+        });
 
         // Exclude the random userId from snapshot
         const percyCSS = ".mx_ProfileSettings_profile_controls_userId { visibility: hidden !important; }";
