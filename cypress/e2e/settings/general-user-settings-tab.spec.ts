@@ -40,8 +40,13 @@ describe("General user settings tab", () => {
             // Ensure the top heading is rendered
             cy.get("[data-testid='general']").should("have.text", "General");
 
-            // Check a random userId exists
-            cy.contains(".mx_ProfileSettings_profile_controls_userId", ":localhost");
+            cy.get(".mx_ProfileSettings_profile").within(() => {
+                // Check USER_NAME
+                cy.get(`input[value='${USER_NAME}']`).should("exist");
+
+                // Check a random userId exists
+                cy.contains(".mx_ProfileSettings_profile_controls_userId", ":localhost");
+            });
 
             // Wait until spinners disappear
             cy.get(".mx_GeneralUserSettingsTab_accountSection .mx_Spinner").should("not.exist");
