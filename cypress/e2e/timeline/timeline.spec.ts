@@ -75,6 +75,32 @@ describe("Timeline", () => {
     let oldAvatarUrl: string;
     let newAvatarUrl: string;
 
+    // View the room with a specified layout, waiting for confirmation message
+    const viewRoomByLayout = (layout: string) => {
+        // Select the layout of the room which should be visited
+        if (layout == "IRC") {
+            // Enable IRC layout
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
+        } else if (layout == "Group") {
+            // Enable modern layout. Traditionally modern layout has been specified with "Group"
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+        } else if (layout == "Bubble") {
+            // Enable bubble message layout
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
+        }
+
+        // Visit the room
+        cy.visit("/#/room/" + roomId);
+
+        // Wait until configuration is finished
+        cy.contains(
+            ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=" +
+                layout.toLowerCase() + // Ensure GELS (generic event list summary) is specified with the layout variable
+                "] .mx_GenericEventListSummary_summary",
+            "created and configured the room.",
+        ).should("exist");
+    };
+
     beforeEach(() => {
         cy.startHomeserver("default").then((data) => {
             homeserver = data;
@@ -153,13 +179,7 @@ describe("Timeline", () => {
         });
 
         it("should create and configure a room on IRC layout", () => {
-            cy.visit("/#/room/" + roomId);
-            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=irc] " +
-                    ".mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            viewRoomByLayout("IRC");
 
             // Check room name line-height is reset
             cy.get(".mx_IRCLayout .mx_NewRoomIntro h2").should("have.css", "line-height", "normal");
@@ -168,14 +188,7 @@ describe("Timeline", () => {
         });
 
         it("should add inline start margin to an event line on IRC layout", () => {
-            cy.visit("/#/room/" + roomId);
-            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
-
-            // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary " + ".mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            viewRoomByLayout("IRC");
 
             // Click "expand" link button
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
@@ -208,14 +221,7 @@ describe("Timeline", () => {
             // Exclude timestamp from snapshot of mx_MainSplit
             const percyCSS = ".mx_MainSplit .mx_MessageTimestamp { visibility: hidden !important; }";
 
-            cy.visit("/#/room/" + roomId);
-            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
-
-            // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            viewRoomByLayout("IRC");
 
             // Send messages
             cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("Hello Mr. Bot{enter}");
@@ -313,19 +319,11 @@ describe("Timeline", () => {
             sendEvent(roomId); // check continuation
             sendEvent(roomId); // check the last EventTile
 
-            cy.visit("/#/room/" + roomId);
-
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // IRC layout
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
-
-            // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=irc] .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            viewRoomByLayout("IRC");
 
             cy.get(".mx_RoomView_body[data-layout=irc]").within(() => {
                 // Ensure CSS declarations which cannot be detected with a screenshot test are applied as expected
@@ -424,12 +422,8 @@ describe("Timeline", () => {
 
         it("should set inline start padding to a hidden event line", () => {
             sendEvent(roomId);
-            cy.visit("/#/room/" + roomId);
             cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            viewRoomByLayout("Group");
 
             // Edit message
             cy.contains(".mx_RoomView_body .mx_EventTile .mx_EventTile_line", "Message").within(() => {
@@ -476,12 +470,8 @@ describe("Timeline", () => {
             const percyCSS = ".mx_MessageTimestamp { visibility: hidden !important; }";
 
             sendEvent(roomId);
-            cy.visit("/#/room/" + roomId);
             cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary " + ".mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            viewRoomByLayout("Group");
 
             // Edit message
             cy.contains(".mx_RoomView_body .mx_EventTile .mx_EventTile_line", "Message").within(() => {
@@ -542,13 +532,7 @@ describe("Timeline", () => {
         });
 
         it("should click 'collapse' link button on the first hovered info event line on bubble layout", () => {
-            cy.visit("/#/room/" + roomId);
-            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=bubble] " +
-                    ".mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            viewRoomByLayout("Bubble");
 
             // Click "expand" link button
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
@@ -564,7 +548,7 @@ describe("Timeline", () => {
         it("should highlight search result words regardless of formatting", () => {
             sendEvent(roomId);
             sendEvent(roomId, true);
-            cy.visit("/#/room/" + roomId);
+            viewRoomByLayout("Group");
 
             cy.get(".mx_RoomHeader_searchButton").click();
             cy.get(".mx_SearchBar_input input").type("Message{enter}");
@@ -601,7 +585,7 @@ describe("Timeline", () => {
                 msgtype: "m.text" as MsgType,
                 body: "https://call.element.io/",
             });
-            cy.visit("/#/room/" + roomId);
+            viewRoomByLayout("Group");
 
             cy.get(".mx_LinkPreviewWidget").should("exist").should("contain.text", "Element Call");
 
@@ -623,8 +607,7 @@ describe("Timeline", () => {
         const MESSAGE = "Hello world";
         const reply = "Reply";
         const viewRoomSendMessageAndSetupReply = () => {
-            // View room
-            cy.visit("/#/room/" + roomId);
+            viewRoomByLayout("Group");
 
             // Send a message
             cy.getComposer().type(`${MESSAGE}{enter}`);
@@ -670,7 +653,7 @@ describe("Timeline", () => {
         });
 
         it("should not be possible to send flag with regional emojis", () => {
-            cy.visit("/#/room/" + roomId);
+            viewRoomByLayout("Group");
 
             // Send a message
             cy.getComposer().type(":regional_indicator_a");
@@ -706,13 +689,7 @@ describe("Timeline", () => {
                 });
             };
 
-            cy.visit("/#/room/" + roomId);
-
-            // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            viewRoomByLayout("Group");
 
             // Create a bot "BotBob" and invite it
             cy.getBot(homeserver, {
@@ -814,14 +791,9 @@ describe("Timeline", () => {
                     roomId = _roomId;
                     cy.inviteUser(roomId, bot.getUserId());
                     bot.joinRoom(roomId);
-                    cy.visit("/#/room/" + roomId);
-                });
 
-            // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+                    viewRoomByLayout("Group");
+                });
 
             // Set the display name to "LONG_STRING 2" in order to avoid a warning in Percy tests from being triggered
             // due to the generated random mxid being displayed inside the GELS summary.
