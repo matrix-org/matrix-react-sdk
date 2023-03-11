@@ -46,6 +46,17 @@ describe("General user settings tab", () => {
 
                 // Check a random userId exists
                 cy.contains(".mx_ProfileSettings_profile_controls_userId", ":localhost");
+
+                // Check avatar setting
+                cy.get(".mx_AvatarSetting_avatar")
+                    .should("exist")
+                    .realHover()
+                    .get(".mx_AvatarSetting_avatar_hovering")
+                    .within(() => {
+                        // Hover effect
+                        cy.get(".mx_AvatarSetting_hoverBg").should("exist");
+                        cy.contains(".mx_AvatarSetting_hover span", "Upload");
+                    });
             });
 
             // Wait until spinners disappear
