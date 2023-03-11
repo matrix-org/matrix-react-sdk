@@ -71,15 +71,44 @@ describe("General user settings tab", () => {
                 cy.get("input[label='Confirm password']").should("exist");
             });
 
-            // Check an input area for a new email address exists
-            cy.get("form.mx_EmailAddresses_new input[label='Email Address']").should("exist");
+            // Check phone numbers area
+            cy.get(".mx_PhoneNumbers").within(() => {
+                // Check form of a new phone number
+                cy.get("form.mx_PhoneNumbers_new").within(() => {
+                    // Check an input area for a new phone number exists
+                    cy.get("input[label='Phone Number']").should("exist");
 
-            // Check an input area for a new phone exists
-            cy.get("form.mx_PhoneNumbers_new input[label='Phone Number']").should("exist");
-            cy.contains("#mx_CountryDropdown_value", "+44");
+                    // Check a new phone number dropdown menu
+                    cy.get(".mx_PhoneNumbers_country").within(() => {
+                        // Check the default value
+                        cy.contains("#mx_CountryDropdown_value", "+44");
 
-            // Check language dropdown menu
-            cy.get(".mx_GeneralUserSettingsTab_languageInput").should("have.text", "English");
+                        // Ensure the list item is rendered inside the dropdown
+                        cy.get(".mx_Dropdown_input[aria-expanded='false']")
+                            .should("exist")
+                            .click()
+                            .within(() => {
+                                cy.get("[aria-activedescendant='mx_CountryDropdown__GB']").should("exist");
+                            })
+                            .click(); // Click again to close the dropdown
+                    });
+                });
+            });
+
+            // Check language and region setting dropdown
+            cy.get(".mx_GeneralUserSettingsTab_languageInput").within(() => {
+                // Check the default value
+                cy.contains("#mx_LanguageDropdown_value", "English");
+
+                // Ensure the list item is rendered inside the dropdown
+                cy.get(".mx_Dropdown_input[aria-expanded='false']")
+                    .should("exist")
+                    .click()
+                    .within(() => {
+                        cy.get("[aria-activedescendant='mx_LanguageDropdown__id']").should("exist");
+                    })
+                    .click(); // Click again to close the dropdown
+            });
 
             // Check an input area for identity server exists
             cy.get("form.mx_SetIdServer input[label='Enter a new identity server']").should("exist");
