@@ -45,7 +45,7 @@ describe("General user settings tab", () => {
                 // Check USER_NAME
                 cy.get(`input[value='${USER_NAME}']`).should("exist");
 
-                // Check a random userId exists
+                // Ensure a random userId exists
                 cy.contains(".mx_ProfileSettings_profile_controls_userId", ":localhost");
 
                 // Check avatar setting
@@ -64,7 +64,7 @@ describe("General user settings tab", () => {
             cy.get(".mx_GeneralUserSettingsTab_accountSection .mx_Spinner").should("not.exist");
             cy.get(".mx_GeneralUserSettingsTab_discovery .mx_Spinner").should("not.exist");
 
-            // Check input areas for password change exist
+            // Ensure input areas for password change exist
             cy.get("form.mx_GeneralUserSettingsTab_changePassword").within(() => {
                 cy.get("input[label='Current password']").should("exist");
                 cy.get("input[label='New password']").should("exist");
@@ -75,7 +75,7 @@ describe("General user settings tab", () => {
             cy.get(".mx_PhoneNumbers").within(() => {
                 // Check form of a new phone number
                 cy.get("form.mx_PhoneNumbers_new").within(() => {
-                    // Check an input area for a new phone number exists
+                    // Ensure an input area for a new phone number exists
                     cy.get("input[label='Phone Number']").should("exist");
 
                     // Check a new phone number dropdown menu
@@ -110,7 +110,7 @@ describe("General user settings tab", () => {
                     .click(); // Click again to close the dropdown
             });
 
-            // Check an input area for identity server exists
+            // Ensure an input area for identity server exists
             cy.get("form.mx_SetIdServer input[label='Enter a new identity server']").should("exist");
 
             // Check default integration manager
