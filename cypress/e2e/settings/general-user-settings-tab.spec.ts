@@ -37,6 +37,7 @@ describe("General user settings tab", () => {
     it("render general user settings tab", () => {
         cy.openUserSettings("General");
         cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab").within(() => {
+            // Ensure the top heading is rendered
             cy.get("[data-testid='general']").should("have.text", "General");
 
             // Check a random userId exists
