@@ -19,6 +19,7 @@ limitations under the License.
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 
 const USER_NAME = "Alice";
+const IntegrationManager = "scalar.vector.im";
 
 describe("General user settings tab", () => {
     let homeserver: HomeserverInstance;
@@ -85,7 +86,7 @@ describe("General user settings tab", () => {
 
             // Check default integration manager
             cy.get(".mx_SetIntegrationManager").within(() => {
-                cy.contains(".mx_SetIntegrationManager_heading_manager", "scalar.vector.im");
+                cy.contains(".mx_SetIntegrationManager_heading_manager", IntegrationManager);
 
                 // Make sure integration manager's toggle switch is enabled
                 cy.get(".mx_ToggleSwitch_enabled").should("exist");
