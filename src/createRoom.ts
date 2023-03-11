@@ -66,6 +66,7 @@ export interface IOpts {
     // contextually only makes sense if parentSpace is specified, if true then will be added to parentSpace as suggested
     suggested?: boolean;
     joinRule?: JoinRule;
+    useMls?: boolean;
 }
 
 const DEFAULT_EVENT_POWER_LEVELS = {
@@ -208,7 +209,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
             type: "m.room.encryption",
             state_key: "",
             content: {
-                algorithm: "m.megolm.v1.aes-sha2",
+                algorithm: opts.useMls ? "org.matrix.msc2883.v0.mls.dhkemx25519-aes128gcm-sha256-ed25519" : "m.megolm.v1.aes-sha2",
             },
         });
     }
@@ -314,6 +315,11 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
             });
 
             if (opts.dmUserId) await Rooms.setDMRoom(roomId, opts.dmUserId);
+        })
+        .then(() => {
+            if (opts.encryption && opts.useMls) {
+                client.crypto.mlsProvider.createGroup(roomId);
+            }
         })
         .then(() => {
             if (opts.parentSpace) {
