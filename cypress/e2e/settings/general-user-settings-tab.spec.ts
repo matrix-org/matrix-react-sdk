@@ -35,7 +35,7 @@ describe("General user settings tab", () => {
         cy.stopHomeserver(homeserver);
     });
 
-    it("render general user settings tab", () => {
+    it("should render general user settings tab", () => {
         cy.openUserSettings("General");
         cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab").within(() => {
             // Ensure the top heading is rendered
