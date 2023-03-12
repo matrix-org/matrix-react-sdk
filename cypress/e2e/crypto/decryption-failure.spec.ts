@@ -114,7 +114,7 @@ describe("Decryption Failure Bar", () => {
                 .then(() => {
                     cy.botSendMessage(bot, roomId, "test");
                     cy.contains(
-                        ".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline",
+                        ".mx_DecryptionFailureBar .mx_DecryptionFailureBar__header__headline",
                         "Verify this device to access all messages",
                     );
 
@@ -125,8 +125,10 @@ describe("Decryption Failure Bar", () => {
                         },
                     );
 
-                    cy.contains(".mx_DecryptionFailureBar_button", "Resend key requests").should("not.exist");
-                    cy.contains(".mx_DecryptionFailureBar_button", "Verify").click();
+                    cy.contains(".mx_DecryptionFailureBar__header__buttons__button", "Resend key requests").should(
+                        "not.exist",
+                    );
+                    cy.contains(".mx_DecryptionFailureBar__header__buttons__button", "Verify").click();
 
                     const verificationRequestPromise = waitForVerificationRequest(otherDevice);
                     cy.get(".mx_CompleteSecurity_actionRow .mx_AccessibleButton").click();
@@ -146,7 +148,7 @@ describe("Decryption Failure Bar", () => {
             cy.get(".mx_VerificationPanel_verified_section .mx_E2EIcon_verified").should("exist");
             cy.contains(".mx_AccessibleButton", "Got it").click();
 
-            cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline").should(
+            cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar__header__headline").should(
                 "have.text",
                 "Open another device to load encrypted messages",
             );
@@ -159,9 +161,9 @@ describe("Decryption Failure Bar", () => {
             );
 
             cy.intercept("/_matrix/client/r0/sendToDevice/m.room_key_request/*").as("keyRequest");
-            cy.contains(".mx_DecryptionFailureBar_button", "Resend key requests").click();
+            cy.contains(".mx_DecryptionFailureBar__header__buttons__button", "Resend key requests").click();
             cy.wait("@keyRequest");
-            cy.contains(".mx_DecryptionFailureBar_button", "Resend key requests").should("not.exist");
+            cy.contains(".mx_DecryptionFailureBar__header__buttons__button", "Resend key requests").should("not.exist");
 
             cy.get(".mx_DecryptionFailureBar").percySnapshotElement(
                 "DecryptionFailureBar prompts user to open another device, without Resend Key Requests button",
@@ -184,7 +186,7 @@ describe("Decryption Failure Bar", () => {
 
             cy.botSendMessage(bot, roomId, "test");
             cy.contains(
-                ".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline",
+                ".mx_DecryptionFailureBar .mx_DecryptionFailureBar__header__headline",
                 "Reset your keys to prevent future decryption errors",
             );
 
@@ -192,7 +194,7 @@ describe("Decryption Failure Bar", () => {
                 widths: [320, 640],
             });
 
-            cy.contains(".mx_DecryptionFailureBar_button", "Reset").click();
+            cy.contains(".mx_DecryptionFailureBar__header__buttons__button", "Reset").click();
 
             // Set up key backup
             cy.get(".mx_Dialog").within(() => {
@@ -204,7 +206,7 @@ describe("Decryption Failure Bar", () => {
                 cy.contains("Done").click();
             });
 
-            cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline").should(
+            cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar__header__headline").should(
                 "have.text",
                 "Some messages could not be decrypted",
             );
@@ -235,7 +237,7 @@ describe("Decryption Failure Bar", () => {
 
         cy.wait(5000);
         cy.get(".mx_DecryptionFailureBar .mx_Spinner").should("not.exist");
-        cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_icon").should("exist");
+        cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar__icon").should("exist");
 
         cy.get(".mx_RoomView_messagePanel").scrollTo("top");
         cy.get(".mx_DecryptionFailureBar").should("not.exist");

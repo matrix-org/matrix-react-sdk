@@ -145,14 +145,14 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
         store.resetConfirm();
     };
 
-    const statusIndicator = waiting ? <Spinner /> : <div className="mx_DecryptionFailureBar_icon" />;
+    const statusIndicator = waiting ? <Spinner /> : <div className="mx_DecryptionFailureBar__icon" />;
 
     let headline: JSX.Element;
-    let body: JSX.Element;
+    let message: JSX.Element;
     let button = <React.Fragment />;
     if (waiting) {
         headline = <React.Fragment>{_t("Decrypting messages…")}</React.Fragment>;
-        body = (
+        message = (
             <React.Fragment>
                 {_t("Please wait as we try to decrypt your messages. This may take a few moments.")}
             </React.Fragment>
@@ -160,19 +160,23 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
     } else if (needsVerification) {
         if (hasOtherVerifiedDevices || hasKeyBackup) {
             headline = <React.Fragment>{_t("Verify this device to access all messages")}</React.Fragment>;
-            body = (
+            message = (
                 <React.Fragment>
                     {_t("This device was unable to decrypt some messages because it has not been verified yet.")}
                 </React.Fragment>
             );
             button = (
-                <AccessibleButton kind="primary" onClick={onVerifyClick}>
+                <AccessibleButton
+                    className="mx_DecryptionFailureBar__header__buttons__button"
+                    kind="primary"
+                    onClick={onVerifyClick}
+                >
                     {_t("Verify")}
                 </AccessibleButton>
             );
         } else {
             headline = <React.Fragment>{_t("Reset your keys to prevent future decryption errors")}</React.Fragment>;
-            body = (
+            message = (
                 <React.Fragment>
                     {_t(
                         "You will not be able to access old undecryptable messages, " +
@@ -181,14 +185,18 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
                 </React.Fragment>
             );
             button = (
-                <AccessibleButton kind="primary" onClick={onResetClick}>
+                <AccessibleButton
+                    className="mx_DecryptionFailureBar__header__buttons__button"
+                    kind="primary"
+                    onClick={onResetClick}
+                >
                     {_t("Reset")}
                 </AccessibleButton>
             );
         }
     } else if (hasOtherVerifiedDevices) {
         headline = <React.Fragment>{_t("Open another device to load encrypted messages")}</React.Fragment>;
-        body = (
+        message = (
             <React.Fragment>
                 {_t(
                     "This device is requesting decryption keys from your other devices. " +
@@ -197,13 +205,17 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
             </React.Fragment>
         );
         button = (
-            <AccessibleButton kind="primary_outline" onClick={onDeviceListClick}>
+            <AccessibleButton
+                className="mx_DecryptionFailureBar__header__buttons__button"
+                kind="primary_outline"
+                onClick={onDeviceListClick}
+            >
                 {_t("View your device list")}
             </AccessibleButton>
         );
     } else {
         headline = <React.Fragment>{_t("Some messages could not be decrypted")}</React.Fragment>;
-        body = (
+        message = (
             <React.Fragment>
                 {_t(
                     "Unfortunately, there are no other verified devices to request decryption keys from. " +
@@ -216,23 +228,27 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
     let keyRequestButton = <React.Fragment />;
     if (!needsVerification && hasOtherVerifiedDevices && anyUnrequestedSessions) {
         keyRequestButton = (
-            <div className="mx_DecryptionFailureBar_button">
-                <AccessibleButton kind="primary" onClick={sendKeyRequests}>
-                    {_t("Resend key requests")}
-                </AccessibleButton>
-            </div>
+            <AccessibleButton
+                className="mx_DecryptionFailureBar__header__buttons__button"
+                kind="primary"
+                onClick={sendKeyRequests}
+            >
+                {_t("Resend key requests")}
+            </AccessibleButton>
         );
     }
 
     return (
         <div className="mx_DecryptionFailureBar">
             {statusIndicator}
-            <div className="mx_DecryptionFailureBar_message">
-                <div className="mx_DecryptionFailureBar_message_headline">{headline}</div>
-                <div className="mx_DecryptionFailureBar_message_body">{body}</div>
+            <div className="mx_DecryptionFailureBar__header">
+                <div className="mx_DecryptionFailureBar__header__headline">{headline}</div>
+                <div className="mx_DecryptionFailureBar__header__buttons">
+                    {button}
+                    {keyRequestButton}
+                </div>
             </div>
-            <div className="mx_DecryptionFailureBar_button">{button}</div>
-            {keyRequestButton}
+            <div className="mx_DecryptionFailureBar__message">{message}</div>
         </div>
     );
 };

@@ -15,46 +15,63 @@ limitations under the License.
 */
 
 .mx_DecryptionFailureBar {
+    --gap: $spacing-8 $spacing-12;
+
+    display: grid;
+    grid-template-areas:
+        "icon header  header"
+        ".    message message"; /* Empty grid item under grid-area "icon" */
+    grid-template-columns: min-content auto auto;
+    align-items: start;
+
     background-color: $system;
     padding: $spacing-12;
-    margin-left: $spacing-16;
-    margin-right: $spacing-16;
+    margin-inline: $spacing-16;
     border-radius: 4px;
-    display: flex;
-    align-items: flex-start;
-    gap: $spacing-12;
-}
+    gap: var(--gap);
 
-.mx_DecryptionFailureBar_icon {
-    width: 24px;
-    height: 24px;
-    mask-image: url("$(res)/img/e2e/decryption-failure.svg");
-    background-color: $e2e-warning-color;
-    mask-repeat: no-repeat;
-    mask-position: center;
-    mask-size: contain;
-}
+    .mx_DecryptionFailureBar__icon,
+    .mx_Spinner {
+        align-self: start;
+    }
 
-.mx_DecryptionFailureBar_icon,
-.mx_DecryptionFailureBar .mx_Spinner {
-    flex-shrink: 0;
-    flex-grow: 0;
-}
+    .mx_DecryptionFailureBar__icon {
+        --size: 24px;
 
-.mx_DecryptionFailureBar_message {
-    flex-grow: 1;
-}
+        grid-area: icon;
 
-.mx_DecryptionFailureBar_message_headline {
-    font-weight: $font-semi-bold;
-    font-size: $font-16px;
-    margin-bottom: $spacing-4;
-}
+        width: var(--size);
+        height: var(--size);
+        mask-image: url("$(res)/img/e2e/decryption-failure.svg");
+        background-color: $e2e-warning-color;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: contain;
+    }
 
-.mx_DecryptionFailureBar_message_body {
-    color: $secondary-content;
-}
+    .mx_DecryptionFailureBar__header {
+        grid-area: header;
 
-.mx_DecryptionFailureBar_button {
-    flex-shrink: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: var(--gap);
+
+        .mx_DecryptionFailureBar__header__headline {
+            font-weight: $font-semi-bold;
+            font-size: $font-16px;
+        }
+
+        .mx_DecryptionFailureBar__header__buttons {
+            display: flex;
+            flex-wrap: wrap; /* Let the buttons wrapped on a narrow column */
+            gap: var(--gap);
+        }
+    }
+
+    .mx_DecryptionFailureBar__message {
+        grid-area: message;
+
+        color: $secondary-content;
+    }
 }
