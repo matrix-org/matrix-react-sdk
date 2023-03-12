@@ -22,7 +22,8 @@ exports[`<DecryptionFailureBar /> Displays a general error message if there are 
   <div
     class="mx_DecryptionFailureBar__message"
   >
-    Unfortunately, there are no other verified devices to request decryption keys from. Signing in and verifying other devices may help avoid this situation in the future.
+    Unfortunately, there are no other verified devices to request decryption keys from.
+Signing in and verifying other devices may help avoid this situation in the future.
   </div>
 </div>
 `;
@@ -99,7 +100,8 @@ exports[`<DecryptionFailureBar /> Displays button to resend key requests if we a
   <div
     class="mx_DecryptionFailureBar__message"
   >
-    This device is requesting decryption keys from your other devices. Opening one of your other devices may speed this up.
+    This device is requesting decryption keys from your other devices.
+Opening one of your other devices may speed this up.
   </div>
 </div>
 `;
@@ -134,7 +136,8 @@ exports[`<DecryptionFailureBar /> Displays button to resend key requests if we a
   <div
     class="mx_DecryptionFailureBar__message"
   >
-    This device is requesting decryption keys from your other devices. Opening one of your other devices may speed this up.
+    This device is requesting decryption keys from your other devices.
+Opening one of your other devices may speed this up.
   </div>
 </div>
 `;
@@ -176,7 +179,8 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
   <div
     class="mx_DecryptionFailureBar__message"
   >
-    This device is requesting decryption keys from your other devices. Opening one of your other devices may speed this up.
+    This device is requesting decryption keys from your other devices.
+Opening one of your other devices may speed this up.
   </div>
 </div>
 `;
@@ -211,7 +215,8 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
   <div
     class="mx_DecryptionFailureBar__message"
   >
-    This device is requesting decryption keys from your other devices. Opening one of your other devices may speed this up.
+    This device is requesting decryption keys from your other devices.
+Opening one of your other devices may speed this up.
   </div>
 </div>
 `;
@@ -253,7 +258,8 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
   <div
     class="mx_DecryptionFailureBar__message"
   >
-    This device is requesting decryption keys from your other devices. Opening one of your other devices may speed this up.
+    This device is requesting decryption keys from your other devices.
+Opening one of your other devices may speed this up.
   </div>
 </div>
 `;
@@ -288,7 +294,8 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
   <div
     class="mx_DecryptionFailureBar__message"
   >
-    This device is requesting decryption keys from your other devices. Opening one of your other devices may speed this up.
+    This device is requesting decryption keys from your other devices.
+Opening one of your other devices may speed this up.
   </div>
 </div>
 `;
@@ -400,7 +407,8 @@ exports[`<DecryptionFailureBar /> Handles device updates 2`] = `
   <div
     class="mx_DecryptionFailureBar__message"
   >
-    This device is requesting decryption keys from your other devices. Opening one of your other devices may speed this up.
+    This device is requesting decryption keys from your other devices.
+Opening one of your other devices may speed this up.
   </div>
 </div>
 `;
@@ -435,7 +443,8 @@ exports[`<DecryptionFailureBar /> Prompts the user to reset if they have no othe
   <div
     class="mx_DecryptionFailureBar__message"
   >
-    You will not be able to access old undecryptable messages, but resetting your keys will allow you to receive new messages.
+    You will not be able to access old undecryptable messages,
+but resetting your keys will allow you to receive new messages.
   </div>
 </div>
 `;
@@ -547,7 +556,8 @@ exports[`<DecryptionFailureBar /> Recommends opening other devices if there are 
   <div
     class="mx_DecryptionFailureBar__message"
   >
-    This device is requesting decryption keys from your other devices. Opening one of your other devices may speed this up.
+    This device is requesting decryption keys from your other devices.
+Opening one of your other devices may speed this up.
   </div>
 </div>
 `;

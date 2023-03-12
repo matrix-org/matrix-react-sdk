@@ -179,7 +179,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
             message = (
                 <React.Fragment>
                     {_t(
-                        "You will not be able to access old undecryptable messages, " +
+                        "You will not be able to access old undecryptable messages,\n" +
                             "but resetting your keys will allow you to receive new messages.",
                     )}
                 </React.Fragment>
@@ -199,7 +199,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
         message = (
             <React.Fragment>
                 {_t(
-                    "This device is requesting decryption keys from your other devices. " +
+                    "This device is requesting decryption keys from your other devices.\n" +
                         "Opening one of your other devices may speed this up.",
                 )}
             </React.Fragment>
@@ -218,7 +218,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
         message = (
             <React.Fragment>
                 {_t(
-                    "Unfortunately, there are no other verified devices to request decryption keys from. " +
+                    "Unfortunately, there are no other verified devices to request decryption keys from.\n" +
                         "Signing in and verifying other devices may help avoid this situation in the future.",
                 )}
             </React.Fragment>
