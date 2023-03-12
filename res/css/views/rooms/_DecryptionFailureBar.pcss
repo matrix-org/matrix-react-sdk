@@ -19,8 +19,8 @@ limitations under the License.
 
     display: grid;
     grid-template-areas:
-        "icon header  header"
-        ".    message message"; /* Empty grid item under grid-area "icon" */
+        "indicator header  header"
+        ".         message message"; /* Empty grid item under grid-area "indicator" */
     grid-template-columns: min-content auto auto;
     align-items: start;
 
@@ -30,19 +30,21 @@ limitations under the License.
     border-radius: 4px;
     gap: var(--gap);
 
-    .mx_DecryptionFailureBar__icon,
-    .mx_Spinner {
-        align-self: start;
-    }
+    .mx_DecryptionFailureBar__indicator {
+        grid-area: indicator;
 
-    .mx_Spinner {
-        height: unset; /* Unset height: 100% */
+        .mx_Spinner,
+        .mx_DecryptionFailureBar__icon {
+            align-self: start;
+        }
+
+        .mx_Spinner {
+            height: unset; /* Unset height: 100% */
+        }
     }
 
     .mx_DecryptionFailureBar__icon {
         --size: 24px;
-
-        grid-area: icon;
 
         width: var(--size);
         height: var(--size);

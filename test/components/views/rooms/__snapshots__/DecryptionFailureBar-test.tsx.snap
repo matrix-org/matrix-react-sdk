@@ -5,8 +5,13 @@ exports[`<DecryptionFailureBar /> Displays a general error message if there are 
   class="mx_DecryptionFailureBar"
 >
   <div
-    class="mx_DecryptionFailureBar__icon"
-  />
+    class="mx_DecryptionFailureBar__indicator"
+    data-testid="decryption-failure-bar-indicator"
+  >
+    <div
+      class="mx_DecryptionFailureBar__icon"
+    />
+  </div>
   <div
     class="mx_DecryptionFailureBar__header"
   >
@@ -33,15 +38,20 @@ exports[`<DecryptionFailureBar /> Displays a loading spinner 1`] = `
   class="mx_DecryptionFailureBar"
 >
   <div
-    class="mx_Spinner"
+    class="mx_DecryptionFailureBar__indicator"
+    data-testid="decryption-failure-bar-indicator"
   >
     <div
-      aria-label="Loading…"
-      class="mx_Spinner_icon"
-      data-testid="spinner"
-      role="progressbar"
-      style="width: 32px; height: 32px;"
-    />
+      class="mx_Spinner"
+    >
+      <div
+        aria-label="Loading…"
+        class="mx_Spinner_icon"
+        data-testid="spinner"
+        role="progressbar"
+        style="width: 32px; height: 32px;"
+      />
+    </div>
   </div>
   <div
     class="mx_DecryptionFailureBar__header"
@@ -68,8 +78,13 @@ exports[`<DecryptionFailureBar /> Displays button to resend key requests if we a
   class="mx_DecryptionFailureBar"
 >
   <div
-    class="mx_DecryptionFailureBar__icon"
-  />
+    class="mx_DecryptionFailureBar__indicator"
+    data-testid="decryption-failure-bar-indicator"
+  >
+    <div
+      class="mx_DecryptionFailureBar__icon"
+    />
+  </div>
   <div
     class="mx_DecryptionFailureBar__header"
   >
@@ -83,6 +98,7 @@ exports[`<DecryptionFailureBar /> Displays button to resend key requests if we a
     >
       <div
         class="mx_AccessibleButton mx_DecryptionFailureBar__header__buttons__button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+        data-testid="decryption-failure-bar-button"
         role="button"
         tabindex="0"
       >
@@ -90,6 +106,7 @@ exports[`<DecryptionFailureBar /> Displays button to resend key requests if we a
       </div>
       <div
         class="mx_AccessibleButton mx_DecryptionFailureBar__header__buttons__button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+        data-testid="decryption-failure-bar-button"
         role="button"
         tabindex="0"
       >
@@ -111,8 +128,13 @@ exports[`<DecryptionFailureBar /> Displays button to resend key requests if we a
   class="mx_DecryptionFailureBar"
 >
   <div
-    class="mx_DecryptionFailureBar__icon"
-  />
+    class="mx_DecryptionFailureBar__indicator"
+    data-testid="decryption-failure-bar-indicator"
+  >
+    <div
+      class="mx_DecryptionFailureBar__icon"
+    />
+  </div>
   <div
     class="mx_DecryptionFailureBar__header"
   >
@@ -126,6 +148,7 @@ exports[`<DecryptionFailureBar /> Displays button to resend key requests if we a
     >
       <div
         class="mx_AccessibleButton mx_DecryptionFailureBar__header__buttons__button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+        data-testid="decryption-failure-bar-button"
         role="button"
         tabindex="0"
       >
@@ -147,8 +170,13 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
   class="mx_DecryptionFailureBar"
 >
   <div
-    class="mx_DecryptionFailureBar__icon"
-  />
+    class="mx_DecryptionFailureBar__indicator"
+    data-testid="decryption-failure-bar-indicator"
+  >
+    <div
+      class="mx_DecryptionFailureBar__icon"
+    />
+  </div>
   <div
     class="mx_DecryptionFailureBar__header"
   >
@@ -162,6 +190,7 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
     >
       <div
         class="mx_AccessibleButton mx_DecryptionFailureBar__header__buttons__button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+        data-testid="decryption-failure-bar-button"
         role="button"
         tabindex="0"
       >
@@ -169,6 +198,7 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
       </div>
       <div
         class="mx_AccessibleButton mx_DecryptionFailureBar__header__buttons__button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+        data-testid="decryption-failure-bar-button"
         role="button"
         tabindex="0"
       >
@@ -190,8 +220,13 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
   class="mx_DecryptionFailureBar"
 >
   <div
-    class="mx_DecryptionFailureBar__icon"
-  />
+    class="mx_DecryptionFailureBar__indicator"
+    data-testid="decryption-failure-bar-indicator"
+  >
+    <div
+      class="mx_DecryptionFailureBar__icon"
+    />
+  </div>
   <div
     class="mx_DecryptionFailureBar__header"
   >
@@ -205,6 +240,7 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
     >
       <div
         class="mx_AccessibleButton mx_DecryptionFailureBar__header__buttons__button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+        data-testid="decryption-failure-bar-button"
         role="button"
         tabindex="0"
       >
@@ -226,8 +262,13 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
   class="mx_DecryptionFailureBar"
 >
   <div
-    class="mx_DecryptionFailureBar__icon"
-  />
+    class="mx_DecryptionFailureBar__indicator"
+    data-testid="decryption-failure-bar-indicator"
+  >
+    <div
+      class="mx_DecryptionFailureBar__icon"
+    />
+  </div>
   <div
     class="mx_DecryptionFailureBar__header"
   >
@@ -241,6 +282,7 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
     >
       <div
         class="mx_AccessibleButton mx_DecryptionFailureBar__header__buttons__button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+        data-testid="decryption-failure-bar-button"
         role="button"
         tabindex="0"
       >
@@ -248,6 +290,7 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
       </div>
       <div
         class="mx_AccessibleButton mx_DecryptionFailureBar__header__buttons__button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+        data-testid="decryption-failure-bar-button"
         role="button"
         tabindex="0"
       >
@@ -269,8 +312,13 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
   class="mx_DecryptionFailureBar"
 >
   <div
-    class="mx_DecryptionFailureBar__icon"
-  />
+    class="mx_DecryptionFailureBar__indicator"
+    data-testid="decryption-failure-bar-indicator"
+  >
+    <div
+      class="mx_DecryptionFailureBar__icon"
+    />
+  </div>
   <div
     class="mx_DecryptionFailureBar__header"
   >
@@ -284,6 +332,7 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
     >
       <div
         class="mx_AccessibleButton mx_DecryptionFailureBar__header__buttons__button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+        data-testid="decryption-failure-bar-button"
         role="button"
         tabindex="0"
       >
@@ -305,8 +354,13 @@ exports[`<DecryptionFailureBar /> Does not display a button to send key requests
   class="mx_DecryptionFailureBar"
 >
   <div
-    class="mx_DecryptionFailureBar__icon"
-  />
+    class="mx_DecryptionFailureBar__indicator"
+    data-testid="decryption-failure-bar-indicator"
+  >
+    <div
+      class="mx_DecryptionFailureBar__icon"
+    />
+  </div>
   <div
     class="mx_DecryptionFailureBar__header"
   >
@@ -320,6 +374,7 @@ exports[`<DecryptionFailureBar /> Does not display a button to send key requests
     >
       <div
         class="mx_AccessibleButton mx_DecryptionFailureBar__header__buttons__button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+        data-testid="decryption-failure-bar-button"
         role="button"
         tabindex="0"
       >
@@ -340,8 +395,13 @@ exports[`<DecryptionFailureBar /> Handles device updates 1`] = `
   class="mx_DecryptionFailureBar"
 >
   <div
-    class="mx_DecryptionFailureBar__icon"
-  />
+    class="mx_DecryptionFailureBar__indicator"
+    data-testid="decryption-failure-bar-indicator"
+  >
+    <div
+      class="mx_DecryptionFailureBar__icon"
+    />
+  </div>
   <div
     class="mx_DecryptionFailureBar__header"
   >
@@ -355,6 +415,7 @@ exports[`<DecryptionFailureBar /> Handles device updates 1`] = `
     >
       <div
         class="mx_AccessibleButton mx_DecryptionFailureBar__header__buttons__button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+        data-testid="decryption-failure-bar-button"
         role="button"
         tabindex="0"
       >
@@ -375,8 +436,13 @@ exports[`<DecryptionFailureBar /> Handles device updates 2`] = `
   class="mx_DecryptionFailureBar"
 >
   <div
-    class="mx_DecryptionFailureBar__icon"
-  />
+    class="mx_DecryptionFailureBar__indicator"
+    data-testid="decryption-failure-bar-indicator"
+  >
+    <div
+      class="mx_DecryptionFailureBar__icon"
+    />
+  </div>
   <div
     class="mx_DecryptionFailureBar__header"
   >
@@ -390,6 +456,7 @@ exports[`<DecryptionFailureBar /> Handles device updates 2`] = `
     >
       <div
         class="mx_AccessibleButton mx_DecryptionFailureBar__header__buttons__button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+        data-testid="decryption-failure-bar-button"
         role="button"
         tabindex="0"
       >
@@ -397,6 +464,7 @@ exports[`<DecryptionFailureBar /> Handles device updates 2`] = `
       </div>
       <div
         class="mx_AccessibleButton mx_DecryptionFailureBar__header__buttons__button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+        data-testid="decryption-failure-bar-button"
         role="button"
         tabindex="0"
       >
@@ -418,8 +486,13 @@ exports[`<DecryptionFailureBar /> Prompts the user to reset if they have no othe
   class="mx_DecryptionFailureBar"
 >
   <div
-    class="mx_DecryptionFailureBar__icon"
-  />
+    class="mx_DecryptionFailureBar__indicator"
+    data-testid="decryption-failure-bar-indicator"
+  >
+    <div
+      class="mx_DecryptionFailureBar__icon"
+    />
+  </div>
   <div
     class="mx_DecryptionFailureBar__header"
   >
@@ -433,6 +506,7 @@ exports[`<DecryptionFailureBar /> Prompts the user to reset if they have no othe
     >
       <div
         class="mx_AccessibleButton mx_DecryptionFailureBar__header__buttons__button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+        data-testid="decryption-failure-bar-button"
         role="button"
         tabindex="0"
       >
@@ -454,8 +528,13 @@ exports[`<DecryptionFailureBar /> Prompts the user to verify if they have backup
   class="mx_DecryptionFailureBar"
 >
   <div
-    class="mx_DecryptionFailureBar__icon"
-  />
+    class="mx_DecryptionFailureBar__indicator"
+    data-testid="decryption-failure-bar-indicator"
+  >
+    <div
+      class="mx_DecryptionFailureBar__icon"
+    />
+  </div>
   <div
     class="mx_DecryptionFailureBar__header"
   >
@@ -469,6 +548,7 @@ exports[`<DecryptionFailureBar /> Prompts the user to verify if they have backup
     >
       <div
         class="mx_AccessibleButton mx_DecryptionFailureBar__header__buttons__button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+        data-testid="decryption-failure-bar-button"
         role="button"
         tabindex="0"
       >
@@ -489,8 +569,13 @@ exports[`<DecryptionFailureBar /> Prompts the user to verify if they have other 
   class="mx_DecryptionFailureBar"
 >
   <div
-    class="mx_DecryptionFailureBar__icon"
-  />
+    class="mx_DecryptionFailureBar__indicator"
+    data-testid="decryption-failure-bar-indicator"
+  >
+    <div
+      class="mx_DecryptionFailureBar__icon"
+    />
+  </div>
   <div
     class="mx_DecryptionFailureBar__header"
   >
@@ -504,6 +589,7 @@ exports[`<DecryptionFailureBar /> Prompts the user to verify if they have other 
     >
       <div
         class="mx_AccessibleButton mx_DecryptionFailureBar__header__buttons__button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+        data-testid="decryption-failure-bar-button"
         role="button"
         tabindex="0"
       >
@@ -524,8 +610,13 @@ exports[`<DecryptionFailureBar /> Recommends opening other devices if there are 
   class="mx_DecryptionFailureBar"
 >
   <div
-    class="mx_DecryptionFailureBar__icon"
-  />
+    class="mx_DecryptionFailureBar__indicator"
+    data-testid="decryption-failure-bar-indicator"
+  >
+    <div
+      class="mx_DecryptionFailureBar__icon"
+    />
+  </div>
   <div
     class="mx_DecryptionFailureBar__header"
   >
@@ -539,6 +630,7 @@ exports[`<DecryptionFailureBar /> Recommends opening other devices if there are 
     >
       <div
         class="mx_AccessibleButton mx_DecryptionFailureBar__header__buttons__button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+        data-testid="decryption-failure-bar-button"
         role="button"
         tabindex="0"
       >
@@ -546,6 +638,7 @@ exports[`<DecryptionFailureBar /> Recommends opening other devices if there are 
       </div>
       <div
         class="mx_AccessibleButton mx_DecryptionFailureBar__header__buttons__button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+        data-testid="decryption-failure-bar-button"
         role="button"
         tabindex="0"
       >

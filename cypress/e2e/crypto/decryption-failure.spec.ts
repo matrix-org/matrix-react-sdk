@@ -57,6 +57,28 @@ const handleVerificationRequest = (request: VerificationRequest): Chainable<Emoj
     );
 };
 
+const checkTimelineNarrow = (button = true) => {
+    cy.viewport(800, 600); // SVGA
+    cy.get(".mx_LeftPanel_minimized").should("exist"); // Wait until the left panel is minimized
+    cy.get(".mx_RightPanel_roomSummaryButton").click(); // Open the right panel to make the timeline narrow
+    cy.get(".mx_BaseCard").should("exist");
+
+    // Ensure the failure bar does not cover the timeline
+    cy.get(".mx_EventTile.mx_EventTile_last").should("be.visible");
+
+    // Ensure the indicator does not overflow the timeline
+    cy.get("[data-testid='decryption-failure-bar-indicator']").should("be.visible");
+
+    if (button) {
+        // Ensure the button does not overflow the timeline
+        cy.get("[data-testid='decryption-failure-bar-button']:last-of-type").should("be.visible");
+    }
+
+    cy.get(".mx_RightPanel_roomSummaryButton").click(); // Close the right panel
+    cy.get(".mx_BaseCard").should("not.exist");
+    cy.viewport(1000, 660); // Reset to the default size
+};
+
 describe("Decryption Failure Bar", () => {
     let homeserver: HomeserverInstance | undefined;
     let testUser: UserCredentials | undefined;
@@ -113,10 +135,13 @@ describe("Decryption Failure Bar", () => {
                 })
                 .then(() => {
                     cy.botSendMessage(bot, roomId, "test");
+
                     cy.contains(
                         ".mx_DecryptionFailureBar .mx_DecryptionFailureBar__header__headline",
                         "Verify this device to access all messages",
                     );
+
+                    checkTimelineNarrow();
 
                     cy.get(".mx_DecryptionFailureBar").percySnapshotElement(
                         "DecryptionFailureBar prompts user to verify",
@@ -153,6 +178,8 @@ describe("Decryption Failure Bar", () => {
                 "Open another device to load encrypted messages",
             );
 
+            checkTimelineNarrow();
+
             cy.get(".mx_DecryptionFailureBar").percySnapshotElement(
                 "DecryptionFailureBar prompts user to open another device, with Resend Key Requests button",
                 {
@@ -164,6 +191,9 @@ describe("Decryption Failure Bar", () => {
             cy.contains(".mx_DecryptionFailureBar__header__buttons__button", "Resend key requests").click();
             cy.wait("@keyRequest");
             cy.contains(".mx_DecryptionFailureBar__header__buttons__button", "Resend key requests").should("not.exist");
+            cy.contains(".mx_DecryptionFailureBar__header__buttons__button", "View your device list").should("exist");
+
+            checkTimelineNarrow();
 
             cy.get(".mx_DecryptionFailureBar").percySnapshotElement(
                 "DecryptionFailureBar prompts user to open another device, without Resend Key Requests button",
@@ -190,6 +220,8 @@ describe("Decryption Failure Bar", () => {
                 "Reset your keys to prevent future decryption errors",
             );
 
+            checkTimelineNarrow();
+
             cy.get(".mx_DecryptionFailureBar").percySnapshotElement("DecryptionFailureBar prompts user to reset keys", {
                 widths: [320, 640],
             });
@@ -211,6 +243,8 @@ describe("Decryption Failure Bar", () => {
                 "Some messages could not be decrypted",
             );
 
+            checkTimelineNarrow(false); // button should not be rendered here
+
             cy.get(".mx_DecryptionFailureBar").percySnapshotElement(
                 "DecryptionFailureBar displays general message with no call to action",
                 {
@@ -230,6 +264,8 @@ describe("Decryption Failure Bar", () => {
         cy.get(".mx_DecryptionFailureBar").should("exist");
         cy.get(".mx_DecryptionFailureBar .mx_Spinner").should("exist");
 
+        checkTimelineNarrow();
+
         cy.get(".mx_DecryptionFailureBar").percySnapshotElement("DecryptionFailureBar displays loading spinner", {
             allowSpinners: true,
             widths: [320, 640],
@@ -247,5 +283,7 @@ describe("Decryption Failure Bar", () => {
 
         cy.get(".mx_RoomView_messagePanel").scrollTo("bottom");
         cy.get(".mx_DecryptionFailureBar").should("exist");
+
+        checkTimelineNarrow();
     });
 });

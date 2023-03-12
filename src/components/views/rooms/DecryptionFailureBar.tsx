@@ -170,6 +170,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
                     className="mx_DecryptionFailureBar__header__buttons__button"
                     kind="primary"
                     onClick={onVerifyClick}
+                    data-testid="decryption-failure-bar-button"
                 >
                     {_t("Verify")}
                 </AccessibleButton>
@@ -189,6 +190,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
                     className="mx_DecryptionFailureBar__header__buttons__button"
                     kind="primary"
                     onClick={onResetClick}
+                    data-testid="decryption-failure-bar-button"
                 >
                     {_t("Reset")}
                 </AccessibleButton>
@@ -209,6 +211,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
                 className="mx_DecryptionFailureBar__header__buttons__button"
                 kind="primary_outline"
                 onClick={onDeviceListClick}
+                data-testid="decryption-failure-bar-button"
             >
                 {_t("View your device list")}
             </AccessibleButton>
@@ -232,6 +235,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
                 className="mx_DecryptionFailureBar__header__buttons__button"
                 kind="primary"
                 onClick={sendKeyRequests}
+                data-testid="decryption-failure-bar-button"
             >
                 {_t("Resend key requests")}
             </AccessibleButton>
@@ -240,7 +244,9 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
 
     return (
         <div className="mx_DecryptionFailureBar">
-            {statusIndicator}
+            <div className="mx_DecryptionFailureBar__indicator" data-testid="decryption-failure-bar-indicator">
+                {statusIndicator}
+            </div>
             <div className="mx_DecryptionFailureBar__header">
                 <div className="mx_DecryptionFailureBar__header__headline">{headline}</div>
                 <div className="mx_DecryptionFailureBar__header__buttons">
