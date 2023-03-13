@@ -532,7 +532,7 @@ describe("RoomView", () => {
         });
 
         afterEach(() => {
-            jest.spyOn(logger, 'error').mockRestore();
+            jest.spyOn(logger, "error").mockRestore();
         });
 
         it("should display invite screen with join and reject buttons", async () => {
@@ -561,7 +561,7 @@ describe("RoomView", () => {
 
         it("should create an error dialog when ignore and reject fails", async () => {
             // eat intended errors
-            jest.spyOn(logger, 'error').mockImplementation(() => {});
+            jest.spyOn(logger, "error").mockImplementation(() => {});
             cli.setIgnoredUsers.mockRejectedValue("Something went wrong");
             await renderRoomView();
 

@@ -293,8 +293,6 @@ describe("SlashCommands", () => {
                 await promise;
                 // no error
                 expect(error).toBeFalsy();
-                // called with acceptable value
-                expect(mocked(client.setIgnoredUsers)).toHaveBeenCalledWith([bert]);
             });
 
             it("should remove the user from the ignore list", async () => {

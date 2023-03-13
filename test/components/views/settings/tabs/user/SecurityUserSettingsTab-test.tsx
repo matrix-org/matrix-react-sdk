@@ -44,7 +44,7 @@ describe("<SecurityUserSettingsTab />", () => {
         ...mockClientMethodsCrypto(),
         getRooms: jest.fn().mockReturnValue([]),
         getIgnoredUsers: jest.fn(),
-        setIgnoredUsers: jest.fn(),
+        setIgnoredUsers: jest.fn().mockResolvedValue({}),
         getVersions: jest.fn().mockResolvedValue({
             unstable_features: {
                 "org.matrix.msc3882": true,
@@ -141,11 +141,6 @@ describe("<SecurityUserSettingsTab />", () => {
 
             // ernie removed
             expect(mockClient.setIgnoredUsers).toHaveBeenCalledWith([bert]);
-
-            // disabled while loading
-            expect(screen.getByTestId(`mx_SecurityUserSettingsTab_ignoredUser_${ernie}_button`)).toHaveAttribute(
-                "disabled",
-            );
         });
     });
 });

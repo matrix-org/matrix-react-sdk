@@ -29,6 +29,7 @@ import SettingsStore from "../../../../../settings/SettingsStore";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import E2eAdvancedPanel, { isE2eAdvancedPanelPossible } from "../../E2eAdvancedPanel";
 import { ActionPayload } from "../../../../../dispatcher/payloads";
+import { unignoreUser } from "../../../../../utils/ignoreUser";
 import CryptographyPanel from "../../CryptographyPanel";
 import DevicesPanel from "../../DevicesPanel";
 import SettingsFlag from "../../../elements/SettingsFlag";
@@ -160,9 +161,8 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
 
         const index = currentlyIgnoredUserIds.indexOf(userId);
         if (index !== -1) {
-            currentlyIgnoredUserIds.splice(index, 1);
             this.setState(({ waitingUnignored }) => ({ waitingUnignored: [...waitingUnignored, userId] }));
-            MatrixClientPeg.get().setIgnoredUsers(currentlyIgnoredUserIds);
+            unignoreUser(userId, MatrixClientPeg.get());
         }
     };
 

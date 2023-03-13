@@ -69,6 +69,7 @@ import VoipUserMapper from "./VoipUserMapper";
 import { htmlSerializeFromMdIfNeeded } from "./editor/serialize";
 import { leaveRoomBehaviour } from "./utils/leave-behaviour";
 import { isLocalRoom } from "./utils/localRoom/isLocalRoom";
+import { ignoreUser, unignoreUser } from "./utils/ignoreUser";
 import { SdkContextClass } from "./contexts/SDKContext";
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
@@ -818,10 +819,8 @@ export const Commands = [
                 const matches = args.match(/^(@[^:]+:\S+)$/);
                 if (matches) {
                     const userId = matches[1];
-                    const ignoredUsers = cli.getIgnoredUsers();
-                    ignoredUsers.push(userId); // de-duped internally in the js-sdk
                     return success(
-                        cli.setIgnoredUsers(ignoredUsers).then(() => {
+                        ignoreUser(userId, cli).then(() => {
                             Modal.createDialog(InfoDialog, {
                                 title: _t("Ignored user"),
                                 description: (
@@ -849,11 +848,8 @@ export const Commands = [
                 const matches = args.match(/(^@[^:]+:\S+$)/);
                 if (matches) {
                     const userId = matches[1];
-                    const ignoredUsers = cli.getIgnoredUsers();
-                    const index = ignoredUsers.indexOf(userId);
-                    if (index !== -1) ignoredUsers.splice(index, 1);
                     return success(
-                        cli.setIgnoredUsers(ignoredUsers).then(() => {
+                        unignoreUser(userId, cli).then(() => {
                             Modal.createDialog(InfoDialog, {
                                 title: _t("Unignored user"),
                                 description: (

@@ -79,6 +79,7 @@ import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { DirectoryMember, startDmOnFirstMessage } from "../../../utils/direct-messages";
 import { SdkContextClass } from "../../../contexts/SDKContext";
+import { unignoreUser } from "../../../utils/ignoreUser";
 
 export interface IDevice extends DeviceInfo {
     ambiguous?: boolean;
@@ -357,10 +358,7 @@ export const UserOptionsSection: React.FC<{
     };
 
     const unignore = useCallback(() => {
-        const ignoredUsers = cli.getIgnoredUsers();
-        const index = ignoredUsers.indexOf(member.userId);
-        if (index !== -1) ignoredUsers.splice(index, 1);
-        cli.setIgnoredUsers(ignoredUsers);
+        unignoreUser(member.userId, cli);
     }, [cli, member]);
 
     const ignore = useCallback(async () => {
