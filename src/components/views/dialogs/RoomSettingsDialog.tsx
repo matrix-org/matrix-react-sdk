@@ -171,7 +171,6 @@ export default class RoomSettingsDialog extends React.Component<IProps, IState> 
                     _td("Poll history"),
                     "mx_RoomSettingsDialog_pollsIcon",
                     <PollHistoryTab roomId={this.props.roomId} onFinished={() => this.props.onFinished(true)} />,
-                    "RoomSettingsPollHistory",
                 ),
             );
         }
