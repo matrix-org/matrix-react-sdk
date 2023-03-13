@@ -19,9 +19,10 @@ import { mocked, MockedObject } from "jest-mock";
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, RoomStateEvent } from "matrix-js-sdk/src/matrix";
+import { EventType, HistoryVisibility, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { MEGOLM_ALGORITHM } from "matrix-js-sdk/src/crypto/olmlib";
 import { fireEvent, render, screen, RenderResult } from "@testing-library/react";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import {
     stubClient,
@@ -55,6 +56,8 @@ import VoipUserMapper from "../../../src/VoipUserMapper";
 import WidgetUtils from "../../../src/utils/WidgetUtils";
 import { WidgetType } from "../../../src/widgets/WidgetType";
 import WidgetStore from "../../../src/stores/WidgetStore";
+import Modal from "../../../src/Modal";
+import ErrorDialog from "../../../src/components/views/dialogs/ErrorDialog";
 
 const RoomView = wrapInMatrixClientContext(_RoomView);
 
@@ -72,6 +75,15 @@ describe("RoomView", () => {
         mockPlatformPeg({ reload: () => {} });
         stubClient();
         cli = mocked(MatrixClientPeg.get());
+        // instead of making more changes to old cli mocking functions
+        // @ts-ignore set extra mocks here
+        cli.getSyncStateData = jest.fn();
+        // @ts-ignore
+        cli.getIgnoredUsers = jest.fn().mockReturnValue([]);
+        // @ts-ignore
+        cli.setIgnoredUsers = jest.fn().mockResolvedValue({});
+        // @ts-ignore
+        cli.leave = jest.fn().mockResolvedValue({});
 
         room = new Room(`!${roomCount++}:example.org`, cli, "@alice:example.org");
         jest.spyOn(room, "findPredecessor");
@@ -489,6 +501,81 @@ describe("RoomView", () => {
                 });
 
                 itShouldNotRemoveTheLastWidget();
+            });
+        });
+    });
+
+    describe("when we have a regular invite for the room", () => {
+        beforeEach(async () => {
+            jest.spyOn(defaultDispatcher, "dispatch").mockClear();
+            jest.spyOn(Modal, "createDialog").mockClear();
+            room.currentState.setStateEvents([
+                mkRoomMemberJoinEvent("@alice:server.org", room.roomId, { membership: "join" }),
+                new MatrixEvent({
+                    type: EventType.RoomMember,
+                    content: {
+                        membership: "invite",
+                        displayname: "Test User",
+                    },
+                    state_key: cli.getSafeUserId(),
+                    sender: "@alice:server.org",
+                    room_id: room.roomId,
+                }),
+                new MatrixEvent({
+                    type: EventType.RoomHistoryVisibility,
+                    content: { history_visibility: HistoryVisibility.WorldReadable },
+                    room_id: room.roomId,
+                    state_key: "",
+                }),
+            ]);
+            room.updateMyMembership("invite");
+        });
+
+        afterEach(() => {
+            jest.spyOn(logger, 'error').mockRestore();
+        });
+
+        it("should display invite screen with join and reject buttons", async () => {
+            await renderRoomView();
+
+            expect(screen.getByText(`Do you want to join ${room.roomId}?`));
+            expect(screen.getByText("Accept")).toBeInTheDocument();
+            expect(screen.getByText("Reject")).toBeInTheDocument();
+            expect(screen.getByText("Reject & Ignore user")).toBeInTheDocument();
+        });
+
+        it("should ignore inviter and leave room on reject and ignore click", async () => {
+            await renderRoomView();
+
+            fireEvent.click(screen.getByText("Reject & Ignore user"));
+
+            await flushPromises();
+
+            expect(cli.setIgnoredUsers).toHaveBeenCalledWith(["@alice:server.org"]);
+            expect(cli.leave).toHaveBeenCalledWith(room.roomId);
+
+            expect(defaultDispatcher.dispatch).toHaveBeenCalledWith({
+                action: Action.ViewHomePage,
+            });
+        });
+
+        it("should create an error dialog when ignore and reject fails", async () => {
+            // eat intended errors
+            jest.spyOn(logger, 'error').mockImplementation(() => {});
+            cli.setIgnoredUsers.mockRejectedValue("Something went wrong");
+            await renderRoomView();
+
+            fireEvent.click(screen.getByText("Reject & Ignore user"));
+
+            await flushPromises();
+
+            expect(Modal.createDialog).toHaveBeenCalledWith(ErrorDialog, {
+                title: "Failed to reject invite",
+                description: '"Something went wrong"',
+            });
+            // stay in room
+            expect(defaultDispatcher.dispatch).not.toHaveBeenCalledWith({
+                action: Action.ViewHomePage,
             });
         });
     });
