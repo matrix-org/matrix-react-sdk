@@ -69,7 +69,7 @@ export default class DialogButtons extends React.Component<IProps> {
     };
 
     private onCancelClick = (event: React.MouseEvent): void => {
-        this.props.onCancel!(event);
+        this.props.onCancel?.(event);
     };
 
     public render(): React.ReactNode {

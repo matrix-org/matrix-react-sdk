@@ -62,9 +62,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
         const userId = cli.getSafeUserId();
         const event = this.props.mxEvent;
         const room = cli.getRoom(event.getRoomId());
-        if (event.localRedactionEvent()) {
-            event.localRedactionEvent()!.on(MatrixEventEvent.Status, this.onAssociatedStatusChanged);
-        }
+        event.localRedactionEvent()?.on(MatrixEventEvent.Status, this.onAssociatedStatusChanged);
         const canRedact = room.currentState.maySendRedactionForEvent(event, userId);
         this.state = { canRedact, sendStatus: event.getAssociatedStatus() };
     }
@@ -121,9 +119,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
         unmountPills(this.pills);
         unmountTooltips(this.tooltips);
         const event = this.props.mxEvent;
-        if (event.localRedactionEvent()) {
-            event.localRedactionEvent()!.off(MatrixEventEvent.Status, this.onAssociatedStatusChanged);
-        }
+        event.localRedactionEvent()?.off(MatrixEventEvent.Status, this.onAssociatedStatusChanged);
     }
 
     public componentDidUpdate(): void {
