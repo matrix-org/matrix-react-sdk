@@ -62,6 +62,7 @@ export class IgnoredUser extends React.Component<IIgnoredUserProps> {
                     kind="primary_sm"
                     aria-describedby={id}
                     disabled={this.props.inProgress}
+                    data-testid={id + "_button"}
                 >
                     {_t("Unignore")}
                 </AccessibleButton>
@@ -240,7 +241,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
               });
 
         return (
-            <div className="mx_SettingsTab_section">
+            <div className="mx_SettingsTab_section" data-testid="ignored-users-section">
                 <span className="mx_SettingsTab_subheading">{_t("Ignored users")}</span>
                 <div className="mx_SettingsTab_subsectionText">{userIds}</div>
             </div>
