@@ -135,7 +135,6 @@ describe("Decryption Failure Bar", () => {
                 })
                 .then(() => {
                     cy.botSendMessage(bot, roomId, "test");
-
                     cy.contains(
                         ".mx_DecryptionFailureBar .mx_DecryptionFailureBar__header__headline",
                         "Verify this device to access all messages",
