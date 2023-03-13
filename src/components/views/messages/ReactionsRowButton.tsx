@@ -106,7 +106,7 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
         }
 
         const room = this.context.getRoom(mxEvent.getRoomId());
-        let label: string;
+        let label: string | undefined;
         if (room) {
             const senders = [];
             for (const reactionEvent of reactionEvents) {
