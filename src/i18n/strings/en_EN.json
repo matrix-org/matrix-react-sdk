@@ -2957,7 +2957,6 @@
     "Send report": "Send report",
     "Report Content to Your Homeserver Administrator": "Report Content to Your Homeserver Administrator",
     "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.",
-    "Poll history": "Poll history",
     "Room Settings - %(roomName)s": "Room Settings - %(roomName)s",
     "Failed to upgrade room": "Failed to upgrade room",
     "The room upgrade could not be completed": "The room upgrade could not be completed",
