@@ -52,7 +52,7 @@ import ExportDialog from "../dialogs/ExportDialog";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
-import { PollHistoryDialog } from "../dialogs/polls/PollHistoryDialog";
+import { PollHistoryDialog } from "../dialogs/PollHistoryDialog";
 
 interface IProps {
     room: Room;
@@ -325,7 +325,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) 
 
     const memberCount = useRoomMemberCount(room);
     const pinningEnabled = useFeatureEnabled("feature_pinning");
-    const pinCount = usePinnedEvents(pinningEnabled && room)?.length;
+    const pinCount = usePinnedEvents(pinningEnabled ? room : undefined)?.length;
 
     const isPollHistoryEnabled = useFeatureEnabled("feature_poll_history");
 
