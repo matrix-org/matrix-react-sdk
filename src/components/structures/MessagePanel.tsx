@@ -163,7 +163,7 @@ interface IProps {
     stickyBottom?: boolean;
 
     // className for the panel
-    className: string;
+    className?: string;
 
     // show twelve hour timestamps
     isTwelveHour?: boolean;
@@ -177,7 +177,7 @@ interface IProps {
     // which layout to use
     layout?: Layout;
 
-    resizeNotifier: ResizeNotifier;
+    resizeNotifier?: ResizeNotifier;
     permalinkCreator?: RoomPermalinkCreator;
     editState?: EditorStateTransfer;
 
@@ -345,12 +345,12 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     };
 
     /* get the DOM node representing the given event */
-    public getNodeForEventId(eventId: string): HTMLElement {
+    public getNodeForEventId(eventId: string): HTMLElement | undefined {
         if (!this.eventTiles) {
             return undefined;
         }
 
-        return this.eventTiles[eventId]?.ref?.current;
+        return this.eventTiles[eventId]?.ref?.current ?? undefined;
     }
 
     public getTileForEventId(eventId?: string): UnwrappedEventTile | undefined {
@@ -362,7 +362,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     /* return true if the content is fully scrolled down right now; else false.
      */
-    public isAtBottom(): boolean {
+    public isAtBottom(): boolean | undefined {
         return this.scrollPanel.current?.isAtBottom();
     }
 
@@ -371,7 +371,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
      *
      * returns null if we are not mounted.
      */
-    public getScrollState(): IScrollState {
+    public getScrollState(): IScrollState | null {
         return this.scrollPanel.current?.getScrollState() ?? null;
     }
 
@@ -381,7 +381,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     //  -1: read marker is above the window
     //   0: read marker is within the window
     //  +1: read marker is below the window
-    public getReadMarkerPosition(): number {
+    public getReadMarkerPosition(): number | null {
         const readMarker = this.readMarkerNode.current;
         const messageWrapper = this.scrollPanel.current;
 
@@ -561,14 +561,29 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         });
     };
 
-    private getNextEventInfo(arr: MatrixEvent[], i: number): { nextEvent: MatrixEvent; nextTile: MatrixEvent } {
-        const nextEvent = i < arr.length - 1 ? arr[i + 1] : null;
+    /**
+     * Find the next event in the list, and the next visible event in the list.
+     *
+     * @param event      - the list of events to look in and whether they are shown
+     * @param i          - where in the list we are now
+     *
+     * @returns { nextEvent, nextTile }
+     *
+     * nextEvent is the event after i in the supplied array.
+     *
+     * nextTile is the first event in the array after i that we will show a tile
+     * for. It is used to to determine the 'last successful' flag when rendering
+     * the tile.
+     */
+    private getNextEventInfo(
+        events: EventAndShouldShow[],
+        i: number,
+    ): { nextEvent: MatrixEvent | null; nextTile: MatrixEvent | null } {
+        // WARNING: this method is on a hot path.
 
-        // The next event with tile is used to to determine the 'last successful' flag
-        // when rendering the tile. The shouldShowEvent function is pretty quick at what
-        // it does, so this should have no significant cost even when a room is used for
-        // not-chat purposes.
-        const nextTile = arr.slice(i + 1).find((e) => this.shouldShowEvent(e));
+        const nextEvent = i < events.length - 1 ? events[i + 1].event : null;
+
+        const nextTile = findFirstShownAfter(i, events);
 
         return { nextEvent, nextTile };
     }
@@ -587,20 +602,21 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     }
 
     private getEventTiles(): ReactNode[] {
-        let i;
-
         // first figure out which is the last event in the list which we're
         // actually going to show; this allows us to behave slightly
         // differently for the last event in the list. (eg show timestamp)
         //
         // we also need to figure out which is the last event we show which isn't
         // a local echo, to manage the read-marker.
-        let lastShownEvent;
+        let lastShownEvent: MatrixEvent | undefined;
+        const events: EventAndShouldShow[] = this.props.events.map((event) => {
+            return { event, shouldShow: this.shouldShowEvent(event) };
+        });
 
         let lastShownNonLocalEchoIndex = -1;
-        for (i = this.props.events.length - 1; i >= 0; i--) {
-            const mxEv = this.props.events[i];
-            if (!this.shouldShowEvent(mxEv)) {
+        for (let i = events.length - 1; i >= 0; i--) {
+            const { event: mxEv, shouldShow } = events[i];
+            if (!shouldShow) {
                 continue;
             }
 
@@ -617,9 +633,8 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             break;
         }
 
-        const ret = [];
-
-        let prevEvent = null; // the last event we showed
+        const ret: ReactNode[] = [];
+        let prevEvent: MatrixEvent | null = null; // the last event we showed
 
         // Note: the EventTile might still render a "sent/sending receipt" independent of
         // this information. When not providing read receipt information, the tile is likely
@@ -629,13 +644,13 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             this.readReceiptsByEvent = this.getReadReceiptsByShownEvent();
         }
 
-        let grouper: BaseGrouper = null;
+        let grouper: BaseGrouper | null = null;
 
-        for (i = 0; i < this.props.events.length; i++) {
-            const mxEv = this.props.events[i];
+        for (let i = 0; i < events.length; i++) {
+            const { event: mxEv, shouldShow } = events[i];
             const eventId = mxEv.getId();
             const last = mxEv === lastShownEvent;
-            const { nextEvent, nextTile } = this.getNextEventInfo(this.props.events, i);
+            const { nextEvent, nextTile } = this.getNextEventInfo(events, i);
 
             if (grouper) {
                 if (grouper.shouldGroup(mxEv)) {
@@ -658,7 +673,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             }
 
             if (!grouper) {
-                if (this.shouldShowEvent(mxEv)) {
+                if (shouldShow) {
                     // make sure we unpack the array returned by getTilesForEvent,
                     // otherwise React will auto-generate keys, and we will end up
                     // replacing all the DOM elements every time we paginate.
@@ -679,14 +694,14 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     }
 
     public getTilesForEvent(
-        prevEvent: MatrixEvent,
+        prevEvent: MatrixEvent | null,
         mxEv: MatrixEvent,
         last = false,
         isGrouped = false,
         nextEvent?: MatrixEvent,
         nextEventWithTile?: MatrixEvent,
     ): ReactNode[] {
-        const ret = [];
+        const ret: ReactNode[] = [];
 
         const isEditing = this.props.editState?.getEvent().getId() === mxEv.getId();
         // local echoes have a fake date, which could even be yesterday. Treat them as 'today' for the date separators.
@@ -790,7 +805,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         return ret;
     }
 
-    public wantsDateSeparator(prevEvent: MatrixEvent, nextEventDate: Date): boolean {
+    public wantsDateSeparator(prevEvent: MatrixEvent | null, nextEventDate: Date): boolean {
         if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList) {
             return false;
         }
@@ -804,7 +819,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     // Get a list of read receipts that should be shown next to this event
     // Receipts are objects which have a 'userId', 'roomMember' and 'ts'.
-    private getReadReceiptsForEvent(event: MatrixEvent): IReadReceiptProps[] {
+    private getReadReceiptsForEvent(event: MatrixEvent): IReadReceiptProps[] | null {
         const myUserId = MatrixClientPeg.get().credentials.userId;
 
         // get list of read receipts, sorted most recent first
@@ -923,7 +938,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     private onTypingShown = (): void => {
         const scrollPanel = this.scrollPanel.current;
         // this will make the timeline grow, so checkScroll
-        scrollPanel.checkScroll();
+        scrollPanel?.checkScroll();
         if (scrollPanel && scrollPanel.getScrollState().stuckAtBottom) {
             scrollPanel.preventShrinking();
         }
@@ -1002,7 +1017,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             );
         }
 
-        let ircResizer = null;
+        let ircResizer: JSX.Element | undefined;
         if (this.props.layout == Layout.IRC) {
             ircResizer = (
                 <IRCTimelineProfileResizer
@@ -1040,6 +1055,15 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     }
 }
 
+/**
+ * Holds on to an event, caching the information about whether it should be
+ * shown. Avoids calling shouldShowEvent more times than we need to.
+ */
+interface EventAndShouldShow {
+    event: MatrixEvent;
+    shouldShow: boolean;
+}
+
 abstract class BaseGrouper {
     public static canStartGroup = (panel: MessagePanel, ev: MatrixEvent): boolean => true;
 
@@ -1051,7 +1075,7 @@ abstract class BaseGrouper {
     public constructor(
         public readonly panel: MessagePanel,
         public readonly event: MatrixEvent,
-        public readonly prevEvent: MatrixEvent,
+        public readonly prevEvent: MatrixEvent | null,
         public readonly lastShownEvent: MatrixEvent,
         public readonly nextEvent?: MatrixEvent,
         public readonly nextEventTile?: MatrixEvent,
@@ -1236,7 +1260,7 @@ class MainGrouper extends BaseGrouper {
     public constructor(
         public readonly panel: MessagePanel,
         public readonly event: MatrixEvent,
-        public readonly prevEvent: MatrixEvent,
+        public readonly prevEvent: MatrixEvent | null,
         public readonly lastShownEvent: MatrixEvent,
         nextEvent: MatrixEvent,
         nextEventTile: MatrixEvent,
@@ -1316,7 +1340,7 @@ class MainGrouper extends BaseGrouper {
         }
 
         let highlightInSummary = false;
-        let eventTiles = this.events
+        let eventTiles: ReactNode[] | null = this.events
             .map((e, i) => {
                 if (e.getId() === panel.props.highlightedEventId) {
                     highlightInSummary = true;
@@ -1369,3 +1393,17 @@ class MainGrouper extends BaseGrouper {
 
 // all the grouper classes that we use, ordered by priority
 const groupers = [CreationGrouper, MainGrouper];
+
+/**
+ * Look through the supplied list of EventAndShouldShow, and return the first
+ * event that is >start items through the list, and is shown.
+ */
+function findFirstShownAfter(start: number, events: EventAndShouldShow[]): MatrixEvent | null {
+    for (let n = start + 1; n < events.length; n++) {
+        const { event, shouldShow } = events[n];
+        if (shouldShow) {
+            return event;
+        }
+    }
+    return null;
+}
