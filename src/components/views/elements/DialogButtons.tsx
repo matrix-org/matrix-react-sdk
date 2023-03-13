@@ -79,7 +79,7 @@ export default class DialogButtons extends React.Component<IProps> {
         }
 
         let cancelButton: JSX.Element | undefined;
-        if (this.props.cancelButton && this.props.hasCancel) {
+        if (this.props.hasCancel) {
             cancelButton = (
                 <button
                     // important: the default type is 'submit' and this button comes before the

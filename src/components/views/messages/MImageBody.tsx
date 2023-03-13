@@ -47,8 +47,8 @@ enum Placeholder {
 }
 
 interface IState {
-    contentUrl?: string;
-    thumbUrl?: string;
+    contentUrl: string | null;
+    thumbUrl: string | null;
     isAnimated?: boolean;
     error?: Error;
     imgError: boolean;
@@ -78,6 +78,8 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         this.reconnectedListener = createReconnectedListener(this.clearError);
 
         this.state = {
+            contentUrl: null,
+            thumbUrl: null,
             imgError: false,
             imgLoaded: false,
             hover: false,

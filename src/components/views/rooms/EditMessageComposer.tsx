@@ -383,7 +383,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         // editorstate so it can be restored when the remote echo event tile gets rendered
         // in case we're currently editing a pending event
         const sel = document.getSelection();
-        let caret: DocumentOffset;
+        let caret: DocumentOffset | undefined;
         if (sel.focusNode) {
             caret = getCaretOffsetAndText(this.editorRef.current?.editorRef.current, sel).caret;
         }
@@ -391,7 +391,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         // if caret is undefined because for some reason there isn't a valid selection,
         // then when mounting the editor again with the same editor state,
         // it will set the cursor at the end.
-        this.props.editState.setEditorState(caret, parts);
+        this.props.editState.setEditorState(caret ?? null, parts);
         window.removeEventListener("beforeunload", this.saveStoredEditorState);
         if (this.shouldSaveStoredEditorState) {
             this.saveStoredEditorState();
