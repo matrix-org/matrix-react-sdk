@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import React from "react";
 import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 
@@ -24,6 +25,8 @@ import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../src/models/LocalRoom";
 import SettingsStore from "../src/settings/SettingsStore";
 import LegacyCallHandler from "../src/LegacyCallHandler";
 import { SdkContextClass } from "../src/contexts/SDKContext";
+import Modal from "../src/Modal";
+import InfoDialog from "../src/components/views/dialogs/InfoDialog";
 
 describe("SlashCommands", () => {
     let client: MatrixClient;
@@ -237,6 +240,75 @@ describe("SlashCommands", () => {
 
         it("should make things rainbowy", () => {
             return expect(command.run(roomId, null, "this is a test message").promise).resolves.toMatchSnapshot();
+        });
+    });
+
+    describe("ignore/unignore", () => {
+        const bert = "@bert:sesame.org";
+        const ernie = "@ernie:sesame.org";
+        beforeEach(() => {
+            client.setIgnoredUsers = jest.fn();
+            client.getIgnoredUsers = jest.fn();
+            mocked(client.getIgnoredUsers).mockClear().mockReturnValue([bert]);
+            mocked(client.setIgnoredUsers).mockClear().mockResolvedValue({});
+
+            jest.spyOn(Modal, "createDialog").mockClear();
+        });
+        describe("ignore", () => {
+            const command = findCommand("ignore");
+            it("should return usage if no args", () => {
+                expect(command.run(roomId, null, undefined).error).toEqual("Usage: /ignore <user-id>");
+            });
+
+            it("should return usage if given user id is not a valid mxid", () => {
+                expect(command.run(roomId, null, "Bert").error).toEqual("Usage: /ignore <user-id>");
+            });
+
+            it("should add userId to ignored users", async () => {
+                await command.run(roomId, null, ernie).promise;
+                expect(mocked(client.setIgnoredUsers)).toHaveBeenCalledWith([bert, ernie]);
+                expect(Modal.createDialog).toHaveBeenCalledWith(InfoDialog, {
+                    description: (
+                        <div>
+                            <p>You are now ignoring @ernie:sesame.org</p>
+                        </div>
+                    ),
+                    title: "Ignored user",
+                });
+            });
+        });
+
+        describe("unignore", () => {
+            const command = findCommand("unignore");
+            it("should return usage if no args", () => {
+                expect(command.run(roomId, null, undefined).error).toEqual("Usage: /unignore <user-id>");
+            });
+
+            it("should return usage if given user id is not a valid mxid", () => {
+                expect(command.run(roomId, null, "Bert").error).toEqual("Usage: /unignore <user-id>");
+            });
+
+            it("should handle if the user is not already ignored", async () => {
+                const { error, promise } = command.run(roomId, null, ernie);
+                await promise;
+                // no error
+                expect(error).toBeFalsy();
+                // called with acceptable value
+                expect(mocked(client.setIgnoredUsers)).toHaveBeenCalledWith([bert]);
+            });
+
+            it("should remove the user from the ignore list", async () => {
+                await command.run(roomId, null, bert).promise;
+                expect(mocked(client.setIgnoredUsers)).toHaveBeenCalledWith([]);
+                expect(Modal.createDialog).toHaveBeenCalledWith(InfoDialog, {
+                    description: (
+                        <div>
+                            <p>You are no longer ignoring @bert:sesame.org</p>
+                        </div>
+                    ),
+                    title: "Unignored user",
+                });
+            });
         });
     });
 });
