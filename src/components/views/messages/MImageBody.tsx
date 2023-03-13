@@ -471,7 +471,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             gifLabel = <p className="mx_MImageBody_gifLabel">GIF</p>;
         }
 
-        let banner: JSX.Element | undefined;
+        let banner: ReactNode | undefined;
         if (this.state.showImage && this.state.hover) {
             banner = this.getBanner(content);
         }
