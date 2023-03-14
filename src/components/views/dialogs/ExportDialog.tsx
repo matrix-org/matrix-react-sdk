@@ -142,8 +142,6 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
     };
 
     const onExportClick = async (): Promise<void> => {
-        if (!sizeLimitRef.current || !messageCountRef.current) return;
-
         const isValidSize =
             !setSizeLimit ||
             (await sizeLimitRef.current.validate({
