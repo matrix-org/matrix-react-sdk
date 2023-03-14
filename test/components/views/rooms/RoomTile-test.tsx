@@ -45,6 +45,12 @@ import { VoiceBroadcastInfoState } from "../../../../src/voice-broadcast";
 import { mkVoiceBroadcastInfoStateEvent } from "../../../voice-broadcast/utils/test-utils";
 import { TestSdkContext } from "../../../TestSdkContext";
 import { SDKContext } from "../../../../src/contexts/SDKContext";
+import { shouldShowComponent } from "../../../../src/customisations/helpers/UIComponents";
+import { UIComponent } from "../../../../src/settings/UIFeature";
+
+jest.mock("../../../../src/customisations/helpers/UIComponents", () => ({
+    shouldShowComponent: jest.fn(),
+}));
 
 describe("RoomTile", () => {
     jest.spyOn(PlatformPeg, "get").mockReturnValue({
@@ -66,8 +72,8 @@ describe("RoomTile", () => {
         });
     };
 
-    const renderRoomTile = (): void => {
-        renderResult = render(
+    const renderRoomTile = (): RenderResult => {
+        return render(
             <SDKContext.Provider value={sdkContext}>
                 <RoomTile room={room} showMessagePreview={false} isMinimized={false} tag={DefaultTagID.Untagged} />
             </SDKContext.Provider>,
@@ -77,7 +83,6 @@ describe("RoomTile", () => {
     let client: Mocked<MatrixClient>;
     let voiceBroadcastInfoEvent: MatrixEvent;
     let room: Room;
-    let renderResult: RenderResult;
     let sdkContext: TestSdkContext;
 
     filterConsole(
@@ -99,8 +104,6 @@ describe("RoomTile", () => {
         client.getRoom.mockImplementation((roomId) => (roomId === room.roomId ? room : null));
         client.getRooms.mockReturnValue([room]);
         client.reEmitter.reEmit(room, [RoomStateEvent.Events]);
-
-        renderRoomTile();
     });
 
     afterEach(() => {
@@ -108,7 +111,23 @@ describe("RoomTile", () => {
     });
 
     it("should render the room", () => {
+        mocked(shouldShowComponent).mockReturnValue(true);
+        const renderResult: RenderResult = renderRoomTile();
         expect(renderResult.container).toMatchSnapshot();
+    });
+
+    it("does not render the room options context menu when UIComponent customisations disable room options", () => {
+        mocked(shouldShowComponent).mockReturnValue(false);
+        renderRoomTile();
+        expect(shouldShowComponent).toHaveBeenCalledWith(UIComponent.RoomOptionsMenu);
+        expect(screen.queryByRole("button", { name: "Room options" })).not.toBeInTheDocument();
+    });
+
+    it("renders the room options context menu when UIComponent customisations enable room options", () => {
+        mocked(shouldShowComponent).mockReturnValue(true);
+        renderRoomTile();
+        expect(shouldShowComponent).toHaveBeenCalledWith(UIComponent.RoomOptionsMenu);
+        expect(screen.queryByRole("button", { name: "Room options" })).toBeInTheDocument();
     });
 
     describe("when a call starts", () => {
@@ -131,13 +150,13 @@ describe("RoomTile", () => {
         });
 
         afterEach(() => {
-            renderResult.unmount();
             call.destroy();
             client.reEmitter.stopReEmitting(room, [RoomStateEvent.Events]);
             WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
         });
 
         it("tracks connection state", async () => {
+            renderRoomTile();
             screen.getByText("Video");
 
             // Insert an await point in the connection method so we can inspect
@@ -160,6 +179,7 @@ describe("RoomTile", () => {
         });
 
         it("tracks participants", () => {
+            renderRoomTile();
             const alice: [RoomMember, Set<string>] = [mkRoomMember(room.roomId, "@alice:example.org"), new Set(["a"])];
             const bob: [RoomMember, Set<string>] = [
                 mkRoomMember(room.roomId, "@bob:example.org"),
@@ -187,6 +207,7 @@ describe("RoomTile", () => {
 
         describe("and a live broadcast starts", () => {
             beforeEach(async () => {
+                renderRoomTile();
                 await setUpVoiceBroadcast(VoiceBroadcastInfoState.Started);
             });
 
@@ -199,6 +220,7 @@ describe("RoomTile", () => {
 
     describe("when a live voice broadcast starts", () => {
         beforeEach(async () => {
+            renderRoomTile();
             await setUpVoiceBroadcast(VoiceBroadcastInfoState.Started);
         });
 

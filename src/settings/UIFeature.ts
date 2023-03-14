@@ -64,4 +64,9 @@ export enum UIComponent {
      * and integrations to the room, such as from the room information card.
      */
     AddIntegrations = "UIComponent.addIntegrations",
+
+    /**
+     * Components that lead the user to room options menu.
+     */
+    RoomOptionsMenu = "UIComponent.roomOptionsMenu",
 }

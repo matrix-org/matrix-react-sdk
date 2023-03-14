@@ -49,6 +49,8 @@ import { RoomGeneralContextMenu } from "../context_menus/RoomGeneralContextMenu"
 import { CallStore, CallStoreEvent } from "../../../stores/CallStore";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { useHasRoomLiveVoiceBroadcast, VoiceBroadcastRoomSubtitle } from "../../../voice-broadcast";
+import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../../settings/UIFeature";
 
 interface Props {
     room: Room;
@@ -118,7 +120,7 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
     };
 
     private get showContextMenu(): boolean {
-        return this.props.tag !== DefaultTagID.Invite;
+        return this.props.tag !== DefaultTagID.Invite && shouldShowComponent(UIComponent.RoomOptionsMenu);
     }
 
     private get showMessagePreview(): boolean {
