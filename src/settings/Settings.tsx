@@ -232,7 +232,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
             defaultWatchManager,
             ["org.matrix.msc3827.stable"],
             undefined,
-            _td("Requires your server to support stable version of MSC3827"),
+            _td("Requires your server to support the stable version of MSC3827"),
         ),
     },
     "feature_msc3531_hide_messages_pending_moderation": {

@@ -338,7 +338,8 @@ export default class SettingsStore {
 
     /**
      * Retrieves the reason a setting is disabled if one is assigned.
-     * If a setting is not disabled this will return undefined.
+     * If a setting is not disabled, or no reason is given by the `SettingController`,
+     * this will return undefined.
      * @param {string} settingName The setting to look up.
      * @return {string} The reason the setting is disabled.
      */

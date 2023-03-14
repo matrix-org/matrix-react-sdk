@@ -48,10 +48,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
 
     private static KEYBINDINGS_SETTINGS = ["ctrlFForSearch"];
 
-    private static PRESENCE_SETTINGS = [
-        "sendTypingNotifications",
-        // sendReadReceipts - handled specially due to server needing support
-    ];
+    private static PRESENCE_SETTINGS = ["sendReadReceipts", "sendTypingNotifications"];
 
     private static COMPOSER_SETTINGS = [
         "MessageComposerInput.autoReplaceEmoji",
@@ -189,7 +186,6 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                     <span className="mx_SettingsTab_subsectionText">
                         {_t("Share your activity and status with others.")}
                     </span>
-                    <SettingsFlag name="sendReadReceipts" level={SettingLevel.ACCOUNT} />
                     {this.renderGroup(PreferencesUserSettingsTab.PRESENCE_SETTINGS)}
                 </div>
 

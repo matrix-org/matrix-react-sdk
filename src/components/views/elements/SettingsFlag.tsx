@@ -39,6 +39,7 @@ interface IProps {
 
 interface IState {
     value: boolean;
+    /** true if `SettingsStore.isEnabled` returned false. */
     disabled: boolean;
 }
 
@@ -47,8 +48,8 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            value: this.settingValue,
-            disabled: this.settingDisabled,
+            value: this.getSettingValue(),
+            disabled: this.isSettingDisabled(),
         };
     }
 
@@ -60,18 +61,18 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
         defaultWatchManager.unwatchSetting(this.onSettingChange);
     }
 
-    private get settingValue(): boolean {
+    private getSettingValue(): boolean {
         return SettingsStore.getValueAt(this.props.level, this.props.name, this.props.roomId, this.props.isExplicit);
     }
 
-    private get settingDisabled(): boolean {
+    private isSettingDisabled(): boolean {
         return !SettingsStore.isEnabled(this.props.name);
     }
 
     private onSettingChange = (): void => {
         this.setState({
-            value: this.settingValue,
-            disabled: this.settingDisabled,
+            value: this.getSettingValue(),
+            disabled: this.isSettingDisabled(),
         });
     };
 
