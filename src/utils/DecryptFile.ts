@@ -47,7 +47,7 @@ export class DecryptError extends Error {
  * @param {IMediaEventInfo} info The info parameter taken from the matrix event.
  * @returns {Promise<Blob>} Resolves to a Blob of the file.
  */
-export async function decryptFile(file: IEncryptedFile, info?: IMediaEventInfo): Promise<Blob> {
+export async function decryptFile(file?: IEncryptedFile, info?: IMediaEventInfo): Promise<Blob> {
     const media = mediaFromContent({ file });
 
     let responseData: ArrayBuffer;

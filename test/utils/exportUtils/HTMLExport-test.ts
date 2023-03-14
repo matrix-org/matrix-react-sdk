@@ -107,6 +107,22 @@ describe("HTMLExport", () => {
         fetchMock.get(media.srcHttp!, body);
     }
 
+    it("should throw when created with invalid config for LastNMessages", async () => {
+        expect(
+            () =>
+                new HTMLExporter(
+                    room,
+                    ExportType.LastNMessages,
+                    {
+                        attachmentsIncluded: false,
+                        maxSize: 1_024 * 1_024,
+                        numberOfMessages: undefined,
+                    },
+                    () => {},
+                ),
+        ).toThrow("Invalid export options");
+    });
+
     it("should have an SDK-branded destination file name", () => {
         const roomName = "My / Test / Room: Welcome";
         const stubOptions: IExportOptions = {
@@ -323,6 +339,7 @@ describe("HTMLExport", () => {
             {
                 attachmentsIncluded: false,
                 maxSize: 1_024 * 1_024,
+                numberOfMessages: 5000,
             },
             () => {},
         );
