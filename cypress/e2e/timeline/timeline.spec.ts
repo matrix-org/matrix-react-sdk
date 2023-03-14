@@ -325,12 +325,16 @@ describe("Timeline", () => {
 
                     .first()
                     .within(() => {
-                        cy.get(".mx_EventTile_line")
-                            .should("have.css", "line-height", "22px") // --EventTile_group_line-line-height
+                        // --EventTile_group_line-line-height
+                        cy.get(".mx_EventTile_line").should("have.css", "line-height", "22px");
                     });
 
                 // Check that block start padding of the second message is not overridden by anything
-                cy.get(".mx_EventTile_continuation").should("have.css", "padding-block-start", "0px");
+                cy.get(".mx_EventTile[data-layout=group].mx_EventTile_continuation").should(
+                    "have.css",
+                    "padding-block-start",
+                    "0px",
+                );
             });
 
             // Exclude timestamp and read marker from snapshot
@@ -340,11 +344,16 @@ describe("Timeline", () => {
 
             // Check the same thing for compact layout
             cy.setSettingValue("useCompactLayout", null, SettingLevel.DEVICE, true);
-            cy.get(".mx_MatrixChat_useCompactLayout .mx_EventTile_continuation").should(
-                "have.css",
-                "padding-block-start",
-                "0px",
-            );
+            cy.get(".mx_MatrixChat_useCompactLayout").within(() => {
+                cy.get(".mx_EventTile[data-layout=group]")
+                    .should("have.css", "max-width", "100%")
+                    .should("have.css", "clear", "both")
+                    .should("have.css", "position", "relative");
+
+                cy.get(".mx_EventTile_continuation").should("have.css", "padding-block-start", "0px");
+            });
+
+            cy.get(".mx_MainSplit").percySnapshotElement("Continued EventTile on compact modern layout", { percyCSS });
         });
 
         it("should set inline start padding to a hidden event line", () => {
