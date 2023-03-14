@@ -16,6 +16,7 @@
         "lib": ["es2020", "dom", "dom.iterable"],
         "alwaysStrict": true,
         "strictBindCallApply": true,
+        "strictNullChecks": true,
         "noImplicitThis": true
     },
     "include": [
