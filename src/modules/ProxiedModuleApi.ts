@@ -36,6 +36,7 @@ import { MatrixClientPeg } from "../MatrixClientPeg";
 import { getCachedRoomIDForAlias } from "../RoomAliasCache";
 import { Action } from "../dispatcher/actions";
 import { OverwriteLoginPayload } from "../dispatcher/payloads/OverwriteLoginPayload";
+import { ActionPayload } from "../dispatcher/payloads";
 
 /**
  * Glue between the `ModuleApi` interface and the react-sdk. Anticipates one instance
@@ -43,6 +44,18 @@ import { OverwriteLoginPayload } from "../dispatcher/payloads/OverwriteLoginPayl
  */
 export class ProxiedModuleApi implements ModuleApi {
     private cachedTranslations: Optional<TranslationStringsObject>;
+
+    private overrideLoginResolve?: () => void;
+
+    public constructor() {
+        dispatcher.register(this.onAction);
+    }
+
+    private onAction = (payload: ActionPayload): void => {
+        if (payload.action === Action.OnLoggedIn) {
+            this.overrideLoginResolve?.();
+        }
+    };
 
     /**
      * All custom translations used by the associated module.
@@ -88,7 +101,7 @@ export class ProxiedModuleApi implements ModuleApi {
                 },
                 "mx_CompoundDialog",
             ).finished.then(([didOkOrSubmit, model]) => {
-                resolve({ didOkOrSubmit, model: model as M });
+                resolve({ didOkOrSubmit: !!didOkOrSubmit, model: model as M });
             });
         });
     }
@@ -102,6 +115,7 @@ export class ProxiedModuleApi implements ModuleApi {
         displayName?: string,
     ): Promise<AccountAuthInfo> {
         const hsUrl = SdkConfig.get("validated_server_config")?.hsUrl;
+        if (!hsUrl) throw new Error("Could not get homeserver url");
         const client = Matrix.createClient({ baseUrl: hsUrl });
         const deviceName =
             SdkConfig.get("default_device_display_name") || PlatformPeg.get()?.getDefaultDeviceDisplayName();
@@ -154,6 +168,11 @@ export class ProxiedModuleApi implements ModuleApi {
             },
             true,
         ); // require to be sync to match inherited interface behaviour
+
+        // wait for login to complete
+        await new Promise<void>((resolve) => {
+            this.overrideLoginResolve = resolve;
+        });
     }
 
     /**
