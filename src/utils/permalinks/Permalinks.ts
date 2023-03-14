@@ -22,7 +22,10 @@ import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
-import MatrixToPermalinkConstructor, { baseUrl as matrixtoBaseUrl } from "./MatrixToPermalinkConstructor";
+import MatrixToPermalinkConstructor, {
+    baseUrl as matrixtoBaseUrl,
+    baseUrlPattern as matrixToBaseUrlPattern,
+} from "./MatrixToPermalinkConstructor";
 import PermalinkConstructor, { PermalinkParts } from "./PermalinkConstructor";
 import ElementPermalinkConstructor from "./ElementPermalinkConstructor";
 import SdkConfig from "../../SdkConfig";
@@ -216,12 +219,16 @@ export class RoomPermalinkCreator {
                 const getRegex = (hostname: string): RegExp =>
                     new RegExp("^" + utils.globToRegexp(hostname, false) + "$");
 
-                const denied = aclEvent.getContent<{ deny: string[] }>().deny || [];
-                denied.forEach((h) => bannedHostsRegexps.push(getRegex(h)));
+                const denied = aclEvent.getContent<{ deny: string[] }>().deny;
+                if (Array.isArray(denied)) {
+                    denied.forEach((h) => bannedHostsRegexps.push(getRegex(h)));
+                }
 
-                const allowed = aclEvent.getContent<{ allow: string[] }>().allow || [];
+                const allowed = aclEvent.getContent<{ allow: string[] }>().allow;
                 allowedHostsRegexps = []; // we don't want to use the default rule here
-                allowed.forEach((h) => allowedHostsRegexps.push(getRegex(h)));
+                if (Array.isArray(denied)) {
+                    allowed.forEach((h) => allowedHostsRegexps.push(getRegex(h)));
+                }
             }
         }
         this.bannedHostsRegexps = bannedHostsRegexps;
@@ -420,8 +427,9 @@ function getPermalinkConstructor(): PermalinkConstructor {
 export function parsePermalink(fullUrl: string): PermalinkParts | null {
     try {
         const elementPrefix = SdkConfig.get("permalink_prefix");
-        if (decodeURIComponent(fullUrl).startsWith(matrixtoBaseUrl)) {
-            return new MatrixToPermalinkConstructor().parsePermalink(decodeURIComponent(fullUrl));
+        const decodedUrl = decodeURIComponent(fullUrl);
+        if (new RegExp(matrixToBaseUrlPattern, "i").test(decodedUrl)) {
+            return new MatrixToPermalinkConstructor().parsePermalink(decodedUrl);
         } else if (fullUrl.startsWith("matrix:")) {
             return new MatrixSchemePermalinkConstructor().parsePermalink(fullUrl);
         } else if (elementPrefix && fullUrl.startsWith(elementPrefix)) {
