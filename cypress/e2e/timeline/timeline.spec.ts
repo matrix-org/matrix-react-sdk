@@ -313,14 +313,22 @@ describe("Timeline", () => {
                 "created and configured the room.",
             ).should("exist");
 
-            // Exclude timestamp and read marker from snapshot
-            const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
-
             // Send the second message
             sendEvent(roomId);
 
-            // Check that block start padding of the second message is not overridden by anything
-            cy.get(".mx_EventTile_continuation").should("have.css", "padding-block-start", "0px");
+            // Ensure CSS declarations which cannot be detected with a screenshot test are applied as expected
+            cy.get(".mx_RoomView_body").within(() => {
+                cy.get(".mx_EventTile[data-layout=group]")
+                    .should("have.css", "max-width", "100%")
+                    .should("have.css", "clear", "both")
+                    .should("have.css", "position", "relative");
+
+                // Check that block start padding of the second message is not overridden by anything
+                cy.get(".mx_EventTile_continuation").should("have.css", "padding-block-start", "0px");
+            });
+
+            // Exclude timestamp and read marker from snapshot
+            const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
 
             cy.get(".mx_MainSplit").percySnapshotElement("Continued EventTile on modern layout", { percyCSS });
 
