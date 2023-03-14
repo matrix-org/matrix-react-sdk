@@ -699,7 +699,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         mxEv: MatrixEvent,
         last = false,
         isGrouped = false,
-        nextEvent?: EventAndShouldShow,
+        nextEvent: EventAndShouldShow = null,
         nextEventWithTile?: MatrixEvent,
     ): ReactNode[] {
         const ret: ReactNode[] = [];
