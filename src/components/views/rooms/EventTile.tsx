@@ -658,6 +658,33 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         if (this.context.timelineRenderingType === TimelineRenderingType.Notification) return false;
         if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList) return false;
 
+        // MSC3952 mentions attempt to avoid notifying the user multiple times
+        // for edits. This is done by not including the same user in the mentions
+        // field for each iteration of the edit (only the first time they're included).
+        //
+        // An edited event should show up as highlights iff the m.new_content includes
+        // a mention to the user, this differs from what push actions occurred on the
+        // event.
+        //
+        // Note that we can't just check if any of the iterations of the event caused
+        // a highlight since that would preclude removing a user mention.
+        if (this.props.mxEvent.replacingEvent()) {
+            // Grab the mentions field of the latest edit event, but from the
+            // m.new_content field.
+            const mentions = this.props.mxEvent.replacingEvent()!.getContent()["m.new_content"]?.[
+                "org.matrix.msc3952.mentions"
+            ];
+            // If this field doesn't exist, fallback to legacy behaviour.
+            if (mentions) {
+                const userMentions = mentions?.user_ids;
+                if (!Array.isArray(userMentions)) {
+                    return false;
+                }
+                return userMentions.includes(MatrixClientPeg.get().getUserId()!);
+            }
+        }
+
+        // Non-edits (or edits prior to MSC3952) just look at push rules.
         const actions = MatrixClientPeg.get().getPushActionsForEvent(
             this.props.mxEvent.replacingEvent() || this.props.mxEvent,
         );
