@@ -167,7 +167,7 @@ const maximumVectorState = (
     if (!definition.syncedRuleIds?.length) {
         return undefined;
     }
-    const vectorState = definition.syncedRuleIds.reduce((maxVectorState, ruleId) => {
+    const vectorState = definition.syncedRuleIds.reduce<VectorState | undefined>((maxVectorState, ruleId) => {
         // already set to maximum
         if (maxVectorState === VectorState.Loud) {
             return maxVectorState;

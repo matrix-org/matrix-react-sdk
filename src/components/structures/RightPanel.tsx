@@ -49,7 +49,7 @@ interface IProps {
     room?: Room; // if showing panels for a given room, this is set
     overwriteCard?: IRightPanelCard; // used to display a custom card and ignoring the RightPanelStore (used for UserView)
     resizeNotifier: ResizeNotifier;
-    permalinkCreator: RoomPermalinkCreator;
+    permalinkCreator?: RoomPermalinkCreator;
     e2eStatus?: E2EStatus;
 }
 
