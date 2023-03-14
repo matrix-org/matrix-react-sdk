@@ -86,15 +86,15 @@ describe("<LabsUserSettingsTab />", () => {
         const { queryByText } = render(getComponent());
 
         expect(
-            queryByText("Explore public spaces in the new search dialog")
-                .closest(".mx_SettingsFlag")
+            queryByText("Explore public spaces in the new search dialog")!
+                .closest(".mx_SettingsFlag")!
                 .querySelector(".mx_AccessibleButton"),
         ).toHaveAttribute("aria-disabled", "true");
         deferred.resolve(true);
         await waitFor(() => {
             expect(
-                queryByText("Explore public spaces in the new search dialog")
-                    .closest(".mx_SettingsFlag")
+                queryByText("Explore public spaces in the new search dialog")!
+                    .closest(".mx_SettingsFlag")!
                     .querySelector(".mx_AccessibleButton"),
             ).toHaveAttribute("aria-disabled", "false");
         });

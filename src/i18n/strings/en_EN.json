@@ -938,7 +938,7 @@
     "Yes, the chat timeline is displayed alongside the video.": "Yes, the chat timeline is displayed alongside the video.",
     "Thank you for trying the beta, please go into as much detail as you can so we can improve it.": "Thank you for trying the beta, please go into as much detail as you can so we can improve it.",
     "Explore public spaces in the new search dialog": "Explore public spaces in the new search dialog",
-    "Requires your server to support stable version of MSC3827": "Requires your server to support stable version of MSC3827",
+    "Requires your server to support the stable version of MSC3827": "Requires your server to support the stable version of MSC3827",
     "Let moderators hide messages pending moderation.": "Let moderators hide messages pending moderation.",
     "Report to moderators": "Report to moderators",
     "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.": "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.",

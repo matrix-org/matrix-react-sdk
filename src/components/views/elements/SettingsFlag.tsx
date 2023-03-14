@@ -54,7 +54,7 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
-        defaultWatchManager.watchSetting(this.props.name, this.props.roomId, this.onSettingChange);
+        defaultWatchManager.watchSetting(this.props.name, this.props.roomId ?? null, this.onSettingChange);
     }
 
     public componentWillUnmount(): void {
@@ -62,7 +62,12 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
     }
 
     private getSettingValue(): boolean {
-        return SettingsStore.getValueAt(this.props.level, this.props.name, this.props.roomId, this.props.isExplicit);
+        return SettingsStore.getValueAt(
+            this.props.level,
+            this.props.name,
+            this.props.roomId ?? null,
+            this.props.isExplicit,
+        );
     }
 
     private isSettingDisabled(): boolean {

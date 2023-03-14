@@ -104,7 +104,7 @@ const ThreadListContextMenu: React.FC<ThreadListContextMenuProps> = ({
                     className="mx_RoomTile_contextMenu"
                     compact
                     rightAligned
-                    {...contextMenuBelow(button.current.getBoundingClientRect())}
+                    {...contextMenuBelow(button.current!.getBoundingClientRect())}
                 >
                     <IconizedContextMenuOptionList>
                         {isMainSplitTimelineShown && (
