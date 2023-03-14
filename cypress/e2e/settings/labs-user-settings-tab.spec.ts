@@ -156,7 +156,7 @@ describe("Labs user settings tab", () => {
             checkLabsGroup(11, "Experimental", ["Low bandwidth mode"]);
 
             // "Developer" subsection
-            checkLabsGroup(12, "Developer", ["Sliding Sync mode"]);
+            checkLabsGroup(12, "Developer", ["Sliding Sync mode", "Rust cryptography implementation"]);
         });
 
         cy.get(".mx_SettingsTab.mx_LabsUserSettingsTab").percySnapshotElement("Labs user settings tab");
