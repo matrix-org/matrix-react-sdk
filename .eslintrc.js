@@ -84,7 +84,6 @@ module.exports = {
         "jsx-a11y/aria-activedescendant-has-tabindex": "off",
         "jsx-a11y/click-events-have-key-events": "off",
         "jsx-a11y/interactive-supports-focus": "off",
-        "jsx-a11y/label-has-associated-control": "off",
         "jsx-a11y/media-has-caption": "off",
         "jsx-a11y/mouse-events-have-key-events": "off",
         "jsx-a11y/no-autofocus": "off",
