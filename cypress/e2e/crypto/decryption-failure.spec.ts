@@ -64,7 +64,7 @@ const checkTimelineNarrow = (button = true) => {
     cy.get(".mx_BaseCard").should("exist");
 
     // Ensure the failure bar does not cover the timeline
-    cy.get(".mx_EventTile.mx_EventTile_last").should("be.visible");
+    cy.get(".mx_RoomView_body .mx_EventTile.mx_EventTile_last").should("be.visible");
 
     // Ensure the indicator does not overflow the timeline
     cy.get("[data-testid='decryption-failure-bar-indicator']").should("be.visible");
