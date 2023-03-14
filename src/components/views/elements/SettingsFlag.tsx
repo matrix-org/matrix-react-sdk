@@ -33,14 +33,13 @@ interface IProps {
     isExplicit?: boolean;
     // XXX: once design replaces all toggles make this the default
     useCheckbox?: boolean;
-    disabled?: boolean;
-    disabledDescription?: string;
     hideIfCannotSet?: boolean;
     onChange?(checked: boolean): void;
 }
 
 interface IState {
     value: boolean;
+    disabled: boolean;
 }
 
 export default class SettingsFlag extends React.Component<IProps, IState> {
@@ -49,6 +48,7 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
 
         this.state = {
             value: this.settingValue,
+            disabled: this.settingDisabled,
         };
     }
 
@@ -64,8 +64,15 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
         return SettingsStore.getValueAt(this.props.level, this.props.name, this.props.roomId, this.props.isExplicit);
     }
 
+    private get settingDisabled(): boolean {
+        return !SettingsStore.isEnabled(this.props.name);
+    }
+
     private onSettingChange = (): void => {
-        this.setState({ value: this.settingValue });
+        this.setState({
+            value: this.settingValue,
+            disabled: this.settingDisabled,
+        });
     };
 
     private onChange = async (checked: boolean): Promise<void> => {
@@ -98,14 +105,11 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
                 : SettingsStore.getDisplayName(this.props.name, this.props.level)) ?? undefined;
         const description = SettingsStore.getDescription(this.props.name);
         const shouldWarn = SettingsStore.shouldHaveWarning(this.props.name);
+        const disabled = this.state.disabled || !canChange;
 
         if (this.props.useCheckbox) {
             return (
-                <StyledCheckbox
-                    checked={this.state.value}
-                    onChange={this.checkBoxOnChange}
-                    disabled={this.props.disabled || !canChange}
-                >
+                <StyledCheckbox checked={this.state.value} onChange={this.checkBoxOnChange} disabled={disabled}>
                     {label}
                 </StyledCheckbox>
             );
@@ -134,8 +138,8 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
                     <ToggleSwitch
                         checked={this.state.value}
                         onChange={this.onChange}
-                        disabled={this.props.disabled || !canChange}
-                        tooltip={this.props.disabled ? this.props.disabledDescription : undefined}
+                        disabled={disabled}
+                        tooltip={disabled ? SettingsStore.disabledMessage(this.props.name) : undefined}
                         title={label}
                     />
                 </div>

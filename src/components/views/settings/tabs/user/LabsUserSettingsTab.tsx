@@ -68,15 +68,7 @@ export default class LabsUserSettingsTab extends React.Component<{}> {
             this.labs.forEach((f) => {
                 groups
                     .getOrCreate(SettingsStore.getLabGroup(f), [])
-                    .push(
-                        <SettingsFlag
-                            level={SettingLevel.DEVICE}
-                            name={f}
-                            key={f}
-                            disabled={!SettingsStore.isEnabled(f)}
-                            disabledDescription={SettingsStore.disabledMessage(f)}
-                        />,
-                    );
+                    .push(<SettingsFlag level={SettingLevel.DEVICE} name={f} key={f} />);
             });
 
             groups
