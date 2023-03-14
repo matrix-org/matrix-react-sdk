@@ -316,12 +316,18 @@ describe("Timeline", () => {
             // Send the second message
             sendEvent(roomId);
 
-            // Ensure CSS declarations which cannot be detected with a screenshot test are applied as expected
             cy.get(".mx_RoomView_body").within(() => {
+                // Ensure CSS declarations which cannot be detected with a screenshot test are applied as expected
                 cy.get(".mx_EventTile[data-layout=group]")
                     .should("have.css", "max-width", "100%")
                     .should("have.css", "clear", "both")
-                    .should("have.css", "position", "relative");
+                    .should("have.css", "position", "relative")
+
+                    .first()
+                    .within(() => {
+                        cy.get(".mx_EventTile_line")
+                            .should("have.css", "line-height", "22px") // --EventTile_group_line-line-height
+                    });
 
                 // Check that block start padding of the second message is not overridden by anything
                 cy.get(".mx_EventTile_continuation").should("have.css", "padding-block-start", "0px");
