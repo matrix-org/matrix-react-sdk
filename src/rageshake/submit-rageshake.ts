@@ -88,7 +88,7 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
                 keys.push(`curve25519:${client.getDeviceCurve25519Key()}`);
             }
             body.append("device_keys", keys.join(", "));
-            body.append("cross_signing_key", client.getCrossSigningId());
+            body.append("cross_signing_key", String(client.getCrossSigningId()));
 
             // add cross-signing status information
             const crossSigning = client.crypto.crossSigningInfo;
@@ -99,7 +99,7 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
                 "cross_signing_supported_by_hs",
                 String(await client.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing")),
             );
-            body.append("cross_signing_key", crossSigning.getId());
+            body.append("cross_signing_key", String(crossSigning.getId()));
             body.append(
                 "cross_signing_privkey_in_secret_storage",
                 String(!!(await crossSigning.isStoredInSecretStorage(secretStorage))),
@@ -163,7 +163,7 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
             body.append("storageManager_usage", String(estimate.usage));
             if (estimate.usageDetails) {
                 Object.keys(estimate.usageDetails).forEach((k) => {
-                    body.append(`storageManager_usage_${k}`, String(estimate.usageDetails[k]));
+                    body.append(`storageManager_usage_${k}`, String(estimate.usageDetails![k]));
                 });
             }
         } catch (e) {}
@@ -302,8 +302,8 @@ export async function submitFeedback(
 
     body.append("app", "element-web");
     body.append("version", version || "UNKNOWN");
-    body.append("platform", PlatformPeg.get().getHumanReadableName());
-    body.append("user_id", MatrixClientPeg.get()?.getUserId());
+    body.append("platform", String(PlatformPeg.get()?.getHumanReadableName()));
+    body.append("user_id", String(MatrixClientPeg.get()?.getUserId()));
 
     for (const k in extraData) {
         body.append(k, JSON.stringify(extraData[k]));
