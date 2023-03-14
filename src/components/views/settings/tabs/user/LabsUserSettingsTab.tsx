@@ -125,8 +125,10 @@ export default class LabsUserSettingsTab extends React.Component<{}, State> {
 
         return (
             <div className="mx_SettingsTab mx_LabsUserSettingsTab">
-                <div className="mx_SettingsTab_heading">{_t("Upcoming features")}</div>
-                <div className="mx_SettingsTab_subsectionText">
+                <div className="mx_SettingsTab_heading" data-testid="heading">
+                    {_t("Upcoming features")}
+                </div>
+                <div className="mx_SettingsTab_subsectionText" data-testid="heading-text">
                     {_t(
                         "What's next for %(brand)s? " +
                             "Labs are the best way to get things early, " +
@@ -137,8 +139,10 @@ export default class LabsUserSettingsTab extends React.Component<{}, State> {
                 {betaSection}
                 {labsSections && (
                     <>
-                        <div className="mx_SettingsTab_heading">{_t("Early previews")}</div>
-                        <div className="mx_SettingsTab_subsectionText">
+                        <div className="mx_SettingsTab_heading" data-testid="heading-labs">
+                            {_t("Early previews")}
+                        </div>
+                        <div className="mx_SettingsTab_subsectionText" data-testid="heading-labs-text">
                             {_t(
                                 "Feeling experimental? " +
                                     "Try out our latest ideas in development. " +
