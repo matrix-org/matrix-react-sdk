@@ -335,6 +335,17 @@ export default class SettingsStore {
     }
 
     /**
+     * Retrieves the reason a setting is disabled if one is assigned.
+     * If a setting is not disabled this will return undefined.
+     * @param {string} settingName The setting to look up.
+     * @return {string} The reason the setting is disabled.
+     */
+    public static disabledMessage(settingName: string): string | undefined {
+        const disabled = SETTINGS[settingName].controller?.settingDisabled;
+        return typeof disabled === "string" ? disabled : undefined;
+    }
+
+    /**
      * Gets the value of a setting. The room ID is optional if the setting is not to
      * be applied to any particular room, otherwise it should be supplied.
      * @param {string} settingName The name of the setting to read the value of.

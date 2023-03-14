@@ -32,6 +32,7 @@ export default class ServerSupportUnstableFeatureController extends MatrixClient
         private readonly settingName: string,
         private readonly watchers: WatchManager,
         private readonly unstableFeatures: string[],
+        private readonly disabledMessage?: string,
         private readonly forcedValue: any = false,
     ) {
         super();
@@ -72,7 +73,10 @@ export default class ServerSupportUnstableFeatureController extends MatrixClient
         return null; // no override
     }
 
-    public get settingDisabled(): boolean {
-        return this.disabled;
+    public get settingDisabled(): boolean | string {
+        if (this.disabled) {
+            return this.disabledMessage ?? true;
+        }
+        return false;
     }
 }

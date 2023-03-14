@@ -22,6 +22,7 @@ import { _t } from "../../../languageHandler";
 import ToggleSwitch from "./ToggleSwitch";
 import StyledCheckbox from "./StyledCheckbox";
 import { SettingLevel } from "../../../settings/SettingLevel";
+import { defaultWatchManager } from "../../../settings/Settings";
 
 interface IProps {
     // The setting must be a boolean
@@ -47,19 +48,30 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            value: SettingsStore.getValueAt(
-                this.props.level,
-                this.props.name,
-                this.props.roomId,
-                this.props.isExplicit,
-            ),
+            value: this.settingValue,
         };
     }
+
+    public componentDidMount(): void {
+        defaultWatchManager.watchSetting(this.props.name, this.props.roomId, this.onSettingChange);
+    }
+
+    public componentWillUnmount(): void {
+        defaultWatchManager.unwatchSetting(this.onSettingChange);
+    }
+
+    private get settingValue(): boolean {
+        return SettingsStore.getValueAt(this.props.level, this.props.name, this.props.roomId, this.props.isExplicit);
+    }
+
+    private onSettingChange = (): void => {
+        this.setState({ value: this.settingValue });
+    };
 
     private onChange = async (checked: boolean): Promise<void> => {
         await this.save(checked);
         this.setState({ value: checked });
-        if (this.props.onChange) this.props.onChange(checked);
+        this.props.onChange?.(checked);
     };
 
     private checkBoxOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -87,11 +99,6 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
         const description = SettingsStore.getDescription(this.props.name);
         const shouldWarn = SettingsStore.shouldHaveWarning(this.props.name);
 
-        let disabledDescription: JSX.Element | null = null;
-        if (this.props.disabled && this.props.disabledDescription) {
-            disabledDescription = <div className="mx_SettingsFlag_microcopy">{this.props.disabledDescription}</div>;
-        }
-
         if (this.props.useCheckbox) {
             return (
                 <StyledCheckbox
@@ -117,18 +124,18 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
                                               w: (sub) => (
                                                   <span className="mx_SettingsTab_microcopy_warning">{sub}</span>
                                               ),
-                                              description: description,
+                                              description,
                                           },
                                       )
                                     : description}
                             </div>
                         )}
-                        {disabledDescription}
                     </label>
                     <ToggleSwitch
                         checked={this.state.value}
                         onChange={this.onChange}
                         disabled={this.props.disabled || !canChange}
+                        tooltip={this.props.disabled ? this.props.disabledDescription : undefined}
                         title={label}
                     />
                 </div>

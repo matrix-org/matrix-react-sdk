@@ -227,9 +227,12 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("Explore public spaces in the new search dialog"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
-        controller: new ServerSupportUnstableFeatureController("feature_exploring_public_spaces", defaultWatchManager, [
-            "org.matrix.msc3827.stable",
-        ]),
+        controller: new ServerSupportUnstableFeatureController(
+            "feature_exploring_public_spaces",
+            defaultWatchManager,
+            ["org.matrix.msc3827.stable"],
+            _td("Requires your server to support stable version of MSC3827"),
+        ),
     },
     "feature_msc3531_hide_messages_pending_moderation": {
         isFeature: true,
@@ -373,9 +376,12 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("Jump to date (adds /jumptodate and jump to date headers)"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
-        controller: new ServerSupportUnstableFeatureController("feature_jump_to_date", defaultWatchManager, [
-            "org.matrix.msc3030",
-        ]),
+        controller: new ServerSupportUnstableFeatureController(
+            "feature_jump_to_date",
+            defaultWatchManager,
+            ["org.matrix.msc3030"],
+            _td("Requires your server to support MSC3030"),
+        ),
     },
     "RoomList.backgroundImage": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -482,7 +488,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Developer,
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("Rust cryptography implementation"),
-        description: _td("Under active development. Can currently only be enabled via config.json"),
+        description: _td("Under active development."),
         // shouldWarn: true,
         default: false,
         controller: new RustCryptoSdkController(),
