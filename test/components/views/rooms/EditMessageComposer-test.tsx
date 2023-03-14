@@ -22,6 +22,7 @@ import { createPartCreator } from "../../../editor/mock";
 import { mkEvent } from "../../../test-utils";
 import DocumentOffset from "../../../../src/editor/offset";
 import { attachDifferentialMentions } from "../../../../src/components/views/rooms/EditMessageComposer";
+import SettingsStore from "../../../../src/settings/SettingsStore";
 
 describe("<EditMessageComposer/>", () => {
     const editedEvent = mkEvent({
@@ -44,15 +45,13 @@ describe("<EditMessageComposer/>", () => {
                 "body": " * hello world",
                 "msgtype": "m.text",
                 "m.new_content": {
-                    "body": "hello world",
-                    "msgtype": "m.text",
-                    "org.matrix.msc3952.mentions": {},
+                    body: "hello world",
+                    msgtype: "m.text",
                 },
                 "m.relates_to": {
                     event_id: editedEvent.getId(),
                     rel_type: "m.replace",
                 },
-                "org.matrix.msc3952.mentions": {},
             });
         });
 
@@ -69,17 +68,15 @@ describe("<EditMessageComposer/>", () => {
                 "format": "org.matrix.custom.html",
                 "formatted_body": " * hello <em>world</em>",
                 "m.new_content": {
-                    "body": "hello *world*",
-                    "msgtype": "m.text",
-                    "format": "org.matrix.custom.html",
-                    "formatted_body": "hello <em>world</em>",
-                    "org.matrix.msc3952.mentions": {},
+                    body: "hello *world*",
+                    msgtype: "m.text",
+                    format: "org.matrix.custom.html",
+                    formatted_body: "hello <em>world</em>",
                 },
                 "m.relates_to": {
                     event_id: editedEvent.getId(),
                     rel_type: "m.replace",
                 },
-                "org.matrix.msc3952.mentions": {},
             });
         });
 
@@ -96,17 +93,15 @@ describe("<EditMessageComposer/>", () => {
                 "format": "org.matrix.custom.html",
                 "formatted_body": " * blinks <strong>quickly</strong>",
                 "m.new_content": {
-                    "body": "blinks __quickly__",
-                    "msgtype": "m.emote",
-                    "format": "org.matrix.custom.html",
-                    "formatted_body": "blinks <strong>quickly</strong>",
-                    "org.matrix.msc3952.mentions": {},
+                    body: "blinks __quickly__",
+                    msgtype: "m.emote",
+                    format: "org.matrix.custom.html",
+                    formatted_body: "blinks <strong>quickly</strong>",
                 },
                 "m.relates_to": {
                     event_id: editedEvent.getId(),
                     rel_type: "m.replace",
                 },
-                "org.matrix.msc3952.mentions": {},
             });
         });
 
@@ -122,15 +117,13 @@ describe("<EditMessageComposer/>", () => {
                 "body": " * ✨sparkles✨",
                 "msgtype": "m.emote",
                 "m.new_content": {
-                    "body": "✨sparkles✨",
-                    "msgtype": "m.emote",
-                    "org.matrix.msc3952.mentions": {},
+                    body: "✨sparkles✨",
+                    msgtype: "m.emote",
                 },
                 "m.relates_to": {
                     event_id: editedEvent.getId(),
                     rel_type: "m.replace",
                 },
-                "org.matrix.msc3952.mentions": {},
             });
         });
 
@@ -148,20 +141,28 @@ describe("<EditMessageComposer/>", () => {
                 "body": " * //dev/null is my favourite place",
                 "msgtype": "m.text",
                 "m.new_content": {
-                    "body": "//dev/null is my favourite place",
-                    "msgtype": "m.text",
-                    "org.matrix.msc3952.mentions": {},
+                    body: "//dev/null is my favourite place",
+                    msgtype: "m.text",
                 },
                 "m.relates_to": {
                     event_id: editedEvent.getId(),
                     rel_type: "m.replace",
                 },
-                "org.matrix.msc3952.mentions": {},
             });
         });
     });
 
     describe("attachDifferentialMentions", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                (settingName) => settingName === "feature_intentional_mentions",
+            );
+        });
+
+        afterEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockReset();
+        });
+
         const partsCreator = createPartCreator();
 
         it("no mentions", () => {

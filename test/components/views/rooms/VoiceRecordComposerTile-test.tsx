@@ -27,6 +27,7 @@ import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalink
 import { VoiceRecordingStore } from "../../../../src/stores/VoiceRecordingStore";
 import { PlaybackClock } from "../../../../src/audio/PlaybackClock";
 import { mkEvent } from "../../../test-utils";
+import SettingsStore from "../../../../src/settings/SettingsStore";
 
 jest.mock("../../../../src/utils/local-room", () => ({
     doMaybeLocalRoomAction: jest.fn(),
@@ -100,6 +101,10 @@ describe("<VoiceRecordComposerTile/>", () => {
             <T,>(roomId: string, fn: (actualRoomId: string) => Promise<T>, _client?: MatrixClient) => {
                 return fn(roomId);
             },
+        );
+
+        jest.spyOn(SettingsStore, "getValue").mockImplementation(
+            (settingName) => settingName === "feature_intentional_mentions",
         );
     });
 

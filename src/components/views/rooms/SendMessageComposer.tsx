@@ -78,6 +78,11 @@ export function attachMentions(
     model: EditorModel | null,
     replyToEvent: MatrixEvent | undefined,
 ): void {
+    // If this feature is disabled, do nothing.
+    if (!SettingsStore.getValue("feature_intentional_mentions")) {
+        return;
+    }
+
     // The mentions property *always* gets included to disable legacy push rules.
     const mentions: IMentions = (content["org.matrix.msc3952.mentions"] = {});
 

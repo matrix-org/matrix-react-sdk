@@ -77,6 +77,7 @@ import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
 import { ElementCall } from "../../../models/Call";
 import { UnreadNotificationBadge } from "./NotificationBadge/UnreadNotificationBadge";
 import { EventTileThreadToolbar } from "./EventTile/EventTileThreadToolbar";
+import SettingsStore from "../../../settings/SettingsStore";
 
 export type GetRelationsForEvent = (
     eventId: string,
@@ -668,7 +669,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         //
         // Note that we can't just check if any of the iterations of the event caused
         // a highlight since that would preclude removing a user mention.
-        if (this.props.mxEvent.replacingEvent()) {
+        if (SettingsStore.getValue("feature_intentional_mentions") && this.props.mxEvent.replacingEvent()) {
             // Grab the mentions field of the latest edit event, but from the
             // m.new_content field.
             const mentions = this.props.mxEvent.replacingEvent()!.getContent()["m.new_content"]?.[

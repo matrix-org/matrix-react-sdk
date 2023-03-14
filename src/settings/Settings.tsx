@@ -532,6 +532,14 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Rooms,
         default: false,
     },
+    // MSC3952 intentional mentions support.
+    "feature_intentional_mentions": {
+        isFeature: true,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        displayName: _td("Enable intentional mentions"),
+        labsGroup: LabGroup.Rooms,
+        default: false,
+    },
     "useCompactLayout": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         displayName: _td("Use a more compact 'Modern' layout"),

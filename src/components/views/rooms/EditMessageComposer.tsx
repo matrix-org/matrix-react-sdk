@@ -151,8 +151,14 @@ export function createEditContent(model: EditorModel, editedEvent: MatrixEvent):
     // Build the mentions property for the *new* content (as if there was no edit).
     //
     // TODO If this is a reply we need to include all the users from it.
-    attachMentions(editedEvent.sender!.userId, newContent, model, undefined);
-    const mentions = attachDifferentialMentions(editedEvent.sender!.userId, editedEvent.getContent(), model);
+    if (SettingsStore.getValue("feature_intentional_mentions")) {
+        attachMentions(editedEvent.sender!.userId, newContent, model, undefined);
+        contentBody["org.matrix.msc3952.mentions"] = attachDifferentialMentions(
+            editedEvent.sender!.userId,
+            editedEvent.getContent(),
+            model,
+        );
+    }
 
     return Object.assign(
         {
@@ -161,7 +167,6 @@ export function createEditContent(model: EditorModel, editedEvent: MatrixEvent):
                 rel_type: "m.replace",
                 event_id: editedEvent.getId(),
             },
-            "org.matrix.msc3952.mentions": mentions,
         },
         contentBody,
     );

@@ -107,7 +107,6 @@ describe("ThreadView", () => {
                 "rel_type": RelationType.Thread,
             },
             "msgtype": MsgType.Text,
-            "org.matrix.msc3952.mentions": {},
         };
     }
 
