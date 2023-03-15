@@ -30,11 +30,11 @@ limitations under the License.
     border-radius: 4px;
     gap: var(--gap);
 
-    .mx_DecryptionFailureBar__indicator {
+    .mx_DecryptionFailureBar_indicator {
         grid-area: indicator;
 
         .mx_Spinner,
-        .mx_DecryptionFailureBar__icon {
+        .mx_DecryptionFailureBar_icon {
             align-self: start;
         }
 
@@ -43,7 +43,7 @@ limitations under the License.
         }
     }
 
-    .mx_DecryptionFailureBar__icon {
+    .mx_DecryptionFailureBar_icon {
         --size: 24px;
 
         width: var(--size);
@@ -55,7 +55,7 @@ limitations under the License.
         mask-size: contain;
     }
 
-    .mx_DecryptionFailureBar__header {
+    .mx_DecryptionFailureBar_header {
         grid-area: header;
 
         display: flex;
@@ -63,19 +63,19 @@ limitations under the License.
         justify-content: space-between;
         gap: var(--gap);
 
-        .mx_DecryptionFailureBar__header__headline {
+        .mx_DecryptionFailureBar_header_headline {
             font-weight: $font-semi-bold;
             font-size: $font-16px;
         }
 
-        .mx_DecryptionFailureBar__header__buttons {
+        .mx_DecryptionFailureBar_header_buttons {
             display: flex;
             flex-wrap: wrap; /* Let the buttons wrapped on a narrow column */
             gap: var(--gap);
         }
     }
 
-    .mx_DecryptionFailureBar__message {
+    .mx_DecryptionFailureBar_message {
         grid-area: message;
 
         white-space: pre-line; /* Break lines at newline characters */
