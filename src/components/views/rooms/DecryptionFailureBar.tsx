@@ -145,7 +145,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
         store.resetConfirm();
     };
 
-    const statusIndicator = waiting ? <Spinner /> : <div className="mx_DecryptionFailureBar__icon" />;
+    const statusIndicator = waiting ? <Spinner /> : <div className="mx_DecryptionFailureBar_icon" />;
 
     let headline: JSX.Element;
     let message: JSX.Element;
@@ -167,7 +167,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
             );
             button = (
                 <AccessibleButton
-                    className="mx_DecryptionFailureBar__header__buttons__button"
+                    className="mx_DecryptionFailureBar_header_buttons_button"
                     kind="primary"
                     onClick={onVerifyClick}
                     data-testid="decryption-failure-bar-button"
@@ -187,7 +187,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
             );
             button = (
                 <AccessibleButton
-                    className="mx_DecryptionFailureBar__header__buttons__button"
+                    className="mx_DecryptionFailureBar_header_buttons_button"
                     kind="primary"
                     onClick={onResetClick}
                     data-testid="decryption-failure-bar-button"
@@ -208,7 +208,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
         );
         button = (
             <AccessibleButton
-                className="mx_DecryptionFailureBar__header__buttons__button"
+                className="mx_DecryptionFailureBar_header_buttons_button"
                 kind="primary_outline"
                 onClick={onDeviceListClick}
                 data-testid="decryption-failure-bar-button"
@@ -232,7 +232,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
     if (!needsVerification && hasOtherVerifiedDevices && anyUnrequestedSessions) {
         keyRequestButton = (
             <AccessibleButton
-                className="mx_DecryptionFailureBar__header__buttons__button"
+                className="mx_DecryptionFailureBar_header_buttons_button"
                 kind="primary"
                 onClick={sendKeyRequests}
                 data-testid="decryption-failure-bar-button"
@@ -244,17 +244,17 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
 
     return (
         <div className="mx_DecryptionFailureBar">
-            <div className="mx_DecryptionFailureBar__indicator" data-testid="decryption-failure-bar-indicator">
+            <div className="mx_DecryptionFailureBar_indicator" data-testid="decryption-failure-bar-indicator">
                 {statusIndicator}
             </div>
-            <div className="mx_DecryptionFailureBar__header">
-                <div className="mx_DecryptionFailureBar__header__headline">{headline}</div>
-                <div className="mx_DecryptionFailureBar__header__buttons">
+            <div className="mx_DecryptionFailureBar_header">
+                <div className="mx_DecryptionFailureBar_header_headline">{headline}</div>
+                <div className="mx_DecryptionFailureBar_header_buttons">
                     {button}
                     {keyRequestButton}
                 </div>
             </div>
-            <div className="mx_DecryptionFailureBar__message">{message}</div>
+            <div className="mx_DecryptionFailureBar_message">{message}</div>
         </div>
     );
 };
