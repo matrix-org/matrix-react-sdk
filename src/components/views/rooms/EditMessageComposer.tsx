@@ -135,6 +135,7 @@ export function createEditContent(model: EditorModel, editedEvent: MatrixEvent):
     const contentBody: IContent = {
         msgtype: newContent.msgtype,
         body: `${plainPrefix} * ${body}`,
+        "m.new_content": newContent,
     };
 
     const formattedBody = htmlSerializeIfNeeded(model, {

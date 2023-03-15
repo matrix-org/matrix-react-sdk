@@ -52,7 +52,7 @@ describe("ContentMessages", () => {
 
     beforeEach(() => {
         client = {
-            getUserId: jest.fn().mockReturnValue("@alice:test"),
+            getSafeUserId: jest.fn().mockReturnValue("@alice:test"),
             sendStickerMessage: jest.fn(),
             sendMessage: jest.fn(),
             isRoomEncrypted: jest.fn().mockReturnValue(false),
