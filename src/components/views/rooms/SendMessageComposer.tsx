@@ -443,7 +443,8 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 }
 
                 if (cmd.category === CommandCategories.messages || cmd.category === CommandCategories.effects) {
-                    // TODO Do we need to attachMentions?
+                    // Attach any mentions which might be contained in the command content.
+                    attachMentions(this.props.mxClient.getSafeUserId(), content, model, replyToEvent);
                     attachRelation(content, this.props.relation);
                     if (replyToEvent) {
                         addReplyToMessageContent(content, replyToEvent, {
