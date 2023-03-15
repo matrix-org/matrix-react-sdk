@@ -48,6 +48,7 @@ export class DecryptError extends Error {
  * @returns {Promise<Blob>} Resolves to a Blob of the file.
  */
 export async function decryptFile(file?: IEncryptedFile, info?: IMediaEventInfo): Promise<Blob> {
+    // throws if file is falsy
     const media = mediaFromContent({ file });
 
     let responseData: ArrayBuffer;
@@ -64,7 +65,7 @@ export async function decryptFile(file?: IEncryptedFile, info?: IMediaEventInfo)
 
     try {
         // Decrypt the array buffer using the information taken from the event content.
-        const dataArray = await encrypt.decryptAttachment(responseData, file);
+        const dataArray = await encrypt.decryptAttachment(responseData, file!);
         // Turn the array into a Blob and give it the correct MIME-type.
 
         // IMPORTANT: we must not allow scriptable mime-types into Blobs otherwise
