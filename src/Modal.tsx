@@ -29,7 +29,7 @@ const STATIC_DIALOG_CONTAINER_ID = "mx_Dialog_StaticContainer";
 
 // Type which accepts a React Component which looks like a Modal (accepts an onFinished prop)
 export type ComponentType = React.ComponentType<{
-    onFinished?(...args: any): void;
+    onFinished(...args: any): void;
 }>;
 
 type Defaultize<P, D> = P extends any
