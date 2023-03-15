@@ -23,6 +23,7 @@ import React, {
     useRef,
     useState,
     ChangeEvent,
+    ReactNode,
 } from "react";
 import classNames from "classnames";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
@@ -139,7 +140,7 @@ export const SpaceFeedbackPrompt: React.FC<{
                         rageshakeData: Object.fromEntries(
                             ["Spaces.allRoomsInHome", "Spaces.enabledMetaSpaces"].map((k) => [
                                 k,
-                                String(SettingsStore.getValue(k)),
+                                SettingsStore.getValue(k),
                             ]),
                         ),
                     });
@@ -158,6 +159,7 @@ interface ISpaceCreateFormProps extends BProps {
     nameFieldRef: RefObject<Field>;
     aliasFieldRef: RefObject<RoomAliasField>;
     showAliasField?: boolean;
+    children?: ReactNode;
     onSubmit(e: SyntheticEvent): void;
     setAlias(alias: string): void;
 }
