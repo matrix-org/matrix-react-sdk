@@ -92,7 +92,7 @@ export function attachMentions(
     // event + any mentioned users in that event.
     if (replyToEvent) {
         userMentions.add(replyToEvent.sender!.userId);
-        // TODO What do we do if the prely event *doeesn't* have this property?
+        // TODO What do we do if the reply event *doeesn't* have this property?
         // Try to fish out replies from the contents?
         const userIds = replyToEvent.getContent()["org.matrix.msc3952.mentions"]?.user_ids;
         if (Array.isArray(userIds)) {
