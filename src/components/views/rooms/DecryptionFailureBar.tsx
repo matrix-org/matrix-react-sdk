@@ -145,11 +145,17 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
         store.resetConfirm();
     };
 
-    const statusIndicator = waiting ? <Spinner /> : <div className="mx_DecryptionFailureBar_icon" />;
+    const statusIndicator = waiting ? (
+        <Spinner w={24} h={24} />
+    ) : (
+        <div className="mx_DecryptionFailureBar_start_status_icon" data-testid="decryption-failure-bar-icon" />
+    );
 
     let headline: JSX.Element;
+    let headline_testid;
     let message: JSX.Element;
     let button = <React.Fragment />;
+    let button_testid;
     if (waiting) {
         headline = <React.Fragment>{_t("Decrypting messages…")}</React.Fragment>;
         message = (
@@ -160,6 +166,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
     } else if (needsVerification) {
         if (hasOtherVerifiedDevices || hasKeyBackup) {
             headline = <React.Fragment>{_t("Verify this device to access all messages")}</React.Fragment>;
+            headline_testid = "decryption-failure-bar-headline-verify";
             message = (
                 <React.Fragment>
                     {_t("This device was unable to decrypt some messages because it has not been verified yet.")}
@@ -167,30 +174,33 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
             );
             button = (
                 <AccessibleButton
-                    className="mx_DecryptionFailureBar_header_buttons_button"
+                    className="mx_DecryptionFailureBar_end--buttons_button"
                     kind="primary"
                     onClick={onVerifyClick}
                     data-testid="decryption-failure-bar-button"
+                    data-testid-button="decryption-failure-bar-button-verify"
                 >
                     {_t("Verify")}
                 </AccessibleButton>
             );
         } else {
             headline = <React.Fragment>{_t("Reset your keys to prevent future decryption errors")}</React.Fragment>;
+            headline_testid = "decryption-failure-bar-headline-reset";
             message = (
                 <React.Fragment>
                     {_t(
-                        "You will not be able to access old undecryptable messages,\n" +
+                        "You will not be able to access old undecryptable messages, " +
                             "but resetting your keys will allow you to receive new messages.",
                     )}
                 </React.Fragment>
             );
             button = (
                 <AccessibleButton
-                    className="mx_DecryptionFailureBar_header_buttons_button"
+                    className="mx_DecryptionFailureBar_end--buttons_button"
                     kind="primary"
                     onClick={onResetClick}
                     data-testid="decryption-failure-bar-button"
+                    data-testid-button="decryption-failure-bar-button-reset"
                 >
                     {_t("Reset")}
                 </AccessibleButton>
@@ -198,30 +208,33 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
         }
     } else if (hasOtherVerifiedDevices) {
         headline = <React.Fragment>{_t("Open another device to load encrypted messages")}</React.Fragment>;
+        headline_testid = "decryption-failure-bar-headline-devicelist";
         message = (
             <React.Fragment>
                 {_t(
-                    "This device is requesting decryption keys from your other devices.\n" +
+                    "This device is requesting decryption keys from your other devices. " +
                         "Opening one of your other devices may speed this up.",
                 )}
             </React.Fragment>
         );
         button = (
             <AccessibleButton
-                className="mx_DecryptionFailureBar_header_buttons_button"
+                className="mx_DecryptionFailureBar_end--buttons_button"
                 kind="primary_outline"
                 onClick={onDeviceListClick}
                 data-testid="decryption-failure-bar-button"
+                data-testid-button="decryption-failure-bar-button-devicelist"
             >
                 {_t("View your device list")}
             </AccessibleButton>
         );
     } else {
         headline = <React.Fragment>{_t("Some messages could not be decrypted")}</React.Fragment>;
+        headline_testid = "decryption-failure-bar-headline-error";
         message = (
             <React.Fragment>
                 {_t(
-                    "Unfortunately, there are no other verified devices to request decryption keys from.\n" +
+                    "Unfortunately, there are no other verified devices to request decryption keys from. " +
                         "Signing in and verifying other devices may help avoid this situation in the future.",
                 )}
             </React.Fragment>
@@ -232,10 +245,11 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
     if (!needsVerification && hasOtherVerifiedDevices && anyUnrequestedSessions) {
         keyRequestButton = (
             <AccessibleButton
-                className="mx_DecryptionFailureBar_header_buttons_button"
+                className="mx_DecryptionFailureBar_end--buttons_button"
                 kind="primary"
                 onClick={sendKeyRequests}
                 data-testid="decryption-failure-bar-button"
+                data-testid-button="decryption-failure-bar-button-resend"
             >
                 {_t("Resend key requests")}
             </AccessibleButton>
@@ -244,17 +258,19 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
 
     return (
         <div className="mx_DecryptionFailureBar">
-            <div className="mx_DecryptionFailureBar_indicator" data-testid="decryption-failure-bar-indicator">
-                {statusIndicator}
-            </div>
-            <div className="mx_DecryptionFailureBar_header">
-                <div className="mx_DecryptionFailureBar_header_headline">{headline}</div>
-                <div className="mx_DecryptionFailureBar_header_buttons">
-                    {button}
-                    {keyRequestButton}
+            <div className="mx_DecryptionFailureBar_start">
+                <div className="mx_DecryptionFailureBar_start_status">
+                    <div data-testid="decryption-failure-bar-indicator">{statusIndicator}</div>
                 </div>
+                <div className="mx_DecryptionFailureBar_start_headline" data-testid={headline_testid}>
+                    {headline}
+                </div>
+                <div className="mx_DecryptionFailureBar_start_message">{message}</div>
             </div>
-            <div className="mx_DecryptionFailureBar_message">{message}</div>
+            <div className="mx_DecryptionFailureBar_end--buttons">
+                {button}
+                {keyRequestButton}
+            </div>
         </div>
     );
 };

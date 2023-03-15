@@ -15,70 +15,71 @@ limitations under the License.
 */
 
 .mx_DecryptionFailureBar {
-    --gap: $spacing-8 $spacing-12;
-
-    display: grid;
-    grid-template-areas:
-        "indicator header  header"
-        ".         message message"; /* Empty grid item under grid-area "indicator" */
-    grid-template-columns: min-content auto auto;
-    align-items: start;
+    --gap-row: $spacing-8;
+    --gap-column: $spacing-12;
+    --gap: var(--gap-row) var(--gap-column);
+    --size-icon: 24px;
 
     background-color: $system;
     padding: $spacing-12;
     margin-inline: $spacing-16;
     border-radius: 4px;
-    gap: var(--gap);
 
-    .mx_DecryptionFailureBar_indicator {
-        grid-area: indicator;
+    display: flex;
+    flex-flow: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    row-gap: var(--gap-row);
 
-        .mx_Spinner,
-        .mx_DecryptionFailureBar_icon {
-            align-self: start;
-        }
-
-        .mx_Spinner {
-            height: unset; /* Unset height: 100% */
-        }
-    }
-
-    .mx_DecryptionFailureBar_icon {
-        --size: 24px;
-
-        width: var(--size);
-        height: var(--size);
-        mask-image: url("$(res)/img/e2e/decryption-failure.svg");
-        background-color: $e2e-warning-color;
-        mask-repeat: no-repeat;
-        mask-position: center;
-        mask-size: contain;
-    }
-
-    .mx_DecryptionFailureBar_header {
-        grid-area: header;
-
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
+    .mx_DecryptionFailureBar_start {
+        display: grid;
         gap: var(--gap);
+        grid-template-areas:
+            "status headline"
+            ".      message";
+        grid-template-columns: var(--size-icon) auto;
 
-        .mx_DecryptionFailureBar_header_headline {
+        .mx_DecryptionFailureBar_start_status {
+            grid-area: status;
+
+            display: flex;
+            align-items: center;
+            gap: var(--gap);
+
+            .mx_Spinner {
+                height: unset; /* Unset height: 100% */
+            }
+
+            .mx_DecryptionFailureBar_start_status_icon {
+                min-width: var(--size-icon);
+                height: var(--size-icon);
+                mask-image: url("$(res)/img/e2e/decryption-failure.svg");
+                background-color: $e2e-warning-color;
+                mask-repeat: no-repeat;
+                mask-position: center;
+                mask-size: contain;
+            }
+        }
+
+        .mx_DecryptionFailureBar_start_headline {
+            grid-area: headline;
+
             font-weight: $font-semi-bold;
             font-size: $font-16px;
+            align-self: center;
         }
 
-        .mx_DecryptionFailureBar_header_buttons {
-            display: flex;
-            flex-wrap: wrap; /* Let the buttons wrapped on a narrow column */
-            gap: var(--gap);
+        .mx_DecryptionFailureBar_start_message {
+            grid-area: message;
+
+            color: $secondary-content;
         }
     }
 
-    .mx_DecryptionFailureBar_message {
-        grid-area: message;
-
-        white-space: pre-line; /* Break lines at newline characters */
-        color: $secondary-content;
+    .mx_DecryptionFailureBar_end--buttons {
+        display: flex;
+        flex-wrap: wrap; /* Let the buttons wrapped on a narrow column */
+        gap: var(--buttons-dialog-gap-row) var(--buttons-dialog-gap-column);
+        margin-inline-start: calc(var(--size-icon) + var(--gap-column)); /* Align the button(s) and the message */
     }
 }
