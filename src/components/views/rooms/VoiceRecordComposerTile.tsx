@@ -130,7 +130,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
             );
 
             // Attach mentions, which really only applies if there's a replyToEvent.
-            attachMentions(MatrixClientPeg.get().getUserId()!, content, null, replyToEvent);
+            attachMentions(MatrixClientPeg.get().getSafeUserId(), content, null, replyToEvent);
             attachRelation(content, relation);
             if (replyToEvent) {
                 addReplyToMessageContent(content, replyToEvent, {

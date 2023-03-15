@@ -681,7 +681,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                 if (!Array.isArray(userMentions)) {
                     return false;
                 }
-                return userMentions.includes(MatrixClientPeg.get().getUserId()!);
+                return userMentions.includes(MatrixClientPeg.get().getSafeUserId());
             }
         }
 

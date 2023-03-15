@@ -488,7 +488,7 @@ export default class ContentMessages {
         };
 
         // Attach mentions, which really only applies if there's a replyToEvent.
-        attachMentions(matrixClient.getUserId()!, content, null, replyToEvent);
+        attachMentions(matrixClient.getSafeUserId(), content, null, replyToEvent);
         attachRelation(content, relation);
         if (replyToEvent) {
             addReplyToMessageContent(content, replyToEvent, {

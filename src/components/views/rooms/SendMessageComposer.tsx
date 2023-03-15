@@ -476,7 +476,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             const { roomId } = this.props.room;
             if (!content) {
                 content = createMessageContent(
-                    this.props.mxClient.getUserId()!,
+                    this.props.mxClient.getSafeUserId(),
                     model,
                     replyToEvent,
                     this.props.relation,
