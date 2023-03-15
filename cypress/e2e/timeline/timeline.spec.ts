@@ -302,6 +302,49 @@ describe("Timeline", () => {
             );
         });
 
+        it("should render EventTiles on IRC layout", () => {
+            // Exclude timestamp and read marker from snapshots
+            const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
+
+            sendEvent(roomId);
+            sendEvent(roomId); // check continuation
+            sendEvent(roomId); // check the last EventTile
+
+            cy.visit("/#/room/" + roomId);
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
+
+            // Wait until configuration is finished
+            cy.contains(
+                ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=irc] .mx_GenericEventListSummary_summary",
+                "created and configured the room.",
+            ).should("exist");
+
+            cy.get(".mx_RoomView_body[data-layout=irc]").within(() => {
+                // Ensure CSS declarations which cannot be detected with a screenshot test are applied as expected
+                cy.get(".mx_EventTile")
+                    .should("have.css", "max-width", "100%")
+                    .should("have.css", "clear", "both")
+                    .should("have.css", "position", "relative");
+
+                cy.get(".mx_EventTile_continuation")
+                    // Check that zero block padding is set
+                    .should("have.css", "padding-block-start", "0px");
+
+                cy.get(".mx_EventTile_continuation .mx_EventTile_line").should("have.css", "clear", "both");
+
+                // Select the last event tile
+                cy.get(".mx_EventTile_last")
+                    .within(() => {
+                        // The last tile is also a continued one
+                        cy.get(".mx_EventTile_line").should("have.css", "clear", "both");
+                    })
+                    // Check that zero block padding is set
+                    .should("have.css", "padding-block-start", "0px");
+            });
+
+            cy.get(".mx_MainSplit").percySnapshotElement("EventTiles on IRC layout", { percyCSS });
+        });
+
         it("should render EventTiles on modern layout", () => {
             // Exclude timestamp and read marker from snapshots
             const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
