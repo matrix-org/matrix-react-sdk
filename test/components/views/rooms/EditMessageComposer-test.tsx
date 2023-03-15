@@ -14,15 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IContent } from "matrix-js-sdk/src/matrix";
-
 import { createEditContent } from "../../../../src/components/views/rooms/EditMessageComposer";
 import EditorModel from "../../../../src/editor/model";
 import { createPartCreator } from "../../../editor/mock";
 import { mkEvent } from "../../../test-utils";
 import DocumentOffset from "../../../../src/editor/offset";
-import { attachDifferentialMentions } from "../../../../src/components/views/rooms/EditMessageComposer";
-import SettingsStore from "../../../../src/settings/SettingsStore";
 
 describe("<EditMessageComposer/>", () => {
     const editedEvent = mkEvent({
@@ -149,71 +145,6 @@ describe("<EditMessageComposer/>", () => {
                     rel_type: "m.replace",
                 },
             });
-        });
-    });
-
-    describe("attachDifferentialMentions", () => {
-        beforeEach(() => {
-            jest.spyOn(SettingsStore, "getValue").mockImplementation(
-                (settingName) => settingName === "feature_intentional_mentions",
-            );
-        });
-
-        afterEach(() => {
-            jest.spyOn(SettingsStore, "getValue").mockReset();
-        });
-
-        const partsCreator = createPartCreator();
-
-        it("no mentions", () => {
-            const model = new EditorModel([], partsCreator);
-            const prevContent: IContent = {};
-            const mentions = attachDifferentialMentions("@alice:test", prevContent, model);
-            expect(mentions).toEqual({});
-        });
-
-        it("mentions do not propagate", () => {
-            const model = new EditorModel([], partsCreator);
-            const prevContent: IContent = { "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"], room: true } };
-            const mentions = attachDifferentialMentions("@alice:test", prevContent, model);
-            expect(mentions).toEqual({});
-        });
-
-        it("test user mentions", () => {
-            const model = new EditorModel([partsCreator.userPill("Bob", "@bob:test")], partsCreator);
-            const prevContent: IContent = {};
-            const mentions = attachDifferentialMentions("@alice:test", prevContent, model);
-            expect(mentions).toEqual({ user_ids: ["@bob:test"] });
-        });
-
-        it("test prev user mentions", () => {
-            const model = new EditorModel([partsCreator.userPill("Bob", "@bob:test")], partsCreator);
-            const prevContent: IContent = { "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] } };
-            const mentions = attachDifferentialMentions("@alice:test", prevContent, model);
-            expect(mentions).toEqual({});
-        });
-
-        it("test room mention", () => {
-            const model = new EditorModel([partsCreator.atRoomPill("@room")], partsCreator);
-            const prevContent: IContent = {};
-            const mentions = attachDifferentialMentions("@alice:test", prevContent, model);
-            expect(mentions).toEqual({ room: true });
-        });
-
-        it("test prev room mention", () => {
-            const model = new EditorModel([partsCreator.atRoomPill("@room")], partsCreator);
-            const prevContent: IContent = { "org.matrix.msc3952.mentions": { room: true } };
-            const mentions = attachDifferentialMentions("@alice:test", prevContent, model);
-            expect(mentions).toEqual({});
-        });
-
-        it("test broken mentions", () => {
-            // Replying to a room mention shouldn't automatically be a room mention.
-            const model = new EditorModel([], partsCreator);
-            // @ts-ignore - Purposefully testing invalid data.
-            const prevContent: IContent = { "org.matrix.msc3952.mentions": { user_ids: "@bob:test" } };
-            const mentions = attachDifferentialMentions("@alice:test", prevContent, model);
-            expect(mentions).toEqual({});
         });
     });
 });

@@ -71,12 +71,14 @@ import { doMaybeLocalRoomAction } from "../../../utils/local-room";
  * @param content - The event content.
  * @param model - The editor model to search for mentions, null if there is no editor.
  * @param replyToEvent - The event being replied to or undefined if it is not a reply.
+ * @param editedContent - The content of the parent event being edited.
  */
 export function attachMentions(
     sender: string,
     content: IContent,
     model: EditorModel | null,
     replyToEvent: MatrixEvent | undefined,
+    editedContent: IContent | null = null,
 ): void {
     // If this feature is disabled, do nothing.
     if (!SettingsStore.getValue("feature_intentional_mentions")) {
@@ -87,6 +89,7 @@ export function attachMentions(
     const mentions: IMentions = (content["org.matrix.msc3952.mentions"] = {});
 
     const userMentions = new Set<string>();
+    let roomMention = false;
 
     // If there's a reply, initialize the mentioned users as the sender of that
     // event + any mentioned users in that event.
@@ -100,13 +103,14 @@ export function attachMentions(
         }
     }
 
+    // If user provided content is available, check to see if any users are mentioned.
     if (model) {
         // Add any mentioned users in the current content.
         for (const part of model.parts) {
             if (part.type === Type.UserPill) {
                 userMentions.add(part.resourceId);
             } else if (part.type === Type.AtRoomPill) {
-                mentions.room = true;
+                roomMention = true;
             }
         }
     }
@@ -114,9 +118,41 @@ export function attachMentions(
     // Ensure the *current* user isn't listed in the mentioned users.
     userMentions.delete(sender);
 
-    // Only include the users if there are any.
+    // Finally, if this event is editing a previous event, only include users who
+    // were not previously mentioned and a room mention if the previous event was
+    // not a room mention.
+    if (editedContent) {
+        // First, the new event content gets the *full* set of users.
+        const newContent = content["m.new_content"];
+        const newMentions: IMentions = (newContent["org.matrix.msc3952.mentions"] = {});
+
+        // Only include the users/room if there is any content.
+        if (userMentions.size) {
+            newMentions.user_ids = [...userMentions];
+        }
+        if (roomMention) {
+            newMentions.room = true;
+        }
+
+        // Fetch the mentions from the original event and remove any previously
+        // mentioned users.
+        const prevMentions = editedContent["org.matrix.msc3952.mentions"];
+        if (Array.isArray(prevMentions?.user_ids)) {
+            prevMentions!.user_ids.forEach((userId) => userMentions.delete(userId));
+        }
+
+        // If the original event mentioned the room, nothing to do here.
+        if (prevMentions?.room) {
+            roomMention = false;
+        }
+    }
+
+    // Only include the users/room if there is any content.
     if (userMentions.size) {
         mentions.user_ids = [...userMentions];
+    }
+    if (roomMention) {
+        mentions.room = true;
     }
 }
 

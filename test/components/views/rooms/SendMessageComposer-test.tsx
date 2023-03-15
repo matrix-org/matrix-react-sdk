@@ -263,6 +263,89 @@ describe("<SendMessageComposer/>", () => {
                 "org.matrix.msc3952.mentions": {},
             });
         });
+
+        describe("attachMentions with edit", () => {
+            it("no mentions", () => {
+                const model = new EditorModel([], partsCreator);
+                const content: IContent = { "m.new_content": {} };
+                const prevContent: IContent = {};
+                attachMentions("@alice:test", content, model, undefined, prevContent);
+                expect(content).toEqual({
+                    "org.matrix.msc3952.mentions": {},
+                    "m.new_content": { "org.matrix.msc3952.mentions": {} },
+                });
+            });
+
+            it("mentions do not propagate", () => {
+                const model = new EditorModel([], partsCreator);
+                const content: IContent = { "m.new_content": {} };
+                const prevContent: IContent = {
+                    "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"], room: true },
+                };
+                attachMentions("@alice:test", content, model, undefined, prevContent);
+                expect(content).toEqual({
+                    "org.matrix.msc3952.mentions": {},
+                    "m.new_content": { "org.matrix.msc3952.mentions": {} },
+                });
+            });
+
+            it("test user mentions", () => {
+                const model = new EditorModel([partsCreator.userPill("Bob", "@bob:test")], partsCreator);
+                const content: IContent = { "m.new_content": {} };
+                const prevContent: IContent = {};
+                attachMentions("@alice:test", content, model, undefined, prevContent);
+                expect(content).toEqual({
+                    "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] },
+                    "m.new_content": { "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] } },
+                });
+            });
+
+            it("test prev user mentions", () => {
+                const model = new EditorModel([partsCreator.userPill("Bob", "@bob:test")], partsCreator);
+                const content: IContent = { "m.new_content": {} };
+                const prevContent: IContent = { "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] } };
+                attachMentions("@alice:test", content, model, undefined, prevContent);
+                expect(content).toEqual({
+                    "org.matrix.msc3952.mentions": {},
+                    "m.new_content": { "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] } },
+                });
+            });
+
+            it("test room mention", () => {
+                const model = new EditorModel([partsCreator.atRoomPill("@room")], partsCreator);
+                const content: IContent = { "m.new_content": {} };
+                const prevContent: IContent = {};
+                attachMentions("@alice:test", content, model, undefined, prevContent);
+                expect(content).toEqual({
+                    "org.matrix.msc3952.mentions": { room: true },
+                    "m.new_content": { "org.matrix.msc3952.mentions": { room: true } },
+                });
+            });
+
+            it("test prev room mention", () => {
+                const model = new EditorModel([partsCreator.atRoomPill("@room")], partsCreator);
+                const content: IContent = { "m.new_content": {} };
+                const prevContent: IContent = { "org.matrix.msc3952.mentions": { room: true } };
+                attachMentions("@alice:test", content, model, undefined, prevContent);
+                expect(content).toEqual({
+                    "org.matrix.msc3952.mentions": {},
+                    "m.new_content": { "org.matrix.msc3952.mentions": { room: true } },
+                });
+            });
+
+            it("test broken mentions", () => {
+                // Replying to a room mention shouldn't automatically be a room mention.
+                const model = new EditorModel([], partsCreator);
+                const content: IContent = { "m.new_content": {} };
+                // @ts-ignore - Purposefully testing invalid data.
+                const prevContent: IContent = { "org.matrix.msc3952.mentions": { user_ids: "@bob:test" } };
+                attachMentions("@alice:test", content, model, undefined, prevContent);
+                expect(content).toEqual({
+                    "org.matrix.msc3952.mentions": {},
+                    "m.new_content": { "org.matrix.msc3952.mentions": {} },
+                });
+            });
+        });
     });
 
     describe("functions correctly mounted", () => {
