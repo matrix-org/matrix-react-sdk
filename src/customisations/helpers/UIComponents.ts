@@ -14,9 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import {
+    ShouldShowUiComponentOps,
+    UiComponentLifecycle,
+} from "@matrix-org/react-sdk-module-api/lib/lifecycles/UiComponentLifecycle";
+
 import { UIComponent } from "../../settings/UIFeature";
 import { ComponentVisibilityCustomisations } from "../ComponentVisibility";
+import { ModuleRunner } from "../../modules/ModuleRunner";
+import { MatrixClientPeg } from "../../MatrixClientPeg";
 
 export function shouldShowComponent(component: UIComponent): boolean {
-    return ComponentVisibilityCustomisations.shouldShowComponent?.(component) ?? true;
+    let approved: boolean | undefined;
+    if (ComponentVisibilityCustomisations.shouldShowComponent) {
+        approved = ComponentVisibilityCustomisations.shouldShowComponent(component);
+    } else {
+        const opts: ShouldShowUiComponentOps = { shouldShowComponent: undefined };
+        ModuleRunner.instance.invoke(
+            UiComponentLifecycle.ShouldShowComponent,
+            opts,
+            component,
+            MatrixClientPeg.get().getUserId(),
+        );
+        approved = opts.shouldShowComponent;
+    }
+    return approved ?? true;
 }
