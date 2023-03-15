@@ -267,7 +267,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
         });
     }
 
-    let modal: IHandle<any> | undefined;
+    let modal: IHandle | undefined;
     if (opts.spinner) modal = Modal.createDialog(Spinner, undefined, "mx_Dialog_spinner");
 
     let roomId: string;

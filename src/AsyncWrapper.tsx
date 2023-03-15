@@ -22,13 +22,18 @@ import BaseDialog from "./components/views/dialogs/BaseDialog";
 import DialogButtons from "./components/views/elements/DialogButtons";
 import Spinner from "./components/views/elements/Spinner";
 
-type AsyncImport<T> = { default: T };
+export type AsyncImport<T> = { default: T };
 
-interface IProps {
+interface Wof {
+    onFinished(...args: any): any;
+}
+
+export type WithOnFinished = Wof & any;
+
+type IProps = WithOnFinished & {
     // A promise which resolves with the real component
     prom: Promise<ComponentType<any> | AsyncImport<ComponentType<any>>>;
-    onFinished(): void;
-}
+};
 
 interface IState {
     component?: ComponentType<PropsWithChildren<any>>;

@@ -39,7 +39,7 @@ import { SdkContextClass } from "../contexts/SDKContext";
 import SettingsStore from "../settings/SettingsStore";
 
 export async function leaveRoomBehaviour(roomId: string, retry = true, spinner = true): Promise<void> {
-    let spinnerModal: IHandle<any> | undefined;
+    let spinnerModal: IHandle | undefined;
     if (spinner) {
         spinnerModal = Modal.createDialog(Spinner, undefined, "mx_Dialog_spinner");
     }

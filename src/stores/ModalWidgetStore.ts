@@ -25,7 +25,7 @@ import ModalWidgetDialog from "../components/views/dialogs/ModalWidgetDialog";
 import { WidgetMessagingStore } from "./widgets/WidgetMessagingStore";
 
 interface IState {
-    modal?: IModal<any>;
+    modal?: IModal;
     openedFromId?: string;
 }
 
@@ -35,7 +35,7 @@ export class ModalWidgetStore extends AsyncStoreWithClient<IState> {
         instance.start();
         return instance;
     })();
-    private modalInstance: IHandle<typeof ModalWidgetDialog> | null = null;
+    private modalInstance: IHandle | null = null;
     private openSourceWidgetId: string | null = null;
     private openSourceWidgetRoomId: string | null = null;
 

@@ -62,7 +62,7 @@ export async function upgradeRoom(
     progressCallback?: (progress: IProgress) => void,
 ): Promise<string> {
     const cli = room.client;
-    let spinnerModal: IHandle<any> | undefined;
+    let spinnerModal: IHandle | undefined;
     if (!progressCallback) {
         spinnerModal = Modal.createDialog(Spinner, undefined, "mx_Dialog_spinner");
     }

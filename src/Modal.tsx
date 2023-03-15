@@ -22,49 +22,31 @@ import { defer, sleep } from "matrix-js-sdk/src/utils";
 import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
 
 import dis from "./dispatcher/dispatcher";
-import AsyncWrapper from "./AsyncWrapper";
+import AsyncWrapper, { AsyncImport, WithOnFinished } from "./AsyncWrapper";
 
 const DIALOG_CONTAINER_ID = "mx_Dialog_Container";
 const STATIC_DIALOG_CONTAINER_ID = "mx_Dialog_StaticContainer";
 
-// Type which accepts a React Component which looks like a Modal (accepts an onFinished prop)
-export type ComponentType = React.ComponentType<{
-    onFinished(...args: any): void;
-}>;
+export type ComponentType = React.ComponentType<any> | AsyncImport<React.ComponentType<any>>;
 
-type Defaultize<P, D> = P extends any
-    ? string extends keyof P
-        ? P
-        : Pick<P, Exclude<keyof P, keyof D>> &
-              Partial<Pick<P, Extract<keyof P, keyof D>>> &
-              Partial<Pick<D, Exclude<keyof D, keyof P>>>
-    : never;
-
-// Generic type which returns the props of the Modal component with the onFinished being optional.
-export type ComponentProps<C extends ComponentType> = Defaultize<
-    Omit<React.ComponentProps<C>, "onFinished">,
-    C["defaultProps"]
-> &
-    Partial<Pick<React.ComponentProps<C>, "onFinished">>;
-
-export interface IModal<C extends ComponentType> {
+export interface IModal {
     elem: React.ReactNode;
     className?: string;
     beforeClosePromise?: Promise<boolean>;
     closeReason?: string;
     onBeforeClose?(reason?: string): Promise<boolean>;
-    onFinished: ComponentProps<C>["onFinished"];
-    close(...args: Parameters<ComponentProps<C>["onFinished"]>): void;
+    onFinished: WithOnFinished["onFinished"];
+    close(...args: Parameters<WithOnFinished["onFinished"]>): void;
     hidden?: boolean;
 }
 
-export interface IHandle<C extends ComponentType> {
-    finished: Promise<Parameters<ComponentProps<C>["onFinished"]>>;
-    close(...args: Parameters<ComponentProps<C>["onFinished"]>): void;
+export interface IHandle {
+    finished: Promise<Parameters<WithOnFinished["onFinished"]>>;
+    close(...args: Parameters<WithOnFinished["onFinished"]>): void;
 }
 
-interface IOptions<C extends ComponentType> {
-    onBeforeClose?: IModal<C>["onBeforeClose"];
+interface IOptions {
+    onBeforeClose?: IModal["onBeforeClose"];
 }
 
 export enum ModalManagerEvent {
@@ -80,14 +62,14 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
     // The modal to prioritise over all others. If this is set, only show
     // this modal. Remove all other modals from the stack when this modal
     // is closed.
-    private priorityModal: IModal<any> | null = null;
+    private priorityModal: IModal | null = null;
     // The modal to keep open underneath other modals if possible. Useful
     // for cases like Settings where the modal should remain open while the
     // user is prompted for more information/errors.
-    private staticModal: IModal<any> | null = null;
+    private staticModal: IModal | null = null;
     // A list of the modals we have stacked up, with the most recent at [0]
     // Neither the static nor priority modal will be in this list.
-    private modals: IModal<any>[] = [];
+    private modals: IModal[] = [];
 
     private static getOrCreateContainer(): HTMLElement {
         let container = document.getElementById(DIALOG_CONTAINER_ID);
@@ -125,12 +107,12 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
 
     public createDialog<C extends ComponentType>(
         Element: C,
-        props?: ComponentProps<C>,
+        props?: WithOnFinished,
         className?: string,
         isPriorityModal = false,
         isStaticModal = false,
-        options: IOptions<C> = {},
-    ): IHandle<C> {
+        options: IOptions = {},
+    ): IHandle {
         return this.createDialogAsync<C>(
             Promise.resolve(Element),
             props,
@@ -141,11 +123,7 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
         );
     }
 
-    public appendDialog<C extends ComponentType>(
-        Element: React.ComponentType,
-        props?: ComponentProps<C>,
-        className?: string,
-    ): IHandle<C> {
+    public appendDialog<C extends ComponentType>(Element: C, props?: WithOnFinished, className?: string): IHandle {
         return this.appendDialogAsync<C>(Promise.resolve(Element), props, className);
     }
 
@@ -159,14 +137,14 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
     }
 
     private buildModal<C extends ComponentType>(
-        prom: Promise<React.ComponentType>,
-        props?: ComponentProps<C>,
+        prom: Promise<C>,
+        props?: WithOnFinished,
         className?: string,
-        options?: IOptions<C>,
+        options?: IOptions,
     ): {
-        modal: IModal<C>;
-        closeDialog: IHandle<C>["close"];
-        onFinishedProm: IHandle<C>["finished"];
+        modal: IModal;
+        closeDialog: IHandle["close"];
+        onFinishedProm: IHandle["finished"];
     } {
         const modal = {
             onFinished: props?.onFinished,
@@ -175,10 +153,10 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
 
             // these will be set below but we need an object reference to pass to getCloseFn before we can do that
             elem: null,
-        } as IModal<C>;
+        } as IModal;
 
         // never call this from onFinished() otherwise it will loop
-        const [closeDialog, onFinishedProm] = this.getCloseFn<C>(modal, props);
+        const [closeDialog, onFinishedProm] = this.getCloseFn(modal, props);
 
         // don't attempt to reuse the same AsyncWrapper for different dialogs,
         // otherwise we'll get confused.
@@ -192,13 +170,10 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
         return { modal, closeDialog, onFinishedProm };
     }
 
-    private getCloseFn<C extends ComponentType>(
-        modal: IModal<C>,
-        props?: ComponentProps<C>,
-    ): [IHandle<C>["close"], IHandle<C>["finished"]] {
-        const deferred = defer<Parameters<ComponentProps<C>["onFinished"]>>();
+    private getCloseFn(modal: IModal, props?: WithOnFinished): [IHandle["close"], IHandle["finished"]] {
+        const deferred = defer<Parameters<WithOnFinished["onFinished"]>>();
         return [
-            async (...args: Parameters<ComponentProps<C>["onFinished"]>): Promise<void> => {
+            async (...args: Parameters<WithOnFinished["onFinished"]>): Promise<void> => {
                 if (modal.beforeClosePromise) {
                     await modal.beforeClosePromise;
                 } else if (modal.onBeforeClose) {
@@ -275,12 +250,12 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
      */
     public createDialogAsync<C extends ComponentType>(
         prom: Promise<C>,
-        props?: ComponentProps<C>,
+        props?: WithOnFinished,
         className?: string,
         isPriorityModal = false,
         isStaticModal = false,
-        options: IOptions<C> = {},
-    ): IHandle<C> {
+        options: IOptions = {},
+    ): IHandle {
         const beforeModal = this.getCurrentModal();
         const { modal, closeDialog, onFinishedProm } = this.buildModal<C>(prom, props, className, options);
         if (isPriorityModal) {
@@ -303,10 +278,10 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
     }
 
     private appendDialogAsync<C extends ComponentType>(
-        prom: Promise<React.ComponentType>,
-        props?: ComponentProps<C>,
+        prom: Promise<C>,
+        props?: WithOnFinished,
         className?: string,
-    ): IHandle<C> {
+    ): IHandle {
         const beforeModal = this.getCurrentModal();
         const { modal, closeDialog, onFinishedProm } = this.buildModal<C>(prom, props, className, {});
 
@@ -321,7 +296,7 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
         };
     }
 
-    private emitIfChanged(beforeModal?: IModal<any>): void {
+    private emitIfChanged(beforeModal?: IModal): void {
         if (beforeModal !== this.getCurrentModal()) {
             this.emit(ModalManagerEvent.Opened);
         }
@@ -341,7 +316,7 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
         modal.closeReason = undefined;
     };
 
-    private getCurrentModal(): IModal<any> {
+    private getCurrentModal(): IModal {
         return this.priorityModal ? this.priorityModal : this.modals[0] || this.staticModal;
     }
 
