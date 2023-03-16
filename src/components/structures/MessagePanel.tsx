@@ -699,8 +699,8 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         mxEv: MatrixEvent,
         last = false,
         isGrouped = false,
-        nextEvent: EventAndShouldShow = null,
-        nextEventWithTile?: MatrixEvent,
+        nextEvent: EventAndShouldShow | null = null,
+        nextEventWithTile: MatrixEvent | null = null,
     ): ReactNode[] {
         const ret: ReactNode[] = [];
 
@@ -1078,7 +1078,7 @@ abstract class BaseGrouper {
         public readonly event: EventAndShouldShow,
         public readonly prevEvent: MatrixEvent | null,
         public readonly lastShownEvent: MatrixEvent,
-        public readonly nextEvent?: EventAndShouldShow,
+        public readonly nextEvent: EventAndShouldShow | null,
         public readonly nextEventTile?: MatrixEvent,
     ) {
         this.readMarker = panel.readMarkerForEvent(event.event.getId(), event.event === lastShownEvent);
