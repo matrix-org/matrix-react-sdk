@@ -24,6 +24,8 @@ import { MatrixClientPeg } from "../MatrixClientPeg";
 import { parsePermalink } from "../utils/permalinks/Permalinks";
 import dis from "../dispatcher/dispatcher";
 import { Action } from "../dispatcher/actions";
+import { PermalinkParts } from "../utils/permalinks/PermalinkConstructor";
+import { _t } from "../languageHandler";
 
 interface Args {
     /** Room in which the permalink should be displayed. */
@@ -71,38 +73,171 @@ interface HookResult {
 }
 
 /**
- * Can be used to retrieve all information to display a permalink.
+ * Tries to determine the pill type.
+ *
+ * If forcedType is present it will be returned.
+ * If the parse result contains a room Id or alias and an event Id:
+ * - Type is EventInSameRoom if the permalink room Id or alias equals the parsed room Id or alias
+ * - Type is EventInOtherRoom if the permalink room Id or alias not equals the parsed room Id or alias
+ * If the parse result contains a primary entity Id it will try to detect the type from it.
+ * Otherwise returns null.
+ *
+ * @param forcedType - Forced pill type. Will be used if present and short-circuits all othe conditions.
+ * @param parseResult - Permalink parser result
+ * @param permalinkRoom - Room in which the permalink is displayed.
+ * @returns Pill type or null if unable to determine.
  */
-export const usePermalink: (args: Args) => HookResult = ({ room, type: argType, url }): HookResult => {
-    const [member, setMember] = useState<RoomMember | null>(null);
-    // room of the entity this pill points to
-    const [targetRoom, setTargetRoom] = useState<Room | null>(room ?? null);
+const determineType = (
+    forcedType: PillType | null,
+    parseResult: PermalinkParts | null,
+    permalinkRoom: Room | undefined,
+): PillType | null => {
+    if (forcedType) return forcedType;
 
+    if (parseResult?.roomIdOrAlias && parseResult?.eventId) {
+        if (parseResult.roomIdOrAlias === permalinkRoom?.roomId) {
+            return PillType.EventInSameRoom;
+        }
+
+        return PillType.EventInOtherRoom;
+    }
+
+    if (parseResult?.primaryEntityId) {
+        const prefix = parseResult.primaryEntityId[0] || "";
+        return (
+            {
+                "@": PillType.UserMention,
+                "#": PillType.RoomMention,
+                "!": PillType.RoomMention,
+            }[prefix] || null
+        );
+    }
+
+    return null;
+};
+
+/**
+ * Tries to determine the user Id of a permalink.
+ * In case of a user permalink it is the user id.
+ * In case of an event permalink it is the sender user Id of the event if that event is available.
+ * Otherwise returns null.
+ *
+ * @param type - pill type
+ * @param parseResult - permalink parse result
+ * @param event - permalink event, if available
+ * @returns permalink user Id. null if the Id cannot be determined.
+ */
+const determineUserId = (
+    type: PillType,
+    parseResult: PermalinkParts | null,
+    event: MatrixEvent | null,
+): string | null => {
+    if (parseResult?.userId) return parseResult.userId;
+
+    if (event && [PillType.EventInSameRoom, PillType.EventInOtherRoom].includes(type)) {
+        return event.getSender();
+    }
+
+    return null;
+};
+
+/**
+ * Tries to find a room by room Id or searching all rooms for an alias.
+ *
+ * @param roomIdOrAlias - Id or alias of the room to find.
+ * @returns Room if found, else null.
+ */
+const findRoom = (roomIdOrAlias: string): Room | null => {
+    const client = MatrixClientPeg.get();
+
+    return roomIdOrAlias[0] === "#"
+        ? client.getRooms().find((r) => {
+              return r.getCanonicalAlias() === roomIdOrAlias || r.getAltAliases().includes(roomIdOrAlias);
+          })
+        : client.getRoom(roomIdOrAlias);
+};
+
+/**
+ * Tries to determine the initial room.
+ * Initial here means it should be possible to load the room without sending API requests.
+ * For an @room or a user mention it is the permalinkRoom.
+ * If the parse result contains a room Id or alias try to find it with {@link findRoom}.
+ * Otherwise returns null.
+ *
+ * @param type - Pill type
+ * @param permalinkRoom - Room in which the permalink is displayed.
+ * @param parseResult - Permalink parser result
+ * @returns Initial room or null if it cannot be determined.
+ */
+const determineInitialRoom = (type: PillType, permalinkRoom: Room, parseResult: PermalinkParts | null): Room | null => {
+    if (type === PillType.AtRoomMention && permalinkRoom) return permalinkRoom;
+
+    if (type === PillType.UserMention && permalinkRoom) {
+        return permalinkRoom;
+    }
+
+    if (parseResult?.roomIdOrAlias) {
+        const room = findRoom(parseResult.roomIdOrAlias);
+        if (room) return room;
+    }
+
+    return null;
+};
+
+/**
+ * Can be used to retrieve all information needed to display a permalink.
+ */
+export const usePermalink: (args: Args) => HookResult = ({
+    room: permalinkRoom,
+    type: forcedType,
+    url,
+}): HookResult => {
     let resourceId: string | null = null;
+    let parseResult: PermalinkParts | null = null;
 
     if (url) {
-        const parseResult = parsePermalink(url);
+        parseResult = parsePermalink(url);
 
         if (parseResult?.primaryEntityId) {
             resourceId = parseResult.primaryEntityId;
         }
     }
-    const prefix = resourceId ? resourceId[0] : "";
-    const type =
-        argType ||
-        // try to detect the permalink type from the URL prefix
-        {
-            "@": PillType.UserMention,
-            "#": PillType.RoomMention,
-            "!": PillType.RoomMention,
-        }[prefix] ||
-        null;
 
-    const doProfileLookup = useCallback((userId: string, member: RoomMember): void => {
+    const type = determineType(forcedType, parseResult, permalinkRoom);
+
+    // The listed permalink types require a room.
+    // If it cannot be initially determined, it will be looked up later by a memo hook.
+    const shouldLookUpRoom = [
+        PillType.RoomMention,
+        PillType.EventInSameRoom,
+        PillType.EventInOtherRoom,
+        "space",
+    ].includes(type);
+    const initialRoom = determineInitialRoom(type, permalinkRoom, parseResult);
+    const [targetRoom, setTargetRoom] = useState<Room | null>(initialRoom);
+
+    // Event permalinks require to know the event.
+    // If it cannot be initially determined, it will be looked up later by a memo hook.
+    const shouldLookUpEvent =
+        parseResult?.roomIdOrAlias &&
+        parseResult?.eventId &&
+        [PillType.EventInSameRoom, PillType.EventInOtherRoom].includes(type);
+    const eventId = parseResult?.eventId;
+    const eventInRoom = shouldLookUpEvent && targetRoom ? targetRoom.findEventById(parseResult?.eventId) : null;
+    const [event, setEvent] = useState<MatrixEvent | null>(eventInRoom);
+
+    // User mentions and permalinks to events in the same room require to know the user.
+    // If it cannot be initially determined, it will be looked up later by a memo hook.
+    const shouldLookUpUser = [PillType.UserMention, PillType.EventInSameRoom].includes(type);
+    const userId = determineUserId(type, parseResult, event);
+    const userInRoom = shouldLookUpUser && userId && targetRoom ? targetRoom.getMember(userId) : null;
+    const [member, setMember] = useState<RoomMember | null>(userInRoom);
+
+    const doProfileLookup = useCallback((userId: string): void => {
         MatrixClientPeg.get()
             .getProfileInfo(userId)
             .then((resp) => {
-                const newMember = new RoomMember(member.roomId, userId);
+                const newMember = new RoomMember("", userId);
                 newMember.name = resp.displayname || userId;
                 newMember.rawDisplayName = resp.displayname || userId;
                 newMember.getMxcAvatarUrl();
@@ -122,46 +257,49 @@ export const usePermalink: (args: Args) => HookResult = ({ room, type: argType, 
             });
     }, []);
 
+    // User lookup
     useMemo(() => {
-        switch (type) {
-            case PillType.UserMention:
-                {
-                    if (resourceId) {
-                        let member = room?.getMember(resourceId) || null;
-                        setMember(member);
-
-                        if (!member) {
-                            member = new RoomMember("", resourceId);
-                            doProfileLookup(resourceId, member);
-                        }
-                    }
-                }
-                break;
-            case PillType.RoomMention:
-                {
-                    if (resourceId) {
-                        const newRoom =
-                            resourceId[0] === "#"
-                                ? MatrixClientPeg.get()
-                                      .getRooms()
-                                      .find((r) => {
-                                          return (
-                                              r.getCanonicalAlias() === resourceId ||
-                                              (resourceId && r.getAltAliases().includes(resourceId))
-                                          );
-                                      })
-                                : MatrixClientPeg.get().getRoom(resourceId);
-                        setTargetRoom(newRoom || null);
-                    }
-                }
-                break;
+        if (!shouldLookUpUser || !userId || member) {
+            // nothing to do here
+            return;
         }
-    }, [doProfileLookup, type, resourceId, room]);
+
+        const foundMember = targetRoom?.getMember(userId) ?? null;
+        setMember(foundMember);
+
+        if (!foundMember) {
+            doProfileLookup(userId);
+        }
+    }, [doProfileLookup, member, shouldLookUpUser, targetRoom, userId]);
+
+    // Event lookup
+    useMemo(async () => {
+        if (!shouldLookUpEvent || !eventId || event) {
+            // nothing to do here
+            return;
+        }
+
+        try {
+            const eventData = await MatrixClientPeg.get().fetchRoomEvent(
+                parseResult.roomIdOrAlias,
+                parseResult.eventId,
+            );
+            setEvent(new MatrixEvent(eventData));
+        } catch {}
+    }, [event, eventId, parseResult?.eventId, parseResult?.roomIdOrAlias, shouldLookUpEvent]);
+
+    // Room lookup
+    useMemo(() => {
+        if (shouldLookUpRoom && !targetRoom && parseResult.roomIdOrAlias) {
+            const newRoom = findRoom(parseResult.roomIdOrAlias);
+            setTargetRoom(newRoom);
+        }
+    }, [parseResult?.roomIdOrAlias, shouldLookUpRoom, targetRoom]);
 
     let onClick: (e: ButtonEvent) => void = () => {};
     let text = resourceId;
 
-    if (type === PillType.AtRoomMention && room) {
+    if (type === PillType.AtRoomMention && permalinkRoom) {
         text = "@room";
     } else if (type === PillType.UserMention && member) {
         text = member.name || resourceId;
@@ -177,6 +315,10 @@ export const usePermalink: (args: Args) => HookResult = ({ room, type: argType, 
         if (targetRoom) {
             text = targetRoom.name || resourceId;
         }
+    } else if (type === PillType.EventInSameRoom) {
+        text = member?.name || _t("User");
+    } else if (type === PillType.EventInOtherRoom) {
+        text = targetRoom?.name || _t("Room");
     }
 
     return {
