@@ -191,18 +191,25 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         this.createClient(creds);
     }
 
-    private onUnexpectedStoreClose = (): void => {
+    private onUnexpectedStoreClose = async (): Promise<void> => {
         this.matrixClient.stopClient(); // stop the client as the database has failed
-        Modal.createDialog(ErrorDialog, {
-            title: _t("Database unexpectedly closed"),
-            description: _t(
-                "This may be caused by having the app open in multiple tabs or due to clearing browser data.",
-            ),
-            button: _t("Reload"),
-            onFinished: (reload?: boolean) => {
-                if (reload) PlatformPeg.get()?.reload();
-            },
-        });
+
+        if (!this.matrixClient.isGuest()) {
+            // If the user is not a guest then prompt them to reload rather than doing it for them
+            // For guests this is likely to happen during e-mail verification as part of registration
+
+            const { finished } = Modal.createDialog(ErrorDialog, {
+                title: _t("Database unexpectedly closed"),
+                description: _t(
+                    "This may be caused by having the app open in multiple tabs or due to clearing browser data.",
+                ),
+                button: _t("Reload"),
+            });
+            const [reload] = await finished;
+            if (!reload) return;
+        }
+
+        PlatformPeg.get()?.reload();
     };
 
     public async assign(): Promise<any> {
