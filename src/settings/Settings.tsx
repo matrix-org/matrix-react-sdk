@@ -539,6 +539,9 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("Enable intentional mentions"),
         labsGroup: LabGroup.Rooms,
         default: false,
+        controller: new ServerSupportUnstableFeatureController("feature_intentional_mentions", defaultWatchManager, [
+            "org.matrix.msc3952_intentional_mentions",
+        ]),
     },
     "useCompactLayout": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
