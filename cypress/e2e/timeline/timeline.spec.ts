@@ -305,7 +305,7 @@ describe("Timeline", () => {
             );
         });
 
-        it("should render EventTiles on IRC layout", () => {
+        it("should render EventTiles on IRC, modern (group), and bubble layout", () => {
             // Exclude timestamp and read marker from snapshots
             const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
 
@@ -314,6 +314,11 @@ describe("Timeline", () => {
             sendEvent(roomId); // check the last EventTile
 
             cy.visit("/#/room/" + roomId);
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // IRC layout
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
 
             // Wait until configuration is finished
@@ -345,24 +350,12 @@ describe("Timeline", () => {
             });
 
             cy.get(".mx_MainSplit").percySnapshotElement("EventTiles on IRC layout", { percyCSS });
-        });
 
-        it("should render EventTiles on modern layout", () => {
-            // Exclude timestamp and read marker from snapshots
-            const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // Group/modern layout
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            sendEvent(roomId);
-            sendEvent(roomId); // check continuation
-            sendEvent(roomId); // check the last EventTile
-
-            cy.visit("/#/room/" + roomId);
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
-
-            // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=group] .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
 
             cy.get(".mx_RoomView_body[data-layout=group]").within(() => {
                 // Ensure CSS declarations which cannot be detected with a screenshot test are applied as expected
@@ -400,24 +393,12 @@ describe("Timeline", () => {
             });
 
             cy.get(".mx_MainSplit").percySnapshotElement("EventTiles on compact modern layout", { percyCSS });
-        });
 
-        it("should render EventTiles on bubble layout", () => {
-            // Exclude timestamp and read marker from snapshots
-            const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // Message bubble layout
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            sendEvent(roomId);
-            sendEvent(roomId); // check continuation
-            sendEvent(roomId); // check the last EventTile
-
-            cy.visit("/#/room/" + roomId);
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
-
-            // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=bubble] .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
 
             cy.get(".mx_RoomView_body[data-layout=bubble]").within(() => {
                 // Ensure CSS declarations which cannot be detected with a screenshot test are applied as expected
