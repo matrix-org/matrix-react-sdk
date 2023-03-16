@@ -368,14 +368,12 @@ describe("Timeline", () => {
             cy.get(".mx_RoomView_body[data-layout=group]").within(() => {
                 // Ensure CSS declarations which cannot be detected with a screenshot test are applied as expected
                 cy.get(".mx_EventTile")
-                    .should("exist")
                     .should("have.css", "max-width", "100%")
                     .should("have.css", "clear", "both")
                     .should("have.css", "position", "relative");
 
                 // Check that block start padding of the second message is not overridden
                 cy.get(".mx_EventTile.mx_EventTile_continuation")
-                    .should("exist")
                     .should("have.css", "padding-block-start", "0px");
 
                 // Check that the last EventTile is rendered
@@ -390,13 +388,12 @@ describe("Timeline", () => {
             cy.get(".mx_MatrixChat_useCompactLayout").within(() => {
                 // Ensure CSS declarations which cannot be detected with a screenshot test are applied as expected
                 cy.get(".mx_EventTile")
-                    .should("exist")
                     .should("have.css", "max-width", "100%")
                     .should("have.css", "clear", "both")
                     .should("have.css", "position", "relative");
 
                 // Check cascading works
-                cy.get(".mx_EventTile_continuation").should("exist").should("have.css", "padding-block-start", "0px");
+                cy.get(".mx_EventTile_continuation").should("have.css", "padding-block-start", "0px");
 
                 // Check that the last EventTile is rendered
                 cy.get(".mx_EventTile.mx_EventTile_last").should("exist");
