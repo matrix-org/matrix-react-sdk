@@ -372,7 +372,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         controller: new ServerSupportUnstableFeatureController(
             "feature_jump_to_date",
             defaultWatchManager,
-            ["org.matrix.msc3030"],
+            ["org.matrix.msc3030", "org.matrix.msc3030.stable"],
             "v1.6",
             _td("Requires your server to support MSC3030"),
         ),
