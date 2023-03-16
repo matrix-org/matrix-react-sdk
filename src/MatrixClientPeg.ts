@@ -224,7 +224,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
                 }
             }
         }
-        this.matrixClient.store.on("closed", this.onUnexpectedStoreClose);
+        this.matrixClient.store.on?.("closed", this.onUnexpectedStoreClose);
 
         // try to initialise e2e on the new client
         if (!SettingsStore.getValue("lowBandwidth")) {
