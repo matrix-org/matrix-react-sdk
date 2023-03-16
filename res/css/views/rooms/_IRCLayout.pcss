@@ -217,11 +217,21 @@ $irc-line-height: $font-18px;
     }
 
     .mx_ProfileResizer {
+        --resizer-width: 15px;
+
         position: absolute;
         height: 100%;
-        width: 15px;
-        left: calc(80px + var(--name-width));
+        width: var(--resizer-width);
         cursor: col-resize;
         z-index: 100;
+
+        /* Add width of every element rendered before the resizer (including padding for the avatar and the display
+           name), subtracting the resizer width itself to prevent the resizer from overlapping the text.
+           Please note that MessageTimestamp does not have inline padding. */
+        /* stylelint-disable-next-line declaration-colon-space-after */
+        inset-inline-start: calc(
+            var(--RoomView_MessageList-padding) + var(--MessageTimestamp-width) + var(--icon-width) +
+                var(--right-padding) + var(--name-width) + var(--right-padding) - var(--resizer-width)
+        );
     }
 }
