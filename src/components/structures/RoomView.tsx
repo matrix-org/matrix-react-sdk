@@ -607,10 +607,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         }
 
         const roomId = this.context.roomViewStore.getRoomId() ?? null;
-        const room = this.context.client?.getRoom(roomId) ?? null;
+        const room = this.context.client?.getRoom(roomId ?? undefined) ?? undefined;
 
         const newState: Partial<IRoomState> = {
-            roomId,
+            roomId: roomId ?? undefined,
             roomAlias: this.context.roomViewStore.getRoomAlias(),
             roomLoading: this.context.roomViewStore.isRoomLoading(),
             roomLoadError: this.context.roomViewStore.getRoomLoadError(),
@@ -624,7 +624,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             showAvatarChanges: SettingsStore.getValue("showAvatarChanges", roomId),
             showDisplaynameChanges: SettingsStore.getValue("showDisplaynameChanges", roomId),
             wasContextSwitch: this.context.roomViewStore.getWasContextSwitch(),
-            mainSplitContentType: room === null ? undefined : this.getMainSplitContentType(room),
+            mainSplitContentType: room ? this.getMainSplitContentType(room) : undefined,
             initialEventId: undefined, // default to clearing this, will get set later in the method if needed
             showRightPanel: this.context.rightPanelStore.isOpenForRoom(roomId),
             activeCall: CallStore.instance.getActiveCall(roomId),
