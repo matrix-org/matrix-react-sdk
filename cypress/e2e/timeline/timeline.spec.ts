@@ -329,10 +329,9 @@ describe("Timeline", () => {
                     .should("have.css", "clear", "both")
                     .should("have.css", "position", "relative");
 
-                cy.get(".mx_EventTile_continuation")
-                    // Check that zero block padding is set
-                    .should("have.css", "padding-block-start", "0px");
-
+                // Check mx_EventTile_continuation
+                // Block start padding of the second message should not be overridden
+                cy.get(".mx_EventTile_continuation").should("have.css", "padding-block-start", "0px");
                 cy.get(".mx_EventTile_continuation .mx_EventTile_line").should("have.css", "clear", "both");
 
                 // Select the last event tile
@@ -372,9 +371,10 @@ describe("Timeline", () => {
                     .should("have.css", "clear", "both")
                     .should("have.css", "position", "relative");
 
-                // Check that block start padding of the second message is not overridden
-                cy.get(".mx_EventTile.mx_EventTile_continuation")
-                    .should("have.css", "padding-block-start", "0px");
+                // Check mx_EventTile_continuation
+                // Block start padding of the second message should not be overridden
+                cy.get(".mx_EventTile_continuation").should("have.css", "padding-block-start", "0px");
+                cy.get(".mx_EventTile_continuation .mx_EventTile_line").should("have.css", "clear", "both");
 
                 // Check that the last EventTile is rendered
                 cy.get(".mx_EventTile.mx_EventTile_last").should("exist");
