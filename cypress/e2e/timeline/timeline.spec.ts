@@ -161,8 +161,22 @@ describe("Timeline", () => {
                 "created and configured the room.",
             ).should("exist");
 
-            // Check room name line-height is reset
-            cy.get(".mx_IRCLayout .mx_NewRoomIntro h2").should("have.css", "line-height", "normal");
+            cy.get(".mx_IRCLayout").within(() => {
+                // Check room name line-height is reset
+                cy.get(".mx_NewRoomIntro h2").should("have.css", "line-height", "normal");
+
+                // Check the profile resizer's place
+                // See: _IRCLayout
+                // --RoomView_MessageList-padding = 18px (See: _RoomView.pcss)
+                // --MessageTimestamp-width = $MessageTimestamp_width = 46px (See: _common.pcss)
+                // --icon-width = 14px
+                // --right-padding = 5px
+                // --name-width = 80px
+                // --resizer-width = 15px
+                // 18px + 46px + 14px + 5px + 80px + 5px - 15px
+                // = 153px
+                cy.get(".mx_ProfileResizer").should("have.css", "inset-inline-start", "153px");
+            });
 
             cy.get(".mx_MainSplit").percySnapshotElement("Configured room on IRC layout");
         });
