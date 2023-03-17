@@ -228,7 +228,6 @@ $irc-line-height: $font-18px;
         /* Add width of every element rendered before the resizer (including padding for the avatar and the display
            name), subtracting the resizer width itself to prevent the resizer from overlapping the text.
            Please note that MessageTimestamp does not have inline padding. */
-        /* stylelint-disable-next-line declaration-colon-space-after */
         inset-inline-start: calc(
             var(--RoomView_MessageList-padding) + var(--MessageTimestamp-width) + var(--icon-width) +
                 var(--right-padding) + var(--name-width) + var(--right-padding) - var(--resizer-width)
