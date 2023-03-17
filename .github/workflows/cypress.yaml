@@ -238,11 +238,11 @@ jobs:
             - name: Upload to kiwi
               uses: vector-im/kiwitcms-upload-action@main
               with:
-                 file-pattern: results-*.xml
-                 kiwi-username: ${{ secrets.TCMS_USERNAME }}
-                 kiwi-password: ${{ secrets.TCMS_PASSWORD }}
-                 product: "Element Web"
-                 product-version: ${{ github.event.workflow_run.head_branch }}
-                 build-id: ${{ github.event.workflow_run.head_sha }}
-                 suite-name: "Cypress E2E"
-                 summary-template: '$name'
+                  file-pattern: results-*.xml
+                  kiwi-username: ${{ secrets.TCMS_USERNAME }}
+                  kiwi-password: ${{ secrets.TCMS_PASSWORD }}
+                  product: "Element Web"
+                  product-version: ${{ github.event.workflow_run.head_branch }}
+                  build-id: ${{ github.event.workflow_run.head_sha }}
+                  suite-name: "Cypress E2E"
+                  summary-template: "$name"
