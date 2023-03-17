@@ -154,5 +154,38 @@ describe("FilePanel", () => {
                 });
             });
         });
+
+        it("should render the audio pleyer and play the audio file on the panel", () => {
+            // Upload an image file
+            uploadFile("cypress/fixtures/1sec.ogg");
+
+            cy.get(".mx_FilePanel").within(() => {
+                cy.get(".mx_RoomView_MessageList").within(() => {
+                    // Detect the audio file
+                    cy.get(".mx_EventTile_mediaLine .mx_MAudioBody").within(() => {
+                        // Ensure the audio player is rendered
+                        cy.get(".mx_AudioPlayer_container").within(() => {
+                            // Ensure the audio file information is rendered
+                            cy.get(".mx_AudioPlayer_mediaInfo").within(() => {
+                                cy.get(".mx_AudioPlayer_mediaName").should("have.text", "1sec.ogg");
+                                cy.contains(".mx_AudioPlayer_byline", "00:01").should("exist");
+                                cy.contains(".mx_AudioPlayer_byline", "(3.56 KB)").should("exist"); // actual size
+                            });
+
+                            // Click the play button
+                            cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
+                            cy.get("[data-testid='play-pause-button'][aria-label='Play']").click();
+
+                            // Ensure the pause button is rendered
+                            cy.get("[data-testid='play-pause-button'][aria-label='Pause']").should("exist");
+
+                            // Ensure the timer is reset when the audio file finished playing
+                            cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
+                            cy.get("[data-testid='play-pause-button'][aria-label='Play']").should("exist");
+                        });
+                    });
+                });
+            });
+        });
     });
 });
