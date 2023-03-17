@@ -14,11 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EchoContext } from "./EchoContext";
 import { Room } from "matrix-js-sdk/src/models/room";
 
+import { EchoContext } from "./EchoContext";
+
 export class RoomEchoContext extends EchoContext {
-    constructor(public readonly room: Room) {
+    public constructor(public readonly room: Room) {
         super();
     }
 }

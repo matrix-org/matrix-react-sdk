@@ -15,22 +15,15 @@ limitations under the License.
 */
 
 import React from "react";
-import {MatrixEvent} from "matrix-js-sdk/src/models/event";
+
 import MAudioBody from "./MAudioBody";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
-import SettingsStore from "../../../settings/SettingsStore";
 import MVoiceMessageBody from "./MVoiceMessageBody";
+import { IBodyProps } from "./IBodyProps";
+import { isVoiceMessage } from "../../../utils/EventUtils";
 
-interface IProps {
-    mxEvent: MatrixEvent;
-}
-
-@replaceableComponent("views.messages.MVoiceOrAudioBody")
-export default class MVoiceOrAudioBody extends React.PureComponent<IProps> {
-    public render() {
-        const isVoiceMessage = !!this.props.mxEvent.getContent()['org.matrix.msc2516.voice'];
-        const voiceMessagesEnabled = SettingsStore.getValue("feature_voice_messages");
-        if (isVoiceMessage && voiceMessagesEnabled) {
+export default class MVoiceOrAudioBody extends React.PureComponent<IBodyProps> {
+    public render(): React.ReactNode {
+        if (!this.props.forExport && isVoiceMessage(this.props.mxEvent)) {
             return <MVoiceMessageBody {...this.props} />;
         } else {
             return <MAudioBody {...this.props} />;

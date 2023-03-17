@@ -15,11 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { _t } from '../../../languageHandler';
-import {Key} from "../../../Keyboard";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import { _t } from "../../../languageHandler";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 
 interface IProps {
     query: string;
@@ -27,24 +27,26 @@ interface IProps {
     onEnter(): void;
 }
 
-@replaceableComponent("views.emojipicker.Search")
 class Search extends React.PureComponent<IProps> {
     private inputRef = React.createRef<HTMLInputElement>();
 
-    componentDidMount() {
-        // For some reason, neither the autoFocus nor just calling focus() here worked, so here's a setTimeout
-        setTimeout(() => this.inputRef.current.focus(), 0);
+    public componentDidMount(): void {
+        // For some reason, neither the autoFocus nor just calling focus() here worked, so here's a window.setTimeout
+        window.setTimeout(() => this.inputRef.current?.focus(), 0);
     }
 
-    private onKeyDown = (ev: React.KeyboardEvent) => {
-        if (ev.key === Key.ENTER) {
-            this.props.onEnter();
-            ev.stopPropagation();
-            ev.preventDefault();
+    private onKeyDown = (ev: React.KeyboardEvent): void => {
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+        switch (action) {
+            case KeyBindingAction.Enter:
+                this.props.onEnter();
+                ev.stopPropagation();
+                ev.preventDefault();
+                break;
         }
     };
 
-    render() {
+    public render(): React.ReactNode {
         let rightButton;
         if (this.props.query) {
             rightButton = (
@@ -63,9 +65,9 @@ class Search extends React.PureComponent<IProps> {
                 <input
                     autoFocus
                     type="text"
-                    placeholder="Search"
+                    placeholder={_t("Search")}
                     value={this.props.query}
-                    onChange={ev => this.props.onChange(ev.target.value)}
+                    onChange={(ev) => this.props.onChange(ev.target.value)}
                     onKeyDown={this.onKeyDown}
                     ref={this.inputRef}
                 />

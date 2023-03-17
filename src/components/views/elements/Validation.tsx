@@ -15,32 +15,37 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/* eslint-disable babel/no-invalid-this */
-import React from "react";
+import React, { ReactNode } from "react";
 import classNames from "classnames";
 
 type Data = Pick<IFieldState, "value" | "allowEmpty">;
 
-interface IRule<T, D = void> {
+interface IResult {
+    key: string;
+    valid: boolean;
+    text: string;
+}
+
+interface IRule<T, D = undefined> {
     key: string;
     final?: boolean;
     skip?(this: T, data: Data, derivedData: D): boolean;
     test(this: T, data: Data, derivedData: D): boolean | Promise<boolean>;
-    valid?(this: T, derivedData: D): string;
-    invalid?(this: T, derivedData: D): string;
+    valid?(this: T, derivedData: D): string | null;
+    invalid?(this: T, derivedData: D): string | null;
 }
 
 interface IArgs<T, D = void> {
     rules: IRule<T, D>[];
-    description?(this: T, derivedData: D): React.ReactChild;
+    description?(this: T, derivedData: D, results: IResult[]): ReactNode;
     hideDescriptionIfValid?: boolean;
     deriveData?(data: Data): Promise<D>;
 }
 
 export interface IFieldState {
-    value: string;
+    value: string | null;
     focused: boolean;
-    allowEmpty: boolean;
+    allowEmpty?: boolean;
 }
 
 export interface IValidationResult {
@@ -74,23 +79,27 @@ export interface IValidationResult {
  *     A validation function that takes in the current input value and returns
  *     the overall validity and a feedback UI that can be rendered for more detail.
  */
-export default function withValidation<T = undefined, D = void>({
-    description, hideDescriptionIfValid, deriveData, rules,
+export default function withValidation<T = void, D = void>({
+    description,
+    hideDescriptionIfValid,
+    deriveData,
+    rules,
 }: IArgs<T, D>) {
-    return async function onValidate({ value, focused, allowEmpty = true }: IFieldState): Promise<IValidationResult> {
+    return async function onValidate(
+        this: T,
+        { value, focused, allowEmpty = true }: IFieldState,
+    ): Promise<IValidationResult> {
         if (!value && allowEmpty) {
-            return {
-                valid: null,
-                feedback: null,
-            };
+            return {};
         }
 
         const data = { value, allowEmpty };
-        const derivedData = deriveData ? await deriveData(data) : undefined;
+        // We know that if deriveData is set then D will not be undefined
+        const derivedData: D = (await deriveData?.call(this, data)) as D;
 
-        const results = [];
+        const results: IResult[] = [];
         let valid = true;
-        if (rules && rules.length) {
+        if (rules?.length) {
             for (const rule of rules) {
                 if (!rule.key || !rule.test) {
                     continue;
@@ -100,13 +109,13 @@ export default function withValidation<T = undefined, D = void>({
                     continue;
                 }
 
-                if (rule.skip && rule.skip.call(this, data, derivedData)) {
+                if (rule.skip?.call(this, data, derivedData)) {
                     continue;
                 }
 
                 // We're setting `this` to whichever component holds the validation
                 // function. That allows rules to access the state of the component.
-                const ruleValid = await rule.test.call(this, data, derivedData);
+                const ruleValid: boolean = await rule.test.call(this, data, derivedData);
                 valid = valid && ruleValid;
                 if (ruleValid && rule.valid) {
                     // If the rule's result is valid and has text to show for
@@ -138,42 +147,45 @@ export default function withValidation<T = undefined, D = void>({
 
         // Hide feedback when not focused
         if (!focused) {
-            return {
-                valid,
-                feedback: null,
-            };
+            return { valid };
         }
 
         let details;
         if (results && results.length) {
-            details = <ul className="mx_Validation_details">
-                {results.map(result => {
-                    const classes = classNames({
-                        "mx_Validation_detail": true,
-                        "mx_Validation_valid": result.valid,
-                        "mx_Validation_invalid": !result.valid,
-                    });
-                    return <li key={result.key} className={classes}>
-                        {result.text}
-                    </li>;
-                })}
-            </ul>;
+            details = (
+                <ul className="mx_Validation_details">
+                    {results.map((result) => {
+                        const classes = classNames({
+                            mx_Validation_detail: true,
+                            mx_Validation_valid: result.valid,
+                            mx_Validation_invalid: !result.valid,
+                        });
+                        return (
+                            <li key={result.key} className={classes}>
+                                {result.text}
+                            </li>
+                        );
+                    })}
+                </ul>
+            );
         }
 
         let summary;
         if (description && (details || !hideDescriptionIfValid)) {
             // We're setting `this` to whichever component holds the validation
             // function. That allows rules to access the state of the component.
-            const content = description.call(this, derivedData);
-            summary = <div className="mx_Validation_description">{content}</div>;
+            const content = description.call(this, derivedData, results);
+            summary = content ? <div className="mx_Validation_description">{content}</div> : undefined;
         }
 
         let feedback;
         if (summary || details) {
-            feedback = <div className="mx_Validation">
-                {summary}
-                {details}
-            </div>;
+            feedback = (
+                <div className="mx_Validation">
+                    {summary}
+                    {details}
+                </div>
+            );
         }
 
         return {

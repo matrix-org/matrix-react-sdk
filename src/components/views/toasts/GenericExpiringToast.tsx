@@ -18,13 +18,13 @@ import React from "react";
 
 import ToastStore from "../../../stores/ToastStore";
 import GenericToast, { IProps as IGenericToastProps } from "./GenericToast";
-import {useExpiringCounter} from "../../../hooks/useTimeout";
+import { useExpiringCounter } from "../../../hooks/useTimeout";
 
 interface IProps extends IGenericToastProps {
     toastKey: string;
     numSeconds: number;
     dismissLabel: string;
-    onDismiss?();
+    onDismiss?(): void;
 }
 
 const SECOND = 1000;
@@ -38,7 +38,7 @@ const GenericExpiringToast: React.FC<IProps> = ({
     toastKey,
     numSeconds,
 }) => {
-    const onReject = () => {
+    const onReject = (): void => {
         if (onDismiss) onDismiss();
         ToastStore.sharedInstance().dismissToast(toastKey);
     };
@@ -49,13 +49,15 @@ const GenericExpiringToast: React.FC<IProps> = ({
         rejectLabel += ` (${counter})`;
     }
 
-    return <GenericToast
-        description={description}
-        acceptLabel={acceptLabel}
-        onAccept={onAccept}
-        rejectLabel={rejectLabel}
-        onReject={onReject}
-    />;
+    return (
+        <GenericToast
+            description={description}
+            acceptLabel={acceptLabel}
+            onAccept={onAccept}
+            rejectLabel={rejectLabel}
+            onReject={onReject}
+        />
+    );
 };
 
 export default GenericExpiringToast;

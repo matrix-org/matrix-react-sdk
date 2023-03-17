@@ -14,19 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {RoomMember} from "matrix-js-sdk/src/models/room-member";
-import {User} from "matrix-js-sdk/src/models/user";
-import {Room} from "matrix-js-sdk/src/models/room";
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { User } from "matrix-js-sdk/src/models/user";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
+import { split } from "lodash";
 
-import DMRoomMap from './utils/DMRoomMap';
-import {mediaFromMxc} from "./customisations/Media";
-import SettingsStore from "./settings/SettingsStore";
-
-export type ResizeMethod = "crop" | "scale";
+import DMRoomMap from "./utils/DMRoomMap";
+import { mediaFromMxc } from "./customisations/Media";
+import { isLocalRoom } from "./utils/localRoom/isLocalRoom";
 
 // Not to be used for BaseAvatar urls as that has similar default avatar fallback already
-export function avatarUrlForMember(member: RoomMember, width: number, height: number, resizeMethod: ResizeMethod) {
-    let url: string;
+export function avatarUrlForMember(
+    member: RoomMember,
+    width: number,
+    height: number,
+    resizeMethod: ResizeMethod,
+): string {
+    let url: string | null | undefined;
     if (member?.getMxcAvatarUrl()) {
         url = mediaFromMxc(member.getMxcAvatarUrl()).getThumbnailOfSourceHttp(width, height, resizeMethod);
     }
@@ -34,21 +39,31 @@ export function avatarUrlForMember(member: RoomMember, width: number, height: nu
         // member can be null here currently since on invites, the JS SDK
         // does not have enough info to build a RoomMember object for
         // the inviter.
-        url = defaultAvatarUrlForString(member ? member.userId : '');
+        url = defaultAvatarUrlForString(member ? member.userId : "");
     }
     return url;
 }
 
-export function avatarUrlForUser(user: User, width: number, height: number, resizeMethod?: ResizeMethod) {
+export function avatarUrlForUser(
+    user: Pick<User, "avatarUrl">,
+    width: number,
+    height: number,
+    resizeMethod?: ResizeMethod,
+): string | null {
     if (!user.avatarUrl) return null;
     return mediaFromMxc(user.avatarUrl).getThumbnailOfSourceHttp(width, height, resizeMethod);
 }
 
 function isValidHexColor(color: string): boolean {
-    return typeof color === "string" &&
+    return (
+        typeof color === "string" &&
         (color.length === 7 || color.length === 9) &&
         color.charAt(0) === "#" &&
-        !color.substr(1).split("").some(c => isNaN(parseInt(c, 16)));
+        !color
+            .slice(1)
+            .split("")
+            .some((c) => isNaN(parseInt(c, 16)))
+    );
 }
 
 function urlForColor(color: string): string {
@@ -73,7 +88,7 @@ const colorToDataURLCache = new Map<string, string>();
 
 export function defaultAvatarUrlForString(s: string): string {
     if (!s) return ""; // XXX: should never happen but empirically does by evidence of a rageshake
-    const defaultColors = ['#0DBD8B', '#368bd6', '#ac3ba8'];
+    const defaultColors = ["#0DBD8B", "#368bd6", "#ac3ba8"];
     let total = 0;
     for (let i = 0; i < s.length; ++i) {
         total += s.charCodeAt(i);
@@ -103,7 +118,7 @@ export function defaultAvatarUrlForString(s: string): string {
  * @param {string} name
  * @return {string} the first letter
  */
-export function getInitialLetter(name: string): string {
+export function getInitialLetter(name: string): string | undefined {
     if (!name) {
         // XXX: We should find out what causes the name to sometimes be falsy.
         console.trace("`name` argument to `getInitialLetter` not supplied");
@@ -113,50 +128,47 @@ export function getInitialLetter(name: string): string {
         return undefined;
     }
 
-    let idx = 0;
     const initial = name[0];
-    if ((initial === '@' || initial === '#' || initial === '+') && name[1]) {
-        idx++;
+    if ((initial === "@" || initial === "#" || initial === "+") && name[1]) {
+        name = name.substring(1);
     }
 
-    // string.codePointAt(0) would do this, but that isn't supported by
-    // some browsers (notably PhantomJS).
-    let chars = 1;
-    const first = name.charCodeAt(idx);
-
-    // check if it’s the start of a surrogate pair
-    if (first >= 0xD800 && first <= 0xDBFF && name[idx+1]) {
-        const second = name.charCodeAt(idx+1);
-        if (second >= 0xDC00 && second <= 0xDFFF) {
-            chars++;
-        }
-    }
-
-    const firstChar = name.substring(idx, idx+chars);
-    return firstChar.toUpperCase();
+    // rely on the grapheme cluster splitter in lodash so that we don't break apart compound emojis
+    return split(name, "", 1)[0].toUpperCase();
 }
 
-export function avatarUrlForRoom(room: Room, width: number, height: number, resizeMethod?: ResizeMethod) {
+export function avatarUrlForRoom(
+    room: Room | null,
+    width?: number,
+    height?: number,
+    resizeMethod?: ResizeMethod,
+): string | null {
     if (!room) return null; // null-guard
 
     if (room.getMxcAvatarUrl()) {
-        return mediaFromMxc(room.getMxcAvatarUrl()).getThumbnailOfSourceHttp(width, height, resizeMethod);
+        const media = mediaFromMxc(room.getMxcAvatarUrl() ?? undefined);
+        if (width !== undefined && height !== undefined) {
+            return media.getThumbnailOfSourceHttp(width, height, resizeMethod);
+        }
+        return media.srcHttp;
     }
 
     // space rooms cannot be DMs so skip the rest
-    if (SettingsStore.getValue("feature_spaces") && room.isSpaceRoom()) return null;
+    if (room.isSpaceRoom()) return null;
 
-    let otherMember = null;
-    const otherUserId = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
-    if (otherUserId) {
-        otherMember = room.getMember(otherUserId);
-    } else {
-        // if the room is not marked as a 1:1, but only has max 2 members
-        // then still try to show any avatar (pref. other member)
-        otherMember = room.getAvatarFallbackMember();
+    // If the room is not a DM don't fallback to a member avatar
+    if (!DMRoomMap.shared().getUserIdForRoomId(room.roomId) && !isLocalRoom(room)) {
+        return null;
     }
+
+    // If there are only two members in the DM use the avatar of the other member
+    const otherMember = room.getAvatarFallbackMember();
     if (otherMember?.getMxcAvatarUrl()) {
-        return mediaFromMxc(otherMember.getMxcAvatarUrl()).getThumbnailOfSourceHttp(width, height, resizeMethod);
+        const media = mediaFromMxc(otherMember.getMxcAvatarUrl());
+        if (width !== undefined && height !== undefined) {
+            return media.getThumbnailOfSourceHttp(width, height, resizeMethod);
+        }
+        return media.srcHttp;
     }
     return null;
 }

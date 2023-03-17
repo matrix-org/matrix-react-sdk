@@ -14,112 +14,93 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import {MatrixClientPeg} from "../../../MatrixClientPeg";
-import { Room } from 'matrix-js-sdk/src/models/room'
-import dis from "../../../dispatcher/dispatcher";
-import AppsDrawer from './AppsDrawer';
-import classNames from 'classnames';
-import RateLimitedFunc from '../../../ratelimitedfunc';
+import React, { ReactNode } from "react";
+import { lexicographicCompare } from "matrix-js-sdk/src/utils";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { throttle } from "lodash";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import AppsDrawer from "./AppsDrawer";
 import SettingsStore from "../../../settings/SettingsStore";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
-import {UIFeature} from "../../../settings/UIFeature";
-import { ResizeNotifier } from "../../../utils/ResizeNotifier";
-import CallViewForRoom from '../voip/CallViewForRoom';
-import {objectHasDiff} from "../../../utils/objects";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import { UIFeature } from "../../../settings/UIFeature";
+import ResizeNotifier from "../../../utils/ResizeNotifier";
+import LegacyCallViewForRoom from "../voip/LegacyCallViewForRoom";
+import { objectHasDiff } from "../../../utils/objects";
 
 interface IProps {
     // js-sdk room object
-    room: Room,
-    userId: string,
-    showApps: boolean, // Render apps
-
-    // maxHeight attribute for the aux panel and the video
-    // therein
-    maxHeight: number,
-
-    // a callback which is called when the content of the aux panel changes
-    // content in a way that is likely to make it change size.
-    onResize: () => void,
-    fullHeight: boolean,
-
-    resizeNotifier: ResizeNotifier,
+    room: Room;
+    userId: string;
+    showApps: boolean; // Render apps
+    resizeNotifier: ResizeNotifier;
+    children?: ReactNode;
 }
 
 interface Counter {
-    title: string,
-    value: number,
-    link: string,
-    severity: string,
-    stateKey: string,
+    title: string;
+    value: number;
+    link: string;
+    severity: string;
+    stateKey: string;
 }
 
 interface IState {
-    counters: Counter[],
+    counters: Counter[];
 }
 
-@replaceableComponent("views.rooms.AuxPanel")
 export default class AuxPanel extends React.Component<IProps, IState> {
-    static defaultProps = {
+    public static defaultProps = {
         showApps: true,
     };
 
-    constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
-            counters: this._computeCounters(),
+            counters: this.computeCounters(),
         };
     }
 
-    componentDidMount() {
+    public componentDidMount(): void {
         const cli = MatrixClientPeg.get();
-        cli.on("RoomState.events", this._rateLimitedUpdate);
-    }
-
-    componentWillUnmount() {
-        const cli = MatrixClientPeg.get();
-        if (cli) {
-            cli.removeListener("RoomState.events", this._rateLimitedUpdate);
+        if (SettingsStore.getValue("feature_state_counters")) {
+            cli.on(RoomStateEvent.Events, this.onRoomStateEvents);
         }
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+    public componentWillUnmount(): void {
+        if (SettingsStore.getValue("feature_state_counters")) {
+            MatrixClientPeg.get()?.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
+        }
+    }
+
+    public shouldComponentUpdate(nextProps: IProps, nextState: IState): boolean {
         return objectHasDiff(this.props, nextProps) || objectHasDiff(this.state, nextState);
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        // most changes are likely to cause a resize
-        if (this.props.onResize) {
-            this.props.onResize();
+    private onRoomStateEvents = (ev: MatrixEvent): void => {
+        if (ev.getType() === "re.jki.counter") {
+            this.updateCounters();
         }
-    }
-
-    onConferenceNotificationClick = (ev, type) => {
-        dis.dispatch({
-            action: 'place_call',
-            type: type,
-            room_id: this.props.room.roomId,
-        });
-        ev.stopPropagation();
-        ev.preventDefault();
     };
 
-    _rateLimitedUpdate = new RateLimitedFunc(() => {
-        if (SettingsStore.getValue("feature_state_counters")) {
-            this.setState({counters: this._computeCounters()});
-        }
-    }, 500);
+    private updateCounters = throttle(
+        () => {
+            this.setState({ counters: this.computeCounters() });
+        },
+        500,
+        { leading: true, trailing: true },
+    );
 
-    _computeCounters() {
-        const counters = [];
+    private computeCounters(): Counter[] {
+        const counters: Counter[] = [];
 
         if (this.props.room && SettingsStore.getValue("feature_state_counters")) {
-            const stateEvs = this.props.room.currentState.getStateEvents('re.jki.counter');
-            stateEvs.sort((a, b) => {
-                return a.getStateKey() < b.getStateKey();
-            });
+            const stateEvs = this.props.room.currentState.getStateEvents("re.jki.counter");
+            stateEvs.sort((a, b) => lexicographicCompare(a.getStateKey(), b.getStateKey()));
 
             for (const ev of stateEvs) {
                 const title = ev.getContent().title;
@@ -128,7 +109,7 @@ export default class AuxPanel extends React.Component<IProps, IState> {
                 const severity = ev.getContent().severity || "normal";
                 const stateKey = ev.getStateKey();
 
-                // We want a non-empty title but can accept falsey values (e.g.
+                // We want a non-empty title but can accept falsy values (e.g.
                 // zero)
                 if (title && value !== undefined) {
                     counters.push({
@@ -137,7 +118,7 @@ export default class AuxPanel extends React.Component<IProps, IState> {
                         link,
                         severity,
                         stateKey,
-                    })
+                    });
                 }
             }
         }
@@ -145,29 +126,30 @@ export default class AuxPanel extends React.Component<IProps, IState> {
         return counters;
     }
 
-    render() {
+    public render(): React.ReactNode {
         const callView = (
-            <CallViewForRoom
+            <LegacyCallViewForRoom
                 roomId={this.props.room.roomId}
-                maxVideoHeight={this.props.maxHeight}
                 resizeNotifier={this.props.resizeNotifier}
+                showApps={this.props.showApps}
             />
         );
 
         let appsDrawer;
         if (SettingsStore.getValue(UIFeature.Widgets)) {
-            appsDrawer = <AppsDrawer
-                room={this.props.room}
-                userId={this.props.userId}
-                maxHeight={this.props.maxHeight}
-                showApps={this.props.showApps}
-                resizeNotifier={this.props.resizeNotifier}
-            />;
+            appsDrawer = (
+                <AppsDrawer
+                    room={this.props.room}
+                    userId={this.props.userId}
+                    showApps={this.props.showApps}
+                    resizeNotifier={this.props.resizeNotifier}
+                />
+            );
         }
 
-        let stateViews = null;
+        let stateViews: JSX.Element | null = null;
         if (this.state.counters && SettingsStore.getValue("feature_state_counters")) {
-            const counters = [];
+            const counters: JSX.Element[] = [];
 
             this.state.counters.forEach((counter, idx) => {
                 const title = counter.title;
@@ -176,12 +158,16 @@ export default class AuxPanel extends React.Component<IProps, IState> {
                 const severity = counter.severity;
                 const stateKey = counter.stateKey;
 
-                let span = <span>{ title }: { value }</span>;
+                let span = (
+                    <span>
+                        {title}: {value}
+                    </span>
+                );
 
                 if (link) {
                     span = (
                         <a href={link} target="_blank" rel="noreferrer noopener">
-                            { span }
+                            {span}
                         </a>
                     );
                 }
@@ -190,7 +176,7 @@ export default class AuxPanel extends React.Component<IProps, IState> {
                     <span
                         className="m_RoomView_auxPanel_stateViews_span"
                         data-severity={severity}
-                        key={ "x-" + stateKey }
+                        key={"x-" + stateKey}
                     >
                         {span}
                     </span>
@@ -198,38 +184,25 @@ export default class AuxPanel extends React.Component<IProps, IState> {
 
                 counters.push(span);
                 counters.push(
-                    <span
-                        className="m_RoomView_auxPanel_stateViews_delim"
-                        key={"delim" + idx}
-                    > ─ </span>,
+                    <span className="m_RoomView_auxPanel_stateViews_delim" key={"delim" + idx}>
+                        {" "}
+                        ─{" "}
+                    </span>,
                 );
             });
 
             if (counters.length > 0) {
                 counters.pop(); // remove last deliminator
-                stateViews = (
-                    <div className="m_RoomView_auxPanel_stateViews">
-                        { counters }
-                    </div>
-                );
+                stateViews = <div className="m_RoomView_auxPanel_stateViews">{counters}</div>;
             }
         }
 
-        const classes = classNames({
-            "mx_RoomView_auxPanel": true,
-            "mx_RoomView_auxPanel_fullHeight": this.props.fullHeight,
-        });
-        const style: React.CSSProperties = {};
-        if (!this.props.fullHeight) {
-            style.maxHeight = this.props.maxHeight;
-        }
-
         return (
-            <AutoHideScrollbar className={classes} style={style} >
-                { stateViews }
-                { appsDrawer }
-                { callView }
-                { this.props.children }
+            <AutoHideScrollbar className="mx_RoomView_auxPanel">
+                {stateViews}
+                {this.props.children}
+                {appsDrawer}
+                {callView}
             </AutoHideScrollbar>
         );
     }

@@ -17,39 +17,43 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useCallback, useContext, useEffect, useState} from 'react';
-import classNames from 'classnames';
-import * as AvatarLogic from '../../../Avatar';
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import classNames from "classnames";
+import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
+import { ClientEvent } from "matrix-js-sdk/src/client";
+
+import * as AvatarLogic from "../../../Avatar";
 import SettingsStore from "../../../settings/SettingsStore";
-import AccessibleButton from '../elements/AccessibleButton';
+import AccessibleButton from "../elements/AccessibleButton";
+import RoomContext from "../../../contexts/RoomContext";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import {useEventEmitter} from "../../../hooks/useEventEmitter";
-import {toPx} from "../../../utils/units";
-import {ResizeMethod} from "../../../Avatar";
-import { _t } from '../../../languageHandler';
+import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
+import { toPx } from "../../../utils/units";
+import { _t } from "../../../languageHandler";
 
 interface IProps {
-    name: string; // The name (first initial used as default)
+    name?: string; // The name (first initial used as default)
     idName?: string; // ID for generating hash colours
     title?: string; // onHover title text
-    url?: string; // highest priority of them all, shortcut to set in urls[0]
+    url?: string | null; // highest priority of them all, shortcut to set in urls[0]
     urls?: string[]; // [highest_priority, ... , lowest_priority]
-    width?: number;
-    height?: number;
+    width: number;
+    height: number;
     // XXX: resizeMethod not actually used.
     resizeMethod?: ResizeMethod;
     defaultToInitialLetter?: boolean; // true to add default url
     onClick?: React.MouseEventHandler;
     inputRef?: React.RefObject<HTMLImageElement & HTMLSpanElement>;
     className?: string;
+    tabIndex?: number;
 }
 
-const calculateUrls = (url, urls) => {
+const calculateUrls = (url?: string | null, urls?: string[], lowBandwidth = false): string[] => {
     // work out the full set of urls to try to load. This is formed like so:
     // imageUrls: [ props.url, ...props.urls ]
 
-    let _urls = [];
-    if (!SettingsStore.getValue("lowBandwidth")) {
+    let _urls: string[] = [];
+    if (!lowBandwidth) {
         _urls = urls || [];
 
         if (url) {
@@ -62,16 +66,21 @@ const calculateUrls = (url, urls) => {
     return Array.from(new Set(_urls));
 };
 
-const useImageUrl = ({url, urls}): [string, () => void] => {
-    const [imageUrls, setUrls] = useState<string[]>(calculateUrls(url, urls));
+const useImageUrl = ({ url, urls }: { url?: string | null; urls?: string[] }): [string, () => void] => {
+    // Since this is a hot code path and the settings store can be slow, we
+    // use the cached lowBandwidth value from the room context if it exists
+    const roomContext = useContext(RoomContext);
+    const lowBandwidth = roomContext ? roomContext.lowBandwidth : SettingsStore.getValue("lowBandwidth");
+
+    const [imageUrls, setUrls] = useState<string[]>(calculateUrls(url, urls, lowBandwidth));
     const [urlsIndex, setIndex] = useState<number>(0);
 
     const onError = useCallback(() => {
-        setIndex(i => i + 1); // try the next one
+        setIndex((i) => i + 1); // try the next one
     }, []);
 
     useEffect(() => {
-        setUrls(calculateUrls(url, urls));
+        setUrls(calculateUrls(url, urls, lowBandwidth));
         setIndex(0);
     }, [url, JSON.stringify(urls)]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -84,13 +93,13 @@ const useImageUrl = ({url, urls}): [string, () => void] => {
             setIndex(0);
         }
     }, []);
-    useEventEmitter(cli, "sync", onClientSync);
+    useTypedEventEmitter(cli, ClientEvent.Sync, onClientSync);
 
     const imageUrl = imageUrls[urlsIndex];
     return [imageUrl, onError];
 };
 
-const BaseAvatar = (props: IProps) => {
+const BaseAvatar: React.FC<IProps> = (props) => {
     const {
         name,
         idName,
@@ -107,9 +116,9 @@ const BaseAvatar = (props: IProps) => {
         ...otherProps
     } = props;
 
-    const [imageUrl, onError] = useImageUrl({url, urls});
+    const [imageUrl, onError] = useImageUrl({ url, urls });
 
-    if (!imageUrl && defaultToInitialLetter) {
+    if (!imageUrl && defaultToInitialLetter && name) {
         const initialLetter = AvatarLogic.getInitialLetter(name);
         const textNode = (
             <span
@@ -121,7 +130,7 @@ const BaseAvatar = (props: IProps) => {
                     lineHeight: toPx(height),
                 }}
             >
-                { initialLetter }
+                {initialLetter}
             </span>
         );
         const imgNode = (
@@ -135,21 +144,24 @@ const BaseAvatar = (props: IProps) => {
                     width: toPx(width),
                     height: toPx(height),
                 }}
-                aria-hidden="true" />
+                aria-hidden="true"
+                data-testid="avatar-img"
+            />
         );
 
         if (onClick) {
             return (
                 <AccessibleButton
                     aria-label={_t("Avatar")}
+                    aria-live="off"
                     {...otherProps}
                     element="span"
                     className={classNames("mx_BaseAvatar", className)}
                     onClick={onClick}
                     inputRef={inputRef}
                 >
-                    { textNode }
-                    { imgNode }
+                    {textNode}
+                    {imgNode}
                 </AccessibleButton>
             );
         } else {
@@ -160,8 +172,8 @@ const BaseAvatar = (props: IProps) => {
                     {...otherProps}
                     role="presentation"
                 >
-                    { textNode }
-                    { imgNode }
+                    {textNode}
+                    {imgNode}
                 </span>
             );
         }
@@ -171,7 +183,7 @@ const BaseAvatar = (props: IProps) => {
         return (
             <AccessibleButton
                 className={classNames("mx_BaseAvatar mx_BaseAvatar_image", className)}
-                element='img'
+                element="img"
                 src={imageUrl}
                 onClick={onClick}
                 onError={onError}
@@ -179,9 +191,12 @@ const BaseAvatar = (props: IProps) => {
                     width: toPx(width),
                     height: toPx(height),
                 }}
-                title={title} alt={_t("Avatar")}
+                title={title}
+                alt={_t("Avatar")}
                 inputRef={inputRef}
-                {...otherProps} />
+                data-testid="avatar-img"
+                {...otherProps}
+            />
         );
     } else {
         return (
@@ -193,9 +208,12 @@ const BaseAvatar = (props: IProps) => {
                     width: toPx(width),
                     height: toPx(height),
                 }}
-                title={title} alt=""
+                title={title}
+                alt=""
                 ref={inputRef}
-                {...otherProps} />
+                data-testid="avatar-img"
+                {...otherProps}
+            />
         );
     }
 };

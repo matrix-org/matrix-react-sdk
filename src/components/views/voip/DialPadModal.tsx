@@ -14,100 +14,121 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as React from "react";
-import { ensureDMExists } from "../../../createRoom";
-import { _t } from "../../../languageHandler";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import AccessibleButton from "../elements/AccessibleButton";
+import React, { ChangeEvent } from "react";
+import { createRef, SyntheticEvent } from "react";
+
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import Field from "../elements/Field";
-import DialPad from './DialPad';
-import dis from '../../../dispatcher/dispatcher';
-import Modal from "../../../Modal";
-import ErrorDialog from "../../views/dialogs/ErrorDialog";
-import CallHandler from "../../../CallHandler";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import DialPad from "./DialPad";
+import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
+import LegacyCallHandler from "../../../LegacyCallHandler";
 
 interface IProps {
-    onFinished: (boolean) => void;
+    onFinished: (dialled: boolean) => void;
 }
 
 interface IState {
     value: string;
 }
 
-@replaceableComponent("views.voip.DialPadModal")
 export default class DialpadModal extends React.PureComponent<IProps, IState> {
-    constructor(props) {
+    private numberEntryFieldRef: React.RefObject<Field> = createRef();
+
+    public constructor(props: IProps) {
         super(props);
         this.state = {
-            value: '',
-        }
+            value: "",
+        };
     }
 
-    onCancelClick = () => {
+    public onCancelClick = (): void => {
         this.props.onFinished(false);
-    }
+    };
 
-    onChange = (ev) => {
-        this.setState({value: ev.target.value});
-    }
+    public onChange = (ev: ChangeEvent<HTMLInputElement>): void => {
+        this.setState({ value: ev.target.value });
+    };
 
-    onFormSubmit = (ev) => {
+    public onFormSubmit = (ev: SyntheticEvent): void => {
         ev.preventDefault();
         this.onDialPress();
-    }
+    };
 
-    onDigitPress = (digit) => {
-        this.setState({value: this.state.value + digit});
-    }
+    public onDigitPress = (digit: string, ev: ButtonEvent): void => {
+        this.setState({ value: this.state.value + digit });
 
-    onDeletePress = () => {
-        if (this.state.value.length === 0) return;
-        this.setState({value: this.state.value.slice(0, -1)});
-    }
-
-    onDialPress = async () => {
-        const results = await CallHandler.sharedInstance().pstnLookup(this.state.value);
-        if (!results || results.length === 0 || !results[0].userid) {
-            Modal.createTrackedDialog('', '', ErrorDialog, {
-                title: _t("Unable to look up phone number"),
-                description: _t("There was an error looking up the phone number"),
-            });
+        // Keep the number field focused so that keyboard entry is still available.
+        // However, don't focus if this wasn't the result of directly clicking on the button,
+        // i.e someone using keyboard navigation.
+        if (ev.type === "click") {
+            this.numberEntryFieldRef.current?.focus();
         }
-        const userId = results[0].userid;
+    };
 
-        const roomId = await ensureDMExists(MatrixClientPeg.get(), userId);
+    public onDeletePress = (ev: ButtonEvent): void => {
+        if (this.state.value.length === 0) return;
+        this.setState({ value: this.state.value.slice(0, -1) });
 
-        dis.dispatch({
-            action: 'view_room',
-            room_id: roomId,
-        });
+        // Keep the number field focused so that keyboard entry is still available
+        // However, don't focus if this wasn't the result of directly clicking on the button,
+        // i.e someone using keyboard navigation.
+        if (ev.type === "click") {
+            this.numberEntryFieldRef.current?.focus();
+        }
+    };
 
+    public onDialPress = async (): Promise<void> => {
+        LegacyCallHandler.instance.dialNumber(this.state.value);
         this.props.onFinished(true);
-    }
+    };
 
-    render() {
-        return <div className="mx_DialPadModal">
-            <div className="mx_DialPadModal_header">
+    public render(): React.ReactNode {
+        const backspaceButton = <DialPadBackspaceButton onBackspacePress={this.onDeletePress} />;
+
+        // Only show the backspace button if the field has content
+        let dialPadField;
+        if (this.state.value.length !== 0) {
+            dialPadField = (
+                <Field
+                    ref={this.numberEntryFieldRef}
+                    className="mx_DialPadModal_field"
+                    id="dialpad_number"
+                    value={this.state.value}
+                    autoFocus={true}
+                    onChange={this.onChange}
+                    postfixComponent={backspaceButton}
+                />
+            );
+        } else {
+            dialPadField = (
+                <Field
+                    ref={this.numberEntryFieldRef}
+                    className="mx_DialPadModal_field"
+                    id="dialpad_number"
+                    value={this.state.value}
+                    autoFocus={true}
+                    onChange={this.onChange}
+                />
+            );
+        }
+
+        return (
+            <div className="mx_DialPadModal">
                 <div>
-                    <span className="mx_DialPadModal_title">{_t("Dial pad")}</span>
                     <AccessibleButton className="mx_DialPadModal_cancel" onClick={this.onCancelClick} />
                 </div>
-                <form onSubmit={this.onFormSubmit}>
-                    <Field className="mx_DialPadModal_field" id="dialpad_number"
-                        value={this.state.value} autoFocus={true}
-                        onChange={this.onChange}
+                <div className="mx_DialPadModal_header">
+                    <form onSubmit={this.onFormSubmit}>{dialPadField}</form>
+                </div>
+                <div className="mx_DialPadModal_dialPad">
+                    <DialPad
+                        hasDial={true}
+                        onDigitPress={this.onDigitPress}
+                        onDeletePress={this.onDeletePress}
+                        onDialPress={this.onDialPress}
                     />
-                </form>
+                </div>
             </div>
-            <div className="mx_DialPadModal_horizSep" />
-            <div className="mx_DialPadModal_dialPad">
-                <DialPad hasDialAndDelete={true}
-                    onDigitPress={this.onDigitPress}
-                    onDeletePress={this.onDeletePress}
-                    onDialPress={this.onDialPress}
-                />
-            </div>
-        </div>;
+        );
     }
 }

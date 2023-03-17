@@ -13,7 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
 /**
  * Copy plaintext to user's clipboard
  * It will overwrite user's selection range
@@ -21,9 +20,11 @@ limitations under the License.
  * Tries to use new async clipboard API if available
  * @param text the plaintext to put in the user's clipboard
  */
+import { logger } from "matrix-js-sdk/src/logger";
+
 export async function copyPlaintext(text: string): Promise<boolean> {
     try {
-        if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+        if (navigator?.clipboard?.writeText) {
             await navigator.clipboard.writeText(text);
             return true;
         } else {
@@ -36,7 +37,7 @@ export async function copyPlaintext(text: string): Promise<boolean> {
             textArea.style.position = "fixed";
 
             document.body.appendChild(textArea);
-            const selection = document.getSelection();
+            const selection = document.getSelection()!;
             const range = document.createRange();
             // range.selectNodeContents(textArea);
             range.selectNode(textArea);
@@ -49,16 +50,16 @@ export async function copyPlaintext(text: string): Promise<boolean> {
             return successful;
         }
     } catch (e) {
-        console.error("copyPlaintext failed", e);
+        logger.error("copyPlaintext failed", e);
     }
     return false;
 }
 
-export function selectText(target: Element) {
+export function selectText(target: Element): void {
     const range = document.createRange();
     range.selectNodeContents(target);
 
-    const selection = window.getSelection();
+    const selection = window.getSelection()!;
     selection.removeAllRanges();
     selection.addRange(range);
 }
@@ -69,7 +70,16 @@ export function selectText(target: Element) {
  * In certain browsers it may only work if triggered by a user action or may ask user for permissions
  * @param ref pointer to the node to copy
  */
-export function copyNode(ref: Element): boolean {
+export function copyNode(ref?: Element | null): boolean {
+    if (!ref) return false;
     selectText(ref);
-    return document.execCommand('copy');
+    return document.execCommand("copy");
+}
+
+/**
+ * Returns text which has been selected by the user
+ * @returns the selected text
+ */
+export function getSelectedText(): string {
+    return window.getSelection()!.toString();
 }

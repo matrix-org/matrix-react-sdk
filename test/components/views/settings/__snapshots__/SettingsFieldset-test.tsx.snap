@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SettingsFieldset /> renders fieldset with plain text description 1`] = `
+<DocumentFragment>
+  <fieldset
+    class="mx_SettingsFieldset"
+    data-testid="test"
+  >
+    <legend
+      class="mx_SettingsFieldset_legend"
+    >
+      Who can read history?
+    </legend>
+    <div
+      class="mx_SettingsFieldset_description"
+    >
+      Changes to who can read history.
+    </div>
+    <div>
+      test
+    </div>
+  </fieldset>
+</DocumentFragment>
+`;
+
+exports[`<SettingsFieldset /> renders fieldset with react description 1`] = `
+<DocumentFragment>
+  <fieldset
+    class="mx_SettingsFieldset"
+    data-testid="test"
+  >
+    <legend
+      class="mx_SettingsFieldset_legend"
+    >
+      Who can read history?
+    </legend>
+    <div
+      class="mx_SettingsFieldset_description"
+    >
+      <p>
+        Test
+      </p>
+      <a
+        href="#test"
+      >
+        a link
+      </a>
+    </div>
+    <div>
+      test
+    </div>
+  </fieldset>
+</DocumentFragment>
+`;
+
+exports[`<SettingsFieldset /> renders fieldset without description 1`] = `
+<DocumentFragment>
+  <fieldset
+    class="mx_SettingsFieldset"
+    data-testid="test"
+  >
+    <legend
+      class="mx_SettingsFieldset_legend"
+    >
+      Who can read history?
+    </legend>
+    <div>
+      test
+    </div>
+  </fieldset>
+</DocumentFragment>
+`;

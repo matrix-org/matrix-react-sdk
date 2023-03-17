@@ -16,51 +16,49 @@ limitations under the License.
 
 import FixedDistributor from "./fixed";
 import ResizeItem from "../item";
-import Resizer, {IConfig} from "../resizer";
+import Resizer, { IConfig } from "../resizer";
 import Sizer from "../sizer";
 
 export interface ICollapseConfig extends IConfig {
     toggleSize: number;
-    onCollapsed?(collapsed: boolean, id: string, element: HTMLElement): void;
+    onCollapsed?(collapsed: boolean, id: string | null, element: HTMLElement): void;
     isItemCollapsed(element: HTMLElement): boolean;
 }
 
 class CollapseItem extends ResizeItem<ICollapseConfig> {
-    notifyCollapsed(collapsed: boolean) {
-        const callback = this.resizer.config.onCollapsed;
-        if (callback) {
-            callback(collapsed, this.id, this.domNode);
-        }
+    public notifyCollapsed(collapsed: boolean): void {
+        this.resizer.config?.onCollapsed?.(collapsed, this.id, this.domNode);
     }
 
-    get isCollapsed() {
-        const isItemCollapsed = this.resizer.config.isItemCollapsed;
-        return isItemCollapsed(this.domNode);
+    public get isCollapsed(): boolean {
+        return this.resizer.config?.isItemCollapsed?.(this.domNode) ?? false;
     }
 }
 
 export default class CollapseDistributor extends FixedDistributor<ICollapseConfig, CollapseItem> {
-    static createItem(resizeHandle: HTMLDivElement, resizer: Resizer<ICollapseConfig>, sizer: Sizer) {
-        return new CollapseItem(resizeHandle, resizer, sizer);
+    public static createItem(
+        resizeHandle: HTMLDivElement,
+        resizer: Resizer<ICollapseConfig>,
+        sizer: Sizer,
+        container?: HTMLElement,
+    ): CollapseItem {
+        return new CollapseItem(resizeHandle, resizer, sizer, container);
     }
 
-    private readonly toggleSize: number;
+    private readonly toggleSize: number | undefined;
     private isCollapsed: boolean;
 
-    constructor(item: CollapseItem) {
+    public constructor(item: CollapseItem) {
         super(item);
         this.toggleSize = item.resizer?.config?.toggleSize;
         this.isCollapsed = item.isCollapsed;
     }
 
-    public resize(newSize: number) {
-        const isCollapsedSize = newSize < this.toggleSize;
-        if (isCollapsedSize && !this.isCollapsed) {
-            this.isCollapsed = true;
-            this.item.notifyCollapsed(true);
-        } else if (!isCollapsedSize && this.isCollapsed) {
-            this.item.notifyCollapsed(false);
-            this.isCollapsed = false;
+    public resize(newSize: number): void {
+        const isCollapsedSize = !!this.toggleSize && newSize < this.toggleSize;
+        if (isCollapsedSize !== this.isCollapsed) {
+            this.isCollapsed = isCollapsedSize;
+            this.item.notifyCollapsed(isCollapsedSize);
         }
         if (!isCollapsedSize) {
             super.resize(newSize);

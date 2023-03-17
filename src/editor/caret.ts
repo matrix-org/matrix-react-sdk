@@ -15,15 +15,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {needsCaretNodeBefore, needsCaretNodeAfter} from "./render";
+import { needsCaretNodeBefore, needsCaretNodeAfter } from "./render";
 import Range from "./range";
 import EditorModel from "./model";
-import DocumentPosition, {IPosition} from "./position";
-import {Part} from "./parts";
+import DocumentPosition, { IPosition } from "./position";
+import { Part, Type } from "./parts";
 
 export type Caret = Range | DocumentPosition;
 
-export function setSelection(editor: HTMLDivElement, model: EditorModel, selection: Range | IPosition) {
+export function setSelection(editor: HTMLDivElement, model: EditorModel, selection: Range | IPosition): void {
     if (selection instanceof Range) {
         setDocumentRangeSelection(editor, model, selection);
     } else {
@@ -31,8 +31,8 @@ export function setSelection(editor: HTMLDivElement, model: EditorModel, selecti
     }
 }
 
-function setDocumentRangeSelection(editor: HTMLDivElement, model: EditorModel, range: Range) {
-    const sel = document.getSelection();
+function setDocumentRangeSelection(editor: HTMLDivElement, model: EditorModel, range: Range): void {
+    const sel = document.getSelection()!;
     sel.removeAllRanges();
     const selectionRange = document.createRange();
     const start = getNodeAndOffsetForPosition(editor, model, range.start);
@@ -42,13 +42,15 @@ function setDocumentRangeSelection(editor: HTMLDivElement, model: EditorModel, r
     sel.addRange(selectionRange);
 }
 
-export function setCaretPosition(editor: HTMLDivElement, model: EditorModel, caretPosition: IPosition) {
+export function setCaretPosition(editor: HTMLDivElement, model: EditorModel, caretPosition: IPosition): void {
+    if (model.isEmpty) return; // selection can't possibly be wrong, so avoid a reflow
+
     const range = document.createRange();
-    const {node, offset} = getNodeAndOffsetForPosition(editor, model, caretPosition);
+    const { node, offset } = getNodeAndOffsetForPosition(editor, model, caretPosition);
     range.setStart(node, offset);
     range.collapse(true);
 
-    const sel = document.getSelection();
+    const sel = document.getSelection()!;
     if (sel.rangeCount === 1) {
         const existingRange = sel.getRangeAt(0);
         if (
@@ -67,8 +69,15 @@ export function setCaretPosition(editor: HTMLDivElement, model: EditorModel, car
     sel.addRange(range);
 }
 
-function getNodeAndOffsetForPosition(editor: HTMLDivElement, model: EditorModel, position: IPosition) {
-    const {offset, lineIndex, nodeIndex} = getLineAndNodePosition(model, position);
+function getNodeAndOffsetForPosition(
+    editor: HTMLDivElement,
+    model: EditorModel,
+    position: IPosition,
+): {
+    node: Node;
+    offset: number;
+} {
+    const { offset, lineIndex, nodeIndex } = getLineAndNodePosition(model, position);
     const lineNode = editor.childNodes[lineIndex];
 
     let focusNode;
@@ -82,16 +91,23 @@ function getNodeAndOffsetForPosition(editor: HTMLDivElement, model: EditorModel,
             focusNode = focusNode.firstChild;
         }
     }
-    return {node: focusNode, offset};
+    return { node: focusNode, offset };
 }
 
-export function getLineAndNodePosition(model: EditorModel, caretPosition: IPosition) {
-    const {parts} = model;
+export function getLineAndNodePosition(
+    model: EditorModel,
+    caretPosition: IPosition,
+): {
+    offset: number;
+    lineIndex: number;
+    nodeIndex: number;
+} {
+    const { parts } = model;
     const partIndex = caretPosition.index;
     const lineResult = findNodeInLineForPart(parts, partIndex);
-    const {lineIndex} = lineResult;
-    let {nodeIndex} = lineResult;
-    let {offset} = caretPosition;
+    const { lineIndex } = lineResult;
+    let { nodeIndex } = lineResult;
+    let { offset } = caretPosition;
     // we're at an empty line between a newline part
     // and another newline part or end/start of parts.
     // set offset to 0 so it gets set to the <br> inside the line container
@@ -99,36 +115,36 @@ export function getLineAndNodePosition(model: EditorModel, caretPosition: IPosit
         offset = 0;
     } else {
         // move caret out of uneditable part (into caret node, or empty line br) if needed
-        ({nodeIndex, offset} = moveOutOfUneditablePart(parts, partIndex, nodeIndex, offset));
+        ({ nodeIndex, offset } = moveOutOfUnselectablePart(parts, partIndex, nodeIndex, offset));
     }
-    return {lineIndex, nodeIndex, offset};
+    return { lineIndex, nodeIndex, offset };
 }
 
-function findNodeInLineForPart(parts: Part[], partIndex: number) {
+function findNodeInLineForPart(parts: Part[], partIndex: number): { lineIndex: number; nodeIndex: number } {
     let lineIndex = 0;
     let nodeIndex = -1;
 
-    let prevPart = null;
+    let prevPart: Part | undefined;
     // go through to parts up till (and including) the index
     // to find newline parts
     for (let i = 0; i <= partIndex; ++i) {
         const part = parts[i];
-        if (part.type === "newline") {
+        if (part.type === Type.Newline) {
             lineIndex += 1;
             nodeIndex = -1;
-            prevPart = null;
+            prevPart = undefined;
         } else {
             nodeIndex += 1;
             if (needsCaretNodeBefore(part, prevPart)) {
                 nodeIndex += 1;
             }
             // only jump over caret node if we're not at our destination node already,
-            // as we'll assume in moveOutOfUneditablePart that nodeIndex
+            // as we'll assume in moveOutOfUnselectablePart that nodeIndex
             // refers to the node  corresponding to the part,
             // and not an adjacent caret node
             if (i < partIndex) {
                 const nextPart = parts[i + 1];
-                const isLastOfLine = !nextPart || nextPart.type === "newline";
+                const isLastOfLine = !nextPart || nextPart.type === Type.Newline;
                 if (needsCaretNodeAfter(part, isLastOfLine)) {
                     nodeIndex += 1;
                 }
@@ -137,13 +153,18 @@ function findNodeInLineForPart(parts: Part[], partIndex: number) {
         }
     }
 
-    return {lineIndex, nodeIndex};
+    return { lineIndex, nodeIndex };
 }
 
-function moveOutOfUneditablePart(parts: Part[], partIndex: number, nodeIndex: number, offset: number) {
-    // move caret before or after uneditable part
+function moveOutOfUnselectablePart(
+    parts: Part[],
+    partIndex: number,
+    nodeIndex: number,
+    offset: number,
+): { offset: number; nodeIndex: number } {
+    // move caret before or after unselectable part
     const part = parts[partIndex];
-    if (part && !part.canEdit) {
+    if (part && !part.acceptsCaret) {
         if (offset === 0) {
             nodeIndex -= 1;
             const prevPart = parts[partIndex - 1];
@@ -159,5 +180,5 @@ function moveOutOfUneditablePart(parts: Part[], partIndex: number, nodeIndex: nu
             offset = 0;
         }
     }
-    return {nodeIndex, offset};
+    return { nodeIndex, offset };
 }

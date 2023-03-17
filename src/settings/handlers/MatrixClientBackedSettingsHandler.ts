@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import SettingsHandler from "./SettingsHandler";
 import { MatrixClient } from "matrix-js-sdk/src/client";
+
+import SettingsHandler from "./SettingsHandler";
 
 // Dev note: This whole class exists in the event someone logs out and back in - we want
 // to make sure the right MatrixClient is listening for changes.
@@ -47,7 +48,5 @@ export default abstract class MatrixClientBackedSettingsHandler extends Settings
         return MatrixClientBackedSettingsHandler._matrixClient;
     }
 
-    protected initMatrixClient(oldClient: MatrixClient, newClient: MatrixClient) {
-        console.warn("initMatrixClient not overridden");
-    }
+    protected abstract initMatrixClient(oldClient: MatrixClient, newClient: MatrixClient): void;
 }

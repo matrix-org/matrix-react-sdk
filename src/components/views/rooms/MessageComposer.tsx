@@ -1,5 +1,5 @@
 /*
-Copyright 2015-2021 The Matrix.org Foundation C.I.C.
+Copyright 2015 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,448 +13,639 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import React from 'react';
-import classNames from 'classnames';
-import { _t } from '../../../languageHandler';
-import {MatrixClientPeg} from '../../../MatrixClientPeg';
-import * as sdk from '../../../index';
-import {MatrixEvent} from "matrix-js-sdk/src/models/event";
-import {Room} from "matrix-js-sdk/src/models/room";
-import {RoomMember} from "matrix-js-sdk/src/models/room-member";
-import dis from '../../../dispatcher/dispatcher';
+
+import React, { createRef, ReactNode } from "react";
+import classNames from "classnames";
+import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+import { Optional } from "matrix-events-sdk";
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
+
+import { _t } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import dis from "../../../dispatcher/dispatcher";
 import { ActionPayload } from "../../../dispatcher/payloads";
-import Stickerpicker from './Stickerpicker';
-import { makeRoomPermalink, RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
-import ContentMessages from '../../../ContentMessages';
-import E2EIcon from './E2EIcon';
+import Stickerpicker from "./Stickerpicker";
+import { makeRoomPermalink, RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
+import E2EIcon from "./E2EIcon";
 import SettingsStore from "../../../settings/SettingsStore";
-import {aboveLeftOf, ContextMenu, ContextMenuTooltipButton, useContextMenu} from "../../structures/ContextMenu";
+import { aboveLeftOf, MenuProps } from "../../structures/ContextMenu";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import ReplyPreview from "./ReplyPreview";
-import {UIFeature} from "../../../settings/UIFeature";
-import {UPDATE_EVENT} from "../../../stores/AsyncStore";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import VoiceRecordComposerTile from "./VoiceRecordComposerTile";
-import {VoiceRecordingStore} from "../../../stores/VoiceRecordingStore";
-import {RecordingState} from "../../../voice/VoiceRecording";
-import Tooltip, {Alignment} from "../elements/Tooltip";
+import { VoiceRecordingStore } from "../../../stores/VoiceRecordingStore";
+import { RecordingState } from "../../../audio/VoiceRecording";
+import Tooltip, { Alignment } from "../elements/Tooltip";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
-import { E2EStatus } from '../../../utils/ShieldUtils';
-import SendMessageComposer from "./SendMessageComposer";
+import { E2EStatus } from "../../../utils/ShieldUtils";
+import SendMessageComposer, { SendMessageComposer as SendMessageComposerClass } from "./SendMessageComposer";
+import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
+import { Action } from "../../../dispatcher/actions";
+import EditorModel from "../../../editor/model";
+import UIStore, { UI_EVENTS } from "../../../stores/UIStore";
+import RoomContext from "../../../contexts/RoomContext";
+import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdatedPayload";
+import MessageComposerButtons from "./MessageComposerButtons";
+import { ButtonEvent } from "../elements/AccessibleButton";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
+import { Features } from "../../../settings/Settings";
+import { VoiceMessageRecording } from "../../../audio/VoiceMessageRecording";
+import { SendWysiwygComposer, sendMessage, getConversionFunctions } from "./wysiwyg_composer/";
+import { MatrixClientProps, withMatrixClientHOC } from "../../../contexts/MatrixClientContext";
+import { setUpVoiceBroadcastPreRecording } from "../../../voice-broadcast/utils/setUpVoiceBroadcastPreRecording";
+import { SdkContextClass } from "../../../contexts/SDKContext";
+import { VoiceBroadcastInfoState } from "../../../voice-broadcast";
+import { createCantStartVoiceMessageBroadcastDialog } from "../dialogs/CantStartVoiceMessageBroadcastDialog";
 
-interface IComposerAvatarProps {
-    me: object;
-}
-
-function ComposerAvatar(props: IComposerAvatarProps) {
-    const MemberStatusMessageAvatar = sdk.getComponent('avatars.MemberStatusMessageAvatar');
-    return <div className="mx_MessageComposer_avatar">
-        <MemberStatusMessageAvatar member={props.me} width={24} height={24} />
-    </div>;
-}
+let instanceCount = 0;
 
 interface ISendButtonProps {
-    onClick: () => void;
+    onClick: (ev: ButtonEvent) => void;
+    title?: string; // defaults to something generic
 }
 
-function SendButton(props: ISendButtonProps) {
+function SendButton(props: ISendButtonProps): JSX.Element {
     return (
         <AccessibleTooltipButton
             className="mx_MessageComposer_sendMessage"
             onClick={props.onClick}
-            title={_t('Send message')}
+            title={props.title ?? _t("Send message")}
+            data-testid="sendmessagebtn"
         />
     );
 }
 
-const EmojiButton = ({addEmoji}) => {
-    const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
-
-    let contextMenu;
-    if (menuDisplayed) {
-        const buttonRect = button.current.getBoundingClientRect();
-        const EmojiPicker = sdk.getComponent('emojipicker.EmojiPicker');
-        contextMenu = <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu} managed={false}>
-            <EmojiPicker onChoose={addEmoji} showQuickReactions={true} />
-        </ContextMenu>;
-    }
-
-    const className = classNames(
-        "mx_MessageComposer_button",
-        "mx_MessageComposer_emoji",
-        {
-            "mx_MessageComposer_button_highlight": menuDisplayed,
-        },
-    );
-
-    // TODO: replace ContextMenuTooltipButton with a unified representation of
-    // the header buttons and the right panel buttons
-    return <React.Fragment>
-        <ContextMenuTooltipButton
-            className={className}
-            onClick={openMenu}
-            isExpanded={menuDisplayed}
-            title={_t('Emoji picker')}
-            inputRef={button}
-        >
-
-        </ContextMenuTooltipButton>
-
-        { contextMenu }
-    </React.Fragment>;
-};
-
-interface IUploadButtonProps {
-    roomId: string;
-}
-
-class UploadButton extends React.Component<IUploadButtonProps> {
-    private uploadInput = React.createRef<HTMLInputElement>();
-    private dispatcherRef: string;
-
-    constructor(props) {
-        super(props);
-
-        this.dispatcherRef = dis.register(this.onAction);
-    }
-
-    componentWillUnmount() {
-        dis.unregister(this.dispatcherRef);
-    }
-
-    private onAction = (payload: ActionPayload) => {
-        if (payload.action === "upload_file") {
-            this.onUploadClick();
-        }
-    };
-
-    private onUploadClick = () => {
-        if (MatrixClientPeg.get().isGuest()) {
-            dis.dispatch({action: 'require_registration'});
-            return;
-        }
-        this.uploadInput.current.click();
-    }
-
-    private onUploadFileInputChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-        if (ev.target.files.length === 0) return;
-
-        // take a copy so we can safely reset the value of the form control
-        // (Note it is a FileList: we can't use slice or sensible iteration).
-        const tfiles = [];
-        for (let i = 0; i < ev.target.files.length; ++i) {
-            tfiles.push(ev.target.files[i]);
-        }
-
-        ContentMessages.sharedInstance().sendContentListToRoom(
-            tfiles, this.props.roomId, MatrixClientPeg.get(),
-        );
-
-        // This is the onChange handler for a file form control, but we're
-        // not keeping any state, so reset the value of the form control
-        // to empty.
-        // NB. we need to set 'value': the 'files' property is immutable.
-        ev.target.value = '';
-    }
-
-    render() {
-        const uploadInputStyle = {display: 'none'};
-        return (
-            <AccessibleTooltipButton
-                className="mx_MessageComposer_button mx_MessageComposer_upload"
-                onClick={this.onUploadClick}
-                title={_t('Upload file')}
-            >
-                <input
-                    ref={this.uploadInput}
-                    type="file"
-                    style={uploadInputStyle}
-                    multiple
-                    onChange={this.onUploadFileInputChange}
-                />
-            </AccessibleTooltipButton>
-        );
-    }
-}
-
-interface IProps {
+interface IProps extends MatrixClientProps {
     room: Room;
     resizeNotifier: ResizeNotifier;
     permalinkCreator: RoomPermalinkCreator;
     replyToEvent?: MatrixEvent;
+    relation?: IEventRelation;
     e2eStatus?: E2EStatus;
+    compact?: boolean;
 }
 
 interface IState {
-    tombstone: MatrixEvent;
-    canSendMessages: boolean;
+    composerContent: string;
     isComposerEmpty: boolean;
     haveRecording: boolean;
     recordingTimeLeftSeconds?: number;
     me?: RoomMember;
+    isMenuOpen: boolean;
+    isStickerPickerOpen: boolean;
+    showStickersButton: boolean;
+    showPollsButton: boolean;
+    showVoiceBroadcastButton: boolean;
+    isWysiwygLabEnabled: boolean;
+    isRichTextEnabled: boolean;
+    initialComposerContent: string;
 }
 
-@replaceableComponent("views.rooms.MessageComposer")
-export default class MessageComposer extends React.Component<IProps, IState> {
-    private dispatcherRef: string;
-    private messageComposerInput: SendMessageComposer;
-    private voiceRecordingButton: VoiceRecordComposerTile;
+export class MessageComposer extends React.Component<IProps, IState> {
+    private dispatcherRef?: string;
+    private messageComposerInput = createRef<SendMessageComposerClass>();
+    private voiceRecordingButton = createRef<VoiceRecordComposerTile>();
+    private ref: React.RefObject<HTMLDivElement> = createRef();
+    private instanceId: number;
 
-    constructor(props) {
+    private _voiceRecording: Optional<VoiceMessageRecording>;
+
+    public static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
+
+    public static defaultProps = {
+        compact: false,
+        showVoiceBroadcastButton: false,
+        isRichTextEnabled: true,
+    };
+
+    public constructor(props: IProps) {
         super(props);
         VoiceRecordingStore.instance.on(UPDATE_EVENT, this.onVoiceStoreUpdate);
 
         this.state = {
-            tombstone: this.getRoomTombstone(),
-            canSendMessages: this.props.room.maySendMessage(),
             isComposerEmpty: true,
+            composerContent: "",
             haveRecording: false,
-            recordingTimeLeftSeconds: null, // when set to a number, shows a toast
+            recordingTimeLeftSeconds: undefined, // when set to a number, shows a toast
+            isMenuOpen: false,
+            isStickerPickerOpen: false,
+            showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
+            showPollsButton: SettingsStore.getValue("MessageComposerInput.showPollsButton"),
+            showVoiceBroadcastButton: SettingsStore.getValue(Features.VoiceBroadcast),
+            isWysiwygLabEnabled: SettingsStore.getValue<boolean>("feature_wysiwyg_composer"),
+            isRichTextEnabled: true,
+            initialComposerContent: "",
         };
+
+        this.instanceId = instanceCount++;
+
+        SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
+        SettingsStore.monitorSetting("MessageComposerInput.showPollsButton", null);
+        SettingsStore.monitorSetting(Features.VoiceBroadcast, null);
+        SettingsStore.monitorSetting("feature_wysiwyg_composer", null);
     }
 
-    componentDidMount() {
+    private get voiceRecording(): Optional<VoiceMessageRecording> {
+        return this._voiceRecording;
+    }
+
+    private set voiceRecording(rec: Optional<VoiceMessageRecording>) {
+        if (this._voiceRecording) {
+            this._voiceRecording.off(RecordingState.Started, this.onRecordingStarted);
+            this._voiceRecording.off(RecordingState.EndingSoon, this.onRecordingEndingSoon);
+        }
+
+        this._voiceRecording = rec;
+
+        if (rec) {
+            // Delay saying we have a recording until it is started, as we might not yet
+            // have A/V permissions
+            rec.on(RecordingState.Started, this.onRecordingStarted);
+
+            // We show a little heads up that the recording is about to automatically end soon. The 3s
+            // display time is completely arbitrary.
+            rec.on(RecordingState.EndingSoon, this.onRecordingEndingSoon);
+        }
+    }
+
+    public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
-        MatrixClientPeg.get().on("RoomState.events", this.onRoomStateEvents);
         this.waitForOwnMember();
+        UIStore.instance.trackElementDimensions(`MessageComposer${this.instanceId}`, this.ref.current!);
+        UIStore.instance.on(`MessageComposer${this.instanceId}`, this.onResize);
+        this.updateRecordingState(); // grab any cached recordings
     }
 
-    private onAction = (payload: ActionPayload) => {
-        if (payload.action === 'reply_to_event') {
-            // add a timeout for the reply preview to be rendered, so
-            // that the ScrollPanel listening to the resizeNotifier can
-            // correctly measure it's new height and scroll down to keep
-            // at the bottom if it already is
-            setTimeout(() => {
-                this.props.resizeNotifier.notifyTimelineHeightChanged();
-            }, 100);
+    private onResize = (type: UI_EVENTS, entry: ResizeObserverEntry): void => {
+        if (type === UI_EVENTS.Resize) {
+            const { narrow } = this.context;
+            this.setState({
+                isMenuOpen: !narrow ? false : this.state.isMenuOpen,
+                isStickerPickerOpen: false,
+            });
         }
     };
 
-    private waitForOwnMember() {
-        // if we have the member already, do that
-        const me = this.props.room.getMember(MatrixClientPeg.get().getUserId());
+    private onAction = (payload: ActionPayload): void => {
+        switch (payload.action) {
+            case "reply_to_event":
+                if (payload.context === this.context.timelineRenderingType) {
+                    // add a timeout for the reply preview to be rendered, so
+                    // that the ScrollPanel listening to the resizeNotifier can
+                    // correctly measure it's new height and scroll down to keep
+                    // at the bottom if it already is
+                    window.setTimeout(() => {
+                        this.props.resizeNotifier.notifyTimelineHeightChanged();
+                    }, 100);
+                }
+                break;
+
+            case Action.SettingUpdated: {
+                const settingUpdatedPayload = payload as SettingUpdatedPayload;
+                switch (settingUpdatedPayload.settingName) {
+                    case "MessageComposerInput.showStickersButton": {
+                        const showStickersButton = SettingsStore.getValue("MessageComposerInput.showStickersButton");
+                        if (this.state.showStickersButton !== showStickersButton) {
+                            this.setState({ showStickersButton });
+                        }
+                        break;
+                    }
+                    case "MessageComposerInput.showPollsButton": {
+                        const showPollsButton = SettingsStore.getValue("MessageComposerInput.showPollsButton");
+                        if (this.state.showPollsButton !== showPollsButton) {
+                            this.setState({ showPollsButton });
+                        }
+                        break;
+                    }
+                    case Features.VoiceBroadcast: {
+                        if (this.state.showVoiceBroadcastButton !== settingUpdatedPayload.newValue) {
+                            this.setState({ showVoiceBroadcastButton: !!settingUpdatedPayload.newValue });
+                        }
+                        break;
+                    }
+                    case "feature_wysiwyg_composer": {
+                        if (this.state.isWysiwygLabEnabled !== settingUpdatedPayload.newValue) {
+                            this.setState({ isWysiwygLabEnabled: Boolean(settingUpdatedPayload.newValue) });
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    };
+
+    private waitForOwnMember(): void {
+        // If we have the member already, do that
+        const me = this.props.room.getMember(MatrixClientPeg.get().getUserId()!);
         if (me) {
-            this.setState({me});
+            this.setState({ me });
             return;
         }
         // Otherwise, wait for member loading to finish and then update the member for the avatar.
         // The members should already be loading, and loadMembersIfNeeded
         // will return the promise for the existing operation
         this.props.room.loadMembersIfNeeded().then(() => {
-            const me = this.props.room.getMember(MatrixClientPeg.get().getUserId());
-            this.setState({me});
+            const me = this.props.room.getMember(MatrixClientPeg.get().getUserId()!);
+            this.setState({ me });
         });
     }
 
-    componentWillUnmount() {
-        if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener("RoomState.events", this.onRoomStateEvents);
-        }
+    public componentWillUnmount(): void {
         VoiceRecordingStore.instance.off(UPDATE_EVENT, this.onVoiceStoreUpdate);
-        dis.unregister(this.dispatcherRef);
+        if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
+        UIStore.instance.stopTrackingElementDimensions(`MessageComposer${this.instanceId}`);
+        UIStore.instance.removeListener(`MessageComposer${this.instanceId}`, this.onResize);
+
+        // clean up our listeners by setting our cached recording to falsy (see internal setter)
+        this.voiceRecording = null;
     }
 
-    private onRoomStateEvents = (ev, state) => {
-        if (ev.getRoomId() !== this.props.room.roomId) return;
-
-        if (ev.getType() === 'm.room.tombstone') {
-            this.setState({tombstone: this.getRoomTombstone()});
-        }
-        if (ev.getType() === 'm.room.power_levels') {
-            this.setState({canSendMessages: this.props.room.maySendMessage()});
-        }
-    }
-
-    private getRoomTombstone() {
-        return this.props.room.currentState.getStateEvents('m.room.tombstone', '');
-    }
-
-    private onTombstoneClick = (ev) => {
+    private onTombstoneClick = (ev: ButtonEvent): void => {
         ev.preventDefault();
 
-        const replacementRoomId = this.state.tombstone.getContent()['replacement_room'];
+        const replacementRoomId = this.context.tombstone?.getContent()["replacement_room"];
         const replacementRoom = MatrixClientPeg.get().getRoom(replacementRoomId);
-        let createEventId = null;
+        let createEventId: string | undefined;
         if (replacementRoom) {
-            const createEvent = replacementRoom.currentState.getStateEvents('m.room.create', '');
-            if (createEvent && createEvent.getId()) createEventId = createEvent.getId();
+            const createEvent = replacementRoom.currentState.getStateEvents(EventType.RoomCreate, "");
+            if (createEvent?.getId()) createEventId = createEvent.getId();
         }
 
-        const viaServers = [this.state.tombstone.getSender().split(':').splice(1).join(':')];
-        dis.dispatch({
-            action: 'view_room',
+        const viaServers = [this.context.tombstone.getSender().split(":").slice(1).join(":")];
+
+        dis.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
             highlighted: true,
             event_id: createEventId,
             room_id: replacementRoomId,
             auto_join: true,
-            _type: "tombstone", // instrumentation
-
             // Try to join via the server that sent the event. This converts @something:example.org
             // into a server domain by splitting on colons and ignoring the first entry ("@something").
             via_servers: viaServers,
-            opts: {
-                // These are passed down to the js-sdk's /join call
-                viaServers: viaServers,
-            },
+            metricsTrigger: "Tombstone",
+            metricsViaKeyboard: ev.type !== "click",
         });
-    }
+    };
 
-    private renderPlaceholderText = () => {
+    private renderPlaceholderText = (): string => {
         if (this.props.replyToEvent) {
-            if (this.props.e2eStatus) {
-                return _t('Send an encrypted reply…');
+            const replyingToThread = this.props.relation?.rel_type === THREAD_RELATION_TYPE.name;
+            if (replyingToThread && this.props.e2eStatus) {
+                return _t("Reply to encrypted thread…");
+            } else if (replyingToThread) {
+                return _t("Reply to thread…");
+            } else if (this.props.e2eStatus) {
+                return _t("Send an encrypted reply…");
             } else {
-                return _t('Send a reply…');
+                return _t("Send a reply…");
             }
         } else {
             if (this.props.e2eStatus) {
-                return _t('Send an encrypted message…');
+                return _t("Send an encrypted message…");
             } else {
-                return _t('Send a message…');
+                return _t("Send a message…");
             }
         }
-    }
+    };
 
-    addEmoji(emoji) {
-        dis.dispatch({
-            action: "insert_emoji",
-            emoji,
+    private addEmoji = (emoji: string): boolean => {
+        dis.dispatch<ComposerInsertPayload>({
+            action: Action.ComposerInsert,
+            text: emoji,
+            timelineRenderingType: this.context.timelineRenderingType,
         });
-    }
+        return true;
+    };
 
-    sendMessage = async () => {
-        if (this.state.haveRecording && this.voiceRecordingButton) {
+    private sendMessage = async (): Promise<void> => {
+        if (this.state.haveRecording && this.voiceRecordingButton.current) {
             // There shouldn't be any text message to send when a voice recording is active, so
             // just send out the voice recording.
-            await this.voiceRecordingButton.send();
+            await this.voiceRecordingButton.current?.send();
             return;
         }
 
-        // XXX: Private function access
-        this.messageComposerInput._sendMessage();
-    }
+        this.messageComposerInput.current?.sendMessage();
 
-    onChange = (model) => {
-        this.setState({
-            isComposerEmpty: model.isEmpty,
-        });
-    }
-
-    private onVoiceStoreUpdate = () => {
-        const recording = VoiceRecordingStore.instance.activeRecording;
-        this.setState({haveRecording: !!recording});
-        if (recording) {
-            // We show a little heads up that the recording is about to automatically end soon. The 3s
-            // display time is completely arbitrary. Note that we don't need to deregister the listener
-            // because the recording instance will clean that up for us.
-            recording.on(RecordingState.EndingSoon, ({secondsLeft}) => {
-                this.setState({recordingTimeLeftSeconds: secondsLeft});
-                setTimeout(() => this.setState({recordingTimeLeftSeconds: null}), 3000);
+        if (this.state.isWysiwygLabEnabled) {
+            const { permalinkCreator, relation, replyToEvent } = this.props;
+            const composerContent = this.state.composerContent;
+            this.setState({ composerContent: "", initialComposerContent: "" });
+            dis.dispatch({
+                action: Action.ClearAndFocusSendMessageComposer,
+                timelineRenderingType: this.context.timelineRenderingType,
+            });
+            await sendMessage(composerContent, this.state.isRichTextEnabled, {
+                mxClient: this.props.mxClient,
+                roomContext: this.context,
+                permalinkCreator,
+                relation,
+                replyToEvent,
             });
         }
     };
 
-    render() {
-        const controls = [
-            this.state.me ? <ComposerAvatar key="controls_avatar" me={this.state.me} /> : null,
-            this.props.e2eStatus ?
-                <E2EIcon key="e2eIcon" status={this.props.e2eStatus} className="mx_MessageComposer_e2eIcon" /> :
-                null,
-        ];
+    private onChange = (model: EditorModel): void => {
+        this.setState({
+            isComposerEmpty: model.isEmpty,
+        });
+    };
 
-        if (!this.state.tombstone && this.state.canSendMessages) {
-            const SendMessageComposer = sdk.getComponent("rooms.SendMessageComposer");
+    private onWysiwygChange = (content: string): void => {
+        this.setState({
+            composerContent: content,
+            isComposerEmpty: content?.length === 0,
+        });
+    };
+
+    private onRichTextToggle = async (): Promise<void> => {
+        const { richToPlain, plainToRich } = await getConversionFunctions();
+
+        const { isRichTextEnabled, composerContent } = this.state;
+        const convertedContent = isRichTextEnabled
+            ? await richToPlain(composerContent)
+            : await plainToRich(composerContent);
+
+        this.setState({
+            isRichTextEnabled: !isRichTextEnabled,
+            composerContent: convertedContent,
+            initialComposerContent: convertedContent,
+        });
+    };
+
+    private onVoiceStoreUpdate = (): void => {
+        this.updateRecordingState();
+    };
+
+    private updateRecordingState(): void {
+        const voiceRecordingId = VoiceRecordingStore.getVoiceRecordingId(this.props.room, this.props.relation);
+        this.voiceRecording = VoiceRecordingStore.instance.getActiveRecording(voiceRecordingId);
+        if (this.voiceRecording) {
+            // If the recording has already started, it's probably a cached one.
+            if (this.voiceRecording.hasRecording && !this.voiceRecording.isRecording) {
+                this.setState({ haveRecording: true });
+            }
+
+            // Note: Listeners for recording states are set by the `this.voiceRecording` setter.
+        } else {
+            this.setState({ haveRecording: false });
+        }
+    }
+
+    private onRecordingStarted = (): void => {
+        // update the recording instance, just in case
+        const voiceRecordingId = VoiceRecordingStore.getVoiceRecordingId(this.props.room, this.props.relation);
+        this.voiceRecording = VoiceRecordingStore.instance.getActiveRecording(voiceRecordingId);
+        this.setState({
+            haveRecording: !!this.voiceRecording,
+        });
+    };
+
+    private onRecordingEndingSoon = ({ secondsLeft }: { secondsLeft: number }): void => {
+        this.setState({ recordingTimeLeftSeconds: secondsLeft });
+        window.setTimeout(() => this.setState({ recordingTimeLeftSeconds: undefined }), 3000);
+    };
+
+    private setStickerPickerOpen = (isStickerPickerOpen: boolean): void => {
+        this.setState({
+            isStickerPickerOpen,
+            isMenuOpen: false,
+        });
+    };
+
+    private toggleStickerPickerOpen = (): void => {
+        this.setStickerPickerOpen(!this.state.isStickerPickerOpen);
+    };
+
+    private toggleButtonMenu = (): void => {
+        this.setState({
+            isMenuOpen: !this.state.isMenuOpen,
+        });
+    };
+
+    private get showStickersButton(): boolean {
+        return this.state.showStickersButton && !isLocalRoom(this.props.room);
+    }
+
+    private getMenuPosition(): MenuProps | undefined {
+        if (this.ref.current) {
+            const hasFormattingButtons = this.state.isWysiwygLabEnabled && this.state.isRichTextEnabled;
+            const contentRect = this.ref.current.getBoundingClientRect();
+            // Here we need to remove the all the extra space above the editor
+            // Instead of doing a querySelector or pass a ref to find the compute the height formatting buttons
+            // We are using an arbitrary value, the formatting buttons height doesn't change during the lifecycle of the component
+            // It's easier to just use a constant here instead of an over-engineering way to find the height
+            const heightToRemove = hasFormattingButtons ? 36 : 0;
+            const fixedRect = new DOMRect(
+                contentRect.x,
+                contentRect.y + heightToRemove,
+                contentRect.width,
+                contentRect.height - heightToRemove,
+            );
+            return aboveLeftOf(fixedRect);
+        }
+    }
+
+    private onRecordStartEndClick = (): void => {
+        const currentBroadcastRecording = SdkContextClass.instance.voiceBroadcastRecordingsStore.getCurrent();
+
+        if (currentBroadcastRecording && currentBroadcastRecording.getState() !== VoiceBroadcastInfoState.Stopped) {
+            createCantStartVoiceMessageBroadcastDialog();
+        } else {
+            this.voiceRecordingButton.current?.onRecordStartEndClick();
+        }
+
+        if (this.context.narrow) {
+            this.toggleButtonMenu();
+        }
+    };
+
+    public render(): React.ReactNode {
+        const hasE2EIcon = Boolean(!this.state.isWysiwygLabEnabled && this.props.e2eStatus);
+        const e2eIcon = hasE2EIcon && (
+            <E2EIcon key="e2eIcon" status={this.props.e2eStatus} className="mx_MessageComposer_e2eIcon" />
+        );
+
+        const controls: ReactNode[] = [];
+        const menuPosition = this.getMenuPosition();
+
+        const canSendMessages = this.context.canSendMessages && !this.context.tombstone;
+        let composer: ReactNode;
+        if (canSendMessages) {
+            if (this.state.isWysiwygLabEnabled && menuPosition) {
+                composer = (
+                    <SendWysiwygComposer
+                        key="controls_input"
+                        disabled={this.state.haveRecording}
+                        onChange={this.onWysiwygChange}
+                        onSend={this.sendMessage}
+                        isRichTextEnabled={this.state.isRichTextEnabled}
+                        initialContent={this.state.initialComposerContent}
+                        e2eStatus={this.props.e2eStatus}
+                        menuPosition={menuPosition}
+                        placeholder={this.renderPlaceholderText()}
+                        eventRelation={this.props.relation}
+                    />
+                );
+            } else {
+                composer = (
+                    <SendMessageComposer
+                        ref={this.messageComposerInput}
+                        key="controls_input"
+                        room={this.props.room}
+                        placeholder={this.renderPlaceholderText()}
+                        permalinkCreator={this.props.permalinkCreator}
+                        relation={this.props.relation}
+                        replyToEvent={this.props.replyToEvent}
+                        onChange={this.onChange}
+                        disabled={this.state.haveRecording}
+                        toggleStickerPickerOpen={this.toggleStickerPickerOpen}
+                    />
+                );
+            }
 
             controls.push(
-                <SendMessageComposer
-                    ref={(c) => this.messageComposerInput = c}
-                    key="controls_input"
+                <VoiceRecordComposerTile
+                    key="controls_voice_record"
+                    ref={this.voiceRecordingButton}
                     room={this.props.room}
-                    placeholder={this.renderPlaceholderText()}
-                    resizeNotifier={this.props.resizeNotifier}
                     permalinkCreator={this.props.permalinkCreator}
+                    relation={this.props.relation}
                     replyToEvent={this.props.replyToEvent}
-                    onChange={this.onChange}
-                    disabled={this.state.haveRecording}
                 />,
             );
-
-            if (!this.state.haveRecording) {
-                controls.push(
-                    <UploadButton key="controls_upload" roomId={this.props.room.roomId} />,
-                    <EmojiButton key="emoji_button" addEmoji={this.addEmoji} />,
-                );
-            }
-
-            if (SettingsStore.getValue(UIFeature.Widgets) &&
-                SettingsStore.getValue("MessageComposerInput.showStickersButton") &&
-                !this.state.haveRecording) {
-                controls.push(<Stickerpicker key="stickerpicker_controls_button" room={this.props.room} />);
-            }
-
-            if (SettingsStore.getValue("feature_voice_messages")) {
-                controls.push(<VoiceRecordComposerTile
-                    key="controls_voice_record"
-                    ref={c => this.voiceRecordingButton = c}
-                    room={this.props.room} />);
-            }
-
-            if (!this.state.isComposerEmpty || this.state.haveRecording) {
-                controls.push(
-                    <SendButton key="controls_send" onClick={this.sendMessage} />,
-                );
-            }
-        } else if (this.state.tombstone) {
-            const replacementRoomId = this.state.tombstone.getContent()['replacement_room'];
+        } else if (this.context.tombstone) {
+            const replacementRoomId = this.context.tombstone.getContent()["replacement_room"];
 
             const continuesLink = replacementRoomId ? (
-                <a href={makeRoomPermalink(replacementRoomId)}
+                <a
+                    href={makeRoomPermalink(replacementRoomId)}
                     className="mx_MessageComposer_roomReplaced_link"
                     onClick={this.onTombstoneClick}
                 >
                     {_t("The conversation continues here.")}
                 </a>
-            ) : '';
+            ) : (
+                ""
+            );
 
-            controls.push(<div className="mx_MessageComposer_replaced_wrapper" key="room_replaced">
-                <div className="mx_MessageComposer_replaced_valign">
-                    <img className="mx_MessageComposer_roomReplaced_icon"
-                        src={require("../../../../res/img/room_replaced.svg")}
-                    />
-                    <span className="mx_MessageComposer_roomReplaced_header">
-                        {_t("This room has been replaced and is no longer active.")}
-                    </span><br />
-                    { continuesLink }
-                </div>
-            </div>);
+            controls.push(
+                <div className="mx_MessageComposer_replaced_wrapper" key="room_replaced">
+                    <div className="mx_MessageComposer_replaced_valign">
+                        <img
+                            aria-hidden
+                            alt=""
+                            className="mx_MessageComposer_roomReplaced_icon"
+                            src={require("../../../../res/img/room_replaced.svg").default}
+                        />
+                        <span className="mx_MessageComposer_roomReplaced_header">
+                            {_t("This room has been replaced and is no longer active.")}
+                        </span>
+                        <br />
+                        {continuesLink}
+                    </div>
+                </div>,
+            );
         } else {
             controls.push(
                 <div key="controls_error" className="mx_MessageComposer_noperm_error">
-                    { _t('You do not have permission to post to this room') }
+                    {_t("You do not have permission to post to this room")}
                 </div>,
             );
         }
 
         let recordingTooltip;
-        const secondsLeft = Math.round(this.state.recordingTimeLeftSeconds);
-        if (secondsLeft) {
-            recordingTooltip = <Tooltip
-                label={_t("%(seconds)ss left", {seconds: secondsLeft})}
-                alignment={Alignment.Top} yOffset={-50}
-            />;
+        if (this.state.recordingTimeLeftSeconds) {
+            const secondsLeft = Math.round(this.state.recordingTimeLeftSeconds);
+            recordingTooltip = (
+                <Tooltip label={_t("%(seconds)ss left", { seconds: secondsLeft })} alignment={Alignment.Top} />
+            );
         }
 
+        const threadId =
+            this.props.relation?.rel_type === THREAD_RELATION_TYPE.name ? this.props.relation.event_id : null;
+
+        controls.push(
+            <Stickerpicker
+                room={this.props.room}
+                threadId={threadId}
+                isStickerPickerOpen={this.state.isStickerPickerOpen}
+                setStickerPickerOpen={this.setStickerPickerOpen}
+                menuPosition={menuPosition}
+                key="stickers"
+            />,
+        );
+
+        const showSendButton = !this.state.isComposerEmpty || this.state.haveRecording;
+
+        const classes = classNames({
+            "mx_MessageComposer": true,
+            "mx_MessageComposer--compact": this.props.compact,
+            "mx_MessageComposer_e2eStatus": hasE2EIcon,
+            "mx_MessageComposer_wysiwyg": this.state.isWysiwygLabEnabled,
+        });
+
         return (
-            <div className="mx_MessageComposer mx_GroupLayout">
+            <div className={classes} ref={this.ref}>
                 {recordingTooltip}
                 <div className="mx_MessageComposer_wrapper">
-                    <ReplyPreview permalinkCreator={this.props.permalinkCreator} />
+                    <ReplyPreview
+                        replyToEvent={this.props.replyToEvent}
+                        permalinkCreator={this.props.permalinkCreator}
+                    />
                     <div className="mx_MessageComposer_row">
-                        { controls }
+                        {e2eIcon}
+                        {composer}
+                        <div className="mx_MessageComposer_actions">
+                            {controls}
+                            {canSendMessages && (
+                                <MessageComposerButtons
+                                    addEmoji={this.addEmoji}
+                                    haveRecording={this.state.haveRecording}
+                                    isMenuOpen={this.state.isMenuOpen}
+                                    isStickerPickerOpen={this.state.isStickerPickerOpen}
+                                    menuPosition={menuPosition}
+                                    relation={this.props.relation}
+                                    onRecordStartEndClick={this.onRecordStartEndClick}
+                                    setStickerPickerOpen={this.setStickerPickerOpen}
+                                    showLocationButton={!window.electron}
+                                    showPollsButton={this.state.showPollsButton}
+                                    showStickersButton={this.showStickersButton}
+                                    isRichTextEnabled={this.state.isRichTextEnabled}
+                                    onComposerModeClick={this.onRichTextToggle}
+                                    toggleButtonMenu={this.toggleButtonMenu}
+                                    showVoiceBroadcastButton={this.state.showVoiceBroadcastButton}
+                                    onStartVoiceBroadcastClick={() => {
+                                        setUpVoiceBroadcastPreRecording(
+                                            this.props.room,
+                                            MatrixClientPeg.get(),
+                                            SdkContextClass.instance.voiceBroadcastPlaybacksStore,
+                                            SdkContextClass.instance.voiceBroadcastRecordingsStore,
+                                            SdkContextClass.instance.voiceBroadcastPreRecordingStore,
+                                        );
+                                        this.toggleButtonMenu();
+                                    }}
+                                />
+                            )}
+                            {showSendButton && (
+                                <SendButton
+                                    key="controls_send"
+                                    onClick={this.sendMessage}
+                                    title={this.state.haveRecording ? _t("Send voice message") : undefined}
+                                />
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
         );
     }
 }
+
+const MessageComposerWithMatrixClient = withMatrixClientHOC(MessageComposer);
+export default MessageComposerWithMatrixClient;

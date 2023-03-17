@@ -14,17 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {PureComponent, RefCallback, RefObject} from "react";
+import React, { PureComponent, RefCallback, RefObject } from "react";
 import classNames from "classnames";
 import zxcvbn from "zxcvbn";
 
 import SdkConfig from "../../../SdkConfig";
-import withValidation, {IFieldState, IValidationResult} from "../elements/Validation";
-import {_t, _td} from "../../../languageHandler";
-import Field, {IInputProps} from "../elements/Field";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
+import { _t, _td } from "../../../languageHandler";
+import Field, { IInputProps } from "../elements/Field";
 
-interface IProps extends Omit<IInputProps, "onValidate"> {
+interface IProps extends Omit<IInputProps, "onValidate" | "element"> {
     autoFocus?: boolean;
     id?: string;
     className?: string;
@@ -32,32 +31,31 @@ interface IProps extends Omit<IInputProps, "onValidate"> {
     value: string;
     fieldRef?: RefCallback<Field> | RefObject<Field>;
 
-    label?: string;
-    labelEnterPassword?: string;
-    labelStrongPassword?: string;
-    labelAllowedButUnsafe?: string;
+    label: string;
+    labelEnterPassword: string;
+    labelStrongPassword: string;
+    labelAllowedButUnsafe: string;
 
-    onChange(ev: React.FormEvent<HTMLElement>);
-    onValidate(result: IValidationResult);
+    onChange(ev: React.FormEvent<HTMLElement>): void;
+    onValidate?(result: IValidationResult): void;
 }
 
-@replaceableComponent("views.auth.PassphraseField")
 class PassphraseField extends PureComponent<IProps> {
-    static defaultProps = {
+    public static defaultProps = {
         label: _td("Password"),
         labelEnterPassword: _td("Enter password"),
         labelStrongPassword: _td("Nice, strong password!"),
         labelAllowedButUnsafe: _td("Password is allowed, but unsafe"),
     };
 
-    public readonly validate = withValidation<this, zxcvbn.ZXCVBNResult>({
-        description: function(complexity) {
+    public readonly validate = withValidation<this, zxcvbn.ZXCVBNResult | null>({
+        description: function (complexity) {
             const score = complexity ? complexity.score : 0;
             return <progress className="mx_PassphraseField_progress" max={4} value={score} />;
         },
-        deriveData: async ({ value }) => {
+        deriveData: async ({ value }): Promise<zxcvbn.ZXCVBNResult | null> => {
             if (!value) return null;
-            const { scorePassword } = await import('../../../utils/PasswordScorer');
+            const { scorePassword } = await import("../../../utils/PasswordScorer");
             return scorePassword(value);
         },
         rules: [
@@ -68,53 +66,57 @@ class PassphraseField extends PureComponent<IProps> {
             },
             {
                 key: "complexity",
-                test: async function({ value }, complexity) {
-                    if (!value) {
+                test: async function ({ value }, complexity): Promise<boolean> {
+                    if (!value || !complexity) {
                         return false;
                     }
                     const safe = complexity.score >= this.props.minScore;
-                    const allowUnsafe = SdkConfig.get()["dangerously_allow_unsafe_and_insecure_passwords"];
+                    const allowUnsafe = SdkConfig.get("dangerously_allow_unsafe_and_insecure_passwords");
                     return allowUnsafe || safe;
                 },
-                valid: function(complexity) {
+                valid: function (complexity) {
                     // Unsafe passwords that are valid are only possible through a
                     // configuration flag. We'll print some helper text to signal
                     // to the user that their password is allowed, but unsafe.
-                    if (complexity.score >= this.props.minScore) {
+                    if (complexity && complexity.score >= this.props.minScore) {
                         return _t(this.props.labelStrongPassword);
                     }
                     return _t(this.props.labelAllowedButUnsafe);
                 },
-                invalid: function(complexity) {
+                invalid: function (complexity) {
                     if (!complexity) {
                         return null;
                     }
                     const { feedback } = complexity;
-                    return feedback.warning || feedback.suggestions[0] || _t("Keep going...");
+                    return feedback.warning || feedback.suggestions[0] || _t("Keep going…");
                 },
             },
         ],
     });
 
-    onValidate = async (fieldState: IFieldState) => {
+    public onValidate = async (fieldState: IFieldState): Promise<IValidationResult> => {
         const result = await this.validate(fieldState);
-        this.props.onValidate(result);
+        if (this.props.onValidate) {
+            this.props.onValidate(result);
+        }
         return result;
     };
 
-    render() {
-        return <Field
-            id={this.props.id}
-            autoFocus={this.props.autoFocus}
-            className={classNames("mx_PassphraseField", this.props.className)}
-            ref={this.props.fieldRef}
-            type="password"
-            autoComplete="new-password"
-            label={_t(this.props.label)}
-            value={this.props.value}
-            onChange={this.props.onChange}
-            onValidate={this.onValidate}
-        />;
+    public render(): React.ReactNode {
+        return (
+            <Field
+                id={this.props.id}
+                autoFocus={this.props.autoFocus}
+                className={classNames("mx_PassphraseField", this.props.className)}
+                ref={this.props.fieldRef}
+                type="password"
+                autoComplete="new-password"
+                label={_t(this.props.label)}
+                value={this.props.value}
+                onChange={this.props.onChange}
+                onValidate={this.onValidate}
+            />
+        );
     }
 }
 

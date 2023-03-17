@@ -16,16 +16,18 @@ limitations under the License.
 
 import EventEmitter from "events";
 import React from "react";
+
 import { ComponentClass } from "../@types/common";
 
 export interface IToast<C extends ComponentClass> {
     key: string;
     // higher priority number will be shown on top of lower priority
     priority: number;
-    title: string;
+    title?: string;
     icon?: string;
     component: C;
     className?: string;
+    bodyClassName?: string;
     props?: Omit<React.ComponentProps<C>, "toastKey">; // toastKey is injected by ToastContainer
 }
 
@@ -38,12 +40,12 @@ export default class ToastStore extends EventEmitter {
     // where the count resets when the stack of toasts clears.
     private countSeen = 0;
 
-    static sharedInstance() {
+    public static sharedInstance(): ToastStore {
         if (!window.mxToastStore) window.mxToastStore = new ToastStore();
         return window.mxToastStore;
     }
 
-    reset() {
+    public reset(): void {
         this.toasts = [];
         this.countSeen = 0;
     }
@@ -57,8 +59,8 @@ export default class ToastStore extends EventEmitter {
      *
      * @param {object} newToast The new toast
      */
-    addOrReplaceToast<C extends ComponentClass>(newToast: IToast<C>) {
-        const oldIndex = this.toasts.findIndex(t => t.key === newToast.key);
+    public addOrReplaceToast<C extends ComponentClass>(newToast: IToast<C>): void {
+        const oldIndex = this.toasts.findIndex((t) => t.key === newToast.key);
         if (oldIndex === -1) {
             let newIndex = this.toasts.length;
             while (newIndex > 0 && this.toasts[newIndex - 1].priority < newToast.priority) --newIndex;
@@ -66,30 +68,30 @@ export default class ToastStore extends EventEmitter {
         } else {
             this.toasts[oldIndex] = newToast;
         }
-        this.emit('update');
+        this.emit("update");
     }
 
-    dismissToast(key) {
+    public dismissToast(key: string): void {
         if (this.toasts[0] && this.toasts[0].key === key) {
             this.countSeen++;
         }
 
         const length = this.toasts.length;
-        this.toasts = this.toasts.filter(t => t.key !== key);
+        this.toasts = this.toasts.filter((t) => t.key !== key);
         if (length !== this.toasts.length) {
             if (this.toasts.length === 0) {
                 this.countSeen = 0;
             }
 
-            this.emit('update');
+            this.emit("update");
         }
     }
 
-    getToasts() {
+    public getToasts(): IToast<any>[] {
         return this.toasts;
     }
 
-    getCountSeen() {
+    public getCountSeen(): number {
         return this.countSeen;
     }
 }

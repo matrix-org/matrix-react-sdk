@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/models/room";
+
 import { TagID } from "../../models";
 
 /**
@@ -25,7 +26,7 @@ export interface IAlgorithm {
      * Sorts the given rooms according to the sorting rules of the algorithm.
      * @param {Room[]} rooms The rooms to sort.
      * @param {TagID} tagId The tag ID in which the rooms are being sorted.
-     * @returns {Promise<Room[]>} Resolves to the sorted rooms.
+     * @returns {Room[]} Returns the sorted rooms.
      */
-    sortRooms(rooms: Room[], tagId: TagID): Promise<Room[]>;
+    sortRooms(rooms: Room[], tagId: TagID): Room[];
 }

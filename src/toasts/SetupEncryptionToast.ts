@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import Modal from "../Modal";
-import * as sdk from "../index";
 import { _t } from "../languageHandler";
 import DeviceListener from "../DeviceListener";
 import SetupEncryptionDialog from "../components/views/dialogs/security/SetupEncryptionDialog";
@@ -23,10 +22,11 @@ import { accessSecretStorage } from "../SecurityManager";
 import ToastStore from "../stores/ToastStore";
 import GenericToast from "../components/views/toasts/GenericToast";
 import SecurityCustomisations from "../customisations/Security";
+import Spinner from "../components/views/elements/Spinner";
 
 const TOAST_KEY = "setupencryption";
 
-const getTitle = (kind: Kind) => {
+const getTitle = (kind: Kind): string => {
     switch (kind) {
         case Kind.SET_UP_ENCRYPTION:
             return _t("Set up Secure Backup");
@@ -37,7 +37,7 @@ const getTitle = (kind: Kind) => {
     }
 };
 
-const getIcon = (kind: Kind) => {
+const getIcon = (kind: Kind): string => {
     switch (kind) {
         case Kind.SET_UP_ENCRYPTION:
         case Kind.UPGRADE_ENCRYPTION:
@@ -47,7 +47,7 @@ const getIcon = (kind: Kind) => {
     }
 };
 
-const getSetupCaption = (kind: Kind) => {
+const getSetupCaption = (kind: Kind): string => {
     switch (kind) {
         case Kind.SET_UP_ENCRYPTION:
             return _t("Continue");
@@ -58,7 +58,7 @@ const getSetupCaption = (kind: Kind) => {
     }
 };
 
-const getDescription = (kind: Kind) => {
+const getDescription = (kind: Kind): string => {
     switch (kind) {
         case Kind.SET_UP_ENCRYPTION:
         case Kind.UPGRADE_ENCRYPTION:
@@ -74,23 +74,25 @@ export enum Kind {
     VERIFY_THIS_SESSION = "verify_this_session",
 }
 
-const onReject = () => {
+const onReject = (): void => {
     DeviceListener.sharedInstance().dismissEncryptionSetup();
 };
 
-export const showToast = (kind: Kind) => {
+export const showToast = (kind: Kind): void => {
     if (SecurityCustomisations.setupEncryptionNeeded?.(kind)) {
         return;
     }
 
-    const onAccept = async () => {
+    const onAccept = async (): Promise<void> => {
         if (kind === Kind.VERIFY_THIS_SESSION) {
-            Modal.createTrackedDialog("Verify session", "Verify session", SetupEncryptionDialog,
-                {}, null, /* priority = */ false, /* static = */ true);
+            Modal.createDialog(SetupEncryptionDialog, {}, undefined, /* priority = */ false, /* static = */ true);
         } else {
-            const Spinner = sdk.getComponent("elements.Spinner");
             const modal = Modal.createDialog(
-                Spinner, null, "mx_Dialog_spinner", /* priority */ false, /* static */ true,
+                Spinner,
+                undefined,
+                "mx_Dialog_spinner",
+                /* priority */ false,
+                /* static */ true,
             );
             try {
                 await accessSecretStorage();
@@ -116,6 +118,6 @@ export const showToast = (kind: Kind) => {
     });
 };
 
-export const hideToast = () => {
+export const hideToast = (): void => {
     ToastStore.sharedInstance().dismissToast(TOAST_KEY);
 };

@@ -15,85 +15,93 @@ limitations under the License.
 */
 
 import React from "react";
-import {Room} from "matrix-js-sdk/src/models/room";
-import {MatrixClient} from "matrix-js-sdk/src/client";
-import {EventType} from "matrix-js-sdk/src/@types/event";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { RoomType, EventType } from "matrix-js-sdk/src/@types/event";
+import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { ICreateRoomStateEvent } from "matrix-js-sdk/src/matrix";
 
-import {calculateRoomVia} from "../utils/permalinks/Permalinks";
+import { calculateRoomVia } from "./permalinks/Permalinks";
 import Modal from "../Modal";
-import SpaceSettingsDialog from "../components/views/dialogs/SpaceSettingsDialog";
-import AddExistingToSpaceDialog from "../components/views/dialogs/AddExistingToSpaceDialog";
 import CreateRoomDialog from "../components/views/dialogs/CreateRoomDialog";
-import createRoom, {IOpts} from "../createRoom";
-import {_t} from "../languageHandler";
+import createRoom from "../createRoom";
+import { _t } from "../languageHandler";
 import SpacePublicShare from "../components/views/spaces/SpacePublicShare";
 import InfoDialog from "../components/views/dialogs/InfoDialog";
 import { showRoomInviteDialog } from "../RoomInvite";
+import CreateSubspaceDialog from "../components/views/dialogs/CreateSubspaceDialog";
+import AddExistingSubspaceDialog from "../components/views/dialogs/AddExistingSubspaceDialog";
+import defaultDispatcher from "../dispatcher/dispatcher";
+import { Action } from "../dispatcher/actions";
+import Spinner from "../components/views/elements/Spinner";
+import { shouldShowComponent } from "../customisations/helpers/UIComponents";
+import { UIComponent } from "../settings/UIFeature";
+import { OpenSpacePreferencesPayload, SpacePreferenceTab } from "../dispatcher/payloads/OpenSpacePreferencesPayload";
+import { OpenSpaceSettingsPayload } from "../dispatcher/payloads/OpenSpaceSettingsPayload";
+import { OpenAddExistingToSpaceDialogPayload } from "../dispatcher/payloads/OpenAddExistingToSpaceDialogPayload";
+import { SdkContextClass } from "../contexts/SDKContext";
 
-export const shouldShowSpaceSettings = (cli: MatrixClient, space: Room) => {
-    const userId = cli.getUserId();
-    return space.getMyMembership() === "join"
-        && (space.currentState.maySendStateEvent(EventType.RoomAvatar, userId)
-            || space.currentState.maySendStateEvent(EventType.RoomName, userId)
-            || space.currentState.maySendStateEvent(EventType.RoomTopic, userId)
-            || space.currentState.maySendStateEvent(EventType.RoomJoinRules, userId));
+export const shouldShowSpaceSettings = (space: Room): boolean => {
+    const userId = space.client.getUserId()!;
+    return (
+        space.getMyMembership() === "join" &&
+        (space.currentState.maySendStateEvent(EventType.RoomAvatar, userId) ||
+            space.currentState.maySendStateEvent(EventType.RoomName, userId) ||
+            space.currentState.maySendStateEvent(EventType.RoomTopic, userId) ||
+            space.currentState.maySendStateEvent(EventType.RoomJoinRules, userId))
+    );
 };
 
-export const makeSpaceParentEvent = (room: Room, canonical = false) => ({
+export const makeSpaceParentEvent = (room: Room, canonical = false): ICreateRoomStateEvent => ({
     type: EventType.SpaceParent,
     content: {
-        "via": calculateRoomVia(room),
-        "canonical": canonical,
+        via: calculateRoomVia(room),
+        canonical: canonical,
     },
     state_key: room.roomId,
 });
 
-export const showSpaceSettings = (cli: MatrixClient, space: Room) => {
-    Modal.createTrackedDialog("Space Settings", "", SpaceSettingsDialog, {
-        matrixClient: cli,
+export function showSpaceSettings(space: Room): void {
+    defaultDispatcher.dispatch<OpenSpaceSettingsPayload>({
+        action: Action.OpenSpaceSettings,
         space,
-    }, /*className=*/null, /*isPriority=*/false, /*isStatic=*/true);
+    });
+}
+
+export const showAddExistingRooms = (space: Room): void => {
+    defaultDispatcher.dispatch<OpenAddExistingToSpaceDialogPayload>({
+        action: Action.OpenAddToExistingSpaceDialog,
+        space,
+    });
 };
 
-export const showAddExistingRooms = async (cli: MatrixClient, space: Room) => {
-    return Modal.createTrackedDialog(
-        "Space Landing",
-        "Add Existing",
-        AddExistingToSpaceDialog,
-        {
-            matrixClient: cli,
-            onCreateRoomClick: showCreateNewRoom,
-            space,
-        },
-        "mx_AddExistingToSpaceDialog_wrapper",
-    ).finished;
-};
-
-export const showCreateNewRoom = async (cli: MatrixClient, space: Room) => {
-    const modal = Modal.createTrackedDialog<[boolean, IOpts]>(
-        "Space Landing",
-        "Create Room",
-        CreateRoomDialog,
-        {
-            defaultPublic: space.getJoinRule() === "public",
-            parentSpace: space,
-        },
-    );
+export const showCreateNewRoom = async (space: Room, type?: RoomType): Promise<boolean> => {
+    const modal = Modal.createDialog(CreateRoomDialog, {
+        type,
+        defaultPublic: space.getJoinRule() === JoinRule.Public,
+        parentSpace: space,
+    });
     const [shouldCreate, opts] = await modal.finished;
     if (shouldCreate) {
         await createRoom(opts);
     }
-    return shouldCreate;
+    return !!shouldCreate;
 };
 
-export const showSpaceInvite = (space: Room, initialText = "") => {
+export const shouldShowSpaceInvite = (space: Room): boolean =>
+    ((space?.getMyMembership() === "join" && space.canInvite(space.client.getUserId()!)) ||
+        space.getJoinRule() === JoinRule.Public) &&
+    shouldShowComponent(UIComponent.InviteUsers);
+
+export const showSpaceInvite = (space: Room, initialText = ""): void => {
     if (space.getJoinRule() === "public") {
-        const modal = Modal.createTrackedDialog("Space Invite", "User Menu", InfoDialog, {
+        const modal = Modal.createDialog(InfoDialog, {
             title: _t("Invite to %(spaceName)s", { spaceName: space.name }),
-            description: <React.Fragment>
-                <span>{ _t("Share your public space") }</span>
-                <SpacePublicShare space={space} onFinished={() => modal.close()} />
-            </React.Fragment>,
+            description: (
+                <React.Fragment>
+                    <span>{_t("Share your public space")}</span>
+                    <SpacePublicShare space={space} onFinished={() => modal.close()} />
+                </React.Fragment>
+            ),
             fixedWidth: false,
             button: false,
             className: "mx_SpacePanel_sharePublicSpace",
@@ -102,4 +110,60 @@ export const showSpaceInvite = (space: Room, initialText = "") => {
     } else {
         showRoomInviteDialog(space.roomId, initialText);
     }
+};
+
+export const showAddExistingSubspace = (space: Room): void => {
+    Modal.createDialog(
+        AddExistingSubspaceDialog,
+        {
+            space,
+            onCreateSubspaceClick: () => showCreateNewSubspace(space),
+            onFinished: (added: boolean) => {
+                if (added && SdkContextClass.instance.roomViewStore.getRoomId() === space.roomId) {
+                    defaultDispatcher.fire(Action.UpdateSpaceHierarchy);
+                }
+            },
+        },
+        "mx_AddExistingToSpaceDialog_wrapper",
+    );
+};
+
+export const showCreateNewSubspace = (space: Room): void => {
+    Modal.createDialog(
+        CreateSubspaceDialog,
+        {
+            space,
+            onAddExistingSpaceClick: () => showAddExistingSubspace(space),
+            onFinished: (added: boolean) => {
+                if (added && SdkContextClass.instance.roomViewStore.getRoomId() === space.roomId) {
+                    defaultDispatcher.fire(Action.UpdateSpaceHierarchy);
+                }
+            },
+        },
+        "mx_CreateSubspaceDialog_wrapper",
+    );
+};
+
+export const bulkSpaceBehaviour = async (
+    space: Room,
+    children: Room[],
+    fn: (room: Room) => Promise<unknown>,
+): Promise<void> => {
+    const modal = Modal.createDialog(Spinner, undefined, "mx_Dialog_spinner");
+    try {
+        for (const room of children) {
+            await fn(room);
+        }
+        await fn(space);
+    } finally {
+        modal.close();
+    }
+};
+
+export const showSpacePreferences = (space: Room, initialTabId?: SpacePreferenceTab): void => {
+    defaultDispatcher.dispatch<OpenSpacePreferencesPayload>({
+        action: Action.OpenSpacePreferences,
+        space,
+        initialTabId,
+    });
 };

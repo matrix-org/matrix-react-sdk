@@ -39,13 +39,13 @@ export const ContextMenuButton: React.FC<IProps> = ({
         <AccessibleButton
             {...props}
             onClick={onClick}
-            onContextMenu={onContextMenu || onClick}
+            onContextMenu={onContextMenu ?? onClick ?? undefined}
             title={label}
             aria-label={label}
             aria-haspopup={true}
             aria-expanded={isExpanded}
         >
-            { children }
+            {children}
         </AccessibleButton>
     );
 };

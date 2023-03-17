@@ -14,11 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {MatrixClientPeg} from '../MatrixClientPeg';
+import { IClientWellKnown } from "matrix-js-sdk/src/client";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
+
+import { MatrixClientPeg } from "../MatrixClientPeg";
 
 const CALL_BEHAVIOUR_WK_KEY = "io.element.call_behaviour";
 const E2EE_WK_KEY = "io.element.e2ee";
 const E2EE_WK_KEY_DEPRECATED = "im.vector.riot.e2ee";
+export const TILE_SERVER_WK_KEY = new UnstableValue("m.tile_server", "org.matrix.msc3488.tile_server");
+const EMBEDDED_PAGES_WK_PROPERTY = "io.element.embedded_pages";
 
 /* eslint-disable camelcase */
 export interface ICallBehaviourWellKnown {
@@ -30,6 +35,14 @@ export interface IE2EEWellKnown {
     secure_backup_required?: boolean;
     secure_backup_setup_methods?: SecureBackupSetupMethod[];
 }
+
+export interface ITileServerWellKnown {
+    map_style_url?: string;
+}
+
+export interface IEmbeddedPagesWellKnown {
+    home_url?: string;
+}
 /* eslint-enable camelcase */
 
 export function getCallBehaviourWellKnown(): ICallBehaviourWellKnown {
@@ -37,20 +50,35 @@ export function getCallBehaviourWellKnown(): ICallBehaviourWellKnown {
     return clientWellKnown?.[CALL_BEHAVIOUR_WK_KEY];
 }
 
-export function getE2EEWellKnown(): IE2EEWellKnown {
+export function getE2EEWellKnown(): IE2EEWellKnown | null {
     const clientWellKnown = MatrixClientPeg.get().getClientWellKnown();
-    if (clientWellKnown && clientWellKnown[E2EE_WK_KEY]) {
+    if (clientWellKnown?.[E2EE_WK_KEY]) {
         return clientWellKnown[E2EE_WK_KEY];
     }
-    if (clientWellKnown && clientWellKnown[E2EE_WK_KEY_DEPRECATED]) {
-        return clientWellKnown[E2EE_WK_KEY_DEPRECATED]
+    if (clientWellKnown?.[E2EE_WK_KEY_DEPRECATED]) {
+        return clientWellKnown[E2EE_WK_KEY_DEPRECATED];
     }
     return null;
 }
 
+export function getTileServerWellKnown(): ITileServerWellKnown | undefined {
+    return tileServerFromWellKnown(MatrixClientPeg.get().getClientWellKnown());
+}
+
+export function tileServerFromWellKnown(clientWellKnown?: IClientWellKnown | undefined): ITileServerWellKnown {
+    return clientWellKnown?.[TILE_SERVER_WK_KEY.name] ?? clientWellKnown?.[TILE_SERVER_WK_KEY.altName];
+}
+
+export function getEmbeddedPagesWellKnown(): IEmbeddedPagesWellKnown | undefined {
+    return embeddedPagesFromWellKnown(MatrixClientPeg.get()?.getClientWellKnown());
+}
+
+export function embeddedPagesFromWellKnown(clientWellKnown?: IClientWellKnown): IEmbeddedPagesWellKnown {
+    return clientWellKnown?.[EMBEDDED_PAGES_WK_PROPERTY];
+}
+
 export function isSecureBackupRequired(): boolean {
-    const wellKnown = getE2EEWellKnown();
-    return wellKnown && wellKnown["secure_backup_required"] === true;
+    return getE2EEWellKnown()?.["secure_backup_required"] === true;
 }
 
 export enum SecureBackupSetupMethod {
@@ -69,10 +97,7 @@ export function getSecureBackupSetupMethods(): SecureBackupSetupMethod[] {
             wellKnown["secure_backup_setup_methods"].includes(SecureBackupSetupMethod.Passphrase)
         )
     ) {
-        return [
-            SecureBackupSetupMethod.Key,
-            SecureBackupSetupMethod.Passphrase,
-        ];
+        return [SecureBackupSetupMethod.Key, SecureBackupSetupMethod.Passphrase];
     }
     return wellKnown["secure_backup_setup_methods"];
 }

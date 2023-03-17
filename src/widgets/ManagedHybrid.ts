@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import { IWidget } from "matrix-widget-api";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { getCallBehaviourWellKnown } from "../utils/WellKnownUtils";
 import WidgetUtils from "../utils/WidgetUtils";
@@ -31,19 +33,19 @@ interface IManagedHybridWidgetData {
 }
 /* eslint-enable camelcase */
 
-function getWidgetBuildUrl(): string {
+function getWidgetBuildUrl(): string | undefined {
     if (SdkConfig.get().widget_build_url) {
         return SdkConfig.get().widget_build_url;
     }
     /* eslint-disable-next-line camelcase */
-    return getCallBehaviourWellKnown()?.widget_build_url
+    return getCallBehaviourWellKnown()?.widget_build_url;
 }
 
 export function isManagedHybridWidgetEnabled(): boolean {
     return !!getWidgetBuildUrl();
 }
 
-export async function addManagedHybridWidget(roomId: string) {
+export async function addManagedHybridWidget(roomId: string): Promise<void> {
     const cli = MatrixClientPeg.get();
     const room = cli.getRoom(roomId);
     if (!room) {
@@ -52,7 +54,7 @@ export async function addManagedHybridWidget(roomId: string) {
 
     // Check for permission
     if (!WidgetUtils.canUserModifyWidgets(roomId)) {
-        console.error(`User not allowed to modify widgets in ${roomId}`);
+        logger.error(`User not allowed to modify widgets in ${roomId}`);
         return;
     }
 
@@ -67,7 +69,7 @@ export async function addManagedHybridWidget(roomId: string) {
         const response = await fetch(`${widgetBuildUrl}?roomId=${roomId}`);
         widgetData = await response.json();
     } catch (e) {
-        console.error(`Managed hybrid widget builder failed for room ${roomId}`, e);
+        logger.error(`Managed hybrid widget builder failed for room ${roomId}`, e);
         return;
     }
     if (!widgetData) {
@@ -77,12 +79,9 @@ export async function addManagedHybridWidget(roomId: string) {
 
     // Ensure the widget is not already present in the room
     let widgets = WidgetStore.instance.getApps(roomId);
-    const existing = (
-        widgets.some(w => w.id === widgetId) ||
-        WidgetEchoStore.roomHasPendingWidgets(roomId, [])
-    );
+    const existing = widgets.some((w) => w.id === widgetId) || WidgetEchoStore.roomHasPendingWidgets(roomId, []);
     if (existing) {
-        console.error(`Managed hybrid widget already present in room ${roomId}`);
+        logger.error(`Managed hybrid widget already present in room ${roomId}`);
         return;
     }
 
@@ -90,7 +89,7 @@ export async function addManagedHybridWidget(roomId: string) {
     try {
         await WidgetUtils.setRoomWidgetContent(roomId, widgetId, widgetContent);
     } catch (e) {
-        console.error(`Unable to add managed hybrid widget in room ${roomId}`, e);
+        logger.error(`Unable to add managed hybrid widget in room ${roomId}`, e);
         return;
     }
 
@@ -99,7 +98,7 @@ export async function addManagedHybridWidget(roomId: string) {
         return;
     }
     widgets = WidgetStore.instance.getApps(roomId);
-    const installedWidget = widgets.find(w => w.id === widgetId);
+    const installedWidget = widgets.find((w) => w.id === widgetId);
     if (!installedWidget) {
         return;
     }

@@ -16,13 +16,9 @@ limitations under the License.
 
 import { SettingLevel } from "./SettingLevel";
 
-export type CallbackFn = (changedInRoomId: string, atLevel: SettingLevel, newValAtLevel: any) => void;
+export type CallbackFn = (changedInRoomId: string | null, atLevel: SettingLevel, newValAtLevel: any) => void;
 
-const IRRELEVANT_ROOM: string = null;
-
-interface RoomWatcherMap {
-    [roomId: string]: CallbackFn[];
-}
+const IRRELEVANT_ROOM: string | null = null;
 
 /**
  * Generalized management class for dealing with watchers on a per-handler (per-level)
@@ -30,47 +26,51 @@ interface RoomWatcherMap {
  * class, which are then proxied outwards to any applicable watchers.
  */
 export class WatchManager {
-    private watchers: {[settingName: string]: RoomWatcherMap} = {};
+    private watchers = new Map<string, Map<string | null, CallbackFn[]>>(); // settingName -> roomId -> CallbackFn[]
 
     // Proxy for handlers to delegate changes to this manager
-    public watchSetting(settingName: string, roomId: string | null, cb: CallbackFn) {
-        if (!this.watchers[settingName]) this.watchers[settingName] = {};
-        if (!this.watchers[settingName][roomId]) this.watchers[settingName][roomId] = [];
-        this.watchers[settingName][roomId].push(cb);
+    public watchSetting(settingName: string, roomId: string | null, cb: CallbackFn): void {
+        if (!this.watchers.has(settingName)) this.watchers.set(settingName, new Map());
+        if (!this.watchers.get(settingName)!.has(roomId)) this.watchers.get(settingName)!.set(roomId, []);
+        this.watchers.get(settingName)!.get(roomId)!.push(cb);
     }
 
     // Proxy for handlers to delegate changes to this manager
-    public unwatchSetting(cb: CallbackFn) {
-        for (const settingName of Object.keys(this.watchers)) {
-            for (const roomId of Object.keys(this.watchers[settingName])) {
-                let idx;
-                while ((idx = this.watchers[settingName][roomId].indexOf(cb)) !== -1) {
-                    this.watchers[settingName][roomId].splice(idx, 1);
+    public unwatchSetting(cb: CallbackFn): void {
+        this.watchers.forEach((map) => {
+            map.forEach((callbacks) => {
+                let idx: number;
+                while ((idx = callbacks.indexOf(cb)) !== -1) {
+                    callbacks.splice(idx, 1);
                 }
-            }
-        }
+            });
+        });
     }
 
-    public notifyUpdate(settingName: string, inRoomId: string | null, atLevel: SettingLevel, newValueAtLevel: any) {
+    public notifyUpdate(
+        settingName: string,
+        inRoomId: string | null,
+        atLevel: SettingLevel,
+        newValueAtLevel: any,
+    ): void {
         // Dev note: We could avoid raising changes for ultimately inconsequential changes, but
         // we also don't have a reliable way to get the old value of a setting. Instead, we'll just
         // let it fall through regardless and let the receiver dedupe if they want to.
 
-        if (!this.watchers[settingName]) return;
+        if (!this.watchers.has(settingName)) return;
 
-        const roomWatchers = this.watchers[settingName];
-        const callbacks = [];
+        const roomWatchers = this.watchers.get(settingName)!;
+        const callbacks: CallbackFn[] = [];
 
-        if (inRoomId !== null && roomWatchers[inRoomId]) {
-            callbacks.push(...roomWatchers[inRoomId]);
+        if (inRoomId !== null && roomWatchers.has(inRoomId)) {
+            callbacks.push(...roomWatchers.get(inRoomId)!);
         }
 
         if (!inRoomId) {
-            // Fire updates to all the individual room watchers too, as they probably
-            // care about the change higher up.
-            callbacks.push(...Object.values(roomWatchers).flat(1));
-        } else if (roomWatchers[IRRELEVANT_ROOM]) {
-            callbacks.push(...roomWatchers[IRRELEVANT_ROOM]);
+            // Fire updates to all the individual room watchers too, as they probably care about the change higher up.
+            callbacks.push(...Array.from(roomWatchers.values()).flat(1));
+        } else if (roomWatchers.has(IRRELEVANT_ROOM)) {
+            callbacks.push(...roomWatchers.get(IRRELEVANT_ROOM)!);
         }
 
         for (const callback of callbacks) {

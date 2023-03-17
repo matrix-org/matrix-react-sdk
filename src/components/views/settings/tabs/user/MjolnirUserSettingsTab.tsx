@@ -14,16 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import {_t} from "../../../../../languageHandler";
+import React, { ChangeEvent, SyntheticEvent } from "react";
+import { logger } from "matrix-js-sdk/src/logger";
+
+import { _t } from "../../../../../languageHandler";
 import SdkConfig from "../../../../../SdkConfig";
-import {Mjolnir} from "../../../../../mjolnir/Mjolnir";
-import {ListRule} from "../../../../../mjolnir/ListRule";
-import {BanList, RULE_SERVER, RULE_USER} from "../../../../../mjolnir/BanList";
+import { Mjolnir } from "../../../../../mjolnir/Mjolnir";
+import { ListRule } from "../../../../../mjolnir/ListRule";
+import { BanList, RULE_SERVER, RULE_USER } from "../../../../../mjolnir/BanList";
 import Modal from "../../../../../Modal";
-import {MatrixClientPeg} from "../../../../../MatrixClientPeg";
-import * as sdk from "../../../../../index";
-import {replaceableComponent} from "../../../../../utils/replaceableComponent";
+import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
+import ErrorDialog from "../../../dialogs/ErrorDialog";
+import QuestionDialog from "../../../dialogs/QuestionDialog";
+import AccessibleButton from "../../../elements/AccessibleButton";
+import Field from "../../../elements/Field";
 
 interface IState {
     busy: boolean;
@@ -31,9 +35,8 @@ interface IState {
     newList: string;
 }
 
-@replaceableComponent("views.settings.tabs.user.MjolnirUserSettingsTab")
 export default class MjolnirUserSettingsTab extends React.Component<{}, IState> {
-    constructor(props) {
+    public constructor(props: {}) {
         super(props);
 
         this.state = {
@@ -43,15 +46,15 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
         };
     }
 
-    private onPersonalRuleChanged = (e) => {
-        this.setState({newPersonalRule: e.target.value});
+    private onPersonalRuleChanged = (e: ChangeEvent<HTMLInputElement>): void => {
+        this.setState({ newPersonalRule: e.target.value });
     };
 
-    private onNewListChanged = (e) => {
-        this.setState({newList: e.target.value});
+    private onNewListChanged = (e: ChangeEvent<HTMLInputElement>): void => {
+        this.setState({ newList: e.target.value });
     };
 
-    private onAddPersonalRule = async (e) => {
+    private onAddPersonalRule = async (e: SyntheticEvent): Promise<void> => {
         e.preventDefault();
         e.stopPropagation();
 
@@ -60,100 +63,98 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
             kind = RULE_USER;
         }
 
-        this.setState({busy: true});
+        this.setState({ busy: true });
         try {
             const list = await Mjolnir.sharedInstance().getOrCreatePersonalList();
             await list.banEntity(kind, this.state.newPersonalRule, _t("Ignored/Blocked"));
-            this.setState({newPersonalRule: ""}); // this will also cause the new rule to be rendered
+            this.setState({ newPersonalRule: "" }); // this will also cause the new rule to be rendered
         } catch (e) {
-            console.error(e);
+            logger.error(e);
 
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            Modal.createTrackedDialog('Failed to add Mjolnir rule', '', ErrorDialog, {
-                title: _t('Error adding ignored user/server'),
-                description: _t('Something went wrong. Please try again or view your console for hints.'),
+            Modal.createDialog(ErrorDialog, {
+                title: _t("Error adding ignored user/server"),
+                description: _t("Something went wrong. Please try again or view your console for hints."),
             });
         } finally {
-            this.setState({busy: false});
+            this.setState({ busy: false });
         }
     };
 
-    private onSubscribeList = async (e) => {
+    private onSubscribeList = async (e: SyntheticEvent): Promise<void> => {
         e.preventDefault();
         e.stopPropagation();
 
-        this.setState({busy: true});
+        this.setState({ busy: true });
         try {
             const room = await MatrixClientPeg.get().joinRoom(this.state.newList);
             await Mjolnir.sharedInstance().subscribeToList(room.roomId);
-            this.setState({newList: ""}); // this will also cause the new rule to be rendered
+            this.setState({ newList: "" }); // this will also cause the new rule to be rendered
         } catch (e) {
-            console.error(e);
+            logger.error(e);
 
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            Modal.createTrackedDialog('Failed to subscribe to Mjolnir list', '', ErrorDialog, {
-                title: _t('Error subscribing to list'),
-                description: _t('Please verify the room ID or address and try again.'),
+            Modal.createDialog(ErrorDialog, {
+                title: _t("Error subscribing to list"),
+                description: _t("Please verify the room ID or address and try again."),
             });
         } finally {
-            this.setState({busy: false});
+            this.setState({ busy: false });
         }
     };
 
-    private async removePersonalRule(rule: ListRule) {
-        this.setState({busy: true});
+    private async removePersonalRule(rule: ListRule): Promise<void> {
+        this.setState({ busy: true });
         try {
             const list = Mjolnir.sharedInstance().getPersonalList();
-            await list.unbanEntity(rule.kind, rule.entity);
+            await list!.unbanEntity(rule.kind, rule.entity);
         } catch (e) {
-            console.error(e);
+            logger.error(e);
 
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            Modal.createTrackedDialog('Failed to remove Mjolnir rule', '', ErrorDialog, {
-                title: _t('Error removing ignored user/server'),
-                description: _t('Something went wrong. Please try again or view your console for hints.'),
+            Modal.createDialog(ErrorDialog, {
+                title: _t("Error removing ignored user/server"),
+                description: _t("Something went wrong. Please try again or view your console for hints."),
             });
         } finally {
-            this.setState({busy: false});
+            this.setState({ busy: false });
         }
     }
 
-    private async unsubscribeFromList(list: BanList) {
-        this.setState({busy: true});
+    private async unsubscribeFromList(list: BanList): Promise<void> {
+        this.setState({ busy: true });
         try {
             await Mjolnir.sharedInstance().unsubscribeFromList(list.roomId);
             await MatrixClientPeg.get().leave(list.roomId);
         } catch (e) {
-            console.error(e);
+            logger.error(e);
 
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            Modal.createTrackedDialog('Failed to unsubscribe from Mjolnir list', '', ErrorDialog, {
-                title: _t('Error unsubscribing from list'),
-                description: _t('Please try again or view your console for hints.'),
+            Modal.createDialog(ErrorDialog, {
+                title: _t("Error unsubscribing from list"),
+                description: _t("Please try again or view your console for hints."),
             });
         } finally {
-            this.setState({busy: false});
+            this.setState({ busy: false });
         }
     }
 
-    private viewListRules(list: BanList) {
-        const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-
+    private viewListRules(list: BanList): void {
         const room = MatrixClientPeg.get().getRoom(list.roomId);
         const name = room ? room.name : list.roomId;
 
-        const renderRules = (rules: ListRule[]) => {
+        const renderRules = (rules: ListRule[]): JSX.Element => {
             if (rules.length === 0) return <i>{_t("None")}</i>;
 
-            const tiles = [];
+            const tiles: JSX.Element[] = [];
             for (const rule of rules) {
-                tiles.push(<li key={rule.kind + rule.entity}><code>{rule.entity}</code></li>);
+                tiles.push(
+                    <li key={rule.kind + rule.entity}>
+                        <code>{rule.entity}</code>
+                    </li>,
+                );
             }
             return <ul>{tiles}</ul>;
         };
 
-        Modal.createTrackedDialog('View Mjolnir list rules', '', QuestionDialog, {
-            title: _t("Ban list rules - %(roomName)s", {roomName: name}),
+        Modal.createDialog(QuestionDialog, {
+            title: _t("Ban list rules - %(roomName)s", { roomName: name }),
             description: (
                 <div>
                     <h3>{_t("Server rules")}</h3>
@@ -167,14 +168,12 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
         });
     }
 
-    private renderPersonalBanListRules() {
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-
+    private renderPersonalBanListRules(): JSX.Element {
         const list = Mjolnir.sharedInstance().getPersonalList();
         const rules = list ? [...list.userRules, ...list.serverRules] : [];
         if (!list || rules.length <= 0) return <i>{_t("You have not ignored anyone.")}</i>;
 
-        const tiles = [];
+        const tiles: JSX.Element[] = [];
         for (const rule of rules) {
             tiles.push(
                 <li key={rule.entity} className="mx_MjolnirUserSettingsTab_listItem">
@@ -184,7 +183,8 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
                         disabled={this.state.busy}
                     >
                         {_t("Remove")}
-                    </AccessibleButton>&nbsp;
+                    </AccessibleButton>
+                    &nbsp;
                     <code>{rule.entity}</code>
                 </li>,
             );
@@ -198,19 +198,23 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
         );
     }
 
-    private renderSubscribedBanLists() {
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-
+    private renderSubscribedBanLists(): JSX.Element {
         const personalList = Mjolnir.sharedInstance().getPersonalList();
-        const lists = Mjolnir.sharedInstance().lists.filter(b => {
-            return personalList? personalList.roomId !== b.roomId : true;
+        const lists = Mjolnir.sharedInstance().lists.filter((b) => {
+            return personalList ? personalList.roomId !== b.roomId : true;
         });
         if (!lists || lists.length <= 0) return <i>{_t("You are not subscribed to any lists")}</i>;
 
-        const tiles = [];
+        const tiles: JSX.Element[] = [];
         for (const list of lists) {
             const room = MatrixClientPeg.get().getRoom(list.roomId);
-            const name = room ? <span>{room.name} (<code>{list.roomId}</code>)</span> : <code>list.roomId</code>;
+            const name = room ? (
+                <span>
+                    {room.name} (<code>{list.roomId}</code>)
+                </span>
+            ) : (
+                <code>list.roomId</code>
+            );
             tiles.push(
                 <li key={list.roomId} className="mx_MjolnirUserSettingsTab_listItem">
                     <AccessibleButton
@@ -219,14 +223,16 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
                         disabled={this.state.busy}
                     >
                         {_t("Unsubscribe")}
-                    </AccessibleButton>&nbsp;
+                    </AccessibleButton>
+                    &nbsp;
                     <AccessibleButton
                         kind="primary_sm"
                         onClick={() => this.viewListRules(list)}
                         disabled={this.state.busy}
                     >
                         {_t("View rules")}
-                    </AccessibleButton>&nbsp;
+                    </AccessibleButton>
+                    &nbsp;
                     {name}
                 </li>,
             );
@@ -240,45 +246,47 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
         );
     }
 
-    render() {
-        const Field = sdk.getComponent('elements.Field');
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
+    public render(): React.ReactNode {
         const brand = SdkConfig.get().brand;
 
         return (
             <div className="mx_SettingsTab mx_MjolnirUserSettingsTab">
                 <div className="mx_SettingsTab_heading">{_t("Ignored users")}</div>
                 <div className="mx_SettingsTab_section">
-                    <div className='mx_SettingsTab_subsectionText'>
-                        <span className='warning'>{_t("⚠ These settings are meant for advanced users.")}</span><br />
+                    <div className="mx_SettingsTab_subsectionText">
+                        <span className="warning">{_t("⚠ These settings are meant for advanced users.")}</span>
+                        <br />
                         <br />
                         {_t(
                             "Add users and servers you want to ignore here. Use asterisks " +
-                            "to have %(brand)s match any characters. For example, <code>@bot:*</code> " +
-                            "would ignore all users that have the name 'bot' on any server.",
-                            { brand }, {code: (s) => <code>{s}</code>},
-                        )}<br />
+                                "to have %(brand)s match any characters. For example, <code>@bot:*</code> " +
+                                "would ignore all users that have the name 'bot' on any server.",
+                            { brand },
+                            { code: (s) => <code>{s}</code> },
+                        )}
+                        <br />
                         <br />
                         {_t(
                             "Ignoring people is done through ban lists which contain rules for " +
-                            "who to ban. Subscribing to a ban list means the users/servers blocked by " +
-                            "that list will be hidden from you.",
+                                "who to ban. Subscribing to a ban list means the users/servers blocked by " +
+                                "that list will be hidden from you.",
                         )}
                     </div>
                 </div>
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{_t("Personal ban list")}</span>
-                    <div className='mx_SettingsTab_subsectionText'>
+                    <div className="mx_SettingsTab_subsectionText">
                         {_t(
                             "Your personal ban list holds all the users/servers you personally don't " +
-                            "want to see messages from. After ignoring your first user/server, a new room " +
-                            "will show up in your room list named 'My Ban List' - stay in this room to keep " +
-                            "the ban list in effect.",
+                                "want to see messages from. After ignoring your first user/server, a new room " +
+                                "will show up in your room list named '%(myBanList)s' - stay in this room to keep " +
+                                "the ban list in effect.",
+                            {
+                                myBanList: _t("My Ban List"),
+                            },
                         )}
                     </div>
-                    <div>
-                        {this.renderPersonalBanListRules()}
-                    </div>
+                    <div>{this.renderPersonalBanListRules()}</div>
                     <div>
                         <form onSubmit={this.onAddPersonalRule} autoComplete="off">
                             <Field
@@ -301,16 +309,12 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
                 </div>
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{_t("Subscribed lists")}</span>
-                    <div className='mx_SettingsTab_subsectionText'>
-                        <span className='warning'>{_t("Subscribing to a ban list will cause you to join it!")}</span>
+                    <div className="mx_SettingsTab_subsectionText">
+                        <span className="warning">{_t("Subscribing to a ban list will cause you to join it!")}</span>
                         &nbsp;
-                        <span>{_t(
-                            "If this isn't what you want, please use a different tool to ignore users.",
-                        )}</span>
+                        <span>{_t("If this isn't what you want, please use a different tool to ignore users.")}</span>
                     </div>
-                    <div>
-                        {this.renderSubscribedBanLists()}
-                    </div>
+                    <div>{this.renderSubscribedBanLists()}</div>
                     <div>
                         <form onSubmit={this.onSubscribeList} autoComplete="off">
                             <Field

@@ -15,24 +15,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {Part} from "./parts";
+import { Part, Type } from "./parts";
 import EditorModel from "./model";
 
-export function needsCaretNodeBefore(part: Part, prevPart: Part) {
-    const isFirst = !prevPart || prevPart.type === "newline";
-    return !part.canEdit && (isFirst || !prevPart.canEdit);
+export function needsCaretNodeBefore(part: Part, prevPart?: Part): boolean {
+    const isFirst = !prevPart || prevPart.type === Type.Newline;
+    return !part.acceptsCaret && (isFirst || !prevPart.acceptsCaret);
 }
 
-export function needsCaretNodeAfter(part: Part, isLastOfLine: boolean) {
-    return !part.canEdit && isLastOfLine;
+export function needsCaretNodeAfter(part: Part, isLastOfLine: boolean): boolean {
+    return !part.acceptsCaret && isLastOfLine;
 }
 
-function insertAfter(node: HTMLElement, nodeToInsert: HTMLElement) {
+function insertAfter(node: ChildNode, nodeToInsert: ChildNode): void {
     const next = node.nextSibling;
     if (next) {
-        node.parentElement.insertBefore(nodeToInsert, next);
+        node.parentElement!.insertBefore(nodeToInsert, next);
     } else {
-        node.parentElement.appendChild(nodeToInsert);
+        node.parentElement!.appendChild(nodeToInsert);
     }
 }
 
@@ -44,25 +44,25 @@ export const CARET_NODE_CHAR = "\ufeff";
 // a caret node is a node that allows the caret to be placed
 // where otherwise it wouldn't be possible
 // (e.g. next to a pill span without adjacent text node)
-function createCaretNode() {
+function createCaretNode(): HTMLElement {
     const span = document.createElement("span");
     span.className = "caretNode";
     span.appendChild(document.createTextNode(CARET_NODE_CHAR));
     return span;
 }
 
-function updateCaretNode(node: HTMLElement) {
+function updateCaretNode(node: ChildNode): void {
     // ensure the caret node contains only a zero-width space
     if (node.textContent !== CARET_NODE_CHAR) {
         node.textContent = CARET_NODE_CHAR;
     }
 }
 
-export function isCaretNode(node: HTMLElement) {
-    return node && node.tagName === "SPAN" && node.className === "caretNode";
+export function isCaretNode(node?: Node | null): node is HTMLElement {
+    return !!node && node instanceof HTMLElement && node.tagName === "SPAN" && node.className === "caretNode";
 }
 
-function removeNextSiblings(node: ChildNode) {
+function removeNextSiblings(node: ChildNode | null): void {
     if (!node) {
         return;
     }
@@ -74,7 +74,7 @@ function removeNextSiblings(node: ChildNode) {
     }
 }
 
-function removeChildren(parent: HTMLElement) {
+function removeChildren(parent: HTMLElement): void {
     const firstChild = parent.firstChild;
     if (firstChild) {
         removeNextSiblings(firstChild);
@@ -82,19 +82,19 @@ function removeChildren(parent: HTMLElement) {
     }
 }
 
-function reconcileLine(lineContainer: ChildNode, parts: Part[]) {
-    let currentNode;
-    let prevPart;
+function reconcileLine(lineContainer: ChildNode, parts: Part[]): void {
+    let currentNode: ChildNode | null = null;
+    let prevPart: Part | undefined;
     const lastPart = parts[parts.length - 1];
 
     for (const part of parts) {
         const isFirst = !prevPart;
-        currentNode = isFirst ? lineContainer.firstChild : currentNode.nextSibling;
+        currentNode = isFirst ? lineContainer.firstChild : currentNode!.nextSibling;
 
         if (needsCaretNodeBefore(part, prevPart)) {
-            if (isCaretNode(currentNode)) {
-                updateCaretNode(currentNode);
-                currentNode = currentNode.nextSibling;
+            if (isCaretNode(currentNode as Element)) {
+                updateCaretNode(currentNode!);
+                currentNode = currentNode!.nextSibling;
             } else {
                 lineContainer.insertBefore(createCaretNode(), currentNode);
             }
@@ -109,18 +109,18 @@ function reconcileLine(lineContainer: ChildNode, parts: Part[]) {
         if (currentNode && part) {
             part.updateDOMNode(currentNode);
         } else if (part) {
-            currentNode = part.toDOMNode();
+            currentNode = part.toDOMNode() as ChildNode;
             // hooks up nextSibling for next iteration
             lineContainer.appendChild(currentNode);
         }
 
         if (needsCaretNodeAfter(part, part === lastPart)) {
-            if (isCaretNode(currentNode.nextSibling)) {
-                currentNode = currentNode.nextSibling;
-                updateCaretNode(currentNode);
+            if (isCaretNode(currentNode?.nextSibling as Element)) {
+                currentNode = currentNode!.nextSibling;
+                updateCaretNode(currentNode as HTMLElement);
             } else {
                 const caretNode = createCaretNode();
-                insertAfter(currentNode, caretNode);
+                insertAfter(currentNode as HTMLElement, caretNode);
                 currentNode = caretNode;
             }
         }
@@ -131,13 +131,13 @@ function reconcileLine(lineContainer: ChildNode, parts: Part[]) {
     removeNextSiblings(currentNode);
 }
 
-function reconcileEmptyLine(lineContainer) {
+function reconcileEmptyLine(lineContainer: HTMLElement): void {
     // empty div needs to have a BR in it to give it height
     let foundBR = false;
     let partNode = lineContainer.firstChild;
     while (partNode) {
         const nextNode = partNode.nextSibling;
-        if (!foundBR && partNode.tagName === "BR") {
+        if (!foundBR && (partNode as HTMLElement).tagName === "BR") {
             foundBR = true;
         } else {
             partNode.remove();
@@ -149,16 +149,19 @@ function reconcileEmptyLine(lineContainer) {
     }
 }
 
-export function renderModel(editor: HTMLDivElement, model: EditorModel) {
-    const lines = model.parts.reduce((linesArr, part) => {
-        if (part.type === "newline") {
-            linesArr.push([]);
-        } else {
-            const lastLine = linesArr[linesArr.length - 1];
-            lastLine.push(part);
-        }
-        return linesArr;
-    }, [[]]);
+export function renderModel(editor: HTMLDivElement, model: EditorModel): void {
+    const lines = model.parts.reduce<Part[][]>(
+        (linesArr, part) => {
+            if (part.type === Type.Newline) {
+                linesArr.push([]);
+            } else {
+                const lastLine = linesArr[linesArr.length - 1];
+                lastLine.push(part);
+            }
+            return linesArr;
+        },
+        [[]],
+    );
     lines.forEach((parts, i) => {
         // find first (and remove anything else) div without className
         // (as browsers insert these in contenteditable) line container
@@ -175,7 +178,7 @@ export function renderModel(editor: HTMLDivElement, model: EditorModel) {
         if (parts.length) {
             reconcileLine(lineContainer, parts);
         } else {
-            reconcileEmptyLine(lineContainer);
+            reconcileEmptyLine(lineContainer as HTMLElement);
         }
     });
     if (lines.length) {

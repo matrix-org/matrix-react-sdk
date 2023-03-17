@@ -14,81 +14,88 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import Dropdown from "../../views/elements/Dropdown"
-import * as sdk from '../../../index';
+import Dropdown from "../../views/elements/Dropdown";
 import PlatformPeg from "../../../PlatformPeg";
 import SettingsStore from "../../../settings/SettingsStore";
 import { _t } from "../../../languageHandler";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import Spinner from "./Spinner";
+import * as languageHandler from "../../../languageHandler";
 
-function languageMatchesSearchQuery(query, language) {
+type Languages = Awaited<ReturnType<typeof languageHandler.getAllLanguagesFromJson>>;
+function languageMatchesSearchQuery(query: string, language: Languages[0]): boolean {
     if (language.label.toUpperCase().includes(query.toUpperCase())) return true;
     if (language.value.toUpperCase() === query.toUpperCase()) return true;
     return false;
 }
 
 interface SpellCheckLanguagesDropdownIProps {
-    className: string,
-    value: string,
-    onOptionChange(language: string),
+    className: string;
+    value: string;
+    onOptionChange(language: string): void;
 }
 
 interface SpellCheckLanguagesDropdownIState {
-    searchQuery: string,
-    languages: any,
+    searchQuery: string;
+    languages?: Languages;
 }
 
-@replaceableComponent("views.elements.SpellCheckLanguagesDropdown")
-export default class SpellCheckLanguagesDropdown extends React.Component<SpellCheckLanguagesDropdownIProps,
-                                                                         SpellCheckLanguagesDropdownIState> {
-    constructor(props) {
+export default class SpellCheckLanguagesDropdown extends React.Component<
+    SpellCheckLanguagesDropdownIProps,
+    SpellCheckLanguagesDropdownIState
+> {
+    public constructor(props: SpellCheckLanguagesDropdownIProps) {
         super(props);
-        this._onSearchChange = this._onSearchChange.bind(this);
+        this.onSearchChange = this.onSearchChange.bind(this);
 
         this.state = {
-            searchQuery: '',
-            languages: null,
+            searchQuery: "",
         };
     }
 
-    componentDidMount() {
+    public componentDidMount(): void {
         const plaf = PlatformPeg.get();
         if (plaf) {
-            plaf.getAvailableSpellCheckLanguages().then((languages) => {
-                languages.sort(function(a, b) {
-                    if (a < b) return -1;
-                    if (a > b) return 1;
-                    return 0;
-                });
-                const langs = [];
-                languages.forEach((language) => {
-                    langs.push({
-                        label: language,
-                        value: language,
-                    })
+            plaf.getAvailableSpellCheckLanguages()
+                ?.then((languages) => {
+                    languages.sort(function (a, b) {
+                        if (a < b) return -1;
+                        if (a > b) return 1;
+                        return 0;
+                    });
+                    const langs: Languages = [];
+                    languages.forEach((language) => {
+                        langs.push({
+                            label: language,
+                            value: language,
+                        });
+                    });
+                    this.setState({ languages: langs });
                 })
-                this.setState({languages: langs});
-            }).catch((e) => {
-                this.setState({languages: ['en']});
-            });
+                .catch((e) => {
+                    this.setState({
+                        languages: [
+                            {
+                                value: "en",
+                                label: "English",
+                            },
+                        ],
+                    });
+                });
         }
     }
 
-    _onSearchChange(search) {
-        this.setState({
-            searchQuery: search,
-        });
+    private onSearchChange(searchQuery: string): void {
+        this.setState({ searchQuery });
     }
 
-    render() {
-        if (this.state.languages === null) {
-            const Spinner = sdk.getComponent('elements.Spinner');
+    public render(): React.ReactNode {
+        if (!this.state.languages) {
             return <Spinner />;
         }
 
-        let displayedLanguages;
+        let displayedLanguages: Languages;
         if (this.state.searchQuery) {
             displayedLanguages = this.state.languages.filter((lang) => {
                 return languageMatchesSearchQuery(this.state.searchQuery, lang);
@@ -98,15 +105,13 @@ export default class SpellCheckLanguagesDropdown extends React.Component<SpellCh
         }
 
         const options = displayedLanguages.map((language) => {
-            return <div key={language.value}>
-                { language.label }
-            </div>;
+            return <div key={language.value}>{language.label}</div>;
         });
 
         // default value here too, otherwise we need to handle null / undefined;
-        // values between mounting and the initial value propgating
-        let language = SettingsStore.getValue("language", null, /*excludeDefault:*/true);
-        let value = null;
+        // values between mounting and the initial value propagating
+        let language = SettingsStore.getValue<string | undefined>("language", null, /*excludeDefault:*/ true);
+        let value: string | undefined;
         if (language) {
             value = this.props.value || language;
         } else {
@@ -114,15 +119,19 @@ export default class SpellCheckLanguagesDropdown extends React.Component<SpellCh
             value = this.props.value || language;
         }
 
-        return <Dropdown
-            id="mx_LanguageDropdown"
-            className={this.props.className}
-            onOptionChange={this.props.onOptionChange}
-            onSearchChange={this._onSearchChange}
-            searchEnabled={true}
-            value={value}
-            label={_t("Language Dropdown")}>
-            { options }
-        </Dropdown>;
+        return (
+            <Dropdown
+                id="mx_LanguageDropdown"
+                className={this.props.className}
+                onOptionChange={this.props.onOptionChange}
+                onSearchChange={this.onSearchChange}
+                searchEnabled={true}
+                value={value}
+                label={_t("Language Dropdown")}
+                placeholder={_t("Choose a locale")}
+            >
+                {options}
+            </Dropdown>
+        );
     }
 }

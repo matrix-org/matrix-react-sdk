@@ -14,59 +14,62 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import classNames from "classnames";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Relations } from "matrix-js-sdk/src/models/relations";
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { Relations, RelationsEvent } from "matrix-js-sdk/src/models/relations";
 
-import { _t } from '../../../languageHandler';
-import { isContentActionable } from '../../../utils/EventUtils';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { _t } from "../../../languageHandler";
+import { isContentActionable } from "../../../utils/EventUtils";
 import { ContextMenuTooltipButton } from "../../../accessibility/context_menu/ContextMenuTooltipButton";
-import { aboveLeftOf, ContextMenu, useContextMenu } from "../../structures/ContextMenu";
+import ContextMenu, { aboveLeftOf, useContextMenu } from "../../structures/ContextMenu";
 import ReactionPicker from "../emojipicker/ReactionPicker";
 import ReactionsRowButton from "./ReactionsRowButton";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import RoomContext from "../../../contexts/RoomContext";
+import AccessibleButton from "../elements/AccessibleButton";
 
 // The maximum number of reactions to initially show on a message.
 const MAX_ITEMS_WHEN_LIMITED = 8;
 
-const ReactButton = ({ mxEvent, reactions }: IProps) => {
+const ReactButton: React.FC<IProps> = ({ mxEvent, reactions }) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
     let contextMenu;
     if (menuDisplayed) {
         const buttonRect = button.current.getBoundingClientRect();
-        contextMenu = <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu} managed={false}>
-            <ReactionPicker mxEvent={mxEvent} reactions={reactions} onFinished={closeMenu} />
-        </ContextMenu>;
+        contextMenu = (
+            <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu} managed={false}>
+                <ReactionPicker mxEvent={mxEvent} reactions={reactions} onFinished={closeMenu} />
+            </ContextMenu>
+        );
     }
 
-    return <React.Fragment>
-        <ContextMenuTooltipButton
-            className={classNames("mx_ReactionsRow_addReactionButton", {
-                mx_ReactionsRow_addReactionButton_active: menuDisplayed,
-            })}
-            title={_t("Add reaction")}
-            onClick={openMenu}
-            onContextMenu={e => {
-                e.preventDefault();
-                openMenu();
-            }}
-            isExpanded={menuDisplayed}
-            inputRef={button}
-        />
+    return (
+        <React.Fragment>
+            <ContextMenuTooltipButton
+                className={classNames("mx_ReactionsRow_addReactionButton", {
+                    mx_ReactionsRow_addReactionButton_active: menuDisplayed,
+                })}
+                title={_t("Add reaction")}
+                onClick={openMenu}
+                onContextMenu={(e: SyntheticEvent): void => {
+                    e.preventDefault();
+                    openMenu();
+                }}
+                isExpanded={menuDisplayed}
+                inputRef={button}
+            />
 
-        { contextMenu }
-    </React.Fragment>;
+            {contextMenu}
+        </React.Fragment>
+    );
 };
 
 interface IProps {
     // The event we're displaying reactions for
     mxEvent: MatrixEvent;
     // The Relations model from the JS SDK for reactions to `mxEvent`
-    reactions?: Relations;
+    reactions?: Relations | null | undefined;
 }
 
 interface IState {
@@ -74,18 +77,13 @@ interface IState {
     showAll: boolean;
 }
 
-@replaceableComponent("views.messages.ReactionsRow")
 export default class ReactionsRow extends React.PureComponent<IProps, IState> {
-    static contextType = MatrixClientContext;
+    public static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
 
-    constructor(props, context) {
+    public constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
         super(props, context);
-
-        if (props.reactions) {
-            props.reactions.on("Relations.add", this.onReactionsChange);
-            props.reactions.on("Relations.remove", this.onReactionsChange);
-            props.reactions.on("Relations.redaction", this.onReactionsChange);
-        }
+        this.context = context;
 
         this.state = {
             myReactions: this.getMyReactions(),
@@ -93,33 +91,47 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
         };
     }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.reactions !== this.props.reactions) {
-            this.props.reactions.on("Relations.add", this.onReactionsChange);
-            this.props.reactions.on("Relations.remove", this.onReactionsChange);
-            this.props.reactions.on("Relations.redaction", this.onReactionsChange);
+    public componentDidMount(): void {
+        const { mxEvent, reactions } = this.props;
+
+        if (mxEvent.isBeingDecrypted() || mxEvent.shouldAttemptDecryption()) {
+            mxEvent.once(MatrixEventEvent.Decrypted, this.onDecrypted);
+        }
+
+        if (reactions) {
+            reactions.on(RelationsEvent.Add, this.onReactionsChange);
+            reactions.on(RelationsEvent.Remove, this.onReactionsChange);
+            reactions.on(RelationsEvent.Redaction, this.onReactionsChange);
+        }
+    }
+
+    public componentWillUnmount(): void {
+        const { mxEvent, reactions } = this.props;
+
+        mxEvent.off(MatrixEventEvent.Decrypted, this.onDecrypted);
+
+        if (reactions) {
+            reactions.off(RelationsEvent.Add, this.onReactionsChange);
+            reactions.off(RelationsEvent.Remove, this.onReactionsChange);
+            reactions.off(RelationsEvent.Redaction, this.onReactionsChange);
+        }
+    }
+
+    public componentDidUpdate(prevProps: IProps): void {
+        if (this.props.reactions && prevProps.reactions !== this.props.reactions) {
+            this.props.reactions.on(RelationsEvent.Add, this.onReactionsChange);
+            this.props.reactions.on(RelationsEvent.Remove, this.onReactionsChange);
+            this.props.reactions.on(RelationsEvent.Redaction, this.onReactionsChange);
             this.onReactionsChange();
         }
     }
 
-    componentWillUnmount() {
-        if (this.props.reactions) {
-            this.props.reactions.removeListener(
-                "Relations.add",
-                this.onReactionsChange,
-            );
-            this.props.reactions.removeListener(
-                "Relations.remove",
-                this.onReactionsChange,
-            );
-            this.props.reactions.removeListener(
-                "Relations.redaction",
-                this.onReactionsChange,
-            );
-        }
-    }
+    private onDecrypted = (): void => {
+        // Decryption changes whether the event is actionable
+        this.forceUpdate();
+    };
 
-    onReactionsChange = () => {
+    private onReactionsChange = (): void => {
         // TODO: Call `onHeightChanged` as needed
         this.setState({
             myReactions: this.getMyReactions(),
@@ -128,14 +140,14 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
         // has changed (this is triggered by events for that purpose only) and
         // `PureComponent`s shallow state / props compare would otherwise filter this out.
         this.forceUpdate();
-    }
+    };
 
-    getMyReactions() {
+    private getMyReactions(): MatrixEvent[] | null {
         const reactions = this.props.reactions;
         if (!reactions) {
             return null;
         }
-        const userId = this.context.getUserId();
+        const userId = this.context.room.client.getUserId();
         const myReactions = reactions.getAnnotationsBySender()[userId];
         if (!myReactions) {
             return null;
@@ -143,13 +155,13 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
         return [...myReactions.values()];
     }
 
-    onShowAllClick = () => {
+    private onShowAllClick = (): void => {
         this.setState({
             showAll: true,
         });
-    }
+    };
 
-    render() {
+    public render(): React.ReactNode {
         const { mxEvent, reactions } = this.props;
         const { myReactions, showAll } = this.state;
 
@@ -157,60 +169,64 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
             return null;
         }
 
-        let items = reactions.getSortedAnnotationsByKey().map(([content, events]) => {
-            const count = events.size;
-            if (!count) {
-                return null;
-            }
-            const myReactionEvent = myReactions && myReactions.find(mxEvent => {
-                if (mxEvent.isRedacted()) {
-                    return false;
+        let items = reactions
+            .getSortedAnnotationsByKey()
+            .map(([content, events]) => {
+                const count = events.size;
+                if (!count) {
+                    return null;
                 }
-                return mxEvent.getRelation().key === content;
-            });
-            return <ReactionsRowButton
-                key={content}
-                content={content}
-                count={count}
-                mxEvent={mxEvent}
-                reactionEvents={events}
-                myReactionEvent={myReactionEvent}
-            />;
-        }).filter(item => !!item);
+                const myReactionEvent =
+                    myReactions &&
+                    myReactions.find((mxEvent) => {
+                        if (mxEvent.isRedacted()) {
+                            return false;
+                        }
+                        return mxEvent.getRelation().key === content;
+                    });
+                return (
+                    <ReactionsRowButton
+                        key={content}
+                        content={content}
+                        count={count}
+                        mxEvent={mxEvent}
+                        reactionEvents={events}
+                        myReactionEvent={myReactionEvent}
+                        disabled={
+                            !this.context.canReact ||
+                            (myReactionEvent && !myReactionEvent.isRedacted() && !this.context.canSelfRedact)
+                        }
+                    />
+                );
+            })
+            .filter((item) => !!item);
 
         if (!items.length) return null;
 
         // Show the first MAX_ITEMS if there are MAX_ITEMS + 1 or more items.
         // The "+ 1" ensure that the "show all" reveals something that takes up
         // more space than the button itself.
-        let showAllButton;
-        if ((items.length > MAX_ITEMS_WHEN_LIMITED + 1) && !showAll) {
+        let showAllButton: JSX.Element | undefined;
+        if (items.length > MAX_ITEMS_WHEN_LIMITED + 1 && !showAll) {
             items = items.slice(0, MAX_ITEMS_WHEN_LIMITED);
-            showAllButton = <a
-                className="mx_ReactionsRow_showAll"
-                href="#"
-                onClick={this.onShowAllClick}
-            >
-                {_t("Show all")}
-            </a>;
+            showAllButton = (
+                <AccessibleButton kind="link_inline" className="mx_ReactionsRow_showAll" onClick={this.onShowAllClick}>
+                    {_t("Show all")}
+                </AccessibleButton>
+            );
         }
 
-        const cli = this.context;
-
-        let addReactionButton;
-        const room = cli.getRoom(mxEvent.getRoomId());
-        if (room.getMyMembership() === "join" && room.currentState.maySendEvent(EventType.Reaction, cli.getUserId())) {
+        let addReactionButton: JSX.Element;
+        if (this.context.canReact) {
             addReactionButton = <ReactButton mxEvent={mxEvent} reactions={reactions} />;
         }
 
-        return <div
-            className="mx_ReactionsRow"
-            role="toolbar"
-            aria-label={_t("Reactions")}
-        >
-            { items }
-            { showAllButton }
-            { addReactionButton }
-        </div>;
+        return (
+            <div className="mx_ReactionsRow" role="toolbar" aria-label={_t("Reactions")}>
+                {items}
+                {showAllButton}
+                {addReactionButton}
+            </div>
+        );
     }
 }
