@@ -138,5 +138,21 @@ describe("FilePanel", () => {
                 cy.get(".mx_RoomView_MessageList").percySnapshotElement("Image tiles on FilePanel", { percyCSS });
             });
         });
+
+        it("should download an image via the link on the panel", () => {
+            // Upload an image file
+            uploadFile("cypress/fixtures/riot.png");
+
+            cy.get(".mx_FilePanel").within(() => {
+                cy.get(".mx_RoomView_MessageList").within(() => {
+                    // Detect the image file on the panel
+                    cy.get(".mx_EventTile_mediaLine.mx_EventTile_image .mx_MImageBody").within(() => {
+                        // Click the anchor link (not the image itself)
+                        cy.get(".mx_MFileBody_download a").click();
+                        cy.readFile("cypress/downloads/riot.png").should("exist");
+                    });
+                });
+            });
+        });
     });
 });
