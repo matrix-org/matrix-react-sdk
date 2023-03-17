@@ -252,4 +252,14 @@ describe("<Pill>", () => {
         });
         expect(renderResult.asFragment()).toMatchSnapshot();
     });
+
+    it("should not render a pill with an unknown type", () => {
+        // @ts-ignore
+        renderPill({ type: "unknown" });
+        expect(renderResult.asFragment()).toMatchInlineSnapshot(`
+            <DocumentFragment>
+              <div />
+            </DocumentFragment>
+        `);
+    });
 });

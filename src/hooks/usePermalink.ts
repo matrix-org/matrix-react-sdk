@@ -88,7 +88,7 @@ interface HookResult {
  * @returns Pill type or null if unable to determine.
  */
 const determineType = (
-    forcedType: PillType | null,
+    forcedType: PillType | undefined,
     parseResult: PermalinkParts | null,
     permalinkRoom: Room | undefined,
 ): PillType | null => {
@@ -128,14 +128,16 @@ const determineType = (
  * @returns permalink user Id. null if the Id cannot be determined.
  */
 const determineUserId = (
-    type: PillType,
+    type: PillType | null,
     parseResult: PermalinkParts | null,
     event: MatrixEvent | null,
 ): string | null => {
+    if (type === null) return null;
+
     if (parseResult?.userId) return parseResult.userId;
 
     if (event && [PillType.EventInSameRoom, PillType.EventInOtherRoom].includes(type)) {
-        return event.getSender();
+        return event.getSender() ?? null;
     }
 
     return null;
@@ -153,7 +155,7 @@ const findRoom = (roomIdOrAlias: string): Room | null => {
     return roomIdOrAlias[0] === "#"
         ? client.getRooms().find((r) => {
               return r.getCanonicalAlias() === roomIdOrAlias || r.getAltAliases().includes(roomIdOrAlias);
-          })
+          }) ?? null
         : client.getRoom(roomIdOrAlias);
 };
 
@@ -169,7 +171,11 @@ const findRoom = (roomIdOrAlias: string): Room | null => {
  * @param parseResult - Permalink parser result
  * @returns Initial room or null if it cannot be determined.
  */
-const determineInitialRoom = (type: PillType, permalinkRoom: Room, parseResult: PermalinkParts | null): Room | null => {
+const determineInitialRoom = (
+    type: PillType | null,
+    permalinkRoom: Room | undefined,
+    parseResult: PermalinkParts | null,
+): Room | null => {
     if (type === PillType.AtRoomMention && permalinkRoom) return permalinkRoom;
 
     if (type === PillType.UserMention && permalinkRoom) {
@@ -182,6 +188,26 @@ const determineInitialRoom = (type: PillType, permalinkRoom: Room, parseResult: 
     }
 
     return null;
+};
+
+/**
+ * Tries to find the initial event.
+ * If the event should not be looked up or there is no target room it returns null.
+ * Otherwise it tries to get the event from the target room.
+ *
+ * @param shouldLookUpEvent - whether the parmalink event should be looked up
+ * @param Room | null targetRoom - target room of the permalink
+ * @param parseResult - permalink parse result
+ * @returns The event if found or null if it should not be looked up or was not found.
+ */
+const determineInitialEvent = (
+    shouldLookUpEvent: boolean,
+    targetRoom: Room | null,
+    parseResult: PermalinkParts | null,
+): MatrixEvent | null => {
+    if (!shouldLookUpEvent || !targetRoom || !parseResult?.eventId) return null;
+
+    return targetRoom.findEventById(parseResult.eventId) || null;
 };
 
 /**
@@ -207,28 +233,25 @@ export const usePermalink: (args: Args) => HookResult = ({
 
     // The listed permalink types require a room.
     // If it cannot be initially determined, it will be looked up later by a memo hook.
-    const shouldLookUpRoom = [
-        PillType.RoomMention,
-        PillType.EventInSameRoom,
-        PillType.EventInOtherRoom,
-        "space",
-    ].includes(type);
+    const shouldLookUpRoom =
+        type && [PillType.RoomMention, PillType.EventInSameRoom, PillType.EventInOtherRoom, "space"].includes(type);
     const initialRoom = determineInitialRoom(type, permalinkRoom, parseResult);
     const [targetRoom, setTargetRoom] = useState<Room | null>(initialRoom);
 
     // Event permalinks require to know the event.
     // If it cannot be initially determined, it will be looked up later by a memo hook.
     const shouldLookUpEvent =
-        parseResult?.roomIdOrAlias &&
-        parseResult?.eventId &&
+        !!type &&
+        !!parseResult?.roomIdOrAlias &&
+        !!parseResult?.eventId &&
         [PillType.EventInSameRoom, PillType.EventInOtherRoom].includes(type);
     const eventId = parseResult?.eventId;
-    const eventInRoom = shouldLookUpEvent && targetRoom ? targetRoom.findEventById(parseResult?.eventId) : null;
+    const eventInRoom = determineInitialEvent(shouldLookUpEvent, targetRoom, parseResult);
     const [event, setEvent] = useState<MatrixEvent | null>(eventInRoom);
 
     // User mentions and permalinks to events in the same room require to know the user.
     // If it cannot be initially determined, it will be looked up later by a memo hook.
-    const shouldLookUpUser = [PillType.UserMention, PillType.EventInSameRoom].includes(type);
+    const shouldLookUpUser = type && [PillType.UserMention, PillType.EventInSameRoom].includes(type);
     const userId = determineUserId(type, parseResult, event);
     const userInRoom = shouldLookUpUser && userId && targetRoom ? targetRoom.getMember(userId) : null;
     const [member, setMember] = useState<RoomMember | null>(userInRoom);
@@ -274,7 +297,7 @@ export const usePermalink: (args: Args) => HookResult = ({
 
     // Event lookup
     useMemo(async () => {
-        if (!shouldLookUpEvent || !eventId || event) {
+        if (!shouldLookUpEvent || !eventId || event || !parseResult?.roomIdOrAlias || !parseResult.eventId) {
             // nothing to do here
             return;
         }
@@ -290,7 +313,7 @@ export const usePermalink: (args: Args) => HookResult = ({
 
     // Room lookup
     useMemo(() => {
-        if (shouldLookUpRoom && !targetRoom && parseResult.roomIdOrAlias) {
+        if (shouldLookUpRoom && !targetRoom && parseResult?.roomIdOrAlias) {
             const newRoom = findRoom(parseResult.roomIdOrAlias);
             setTargetRoom(newRoom);
         }

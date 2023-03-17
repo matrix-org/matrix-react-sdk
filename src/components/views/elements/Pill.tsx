@@ -86,7 +86,7 @@ export interface PillProps {
     shouldShowPillAvatar?: boolean;
 }
 
-export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room, shouldShowPillAvatar }) => {
+export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room, shouldShowPillAvatar = true }) => {
     const [hover, setHover] = useState(false);
     const { member, onClick, resourceId, targetRoom, text, type } = usePermalink({
         room,
