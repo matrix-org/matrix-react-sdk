@@ -62,7 +62,7 @@ describe("formatRelativeTime", () => {
 
     it("returns month and day for events created less than 24h ago but on a different day", () => {
         // Monday, 1 November 2021 23:01:00 UTC
-        const date = new Date(2021, 10, 2, 23, 1, 23, 0);
+        const date = new Date(2021, 10, 1, 23, 1, 23, 0);
         expect(formatRelativeTime(date)).toBe("Nov 1");
     });
 
