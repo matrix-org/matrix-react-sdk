@@ -99,7 +99,7 @@ describe("RoomGeneralContextMenu", () => {
         expect(container).toMatchSnapshot();
     });
 
-    it("does not render when UIComponent customisations disable room invite", () => {
+    it("does not render invite menu item when UIComponent customisations disable room invite", () => {
         room.updateMyMembership("join");
         jest.spyOn(room, "canInvite").mockReturnValue(true);
         mocked(shouldShowComponent).mockReturnValue(false);
@@ -110,7 +110,7 @@ describe("RoomGeneralContextMenu", () => {
         expect(screen.queryByRole("menuitem", { name: "Invite" })).not.toBeInTheDocument();
     });
 
-    it("renders when UIComponent customisations enables invite", () => {
+    it("renders invite menu item when UIComponent customisations enables room invite", () => {
         room.updateMyMembership("join");
         jest.spyOn(room, "canInvite").mockReturnValue(true);
         mocked(shouldShowComponent).mockReturnValue(true);
