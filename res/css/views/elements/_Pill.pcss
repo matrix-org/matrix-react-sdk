@@ -29,6 +29,10 @@ limitations under the License.
     color: $accent-fg-color !important; /* To override .markdown-body */
     background-color: $pill-bg-color !important; /* To override .markdown-body */
 
+    > * {
+        pointer-events: none;
+    }
+
     &.mx_UserPill_me,
     &.mx_AtRoomPill {
         background-color: $alert !important; /* To override .markdown-body */
