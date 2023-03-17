@@ -140,7 +140,7 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelati
         error?.message === LocationShareError.MapStyleUrlNotConfigured ||
         error?.message === LocationShareError.MapStyleUrlNotReachable;
     const displayStatus = getBeaconDisplayStatus(
-        isLive,
+        !!isLive,
         latestLocationState,
         // if we are unable to display maps because it is not configured for the server
         // don't display an error
@@ -162,7 +162,6 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelati
                 roomId: mxEvent.getRoomId(),
                 matrixClient,
                 initialFocusedBeacon: beacon,
-                isMapDisplayError,
             },
             "mx_BeaconViewDialog_wrapper",
             false, // isPriority
@@ -175,7 +174,7 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelati
         map = (
             <Map
                 id={mapId}
-                centerGeoUri={latestLocationState.uri}
+                centerGeoUri={latestLocationState?.uri}
                 onError={setError}
                 onClick={onClick}
                 className="mx_MBeaconBody_map"
@@ -184,8 +183,8 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelati
                     <SmartMarker
                         map={map}
                         id={`${mapId}-marker`}
-                        geoUri={latestLocationState.uri}
-                        roomMember={markerRoomMember}
+                        geoUri={latestLocationState?.uri}
+                        roomMember={markerRoomMember ?? undefined}
                         useMemberColor
                     />
                 )}

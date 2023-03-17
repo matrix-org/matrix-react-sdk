@@ -166,10 +166,11 @@ export default class LeftPanel extends React.Component<IProps, IState> {
             }
         >();
 
-        let lastTopHeader;
-        let firstBottomHeader;
+        let lastTopHeader: HTMLDivElement | undefined;
+        let firstBottomHeader: HTMLDivElement | undefined;
         for (const sublist of sublists) {
             const header = sublist.querySelector<HTMLDivElement>(".mx_RoomSublist_stickable");
+            if (!header) continue; // this should never occur
             header.style.removeProperty("display"); // always clear display:none first
 
             // When an element is <=40% off screen, make it take over
@@ -196,7 +197,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         // cause a no-op update, as adding/removing properties that are/aren't there cause
         // layout updates.
         for (const header of targetStyles.keys()) {
-            const style = targetStyles.get(header);
+            const style = targetStyles.get(header)!;
 
             if (style.makeInvisible) {
                 // we will have already removed the 'display: none', so add it back.
@@ -270,6 +271,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         // add appropriate sticky classes to wrapper so it has
         // the necessary top/bottom padding to put the sticky header in
         const listWrapper = list.parentElement; // .mx_LeftPanel_roomListWrapper
+        if (!listWrapper) return;
         if (lastTopHeader) {
             listWrapper.classList.add("mx_LeftPanel_roomListWrapper_stickyTop");
         } else {
@@ -324,7 +326,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
     }
 
     private renderSearchDialExplore(): React.ReactNode {
-        let dialPadButton = null;
+        let dialPadButton: JSX.Element | undefined;
 
         // If we have dialer support, show a button to bring up the dial pad
         // to start a new call
@@ -338,7 +340,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
             );
         }
 
-        let rightButton: JSX.Element;
+        let rightButton: JSX.Element | undefined;
         if (this.state.showBreadcrumbs === BreadcrumbsMode.Labs) {
             rightButton = <RecentlyViewedButton />;
         } else if (this.state.activeSpace === MetaSpace.Home && shouldShowComponent(UIComponent.ExploreRooms)) {

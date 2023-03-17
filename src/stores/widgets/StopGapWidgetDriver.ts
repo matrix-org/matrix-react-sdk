@@ -39,6 +39,11 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 import { Direction } from "matrix-js-sdk/src/matrix";
+import {
+    ApprovalOpts,
+    CapabilitiesOpts,
+    WidgetLifecycle,
+} from "@matrix-org/react-sdk-module-api/lib/lifecycles/WidgetLifecycle";
 
 import SdkConfig, { DEFAULTS } from "../../SdkConfig";
 import { iterableDiff, iterableIntersection } from "../../utils/iterables";
@@ -55,6 +60,8 @@ import dis from "../../dispatcher/dispatcher";
 import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
 import { navigateToPermalink } from "../../utils/permalinks/navigator";
 import { SdkContextClass } from "../../contexts/SDKContext";
+import { ModuleRunner } from "../../modules/ModuleRunner";
+import SettingsStore from "../../settings/SettingsStore";
 
 // TODO: Purge this from the universe
 
@@ -107,7 +114,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
             this.allowedCapabilities.add("visibility");
         } else if (
             virtual &&
-            new URL(SdkConfig.get("element_call").url ?? DEFAULTS.element_call.url).origin === this.forWidget.origin
+            new URL(SdkConfig.get("element_call").url ?? DEFAULTS.element_call.url!).origin === this.forWidget.origin
         ) {
             // This is a trusted Element Call widget that we control
             this.allowedCapabilities.add(MatrixCapabilities.AlwaysOnScreen);
@@ -171,33 +178,33 @@ export class StopGapWidgetDriver extends WidgetDriver {
             allowedSoFar.add(cap);
             missing.delete(cap);
         });
+
+        let approved: Set<string> | undefined;
         if (WidgetPermissionCustomisations.preapproveCapabilities) {
-            const approved = await WidgetPermissionCustomisations.preapproveCapabilities(this.forWidget, requested);
-            if (approved) {
-                approved.forEach((cap) => {
-                    allowedSoFar.add(cap);
-                    missing.delete(cap);
-                });
-            }
+            approved = await WidgetPermissionCustomisations.preapproveCapabilities(this.forWidget, requested);
+        } else {
+            const opts: CapabilitiesOpts = { approvedCapabilities: undefined };
+            ModuleRunner.instance.invoke(WidgetLifecycle.CapabilitiesRequest, opts, this.forWidget, requested);
+            approved = opts.approvedCapabilities;
         }
+        if (approved) {
+            approved.forEach((cap) => {
+                allowedSoFar.add(cap);
+                missing.delete(cap);
+            });
+        }
+
         // TODO: Do something when the widget requests new capabilities not yet asked for
         let rememberApproved = false;
         if (missing.size > 0) {
             try {
-                const [result] = await Modal.createDialog<
-                    [
-                        {
-                            approved: Capability[];
-                            remember: boolean;
-                        },
-                    ]
-                >(WidgetCapabilitiesPromptDialog, {
+                const [result] = await Modal.createDialog(WidgetCapabilitiesPromptDialog, {
                     requestedCapabilities: missing,
                     widget: this.forWidget,
                     widgetKind: this.forWidgetKind,
                 }).finished;
-                (result.approved || []).forEach((cap) => allowedSoFar.add(cap));
-                rememberApproved = result.remember;
+                result?.approved?.forEach((cap) => allowedSoFar.add(cap));
+                rememberApproved = !!result?.remember;
             } catch (e) {
                 logger.error("Non-fatal error getting capabilities: ", e);
             }
@@ -261,7 +268,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         const client = MatrixClientPeg.get();
 
         if (encrypted) {
-            const deviceInfoMap = await client.crypto.deviceList.downloadKeys(Object.keys(contentMap), false);
+            const deviceInfoMap = await client.crypto!.deviceList.downloadKeys(Object.keys(contentMap), false);
 
             await Promise.all(
                 Object.entries(contentMap).flatMap(([userId, userContentMap]) =>
@@ -305,9 +312,9 @@ export class StopGapWidgetDriver extends WidgetDriver {
 
         const targetRooms = roomIds
             ? roomIds.includes(Symbols.AnyRoom)
-                ? client.getVisibleRooms()
+                ? client.getVisibleRooms(SettingsStore.getValue("feature_dynamic_room_predecessors"))
                 : roomIds.map((r) => client.getRoom(r))
-            : [client.getRoom(SdkContextClass.instance.roomViewStore.getRoomId())];
+            : [client.getRoom(SdkContextClass.instance.roomViewStore.getRoomId()!)];
         return targetRooms.filter((r) => !!r) as Room[];
     }
 
@@ -350,7 +357,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         const allResults: IRoomEvent[] = [];
         for (const room of rooms) {
             const results: MatrixEvent[] = [];
-            const state: Map<string, MatrixEvent> = room.currentState.events.get(eventType);
+            const state = room.currentState.events.get(eventType);
             if (state) {
                 if (stateKey === "" || !!stateKey) {
                     const forKey = state.get(stateKey);
@@ -366,6 +373,15 @@ export class StopGapWidgetDriver extends WidgetDriver {
     }
 
     public async askOpenID(observer: SimpleObservable<IOpenIDUpdate>): Promise<void> {
+        const opts: ApprovalOpts = { approved: undefined };
+        ModuleRunner.instance.invoke(WidgetLifecycle.IdentityRequest, opts, this.forWidget);
+        if (opts.approved) {
+            return observer.update({
+                state: OpenIDRequestState.Allowed,
+                token: await MatrixClientPeg.get().getOpenIdToken(),
+            });
+        }
+
         const oidcState = SdkContextClass.instance.widgetPermissionStore.getOIDCState(
             this.forWidget,
             this.forWidgetKind,

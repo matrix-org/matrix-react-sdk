@@ -23,7 +23,7 @@ import { User } from "matrix-js-sdk/src/models/user";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import RoomContext from "../../../contexts/RoomContext";
 import DMRoomMap from "../../../utils/DMRoomMap";
-import { _t } from "../../../languageHandler";
+import { _t, _td } from "../../../languageHandler";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import MiniAvatarUploader, { AVATAR_SIZE } from "../elements/MiniAvatarUploader";
 import RoomAvatar from "../avatars/RoomAvatar";
@@ -39,6 +39,7 @@ import { shouldShowComponent } from "../../../customisations/helpers/UIComponent
 import { UIComponent } from "../../../settings/UIFeature";
 import { privateShouldBeEncrypted } from "../../../utils/rooms";
 import { LocalRoom } from "../../../models/LocalRoom";
+import { shouldEncryptRoomWithSingle3rdPartyInvite } from "../../../utils/room/shouldEncryptRoomWithSingle3rdPartyInvite";
 
 function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): boolean {
     const isEncrypted: boolean = matrixClient.isRoomEncrypted(room.roomId);
@@ -46,21 +47,40 @@ function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): 
     return isPublic || !privateShouldBeEncrypted() || isEncrypted;
 }
 
+const determineIntroMessage = (room: Room, encryptedSingle3rdPartyInvite: boolean): string => {
+    if (room instanceof LocalRoom) {
+        return _td("Send your first message to invite <displayName/> to chat");
+    }
+
+    if (encryptedSingle3rdPartyInvite) {
+        return _td("Once everyone has joined, you’ll be able to chat");
+    }
+
+    return _td("This is the beginning of your direct message history with <displayName/>.");
+};
+
 const NewRoomIntro: React.FC = () => {
     const cli = useContext(MatrixClientContext);
     const { room, roomId } = useContext(RoomContext);
+
+    if (!room || !roomId) {
+        throw new Error("Unable to create a NewRoomIntro without room and roomId");
+    }
 
     const isLocalRoom = room instanceof LocalRoom;
     const dmPartner = isLocalRoom ? room.targets[0]?.userId : DMRoomMap.shared().getUserIdForRoomId(roomId);
 
     let body: JSX.Element;
     if (dmPartner) {
-        let introMessage = _t("This is the beginning of your direct message history with <displayName/>.");
+        const { shouldEncrypt: encryptedSingle3rdPartyInvite } = shouldEncryptRoomWithSingle3rdPartyInvite(room);
+        const introMessage = determineIntroMessage(room, encryptedSingle3rdPartyInvite);
         let caption: string | undefined;
 
-        if (isLocalRoom) {
-            introMessage = _t("Send your first message to invite <displayName/> to chat");
-        } else if (room.getJoinedMemberCount() + room.getInvitedMemberCount() === 2) {
+        if (
+            !(room instanceof LocalRoom) &&
+            !encryptedSingle3rdPartyInvite &&
+            room.getJoinedMemberCount() + room.getInvitedMemberCount() === 2
+        ) {
             caption = _t("Only the two of you are in this conversation, unless either of you invites anyone to join.");
         }
 
@@ -98,7 +118,7 @@ const NewRoomIntro: React.FC = () => {
     } else {
         const inRoom = room && room.getMyMembership() === "join";
         const topic = room.currentState.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic;
-        const canAddTopic = inRoom && room.currentState.maySendStateEvent(EventType.RoomTopic, cli.getUserId());
+        const canAddTopic = inRoom && room.currentState.maySendStateEvent(EventType.RoomTopic, cli.getSafeUserId());
 
         const onTopicClick = (): void => {
             defaultDispatcher.dispatch(
@@ -110,7 +130,7 @@ const NewRoomIntro: React.FC = () => {
             );
             // focus the topic field to help the user find it as it'll gain an outline
             setImmediate(() => {
-                window.document.getElementById("profileTopic").focus();
+                window.document.getElementById("profileTopic")?.focus();
             });
         };
 
@@ -144,9 +164,9 @@ const NewRoomIntro: React.FC = () => {
         }
 
         const creator = room.currentState.getStateEvents(EventType.RoomCreate, "")?.getSender();
-        const creatorName = room?.getMember(creator)?.rawDisplayName || creator;
+        const creatorName = (creator && room?.getMember(creator)?.rawDisplayName) || creator;
 
-        let createdText;
+        let createdText: string;
         if (creator === cli.getUserId()) {
             createdText = _t("You created this room.");
         } else {
@@ -155,15 +175,15 @@ const NewRoomIntro: React.FC = () => {
             });
         }
 
-        let parentSpace: Room;
+        let parentSpace: Room | undefined;
         if (
-            SpaceStore.instance.activeSpaceRoom?.canInvite(cli.getUserId()) &&
-            SpaceStore.instance.isRoomInSpace(SpaceStore.instance.activeSpace, room.roomId)
+            SpaceStore.instance.activeSpaceRoom?.canInvite(cli.getSafeUserId()) &&
+            SpaceStore.instance.isRoomInSpace(SpaceStore.instance.activeSpace!, room.roomId)
         ) {
             parentSpace = SpaceStore.instance.activeSpaceRoom;
         }
 
-        let buttons;
+        let buttons: JSX.Element | undefined;
         if (parentSpace && shouldShowComponent(UIComponent.InviteUsers)) {
             buttons = (
                 <div className="mx_NewRoomIntro_buttons">
@@ -171,12 +191,12 @@ const NewRoomIntro: React.FC = () => {
                         className="mx_NewRoomIntro_inviteButton"
                         kind="primary"
                         onClick={() => {
-                            showSpaceInvite(parentSpace);
+                            showSpaceInvite(parentSpace!);
                         }}
                     >
                         {_t("Invite to %(spaceName)s", { spaceName: parentSpace.name })}
                     </AccessibleButton>
-                    {room.canInvite(cli.getUserId()) && (
+                    {room.canInvite(cli.getSafeUserId()) && (
                         <AccessibleButton
                             className="mx_NewRoomIntro_inviteButton"
                             kind="primary_outline"
@@ -189,7 +209,7 @@ const NewRoomIntro: React.FC = () => {
                     )}
                 </div>
             );
-        } else if (room.canInvite(cli.getUserId()) && shouldShowComponent(UIComponent.InviteUsers)) {
+        } else if (room.canInvite(cli.getSafeUserId()) && shouldShowComponent(UIComponent.InviteUsers)) {
             buttons = (
                 <div className="mx_NewRoomIntro_buttons">
                     <AccessibleButton

@@ -16,7 +16,6 @@ limitations under the License.
 */
 
 import React from "react";
-import ReactDOM from "react-dom";
 import { EventEmitter } from "events";
 import { MatrixEvent, Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import FakeTimers from "@sinonjs/fake-timers";
@@ -47,7 +46,6 @@ const roomId = "!roomId:server_name";
 
 describe("MessagePanel", function () {
     let clock: FakeTimers.InstalledClock;
-    const realSetTimeout = window.setTimeout;
     const events = mkEvents();
     const userId = "@me:here";
     const client = getMockClientWithEventEmitter({
@@ -358,7 +356,7 @@ describe("MessagePanel", function () {
         const [rm] = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
 
         // it should follow the <li> which wraps the event tile for event 4
-        const eventContainer = ReactDOM.findDOMNode(tiles[4]);
+        const eventContainer = tiles[4];
         expect(rm.previousSibling).toEqual(eventContainer);
     });
 
@@ -405,7 +403,7 @@ describe("MessagePanel", function () {
         expect(isReadMarkerVisible(rm)).toBeFalsy();
     });
 
-    it("shows a ghost read-marker when the read-marker moves", function (done) {
+    it("shows a ghost read-marker when the read-marker moves", function () {
         // fake the clock so that we can test the velocity animation.
         clock = FakeTimers.install();
 
@@ -447,19 +445,9 @@ describe("MessagePanel", function () {
         // the second should be the real thing
         expect(readMarkers[1].previousSibling).toEqual(tiles[6]);
 
-        // advance the clock, and then let the browser run an animation frame,
-        // to let the animation start
+        // advance the clock, and then let the browser run an animation frame to let the animation start
         clock.tick(1500);
-
-        realSetTimeout(() => {
-            // then advance it again to let it complete
-            clock.tick(1000);
-            realSetTimeout(() => {
-                // the ghost should now have finished
-                expect(hr.style.opacity).toEqual("0");
-                done();
-            }, 100);
-        }, 100);
+        expect(hr.style.opacity).toEqual("0");
     });
 
     it("should collapse creation events", function () {
@@ -680,6 +668,27 @@ describe("MessagePanel", function () {
         const els = container.getElementsByClassName("mx_GenericEventListSummary");
         expect(els.length).toEqual(1);
         expect(els[0].getAttribute("data-scroll-tokens")?.split(",")).toHaveLength(3);
+    });
+
+    it("should handle large numbers of hidden events quickly", () => {
+        // Increase the length of the loop here to test performance issues with
+        // rendering
+
+        const events: MatrixEvent[] = [];
+        for (let i = 0; i < 100; i++) {
+            events.push(
+                TestUtilsMatrix.mkEvent({
+                    event: true,
+                    type: "unknown.event.type",
+                    content: { key: "value" },
+                    room: "!room:id",
+                    user: "@user:id",
+                    ts: 1000000 + i,
+                }),
+            );
+        }
+        const { asFragment } = render(getComponent({ events }, { showHiddenEvents: false }));
+        expect(asFragment()).toMatchSnapshot();
     });
 });
 

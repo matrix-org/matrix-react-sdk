@@ -227,12 +227,14 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 // selection must be collapsed and caret at start
                 if (this.editorRef.current?.isSelectionCollapsed() && this.editorRef.current?.isCaretAtStart()) {
                     const events = this.context.liveTimeline
-                        .getEvents()
+                        ?.getEvents()
                         .concat(replyingToThread ? [] : this.props.room.getPendingEvents());
-                    const editEvent = findEditableEvent({
-                        events,
-                        isForward: false,
-                    });
+                    const editEvent = events
+                        ? findEditableEvent({
+                              events,
+                              isForward: false,
+                          })
+                        : undefined;
                     if (editEvent) {
                         // We're selecting history, so prevent the key event from doing anything else
                         event.preventDefault();
@@ -297,7 +299,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             if (events[i].getType() === EventType.RoomMessage) {
                 let shouldReact = true;
                 const lastMessage = events[i];
-                const userId = MatrixClientPeg.get().getUserId();
+                const userId = MatrixClientPeg.get().getSafeUserId();
                 const messageReactions = this.props.room.relations.getChildEventsForEvent(
                     lastMessage.getId()!,
                     RelationType.Annotation,
@@ -307,10 +309,10 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 // if we have already sent this reaction, don't redact but don't re-send
                 if (messageReactions) {
                     const myReactionEvents =
-                        messageReactions.getAnnotationsBySender()[userId] || new Set<MatrixEvent>();
+                        messageReactions.getAnnotationsBySender()?.[userId] || new Set<MatrixEvent>();
                     const myReactionKeys = [...myReactionEvents]
                         .filter((event) => !event.isRedacted())
-                        .map((event) => event.getRelation().key);
+                        .map((event) => event.getRelation()?.key);
                     shouldReact = !myReactionKeys.includes(reaction);
                 }
                 if (shouldReact) {
@@ -368,7 +370,12 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     this.props.relation?.rel_type === THREAD_RELATION_TYPE.name ? this.props.relation?.event_id : null;
 
                 let commandSuccessful: boolean;
-                [content, commandSuccessful] = await runSlashCommand(cmd, args, this.props.room.roomId, threadId);
+                [content, commandSuccessful] = await runSlashCommand(
+                    cmd,
+                    args,
+                    this.props.room.roomId,
+                    threadId ?? null,
+                );
                 if (!commandSuccessful) {
                     return; // errored
                 }
@@ -425,7 +432,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
             const prom = doMaybeLocalRoomAction(
                 roomId,
-                (actualRoomId: string) => this.props.mxClient.sendMessage(actualRoomId, threadId, content),
+                (actualRoomId: string) => this.props.mxClient.sendMessage(actualRoomId, threadId ?? null, content!),
                 this.props.mxClient,
             );
             if (replyToEvent) {
@@ -439,7 +446,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             }
             dis.dispatch({ action: "message_sent" });
             CHAT_EFFECTS.forEach((effect) => {
-                if (containsEmoji(content, effect.emojis)) {
+                if (containsEmoji(content!, effect.emojis)) {
                     // For initial threads launch, chat effects are disabled
                     // see #19731
                     const isNotThread = this.props.relation?.rel_type !== THREAD_RELATION_TYPE.name;

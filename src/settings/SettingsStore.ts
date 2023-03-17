@@ -27,9 +27,9 @@ import RoomSettingsHandler from "./handlers/RoomSettingsHandler";
 import ConfigSettingsHandler from "./handlers/ConfigSettingsHandler";
 import { _t } from "../languageHandler";
 import dis from "../dispatcher/dispatcher";
-import { IFeature, ISetting, LabGroup, SETTINGS } from "./Settings";
+import { IFeature, ISetting, LabGroup, SETTINGS, defaultWatchManager } from "./Settings";
 import LocalEchoWrapper from "./handlers/LocalEchoWrapper";
-import { CallbackFn as WatchCallbackFn, WatchManager } from "./WatchManager";
+import { CallbackFn as WatchCallbackFn } from "./WatchManager";
 import { SettingLevel } from "./SettingLevel";
 import SettingsHandler from "./handlers/SettingsHandler";
 import { SettingUpdatedPayload } from "../dispatcher/payloads/SettingUpdatedPayload";
@@ -39,19 +39,17 @@ import dispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 
-const defaultWatchManager = new WatchManager();
-
 // Convert the settings to easier to manage objects for the handlers
 const defaultSettings: Record<string, any> = {};
 const invertedDefaultSettings: Record<string, boolean> = {};
 const featureNames: string[] = [];
-for (const key of Object.keys(SETTINGS)) {
-    defaultSettings[key] = SETTINGS[key].default;
-    if (SETTINGS[key].isFeature) featureNames.push(key);
-    if (SETTINGS[key].invertedSettingName) {
-        // Invert now so that the rest of the system will invert it back
-        // to what was intended.
-        invertedDefaultSettings[SETTINGS[key].invertedSettingName] = !SETTINGS[key].default;
+for (const key in SETTINGS) {
+    const setting = SETTINGS[key];
+    defaultSettings[key] = setting.default;
+    if (setting.isFeature) featureNames.push(key);
+    if (setting.invertedSettingName) {
+        // Invert now so that the rest of the system will invert it back to what was intended.
+        invertedDefaultSettings[setting.invertedSettingName] = !setting.default;
     }
 }
 
@@ -250,7 +248,7 @@ export default class SettingsStore {
             if (roomId === null) {
                 // Unregister all existing watchers and register the new one
                 rooms.forEach((roomId) => {
-                    SettingsStore.unwatchSetting(this.monitors.get(settingName)!.get(roomId));
+                    SettingsStore.unwatchSetting(this.monitors.get(settingName)!.get(roomId)!);
                 });
                 this.monitors.get(settingName)!.clear();
                 registerWatcher();
@@ -327,13 +325,27 @@ export default class SettingsStore {
 
     /**
      * Determines if a setting is enabled.
-     * If a setting is disabled then it should be hidden from the user.
+     * If a setting is disabled then it should normally be hidden from the user to de-clutter the user interface.
+     * This rule is intentionally ignored for labs flags to unveil what features are available with
+     * the right server support.
      * @param {string} settingName The setting to look up.
      * @return {boolean} True if the setting is enabled.
      */
     public static isEnabled(settingName: string): boolean {
         if (!SETTINGS[settingName]) return false;
         return !SETTINGS[settingName].controller?.settingDisabled ?? true;
+    }
+
+    /**
+     * Retrieves the reason a setting is disabled if one is assigned.
+     * If a setting is not disabled, or no reason is given by the `SettingController`,
+     * this will return undefined.
+     * @param {string} settingName The setting to look up.
+     * @return {string} The reason the setting is disabled.
+     */
+    public static disabledMessage(settingName: string): string | undefined {
+        const disabled = SETTINGS[settingName].controller?.settingDisabled;
+        return typeof disabled === "string" ? disabled : undefined;
     }
 
     /**
@@ -513,7 +525,7 @@ export default class SettingsStore {
      * check at.
      * @return {boolean} True if the user may set the setting, false otherwise.
      */
-    public static canSetValue(settingName: string, roomId: string, level: SettingLevel): boolean {
+    public static canSetValue(settingName: string, roomId: string | null, level: SettingLevel): boolean {
         // Verify that the setting is actually a setting
         if (!SETTINGS[settingName]) {
             throw new Error("Setting '" + settingName + "' does not appear to be a setting.");

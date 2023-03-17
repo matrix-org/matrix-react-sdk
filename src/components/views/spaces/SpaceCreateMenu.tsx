@@ -23,6 +23,7 @@ import React, {
     useRef,
     useState,
     ChangeEvent,
+    ReactNode,
 } from "react";
 import classNames from "classnames";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
@@ -56,7 +57,7 @@ export const createSpace = async (
     avatar?: string | File,
     createOpts: Partial<ICreateRoomOpts> = {},
     otherOpts: Partial<Omit<ICreateOpts, "createOpts">> = {},
-): Promise<string> => {
+): Promise<string | null> => {
     return createRoom({
         createOpts: {
             name,
@@ -158,6 +159,7 @@ interface ISpaceCreateFormProps extends BProps {
     nameFieldRef: RefObject<Field>;
     aliasFieldRef: RefObject<RoomAliasField>;
     showAliasField?: boolean;
+    children?: ReactNode;
     onSubmit(e: SyntheticEvent): void;
     setAlias(alias: string): void;
 }
@@ -179,7 +181,7 @@ export const SpaceCreateForm: React.FC<ISpaceCreateFormProps> = ({
     children,
 }) => {
     const cli = useContext(MatrixClientContext);
-    const domain = cli.getDomain();
+    const domain = cli.getDomain() ?? undefined;
 
     const onKeyDown = (ev: KeyboardEvent): void => {
         const action = getKeyBindingsManager().getAccessibilityAction(ev);
@@ -231,7 +233,7 @@ export const SpaceCreateForm: React.FC<ISpaceCreateFormProps> = ({
                 name="spaceTopic"
                 element="textarea"
                 label={_t("Description")}
-                value={topic}
+                value={topic ?? ""}
                 onChange={(ev) => setTopic(ev.target.value)}
                 rows={3}
                 disabled={busy}
@@ -261,14 +263,18 @@ const SpaceCreateMenu: React.FC<{
 
         setBusy(true);
         // require & validate the space name field
-        if (!(await spaceNameField.current.validate({ allowEmpty: false }))) {
+        if (spaceNameField.current && !(await spaceNameField.current.validate({ allowEmpty: false }))) {
             spaceNameField.current.focus();
             spaceNameField.current.validate({ allowEmpty: false, focused: true });
             setBusy(false);
             return;
         }
 
-        if (visibility === Visibility.Public && !(await spaceAliasField.current.validate({ allowEmpty: false }))) {
+        if (
+            spaceAliasField.current &&
+            visibility === Visibility.Public &&
+            !(await spaceAliasField.current.validate({ allowEmpty: false }))
+        ) {
             spaceAliasField.current.focus();
             spaceAliasField.current.validate({ allowEmpty: false, focused: true });
             setBusy(false);

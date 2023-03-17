@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import { act, fireEvent, render } from "@testing-library/react";
 
 import TabbedView, { Tab, TabLocation } from "../../../src/components/structures/TabbedView";
+import { NonEmptyArray } from "../../../src/@types/common";
 
 describe("<TabbedView />", () => {
     const generalTab = new Tab("GENERAL", "General", "general", <div>general</div>);
@@ -26,7 +26,7 @@ describe("<TabbedView />", () => {
     const securityTab = new Tab("SECURITY", "Security", "security", <div>security</div>);
     const defaultProps = {
         tabLocation: TabLocation.LEFT,
-        tabs: [generalTab, labsTab, securityTab],
+        tabs: [generalTab, labsTab, securityTab] as NonEmptyArray<Tab>,
     };
     const getComponent = (props = {}): React.ReactElement => <TabbedView {...defaultProps} {...props} />;
 
@@ -57,11 +57,6 @@ describe("<TabbedView />", () => {
         const { container } = render(getComponent({ initialTabId: securityTab.id }));
         expect(getActiveTab(container)?.textContent).toEqual(securityTab.label);
         expect(getActiveTabBody(container)?.textContent).toEqual("security");
-    });
-
-    it("renders without error when there are no tabs", () => {
-        const { container } = render(getComponent({ tabs: [] }));
-        expect(container).toMatchSnapshot();
     });
 
     it("sets active tab on tab click", () => {

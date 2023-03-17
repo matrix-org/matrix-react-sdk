@@ -96,12 +96,18 @@ export function createTestClient(): MatrixClient {
         getUserId: jest.fn().mockReturnValue("@userId:matrix.org"),
         getSafeUserId: jest.fn().mockReturnValue("@userId:matrix.org"),
         getUserIdLocalpart: jest.fn().mockResolvedValue("userId"),
-        getUser: jest.fn().mockReturnValue({ on: jest.fn() }),
+        getUser: jest.fn().mockReturnValue({ on: jest.fn(), off: jest.fn() }),
+        getDevice: jest.fn(),
         getDeviceId: jest.fn().mockReturnValue("ABCDEFGHI"),
+        getStoredCrossSigningForUser: jest.fn(),
+        getStoredDevice: jest.fn(),
+        requestVerification: jest.fn(),
         deviceId: "ABCDEFGHI",
         getDevices: jest.fn().mockResolvedValue({ devices: [{ device_id: "ABCDEFGHI" }] }),
         getSessionId: jest.fn().mockReturnValue("iaszphgvfku"),
         credentials: { userId: "@userId:matrix.org" },
+        bootstrapCrossSigning: jest.fn(),
+        hasSecretStorageKey: jest.fn(),
 
         store: {
             getPendingEvents: jest.fn().mockResolvedValue([]),
@@ -449,6 +455,7 @@ export function mkRoomMember(roomId: string, userId: string, membership = "join"
         getAvatarUrl: () => {},
         getMxcAvatarUrl: () => {},
         getDMInviter: () => {},
+        off: () => {},
     } as unknown as RoomMember;
 }
 
@@ -466,15 +473,21 @@ export type MessageEventProps = MakeEventPassThruProps & {
  * @param {number} opts.ts The timestamp for the event.
  * @param {boolean} opts.event True to make a MatrixEvent.
  * @param {string=} opts.msg Optional. The content.body for the event.
+ * @param {string=} opts.format Optional. The content.format for the event.
+ * @param {string=} opts.formattedMsg Optional. The content.formatted_body for the event.
  * @return {Object|MatrixEvent} The event
  */
 export function mkMessage({
     msg,
+    format,
+    formattedMsg,
     relatesTo,
     ...opts
 }: MakeEventPassThruProps & {
     room: Room["roomId"];
     msg?: string;
+    format?: string;
+    formattedMsg?: string;
 }): MatrixEvent {
     if (!opts.room || !opts.user) {
         throw new Error("Missing .room or .user from options");
@@ -486,6 +499,7 @@ export function mkMessage({
         content: {
             msgtype: "m.text",
             body: message,
+            ...(format && formattedMsg ? { format, formatted_body: formattedMsg } : {}),
             ["m.relates_to"]: relatesTo,
         },
     };
@@ -502,6 +516,7 @@ export function mkStubRoom(
     return {
         canInvite: jest.fn(),
         client,
+        findThreadForEvent: jest.fn(),
         createThreadsTimelineSets: jest.fn().mockReturnValue(new Promise(() => {})),
         currentState: {
             getStateEvents: jest.fn((_type, key) => (key === undefined ? [] : null)),
@@ -671,14 +686,41 @@ export const mkSpace = (
     return space;
 };
 
-export const mkRoomMemberJoinEvent = (user: string, room: string): MatrixEvent => {
+export const mkRoomMemberJoinEvent = (user: string, room: string, content?: IContent): MatrixEvent => {
     return mkEvent({
         event: true,
         type: EventType.RoomMember,
         content: {
             membership: "join",
+            ...content,
         },
         skey: user,
+        user,
+        room,
+    });
+};
+
+export const mkRoomCanonicalAliasEvent = (userId: string, roomId: string, alias: string): MatrixEvent => {
+    return mkEvent({
+        event: true,
+        type: EventType.RoomCanonicalAlias,
+        content: {
+            alias,
+        },
+        skey: "",
+        user: userId,
+        room: roomId,
+    });
+};
+
+export const mkThirdPartyInviteEvent = (user: string, displayName: string, room: string): MatrixEvent => {
+    return mkEvent({
+        event: true,
+        type: EventType.RoomThirdPartyInvite,
+        content: {
+            display_name: displayName,
+        },
+        skey: "test" + Math.random(),
         user,
         room,
     });

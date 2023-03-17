@@ -18,13 +18,29 @@ import { mocked, MockedObject } from "jest-mock";
 import { MatrixClient, ClientEvent, ITurnServer as IClientTurnServer } from "matrix-js-sdk/src/client";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { Direction, EventType, MatrixEvent, MsgType, RelationType } from "matrix-js-sdk/src/matrix";
-import { Widget, MatrixWidgetType, WidgetKind, WidgetDriver, ITurnServer } from "matrix-widget-api";
+import {
+    Widget,
+    MatrixWidgetType,
+    WidgetKind,
+    WidgetDriver,
+    ITurnServer,
+    SimpleObservable,
+    OpenIDRequestState,
+    IOpenIDUpdate,
+} from "matrix-widget-api";
+import {
+    ApprovalOpts,
+    CapabilitiesOpts,
+    WidgetLifecycle,
+} from "@matrix-org/react-sdk-module-api/lib/lifecycles/WidgetLifecycle";
 
 import { SdkContextClass } from "../../../src/contexts/SDKContext";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { StopGapWidgetDriver } from "../../../src/stores/widgets/StopGapWidgetDriver";
 import { stubClient } from "../../test-utils";
+import { ModuleRunner } from "../../../src/modules/ModuleRunner";
 import dis from "../../../src/dispatcher/dispatcher";
+import SettingsStore from "../../../src/settings/SettingsStore";
 
 describe("StopGapWidgetDriver", () => {
     let client: MockedObject<MatrixClient>;
@@ -99,6 +115,44 @@ describe("StopGapWidgetDriver", () => {
         // As long as this resolves, we'll know that it didn't try to pop up a modal
         const approvedCapabilities = await driver.validateCapabilities(requestedCapabilities);
         expect(approvedCapabilities).toEqual(requestedCapabilities);
+    });
+
+    it("approves capabilities via module api", async () => {
+        const driver = mkDefaultDriver();
+
+        const requestedCapabilities = new Set(["org.matrix.msc2931.navigate", "org.matrix.msc2762.timeline:*"]);
+
+        jest.spyOn(ModuleRunner.instance, "invoke").mockImplementation(
+            (lifecycleEvent, opts, widgetInfo, requested) => {
+                if (lifecycleEvent === WidgetLifecycle.CapabilitiesRequest) {
+                    (opts as CapabilitiesOpts).approvedCapabilities = requested;
+                }
+            },
+        );
+
+        const approvedCapabilities = await driver.validateCapabilities(requestedCapabilities);
+        expect(approvedCapabilities).toEqual(requestedCapabilities);
+    });
+
+    it("approves identity via module api", async () => {
+        const driver = mkDefaultDriver();
+
+        jest.spyOn(ModuleRunner.instance, "invoke").mockImplementation((lifecycleEvent, opts, widgetInfo) => {
+            if (lifecycleEvent === WidgetLifecycle.IdentityRequest) {
+                (opts as ApprovalOpts).approved = true;
+            }
+        });
+
+        const listener = jest.fn();
+        const observer = new SimpleObservable<IOpenIDUpdate>();
+        observer.onUpdate(listener);
+        await driver.askOpenID(observer);
+
+        const openIdUpdate: IOpenIDUpdate = {
+            state: OpenIDRequestState.Allowed,
+            token: await client.getOpenIdToken(),
+        };
+        expect(listener).toHaveBeenCalledWith(openIdUpdate);
     });
 
     describe("sendToDevice", () => {
@@ -223,7 +277,7 @@ describe("StopGapWidgetDriver", () => {
                 prevBatch: undefined,
             });
 
-            expect(client.relations).toBeCalledWith("!this-room-id", "$event", null, null, {});
+            expect(client.relations).toHaveBeenCalledWith("!this-room-id", "$event", null, null, {});
         });
 
         it("reads related events from a selected room", async () => {
@@ -239,7 +293,7 @@ describe("StopGapWidgetDriver", () => {
                 prevBatch: undefined,
             });
 
-            expect(client.relations).toBeCalledWith("!room-id", "$event", null, null, {});
+            expect(client.relations).toHaveBeenCalledWith("!room-id", "$event", null, null, {});
         });
 
         it("reads related events with custom parameters", async () => {
@@ -265,7 +319,7 @@ describe("StopGapWidgetDriver", () => {
                 prevBatch: undefined,
             });
 
-            expect(client.relations).toBeCalledWith("!room-id", "$event", "m.reference", "m.room.message", {
+            expect(client.relations).toHaveBeenCalledWith("!room-id", "$event", "m.reference", "m.room.message", {
                 limit: 25,
                 from: "from-token",
                 to: "to-token",
@@ -311,6 +365,33 @@ describe("StopGapWidgetDriver", () => {
             );
 
             expect(dis.dispatch).not.toHaveBeenCalled();
+        });
+    });
+
+    describe("If the feature_dynamic_room_predecessors feature is not enabled", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+        });
+
+        it("passes the flag through to getVisibleRooms", () => {
+            const driver = mkDefaultDriver();
+            driver.readRoomEvents(EventType.CallAnswer, "", 0, ["*"]);
+            expect(client.getVisibleRooms).toHaveBeenCalledWith(false);
+        });
+    });
+
+    describe("If the feature_dynamic_room_predecessors is enabled", () => {
+        beforeEach(() => {
+            // Turn on feature_dynamic_room_predecessors setting
+            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                (settingName) => settingName === "feature_dynamic_room_predecessors",
+            );
+        });
+
+        it("passes the flag through to getVisibleRooms", () => {
+            const driver = mkDefaultDriver();
+            driver.readRoomEvents(EventType.CallAnswer, "", 0, ["*"]);
+            expect(client.getVisibleRooms).toHaveBeenCalledWith(true);
         });
     });
 });

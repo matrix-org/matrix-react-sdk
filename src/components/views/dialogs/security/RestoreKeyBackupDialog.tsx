@@ -24,7 +24,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t } from "../../../../languageHandler";
 import { accessSecretStorage } from "../../../../SecurityManager";
-import { IDialogProps } from "../IDialogProps";
 import Spinner from "../../elements/Spinner";
 import DialogButtons from "../../elements/DialogButtons";
 import AccessibleButton from "../../elements/AccessibleButton";
@@ -42,29 +41,30 @@ enum ProgressState {
     LoadKeys = "load_keys",
 }
 
-interface IProps extends IDialogProps {
+interface IProps {
     // if false, will close the dialog as soon as the restore completes successfully
     // default: true
     showSummary?: boolean;
     // If specified, gather the key from the user but then call the function with the backup
     // key rather than actually (necessarily) restoring the backup.
     keyCallback?: (key: Uint8Array) => void;
+    onFinished(done?: boolean): void;
 }
 
 interface IState {
-    backupInfo: IKeyBackupInfo;
-    backupKeyStored: Record<string, ISecretStorageKeyInfo>;
+    backupInfo: IKeyBackupInfo | null;
+    backupKeyStored: Record<string, ISecretStorageKeyInfo> | null;
     loading: boolean;
-    loadError: string;
+    loadError: string | null;
     restoreError: {
         errcode: string;
-    };
+    } | null;
     recoveryKey: string;
-    recoverInfo: IKeyBackupRestoreResult;
+    recoverInfo: IKeyBackupRestoreResult | null;
     recoveryKeyValid: boolean;
     forceRecoveryKey: boolean;
     passPhrase: string;
-    restoreType: RestoreType;
+    restoreType: RestoreType | null;
     progress: {
         stage: ProgressState;
         total?: number;
@@ -77,7 +77,7 @@ interface IState {
  * Dialog for restoring e2e keys from a backup and the user's recovery key
  */
 export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, IState> {
-    public static defaultProps = {
+    public static defaultProps: Partial<IProps> = {
         showSummary: true,
     };
 
@@ -247,7 +247,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
         }
     }
 
-    private async restoreWithCachedKey(backupInfo?: IKeyBackupInfo): Promise<boolean> {
+    private async restoreWithCachedKey(backupInfo: IKeyBackupInfo | null): Promise<boolean> {
         if (!backupInfo) return false;
         try {
             const recoverInfo = await MatrixClientPeg.get().restoreKeyBackupWithCache(
@@ -275,7 +275,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
             const cli = MatrixClientPeg.get();
             const backupInfo = await cli.getKeyBackupVersion();
             const has4S = await cli.hasSecretStorageKey();
-            const backupKeyStored = has4S && (await cli.isKeyBackupKeyStored());
+            const backupKeyStored = has4S ? await cli.isKeyBackupKeyStored() : null;
             this.setState({
                 backupInfo,
                 backupKeyStored,
@@ -405,7 +405,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                 <div>
                     <p>
                         {_t(
-                            "<b>Warning</b>: you should only set up key backup " + "from a trusted computer.",
+                            "<b>Warning</b>: you should only set up key backup from a trusted computer.",
                             {},
                             { b: (sub) => <b>{sub}</b> },
                         )}
@@ -480,7 +480,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                 <div>
                     <p>
                         {_t(
-                            "<b>Warning</b>: you should only set up key backup " + "from a trusted computer.",
+                            "<b>Warning</b>: you should only set up key backup from a trusted computer.",
                             {},
                             { b: (sub) => <b>{sub}</b> },
                         )}

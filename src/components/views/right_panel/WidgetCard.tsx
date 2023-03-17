@@ -24,7 +24,7 @@ import AppTile from "../elements/AppTile";
 import { _t } from "../../../languageHandler";
 import { useWidgets } from "./RoomSummaryCard";
 import { ChevronFace, ContextMenuButton, useContextMenu } from "../../structures/ContextMenu";
-import WidgetContextMenu from "../context_menus/WidgetContextMenu";
+import { WidgetContextMenu } from "../context_menus/WidgetContextMenu";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import UIStore from "../../../stores/UIStore";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
@@ -55,9 +55,9 @@ const WidgetCard: React.FC<IProps> = ({ room, widgetId, onClose }) => {
     // Don't render anything as we are about to transition
     if (!app || !isRight) return null;
 
-    let contextMenu;
+    let contextMenu: JSX.Element | undefined;
     if (menuDisplayed) {
-        const rect = handle.current.getBoundingClientRect();
+        const rect = handle.current!.getBoundingClientRect();
         contextMenu = (
             <WidgetContextMenu
                 chevronFace={ChevronFace.None}
@@ -92,7 +92,7 @@ const WidgetCard: React.FC<IProps> = ({ room, widgetId, onClose }) => {
                 fullWidth
                 showMenubar={false}
                 room={room}
-                userId={cli.getUserId()}
+                userId={cli.getSafeUserId()}
                 creatorUserId={app.creatorUserId}
                 widgetPageTitle={WidgetUtils.getWidgetDataTitle(app)}
                 waitForIframeLoad={app.waitForIframeLoad}

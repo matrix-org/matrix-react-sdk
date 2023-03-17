@@ -15,11 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
-import { act } from "react-dom/test-utils";
 import { MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { LocationAssetType, M_ASSET, M_LOCATION, M_TIMESTAMP } from "matrix-js-sdk/src/@types/location";
 import { M_TEXT } from "matrix-js-sdk/src/@types/extensible_events";
-import { fireEvent, getByTestId, render, RenderResult, screen } from "@testing-library/react";
+import { act, fireEvent, getByTestId, render, RenderResult, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -37,6 +36,7 @@ import {
     mockPlatformPeg,
 } from "../../../test-utils";
 import { TILE_SERVER_WK_KEY } from "../../../../src/utils/WellKnownUtils";
+import SettingsStore from "../../../../src/settings/SettingsStore";
 
 describe("ForwardDialog", () => {
     const sourceRoom = "!111111111111111111:example.org";
@@ -324,6 +324,33 @@ describe("ForwardDialog", () => {
                 pinDropLocationEvent.getType(),
                 pinDropLocationEvent.getContent(),
             );
+        });
+    });
+
+    describe("If the feature_dynamic_room_predecessors is not enabled", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+        });
+
+        it("Passes through the dynamic predecessor setting", async () => {
+            mockClient.getVisibleRooms.mockClear();
+            mountForwardDialog();
+            expect(mockClient.getVisibleRooms).toHaveBeenCalledWith(false);
+        });
+    });
+
+    describe("If the feature_dynamic_room_predecessors is enabled", () => {
+        beforeEach(() => {
+            // Turn on feature_dynamic_room_predecessors setting
+            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                (settingName) => settingName === "feature_dynamic_room_predecessors",
+            );
+        });
+
+        it("Passes through the dynamic predecessor setting", async () => {
+            mockClient.getVisibleRooms.mockClear();
+            mountForwardDialog();
+            expect(mockClient.getVisibleRooms).toHaveBeenCalledWith(true);
         });
     });
 });

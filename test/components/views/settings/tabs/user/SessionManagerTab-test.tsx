@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, RenderResult } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import { act, fireEvent, render, RenderResult } from "@testing-library/react";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { logger } from "matrix-js-sdk/src/logger";
 import { DeviceTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
@@ -206,17 +205,6 @@ describe("<SessionManagerTab />", () => {
     it("renders spinner while devices load", () => {
         const { container } = render(getComponent());
         expect(container.getElementsByClassName("mx_Spinner").length).toBeTruthy();
-    });
-
-    it("removes spinner when device fetch fails", async () => {
-        mockClient.getDevices.mockRejectedValue({ httpStatus: 404 });
-        const { container } = render(getComponent());
-        expect(mockClient.getDevices).toHaveBeenCalled();
-
-        await act(async () => {
-            await flushPromises();
-        });
-        expect(container.getElementsByClassName("mx_Spinner").length).toBeFalsy();
     });
 
     it("removes spinner when device fetch fails", async () => {
@@ -761,7 +749,7 @@ describe("<SessionManagerTab />", () => {
                 expect(mockClient.getDevices).toHaveBeenCalled();
             });
 
-            it("deletes a device when interactive auth is not required", async () => {
+            it("does not delete a device when interactive auth is not required", async () => {
                 const { getByTestId } = render(getComponent());
 
                 await act(async () => {
