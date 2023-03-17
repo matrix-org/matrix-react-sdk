@@ -213,6 +213,8 @@ const UntaggedAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex }) => {
     });
 
     const showCreateRoom = shouldShowComponent(UIComponent.CreateRooms);
+    const showExploreRooms = shouldShowComponent(UIComponent.ExploreRooms);
+
     const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
     const elementCallVideoRoomsEnabled = useFeatureEnabled("feature_element_call_video_rooms");
 
@@ -225,21 +227,23 @@ const UntaggedAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex }) => {
 
         contextMenuContent = (
             <IconizedContextMenuOptionList first>
-                <IconizedContextMenuOption
-                    label={_t("Explore rooms")}
-                    iconClassName="mx_RoomList_iconExplore"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        closeMenu();
-                        defaultDispatcher.dispatch<ViewRoomPayload>({
-                            action: Action.ViewRoom,
-                            room_id: activeSpace.roomId,
-                            metricsTrigger: undefined, // other
-                        });
-                        PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuExploreRoomsItem", e);
-                    }}
-                />
+                {showExploreRooms ? (
+                    <IconizedContextMenuOption
+                        label={_t("Explore rooms")}
+                        iconClassName="mx_RoomList_iconExplore"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            closeMenu();
+                            defaultDispatcher.dispatch<ViewRoomPayload>({
+                                action: Action.ViewRoom,
+                                room_id: activeSpace.roomId,
+                                metricsTrigger: undefined, // other
+                            });
+                            PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuExploreRoomsItem", e);
+                        }}
+                    />
+                ) : null}
                 {showCreateRoom ? (
                     <>
                         <IconizedContextMenuOption
@@ -337,17 +341,19 @@ const UntaggedAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex }) => {
                         )}
                     </>
                 )}
-                <IconizedContextMenuOption
-                    label={_t("Explore public rooms")}
-                    iconClassName="mx_RoomList_iconExplore"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        closeMenu();
-                        PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuExploreRoomsItem", e);
-                        defaultDispatcher.fire(Action.ViewRoomDirectory);
-                    }}
-                />
+                {showExploreRooms ? (
+                    <IconizedContextMenuOption
+                        label={_t("Explore public rooms")}
+                        iconClassName="mx_RoomList_iconExplore"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            closeMenu();
+                            PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuExploreRoomsItem", e);
+                            defaultDispatcher.fire(Action.ViewRoomDirectory);
+                        }}
+                    />
+                ) : null}
             </IconizedContextMenuOptionList>
         );
     }
@@ -361,22 +367,26 @@ const UntaggedAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex }) => {
         );
     }
 
-    return (
-        <>
-            <ContextMenuTooltipButton
-                tabIndex={tabIndex}
-                onClick={openMenu}
-                className="mx_RoomSublist_auxButton"
-                tooltipClassName="mx_RoomSublist_addRoomTooltip"
-                aria-label={_t("Add room")}
-                title={_t("Add room")}
-                isExpanded={menuDisplayed}
-                inputRef={handle}
-            />
+    if (showCreateRoom || showExploreRooms) {
+        return (
+            <>
+                <ContextMenuTooltipButton
+                    tabIndex={tabIndex}
+                    onClick={openMenu}
+                    className="mx_RoomSublist_auxButton"
+                    tooltipClassName="mx_RoomSublist_addRoomTooltip"
+                    aria-label={_t("Add room")}
+                    title={_t("Add room")}
+                    isExpanded={menuDisplayed}
+                    inputRef={handle}
+                />
 
-            {contextMenu}
-        </>
-    );
+                {contextMenu}
+            </>
+        );
+    }
+
+    return null;
 };
 
 const TAG_AESTHETICS: TagAestheticsMap = {
