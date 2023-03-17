@@ -30,6 +30,7 @@ import { UIFeature } from "../../../settings/UIFeature";
 import AdvancedRoomSettingsTab from "../settings/tabs/room/AdvancedRoomSettingsTab";
 import RolesRoomSettingsTab from "../settings/tabs/room/RolesRoomSettingsTab";
 import { Action } from "../../../dispatcher/actions";
+import { NonEmptyArray } from "../../../@types/common";
 
 export enum SpaceSettingsTab {
     General = "SPACE_GENERAL_TAB",
@@ -79,22 +80,18 @@ const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFin
                       <AdvancedRoomSettingsTab roomId={space.roomId} closeSettingsFn={onFinished} />,
                   )
                 : null,
-        ].filter(Boolean);
+        ].filter(Boolean) as NonEmptyArray<Tab>;
     }, [cli, space, onFinished]);
 
     return (
         <BaseDialog
-            title={_t("Space settings")}
+            title={_t("Settings - %(spaceName)s", { spaceName: space.name || _t("Unnamed Space") })}
             className="mx_SpaceSettingsDialog"
             contentId="mx_SpaceSettingsDialog"
             onFinished={onFinished}
             fixedWidth={false}
         >
-            <div
-                className="mx_SpaceSettingsDialog_content"
-                id="mx_SpaceSettingsDialog"
-                title={_t("Settings - %(spaceName)s", { spaceName: space.name })}
-            >
+            <div className="mx_SpaceSettingsDialog_content" id="mx_SpaceSettingsDialog">
                 <TabbedView tabs={tabs} />
             </div>
         </BaseDialog>

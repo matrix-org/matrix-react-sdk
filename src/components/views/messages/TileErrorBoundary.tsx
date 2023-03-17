@@ -30,19 +30,18 @@ import { Layout } from "../../../settings/enums/Layout";
 interface IProps {
     mxEvent: MatrixEvent;
     layout: Layout;
+    children: ReactNode;
 }
 
 interface IState {
-    error: Error;
+    error?: Error;
 }
 
 export default class TileErrorBoundary extends React.Component<IProps, IState> {
     public constructor(props: IProps) {
         super(props);
 
-        this.state = {
-            error: null,
-        };
+        this.state = {};
     }
 
     public static getDerivedStateFromError(error: Error): Partial<IState> {

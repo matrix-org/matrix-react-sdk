@@ -52,7 +52,7 @@ import ExportDialog from "../dialogs/ExportDialog";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
-import { PollHistoryDialog } from "../dialogs/polls/PollHistoryDialog";
+import { PollHistoryDialog } from "../dialogs/PollHistoryDialog";
 
 interface IProps {
     room: Room;
@@ -325,9 +325,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) 
 
     const memberCount = useRoomMemberCount(room);
     const pinningEnabled = useFeatureEnabled("feature_pinning");
-    const pinCount = usePinnedEvents(pinningEnabled && room)?.length;
-
-    const isPollHistoryEnabled = useFeatureEnabled("feature_poll_history");
+    const pinCount = usePinnedEvents(pinningEnabled ? room : undefined)?.length;
 
     return (
         <BaseCard header={header} className="mx_RoomSummaryCard" onClose={onClose}>
@@ -341,7 +339,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) 
                         {_t("Files")}
                     </Button>
                 )}
-                {!isVideoRoom && isPollHistoryEnabled && (
+                {!isVideoRoom && (
                     <Button className="mx_RoomSummaryCard_icon_poll" onClick={onRoomPollHistoryClick}>
                         {_t("Polls history")}
                     </Button>
