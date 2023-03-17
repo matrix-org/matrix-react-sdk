@@ -51,10 +51,12 @@ $timeline-image-border-radius: 8px;
     }
 }
 
+html, body {
+    height: 100%;
+
 html {
     /* hack to stop overscroll bounce on OSX and iOS.
        N.B. Breaks things when we have legitimate horizontal overscroll */
-    height: 100%;
     overflow: hidden;
     /* Stop similar overscroll bounce in Firefox Nightly for macOS */
     overscroll-behavior: none;
@@ -65,8 +67,7 @@ body {
     font-size: $font-15px;
     background-color: $background;
     color: $primary-content;
-    border: 0px;
-    margin: 0px;
+    margin: 0;
 
     /* needed to match the designs correctly on macOS */
     /* see https://github.com/vector-im/element-web/issues/11425 */
