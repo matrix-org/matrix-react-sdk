@@ -401,7 +401,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
                             Modal.createDialog(
                                 DevtoolsDialog,
                                 {
-                                    roomId: SdkContextClass.instance.roomViewStore.getRoomId(),
+                                    roomId: room.roomId,
                                 },
                                 "mx_DevtoolsDialog_wrapper",
                             );
