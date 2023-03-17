@@ -405,12 +405,12 @@ describe("StopGapWidgetDriver", () => {
         it("searches for users in the user directory", async () => {
             client.searchUserDirectory.mockResolvedValue({
                 limited: false,
-                results: [],
+                results: [{ user_id: "@user", display_name: "Name", avatar_url: "mxc://" }],
             });
 
             await expect(driver.searchUserDirectory("foo")).resolves.toEqual({
                 limited: false,
-                results: [],
+                results: [{ userId: "@user", displayName: "Name", avatarUrl: "mxc://" }],
             });
 
             expect(client.searchUserDirectory).toHaveBeenCalledWith({ term: "foo", limit: undefined });
