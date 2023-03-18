@@ -27,6 +27,12 @@ $irc-line-height: $font-18px;
         margin: 0;
     }
 
+    .mx_NewRoomIntro {
+        > h2 {
+            line-height: initial; /* Cancel $irc-line-height */
+        }
+    }
+
     .mx_EventTile[data-layout="irc"] {
         --EventTile_irc_line-padding-block: 1px;
 

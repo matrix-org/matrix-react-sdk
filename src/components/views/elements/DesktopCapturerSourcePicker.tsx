@@ -33,7 +33,8 @@ export function getDesktopCapturerSources(): Promise<Array<DesktopCapturerSource
         },
         types: ["screen", "window"],
     };
-    return PlatformPeg.get().getDesktopCapturerSources(options);
+    const plaf = PlatformPeg.get();
+    return plaf ? plaf?.getDesktopCapturerSources(options) : Promise.resolve<DesktopCapturerSource[]>([]);
 }
 
 export enum Tabs {
@@ -68,7 +69,7 @@ export class ExistingSource extends React.Component<ExistingSourceIProps> {
                 title={this.props.source.name}
                 onClick={this.onClick}
             >
-                <img className={thumbnailClasses} src={this.props.source.thumbnailURL} />
+                <img alt={this.props.source.name} className={thumbnailClasses} src={this.props.source.thumbnailURL} />
                 <span className="mx_desktopCapturerSourcePicker_source_name">{this.props.source.name}</span>
             </AccessibleButton>
         );
