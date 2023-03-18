@@ -65,6 +65,7 @@ exports[`<DecryptionFailureBar /> Displays a loading spinner 1`] = `
     </div>
     <div
       class="mx_DecryptionFailureBar_start_headline"
+      data-testid="decryption-failure-bar-headline-waiting"
     >
       Decrypting messages…
     </div>

@@ -135,6 +135,7 @@ describe("Decryption Failure Bar", () => {
                 })
                 .then(() => {
                     cy.botSendMessage(bot, roomId, "test");
+                    cy.get("[data-testid='decryption-failure-bar-headline-waiting']").should("exist");
                     cy.get("[data-testid='decryption-failure-bar-headline-verify']").should("exist");
 
                     checkTimelineNarrow();
