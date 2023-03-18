@@ -135,7 +135,7 @@ describe("FilePanel", () => {
 
                 // Exclude timestamps and read markers from snapshot
                 const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
-                cy.get(".mx_RoomView_MessageList").percySnapshotElement("Image tiles on FilePanel", { percyCSS });
+                cy.get(".mx_RoomView_MessageList").percySnapshotElement("File tiles on FilePanel", { percyCSS });
             });
         });
 
@@ -156,8 +156,10 @@ describe("FilePanel", () => {
                                 cy.contains(".mx_AudioPlayer_byline", "(3.56 KB)").should("exist"); // actual size
                             });
 
-                            // Click the play button
+                            // Ensure the counter is zero before clicking the play button
                             cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
+
+                            // Click the play button
                             cy.get("[data-testid='play-pause-button'][aria-label='Play']").click();
 
                             // Ensure the pause button is rendered
@@ -165,6 +167,8 @@ describe("FilePanel", () => {
 
                             // Ensure the timer is reset when the audio file finished playing
                             cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
+
+                            // Ensure the play button is rendered
                             cy.get("[data-testid='play-pause-button'][aria-label='Play']").should("exist");
                         });
                     });
