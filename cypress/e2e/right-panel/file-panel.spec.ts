@@ -78,7 +78,7 @@ describe("FilePanel", () => {
             uploadFile("cypress/fixtures/matrix-org-client-versions.json"); // JSON
 
             cy.get(".mx_RoomView_body").within(() => {
-                // Ensure all of the file tiles are uploaded
+                // Ensure all of the file were uploaded and rendered
                 cy.get(".mx_EventTile[data-layout='group']").should("have.length", 3);
 
                 // Ensure the image exists and has the alt string
