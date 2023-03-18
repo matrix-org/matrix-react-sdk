@@ -152,13 +152,12 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
     );
 
     let headline: JSX.Element;
-    let headline_testid;
+    let headlineTestId;
     let message: JSX.Element;
     let button = <React.Fragment />;
-    let button_testid;
     if (waiting) {
         headline = <React.Fragment>{_t("Decrypting messages…")}</React.Fragment>;
-        headline_testid = "decryption-failure-bar-headline-waiting";
+        headlineTestId = "decryption-failure-bar-headline-waiting";
         message = (
             <React.Fragment>
                 {_t("Please wait as we try to decrypt your messages. This may take a few moments.")}
@@ -167,7 +166,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
     } else if (needsVerification) {
         if (hasOtherVerifiedDevices || hasKeyBackup) {
             headline = <React.Fragment>{_t("Verify this device to access all messages")}</React.Fragment>;
-            headline_testid = "decryption-failure-bar-headline-verify";
+            headlineTestId = "decryption-failure-bar-headline-verify";
             message = (
                 <React.Fragment>
                     {_t("This device was unable to decrypt some messages because it has not been verified yet.")}
@@ -186,7 +185,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
             );
         } else {
             headline = <React.Fragment>{_t("Reset your keys to prevent future decryption errors")}</React.Fragment>;
-            headline_testid = "decryption-failure-bar-headline-reset";
+            headlineTestId = "decryption-failure-bar-headline-reset";
             message = (
                 <React.Fragment>
                     {_t(
@@ -209,7 +208,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
         }
     } else if (hasOtherVerifiedDevices) {
         headline = <React.Fragment>{_t("Open another device to load encrypted messages")}</React.Fragment>;
-        headline_testid = "decryption-failure-bar-headline-devicelist";
+        headlineTestId = "decryption-failure-bar-headline-devicelist";
         message = (
             <React.Fragment>
                 {_t(
@@ -231,7 +230,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
         );
     } else {
         headline = <React.Fragment>{_t("Some messages could not be decrypted")}</React.Fragment>;
-        headline_testid = "decryption-failure-bar-headline-error";
+        headlineTestId = "decryption-failure-bar-headline-error";
         message = (
             <React.Fragment>
                 {_t(
@@ -263,7 +262,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
                 <div className="mx_DecryptionFailureBar_start_status">
                     <div data-testid="decryption-failure-bar-indicator">{statusIndicator}</div>
                 </div>
-                <div className="mx_DecryptionFailureBar_start_headline" data-testid={headline_testid}>
+                <div className="mx_DecryptionFailureBar_start_headline" data-testid={headlineTestId}>
                     {headline}
                 </div>
                 <div className="mx_DecryptionFailureBar_start_message">{message}</div>
