@@ -36,6 +36,7 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import JumpToDatePicker from "./JumpToDatePicker";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { SdkContextClass } from "../../../contexts/SDKContext";
 
 function getDaysArray(): string[] {
     return [_t("Sunday"), _t("Monday"), _t("Tuesday"), _t("Wednesday"), _t("Thursday"), _t("Friday"), _t("Saturday")];
@@ -135,7 +136,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
             // Only try to navigate to the room if the user is still viewing the same
             // room. We don't want to jump someone back to a room after a slow request
             // if they've already navigated away to another room.
-            const roomIdBeforeNavigation = this.props.roomId;
+            const roomIdBeforeNavigation = SdkContextClass.instance.roomViewStore.getRoomId();
             if (roomIdBeforeNavigation === roomIdForJumpRequest) {
                 dis.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
@@ -156,7 +157,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
             // don't want to worry someone about an error in a room they no longer care
             // about after a slow request if they've already navigated away to another
             // room.
-            const roomIdBeforeDisplayingError = this.props.roomId;
+            const roomIdBeforeDisplayingError = SdkContextClass.instance.roomViewStore.getRoomId();
             if (roomIdBeforeDisplayingError === roomIdForJumpRequest) {
                 let friendlyErrorMessage = `An error occured while trying to find and jump to the given date.`;
                 if (err.errcode === "M_NOT_FOUND") {
