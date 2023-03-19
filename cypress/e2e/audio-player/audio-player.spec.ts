@@ -160,4 +160,33 @@ describe("Audio player", () => {
             });
         });
     });
+
+    it("should download audio file", () => {
+        cy.visit("/#/room/" + roomId);
+        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+
+        // Wait until configuration is finished
+        cy.contains(
+            ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=group] .mx_GenericEventListSummary_summary",
+            "created and configured the room.",
+        ).should("exist");
+
+        // Upload an audio file
+        uploadFile("cypress/fixtures/1sec.ogg");
+
+        cy.get(".mx_RoomView_MessageList").within(() => {
+            // Assert the audio player is rendered
+            cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
+
+            cy.get(".mx_EventTile_last")
+                .realHover()
+                .within(() => {
+                    // Click "Download" button on MessageActionBar
+                    cy.get('[aria-label="Download"]').click({ force: false });
+
+                    // Assert that the file was downloaded
+                    cy.readFile("cypress/downloads/1sec.ogg").should("exist");
+                });
+        });
+    });
 });
