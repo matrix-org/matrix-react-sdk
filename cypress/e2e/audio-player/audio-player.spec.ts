@@ -254,4 +254,60 @@ describe("Audio player", () => {
                 });
         });
     });
+
+    it("should reply to audio file with another audio file", () => {
+        visitRoom();
+
+        // Upload one second audio file with a long file name
+        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
+
+        cy.get(".mx_RoomView_MessageList").within(() => {
+            // Assert the audio player is rendered
+            cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
+
+            cy.get(".mx_EventTile_last")
+                .realHover()
+                .within(() => {
+                    // Click "Reply" button on MessageActionBar
+                    cy.get('[aria-label="Reply"]').click({ force: false });
+                });
+        });
+
+        // Reply to the player with another audio file
+        uploadFile("cypress/fixtures/1sec.ogg");
+
+        cy.get(".mx_RoomView_MessageList").within(() => {
+            const takeSnapshotReply = (layout: string) => {
+                cy.get(".mx_EventTile_last .mx_MAudioBody").should("be.visible");
+                cy.get(".mx_EventTile_last").percySnapshotElement(
+                    `"EventTile of audio player with a reply on ${layout} layout"`,
+                    { percyCSS },
+                );
+                cy.log(`""Took a snapshot of EventTile of audio player with a reply on ${layout} layout"`);
+            };
+
+            cy.get(".mx_EventTile_last").within(() => {
+                // Assert that replied audio file is rendered as file button inside ReplyChain
+                cy.get(".mx_ReplyChain_wrapper").within(() => {
+                    cy.get(".mx_MFileBody_info[role='button']").within(() => {
+                        // Assert that the file button has file name
+                        cy.get(".mx_MFileBody_info_filename").should("exist");
+                    });
+                });
+
+                cy.get(".mx_MAudioBody").within(() => {
+                    // Assert that the play button is visible
+                    cy.get("[data-testid='play-pause-button'][aria-label='Play']").should("be.visible");
+                });
+            });
+
+            // Take a snapshot of EventTile with a reply on group layout
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+            takeSnapshotReply("group");
+
+            // Take a snapshot of EventTile with a reply on bubble layout
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
+            takeSnapshotReply("bubble");
+        });
+    });
 });
