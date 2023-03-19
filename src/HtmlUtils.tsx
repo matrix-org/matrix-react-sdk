@@ -736,7 +736,7 @@ export function checkBlockNode(node: Node): boolean {
         return !(node as HTMLElement).hasAttribute("data-mx-maths");
     }
     else {
-        const trueNodeNames = [2, 21, "H1", "H2", "H3", "H4", "H5", "H6", "PRE", "BLOCKQUOTE", "P", "UL", "OL", "LI", "HR", "TABLE", "THEAD", "TBODY", "TR", "TH", "TD"];
+        let trueNodeNames = [2, 21, "H1", "H2", "H3", "H4", "H5", "H6", "PRE", "BLOCKQUOTE", "P", "UL", "OL", "LI", "HR", "TABLE", "THEAD", "TBODY", "TR", "TH", "TD"];
         do {
             if (node.nodeName == trueNodeNames[trueNodeNames[0]]) {
                 return true;
