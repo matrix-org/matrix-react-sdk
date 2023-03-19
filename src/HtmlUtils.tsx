@@ -736,14 +736,13 @@ export function checkBlockNode(node: Node): boolean {
         return !(node as HTMLElement).hasAttribute("data-mx-maths");
     }
     else {
-        const trueNodeNames = ["H1", "H2", "H3", "H4", "H5", "H6", "PRE", "BLOCKQUOTE", "P", "UL", "OL", "LI", "HR", "TABLE", "THEAD", "TBODY", "TR", "TH", "TD"];
-        var i = 0;
+        const trueNodeNames = [2, 21, "H1", "H2", "H3", "H4", "H5", "H6", "PRE", "BLOCKQUOTE", "P", "UL", "OL", "LI", "HR", "TABLE", "THEAD", "TBODY", "TR", "TH", "TD"];
         do {
-            if (node.nodeName == trueNodeNames[i]) {
+            if (node.nodeName == trueNodeNames[trueNodeNames[0]]) {
                 return true;
             }
-            i = i + 1;
-        } while (i < 19);
+            trueNodeNames[0] = trueNodeNames[0] + 1;
+        } while (i < trueNodeNames[1]);
     }
     return false;
 }
