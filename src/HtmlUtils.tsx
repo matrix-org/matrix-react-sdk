@@ -731,31 +731,19 @@ export function linkifyAndSanitizeHtml(dirtyHtml: string, options = linkifyMatri
  * @returns {bool}
  */
 export function checkBlockNode(node: Node): boolean {
-    switch (node.nodeName) {
-        case "H1":
-        case "H2":
-        case "H3":
-        case "H4":
-        case "H5":
-        case "H6":
-        case "PRE":
-        case "BLOCKQUOTE":
-        case "P":
-        case "UL":
-        case "OL":
-        case "LI":
-        case "HR":
-        case "TABLE":
-        case "THEAD":
-        case "TBODY":
-        case "TR":
-        case "TH":
-        case "TD":
-            return true;
-        case "DIV":
-            // don't treat math nodes as block nodes for deserializing
-            return !(node as HTMLElement).hasAttribute("data-mx-maths");
-        default:
-            return false;
+    if (node.nodeName == "DIV") {
+        // don't treat math nodes as block nodes for deserializing
+        return !(node as HTMLElement).hasAttribute("data-mx-maths");
     }
+    else {
+        const trueNodeNames = ["H1", "H2", "H3", "H4", "H5", "H6", "PRE", "BLOCKQUOTE", "P", "UL", "OL", "LI", "HR", "TABLE", "THEAD", "TBODY", "TR", "TH", "TD"];
+        var i = 0;
+        do {
+            if (node.nodeName == trueNodeNames[i]) {
+                return true;
+            }
+            i = i + 1;
+        } while (i < 19);
+    }
+    return false;
 }
