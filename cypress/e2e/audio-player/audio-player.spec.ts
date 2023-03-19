@@ -189,4 +189,48 @@ describe("Audio player", () => {
                 });
         });
     });
+
+    it("should reply to audio file with another audio file", () => {
+        cy.visit("/#/room/" + roomId);
+        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+
+        // Wait until configuration is finished
+        cy.contains(
+            ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=group] .mx_GenericEventListSummary_summary",
+            "created and configured the room.",
+        ).should("exist");
+
+        // Upload one second audio file with a long file name
+        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
+
+        cy.get(".mx_RoomView_MessageList").within(() => {
+            // Assert the audio player is rendered
+            cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
+
+            cy.get(".mx_EventTile_last")
+                .realHover()
+                .within(() => {
+                    // Click "Reply" button on MessageActionBar
+                    cy.get('[aria-label="Reply"]').click({ force: false });
+                });
+        });
+
+        // Reply to the player with another audio file
+        uploadFile("cypress/fixtures/1sec.ogg");
+
+        // Assert that audio file is rendered as file button inside ReplyChain
+        cy.get(".mx_RoomView_MessageList").within(() => {
+            cy.get(".mx_EventTile_last").within(() => {
+                cy.get(".mx_ReplyChain").within(() => {
+                    cy.get(".mx_MFileBody_info[role='button']").within(() => {
+                        // Asser that the file button has file name
+                        cy.get(".mx_MFileBody_info_filename").should("exist");
+                    });
+                });
+            });
+        });
+
+        // Take snapshots
+        takeSnapshots("Reply to audio player");
+    });
 });
