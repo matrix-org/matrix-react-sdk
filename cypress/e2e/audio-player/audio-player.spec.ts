@@ -138,6 +138,29 @@ describe("Audio player", () => {
             cy.setSettingValue("theme", null, SettingLevel.ACCOUNT, "dark");
             takeSnapshots("Audio player (dark theme)");
         });
+
+        // Take snapshots (high contrast, light theme only)
+        // Enable high contrast manually
+        cy.openUserSettings("Appearance");
+        cy.get(".mx_UserSettingsDialog").within(() => {
+            cy.get(".mx_ThemeChoicePanel").within(() => {
+                cy.get("[data-testid='theme-choice-panel-selectors']").within(() => {
+                    // Enable light theme
+                    cy.get(".mx_ThemeSelector_light").click();
+                });
+
+                cy.get("[data-testid='theme-choice-panel-highcontrast']").within(() => {
+                    // Click the checkbox
+                    cy.get("label .mx_Checkbox_background").click();
+                });
+            });
+
+            // Close the user settings dialog
+            cy.get("[aria-label='Close dialog']").click();
+        });
+        cy.get(".mx_RoomView_MessageList").within(() => {
+            takeSnapshots("Audio player (high contrast)");
+        });
     });
 
     it("should play audio file", () => {
