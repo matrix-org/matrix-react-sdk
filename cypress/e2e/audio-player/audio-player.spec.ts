@@ -25,6 +25,17 @@ describe("Audio player", () => {
     let roomId: string;
     const TEST_USER = "Hanako";
 
+    const visitRoom = () => {
+        cy.visit("/#/room/" + roomId);
+        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+
+        // Wait until configuration is finished
+        cy.contains(
+            ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=group] .mx_GenericEventListSummary_summary",
+            "created and configured the room.",
+        ).should("exist");
+    };
+
     const uploadFile = (file: string) => {
         // Upload a file from the message composer
         cy.get(".mx_MessageComposer_actions input[type='file']").selectFile(file, { force: true });
@@ -81,14 +92,7 @@ describe("Audio player", () => {
     });
 
     it("should render with one second audio file with a long file name", () => {
-        cy.visit("/#/room/" + roomId);
-        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
-
-        // Wait until configuration is finished
-        cy.contains(
-            ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=group] .mx_GenericEventListSummary_summary",
-            "created and configured the room.",
-        ).should("exist");
+        visitRoom();
 
         // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
@@ -127,14 +131,7 @@ describe("Audio player", () => {
     });
 
     it("should play audio file", () => {
-        cy.visit("/#/room/" + roomId);
-        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
-
-        // Wait until configuration is finished
-        cy.contains(
-            ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=group] .mx_GenericEventListSummary_summary",
-            "created and configured the room.",
-        ).should("exist");
+        visitRoom();
 
         // Upload an audio file
         uploadFile("cypress/fixtures/1sec.ogg");
@@ -163,14 +160,7 @@ describe("Audio player", () => {
     });
 
     it("should download audio file", () => {
-        cy.visit("/#/room/" + roomId);
-        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
-
-        // Wait until configuration is finished
-        cy.contains(
-            ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=group] .mx_GenericEventListSummary_summary",
-            "created and configured the room.",
-        ).should("exist");
+        visitRoom();
 
         // Upload an audio file
         uploadFile("cypress/fixtures/1sec.ogg");
@@ -192,14 +182,7 @@ describe("Audio player", () => {
     });
 
     it("should reply to audio file with another audio file", () => {
-        cy.visit("/#/room/" + roomId);
-        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
-
-        // Wait until configuration is finished
-        cy.contains(
-            ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=group] .mx_GenericEventListSummary_summary",
-            "created and configured the room.",
-        ).should("exist");
+        visitRoom();
 
         // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
@@ -236,14 +219,7 @@ describe("Audio player", () => {
     });
 
     it("should create reply chain of audio files", () => {
-        cy.visit("/#/room/" + roomId);
-        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
-
-        // Wait until configuration is finished
-        cy.contains(
-            ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=group] .mx_GenericEventListSummary_summary",
-            "created and configured the room.",
-        ).should("exist");
+        visitRoom();
 
         // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
@@ -323,14 +299,7 @@ describe("Audio player", () => {
     });
 
     it("should render, play, and reply on a thread", () => {
-        cy.visit("/#/room/" + roomId);
-        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
-
-        // Wait until configuration is finished
-        cy.contains(
-            ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=group] .mx_GenericEventListSummary_summary",
-            "created and configured the room.",
-        ).should("exist");
+        visitRoom();
 
         // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
