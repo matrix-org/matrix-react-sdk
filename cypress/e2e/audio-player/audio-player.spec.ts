@@ -23,6 +23,7 @@ import { Layout } from "../../../src/settings/enums/Layout";
 describe("Audio player", () => {
     let homeserver: HomeserverInstance;
     let roomId: string;
+    const TEST_USER = "Hanako";
 
     const uploadFile = (file: string) => {
         // Upload a file from the message composer
@@ -65,7 +66,7 @@ describe("Audio player", () => {
     beforeEach(() => {
         cy.startHomeserver("default").then((data) => {
             homeserver = data;
-            cy.initTestUser(homeserver, "Hanako").then(() =>
+            cy.initTestUser(homeserver, TEST_USER).then(() =>
                 cy.createRoom({}).then((_roomId) => {
                     roomId = _roomId;
                 }),
@@ -232,5 +233,92 @@ describe("Audio player", () => {
 
         // Take snapshots
         takeSnapshots("Reply to audio player");
+    });
+
+    it("should create reply chain of audio files", () => {
+        cy.visit("/#/room/" + roomId);
+        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+
+        // Wait until configuration is finished
+        cy.contains(
+            ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=group] .mx_GenericEventListSummary_summary",
+            "created and configured the room.",
+        ).should("exist");
+
+        // Upload one second audio file with a long file name
+        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
+
+        cy.get(".mx_RoomView_MessageList").within(() => {
+            // Assert the audio player is rendered
+            cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
+
+            cy.get(".mx_EventTile_last")
+                .realHover()
+                .within(() => {
+                    // Click "Reply" button on MessageActionBar
+                    cy.get('[aria-label="Reply"]').click({ force: false });
+                });
+        });
+
+        // Reply to the player with another audio file
+        uploadFile("cypress/fixtures/1sec.ogg");
+
+        cy.get(".mx_RoomView_MessageList").within(() => {
+            cy.get(".mx_EventTile_last").within(() => {
+                // Assert that audio file is rendered as file button
+                cy.get(".mx_ReplyChain").within(() => {
+                    cy.get(".mx_MFileBody_info[role='button']").within(() => {
+                        // Asser that the file button has file name
+                        cy.get(".mx_MFileBody_info_filename").should("exist");
+                    });
+                });
+            });
+
+            cy.get(".mx_EventTile_last")
+                .realHover()
+                .within(() => {
+                    // Again, click "Reply" button on MessageActionBar
+                    cy.get('[aria-label="Reply"]').click({ force: false });
+                });
+        });
+
+        // Reply to the player with another audio file
+        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
+
+        cy.get(".mx_RoomView_MessageList").within(() => {
+            cy.get(".mx_EventTile_last").within(() => {
+                // Assert that there are two "ReplyChain"
+                cy.get(".mx_ReplyChain").should("have.length", 2);
+
+                // Assert that one line contains the user name
+                cy.contains(".mx_ReplyChain .mx_ReplyTile_sender", TEST_USER);
+
+                // Assert that the other line contains the file button
+                cy.get(".mx_ReplyChain .mx_MFileBody").within(() => {
+                    // Assert that audio file is rendered as file button
+                    cy.get(".mx_MFileBody_info[role='button']").within(() => {
+                        // Asser that the file button has file name
+                        cy.get(".mx_MFileBody_info_filename").should("exist");
+                    });
+                });
+
+                // Click "In reply to"
+                cy.get(".mx_ReplyChain .mx_ReplyChain_show").click();
+
+                // Assert that "In reply to" on the first ReplyChain is replaced with the audio file sent at first
+                cy.get("blockquote.mx_ReplyChain:first-of-type .mx_ReplyChain_show").should("not.exist");
+                cy.get(".mx_ReplyChain").should("have.length", 2);
+                cy.get("blockquote.mx_ReplyChain:first-of-type").within(() => {
+                    // Assert that audio file is rendered as file button
+                    cy.get(".mx_MFileBody_info[role='button']").within(() => {
+                        // Asser that the file button contains the name of the file sent at first
+                        cy.contains(".mx_MFileBody_info_filename", "1sec-long-name");
+                    });
+                });
+
+                // Take snapshots
+                takeSnapshots("Audio player of ReplyChain");
+            });
+        });
     });
 });
