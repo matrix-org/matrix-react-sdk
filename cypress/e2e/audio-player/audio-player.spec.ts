@@ -60,15 +60,25 @@ describe("Audio player", () => {
         // Assert that the pause button is not rendered
         cy.get("[data-testid='play-pause-button'][aria-label='Pause']").should("not.exist");
 
-        // Take snapshots in IRC, bubble, modern, and compact modern layout, outputting log for reference
+        // Take a snapshot in IRC layout, outputting log for reference
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
         cy.get(".mx_MAudioBody").percySnapshotElement(detail + " on IRC layout");
+        cy.log("Took a snapshot of " + detail + " on IRC layout");
+
+        // Take a snapshot in bubble layout, outputting log for reference
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
         cy.get(".mx_MAudioBody").percySnapshotElement(detail + " on bubble layout");
+        cy.log("Took a snapshot of " + detail + " on bubble layout");
+
+        // Take a snapshot in modern layout, outputting log for reference
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
         cy.get(".mx_MAudioBody").percySnapshotElement(detail + " on group layout");
+        cy.log("Took a snapshot of " + detail + " on group layout");
+
+        // Take a snapshot in compact modern layout, outputting log for reference
         cy.setSettingValue("useCompactLayout", null, SettingLevel.DEVICE, true);
         cy.get(".mx_MAudioBody").percySnapshotElement(detail + " on compact group layout");
+        cy.log("Took a snapshot of " + detail + " on compact group layout");
 
         // Reset compact layout setting
         cy.setSettingValue("useCompactLayout", null, SettingLevel.DEVICE, false);
