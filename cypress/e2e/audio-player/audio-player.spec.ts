@@ -321,4 +321,92 @@ describe("Audio player", () => {
             });
         });
     });
+
+    it("should render, play, and reply on a thread", () => {
+        cy.visit("/#/room/" + roomId);
+        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+
+        // Wait until configuration is finished
+        cy.contains(
+            ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=group] .mx_GenericEventListSummary_summary",
+            "created and configured the room.",
+        ).should("exist");
+
+        // Upload one second audio file with a long file name
+        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
+
+        cy.get(".mx_RoomView_body .mx_RoomView_MessageList").within(() => {
+            // Assert the audio player is rendered
+            cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
+
+            cy.get(".mx_EventTile_last")
+                .realHover()
+                .within(() => {
+                    // Click "Reply in thread" button on MessageActionBar
+                    cy.get('[aria-label="Reply in thread"]').click({ force: false });
+                });
+        });
+
+        // Assert that the thread is visible
+        cy.get(".mx_ThreadView").should("be.visible");
+
+        // Take snapshots of audio players on main timeline with ThreadPanel opened
+        cy.get(".mx_RoomView_body .mx_RoomView_MessageList").within(() => {
+            takeSnapshots("Audio player on narrow main timeline");
+        });
+
+        cy.get(".mx_ThreadView").within(() => {
+            // Take snapshots of audio player on a thread
+            takeSnapshots("Audio player on a thread");
+
+            cy.get(".mx_AudioPlayer_container").within(() => {
+                // Assert that the counter is zero before clicking the play button
+                cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
+
+                // Click the play button
+                cy.get("[data-testid='play-pause-button'][aria-label='Play']").click();
+
+                // Assert that the pause button is rendered
+                cy.get("[data-testid='play-pause-button'][aria-label='Pause']").should("exist");
+
+                // Assert that the timer is reset when the audio file finished playing
+                cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
+
+                // Assert that the play button is rendered
+                cy.get("[data-testid='play-pause-button'][aria-label='Play']").should("exist");
+            });
+
+            cy.get(".mx_EventTile_last")
+                .realHover()
+                .within(() => {
+                    // Click the reply button
+                    cy.get('[aria-label="Reply"]').click({ force: false });
+                });
+
+            cy.get(".mx_MessageComposer--compact").within(() => {
+                // Assert that the reply preview is rendered on the message composer
+                cy.get(".mx_ReplyPreview").within(() => {
+                    // Assert that the reply preview contains audio ReplyTile
+                    cy.get(".mx_ReplyTile_audio").within(() => {
+                        // Assert that the ReplyTile has the file info button
+                        cy.get(".mx_MFileBody_info[role='button']").should("exist");
+                    });
+                });
+
+                // Select :smile: emoji and send it
+                cy.get("[data-testid='basicmessagecomposer']").type(":smile:");
+                cy.get(".mx_Autocomplete_Completion[aria-selected='true']").click();
+                cy.get("[data-testid='basicmessagecomposer']").type("{enter}");
+            });
+
+            cy.get(".mx_EventTile_last").within(() => {
+                cy.get(".mx_ReplyTile_audio").within(() => {
+                    cy.get(".mx_MFileBody_info[role='button']").within(() => {
+                        // Assert that the file name is rendered on the file button
+                        cy.contains(".mx_MFileBody_info_filename", "1sec-long-name");
+                    });
+                });
+            });
+        });
+    });
 });
