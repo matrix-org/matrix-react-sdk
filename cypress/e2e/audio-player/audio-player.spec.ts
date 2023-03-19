@@ -25,8 +25,10 @@ describe("Audio player", () => {
     let roomId: string;
     const TEST_USER = "Hanako";
 
-    // FIXME: hide mx_SeekBar because flaky - see https://github.com/vector-im/element-web/issues/24898
-    const percyCSS = ".mx_SeekBar { visibility: hidden !important; }";
+    const percyCSS =
+        // FIXME: hide mx_SeekBar because flaky - see https://github.com/vector-im/element-web/issues/24898
+        ".mx_SeekBar, " +
+        ".mx_JumpToBottomButton, .mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
 
     const visitRoom = () => {
         cy.visit("/#/room/" + roomId);
@@ -135,6 +137,9 @@ describe("Audio player", () => {
         // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
 
+        // Scroll to the bottom to make the audio player visible for Percy tests
+        cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
+
         cy.get(".mx_RoomView_MessageList").within(() => {
             checkPlayerFilenameLong();
 
@@ -198,6 +203,9 @@ describe("Audio player", () => {
             // Close the user settings dialog
             cy.get("[aria-label='Close dialog']").click();
         });
+
+        // Scroll to the bottom to make the audio player visible for Percy tests
+        cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
 
         // Take snapshots (high contrast, light theme only)
         cy.get(".mx_RoomView_MessageList").within(() => {
@@ -278,15 +286,6 @@ describe("Audio player", () => {
         uploadFile("cypress/fixtures/1sec.ogg");
 
         cy.get(".mx_RoomView_MessageList").within(() => {
-            const takeSnapshotReply = (layout: string) => {
-                cy.get(".mx_EventTile_last .mx_MAudioBody").should("be.visible");
-                cy.get(".mx_EventTile_last").percySnapshotElement(
-                    `"EventTile of audio player with a reply on ${layout} layout"`,
-                    { percyCSS },
-                );
-                cy.log(`""Took a snapshot of EventTile of audio player with a reply on ${layout} layout"`);
-            };
-
             cy.get(".mx_EventTile_last").within(() => {
                 // Assert that replied audio file is rendered as file button inside ReplyChain
                 cy.get(".mx_ReplyChain_wrapper").within(() => {
@@ -301,6 +300,20 @@ describe("Audio player", () => {
                     cy.get("[data-testid='play-pause-button'][aria-label='Play']").should("be.visible");
                 });
             });
+        });
+
+        // Scroll to the bottom to make the audio player visible for Percy tests
+        cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
+
+        cy.get(".mx_RoomView_MessageList").within(() => {
+            const takeSnapshotReply = (layout: string) => {
+                cy.get(".mx_EventTile_last .mx_MAudioBody").should("be.visible");
+                cy.get(".mx_EventTile_last").percySnapshotElement(
+                    `"EventTile of audio player with a reply on ${layout} layout"`,
+                    { percyCSS },
+                );
+                cy.log(`""Took a snapshot of EventTile of audio player with a reply on ${layout} layout"`);
+            };
 
             // Take a snapshot of EventTile with a reply on group layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
@@ -410,6 +423,104 @@ describe("Audio player", () => {
             // Take a snapshot of EventTile with ReplyChain on bubble layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
             takeSnapshotReplyChain("bubble");
+        });
+    });
+
+    it("should render, play, and reply on a thread", () => {
+        const takeSnapshotTimeline = (layout: string) => {
+            // Scroll to the bottom to make the audio player visible for Percy tests
+            cy.get(".mx_MainSplit .mx_RoomView_body .mx_ScrollPanel").scrollTo("bottom");
+            cy.get(".mx_EventTile_last .mx_MAudioBody").should("be.visible");
+            cy.get(".mx_MainSplit").percySnapshotElement(`"Narrow main timeline with ThreadView on ${layout} layout"`, {
+                percyCSS,
+                widths: [600], // magic number
+            });
+            cy.log(`"Took a snapshot of Narrow main timeline with ThreadView on ${layout} layout"`);
+        };
+
+        visitRoom();
+
+        // Upload one second audio file with a long file name
+        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
+
+        cy.get(".mx_RoomView_body .mx_RoomView_MessageList").within(() => {
+            // Assert the audio player is rendered
+            cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
+
+            cy.get(".mx_EventTile_last")
+                .realHover()
+                .within(() => {
+                    // Click "Reply in thread" button on MessageActionBar
+                    cy.get('[aria-label="Reply in thread"]').click({ force: false });
+                });
+        });
+
+        // Assert that the thread is visible
+        cy.get(".mx_ThreadView").should("be.visible");
+
+        // Take a snapshot of narrow main timeline with ThreadPanel opened on group layout
+        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+        takeSnapshotTimeline("group");
+
+        // Take a snapshot of narrow main timeline with ThreadPanel opened on bubble layout
+        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
+        takeSnapshotTimeline("bubble");
+
+        // Reset to the default layout
+        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+
+        cy.get(".mx_ThreadView").within(() => {
+            // Take snapshots of audio player on a thread
+            takeSnapshots("Audio player on a thread");
+
+            cy.get(".mx_AudioPlayer_container").within(() => {
+                // Assert that the counter is zero before clicking the play button
+                cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
+
+                // Click the play button
+                cy.get("[data-testid='play-pause-button'][aria-label='Play']").click();
+
+                // Assert that the pause button is rendered
+                cy.get("[data-testid='play-pause-button'][aria-label='Pause']").should("exist");
+
+                // Assert that the timer is reset when the audio file finished playing
+                cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
+
+                // Assert that the play button is rendered
+                cy.get("[data-testid='play-pause-button'][aria-label='Play']").should("exist");
+            });
+
+            cy.get(".mx_EventTile_last")
+                .realHover()
+                .within(() => {
+                    // Click the reply button
+                    cy.get('[aria-label="Reply"]').click({ force: false });
+                });
+
+            cy.get(".mx_MessageComposer--compact").within(() => {
+                // Assert that the reply preview is rendered on the message composer
+                cy.get(".mx_ReplyPreview").within(() => {
+                    // Assert that the reply preview contains audio ReplyTile
+                    cy.get(".mx_ReplyTile_audio").within(() => {
+                        // Assert that the ReplyTile has the file info button
+                        cy.get(".mx_MFileBody_info[role='button']").should("exist");
+                    });
+                });
+
+                // Select :smile: emoji and send it
+                cy.get("[data-testid='basicmessagecomposer']").type(":smile:");
+                cy.get(".mx_Autocomplete_Completion[aria-selected='true']").click();
+                cy.get("[data-testid='basicmessagecomposer']").type("{enter}");
+            });
+
+            cy.get(".mx_EventTile_last").within(() => {
+                cy.get(".mx_ReplyTile_audio").within(() => {
+                    cy.get(".mx_MFileBody_info[role='button']").within(() => {
+                        // Assert that the file name is rendered on the file button
+                        cy.contains(".mx_MFileBody_info_filename", "1sec-long-name");
+                    });
+                });
+            });
         });
     });
 });
