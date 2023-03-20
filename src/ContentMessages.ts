@@ -96,17 +96,22 @@ async function loadImageElement(imageFile: File): Promise<{
         // Thus we could slice the file down to only sniff the first 0x1000
         // bytes (but this makes extractPngChunks choke on the corrupt file)
         const headers = imageFile; //.slice(0, 0x1000);
-        parsePromise = readFileAsArrayBuffer(headers).then((arrayBuffer) => {
-            const buffer = new Uint8Array(arrayBuffer);
-            const chunks = extractPngChunks(buffer);
-            for (const chunk of chunks) {
-                if (chunk.name === "pHYs") {
-                    if (chunk.data.byteLength !== PHYS_HIDPI.length) return false;
-                    return chunk.data.every((val, i) => val === PHYS_HIDPI[i]);
+        parsePromise = readFileAsArrayBuffer(headers)
+            .then((arrayBuffer) => {
+                const buffer = new Uint8Array(arrayBuffer);
+                const chunks = extractPngChunks(buffer);
+                for (const chunk of chunks) {
+                    if (chunk.name === "pHYs") {
+                        if (chunk.data.byteLength !== PHYS_HIDPI.length) return false;
+                        return chunk.data.every((val, i) => val === PHYS_HIDPI[i]);
+                    }
                 }
-            }
-            return false;
-        });
+                return false;
+            })
+            .catch((e) => {
+                console.error("Failed to parse PNG", e);
+                return false;
+            });
     }
 
     const [hidpi] = await Promise.all([parsePromise, imgPromise]);
@@ -373,8 +378,13 @@ export default class ContentMessages {
         if (!this.mediaConfig) {
             // hot-path optimization to not flash a spinner if we don't need to
             const modal = Modal.createDialog(Spinner, undefined, "mx_Dialog_spinner");
-            await this.ensureMediaConfigFetched(matrixClient);
-            modal.close();
+            await Promise.race([this.ensureMediaConfigFetched(matrixClient), modal.finished]);
+            if (!this.mediaConfig) {
+                // User cancelled by clicking away on the spinner
+                return;
+            } else {
+                modal.close();
+            }
         }
 
         const tooBigFiles: File[] = [];
