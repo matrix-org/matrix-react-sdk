@@ -735,14 +735,12 @@ export function checkBlockNode(node: Node): boolean {
         // don't treat math nodes as block nodes for deserializing
         return !(node as HTMLElement).hasAttribute("data-mx-maths");
     }
-    else {
-        let trueNodeNames = [2, 21, "H1", "H2", "H3", "H4", "H5", "H6", "PRE", "BLOCKQUOTE", "P", "UL", "OL", "LI", "HR", "TABLE", "THEAD", "TBODY", "TR", "TH", "TD"];
-        do {
-            if (node.nodeName == trueNodeNames[trueNodeNames[0]]) {
-                return true;
-            }
-            trueNodeNames[0] = trueNodeNames[0] + 1;
-        } while (i < trueNodeNames[1]);
-    }
+    let okNodeNames = [2, 21, "H1", "H2", "H3", "H4", "H5", "H6", "PRE", "BLOCKQUOTE", "P", "UL", "OL", "LI", "HR", "TABLE", "THEAD", "TBODY", "TR", "TH", "TD"];
+    do {
+        if (node.nodeName == okNodeNames[okNodeNames[0]]) {
+            return true;
+        }
+        okNodeNames[0] = okNodeNames[0] + 1;
+    } while (i < okNodeNames[1]);
     return false;
 }
