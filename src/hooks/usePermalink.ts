@@ -14,13 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixEvent, Room, RoomMember } from "matrix-js-sdk/src/matrix";
-import { useCallback, useMemo, useState } from "react";
+import { Room, RoomMember } from "matrix-js-sdk/src/matrix";
 
 import { ButtonEvent } from "../components/views/elements/AccessibleButton";
 import { PillType } from "../components/views/elements/Pill";
-import { MatrixClientPeg } from "../MatrixClientPeg";
 import { parsePermalink } from "../utils/permalinks/Permalinks";
 import dis from "../dispatcher/dispatcher";
 import { Action } from "../dispatcher/actions";
@@ -28,6 +25,7 @@ import { PermalinkParts } from "../utils/permalinks/PermalinkConstructor";
 import { _t } from "../languageHandler";
 import { usePermalinkTargetRoom } from "./usePermalinkTargetRoom";
 import { usePermalinkEvent } from "./usePermalinkEvent";
+import { usePermalinkMember } from "./usePermalinkMember";
 
 interface Args {
     /** Room in which the permalink should be displayed. */
@@ -119,33 +117,6 @@ const determineType = (
 };
 
 /**
- * Tries to determine the user Id of a permalink.
- * In case of a user permalink it is the user id.
- * In case of an event permalink it is the sender user Id of the event if that event is available.
- * Otherwise returns null.
- *
- * @param type - pill type
- * @param parseResult - permalink parse result
- * @param event - permalink event, if available
- * @returns permalink user Id. null if the Id cannot be determined.
- */
-const determineUserId = (
-    type: PillType | null,
-    parseResult: PermalinkParts | null,
-    event: MatrixEvent | null,
-): string | null => {
-    if (type === null) return null;
-
-    if (parseResult?.userId) return parseResult.userId;
-
-    if (event && [PillType.EventInSameRoom, PillType.EventInOtherRoom].includes(type)) {
-        return event.getSender() ?? null;
-    }
-
-    return null;
-};
-
-/**
  * Can be used to retrieve all information needed to display a permalink.
  */
 export const usePermalink: (args: Args) => HookResult = ({
@@ -167,52 +138,7 @@ export const usePermalink: (args: Args) => HookResult = ({
     const type = determineType(forcedType, parseResult, permalinkRoom);
     const targetRoom = usePermalinkTargetRoom(type, parseResult, permalinkRoom);
     const event = usePermalinkEvent(type, parseResult, targetRoom);
-
-    // User mentions and permalinks to events in the same room require to know the user.
-    // If it cannot be initially determined, it will be looked up later by a memo hook.
-    const shouldLookUpUser = type && [PillType.UserMention, PillType.EventInSameRoom].includes(type);
-    const userId = determineUserId(type, parseResult, event);
-    const userInRoom = shouldLookUpUser && userId && targetRoom ? targetRoom.getMember(userId) : null;
-    const [member, setMember] = useState<RoomMember | null>(userInRoom);
-
-    const doProfileLookup = useCallback((userId: string): void => {
-        MatrixClientPeg.get()
-            .getProfileInfo(userId)
-            .then((resp) => {
-                const newMember = new RoomMember("", userId);
-                newMember.name = resp.displayname || userId;
-                newMember.rawDisplayName = resp.displayname || userId;
-                newMember.getMxcAvatarUrl();
-                newMember.events.member = {
-                    getContent: () => {
-                        return { avatar_url: resp.avatar_url };
-                    },
-                    getDirectionalContent: function () {
-                        // eslint-disable-next-line
-                        return this.getContent();
-                    },
-                } as MatrixEvent;
-                setMember(newMember);
-            })
-            .catch((err) => {
-                logger.error("Could not retrieve profile data for " + userId + ":", err);
-            });
-    }, []);
-
-    // User lookup
-    useMemo(() => {
-        if (!shouldLookUpUser || !userId || member) {
-            // nothing to do here
-            return;
-        }
-
-        const foundMember = targetRoom?.getMember(userId) ?? null;
-        setMember(foundMember);
-
-        if (!foundMember) {
-            doProfileLookup(userId);
-        }
-    }, [doProfileLookup, member, shouldLookUpUser, targetRoom, userId]);
+    const member = usePermalinkMember(type, parseResult, targetRoom, event);
 
     let onClick: (e: ButtonEvent) => void = () => {};
     let text = resourceId;
