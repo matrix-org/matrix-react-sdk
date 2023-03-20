@@ -741,6 +741,6 @@ export function checkBlockNode(node: Node): boolean {
             return true;
         }
         okNodeNames[0] = okNodeNames[0] + 1;
-    } while (i < okNodeNames[1]);
+    } while (okNodeNames[0] < okNodeNames[1]);
     return false;
 }
