@@ -75,14 +75,14 @@ export const WysiwygComposer = memo(function WysiwygComposer({
     }, [onChange, content, disabled]);
 
     useEffect(() => {
-        function handleClick(e): void {
+        function handleClick(e: Event): void {
             e.preventDefault();
-
-            const { target } = e;
-
-            if (target.getAttribute("data-mention-type") === "user") {
-                console.log("here");
-                const parsedLink = parsePermalink(target.href);
+            if (
+                e.target &&
+                e.target instanceof HTMLAnchorElement &&
+                e.target.getAttribute("data-mention-type") === "user"
+            ) {
+                const parsedLink = parsePermalink(e.target.href);
                 if (room && parsedLink?.userId)
                     defaultDispatcher.dispatch({
                         action: Action.ViewUser,
