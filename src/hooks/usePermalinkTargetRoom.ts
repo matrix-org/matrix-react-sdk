@@ -74,11 +74,11 @@ const findRoom = (roomIdOrAlias: string): Room | null => {
  * @param type - Permalink type
  * @param parseResult - Permalink parse result
  * @param permalinkRoom - Room in which the permalink is rendered
- * @returns {Room | null} Returns the target room:
- *                        - The permalinkRoom for an @room or user mention
- *                        - The room of the parse result for a room mention
- *                        - The room of the event for an event permalink
- *                        - Null in other cases or if the room cannot be found
+ * @returns Returns the target room:
+ *          - The permalinkRoom for an @room or user mention
+ *          - The room of the parse result for a room mention
+ *          - The room of the event for an event permalink
+ *          - Null in other cases or if the room cannot be found
  */
 export const usePermalinkTargetRoom = (
     type: PillType | null,

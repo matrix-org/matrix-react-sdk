@@ -27,6 +27,7 @@ import { Action } from "../dispatcher/actions";
 import { PermalinkParts } from "../utils/permalinks/PermalinkConstructor";
 import { _t } from "../languageHandler";
 import { usePermalinkTargetRoom } from "./usePermalinkTargetRoom";
+import { usePermalinkEvent } from "./usePermalinkEvent";
 
 interface Args {
     /** Room in which the permalink should be displayed. */
@@ -145,26 +146,6 @@ const determineUserId = (
 };
 
 /**
- * Tries to find the initial event.
- * If the event should not be looked up or there is no target room it returns null.
- * Otherwise it tries to get the event from the target room.
- *
- * @param shouldLookUpEvent - whether the parmalink event should be looked up
- * @param Room | null targetRoom - target room of the permalink
- * @param parseResult - permalink parse result
- * @returns The event if found or null if it should not be looked up or was not found.
- */
-const determineInitialEvent = (
-    shouldLookUpEvent: boolean,
-    targetRoom: Room | null,
-    parseResult: PermalinkParts | null,
-): MatrixEvent | null => {
-    if (!shouldLookUpEvent || !targetRoom || !parseResult?.eventId) return null;
-
-    return targetRoom.findEventById(parseResult.eventId) || null;
-};
-
-/**
  * Can be used to retrieve all information needed to display a permalink.
  */
 export const usePermalink: (args: Args) => HookResult = ({
@@ -185,17 +166,7 @@ export const usePermalink: (args: Args) => HookResult = ({
 
     const type = determineType(forcedType, parseResult, permalinkRoom);
     const targetRoom = usePermalinkTargetRoom(type, parseResult, permalinkRoom);
-
-    // Event permalinks require to know the event.
-    // If it cannot be initially determined, it will be looked up later by a memo hook.
-    const shouldLookUpEvent =
-        !!type &&
-        !!parseResult?.roomIdOrAlias &&
-        !!parseResult?.eventId &&
-        [PillType.EventInSameRoom, PillType.EventInOtherRoom].includes(type);
-    const eventId = parseResult?.eventId;
-    const eventInRoom = determineInitialEvent(shouldLookUpEvent, targetRoom, parseResult);
-    const [event, setEvent] = useState<MatrixEvent | null>(eventInRoom);
+    const event = usePermalinkEvent(type, parseResult, targetRoom);
 
     // User mentions and permalinks to events in the same room require to know the user.
     // If it cannot be initially determined, it will be looked up later by a memo hook.
@@ -242,22 +213,6 @@ export const usePermalink: (args: Args) => HookResult = ({
             doProfileLookup(userId);
         }
     }, [doProfileLookup, member, shouldLookUpUser, targetRoom, userId]);
-
-    // Event lookup
-    useMemo(async () => {
-        if (!shouldLookUpEvent || !eventId || event || !parseResult?.roomIdOrAlias || !parseResult.eventId) {
-            // nothing to do here
-            return;
-        }
-
-        try {
-            const eventData = await MatrixClientPeg.get().fetchRoomEvent(
-                parseResult.roomIdOrAlias,
-                parseResult.eventId,
-            );
-            setEvent(new MatrixEvent(eventData));
-        } catch {}
-    }, [event, eventId, parseResult?.eventId, parseResult?.roomIdOrAlias, shouldLookUpEvent]);
 
     let onClick: (e: ButtonEvent) => void = () => {};
     let text = resourceId;
