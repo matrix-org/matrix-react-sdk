@@ -130,6 +130,8 @@ describe("Audio player", () => {
             // Take snapshots (light theme, monospace font): assert that timer is not wrapped
             cy.setSettingValue("useSystemFont", null, SettingLevel.DEVICE, true);
             cy.setSettingValue("systemFont", null, SettingLevel.DEVICE, "monospace");
+            // Assert that the monospace timer is visible
+            cy.get("[role='timer']").should("have.css", "font-family", '"monospace"').should("be.visible");
             takeSnapshots("Audio player (light theme, monospace)");
             // Reset font setting
             cy.setSettingValue("useSystemFont", null, SettingLevel.DEVICE, false);
