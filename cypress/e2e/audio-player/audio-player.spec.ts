@@ -240,7 +240,7 @@ describe("Audio player", () => {
             cy.get(".mx_EventTile_last").within(() => {
                 cy.get(".mx_ReplyChain").within(() => {
                     cy.get(".mx_MFileBody_info[role='button']").within(() => {
-                        // Asser that the file button has file name
+                        // Assert that the file button has file name
                         cy.get(".mx_MFileBody_info_filename").should("exist");
                     });
                 });
@@ -277,7 +277,7 @@ describe("Audio player", () => {
                 // Assert that audio file is rendered as file button
                 cy.get(".mx_ReplyChain").within(() => {
                     cy.get(".mx_MFileBody_info[role='button']").within(() => {
-                        // Asser that the file button has file name
+                        // Assert that the file button has file name
                         cy.get(".mx_MFileBody_info_filename").should("exist");
                     });
                 });
@@ -306,7 +306,7 @@ describe("Audio player", () => {
                 cy.get(".mx_ReplyChain .mx_MFileBody").within(() => {
                     // Assert that audio file is rendered as file button
                     cy.get(".mx_MFileBody_info[role='button']").within(() => {
-                        // Asser that the file button has file name
+                        // Assert that the file button has file name
                         cy.get(".mx_MFileBody_info_filename").should("exist");
                     });
                 });
@@ -320,7 +320,7 @@ describe("Audio player", () => {
                 cy.get("blockquote.mx_ReplyChain:first-of-type").within(() => {
                     // Assert that audio file is rendered as file button
                     cy.get(".mx_MFileBody_info[role='button']").within(() => {
-                        // Asser that the file button contains the name of the file sent at first
+                        // Assert that the file button contains the name of the file sent at first
                         cy.contains(".mx_MFileBody_info_filename", "1sec-long-name");
                     });
                 });
