@@ -26,6 +26,7 @@ import dis from "../dispatcher/dispatcher";
 import { Action } from "../dispatcher/actions";
 import { PermalinkParts } from "../utils/permalinks/PermalinkConstructor";
 import { _t } from "../languageHandler";
+import { usePermalinkTargetRoom } from "./usePermalinkTargetRoom";
 
 interface Args {
     /** Room in which the permalink should be displayed. */
@@ -144,53 +145,6 @@ const determineUserId = (
 };
 
 /**
- * Tries to find a room by room Id or searching all rooms for an alias.
- *
- * @param roomIdOrAlias - Id or alias of the room to find.
- * @returns Room if found, else null.
- */
-const findRoom = (roomIdOrAlias: string): Room | null => {
-    const client = MatrixClientPeg.get();
-
-    return roomIdOrAlias[0] === "#"
-        ? client.getRooms().find((r) => {
-              return r.getCanonicalAlias() === roomIdOrAlias || r.getAltAliases().includes(roomIdOrAlias);
-          }) ?? null
-        : client.getRoom(roomIdOrAlias);
-};
-
-/**
- * Tries to determine the initial room.
- * Initial here means it should be possible to load the room without sending API requests.
- * For an @room or a user mention it is the permalinkRoom.
- * If the parse result contains a room Id or alias try to find it with {@link findRoom}.
- * Otherwise returns null.
- *
- * @param type - Pill type
- * @param permalinkRoom - Room in which the permalink is displayed.
- * @param parseResult - Permalink parser result
- * @returns Initial room or null if it cannot be determined.
- */
-const determineInitialRoom = (
-    type: PillType | null,
-    permalinkRoom: Room | undefined,
-    parseResult: PermalinkParts | null,
-): Room | null => {
-    if (type === PillType.AtRoomMention && permalinkRoom) return permalinkRoom;
-
-    if (type === PillType.UserMention && permalinkRoom) {
-        return permalinkRoom;
-    }
-
-    if (parseResult?.roomIdOrAlias) {
-        const room = findRoom(parseResult.roomIdOrAlias);
-        if (room) return room;
-    }
-
-    return null;
-};
-
-/**
  * Tries to find the initial event.
  * If the event should not be looked up or there is no target room it returns null.
  * Otherwise it tries to get the event from the target room.
@@ -230,13 +184,7 @@ export const usePermalink: (args: Args) => HookResult = ({
     }
 
     const type = determineType(forcedType, parseResult, permalinkRoom);
-
-    // The listed permalink types require a room.
-    // If it cannot be initially determined, it will be looked up later by a memo hook.
-    const shouldLookUpRoom =
-        type && [PillType.RoomMention, PillType.EventInSameRoom, PillType.EventInOtherRoom, "space"].includes(type);
-    const initialRoom = determineInitialRoom(type, permalinkRoom, parseResult);
-    const [targetRoom, setTargetRoom] = useState<Room | null>(initialRoom);
+    const targetRoom = usePermalinkTargetRoom(type, parseResult, permalinkRoom);
 
     // Event permalinks require to know the event.
     // If it cannot be initially determined, it will be looked up later by a memo hook.
@@ -310,14 +258,6 @@ export const usePermalink: (args: Args) => HookResult = ({
             setEvent(new MatrixEvent(eventData));
         } catch {}
     }, [event, eventId, parseResult?.eventId, parseResult?.roomIdOrAlias, shouldLookUpEvent]);
-
-    // Room lookup
-    useMemo(() => {
-        if (shouldLookUpRoom && !targetRoom && parseResult?.roomIdOrAlias) {
-            const newRoom = findRoom(parseResult.roomIdOrAlias);
-            setTargetRoom(newRoom);
-        }
-    }, [parseResult?.roomIdOrAlias, shouldLookUpRoom, targetRoom]);
 
     let onClick: (e: ButtonEvent) => void = () => {};
     let text = resourceId;
