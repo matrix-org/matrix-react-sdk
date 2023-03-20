@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 
 import { _t } from "../../../languageHandler";
 
@@ -53,9 +53,10 @@ interface IProps {
     primaryDisabled?: boolean;
 
     // something to stick next to the buttons, optionally
-    additive?: React.ReactNode;
+    additive?: ReactNode;
 
     primaryButtonClass?: string;
+    children?: ReactNode;
 }
 
 /**
@@ -68,7 +69,7 @@ export default class DialogButtons extends React.Component<IProps> {
     };
 
     private onCancelClick = (event: React.MouseEvent): void => {
-        this.props.onCancel(event);
+        this.props.onCancel?.(event);
     };
 
     public render(): React.ReactNode {
@@ -76,9 +77,9 @@ export default class DialogButtons extends React.Component<IProps> {
         if (this.props.primaryButtonClass) {
             primaryButtonClassName += " " + this.props.primaryButtonClass;
         }
-        let cancelButton;
 
-        if (this.props.cancelButton || this.props.hasCancel) {
+        let cancelButton: JSX.Element | undefined;
+        if (this.props.hasCancel) {
             cancelButton = (
                 <button
                     // important: the default type is 'submit' and this button comes before the
@@ -94,7 +95,7 @@ export default class DialogButtons extends React.Component<IProps> {
             );
         }
 
-        let additive = null;
+        let additive: JSX.Element | undefined;
         if (this.props.additive) {
             additive = <div className="mx_Dialog_buttons_additive">{this.props.additive}</div>;
         }

@@ -151,14 +151,16 @@ export default class BaseDialog extends React.Component<IProps> {
             lockProps["aria-labelledby"] = "mx_BaseDialog_title";
         }
 
+        const isHeaderWithCancelOnly =
+            !!cancelButton && !this.props.title && !this.props.headerButton && !this.props.headerImage;
+
         return (
             <MatrixClientContext.Provider value={this.matrixClient}>
-                <PosthogScreenTracker screenName={this.props.screenName} />
+                {this.props.screenName && <PosthogScreenTracker screenName={this.props.screenName} />}
                 <FocusLock
                     returnFocus={true}
                     lockProps={lockProps}
-                    className={classNames({
-                        [this.props.className]: true,
+                    className={classNames(this.props.className, {
                         mx_Dialog_fixedWidth: this.props.fixedWidth,
                     })}
                 >
@@ -167,16 +169,19 @@ export default class BaseDialog extends React.Component<IProps> {
                         className={classNames("mx_Dialog_header", {
                             mx_Dialog_headerWithButton: !!this.props.headerButton,
                             mx_Dialog_headerWithCancel: !!cancelButton,
+                            mx_Dialog_headerWithCancelOnly: isHeaderWithCancelOnly,
                         })}
                     >
-                        <Heading
-                            size="h2"
-                            className={classNames("mx_Dialog_title", this.props.titleClass)}
-                            id="mx_BaseDialog_title"
-                        >
-                            {headerImage}
-                            {this.props.title}
-                        </Heading>
+                        {!!(this.props.title || headerImage) && (
+                            <Heading
+                                size="h2"
+                                className={classNames("mx_Dialog_title", this.props.titleClass)}
+                                id="mx_BaseDialog_title"
+                            >
+                                {headerImage}
+                                {this.props.title}
+                            </Heading>
+                        )}
                         {this.props.headerButton}
                         {cancelButton}
                     </div>
