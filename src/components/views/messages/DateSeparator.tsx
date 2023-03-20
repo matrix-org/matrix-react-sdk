@@ -160,14 +160,14 @@ export default class DateSeparator extends React.Component<IProps, IState> {
             const roomIdBeforeDisplayingError = SdkContextClass.instance.roomViewStore.getRoomId();
             if (roomIdBeforeDisplayingError === roomIdForJumpRequest) {
                 let friendlyErrorMessage = `An error occured while trying to find and jump to the given date.`;
-                if (err.errcode === "M_NOT_FOUND") {
+                if (err?.errcode === "M_NOT_FOUND") {
                     friendlyErrorMessage = _t(
                         "We were unable to find an event looking forwards from %(dateString)s. " +
                             "Try choosing an earlier date.",
                         { dateString: formatFullDateNoDay(new Date(unixTimestamp)) },
                     );
                 }
-                if (err.name === "ConnectionError") {
+                if (err?.name === "ConnectionError") {
                     friendlyErrorMessage = _t(
                         "Your homeserver was unreachable and was not able to log you in. Please try again. " +
                             "If this continues, please contact your homeserver administrator.",
@@ -185,12 +185,12 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                                 <ul>
                                     <li>
                                         {_t("Request status code: %(statusCode)s", {
-                                            statusCode: err.httpStatus || _t("HTTP status code not available"),
+                                            statusCode: err?.httpStatus || _t("HTTP status code not available"),
                                         })}
                                     </li>
                                     <li>
                                         {_t("Error code: %(errorCode)s", {
-                                            errorCode: err.errcode || _t("Error code not available"),
+                                            errorCode: err?.errcode || _t("Error code not available"),
                                         })}
                                     </li>
                                 </ul>
