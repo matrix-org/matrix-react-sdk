@@ -173,9 +173,10 @@ describe("Timeline", () => {
                 // --right-padding = 5px
                 // --name-width = 80px
                 // --resizer-width = 15px
-                // 18px + 46px + 14px + 5px + 80px + 5px - 15px
-                // = 153px
-                cy.get(".mx_ProfileResizer").should("have.css", "inset-inline-start", "153px");
+                // --resizer-a11y = 3px
+                // 18px + 46px + 14px + 5px + 80px + 5px - 15px - 3px
+                // = 150px
+                cy.get(".mx_ProfileResizer").should("have.css", "inset-inline-start", "150px");
             });
 
             cy.get(".mx_MainSplit").percySnapshotElement("Configured room on IRC layout");
