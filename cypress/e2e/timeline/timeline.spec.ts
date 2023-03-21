@@ -433,25 +433,31 @@ describe("Timeline", () => {
             // Send a message
             cy.getComposer().type("Hello{enter}");
 
-            // Confirm the message was sent
-            cy.get(".mx_RoomView_MessageList > .mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
+            cy.get(".mx_RoomView_MessageList").within(() => {
+                // Confirm the message was sent
+                cy.get(".mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
 
-            // Delete the message
-            cy.get(".mx_RoomView_MessageList > .mx_EventTile_last").realHover();
-            cy.get(".mx_RoomView_MessageList > .mx_EventTile_last [data-testid=message-action-bar-button-options]", {
-                timeout: 1000,
-            })
-                .should("exist")
-                .realHover()
-                .click({ force: false });
+                // Click "Options"
+                cy.get(".mx_EventTile_last").realHover();
+                cy.get(".mx_EventTile_last [data-testid='message-action-bar-button-options']", {
+                    timeout: 1000,
+                })
+                    .should("exist")
+                    .realHover()
+                    .click({ force: false });
+            });
+
+            // Click "Remove"
             cy.get(".mx_IconizedContextMenu_item[aria-label=Remove]", { timeout: 1000 })
                 .should("be.visible")
                 .click({ force: false });
 
             // Confirm deletion
-            cy.get(".mx_Dialog_buttons button[data-testid=dialog-primary-button]")
-                .should("have.text", "Remove")
-                .click({ force: false });
+            cy.get(".mx_Dialog").within(() => {
+                cy.get(".mx_Dialog_buttons button[data-testid=dialog-primary-button]")
+                    .should("have.text", "Remove")
+                    .click({ force: false });
+            });
 
             // Make sure the message was redacted
             cy.get(".mx_Dialog").should("not.exist");
