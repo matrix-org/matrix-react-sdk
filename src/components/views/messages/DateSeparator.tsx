@@ -18,6 +18,7 @@ limitations under the License.
 import React from "react";
 import { Direction } from "matrix-js-sdk/src/models/event-timeline";
 import { logger } from "matrix-js-sdk/src/logger";
+import { ConnectionError, MatrixError, HTTPError } from "matrix-js-sdk/src/http-api";
 
 import { _t } from "../../../languageHandler";
 import { formatFullDateNoDay, formatFullDateNoTime } from "../../../DateUtils";
@@ -168,8 +169,8 @@ export default class DateSeparator extends React.Component<IProps, IState> {
             if (currentRoomId === roomIdForJumpRequest) {
                 let friendlyErrorMessage = `An error occured while trying to find and jump to the given date.`;
                 let submitDebugLogsContent: JSX.Element = <></>;
-                if (err?.name === "ConnectionError" || err?.httpStatus) {
-                    if (err?.errcode === "M_NOT_FOUND") {
+                if (err instanceof ConnectionError || err instanceof HTTPError) {
+                    if (err instanceof MatrixError && err?.errcode === "M_NOT_FOUND") {
                         friendlyErrorMessage = _t(
                             "We were unable to find an event looking forwards from %(dateString)s. " +
                                 "Try choosing an earlier date.",
@@ -199,7 +200,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                                             // this to a be a inline anchor element.
                                             element="a"
                                             kind="link"
-                                            onClick={() => this.onBugReport(err)}
+                                            onClick={() => this.onBugReport(err instanceof Error ? err : undefined)}
                                             data-testid="jump-to-date-error-submit-debug-logs-button"
                                         >
                                             {sub}
@@ -228,7 +229,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
         }
     };
 
-    private onBugReport = (err: Error): void => {
+    private onBugReport = (err?: Error): void => {
         Modal.createDialog(BugReportDialog, {
             error: err,
             initialText: "Error occured while using jump to date #jump-to-date",
