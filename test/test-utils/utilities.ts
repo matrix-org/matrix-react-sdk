@@ -204,8 +204,8 @@ export const clearAllModals = async (): Promise<void> => {
     let keepClosingModals = true;
     while (keepClosingModals) {
         keepClosingModals = Modal.closeCurrentModal("End of test (clean-up)");
-    }
 
-    // Then wait for the screen to update (probably React rerender)
-    await flushPromisesWithFakeTimers();
+        // Then wait for the screen to update (probably React rerender)
+        await flushPromisesWithFakeTimers();
+    }
 };
