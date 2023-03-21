@@ -228,7 +228,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
         }
     };
 
-    private onBugReport = (err): void => {
+    private onBugReport = (err: Error): void => {
         Modal.createDialog(BugReportDialog, {
             error: err,
             initialText: "Error occured while using jump to date #jump-to-date",
