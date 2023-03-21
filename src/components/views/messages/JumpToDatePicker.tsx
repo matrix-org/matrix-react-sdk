@@ -25,14 +25,19 @@ interface IProps {
     onDatePicked: (dateString: string) => void;
 }
 
-const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
-    const date = new Date(ts);
+function formatDateForInput(date: Date): string {
     const year = date.getFullYear();
     const month = `${date.getMonth() + 1}`.padStart(2, "0");
     const day = `${date.getDate()}`.padStart(2, "0");
-    const dateDefaultValue = `${year}-${month}-${day}`;
+    const dateInputValue = `${year}-${month}-${day}`;
+    return dateInputValue;
+}
 
-    const [dateValue, setDateValue] = useState(dateDefaultValue);
+const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
+    const date = new Date(ts);
+    const dateInputDefaultValue = formatDateForInput(date);
+
+    const [dateValue, setDateValue] = useState(dateInputDefaultValue);
     const [onFocus, isActive, ref] = useRovingTabIndex<HTMLInputElement>();
 
     const onDateValueInput = (ev: React.ChangeEvent<HTMLInputElement>): void => setDateValue(ev.target.value);
@@ -49,6 +54,9 @@ const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
                 type="date"
                 onInput={onDateValueInput}
                 value={dateValue}
+                // Prevent people from selecting a day in the future (there won't be any
+                // events there anyway).
+                max={formatDateForInput(new Date())}
                 className="mx_JumpToDatePicker_datePicker"
                 label={_t("Pick a date to jump to")}
                 onFocus={onFocus}
