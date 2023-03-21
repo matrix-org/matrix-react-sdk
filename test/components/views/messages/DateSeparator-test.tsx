@@ -206,50 +206,32 @@ describe("DateSeparator", () => {
             await screen.findByTestId("jump-to-date-error-submit-debug-logs-button");
         });
 
-        it("should show error dialog without submit debug logs option when networking error (connection) occurs", async () => {
-            // Render the component
-            getComponent();
+        [
+            new ConnectionError("Fake connection error in test"),
+            new HTTPError("Fake connection error in test", 418),
+        ].forEach((fakeError) => {
+            it(`should show error dialog without submit debug logs option when networking error (${fakeError.name}) occurs`, async () => {
+                // Render the component
+                getComponent();
 
-            // Open the jump to date context menu
-            fireEvent.click(screen.getByTestId("jump-to-date-separator-button"));
+                // Open the jump to date context menu
+                fireEvent.click(screen.getByTestId("jump-to-date-separator-button"));
 
-            // Try to jump to "last week" but we want a network error to occur
-            const fakeConnectionError = new ConnectionError("Fake connection error in test");
-            mockClient.timestampToEvent.mockRejectedValue(fakeConnectionError);
-            const jumpToLastWeekButton = await screen.findByTestId("jump-to-date-last-week");
-            fireEvent.click(jumpToLastWeekButton);
+                // Try to jump to "last week" but we want a network error to occur
+                mockClient.timestampToEvent.mockRejectedValue(fakeError);
+                const jumpToLastWeekButton = await screen.findByTestId("jump-to-date-last-week");
+                fireEvent.click(jumpToLastWeekButton);
 
-            // Expect error to be shown. We have to wait for the UI to transition.
-            await screen.findByTestId("jump-to-date-error-content");
+                // Expect error to be shown. We have to wait for the UI to transition.
+                await screen.findByTestId("jump-to-date-error-content");
 
-            screen.debug();
+                screen.debug();
 
-            // The submit debug logs option should *NOT* be shown for network errors.
-            //
-            // We have to use `queryBy` so that it can return `null` for something that does not exist.
-            expect(screen.queryByTestId("jump-to-date-error-submit-debug-logs-button")).not.toBeInTheDocument();
-        });
-
-        it("should show error dialog without submit debug logs option when networking error (http) occurs", async () => {
-            // Render the component
-            getComponent();
-
-            // Open the jump to date context menu
-            fireEvent.click(screen.getByTestId("jump-to-date-separator-button"));
-
-            // Try to jump to "last week" but we want a network error to occur
-            const fakeHttpError = new HTTPError("Fake connection error in test", 418);
-            mockClient.timestampToEvent.mockRejectedValue(fakeHttpError);
-            const jumpToLastWeekButton = await screen.findByTestId("jump-to-date-last-week");
-            fireEvent.click(jumpToLastWeekButton);
-
-            // Expect error to be shown. We have to wait for the UI to transition.
-            await screen.findByTestId("jump-to-date-error-content");
-
-            // The submit debug logs option should *NOT* be shown for network errors.
-            //
-            // We have to use `queryBy` so that it can return `null` for something that does not exist.
-            expect(screen.queryByTestId("jump-to-date-error-submit-debug-logs-button")).not.toBeInTheDocument();
+                // The submit debug logs option should *NOT* be shown for network errors.
+                //
+                // We have to use `queryBy` so that it can return `null` for something that does not exist.
+                expect(screen.queryByTestId("jump-to-date-error-submit-debug-logs-button")).not.toBeInTheDocument();
+            });
         });
     });
 });
