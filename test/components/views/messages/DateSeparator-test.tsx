@@ -124,7 +124,6 @@ describe("DateSeparator", () => {
     });
 
     describe("when feature_jump_to_date is enabled", () => {
-        const currentDate = new Date("2023-03-05");
         beforeEach(() => {
             jest.clearAllMocks();
             mocked(SettingsStore).getValue.mockImplementation((arg): any => {
@@ -153,7 +152,7 @@ describe("DateSeparator", () => {
 
             // Jump to "last week"
             const lastWeekDate = new Date();
-            lastWeekDate.setDate(currentDate.getDate() - 7);
+            lastWeekDate.setDate(nowDate.getDate() - 7);
             const returnedEventId = "$abc";
             mockClient.timestampToEvent.mockResolvedValue({
                 event_id: returnedEventId,
