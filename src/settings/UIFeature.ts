@@ -66,6 +66,11 @@ export enum UIComponent {
     AddIntegrations = "UIComponent.addIntegrations",
 
     /**
+     * Component that lead to the user being able to search, dial, explore rooms
+     */
+    FilterContainer = "UIComponent.filterContainer",
+
+    /**
      * Components that lead the user to room options menu.
      */
     RoomOptionsMenu = "UIComponent.roomOptionsMenu",
