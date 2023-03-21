@@ -37,6 +37,17 @@ const mkRoomTextMessage = (body: string): MatrixEvent => {
     });
 };
 
+const mkFormattedMessage = (body: string, formattedBody: string): MatrixEvent => {
+    return mkMessage({
+        msg: body,
+        formattedMsg: formattedBody,
+        format: "org.matrix.custom.html",
+        room: "room_id",
+        user: "sender",
+        event: true,
+    });
+};
+
 describe("<TextualBody />", () => {
     afterEach(() => {
         jest.spyOn(MatrixClientPeg, "get").mockRestore();
@@ -52,6 +63,9 @@ describe("<TextualBody />", () => {
             isGuest: () => false,
             mxcUrlToHttp: (s: string) => s,
             getUserId: () => "@user:example.com",
+            fetchRoomEvent: () => {
+                throw new Error("MockClient event not found");
+            },
         });
     });
 
@@ -156,12 +170,30 @@ describe("<TextualBody />", () => {
             );
         });
 
+        it("should pillify an MXID permalink", () => {
+            const ev = mkRoomTextMessage("Chat with https://matrix.to/#/@user:example.com");
+            const { container } = getComponent({ mxEvent: ev });
+            const content = container.querySelector(".mx_EventTile_body");
+            expect(content.innerHTML).toMatchInlineSnapshot(
+                `"Chat with <span><bdi><a class="mx_Pill mx_UserPill mx_UserPill_me" href="https://matrix.to/#/@user:example.com"><img class="mx_BaseAvatar mx_BaseAvatar_image" src="mxc://avatar.url/image.png" style="width: 16px; height: 16px;" alt="" data-testid="avatar-img" aria-hidden="true"><span class="mx_Pill_text">Member</span></a></bdi></span>"`,
+            );
+        });
+
         it("should not pillify room aliases", () => {
             const ev = mkRoomTextMessage("Visit #room:example.com");
             const { container } = getComponent({ mxEvent: ev });
             const content = container.querySelector(".mx_EventTile_body");
             expect(content.innerHTML).toMatchInlineSnapshot(
                 `"Visit <a href="https://matrix.to/#/#room:example.com" class="linkified" rel="noreferrer noopener">#room:example.com</a>"`,
+            );
+        });
+
+        it("should pillify a room alias permalink", () => {
+            const ev = mkRoomTextMessage("Visit https://matrix.to/#/#room:example.com");
+            const { container } = getComponent({ mxEvent: ev });
+            const content = container.querySelector(".mx_EventTile_body");
+            expect(content.innerHTML).toMatchInlineSnapshot(
+                `"Visit <span><bdi><a class="mx_Pill mx_RoomPill" href="https://matrix.to/#/#room:example.com"><div class="mx_Pill_LinkIcon mx_BaseAvatar mx_BaseAvatar_image"></div><span class="mx_Pill_text">#room:example.com</span></a></bdi></span>"`,
             );
         });
     });
@@ -183,19 +215,10 @@ describe("<TextualBody />", () => {
         });
 
         it("italics, bold, underline and strikethrough render as expected", () => {
-            const ev = mkEvent({
-                type: "m.room.message",
-                room: "room_id",
-                user: "sender",
-                content: {
-                    body: "foo *baz* __bar__ <del>del</del> <u>u</u>",
-                    msgtype: "m.text",
-                    format: "org.matrix.custom.html",
-                    formatted_body: "foo <em>baz</em> <strong>bar</strong> <del>del</del> <u>u</u>",
-                },
-                event: true,
-            });
-
+            const ev = mkFormattedMessage(
+                "foo *baz* __bar__ <del>del</del> <u>u</u>",
+                "foo <em>baz</em> <strong>bar</strong> <del>del</del> <u>u</u>",
+            );
             const { container } = getComponent({ mxEvent: ev }, matrixClient);
             expect(container).toHaveTextContent("foo baz bar del u");
             const content = container.querySelector(".mx_EventTile_body");
@@ -207,19 +230,10 @@ describe("<TextualBody />", () => {
         });
 
         it("spoilers get injected properly into the DOM", () => {
-            const ev = mkEvent({
-                type: "m.room.message",
-                room: "room_id",
-                user: "sender",
-                content: {
-                    body: "Hey [Spoiler for movie](mxc://someserver/somefile)",
-                    msgtype: "m.text",
-                    format: "org.matrix.custom.html",
-                    formatted_body: 'Hey <span data-mx-spoiler="movie">the movie was awesome</span>',
-                },
-                event: true,
-            });
-
+            const ev = mkFormattedMessage(
+                "Hey [Spoiler for movie](mxc://someserver/somefile)",
+                'Hey <span data-mx-spoiler="movie">the movie was awesome</span>',
+            );
             const { container } = getComponent({ mxEvent: ev }, matrixClient);
             expect(container).toHaveTextContent("Hey (movie) the movie was awesome");
             const content = container.querySelector(".mx_EventTile_body");
@@ -234,19 +248,10 @@ describe("<TextualBody />", () => {
         });
 
         it("linkification is not applied to code blocks", () => {
-            const ev = mkEvent({
-                type: "m.room.message",
-                room: "room_id",
-                user: "sender",
-                content: {
-                    body: "Visit `https://matrix.org/`\n```\nhttps://matrix.org/\n```",
-                    msgtype: "m.text",
-                    format: "org.matrix.custom.html",
-                    formatted_body: "<p>Visit <code>https://matrix.org/</code></p>\n<pre>https://matrix.org/\n</pre>\n",
-                },
-                event: true,
-            });
-
+            const ev = mkFormattedMessage(
+                "Visit `https://matrix.org/`\n```\nhttps://matrix.org/\n```",
+                "<p>Visit <code>https://matrix.org/</code></p>\n<pre>https://matrix.org/\n</pre>\n",
+            );
             const { container } = getComponent({ mxEvent: ev }, matrixClient);
             expect(container).toHaveTextContent("Visit https://matrix.org/ 1https://matrix.org/");
             const content = container.querySelector(".mx_EventTile_body");
@@ -255,19 +260,7 @@ describe("<TextualBody />", () => {
 
         // If pills were rendered within a Portal/same shadow DOM then it'd be easier to test
         it("pills get injected correctly into the DOM", () => {
-            const ev = mkEvent({
-                type: "m.room.message",
-                room: "room_id",
-                user: "sender",
-                content: {
-                    body: "Hey User",
-                    msgtype: "m.text",
-                    format: "org.matrix.custom.html",
-                    formatted_body: 'Hey <a href="https://matrix.to/#/@user:server">Member</a>',
-                },
-                event: true,
-            });
-
+            const ev = mkFormattedMessage("Hey User", 'Hey <a href="https://matrix.to/#/@user:server">Member</a>');
             const { container } = getComponent({ mxEvent: ev }, matrixClient);
             expect(container).toHaveTextContent("Hey Member");
             const content = container.querySelector(".mx_EventTile_body");
@@ -275,85 +268,58 @@ describe("<TextualBody />", () => {
         });
 
         it("pills do not appear in code blocks", () => {
-            const ev = mkEvent({
-                type: "m.room.message",
-                room: "room_id",
-                user: "sender",
-                content: {
-                    body: "`@room`\n```\n@room\n```",
-                    msgtype: "m.text",
-                    format: "org.matrix.custom.html",
-                    formatted_body: "<p><code>@room</code></p>\n<pre><code>@room\n</code></pre>\n",
-                },
-                event: true,
-            });
-
+            const ev = mkFormattedMessage(
+                "`@room`\n```\n@room\n```",
+                "<p><code>@room</code></p>\n<pre><code>@room\n</code></pre>\n",
+            );
             const { container } = getComponent({ mxEvent: ev });
             expect(container).toHaveTextContent("@room 1@room");
             const content = container.querySelector(".mx_EventTile_body");
             expect(content).toMatchSnapshot();
         });
 
-        it("pills do not appear for event permalinks", () => {
-            const ev = mkEvent({
-                type: "m.room.message",
-                room: "room_id",
-                user: "sender",
-                content: {
-                    body:
-                        "An [event link](https://matrix.to/#/!ZxbRYPQXDXKGmDnJNg:example.com/" +
-                        "$16085560162aNpaH:example.com?via=example.com) with text",
-                    msgtype: "m.text",
-                    format: "org.matrix.custom.html",
-                    formatted_body:
-                        'An <a href="https://matrix.to/#/!ZxbRYPQXDXKGmDnJNg:example.com/' +
-                        '$16085560162aNpaH:example.com?via=example.com">event link</a> with text',
-                },
-                event: true,
-            });
-
-            const { container } = getComponent({ mxEvent: ev }, matrixClient);
-            expect(container).toHaveTextContent("An event link with text");
-            const content = container.querySelector(".mx_EventTile_body");
-            expect(content).toContainHTML(
-                '<span class="mx_EventTile_body markdown-body" dir="auto">' +
-                    'An <a href="https://matrix.to/#/!ZxbRYPQXDXKGmDnJNg:example.com/' +
-                    '$16085560162aNpaH:example.com?via=example.com" ' +
-                    'rel="noreferrer noopener">event link</a> with text</span>',
+        it("pills do not appear for event permalinks with a custom label", () => {
+            const ev = mkFormattedMessage(
+                "An [event link](https://matrix.to/#/!ZxbRYPQXDXKGmDnJNg:example.com/" +
+                    "$16085560162aNpaH:example.com?via=example.com) with text",
+                'An <a href="https://matrix.to/#/!ZxbRYPQXDXKGmDnJNg:example.com/' +
+                    '$16085560162aNpaH:example.com?via=example.com">event link</a> with text',
             );
+            const { asFragment, container } = getComponent({ mxEvent: ev }, matrixClient);
+            expect(container).toHaveTextContent("An event link with text");
+            expect(asFragment()).toMatchSnapshot();
+        });
+
+        it("pills appear for event permalinks without a custom label", () => {
+            const ev = mkFormattedMessage(
+                "See this message https://matrix.to/#/!ZxbRYPQXDXKGmDnJNg:example.com/$16085560162aNpaH:example.com?via=example.com",
+                'See this message <a href="https://matrix.to/#/!ZxbRYPQXDXKGmDnJNg:example.com/$16085560162aNpaH:example.com?via=example.com">' +
+                    "https://matrix.to/#/!ZxbRYPQXDXKGmDnJNg:example.com/$16085560162aNpaH:example.com?via=example.com</a>",
+            );
+            const { asFragment } = getComponent({ mxEvent: ev }, matrixClient);
+            expect(asFragment()).toMatchSnapshot();
         });
 
         it("pills appear for room links with vias", () => {
-            const ev = mkEvent({
-                type: "m.room.message",
-                room: "room_id",
-                user: "sender",
-                content: {
-                    body:
-                        "A [room link](https://matrix.to/#/!ZxbRYPQXDXKGmDnJNg:example.com" +
-                        "?via=example.com&via=bob.com) with vias",
-                    msgtype: "m.text",
-                    format: "org.matrix.custom.html",
-                    formatted_body:
-                        'A <a href="https://matrix.to/#/!ZxbRYPQXDXKGmDnJNg:example.com' +
-                        '?via=example.com&amp;via=bob.com">room link</a> with vias',
-                },
-                event: true,
-            });
-
-            const { container } = getComponent({ mxEvent: ev }, matrixClient);
-            expect(container).toHaveTextContent("A room name with vias");
-            const content = container.querySelector(".mx_EventTile_body");
-            expect(content).toContainHTML(
-                '<span class="mx_EventTile_body markdown-body" dir="auto">' +
-                    'A <span><bdi><a class="mx_Pill mx_RoomPill" ' +
-                    'href="https://matrix.to/#/!ZxbRYPQXDXKGmDnJNg:example.com' +
-                    '?via=example.com&amp;via=bob.com"' +
-                    '><img class="mx_BaseAvatar mx_BaseAvatar_image" ' +
-                    'src="mxc://avatar.url/room.png" ' +
-                    'style="width: 16px; height: 16px;" alt="" data-testid="avatar-img" aria-hidden="true">' +
-                    '<span class="mx_Pill_linkText">room name</span></a></bdi></span> with vias</span>',
+            const ev = mkFormattedMessage(
+                "A [room link](https://matrix.to/#/!ZxbRYPQXDXKGmDnJNg:example.com" +
+                    "?via=example.com&via=bob.com) with vias",
+                'A <a href="https://matrix.to/#/!ZxbRYPQXDXKGmDnJNg:example.com' +
+                    '?via=example.com&amp;via=bob.com">room link</a> with vias',
             );
+            const { asFragment, container } = getComponent({ mxEvent: ev }, matrixClient);
+            expect(container).toHaveTextContent("A room name with vias");
+            expect(asFragment()).toMatchSnapshot();
+        });
+
+        it("pills appear for an MXID permalink", () => {
+            const ev = mkFormattedMessage(
+                "Chat with [@user:example.com](https://matrix.to/#/@user:example.com)",
+                'Chat with <a href="https://matrix.to/#/@user:example.com">@user:example.com</a>',
+            );
+            const { container } = getComponent({ mxEvent: ev }, matrixClient);
+            const content = container.querySelector(".mx_EventTile_body");
+            expect(content).toMatchSnapshot();
         });
 
         it("renders formatted body without html corretly", () => {

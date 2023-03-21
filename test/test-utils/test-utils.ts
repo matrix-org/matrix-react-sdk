@@ -231,6 +231,8 @@ export function createTestClient(): MatrixClient {
                 room_id: roomId,
             });
         }),
+
+        searchUserDirectory: jest.fn().mockResolvedValue({ limited: false, results: [] }),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
@@ -255,6 +257,8 @@ type MakeEventPassThruProps = {
     skey?: string;
 };
 type MakeEventProps = MakeEventPassThruProps & {
+    /** If provided will be used as event Id. Else an Id is generated. */
+    id?: string;
     type: string;
     redacts?: string;
     content: IContent;
@@ -301,7 +305,7 @@ export function mkEvent(opts: MakeEventProps): MatrixEvent {
         sender: opts.user,
         content: opts.content,
         prev_content: opts.prev_content,
-        event_id: "$" + Math.random() + "-" + Math.random(),
+        event_id: opts.id ?? "$" + Math.random() + "-" + Math.random(),
         origin_server_ts: opts.ts ?? 0,
         unsigned: opts.unsigned,
         redacts: opts.redacts,
@@ -473,16 +477,23 @@ export type MessageEventProps = MakeEventPassThruProps & {
  * @param {number} opts.ts The timestamp for the event.
  * @param {boolean} opts.event True to make a MatrixEvent.
  * @param {string=} opts.msg Optional. The content.body for the event.
+ * @param {string=} opts.format Optional. The content.format for the event.
+ * @param {string=} opts.formattedMsg Optional. The content.formatted_body for the event.
  * @return {Object|MatrixEvent} The event
  */
 export function mkMessage({
     msg,
+    format,
+    formattedMsg,
     relatesTo,
     ...opts
-}: MakeEventPassThruProps & {
-    room: Room["roomId"];
-    msg?: string;
-}): MatrixEvent {
+}: MakeEventPassThruProps &
+    Pick<MakeEventProps, "id"> & {
+        room: Room["roomId"];
+        msg?: string;
+        format?: string;
+        formattedMsg?: string;
+    }): MatrixEvent {
     if (!opts.room || !opts.user) {
         throw new Error("Missing .room or .user from options");
     }
@@ -493,6 +504,7 @@ export function mkMessage({
         content: {
             msgtype: "m.text",
             body: message,
+            ...(format && formattedMsg ? { format, formatted_body: formattedMsg } : {}),
             ["m.relates_to"]: relatesTo,
         },
     };
