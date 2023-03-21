@@ -19,18 +19,11 @@ import React, { useState, FormEvent } from "react";
 import { _t } from "../../../languageHandler";
 import Field from "../elements/Field";
 import { RovingAccessibleButton, useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
+import { formatDateForInput } from "../../../DateUtils";
 
 interface IProps {
     ts: number;
     onDatePicked: (dateString: string) => void;
-}
-
-function formatDateForInput(date: Date): string {
-    const year = date.getFullYear();
-    const month = `${date.getMonth() + 1}`.padStart(2, "0");
-    const day = `${date.getDate()}`.padStart(2, "0");
-    const dateInputValue = `${year}-${month}-${day}`;
-    return dateInputValue;
 }
 
 const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
