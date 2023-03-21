@@ -28,6 +28,8 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import Modal from "../../../Modal";
 import ErrorDialog from "../dialogs/ErrorDialog";
+import BugReportDialog from "../dialogs/BugReportDialog";
+import AccessibleButton from "../elements/AccessibleButton";
 import { contextMenuBelow } from "../rooms/RoomTile";
 import { ContextMenuTooltipButton } from "../../structures/ContextMenu";
 import IconizedContextMenu, {
@@ -160,17 +162,43 @@ export default class DateSeparator extends React.Component<IProps, IState> {
             const roomIdBeforeDisplayingError = SdkContextClass.instance.roomViewStore.getRoomId();
             if (roomIdBeforeDisplayingError === roomIdForJumpRequest) {
                 let friendlyErrorMessage = `An error occured while trying to find and jump to the given date.`;
-                if (err?.errcode === "M_NOT_FOUND") {
-                    friendlyErrorMessage = _t(
-                        "We were unable to find an event looking forwards from %(dateString)s. " +
-                            "Try choosing an earlier date.",
-                        { dateString: formatFullDateNoDay(new Date(unixTimestamp)) },
-                    );
-                }
+                let submitDebugLogsContent: JSX.Element = <></>;
                 if (err?.name === "ConnectionError") {
-                    friendlyErrorMessage = _t(
-                        "Your homeserver was unreachable and was not able to log you in. Please try again. " +
-                            "If this continues, please contact your homeserver administrator.",
+                    if (err?.errcode === "M_NOT_FOUND") {
+                        friendlyErrorMessage = _t(
+                            "We were unable to find an event looking forwards from %(dateString)s. " +
+                                "Try choosing an earlier date.",
+                            { dateString: formatFullDateNoDay(new Date(unixTimestamp)) },
+                        );
+                    } else {
+                        friendlyErrorMessage = _t(
+                            "A network error occurred while trying to find and jump to the given date. " +
+                                "Your homeserver might be down or was just a temporary problem with your " +
+                                "internet connection. Please try again. If this continues, please " +
+                                "contact your homeserver administrator.",
+                        );
+                    }
+                } else {
+                    // We only give the option to submit logs for actual errors, not network problems.
+                    submitDebugLogsContent = (
+                        <p>
+                            {_t(
+                                "Please submit <debugLogsLink>debug logs</debugLogsLink> to help us " +
+                                    "track down the problem.",
+                                {},
+                                {
+                                    debugLogsLink: (sub) => (
+                                        <AccessibleButton
+                                            kind="link"
+                                            onClick={() => this.onBugReport(err)}
+                                            data-testid="jump-to-date-error-submit-debug-logs-button"
+                                        >
+                                            {sub}
+                                        </AccessibleButton>
+                                    ),
+                                },
+                            )}
+                        </p>
                     );
                 }
 
@@ -179,6 +207,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                     description: (
                         <>
                             <p>{friendlyErrorMessage}</p>
+                            {submitDebugLogsContent}
                             <details>
                                 <summary>{_t("Error details")}</summary>
 
@@ -201,6 +230,13 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                 });
             }
         }
+    };
+
+    private onBugReport = (err): void => {
+        Modal.createDialog(BugReportDialog, {
+            error: err,
+            initialText: "Error occured while using jump to date #jump-to-date",
+        });
     };
 
     private onLastWeekClicked = (): void => {
