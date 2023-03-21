@@ -18,6 +18,7 @@ import React from "react";
 import { fireEvent, render, screen, waitFor, cleanup, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
+import { clearAllModals } from "../../../test-utils";
 import { Room, User, MatrixClient, RoomMember, MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { Phase, VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { DeviceTrustLevel, UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
@@ -417,7 +418,9 @@ describe("<UserOptionsSection />", () => {
         mockClient.setIgnoredUsers.mockClear();
     });
 
-    afterEach(() => Modal.closeCurrentModal("End of test"));
+    afterEach(async () => {
+        await clearAllModals();
+    });
 
     afterAll(() => {
         inviteSpy.mockRestore();

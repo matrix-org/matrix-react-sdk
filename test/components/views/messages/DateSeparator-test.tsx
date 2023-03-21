@@ -28,9 +28,13 @@ import { formatFullDateNoTime } from "../../../../src/DateUtils";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { UIFeature } from "../../../../src/settings/UIFeature";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
-import { flushPromisesWithFakeTimers, getMockClientWithEventEmitter } from "../../../test-utils";
+import {
+    clearAllModals,
+    flushPromisesWithFakeTimers,
+    getMockClientWithEventEmitter,
+    waitEnoughCyclesForModal,
+} from "../../../test-utils";
 import DateSeparator from "../../../../src/components/views/messages/DateSeparator";
-import Modal from "../../../../src/Modal";
 
 jest.mock("../../../../src/settings/SettingsStore");
 
@@ -132,14 +136,7 @@ describe("DateSeparator", () => {
         });
 
         afterEach(async () => {
-            // Prevent modals from leaking and polluting other tests
-            let keepClosingModals = true;
-            while (keepClosingModals) {
-                keepClosingModals = Modal.closeCurrentModal("End of test (clean-up)");
-            }
-
-            // Then wait for the screen to update (probably React rerender)
-            await flushPromisesWithFakeTimers();
+            await clearAllModals();
         });
 
         it("renders the date separator correctly", () => {
@@ -178,12 +175,66 @@ describe("DateSeparator", () => {
             } satisfies ViewRoomPayload);
         });
 
-        it("should not jump to date if we already switched to another room (simulate slow network request)", async () => {
-            // TODO
+        it("should not jump to date if we already switched to another room", async () => {
+            // Render the component
+            getComponent();
+
+            // Open the jump to date context menu
+            fireEvent.click(screen.getByTestId("jump-to-date-separator-button"));
+
+            // Mimic the outcome of switching rooms while waiting for the jump to date
+            // request to finish. Imagine that we started jumping to "last week", the
+            // network request is taking a while, so we got bored, switched rooms; we
+            // shouldn't jump back to the previous room after the network request
+            // happens to finish later.
+            jest.spyOn(SdkContextClass.instance.roomViewStore, "getRoomId").mockReturnValue("!some-other-room");
+
+            // Jump to "last week"
+            mockClient.timestampToEvent.mockResolvedValue({
+                event_id: "$abc",
+                origin_server_ts: "0",
+            });
+            const jumpToLastWeekButton = await screen.findByTestId("jump-to-date-last-week");
+            fireEvent.click(jumpToLastWeekButton);
+
+            // Flush out the dispatcher which uses `window.setTimeout(...)` since we're
+            // using `jest.useFakeTimers()` in these tests.
+            await flushPromisesWithFakeTimers();
+
+            // We should not see any room switching going on (`Action.ViewRoom`)
+            expect(dispatcher.dispatch).not.toHaveBeenCalled();
         });
 
-        it("should not show jump to date error if we already switched to another room (simulate slow network request)", async () => {
-            // TODO
+        it("should not show jump to date error if we already switched to another room", async () => {
+            // Render the component
+            getComponent();
+
+            // Open the jump to date context menu
+            fireEvent.click(screen.getByTestId("jump-to-date-separator-button"));
+
+            // Mimic the outcome of switching rooms while waiting for the jump to date
+            // request to finish. Imagine that we started jumping to "last week", the
+            // network request is taking a while, so we got bored, switched rooms; we
+            // shouldn't jump back to the previous room after the network request
+            // happens to finish later.
+            jest.spyOn(SdkContextClass.instance.roomViewStore, "getRoomId").mockReturnValue("!some-other-room");
+
+            // Try to jump to "last week" but we want an error to occur and ensure that
+            // we don't show an error dialog for it since we already switched away to
+            // another room and don't care about the outcome here anymore.
+            mockClient.timestampToEvent.mockRejectedValue(new Error("Fake error in test"));
+            const jumpToLastWeekButton = await screen.findByTestId("jump-to-date-last-week");
+            fireEvent.click(jumpToLastWeekButton);
+
+            // Wait the necessary time in order to see if any modal will appear
+            await waitEnoughCyclesForModal({
+                useFakeTimers: true,
+            });
+
+            // We should not see any error modal dialog
+            //
+            // We have to use `queryBy` so that it can return `null` for something that does not exist.
+            expect(screen.queryByTestId("jump-to-date-error-content")).not.toBeInTheDocument();
         });
 
         it("should show error dialog with submit debug logs option when non-networking error occurs", async () => {
@@ -224,8 +275,6 @@ describe("DateSeparator", () => {
 
                 // Expect error to be shown. We have to wait for the UI to transition.
                 await screen.findByTestId("jump-to-date-error-content");
-
-                screen.debug();
 
                 // The submit debug logs option should *NOT* be shown for network errors.
                 //

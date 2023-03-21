@@ -34,7 +34,11 @@ import {
 } from "../../../src/voice-broadcast";
 import { filterConsole, flushPromises, flushPromisesWithFakeTimers, stubClient } from "../../test-utils";
 import { createTestPlayback } from "../../test-utils/audio";
-import { mkVoiceBroadcastChunkEvent, mkVoiceBroadcastInfoStateEvent } from "../utils/test-utils";
+import {
+    mkVoiceBroadcastChunkEvent,
+    mkVoiceBroadcastInfoStateEvent,
+    waitEnoughCyclesForModal,
+} from "../utils/test-utils";
 import { LazyValue } from "../../../src/utils/LazyValue";
 
 jest.mock("../../../src/utils/MediaEventHelper", () => ({
@@ -75,11 +79,6 @@ describe("VoiceBroadcastPlayback", () => {
         return screen.queryByText(
             "If you start listening to this live broadcast, your current live broadcast recording will be ended.",
         );
-    };
-
-    const waitForDialog = async () => {
-        await flushPromises();
-        await flushPromises();
     };
 
     const itShouldSetTheStateTo = (state: VoiceBroadcastPlaybackState) => {
@@ -480,7 +479,7 @@ describe("VoiceBroadcastPlayback", () => {
                 jest.spyOn(recording, "stop");
                 SdkContextClass.instance.voiceBroadcastRecordingsStore.setCurrent(recording);
                 playback.start();
-                await waitForDialog();
+                await waitEnoughCyclesForModal();
             });
 
             it("should display a confirm modal", () => {

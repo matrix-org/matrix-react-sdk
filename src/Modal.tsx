@@ -352,6 +352,8 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
     }
 
     private async reRender(): Promise<void> {
+        // TODO: We should remove this weird sleep. It also makes testing harder
+        //
         // await next tick because sometimes ReactDOM can race with itself and cause the modal to wrongly stick around
         await sleep(0);
 
