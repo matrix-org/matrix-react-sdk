@@ -45,6 +45,8 @@ export const pillRoomNotifLen = (): number => {
     return "@room".length;
 };
 
+const linkIcon = <LinkIcon className="mx_Pill_LinkIcon mx_BaseAvatar mx_BaseAvatar_image" />;
+
 const PillRoomAvatar: React.FC<{
     shouldShowPillAvatar: boolean;
     room: Room | null;
@@ -56,7 +58,7 @@ const PillRoomAvatar: React.FC<{
     if (room) {
         return <RoomAvatar room={room} width={16} height={16} aria-hidden="true" />;
     }
-    return <LinkIcon className="mx_Pill_LinkIcon mx_BaseAvatar mx_BaseAvatar_image" />;
+    return linkIcon;
 };
 
 const PillMemberAvatar: React.FC<{
@@ -88,7 +90,7 @@ export interface PillProps {
 
 export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room, shouldShowPillAvatar = true }) => {
     const [hover, setHover] = useState(false);
-    const { member, onClick, resourceId, targetRoom, text, type } = usePermalink({
+    const { event, member, onClick, resourceId, targetRoom, text, type } = usePermalink({
         room,
         type: propType,
         url,
@@ -130,10 +132,15 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
             break;
         case PillType.EventInSameRoom:
             {
-                avatar = <PillMemberAvatar shouldShowPillAvatar={shouldShowPillAvatar} member={member} />;
-                pillText = _t("Message from %(user)s", {
-                    user: text,
-                });
+                if (event) {
+                    avatar = <PillMemberAvatar shouldShowPillAvatar={shouldShowPillAvatar} member={member} />;
+                    pillText = _t("Message from %(user)s", {
+                        user: text,
+                    });
+                } else {
+                    avatar = linkIcon;
+                    pillText = _t("Message");
+                }
             }
             break;
         case PillType.AtRoomMention:
