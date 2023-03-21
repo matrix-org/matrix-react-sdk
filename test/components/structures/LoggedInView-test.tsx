@@ -15,11 +15,12 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, RenderResult } from "@testing-library/react";
+import { screen, render, RenderResult } from "@testing-library/react";
 import { ConditionKind, EventType, IPushRule, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { ClientEvent } from "matrix-js-sdk/src/client";
 import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
 import { logger } from "matrix-js-sdk/src/logger";
+import { BannerLifecycle, BannerOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/BannerLifecycle";
 
 import LoggedInView from "../../../src/components/structures/LoggedInView";
 import { SDKContext } from "../../../src/contexts/SDKContext";
@@ -27,6 +28,7 @@ import { StandardActions } from "../../../src/notifications/StandardActions";
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";
 import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../test-utils";
 import { TestSdkContext } from "../../TestSdkContext";
+import { ModuleRunner } from "../../../src/modules/ModuleRunner";
 
 describe("<LoggedInView />", () => {
     const userId = "@alice:domain.org";
@@ -321,6 +323,22 @@ describe("<LoggedInView />", () => {
                 // not called
                 expect(mockClient.setPushRuleActions).not.toHaveBeenCalled();
             });
+        });
+
+        it("renders banner via module api", () => {
+            jest.spyOn(ModuleRunner.instance, "invoke").mockImplementation((lifecycleEvent, opts) => {
+                if (lifecycleEvent === BannerLifecycle.Banner) {
+                    (opts as BannerOpts).banner = (
+                        <div>
+                            <button>Custom Menu</button>
+                        </div>
+                    );
+                }
+            });
+
+            getComponent();
+
+            expect(screen.getByRole("button", { name: "Custom Menu" })).toBeInTheDocument();
         });
     });
 });

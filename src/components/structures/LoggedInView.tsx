@@ -23,6 +23,7 @@ import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
 import { IUsageLimit } from "matrix-js-sdk/src/@types/partials";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { MatrixError } from "matrix-js-sdk/src/matrix";
+import { BannerLifecycle, BannerOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/BannerLifecycle";
 
 import { isOnlyCtrlOrCmdKeyEvent, Key } from "../../Keyboard";
 import PageTypes from "../../PageTypes";
@@ -71,6 +72,7 @@ import LeftPanelLiveShareWarning from "../views/beacon/LeftPanelLiveShareWarning
 import { UserOnboardingPage } from "../views/user-onboarding/UserOnboardingPage";
 import { PipContainer } from "./PipContainer";
 import { monitorSyncedPushRules } from "../../utils/pushRules/monitorSyncedPushRules";
+import { ModuleRunner } from "../../modules/ModuleRunner";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -659,6 +661,9 @@ class LoggedInView extends React.Component<IProps, IState> {
             "mx_MatrixChat--with-avatar": this.state.backgroundImage,
         });
 
+        const bannerOpts: BannerOpts = { banner: undefined };
+        ModuleRunner.instance.invoke(BannerLifecycle.Banner, bannerOpts);
+
         const audioFeedArraysForCalls = this.state.activeCalls.map((call) => {
             return <AudioFeedArrayForLegacyCall call={call} key={call.callId} />;
         });
@@ -672,6 +677,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                     aria-hidden={this.props.hideToSRUsers}
                 >
                     <ToastContainer />
+                    {bannerOpts.banner}
                     <div className={bodyClasses}>
                         <div className="mx_LeftPanel_outerWrapper">
                             <LeftPanelLiveShareWarning isMinimized={this.props.collapseLhs || false} />
