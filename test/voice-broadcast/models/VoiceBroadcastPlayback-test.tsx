@@ -32,13 +32,15 @@ import {
     VoiceBroadcastPlaybackState,
     VoiceBroadcastRecording,
 } from "../../../src/voice-broadcast";
-import { filterConsole, flushPromises, flushPromisesWithFakeTimers, stubClient } from "../../test-utils";
-import { createTestPlayback } from "../../test-utils/audio";
 import {
-    mkVoiceBroadcastChunkEvent,
-    mkVoiceBroadcastInfoStateEvent,
+    filterConsole,
+    flushPromises,
+    flushPromisesWithFakeTimers,
+    stubClient,
     waitEnoughCyclesForModal,
-} from "../utils/test-utils";
+} from "../../test-utils";
+import { createTestPlayback } from "../../test-utils/audio";
+import { mkVoiceBroadcastChunkEvent, mkVoiceBroadcastInfoStateEvent } from "../utils/test-utils";
 import { LazyValue } from "../../../src/utils/LazyValue";
 
 jest.mock("../../../src/utils/MediaEventHelper", () => ({
