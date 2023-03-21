@@ -168,7 +168,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
             if (currentRoomId === roomIdForJumpRequest) {
                 let friendlyErrorMessage = `An error occured while trying to find and jump to the given date.`;
                 let submitDebugLogsContent: JSX.Element = <></>;
-                if (err?.name === "ConnectionError") {
+                if (err?.name === "ConnectionError" || err?.httpStatus) {
                     if (err?.errcode === "M_NOT_FOUND") {
                         friendlyErrorMessage = _t(
                             "We were unable to find an event looking forwards from %(dateString)s. " +
@@ -194,6 +194,10 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                                 {
                                     debugLogsLink: (sub) => (
                                         <AccessibleButton
+                                            // This is by default a `<div>` which we
+                                            // can't nest within a `<p>` here so update
+                                            // this to a be a inline anchor element.
+                                            element="a"
                                             kind="link"
                                             onClick={() => this.onBugReport(err)}
                                             data-testid="jump-to-date-error-submit-debug-logs-button"

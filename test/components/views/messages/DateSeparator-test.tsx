@@ -18,6 +18,7 @@ import React from "react";
 import { mocked } from "jest-mock";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { ITimestampToEventResponse } from "matrix-js-sdk/src/client";
+import { ConnectionError, HTTPError } from "matrix-js-sdk/src/http-api";
 
 import dispatcher from "../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../src/dispatcher/actions";
@@ -29,6 +30,7 @@ import { UIFeature } from "../../../../src/settings/UIFeature";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import { flushPromisesWithFakeTimers, getMockClientWithEventEmitter } from "../../../test-utils";
 import DateSeparator from "../../../../src/components/views/messages/DateSeparator";
+import Modal from "../../../../src/Modal";
 
 jest.mock("../../../../src/settings/SettingsStore");
 
@@ -120,12 +122,24 @@ describe("DateSeparator", () => {
     describe("when feature_jump_to_date is enabled", () => {
         const currentDate = new Date("2023-03-05");
         beforeEach(() => {
+            jest.clearAllMocks();
             mocked(SettingsStore).getValue.mockImplementation((arg): any => {
                 if (arg === "feature_jump_to_date") {
                     return true;
                 }
             });
-            jest.spyOn(dispatcher, "dispatch");
+            jest.spyOn(dispatcher, "dispatch").mockImplementation(() => {});
+        });
+
+        afterEach(async () => {
+            // Prevent modals from leaking and polluting other tests
+            let keepClosingModals = true;
+            while (keepClosingModals) {
+                keepClosingModals = Modal.closeCurrentModal("End of test (clean-up)");
+            }
+
+            // Then wait for the screen to update (probably React rerender)
+            await flushPromisesWithFakeTimers();
         });
 
         it("renders the date separator correctly", () => {
@@ -164,14 +178,22 @@ describe("DateSeparator", () => {
             } satisfies ViewRoomPayload);
         });
 
-        it("should show error dialog with option to submit debug logs when something went wrong while jumping", async () => {
+        it("should not jump to date if we already switched to another room (simulate slow network request)", async () => {
+            // TODO
+        });
+
+        it("should not show jump to date error if we already switched to another room (simulate slow network request)", async () => {
+            // TODO
+        });
+
+        it("should show error dialog with submit debug logs option when non-networking error occurs", async () => {
             // Render the component
             getComponent();
 
             // Open the jump to date context menu
             fireEvent.click(screen.getByTestId("jump-to-date-separator-button"));
 
-            // Try to jump to "last week" but we want it with a non-network error so it
+            // Try to jump to "last week" but we want a non-network error to occur so it
             // shows the "Submit debug logs" UI
             mockClient.timestampToEvent.mockRejectedValue(new Error("Fake error in test"));
             const jumpToLastWeekButton = await screen.findByTestId("jump-to-date-last-week");
@@ -180,8 +202,54 @@ describe("DateSeparator", () => {
             // Expect error to be shown. We have to wait for the UI to transition.
             await screen.findByTestId("jump-to-date-error-content");
 
-            // Expect an option to submit debug logs to be shown
+            // Expect an option to submit debug logs to be shown when a non-network error occurs
             await screen.findByTestId("jump-to-date-error-submit-debug-logs-button");
+        });
+
+        it("should show error dialog without submit debug logs option when networking error (connection) occurs", async () => {
+            // Render the component
+            getComponent();
+
+            // Open the jump to date context menu
+            fireEvent.click(screen.getByTestId("jump-to-date-separator-button"));
+
+            // Try to jump to "last week" but we want a network error to occur
+            const fakeConnectionError = new ConnectionError("Fake connection error in test");
+            mockClient.timestampToEvent.mockRejectedValue(fakeConnectionError);
+            const jumpToLastWeekButton = await screen.findByTestId("jump-to-date-last-week");
+            fireEvent.click(jumpToLastWeekButton);
+
+            // Expect error to be shown. We have to wait for the UI to transition.
+            await screen.findByTestId("jump-to-date-error-content");
+
+            screen.debug();
+
+            // The submit debug logs option should *NOT* be shown for network errors.
+            //
+            // We have to use `queryBy` so that it can return `null` for something that does not exist.
+            expect(screen.queryByTestId("jump-to-date-error-submit-debug-logs-button")).not.toBeInTheDocument();
+        });
+
+        it("should show error dialog without submit debug logs option when networking error (http) occurs", async () => {
+            // Render the component
+            getComponent();
+
+            // Open the jump to date context menu
+            fireEvent.click(screen.getByTestId("jump-to-date-separator-button"));
+
+            // Try to jump to "last week" but we want a network error to occur
+            const fakeHttpError = new HTTPError("Fake connection error in test", 418);
+            mockClient.timestampToEvent.mockRejectedValue(fakeHttpError);
+            const jumpToLastWeekButton = await screen.findByTestId("jump-to-date-last-week");
+            fireEvent.click(jumpToLastWeekButton);
+
+            // Expect error to be shown. We have to wait for the UI to transition.
+            await screen.findByTestId("jump-to-date-error-content");
+
+            // The submit debug logs option should *NOT* be shown for network errors.
+            //
+            // We have to use `queryBy` so that it can return `null` for something that does not exist.
+            expect(screen.queryByTestId("jump-to-date-error-submit-debug-logs-button")).not.toBeInTheDocument();
         });
     });
 });

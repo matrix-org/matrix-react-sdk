@@ -149,13 +149,19 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
         return this.appendDialogAsync<C>(Promise.resolve(Element), props, className);
     }
 
-    public closeCurrentModal(reason: string): void {
+    /**
+     * @callback onBeforeClose
+     * @param reason either "backgroundClick" or undefined
+     * @return whether a modal was closed
+     */
+    public closeCurrentModal(reason?: string): boolean {
         const modal = this.getCurrentModal();
         if (!modal) {
-            return;
+            return false;
         }
         modal.closeReason = reason;
         modal.close();
+        return true;
     }
 
     private buildModal<C extends ComponentType>(
