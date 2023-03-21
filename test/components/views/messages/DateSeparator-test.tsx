@@ -16,13 +16,18 @@ limitations under the License.
 
 import React from "react";
 import { mocked } from "jest-mock";
-import { render } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { ITimestampToEventResponse } from "matrix-js-sdk/src/client";
 
+import dispatcher from "../../../../src/dispatcher/dispatcher";
+import { Action } from "../../../../src/dispatcher/actions";
+import { ViewRoomPayload } from "../../../../src/dispatcher/payloads/ViewRoomPayload";
+import { SdkContextClass } from "../../../../src/contexts/SDKContext";
 import { formatFullDateNoTime } from "../../../../src/DateUtils";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { UIFeature } from "../../../../src/settings/UIFeature";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
-import { getMockClientWithEventEmitter } from "../../../test-utils";
+import { flushPromisesWithFakeTimers, getMockClientWithEventEmitter } from "../../../test-utils";
 import DateSeparator from "../../../../src/components/views/messages/DateSeparator";
 
 jest.mock("../../../../src/settings/SettingsStore");
@@ -31,21 +36,16 @@ describe("DateSeparator", () => {
     const HOUR_MS = 3600000;
     const DAY_MS = HOUR_MS * 24;
     // Friday Dec 17 2021, 9:09am
-    const now = "2021-12-17T08:09:00.000Z";
-    const nowMs = 1639728540000;
+    const nowDate = new Date("2021-12-17T08:09:00.000Z");
+    const roomId = "!unused:example.org";
     const defaultProps = {
-        ts: nowMs,
-        now,
-        roomId: "!unused:example.org",
+        ts: nowDate.getTime(),
+        roomId,
     };
-    const RealDate = global.Date;
-    class MockDate extends Date {
-        constructor(date: string | number | Date) {
-            super(date || now);
-        }
-    }
 
-    const mockClient = getMockClientWithEventEmitter({});
+    const mockClient = getMockClientWithEventEmitter({
+        timestampToEvent: jest.fn(),
+    });
     const getComponent = (props = {}) =>
         render(
             <MatrixClientContext.Provider value={mockClient}>
@@ -55,11 +55,11 @@ describe("DateSeparator", () => {
 
     type TestCase = [string, number, string];
     const testCases: TestCase[] = [
-        ["the exact same moment", nowMs, "Today"],
-        ["same day as current day", nowMs - HOUR_MS, "Today"],
-        ["day before the current day", nowMs - HOUR_MS * 12, "Yesterday"],
-        ["2 days ago", nowMs - DAY_MS * 2, "Wednesday"],
-        ["144 hours ago", nowMs - HOUR_MS * 144, "Sat, Dec 11 2021"],
+        ["the exact same moment", nowDate.getTime(), "Today"],
+        ["same day as current day", nowDate.getTime() - HOUR_MS, "Today"],
+        ["day before the current day", nowDate.getTime() - HOUR_MS * 12, "Yesterday"],
+        ["2 days ago", nowDate.getTime() - DAY_MS * 2, "Wednesday"],
+        ["144 hours ago", nowDate.getTime() - HOUR_MS * 144, "Sat, Dec 11 2021"],
         [
             "6 days ago, but less than 144h",
             new Date("Saturday Dec 11 2021 23:59:00 GMT+0100 (Central European Standard Time)").getTime(),
@@ -68,16 +68,20 @@ describe("DateSeparator", () => {
     ];
 
     beforeEach(() => {
-        global.Date = MockDate as unknown as DateConstructor;
+        // Set a consistent fake time here so the test is always consistent
+        jest.useFakeTimers();
+        jest.setSystemTime(nowDate.getTime());
+
         (SettingsStore.getValue as jest.Mock) = jest.fn((arg) => {
             if (arg === UIFeature.TimelineEnableRelativeDates) {
                 return true;
             }
         });
+        jest.spyOn(SdkContextClass.instance.roomViewStore, "getRoomId").mockReturnValue(roomId);
     });
 
     afterAll(() => {
-        global.Date = RealDate;
+        jest.useRealTimers();
     });
 
     it("renders the date separator correctly", () => {
@@ -114,16 +118,70 @@ describe("DateSeparator", () => {
     });
 
     describe("when feature_jump_to_date is enabled", () => {
+        const currentDate = new Date("2023-03-05");
         beforeEach(() => {
             mocked(SettingsStore).getValue.mockImplementation((arg): any => {
                 if (arg === "feature_jump_to_date") {
                     return true;
                 }
             });
+            jest.spyOn(dispatcher, "dispatch");
         });
+
         it("renders the date separator correctly", () => {
             const { asFragment } = getComponent();
             expect(asFragment()).toMatchSnapshot();
+        });
+
+        it("can jump to last week", async () => {
+            // Render the component
+            getComponent();
+
+            // Open the jump to date context menu
+            fireEvent.click(screen.getByTestId("jump-to-date-separator-button"));
+
+            // Jump to "last week"
+            const lastWeekDate = new Date();
+            lastWeekDate.setDate(currentDate.getDate() - 7);
+            const returnedEventId = "$abc";
+            mockClient.timestampToEvent.mockResolvedValue({
+                event_id: returnedEventId,
+                origin_server_ts: String(lastWeekDate.getTime()),
+            } satisfies ITimestampToEventResponse);
+            const jumpToLastWeekButton = await screen.findByTestId("jump-to-date-last-week");
+            fireEvent.click(jumpToLastWeekButton);
+
+            // Flush out the dispatcher which uses `window.setTimeout(...)` since we're
+            // using `jest.useFakeTimers()` in these tests.
+            await flushPromisesWithFakeTimers();
+
+            expect(dispatcher.dispatch).toHaveBeenCalledWith({
+                action: Action.ViewRoom,
+                event_id: returnedEventId,
+                highlighted: true,
+                room_id: roomId,
+                metricsTrigger: undefined,
+            } satisfies ViewRoomPayload);
+        });
+
+        it("should show error dialog with option to submit debug logs when something went wrong while jumping", async () => {
+            // Render the component
+            getComponent();
+
+            // Open the jump to date context menu
+            fireEvent.click(screen.getByTestId("jump-to-date-separator-button"));
+
+            // Try to jump to "last week" but we want it with a non-network error so it
+            // shows the "Submit debug logs" UI
+            mockClient.timestampToEvent.mockRejectedValue(new Error("Fake error in test"));
+            const jumpToLastWeekButton = await screen.findByTestId("jump-to-date-last-week");
+            fireEvent.click(jumpToLastWeekButton);
+
+            // Expect error to be shown. We have to wait for the UI to transition.
+            await screen.findByTestId("jump-to-date-error-content");
+
+            // Expect an option to submit debug logs to be shown
+            await screen.findByTestId("jump-to-date-error-submit-debug-logs-button");
         });
     });
 });

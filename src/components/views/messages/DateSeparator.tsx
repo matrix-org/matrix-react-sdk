@@ -22,7 +22,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { _t } from "../../../languageHandler";
 import { formatFullDateNoDay, formatFullDateNoTime } from "../../../DateUtils";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import dis from "../../../dispatcher/dispatcher";
+import dispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
@@ -138,15 +138,20 @@ export default class DateSeparator extends React.Component<IProps, IState> {
             // Only try to navigate to the room if the user is still viewing the same
             // room. We don't want to jump someone back to a room after a slow request
             // if they've already navigated away to another room.
-            const roomIdBeforeNavigation = SdkContextClass.instance.roomViewStore.getRoomId();
-            if (roomIdBeforeNavigation === roomIdForJumpRequest) {
-                dis.dispatch<ViewRoomPayload>({
+            const currentRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
+            if (currentRoomId === roomIdForJumpRequest) {
+                dispatcher.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     event_id: eventId,
                     highlighted: true,
-                    room_id: roomIdBeforeNavigation,
+                    room_id: roomIdForJumpRequest,
                     metricsTrigger: undefined, // room doesn't change
                 });
+            } else {
+                logger.debug(
+                    `No longer navigating to date in room (jump to date) because the user already switched ` +
+                        `to another room: currentRoomId=${currentRoomId}, roomIdForJumpRequest=${roomIdForJumpRequest}`,
+                );
             }
         } catch (err) {
             logger.error(
@@ -159,8 +164,8 @@ export default class DateSeparator extends React.Component<IProps, IState> {
             // don't want to worry someone about an error in a room they no longer care
             // about after a slow request if they've already navigated away to another
             // room.
-            const roomIdBeforeDisplayingError = SdkContextClass.instance.roomViewStore.getRoomId();
-            if (roomIdBeforeDisplayingError === roomIdForJumpRequest) {
+            const currentRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
+            if (currentRoomId === roomIdForJumpRequest) {
                 let friendlyErrorMessage = `An error occured while trying to find and jump to the given date.`;
                 let submitDebugLogsContent: JSX.Element = <></>;
                 if (err?.name === "ConnectionError") {
@@ -205,7 +210,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Unable to find event at that date"),
                     description: (
-                        <>
+                        <div data-testid="jump-to-date-error-content">
                             <p>{friendlyErrorMessage}</p>
                             {submitDebugLogsContent}
                             <details>
@@ -225,7 +230,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                                 </ul>
                                 <p>{String(err)}</p>
                             </details>
-                        </>
+                        </div>
                     ),
                 });
             }
@@ -274,7 +279,11 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                     onFinished={this.onContextMenuCloseClick}
                 >
                     <IconizedContextMenuOptionList first>
-                        <IconizedContextMenuOption label={_t("Last week")} onClick={this.onLastWeekClicked} />
+                        <IconizedContextMenuOption
+                            label={_t("Last week")}
+                            onClick={this.onLastWeekClicked}
+                            data-testid="jump-to-date-last-week"
+                        />
                         <IconizedContextMenuOption label={_t("Last month")} onClick={this.onLastMonthClicked} />
                         <IconizedContextMenuOption
                             label={_t("The beginning of the room")}
@@ -292,6 +301,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
         return (
             <ContextMenuTooltipButton
                 className="mx_DateSeparator_jumpToDateMenu mx_DateSeparator_dateContent"
+                data-testid="jump-to-date-separator-button"
                 onClick={this.onContextMenuOpenClick}
                 isExpanded={!!this.state.contextMenuPosition}
                 title={_t("Jump to date")}
