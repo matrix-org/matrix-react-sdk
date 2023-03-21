@@ -30,7 +30,7 @@ import { UIFeature } from "../../../settings/UIFeature";
 import Modal from "../../../Modal";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import BugReportDialog from "../dialogs/BugReportDialog";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import { contextMenuBelow } from "../rooms/RoomTile";
 import { ContextMenuTooltipButton } from "../../structures/ContextMenu";
 import IconizedContextMenu, {
@@ -80,7 +80,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
         if (this.settingWatcherRef) SettingsStore.unwatchSetting(this.settingWatcherRef);
     }
 
-    private onContextMenuOpenClick = (e: React.MouseEvent): void => {
+    private onContextMenuOpenClick = (e: ButtonEvent): void => {
         e.preventDefault();
         e.stopPropagation();
         const target = e.target as HTMLButtonElement;
