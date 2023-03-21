@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 import { mocked } from "jest-mock";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { ITimestampToEventResponse } from "matrix-js-sdk/src/client";
+import { TimestampToEventResponse } from "matrix-js-sdk/src/client";
 import { ConnectionError, HTTPError } from "matrix-js-sdk/src/http-api";
 
 import dispatcher from "../../../../src/dispatcher/dispatcher";
@@ -157,7 +157,7 @@ describe("DateSeparator", () => {
             mockClient.timestampToEvent.mockResolvedValue({
                 event_id: returnedEventId,
                 origin_server_ts: String(lastWeekDate.getTime()),
-            } satisfies ITimestampToEventResponse);
+            } satisfies TimestampToEventResponse);
             const jumpToLastWeekButton = await screen.findByTestId("jump-to-date-last-week");
             fireEvent.click(jumpToLastWeekButton);
 
