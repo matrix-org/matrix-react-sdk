@@ -219,19 +219,6 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                             {submitDebugLogsContent}
                             <details>
                                 <summary>{_t("Error details")}</summary>
-
-                                <ul>
-                                    <li>
-                                        {_t("Request status code: %(statusCode)s", {
-                                            statusCode: err?.httpStatus || _t("HTTP status code not available"),
-                                        })}
-                                    </li>
-                                    <li>
-                                        {_t("Error code: %(errorCode)s", {
-                                            errorCode: err?.errcode || _t("Error code not available"),
-                                        })}
-                                    </li>
-                                </ul>
                                 <p>{String(err)}</p>
                             </details>
                         </div>
