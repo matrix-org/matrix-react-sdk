@@ -43,7 +43,7 @@ const PRESENCE_CLASS: Record<PresenceState, string> = {
     unavailable: "mx_EntityTile_unavailable",
 };
 
-function presenceClassForMember(presenceState: PresenceState, lastActiveAgo: number, showPresence: boolean): string {
+function presenceClassForMember(presenceState?: PresenceState, lastActiveAgo?: number, showPresence?: boolean): string {
     if (showPresence === false) {
         return "mx_EntityTile_online_beenactive";
     }
@@ -69,14 +69,14 @@ interface IProps {
     title?: string;
     avatarJsx?: JSX.Element; // <BaseAvatar />
     className?: string;
-    presenceState?: PresenceState;
-    presenceLastActiveAgo?: number;
-    presenceLastTs?: number;
+    presenceState: PresenceState;
+    presenceLastActiveAgo: number;
+    presenceLastTs: number;
     presenceCurrentlyActive?: boolean;
-    showInviteButton?: boolean;
-    onClick?(): void;
-    suppressOnHover?: boolean;
-    showPresence?: boolean;
+    showInviteButton: boolean;
+    onClick(): void;
+    suppressOnHover: boolean;
+    showPresence: boolean;
     subtextLabel?: string;
     e2eStatus?: E2EState;
     powerStatus?: PowerStatus;
@@ -108,7 +108,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
     public render(): React.ReactNode {
         const mainClassNames: Record<string, boolean> = {
             mx_EntityTile: true,
-            mx_EntityTile_noHover: this.props.suppressOnHover,
+            mx_EntityTile_noHover: !!this.props.suppressOnHover,
         };
         if (this.props.className) mainClassNames[this.props.className] = true;
 
@@ -127,7 +127,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
                 ? Date.now() - (this.props.presenceLastTs - this.props.presenceLastActiveAgo)
                 : -1;
 
-            let presenceLabel = null;
+            let presenceLabel: JSX.Element | undefined;
             if (this.props.showPresence) {
                 presenceLabel = (
                     <PresenceLabel
@@ -161,7 +161,12 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
         if (this.props.showInviteButton) {
             inviteButton = (
                 <div className="mx_EntityTile_invite">
-                    <img src={require("../../../../res/img/plus.svg").default} width="16" height="16" />
+                    <img
+                        alt={_t("Invite")}
+                        src={require("../../../../res/img/plus.svg").default}
+                        width="16"
+                        height="16"
+                    />
                 </div>
             );
         }

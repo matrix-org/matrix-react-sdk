@@ -50,10 +50,7 @@ export const createMap = (interactive: boolean, bodyId: string, onError?: (error
         map.addControl(new maplibregl.AttributionControl(), "top-right");
 
         map.on("error", (e) => {
-            logger.error(
-                "Failed to load map: check map_style_url in config.json has a " + "valid URL and API key",
-                e.error,
-            );
+            logger.error("Failed to load map: check map_style_url in config.json has a valid URL and API key", e.error);
             onError?.(new Error(LocationShareError.MapStyleUrlNotReachable));
         });
 
@@ -82,7 +79,7 @@ export const makeMapSiteLink = (coords: GeolocationCoordinates): string => {
     );
 };
 
-export const createMapSiteLinkFromEvent = (event: MatrixEvent): string => {
+export const createMapSiteLinkFromEvent = (event: MatrixEvent): string | null => {
     const content = event.getContent();
     const mLocation = content[M_LOCATION.name];
     if (mLocation !== undefined) {

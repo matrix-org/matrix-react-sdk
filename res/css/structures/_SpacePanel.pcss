@@ -101,6 +101,8 @@ $activeBorderColor: $primary-content;
 
     .mx_SpaceItem.collapsed {
         & > .mx_SpaceButton > .mx_SpaceButton_toggleCollapse {
+            padding: 0 10px;
+            margin: 0 -10px;
             transform: rotate(-90deg);
         }
 
@@ -111,12 +113,6 @@ $activeBorderColor: $primary-content;
 
     .mx_SpaceItem_new {
         position: relative;
-
-        .mx_BetaDot {
-            position: absolute;
-            left: 33px;
-            top: -5px;
-        }
     }
 
     .mx_SpaceItem:not(.hasSubSpaces) > .mx_SpaceButton {
@@ -167,6 +163,7 @@ $activeBorderColor: $primary-content;
 
         .mx_SpaceButton_toggleCollapse {
             width: $gutterSize;
+            padding: 10px 0;
             min-width: $gutterSize;
             height: 20px;
             mask-position: center;

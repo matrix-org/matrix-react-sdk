@@ -40,6 +40,7 @@ import { StopGapWidgetDriver } from "../../../src/stores/widgets/StopGapWidgetDr
 import { stubClient } from "../../test-utils";
 import { ModuleRunner } from "../../../src/modules/ModuleRunner";
 import dis from "../../../src/dispatcher/dispatcher";
+import SettingsStore from "../../../src/settings/SettingsStore";
 
 describe("StopGapWidgetDriver", () => {
     let client: MockedObject<MatrixClient>;
@@ -151,7 +152,7 @@ describe("StopGapWidgetDriver", () => {
             state: OpenIDRequestState.Allowed,
             token: await client.getOpenIdToken(),
         };
-        expect(listener).toBeCalledWith(openIdUpdate);
+        expect(listener).toHaveBeenCalledWith(openIdUpdate);
     });
 
     describe("sendToDevice", () => {
@@ -276,7 +277,7 @@ describe("StopGapWidgetDriver", () => {
                 prevBatch: undefined,
             });
 
-            expect(client.relations).toBeCalledWith("!this-room-id", "$event", null, null, {});
+            expect(client.relations).toHaveBeenCalledWith("!this-room-id", "$event", null, null, {});
         });
 
         it("reads related events from a selected room", async () => {
@@ -292,7 +293,7 @@ describe("StopGapWidgetDriver", () => {
                 prevBatch: undefined,
             });
 
-            expect(client.relations).toBeCalledWith("!room-id", "$event", null, null, {});
+            expect(client.relations).toHaveBeenCalledWith("!room-id", "$event", null, null, {});
         });
 
         it("reads related events with custom parameters", async () => {
@@ -318,7 +319,7 @@ describe("StopGapWidgetDriver", () => {
                 prevBatch: undefined,
             });
 
-            expect(client.relations).toBeCalledWith("!room-id", "$event", "m.reference", "m.room.message", {
+            expect(client.relations).toHaveBeenCalledWith("!room-id", "$event", "m.reference", "m.room.message", {
                 limit: 25,
                 from: "from-token",
                 to: "to-token",
@@ -364,6 +365,33 @@ describe("StopGapWidgetDriver", () => {
             );
 
             expect(dis.dispatch).not.toHaveBeenCalled();
+        });
+    });
+
+    describe("If the feature_dynamic_room_predecessors feature is not enabled", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+        });
+
+        it("passes the flag through to getVisibleRooms", () => {
+            const driver = mkDefaultDriver();
+            driver.readRoomEvents(EventType.CallAnswer, "", 0, ["*"]);
+            expect(client.getVisibleRooms).toHaveBeenCalledWith(false);
+        });
+    });
+
+    describe("If the feature_dynamic_room_predecessors is enabled", () => {
+        beforeEach(() => {
+            // Turn on feature_dynamic_room_predecessors setting
+            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                (settingName) => settingName === "feature_dynamic_room_predecessors",
+            );
+        });
+
+        it("passes the flag through to getVisibleRooms", () => {
+            const driver = mkDefaultDriver();
+            driver.readRoomEvents(EventType.CallAnswer, "", 0, ["*"]);
+            expect(client.getVisibleRooms).toHaveBeenCalledWith(true);
         });
     });
 });

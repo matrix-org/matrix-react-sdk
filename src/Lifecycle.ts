@@ -265,7 +265,7 @@ export function handleInvalidStoreError(e: InvalidStoreError): Promise<void> {
             .then(() => {
                 const lazyLoadEnabled = e.value;
                 if (lazyLoadEnabled) {
-                    return new Promise((resolve) => {
+                    return new Promise<void>((resolve) => {
                         Modal.createDialog(LazyLoadingResyncDialog, {
                             onFinished: resolve,
                         });
@@ -275,7 +275,7 @@ export function handleInvalidStoreError(e: InvalidStoreError): Promise<void> {
                     // between LL/non-LL version on same host.
                     // as disabling LL when previously enabled
                     // is a strong indicator of this (/develop & /app)
-                    return new Promise((resolve) => {
+                    return new Promise<void>((resolve) => {
                         Modal.createDialog(LazyLoadingDisabledDialog, {
                             onFinished: resolve,
                             host: window.location.host,
@@ -568,7 +568,7 @@ export async function hydrateSession(credentials: IMatrixClientCreds): Promise<M
 }
 
 /**
- * fires on_logging_in, optionally clears localstorage, persists new credentials
+ * optionally clears localstorage, persists new credentials
  * to localstorage, starts the new client.
  *
  * @param {IMatrixClientCreds} credentials
@@ -594,15 +594,6 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
             softLogout,
         " freshLogin: " + credentials.freshLogin,
     );
-
-    // This is dispatched to indicate that the user is still in the process of logging in
-    // because async code may take some time to resolve, breaking the assumption that
-    // `setLoggedIn` takes an "instant" to complete, and dispatch `on_logged_in` a few ms
-    // later than MatrixChat might assume.
-    //
-    // we fire it *synchronously* to make sure it fires before on_logged_in.
-    // (dis.dispatch uses `window.setTimeout`, which does not guarantee ordering.)
-    dis.dispatch({ action: "on_logging_in" }, true);
 
     if (clearStorageEnabled) {
         await clearStorage();
@@ -871,6 +862,7 @@ export async function onLoggedOut(): Promise<void> {
     stopMatrixClient();
     await clearStorage({ deleteEverything: true });
     LifecycleCustomisations.onLoggedOutAndStorageCleared?.();
+    await PlatformPeg.get()?.clearStorage();
 
     // Do this last, so we can make sure all storage has been cleared and all
     // customisations got the memo.

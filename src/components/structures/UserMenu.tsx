@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from "react";
+import React, { createRef, ReactNode } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -43,18 +43,18 @@ import IconizedContextMenu, {
     IconizedContextMenuOptionList,
 } from "../views/context_menus/IconizedContextMenu";
 import { UIFeature } from "../../settings/UIFeature";
-import HostSignupAction from "./HostSignupAction";
 import SpaceStore from "../../stores/spaces/SpaceStore";
 import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import UserIdentifierCustomisations from "../../customisations/UserIdentifier";
 import PosthogTrackers from "../../PosthogTrackers";
 import { ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePayload";
-import { Icon as LiveIcon } from "../../../res/img/element-icons/live.svg";
+import { Icon as LiveIcon } from "../../../res/img/compound/live-8px.svg";
 import { VoiceBroadcastRecording, VoiceBroadcastRecordingsStoreEvent } from "../../voice-broadcast";
 import { SDKContext } from "../../contexts/SDKContext";
 
 interface IProps {
     isPanelCollapsed: boolean;
+    children?: ReactNode;
 }
 
 type PartialDOMRect = Pick<DOMRect, "width" | "left" | "top" | "height">;
@@ -145,7 +145,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         } else {
             const theme = SettingsStore.getValue("theme");
             if (theme.startsWith("custom-")) {
-                return getCustomTheme(theme.substring("custom-".length)).is_dark;
+                return !!getCustomTheme(theme.substring("custom-".length)).is_dark;
             }
             return theme === "dark";
         }
@@ -236,7 +236,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         SettingsStore.setValue("theme", null, SettingLevel.DEVICE, newTheme); // set at same level as Appearance tab
     };
 
-    private onSettingsOpen = (ev: ButtonEvent, tabId: string): void => {
+    private onSettingsOpen = (ev: ButtonEvent, tabId?: string): void => {
         ev.preventDefault();
         ev.stopPropagation();
 
@@ -289,8 +289,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
     private renderContextMenu = (): React.ReactNode => {
         if (!this.state.contextMenuPosition) return null;
 
-        let topSection;
-        const hostSignupConfig = SdkConfig.getObject("host_signup");
+        let topSection: JSX.Element | undefined;
         if (MatrixClientPeg.get().isGuest()) {
             topSection = (
                 <div className="mx_UserMenu_contextMenu_header mx_UserMenu_contextMenu_guestPrompts">
@@ -305,31 +304,24 @@ export default class UserMenu extends React.Component<IProps, IState> {
                             ),
                         },
                     )}
-                    {_t(
-                        "New here? <a>Create an account</a>",
-                        {},
-                        {
-                            a: (sub) => (
-                                <AccessibleButton kind="link_inline" onClick={this.onRegisterClick}>
-                                    {sub}
-                                </AccessibleButton>
-                            ),
-                        },
-                    )}
+                    {SettingsStore.getValue(UIFeature.Registration)
+                        ? _t(
+                              "New here? <a>Create an account</a>",
+                              {},
+                              {
+                                  a: (sub) => (
+                                      <AccessibleButton kind="link_inline" onClick={this.onRegisterClick}>
+                                          {sub}
+                                      </AccessibleButton>
+                                  ),
+                              },
+                          )
+                        : null}
                 </div>
             );
-        } else if (hostSignupConfig?.get("url")) {
-            // If hostSignup.domains is set to a non-empty array, only show
-            // dialog if the user is on the domain or a subdomain.
-            const hostSignupDomains = hostSignupConfig.get("domains") || [];
-            const mxDomain = MatrixClientPeg.get().getDomain();
-            const validDomains = hostSignupDomains.filter((d) => d === mxDomain || mxDomain.endsWith(`.${d}`));
-            if (!hostSignupConfig.get("domains") || validDomains.length > 0) {
-                topSection = <HostSignupAction onClick={this.onCloseMenu} />;
-            }
         }
 
-        let homeButton = null;
+        let homeButton: JSX.Element | undefined;
         if (this.hasHomePage) {
             homeButton = (
                 <IconizedContextMenuOption
@@ -340,7 +332,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
             );
         }
 
-        let feedbackButton;
+        let feedbackButton: JSX.Element | undefined;
         if (SettingsStore.getValue(UIFeature.Feedback)) {
             feedbackButton = (
                 <IconizedContextMenuOption
@@ -367,7 +359,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconSettings"
                     label={_t("All settings")}
-                    onClick={(e) => this.onSettingsOpen(e, null)}
+                    onClick={(e) => this.onSettingsOpen(e)}
                 />
                 {feedbackButton}
                 <IconizedContextMenuOption
@@ -386,7 +378,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     <IconizedContextMenuOption
                         iconClassName="mx_UserMenu_iconSettings"
                         label={_t("Settings")}
-                        onClick={(e) => this.onSettingsOpen(e, null)}
+                        onClick={(e) => this.onSettingsOpen(e)}
                     />
                     {feedbackButton}
                 </IconizedContextMenuOptionList>
@@ -405,9 +397,12 @@ export default class UserMenu extends React.Component<IProps, IState> {
                             {OwnProfileStore.instance.displayName}
                         </span>
                         <span className="mx_UserMenu_contextMenu_userId">
-                            {UserIdentifierCustomisations.getDisplayUserIdentifier(MatrixClientPeg.get().getUserId(), {
-                                withDisplayName: true,
-                            })}
+                            {UserIdentifierCustomisations.getDisplayUserIdentifier(
+                                MatrixClientPeg.get().getSafeUserId(),
+                                {
+                                    withDisplayName: true,
+                                },
+                            )}
                         </span>
                     </div>
 
@@ -432,11 +427,11 @@ export default class UserMenu extends React.Component<IProps, IState> {
     public render(): React.ReactNode {
         const avatarSize = 32; // should match border-radius of the avatar
 
-        const userId = MatrixClientPeg.get().getUserId();
+        const userId = MatrixClientPeg.get().getSafeUserId();
         const displayName = OwnProfileStore.instance.displayName || userId;
         const avatarUrl = OwnProfileStore.instance.getHttpAvatarUrl(avatarSize);
 
-        let name: JSX.Element;
+        let name: JSX.Element | undefined;
         if (!this.props.isPanelCollapsed) {
             name = <div className="mx_UserMenu_name">{displayName}</div>;
         }

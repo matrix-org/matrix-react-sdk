@@ -44,6 +44,10 @@ import SdkConfig from "../SdkConfig";
 import SlidingSyncController from "./controllers/SlidingSyncController";
 import { FontWatcher } from "./watchers/FontWatcher";
 import RustCryptoSdkController from "./controllers/RustCryptoSdkController";
+import ServerSupportUnstableFeatureController from "./controllers/ServerSupportUnstableFeatureController";
+import { WatchManager } from "./WatchManager";
+
+export const defaultWatchManager = new WatchManager();
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
 const LEVELS_ROOM_SETTINGS = [
@@ -126,7 +130,7 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
 
     // The supported levels are required. Preferably, use the preset arrays
     // at the top of this file to define this rather than a custom array.
-    supportedLevels?: SettingLevel[];
+    supportedLevels: SettingLevel[];
 
     // Required. Can be any data type. The value specified here should match
     // the data being stored (ie: if a boolean is used, the setting should
@@ -218,9 +222,18 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         },
     },
     "feature_exploring_public_spaces": {
+        isFeature: true,
+        labsGroup: LabGroup.Spaces,
         displayName: _td("Explore public spaces in the new search dialog"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
+        controller: new ServerSupportUnstableFeatureController(
+            "feature_exploring_public_spaces",
+            defaultWatchManager,
+            [["org.matrix.msc3827.stable"]],
+            undefined,
+            _td("Requires your server to support the stable version of MSC3827"),
+        ),
     },
     "feature_msc3531_hide_messages_pending_moderation": {
         isFeature: true,
@@ -350,22 +363,19 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         description: _td("Defaults to room member list."),
         default: false,
     },
-    "feature_poll_history": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Polls history"),
-        description: _td("View a list of polls in a room. (Under active development)"),
-        default: false,
-    },
     "feature_jump_to_date": {
-        // We purposely leave out `isFeature: true` so it doesn't show in Labs
-        // by default. We will conditionally show it depending on whether we can
-        // detect MSC3030 support (see LabUserSettingsTab.tsx).
-        // labsGroup: LabGroup.Messaging,
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
         displayName: _td("Jump to date (adds /jumptodate and jump to date headers)"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
+        controller: new ServerSupportUnstableFeatureController(
+            "feature_jump_to_date",
+            defaultWatchManager,
+            [["org.matrix.msc3030"], ["org.matrix.msc3030.stable"]],
+            "v1.6",
+            _td("Requires your server to support MSC3030"),
+        ),
     },
     "RoomList.backgroundImage": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -375,6 +385,14 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Send read receipts"),
         default: true,
+        controller: new ServerSupportUnstableFeatureController(
+            "sendReadReceipts",
+            defaultWatchManager,
+            [["org.matrix.msc2285.stable"]],
+            "v1.4",
+            _td("Your server doesn't support disabling sending read receipts."),
+            true,
+        ),
     },
     "feature_sliding_sync": {
         isFeature: true,
@@ -387,6 +405,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         controller: new SlidingSyncController(),
     },
     "feature_sliding_sync_proxy_url": {
+        // This is not a distinct feature, it is a setting for feature_sliding_sync above
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: "",
     },
@@ -471,7 +490,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Developer,
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("Rust cryptography implementation"),
-        description: _td("Under active development. Can currently only be enabled via config.json"),
+        description: _td("Under active development."),
         // shouldWarn: true,
         default: false,
         controller: new RustCryptoSdkController(),

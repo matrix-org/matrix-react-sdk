@@ -1179,34 +1179,34 @@ describe("SpaceStore", () => {
             const fn = jest.fn();
             store.traverseSpace("!b:server", fn);
 
-            expect(fn).toBeCalledTimes(3);
-            expect(fn).toBeCalledWith("!a:server");
-            expect(fn).toBeCalledWith("!b:server");
-            expect(fn).toBeCalledWith("!c:server");
+            expect(fn).toHaveBeenCalledTimes(3);
+            expect(fn).toHaveBeenCalledWith("!a:server");
+            expect(fn).toHaveBeenCalledWith("!b:server");
+            expect(fn).toHaveBeenCalledWith("!c:server");
         });
 
         it("including rooms", () => {
             const fn = jest.fn();
             store.traverseSpace("!b:server", fn, true);
 
-            expect(fn).toBeCalledTimes(8); // twice for shared-child
-            expect(fn).toBeCalledWith("!a:server");
-            expect(fn).toBeCalledWith("!a-child:server");
-            expect(fn).toBeCalledWith("!b:server");
-            expect(fn).toBeCalledWith("!b-child:server");
-            expect(fn).toBeCalledWith("!c:server");
-            expect(fn).toBeCalledWith("!c-child:server");
-            expect(fn).toBeCalledWith("!shared-child:server");
+            expect(fn).toHaveBeenCalledTimes(8); // twice for shared-child
+            expect(fn).toHaveBeenCalledWith("!a:server");
+            expect(fn).toHaveBeenCalledWith("!a-child:server");
+            expect(fn).toHaveBeenCalledWith("!b:server");
+            expect(fn).toHaveBeenCalledWith("!b-child:server");
+            expect(fn).toHaveBeenCalledWith("!c:server");
+            expect(fn).toHaveBeenCalledWith("!c-child:server");
+            expect(fn).toHaveBeenCalledWith("!shared-child:server");
         });
 
         it("excluding rooms", () => {
             const fn = jest.fn();
             store.traverseSpace("!b:server", fn, false);
 
-            expect(fn).toBeCalledTimes(3);
-            expect(fn).toBeCalledWith("!a:server");
-            expect(fn).toBeCalledWith("!b:server");
-            expect(fn).toBeCalledWith("!c:server");
+            expect(fn).toHaveBeenCalledTimes(3);
+            expect(fn).toHaveBeenCalledWith("!a:server");
+            expect(fn).toHaveBeenCalledWith("!b:server");
+            expect(fn).toHaveBeenCalledWith("!c:server");
         });
     });
 
@@ -1330,5 +1330,103 @@ describe("SpaceStore", () => {
         await run();
         expect(metaSpaces).toEqual(store.enabledMetaSpaces);
         removeListener();
+    });
+
+    describe("when feature_dynamic_room_predecessors is not enabled", () => {
+        beforeAll(() => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                (settingName) => settingName === "Spaces.allRoomsInHome",
+            );
+            // @ts-ignore calling a private function
+            SpaceStore.instance.onAction({
+                action: Action.SettingUpdated,
+                settingName: "feature_dynamic_room_predecessors",
+                roomId: null,
+                level: SettingLevel.ACCOUNT,
+                newValueAtLevel: SettingLevel.ACCOUNT,
+                newValue: false,
+            });
+        });
+
+        beforeEach(() => {
+            jest.clearAllMocks();
+        });
+
+        it("passes that value in calls to getVisibleRooms and getRoomUpgradeHistory during startup", async () => {
+            // When we create an instance, which calls onReady and rebuildSpaceHierarchy
+            mkSpace("!dynspace:example.com", [mkRoom("!dynroom:example.com").roomId]);
+            await run();
+
+            // Then we pass through the correct value of the feature flag to
+            // everywhere that needs it.
+            expect(client.getVisibleRooms).toHaveBeenCalledWith(false);
+            expect(client.getVisibleRooms).not.toHaveBeenCalledWith(true);
+            expect(client.getVisibleRooms).not.toHaveBeenCalledWith();
+            expect(client.getRoomUpgradeHistory).toHaveBeenCalledWith(expect.anything(), expect.anything(), false);
+            expect(client.getRoomUpgradeHistory).not.toHaveBeenCalledWith(expect.anything(), expect.anything(), true);
+            expect(client.getRoomUpgradeHistory).not.toHaveBeenCalledWith(expect.anything(), expect.anything());
+        });
+
+        it("passes that value in calls to getVisibleRooms during getSpaceFilteredRoomIds", () => {
+            // Given a store
+            const store = SpaceStore.testInstance();
+
+            // When we ask for filtered room ids
+            store.getSpaceFilteredRoomIds(MetaSpace.Home);
+
+            // Then we pass the correct feature flag
+            expect(client.getVisibleRooms).toHaveBeenCalledWith(false);
+            expect(client.getVisibleRooms).not.toHaveBeenCalledWith(true);
+            expect(client.getVisibleRooms).not.toHaveBeenCalledWith();
+        });
+    });
+
+    describe("when feature_dynamic_room_predecessors is enabled", () => {
+        beforeAll(() => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                (settingName) =>
+                    settingName === "Spaces.allRoomsInHome" || settingName === "feature_dynamic_room_predecessors",
+            );
+            // @ts-ignore calling a private function
+            SpaceStore.instance.onAction({
+                action: Action.SettingUpdated,
+                settingName: "feature_dynamic_room_predecessors",
+                roomId: null,
+                level: SettingLevel.ACCOUNT,
+                newValueAtLevel: SettingLevel.ACCOUNT,
+                newValue: true,
+            });
+        });
+
+        beforeEach(() => {
+            jest.clearAllMocks();
+        });
+
+        it("passes that value in calls to getVisibleRooms and getRoomUpgradeHistory during startup", async () => {
+            // When we create an instance, which calls onReady and rebuildSpaceHierarchy
+            mkSpace("!dynspace:example.com", [mkRoom("!dynroom:example.com").roomId]);
+            await run();
+
+            // Then we pass through the correct value of the feature flag to
+            // everywhere that needs it.
+            expect(client.getVisibleRooms).toHaveBeenCalledWith(true);
+            expect(client.getVisibleRooms).not.toHaveBeenCalledWith(false);
+            expect(client.getVisibleRooms).not.toHaveBeenCalledWith();
+            expect(client.getRoomUpgradeHistory).toHaveBeenCalledWith(expect.anything(), expect.anything(), true);
+            expect(client.getRoomUpgradeHistory).not.toHaveBeenCalledWith(expect.anything(), expect.anything(), false);
+            expect(client.getRoomUpgradeHistory).not.toHaveBeenCalledWith(expect.anything(), expect.anything());
+        });
+
+        it("passes that value in calls to getVisibleRooms during getSpaceFilteredRoomIds", () => {
+            // Given a store
+            const store = SpaceStore.testInstance();
+            // When we ask for filtered room ids
+            store.getSpaceFilteredRoomIds(MetaSpace.Home);
+
+            // Then we pass the correct feature flag
+            expect(client.getVisibleRooms).toHaveBeenCalledWith(true);
+            expect(client.getVisibleRooms).not.toHaveBeenCalledWith(false);
+            expect(client.getVisibleRooms).not.toHaveBeenCalledWith();
+        });
     });
 });

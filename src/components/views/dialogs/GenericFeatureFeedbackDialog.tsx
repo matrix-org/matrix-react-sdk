@@ -14,23 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 
 import QuestionDialog from "./QuestionDialog";
 import { _t } from "../../../languageHandler";
 import Field from "../elements/Field";
 import SdkConfig from "../../../SdkConfig";
-import { IDialogProps } from "./IDialogProps";
 import { submitFeedback } from "../../../rageshake/submit-rageshake";
 import StyledCheckbox from "../elements/StyledCheckbox";
 import Modal from "../../../Modal";
 import InfoDialog from "./InfoDialog";
 
-interface IProps extends IDialogProps {
+interface IProps {
     title: string;
     subheading: string;
     rageshakeLabel: string;
-    rageshakeData?: Record<string, string>;
+    rageshakeData?: Record<string, any>;
+    children?: ReactNode;
+    onFinished(sendFeedback?: boolean): void;
 }
 
 const GenericFeatureFeedbackDialog: React.FC<IProps> = ({

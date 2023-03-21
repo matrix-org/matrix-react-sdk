@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from "react";
+import React, { CSSProperties, useState } from "react";
 import classNames from "classnames";
 
 import { _t, _td } from "../../../languageHandler";
@@ -76,14 +76,16 @@ const E2EIcon: React.FC<IProps> = ({
         className,
     );
 
-    let e2eTitle;
-    if (isUser) {
-        e2eTitle = crossSigningUserTitles[status];
-    } else {
-        e2eTitle = crossSigningRoomTitles[status];
+    let e2eTitle: string | undefined;
+    if (status) {
+        if (isUser) {
+            e2eTitle = crossSigningUserTitles[status];
+        } else {
+            e2eTitle = crossSigningRoomTitles[status];
+        }
     }
 
-    let style;
+    let style: CSSProperties | undefined;
     if (size) {
         style = { width: `${size}px`, height: `${size}px` };
     }
@@ -91,7 +93,7 @@ const E2EIcon: React.FC<IProps> = ({
     const onMouseOver = (): void => setHover(true);
     const onMouseLeave = (): void => setHover(false);
 
-    let tip;
+    let tip: JSX.Element | undefined;
     if (hover && !hideTooltip) {
         tip = <Tooltip label={e2eTitle ? _t(e2eTitle) : ""} alignment={tooltipAlignment} />;
     }
