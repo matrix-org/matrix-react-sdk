@@ -21,7 +21,7 @@ import userEvent from "@testing-library/user-event";
 
 import { WysiwygComposer } from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/WysiwygComposer";
 import SettingsStore from "../../../../../../src/settings/SettingsStore";
-import { createTestClient, flushPromises, mockPlatformPeg } from "../../../../../test-utils";
+import { createTestClient, flushPromises, mockPlatformPeg, stubClient } from "../../../../../test-utils";
 import defaultDispatcher from "../../../../../../src/dispatcher/dispatcher";
 import * as EventUtils from "../../../../../../src/utils/EventUtils";
 import { Action } from "../../../../../../src/dispatcher/actions";
@@ -245,6 +245,8 @@ describe("WysiwygComposer", () => {
             roomContext = defaultRoomContext,
         ) => {
             const spyDispatcher = jest.spyOn(defaultDispatcher, "dispatch");
+            stubClient();
+
             customRender(client, roomContext, editorState);
             await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
             return { textbox: screen.getByRole("textbox"), spyDispatcher };
