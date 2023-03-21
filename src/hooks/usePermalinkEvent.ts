@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { PillType } from "../components/views/elements/Pill";
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -66,19 +66,23 @@ export const usePermalinkEvent = (
     const eventInRoom = determineInitialEvent(shouldLookUpEvent, targetRoom, parseResult);
     const [event, setEvent] = useState<MatrixEvent | null>(eventInRoom);
 
-    useMemo(async () => {
+    useEffect(() => {
         if (!shouldLookUpEvent || !eventId || event || !parseResult?.roomIdOrAlias || !parseResult.eventId) {
             // nothing to do here
             return;
         }
 
-        try {
-            const eventData = await MatrixClientPeg.get().fetchRoomEvent(
-                parseResult.roomIdOrAlias,
-                parseResult.eventId,
-            );
-            setEvent(new MatrixEvent(eventData));
-        } catch {}
+        const fetchRoomEvent = async (): Promise<void> => {
+            try {
+                const eventData = await MatrixClientPeg.get().fetchRoomEvent(
+                    parseResult.roomIdOrAlias,
+                    parseResult.eventId,
+                );
+                setEvent(new MatrixEvent(eventData));
+            } catch {}
+        };
+
+        fetchRoomEvent();
     }, [event, eventId, parseResult?.eventId, parseResult?.roomIdOrAlias, shouldLookUpEvent]);
 
     return event;

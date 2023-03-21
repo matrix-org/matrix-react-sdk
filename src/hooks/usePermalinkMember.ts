@@ -16,7 +16,7 @@ limitations under the License.
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixEvent, Room, RoomMember } from "matrix-js-sdk/src/matrix";
-import { useCallback, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { PillType } from "../components/views/elements/Pill";
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -74,43 +74,38 @@ export const usePermalinkMember = (
     const userInRoom = shouldLookUpUser && userId && targetRoom ? targetRoom.getMember(userId) : null;
     const [member, setMember] = useState<RoomMember | null>(userInRoom);
 
-    const doProfileLookup = useCallback((userId: string): void => {
-        MatrixClientPeg.get()
-            .getProfileInfo(userId)
-            .then((resp) => {
-                const newMember = new RoomMember("", userId);
-                newMember.name = resp.displayname || userId;
-                newMember.rawDisplayName = resp.displayname || userId;
-                newMember.getMxcAvatarUrl();
-                newMember.events.member = {
-                    getContent: () => {
-                        return { avatar_url: resp.avatar_url };
-                    },
-                    getDirectionalContent: function () {
-                        // eslint-disable-next-line
-                        return this.getContent();
-                    },
-                } as MatrixEvent;
-                setMember(newMember);
-            })
-            .catch((err) => {
-                logger.error("Could not retrieve profile data for " + userId + ":", err);
-            });
-    }, []);
-
-    useMemo(() => {
+    useEffect(() => {
         if (!shouldLookUpUser || !userId || member) {
             // nothing to do here
             return;
         }
 
-        const foundMember = targetRoom?.getMember(userId) ?? null;
-        setMember(foundMember);
+        const doProfileLookup = (userId: string): void => {
+            MatrixClientPeg.get()
+                .getProfileInfo(userId)
+                .then((resp) => {
+                    const newMember = new RoomMember("", userId);
+                    newMember.name = resp.displayname || userId;
+                    newMember.rawDisplayName = resp.displayname || userId;
+                    newMember.getMxcAvatarUrl();
+                    newMember.events.member = {
+                        getContent: () => {
+                            return { avatar_url: resp.avatar_url };
+                        },
+                        getDirectionalContent: function () {
+                            // eslint-disable-next-line
+                            return this.getContent();
+                        },
+                    } as MatrixEvent;
+                    setMember(newMember);
+                })
+                .catch((err) => {
+                    logger.error("Could not retrieve profile data for " + userId + ":", err);
+                });
+        };
 
-        if (!foundMember) {
-            doProfileLookup(userId);
-        }
-    }, [doProfileLookup, member, shouldLookUpUser, targetRoom, userId]);
+        doProfileLookup(userId);
+    }, [member, shouldLookUpUser, targetRoom, userId]);
 
     return member;
 };

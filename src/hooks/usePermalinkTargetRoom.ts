@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/matrix";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { PillType } from "../components/views/elements/Pill";
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -92,7 +92,7 @@ export const usePermalinkTargetRoom = (
     const initialRoom = determineInitialRoom(type, parseResult, permalinkRoom);
     const [targetRoom, setTargetRoom] = useState<Room | null>(initialRoom);
 
-    useMemo(() => {
+    useEffect(() => {
         if (shouldLookUpRoom && !targetRoom && parseResult?.roomIdOrAlias) {
             const newRoom = findRoom(parseResult.roomIdOrAlias);
             setTargetRoom(newRoom);
