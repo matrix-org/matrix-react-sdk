@@ -150,7 +150,6 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
     }
 
     /**
-     * @callback onBeforeClose
      * @param reason either "backgroundClick" or undefined
      * @return whether a modal was closed
      */
