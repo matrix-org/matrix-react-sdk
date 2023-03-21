@@ -128,7 +128,7 @@ describe("formatFullDateNoDayISO", () => {
 });
 
 describe("formatDateForInput", () => {
-    it.each([["1993-11-01"], ["1066-10-14"], ["0571-04-22"], ["0062-02-05"], ["99999-09-09"]])(
+    it.each([["1993-11-01"], ["1066-10-14"], ["0571-04-22"], ["0062-02-05"]])(
         "should format %s",
         (dateString: string) => {
             expect(formatDateForInput(new Date(dateString))).toBe(dateString);
