@@ -116,35 +116,33 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
     };
 
     const tip = hover && resourceId ? <Tooltip label={resourceId} alignment={Alignment.Right} /> : null;
-    let content: (ReactElement | string)[] = [];
-    const textElement = <span className="mx_Pill_text">{text}</span>;
+    let avatar: ReactElement | null = null;
+    let pillText: string | null = text;
 
     switch (type) {
         case PillType.EventInOtherRoom:
             {
-                const avatar = <PillRoomAvatar shouldShowPillAvatar={shouldShowPillAvatar} room={targetRoom} />;
-                content = [_t("Message in"), avatar || " ", textElement];
+                avatar = <PillRoomAvatar shouldShowPillAvatar={shouldShowPillAvatar} room={targetRoom} />;
+                pillText = _t("Message in %(room)s", {
+                    room: text,
+                });
             }
             break;
         case PillType.EventInSameRoom:
             {
-                const avatar = <PillMemberAvatar shouldShowPillAvatar={shouldShowPillAvatar} member={member} />;
-                content = [_t("Message from"), avatar || " ", textElement];
+                avatar = <PillMemberAvatar shouldShowPillAvatar={shouldShowPillAvatar} member={member} />;
+                pillText = _t("Message from %(user)s", {
+                    user: text,
+                });
             }
             break;
         case PillType.AtRoomMention:
         case PillType.RoomMention:
         case "space":
-            {
-                const avatar = <PillRoomAvatar shouldShowPillAvatar={shouldShowPillAvatar} room={targetRoom} />;
-                content = [avatar, textElement];
-            }
+            avatar = <PillRoomAvatar shouldShowPillAvatar={shouldShowPillAvatar} room={targetRoom} />;
             break;
         case PillType.UserMention:
-            {
-                const avatar = <PillMemberAvatar shouldShowPillAvatar={shouldShowPillAvatar} member={member} />;
-                content = [avatar, textElement];
-            }
+            avatar = <PillMemberAvatar shouldShowPillAvatar={shouldShowPillAvatar} member={member} />;
             break;
         default:
             return null;
@@ -161,12 +159,14 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
                         onMouseOver={onMouseOver}
                         onMouseLeave={onMouseLeave}
                     >
-                        {content}
+                        {avatar}
+                        <span className="mx_Pill_text">{pillText}</span>
                         {tip}
                     </a>
                 ) : (
                     <span className={classes} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
-                        {content}
+                        {avatar}
+                        <span className="mx_Pill_text">{pillText}</span>
                         {tip}
                     </span>
                 )}
