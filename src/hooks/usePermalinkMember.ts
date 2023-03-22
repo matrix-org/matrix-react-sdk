@@ -64,6 +64,15 @@ const determineUserId = (
     return null;
 };
 
+/**
+ * Tries to determine a RoomMember.
+ *
+ * @param userId - User Id to get the member for
+ * @param targetRoom - permalink target room
+ * @returns RoomMember of the target room if it exists.
+ *          If sharing at least one room with the user, then the result will be the profile fetched via API.
+ *          null in all other cases.
+ */
 const determineMember = (userId: string, targetRoom: Room): RoomMember | null => {
     const targetRoomMember = targetRoom.getMember(userId);
 
