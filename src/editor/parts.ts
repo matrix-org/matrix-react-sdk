@@ -272,7 +272,7 @@ export abstract class PillPart extends BasePart implements IPillPart {
         const container = document.createElement("span");
         container.setAttribute("spellcheck", "false");
         container.setAttribute("contentEditable", "false");
-        container.onclick = this.onClick;
+        if (this.onClick) container.onclick = this.onClick;
         container.className = this.className;
         container.appendChild(document.createTextNode(this.text));
         this.setAvatar(container);
@@ -287,7 +287,7 @@ export abstract class PillPart extends BasePart implements IPillPart {
         if (node.className !== this.className) {
             node.className = this.className;
         }
-        if (node.onclick !== this.onClick) {
+        if (this.onClick && node.onclick !== this.onClick) {
             node.onclick = this.onClick;
         }
         this.setAvatar(node);
@@ -545,7 +545,9 @@ export class PartCreator {
     ) {
         // pre-create the creator as an object even without callback so it can already be passed
         // to PillCandidatePart (e.g. while deserializing) and set later on
-        this.autoCompleteCreator = { create: autoCompleteCreator?.(this) };
+        if (autoCompleteCreator) {
+            this.autoCompleteCreator = { create: autoCompleteCreator(this) };
+        }
     }
 
     public setAutoCompleteCreator(autoCompleteCreator: AutoCompleteCreator): void {
@@ -587,9 +589,9 @@ export class PartCreator {
             case Type.PillCandidate:
                 return this.pillCandidate(part.text);
             case Type.RoomPill:
-                return this.roomPill(part.resourceId);
+                return part.resourceId ? this.roomPill(part.resourceId) : undefined;
             case Type.UserPill:
-                return this.userPill(part.text, part.resourceId);
+                return part.resourceId ? this.userPill(part.text, part.resourceId) : undefined;
         }
     }
 

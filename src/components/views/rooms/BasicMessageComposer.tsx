@@ -336,10 +336,12 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         if (text && this.editorRef.current) {
             const { model } = this.props;
             const range = getRangeForSelection(this.editorRef.current, model, selection);
+            if (!range) return;
+
             const selectedParts = range.parts.map((p) => p.serialize());
             event.clipboardData.setData("application/x-element-composer", JSON.stringify(selectedParts));
             event.clipboardData.setData("text/plain", text); // so plain copy/paste works
-            if (type === "cut") {
+            if (type === "cut" && range) {
                 // Remove the text, updating the model as appropriate
                 this.modifiedFlag = true;
                 replaceRangeAndMoveCaret(range, []);
@@ -380,9 +382,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         const range = getRangeForSelection(this.editorRef.current, model, document.getSelection());
 
         // If the user is pasting a link, and has a range selected which is not a link, wrap the range with the link
-        if (plainText && range.length > 0 && linkify.test(plainText) && !linkify.test(range.text)) {
+        if (plainText && range && range.length > 0 && linkify.test(plainText) && !linkify.test(range.text)) {
             formatRangeAsLink(range, plainText);
-        } else {
+        } else if (range) {
             replaceRangeAndMoveCaret(range, parts);
         }
     };
@@ -478,7 +480,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         } else if (!selection.isCollapsed && !isEmpty) {
             this.hasTextSelected = true;
             const range = getRangeForSelection(this.editorRef.current, this.props.model, selection);
-            if (this.formatBarRef.current && this.state.useMarkdown && !!range.text.trim()) {
+            if (this.formatBarRef.current && this.state.useMarkdown && range && !!range.text.trim()) {
                 const selectionRect = selection.getRangeAt(0).getBoundingClientRect();
                 this.formatBarRef.current.showAt(selectionRect);
             }
@@ -499,10 +501,16 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 this.props.model,
                 document.getSelection(),
             );
+
+            if (!selectionRange) return;
+
             // trim the range as we want it to exclude leading/trailing spaces
             selectionRange.trim();
 
-            if ([...SURROUND_WITH_DOUBLE_CHARACTERS.keys(), ...SURROUND_WITH_CHARACTERS].includes(event.key)) {
+            if (
+                selectionRange &&
+                [...SURROUND_WITH_DOUBLE_CHARACTERS.keys(), ...SURROUND_WITH_CHARACTERS].includes(event.key)
+            ) {
                 this.historyManager.ensureLastChangesPushed(this.props.model);
                 this.modifiedFlag = true;
                 toggleInlineFormat(selectionRange, event.key, SURROUND_WITH_DOUBLE_CHARACTERS.get(event.key));
@@ -573,24 +581,29 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 this.onFormatAction(Formatting.InsertLink);
                 handled = true;
                 break;
-            case KeyBindingAction.EditRedo:
-                if (this.historyManager.canRedo()) {
-                    const { parts, caret } = this.historyManager.redo();
+            case KeyBindingAction.EditRedo: {
+                const history = this.historyManager.redo();
+                if (history) {
+                    const { parts, caret } = history;
                     // pass matching inputType so historyManager doesn't push echo
                     // when invoked from rerender callback.
                     model.reset(parts, caret, "historyRedo");
                 }
+
                 handled = true;
                 break;
-            case KeyBindingAction.EditUndo:
-                if (this.historyManager.canUndo()) {
-                    const { parts, caret } = this.historyManager.undo(this.props.model);
+            }
+            case KeyBindingAction.EditUndo: {
+                const history = this.historyManager.undo(this.props.model);
+                if (history) {
+                    const { parts, caret } = history;
                     // pass matching inputType so historyManager doesn't push echo
                     // when invoked from rerender callback.
                     model.reset(parts, caret, "historyUndo");
                 }
                 handled = true;
                 break;
+            }
             case KeyBindingAction.NewLine:
                 this.insertText("\n");
                 handled = true;
@@ -745,12 +758,12 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             return;
         }
 
-        const range: Range = getRangeForSelection(this.editorRef.current, this.props.model, document.getSelection());
+        const range = getRangeForSelection(this.editorRef.current, this.props.model, document.getSelection());
 
         this.historyManager.ensureLastChangesPushed(this.props.model);
         this.modifiedFlag = true;
 
-        formatRange(range, action);
+        if (range) formatRange(range, action);
     };
 
     public render(): React.ReactNode {
