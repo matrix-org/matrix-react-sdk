@@ -186,6 +186,7 @@ export const waitEnoughCyclesForModal = async ({
 }: {
     useFakeTimers?: boolean;
 } = {}): Promise<void> => {
+    // XXX: Maybe in the future with Jest 29.5.0+, we could use `runAllTimersAsync` instead.
     const flushFunc = useFakeTimers ? flushPromisesWithFakeTimers : flushPromises;
 
     await flushFunc();
@@ -208,6 +209,8 @@ export const clearAllModals = async (): Promise<void> => {
         // Then wait for the screen to update (probably React rerender and async/await).
         // Important for tests using Jest fake timers to not get into an infinite loop
         // of removing the same modal because the promises don't flush otherwise.
+        //
+        // XXX: Maybe in the future with Jest 29.5.0+, we could use `runAllTimersAsync` instead.
         await flushPromisesWithFakeTimers();
     }
 };
