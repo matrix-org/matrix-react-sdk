@@ -90,7 +90,7 @@ const WysiwygAutocomplete = forwardRef(
         }
 
         return room ? (
-            <div className="mx_SendWysiwygComposer_AutoCompleteWrapper">
+            <div className="mx_SendWysiwygComposer_AutoCompleteWrapper" data-testid="autocomplete-wrapper">
                 <Autocomplete
                     ref={ref}
                     query={buildQuery(suggestion)}
