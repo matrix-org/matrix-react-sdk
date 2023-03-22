@@ -20,7 +20,7 @@ import { IAuthData, IRequestMsisdnTokenResponse, IRequestTokenResponse } from "m
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import Modal from "./Modal";
-import { _t } from "./languageHandler";
+import { _t, newTranslatableError } from "./languageHandler";
 import IdentityAuthClient from "./IdentityAuthClient";
 import { SSOAuthEntry } from "./components/views/auth/InteractiveAuthEntryComponents";
 import InteractiveAuthDialog from "./components/views/dialogs/InteractiveAuthDialog";
@@ -67,23 +67,21 @@ export default class AddThreepid {
      * @param {string} emailAddress The email address to add
      * @return {Promise} Resolves when the email has been sent. Then call checkEmailLinkClicked().
      */
-    public addEmailAddress(emailAddress: string): Promise<IRequestTokenResponse> {
-        return MatrixClientPeg.get()
-            .requestAdd3pidEmailToken(emailAddress, this.clientSecret, 1)
-            .then(
-                (res) => {
-                    this.sessionId = res.sid;
-                    return res;
-                },
-                function (err) {
-                    if (err.errcode === "M_THREEPID_IN_USE") {
-                        err.message = _t("This email address is already in use");
-                    } else if (err.httpStatus) {
-                        err.message = err.message + ` (Status ${err.httpStatus})`;
-                    }
-                    throw err;
-                },
-            );
+    public async addEmailAddress(emailAddress: string): Promise<IRequestTokenResponse> {
+        try {
+            const res = await MatrixClientPeg.get().requestAdd3pidEmailToken(emailAddress, this.clientSecret, 1);
+            this.sessionId = res.sid;
+            return res;
+        } catch (err) {
+            if (err.errcode === "M_THREEPID_IN_USE") {
+                throw newTranslatableError("This email address is already in use");
+            } else if (err.httpStatus) {
+                throw newTranslatableError("%(errorMessage)s (Status %(httpStatus)s)", {
+                    errorMessage: err.message,
+                    httpStatus: err.httpStatus,
+                });
+            }
+        }
     }
 
     /**
@@ -98,22 +96,26 @@ export default class AddThreepid {
             // For separate bind, request a token directly from the IS.
             const authClient = new IdentityAuthClient();
             const identityAccessToken = (await authClient.getAccessToken()) ?? undefined;
-            return MatrixClientPeg.get()
-                .requestEmailToken(emailAddress, this.clientSecret, 1, undefined, identityAccessToken)
-                .then(
-                    (res) => {
-                        this.sessionId = res.sid;
-                        return res;
-                    },
-                    function (err) {
-                        if (err.errcode === "M_THREEPID_IN_USE") {
-                            err.message = _t("This email address is already in use");
-                        } else if (err.httpStatus) {
-                            err.message = err.message + ` (Status ${err.httpStatus})`;
-                        }
-                        throw err;
-                    },
+            try {
+                const res = await MatrixClientPeg.get().requestEmailToken(
+                    emailAddress,
+                    this.clientSecret,
+                    1,
+                    undefined,
+                    identityAccessToken,
                 );
+                this.sessionId = res.sid;
+                return res;
+            } catch (err) {
+                if (err.errcode === "M_THREEPID_IN_USE") {
+                    throw newTranslatableError("This email address is already in use");
+                } else if (err.httpStatus) {
+                    throw newTranslatableError("%(errorMessage)s (Status %(httpStatus)s)", {
+                        errorMessage: err.message,
+                        httpStatus: err.httpStatus,
+                    });
+                }
+            }
         } else {
             // For tangled bind, request a token via the HS.
             return this.addEmailAddress(emailAddress);
@@ -127,24 +129,27 @@ export default class AddThreepid {
      * @param {string} phoneNumber The national or international formatted phone number to add
      * @return {Promise} Resolves when the text message has been sent. Then call haveMsisdnToken().
      */
-    public addMsisdn(phoneCountry: string, phoneNumber: string): Promise<IRequestMsisdnTokenResponse> {
-        return MatrixClientPeg.get()
-            .requestAdd3pidMsisdnToken(phoneCountry, phoneNumber, this.clientSecret, 1)
-            .then(
-                (res) => {
-                    this.sessionId = res.sid;
-                    this.submitUrl = res.submit_url;
-                    return res;
-                },
-                function (err) {
-                    if (err.errcode === "M_THREEPID_IN_USE") {
-                        err.message = _t("This phone number is already in use");
-                    } else if (err.httpStatus) {
-                        err.message = err.message + ` (Status ${err.httpStatus})`;
-                    }
-                    throw err;
-                },
+    public async addMsisdn(phoneCountry: string, phoneNumber: string): Promise<IRequestMsisdnTokenResponse> {
+        try {
+            const res = await MatrixClientPeg.get().requestAdd3pidMsisdnToken(
+                phoneCountry,
+                phoneNumber,
+                this.clientSecret,
+                1,
             );
+            this.sessionId = res.sid;
+            this.submitUrl = res.submit_url;
+            return res;
+        } catch (err) {
+            if (err.errcode === "M_THREEPID_IN_USE") {
+                throw newTranslatableError("This phone number is already in use");
+            } else if (err.httpStatus) {
+                throw newTranslatableError("%(errorMessage)s (Status %(httpStatus)s)", {
+                    errorMessage: err.message,
+                    httpStatus: err.httpStatus,
+                });
+            }
+        }
     }
 
     /**
@@ -160,22 +165,27 @@ export default class AddThreepid {
             // For separate bind, request a token directly from the IS.
             const authClient = new IdentityAuthClient();
             const identityAccessToken = (await authClient.getAccessToken()) ?? undefined;
-            return MatrixClientPeg.get()
-                .requestMsisdnToken(phoneCountry, phoneNumber, this.clientSecret, 1, undefined, identityAccessToken)
-                .then(
-                    (res) => {
-                        this.sessionId = res.sid;
-                        return res;
-                    },
-                    function (err) {
-                        if (err.errcode === "M_THREEPID_IN_USE") {
-                            err.message = _t("This phone number is already in use");
-                        } else if (err.httpStatus) {
-                            err.message = err.message + ` (Status ${err.httpStatus})`;
-                        }
-                        throw err;
-                    },
+            try {
+                const res = await MatrixClientPeg.get().requestMsisdnToken(
+                    phoneCountry,
+                    phoneNumber,
+                    this.clientSecret,
+                    1,
+                    undefined,
+                    identityAccessToken,
                 );
+                this.sessionId = res.sid;
+                return res;
+            } catch (err) {
+                if (err.errcode === "M_THREEPID_IN_USE") {
+                    throw newTranslatableError("This phone number is already in use");
+                } else if (err.httpStatus) {
+                    throw newTranslatableError("%(errorMessage)s (Status %(httpStatus)s)", {
+                        errorMessage: err.message,
+                        httpStatus: err.httpStatus,
+                    });
+                }
+            }
         } else {
             // For tangled bind, request a token via the HS.
             return this.addMsisdn(phoneCountry, phoneNumber);
@@ -257,11 +267,15 @@ export default class AddThreepid {
             }
         } catch (err) {
             if (err.httpStatus === 401) {
-                err.message = _t("Failed to verify email address: make sure you clicked the link in the email");
+                throw newTranslatableError(
+                    "Failed to verify email address: make sure you clicked the link in the email",
+                );
             } else if (err.httpStatus) {
-                err.message += ` (Status ${err.httpStatus})`;
+                throw newTranslatableError("%(errorMessage)s (Status %(httpStatus)s)", {
+                    errorMessage: err.message,
+                    httpStatus: err.httpStatus,
+                });
             }
-            throw err;
         }
         return [];
     }
