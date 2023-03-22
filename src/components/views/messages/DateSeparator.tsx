@@ -167,7 +167,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
             // room.
             const currentRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
             if (currentRoomId === roomIdForJumpRequest) {
-                let friendlyErrorMessage = `An error occured while trying to find and jump to the given date.`;
+                let friendlyErrorMessage = "An error occured while trying to find and jump to the given date.";
                 let submitDebugLogsContent: JSX.Element = <></>;
                 if (err instanceof ConnectionError || err instanceof HTTPError) {
                     if (err instanceof MatrixError && err?.errcode === "M_NOT_FOUND") {
