@@ -65,15 +65,13 @@ describe("WysiwygAutocomplete", () => {
     });
 
     const autocompleteRef = createRef<Autocomplete>();
-    const getCompletionsSpy = jest.spyOn(Autocompleter.prototype, "getCompletions").mockImplementation((...args) => {
-        return Promise.resolve([
-            {
-                completions: mockCompletion,
-                provider: constructMockProvider(mockCompletion),
-                command: { command: "truthy" },
-            },
-        ]);
-    });
+    const getCompletionsSpy = jest.spyOn(Autocompleter.prototype, "getCompletions").mockResolvedValue([
+        {
+            completions: mockCompletion,
+            provider: constructMockProvider(mockCompletion),
+            command: { command: ["truthy"] as RegExpExecArray }, // needed for us to unhide the autocomplete when testing
+        },
+    ]);
 
     const renderComponent = (props = {}) => {
         const mockClient = stubClient();
