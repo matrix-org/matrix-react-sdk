@@ -68,13 +68,7 @@ describe("WysiwygComposer", () => {
     const customRender = (onChange = jest.fn(), onSend = jest.fn(), disabled = false, initialContent?: string) => {
         const mockClient = stubClient();
         const { defaultRoomContext } = createMocks();
-        jest.spyOn(Autocompleter.prototype, "getCompletions").mockResolvedValue([
-            {
-                completions: mockCompletion,
-                provider: constructMockProvider(mockCompletion),
-                command: { command: ["truthy"] as RegExpExecArray }, // needed for us to unhide the autocomplete when testing
-            },
-        ]);
+
         return render(
             <MatrixClientContext.Provider value={mockClient}>
                 <RoomContext.Provider value={defaultRoomContext}>
@@ -89,16 +83,26 @@ describe("WysiwygComposer", () => {
         );
     };
 
+    beforeEach(() => {
+        jest.spyOn(Autocompleter.prototype, "getCompletions").mockResolvedValue([
+            {
+                completions: mockCompletion,
+                provider: constructMockProvider(mockCompletion),
+                command: { command: ["truthy"] as RegExpExecArray }, // needed for us to unhide the autocomplete when testing
+            },
+        ]);
+    });
+
     afterEach(() => {
         jest.resetAllMocks();
     });
 
-    it("Should have contentEditable at false when disabled", () => {
+    it("Should have contentEditable at false when disabled", async () => {
         // When
         customRender(jest.fn(), jest.fn(), true);
 
         // Then
-        expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "false");
+        await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "false"));
     });
 
     describe("Standard behavior", () => {
