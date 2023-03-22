@@ -548,7 +548,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Rooms,
         default: false,
         controller: new ServerSupportUnstableFeatureController("feature_intentional_mentions", defaultWatchManager, [
-            "org.matrix.msc3952_intentional_mentions",
+            ["org.matrix.msc3952_intentional_mentions"],
         ]),
     },
     "useCompactLayout": {
