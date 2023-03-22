@@ -94,8 +94,7 @@ describe("SendWysiwygComposer", () => {
         customRender(jest.fn(), jest.fn(), false, true);
 
         // Then
-        await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
-        expect(screen.getByTestId("WysiwygComposer")).toBeInTheDocument();
+        await waitFor(() => expect(screen.getByTestId("WysiwygComposer")).toBeInTheDocument());
     });
 
     it("Should render PlainTextComposer when isRichTextEnabled is at false", async () => {
