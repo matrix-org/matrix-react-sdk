@@ -22,7 +22,7 @@ import MatrixClientContext from "../../../../../src/contexts/MatrixClientContext
 import RoomContext from "../../../../../src/contexts/RoomContext";
 import defaultDispatcher from "../../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../../src/dispatcher/actions";
-import { flushPromises } from "../../../../test-utils";
+import { flushPromises, stubClient } from "../../../../test-utils";
 import { SendWysiwygComposer } from "../../../../../src/components/views/rooms/wysiwyg_composer/";
 import { aboveLeftOf } from "../../../../../src/components/structures/ContextMenu";
 import { ComposerInsertPayload, ComposerType } from "../../../../../src/dispatcher/payloads/ComposerInsertPayload";
@@ -44,7 +44,8 @@ describe("SendWysiwygComposer", () => {
         jest.resetAllMocks();
     });
 
-    const { defaultRoomContext, mockClient } = createMocks();
+    const mockClient = stubClient();
+    const { defaultRoomContext } = createMocks();
 
     const registerId = defaultDispatcher.register((payload) => {
         switch (payload.action) {
@@ -93,15 +94,16 @@ describe("SendWysiwygComposer", () => {
         customRender(jest.fn(), jest.fn(), false, true);
 
         // Then
-        await waitFor(() => expect(screen.getByTestId("WysiwygComposer")).toBeTruthy());
+        await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
+        expect(screen.getByTestId("WysiwygComposer")).toBeInTheDocument();
     });
 
-    it("Should render PlainTextComposer when isRichTextEnabled is at false", () => {
+    it("Should render PlainTextComposer when isRichTextEnabled is at false", async () => {
         // When
         customRender(jest.fn(), jest.fn(), false, false);
 
         // Then
-        expect(screen.getByTestId("PlainTextComposer")).toBeTruthy();
+        expect(await screen.findByTestId("PlainTextComposer")).toBeInTheDocument();
     });
 
     describe.each([{ isRichTextEnabled: true }, { isRichTextEnabled: false }])(
