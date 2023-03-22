@@ -103,12 +103,14 @@ describe("Stickers", () => {
 
     let stickerPickerUrl: string;
     let homeserver: HomeserverInstance;
+    let userId: string;
 
     beforeEach(() => {
         cy.startHomeserver("default").then((data) => {
             homeserver = data;
 
-            cy.initTestUser(homeserver, "Sally");
+            cy.initTestUser(homeserver, "Sally")
+                .then(user => userId = user.userId);
         });
         cy.serveHtmlFile(WIDGET_HTML).then((url) => {
             stickerPickerUrl = url;
@@ -133,9 +135,9 @@ describe("Stickers", () => {
                     type: "m.stickerpicker",
                     name: STICKER_PICKER_WIDGET_NAME,
                     url: stickerPickerUrl,
-                    creatorUserId: "@userId",
+                    creatorUserId: userId,
                 },
-                sender: "@userId",
+                sender: userId,
                 state_key: STICKER_PICKER_WIDGET_ID,
                 type: "m.widget",
                 id: STICKER_PICKER_WIDGET_ID,
@@ -175,7 +177,7 @@ describe("Stickers", () => {
                     url: stickerPickerUrl,
                     // No creatorUserId
                 },
-                sender: "@userId",
+                sender: userId,
                 state_key: STICKER_PICKER_WIDGET_ID,
                 type: "m.widget",
                 id: STICKER_PICKER_WIDGET_ID,
