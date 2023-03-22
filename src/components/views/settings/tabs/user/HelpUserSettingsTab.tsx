@@ -112,13 +112,23 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
 
         const legalLinks: JSX.Element[] = [];
         for (const tocEntry of tocLinks) {
-            legalLinks.push(
-                <div key={tocEntry.url}>
-                    <a href={tocEntry.url} rel="noreferrer noopener" target="_blank">
-                        {tocEntry.text}
-                    </a>
-                </div>,
-            );
+            if (tocEntry.url) {
+                legalLinks.push(
+                    <div key={tocEntry.url}>
+                        <a href={tocEntry.url} rel="noreferrer noopener" target="_blank">
+                            {tocEntry.text}
+                        </a>
+                    </div>
+                );
+            } else {
+                legalLinks.push(
+                    <div>
+                        <span>
+                            {tocEntry.text}
+                        </span>
+                    </div>
+                );
+            }
         }
 
         return (
