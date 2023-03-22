@@ -169,21 +169,28 @@ export default class DateSeparator extends React.Component<IProps, IState> {
             if (currentRoomId === roomIdForJumpRequest) {
                 let friendlyErrorMessage = "An error occured while trying to find and jump to the given date.";
                 let submitDebugLogsContent: JSX.Element = <></>;
-                if (err instanceof ConnectionError || err instanceof HTTPError) {
-                    if (err instanceof MatrixError && err?.errcode === "M_NOT_FOUND") {
+                if (err instanceof ConnectionError) {
+                    friendlyErrorMessage = _t(
+                        "A network error occurred while trying to find and jump to the given date. " +
+                            "Your homeserver might be down or there was just a temporary problem with " +
+                            "your internet connection. Please try again. If this continues, please " +
+                            "contact your homeserver administrator.",
+                    );
+                } else if (err instanceof MatrixError) {
+                    if (err?.errcode === "M_NOT_FOUND") {
                         friendlyErrorMessage = _t(
                             "We were unable to find an event looking forwards from %(dateString)s. " +
                                 "Try choosing an earlier date.",
                             { dateString: formatFullDateNoDay(new Date(unixTimestamp)) },
                         );
                     } else {
-                        friendlyErrorMessage = _t(
-                            "A network error occurred while trying to find and jump to the given date. " +
-                                "Your homeserver might be down or there was just a temporary problem with " +
-                                "your internet connection. Please try again. If this continues, please " +
-                                "contact your homeserver administrator.",
-                        );
+                        friendlyErrorMessage = _t("Server returned %(statusCode)s with error code %(errorCode)s", {
+                            statusCode: err?.httpStatus || _t("unknown status code"),
+                            errorCode: err?.errcode || _t("unavailable"),
+                        });
                     }
+                } else if (err instanceof HTTPError) {
+                    friendlyErrorMessage = err.message;
                 } else {
                     // We only give the option to submit logs for actual errors, not network problems.
                     submitDebugLogsContent = (
