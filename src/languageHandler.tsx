@@ -476,9 +476,10 @@ export function getAllLanguagesFromJson(): Promise<Language[]> {
 }
 
 export function getLanguagesFromBrowser(): readonly string[] {
-    if (navigator.languages && navigator.languages.length) return navigator.languages;
-    if (navigator.language) return [navigator.language];
-    return [navigator.userLanguage || "en"];
+    return ["zh-hans"];
+    // if (navigator.languages && navigator.languages.length) return navigator.languages;
+    // if (navigator.language) return [navigator.language];
+    // return [navigator.userLanguage || "en"];
 }
 
 export function getLanguageFromBrowser(): string {

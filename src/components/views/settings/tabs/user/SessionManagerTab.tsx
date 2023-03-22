@@ -22,7 +22,7 @@ import { _t } from "../../../../../languageHandler";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import Modal from "../../../../../Modal";
 import SettingsSubsection from "../../shared/SettingsSubsection";
-import SetupEncryptionDialog from "../../../dialogs/security/SetupEncryptionDialog";
+// import SetupEncryptionDialog from "../../../dialogs/security/SetupEncryptionDialog";
 import VerificationRequestDialog from "../../../dialogs/VerificationRequestDialog";
 import LogoutDialog from "../../../dialogs/LogoutDialog";
 import { useOwnDevices } from "../../devices/useOwnDevices";
@@ -160,7 +160,7 @@ const SessionManagerTab: React.FC = () => {
     const shouldShowOtherSessions = otherSessionsCount > 0;
 
     const onVerifyCurrentDevice = (): void => {
-        Modal.createDialog(SetupEncryptionDialog as unknown as React.ComponentType, { onFinished: refreshDevices });
+        // Modal.createDialog(SetupEncryptionDialog as unknown as React.ComponentType, { onFinished: refreshDevices });
     };
 
     const onTriggerDeviceVerification = useCallback(

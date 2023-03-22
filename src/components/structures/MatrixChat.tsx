@@ -96,7 +96,7 @@ import UserSettingsDialog from "../views/dialogs/UserSettingsDialog";
 import CreateRoomDialog from "../views/dialogs/CreateRoomDialog";
 import KeySignatureUploadFailedDialog from "../views/dialogs/KeySignatureUploadFailedDialog";
 import IncomingSasDialog from "../views/dialogs/IncomingSasDialog";
-import CompleteSecurity from "./auth/CompleteSecurity";
+// import CompleteSecurity from "./auth/CompleteSecurity";
 import Welcome from "../views/auth/Welcome";
 import ForgotPassword from "./auth/ForgotPassword";
 import E2eSetup from "./auth/E2eSetup";
@@ -2028,7 +2028,13 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 </div>
             );
         } else if (this.state.view === Views.COMPLETE_SECURITY) {
-            view = <CompleteSecurity onFinished={this.onCompleteSecurityE2eSetupFinished} />;
+            // view = <CompleteSecurity onFinished={this.onCompleteSecurityE2eSetupFinished} />;
+            this.onCompleteSecurityE2eSetupFinished();
+            view = (
+                <div className="mx_MatrixChat_splash">
+                    <Spinner />
+                </div>
+            );
         } else if (this.state.view === Views.E2E_SETUP) {
             view = (
                 <E2eSetup

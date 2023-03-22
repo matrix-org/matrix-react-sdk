@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { useCallback } from "react";
 import { chunk } from "lodash";
 import classNames from "classnames";
 import { MatrixClient } from "matrix-js-sdk/src/client";
@@ -99,11 +99,18 @@ const SSOButton: React.FC<ISSOButtonProps> = ({
         label = _t("Sign in with single sign-on");
     }
 
-    const onClick = (): void => {
+    const onClick = useCallback((): void => {
         const authenticationType = getAuthenticationType(idp?.brand ?? "");
         PosthogAnalytics.instance.setAuthenticationType(authenticationType);
         PlatformPeg.get()?.startSingleSignOn(matrixClient, loginType, fragmentAfterLogin, idp?.id, action);
-    };
+    }, [action, fragmentAfterLogin, idp?.brand, idp?.id, loginType, matrixClient]);
+
+    // sso 自动登录
+    // useEffect(() => {
+    //     if (idp) {
+    //         onClick();
+    //     }
+    // }, [idp, onClick]);
 
     let icon: JSX.Element | undefined;
     let brandClass: string | undefined;

@@ -25,7 +25,7 @@ import Modal from "../../../Modal";
 import Spinner from "../elements/Spinner";
 import InteractiveAuthDialog from "../dialogs/InteractiveAuthDialog";
 import ConfirmDestroyCrossSigningDialog from "../dialogs/security/ConfirmDestroyCrossSigningDialog";
-import SetupEncryptionDialog from "../dialogs/security/SetupEncryptionDialog";
+// import SetupEncryptionDialog from "../dialogs/security/SetupEncryptionDialog";
 import { accessSecretStorage } from "../../../SecurityManager";
 import AccessibleButton from "../elements/AccessibleButton";
 
@@ -75,7 +75,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
 
     private onBootstrapClick = (): void => {
         if (this.state.crossSigningPrivateKeysInStorage) {
-            Modal.createDialog(SetupEncryptionDialog, {}, undefined, /* priority = */ false, /* static = */ true);
+            // Modal.createDialog(SetupEncryptionDialog, {}, undefined, /* priority = */ false, /* static = */ true);
         } else {
             // Trigger the flow to set up secure backup, which is what this will do when in
             // the appropriate state.

@@ -18,7 +18,7 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
-import Modal from "../../../Modal";
+// import Modal from "../../../Modal";
 import { _t } from "../../../languageHandler";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
@@ -26,7 +26,7 @@ import AccessibleButton from "../elements/AccessibleButton";
 import { OpenToTabPayload } from "../../../dispatcher/payloads/OpenToTabPayload";
 import { UserTab } from "../dialogs/UserTab";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import SetupEncryptionDialog from "../dialogs/security/SetupEncryptionDialog";
+// import SetupEncryptionDialog from "../dialogs/security/SetupEncryptionDialog";
 import { SetupEncryptionStore } from "../../../stores/SetupEncryptionStore";
 import Spinner from "../elements/Spinner";
 
@@ -131,9 +131,9 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
         };
     }, [context, updateDeviceInfo]);
 
-    const onVerifyClick = (): void => {
-        Modal.createDialog(SetupEncryptionDialog);
-    };
+    // const onVerifyClick = (): void => {
+    //     Modal.createDialog(SetupEncryptionDialog);
+    // };
 
     const onDeviceListClick = (): void => {
         const payload: OpenToTabPayload = { action: Action.ViewUserSettings, initialTabId: UserTab.Security };
@@ -165,11 +165,11 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
                     {_t("This device was unable to decrypt some messages because it has not been verified yet.")}
                 </React.Fragment>
             );
-            button = (
-                <AccessibleButton kind="primary" onClick={onVerifyClick}>
-                    {_t("Verify")}
-                </AccessibleButton>
-            );
+            // button = (
+            //     <AccessibleButton kind="primary" onClick={onVerifyClick}>
+            //         {_t("Verify")}
+            //     </AccessibleButton>
+            // );
         } else {
             headline = <React.Fragment>{_t("Reset your keys to prevent future decryption errors")}</React.Fragment>;
             body = (

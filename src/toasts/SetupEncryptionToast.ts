@@ -17,7 +17,7 @@ limitations under the License.
 import Modal from "../Modal";
 import { _t } from "../languageHandler";
 import DeviceListener from "../DeviceListener";
-import SetupEncryptionDialog from "../components/views/dialogs/security/SetupEncryptionDialog";
+// import SetupEncryptionDialog from "../components/views/dialogs/security/SetupEncryptionDialog";
 import { accessSecretStorage } from "../SecurityManager";
 import ToastStore from "../stores/ToastStore";
 import GenericToast from "../components/views/toasts/GenericToast";
@@ -85,7 +85,7 @@ export const showToast = (kind: Kind): void => {
 
     const onAccept = async (): Promise<void> => {
         if (kind === Kind.VERIFY_THIS_SESSION) {
-            Modal.createDialog(SetupEncryptionDialog, {}, undefined, /* priority = */ false, /* static = */ true);
+            // Modal.createDialog(SetupEncryptionDialog, {}, undefined, /* priority = */ false, /* static = */ true);
         } else {
             const modal = Modal.createDialog(
                 Spinner,
@@ -102,20 +102,23 @@ export const showToast = (kind: Kind): void => {
         }
     };
 
-    ToastStore.sharedInstance().addOrReplaceToast({
-        key: TOAST_KEY,
-        title: getTitle(kind),
-        icon: getIcon(kind),
-        props: {
-            description: getDescription(kind),
-            acceptLabel: getSetupCaption(kind),
-            onAccept,
-            rejectLabel: _t("Later"),
-            onReject,
-        },
-        component: GenericToast,
-        priority: kind === Kind.VERIFY_THIS_SESSION ? 95 : 40,
-    });
+    if (kind !== Kind.VERIFY_THIS_SESSION) {
+        ToastStore.sharedInstance().addOrReplaceToast({
+            key: TOAST_KEY,
+            title: getTitle(kind),
+            icon: getIcon(kind),
+            props: {
+                description: getDescription(kind),
+                acceptLabel: getSetupCaption(kind),
+                onAccept,
+                rejectLabel: _t("Later"),
+                onReject,
+            },
+            component: GenericToast,
+            // priority: kind === Kind.VERIFY_THIS_SESSION ? 95 : 40,
+            priority: 40,
+        });
+    }
 };
 
 export const hideToast = (): void => {

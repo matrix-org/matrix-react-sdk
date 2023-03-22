@@ -272,6 +272,9 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
         const [invites, metaSpaces, actualSpaces, activeSpace] = useSpaces();
         const activeSpaces = activeSpace ? [activeSpace] : [];
 
+        // 自定义修改
+        const defineToEp = true;
+
         const metaSpacesSection = metaSpaces.map((key) => {
             const Component = metaSpaceComponentMap[key];
             return <Component key={key} selected={activeSpace === key} isPanelCollapsed={isPanelCollapsed} />;
@@ -321,7 +324,7 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
                     </Draggable>
                 ))}
                 {children}
-                {shouldShowComponent(UIComponent.CreateSpaces) && (
+                {!defineToEp && shouldShowComponent(UIComponent.CreateSpaces) && (
                     <CreateSpaceButton isPanelCollapsed={isPanelCollapsed} setPanelCollapsed={setPanelCollapsed} />
                 )}
             </IndicatorScrollbar>

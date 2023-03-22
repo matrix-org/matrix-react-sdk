@@ -618,6 +618,9 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             );
         }
 
+        // 自定义修改
+        const defineToEp = true;
+
         return (
             <AuthPage>
                 <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
@@ -633,7 +636,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                         onServerConfigChange={this.props.onServerConfigChange}
                     />
                     {this.renderLoginComponentForFlows()}
-                    {footer}
+                    {!defineToEp && footer}
                 </AuthBody>
             </AuthPage>
         );

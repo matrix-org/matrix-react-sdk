@@ -24,8 +24,8 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import AccessibleButton from "../elements/AccessibleButton";
 import Field from "../elements/Field";
 import Modal from "../../../Modal";
-import SetupEncryptionDialog from "../dialogs/security/SetupEncryptionDialog";
-import VerificationRequestDialog from "../../views/dialogs/VerificationRequestDialog";
+// import SetupEncryptionDialog from "../dialogs/security/SetupEncryptionDialog";
+// import VerificationRequestDialog from "../../views/dialogs/VerificationRequestDialog";
 import LogoutDialog from "../dialogs/LogoutDialog";
 import DeviceTile from "./devices/DeviceTile";
 import SelectableDeviceTile from "./devices/SelectableDeviceTile";
@@ -96,39 +96,39 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
         );
     };
 
-    private verify = async (): Promise<void> => {
-        if (this.props.isOwnDevice) {
-            Modal.createDialog(SetupEncryptionDialog, {
-                onFinished: this.props.onDeviceChange,
-            });
-        } else {
-            const cli = MatrixClientPeg.get();
-            const userId = cli.getUserId()!;
-            const verificationRequestPromise = cli.requestVerification(userId, [this.props.device.device_id]);
-            Modal.createDialog(VerificationRequestDialog, {
-                verificationRequestPromise,
-                member: cli.getUser(userId),
-                onFinished: async (): Promise<void> => {
-                    const request = await verificationRequestPromise;
-                    request.cancel();
-                    this.props.onDeviceChange();
-                },
-            });
-        }
-    };
+    // private verify = async (): Promise<void> => {
+    //     if (this.props.isOwnDevice) {
+    //         Modal.createDialog(SetupEncryptionDialog, {
+    //             onFinished: this.props.onDeviceChange,
+    //         });
+    //     } else {
+    //         const cli = MatrixClientPeg.get();
+    //         const userId = cli.getUserId()!;
+    //         const verificationRequestPromise = cli.requestVerification(userId, [this.props.device.device_id]);
+    //         Modal.createDialog(VerificationRequestDialog, {
+    //             verificationRequestPromise,
+    //             member: cli.getUser(userId),
+    //             onFinished: async (): Promise<void> => {
+    //                 const request = await verificationRequestPromise;
+    //                 request.cancel();
+    //                 this.props.onDeviceChange();
+    //             },
+    //         });
+    //     }
+    // };
 
     public render(): React.ReactNode {
         let iconClass = "";
         let verifyButton: JSX.Element | undefined;
         if (this.props.verified !== null) {
             iconClass = this.props.verified ? "mx_E2EIcon_verified" : "mx_E2EIcon_warning";
-            if (!this.props.verified && this.props.canBeVerified) {
-                verifyButton = (
-                    <AccessibleButton kind="primary" onClick={this.verify}>
-                        {_t("Verify")}
-                    </AccessibleButton>
-                );
-            }
+            // if (!this.props.verified && this.props.canBeVerified) {
+            //     verifyButton = (
+            //         <AccessibleButton kind="primary" onClick={this.verify}>
+            //             {_t("Verify")}
+            //         </AccessibleButton>
+            //     );
+            // }
         }
 
         let signOutButton: JSX.Element | undefined;
