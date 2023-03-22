@@ -39,8 +39,18 @@ import { parseEditorStateTransfer } from "../../../../../../src/components/views
 
 describe("WysiwygComposer", () => {
     const customRender = (onChange = jest.fn(), onSend = jest.fn(), disabled = false, initialContent?: string) => {
+        const { mockClient, defaultRoomContext } = createMocks();
         return render(
-            <WysiwygComposer onChange={onChange} onSend={onSend} disabled={disabled} initialContent={initialContent} />,
+            <MatrixClientContext.Provider value={mockClient}>
+                <RoomContext.Provider value={defaultRoomContext}>
+                    <WysiwygComposer
+                        onChange={onChange}
+                        onSend={onSend}
+                        disabled={disabled}
+                        initialContent={initialContent}
+                    />{" "}
+                </RoomContext.Provider>
+            </MatrixClientContext.Provider>,
         );
     };
 
