@@ -15,47 +15,99 @@ limitations under the License.
 */
 
 import "@testing-library/jest-dom";
-import React from "react";
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import React, { createRef } from "react";
+import { render, screen } from "@testing-library/react";
 // import userEvent from "@testing-library/user-event";
 
 import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
 import RoomContext from "../../../../../../src/contexts/RoomContext";
 import { WysiwygAutocomplete } from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/WysiwygAutocomplete";
-import { createMocks } from "../utils";
-import { stubClient } from "../../../../../test-utils";
-import { MatrixClientPeg } from "../../../../../../src/MatrixClientPeg";
+import { getRoomContext, mkStubRoom, stubClient } from "../../../../../test-utils";
+import Autocomplete from "../../../../../../src/components/views/rooms/Autocomplete";
+import Autocompleter, { ICompletion } from "../../../../../../src/autocomplete/Autocompleter";
+import AutocompleteProvider from "../../../../../../src/autocomplete/AutocompleteProvider";
+
+const mockCompletion: ICompletion[] = [
+    {
+        type: "user",
+        completion: "user_1",
+        completionId: "@user_1:host.local",
+        range: { start: 1, end: 1 },
+        component: <div>user_1</div>,
+    },
+    {
+        type: "user",
+        completion: "user_2",
+        completionId: "@user_2:host.local",
+        range: { start: 1, end: 1 },
+        component: <div>user_2</div>,
+    },
+];
+const constructMockProvider = (data: ICompletion[]) =>
+    ({
+        getCompletions: jest.fn().mockImplementation(async () => data),
+        getName: jest.fn().mockReturnValue("hello"),
+        renderCompletions: jest.fn().mockReturnValue(mockCompletion.map((c) => c.component)),
+    } as unknown as AutocompleteProvider);
 
 describe("WysiwygAutocomplete", () => {
+    beforeAll(() => jest.useFakeTimers());
+    afterAll(() => jest.useRealTimers());
+
+    const autocompleteRef = createRef<Autocomplete>();
+    const AutocompleterSpy = jest
+        .spyOn(Autocompleter.prototype, "getCompletions")
+        .mockResolvedValue([
+            { completions: mockCompletion, provider: constructMockProvider(mockCompletion), command: {} },
+        ]);
+
     const renderComponent = (props = {}) => {
-        const { mockClient, defaultRoomContext } = createMocks();
+        const mockClient = stubClient();
+        const mockRoom = mkStubRoom("test_room", "test_room", mockClient);
+        const mockRoomContext = getRoomContext(mockRoom, {});
 
         return render(
             <MatrixClientContext.Provider value={mockClient}>
-                <RoomContext.Provider value={defaultRoomContext}>
+                <RoomContext.Provider value={mockRoomContext}>
                     <WysiwygAutocomplete
+                        ref={autocompleteRef}
                         suggestion={null}
                         handleMention={function (link: string, text: string): void {
                             throw new Error("Function not implemented.");
                         }}
+                        {...props}
                     />
                 </RoomContext.Provider>
             </MatrixClientContext.Provider>,
         );
     };
 
-    beforeEach(() => {
-        stubClient();
-        MatrixClientPeg.get();
+    it("does not show any suggestions when room is undefined", () => {
+        const { container } = render(
+            <WysiwygAutocomplete
+                ref={autocompleteRef}
+                suggestion={null}
+                handleMention={function (link: string, text: string): void {
+                    throw new Error("Function not implemented.");
+                }}
+            />,
+        );
+        expect(container).toBeEmptyDOMElement();
     });
 
-    it("does not show anything when room is undefined", () => {
+    it("does not show any suggestions with a null suggestion prop", () => {
+        // default in renderComponent is a null suggestion
         renderComponent();
-        expect(screen.queryByRole("presentation")).not.toBeInTheDocument();
+        expect(screen.getByTestId("autocomplete-wrapper")).toBeEmptyDOMElement();
     });
 
-    it("does something when we have a valid suggestion", () => {
+    it.only("calls Autocompleter when given a valid suggestion prop", () => {
+        // default in renderComponent is a null suggestion
         renderComponent({ suggestion: { keyChar: "@", text: "abc", type: "mention" } });
+        expect(screen.getByTestId("autocomplete-wrapper")).toBeEmptyDOMElement();
+        jest.runAllTimers();
+        console.log(autocompleteRef);
+
         screen.debug();
     });
 });
