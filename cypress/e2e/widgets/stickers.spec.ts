@@ -159,4 +159,32 @@ describe("Stickers", () => {
             expectTimelineSticker(roomId2);
         });
     });
+
+    it("should handle a sticker picker widget missing creatorUserId", () => {
+        cy.createRoom({
+            name: ROOM_NAME_1,
+        }).as("roomId1");
+        cy.setAccountData("m.widgets", {
+            [STICKER_PICKER_WIDGET_ID]: {
+                content: {
+                    type: "m.stickerpicker",
+                    name: STICKER_PICKER_WIDGET_NAME,
+                    url: stickerPickerUrl,
+                    // No creatorUserId
+                },
+                id: STICKER_PICKER_WIDGET_ID,
+            },
+        }).as("stickers");
+
+        cy.all([
+            cy.get<string>("@roomId1"),
+            cy.get<{}>("@stickers"),
+        ]).then(([roomId1]) => {
+            cy.viewRoomByName(ROOM_NAME_1);
+            cy.url().should("contain", `/#/room/${roomId1}`);
+            openStickerPicker();
+            sendStickerFromPicker();
+            expectTimelineSticker(roomId1);
+        });
+    });
 });
