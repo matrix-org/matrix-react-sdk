@@ -250,10 +250,10 @@ describe("DateSeparator", () => {
             fireEvent.click(jumpToLastWeekButton);
 
             // Expect error to be shown. We have to wait for the UI to transition.
-            await screen.findByTestId("jump-to-date-error-content");
+            expect(await screen.findByTestId("jump-to-date-error-content")).toBeInTheDocument();
 
             // Expect an option to submit debug logs to be shown when a non-network error occurs
-            await screen.findByTestId("jump-to-date-error-submit-debug-logs-button");
+            expect(await screen.findByTestId("jump-to-date-error-submit-debug-logs-button")).toBeInTheDocument();
         });
 
         [
@@ -273,7 +273,7 @@ describe("DateSeparator", () => {
                 fireEvent.click(jumpToLastWeekButton);
 
                 // Expect error to be shown. We have to wait for the UI to transition.
-                await screen.findByTestId("jump-to-date-error-content");
+                expect(await screen.findByTestId("jump-to-date-error-content")).toBeInTheDocument();
 
                 // The submit debug logs option should *NOT* be shown for network errors.
                 //
