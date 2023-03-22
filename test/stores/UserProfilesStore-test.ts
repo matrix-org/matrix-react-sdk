@@ -17,7 +17,7 @@ limitations under the License.
 import { mocked, Mocked } from "jest-mock";
 import { IMatrixProfile, MatrixClient, MatrixEvent, Room, RoomMemberEvent } from "matrix-js-sdk/src/matrix";
 
-import { UserProfilesStore } from "../../src/stores/UserProfilesStores";
+import { UserProfilesStore } from "../../src/stores/UserProfilesStore";
 import { filterConsole, mkRoomMember, mkRoomMemberJoinEvent, stubClient } from "../test-utils";
 
 describe("UserProfilesStore", () => {

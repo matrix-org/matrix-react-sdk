@@ -28,7 +28,7 @@ import RightPanelStore from "../stores/right-panel/RightPanelStore";
 import { RoomViewStore } from "../stores/RoomViewStore";
 import SpaceStore, { SpaceStoreClass } from "../stores/spaces/SpaceStore";
 import TypingStore from "../stores/TypingStore";
-import { UserProfilesStore } from "../stores/UserProfilesStores";
+import { UserProfilesStore } from "../stores/UserProfilesStore";
 import { WidgetLayoutStore } from "../stores/widgets/WidgetLayoutStore";
 import { WidgetPermissionStore } from "../stores/widgets/WidgetPermissionStore";
 import WidgetStore from "../stores/WidgetStore";
