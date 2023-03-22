@@ -54,12 +54,18 @@ describe("WysiwygAutocomplete", () => {
     beforeAll(() => {
         // scrollTo not implemented in JSDOM
         window.HTMLElement.prototype.scrollTo = function () {};
-        jest.useFakeTimers();
     });
-    afterAll(() => jest.useRealTimers());
+
+    afterAll(() => {
+        jest.restoreAllMocks();
+    });
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
 
     const autocompleteRef = createRef<Autocomplete>();
-    const AutocompleterSpy = jest.spyOn(Autocompleter.prototype, "getCompletions").mockImplementation((...args) => {
+    const getCompletionsSpy = jest.spyOn(Autocompleter.prototype, "getCompletions").mockImplementation((...args) => {
         return Promise.resolve([
             {
                 completions: mockCompletion,
@@ -90,8 +96,8 @@ describe("WysiwygAutocomplete", () => {
         );
     };
 
-    it("does not show any suggestions when room is undefined", () => {
-        const { container } = render(
+    it("does not show the autocomplete when room is undefined", () => {
+        render(
             <WysiwygAutocomplete
                 ref={autocompleteRef}
                 suggestion={null}
@@ -100,25 +106,31 @@ describe("WysiwygAutocomplete", () => {
                 }}
             />,
         );
-        expect(container).toBeEmptyDOMElement();
+        expect(screen.queryByTestId("autocomplete-wrapper")).not.toBeInTheDocument();
     });
 
-    it("does not show any suggestions with a null suggestion prop", () => {
-        // default in renderComponent is a null suggestion
+    it("does not call for suggestions with a null suggestion prop", async () => {
+        // render the component, the default props have suggestion = null
         renderComponent();
-        expect(screen.getByTestId("autocomplete-wrapper")).toBeEmptyDOMElement();
+
+        // check that getCompletions is not called, and we have no suggestions
+        expect(getCompletionsSpy).not.toHaveBeenCalled();
+        expect(screen.queryByRole("presentation")).not.toBeInTheDocument();
     });
 
-    it.only("calls Autocompleter when given a valid suggestion prop", async () => {
+    it("calls getCompletions when given a valid suggestion prop", async () => {
         // default in renderComponent is a null suggestion
         renderComponent({ suggestion: { keyChar: "@", text: "abc", type: "mention" } });
-        expect(screen.getByTestId("autocomplete-wrapper")).toBeEmptyDOMElement();
-        jest.runAllTimers();
 
+        // wait for getCompletions to have been called
         await waitFor(() => {
-            expect(autocompleteRef.current?.state.completions).not.toEqual([]);
+            expect(getCompletionsSpy).toHaveBeenCalled();
         });
 
-        screen.debug();
+        // check that some suggestions are shown
+        expect(screen.queryByRole("presentation")).toBeInTheDocument();
+
+        // and that they are the mock completions
+        mockCompletion.forEach(({ completion }) => expect(screen.getByText(completion)).toBeInTheDocument());
     });
 });
