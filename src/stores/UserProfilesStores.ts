@@ -17,44 +17,106 @@ limitations under the License.
 import { logger } from "matrix-js-sdk/src/logger";
 import { IMatrixProfile, MatrixClient } from "matrix-js-sdk/src/matrix";
 
+import { LruCache } from "../utils/LruCache";
+
+const cacheSize = 500;
+
+type StoreProfileValue = IMatrixProfile | undefined | null;
+
+/**
+ * This store provides cached access to user profiles.
+ */
 export class UserProfilesStore {
-    private profiles = new Map<string, IMatrixProfile>();
-    private knownProfiles = new Map<string, IMatrixProfile>();
+    private profiles = new LruCache<string, IMatrixProfile | null>(cacheSize);
+    private knownProfiles = new LruCache<string, IMatrixProfile | null>(cacheSize);
 
     public constructor(private client?: MatrixClient) {}
 
-    public getProfile(userId: string): IMatrixProfile | undefined {
+    /**
+     * Synchronously get a profile from the store cache.
+     *
+     * @param userId - User Id of the profile to fetch
+     * @returns The profile, if cached by the store.
+     *          Null if the profile does not exist.
+     *          Undefined if the profile is not cached by the store.
+     *          In this case a profile can be fetched from the API via {@link fetchProfile}.
+     */
+    public getProfile(userId: string): StoreProfileValue {
         return this.profiles.get(userId);
     }
 
-    public getOnlyKnownProfile(userId: string): IMatrixProfile | undefined {
+    /**
+     * Synchronously get a profile from known users from the store cache.
+     * Known user means that at least one shared room with the user exists.
+     *
+     * @param userId - User Id of the profile to fetch
+     * @returns The profile, if cached by the store.
+     *          Null if the profile does not exist.
+     *          Undefined if the profile is not cached by the store.
+     *          In this case a profile can be fetched from the API via {@link fetchOnlyKnownProfile}.
+     */
+    public getOnlyKnownProfile(userId: string): StoreProfileValue {
         return this.knownProfiles.get(userId);
     }
 
-    public async fetchProfile(userId: string): Promise<IMatrixProfile | undefined> {
-        const profile = await this.lookUpProfile(userId);
+    /**
+     * Asynchronousely fetches a profile from the API.
+     * Stores the result in the cache, so that next time {@link getProfile} returns this value.
+     *
+     * @param userId - User Id for which the profile should be fetched for
+     * @returns The profile, if found.
+     *          Null if the profile does not exist or there was an error fetching it.
+     */
+    public async fetchProfile(userId: string): Promise<IMatrixProfile | null> {
+        const profile = await this.fetchProfileFromApi(userId);
         this.profiles.set(userId, profile);
         return profile;
     }
 
-    public async fetchOnlyKnownProfile(userId: string): Promise<IMatrixProfile | undefined> {
+    /**
+     * Asynchronousely fetches a profile from a known user from the API.
+     * Known user means that at least one shared room with the user exists.
+     * Stores the result in the cache, so that next time {@link getOnlyKnownProfile} returns this value.
+     *
+     * @param userId - User Id for which the profile should be fetched for
+     * @returns The profile, if found.
+     *          Undefined if the user is unknown.
+     *          Null if the profile does not exist or there was an error fetching it.
+     */
+    public async fetchOnlyKnownProfile(userId: string): Promise<StoreProfileValue> {
+        console.log("fetchOnlyKnownProfile");
+
+        // Do not look up unknown users. The test for existence in knownProfiles is a performance optimisation.
+        // If the user Id exists in knownProfiles we know them.
         if (!this.knownProfiles.has(userId) && !this.isUserIdKnown(userId)) return undefined;
 
-        const profile = await this.lookUpProfile(userId);
+        const profile = await this.fetchProfileFromApi(userId);
         this.knownProfiles.set(userId, profile);
         return profile;
     }
 
-    private async lookUpProfile(userId: string): Promise<IMatrixProfile | undefined> {
+    /**
+     * Looks up a user profile via API.
+     *
+     * @param userId - User Id for which the profile should be fetched for
+     * @returns The profile information or null on errors
+     */
+    private async fetchProfileFromApi(userId: string): Promise<IMatrixProfile | null> {
         try {
             return await this.client?.getProfileInfo(userId);
         } catch (e) {
             logger.warn(`Error retrieving profile for userId ${userId}`, e);
         }
 
-        return undefined;
+        return null;
     }
 
+    /**
+     * Whether at least one shared room with the userId exists.
+     *
+     * @param userId
+     * @returns true: at least one room shared with user identified by its Id, else false.
+     */
     private isUserIdKnown(userId: string): boolean {
         if (!this.client) return false;
 
