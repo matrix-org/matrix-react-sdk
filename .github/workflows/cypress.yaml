@@ -24,7 +24,7 @@ jobs:
             commit_message: ${{ steps.commit.outputs.message }}
             commit_author: ${{ steps.commit.outputs.author }}
             commit_email: ${{ steps.commit.outputs.email }}
-            percy_enable: ${{ steps.percy.outputs.value || '1' }}
+            percy_enable: ${{ steps.percy.outputs.value || '0' }}
             kiwi_enable: ${{ steps.kiwi.outputs.value || '1' }}
         steps:
             # We create the status here and then update it to success/failure in the `report` stage
@@ -59,13 +59,13 @@ jobs:
                       core.setOutput("author", response.data.author.name);
                       core.setOutput("email", response.data.author.email);
 
-            # Only run Percy when it is demanded or on develop
-            - name: Disable Percy if not needed
+            # Only run Percy when it is demanded
+            - name: Enable Percy if X-Needs-Percy
               id: percy
               if: |
                   github.event.workflow_run.event == 'pull_request' &&
-                  !contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy')
-              run: echo "::set-output name=value::0"
+                  contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy')
+              run: echo "::set-output name=value::1"
 
             # Only export to kiwi when it is demanded or on develop
             - name: Disable Kiwi if not needed
