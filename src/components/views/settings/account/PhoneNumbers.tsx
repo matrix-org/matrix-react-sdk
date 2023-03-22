@@ -192,7 +192,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
                 this.setState({ verifying: false, continueDisabled: false, addTask: null });
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Error"),
-                    description: err && err.message ? err.message : _t("Operation failed"),
+                    description: err?.translatedMessage || err?.message || _t("Operation failed"),
                 });
             });
     };

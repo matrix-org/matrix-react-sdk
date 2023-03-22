@@ -107,7 +107,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description: err && err.message ? err.message : _t("Operation failed"),
+                description: err?.translatedMessage || err?.message || _t("Operation failed"),
             });
         }
     }
@@ -148,7 +148,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description: err && err.message ? err.message : _t("Operation failed"),
+                description: err?.translatedMessage || err?.message || _t("Operation failed"),
             });
         }
     }

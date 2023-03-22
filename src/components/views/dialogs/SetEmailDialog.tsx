@@ -88,7 +88,7 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
                 logger.error("Unable to add email address " + emailAddress + " " + err);
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Unable to add email address"),
-                    description: err && err.message ? err.message : _t("Operation failed"),
+                    description: err?.translatedMessage || err?.message || _t("Operation failed"),
                 });
             },
         );
@@ -131,7 +131,7 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
                     logger.error("Unable to verify email address: " + err);
                     Modal.createDialog(ErrorDialog, {
                         title: _t("Unable to verify email address."),
-                        description: err && err.message ? err.message : _t("Operation failed"),
+                        description: err?.translatedMessage || err?.message || _t("Operation failed"),
                     });
                 }
             },

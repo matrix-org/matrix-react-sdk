@@ -106,7 +106,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description: err && err.message ? err.message : _t("Operation failed"),
+                description: err?.translatedMessage || err?.message || _t("Operation failed"),
             });
         }
     }
@@ -141,7 +141,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description: err && err.message ? err.message : _t("Operation failed"),
+                description: err?.translatedMessage || err?.message || _t("Operation failed"),
             });
         }
     }
@@ -191,7 +191,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                 logger.error("Unable to verify email address: " + err);
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Unable to verify email address."),
-                    description: err && err.message ? err.message : _t("Operation failed"),
+                    description: err?.translatedMessage || err?.message || _t("Operation failed"),
                 });
             }
         }
