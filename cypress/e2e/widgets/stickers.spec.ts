@@ -109,8 +109,7 @@ describe("Stickers", () => {
         cy.startHomeserver("default").then((data) => {
             homeserver = data;
 
-            cy.initTestUser(homeserver, "Sally")
-                .then(user => userId = user.userId);
+            cy.initTestUser(homeserver, "Sally").then((user) => (userId = user.userId));
         });
         cy.serveHtmlFile(WIDGET_HTML).then((url) => {
             stickerPickerUrl = url;
@@ -184,10 +183,7 @@ describe("Stickers", () => {
             },
         }).as("stickers");
 
-        cy.all([
-            cy.get<string>("@roomId1"),
-            cy.get<{}>("@stickers"),
-        ]).then(([roomId1]) => {
+        cy.all([cy.get<string>("@roomId1"), cy.get<{}>("@stickers")]).then(([roomId1]) => {
             cy.viewRoomByName(ROOM_NAME_1);
             cy.url().should("contain", `/#/room/${roomId1}`);
             openStickerPicker();
