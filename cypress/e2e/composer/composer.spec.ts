@@ -185,9 +185,5 @@ describe("Composer", () => {
                 cy.get(".mx_EventTile_body a").should("have.attr", "href").and("include", "https://matrix.org/");
             });
         });
-
-        // describe.only("mentions", () => {
-        //     it("does something", () => {});
-        // });
     });
 });
