@@ -179,8 +179,8 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                     } else {
                         friendlyErrorMessage = _t(
                             "A network error occurred while trying to find and jump to the given date. " +
-                                "Your homeserver might be down or was just a temporary problem with your " +
-                                "internet connection. Please try again. If this continues, please " +
+                                "Your homeserver might be down or there was just a temporary problem with " +
+                                "your internet connection. Please try again. If this continues, please " +
                                 "contact your homeserver administrator.",
                         );
                     }
