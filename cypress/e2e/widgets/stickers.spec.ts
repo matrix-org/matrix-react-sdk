@@ -135,6 +135,9 @@ describe("Stickers", () => {
                     url: stickerPickerUrl,
                     creatorUserId: "@userId",
                 },
+                sender: "@userId",
+                state_key: STICKER_PICKER_WIDGET_ID,
+                type: "m.widget",
                 id: STICKER_PICKER_WIDGET_ID,
             },
         }).as("stickers");
@@ -172,6 +175,9 @@ describe("Stickers", () => {
                     url: stickerPickerUrl,
                     // No creatorUserId
                 },
+                sender: "@userId",
+                state_key: STICKER_PICKER_WIDGET_ID,
+                type: "m.widget",
                 id: STICKER_PICKER_WIDGET_ID,
             },
         }).as("stickers");
