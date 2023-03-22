@@ -36,10 +36,45 @@ import EditorStateTransfer from "../../../../../../src/utils/EditorStateTransfer
 import { SubSelection } from "../../../../../../src/components/views/rooms/wysiwyg_composer/types";
 import { setSelection } from "../../../../../../src/components/views/rooms/wysiwyg_composer/utils/selection";
 import { parseEditorStateTransfer } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/useInitialContent";
+import Autocompleter, { ICompletion } from "../../../../../../src/autocomplete/Autocompleter";
+import AutocompleteProvider from "../../../../../../src/autocomplete/AutocompleteProvider";
+
+// needed for the autocomplete
+const mockCompletion: ICompletion[] = [
+    {
+        type: "user",
+        completion: "user_1",
+        completionId: "@user_1:host.local",
+        range: { start: 1, end: 1 },
+        component: <div>user_1</div>,
+    },
+    {
+        type: "user",
+        completion: "user_2",
+        completionId: "@user_2:host.local",
+        range: { start: 1, end: 1 },
+        component: <div>user_2</div>,
+    },
+];
+
+const constructMockProvider = (data: ICompletion[]) =>
+    ({
+        getCompletions: jest.fn().mockImplementation(async () => data),
+        getName: jest.fn().mockReturnValue("test provider"),
+        renderCompletions: jest.fn().mockImplementation((components) => components),
+    } as unknown as AutocompleteProvider);
 
 describe("WysiwygComposer", () => {
     const customRender = (onChange = jest.fn(), onSend = jest.fn(), disabled = false, initialContent?: string) => {
-        const { mockClient, defaultRoomContext } = createMocks();
+        const mockClient = stubClient();
+        const { defaultRoomContext } = createMocks();
+        jest.spyOn(Autocompleter.prototype, "getCompletions").mockResolvedValue([
+            {
+                completions: mockCompletion,
+                provider: constructMockProvider(mockCompletion),
+                command: { command: ["truthy"] as RegExpExecArray }, // needed for us to unhide the autocomplete when testing
+            },
+        ]);
         return render(
             <MatrixClientContext.Provider value={mockClient}>
                 <RoomContext.Provider value={defaultRoomContext}>

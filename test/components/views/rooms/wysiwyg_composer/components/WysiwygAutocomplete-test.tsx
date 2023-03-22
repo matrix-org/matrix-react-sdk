@@ -42,6 +42,7 @@ const mockCompletion: ICompletion[] = [
         component: <div>user_2</div>,
     },
 ];
+
 const constructMockProvider = (data: ICompletion[]) =>
     ({
         getCompletions: jest.fn().mockImplementation(async () => data),
