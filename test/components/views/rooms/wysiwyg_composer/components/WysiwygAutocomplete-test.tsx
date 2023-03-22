@@ -46,10 +46,8 @@ const mockCompletion: ICompletion[] = [
 const constructMockProvider = (data: ICompletion[]) =>
     ({
         getCompletions: jest.fn().mockImplementation(async () => data),
-        getName: jest.fn().mockReturnValue("hello"),
-        renderCompletions: jest.fn().mockImplementation((...args) => {
-            mockCompletion.map((c) => c.component);
-        }),
+        getName: jest.fn().mockReturnValue("test provider"),
+        renderCompletions: jest.fn().mockImplementation((components) => components),
     } as unknown as AutocompleteProvider);
 
 describe("WysiwygAutocomplete", () => {
