@@ -232,6 +232,8 @@ export function createTestClient(): MatrixClient {
                 room_id: roomId,
             });
         }),
+
+        searchUserDirectory: jest.fn().mockResolvedValue({ limited: false, results: [] }),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
@@ -256,6 +258,8 @@ type MakeEventPassThruProps = {
     skey?: string;
 };
 type MakeEventProps = MakeEventPassThruProps & {
+    /** If provided will be used as event Id. Else an Id is generated. */
+    id?: string;
     type: string;
     redacts?: string;
     content: IContent;
@@ -302,7 +306,7 @@ export function mkEvent(opts: MakeEventProps): MatrixEvent {
         sender: opts.user,
         content: opts.content,
         prev_content: opts.prev_content,
-        event_id: "$" + Math.random() + "-" + Math.random(),
+        event_id: opts.id ?? "$" + Math.random() + "-" + Math.random(),
         origin_server_ts: opts.ts ?? 0,
         unsigned: opts.unsigned,
         redacts: opts.redacts,
@@ -484,12 +488,13 @@ export function mkMessage({
     formattedMsg,
     relatesTo,
     ...opts
-}: MakeEventPassThruProps & {
-    room: Room["roomId"];
-    msg?: string;
-    format?: string;
-    formattedMsg?: string;
-}): MatrixEvent {
+}: MakeEventPassThruProps &
+    Pick<MakeEventProps, "id"> & {
+        room: Room["roomId"];
+        msg?: string;
+        format?: string;
+        formattedMsg?: string;
+    }): MatrixEvent {
     if (!opts.room || !opts.user) {
         throw new Error("Missing .room or .user from options");
     }
@@ -533,7 +538,7 @@ export function mkStubRoom(
         } as unknown as RoomState,
         eventShouldLiveIn: jest.fn().mockReturnValue({}),
         fetchRoomThreads: jest.fn().mockReturnValue(Promise.resolve()),
-        findEventById: (_: string) => undefined as MatrixEvent | undefined,
+        findEventById: jest.fn().mockReturnValue(undefined),
         findPredecessor: jest.fn().mockReturnValue({ roomId: "", eventId: null }),
         getAccountData: (_: EventType | string) => undefined as MatrixEvent | undefined,
         getAltAliases: jest.fn().mockReturnValue([]),
