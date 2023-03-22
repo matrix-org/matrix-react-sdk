@@ -59,12 +59,15 @@ jobs:
                       core.setOutput("author", response.data.author.name);
                       core.setOutput("email", response.data.author.email);
 
-            # Only run Percy when it is demanded
+            # Only run Percy when it is demanded or we are running the daily build
             - name: Enable Percy if X-Needs-Percy
               id: percy
               if: |
-                  github.event.workflow_run.event == 'pull_request' &&
-                  contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy')
+                  github.event.workflow_run.event == 'schedule' ||
+                  (
+                    github.event.workflow_run.event == 'pull_request' &&
+                    contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy')
+                  )
               run: echo "::set-output name=value::1"
 
             # Only export to kiwi when it is demanded or on develop
