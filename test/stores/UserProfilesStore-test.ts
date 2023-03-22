@@ -23,9 +23,9 @@ import { filterConsole, mkRoomMember, mkRoomMemberJoinEvent, stubClient } from "
 describe("UserProfilesStore", () => {
     const userIdDoesNotExist = "@unknown:example.com";
     const user1Id = "@user1:example.com";
-    const user1Profile: IMatrixProfile = { displayname: "User 1", avatar_url: null };
+    const user1Profile: IMatrixProfile = { displayname: "User 1", avatar_url: undefined };
     const user2Id = "@user2:example.com";
-    const user2Profile: IMatrixProfile = { displayname: "User 2", avatar_url: null };
+    const user2Profile: IMatrixProfile = { displayname: "User 2", avatar_url: undefined };
     const user3Id = "@user3:example.com";
     let mockClient: Mocked<MatrixClient>;
     let userProfilesStore: UserProfilesStore;
@@ -105,13 +105,13 @@ describe("UserProfilesStore", () => {
         describe("and membership events with the same values appear", () => {
             beforeEach(() => {
                 const roomMember1 = mkRoomMember(room.roomId, user1Id);
-                roomMember1.rawDisplayName = user1Profile.displayname;
-                roomMember1.getMxcAvatarUrl = () => null;
+                roomMember1.rawDisplayName = user1Profile.displayname!;
+                roomMember1.getMxcAvatarUrl = () => undefined;
                 mockClient.emit(RoomMemberEvent.Membership, {} as MatrixEvent, roomMember1);
 
                 const roomMember2 = mkRoomMember(room.roomId, user2Id);
-                roomMember2.rawDisplayName = user2Profile.displayname;
-                roomMember2.getMxcAvatarUrl = () => null;
+                roomMember2.rawDisplayName = user2Profile.displayname!;
+                roomMember2.getMxcAvatarUrl = () => undefined;
                 mockClient.emit(RoomMemberEvent.Membership, {} as MatrixEvent, roomMember2);
             });
 

@@ -106,7 +106,7 @@ export class UserProfilesStore {
      */
     private async fetchProfileFromApi(userId: string): Promise<IMatrixProfile | null> {
         try {
-            return await this.client?.getProfileInfo(userId);
+            return (await this.client?.getProfileInfo(userId)) ?? null;
         } catch (e) {
             logger.warn(`Error retrieving profile for userId ${userId}`, e);
         }
