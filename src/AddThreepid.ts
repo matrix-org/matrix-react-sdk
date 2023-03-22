@@ -81,6 +81,8 @@ export default class AddThreepid {
                     httpStatus: err.httpStatus,
                 });
             }
+            // Otherwise, just blurt out the same error
+            throw err;
         }
     }
 
@@ -115,6 +117,8 @@ export default class AddThreepid {
                         httpStatus: err.httpStatus,
                     });
                 }
+                // Otherwise, just blurt out the same error
+                throw err;
             }
         } else {
             // For tangled bind, request a token via the HS.
@@ -149,6 +153,8 @@ export default class AddThreepid {
                     httpStatus: err.httpStatus,
                 });
             }
+            // Otherwise, just blurt out the same error
+            throw err;
         }
     }
 
@@ -185,6 +191,8 @@ export default class AddThreepid {
                         httpStatus: err.httpStatus,
                     });
                 }
+                // Otherwise, just blurt out the same error
+                throw err;
             }
         } else {
             // For tangled bind, request a token via the HS.
@@ -276,6 +284,8 @@ export default class AddThreepid {
                     httpStatus: err.httpStatus,
                 });
             }
+            // Otherwise, just blurt out the same error
+            throw err;
         }
         return [];
     }
