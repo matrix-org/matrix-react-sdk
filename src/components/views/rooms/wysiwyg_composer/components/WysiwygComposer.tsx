@@ -91,7 +91,7 @@ export const WysiwygComposer = memo(function WysiwygComposer({
             }
         }
 
-        const mentions = ref.current?.querySelectorAll("a[data-mention-type]") || [];
+        const mentions = ref.current?.querySelectorAll("a[data-mention-type]");
         mentions.forEach((mention) => mention.addEventListener("click", handleClick));
 
         return () => mentions.forEach((mention) => mention.removeEventListener("click", handleClick));
