@@ -125,6 +125,21 @@ export class LruCache<K, V> {
     }
 
     /**
+     * Deletes an item from the cache.
+     *
+     * @param key - Key of the item to be removed
+     */
+    public delete(key: K): void {
+        const item = this.map.get(key);
+
+        // Unknown item.
+        if (!item) return;
+
+        this.removeItemFromList(item);
+        this.map.delete(key);
+    }
+
+    /**
      * Returns an iterator over the cached values.
      */
     public *values(): IterableIterator<V> {
@@ -143,17 +158,7 @@ export class LruCache<K, V> {
         // No update required.
         if (item === this.head) return item;
 
-        // Remove item from the list…
-        if (item === this.tail && item.prev) {
-            this.tail = item.prev;
-        }
-
-        item.prev.next = item.next;
-
-        if (item.next) {
-            item.next.prev = item.prev;
-        }
-
+        this.removeItemFromList(item);
         // …and put it to the front.
         this.head.prev = item;
         item.prev = null;
@@ -161,5 +166,23 @@ export class LruCache<K, V> {
         this.head = item;
 
         return item;
+    }
+
+    private removeItemFromList(item: CacheItem<K, V>): void {
+        if (item === this.head) {
+            this.head = item.next ?? null;
+        }
+
+        if (item === this.tail) {
+            this.tail = item.prev ?? null;
+        }
+
+        if (item.prev) {
+            item.prev.next = item.next;
+        }
+
+        if (item.next) {
+            item.next.prev = item.prev;
+        }
     }
 }

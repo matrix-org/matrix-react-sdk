@@ -15,13 +15,13 @@ limitations under the License.
 */
 
 import { mocked, Mocked } from "jest-mock";
-import { IMatrixProfile, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import { IMatrixProfile, MatrixClient, MatrixEvent, Room, RoomMemberEvent } from "matrix-js-sdk/src/matrix";
 
 import { UserProfilesStore } from "../../src/stores/UserProfilesStores";
-import { filterConsole, mkRoomMemberJoinEvent, stubClient } from "../test-utils";
+import { filterConsole, mkRoomMember, mkRoomMemberJoinEvent, stubClient } from "../test-utils";
 
 describe("UserProfilesStore", () => {
-    const userUnknownId = "@unknown:example.com";
+    const userIdDoesNotExist = "@unknown:example.com";
     const user1Id = "@user1:example.com";
     const user1Profile: IMatrixProfile = { displayname: "User 1", avatar_url: null };
     const user2Id = "@user2:example.com";
@@ -36,7 +36,7 @@ describe("UserProfilesStore", () => {
         "Error retrieving profile for userId @user3:example.com",
     );
 
-    beforeAll(() => {
+    beforeEach(() => {
         mockClient = mocked(stubClient());
         room = new Room("!room:example.com", mockClient, mockClient.getSafeUserId());
         room.currentState.setStateEvents([
@@ -58,37 +58,67 @@ describe("UserProfilesStore", () => {
         expect(userProfilesStore.getProfile(user1Id)).toBeUndefined();
     });
 
-    it("fetchProfile should return the profile from the API and cache it", async () => {
-        const profile = await userProfilesStore.fetchProfile(user1Id);
-        expect(profile).toBe(user1Profile);
-        expect(userProfilesStore.getProfile(user1Id)).toBe(user1Profile);
-    });
+    describe("fetchProfile", () => {
+        it("should return the profile from the API and cache it", async () => {
+            const profile = await userProfilesStore.fetchProfile(user1Id);
+            expect(profile).toBe(user1Profile);
+            expect(userProfilesStore.getProfile(user1Id)).toBe(user1Profile);
+        });
 
-    it("fetchProfile for an unknown user should return null and cache it", async () => {
-        const profile = await userProfilesStore.fetchProfile(userUnknownId);
-        expect(profile).toBeNull();
-        expect(userProfilesStore.getProfile(userUnknownId)).toBeNull();
+        it("for an user that does not exist should return null and cache it", async () => {
+            const profile = await userProfilesStore.fetchProfile(userIdDoesNotExist);
+            expect(profile).toBeNull();
+            expect(userProfilesStore.getProfile(userIdDoesNotExist)).toBeNull();
+        });
     });
 
     it("getOnlyKnownProfile should return undefined if the profile was not fetched", () => {
         expect(userProfilesStore.getOnlyKnownProfile(user1Id)).toBeUndefined();
     });
 
-    it("fetchOnlyKnownProfile should return undefined if no room shared with the user", async () => {
-        const profile = await userProfilesStore.fetchOnlyKnownProfile(user1Id);
-        expect(profile).toBeUndefined();
-        expect(userProfilesStore.getOnlyKnownProfile(user1Id)).toBeUndefined();
+    describe("fetchOnlyKnownProfile", () => {
+        it("should return undefined if no room shared with the user", async () => {
+            const profile = await userProfilesStore.fetchOnlyKnownProfile(user1Id);
+            expect(profile).toBeUndefined();
+            expect(userProfilesStore.getOnlyKnownProfile(user1Id)).toBeUndefined();
+        });
+
+        it("for a known user should return the profile from the API and cache it", async () => {
+            const profile = await userProfilesStore.fetchOnlyKnownProfile(user2Id);
+            expect(profile).toBe(user2Profile);
+            expect(userProfilesStore.getOnlyKnownProfile(user2Id)).toBe(user2Profile);
+        });
+
+        it("for a known user not found via API should return null and cache it", async () => {
+            const profile = await userProfilesStore.fetchOnlyKnownProfile(user3Id);
+            expect(profile).toBeNull();
+            expect(userProfilesStore.getOnlyKnownProfile(user3Id)).toBeNull();
+        });
     });
 
-    it("fetchOnlyKnownProfile for a known user should return the profile from the API and cache it", async () => {
-        const profile = await userProfilesStore.fetchOnlyKnownProfile(user2Id);
-        expect(profile).toBe(user2Profile);
-        expect(userProfilesStore.getOnlyKnownProfile(user2Id)).toBe(user2Profile);
-    });
+    describe("when there are cached values and membership updates", () => {
+        beforeEach(async () => {
+            await userProfilesStore.fetchProfile(user1Id);
+            await userProfilesStore.fetchOnlyKnownProfile(user2Id);
+        });
 
-    it("fetchOnlyKnownProfile for a known user not found via API should return null and cache it", async () => {
-        const profile = await userProfilesStore.fetchOnlyKnownProfile(user3Id);
-        expect(profile).toBeNull();
-        expect(userProfilesStore.getOnlyKnownProfile(user3Id)).toBeNull();
+        describe("and membership events with the same values appear", () => {
+            beforeEach(() => {
+                const roomMember1 = mkRoomMember(room.roomId, user1Id);
+                roomMember1.rawDisplayName = user1Profile.displayname;
+                roomMember1.getMxcAvatarUrl = () => null;
+                mockClient.emit(RoomMemberEvent.Membership, {} as MatrixEvent, roomMember1);
+
+                const roomMember2 = mkRoomMember(room.roomId, user2Id);
+                roomMember2.rawDisplayName = user2Profile.displayname;
+                roomMember2.getMxcAvatarUrl = () => null;
+                mockClient.emit(RoomMemberEvent.Membership, {} as MatrixEvent, roomMember2);
+            });
+
+            it("should not invalidate the cache", () => {
+                expect(userProfilesStore.getProfile(user1Id)).toBe(user1Profile);
+                expect(userProfilesStore.getOnlyKnownProfile(user2Id)).toBe(user2Profile);
+            });
+        });
     });
 });

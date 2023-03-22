@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { IMatrixProfile, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { IMatrixProfile, MatrixClient, MatrixEvent, RoomMember, RoomMemberEvent } from "matrix-js-sdk/src/matrix";
 
 import { LruCache } from "../utils/LruCache";
 
@@ -25,12 +25,17 @@ type StoreProfileValue = IMatrixProfile | undefined | null;
 
 /**
  * This store provides cached access to user profiles.
+ * Listens for membership events and invalidates the cache for a profile on update with different profile values.
  */
 export class UserProfilesStore {
     private profiles = new LruCache<string, IMatrixProfile | null>(cacheSize);
     private knownProfiles = new LruCache<string, IMatrixProfile | null>(cacheSize);
 
-    public constructor(private client?: MatrixClient) {}
+    public constructor(private client?: MatrixClient) {
+        if (client) {
+            client.on(RoomMemberEvent.Membership, this.onRoomMembershipEvent);
+        }
+    }
 
     /**
      * Synchronously get a profile from the store cache.
@@ -84,8 +89,6 @@ export class UserProfilesStore {
      *          Null if the profile does not exist or there was an error fetching it.
      */
     public async fetchOnlyKnownProfile(userId: string): Promise<StoreProfileValue> {
-        console.log("fetchOnlyKnownProfile");
-
         // Do not look up unknown users. The test for existence in knownProfiles is a performance optimisation.
         // If the user Id exists in knownProfiles we know them.
         if (!this.knownProfiles.has(userId) && !this.isUserIdKnown(userId)) return undefined;
@@ -124,4 +127,28 @@ export class UserProfilesStore {
             return !!room.getMember(userId);
         });
     }
+
+    /**
+     * Simple cache invalidation if a room membership event is received and
+     * at least one profile value differs from the cached one.
+     */
+    private onRoomMembershipEvent = (event: MatrixEvent, member: RoomMember): void => {
+        const profile = this.profiles.get(member.userId);
+
+        if (
+            profile &&
+            (profile.displayname !== member.rawDisplayName || profile.avatar_url !== member.getMxcAvatarUrl())
+        ) {
+            this.profiles.delete(member.userId);
+        }
+
+        const knownProfile = this.knownProfiles.get(member.userId);
+
+        if (
+            knownProfile &&
+            (knownProfile.displayname !== member.rawDisplayName || knownProfile.avatar_url !== member.getMxcAvatarUrl())
+        ) {
+            this.knownProfiles.delete(member.userId);
+        }
+    };
 }
