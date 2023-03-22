@@ -16,7 +16,7 @@ limitations under the License.
 
 import "@testing-library/jest-dom";
 import React, { createRef } from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 // import userEvent from "@testing-library/user-event";
 
 import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
@@ -47,19 +47,29 @@ const constructMockProvider = (data: ICompletion[]) =>
     ({
         getCompletions: jest.fn().mockImplementation(async () => data),
         getName: jest.fn().mockReturnValue("hello"),
-        renderCompletions: jest.fn().mockReturnValue(mockCompletion.map((c) => c.component)),
+        renderCompletions: jest.fn().mockImplementation((...args) => {
+            mockCompletion.map((c) => c.component);
+        }),
     } as unknown as AutocompleteProvider);
 
 describe("WysiwygAutocomplete", () => {
-    beforeAll(() => jest.useFakeTimers());
+    beforeAll(() => {
+        // scrollTo not implemented in JSDOM
+        window.HTMLElement.prototype.scrollTo = function () {};
+        jest.useFakeTimers();
+    });
     afterAll(() => jest.useRealTimers());
 
     const autocompleteRef = createRef<Autocomplete>();
-    const AutocompleterSpy = jest
-        .spyOn(Autocompleter.prototype, "getCompletions")
-        .mockResolvedValue([
-            { completions: mockCompletion, provider: constructMockProvider(mockCompletion), command: {} },
+    const AutocompleterSpy = jest.spyOn(Autocompleter.prototype, "getCompletions").mockImplementation((...args) => {
+        return Promise.resolve([
+            {
+                completions: mockCompletion,
+                provider: constructMockProvider(mockCompletion),
+                command: { command: "truthy" },
+            },
         ]);
+    });
 
     const renderComponent = (props = {}) => {
         const mockClient = stubClient();
@@ -101,12 +111,15 @@ describe("WysiwygAutocomplete", () => {
         expect(screen.getByTestId("autocomplete-wrapper")).toBeEmptyDOMElement();
     });
 
-    it.only("calls Autocompleter when given a valid suggestion prop", () => {
+    it.only("calls Autocompleter when given a valid suggestion prop", async () => {
         // default in renderComponent is a null suggestion
         renderComponent({ suggestion: { keyChar: "@", text: "abc", type: "mention" } });
         expect(screen.getByTestId("autocomplete-wrapper")).toBeEmptyDOMElement();
         jest.runAllTimers();
-        console.log(autocompleteRef);
+
+        await waitFor(() => {
+            expect(autocompleteRef.current?.state.completions).not.toEqual([]);
+        });
 
         screen.debug();
     });
