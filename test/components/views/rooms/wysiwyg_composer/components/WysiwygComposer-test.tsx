@@ -38,6 +38,8 @@ import { setSelection } from "../../../../../../src/components/views/rooms/wysiw
 import { parseEditorStateTransfer } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/useInitialContent";
 import Autocompleter, { ICompletion } from "../../../../../../src/autocomplete/Autocompleter";
 import AutocompleteProvider from "../../../../../../src/autocomplete/AutocompleteProvider";
+import * as Permalinks from "../../../../../../src/utils/permalinks/Permalinks";
+import { PermalinkParts } from "../../../../../../src/utils/permalinks/PermalinkConstructor";
 
 // needed for the autocomplete
 const mockCompletion: ICompletion[] = [
@@ -116,6 +118,10 @@ describe("WysiwygComposer", () => {
                 command: { command: ["truthy"] as RegExpExecArray }, // needed for us to unhide the autocomplete when testing
             },
         ]);
+
+        jest.spyOn(Permalinks, "parsePermalink").mockReturnValue({
+            userId: "mockParsedUserId",
+        } as unknown as PermalinkParts);
     });
 
     afterEach(() => {
@@ -219,9 +225,15 @@ describe("WysiwygComposer", () => {
     });
 
     describe("Mentions", () => {
+        let dispatchSpy: jest.SpyInstance;
+
         beforeEach(async () => {
+            dispatchSpy = jest.spyOn(defaultDispatcher, "dispatch");
             customRender();
             await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
+        });
+        afterEach(() => {
+            jest.resetAllMocks();
         });
 
         it("shows the autocomplete when text has @ prefix and autoselects the first item", async () => {
@@ -276,6 +288,35 @@ describe("WysiwygComposer", () => {
             expect(screen.getByRole("link", { name: mockCompletion[0].completion })).toBeInTheDocument();
         });
 
+        it("clicking on a mention in the composer dispatches the correct action", async () => {
+            fireEvent.input(screen.getByRole("textbox"), {
+                data: "@abc",
+                inputType: "insertText",
+            });
+
+            expect(await screen.findByRole("presentation")).toBeInTheDocument();
+
+            // press enter
+            await userEvent.keyboard("{Enter}");
+
+            // check that it closes the autocomplete
+            await waitFor(() => {
+                expect(screen.queryByRole("presentation")).not.toBeInTheDocument();
+            });
+
+            // click on the user mention link that has been inserted
+            await userEvent.click(screen.getByRole("link", { name: mockCompletion[0].completion }));
+            expect(dispatchSpy).toHaveBeenCalledTimes(1);
+
+            // this relies on the output from the mock room, which maybe we could tidy up
+            expect(dispatchSpy).toHaveBeenCalledWith({
+                action: Action.ViewUser,
+                member: expect.objectContaining({
+                    userId: "@member:domain.bla",
+                }),
+            });
+        });
+
         it("selecting a mention without a href closes the autocomplete but does not insert a mention", async () => {
             fireEvent.input(screen.getByRole("textbox"), {
                 data: "@abc",
@@ -284,7 +325,7 @@ describe("WysiwygComposer", () => {
 
             expect(await screen.findByRole("presentation")).toBeInTheDocument();
 
-            // select the third user
+            // select the third user using the keyboard
             await userEvent.keyboard("{ArrowDown}{ArrowDown}{Enter}");
 
             // check that it closes the autocomplete
@@ -296,7 +337,7 @@ describe("WysiwygComposer", () => {
             expect(screen.queryByRole("link", { name: mockCompletion[2].completion })).not.toBeInTheDocument();
         });
 
-        it("clicking a room mention with a completionId uses client.getRoom", async () => {
+        it("selecting a room mention with a completionId uses client.getRoom", async () => {
             fireEvent.input(screen.getByRole("textbox"), {
                 data: "@abc",
                 inputType: "insertText",
@@ -304,7 +345,7 @@ describe("WysiwygComposer", () => {
 
             expect(await screen.findByRole("presentation")).toBeInTheDocument();
 
-            // select the room suggestion
+            // select the room suggestion by clicking
             await userEvent.click(screen.getByText("room_1"));
 
             // check that it closes the autocomplete
@@ -317,7 +358,7 @@ describe("WysiwygComposer", () => {
             expect(screen.getByRole("link", { name: "My room" })).toBeInTheDocument();
         });
 
-        it("clicking a room mention without a completionId uses client.getRooms", async () => {
+        it("selecting a room mention without a completionId uses client.getRooms", async () => {
             fireEvent.input(screen.getByRole("textbox"), {
                 data: "@abc",
                 inputType: "insertText",
@@ -325,7 +366,6 @@ describe("WysiwygComposer", () => {
 
             expect(await screen.findByRole("presentation")).toBeInTheDocument();
 
-            screen.debug();
             // select the room suggestion
             await userEvent.click(screen.getByText("room_2"));
 
