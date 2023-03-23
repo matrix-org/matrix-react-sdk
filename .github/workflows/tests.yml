@@ -23,9 +23,11 @@ jobs:
     jest:
         name: Jest
         runs-on: ubuntu-latest
-        matrix:
-            node-version: [ 18.x ]
-            ci_node_index: [ 0, 1 ]
+        strategy:
+            matrix:
+                node-version: [ 18.x ]
+                ci_node_total: [2]
+                ci_node_index: [ 0, 1 ]
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
@@ -62,7 +64,7 @@ jobs:
             - name: Run tests
               env:
                   KNAPSACK_PRO_TEST_SUITE_TOKEN_JEST: ${{ secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_JEST }}
-                  KNAPSACK_PRO_CI_NODE_TOTAL: ${{ steps.cpu-cores.outputs.count }}
+                  KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
                   KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
                   KNAPSACK_PRO_FIXED_QUEUE_SPLIT: true
                   KNAPSACK_PRO_TEST_FILE_PATTERN: "{**/test/**/*.js?(x),**/?(*.)(spec|test).js?(x)}"
