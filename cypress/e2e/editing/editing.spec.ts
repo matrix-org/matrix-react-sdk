@@ -105,18 +105,18 @@ describe("Editing", () => {
         cy.get(".mx_Dialog").within(() => {
             // Assert that the message edit history dialog is rendered
             cy.get(".mx_MessageEditHistoryDialog").within(() => {
-                // Assert that CSS styles which cannot be detected with snapshots are applied as expected
+                // Assert CSS styles which is difficult or cannot be detected with snapshots are applied as expected
                 cy.get("li").should("have.css", "clear", "both");
-                cy.get(".mx_EventTile")
-                    .should("have.css", "max-width", "100%")
-                    .should("have.css", "clear", "both")
-                    .should("have.css", "position", "relative")
-                    .should("have.css", "padding-block-start", "0px");
                 cy.get(".mx_EventTile .mx_MessageTimestamp")
                     .should("have.css", "position", "absolute")
                     .should("have.css", "inset-inline-start", "0px")
                     .should("have.css", "text-align", "center");
                 cy.get(".mx_EventTile .mx_EventTile_content").should("have.css", "margin-inline-end", "0px");
+
+                // Assert that zero block start padding is applied to mx_EventTile as expected
+                // See: .mx_EventTile on _EventTile.pcss
+                cy.get(".mx_EventTile")
+                    .should("have.css", "padding-block-start", "0px");
 
                 // Assert that the date separator is rendered at the top
                 cy.get("li:nth-child(1) .mx_DateSeparator").within(() => {
