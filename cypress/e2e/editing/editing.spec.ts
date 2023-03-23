@@ -124,8 +124,7 @@ describe("Editing", () => {
 
                 // Assert that zero block start padding is applied to mx_EventTile as expected
                 // See: .mx_EventTile on _EventTile.pcss
-                cy.get(".mx_EventTile")
-                    .should("have.css", "padding-block-start", "0px");
+                cy.get(".mx_EventTile").should("have.css", "padding-block-start", "0px");
 
                 // Assert that the date separator is rendered at the top
                 cy.get("li:nth-child(1) .mx_DateSeparator").within(() => {
