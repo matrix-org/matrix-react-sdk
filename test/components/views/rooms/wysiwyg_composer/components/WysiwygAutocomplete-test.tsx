@@ -94,15 +94,7 @@ describe("WysiwygAutocomplete", () => {
     };
 
     it("does not show the autocomplete when room is undefined", () => {
-        render(
-            <WysiwygAutocomplete
-                ref={autocompleteRef}
-                suggestion={null}
-                handleMention={function (link: string, text: string): void {
-                    throw new Error("Function not implemented.");
-                }}
-            />,
-        );
+        render(<WysiwygAutocomplete ref={autocompleteRef} suggestion={null} handleMention={mockHandleMention} />);
         expect(screen.queryByTestId("autocomplete-wrapper")).not.toBeInTheDocument();
     });
 
