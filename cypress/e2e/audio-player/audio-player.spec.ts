@@ -143,6 +143,10 @@ describe("Audio player", () => {
         cy.get(".mx_RoomView_MessageList").within(() => {
             checkPlayerFilenameLong();
 
+            // Click the timestamp to highlight the event tile on which player is rendered
+            cy.get(".mx_EventTile .mx_MessageTimestamp").click();
+            cy.get(".mx_EventTile.mx_EventTile_selected .mx_MAudioBody").should("be.visible");
+
             // Check audio player on IRC layout here, which currently should be same as on modern layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
             // 243 + 12px + 12px = 267px
@@ -207,8 +211,12 @@ describe("Audio player", () => {
         // Scroll to the bottom to make the audio player visible for Percy tests
         cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
 
-        // Take snapshots (high contrast, light theme only)
         cy.get(".mx_RoomView_MessageList").within(() => {
+            // Click the timestamp to highlight the event tile on which player is rendered
+            cy.get(".mx_EventTile .mx_MessageTimestamp").click();
+            cy.get(".mx_EventTile.mx_EventTile_selected .mx_MAudioBody").should("be.visible");
+
+            // Take snapshots (high contrast, light theme only)
             takeSnapshots("", "Audio player (high contrast)");
         });
     });
@@ -307,6 +315,10 @@ describe("Audio player", () => {
 
         cy.get(".mx_RoomView_MessageList").within(() => {
             const takeSnapshotReply = (layout: string) => {
+                // Click the timestamp to highlight the event tile on which player is rendered
+                cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
+                cy.get(".mx_EventTile.mx_EventTile_selected .mx_MAudioBody").should("be.visible");
+
                 cy.get(".mx_EventTile_last .mx_MAudioBody").should("be.visible");
                 cy.get(".mx_EventTile_last").percySnapshotElement(
                     `"EventTile of audio player with a reply on ${layout} layout"`,
@@ -408,6 +420,10 @@ describe("Audio player", () => {
 
         cy.get(".mx_RoomView_MessageList").within(() => {
             const takeSnapshotReplyChain = (layout: string) => {
+                // Click the timestamp to highlight the event tile on which player is rendered
+                cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
+                cy.get(".mx_EventTile.mx_EventTile_selected .mx_MAudioBody").should("be.visible");
+
                 cy.get(".mx_EventTile_last .mx_ReplyChain").should("be.visible");
                 cy.get(".mx_EventTile_last").percySnapshotElement(
                     `"EventTile of audio player with ReplyChain on ${layout} layout"`,
@@ -428,9 +444,15 @@ describe("Audio player", () => {
 
     it("should render, play, and reply on a thread", () => {
         const takeSnapshotTimeline = (layout: string) => {
-            // Scroll to the bottom to make the audio player visible for Percy tests
-            cy.get(".mx_MainSplit .mx_RoomView_body .mx_ScrollPanel").scrollTo("bottom");
-            cy.get(".mx_EventTile_last .mx_MAudioBody").should("be.visible");
+            cy.get(".mx_MainSplit .mx_RoomView_body").within(() => {
+                // Scroll to the bottom to make the audio player visible for Percy tests
+                cy.get(".mx_ScrollPanel").scrollTo("bottom");
+
+                // Click the timestamp to highlight the event tile on which player is rendered
+                cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
+                cy.get(".mx_EventTile.mx_EventTile_selected .mx_MAudioBody").should("be.visible");
+            });
+
             cy.get(".mx_MainSplit").percySnapshotElement(`"Narrow main timeline with ThreadView on ${layout} layout"`, {
                 percyCSS,
                 widths: [600], // magic number
@@ -446,6 +468,10 @@ describe("Audio player", () => {
         cy.get(".mx_RoomView_body .mx_RoomView_MessageList").within(() => {
             // Assert the audio player is rendered
             cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
+
+            // Click the timestamp to highlight the event tile on which player is rendered
+            cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
+            cy.get(".mx_EventTile.mx_EventTile_selected .mx_MAudioBody").should("be.visible");
 
             cy.get(".mx_EventTile_last")
                 .realHover()
@@ -468,6 +494,12 @@ describe("Audio player", () => {
 
         // Reset to the default layout
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+
+        cy.get(".mx_ThreadView").within(() => {
+            // Click the timestamp to highlight the event tile on which player is rendered
+            cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
+            cy.get(".mx_EventTile.mx_EventTile_selected .mx_MAudioBody").should("be.visible");
+        });
 
         // Take snapshots of audio player on a thread
         takeSnapshots(".mx_ThreadView ", "Audio player on a thread");
