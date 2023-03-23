@@ -41,7 +41,10 @@ function buildQuery(suggestion: MappedSuggestion | null): string {
     return `${suggestion.keyChar}${suggestion.text}`;
 }
 
-// Helper function to get the mention text for a room
+// Helper function to get the mention text for a room as this is less straightforward
+// than it is for determining the text we display for a user.
+// TODO determine if it's worth bringing the switch case into this function to make it
+// into a more general `getMentionText` component
 function getRoomMentionText(completion: ICompletion, client: MatrixClient): string {
     const alias = completion.completion;
     const roomId = completion.completionId;
