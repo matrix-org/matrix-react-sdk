@@ -61,6 +61,11 @@ describe("Editing", () => {
     });
 
     it("should render and interact with the message edit history dialog", () => {
+        // Click the "Remove" button on the message edit history dialog
+        const clickButtonRemove = () => {
+            cy.get(".mx_EventTile_line").realHover().contains(".mx_AccessibleButton", "Remove").click({ force: false });
+        };
+
         cy.visit("/#/room/" + roomId);
 
         // Send "Message"
@@ -145,11 +150,7 @@ describe("Editing", () => {
             cy.get(".mx_MessageEditHistoryDialog").within(() => {
                 // Assert that the edited message is rendered
                 cy.get("li:nth-child(2) .mx_EventTile").within(() => {
-                    // Click the "Remove" button
-                    cy.get(".mx_EventTile_line")
-                        .realHover()
-                        .contains(".mx_AccessibleButton", "Remove")
-                        .click({ force: false });
+                    clickButtonRemove();
                 });
             });
 
@@ -165,10 +166,7 @@ describe("Editing", () => {
                     cy.get(".mx_EventTile_content .mx_EventTile_body").should("have.text", "Meassage");
 
                     // Click the "Remove" button again
-                    cy.get(".mx_EventTile_line")
-                        .realHover()
-                        .contains(".mx_AccessibleButton", "Remove")
-                        .click({ force: false });
+                    clickButtonRemove();
                 });
             });
 
