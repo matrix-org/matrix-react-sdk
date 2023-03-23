@@ -77,6 +77,7 @@ describe("WysiwygAutocomplete", () => {
         const mockClient = stubClient();
         const mockRoom = mkStubRoom("test_room", "test_room", mockClient);
         const mockRoomContext = getRoomContext(mockRoom, {});
+        const mockHandleMention = jest.fn();
 
         return render(
             <MatrixClientContext.Provider value={mockClient}>
@@ -84,9 +85,7 @@ describe("WysiwygAutocomplete", () => {
                     <WysiwygAutocomplete
                         ref={autocompleteRef}
                         suggestion={null}
-                        handleMention={function (link: string, text: string): void {
-                            throw new Error("Function not implemented.");
-                        }}
+                        handleMention={mockHandleMention}
                         {...props}
                     />
                 </RoomContext.Provider>
@@ -126,7 +125,7 @@ describe("WysiwygAutocomplete", () => {
         });
 
         // check that some suggestions are shown
-        expect(screen.queryByRole("presentation")).toBeInTheDocument();
+        expect(screen.getByRole("presentation")).toBeInTheDocument();
 
         // and that they are the mock completions
         mockCompletion.forEach(({ completion }) => expect(screen.getByText(completion)).toBeInTheDocument());
