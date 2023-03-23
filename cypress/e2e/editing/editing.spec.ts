@@ -114,7 +114,7 @@ describe("Editing", () => {
         cy.get(".mx_Dialog").within(() => {
             // Assert that the message edit history dialog is rendered
             cy.get(".mx_MessageEditHistoryDialog").within(() => {
-                // Assert CSS styles which is difficult or cannot be detected with snapshots are applied as expected
+                // Assert CSS styles which are difficult or cannot be detected with snapshots are applied as expected
                 cy.get("li").should("have.css", "clear", "both");
                 cy.get(".mx_EventTile .mx_MessageTimestamp")
                     .should("have.css", "position", "absolute")
@@ -132,7 +132,7 @@ describe("Editing", () => {
                     cy.get("h2").should("have.text", "Today");
                 });
 
-                // Assert that the edited message is rendered at the middle
+                // Assert that the edited message is rendered under the date separator
                 cy.get("li:nth-child(2) .mx_EventTile").within(() => {
                     // Assert that the edited message body consists of both deleted character and inserted character
                     // Above the first "e" of "Message" was replaced with "a"
