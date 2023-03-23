@@ -209,6 +209,115 @@ describe("Editing", () => {
         });
     });
 
+    it("should render 'View Source' button in developer mode on the message edit history dialog", () => {
+        cy.visit("/#/room/" + roomId);
+
+        // Send "Message"
+        sendEvent(roomId);
+
+        cy.get(".mx_RoomView_MessageList").within(() => {
+            // Edit message
+            cy.get(".mx_EventTile_last").realHover();
+            cy.get(".mx_EventTile_last .mx_MessageActionBar_optionsButton", { timeout: 1000 })
+                .should("exist")
+                .realHover()
+                .get('.mx_EventTile_last [aria-label="Edit"]')
+                .click({ force: false });
+            cy.get(".mx_BasicMessageComposer_input").type("{selectAll}{del}Massage{enter}");
+        });
+
+        // Assert that the edit label is visible
+        cy.get(".mx_EventTile_edited").should("be.visible");
+
+        cy.get(".mx_RoomView_MessageList").within(() => {
+            // Assert that the message was edited
+            cy.contains(".mx_EventTile", "Massage")
+                .should("exist")
+                .within(() => {
+                    // Click to display the message edit history dialog
+                    cy.contains(".mx_EventTile_edited", "(edited)").click();
+                });
+        });
+
+        cy.get(".mx_Dialog").within(() => {
+            cy.get(".mx_MessageEditHistoryDialog").within(() => {
+                // Assert that the original message is rendered
+                cy.get("li:nth-child(3) .mx_EventTile").within(() => {
+                    // Assert that "View Source" is not rendered
+                    cy.get(".mx_EventTile_line")
+                        .realHover()
+                        .contains(".mx_AccessibleButton", "View Source")
+                        .should("not.exist");
+                });
+            });
+
+            // Close the dialog
+            cy.get("[aria-label='Close dialog']").click();
+        });
+
+        // Enable developer mode
+        cy.setSettingValue("developerMode", null, SettingLevel.ACCOUNT, true);
+
+        cy.get(".mx_RoomView_MessageList").within(() => {
+            cy.contains(".mx_EventTile", "Massage")
+                .should("exist")
+                .within(() => {
+                    // Click again to display the message edit history dialog
+                    cy.contains(".mx_EventTile_edited", "(edited)").click();
+                });
+        });
+
+        cy.get(".mx_Dialog").within(() => {
+            cy.get(".mx_MessageEditHistoryDialog").within(() => {
+                // Assert that the edited message is rendered
+                cy.get("li:nth-child(2) .mx_EventTile").within(() => {
+                    // Assert that "Remove" buttons for the edited message exists
+                    cy.get(".mx_EventTile_line").realHover().contains(".mx_AccessibleButton", "Remove").should("exist");
+
+                    // Assert that "View Source" button is rendered and click it
+                    cy.get(".mx_EventTile_line")
+                        .realHover()
+                        .contains(".mx_AccessibleButton", "View Source")
+                        .should("exist")
+                        .click();
+                });
+            });
+
+            // Assert that view source dialog is rendered
+            cy.get(".mx_ViewSource").within(() => {
+                // Close the dialog
+                cy.get("[aria-label='Close dialog']").click();
+            });
+
+            cy.get(".mx_MessageEditHistoryDialog").within(() => {
+                // Assert that the original message is rendered
+                cy.get("li:nth-child(3) .mx_EventTile").within(() => {
+                    // Assert that "Remove" button for the original message does not exist
+                    cy.get(".mx_EventTile_line")
+                        .realHover()
+                        .contains(".mx_AccessibleButton", "Remove")
+                        .should("not.exist");
+
+                    // Assert that "View Source" button is rendered and click it
+                    cy.get(".mx_EventTile_line")
+                        .realHover()
+                        .contains(".mx_AccessibleButton", "View Source")
+                        .should("exist")
+                        .click();
+                });
+            });
+
+            // Assert that view source dialog is rendered
+            cy.get(".mx_ViewSource").within(() => {
+                // Close the dialog
+                cy.get("[aria-label='Close dialog']").click();
+            });
+        });
+
+        // Disable developer mode
+        cy.setSettingValue("developerMode", null, SettingLevel.ACCOUNT, false);
+    });
+
     it("should close the composer when clicking save after making a change and undoing it", () => {
         cy.visit("/#/room/" + roomId);
 
