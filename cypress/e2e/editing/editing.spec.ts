@@ -55,6 +55,16 @@ describe("Editing", () => {
         cy.get(".mx_BasicMessageComposer_input").type(`{selectAll}{del}${edit}{enter}`);
     };
 
+    const clickEditedMessage = (edited: string) => {
+        // Assert that the message was edited
+        cy.contains(".mx_EventTile", edited)
+            .should("exist")
+            .within(() => {
+                // Click to display the message edit history dialog
+                cy.contains(".mx_EventTile_edited", "(edited)").click();
+            });
+    };
+
     beforeEach(() => {
         cy.startHomeserver("default").then((data) => {
             homeserver = data;
@@ -91,13 +101,7 @@ describe("Editing", () => {
         cy.get(".mx_EventTile_edited").should("be.visible");
 
         cy.get(".mx_RoomView_MessageList").within(() => {
-            // Assert that the message was edited
-            cy.contains(".mx_EventTile", "Massage")
-                .should("exist")
-                .within(() => {
-                    // Click to display the message edit history dialog
-                    cy.contains(".mx_EventTile_edited", "(edited)").click();
-                });
+            clickEditedMessage("Massage");
         });
 
         cy.get(".mx_Dialog").within(() => {
@@ -224,13 +228,7 @@ describe("Editing", () => {
         cy.get(".mx_EventTile_edited").should("be.visible");
 
         cy.get(".mx_RoomView_MessageList").within(() => {
-            // Assert that the message was edited
-            cy.contains(".mx_EventTile", "Massage")
-                .should("exist")
-                .within(() => {
-                    // Click to display the message edit history dialog
-                    cy.contains(".mx_EventTile_edited", "(edited)").click();
-                });
+            clickEditedMessage("Massage");
         });
 
         cy.get(".mx_Dialog").within(() => {
@@ -253,12 +251,7 @@ describe("Editing", () => {
         cy.setSettingValue("developerMode", null, SettingLevel.ACCOUNT, true);
 
         cy.get(".mx_RoomView_MessageList").within(() => {
-            cy.contains(".mx_EventTile", "Massage")
-                .should("exist")
-                .within(() => {
-                    // Click again to display the message edit history dialog
-                    cy.contains(".mx_EventTile_edited", "(edited)").click();
-                });
+            clickEditedMessage("Massage");
         });
 
         cy.get(".mx_Dialog").within(() => {
