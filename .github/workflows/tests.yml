@@ -67,13 +67,14 @@ jobs:
                   KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
                   KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
                   KNAPSACK_PRO_FIXED_QUEUE_SPLIT: true
-                  KNAPSACK_PRO_TEST_FILE_PATTERN: "{**/test/**/*.js?(x),**/?(*.)(spec|test).js?(x)}"
+                  KNAPSACK_PRO_TEST_FILE_PATTERN: "{**/test/**/*-test.(js|ts)}"
               run: |
                   yarn ${{ inputs.disable_coverage != 'true' && 'knapsack-pro-jest' || 'test' }} \
                       --ci \
                       --reporters github-actions ${{ steps.metrics.outputs.extra-reporter }} \
                       --cacheDirectory /tmp/jest_cache \
                       --runInBand
+                      --coverage
 
             - name: Upload Artifact
               if: inputs.disable_coverage != 'true'
