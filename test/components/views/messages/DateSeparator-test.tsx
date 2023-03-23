@@ -143,35 +143,52 @@ describe("DateSeparator", () => {
             expect(asFragment()).toMatchSnapshot();
         });
 
-        it("can jump to last week", async () => {
-            // Render the component
-            getComponent();
+        [
+            {
+                timeDescriptor: "last week",
+                jumpButtonTestId: "jump-to-date-last-week",
+            },
+            {
+                timeDescriptor: "last month",
+                jumpButtonTestId: "jump-to-date-last-month",
+            },
+            {
+                timeDescriptor: "the beginning",
+                jumpButtonTestId: "jump-to-date-beginning",
+            },
+        ].forEach((testCase) => {
+            it(`can jump to ${testCase.timeDescriptor}`, async () => {
+                // Render the component
+                getComponent();
 
-            // Open the jump to date context menu
-            fireEvent.click(screen.getByTestId("jump-to-date-separator-button"));
+                // Open the jump to date context menu
+                fireEvent.click(screen.getByTestId("jump-to-date-separator-button"));
 
-            // Jump to "last week"
-            const lastWeekDate = new Date();
-            lastWeekDate.setDate(nowDate.getDate() - 7);
-            const returnedEventId = "$abc";
-            mockClient.timestampToEvent.mockResolvedValue({
-                event_id: returnedEventId,
-                origin_server_ts: String(lastWeekDate.getTime()),
-            } satisfies TimestampToEventResponse);
-            const jumpToLastWeekButton = await screen.findByTestId("jump-to-date-last-week");
-            fireEvent.click(jumpToLastWeekButton);
+                // Jump to "x"
+                const returnedDate = new Date();
+                // Just an arbitrary date before "now"
+                returnedDate.setDate(nowDate.getDate() - 100);
+                const returnedEventId = "$abc";
+                mockClient.timestampToEvent.mockResolvedValue({
+                    event_id: returnedEventId,
+                    origin_server_ts: String(returnedDate.getTime()),
+                } satisfies TimestampToEventResponse);
+                const jumpToXButton = await screen.findByTestId(testCase.jumpButtonTestId);
+                fireEvent.click(jumpToXButton);
 
-            // Flush out the dispatcher which uses `window.setTimeout(...)` since we're
-            // using `jest.useFakeTimers()` in these tests.
-            await flushPromisesWithFakeTimers();
+                // Flush out the dispatcher which uses `window.setTimeout(...)` since we're
+                // using `jest.useFakeTimers()` in these tests.
+                await flushPromisesWithFakeTimers();
 
-            expect(dispatcher.dispatch).toHaveBeenCalledWith({
-                action: Action.ViewRoom,
-                event_id: returnedEventId,
-                highlighted: true,
-                room_id: roomId,
-                metricsTrigger: undefined,
-            } satisfies ViewRoomPayload);
+                // Ensure that we're jumping to the event at the given date
+                expect(dispatcher.dispatch).toHaveBeenCalledWith({
+                    action: Action.ViewRoom,
+                    event_id: returnedEventId,
+                    highlighted: true,
+                    room_id: roomId,
+                    metricsTrigger: undefined,
+                } satisfies ViewRoomPayload);
+            });
         });
 
         it("should not jump to date if we already switched to another room", async () => {
