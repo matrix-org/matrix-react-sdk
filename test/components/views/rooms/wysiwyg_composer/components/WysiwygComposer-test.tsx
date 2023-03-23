@@ -21,7 +21,7 @@ import userEvent from "@testing-library/user-event";
 
 import { WysiwygComposer } from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/WysiwygComposer";
 import SettingsStore from "../../../../../../src/settings/SettingsStore";
-import { flushPromises, mockPlatformPeg, stubClient } from "../../../../../test-utils";
+import { flushPromises, mockPlatformPeg, stubClient, mkStubRoom } from "../../../../../test-utils";
 import defaultDispatcher from "../../../../../../src/dispatcher/dispatcher";
 import * as EventUtils from "../../../../../../src/utils/EventUtils";
 import { Action } from "../../../../../../src/dispatcher/actions";
@@ -251,7 +251,7 @@ describe("WysiwygComposer", () => {
         it("pressing up and down arrows allows us to change the autocomplete selection", async () => {
             await insertMentionInput();
 
-            // so press the down arrow - nb using .keyboard allows us to not have to specify a node, which
+            // press the down arrow - nb using .keyboard allows us to not have to specify a node, which
             // means that we know the autocomplete is correctly catching the event
             await userEvent.keyboard("{ArrowDown}");
             expect(screen.getByText(mockCompletions[0].completion)).toHaveAttribute("aria-selected", "false");
@@ -293,13 +293,15 @@ describe("WysiwygComposer", () => {
             await userEvent.click(screen.getByRole("link", { name: mockCompletions[0].completion }));
             expect(dispatchSpy).toHaveBeenCalledTimes(1);
 
-            // this relies on the output from the mock room, which maybe we could tidy up
-            expect(dispatchSpy).toHaveBeenCalledWith({
-                action: Action.ViewUser,
-                member: expect.objectContaining({
-                    userId: "@member:domain.bla",
+            // this relies on the output from the mock function in mkStubRoom
+            expect(dispatchSpy).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    action: Action.ViewUser,
+                    member: expect.objectContaining({
+                        userId: mkStubRoom(undefined, undefined, undefined).getMember("any")?.userId,
+                    }),
                 }),
-            });
+            );
         });
 
         it("selecting a mention without a href closes the autocomplete but does not insert a mention", async () => {
