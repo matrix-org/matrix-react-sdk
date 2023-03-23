@@ -95,12 +95,10 @@ describe("Editing", () => {
         cy.get(".mx_RoomView_MessageList").within(() => {
             // Edit "Message" to "Massage"
             editLastMessage("Massage");
-        });
 
-        // Assert that the edit label is visible
-        cy.get(".mx_EventTile_edited").should("be.visible");
+            // Assert that the edit label is visible
+            cy.get(".mx_EventTile_edited").should("be.visible");
 
-        cy.get(".mx_RoomView_MessageList").within(() => {
             clickEditedMessage("Massage");
         });
 
@@ -154,12 +152,11 @@ describe("Editing", () => {
         });
 
         cy.get(".mx_Dialog").within(() => {
-            // Click "Remove" button on MessageActionBar
-            cy.get(".mx_MessageEditHistoryDialog").within(() => {
-                // Assert that the edited message is rendered
-                cy.get("li:nth-child(2) .mx_EventTile").within(() => {
-                    clickButtonRemove();
-                });
+            cy.get(".mx_MessageEditHistoryDialog li:nth-child(2) .mx_EventTile").within(() => {
+                cy.get(".mx_EventTile_content .mx_EventTile_body").should("have.text", "Meassage");
+
+                // Click the "Remove" button again
+                clickButtonRemove();
             });
 
             // Do nothing and close the dialog to confirm that the message edit history dialog is rendered
@@ -168,14 +165,11 @@ describe("Editing", () => {
             });
 
             // Assert that the message edit history dialog is rendered again after it was closed
-            cy.get(".mx_MessageEditHistoryDialog").within(() => {
-                // Assert that the edited message is rendered under the date again
-                cy.get("li:nth-child(2) .mx_EventTile").within(() => {
-                    cy.get(".mx_EventTile_content .mx_EventTile_body").should("have.text", "Meassage");
+            cy.get(".mx_MessageEditHistoryDialog li:nth-child(2) .mx_EventTile").within(() => {
+                cy.get(".mx_EventTile_content .mx_EventTile_body").should("have.text", "Meassage");
 
-                    // Click the "Remove" button again
-                    clickButtonRemove();
-                });
+                // Click the "Remove" button again
+                clickButtonRemove();
             });
 
             // This time remove the message really
@@ -222,25 +216,21 @@ describe("Editing", () => {
         cy.get(".mx_RoomView_MessageList").within(() => {
             // Edit "Message" to "Massage"
             editLastMessage("Massage");
-        });
 
-        // Assert that the edit label is visible
-        cy.get(".mx_EventTile_edited").should("be.visible");
+            // Assert that the edit label is visible
+            cy.get(".mx_EventTile_edited").should("be.visible");
 
-        cy.get(".mx_RoomView_MessageList").within(() => {
             clickEditedMessage("Massage");
         });
 
         cy.get(".mx_Dialog").within(() => {
-            cy.get(".mx_MessageEditHistoryDialog").within(() => {
-                // Assert that the original message is rendered
-                cy.get("li:nth-child(3) .mx_EventTile").within(() => {
-                    // Assert that "View Source" is not rendered
-                    cy.get(".mx_EventTile_line")
-                        .realHover()
-                        .contains(".mx_AccessibleButton", "View Source")
-                        .should("not.exist");
-                });
+            // Assert that the original message is rendered
+            cy.get(".mx_MessageEditHistoryDialog li:nth-child(3)").within(() => {
+                // Assert that "View Source" is not rendered
+                cy.get(".mx_EventTile .mx_EventTile_line")
+                    .realHover()
+                    .contains(".mx_AccessibleButton", "View Source")
+                    .should("not.exist");
             });
 
             // Close the dialog
@@ -255,19 +245,20 @@ describe("Editing", () => {
         });
 
         cy.get(".mx_Dialog").within(() => {
-            cy.get(".mx_MessageEditHistoryDialog").within(() => {
-                // Assert that the edited message is rendered
-                cy.get("li:nth-child(2) .mx_EventTile").within(() => {
-                    // Assert that "Remove" buttons for the edited message exists
-                    cy.get(".mx_EventTile_line").realHover().contains(".mx_AccessibleButton", "Remove").should("exist");
+            // Assert that the edited message is rendered
+            cy.get(".mx_MessageEditHistoryDialog li:nth-child(2)").within(() => {
+                // Assert that "Remove" button for the original message is rendered
+                cy.get(".mx_EventTile .mx_EventTile_line")
+                    .realHover()
+                    .contains(".mx_AccessibleButton", "Remove")
+                    .should("exist");
 
-                    // Assert that "View Source" button is rendered and click it
-                    cy.get(".mx_EventTile_line")
-                        .realHover()
-                        .contains(".mx_AccessibleButton", "View Source")
-                        .should("exist")
-                        .click();
-                });
+                // Assert that "View Source" button is rendered and click it
+                cy.get(".mx_EventTile .mx_EventTile_line")
+                    .realHover()
+                    .contains(".mx_AccessibleButton", "View Source")
+                    .should("exist")
+                    .click();
             });
 
             // Assert that view source dialog is rendered
@@ -276,22 +267,20 @@ describe("Editing", () => {
                 cy.get("[aria-label='Close dialog']").click();
             });
 
-            cy.get(".mx_MessageEditHistoryDialog").within(() => {
-                // Assert that the original message is rendered
-                cy.get("li:nth-child(3) .mx_EventTile").within(() => {
-                    // Assert that "Remove" button for the original message does not exist
-                    cy.get(".mx_EventTile_line")
-                        .realHover()
-                        .contains(".mx_AccessibleButton", "Remove")
-                        .should("not.exist");
+            // Assert that the original message is rendered
+            cy.get(".mx_MessageEditHistoryDialog li:nth-child(3)").within(() => {
+                // Assert that "Remove" button for the original message does not exist
+                cy.get(".mx_EventTile .mx_EventTile_line")
+                    .realHover()
+                    .contains(".mx_AccessibleButton", "Remove")
+                    .should("not.exist");
 
-                    // Assert that "View Source" button is rendered and click it
-                    cy.get(".mx_EventTile_line")
-                        .realHover()
-                        .contains(".mx_AccessibleButton", "View Source")
-                        .should("exist")
-                        .click();
-                });
+                // Assert that "View Source" button is rendered and click it
+                cy.get(".mx_EventTile .mx_EventTile_line")
+                    .realHover()
+                    .contains(".mx_AccessibleButton", "View Source")
+                    .should("exist")
+                    .click();
             });
 
             // Assert that view source dialog is rendered
