@@ -382,9 +382,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         const range = getRangeForSelection(this.editorRef.current, model, document.getSelection());
 
         // If the user is pasting a link, and has a range selected which is not a link, wrap the range with the link
-        if (plainText && range && range.length > 0 && linkify.test(plainText) && !linkify.test(range.text)) {
+        if (plainText && range.length > 0 && linkify.test(plainText) && !linkify.test(range.text)) {
             formatRangeAsLink(range, plainText);
-        } else if (range) {
+        } else {
             replaceRangeAndMoveCaret(range, parts);
         }
     };
@@ -501,8 +501,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 this.props.model,
                 document.getSelection(),
             );
-
-            if (!selectionRange) return;
 
             // trim the range as we want it to exclude leading/trailing spaces
             selectionRange.trim();
@@ -754,12 +752,12 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             return;
         }
 
-        const range = getRangeForSelection(this.editorRef.current, this.props.model, document.getSelection());
+        const range: Range = getRangeForSelection(this.editorRef.current, this.props.model, document.getSelection());
 
         this.historyManager.ensureLastChangesPushed(this.props.model);
         this.modifiedFlag = true;
 
-        if (range) formatRange(range, action);
+        formatRange(range, action);
     };
 
     public render(): React.ReactNode {

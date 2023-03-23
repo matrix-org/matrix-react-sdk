@@ -21,7 +21,7 @@ import EditorModel from "./model";
 import Range from "./range";
 
 type Predicate = (node: Node) => boolean;
-type Callback = (node: Node | null) => void;
+type Callback = (node: Node) => void;
 
 export function walkDOMDepthFirst(rootNode: Node, enterNodeCallback: Predicate, leaveNodeCallback: Callback): void {
     let node = rootNode.firstChild;
@@ -34,7 +34,7 @@ export function walkDOMDepthFirst(rootNode: Node, enterNodeCallback: Predicate, 
         } else {
             while (node && !node.nextSibling && node !== rootNode) {
                 node = node.parentElement;
-                if (node !== rootNode) {
+                if (node && node !== rootNode) {
                     leaveNodeCallback(node);
                 }
             }
@@ -211,9 +211,7 @@ function getTextNodeValue(node: Node): string {
     return nodeText;
 }
 
-export function getRangeForSelection(editor: HTMLDivElement, model: EditorModel, selection: Selection): Range | void {
-    if (!selection.focusNode || !selection.anchorNode) return;
-
+export function getRangeForSelection(editor: HTMLDivElement, model: EditorModel, selection: Selection): Range {
     const focusOffset = getSelectionOffsetAndText(editor, selection.focusNode, selection.focusOffset).offset;
     const anchorOffset = getSelectionOffsetAndText(editor, selection.anchorNode, selection.anchorOffset).offset;
     const focusPosition = focusOffset.asPosition(model);
