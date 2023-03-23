@@ -336,8 +336,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         if (text && this.editorRef.current) {
             const { model } = this.props;
             const range = getRangeForSelection(this.editorRef.current, model, selection);
-            if (!range) return;
-
             const selectedParts = range.parts.map((p) => p.serialize());
             event.clipboardData.setData("application/x-element-composer", JSON.stringify(selectedParts));
             event.clipboardData.setData("text/plain", text); // so plain copy/paste works
@@ -480,7 +478,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         } else if (!selection.isCollapsed && !isEmpty) {
             this.hasTextSelected = true;
             const range = getRangeForSelection(this.editorRef.current, this.props.model, selection);
-            if (this.formatBarRef.current && this.state.useMarkdown && range && !!range.text.trim()) {
+            if (this.formatBarRef.current && this.state.useMarkdown && !!range.text.trim()) {
                 const selectionRect = selection.getRangeAt(0).getBoundingClientRect();
                 this.formatBarRef.current.showAt(selectionRect);
             }
@@ -501,7 +499,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 this.props.model,
                 document.getSelection(),
             );
-
             // trim the range as we want it to exclude leading/trailing spaces
             selectionRange.trim();
 
