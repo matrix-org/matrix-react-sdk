@@ -65,6 +65,15 @@ describe("Editing", () => {
             });
     };
 
+    const clickButtonViewSource = () => {
+        // Assert that "View Source" button is rendered and click it
+        cy.get(".mx_EventTile .mx_EventTile_line")
+            .realHover()
+            .contains(".mx_AccessibleButton", "View Source")
+            .should("exist")
+            .click();
+    };
+
     beforeEach(() => {
         cy.startHomeserver("default").then((data) => {
             homeserver = data;
@@ -253,12 +262,7 @@ describe("Editing", () => {
                     .contains(".mx_AccessibleButton", "Remove")
                     .should("exist");
 
-                // Assert that "View Source" button is rendered and click it
-                cy.get(".mx_EventTile .mx_EventTile_line")
-                    .realHover()
-                    .contains(".mx_AccessibleButton", "View Source")
-                    .should("exist")
-                    .click();
+                clickButtonViewSource();
             });
 
             // Assert that view source dialog is rendered
@@ -275,12 +279,7 @@ describe("Editing", () => {
                     .contains(".mx_AccessibleButton", "Remove")
                     .should("not.exist");
 
-                // Assert that "View Source" button is rendered and click it
-                cy.get(".mx_EventTile .mx_EventTile_line")
-                    .realHover()
-                    .contains(".mx_AccessibleButton", "View Source")
-                    .should("exist")
-                    .click();
+                clickButtonViewSource();
             });
 
             // Assert that view source dialog is rendered
