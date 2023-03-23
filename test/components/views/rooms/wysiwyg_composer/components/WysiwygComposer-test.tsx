@@ -218,7 +218,7 @@ describe("WysiwygComposer", () => {
         });
     });
 
-    describe.only("Mentions", () => {
+    describe("Mentions", () => {
         beforeEach(async () => {
             customRender();
             await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));

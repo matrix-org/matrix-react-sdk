@@ -72,12 +72,12 @@ describe("WysiwygAutocomplete", () => {
             command: { command: ["truthy"] as RegExpExecArray }, // needed for us to unhide the autocomplete when testing
         },
     ]);
+    const mockHandleMention = jest.fn();
 
     const renderComponent = (props = {}) => {
         const mockClient = stubClient();
         const mockRoom = mkStubRoom("test_room", "test_room", mockClient);
         const mockRoomContext = getRoomContext(mockRoom, {});
-        const mockHandleMention = jest.fn();
 
         return render(
             <MatrixClientContext.Provider value={mockClient}>
