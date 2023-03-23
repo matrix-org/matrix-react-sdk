@@ -93,7 +93,7 @@ describe("SendWysiwygComposer", () => {
         customRender(jest.fn(), jest.fn(), false, true);
 
         // Then
-        await waitFor(() => expect(screen.getByTestId("WysiwygComposer")).toBeInTheDocument());
+        expect(await screen.findByTestId("WysiwygComposer")).toBeInTheDocument();
     });
 
     it("Should render PlainTextComposer when isRichTextEnabled is at false", async () => {
