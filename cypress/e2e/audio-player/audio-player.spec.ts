@@ -25,8 +25,10 @@ describe("Audio player", () => {
     let roomId: string;
     const TEST_USER = "Hanako";
 
-    // FIXME: hide mx_SeekBar because flaky - see https://github.com/vector-im/element-web/issues/24898
-    const percyCSS = ".mx_SeekBar { visibility: hidden !important; }";
+    const percyCSS =
+        // FIXME: hide mx_SeekBar because flaky - see https://github.com/vector-im/element-web/issues/24898
+        ".mx_SeekBar, " +
+        ".mx_JumpToBottomButton, .mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
 
     const visitRoom = () => {
         cy.visit("/#/room/" + roomId);
@@ -77,7 +79,7 @@ describe("Audio player", () => {
         cy.get(".mx_AudioPlayer_seek input[type='range']").should("exist");
 
         // Assert that the play button is rendered
-        cy.get("[data-testid='play-pause-button'][aria-label='Play']").should("exist");
+        cy.get("[data-testid='play-pause-button'][aria-label='Play']").should("be.visible");
 
         // Assert that the pause button is not rendered
         cy.get("[data-testid='play-pause-button'][aria-label='Pause']").should("not.exist");
@@ -127,6 +129,9 @@ describe("Audio player", () => {
 
         // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
+
+        // Scroll to the bottom to make the audio player visible for Percy tests
+        cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
 
         cy.get(".mx_RoomView_MessageList").within(() => {
             checkPlayerFilenameLong();
@@ -190,6 +195,9 @@ describe("Audio player", () => {
             // Close the user settings dialog
             cy.get("[aria-label='Close dialog']").click();
         });
+
+        // Scroll to the bottom to make the audio player visible for Percy tests
+        cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
 
         // Take snapshots (high contrast, light theme only)
         cy.get(".mx_RoomView_MessageList").within(() => {
@@ -284,7 +292,12 @@ describe("Audio player", () => {
                     cy.get("[data-testid='play-pause-button'][aria-label='Play']").should("be.visible");
                 });
             });
+        });
 
+        // Scroll to the bottom to make the audio player visible for Percy tests
+        cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
+
+        cy.get(".mx_RoomView_MessageList").within(() => {
             // Take snapshots of EventTile with a reply
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
             cy.get(".mx_EventTile_last .mx_MAudioBody").should("be.visible");
@@ -377,7 +390,12 @@ describe("Audio player", () => {
                     });
                 });
             });
+        });
 
+        // Scroll to the bottom to make the audio player visible for Percy tests
+        cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
+
+        cy.get(".mx_RoomView_MessageList").within(() => {
             // Take snapshots of EventTile with ReplyChain
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
             cy.get(".mx_EventTile_last .mx_ReplyChain").should("be.visible");
@@ -417,12 +435,16 @@ describe("Audio player", () => {
 
         // Take snapshots of narrow main timeline with ThreadPanel opened
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+        // Scroll to the bottom to make the audio player visible for Percy tests
+        cy.get(".mx_MainSplit .mx_RoomView_body .mx_ScrollPanel").scrollTo("bottom");
         cy.get(".mx_EventTile_last .mx_MAudioBody").should("be.visible");
         cy.get(".mx_MainSplit").percySnapshotElement("Narrow main timeline with ThreadView on group layout", {
             percyCSS,
             widths: [600], // magic number
         });
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
+        // Scroll to the bottom to make the audio player visible for Percy tests
+        cy.get(".mx_MainSplit .mx_RoomView_body .mx_ScrollPanel").scrollTo("bottom");
         cy.get(".mx_EventTile_last .mx_MAudioBody").should("be.visible");
         cy.get(".mx_MainSplit").percySnapshotElement("Narrow main timeline with ThreadView on bubble layout", {
             percyCSS,
