@@ -181,25 +181,25 @@ describe("WysiwygComposer", () => {
             {
                 // no href user
                 type: "user",
-                completion: "user_3",
+                completion: "user_without_href",
                 completionId: "@user_3:host.local",
                 range: { start: 1, end: 1 },
-                component: <div>user_3</div>,
+                component: <div>user_without_href</div>,
             },
             {
                 type: "room",
                 href: "www.room1.com",
-                completion: "room1",
+                completion: "#room_with_completion_id",
                 completionId: "@room_1:host.local",
                 range: { start: 1, end: 1 },
-                component: <div>room_1</div>,
+                component: <div>room_with_completion_id</div>,
             },
             {
                 type: "room",
                 href: "www.room2.com",
-                completion: "#room2",
+                completion: "#room_without_completion_id",
                 range: { start: 1, end: 1 },
-                component: <div>room_2</div>,
+                component: <div>room_without_completion_id</div>,
             },
         ];
 
@@ -307,8 +307,8 @@ describe("WysiwygComposer", () => {
         it("selecting a mention without a href closes the autocomplete but does not insert a mention", async () => {
             await insertMentionInput();
 
-            // select the third user using the keyboard
-            await userEvent.keyboard("{ArrowDown}{ArrowDown}{Enter}");
+            // select the relevant user by clicking
+            await userEvent.click(screen.getByText("user_without_href"));
 
             // check that it closes the autocomplete
             await waitFor(() => {
@@ -316,14 +316,14 @@ describe("WysiwygComposer", () => {
             });
 
             // check that it has not inserted a link
-            expect(screen.queryByRole("link", { name: mockCompletions[2].completion })).not.toBeInTheDocument();
+            expect(screen.queryByRole("link", { name: "user_without_href" })).not.toBeInTheDocument();
         });
 
         it("selecting a room mention with a completionId uses client.getRoom", async () => {
             await insertMentionInput();
 
             // select the room suggestion by clicking
-            await userEvent.click(screen.getByText("room_1"));
+            await userEvent.click(screen.getByText("room_with_completion_id"));
 
             // check that it closes the autocomplete
             await waitFor(() => {
@@ -339,16 +339,15 @@ describe("WysiwygComposer", () => {
             await insertMentionInput();
 
             // select the room suggestion
-            await userEvent.click(screen.getByText("room_2"));
+            await userEvent.click(screen.getByText("room_without_completion_id"));
 
             // check that it closes the autocomplete
             await waitFor(() => {
                 expect(screen.queryByRole("presentation")).not.toBeInTheDocument();
             });
 
-            // check that it has inserted a link and tried to find the room
-            // but it won't find the room, so falls back to the completion
-            expect(screen.getByRole("link", { name: "#room2" })).toBeInTheDocument();
+            // check that it has inserted a link and falls back to the completion text
+            expect(screen.getByRole("link", { name: "#room_without_completion_id" })).toBeInTheDocument();
         });
     });
 
