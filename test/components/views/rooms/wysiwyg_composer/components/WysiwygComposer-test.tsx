@@ -43,6 +43,7 @@ import AutocompleteProvider from "../../../../../../src/autocomplete/Autocomplet
 const mockCompletion: ICompletion[] = [
     {
         type: "user",
+        href: "www.user1.com",
         completion: "user_1",
         completionId: "@user_1:host.local",
         range: { start: 1, end: 1 },
@@ -50,10 +51,19 @@ const mockCompletion: ICompletion[] = [
     },
     {
         type: "user",
+        href: "www.user2.com",
         completion: "user_2",
         completionId: "@user_2:host.local",
         range: { start: 1, end: 1 },
         component: <div>user_2</div>,
+    },
+    {
+        // no href user
+        type: "user",
+        completion: "user_3",
+        completionId: "@user_3:host.local",
+        range: { start: 1, end: 1 },
+        component: <div>user_3</div>,
     },
 ];
 
@@ -190,6 +200,85 @@ describe("WysiwygComposer", () => {
 
             // Then it sends a message
             await waitFor(() => expect(onSend).toHaveBeenCalledTimes(0));
+        });
+    });
+
+    describe.only("Mentions", () => {
+        beforeEach(async () => {
+            customRender();
+            await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
+        });
+
+        it("shows the autocomplete when text has @ prefix and autoselects the first item", async () => {
+            fireEvent.input(screen.getByRole("textbox"), {
+                data: "@abc",
+                inputType: "insertText",
+            });
+
+            // the autocomplete suggestions container has the presentation role
+            expect(await screen.findByRole("presentation")).toBeInTheDocument();
+            expect(screen.getByText(mockCompletion[0].completion)).toHaveAttribute("aria-selected", "true");
+        });
+
+        it("pressing up and down arrows allows us to change the autocomplete selection", async () => {
+            fireEvent.input(screen.getByRole("textbox"), {
+                data: "@abc",
+                inputType: "insertText",
+            });
+
+            // the autocomplete will open with the first item selected
+            expect(await screen.findByRole("presentation")).toBeInTheDocument();
+
+            // so press the down arrow - nb using .keyboard allows us to not have to specify a node, which
+            // means that we know the autocomplete is correctly catching the event
+            await userEvent.keyboard("{ArrowDown}");
+            expect(screen.getByText(mockCompletion[0].completion)).toHaveAttribute("aria-selected", "false");
+            expect(screen.getByText(mockCompletion[1].completion)).toHaveAttribute("aria-selected", "true");
+
+            // reverse the process and check again
+            await userEvent.keyboard("{ArrowUp}");
+            expect(screen.getByText(mockCompletion[0].completion)).toHaveAttribute("aria-selected", "true");
+            expect(screen.getByText(mockCompletion[1].completion)).toHaveAttribute("aria-selected", "false");
+        });
+
+        it("pressing enter selects the mention and inserts it into the composer as a link", async () => {
+            fireEvent.input(screen.getByRole("textbox"), {
+                data: "@abc",
+                inputType: "insertText",
+            });
+
+            expect(await screen.findByRole("presentation")).toBeInTheDocument();
+
+            // press enter
+            await userEvent.keyboard("{Enter}");
+
+            // check that it closes the autocomplete
+            await waitFor(() => {
+                expect(screen.queryByRole("presentation")).not.toBeInTheDocument();
+            });
+
+            // check that it inserts the completion text as a link
+            expect(screen.getByRole("link", { name: mockCompletion[0].completion })).toBeInTheDocument();
+        });
+
+        it("selecting a mention without a href closes the autocomplete but does not insert a mention", async () => {
+            fireEvent.input(screen.getByRole("textbox"), {
+                data: "@abc",
+                inputType: "insertText",
+            });
+
+            expect(await screen.findByRole("presentation")).toBeInTheDocument();
+
+            // select the third user
+            await userEvent.keyboard("{ArrowDown}{ArrowDown}{Enter}");
+
+            // check that it closes the autocomplete
+            await waitFor(() => {
+                expect(screen.queryByRole("presentation")).not.toBeInTheDocument();
+            });
+
+            // check that it has not inserted a link
+            expect(screen.queryByRole("link", { name: mockCompletion[2].completion })).not.toBeInTheDocument();
         });
     });
 
