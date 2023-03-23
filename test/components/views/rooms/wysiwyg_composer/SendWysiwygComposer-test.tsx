@@ -22,7 +22,7 @@ import MatrixClientContext from "../../../../../src/contexts/MatrixClientContext
 import RoomContext from "../../../../../src/contexts/RoomContext";
 import defaultDispatcher from "../../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../../src/dispatcher/actions";
-import { flushPromises, stubClient } from "../../../../test-utils";
+import { flushPromises } from "../../../../test-utils";
 import { SendWysiwygComposer } from "../../../../../src/components/views/rooms/wysiwyg_composer/";
 import { aboveLeftOf } from "../../../../../src/components/structures/ContextMenu";
 import { ComposerInsertPayload, ComposerType } from "../../../../../src/dispatcher/payloads/ComposerInsertPayload";
@@ -44,8 +44,7 @@ describe("SendWysiwygComposer", () => {
         jest.resetAllMocks();
     });
 
-    const mockClient = stubClient();
-    const { defaultRoomContext } = createMocks();
+    const { defaultRoomContext, mockClient } = createMocks();
 
     const registerId = defaultDispatcher.register((payload) => {
         switch (payload.action) {

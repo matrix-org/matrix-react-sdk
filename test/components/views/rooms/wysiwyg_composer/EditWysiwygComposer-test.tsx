@@ -22,7 +22,7 @@ import MatrixClientContext from "../../../../../src/contexts/MatrixClientContext
 import RoomContext from "../../../../../src/contexts/RoomContext";
 import defaultDispatcher from "../../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../../src/dispatcher/actions";
-import { flushPromises, mkEvent, stubClient } from "../../../../test-utils";
+import { flushPromises, mkEvent } from "../../../../test-utils";
 import { EditWysiwygComposer } from "../../../../../src/components/views/rooms/wysiwyg_composer";
 import EditorStateTransfer from "../../../../../src/utils/EditorStateTransfer";
 import { Emoji } from "../../../../../src/components/views/rooms/wysiwyg_composer/components/Emoji";
@@ -38,8 +38,7 @@ describe("EditWysiwygComposer", () => {
         jest.resetAllMocks();
     });
 
-    const mockClient = stubClient();
-    const { editorStateTransfer, defaultRoomContext, mockEvent } = createMocks();
+    const { editorStateTransfer, defaultRoomContext, mockClient, mockEvent } = createMocks();
 
     const customRender = (
         disabled = false,
