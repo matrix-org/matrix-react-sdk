@@ -60,10 +60,6 @@ describe("WysiwygAutocomplete", () => {
         jest.restoreAllMocks();
     });
 
-    beforeEach(() => {
-        jest.clearAllMocks();
-    });
-
     const autocompleteRef = createRef<Autocomplete>();
     const getCompletionsSpy = jest.spyOn(Autocompleter.prototype, "getCompletions").mockResolvedValue([
         {
