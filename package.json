@@ -138,6 +138,7 @@
         "@babel/register": "^7.12.10",
         "@babel/traverse": "^7.12.12",
         "@casualbot/jest-sonar-reporter": "^2.2.5",
+        "@knapsack-pro/jest": "^5.7.0",
         "@matrix-org/olm": "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.14.tgz",
         "@peculiar/webcrypto": "^1.4.1",
         "@percy/cli": "^1.11.0",
