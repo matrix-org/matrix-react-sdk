@@ -18,7 +18,7 @@ import React from "react";
 import { mocked } from "jest-mock";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { TimestampToEventResponse } from "matrix-js-sdk/src/client";
-import { ConnectionError, HTTPError } from "matrix-js-sdk/src/http-api";
+import { ConnectionError, HTTPError, MatrixError } from "matrix-js-sdk/src/http-api";
 
 import dispatcher from "../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../src/dispatcher/actions";
@@ -275,7 +275,12 @@ describe("DateSeparator", () => {
 
         [
             new ConnectionError("Fake connection error in test"),
-            new HTTPError("Fake connection error in test", 418),
+            new HTTPError("Fake http error in test", 418),
+            new MatrixError(
+                { errcode: "M_FAKE_ERROR_CODE", error: "Some fake error occured" },
+                518,
+                "https://fake-url/",
+            ),
         ].forEach((fakeError) => {
             it(`should show error dialog without submit debug logs option when networking error (${fakeError.name}) occurs`, async () => {
                 // Render the component
