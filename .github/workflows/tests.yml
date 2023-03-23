@@ -70,6 +70,7 @@ jobs:
                   yarn ${{ inputs.disable_coverage != 'true' && 'knapsack-pro-jest' || 'test' }} \
                       --ci \
                       --reporters github-actions ${{ steps.metrics.outputs.extra-reporter }} \
+                      --cacheDirectory /tmp/jest_cache \
                       --runInBand
 
             - name: Upload Artifact
