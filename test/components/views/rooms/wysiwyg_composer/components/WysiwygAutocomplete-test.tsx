@@ -104,7 +104,6 @@ describe("WysiwygAutocomplete", () => {
     });
 
     it("calls getCompletions when given a valid suggestion prop", async () => {
-        // default in renderComponent is a null suggestion
         renderComponent({ suggestion: { keyChar: "@", text: "abc", type: "mention" } });
 
         // wait for getCompletions to have been called
