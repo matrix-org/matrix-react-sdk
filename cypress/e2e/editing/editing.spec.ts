@@ -111,11 +111,6 @@ describe("Editing", () => {
                     cy.get("h2").should("have.text", "Today");
                 });
 
-                // Assert that the original message is rendered
-                cy.get("li:nth-child(3) .mx_EventTile").within(() => {
-                    cy.get(".mx_EventTile_content .mx_EventTile_body").should("have.text", "Message");
-                });
-
                 // Assert that the edited message is rendered
                 cy.get("li:nth-child(2) .mx_EventTile").within(() => {
                     cy.get(".mx_EventTile_content").within(() => {
@@ -127,6 +122,11 @@ describe("Editing", () => {
                             cy.get(".mx_EditHistoryMessage_insertion").should("have.text", "a");
                         });
                     });
+                });
+
+                // Assert that the original message is rendered
+                cy.get("li:nth-child(3) .mx_EventTile").within(() => {
+                    cy.get(".mx_EventTile_content .mx_EventTile_body").should("have.text", "Message");
                 });
             });
         });
