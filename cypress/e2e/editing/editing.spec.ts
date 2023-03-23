@@ -189,13 +189,13 @@ describe("Editing", () => {
                     cy.get("h2").should("have.text", "Today");
                 });
 
-                // Assert that the original message is rendered on the dialog
+                // Assert that the original message is rendered under the date on the dialog
                 cy.get("li:nth-child(2) .mx_EventTile").within(() => {
                     cy.get(".mx_EventTile_content .mx_EventTile_body").should("have.text", "Message");
                 });
 
                 // Assert that the edited message is gone
-                cy.get("li:nth-child(3) .mx_EventTile").should("not.exist");
+                cy.contains(".mx_EventTile_content .mx_EventTile_body", "Meassage").should("not.exist");
 
                 // Close the dialog
                 cy.get("[aria-label='Close dialog']").click();
