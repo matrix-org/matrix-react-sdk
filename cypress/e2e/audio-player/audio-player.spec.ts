@@ -75,23 +75,23 @@ describe("Audio player", () => {
 
     // Take snapshots in modern and bubble layout, outputting log for reference/debugging
     // Player on IRC layout should have the same layout as group layout
-    const takeSnapshots = (detail: string) => {
+    const takeSnapshots = (wrapper: string, detail: string) => {
         // Check the status of the seek bar
         // TODO: check if visible - currently visibility check on a narrow timeline causes an error
-        cy.get(".mx_AudioPlayer_seek input[type='range']").should("exist");
+        cy.get(`${wrapper}.mx_AudioPlayer_seek input[type='range']`).should("exist");
 
         // Assert that the pause button is not rendered
-        cy.get("[data-testid='play-pause-button'][aria-label='Pause']").should("not.exist");
+        cy.get(`${wrapper}[data-testid='play-pause-button'][aria-label='Pause']`).should("not.exist");
 
         // Assert that the play button is rendered
-        cy.get("[data-testid='play-pause-button'][aria-label='Play']").should("exist");
+        cy.get(`${wrapper}[data-testid='play-pause-button'][aria-label='Play']`).should("exist");
 
         // Enable group layout
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
 
         // 243 + 12px + 12px = 267px
         // See _MediaBody.pcss and _AudioPlayer.pcss for spacing
-        cy.get(".mx_MAudioBody").percySnapshotElement(detail + " on group layout", {
+        cy.get(`${wrapper}.mx_MAudioBody`).percySnapshotElement(detail + " on group layout", {
             percyCSS,
             widths: [267],
         });
@@ -103,7 +103,7 @@ describe("Audio player", () => {
 
         // 243px + 12px + 48px = 303px
         // See _EventBubbleTile.pcss and _AudioPlayer.pcss for spacing
-        cy.get(".mx_MAudioBody").percySnapshotElement(detail + " on bubble layout", {
+        cy.get(`${wrapper}.mx_MAudioBody`).percySnapshotElement(detail + " on bubble layout", {
             percyCSS,
             widths: [303],
         });
@@ -157,21 +157,21 @@ describe("Audio player", () => {
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
 
             // Take snapshots (light theme)
-            takeSnapshots("Audio player (light theme)");
+            takeSnapshots("", "Audio player (light theme)");
 
             // Take snapshots (light theme, monospace font)
             cy.setSettingValue("useSystemFont", null, SettingLevel.DEVICE, true);
             cy.setSettingValue("systemFont", null, SettingLevel.DEVICE, "monospace");
             // Assert that the monospace timer is visible
             cy.get("[role='timer']").should("have.css", "font-family", '"monospace"').should("be.visible");
-            takeSnapshots("Audio player (light theme, monospace)");
+            takeSnapshots("", "Audio player (light theme, monospace)");
 
             // Reset font setting
             cy.setSettingValue("useSystemFont", null, SettingLevel.DEVICE, false);
 
             // Take snapshots (dark theme)
             cy.setSettingValue("theme", null, SettingLevel.ACCOUNT, "dark");
-            takeSnapshots("Audio player (dark theme)");
+            takeSnapshots("", "Audio player (dark theme)");
         });
     });
 
@@ -209,7 +209,7 @@ describe("Audio player", () => {
 
         // Take snapshots (high contrast, light theme only)
         cy.get(".mx_RoomView_MessageList").within(() => {
-            takeSnapshots("Audio player (high contrast)");
+            takeSnapshots("", "Audio player (high contrast)");
         });
     });
 
@@ -469,10 +469,10 @@ describe("Audio player", () => {
         // Reset to the default layout
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
 
-        cy.get(".mx_ThreadView").within(() => {
-            // Take snapshots of audio player on a thread
-            takeSnapshots("Audio player on a thread");
+        // Take snapshots of audio player on a thread
+        takeSnapshots(".mx_ThreadView ", "Audio player on a thread");
 
+        cy.get(".mx_ThreadView").within(() => {
             cy.get(".mx_AudioPlayer_container").within(() => {
                 // Assert that the counter is zero before clicking the play button
                 cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
