@@ -34,6 +34,7 @@ import { getEventsFromEditorStateTransfer, getEventsFromRoom } from "../utils/ev
 import { endEditing } from "../utils/editing";
 import Autocomplete from "../../Autocomplete";
 import { handleEventWithAutocomplete } from "./utils";
+import ContentMessages from "../../../../../ContentMessages";
 
 export function useInputEventProcessor(
     onSend: () => void,
@@ -48,6 +49,29 @@ export function useInputEventProcessor(
     return useCallback(
         (event: WysiwygEvent, composer: Wysiwyg, editor: HTMLElement) => {
             if (event instanceof ClipboardEvent) {
+                // This code unashamedly pillaged from SendMessageComposer.onPaste with the arguments
+                // tweaked a bit to see if it works.
+                // It does work, just need to figure out the `this.props.relation` translation
+
+                const { clipboardData } = event;
+                if (clipboardData?.files.length && !clipboardData.types.includes("text/rtf")) {
+                    if (roomContext.room?.roomId) {
+                        ContentMessages.sharedInstance().sendContentListToRoom(
+                            Array.from(clipboardData.files),
+                            roomContext.room.roomId,
+                            {}, // this.props.relation, is IEventRelation, which is passed through MessageComposer
+                            // which it looks like comes from ThreadView
+                            // looks like there is a call to this.props.room.getThread(this.props.mxEvent.getId())
+
+                            // looks like skipping out this bit means when you try and paste into a thread in the right
+                            // panel, it actually just appears in the timeline
+                            mxClient,
+                            roomContext.timelineRenderingType,
+                        );
+                        return null;
+                    }
+                }
+
                 return event;
             }
 
