@@ -76,10 +76,10 @@ const WysiwygAutocomplete = forwardRef(
                     handleMention(completion.href, getRoomMentionText(completion, client));
                     break;
                 }
-                case "command":
-                    // TODO implement the command functionality
-                    console.log("/command functionality not yet in place");
-                    break;
+                // TODO implement the command functionality
+                // case "command":
+                //     console.log("/command functionality not yet in place");
+                //     break;
                 default:
                     break;
             }
