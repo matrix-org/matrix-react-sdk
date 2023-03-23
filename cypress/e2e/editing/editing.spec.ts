@@ -74,6 +74,7 @@ describe("Editing", () => {
                 .realHover()
                 .get('.mx_EventTile_last [aria-label="Edit"]')
                 .click({ force: false });
+            // Edit the message from "Message" to "Massage"
             cy.get(".mx_BasicMessageComposer_input").type("{selectAll}{del}Massage{enter}");
         });
 
@@ -114,10 +115,11 @@ describe("Editing", () => {
                 // Assert that the edited message is rendered
                 cy.get("li:nth-child(2) .mx_EventTile").within(() => {
                     cy.get(".mx_EventTile_content").within(() => {
+                        // Assert that the edited message body consists of both deleted character and inserted character
+                        // Above the first "e" of "Message" was replaced with "a"
                         cy.get(".mx_EventTile_body").should("have.text", "Meassage");
 
                         cy.get(".mx_EventTile_body").within(() => {
-                            // "e" was replaced with "a"
                             cy.get(".mx_EditHistoryMessage_deletion").should("have.text", "e");
                             cy.get(".mx_EditHistoryMessage_insertion").should("have.text", "a");
                         });
