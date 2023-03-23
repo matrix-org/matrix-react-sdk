@@ -65,6 +65,21 @@ const mockCompletion: ICompletion[] = [
         range: { start: 1, end: 1 },
         component: <div>user_3</div>,
     },
+    {
+        type: "room",
+        href: "www.room1.com",
+        completion: "room1",
+        completionId: "@room_1:host.local",
+        range: { start: 1, end: 1 },
+        component: <div>room_1</div>,
+    },
+    {
+        type: "room",
+        href: "www.room2.com",
+        completion: "#room2",
+        range: { start: 1, end: 1 },
+        component: <div>room_2</div>,
+    },
 ];
 
 const constructMockProvider = (data: ICompletion[]) =>
@@ -279,6 +294,49 @@ describe("WysiwygComposer", () => {
 
             // check that it has not inserted a link
             expect(screen.queryByRole("link", { name: mockCompletion[2].completion })).not.toBeInTheDocument();
+        });
+
+        it("clicking a room mention with a completionId uses client.getRoom", async () => {
+            fireEvent.input(screen.getByRole("textbox"), {
+                data: "@abc",
+                inputType: "insertText",
+            });
+
+            expect(await screen.findByRole("presentation")).toBeInTheDocument();
+
+            // select the room suggestion
+            await userEvent.click(screen.getByText("room_1"));
+
+            // check that it closes the autocomplete
+            await waitFor(() => {
+                expect(screen.queryByRole("presentation")).not.toBeInTheDocument();
+            });
+
+            // check that it has inserted a link and looked up the name from the mock client
+            // which will always return 'My room'
+            expect(screen.getByRole("link", { name: "My room" })).toBeInTheDocument();
+        });
+
+        it("clicking a room mention without a completionId uses client.getRooms", async () => {
+            fireEvent.input(screen.getByRole("textbox"), {
+                data: "@abc",
+                inputType: "insertText",
+            });
+
+            expect(await screen.findByRole("presentation")).toBeInTheDocument();
+
+            screen.debug();
+            // select the room suggestion
+            await userEvent.click(screen.getByText("room_2"));
+
+            // check that it closes the autocomplete
+            await waitFor(() => {
+                expect(screen.queryByRole("presentation")).not.toBeInTheDocument();
+            });
+
+            // check that it has inserted a link and tried to find the room
+            // but it won't find the room, so falls back to the completion
+            expect(screen.getByRole("link", { name: "#room2" })).toBeInTheDocument();
         });
     });
 
