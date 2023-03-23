@@ -76,7 +76,7 @@ interface IBasePart {
 
 interface IPillCandidatePart extends Omit<IBasePart, "type" | "createAutoComplete"> {
     type: Type.PillCandidate | Type.Command;
-    createAutoComplete(updateCallback: UpdateCallback): AutocompleteWrapperModel;
+    createAutoComplete(updateCallback: UpdateCallback): AutocompleteWrapperModel | undefined;
 }
 
 interface IPillPart extends Omit<IBasePart, "type" | "resourceId"> {
@@ -496,8 +496,8 @@ class PillCandidatePart extends PlainBasePart implements IPillCandidatePart {
         super(text);
     }
 
-    public createAutoComplete(updateCallback: UpdateCallback): AutocompleteWrapperModel {
-        return this.autoCompleteCreator.create(updateCallback);
+    public createAutoComplete(updateCallback: UpdateCallback): AutocompleteWrapperModel | undefined {
+        return this.autoCompleteCreator.create?.(updateCallback);
     }
 
     protected acceptsInsertion(chr: string, offset: number, inputType: string): boolean {
@@ -532,7 +532,7 @@ export function getAutoCompleteCreator(getAutocompleterComponent: GetAutocomplet
 type AutoCompleteCreator = ReturnType<typeof getAutoCompleteCreator>;
 
 interface IAutocompleteCreator {
-    create(updateCallback: UpdateCallback): AutocompleteWrapperModel;
+    create: ((updateCallback: UpdateCallback) => AutocompleteWrapperModel) | undefined;
 }
 
 export class PartCreator {
@@ -545,9 +545,7 @@ export class PartCreator {
     ) {
         // pre-create the creator as an object even without callback so it can already be passed
         // to PillCandidatePart (e.g. while deserializing) and set later on
-        if (autoCompleteCreator) {
-            this.autoCompleteCreator = { create: autoCompleteCreator(this) };
-        }
+        this.autoCompleteCreator = { create: autoCompleteCreator?.(this) };
     }
 
     public setAutoCompleteCreator(autoCompleteCreator: AutoCompleteCreator): void {

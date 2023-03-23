@@ -341,7 +341,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             const selectedParts = range.parts.map((p) => p.serialize());
             event.clipboardData.setData("application/x-element-composer", JSON.stringify(selectedParts));
             event.clipboardData.setData("text/plain", text); // so plain copy/paste works
-            if (type === "cut" && range) {
+            if (type === "cut") {
                 // Remove the text, updating the model as appropriate
                 this.modifiedFlag = true;
                 replaceRangeAndMoveCaret(range, []);
@@ -507,10 +507,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             // trim the range as we want it to exclude leading/trailing spaces
             selectionRange.trim();
 
-            if (
-                selectionRange &&
-                [...SURROUND_WITH_DOUBLE_CHARACTERS.keys(), ...SURROUND_WITH_CHARACTERS].includes(event.key)
-            ) {
+            if ([...SURROUND_WITH_DOUBLE_CHARACTERS.keys(), ...SURROUND_WITH_CHARACTERS].includes(event.key)) {
                 this.historyManager.ensureLastChangesPushed(this.props.model);
                 this.modifiedFlag = true;
                 toggleInlineFormat(selectionRange, event.key, SURROUND_WITH_DOUBLE_CHARACTERS.get(event.key));
@@ -589,7 +586,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                     // when invoked from rerender callback.
                     model.reset(parts, caret, "historyRedo");
                 }
-
                 handled = true;
                 break;
             }
