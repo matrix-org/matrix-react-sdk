@@ -107,26 +107,24 @@ describe("Editing", () => {
                     .should("have.css", "text-align", "center");
                 cy.get(".mx_EventTile .mx_EventTile_content").should("have.css", "margin-inline-end", "0px");
 
-                // Assert that the date separator is rendered
+                // Assert that the date separator is rendered at the top
                 cy.get("li:nth-child(1) .mx_DateSeparator").within(() => {
                     cy.get("h2").should("have.text", "Today");
                 });
 
-                // Assert that the edited message is rendered
+                // Assert that the edited message is rendered at the middle
                 cy.get("li:nth-child(2) .mx_EventTile").within(() => {
-                    cy.get(".mx_EventTile_content").within(() => {
-                        // Assert that the edited message body consists of both deleted character and inserted character
-                        // Above the first "e" of "Message" was replaced with "a"
-                        cy.get(".mx_EventTile_body").should("have.text", "Meassage");
+                    // Assert that the edited message body consists of both deleted character and inserted character
+                    // Above the first "e" of "Message" was replaced with "a"
+                    cy.get(".mx_EventTile_content .mx_EventTile_body").should("have.text", "Meassage");
 
-                        cy.get(".mx_EventTile_body").within(() => {
-                            cy.get(".mx_EditHistoryMessage_deletion").should("have.text", "e");
-                            cy.get(".mx_EditHistoryMessage_insertion").should("have.text", "a");
-                        });
+                    cy.get(".mx_EventTile_content .mx_EventTile_body").within(() => {
+                        cy.get(".mx_EditHistoryMessage_deletion").should("have.text", "e");
+                        cy.get(".mx_EditHistoryMessage_insertion").should("have.text", "a");
                     });
                 });
 
-                // Assert that the original message is rendered
+                // Assert that the original message is rendered at the bottom
                 cy.get("li:nth-child(3) .mx_EventTile").within(() => {
                     cy.get(".mx_EventTile_content .mx_EventTile_body").should("have.text", "Message");
                 });
@@ -162,11 +160,9 @@ describe("Editing", () => {
 
             // Assert that the message edit history dialog is rendered again after it was closed
             cy.get(".mx_MessageEditHistoryDialog").within(() => {
-                // Assert that the edited message is rendered again
+                // Assert that the edited message is rendered under the date again
                 cy.get("li:nth-child(2) .mx_EventTile").within(() => {
-                    cy.get(".mx_EventTile_content").within(() => {
-                        cy.get(".mx_EventTile_body").should("have.text", "Meassage");
-                    });
+                    cy.get(".mx_EventTile_content .mx_EventTile_body").should("have.text", "Meassage");
 
                     // Click the "Remove" button again
                     cy.get(".mx_EventTile_line")
