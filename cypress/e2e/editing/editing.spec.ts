@@ -44,6 +44,17 @@ describe("Editing", () => {
     let homeserver: HomeserverInstance;
     let roomId: string;
 
+    // Edit "Message"
+    const editLastMessage = (edit: string) => {
+        cy.get(".mx_EventTile_last").realHover();
+        cy.get(".mx_EventTile_last .mx_MessageActionBar_optionsButton", { timeout: 1000 })
+            .should("exist")
+            .realHover()
+            .get('.mx_EventTile_last [aria-label="Edit"]')
+            .click({ force: false });
+        cy.get(".mx_BasicMessageComposer_input").type(`{selectAll}{del}${edit}{enter}`);
+    };
+
     beforeEach(() => {
         cy.startHomeserver("default").then((data) => {
             homeserver = data;
@@ -72,15 +83,8 @@ describe("Editing", () => {
         sendEvent(roomId);
 
         cy.get(".mx_RoomView_MessageList").within(() => {
-            // Edit message
-            cy.get(".mx_EventTile_last").realHover();
-            cy.get(".mx_EventTile_last .mx_MessageActionBar_optionsButton", { timeout: 1000 })
-                .should("exist")
-                .realHover()
-                .get('.mx_EventTile_last [aria-label="Edit"]')
-                .click({ force: false });
-            // Edit the message from "Message" to "Massage"
-            cy.get(".mx_BasicMessageComposer_input").type("{selectAll}{del}Massage{enter}");
+            // Edit "Message" to "Massage"
+            editLastMessage("Massage");
         });
 
         // Assert that the edit label is visible
@@ -212,14 +216,8 @@ describe("Editing", () => {
         sendEvent(roomId);
 
         cy.get(".mx_RoomView_MessageList").within(() => {
-            // Edit message
-            cy.get(".mx_EventTile_last").realHover();
-            cy.get(".mx_EventTile_last .mx_MessageActionBar_optionsButton", { timeout: 1000 })
-                .should("exist")
-                .realHover()
-                .get('.mx_EventTile_last [aria-label="Edit"]')
-                .click({ force: false });
-            cy.get(".mx_BasicMessageComposer_input").type("{selectAll}{del}Massage{enter}");
+            // Edit "Message" to "Massage"
+            editLastMessage("Massage");
         });
 
         // Assert that the edit label is visible
