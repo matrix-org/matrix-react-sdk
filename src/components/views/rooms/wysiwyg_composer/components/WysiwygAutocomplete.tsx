@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ForwardedRef, forwardRef, useRef } from "react";
+import React, { ForwardedRef, forwardRef } from "react";
 import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 import { FormattingFunctions, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 
@@ -66,8 +66,6 @@ const WysiwygAutocomplete = forwardRef(
         const { room } = useRoomContext();
         const client = useMatrixClientContext();
 
-        const autocompleteIndexRef = useRef<number>(0);
-
         function handleConfirm(completion: ICompletion): void {
             if (!completion.href) return;
 
@@ -88,17 +86,12 @@ const WysiwygAutocomplete = forwardRef(
             }
         }
 
-        function handleSelectionChange(completionIndex: number): void {
-            autocompleteIndexRef.current = completionIndex;
-        }
-
         return room ? (
             <div className="mx_SendWysiwygComposer_AutoCompleteWrapper" data-testid="autocomplete-wrapper">
                 <Autocomplete
                     ref={ref}
                     query={buildQuery(suggestion)}
                     onConfirm={handleConfirm}
-                    onSelectionChange={handleSelectionChange}
                     selection={{ start: 0, end: 0 }}
                     room={room}
                 />
