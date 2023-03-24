@@ -244,7 +244,7 @@ describe("Timeline", () => {
             cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on modern layout", { percyCSS });
         });
 
-        it("should click 'collapse' link button on the first hovered info event line on bubble layout", () => {
+        it("should click 'collapse' on the first hovered info event line inside GELS on bubble layout", () => {
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
             cy.contains(
