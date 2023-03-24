@@ -233,10 +233,10 @@ export default class AddThreepid {
                         // The spec has always required this to use UI auth but synapse briefly
                         // implemented it without, so this may just succeed and that's OK.
                         return [true];
-                    } catch (e) {
-                        if (e.httpStatus !== 401 || !e.data || !e.data.flows) {
+                    } catch (err) {
+                        if (!(err instanceof MatrixError) || err.httpStatus !== 401 || !err.data || !err.data.flows) {
                             // doesn't look like an interactive-auth failure
-                            throw e;
+                            throw err;
                         }
 
                         const dialogAesthetics = {
@@ -258,7 +258,7 @@ export default class AddThreepid {
                         const { finished } = Modal.createDialog(InteractiveAuthDialog, {
                             title: _t("Add Email Address"),
                             matrixClient: MatrixClientPeg.get(),
-                            authData: e.data,
+                            authData: err.data,
                             makeRequest: this.makeAddThreepidOnlyRequest,
                             aestheticsForStagePhases: {
                                 [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
