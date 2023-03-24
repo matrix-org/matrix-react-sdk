@@ -112,6 +112,7 @@ const mockClient = mocked({
     setIgnoredUsers: jest.fn(),
     isCryptoEnabled: jest.fn(),
     getUserId: jest.fn(),
+    getSafeUserId: jest.fn(),
     on: jest.fn(),
     off: jest.fn(),
     isSynapseAdministrator: jest.fn().mockResolvedValue(false),
@@ -348,6 +349,7 @@ describe("<DeviceItem />", () => {
     });
 
     it("when userId is the same as userId from client, uses isCrossSigningVerified to determine if button is shown", () => {
+        mockClient.getSafeUserId.mockReturnValueOnce(defaultUserId);
         mockClient.getUserId.mockReturnValueOnce(defaultUserId);
         renderComponent();
 
@@ -429,6 +431,7 @@ describe("<UserOptionsSection />", () => {
     });
 
     it("does not show ignore or direct message buttons when member userId matches client userId", () => {
+        mockClient.getSafeUserId.mockReturnValueOnce(member.userId);
         mockClient.getUserId.mockReturnValueOnce(member.userId);
         renderComponent();
 
@@ -674,6 +677,7 @@ describe("<PowerLevelEditor />", () => {
             content: { users: { [defaultUserId]: startPowerLevel }, users_default: 1 },
         });
         mockRoom.currentState.getStateEvents.mockReturnValue(powerLevelEvent);
+        mockClient.getSafeUserId.mockReturnValueOnce(defaultUserId);
         mockClient.getUserId.mockReturnValueOnce(defaultUserId);
         mockClient.setPowerLevel.mockResolvedValueOnce({ event_id: "123" });
         renderComponent();
