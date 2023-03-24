@@ -31,6 +31,7 @@ import {
     WidgetDriver,
     WidgetEventCapability,
     WidgetKind,
+    ISearchUserDirectoryResult,
 } from "matrix-widget-api";
 import { ClientEvent, ITurnServer as IClientTurnServer } from "matrix-js-sdk/src/client";
 import { EventType } from "matrix-js-sdk/src/@types/event";
@@ -61,6 +62,7 @@ import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
 import { navigateToPermalink } from "../../utils/permalinks/navigator";
 import { SdkContextClass } from "../../contexts/SDKContext";
 import { ModuleRunner } from "../../modules/ModuleRunner";
+import SettingsStore from "../../settings/SettingsStore";
 
 // TODO: Purge this from the universe
 
@@ -311,7 +313,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
 
         const targetRooms = roomIds
             ? roomIds.includes(Symbols.AnyRoom)
-                ? client.getVisibleRooms()
+                ? client.getVisibleRooms(SettingsStore.getValue("feature_dynamic_room_predecessors"))
                 : roomIds.map((r) => client.getRoom(r))
             : [client.getRoom(SdkContextClass.instance.roomViewStore.getRoomId()!)];
         return targetRooms.filter((r) => !!r) as Room[];
@@ -483,6 +485,21 @@ export class StopGapWidgetDriver extends WidgetDriver {
             chunk: events.map((e) => e.getEffectiveEvent() as IRoomEvent),
             nextBatch: nextBatch ?? undefined,
             prevBatch: prevBatch ?? undefined,
+        };
+    }
+
+    public async searchUserDirectory(searchTerm: string, limit?: number): Promise<ISearchUserDirectoryResult> {
+        const client = MatrixClientPeg.get();
+
+        const { limited, results } = await client.searchUserDirectory({ term: searchTerm, limit });
+
+        return {
+            limited,
+            results: results.map((r) => ({
+                userId: r.user_id,
+                displayName: r.display_name,
+                avatarUrl: r.avatar_url,
+            })),
         };
     }
 }

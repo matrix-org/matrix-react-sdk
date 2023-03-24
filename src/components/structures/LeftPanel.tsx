@@ -271,6 +271,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         // add appropriate sticky classes to wrapper so it has
         // the necessary top/bottom padding to put the sticky header in
         const listWrapper = list.parentElement; // .mx_LeftPanel_roomListWrapper
+        if (!listWrapper) return;
         if (lastTopHeader) {
             listWrapper.classList.add("mx_LeftPanel_roomListWrapper_stickyTop");
         } else {
@@ -392,7 +393,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         return (
             <div className={containerClasses}>
                 <div className="mx_LeftPanel_roomListContainer">
-                    {this.renderSearchDialExplore()}
+                    {shouldShowComponent(UIComponent.FilterContainer) && this.renderSearchDialExplore()}
                     {this.renderBreadcrumbs()}
                     {!this.props.isMinimized && <RoomListHeader onVisibilityChange={this.refreshStickyHeaders} />}
                     <UserOnboardingButton

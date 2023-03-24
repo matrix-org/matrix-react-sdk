@@ -26,12 +26,12 @@ jobs:
             commit_message: ${{ steps.commit.outputs.message }}
             commit_author: ${{ steps.commit.outputs.author }}
             commit_email: ${{ steps.commit.outputs.email }}
-            percy_enable: ${{ steps.percy.outputs.value || '1' }}
-            testrail_enable: ${{ steps.testrail.outputs.value || '1' }}
+            percy_enable: ${{ steps.percy.outputs.value || '0' }}
+            kiwi_enable: ${{ steps.kiwi.outputs.value || '1' }}
         steps:
             # We create the status here and then update it to success/failure in the `report` stage
             # This provides an easy link to this workflow_run from the PR before Cypress is done.
-            - uses: Sibz/github-status-action@v1
+            - uses: Sibz/github-status-action@faaa4d96fecf273bd762985e0e7f9f933c774918 # v1
               with:
                   authToken: ${{ secrets.GITHUB_TOKEN }}
                   state: pending
@@ -61,20 +61,23 @@ jobs:
                       core.setOutput("author", response.data.author.name);
                       core.setOutput("email", response.data.author.email);
 
-            # Only run Percy when it is demanded or on develop
-            - name: Disable Percy if not needed
+            # Only run Percy when it is demanded or we are running the daily build
+            - name: Enable Percy if X-Needs-Percy
               id: percy
               if: |
-                  github.event.workflow_run.event == 'pull_request' &&
-                  !contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy')
-              run: echo "::set-output name=value::0"
+                  github.event.workflow_run.event == 'schedule' ||
+                  (
+                    github.event.workflow_run.event == 'pull_request' &&
+                    contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy')
+                  )
+              run: echo "::set-output name=value::1"
 
-            # Only run Testrail when it is demanded or on develop
-            - name: Disable Testrail if not needed
-              id: testrail
+            # Only export to kiwi when it is demanded or on develop
+            - name: Disable Kiwi if not needed
+              id: kiwi
               if: |
                   github.event.workflow_run.event == 'pull_request' &&
-                  !contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Send-Testrail')
+                  !contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Send-Kiwi')
               run: echo "::set-output name=value::0"
 
             - name: Generate unique ID 💎
@@ -99,7 +102,7 @@ jobs:
             - uses: browser-actions/setup-chrome@latest
             - run: echo "BROWSER_PATH=$(which chrome)" >> $GITHUB_ENV
 
-            - uses: tecolicom/actions-use-apt-tools@v1
+            - uses: tecolicom/actions-use-apt-tools@ceaf289fdbc6169fd2406a0f0365a584ffba003b # v1
               with:
                   # Our test suite includes some screenshot tests with unusual diacritics, which are
                   # supposed to be covered by STIXGeneral.
@@ -117,14 +120,14 @@ jobs:
             # There's a 'download artifact' action, but it hasn't been updated for the workflow_run action
             # (https://github.com/actions/download-artifact/issues/60) so instead we get this mess:
             - name: 📥 Download artifact
-              uses: dawidd6/action-download-artifact@v2
+              uses: dawidd6/action-download-artifact@5e780fc7bbd0cac69fc73271ed86edf5dcb72d67 # v2
               with:
                   run_id: ${{ github.event.workflow_run.id }}
                   name: previewbuild
                   path: webapp
 
             - name: Run Cypress tests
-              uses: cypress-io/github-action@v5.1.0
+              uses: cypress-io/github-action@v5.5.0
               with:
                   # The built-in Electron runner seems to grind to a halt trying
                   # to run the tests, so use chrome.
@@ -207,7 +210,7 @@ jobs:
 
             - name: Skip Percy required check
               if: needs.prepare.outputs.percy_enable != '1'
-              uses: Sibz/github-status-action@v1
+              uses: Sibz/github-status-action@faaa4d96fecf273bd762985e0e7f9f933c774918 # v1
               with:
                   authToken: ${{ secrets.GITHUB_TOKEN }}
                   state: success
@@ -216,7 +219,7 @@ jobs:
                   sha: ${{ github.event.workflow_run.head_sha }}
                   target_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-            - uses: Sibz/github-status-action@v1
+            - uses: Sibz/github-status-action@faaa4d96fecf273bd762985e0e7f9f933c774918 # v1
               with:
                   authToken: ${{ secrets.GITHUB_TOKEN }}
                   state: ${{ needs.tests.result == 'success' && 'success' || 'failure' }}
@@ -224,69 +227,27 @@ jobs:
                   sha: ${{ github.event.workflow_run.head_sha }}
                   target_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-    testrail:
-        name: Report results to testrail
+    kiwi:
+        name: Report results to kiwi
         needs:
             - prepare
             - tests
-        environment: Testrail
+        environment: Kiwi
         runs-on: ubuntu-latest
-        if: ${{ needs.prepare.outputs.testrail_enable }}
+        if: ${{ needs.prepare.outputs.kiwi_enable }}
         steps:
-            - uses: actions/download-artifact@v3
+            - name: Download all zip files
+              uses: actions/download-artifact@v3
               with:
                   name: cypress-junit
-            - name: Prepare testrail upload config
-              id: testrailprep
-              env:
-                  TESTRAIL_PROJECT_ID: ${{ secrets.TESTRAIL_PROJECT_ID }}
-                  TESTRAIL_SUITE_ID: ${{ secrets.TESTRAIL_SUITE_ID }}
-                  TEST_ID: ${{ github.run_id }}
-                  TESTRAIL_URL: https://elementqa.testrail.io
-                  TESTRAIL_USER: ${{ secrets.TESTRAIL_USER }}
-                  TESTRAIL_API_KEY: ${{ secrets.TESTRAIL_API_KEY }}
-              run: |
-                  echo '{"name": "element-web cypress '$TEST_ID'", "suite_id": '$TESTRAIL_SUITE_ID' }' > body.json # TODO add description with more context?
-                  RUN_ID=`curl -X POST -d @body.json -u "$TESTRAIL_USER:$TESTRAIL_API_KEY" -H "Content-Type: application/json" "$TESTRAIL_URL/index.php?/api/v2/add_run/$TESTRAIL_PROJECT_ID" | jq '.id'`
-                  PROJECT_NAME=`curl -X GET -u "$TESTRAIL_USER:$TESTRAIL_API_KEY" -H "Content-Type: application/json" "$TESTRAIL_URL/index.php?/api/v2/get_project/$TESTRAIL_PROJECT_ID" | jq '.name'`
-                  echo "run_id=$RUN_ID" >> $GITHUB_OUTPUT
-                  echo "project_name=$PROJECT_NAME" >> $GITHUB_OUTPUT
-            - name: setup python
-              uses: actions/setup-python@v4
+            - name: Upload to kiwi
+              uses: vector-im/kiwitcms-upload-action@main
               with:
-                  python-version: "3.11"
-            - run: pip install trcli
-            - name: Upload junit files
-              env:
-                  TESTRAIL_PROJECT_ID: ${{ secrets.TESTRAIL_PROJECT_ID }}
-                  TESTRAIL_SUITE_ID: ${{ secrets.TESTRAIL_SUITE_ID }}
-                  TESTRAIL_URL: https://elementqa.testrail.io
-                  TESTRAIL_USER: ${{ secrets.TESTRAIL_USER }}
-                  TESTRAIL_API_KEY: ${{ secrets.TESTRAIL_API_KEY }}
-                  TESTRAIL_RUN_ID: ${{ steps.testrailprep.outputs.run_id }}
-              run: |
-                  for file in results-*.xml; do
-                      echo "Handling $file"
-                      trcli -y -h $TESTRAIL_URL \
-                                  --project-id $TESTRAIL_PROJECT_ID \
-                                  --project ${{ steps.testrailprep.outputs.project_name }} \
-                                  --username $TESTRAIL_USER \
-                                  --password $TESTRAIL_API_KEY \
-                                  parse_junit \
-                                  --run-id $TESTRAIL_RUN_ID \
-                                  --suite-id $TESTRAIL_SUITE_ID \
-                                  --title "if you see this please check cypress build for run id not being provisioned" \
-                                  -f $file || true
-                      #  We want to keep uploading what we can; but don't want the failures/red marks when it fails, so we add || true above.
-                  done
-            - name: Close test run
-              id: testrailpost
-              if: always()
-              env:
-                  TESTRAIL_URL: https://elementqa.testrail.io
-                  TESTRAIL_USER: ${{ secrets.TESTRAIL_USER }}
-                  TESTRAIL_API_KEY: ${{ secrets.TESTRAIL_API_KEY }}
-                  TESTRAIL_RUN_ID: ${{ steps.testrailprep.outputs.run_id }}
-              run: |
-                  CLOSE_RESPONSE=`curl -X POST -d '{}' -u "$TESTRAIL_USER:$TESTRAIL_API_KEY" -H "Content-Type: application/json" "$TESTRAIL_URL/index.php?/api/v2/close_run/$TESTRAIL_RUN_ID"`
-                  if [ ! "0" == "`echo $CLOSE_RESPONSE | jq .untested_count`" ] ; then echo "::warning title=Missing Tests::Testrail reported some cypress tests were not run. $CLOSE_RESPONSE"; fi
+                  file-pattern: results-*.xml
+                  kiwi-username: ${{ secrets.TCMS_USERNAME }}
+                  kiwi-password: ${{ secrets.TCMS_PASSWORD }}
+                  product: "Element Web"
+                  product-version: ${{ github.event.workflow_run.head_branch }}
+                  build-id: ${{ github.event.workflow_run.head_sha }}
+                  suite-name: "Cypress E2E"
+                  summary-template: "$name"
