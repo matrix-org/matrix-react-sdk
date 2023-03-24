@@ -36,7 +36,7 @@ async function setupTranslationOverridesForTests(overrides: ICustomTranslations)
     });
     CustomTranslationOptions.lookupFn = fn;
     await registerCustomTranslations({
-        testOnly_ignoreCustomTranslationsCache: true,
+        testOnlyIgnoreCustomTranslationsCache: true,
     });
 }
 
@@ -113,7 +113,7 @@ describe("languageHandler", () => {
             expect(friendlyError.cause).toStrictEqual(underlyingError);
         });
 
-        it("it is ok to omit the substitution variables and cause object, there just won't be any cause", async () => {
+        it("ok to omit the substitution variables and cause object, there just won't be any cause", async () => {
             const friendlyError = new UserFriendlyError("foo error");
             expect(friendlyError.cause).toBeUndefined();
         });

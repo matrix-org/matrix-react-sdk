@@ -210,6 +210,7 @@ declare global {
         (message?: string, options?: ErrorOptions): Error;
     }
 
+    // eslint-disable-next-line no-var
     var Error: ErrorConstructor;
 
     // https://github.com/microsoft/TypeScript/issues/28308#issuecomment-650802278

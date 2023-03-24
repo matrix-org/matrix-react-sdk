@@ -708,9 +708,9 @@ function doRegisterTranslations(customTranslations: ICustomTranslations): void {
  * ensure it overrides strings properly.
  */
 export async function registerCustomTranslations({
-    testOnly_ignoreCustomTranslationsCache = false,
+    testOnlyIgnoreCustomTranslationsCache = false,
 }: {
-    testOnly_ignoreCustomTranslationsCache?: boolean;
+    testOnlyIgnoreCustomTranslationsCache?: boolean;
 } = {}): Promise<void> {
     const moduleTranslations = ModuleRunner.instance.allTranslations;
     doRegisterTranslations(moduleTranslations);
@@ -720,7 +720,7 @@ export async function registerCustomTranslations({
 
     try {
         let json: Optional<ICustomTranslations>;
-        if (testOnly_ignoreCustomTranslationsCache || Date.now() >= cachedCustomTranslationsExpire) {
+        if (testOnlyIgnoreCustomTranslationsCache || Date.now() >= cachedCustomTranslationsExpire) {
             json = CustomTranslationOptions.lookupFn
                 ? CustomTranslationOptions.lookupFn(lookupUrl)
                 : ((await (await fetch(lookupUrl)).json()) as ICustomTranslations);
