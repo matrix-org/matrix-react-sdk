@@ -448,7 +448,10 @@ export const UserOptionsSection: React.FC<{
                     const inviter = new MultiInviter(roomId || "");
                     await inviter.invite([member.userId]).then(() => {
                         if (inviter.getCompletionState(member.userId) !== "invited") {
-                            throw new Error(inviter.getErrorText(member.userId));
+                            throw new Error(
+                                inviter.getErrorText(member.userId) ||
+                                    `User (${member.userId}) did not end up as invited but no error was given from the inviter utility`,
+                            );
                         }
                     });
                 } catch (err) {

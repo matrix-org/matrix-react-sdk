@@ -65,7 +65,7 @@ export async function runSlashCommand(
 ): Promise<[content: IContent | null, success: boolean]> {
     const result = cmd.run(roomId, threadId, args);
     let messageContent: IContent | null = null;
-    let error = result.error;
+    let error: any = result.error;
     if (result.promise) {
         try {
             if (cmd.category === CommandCategories.messages || cmd.category === CommandCategories.effects) {

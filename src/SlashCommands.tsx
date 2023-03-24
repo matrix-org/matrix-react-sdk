@@ -598,7 +598,10 @@ export const Commands = [
                             })
                             .then(() => {
                                 if (inviter.getCompletionState(address) !== "invited") {
-                                    throw new Error(inviter.getErrorText(address));
+                                    throw new Error(
+                                        inviter.getErrorText(address) ||
+                                            `User (${address}) did not end up as invited but no error was given from the inviter utility`,
+                                    );
                                 }
                             }),
                     );
