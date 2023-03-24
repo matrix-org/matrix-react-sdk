@@ -75,7 +75,7 @@ describe("Audio player", () => {
     };
 
     // Take snapshots in modern and bubble layout, outputting log for reference/debugging
-    // Player on IRC layout should have the same layout as group layout
+    // We don't test IRC layout, since it should be the same as group layout.
     const takeSnapshots = (wrapper: string, detail: string) => {
         // Check the status of the seek bar
         // TODO: check if visible - currently visibility check on a narrow timeline causes an error
