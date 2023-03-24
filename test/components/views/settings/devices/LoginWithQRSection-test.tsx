@@ -71,15 +71,19 @@ describe("<LoginWithQRSection />", () => {
         });
 
         it("only MSC3882 r1 enabled", async () => {
-            const { container } = render(getComponent({ capabilities: {"org.matrix.msc3882": { enabled: true } } }));
+            const { container } = render(getComponent({ capabilities: { "org.matrix.msc3882": { enabled: true } } }));
             expect(container).toMatchSnapshot();
         });
 
         it("MSC3886 + MSC3882 r1 disabled", async () => {
-            const { container } = render(getComponent({ versions: makeVersions({ "org.matrix.msc3886": true }), capabilities: {"org.matrix.msc3882": { enabled: false } } }));
+            const { container } = render(
+                getComponent({
+                    versions: makeVersions({ "org.matrix.msc3886": true }),
+                    capabilities: { "org.matrix.msc3882": { enabled: false } },
+                }),
+            );
             expect(container).toMatchSnapshot();
         });
-
     });
 
     describe("should render panel", () => {
@@ -109,5 +113,4 @@ describe("<LoginWithQRSection />", () => {
             expect(container).toMatchSnapshot();
         });
     });
-
 });

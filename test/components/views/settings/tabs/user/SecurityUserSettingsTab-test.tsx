@@ -50,7 +50,7 @@ describe("<SecurityUserSettingsTab />", () => {
         }),
         getCapabilities: jest.fn().mockResolvedValue({
             "org.matrix.msc3882.get_logintoken": {
-                "enabled": true,
+                enabled: true,
             },
         }),
     });

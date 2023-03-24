@@ -398,7 +398,11 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     </span>
                     <DevicesPanel />
                 </div>
-                <LoginWithQRSection onShowQr={this.onShowQRClicked} versions={this.state.versions} capabilities={this.state.capabilities} />
+                <LoginWithQRSection
+                    onShowQr={this.onShowQRClicked}
+                    versions={this.state.versions}
+                    capabilities={this.state.capabilities}
+                />
             </>
         );
 

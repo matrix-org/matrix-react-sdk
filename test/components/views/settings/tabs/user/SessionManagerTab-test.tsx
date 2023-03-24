@@ -1381,7 +1381,7 @@ describe("<SessionManagerTab />", () => {
             });
             mockClient.getCapabilities.mockResolvedValue({
                 "org.matrix.msc3882.get_logintoken": {
-                    "enabled": true,
+                    enabled: true,
                 },
             });
         });
