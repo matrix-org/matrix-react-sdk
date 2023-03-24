@@ -132,7 +132,7 @@ describe("Audio player", () => {
         cy.stopHomeserver(homeserver);
     });
 
-    it("should render player on every layout", () => {
+    it("should be correctly rendered on each layout", () => {
         visitRoom();
 
         // Upload one second audio file with a long file name
