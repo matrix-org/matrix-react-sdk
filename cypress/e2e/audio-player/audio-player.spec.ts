@@ -278,7 +278,7 @@ describe("Audio player", () => {
         });
     });
 
-    it("should reply to audio file with another audio file", () => {
+    it("should support replying to audio file with another audio file", () => {
         visitRoom();
 
         // Upload one second audio file with a long file name
