@@ -845,8 +845,9 @@ describe("Timeline", () => {
             clickButtonReply();
             cy.getComposer().type(`${reply2}{enter}`);
 
-            // Make sure 'reply2' was sent
+            // Assert that 'reply2' was sent
             cy.contains(".mx_RoomView_MessageList .mx_EventTile_last", reply2).should("exist");
+            cy.get(".mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
 
             // Exclude timestamp and read marker from snapshot
             const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
