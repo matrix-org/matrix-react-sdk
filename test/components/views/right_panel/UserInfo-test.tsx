@@ -881,7 +881,7 @@ describe("<BanToggleButton />", () => {
             },
         };
 
-        expect(callback(mockRoom)).toBe(null);
+        expect(callback(mockRoom)).toBe(false);
         expect(callback(mockRoom)).toBe(true);
     });
 
