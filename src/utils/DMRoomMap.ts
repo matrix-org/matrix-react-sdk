@@ -46,13 +46,7 @@ export default class DMRoomMap {
         this.hasSentOutPatchDirectAccountDataPatch = false;
 
         const mDirectRawContent = matrixClient.getAccountData(EventType.Direct)?.getContent() ?? {};
-        const { valid, filteredContent } = filterValidMDirect(mDirectRawContent);
-
-        if (!valid) {
-            logger.warn("Invalid m.direct content occurred", mDirectRawContent);
-        }
-
-        this.mDirectEvent = filteredContent;
+        this.setMDirectFromContent(mDirectRawContent);
     }
 
     /**
@@ -91,9 +85,28 @@ export default class DMRoomMap {
         this.matrixClient.removeListener(ClientEvent.AccountData, this.onAccountData);
     }
 
+    /**
+     * Filter m.direct content to contain only valid data and then sets it.
+     * Logs if invalid m.direct content occurs.
+     * {@link filterValidMDirect}
+     *
+     * @param content - Raw m.direct content
+     */
+    private setMDirectFromContent(content: unknown): void {
+        const { valid, filteredContent } = filterValidMDirect(content);
+
+        if (!valid) {
+            logger.warn("Invalid m.direct content occurred", content);
+        }
+
+        this.mDirectEvent = filteredContent;
+    }
+
     private onAccountData = (ev: MatrixEvent): void => {
+        console.log("onAccountData");
+
         if (ev.getType() == EventType.Direct) {
-            this.mDirectEvent = { ...ev.getContent() }; // copy as we will mutate
+            this.setMDirectFromContent(ev.getContent());
             this.userToRooms = null;
             this.roomToUser = null;
         }
