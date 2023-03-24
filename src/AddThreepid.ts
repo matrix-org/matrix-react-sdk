@@ -28,7 +28,7 @@ import InteractiveAuthDialog from "./components/views/dialogs/InteractiveAuthDia
 function getIdServerDomain(): string {
     const idBaseUrl = MatrixClientPeg.get().idBaseUrl;
     if (!idBaseUrl) {
-        throw new Error("Identity server not set");
+        throw new UserFriendlyError("Identity server not set");
     }
     return idBaseUrl.split("://")[1];
 }
@@ -338,7 +338,7 @@ export default class AddThreepid {
                 await authClient.getAccessToken(),
             );
         } else {
-            throw new Error("The add / bind with MSISDN flow is misconfigured");
+            throw new UserFriendlyError("The add / bind with MSISDN flow is misconfigured");
         }
         if (result.errcode) {
             throw result;
