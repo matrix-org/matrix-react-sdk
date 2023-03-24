@@ -17,6 +17,7 @@ limitations under the License.
 */
 
 import { IAuthData, IRequestMsisdnTokenResponse, IRequestTokenResponse } from "matrix-js-sdk/src/matrix";
+import { MatrixError, HTTPError } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import Modal from "./Modal";
@@ -73,9 +74,9 @@ export default class AddThreepid {
             this.sessionId = res.sid;
             return res;
         } catch (err) {
-            if (err.errcode === "M_THREEPID_IN_USE") {
+            if (err instanceof MatrixError && err.errcode === "M_THREEPID_IN_USE") {
                 throw new UserFriendlyError("This email address is already in use", { cause: err });
-            } else if (err.httpStatus) {
+            } else if (err instanceof HTTPError && err.httpStatus) {
                 throw new UserFriendlyError("%(errorMessage)s (Status %(httpStatus)s)", {
                     errorMessage: err.message,
                     httpStatus: err.httpStatus,
@@ -110,9 +111,9 @@ export default class AddThreepid {
                 this.sessionId = res.sid;
                 return res;
             } catch (err) {
-                if (err.errcode === "M_THREEPID_IN_USE") {
+                if (err instanceof MatrixError && err.errcode === "M_THREEPID_IN_USE") {
                     throw new UserFriendlyError("This email address is already in use", { cause: err });
-                } else if (err.httpStatus) {
+                } else if (err instanceof HTTPError && err.httpStatus) {
                     throw new UserFriendlyError("%(errorMessage)s (Status %(httpStatus)s)", {
                         errorMessage: err.message,
                         httpStatus: err.httpStatus,
@@ -147,9 +148,9 @@ export default class AddThreepid {
             this.submitUrl = res.submit_url;
             return res;
         } catch (err) {
-            if (err.errcode === "M_THREEPID_IN_USE") {
+            if (err instanceof MatrixError && err.errcode === "M_THREEPID_IN_USE") {
                 throw new UserFriendlyError("This phone number is already in use", { cause: err });
-            } else if (err.httpStatus) {
+            } else if (err instanceof HTTPError && err.httpStatus) {
                 throw new UserFriendlyError("%(errorMessage)s (Status %(httpStatus)s)", {
                     errorMessage: err.message,
                     httpStatus: err.httpStatus,
@@ -186,9 +187,9 @@ export default class AddThreepid {
                 this.sessionId = res.sid;
                 return res;
             } catch (err) {
-                if (err.errcode === "M_THREEPID_IN_USE") {
+                if (err instanceof MatrixError && err.errcode === "M_THREEPID_IN_USE") {
                     throw new UserFriendlyError("This phone number is already in use", { cause: err });
-                } else if (err.httpStatus) {
+                } else if (err instanceof HTTPError && err.httpStatus) {
                     throw new UserFriendlyError("%(errorMessage)s (Status %(httpStatus)s)", {
                         errorMessage: err.message,
                         httpStatus: err.httpStatus,
@@ -278,12 +279,12 @@ export default class AddThreepid {
                 );
             }
         } catch (err) {
-            if (err.httpStatus === 401) {
+            if (err instanceof HTTPError && err.httpStatus === 401) {
                 throw new UserFriendlyError(
                     "Failed to verify email address: make sure you clicked the link in the email",
                     { cause: err },
                 );
-            } else if (err.httpStatus) {
+            } else if (err instanceof HTTPError && err.httpStatus) {
                 throw new UserFriendlyError("%(errorMessage)s (Status %(httpStatus)s)", {
                     errorMessage: err.message,
                     httpStatus: err.httpStatus,
@@ -359,10 +360,10 @@ export default class AddThreepid {
                     // The spec has always required this to use UI auth but synapse briefly
                     // implemented it without, so this may just succeed and that's OK.
                     return;
-                } catch (e) {
-                    if (e.httpStatus !== 401 || !e.data || !e.data.flows) {
+                } catch (err) {
+                    if (!(err instanceof MatrixError) || err.httpStatus !== 401 || !err.data || !err.data.flows) {
                         // doesn't look like an interactive-auth failure
-                        throw e;
+                        throw err;
                     }
 
                     const dialogAesthetics = {
@@ -384,7 +385,7 @@ export default class AddThreepid {
                     const { finished } = Modal.createDialog(InteractiveAuthDialog, {
                         title: _t("Add Phone Number"),
                         matrixClient: MatrixClientPeg.get(),
-                        authData: e.data,
+                        authData: err.data,
                         makeRequest: this.makeAddThreepidOnlyRequest,
                         aestheticsForStagePhases: {
                             [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
