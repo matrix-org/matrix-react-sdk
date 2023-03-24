@@ -28,9 +28,14 @@ interface WysiwygAutocompleteProps {
     handleMention: FormattingFunctions["mention"];
 }
 
-// Helper function that takes the rust suggestion and builds the query for the
-// Autocomplete. This will change as we implement / commands.
-// Returns an empty string if we don't want to show the suggestion menu.
+/**
+ * Builds the query for the `<Autocomplete />` component from the rust suggestion. This
+ * will change as we implement handling / commands.
+ *
+ * @param suggestion  - represents if the rust model is tracking a potential mention
+ * @returns an empty string if we can not generate a query, otherwise a query beginning
+ * with @ for a user query, # for a room or space query
+ */
 function buildQuery(suggestion: MappedSuggestion | null): string {
     if (!suggestion || !suggestion.keyChar || suggestion.type === "command") {
         // if we have an empty key character, we do not build a query
@@ -41,10 +46,15 @@ function buildQuery(suggestion: MappedSuggestion | null): string {
     return `${suggestion.keyChar}${suggestion.text}`;
 }
 
-// Helper function to get the mention text for a room as this is less straightforward
-// than it is for determining the text we display for a user.
-// TODO determine if it's worth bringing the switch case into this function to make it
-// into a more general `getMentionText` component
+/**
+ * Given a room type mention, determine the text that should be displayed in the mention
+ * TODO expand this function to more generally handle outputting the display text from a
+ * given completion
+ *
+ * @param completion - the item selected from the autocomplete, currently treated as a room completion
+ * @param client - the MatrixClient is required for us to look up the correct room mention text
+ * @returns the text to display in the mention
+ */
 function getRoomMentionText(completion: ICompletion, client: MatrixClient): string {
     const alias = completion.completion;
     const roomId = completion.completionId;
