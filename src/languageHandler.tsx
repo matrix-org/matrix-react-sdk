@@ -45,11 +45,11 @@ counterpart.setSeparator("|");
 const FALLBACK_LOCALE = "en";
 counterpart.setFallbackLocale(FALLBACK_LOCALE);
 
-// There is another `ErrorOptions` interface declared in `src/@types/global.d.ts` but
-// this one restricts the `cause` only to Error types (what we want the usage of this to
-// be).
 interface ErrorOptions {
-    cause?: Error;
+    // Because we're mixing the subsitution variables and cause into the same object
+    // below, we want them to always explicitly say whether there is an underlying error
+    // or not to avoid typos of "cause" slipping through unnoticed.
+    cause: Error | undefined;
 }
 
 /**
@@ -65,16 +65,18 @@ interface ErrorOptions {
  *
  * @param message - The untranslated error message text, e.g "Something went wrong with %(foo)s".
  * @param substitutionVariablesAndCause - Variable substitutions for the translation and
- * original cause of the error, e.g { foo: 'bar', cause: err }
+ * original cause of the error. If there is no cause, just pass `undefined`, e.g { foo:
+ * 'bar', cause: err || undefined }
  */
 export class UserFriendlyError extends Error {
     public readonly translatedMessage: string;
 
     public constructor(message: string, substitutionVariablesAndCause?: IVariables & ErrorOptions) {
         const errorOptions = {
-            cause: substitutionVariablesAndCause.cause,
+            cause: substitutionVariablesAndCause?.cause,
         };
-        // Prevent "Could not find /%\(cause\)s/g in x" logs to the console by removing it from the list
+        // Prevent "Could not find /%\(cause\)s/g in x" logs to the console by removing
+        // it from the list
         const substitutionVariables = { ...substitutionVariablesAndCause };
         delete substitutionVariables["cause"];
 

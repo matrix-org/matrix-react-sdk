@@ -20,7 +20,7 @@ import { IAuthData, IRequestMsisdnTokenResponse, IRequestTokenResponse } from "m
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import Modal from "./Modal";
-import { _t, newTranslatableError } from "./languageHandler";
+import { _t, UserFriendlyError } from "./languageHandler";
 import IdentityAuthClient from "./IdentityAuthClient";
 import { SSOAuthEntry } from "./components/views/auth/InteractiveAuthEntryComponents";
 import InteractiveAuthDialog from "./components/views/dialogs/InteractiveAuthDialog";
@@ -74,11 +74,12 @@ export default class AddThreepid {
             return res;
         } catch (err) {
             if (err.errcode === "M_THREEPID_IN_USE") {
-                throw newTranslatableError("This email address is already in use");
+                throw new UserFriendlyError("This email address is already in use", { cause: err });
             } else if (err.httpStatus) {
-                throw newTranslatableError("%(errorMessage)s (Status %(httpStatus)s)", {
+                throw new UserFriendlyError("%(errorMessage)s (Status %(httpStatus)s)", {
                     errorMessage: err.message,
                     httpStatus: err.httpStatus,
+                    cause: err,
                 });
             }
             // Otherwise, just blurt out the same error
@@ -110,11 +111,12 @@ export default class AddThreepid {
                 return res;
             } catch (err) {
                 if (err.errcode === "M_THREEPID_IN_USE") {
-                    throw newTranslatableError("This email address is already in use");
+                    throw new UserFriendlyError("This email address is already in use", { cause: err });
                 } else if (err.httpStatus) {
-                    throw newTranslatableError("%(errorMessage)s (Status %(httpStatus)s)", {
+                    throw new UserFriendlyError("%(errorMessage)s (Status %(httpStatus)s)", {
                         errorMessage: err.message,
                         httpStatus: err.httpStatus,
+                        cause: err,
                     });
                 }
                 // Otherwise, just blurt out the same error
@@ -146,11 +148,12 @@ export default class AddThreepid {
             return res;
         } catch (err) {
             if (err.errcode === "M_THREEPID_IN_USE") {
-                throw newTranslatableError("This phone number is already in use");
+                throw new UserFriendlyError("This phone number is already in use", { cause: err });
             } else if (err.httpStatus) {
-                throw newTranslatableError("%(errorMessage)s (Status %(httpStatus)s)", {
+                throw new UserFriendlyError("%(errorMessage)s (Status %(httpStatus)s)", {
                     errorMessage: err.message,
                     httpStatus: err.httpStatus,
+                    cause: err,
                 });
             }
             // Otherwise, just blurt out the same error
@@ -184,11 +187,12 @@ export default class AddThreepid {
                 return res;
             } catch (err) {
                 if (err.errcode === "M_THREEPID_IN_USE") {
-                    throw newTranslatableError("This phone number is already in use");
+                    throw new UserFriendlyError("This phone number is already in use", { cause: err });
                 } else if (err.httpStatus) {
-                    throw newTranslatableError("%(errorMessage)s (Status %(httpStatus)s)", {
+                    throw new UserFriendlyError("%(errorMessage)s (Status %(httpStatus)s)", {
                         errorMessage: err.message,
                         httpStatus: err.httpStatus,
+                        cause: err,
                     });
                 }
                 // Otherwise, just blurt out the same error
@@ -213,7 +217,7 @@ export default class AddThreepid {
                     const authClient = new IdentityAuthClient();
                     const identityAccessToken = await authClient.getAccessToken();
                     if (!identityAccessToken) {
-                        throw new Error("No identity access token found");
+                        throw new UserFriendlyError("No identity access token found");
                     }
                     await MatrixClientPeg.get().bindThreePid({
                         sid: this.sessionId,
@@ -275,13 +279,15 @@ export default class AddThreepid {
             }
         } catch (err) {
             if (err.httpStatus === 401) {
-                throw newTranslatableError(
+                throw new UserFriendlyError(
                     "Failed to verify email address: make sure you clicked the link in the email",
+                    { cause: err },
                 );
             } else if (err.httpStatus) {
-                throw newTranslatableError("%(errorMessage)s (Status %(httpStatus)s)", {
+                throw new UserFriendlyError("%(errorMessage)s (Status %(httpStatus)s)", {
                     errorMessage: err.message,
                     httpStatus: err.httpStatus,
+                    cause: err,
                 });
             }
             // Otherwise, just blurt out the same error

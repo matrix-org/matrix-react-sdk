@@ -90,6 +90,7 @@ describe("languageHandler", () => {
 
             const friendlyError = new UserFriendlyError(testErrorMessage, {
                 email: "test@example.com",
+                cause: undefined,
             });
 
             // Ensure message is in English so it's readable in the logs
@@ -110,6 +111,11 @@ describe("languageHandler", () => {
             });
 
             expect(friendlyError.cause).toStrictEqual(underlyingError);
+        });
+
+        it("it is ok to omit the substitution variables and cause object, there just won't be any cause", async () => {
+            const friendlyError = new UserFriendlyError("foo error");
+            expect(friendlyError.cause).toBeUndefined();
         });
     });
 });
