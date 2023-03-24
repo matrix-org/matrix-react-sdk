@@ -206,14 +206,7 @@ describe("Timeline", () => {
         });
 
         it("should have an expanded generic event list summary (GELS) on IRC layout", () => {
-            cy.visit("/#/room/" + roomId);
-            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
-
-            // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            viewRoomByLayout("IRC");
 
             // Click "expand" link button
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
@@ -232,21 +225,10 @@ describe("Timeline", () => {
         });
 
         it("should have an expanded generic event list summary (GELS) on compact modern/group layout", () => {
-            cy.visit("/#/room/" + roomId);
+            viewRoomByLayout("Group");
 
-            // Set compact modern layout
-            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group).setSettingValue(
-                "useCompactLayout",
-                null,
-                SettingLevel.DEVICE,
-                true,
-            );
-
-            // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            // Enable compact layout
+            cy.setSettingValue("useCompactLayout", null, SettingLevel.DEVICE, true);
 
             // Click "expand" link button
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
