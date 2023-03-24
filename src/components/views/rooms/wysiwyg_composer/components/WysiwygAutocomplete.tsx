@@ -56,18 +56,23 @@ function buildQuery(suggestion: MappedSuggestion | null): string {
  * @returns the text to display in the mention
  */
 function getRoomMentionText(completion: ICompletion, client: MatrixClient): string {
-    const alias = completion.completion;
     const roomId = completion.completionId;
+    const alias = completion.completion;
 
-    let roomForAutocomplete: Room | undefined;
-    if (roomId || alias[0] !== "#") {
-        roomForAutocomplete = client.getRoom(roomId || alias) ?? undefined;
+    let roomForAutocomplete: Room | null | undefined;
+
+    // try to find the room name for the mention text by roomId then alias
+    if (roomId) {
+        roomForAutocomplete = client.getRoom(roomId);
+    } else if (!alias.startsWith("#")) {
+        roomForAutocomplete = client.getRoom(alias);
     } else {
         roomForAutocomplete = client.getRooms().find((r) => {
             return r.getCanonicalAlias() === alias || r.getAltAliases().includes(alias);
         });
     }
 
+    // but if we haven't managed to find the room, use the alias as a fallback
     return roomForAutocomplete?.name || alias;
 }
 
