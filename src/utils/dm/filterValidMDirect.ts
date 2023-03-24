@@ -52,14 +52,14 @@ export const filterValidMDirect = (content: unknown): FilterValidMDirectResult =
 
         const filteredRoomIds: string[] = [];
         filteredContent.set(userId, filteredRoomIds);
-        roomIds.forEach((roomId: unknown) => {
+
+        for (const roomId of roomIds) {
             if (typeof roomId === "string") {
                 filteredRoomIds.push(roomId);
-                return;
+            } else {
+                valid = false;
             }
-
-            valid = false;
-        });
+        }
     }
 
     return {
