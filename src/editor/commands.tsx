@@ -21,7 +21,7 @@ import { IContent } from "matrix-js-sdk/src/models/event";
 import EditorModel from "./model";
 import { Type } from "./parts";
 import { Command, CommandCategories, getCommand } from "../SlashCommands";
-import { ITranslatableError, UserFriendlyError, _t, _td } from "../languageHandler";
+import { UserFriendlyError, _t, _td } from "../languageHandler";
 import Modal from "../Modal";
 import ErrorDialog from "../components/views/dialogs/ErrorDialog";
 import QuestionDialog from "../components/views/dialogs/QuestionDialog";

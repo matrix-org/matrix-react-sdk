@@ -90,10 +90,6 @@ export class UserFriendlyError extends Error {
     }
 }
 
-export interface ITranslatableError extends Error {
-    translatedMessage: string;
-}
-
 export function getUserLanguage(): string {
     const language = SettingsStore.getValue("language", null, /*excludeDefault:*/ true);
     if (language) {
