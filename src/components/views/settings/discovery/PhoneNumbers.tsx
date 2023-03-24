@@ -19,7 +19,7 @@ import React from "react";
 import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from "../../../../languageHandler";
+import { _t, UserFriendlyError } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Modal from "../../../../Modal";
 import AddThreepid, { Binding } from "../../../../AddThreepid";
@@ -107,7 +107,10 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description: err?.translatedMessage || err?.message || _t("Operation failed"),
+                description:
+                    (err instanceof UserFriendlyError && err.translatedMessage) ||
+                    (err instanceof Error && err.message) ||
+                    _t("Operation failed"),
             });
         }
     }
@@ -148,7 +151,10 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description: err?.translatedMessage || err?.message || _t("Operation failed"),
+                description:
+                    (err instanceof UserFriendlyError && err.translatedMessage) ||
+                    (err instanceof Error && err.message) ||
+                    _t("Operation failed"),
             });
         }
     }

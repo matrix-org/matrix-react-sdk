@@ -19,7 +19,7 @@ import React from "react";
 import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from "../../../../languageHandler";
+import { _t, UserFriendlyError } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Modal from "../../../../Modal";
 import AddThreepid, { Binding } from "../../../../AddThreepid";
@@ -106,7 +106,10 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description: err?.translatedMessage || err?.message || _t("Operation failed"),
+                description:
+                    (err instanceof UserFriendlyError && err.translatedMessage) ||
+                    (err instanceof Error && err.message) ||
+                    _t("Operation failed"),
             });
         }
     }
@@ -141,7 +144,10 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description: err?.translatedMessage || err?.message || _t("Operation failed"),
+                description:
+                    (err instanceof UserFriendlyError && err.translatedMessage) ||
+                    (err instanceof Error && err.message) ||
+                    _t("Operation failed"),
             });
         }
     }
@@ -180,7 +186,13 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             });
         } catch (err) {
             this.setState({ continueDisabled: false });
-            if (err.errcode === "M_THREEPID_AUTH_FAILED") {
+
+            let underlyingError = err;
+            if (err instanceof UserFriendlyError) {
+                underlyingError = err.cause;
+            }
+
+            if (underlyingError.errcode === "M_THREEPID_AUTH_FAILED") {
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Your email address hasn't been verified yet"),
                     description: _t(
@@ -191,7 +203,10 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                 logger.error("Unable to verify email address: " + err);
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Unable to verify email address."),
-                    description: err?.translatedMessage || err?.message || _t("Operation failed"),
+                    description:
+                        (err instanceof UserFriendlyError && err.translatedMessage) ||
+                        (err instanceof Error && err.message) ||
+                        _t("Operation failed"),
                 });
             }
         }
