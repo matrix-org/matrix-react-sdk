@@ -19,7 +19,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent, EventType, IContent, MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import DMRoomMap from "../../src/utils/DMRoomMap";
-import { flushPromises, mkEvent, stubClient } from "../test-utils";
+import { mkEvent, stubClient } from "../test-utils";
 describe("DMRoomMap", () => {
     const roomId1 = "!room1:example.com";
     const roomId2 = "!room2:example.com";
