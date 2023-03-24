@@ -24,7 +24,16 @@ import { ICompletion } from "../../../../../autocomplete/Autocompleter";
 import { useMatrixClientContext } from "../../../../../contexts/MatrixClientContext";
 
 interface WysiwygAutocompleteProps {
+    /**
+     * The suggestion output from the rust model is used to build the query that is
+     * passed to the `<Autocomplete />` component
+     */
     suggestion: MappedSuggestion | null;
+
+    /**
+     * This handler will be called with the href and display text for a mention on clicking
+     * a mention in the autocomplete list or pressing enter on a selected item
+     */
     handleMention: FormattingFunctions["mention"];
 }
 
@@ -76,6 +85,13 @@ function getRoomMentionText(completion: ICompletion, client: MatrixClient): stri
     return roomForAutocomplete?.name || alias;
 }
 
+/**
+ * Given the current suggestion from the rust model and a handler function, this component
+ * will display the legacy `<Autocomplete />` component (as used in the BasicMessageComposer)
+ * and call the handler function with the required arguments when a mention is selected
+ *
+ * @param props.ref - the ref will be attached to the rendered `<Autocomplete />` component
+ */
 const WysiwygAutocomplete = forwardRef(
     ({ suggestion, handleMention }: WysiwygAutocompleteProps, ref: ForwardedRef<Autocomplete>): JSX.Element | null => {
         const { room } = useRoomContext();
