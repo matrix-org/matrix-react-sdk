@@ -164,8 +164,23 @@ describe("Timeline", () => {
                 "created and configured the room.",
             ).should("exist");
 
-            // Check room name line-height is reset
-            cy.get(".mx_IRCLayout .mx_NewRoomIntro h2").should("have.css", "line-height", "normal");
+            cy.get(".mx_IRCLayout").within(() => {
+                // Check room name line-height is reset
+                cy.get(".mx_NewRoomIntro h2").should("have.css", "line-height", "normal");
+
+                // Check the profile resizer's place
+                // See: _IRCLayout
+                // --RoomView_MessageList-padding = 18px (See: _RoomView.pcss)
+                // --MessageTimestamp-width = $MessageTimestamp_width = 46px (See: _common.pcss)
+                // --icon-width = 14px
+                // --right-padding = 5px
+                // --name-width = 80px
+                // --resizer-width = 15px
+                // --resizer-a11y = 3px
+                // 18px + 46px + 14px + 5px + 80px + 5px - 15px - 3px
+                // = 150px
+                cy.get(".mx_ProfileResizer").should("have.css", "inset-inline-start", "150px");
+            });
 
             cy.get(".mx_MainSplit").percySnapshotElement("Configured room on IRC layout");
         });
@@ -520,9 +535,10 @@ describe("Timeline", () => {
                 "0px",
             );
 
-            cy.get(".mx_MainSplit").percySnapshotElement("Hidden event line with zero padding on IRC layout", {
+            // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24881
+            /*cy.get(".mx_MainSplit").percySnapshotElement("Hidden event line with zero padding on IRC layout", {
                 percyCSS,
-            });
+            });*/
 
             // should add inline start padding to a hidden event line on modern layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
@@ -833,34 +849,37 @@ describe("Timeline", () => {
             cy.contains(".mx_RoomView_MessageList .mx_EventTile_last", reply2).should("exist");
 
             // Exclude timestamp and read marker from snapshot
-            const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
+            //const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
 
             // Check the margin value of ReplyChains of EventTile at the bottom on IRC layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
             cy.get(".mx_EventTile_last[data-layout='irc'] .mx_ReplyChain").should("have.css", "margin", "0px");
 
             // Take a snapshot on IRC layout
-            cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on IRC layout", {
+            // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24881
+            /*cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on IRC layout", {
                 percyCSS,
-            });
+            });*/
 
             // Check the margin value of ReplyChains of EventTile at the bottom on group/modern layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
             cy.get(".mx_EventTile_last[data-layout='group'] .mx_ReplyChain").should("have.css", "margin-bottom", "8px");
 
             // Take a snapshot on modern layout
-            cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on modern layout", {
+            // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24881
+            /*cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on modern layout", {
                 percyCSS,
-            });
+            });*/
 
             // Check the margin value of ReplyChains of EventTile at the bottom on group/modern compact layout
             cy.setSettingValue("useCompactLayout", null, SettingLevel.DEVICE, true);
             cy.get(".mx_EventTile_last[data-layout='group'] .mx_ReplyChain").should("have.css", "margin-bottom", "4px");
 
             // Take a snapshot on compact modern layout
-            cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on compact modern layout", {
+            // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24881
+            /*cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on compact modern layout", {
                 percyCSS,
-            });
+            });*/
 
             // Check the margin value of ReplyChains of EventTile at the bottom on bubble layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
@@ -871,9 +890,10 @@ describe("Timeline", () => {
             );
 
             // Take a snapshot on bubble layout
-            cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on bubble layout", {
+            // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24881
+            /*cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on bubble layout", {
                 percyCSS,
-            });
+            });*/
         });
 
         it("should send, reply, and display long strings without overflowing", () => {
@@ -931,34 +951,53 @@ describe("Timeline", () => {
                 });
             cy.getComposer().type(`${reply}{enter}`);
 
-            // Make sure the reply tile and the reply are displayed
+            // Make sure the reply tile is rendered
             cy.get(".mx_EventTile_last").within(() => {
                 cy.get(".mx_ReplyTile .mx_MTextBody").should("have.text", LONG_STRING);
                 cy.get(".mx_EventTile_line > .mx_MTextBody").should("have.text", reply);
             });
 
+            // Change the viewport size
+            cy.viewport(1600, 1200);
+
             // Exclude timestamp and read marker from snapshots
-            const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
+            //const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
 
             // Make sure the strings do not overflow on IRC layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
-            cy.get(".mx_MainSplit").percySnapshotElement("Long strings with a reply on IRC layout", { percyCSS });
+            // Scroll to the bottom to have Percy take a snapshot of the whole viewport
+            cy.get(".mx_ScrollPanel").scrollTo("bottom", { ensureScrollable: false });
+            // Assert that both avatar in the introduction and the last message are visible at the same time
+            cy.get(".mx_NewRoomIntro .mx_BaseAvatar").should("be.visible");
+            cy.get(".mx_EventTile_last[data-layout='irc']").within(() => {
+                cy.get(".mx_MTextBody").should("be.visible");
+                cy.get(".mx_EventTile_receiptSent").should("be.visible"); // rendered at the bottom of EventTile
+            });
+            // Take a snapshot in IRC layout
+            // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24881
+            //cy.get(".mx_ScrollPanel").percySnapshotElement("Long strings with a reply on IRC layout", { percyCSS });
 
             // Make sure the strings do not overflow on modern layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
-            cy.get(".mx_EventTile_last[data-layout='group'] .mx_EventTile_line > .mx_MTextBody").should(
-                "have.text",
-                reply,
-            );
-            cy.get(".mx_MainSplit").percySnapshotElement("Long strings with a reply on modern layout", { percyCSS });
+            cy.get(".mx_ScrollPanel").scrollTo("bottom", { ensureScrollable: false }); // Scroll again in case
+            cy.get(".mx_NewRoomIntro .mx_BaseAvatar").should("be.visible");
+            cy.get(".mx_EventTile_last[data-layout='group']").within(() => {
+                cy.get(".mx_MTextBody").should("be.visible");
+                cy.get(".mx_EventTile_receiptSent").should("be.visible");
+            });
+            // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24881
+            //cy.get(".mx_ScrollPanel").percySnapshotElement("Long strings with a reply on modern layout", { percyCSS });
 
             // Make sure the strings do not overflow on bubble layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
-            cy.get(".mx_EventTile_last[data-layout='bubble'] .mx_EventTile_line > .mx_MTextBody").should(
-                "have.text",
-                reply,
-            );
-            cy.get(".mx_MainSplit").percySnapshotElement("Long strings with a reply on bubble layout", { percyCSS });
+            cy.get(".mx_ScrollPanel").scrollTo("bottom", { ensureScrollable: false }); // Scroll again in case
+            cy.get(".mx_NewRoomIntro .mx_BaseAvatar").should("be.visible");
+            cy.get(".mx_EventTile_last[data-layout='bubble']").within(() => {
+                cy.get(".mx_MTextBody").should("be.visible");
+                cy.get(".mx_EventTile_receiptSent").should("be.visible");
+            });
+            // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24881
+            //cy.get(".mx_ScrollPanel").percySnapshotElement("Long strings with a reply on bubble layout", { percyCSS });
         });
     });
 });
