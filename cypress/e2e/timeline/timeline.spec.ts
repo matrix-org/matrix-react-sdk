@@ -245,6 +245,9 @@ describe("Timeline", () => {
         });
 
         it("should click 'collapse' on the first hovered info event line inside GELS on bubble layout", () => {
+            // This test checks clickability of the "Collapse" link button, which had been covered with
+            // MessageActionBar's safe area - https://github.com/vector-im/element-web/issues/22864
+
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
             cy.contains(
