@@ -1,6 +1,4 @@
 {
-    "This email address is already in use": "This email address is already in use",
-    "This phone number is already in use": "This phone number is already in use",
     "Use Single Sign On to continue": "Use Single Sign On to continue",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Confirm adding this email address by using Single Sign On to prove your identity.",
     "Single Sign On": "Single Sign On",
@@ -8,7 +6,6 @@
     "Click the button below to confirm adding this email address.": "Click the button below to confirm adding this email address.",
     "Confirm": "Confirm",
     "Add Email Address": "Add Email Address",
-    "Failed to verify email address: make sure you clicked the link in the email": "Failed to verify email address: make sure you clicked the link in the email",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Confirm adding this phone number by using Single Sign On to prove your identity.",
     "Confirm adding phone number": "Confirm adding phone number",
     "Click the button below to confirm adding this phone number.": "Click the button below to confirm adding this phone number.",
@@ -117,6 +114,7 @@
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s was not given permission to send notifications - please try again",
     "Unable to enable Notifications": "Unable to enable Notifications",
     "This email address was not found": "This email address was not found",
+    "Failed to verify email address: make sure you clicked the link in the email": "Failed to verify email address: make sure you clicked the link in the email",
     "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "Your email address does not appear to be associated with a Matrix ID on this homeserver.",
     "United Kingdom": "United Kingdom",
     "United States": "United States",
