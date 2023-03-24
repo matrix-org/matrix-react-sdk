@@ -55,6 +55,7 @@ describe("Audio player", () => {
         cy.get(".mx_EventTile.mx_EventTile_last .mx_EventTile_receiptSent").should("exist");
     };
 
+    // Check that the audio player for the long-name-audio-file has been rendered correctly
     const checkPlayerFilenameLong = () => {
         // Detect the audio file
         cy.get(".mx_EventTile_mediaLine .mx_MAudioBody").within(() => {
