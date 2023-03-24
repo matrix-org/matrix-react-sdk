@@ -31,10 +31,8 @@ export class UserProfilesStore {
     private profiles = new LruCache<string, IMatrixProfile | null>(cacheSize);
     private knownProfiles = new LruCache<string, IMatrixProfile | null>(cacheSize);
 
-    public constructor(private client?: MatrixClient) {
-        if (client) {
-            client.on(RoomMemberEvent.Membership, this.onRoomMembershipEvent);
-        }
+    public constructor(private client: MatrixClient) {
+        client.on(RoomMemberEvent.Membership, this.onRoomMembershipEvent);
     }
 
     /**
@@ -106,7 +104,7 @@ export class UserProfilesStore {
      */
     private async fetchProfileFromApi(userId: string): Promise<IMatrixProfile | null> {
         try {
-            return (await this.client?.getProfileInfo(userId)) ?? null;
+            return (await this.client.getProfileInfo(userId)) ?? null;
         } catch (e) {
             logger.warn(`Error retrieving profile for userId ${userId}`, e);
         }
@@ -121,8 +119,6 @@ export class UserProfilesStore {
      * @returns true: at least one room shared with user identified by its Id, else false.
      */
     private isUserIdKnown(userId: string): boolean {
-        if (!this.client) return false;
-
         return this.client.getRooms().some((room) => {
             return !!room.getMember(userId);
         });

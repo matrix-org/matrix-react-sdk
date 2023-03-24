@@ -189,9 +189,18 @@ export class SdkContextClass {
     }
 
     public get userProfilesStore(): UserProfilesStore {
+        if (!this.client) {
+            throw new Error("Unable to create UserProfilesStore without a client");
+        }
+
         if (!this._UserProfilesStore) {
             this._UserProfilesStore = new UserProfilesStore(this.client);
         }
+
         return this._UserProfilesStore;
+    }
+
+    public onLoggedOut(): void {
+        this._UserProfilesStore = undefined;
     }
 }
