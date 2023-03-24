@@ -94,19 +94,6 @@ export interface ITranslatableError extends Error {
     translatedMessage: string;
 }
 
-/**
- * Helper function to create an error which has an English message
- * with a translatedMessage property for use by the consumer.
- * @param {string} message Message to translate.
- * @param {object} variables Variable substitutions, e.g { foo: 'bar' }
- * @returns {Error} The constructed error.
- */
-export function newTranslatableError(message: string, variables?: IVariables): ITranslatableError {
-    const error = new Error(message) as ITranslatableError;
-    error.translatedMessage = _t(message, variables);
-    return error;
-}
-
 export function getUserLanguage(): string {
     const language = SettingsStore.getValue("language", null, /*excludeDefault:*/ true);
     if (language) {
