@@ -18,6 +18,7 @@ limitations under the License.
 import React from "react";
 import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { _t, UserFriendlyError } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
@@ -228,7 +229,7 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
                     underlyingError = err.cause;
                 }
 
-                if (underlyingError.errcode === "M_THREEPID_AUTH_FAILED") {
+                if (underlyingError instanceof MatrixError && underlyingError.errcode === "M_THREEPID_AUTH_FAILED") {
                     Modal.createDialog(ErrorDialog, {
                         title: _t("Your email address hasn't been verified yet"),
                         description: _t(

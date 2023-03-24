@@ -17,6 +17,7 @@ limitations under the License.
 
 import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import * as Email from "../../../email";
 import AddThreepid from "../../../AddThreepid";
@@ -123,7 +124,7 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
                     underlyingError = err.cause;
                 }
 
-                if (underlyingError.errcode == "M_THREEPID_AUTH_FAILED") {
+                if (underlyingError instanceof MatrixError && underlyingError.errcode === "M_THREEPID_AUTH_FAILED") {
                     const message =
                         _t("Unable to verify email address.") +
                         " " +
