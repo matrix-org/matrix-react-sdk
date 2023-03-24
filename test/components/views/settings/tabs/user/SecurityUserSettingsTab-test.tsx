@@ -45,8 +45,12 @@ describe("<SecurityUserSettingsTab />", () => {
         getIgnoredUsers: jest.fn(),
         getVersions: jest.fn().mockResolvedValue({
             unstable_features: {
-                "org.matrix.msc3882": true,
                 "org.matrix.msc3886": true,
+            },
+        }),
+        getCapabilities: jest.fn().mockResolvedValue({
+            "org.matrix.msc3882.get_logintoken": {
+                "enabled": true,
             },
         }),
     });

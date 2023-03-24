@@ -24,6 +24,8 @@ import SettingsSubsection from "../shared/SettingsSubsection";
 interface IProps {
     onShowQr: () => void;
     versions?: IServerVersions;
+    // we can't use the capabilities type from the js-sdk because it isn't exported
+    capabilities?: Record<string, any>;
 }
 
 export default class LoginWithQRSection extends React.Component<IProps> {
@@ -33,7 +35,8 @@ export default class LoginWithQRSection extends React.Component<IProps> {
 
     public render(): JSX.Element | null {
         // Needs server support for MSC3882 and MSC3886:
-        const msc3882Supported = !!this.props.versions?.unstable_features?.["org.matrix.msc3882"];
+        // in r0 of MSC3882 it is exposed as a feature flag, but in r1 it is a capability
+        const msc3882Supported = !!this.props.versions?.unstable_features?.["org.matrix.msc3882"] || !!this.props.capabilities?.["org.matrix.msc3882.get_logintoken"]?.enabled;
         const msc3886Supported = !!this.props.versions?.unstable_features?.["org.matrix.msc3886"];
         const offerShowQr = msc3882Supported && msc3886Supported;
 
