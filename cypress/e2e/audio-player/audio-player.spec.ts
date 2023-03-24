@@ -256,7 +256,7 @@ describe("Audio player", () => {
         });
     });
 
-    it("should download audio file", () => {
+    it("should support downloading an audio file", () => {
         visitRoom();
 
         // Upload an audio file
