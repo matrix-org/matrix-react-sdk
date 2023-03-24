@@ -189,13 +189,19 @@ describe("Audio player", () => {
             checkPlayerFilenameLong();
         });
 
+        // Disable "Match system theme" in case
+        cy.setSettingValue("use_system_theme", null, SettingLevel.DEVICE, false);
+
         // Enable high contrast manually
-        cy.openUserSettings("Appearance");
-        cy.get(".mx_UserSettingsDialog").within(() => {
-            cy.get(".mx_ThemeChoicePanel").within(() => {
+        cy.openUserSettings("Appearance")
+            .get(".mx_ThemeChoicePanel")
+            .within(() => {
                 cy.get("[data-testid='theme-choice-panel-selectors']").within(() => {
                     // Enable light theme
                     cy.get(".mx_ThemeSelector_light").click();
+
+                    // Assert that the radio button for light theme was checked
+                    cy.get(".mx_StyledRadioButton_checked input[value='light']").should("exist");
                 });
 
                 cy.get("[data-testid='theme-choice-panel-highcontrast']").within(() => {
@@ -204,9 +210,8 @@ describe("Audio player", () => {
                 });
             });
 
-            // Close the user settings dialog
-            cy.get("[aria-label='Close dialog']").click();
-        });
+        // Close the user settings dialog
+        cy.get("[aria-label='Close dialog']").click();
 
         // Scroll to the bottom to make the audio player visible for Percy tests
         cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
