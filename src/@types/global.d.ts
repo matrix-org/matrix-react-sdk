@@ -186,7 +186,17 @@ declare global {
         scrollIntoView(arg?: boolean | _ScrollIntoViewOptions): void;
     }
 
+    interface ErrorOptions {
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause
+        cause?: unknown;
+    }
+
     interface Error {
+        // Standard
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause
+        cause?: unknown;
+
+        // Non-standard
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/fileName
         fileName?: string;
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/lineNumber
@@ -194,6 +204,13 @@ declare global {
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/columnNumber
         columnNumber?: number;
     }
+
+    interface ErrorConstructor {
+        new (message?: string, options?: ErrorOptions): Error;
+        (message?: string, options?: ErrorOptions): Error;
+    }
+
+    var Error: ErrorConstructor;
 
     // https://github.com/microsoft/TypeScript/issues/28308#issuecomment-650802278
     interface AudioWorkletProcessor {
