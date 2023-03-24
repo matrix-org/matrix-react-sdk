@@ -1,54 +1,90 @@
 name: Tests
 on:
-  pull_request: { }
-  push:
-    branches: [ develop, master ]
-  repository_dispatch:
-    types: [ upstream-sdk-notify ]
+    pull_request: {}
+    push:
+        branches: [develop, master]
+    repository_dispatch:
+        types: [upstream-sdk-notify]
+    workflow_call:
+        inputs:
+            disable_coverage:
+                type: boolean
+                required: false
+                description: "Specify true to skip generating and uploading coverage for tests"
+            matrix-js-sdk-sha:
+                type: string
+                required: false
+                description: "The matrix-js-sdk SHA to use"
 env:
-  # These must be set for fetchdep.sh to get the right branch
-  REPOSITORY: ${{ github.repository }}
-  PR_NUMBER: ${{ github.event.pull_request.number }}
+    # These must be set for fetchdep.sh to get the right branch
+    REPOSITORY: ${{ github.repository }}
+    PR_NUMBER: ${{ github.event.pull_request.number }}
 jobs:
-  jest:
-    name: Jest
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    jest:
+        name: Jest
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+              with:
+                  repository: ${{ inputs.matrix-js-sdk-sha && 'matrix-org/matrix-react-sdk' || github.repository }}
 
-      - name: Yarn cache
-        uses: actions/setup-node@v3
-        with:
-          cache: 'yarn'
+            - name: Yarn cache
+              uses: actions/setup-node@v3
+              with:
+                  cache: "yarn"
 
-      - name: Install Deps
-        run: "./scripts/ci/install-deps.sh --ignore-scripts"
+            - name: Install Deps
+              run: "./scripts/ci/install-deps.sh --ignore-scripts"
+              env:
+                  JS_SDK_GITHUB_BASE_REF: ${{ inputs.matrix-js-sdk-sha }}
 
-      - name: Get number of CPU cores
-        id: cpu-cores
-        uses: SimenB/github-actions-cpu-cores@v1
+            - name: Jest Cache
+              uses: actions/cache@v3
+              with:
+                  path: /tmp/jest_cache
+                  key: ${{ hashFiles('**/yarn.lock') }}
 
-      - name: Run tests with coverage
-        run: "yarn coverage --ci --reporters github-actions --max-workers ${{ steps.cpu-cores.outputs.count }}"
+            - name: Get number of CPU cores
+              id: cpu-cores
+              uses: SimenB/github-actions-cpu-cores@410541432439795d30db6501fb1d8178eb41e502 # v1
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: coverage
-          path: |
-            coverage
-            !coverage/lcov-report
+            - name: Load metrics reporter
+              id: metrics
+              if: github.ref == 'refs/heads/develop'
+              run: |
+                  echo "extra-reporter='--reporters=<rootDir>/test/slowReporter.js'" >> $GITHUB_OUTPUT
 
-  app-tests:
-    name: Element Web Integration Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+            - name: Run tests
+              run: |
+                  yarn ${{ inputs.disable_coverage != 'true' && 'coverage' || 'test' }} \
+                      --ci \
+                      --reporters github-actions ${{ steps.metrics.outputs.extra-reporter }} \
+                      --max-workers ${{ steps.cpu-cores.outputs.count }} \
+                      --cacheDirectory /tmp/jest_cache
 
-      - uses: actions/setup-node@v3
-        with:
-          cache: 'yarn'
+            - name: Upload Artifact
+              if: inputs.disable_coverage != 'true'
+              uses: actions/upload-artifact@v3
+              with:
+                  name: coverage
+                  path: |
+                      coverage
+                      !coverage/lcov-report
 
-      - name: Run tests
-        run: "./scripts/ci/app-tests.sh"
+    app-tests:
+        name: Element Web Integration Tests
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  repository: ${{ inputs.matrix-js-sdk-sha && 'matrix-org/matrix-react-sdk' || github.repository }}
+
+            - uses: actions/setup-node@v3
+              with:
+                  cache: "yarn"
+
+            - name: Run tests
+              run: "./scripts/ci/app-tests.sh"
+              env:
+                  JS_SDK_GITHUB_BASE_REF: ${{ inputs.matrix-js-sdk-sha }}

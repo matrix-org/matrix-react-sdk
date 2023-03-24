@@ -14,15 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// eslint-disable-next-line deprecate/import
-import { ReactWrapper } from "enzyme";
 import EventEmitter from "events";
 
 import { ActionPayload } from "../../src/dispatcher/payloads";
 import defaultDispatcher from "../../src/dispatcher/dispatcher";
 import { DispatcherAction } from "../../src/dispatcher/actions";
 
-export const emitPromise = (e: EventEmitter, k: string | symbol) => new Promise(r => e.once(k, r));
+export const emitPromise = (e: EventEmitter, k: string | symbol) => new Promise((r) => e.once(k, r));
 
 /**
  * Waits for a certain payload to be dispatched.
@@ -33,22 +31,24 @@ export const emitPromise = (e: EventEmitter, k: string | symbol) => new Promise(
  * Rejects when the timeout is reached.
  */
 export function untilDispatch(
-    waitForAction: DispatcherAction | ((payload: ActionPayload) => boolean), dispatcher=defaultDispatcher, timeout=1000,
+    waitForAction: DispatcherAction | ((payload: ActionPayload) => boolean),
+    dispatcher = defaultDispatcher,
+    timeout = 1000,
 ): Promise<ActionPayload> {
-    const callerLine = new Error().stack.toString().split("\n")[2];
+    const callerLine = new Error().stack!.toString().split("\n")[2];
     if (typeof waitForAction === "string") {
         const action = waitForAction;
         waitForAction = (payload) => {
             return payload.action === action;
         };
     }
-    const callback = waitForAction as ((payload: ActionPayload) => boolean);
+    const callback = waitForAction as (payload: ActionPayload) => boolean;
     return new Promise((resolve, reject) => {
         let fulfilled = false;
-        let timeoutId;
+        let timeoutId: number;
         // set a timeout handler if needed
         if (timeout > 0) {
-            timeoutId = setTimeout(() => {
+            timeoutId = window.setTimeout(() => {
                 if (!fulfilled) {
                     reject(new Error(`untilDispatch: timed out at ${callerLine}`));
                     fulfilled = true;
@@ -58,7 +58,8 @@ export function untilDispatch(
         // listen for dispatches
         const token = dispatcher.register((p: ActionPayload) => {
             const finishWaiting = callback(p);
-            if (finishWaiting || fulfilled) { // wait until we're told or we timeout
+            if (finishWaiting || fulfilled) {
+                // wait until we're told or we timeout
                 // if we haven't timed out, resolve now with the payload.
                 if (!fulfilled) {
                     resolve(p);
@@ -84,15 +85,18 @@ export function untilDispatch(
  * no callback is provided. Rejects when the timeout is reached.
  */
 export function untilEmission(
-    emitter: EventEmitter, eventName: string, check: ((...args: any[]) => boolean)=undefined, timeout=1000,
+    emitter: EventEmitter,
+    eventName: string,
+    check?: (...args: any[]) => boolean,
+    timeout = 1000,
 ): Promise<void> {
-    const callerLine = new Error().stack.toString().split("\n")[2];
+    const callerLine = new Error().stack!.toString().split("\n")[2];
     return new Promise((resolve, reject) => {
         let fulfilled = false;
-        let timeoutId;
+        let timeoutId: number;
         // set a timeout handler if needed
         if (timeout > 0) {
-            timeoutId = setTimeout(() => {
+            timeoutId = window.setTimeout(() => {
                 if (!fulfilled) {
                     reject(new Error(`untilEmission: timed out at ${callerLine}`));
                     fulfilled = true;
@@ -122,26 +126,14 @@ export function untilEmission(
     });
 }
 
-export const findByAttr = (attr: string) => (component: ReactWrapper, value: string) =>
-    component.find(`[${attr}="${value}"]`);
-export const findByTestId = findByAttr('data-test-id');
-export const findById = findByAttr('id');
-export const findByAriaLabel = findByAttr('aria-label');
-
-const findByTagAndAttr = (attr: string) =>
-    (component: ReactWrapper, value: string, tag: string) =>
-        component.find(`${tag}[${attr}="${value}"]`);
-
-export const findByTagAndTestId = findByTagAndAttr('data-test-id');
-
-export const flushPromises = async () => await new Promise(resolve => setTimeout(resolve));
+export const flushPromises = async () => await new Promise((resolve) => window.setTimeout(resolve));
 
 // with jest's modern fake timers process.nextTick is also mocked,
 // flushing promises in the normal way then waits for some advancement
 // of the fake timers
 // https://gist.github.com/apieceofbart/e6dea8d884d29cf88cdb54ef14ddbcc4?permalink_comment_id=4018174#gistcomment-4018174
 export const flushPromisesWithFakeTimers = async (): Promise<void> => {
-    const promise = new Promise(resolve => process.nextTick(resolve));
+    const promise = new Promise((resolve) => process.nextTick(resolve));
     jest.advanceTimersByTime(1);
     await promise;
 };
@@ -179,6 +171,6 @@ export function waitForUpdate(inst: React.Component, updates = 1): Promise<void>
  * that also checks timestamps
  */
 export const advanceDateAndTime = (ms: number) => {
-    jest.spyOn(global.Date, 'now').mockReturnValue(Date.now() + ms);
+    jest.spyOn(global.Date, "now").mockReturnValue(Date.now() + ms);
     jest.advanceTimersByTime(ms);
 };

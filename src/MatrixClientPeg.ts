@@ -2,7 +2,7 @@
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd.
 Copyright 2017, 2018, 2019 New Vector Ltd
-Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,28 +17,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ICreateClientOpts, PendingEventOrdering, RoomNameState, RoomNameType } from 'matrix-js-sdk/src/matrix';
-import { IStartClientOpts, MatrixClient } from 'matrix-js-sdk/src/client';
-import { MemoryStore } from 'matrix-js-sdk/src/store/memory';
-import * as utils from 'matrix-js-sdk/src/utils';
-import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
-import { EventTimelineSet } from 'matrix-js-sdk/src/models/event-timeline-set';
-import { verificationMethods } from 'matrix-js-sdk/src/crypto';
+import { ICreateClientOpts, PendingEventOrdering, RoomNameState, RoomNameType } from "matrix-js-sdk/src/matrix";
+import { IStartClientOpts, MatrixClient } from "matrix-js-sdk/src/client";
+import { MemoryStore } from "matrix-js-sdk/src/store/memory";
+import * as utils from "matrix-js-sdk/src/utils";
+import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
+import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
+import { verificationMethods } from "matrix-js-sdk/src/crypto";
 import { SHOW_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import createMatrixClient from './utils/createMatrixClient';
-import SettingsStore from './settings/SettingsStore';
-import MatrixActionCreators from './actions/MatrixActionCreators';
-import Modal from './Modal';
+import createMatrixClient from "./utils/createMatrixClient";
+import SettingsStore from "./settings/SettingsStore";
+import MatrixActionCreators from "./actions/MatrixActionCreators";
+import Modal from "./Modal";
 import MatrixClientBackedSettingsHandler from "./settings/handlers/MatrixClientBackedSettingsHandler";
-import * as StorageManager from './utils/StorageManager';
-import IdentityAuthClient from './IdentityAuthClient';
-import { crossSigningCallbacks, tryToUnlockSecretStorageWithDehydrationKey } from './SecurityManager';
+import * as StorageManager from "./utils/StorageManager";
+import IdentityAuthClient from "./IdentityAuthClient";
+import { crossSigningCallbacks, tryToUnlockSecretStorageWithDehydrationKey } from "./SecurityManager";
 import SecurityCustomisations from "./customisations/Security";
-import { SlidingSyncManager } from './SlidingSyncManager';
+import { SlidingSyncManager } from "./SlidingSyncManager";
 import CryptoStoreTooNewDialog from "./components/views/dialogs/CryptoStoreTooNewDialog";
 import { _t } from "./languageHandler";
+import { SettingLevel } from "./settings/SettingLevel";
+import MatrixClientBackedController from "./settings/controllers/MatrixClientBackedController";
 
 export interface IMatrixClientCreds {
     homeserverUrl: string;
@@ -156,10 +158,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     }
 
     public currentUserIsJustRegistered(): boolean {
-        return (
-            this.matrixClient &&
-            this.matrixClient.credentials.userId === this.justRegisteredUserId
-        );
+        return this.matrixClient && this.matrixClient.credentials.userId === this.justRegisteredUserId;
     }
 
     public userRegisteredWithinLastHours(hours: number): boolean {
@@ -168,9 +167,9 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         }
 
         try {
-            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time"), 10);
+            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time")!, 10);
             const diff = Date.now() - registrationTime;
-            return (diff / 36e5) <= hours;
+            return diff / 36e5 <= hours;
         } catch (e) {
             return false;
         }
@@ -178,7 +177,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
 
     public userRegisteredAfter(timestamp: Date): boolean {
         try {
-            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time"), 10);
+            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time")!, 10);
             return timestamp.getTime() <= registrationTime;
         } catch (e) {
             return false;
@@ -191,44 +190,28 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     }
 
     public async assign(): Promise<any> {
-        for (const dbType of ['indexeddb', 'memory']) {
+        for (const dbType of ["indexeddb", "memory"]) {
             try {
                 const promise = this.matrixClient.store.startup();
                 logger.log("MatrixClientPeg: waiting for MatrixClient store to initialise");
                 await promise;
                 break;
             } catch (err) {
-                if (dbType === 'indexeddb') {
-                    logger.error('Error starting matrixclient store - falling back to memory store', err);
+                if (dbType === "indexeddb") {
+                    logger.error("Error starting matrixclient store - falling back to memory store", err);
                     this.matrixClient.store = new MemoryStore({
                         localStorage: localStorage,
                     });
                 } else {
-                    logger.error('Failed to start memory store!', err);
+                    logger.error("Failed to start memory store!", err);
                     throw err;
                 }
             }
         }
 
         // try to initialise e2e on the new client
-        try {
-            // check that we have a version of the js-sdk which includes initCrypto
-            if (!SettingsStore.getValue("lowBandwidth") && this.matrixClient.initCrypto) {
-                await this.matrixClient.initCrypto();
-                this.matrixClient.setCryptoTrustCrossSignedDevices(
-                    !SettingsStore.getValue('e2ee.manuallyVerifyAllSessions'),
-                );
-                await tryToUnlockSecretStorageWithDehydrationKey(this.matrixClient);
-                StorageManager.setCryptoInitialised(true);
-            }
-        } catch (e) {
-            if (e && e.name === 'InvalidCryptoStoreError') {
-                // The js-sdk found a crypto DB too new for it to use
-                Modal.createDialog(CryptoStoreTooNewDialog);
-            }
-            // this can happen for a number of reasons, the most likely being
-            // that the olm library was missing. It's not fatal.
-            logger.warn("Unable to initialise e2e", e);
+        if (!SettingsStore.getValue("lowBandwidth")) {
+            await this.initClientCrypto();
         }
 
         const opts = utils.deepCopy(this.opts);
@@ -236,7 +219,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         opts.pendingEventOrdering = PendingEventOrdering.Detached;
         opts.lazyLoadMembers = true;
         opts.clientWellKnownPollPeriod = 2 * 60 * 60; // 2 hours
-        opts.experimentalThreadSupport = SettingsStore.getValue("feature_thread");
+        opts.threadSupport = true;
 
         if (SettingsStore.getValue("feature_sliding_sync")) {
             const proxyUrl = SettingsStore.getValue("feature_sliding_sync_proxy_url");
@@ -252,11 +235,56 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             SlidingSyncManager.instance.startSpidering(100, 50); // 100 rooms at a time, 50ms apart
         }
 
+        opts.intentionalMentions = SettingsStore.getValue("feature_intentional_mentions");
+
         // Connect the matrix client to the dispatcher and setting handlers
         MatrixActionCreators.start(this.matrixClient);
         MatrixClientBackedSettingsHandler.matrixClient = this.matrixClient;
+        MatrixClientBackedController.matrixClient = this.matrixClient;
 
         return opts;
+    }
+
+    /**
+     * Attempt to initialize the crypto layer on a newly-created MatrixClient
+     */
+    private async initClientCrypto(): Promise<void> {
+        const useRustCrypto = SettingsStore.getValue("feature_rust_crypto");
+
+        // we want to make sure that the same crypto implementation is used throughout the lifetime of a device,
+        // so persist the setting at the device layer
+        // (At some point, we'll allow the user to *enable* the setting via labs, which will migrate their existing
+        // device to the rust-sdk implementation, but that won't change anything here).
+        await SettingsStore.setValue("feature_rust_crypto", null, SettingLevel.DEVICE, useRustCrypto);
+
+        // Now we can initialise the right crypto impl.
+        if (useRustCrypto) {
+            await this.matrixClient.initRustCrypto();
+
+            // TODO: device dehydration and whathaveyou
+            return;
+        }
+
+        // fall back to the libolm layer.
+        try {
+            // check that we have a version of the js-sdk which includes initCrypto
+            if (this.matrixClient.initCrypto) {
+                await this.matrixClient.initCrypto();
+                this.matrixClient.setCryptoTrustCrossSignedDevices(
+                    !SettingsStore.getValue("e2ee.manuallyVerifyAllSessions"),
+                );
+                await tryToUnlockSecretStorageWithDehydrationKey(this.matrixClient);
+                StorageManager.setCryptoInitialised(true);
+            }
+        } catch (e) {
+            if (e instanceof Error && e.name === "InvalidCryptoStoreError") {
+                // The js-sdk found a crypto DB too new for it to use
+                Modal.createDialog(CryptoStoreTooNewDialog);
+            }
+            // this can happen for a number of reasons, the most likely being
+            // that the olm library was missing. It's not fatal.
+            logger.warn("Unable to initialise e2e", e);
+        }
     }
 
     public async start(): Promise<any> {
@@ -268,7 +296,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     }
 
     public getCredentials(): IMatrixClientCreds {
-        let copiedCredentials = this.currentClientCreds;
+        let copiedCredentials: IMatrixClientCreds | null = this.currentClientCreds;
         if (this.currentClientCreds?.userId !== this.matrixClient?.credentials?.userId) {
             // cached credentials belong to a different user - don't use them
             copiedCredentials = null;
@@ -280,7 +308,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             homeserverUrl: this.matrixClient.baseUrl,
             identityServerUrl: this.matrixClient.idBaseUrl,
             userId: this.matrixClient.credentials.userId,
-            deviceId: this.matrixClient.getDeviceId(),
+            deviceId: this.matrixClient.getDeviceId() ?? undefined,
             accessToken: this.matrixClient.getAccessToken(),
             guest: this.matrixClient.isGuest(),
         };
@@ -345,8 +373,8 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             deviceId: creds.deviceId,
             pickleKey: creds.pickleKey,
             timelineSupport: true,
-            forceTURN: !SettingsStore.getValue('webRtcAllowPeerToPeer'),
-            fallbackICEServerAllowed: !!SettingsStore.getValue('fallbackICEServerAllowed'),
+            forceTURN: !SettingsStore.getValue("webRtcAllowPeerToPeer"),
+            fallbackICEServerAllowed: !!SettingsStore.getValue("fallbackICEServerAllowed"),
             // Gather up to 20 ICE candidates when a call arrives: this should be more than we'd
             // ever normally need, so effectively this should make all the gathering happen when
             // the call arrives.

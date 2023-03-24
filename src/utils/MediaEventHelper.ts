@@ -28,12 +28,12 @@ import { IDestroyable } from "./IDestroyable";
 
 export class MediaEventHelper implements IDestroyable {
     // Either an HTTP or Object URL (when encrypted) to the media.
-    public readonly sourceUrl: LazyValue<string>;
-    public readonly thumbnailUrl: LazyValue<string>;
+    public readonly sourceUrl: LazyValue<string | null>;
+    public readonly thumbnailUrl: LazyValue<string | null>;
 
     // Either the raw or decrypted (when encrypted) contents of the file.
     public readonly sourceBlob: LazyValue<Blob>;
-    public readonly thumbnailBlob: LazyValue<Blob>;
+    public readonly thumbnailBlob: LazyValue<Blob | null>;
 
     public readonly media: Media;
 
@@ -47,19 +47,21 @@ export class MediaEventHelper implements IDestroyable {
     }
 
     public get fileName(): string {
-        return this.event.getContent<IMediaEventContent>().filename
-            || this.event.getContent<IMediaEventContent>().body
-            || "download";
+        return (
+            this.event.getContent<IMediaEventContent>().filename ||
+            this.event.getContent<IMediaEventContent>().body ||
+            "download"
+        );
     }
 
-    public destroy() {
+    public destroy(): void {
         if (this.media.isEncrypted) {
-            if (this.sourceUrl.present) URL.revokeObjectURL(this.sourceUrl.cachedValue);
-            if (this.thumbnailUrl.present) URL.revokeObjectURL(this.thumbnailUrl.cachedValue);
+            if (this.sourceUrl.cachedValue) URL.revokeObjectURL(this.sourceUrl.cachedValue);
+            if (this.thumbnailUrl.cachedValue) URL.revokeObjectURL(this.thumbnailUrl.cachedValue);
         }
     }
 
-    private prepareSourceUrl = async () => {
+    private prepareSourceUrl = async (): Promise<string | null> => {
         if (this.media.isEncrypted) {
             const blob = await this.sourceBlob.value;
             return URL.createObjectURL(blob);
@@ -68,7 +70,7 @@ export class MediaEventHelper implements IDestroyable {
         }
     };
 
-    private prepareThumbnailUrl = async () => {
+    private prepareThumbnailUrl = async (): Promise<string | null> => {
         if (this.media.isEncrypted) {
             const blob = await this.thumbnailBlob.value;
             if (blob === null) return null;
@@ -78,15 +80,15 @@ export class MediaEventHelper implements IDestroyable {
         }
     };
 
-    private fetchSource = () => {
+    private fetchSource = (): Promise<Blob> => {
         if (this.media.isEncrypted) {
             const content = this.event.getContent<IMediaEventContent>();
-            return decryptFile(content.file, content.info);
+            return decryptFile(content.file!, content.info);
         }
-        return this.media.downloadSource().then(r => r.blob());
+        return this.media.downloadSource().then((r) => r.blob());
     };
 
-    private fetchThumbnail = () => {
+    private fetchThumbnail = (): Promise<Blob | null> => {
         if (!this.media.hasThumbnail) return Promise.resolve(null);
 
         if (this.media.isEncrypted) {
@@ -100,7 +102,7 @@ export class MediaEventHelper implements IDestroyable {
             }
         }
 
-        return fetch(this.media.thumbnailHttp).then(r => r.blob());
+        return fetch(this.media.thumbnailHttp).then((r) => r.blob());
     };
 
     public static isEligible(event: MatrixEvent): boolean {
@@ -110,14 +112,9 @@ export class MediaEventHelper implements IDestroyable {
         if (event.getType() !== EventType.RoomMessage) return false;
 
         const content = event.getContent();
-        const mediaMsgTypes: string[] = [
-            MsgType.Video,
-            MsgType.Audio,
-            MsgType.Image,
-            MsgType.File,
-        ];
-        if (mediaMsgTypes.includes(content.msgtype)) return true;
-        if (typeof(content.url) === 'string') return true;
+        const mediaMsgTypes: string[] = [MsgType.Video, MsgType.Audio, MsgType.Image, MsgType.File];
+        if (mediaMsgTypes.includes(content.msgtype!)) return true;
+        if (typeof content.url === "string") return true;
 
         // Finally, it's probably not media
         return false;

@@ -38,10 +38,7 @@ describe("ThreadListContextMenu", () => {
     let event: MatrixEvent;
 
     function getComponent(props: Partial<ThreadListContextMenuProps>) {
-        return render(<ThreadListContextMenu
-            mxEvent={event}
-            {...props}
-        />);
+        return render(<ThreadListContextMenu mxEvent={event} {...props} />);
     }
 
     beforeEach(() => {
@@ -57,8 +54,8 @@ describe("ThreadListContextMenu", () => {
         const res = mkThread({
             room,
             client: mockClient,
-            authorId: mockClient.getUserId(),
-            participantUserIds: [mockClient.getUserId()],
+            authorId: mockClient.getUserId()!,
+            participantUserIds: [mockClient.getUserId()!],
         });
 
         event = res.rootEvent;

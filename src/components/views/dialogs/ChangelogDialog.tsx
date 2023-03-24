@@ -15,9 +15,9 @@ Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
  limitations under the License.
  */
 
-import React from 'react';
+import React from "react";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import QuestionDialog from "./QuestionDialog";
 import Spinner from "../elements/Spinner";
 
@@ -27,16 +27,26 @@ interface IProps {
     onFinished: (success: boolean) => void;
 }
 
-const REPOS = ['vector-im/element-web', 'matrix-org/matrix-react-sdk', 'matrix-org/matrix-js-sdk'];
+type State = Partial<Record<(typeof REPOS)[number], null | string | Commit[]>>;
 
-export default class ChangelogDialog extends React.Component<IProps> {
-    constructor(props) {
+interface Commit {
+    sha: string;
+    html_url: string;
+    commit: {
+        message: string;
+    };
+}
+
+const REPOS = ["vector-im/element-web", "matrix-org/matrix-react-sdk", "matrix-org/matrix-js-sdk"] as const;
+
+export default class ChangelogDialog extends React.Component<IProps, State> {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {};
     }
 
-    private async fetchChanges(repo: string, oldVersion: string, newVersion: string): Promise<void> {
+    private async fetchChanges(repo: (typeof REPOS)[number], oldVersion: string, newVersion: string): Promise<void> {
         const url = `https://riot.im/github/repos/${repo}/compare/${oldVersion}...${newVersion}`;
 
         try {
@@ -54,30 +64,30 @@ export default class ChangelogDialog extends React.Component<IProps> {
         }
     }
 
-    public componentDidMount() {
-        const version = this.props.newVersion.split('-');
-        const version2 = this.props.version.split('-');
+    public componentDidMount(): void {
+        const version = this.props.newVersion.split("-");
+        const version2 = this.props.version.split("-");
         if (version == null || version2 == null) return;
         // parse versions of form: [vectorversion]-react-[react-sdk-version]-js-[js-sdk-version]
         for (let i = 0; i < REPOS.length; i++) {
-            const oldVersion = version2[2*i];
-            const newVersion = version[2*i];
+            const oldVersion = version2[2 * i];
+            const newVersion = version[2 * i];
             this.fetchChanges(REPOS[i], oldVersion, newVersion);
         }
     }
 
-    private elementsForCommit(commit): JSX.Element {
+    private elementsForCommit(commit: Commit): JSX.Element {
         return (
             <li key={commit.sha} className="mx_ChangelogDialog_li">
                 <a href={commit.html_url} target="_blank" rel="noreferrer noopener">
-                    { commit.commit.message.split('\n')[0] }
+                    {commit.commit.message.split("\n")[0]}
                 </a>
             </li>
         );
     }
 
-    public render() {
-        const logs = REPOS.map(repo => {
+    public render(): React.ReactNode {
+        const logs = REPOS.map((repo) => {
             let content;
             if (this.state[repo] == null) {
                 content = <Spinner key={repo} />;
@@ -86,19 +96,19 @@ export default class ChangelogDialog extends React.Component<IProps> {
                     msg: this.state[repo],
                 });
             } else {
-                content = this.state[repo].map(this.elementsForCommit);
+                content = (this.state[repo] as Commit[]).map(this.elementsForCommit);
             }
             return (
                 <div key={repo}>
-                    <h2>{ repo }</h2>
-                    <ul>{ content }</ul>
+                    <h2>{repo}</h2>
+                    <ul>{content}</ul>
                 </div>
             );
         });
 
         const content = (
             <div className="mx_ChangelogDialog_content">
-                { this.props.version == null || this.props.newVersion == null ? <h2>{ _t("Unavailable") }</h2> : logs }
+                {this.props.version == null || this.props.newVersion == null ? <h2>{_t("Unavailable")}</h2> : logs}
             </div>
         );
 

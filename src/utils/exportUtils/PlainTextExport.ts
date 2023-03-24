@@ -29,7 +29,7 @@ export default class PlainTextExporter extends Exporter {
     protected totalSize: number;
     protected mediaOmitText: string;
 
-    constructor(
+    public constructor(
         room: Room,
         exportType: ExportType,
         exportOptions: IExportOptions,
@@ -46,7 +46,7 @@ export default class PlainTextExporter extends Exporter {
         return this.makeFileNameNoExtension() + ".txt";
     }
 
-    public textForReplyEvent = (content: IContent) => {
+    public textForReplyEvent = (content: IContent): string => {
         const REPLY_REGEX = /> <(.*?)>(.*?)\n\n(.*)/s;
         const REPLY_SOURCE_MAX_LENGTH = 32;
 
@@ -61,7 +61,7 @@ export default class PlainTextExporter extends Exporter {
 
         rplSource = match[2].substring(1);
         // Get the first non-blank line from the source.
-        const lines = rplSource.split('\n').filter((line) => !/^\s*$/.test(line));
+        const lines = rplSource.split("\n").filter((line) => !/^\s*$/.test(line));
         if (lines.length > 0) {
             // Cut to a maximum length.
             rplSource = lines[0].substring(0, REPLY_SOURCE_MAX_LENGTH);
@@ -79,7 +79,7 @@ export default class PlainTextExporter extends Exporter {
         return `<${rplName}${rplSource}> ${rplText}`;
     };
 
-    protected plainTextForEvent = async (mxEv: MatrixEvent) => {
+    protected plainTextForEvent = async (mxEv: MatrixEvent): Promise<string> => {
         const senderDisplayName = mxEv.sender && mxEv.sender.name ? mxEv.sender.name : mxEv.getSender();
         let mediaText = "";
         if (this.isAttachment(mxEv)) {
@@ -107,14 +107,18 @@ export default class PlainTextExporter extends Exporter {
         else return textForEvent(mxEv) + mediaText;
     };
 
-    protected async createOutput(events: MatrixEvent[]) {
+    protected async createOutput(events: MatrixEvent[]): Promise<string> {
         let content = "";
         for (let i = 0; i < events.length; i++) {
             const event = events[i];
-            this.updateProgress(_t("Processing event %(number)s out of %(total)s", {
-                number: i + 1,
-                total: events.length,
-            }), false, true);
+            this.updateProgress(
+                _t("Processing event %(number)s out of %(total)s", {
+                    number: i + 1,
+                    total: events.length,
+                }),
+                false,
+                true,
+            );
             if (this.cancelled) return this.cleanUp();
             if (!haveRendererForEvent(event, false)) continue;
             const textForEvent = await this.plainTextForEvent(event);
@@ -123,17 +127,17 @@ export default class PlainTextExporter extends Exporter {
         return content;
     }
 
-    public async export() {
-        this.updateProgress(_t("Starting export process..."));
-        this.updateProgress(_t("Fetching events..."));
+    public async export(): Promise<void> {
+        this.updateProgress(_t("Starting export process…"));
+        this.updateProgress(_t("Fetching events…"));
 
         const fetchStart = performance.now();
         const res = await this.getRequiredEvents();
         const fetchEnd = performance.now();
 
-        logger.log(`Fetched ${res.length} events in ${(fetchEnd - fetchStart)/1000}s`);
+        logger.log(`Fetched ${res.length} events in ${(fetchEnd - fetchStart) / 1000}s`);
 
-        this.updateProgress(_t("Creating output..."));
+        this.updateProgress(_t("Creating output…"));
         const text = await this.createOutput(res);
 
         if (this.files.length) {
@@ -150,10 +154,9 @@ export default class PlainTextExporter extends Exporter {
             logger.info("Export cancelled successfully");
         } else {
             logger.info("Export successful!");
-            logger.log(`Exported ${res.length} events in ${(exportEnd - fetchStart)/1000} seconds`);
+            logger.log(`Exported ${res.length} events in ${(exportEnd - fetchStart) / 1000} seconds`);
         }
 
         this.cleanUp();
     }
 }
-

@@ -16,25 +16,25 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 
 describe("Composer", () => {
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
 
     beforeEach(() => {
-        cy.startSynapse("default").then(data => {
-            synapse = data;
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
         });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
     });
 
     describe("CIDER", () => {
         beforeEach(() => {
-            cy.initTestUser(synapse, "Janet").then(() => {
+            cy.initTestUser(homeserver, "Janet").then(() => {
                 cy.createRoom({ name: "Composing Room" });
             });
             cy.viewRoomByName("Composing Room");
@@ -42,26 +42,26 @@ describe("Composer", () => {
 
         it("sends a message when you click send or press Enter", () => {
             // Type a message
-            cy.get('div[contenteditable=true]').type('my message 0');
+            cy.get("div[contenteditable=true]").type("my message 0");
             // It has not been sent yet
-            cy.contains('.mx_EventTile_body', 'my message 0').should('not.exist');
+            cy.contains(".mx_EventTile_body", "my message 0").should("not.exist");
 
             // Click send
             cy.get('div[aria-label="Send message"]').click();
             // It has been sent
-            cy.contains('.mx_EventTile_body', 'my message 0');
+            cy.contains(".mx_EventTile_body", "my message 0");
 
             // Type another and press Enter afterwards
-            cy.get('div[contenteditable=true]').type('my message 1{enter}');
+            cy.get("div[contenteditable=true]").type("my message 1{enter}");
             // It was sent
-            cy.contains('.mx_EventTile_body', 'my message 1');
+            cy.contains(".mx_EventTile_body", "my message 1");
         });
 
         it("can write formatted text", () => {
-            cy.get('div[contenteditable=true]').type('my bold{ctrl+b} message');
+            cy.get("div[contenteditable=true]").type("my bold{ctrl+b} message");
             cy.get('div[aria-label="Send message"]').click();
             // Note: both "bold" and "message" are bold, which is probably surprising
-            cy.contains('.mx_EventTile_body strong', 'bold message');
+            cy.contains(".mx_EventTile_body strong", "bold message");
         });
 
         it("should allow user to input emoji via graphical picker", () => {
@@ -74,7 +74,7 @@ describe("Composer", () => {
             });
 
             cy.get(".mx_ContextualMenu_background").click(); // Close emoji picker
-            cy.get('div[contenteditable=true]').type("{enter}"); // Send message
+            cy.get("div[contenteditable=true]").type("{enter}"); // Send message
 
             cy.contains(".mx_EventTile_body", "😇");
         });
@@ -86,22 +86,22 @@ describe("Composer", () => {
 
             it("only sends when you press Ctrl+Enter", () => {
                 // Type a message and press Enter
-                cy.get('div[contenteditable=true]').type('my message 3{enter}');
+                cy.get("div[contenteditable=true]").type("my message 3{enter}");
                 // It has not been sent yet
-                cy.contains('.mx_EventTile_body', 'my message 3').should('not.exist');
+                cy.contains(".mx_EventTile_body", "my message 3").should("not.exist");
 
                 // Press Ctrl+Enter
-                cy.get('div[contenteditable=true]').type('{ctrl+enter}');
+                cy.get("div[contenteditable=true]").type("{ctrl+enter}");
                 // It was sent
-                cy.contains('.mx_EventTile_body', 'my message 3');
+                cy.contains(".mx_EventTile_body", "my message 3");
             });
         });
     });
 
-    describe("WYSIWYG", () => {
+    describe("Rich text editor", () => {
         beforeEach(() => {
             cy.enableLabsFeature("feature_wysiwyg_composer");
-            cy.initTestUser(synapse, "Janet").then(() => {
+            cy.initTestUser(homeserver, "Janet").then(() => {
                 cy.createRoom({ name: "Composing Room" });
             });
             cy.viewRoomByName("Composing Room");
@@ -109,28 +109,42 @@ describe("Composer", () => {
 
         it("sends a message when you click send or press Enter", () => {
             // Type a message
-            cy.get('div[contenteditable=true]').type('my message 0');
+            cy.get("div[contenteditable=true]").type("my message 0");
             // It has not been sent yet
-            cy.contains('.mx_EventTile_body', 'my message 0').should('not.exist');
+            cy.contains(".mx_EventTile_body", "my message 0").should("not.exist");
 
             // Click send
             cy.get('div[aria-label="Send message"]').click();
             // It has been sent
-            cy.contains('.mx_EventTile_body', 'my message 0');
+            cy.contains(".mx_EventTile_body", "my message 0");
 
             // Type another
-            cy.get('div[contenteditable=true]').type('my message 1');
-            // Press enter. Would be nice to just use {enter} but we can't because Cypress
-            // does not trigger an insertParagraph when you do that.
-            cy.get('div[contenteditable=true]').trigger('input', { inputType: "insertParagraph" });
+            cy.get("div[contenteditable=true]").type("my message 1");
+            // Send message
+            cy.get("div[contenteditable=true]").type("{enter}");
             // It was sent
-            cy.contains('.mx_EventTile_body', 'my message 1');
+            cy.contains(".mx_EventTile_body", "my message 1");
+        });
+
+        it("sends only one message when you press Enter multiple times", () => {
+            // Type a message
+            cy.get("div[contenteditable=true]").type("my message 0");
+            // It has not been sent yet
+            cy.contains(".mx_EventTile_body", "my message 0").should("not.exist");
+
+            // Click send
+            cy.get("div[contenteditable=true]").type("{enter}");
+            cy.get("div[contenteditable=true]").type("{enter}");
+            cy.get("div[contenteditable=true]").type("{enter}");
+            // It has been sent
+            cy.contains(".mx_EventTile_body", "my message 0");
+            cy.get(".mx_EventTile_body").should("have.length", 1);
         });
 
         it("can write formatted text", () => {
-            cy.get('div[contenteditable=true]').type('my {ctrl+b}bold{ctrl+b} message');
+            cy.get("div[contenteditable=true]").type("my {ctrl+b}bold{ctrl+b} message");
             cy.get('div[aria-label="Send message"]').click();
-            cy.contains('.mx_EventTile_body strong', 'bold');
+            cy.contains(".mx_EventTile_body strong", "bold");
         });
 
         describe("when Ctrl+Enter is required to send", () => {
@@ -140,15 +154,35 @@ describe("Composer", () => {
 
             it("only sends when you press Ctrl+Enter", () => {
                 // Type a message and press Enter
-                cy.get('div[contenteditable=true]').type('my message 3');
-                cy.get('div[contenteditable=true]').trigger('input', { inputType: "insertParagraph" });
+                cy.get("div[contenteditable=true]").type("my message 3");
+                cy.get("div[contenteditable=true]").type("{enter}");
                 // It has not been sent yet
-                cy.contains('.mx_EventTile_body', 'my message 3').should('not.exist');
+                cy.contains(".mx_EventTile_body", "my message 3").should("not.exist");
 
                 // Press Ctrl+Enter
-                cy.get('div[contenteditable=true]').type('{ctrl+enter}');
+                cy.get("div[contenteditable=true]").type("{ctrl+enter}");
                 // It was sent
-                cy.contains('.mx_EventTile_body', 'my message 3');
+                cy.contains(".mx_EventTile_body", "my message 3");
+            });
+        });
+
+        describe("links", () => {
+            it("create link with a forward selection", () => {
+                // Type a message
+                cy.get("div[contenteditable=true]").type("my message 0{selectAll}");
+
+                // Open link modal
+                cy.get('button[aria-label="Link"]').click();
+                // Fill the link field
+                cy.get('input[label="Link"]').type("https://matrix.org/");
+                // Click on save
+                cy.get('button[type="submit"]').click();
+                // Send the message
+                cy.get('div[aria-label="Send message"]').click();
+
+                // It was sent
+                cy.contains(".mx_EventTile_body a", "my message 0");
+                cy.get(".mx_EventTile_body a").should("have.attr", "href").and("include", "https://matrix.org/");
             });
         });
     });

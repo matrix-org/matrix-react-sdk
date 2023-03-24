@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 import { useCallback, useState } from "react";
 
 import { useMatrixClientContext } from "../../../../../contexts/MatrixClientContext";
@@ -22,20 +23,31 @@ import EditorStateTransfer from "../../../../../utils/EditorStateTransfer";
 import { endEditing } from "../utils/editing";
 import { editMessage } from "../utils/message";
 
-export function useEditing(initialContent: string, editorStateTransfer: EditorStateTransfer) {
+export function useEditing(
+    editorStateTransfer: EditorStateTransfer,
+    initialContent?: string,
+): {
+    isSaveDisabled: boolean;
+    onChange(content: string): void;
+    editMessage(): Promise<ISendEventResponse>;
+    endEditing(): void;
+} {
     const roomContext = useRoomContext();
     const mxClient = useMatrixClientContext();
 
     const [isSaveDisabled, setIsSaveDisabled] = useState(true);
     const [content, setContent] = useState(initialContent);
-    const onChange = useCallback((_content: string) => {
-        setContent(_content);
-        setIsSaveDisabled(_isSaveDisabled => _isSaveDisabled && _content === initialContent);
-    }, [initialContent]);
+    const onChange = useCallback(
+        (_content: string) => {
+            setContent(_content);
+            setIsSaveDisabled((_isSaveDisabled) => _isSaveDisabled && _content === initialContent);
+        },
+        [initialContent],
+    );
 
-    const editMessageMemoized = useCallback(() =>
-        editMessage(content, { roomContext, mxClient, editorStateTransfer }),
-    [content, roomContext, mxClient, editorStateTransfer],
+    const editMessageMemoized = useCallback(
+        () => content !== undefined && editMessage(content, { roomContext, mxClient, editorStateTransfer }),
+        [content, roomContext, mxClient, editorStateTransfer],
     );
 
     const endEditingMemoized = useCallback(() => endEditing(roomContext), [roomContext]);

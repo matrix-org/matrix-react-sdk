@@ -86,7 +86,7 @@ export async function waitForRoomReadyAndApplyAfterCreateCallbacks(
     }
 
     return new Promise((resolve) => {
-        const finish = () => {
+        const finish = (): void => {
             if (checkRoomStateIntervalHandle) clearInterval(checkRoomStateIntervalHandle);
             if (stopgapTimeoutHandle) clearTimeout(stopgapTimeoutHandle);
 
@@ -97,15 +97,15 @@ export async function waitForRoomReadyAndApplyAfterCreateCallbacks(
             });
         };
 
-        const stopgapFinish = () => {
+        const stopgapFinish = (): void => {
             logger.warn(`Assuming local room ${localRoom.roomId} is ready after hitting timeout`);
             finish();
         };
 
-        const checkRoomStateIntervalHandle = setInterval(() => {
+        const checkRoomStateIntervalHandle = window.setInterval(() => {
             if (isRoomReady(client, localRoom)) finish();
         }, 500);
-        const stopgapTimeoutHandle = setTimeout(stopgapFinish, 5000);
+        const stopgapTimeoutHandle = window.setTimeout(stopgapFinish, 5000);
     });
 }
 

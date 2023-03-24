@@ -26,40 +26,40 @@ Once a timer is finished or aborted, it can't be started again
 a new one through `clone()` or `cloneIfRun()`.
 */
 export default class Timer {
-    private timerHandle: number;
-    private startTs: number;
+    private timerHandle?: number;
+    private startTs?: number;
     private promise: Promise<void>;
     private resolve: () => void;
-    private reject: (Error) => void;
+    private reject: (err: Error) => void;
 
-    constructor(private timeout: number) {
+    public constructor(private timeout: number) {
         this.setNotStarted();
     }
 
-    private setNotStarted() {
-        this.timerHandle = null;
-        this.startTs = null;
+    private setNotStarted(): void {
+        this.timerHandle = undefined;
+        this.startTs = undefined;
         this.promise = new Promise<void>((resolve, reject) => {
             this.resolve = resolve;
             this.reject = reject;
         }).finally(() => {
-            this.timerHandle = null;
+            this.timerHandle = undefined;
         });
     }
 
-    private onTimeout = () => {
+    private onTimeout = (): void => {
         const now = Date.now();
-        const elapsed = now - this.startTs;
+        const elapsed = now - this.startTs!;
         if (elapsed >= this.timeout) {
             this.resolve();
             this.setNotStarted();
         } else {
             const delta = this.timeout - elapsed;
-            this.timerHandle = setTimeout(this.onTimeout, delta);
+            this.timerHandle = window.setTimeout(this.onTimeout, delta);
         }
     };
 
-    changeTimeout(timeout: number) {
+    public changeTimeout(timeout: number): void {
         if (timeout === this.timeout) {
             return;
         }
@@ -75,10 +75,10 @@ export default class Timer {
      * if not started before, starts the timer.
      * @returns {Timer} the same timer
      */
-    start() {
+    public start(): Timer {
         if (!this.isRunning()) {
             this.startTs = Date.now();
-            this.timerHandle = setTimeout(this.onTimeout, this.timeout);
+            this.timerHandle = window.setTimeout(this.onTimeout, this.timeout);
         }
         return this;
     }
@@ -87,7 +87,7 @@ export default class Timer {
      * (re)start the timer. If it's running, reset the timeout. If not, start it.
      * @returns {Timer} the same timer
      */
-    restart() {
+    public restart(): Timer {
         if (this.isRunning()) {
             // don't clearTimeout here as this method
             // can be called in fast succession,
@@ -105,7 +105,7 @@ export default class Timer {
      * and reject the promise for this timer.
      * @returns {Timer} the same timer
      */
-    abort() {
+    public abort(): Timer {
         if (this.isRunning()) {
             clearTimeout(this.timerHandle);
             this.reject(new Error("Timer was aborted."));
@@ -119,11 +119,11 @@ export default class Timer {
      *or is rejected when abort is called
      *@return {Promise}
      */
-    finished() {
+    public finished(): Promise<void> {
         return this.promise;
     }
 
-    isRunning() {
-        return this.timerHandle !== null;
+    public isRunning(): boolean {
+        return this.timerHandle !== undefined;
     }
 }

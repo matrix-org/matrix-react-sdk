@@ -25,9 +25,7 @@ import { findRoomLiveVoiceBroadcastFromUserAndDevice } from "./findRoomLiveVoice
  * Handles voice broadcasts on app resume (after logging in, reload, crash…).
  */
 export class VoiceBroadcastResumer implements IDestroyable {
-    public constructor(
-        private client: MatrixClient,
-    ) {
+    public constructor(private client: MatrixClient) {
         if (client.isInitialSyncComplete()) {
             this.resume();
         } else {
@@ -36,7 +34,7 @@ export class VoiceBroadcastResumer implements IDestroyable {
         }
     }
 
-    private onClientSync = () => {
+    private onClientSync = (): void => {
         if (this.client.getSyncState() === SyncState.Syncing) {
             this.client.off(ClientEvent.Sync, this.onClientSync);
             this.resume();
@@ -80,9 +78,10 @@ export class VoiceBroadcastResumer implements IDestroyable {
         };
 
         // all events should reference the started event
-        const referencedEventId = infoEvent.getContent()?.state === VoiceBroadcastInfoState.Started
-            ? infoEvent.getId()
-            : infoEvent.getContent()?.["m.relates_to"]?.event_id;
+        const referencedEventId =
+            infoEvent.getContent()?.state === VoiceBroadcastInfoState.Started
+                ? infoEvent.getId()
+                : infoEvent.getContent()?.["m.relates_to"]?.event_id;
 
         if (referencedEventId) {
             content["m.relates_to"] = {
@@ -94,7 +93,7 @@ export class VoiceBroadcastResumer implements IDestroyable {
         this.client.sendStateEvent(roomId, VoiceBroadcastInfoEventType, content, userId);
     }
 
-    destroy(): void {
+    public destroy(): void {
         this.client.off(ClientEvent.Sync, this.onClientSync);
     }
 }

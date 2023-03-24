@@ -29,19 +29,19 @@ export class NotificationUtils {
     //   "highlight: true/false,
     // }
     // to a list of push actions.
-    static encodeActions(action: IEncodedActions): PushRuleAction[] {
+    public static encodeActions(action: IEncodedActions): PushRuleAction[] {
         const notify = action.notify;
         const sound = action.sound;
         const highlight = action.highlight;
         if (notify) {
             const actions: PushRuleAction[] = [PushRuleActionName.Notify];
             if (sound) {
-                actions.push({ "set_tweak": "sound", "value": sound } as TweakSound);
+                actions.push({ set_tweak: "sound", value: sound } as TweakSound);
             }
             if (highlight) {
-                actions.push({ "set_tweak": "highlight" } as TweakHighlight);
+                actions.push({ set_tweak: "highlight" } as TweakHighlight);
             } else {
-                actions.push({ "set_tweak": "highlight", "value": false } as TweakHighlight);
+                actions.push({ set_tweak: "highlight", value: false } as TweakHighlight);
             }
             return actions;
         } else {
@@ -55,10 +55,10 @@ export class NotificationUtils {
     //   "highlight: true/false,
     // }
     // If the actions couldn't be decoded then returns null.
-    static decodeActions(actions: PushRuleAction[]): IEncodedActions {
+    public static decodeActions(actions: PushRuleAction[]): IEncodedActions | null {
         let notify = false;
-        let sound = null;
-        let highlight = false;
+        let sound: string | undefined;
+        let highlight: boolean | undefined = false;
 
         for (let i = 0; i < actions.length; ++i) {
             const action = actions[i];
@@ -87,7 +87,7 @@ export class NotificationUtils {
         }
 
         const result: IEncodedActions = { notify, highlight };
-        if (sound !== null) {
+        if (sound !== undefined) {
             result.sound = sound;
         }
         return result;

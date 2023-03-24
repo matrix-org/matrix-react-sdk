@@ -32,7 +32,7 @@ export default class DeviceSettingsHandler extends AbstractLocalStorageSettingsH
      * @param {string[]} featureNames The names of known features.
      * @param {WatchManager} watchers The watch manager to notify updates to
      */
-    constructor(private featureNames: string[], public readonly watchers: WatchManager) {
+    public constructor(private featureNames: string[], public readonly watchers: WatchManager) {
         super();
     }
 
@@ -99,15 +99,16 @@ export default class DeviceSettingsHandler extends AbstractLocalStorageSettingsH
         return true; // It's their device, so they should be able to
     }
 
-    public watchSetting(settingName: string, roomId: string, cb: CallbackFn) {
+    public watchSetting(settingName: string, roomId: string, cb: CallbackFn): void {
         this.watchers.watchSetting(settingName, roomId, cb);
     }
 
-    public unwatchSetting(cb: CallbackFn) {
+    public unwatchSetting(cb: CallbackFn): void {
         this.watchers.unwatchSetting(cb);
     }
 
-    private getSettings(): any { // TODO: [TS] Type return
+    private getSettings(): any {
+        // TODO: [TS] Type return
         return this.getObject("mx_local_settings");
     }
 
@@ -127,7 +128,7 @@ export default class DeviceSettingsHandler extends AbstractLocalStorageSettingsH
         return this.getBoolean("mx_labs_feature_" + featureName);
     }
 
-    private writeFeature(featureName: string, enabled: boolean | null) {
+    private writeFeature(featureName: string, enabled: boolean | null): void {
         this.setBoolean("mx_labs_feature_" + featureName, enabled);
         this.watchers.notifyUpdate(featureName, null, SettingLevel.DEVICE, enabled);
     }

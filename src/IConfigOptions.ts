@@ -57,7 +57,7 @@ export interface IConfigOptions {
     branding?: {
         welcome_background_url?: string | string[]; // chosen at random if array
         auth_header_logo_url?: string;
-        auth_footer_links?: {text: string, url: string}[];
+        auth_footer_links?: { text: string; url: string }[];
     };
 
     map_style_url?: string; // for location-shared maps
@@ -99,7 +99,7 @@ export interface IConfigOptions {
     features?: Record<string, boolean>; // <FeatureName, EnabledBool>
 
     bug_report_endpoint_url?: string; // omission disables bug reporting
-    uisi_autorageshake_app?: string;
+    uisi_autorageshake_app?: string; // defaults to "element-auto-uisi"
     sentry?: {
         dsn: string;
         environment?: string; // "production", etc
@@ -148,31 +148,26 @@ export interface IConfigOptions {
     analytics_owner?: string; // defaults to `brand`
     privacy_policy_url?: string; // location for cookie policy
 
-    // Server hosting upsell options
-    hosting_signup_link?: string; // slightly different from `host_signup`
-    host_signup?: {
-        brand?: string; // acts as the enabled flag too (truthy == show)
-
-        // Required-ness denotes when `brand` is truthy
-        cookie_policy_url: string;
-        privacy_policy_url: string;
-        terms_of_service_url: string;
-        url: string;
-        domains?: string[];
-    };
-
     enable_presence_by_hs_url?: Record<string, boolean>; // <HomeserverName, Enabled>
 
-    terms_and_conditions_links?: { url: string, text: string }[];
+    terms_and_conditions_links?: { url: string; text: string }[];
 
     latex_maths_delims?: {
         inline?: {
             left?: string;
             right?: string;
+            pattern?: {
+                tex?: string;
+                latex?: string;
+            };
         };
         display?: {
             left?: string;
             right?: string;
+            pattern?: {
+                tex?: string;
+                latex?: string;
+            };
         };
     };
 
@@ -182,6 +177,14 @@ export interface IConfigOptions {
     voice_broadcast?: {
         // length per voice chunk in seconds
         chunk_length?: number;
+        // max voice broadcast length in seconds
+        max_length?: number;
+    };
+
+    user_notice?: {
+        title: string;
+        description: string;
+        show_once?: boolean;
     };
 }
 

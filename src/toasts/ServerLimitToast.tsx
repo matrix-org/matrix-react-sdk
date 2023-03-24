@@ -23,21 +23,30 @@ import { messageForResourceLimitError } from "../utils/ErrorUtils";
 
 const TOAST_KEY = "serverlimit";
 
-export const showToast = (limitType: string, onHideToast: () => void, adminContact?: string, syncError?: boolean) => {
+export const showToast = (
+    limitType: string,
+    onHideToast: () => void,
+    adminContact?: string,
+    syncError?: boolean,
+): void => {
     const errorText = messageForResourceLimitError(limitType, adminContact, {
-        'monthly_active_user': _td("Your homeserver has exceeded its user limit."),
-        'hs_blocked': _td("This homeserver has been blocked by its administrator."),
-        '': _td("Your homeserver has exceeded one of its resource limits."),
+        "monthly_active_user": _td("Your homeserver has exceeded its user limit."),
+        "hs_blocked": _td("This homeserver has been blocked by its administrator."),
+        "": _td("Your homeserver has exceeded one of its resource limits."),
     });
     const contactText = messageForResourceLimitError(limitType, adminContact, {
-        '': _td("Contact your <a>server admin</a>."),
+        "": _td("Contact your <a>server admin</a>."),
     });
 
     ToastStore.sharedInstance().addOrReplaceToast({
         key: TOAST_KEY,
         title: _t("Warning"),
         props: {
-            description: <React.Fragment>{ errorText } { contactText }</React.Fragment>,
+            description: (
+                <React.Fragment>
+                    {errorText} {contactText}
+                </React.Fragment>
+            ),
             acceptLabel: _t("Ok"),
             onAccept: () => {
                 hideToast();
@@ -49,6 +58,6 @@ export const showToast = (limitType: string, onHideToast: () => void, adminConta
     });
 };
 
-export const hideToast = () => {
+export const hideToast = (): void => {
     ToastStore.sharedInstance().dismissToast(TOAST_KEY);
 };

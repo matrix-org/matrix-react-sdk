@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { IEvent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -29,7 +29,7 @@ export default class JSONExporter extends Exporter {
     protected totalSize = 0;
     protected messages: Record<string, any>[] = [];
 
-    constructor(
+    public constructor(
         room: Room,
         exportType: ExportType,
         exportOptions: IExportOptions,
@@ -45,9 +45,9 @@ export default class JSONExporter extends Exporter {
     protected createJSONString(): string {
         const exportDate = formatFullDateNoDayNoTime(new Date());
         const creator = this.room.currentState.getStateEvents(EventType.RoomCreate, "")?.getSender();
-        const creatorName = this.room?.getMember(creator)?.rawDisplayName || creator;
+        const creatorName = (creator && this.room?.getMember(creator)?.rawDisplayName) || creator;
         const topic = this.room.currentState.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic || "";
-        const exporter = this.client.getUserId();
+        const exporter = this.client.getUserId()!;
         const exporterName = this.room?.getMember(exporter)?.rawDisplayName || exporter;
         const jsonObject = {
             room_name: this.room.name,
@@ -60,7 +60,7 @@ export default class JSONExporter extends Exporter {
         return JSON.stringify(jsonObject, null, 2);
     }
 
-    protected async getJSONString(mxEv: MatrixEvent) {
+    protected async getJSONString(mxEv: MatrixEvent): Promise<IEvent> {
         if (this.exportOptions.attachmentsIncluded && this.isAttachment(mxEv)) {
             try {
                 const blob = await this.getMediaBlob(mxEv);
@@ -81,13 +81,17 @@ export default class JSONExporter extends Exporter {
         return clearEvent;
     }
 
-    protected async createOutput(events: MatrixEvent[]) {
+    protected async createOutput(events: MatrixEvent[]): Promise<string> {
         for (let i = 0; i < events.length; i++) {
             const event = events[i];
-            this.updateProgress(_t("Processing event %(number)s out of %(total)s", {
-                number: i + 1,
-                total: events.length,
-            }), false, true);
+            this.updateProgress(
+                _t("Processing event %(number)s out of %(total)s", {
+                    number: i + 1,
+                    total: events.length,
+                }),
+                false,
+                true,
+            );
             if (this.cancelled) return this.cleanUp();
             if (!haveRendererForEvent(event, false)) continue;
             this.messages.push(await this.getJSONString(event));
@@ -95,7 +99,7 @@ export default class JSONExporter extends Exporter {
         return this.createJSONString();
     }
 
-    public async export() {
+    public async export(): Promise<void> {
         logger.info("Starting export process...");
         logger.info("Fetching events...");
 
@@ -103,7 +107,7 @@ export default class JSONExporter extends Exporter {
         const res = await this.getRequiredEvents();
         const fetchEnd = performance.now();
 
-        logger.log(`Fetched ${res.length} events in ${(fetchEnd - fetchStart)/1000}s`);
+        logger.log(`Fetched ${res.length} events in ${(fetchEnd - fetchStart) / 1000}s`);
 
         logger.info("Creating output...");
         const text = await this.createOutput(res);
@@ -122,10 +126,9 @@ export default class JSONExporter extends Exporter {
             logger.info("Export cancelled successfully");
         } else {
             logger.info("Export successful!");
-            logger.log(`Exported ${res.length} events in ${(exportEnd - fetchStart)/1000} seconds`);
+            logger.log(`Exported ${res.length} events in ${(exportEnd - fetchStart) / 1000} seconds`);
         }
 
         this.cleanUp();
     }
 }
-

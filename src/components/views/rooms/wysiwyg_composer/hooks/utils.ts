@@ -24,7 +24,7 @@ export function focusComposer(
     renderingType: TimelineRenderingType,
     roomContext: IRoomState,
     timeoutId: MutableRefObject<number | null>,
-) {
+): void {
     if (renderingType === roomContext.timelineRenderingType) {
         // Immediately set the focus, so if you start typing it
         // will appear in the composer
@@ -37,18 +37,15 @@ export function focusComposer(
         if (timeoutId.current) {
             clearTimeout(timeoutId.current);
         }
-        timeoutId.current = setTimeout(
-            () => composerElement.current?.focus(),
-            200,
-        );
+        timeoutId.current = window.setTimeout(() => composerElement.current?.focus(), 200);
     }
 }
 
-export function setCursorPositionAtTheEnd(element: HTMLElement) {
+export function setCursorPositionAtTheEnd(element: HTMLElement): void {
     const range = document.createRange();
     range.selectNodeContents(element);
     range.collapse(false);
-    const selection = document.getSelection();
+    const selection = document.getSelection()!;
     selection.removeAllRanges();
     selection.addRange(range);
 
