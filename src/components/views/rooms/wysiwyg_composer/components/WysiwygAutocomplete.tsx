@@ -70,7 +70,8 @@ function getRoomMentionText(completion: ICompletion, client: MatrixClient): stri
 
     let roomForAutocomplete: Room | null | undefined;
 
-    // try to find the room name for the mention text by roomId then alias
+    // Not quite sure if the logic here makes sense - specifically calling .getRoom with an alias
+    // that doesn't start with #, but keeping the logic the same as in PartCreator.roomPill for now
     if (roomId) {
         roomForAutocomplete = client.getRoom(roomId);
     } else if (!alias.startsWith("#")) {
@@ -81,7 +82,7 @@ function getRoomMentionText(completion: ICompletion, client: MatrixClient): stri
         });
     }
 
-    // but if we haven't managed to find the room, use the alias as a fallback
+    // if we haven't managed to find the room, use the alias as a fallback
     return roomForAutocomplete?.name || alias;
 }
 
