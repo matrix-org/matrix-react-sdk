@@ -329,7 +329,7 @@ describe("Audio player", () => {
                     `"EventTile of audio player with a reply on ${layout} layout"`,
                     { percyCSS },
                 );
-                cy.log(`""Took a snapshot of EventTile of audio player with a reply on ${layout} layout"`);
+                cy.log(`"Took a snapshot of EventTile of audio player with a reply on ${layout} layout"`);
             };
 
             // Take a snapshot of EventTile with a reply on group layout
