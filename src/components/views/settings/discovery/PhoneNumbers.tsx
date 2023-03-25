@@ -22,7 +22,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { _t } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Modal from "../../../../Modal";
-import AddThreepid from "../../../../AddThreepid";
+import AddThreepid, { Binding } from "../../../../AddThreepid";
 import ErrorDialog from "../../dialogs/ErrorDialog";
 import Field from "../../elements/Field";
 import AccessibleButton from "../../elements/AccessibleButton";
@@ -41,10 +41,10 @@ interface IPhoneNumberProps {
 interface IPhoneNumberState {
     verifying: boolean;
     verificationCode: string;
-    addTask: any; // FIXME: When AddThreepid is TSfied
+    addTask: AddThreepid | null;
     continueDisabled: boolean;
-    bound: boolean;
-    verifyError: string;
+    bound?: boolean;
+    verifyError: string | null;
 }
 
 export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumberState> {
@@ -70,7 +70,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
         }
     }
 
-    private async changeBinding({ bind, label, errorTitle }): Promise<void> {
+    private async changeBinding({ bind, label, errorTitle }: Binding): Promise<void> {
         if (!(await MatrixClientPeg.get().doesServerSupportSeparateAddAndBind())) {
             return this.changeBindingTangledAddBind({ bind, label, errorTitle });
         }
@@ -89,6 +89,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
                 // a leading plus sign to a number in E.164 format (which the 3PID
                 // address is), but this goes against the spec.
                 // See https://github.com/matrix-org/matrix-doc/issues/2222
+                // @ts-ignore
                 await task.bindMsisdn(null, `+${address}`);
                 this.setState({
                     continueDisabled: false,
@@ -111,7 +112,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
         }
     }
 
-    private async changeBindingTangledAddBind({ bind, label, errorTitle }): Promise<void> {
+    private async changeBindingTangledAddBind({ bind, label, errorTitle }: Binding): Promise<void> {
         const { medium, address } = this.props.msisdn;
 
         const task = new AddThreepid();
@@ -128,8 +129,10 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
             // address is), but this goes against the spec.
             // See https://github.com/matrix-org/matrix-doc/issues/2222
             if (bind) {
+                // @ts-ignore
                 await task.bindMsisdn(null, `+${address}`);
             } else {
+                // @ts-ignore
                 await task.addMsisdn(null, `+${address}`);
             }
             this.setState({
@@ -183,7 +186,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
         this.setState({ continueDisabled: true });
         const token = this.state.verificationCode;
         try {
-            await this.state.addTask.haveMsisdnToken(token);
+            await this.state.addTask?.haveMsisdnToken(token);
             this.setState({
                 addTask: null,
                 continueDisabled: false,
@@ -205,7 +208,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
         }
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const { address } = this.props.msisdn;
         const { verifying, bound } = this.state;
 
@@ -266,7 +269,7 @@ interface IProps {
 }
 
 export default class PhoneNumbers extends React.Component<IProps> {
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let content;
         if (this.props.msisdns.length > 0) {
             content = this.props.msisdns.map((e) => {

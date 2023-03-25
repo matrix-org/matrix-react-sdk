@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, SyntheticEvent } from "react";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 
@@ -23,7 +23,6 @@ import SdkConfig from "../../../SdkConfig";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Modal from "../../../Modal";
-import { IDialogProps } from "./IDialogProps";
 import BugReportDialog from "./BugReportDialog";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
@@ -35,25 +34,30 @@ export interface IFinishedOpts {
     invite: boolean;
 }
 
-interface IProps extends IDialogProps {
+interface IProps {
     roomId: string;
     targetVersion: string;
     description?: ReactNode;
     doUpgrade?(opts: IFinishedOpts, fn: (progressText: string, progress: number, total: number) => void): Promise<void>;
+    onFinished(opts?: IFinishedOpts): void;
+}
+
+interface Progress {
+    text: string;
+    progress: number;
+    total: number;
 }
 
 interface IState {
     inviteUsersToNewRoom: boolean;
-    progressText?: string;
-    progress?: number;
-    total?: number;
+    progress?: Progress;
 }
 
 export default class RoomUpgradeWarningDialog extends React.Component<IProps, IState> {
     private readonly isPrivate: boolean;
-    private readonly currentVersion: string;
+    private readonly currentVersion?: string;
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         const room = MatrixClientPeg.get().getRoom(this.props.roomId);
@@ -66,23 +70,24 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
         };
     }
 
-    private onProgressCallback = (progressText: string, progress: number, total: number): void => {
-        this.setState({ progressText, progress, total });
+    private onProgressCallback = (text: string, progress: number, total: number): void => {
+        this.setState({
+            progress: {
+                text,
+                progress,
+                total,
+            },
+        });
     };
 
-    private onContinue = (): void => {
+    private onContinue = async (): Promise<void> => {
         const opts = {
             continue: true,
             invite: this.isPrivate && this.state.inviteUsersToNewRoom,
         };
 
-        if (this.props.doUpgrade) {
-            this.props.doUpgrade(opts, this.onProgressCallback).then(() => {
-                this.props.onFinished(opts);
-            });
-        } else {
-            this.props.onFinished(opts);
-        }
+        await this.props.doUpgrade?.(opts, this.onProgressCallback);
+        this.props.onFinished(opts);
     };
 
     private onCancel = (): void => {
@@ -93,17 +98,17 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
         this.setState({ inviteUsersToNewRoom });
     };
 
-    private openBugReportDialog = (e): void => {
+    private openBugReportDialog = (e: SyntheticEvent): void => {
         e.preventDefault();
         e.stopPropagation();
 
         Modal.createDialog(BugReportDialog, {});
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const brand = SdkConfig.get().brand;
 
-        let inviteToggle = null;
+        let inviteToggle: JSX.Element | undefined;
         if (this.isPrivate) {
             inviteToggle = (
                 <LabelledToggleSwitch
@@ -149,11 +154,11 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
         }
 
         let footer: JSX.Element;
-        if (this.state.progressText) {
+        if (this.state.progress) {
             footer = (
                 <span className="mx_RoomUpgradeWarningDialog_progress">
-                    <ProgressBar value={this.state.progress} max={this.state.total} />
-                    <div className="mx_RoomUpgradeWarningDialog_progressText">{this.state.progressText}</div>
+                    <ProgressBar value={this.state.progress.progress} max={this.state.progress.total} />
+                    <div className="mx_RoomUpgradeWarningDialog_progressText">{this.state.progress.text}</div>
                 </span>
             );
         } else {

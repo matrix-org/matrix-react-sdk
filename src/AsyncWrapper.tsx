@@ -14,24 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentType } from "react";
+import React, { ComponentType, PropsWithChildren } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "./languageHandler";
-import { IDialogProps } from "./components/views/dialogs/IDialogProps";
 import BaseDialog from "./components/views/dialogs/BaseDialog";
 import DialogButtons from "./components/views/elements/DialogButtons";
 import Spinner from "./components/views/elements/Spinner";
 
 type AsyncImport<T> = { default: T };
 
-interface IProps extends IDialogProps {
+interface IProps {
     // A promise which resolves with the real component
-    prom: Promise<ComponentType | AsyncImport<ComponentType>>;
+    prom: Promise<ComponentType<any> | AsyncImport<ComponentType<any>>>;
+    onFinished(): void;
 }
 
 interface IState {
-    component?: ComponentType;
+    component?: ComponentType<PropsWithChildren<any>>;
     error?: Error;
 }
 
@@ -42,10 +42,7 @@ interface IState {
 export default class AsyncWrapper extends React.Component<IProps, IState> {
     private unmounted = false;
 
-    public state = {
-        component: null,
-        error: null,
-    };
+    public state: IState = {};
 
     public componentDidMount(): void {
         // XXX: temporary logging to try to diagnose
@@ -74,10 +71,10 @@ export default class AsyncWrapper extends React.Component<IProps, IState> {
     }
 
     private onWrapperCancelClick = (): void => {
-        this.props.onFinished(false);
+        this.props.onFinished();
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         if (this.state.component) {
             const Component = this.state.component;
             return <Component {...this.props} />;

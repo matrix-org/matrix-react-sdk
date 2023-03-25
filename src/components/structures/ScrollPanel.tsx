@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, CSSProperties, ReactNode, KeyboardEvent } from "react";
+import React, { createRef, CSSProperties, ReactNode } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import SettingsStore from "../../settings/SettingsStore";
@@ -74,6 +74,7 @@ interface IProps {
      * of the wrapper
      */
     fixedChildren?: ReactNode;
+    children?: ReactNode;
 
     /* onFillRequest(backwards): a callback which is called on scroll when
      * the user nears the start (backwards = true) or end (backwards =
@@ -148,7 +149,7 @@ interface IProps {
  */
 
 export interface IScrollState {
-    stuckAtBottom: boolean;
+    stuckAtBottom?: boolean;
     trackedNode?: HTMLElement;
     trackedScrollToken?: string;
     bottomOffset?: number;
@@ -172,7 +173,7 @@ export default class ScrollPanel extends React.Component<IProps> {
         onScroll: function () {},
     };
 
-    private readonly pendingFillRequests: Record<"b" | "f", boolean> = {
+    private readonly pendingFillRequests: Record<"b" | "f", boolean | null> = {
         b: null,
         f: null,
     };
@@ -189,14 +190,14 @@ export default class ScrollPanel extends React.Component<IProps> {
     private pendingFillDueToPropsUpdate: boolean;
     private scrollState: IScrollState;
     private preventShrinkingState: IPreventShrinkingState;
-    private unfillDebouncer: number;
+    private unfillDebouncer: number | null;
     private bottomGrowth: number;
     private minListHeight: number;
     private heightUpdateInProgress: boolean;
     private divScroll: HTMLDivElement;
 
-    public constructor(props, context) {
-        super(props, context);
+    public constructor(props: IProps) {
+        super(props);
 
         this.props.resizeNotifier?.on("middlePanelResizedNoisy", this.onResize);
 
@@ -440,9 +441,9 @@ export default class ScrollPanel extends React.Component<IProps> {
         // pagination.
         //
         // If backwards is true, we unpaginate (remove) tiles from the back (top).
-        let tile;
+        let tile: HTMLElement;
         for (let i = 0; i < tiles.length; i++) {
-            tile = tiles[backwards ? i : tiles.length - 1 - i];
+            tile = tiles[backwards ? i : tiles.length - 1 - i] as HTMLElement;
             // Subtract height of tile as if it were unpaginated
             excessHeight -= tile.clientHeight;
             //If removing the tile would lead to future pagination, break before setting scroll token
@@ -587,7 +588,7 @@ export default class ScrollPanel extends React.Component<IProps> {
      * Scroll up/down in response to a scroll key
      * @param {object} ev the keyboard event
      */
-    public handleScrollKey = (ev: KeyboardEvent): void => {
+    public handleScrollKey = (ev: React.KeyboardEvent | KeyboardEvent): void => {
         const roomAction = getKeyBindingsManager().getRoomAction(ev);
         switch (roomAction) {
             case KeyBindingAction.ScrollUp:

@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { fireEvent, render } from "@testing-library/react";
+import { act, fireEvent, render } from "@testing-library/react";
 import React from "react";
-import { act } from "react-dom/test-utils";
 
 import SelectableDeviceTile from "../../../../../src/components/views/settings/devices/SelectableDeviceTile";
 import { DeviceType } from "../../../../../src/utils/device/parseUserAgent";
@@ -53,7 +52,7 @@ describe("<SelectableDeviceTile />", () => {
         const { container } = render(getComponent({ onSelect }));
 
         act(() => {
-            fireEvent.click(container.querySelector(`#device-tile-checkbox-${device.device_id}`));
+            fireEvent.click(container.querySelector(`#device-tile-checkbox-${device.device_id}`)!);
         });
 
         expect(onSelect).toHaveBeenCalled();

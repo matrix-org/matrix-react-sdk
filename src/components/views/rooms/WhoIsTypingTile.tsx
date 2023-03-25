@@ -51,7 +51,7 @@ export default class WhoIsTypingTile extends React.Component<IProps, IState> {
         whoIsTypingLimit: 3,
     };
 
-    public state = {
+    public state: IState = {
         usersTyping: WhoIsTyping.usersTypingApartFromMe(this.props.room),
         delayedStopTypingTimers: {},
     };
@@ -61,7 +61,7 @@ export default class WhoIsTypingTile extends React.Component<IProps, IState> {
         MatrixClientPeg.get().on(RoomEvent.Timeline, this.onRoomTimeline);
     }
 
-    public componentDidUpdate(_, prevState): void {
+    public componentDidUpdate(prevProps: IProps, prevState: IState): void {
         const wasVisible = WhoIsTypingTile.isVisible(prevState);
         const isVisible = WhoIsTypingTile.isVisible(this.state);
         if (this.props.onShown && !wasVisible && isVisible) {
@@ -89,7 +89,7 @@ export default class WhoIsTypingTile extends React.Component<IProps, IState> {
         return WhoIsTypingTile.isVisible(this.state);
     };
 
-    private onRoomTimeline = (event: MatrixEvent, room: Room | null): void => {
+    private onRoomTimeline = (event: MatrixEvent, room?: Room): void => {
         if (room?.roomId === this.props.room.roomId) {
             const userId = event.getSender();
             // remove user from usersTyping
@@ -199,7 +199,7 @@ export default class WhoIsTypingTile extends React.Component<IProps, IState> {
         return avatars;
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let usersTyping = this.state.usersTyping;
         const stoppedUsersOnTimer = Object.keys(this.state.delayedStopTypingTimers).map((userId) =>
             this.props.room.getMember(userId),

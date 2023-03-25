@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import classNames from "classnames";
 import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import { Relations, RelationsEvent } from "matrix-js-sdk/src/models/relations";
@@ -52,7 +52,7 @@ const ReactButton: React.FC<IProps> = ({ mxEvent, reactions }) => {
                 })}
                 title={_t("Add reaction")}
                 onClick={openMenu}
-                onContextMenu={(e) => {
+                onContextMenu={(e: SyntheticEvent): void => {
                     e.preventDefault();
                     openMenu();
                 }}
@@ -142,7 +142,7 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
         this.forceUpdate();
     };
 
-    private getMyReactions(): MatrixEvent[] {
+    private getMyReactions(): MatrixEvent[] | null {
         const reactions = this.props.reactions;
         if (!reactions) {
             return null;
@@ -161,7 +161,7 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
         });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const { mxEvent, reactions } = this.props;
         const { myReactions, showAll } = this.state;
 
@@ -206,7 +206,7 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
         // Show the first MAX_ITEMS if there are MAX_ITEMS + 1 or more items.
         // The "+ 1" ensure that the "show all" reveals something that takes up
         // more space than the button itself.
-        let showAllButton: JSX.Element;
+        let showAllButton: JSX.Element | undefined;
         if (items.length > MAX_ITEMS_WHEN_LIMITED + 1 && !showAll) {
             items = items.slice(0, MAX_ITEMS_WHEN_LIMITED);
             showAllButton = (

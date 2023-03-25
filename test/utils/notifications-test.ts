@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { mocked } from "jest-mock";
+import { Mocked, mocked } from "jest-mock";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
 import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
@@ -36,9 +36,9 @@ import { MatrixClientPeg } from "../../src/MatrixClientPeg";
 jest.mock("../../src/settings/SettingsStore");
 
 describe("notifications", () => {
-    let accountDataStore = {};
-    let mockClient;
-    let accountDataEventKey;
+    let accountDataStore: Record<string, MatrixEvent> = {};
+    let mockClient: Mocked<MatrixClient>;
+    let accountDataEventKey: string;
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -53,7 +53,7 @@ describe("notifications", () => {
             }),
         });
         accountDataStore = {};
-        accountDataEventKey = getLocalNotificationAccountDataEventType(mockClient.deviceId);
+        accountDataEventKey = getLocalNotificationAccountDataEventType(mockClient.deviceId!);
         mocked(SettingsStore).getValue.mockReturnValue(false);
     });
 
@@ -128,7 +128,7 @@ describe("notifications", () => {
 
         it("sends a request even if everything has been read", () => {
             clearRoomNotification(room, client);
-            expect(sendReadReceiptSpy).not.toBeCalled();
+            expect(sendReadReceiptSpy).not.toHaveBeenCalled();
         });
 
         it("marks the room as read even if the receipt failed", async () => {
@@ -163,7 +163,7 @@ describe("notifications", () => {
 
         it("does not send any requests if everything has been read", () => {
             clearAllNotifications(client);
-            expect(sendReadReceiptSpy).not.toBeCalled();
+            expect(sendReadReceiptSpy).not.toHaveBeenCalled();
         });
 
         it("sends unthreaded receipt requests", () => {
@@ -178,7 +178,7 @@ describe("notifications", () => {
 
             clearAllNotifications(client);
 
-            expect(sendReadReceiptSpy).toBeCalledWith(message, ReceiptType.Read, true);
+            expect(sendReadReceiptSpy).toHaveBeenCalledWith(message, ReceiptType.Read, true);
         });
 
         it("sends private read receipts", () => {
@@ -195,7 +195,7 @@ describe("notifications", () => {
 
             clearAllNotifications(client);
 
-            expect(sendReadReceiptSpy).toBeCalledWith(message, ReceiptType.ReadPrivate, true);
+            expect(sendReadReceiptSpy).toHaveBeenCalledWith(message, ReceiptType.ReadPrivate, true);
         });
     });
 });

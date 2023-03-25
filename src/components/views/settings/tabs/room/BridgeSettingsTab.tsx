@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
@@ -34,22 +34,21 @@ interface IProps {
 }
 
 export default class BridgeSettingsTab extends React.Component<IProps> {
-    private renderBridgeCard(event: MatrixEvent, room: Room): JSX.Element {
+    private renderBridgeCard(event: MatrixEvent, room: Room | null): ReactNode {
         const content = event.getContent();
-        if (!content || !content.channel || !content.protocol) {
-            return null;
-        }
+        if (!room || !content?.channel || !content.protocol) return null;
         return <BridgeTile key={event.getId()} room={room} ev={event} />;
     }
 
     public static getBridgeStateEvents(roomId: string): MatrixEvent[] {
         const client = MatrixClientPeg.get();
-        const roomState = client.getRoom(roomId).currentState;
+        const roomState = client.getRoom(roomId)?.currentState;
+        if (!roomState) return [];
 
         return BRIDGE_EVENT_TYPES.map((typeName) => roomState.getStateEvents(typeName)).flat(1);
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         // This settings tab will only be invoked if the following function returns more
         // than 0 events, so no validation is needed at this stage.
         const bridgeEvents = BridgeSettingsTab.getBridgeStateEvents(this.props.roomId);

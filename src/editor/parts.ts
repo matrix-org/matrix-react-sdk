@@ -70,11 +70,13 @@ interface IBasePart {
     updateDOMNode(node: Node): void;
     canUpdateDOMNode(node: Node): boolean;
     toDOMNode(): Node;
+
+    merge?(part: Part): boolean;
 }
 
 interface IPillCandidatePart extends Omit<IBasePart, "type" | "createAutoComplete"> {
     type: Type.PillCandidate | Type.Command;
-    createAutoComplete(updateCallback: UpdateCallback): AutocompleteWrapperModel;
+    createAutoComplete(updateCallback: UpdateCallback): AutocompleteWrapperModel | undefined;
 }
 
 interface IPillPart extends Omit<IBasePart, "type" | "resourceId"> {
@@ -227,7 +229,7 @@ abstract class PlainBasePart extends BasePart {
         return document.createTextNode(this.text);
     }
 
-    public merge(part): boolean {
+    public merge(part: Part): boolean {
         if (part.type === this.type) {
             this._text = this.text + part.text;
             return true;
@@ -254,7 +256,7 @@ export class PlainPart extends PlainBasePart implements IBasePart {
 }
 
 export abstract class PillPart extends BasePart implements IPillPart {
-    public constructor(public resourceId: string, label) {
+    public constructor(public resourceId: string, label: string) {
         super(label);
     }
 
@@ -270,7 +272,7 @@ export abstract class PillPart extends BasePart implements IPillPart {
         const container = document.createElement("span");
         container.setAttribute("spellcheck", "false");
         container.setAttribute("contentEditable", "false");
-        container.onclick = this.onClick;
+        if (this.onClick) container.onclick = this.onClick;
         container.className = this.className;
         container.appendChild(document.createTextNode(this.text));
         this.setAvatar(container);
@@ -285,7 +287,7 @@ export abstract class PillPart extends BasePart implements IPillPart {
         if (node.className !== this.className) {
             node.className = this.className;
         }
-        if (node.onclick !== this.onClick) {
+        if (this.onClick && node.onclick !== this.onClick) {
             node.onclick = this.onClick;
         }
         this.setAvatar(node);
@@ -420,9 +422,9 @@ class RoomPillPart extends PillPart {
 
     protected setAvatar(node: HTMLElement): void {
         let initialLetter = "";
-        let avatarUrl = Avatar.avatarUrlForRoom(this.room, 16, 16, "crop");
+        let avatarUrl = Avatar.avatarUrlForRoom(this.room ?? null, 16, 16, "crop");
         if (!avatarUrl) {
-            initialLetter = Avatar.getInitialLetter(this.room?.name || this.resourceId);
+            initialLetter = Avatar.getInitialLetter(this.room?.name || this.resourceId) ?? "";
             avatarUrl = Avatar.defaultAvatarUrlForString(this.room?.roomId ?? this.resourceId);
         }
         this.setAvatarVars(node, avatarUrl, initialLetter);
@@ -455,7 +457,7 @@ class AtRoomPillPart extends RoomPillPart {
 }
 
 class UserPillPart extends PillPart {
-    public constructor(userId, displayName, private member?: RoomMember) {
+    public constructor(userId: string, displayName: string, private member?: RoomMember) {
         super(userId, displayName);
     }
 
@@ -476,7 +478,7 @@ class UserPillPart extends PillPart {
         const avatarUrl = Avatar.avatarUrlForMember(this.member, 16, 16, "crop");
         let initialLetter = "";
         if (avatarUrl === defaultAvatarUrl) {
-            initialLetter = Avatar.getInitialLetter(name);
+            initialLetter = Avatar.getInitialLetter(name) ?? "";
         }
         this.setAvatarVars(node, avatarUrl, initialLetter);
     }
@@ -494,8 +496,8 @@ class PillCandidatePart extends PlainBasePart implements IPillCandidatePart {
         super(text);
     }
 
-    public createAutoComplete(updateCallback: UpdateCallback): AutocompleteWrapperModel {
-        return this.autoCompleteCreator.create(updateCallback);
+    public createAutoComplete(updateCallback: UpdateCallback): AutocompleteWrapperModel | undefined {
+        return this.autoCompleteCreator.create?.(updateCallback);
     }
 
     protected acceptsInsertion(chr: string, offset: number, inputType: string): boolean {
@@ -530,7 +532,7 @@ export function getAutoCompleteCreator(getAutocompleterComponent: GetAutocomplet
 type AutoCompleteCreator = ReturnType<typeof getAutoCompleteCreator>;
 
 interface IAutocompleteCreator {
-    create(updateCallback: UpdateCallback): AutocompleteWrapperModel;
+    create: ((updateCallback: UpdateCallback) => AutocompleteWrapperModel) | undefined;
 }
 
 export class PartCreator {
@@ -539,7 +541,7 @@ export class PartCreator {
     public constructor(
         private readonly room: Room,
         private readonly client: MatrixClient,
-        autoCompleteCreator: AutoCompleteCreator = null,
+        autoCompleteCreator: AutoCompleteCreator | null = null,
     ) {
         // pre-create the creator as an object even without callback so it can already be passed
         // to PillCandidatePart (e.g. while deserializing) and set later on
@@ -572,7 +574,7 @@ export class PartCreator {
         return this.plain(text);
     }
 
-    public deserializePart(part: SerializedPart): Part {
+    public deserializePart(part: SerializedPart): Part | undefined {
         switch (part.type) {
             case Type.Plain:
                 return this.plain(part.text);
@@ -585,9 +587,9 @@ export class PartCreator {
             case Type.PillCandidate:
                 return this.pillCandidate(part.text);
             case Type.RoomPill:
-                return this.roomPill(part.resourceId);
+                return part.resourceId ? this.roomPill(part.resourceId) : undefined;
             case Type.UserPill:
-                return this.userPill(part.text, part.resourceId);
+                return part.resourceId ? this.userPill(part.text, part.resourceId) : undefined;
         }
     }
 
@@ -610,7 +612,7 @@ export class PartCreator {
     public roomPill(alias: string, roomId?: string): RoomPillPart {
         let room: Room | undefined;
         if (roomId || alias[0] !== "#") {
-            room = this.client.getRoom(roomId || alias);
+            room = this.client.getRoom(roomId || alias) ?? undefined;
         } else {
             room = this.client.getRooms().find((r) => {
                 return r.getCanonicalAlias() === alias || r.getAltAliases().includes(alias);
@@ -689,7 +691,7 @@ export class CommandPartCreator extends PartCreator {
         return new CommandPart(text, this.autoCompleteCreator);
     }
 
-    public deserializePart(part: SerializedPart): Part {
+    public deserializePart(part: SerializedPart): Part | undefined {
         if (part.type === Type.Command) {
             return this.command(part.text);
         } else {

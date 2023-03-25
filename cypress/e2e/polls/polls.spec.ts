@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,9 +18,11 @@ limitations under the License.
 
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { MatrixClient } from "../../global";
+import { SettingLevel } from "../../../src/settings/SettingLevel";
+import { Layout } from "../../../src/settings/enums/Layout";
 import Chainable = Cypress.Chainable;
 
-const hideTimestampCSS = ".mx_MessageTimestamp { visibility: hidden !important; }";
+const hidePercyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
 
 describe("Polls", () => {
     let homeserver: HomeserverInstance;
@@ -54,12 +56,12 @@ describe("Polls", () => {
     };
 
     const getPollOption = (pollId: string, optionText: string): Chainable<JQuery> => {
-        return getPollTile(pollId).contains(".mx_MPollBody_option .mx_StyledRadioButton", optionText);
+        return getPollTile(pollId).contains(".mx_PollOption .mx_StyledRadioButton", optionText);
     };
 
     const expectPollOptionVoteCount = (pollId: string, optionText: string, votes: number): void => {
         getPollOption(pollId, optionText).within(() => {
-            cy.get(".mx_MPollBody_optionVoteCount").should("contain", `${votes} vote`);
+            cy.get(".mx_PollOption_optionVoteCount").should("contain", `${votes} vote`);
         });
     };
 
@@ -83,7 +85,6 @@ describe("Polls", () => {
     };
 
     beforeEach(() => {
-        cy.enableLabsFeature("feature_threadenabled");
         cy.window().then((win) => {
             win.localStorage.setItem("mx_lhs_size", "0"); // Collapse left panel for these tests
         });
@@ -117,7 +118,8 @@ describe("Polls", () => {
             cy.get('[aria-label="Poll"]').click();
         });
 
-        cy.get(".mx_CompoundDialog").percySnapshotElement("Polls Composer");
+        // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24688
+        //cy.get(".mx_CompoundDialog").percySnapshotElement("Polls Composer");
 
         const pollParams = {
             title: "Does the polls feature work?",
@@ -134,7 +136,7 @@ describe("Polls", () => {
             .as("pollId");
 
         cy.get<string>("@pollId").then((pollId) => {
-            getPollTile(pollId).percySnapshotElement("Polls Timeline tile - no votes", { percyCSS: hideTimestampCSS });
+            getPollTile(pollId).percySnapshotElement("Polls Timeline tile - no votes", { percyCSS: hidePercyCSS });
 
             // Bot votes 'Maybe' in the poll
             botVoteForOption(bot, roomId, pollId, pollParams.options[2]);
@@ -313,6 +315,18 @@ describe("Polls", () => {
             cy.get(".mx_RoomView_body .mx_MPollBody_totalVotes").should("contain", "2 votes cast");
             // and thread view
             cy.get(".mx_ThreadView .mx_MPollBody_totalVotes").should("contain", "2 votes cast");
+
+            // Take snapshots of poll on ThreadView
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
+            cy.get(".mx_ThreadView .mx_EventTile[data-layout='bubble']").should("be.visible");
+            cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with a poll on bubble layout", {
+                percyCSS: hidePercyCSS,
+            });
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+            cy.get(".mx_ThreadView .mx_EventTile[data-layout='group']").should("be.visible");
+            cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with a poll on group layout", {
+                percyCSS: hidePercyCSS,
+            });
 
             cy.get(".mx_RoomView_body").within(() => {
                 // vote 'Maybe' in the main timeline poll

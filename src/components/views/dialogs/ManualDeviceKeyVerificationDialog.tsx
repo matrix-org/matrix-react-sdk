@@ -25,11 +25,11 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import * as FormattingUtils from "../../../utils/FormattingUtils";
 import { _t } from "../../../languageHandler";
 import QuestionDialog from "./QuestionDialog";
-import { IDialogProps } from "./IDialogProps";
 
-interface IProps extends IDialogProps {
+interface IProps {
     userId: string;
     device: DeviceInfo;
+    onFinished(confirm?: boolean): void;
 }
 
 export default class ManualDeviceKeyVerificationDialog extends React.Component<IProps> {
@@ -40,7 +40,7 @@ export default class ManualDeviceKeyVerificationDialog extends React.Component<I
         this.props.onFinished(confirm);
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let text;
         if (MatrixClientPeg.get().getUserId() === this.props.userId) {
             text = _t("Confirm by comparing the following with the User Settings in your other session:");

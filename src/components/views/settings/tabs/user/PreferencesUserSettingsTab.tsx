@@ -29,7 +29,6 @@ import { UserTab } from "../../../dialogs/UserTab";
 import { OpenToTabPayload } from "../../../../../dispatcher/payloads/OpenToTabPayload";
 import { Action } from "../../../../../dispatcher/actions";
 import SdkConfig from "../../../../../SdkConfig";
-import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import { showUserOnboardingPage } from "../../../user-onboarding/UserOnboardingPage";
 
 interface IProps {
@@ -37,7 +36,6 @@ interface IProps {
 }
 
 interface IState {
-    disablingReadReceiptsSupported: boolean;
     autocompleteDelay: string;
     readMarkerInViewThresholdMs: string;
     readMarkerOutOfViewThresholdMs: string;
@@ -50,10 +48,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
 
     private static KEYBINDINGS_SETTINGS = ["ctrlFForSearch"];
 
-    private static PRESENCE_SETTINGS = [
-        "sendTypingNotifications",
-        // sendReadReceipts - handled specially due to server needing support
-    ];
+    private static PRESENCE_SETTINGS = ["sendReadReceipts", "sendTypingNotifications"];
 
     private static COMPOSER_SETTINGS = [
         "MessageComposerInput.autoReplaceEmoji",
@@ -89,17 +84,18 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         "useOnlyCurrentProfiles",
     ];
 
+    private static ROOM_DIRECTORY_SETTINGS = ["SpotlightSearch.showNsfwPublicRooms"];
+
     private static GENERAL_SETTINGS = [
         "promptBeforeInviteUnknownUsers",
         // Start automatically after startup (electron-only)
         // Autocomplete delay (niche text box)
     ];
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
-            disablingReadReceiptsSupported: false,
             autocompleteDelay: SettingsStore.getValueAt(SettingLevel.DEVICE, "autocompleteDelay").toString(10),
             readMarkerInViewThresholdMs: SettingsStore.getValueAt(
                 SettingLevel.DEVICE,
@@ -110,16 +106,6 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                 "readMarkerOutOfViewThresholdMs",
             ).toString(10),
         };
-    }
-
-    public async componentDidMount(): Promise<void> {
-        const cli = MatrixClientPeg.get();
-
-        this.setState({
-            disablingReadReceiptsSupported:
-                (await cli.doesServerSupportUnstableFeature("org.matrix.msc2285.stable")) ||
-                (await cli.isVersionSupported("v1.4")),
-        });
     }
 
     private onAutocompleteDelayChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -138,10 +124,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
     };
 
     private renderGroup(settingIds: string[], level = SettingLevel.ACCOUNT): React.ReactNodeArray {
-        return settingIds.map((i) => {
-            const disabled = !SettingsStore.isEnabled(i);
-            return <SettingsFlag key={i} name={i} level={level} disabled={disabled} />;
-        });
+        return settingIds.map((i) => <SettingsFlag key={i} name={i} level={level} />);
     }
 
     private onKeyboardShortcutsClicked = (): void => {
@@ -151,7 +134,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const useCase = SettingsStore.getValue<UseCase | null>("FTUE.useCaseSelection");
         const roomListSettings = PreferencesUserSettingsTab.ROOM_LIST_SETTINGS
             // Only show the breadcrumbs setting if breadcrumbs v2 is disabled
@@ -203,14 +186,6 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                     <span className="mx_SettingsTab_subsectionText">
                         {_t("Share your activity and status with others.")}
                     </span>
-                    <SettingsFlag
-                        disabled={
-                            !this.state.disablingReadReceiptsSupported && SettingsStore.getValue("sendReadReceipts") // Make sure the feature can always be enabled
-                        }
-                        disabledDescription={_t("Your server doesn't support disabling sending read receipts.")}
-                        name="sendReadReceipts"
-                        level={SettingLevel.ACCOUNT}
-                    />
                     {this.renderGroup(PreferencesUserSettingsTab.PRESENCE_SETTINGS)}
                 </div>
 
@@ -232,6 +207,11 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{_t("Timeline")}</span>
                     {this.renderGroup(PreferencesUserSettingsTab.TIMELINE_SETTINGS)}
+                </div>
+
+                <div className="mx_SettingsTab_section">
+                    <span className="mx_SettingsTab_subheading">{_t("Room directory")}</span>
+                    {this.renderGroup(PreferencesUserSettingsTab.ROOM_DIRECTORY_SETTINGS)}
                 </div>
 
                 <div className="mx_SettingsTab_section">

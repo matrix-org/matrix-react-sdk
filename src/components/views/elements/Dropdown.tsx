@@ -49,7 +49,7 @@ class MenuOption extends React.Component<IMenuOptionProps> {
         this.props.onClick(this.props.dropdownKey);
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const optClasses = classnames({
             mx_Dropdown_option: true,
             mx_Dropdown_option_highlight: this.props.highlighted,
@@ -113,8 +113,8 @@ interface IState {
  */
 export default class Dropdown extends React.Component<DropdownProps, IState> {
     private readonly buttonRef = createRef<HTMLDivElement>();
-    private dropdownRootElement: HTMLDivElement = null;
-    private ignoreEvent: MouseEvent = null;
+    private dropdownRootElement: HTMLDivElement | null = null;
+    private ignoreEvent: MouseEvent | null = null;
     private childrenByKey: Record<string, ReactNode> = {};
 
     public constructor(props: DropdownProps) {
@@ -327,7 +327,7 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
         return options;
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let currentValue;
 
         const menuStyle: CSSProperties = {};
@@ -373,18 +373,14 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
             );
         }
 
-        const dropdownClasses = {
-            mx_Dropdown: true,
-            mx_Dropdown_disabled: this.props.disabled,
-        };
-        if (this.props.className) {
-            dropdownClasses[this.props.className] = true;
-        }
+        const dropdownClasses = classnames("mx_Dropdown", this.props.className, {
+            mx_Dropdown_disabled: !!this.props.disabled,
+        });
 
         // Note the menu sits inside the AccessibleButton div so it's anchored
         // to the input, but overflows below it. The root contains both.
         return (
-            <div className={classnames(dropdownClasses)} ref={this.collectRoot}>
+            <div className={dropdownClasses} ref={this.collectRoot}>
                 <AccessibleButton
                     className="mx_Dropdown_input mx_no_textinput"
                     onClick={this.onAccessibleButtonClick}

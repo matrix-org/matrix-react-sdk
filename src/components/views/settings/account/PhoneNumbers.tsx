@@ -86,7 +86,7 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
             });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         if (this.state.verifyRemove) {
             return (
                 <div className="mx_ExistingPhoneNumber">
@@ -129,9 +129,9 @@ interface IProps {
 
 interface IState {
     verifying: boolean;
-    verifyError: string;
+    verifyError: string | null;
     verifyMsisdn: string;
-    addTask: any; // FIXME: When AddThreepid is TSfied
+    addTask: AddThreepid | null;
     continueDisabled: boolean;
     phoneCountry: string;
     newPhoneNumber: string;
@@ -205,7 +205,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
         const token = this.state.newPhoneNumberCode;
         const address = this.state.verifyMsisdn;
         this.state.addTask
-            .haveMsisdnToken(token)
+            ?.haveMsisdnToken(token)
             .then(([finished]) => {
                 let newPhoneNumber = this.state.newPhoneNumber;
                 if (finished) {
@@ -241,7 +241,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
         this.setState({ phoneCountry: country.iso2 });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const existingPhoneElements = this.props.msisdns.map((p) => {
             return <ExistingPhoneNumber msisdn={p} onRemoved={this.onRemoved} key={p.address} />;
         });

@@ -34,12 +34,12 @@ import { _t, _td, Tags, TranslatedString } from "../languageHandler";
  * @returns {*} Translated string or react component
  */
 export function messageForResourceLimitError(
-    limitType: string,
-    adminContact: string,
+    limitType: string | undefined,
+    adminContact: string | undefined,
     strings: Record<string, string>,
     extraTranslations?: Tags,
 ): TranslatedString {
-    let errString = strings[limitType];
+    let errString = limitType ? strings[limitType] : undefined;
     if (errString === undefined) errString = strings[""];
 
     const linkSub = (sub: string): ReactNode => {
@@ -57,7 +57,7 @@ export function messageForResourceLimitError(
     if (errString.includes("<a>")) {
         return _t(errString, {}, Object.assign({ a: linkSub }, extraTranslations));
     } else {
-        return _t(errString, {}, extraTranslations);
+        return _t(errString, {}, extraTranslations!);
     }
 }
 
@@ -78,6 +78,6 @@ export function messageForSyncError(err: Error): ReactNode {
             </div>
         );
     } else {
-        return <div>{_t("Unable to connect to Homeserver. Retrying...")}</div>;
+        return <div>{_t("Unable to connect to Homeserver. Retrying…")}</div>;
     }
 }

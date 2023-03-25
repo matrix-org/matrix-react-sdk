@@ -19,7 +19,6 @@ import { Room } from "matrix-js-sdk/src/models/room";
 
 import { _t, _td } from "../../../languageHandler";
 import BaseDialog from "../dialogs/BaseDialog";
-import { IDialogProps } from "./IDialogProps";
 import TabbedView, { Tab } from "../../structures/TabbedView";
 import StyledCheckbox from "../elements/StyledCheckbox";
 import { useSettingValue } from "../../../hooks/useSettings";
@@ -27,10 +26,12 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import RoomName from "../elements/RoomName";
 import { SpacePreferenceTab } from "../../../dispatcher/payloads/OpenSpacePreferencesPayload";
+import { NonEmptyArray } from "../../../@types/common";
 
-interface IProps extends IDialogProps {
+interface IProps {
     space: Room;
     initialTabId?: SpacePreferenceTab;
+    onFinished(): void;
 }
 
 const SpacePreferencesAppearanceTab: React.FC<Pick<IProps, "space">> = ({ space }) => {
@@ -69,7 +70,7 @@ const SpacePreferencesAppearanceTab: React.FC<Pick<IProps, "space">> = ({ space 
 };
 
 const SpacePreferencesDialog: React.FC<IProps> = ({ space, initialTabId, onFinished }) => {
-    const tabs = [
+    const tabs: NonEmptyArray<Tab> = [
         new Tab(
             SpacePreferenceTab.Appearance,
             _td("Appearance"),

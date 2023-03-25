@@ -32,7 +32,7 @@ export class WidgetPermissionStore {
     // TODO (all functions here): Merge widgetKind with the widget definition
 
     private packSettingKey(widget: Widget, kind: WidgetKind, roomId?: string): string {
-        let location = roomId;
+        let location: string | null | undefined = roomId;
         if (kind !== WidgetKind.Room) {
             location = this.context.client?.getUserId();
         }
@@ -61,7 +61,10 @@ export class WidgetPermissionStore {
     public setOIDCState(widget: Widget, kind: WidgetKind, roomId: string, newState: OIDCState): void {
         const settingsKey = this.packSettingKey(widget, kind, roomId);
 
-        let currentValues = SettingsStore.getValue("widgetOpenIDPermissions");
+        let currentValues = SettingsStore.getValue<{
+            allow?: string[];
+            deny?: string[];
+        }>("widgetOpenIDPermissions");
         if (!currentValues) {
             currentValues = {};
         }

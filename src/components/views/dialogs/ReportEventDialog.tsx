@@ -15,13 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
 import { ensureDMExists } from "../../../createRoom";
-import { IDialogProps } from "./IDialogProps";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import SdkConfig from "../../../SdkConfig";
 import Markdown from "../../../Markdown";
@@ -33,8 +32,9 @@ import Field from "../elements/Field";
 import Spinner from "../elements/Spinner";
 import LabelledCheckbox from "../elements/LabelledCheckbox";
 
-interface IProps extends IDialogProps {
+interface IProps {
     mxEvent: MatrixEvent;
+    onFinished(report?: boolean): void;
 }
 
 interface IState {
@@ -99,8 +99,8 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
     public constructor(props: IProps) {
         super(props);
 
-        let moderatedByRoomId = null;
-        let moderatedByUserId = null;
+        let moderatedByRoomId: string | null = null;
+        let moderatedByUserId: string | null = null;
 
         if (SettingsStore.getValue("feature_report_to_moderators")) {
             // The client supports reporting to moderators.
@@ -111,7 +111,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
             const room = client.getRoom(props.mxEvent.getRoomId());
 
             for (const stateEventType of MODERATED_BY_STATE_EVENT_TYPE) {
-                const stateEvent = room.currentState.getStateEvents(stateEventType, stateEventType);
+                const stateEvent = room?.currentState.getStateEvents(stateEventType, stateEventType);
                 if (!stateEvent) {
                     continue;
                 }
@@ -177,9 +177,9 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
             // A free-form text describing the abuse.
             reason: "",
             busy: false,
-            err: null,
+            err: undefined,
             // If specified, the nature of the abuse, as specified by MSC3215.
-            nature: null,
+            nature: undefined,
             ignoreUserToo: false, // default false, for now. Could easily be argued as default true
         };
     }
@@ -189,7 +189,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
     };
 
     // The user has written down a freeform description of the abuse.
-    private onReasonChange = ({ target: { value: reason } }): void => {
+    private onReasonChange = ({ target: { value: reason } }: ChangeEvent<HTMLTextAreaElement>): void => {
         this.setState({ reason });
     };
 
@@ -233,14 +233,14 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
 
         this.setState({
             busy: true,
-            err: null,
+            err: undefined,
         });
 
         try {
             const client = MatrixClientPeg.get();
             const ev = this.props.mxEvent;
             if (this.moderation && this.state.nature !== NonStandardValue.Admin) {
-                const nature: Nature = this.state.nature;
+                const nature = this.state.nature;
 
                 // Report to moderators through to the dedicated bot,
                 // as configured in the room's state events.
@@ -273,13 +273,13 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
         }
     };
 
-    public render(): JSX.Element {
-        let error = null;
+    public render(): React.ReactNode {
+        let error: JSX.Element | undefined;
         if (this.state.err) {
             error = <div className="error">{this.state.err}</div>;
         }
 
-        let progress = null;
+        let progress: JSX.Element | undefined;
         if (this.state.busy) {
             progress = (
                 <div className="progress">
@@ -299,7 +299,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
         );
 
         const adminMessageMD = SdkConfig.getObject("report_event")?.get("admin_message_md", "adminMessageMD");
-        let adminMessage;
+        let adminMessage: JSX.Element | undefined;
         if (adminMessageMD) {
             const html = new Markdown(adminMessageMD).toHTML({ externalLinks: true });
             adminMessage = <p dangerouslySetInnerHTML={{ __html: html }} />;
@@ -321,8 +321,8 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                     subtitle = _t(
                         "This user is displaying toxic behaviour, " +
                             "for instance by insulting other users or sharing " +
-                            " adult-only content in a family-friendly room " +
-                            " or otherwise violating the rules of this room.\n" +
+                            "adult-only content in a family-friendly room " +
+                            "or otherwise violating the rules of this room.\n" +
                             "This will be reported to the room moderators.",
                     );
                     break;
@@ -352,7 +352,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                         subtitle = _t(
                             "This room is dedicated to illegal or toxic content " +
                                 "or the moderators fail to moderate illegal or toxic content.\n" +
-                                " This will be reported to the administrators of %(homeserver)s.",
+                                "This will be reported to the administrators of %(homeserver)s.",
                             { homeserver: homeServerName },
                         );
                     }

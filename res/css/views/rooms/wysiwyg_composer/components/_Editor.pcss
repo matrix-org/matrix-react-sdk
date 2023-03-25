@@ -88,17 +88,22 @@ limitations under the License.
             border-radius: 2px;
         }
 
-        code {
+        code:not(pre *) {
             font-family: $monospace-font-family !important;
             background-color: $inlinecode-background-color;
             border: 1px solid $inlinecode-border-color;
             border-radius: 4px;
             padding: $spacing-2;
+
+            &:empty {
+                border: unset;
+                padding: unset;
+            }
         }
 
-        code:empty {
-            border: unset;
-            padding: unset;
+        /* this selector represents what will become a pill */
+        a[data-mention-type] {
+            cursor: text;
         }
     }
 

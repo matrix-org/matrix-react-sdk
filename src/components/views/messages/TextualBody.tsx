@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, SyntheticEvent, MouseEvent, ReactNode } from "react";
+import React, { createRef, SyntheticEvent, MouseEvent } from "react";
 import ReactDOM from "react-dom";
 import highlight from "highlight.js";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
@@ -70,7 +70,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
     public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
 
-    public constructor(props) {
+    public constructor(props: IBodyProps) {
         super(props);
 
         this.state = {
@@ -86,21 +86,21 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
     }
 
     private applyFormatting(): void {
-        const showLineNumbers = SettingsStore.getValue("showCodeLineNumbers");
-        this.activateSpoilers([this.contentRef.current]);
+        // Function is only called from render / componentDidMount → contentRef is set
+        const content = this.contentRef.current!;
 
-        // pillifyLinks BEFORE linkifyElement because plain room/user URLs in the composer
-        // are still sent as plaintext URLs. If these are ever pillified in the composer,
-        // we should be pillify them here by doing the linkifying BEFORE the pillifying.
-        pillifyLinks([this.contentRef.current], this.props.mxEvent, this.pills);
-        HtmlUtils.linkifyElement(this.contentRef.current);
+        const showLineNumbers = SettingsStore.getValue("showCodeLineNumbers");
+        this.activateSpoilers([content]);
+
+        HtmlUtils.linkifyElement(content);
+        pillifyLinks([content], this.props.mxEvent, this.pills);
 
         this.calculateUrlPreview();
 
         // tooltipifyLinks AFTER calculateUrlPreview because the DOM inside the tooltip
         // container is empty before the internal component has mounted so calculateUrlPreview
         // won't find any anchors
-        tooltipifyLinks([this.contentRef.current], this.pills, this.tooltips);
+        tooltipifyLinks([content], this.pills, this.tooltips);
 
         if (this.props.mxEvent.getContent().format === "org.matrix.custom.html") {
             // Handle expansion and add buttons
@@ -342,7 +342,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             if (node.tagName === "SPAN" && typeof node.getAttribute("data-mx-spoiler") === "string") {
                 const spoilerContainer = document.createElement("span");
 
-                const reason = node.getAttribute("data-mx-spoiler");
+                const reason = node.getAttribute("data-mx-spoiler") ?? undefined;
                 node.removeAttribute("data-mx-spoiler"); // we don't want to recurse
                 const spoiler = <Spoiler reason={reason} contentHtml={node.outerHTML} />;
 
@@ -367,7 +367,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             const node = nodes[i];
             if (node.tagName === "A" && node.getAttribute("href")) {
                 if (this.isLinkPreviewable(node)) {
-                    links.push(node.getAttribute("href"));
+                    links.push(node.getAttribute("href")!);
                 }
             } else if (node.tagName === "PRE" || node.tagName === "CODE" || node.tagName === "BLOCKQUOTE") {
                 continue;
@@ -380,7 +380,8 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
     private isLinkPreviewable(node: Element): boolean {
         // don't try to preview relative links
-        if (!node.getAttribute("href").startsWith("http://") && !node.getAttribute("href").startsWith("https://")) {
+        const href = node.getAttribute("href") ?? "";
+        if (!href.startsWith("http://") && !href.startsWith("https://")) {
             return false;
         }
 
@@ -389,24 +390,24 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         // or from a full foo.bar/baz style schemeless URL) - or be a markdown-style
         // link, in which case we check the target text differs from the link value.
         // TODO: make this configurable?
-        if (node.textContent.indexOf("/") > -1) {
+        if (node.textContent?.includes("/")) {
             return true;
+        }
+
+        const url = node.getAttribute("href");
+        const host = url.match(/^https?:\/\/(.*?)(\/|$)/)[1];
+
+        // never preview permalinks (if anything we should give a smart
+        // preview of the room/user they point to: nobody needs to be reminded
+        // what the matrix.to site looks like).
+        if (isPermalinkHost(host)) return false;
+
+        if (node.textContent?.toLowerCase().trim().startsWith(host.toLowerCase())) {
+            // it's a "foo.pl" style link
+            return false;
         } else {
-            const url = node.getAttribute("href");
-            const host = url.match(/^https?:\/\/(.*?)(\/|$)/)[1];
-
-            // never preview permalinks (if anything we should give a smart
-            // preview of the room/user they point to: nobody needs to be reminded
-            // what the matrix.to site looks like).
-            if (isPermalinkHost(host)) return false;
-
-            if (node.textContent.toLowerCase().trim().startsWith(host.toLowerCase())) {
-                // it's a "foo.pl" style link
-                return false;
-            } else {
-                // it's a [foo bar](http://foo.com) style link
-                return true;
-            }
+            // it's a [foo bar](http://foo.com) style link
+            return true;
         }
     }
 
@@ -434,7 +435,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
      * to start with (e.g. pills, links in the content).
      */
     private onBodyLinkClick = (e: MouseEvent): void => {
-        let target = e.target as HTMLLinkElement;
+        let target: HTMLLinkElement | null = e.target as HTMLLinkElement;
         // links processed by linkifyjs have their own handler so don't handle those here
         if (target.classList.contains(linkifyOpts.className as string)) return;
         if (target.nodeName !== "A") {
@@ -562,7 +563,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         return <span className="mx_EventTile_pendingModeration">{`(${text})`}</span>;
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         if (this.props.editState) {
             const isWysiwygComposerEnabled = SettingsStore.getValue("feature_wysiwyg_composer");
             return isWysiwygComposerEnabled ? (
@@ -578,18 +579,16 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
         // only strip reply if this is the original replying event, edits thereafter do not have the fallback
         const stripReply = !mxEvent.replacingEvent() && !!getParentEventId(mxEvent);
-        let body: ReactNode;
-        if (!body) {
-            isEmote = content.msgtype === MsgType.Emote;
-            isNotice = content.msgtype === MsgType.Notice;
-            body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
-                disableBigEmoji: isEmote || !SettingsStore.getValue<boolean>("TextualBody.enableBigEmoji"),
-                // Part of Replies fallback support
-                stripReplyFallback: stripReply,
-                ref: this.contentRef,
-                returnString: false,
-            });
-        }
+        isEmote = content.msgtype === MsgType.Emote;
+        isNotice = content.msgtype === MsgType.Notice;
+        let body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
+            disableBigEmoji: isEmote || !SettingsStore.getValue<boolean>("TextualBody.enableBigEmoji"),
+            // Part of Replies fallback support
+            stripReplyFallback: stripReply,
+            ref: this.contentRef,
+            returnString: false,
+        });
+
         if (this.props.replacingEventId) {
             body = (
                 <>

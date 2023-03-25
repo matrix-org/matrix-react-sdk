@@ -22,7 +22,10 @@ import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
-import MatrixToPermalinkConstructor, { baseUrl as matrixtoBaseUrl } from "./MatrixToPermalinkConstructor";
+import MatrixToPermalinkConstructor, {
+    baseUrl as matrixtoBaseUrl,
+    baseUrlPattern as matrixToBaseUrlPattern,
+} from "./MatrixToPermalinkConstructor";
 import PermalinkConstructor, { PermalinkParts } from "./PermalinkConstructor";
 import ElementPermalinkConstructor from "./ElementPermalinkConstructor";
 import SdkConfig from "../../SdkConfig";
@@ -84,7 +87,7 @@ export class RoomPermalinkCreator {
     private populationMap: { [serverName: string]: number } | null = null;
     private bannedHostsRegexps: RegExp[] | null = null;
     private allowedHostsRegexps: RegExp[] | null = null;
-    private _serverCandidates: string[] | null = null;
+    private _serverCandidates?: string[];
     private started = false;
 
     // We support being given a roomId as a fallback in the event the `room` object
@@ -124,7 +127,7 @@ export class RoomPermalinkCreator {
         this.started = false;
     }
 
-    public get serverCandidates(): string[] {
+    public get serverCandidates(): string[] | undefined {
         return this._serverCandidates;
     }
 
@@ -189,7 +192,7 @@ export class RoomPermalinkCreator {
                             isHostInRegex(domain, this.allowedHostsRegexps)
                         );
                     });
-                    const maxEntry = allowedEntries.reduce(
+                    const maxEntry = allowedEntries.reduce<[string | null, number]>(
                         (max, entry) => {
                             return entry[1] > max[1] ? entry : max;
                         },
@@ -208,7 +211,7 @@ export class RoomPermalinkCreator {
     }
 
     private updateAllowedServers(): void {
-        const bannedHostsRegexps = [];
+        const bannedHostsRegexps: RegExp[] = [];
         let allowedHostsRegexps = [ANY_REGEX]; // default allow everyone
         if (this.room.currentState) {
             const aclEvent = this.room.currentState.getStateEvents(EventType.RoomServerAcl, "");
@@ -216,12 +219,16 @@ export class RoomPermalinkCreator {
                 const getRegex = (hostname: string): RegExp =>
                     new RegExp("^" + utils.globToRegexp(hostname, false) + "$");
 
-                const denied = aclEvent.getContent().deny || [];
-                denied.forEach((h) => bannedHostsRegexps.push(getRegex(h)));
+                const denied = aclEvent.getContent<{ deny: string[] }>().deny;
+                if (Array.isArray(denied)) {
+                    denied.forEach((h) => bannedHostsRegexps.push(getRegex(h)));
+                }
 
-                const allowed = aclEvent.getContent().allow || [];
+                const allowed = aclEvent.getContent<{ allow: string[] }>().allow;
                 allowedHostsRegexps = []; // we don't want to use the default rule here
-                allowed.forEach((h) => allowedHostsRegexps.push(getRegex(h)));
+                if (Array.isArray(denied)) {
+                    allowed.forEach((h) => allowedHostsRegexps.push(getRegex(h)));
+                }
             }
         }
         this.bannedHostsRegexps = bannedHostsRegexps;
@@ -322,7 +329,7 @@ export function tryTransformEntityToPermalink(entity: string): string | null {
                 if (permalinkParts.roomIdOrAlias) {
                     const eventIdPart = permalinkParts.eventId ? `/${permalinkParts.eventId}` : "";
                     let pl = matrixtoBaseUrl + `/#/${permalinkParts.roomIdOrAlias}${eventIdPart}`;
-                    if (permalinkParts.viaServers.length > 0) {
+                    if (permalinkParts.viaServers?.length) {
                         pl += new MatrixToPermalinkConstructor().encodeServerCandidates(permalinkParts.viaServers);
                     }
                     return pl;
@@ -369,7 +376,7 @@ export function tryTransformPermalinkToLocalHref(permalink: string): string {
             if (permalinkParts.roomIdOrAlias) {
                 const eventIdPart = permalinkParts.eventId ? `/${permalinkParts.eventId}` : "";
                 permalink = `#/room/${permalinkParts.roomIdOrAlias}${eventIdPart}`;
-                if (permalinkParts.viaServers.length > 0) {
+                if (permalinkParts.viaServers?.length) {
                     permalink += new MatrixToPermalinkConstructor().encodeServerCandidates(permalinkParts.viaServers);
                 }
             } else if (permalinkParts.userId) {
@@ -420,8 +427,9 @@ function getPermalinkConstructor(): PermalinkConstructor {
 export function parsePermalink(fullUrl: string): PermalinkParts | null {
     try {
         const elementPrefix = SdkConfig.get("permalink_prefix");
-        if (decodeURIComponent(fullUrl).startsWith(matrixtoBaseUrl)) {
-            return new MatrixToPermalinkConstructor().parsePermalink(decodeURIComponent(fullUrl));
+        const decodedUrl = decodeURIComponent(fullUrl);
+        if (new RegExp(matrixToBaseUrlPattern, "i").test(decodedUrl)) {
+            return new MatrixToPermalinkConstructor().parsePermalink(decodedUrl);
         } else if (fullUrl.startsWith("matrix:")) {
             return new MatrixSchemePermalinkConstructor().parsePermalink(fullUrl);
         } else if (elementPrefix && fullUrl.startsWith(elementPrefix)) {
@@ -467,7 +475,7 @@ function isHostnameIpAddress(hostname: string): boolean {
     return isIp(hostname);
 }
 
-export const calculateRoomVia = (room: Room): string[] => {
+export const calculateRoomVia = (room: Room): string[] | undefined => {
     const permalinkCreator = new RoomPermalinkCreator(room);
     permalinkCreator.load();
     return permalinkCreator.serverCandidates;

@@ -42,6 +42,7 @@ $timeline-image-border-radius: 8px;
 
     --transition-short: 0.1s;
     --transition-standard: 0.3s;
+    --MessageTimestamp-width: $MessageTimestamp_width;
 }
 
 @media (prefers-reduced-motion) {
@@ -458,6 +459,11 @@ legend {
 }
 .mx_Dialog_header.mx_Dialog_headerWithCancel {
     padding-right: 20px; /* leave space for the 'X' cancel button */
+}
+
+.mx_Dialog_header.mx_Dialog_headerWithCancelOnly {
+    padding: 0 20px 0 0;
+    margin: 0;
 }
 
 .mx_Dialog_title.danger {

@@ -1,5 +1,6 @@
 /*
 Copyright 2022 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext, useMemo, useRef, useState } from "react";
+import React, { ChangeEvent, useContext, useMemo, useRef, useState } from "react";
 import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import { _t, _td } from "../../../../languageHandler";
@@ -55,7 +56,7 @@ export const stateKeyField = (defaultValue?: string): IFieldDef => ({
 const validateEventContent = withValidation<any, Error | undefined>({
     deriveData({ value }) {
         try {
-            JSON.parse(value);
+            JSON.parse(value!);
         } catch (e) {
             return e;
         }
@@ -75,7 +76,7 @@ const validateEventContent = withValidation<any, Error | undefined>({
 export const EventEditor: React.FC<IEventEditorProps> = ({ fieldDefs, defaultContent = "{\n\n}", onSend, onBack }) => {
     const [fieldData, setFieldData] = useState<string[]>(fieldDefs.map((def) => def.default ?? ""));
     const [content, setContent] = useState<string>(defaultContent);
-    const contentField = useRef<Field>();
+    const contentField = useRef<Field>(null);
 
     const fields = fieldDefs.map((def, i) => (
         <Field
@@ -87,7 +88,7 @@ export const EventEditor: React.FC<IEventEditorProps> = ({ fieldDefs, defaultCon
             type="text"
             autoComplete="on"
             value={fieldData[i]}
-            onChange={(ev) =>
+            onChange={(ev: ChangeEvent<HTMLInputElement>) =>
                 setFieldData((data) => {
                     data[i] = ev.target.value;
                     return [...data];
@@ -96,12 +97,12 @@ export const EventEditor: React.FC<IEventEditorProps> = ({ fieldDefs, defaultCon
         />
     ));
 
-    const onAction = async (): Promise<string> => {
-        const valid = await contentField.current.validate({});
+    const onAction = async (): Promise<string | undefined> => {
+        const valid = contentField.current ? await contentField.current.validate({}) : false;
 
         if (!valid) {
-            contentField.current.focus();
-            contentField.current.validate({ focused: true });
+            contentField.current?.focus();
+            contentField.current?.validate({ focused: true });
             return;
         }
 
@@ -140,7 +141,7 @@ export interface IEditorProps extends Pick<IDevtoolsProps, "onBack"> {
 }
 
 interface IViewerProps extends Required<IEditorProps> {
-    Editor: React.FC<Required<IEditorProps>>;
+    Editor: React.FC<IEditorProps>;
 }
 
 export const EventViewer: React.FC<IViewerProps> = ({ mxEvent, onBack, Editor }) => {
@@ -168,7 +169,7 @@ export const EventViewer: React.FC<IViewerProps> = ({ mxEvent, onBack, Editor })
 const getBaseEventId = (baseEvent: MatrixEvent): string => {
     // show the replacing event, not the original, if it is an edit
     const mxEvent = baseEvent.replacingEvent() ?? baseEvent;
-    return mxEvent.getWireContent()["m.relates_to"]?.event_id ?? baseEvent.getId();
+    return mxEvent.getWireContent()["m.relates_to"]?.event_id ?? baseEvent.getId()!;
 };
 
 export const TimelineEventEditor: React.FC<IEditorProps> = ({ mxEvent, onBack }) => {
@@ -178,10 +179,10 @@ export const TimelineEventEditor: React.FC<IEditorProps> = ({ mxEvent, onBack })
     const fields = useMemo(() => [eventTypeField(mxEvent?.getType())], [mxEvent]);
 
     const onSend = ([eventType]: string[], content?: IContent): Promise<unknown> => {
-        return cli.sendEvent(context.room.roomId, eventType, content);
+        return cli.sendEvent(context.room.roomId, eventType, content || {});
     };
 
-    let defaultContent: string;
+    let defaultContent = "";
 
     if (mxEvent) {
         const originalContent = mxEvent.getContent();

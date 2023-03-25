@@ -135,7 +135,7 @@ export default abstract class Exporter {
         let limit: number;
         switch (this.exportType) {
             case ExportType.LastNMessages:
-                limit = this.exportOptions.numberOfMessages;
+                limit = this.exportOptions.numberOfMessages!;
                 break;
             case ExportType.Timeline:
                 limit = 40;
@@ -221,11 +221,11 @@ export default abstract class Exporter {
         return events;
     }
 
-    protected async getMediaBlob(event: MatrixEvent): Promise<Blob> {
-        let blob: Blob;
+    protected async getMediaBlob(event: MatrixEvent): Promise<Blob | undefined> {
+        let blob: Blob | undefined;
         try {
             const isEncrypted = event.isEncrypted();
-            const content: IMediaEventContent = event.getContent();
+            const content = event.getContent<IMediaEventContent>();
             const shouldDecrypt = isEncrypted && content.hasOwnProperty("file") && event.getType() !== "m.sticker";
             if (shouldDecrypt) {
                 blob = await decryptFile(content.file);
@@ -276,14 +276,14 @@ export default abstract class Exporter {
     protected isReply(event: MatrixEvent): boolean {
         const isEncrypted = event.isEncrypted();
         // If encrypted, in_reply_to lies in event.event.content
-        const content = isEncrypted ? event.event.content : event.getContent();
+        const content = isEncrypted ? event.event.content! : event.getContent();
         const relatesTo = content["m.relates_to"];
         return !!(relatesTo && relatesTo["m.in_reply_to"]);
     }
 
     protected isAttachment(mxEv: MatrixEvent): boolean {
         const attachmentTypes = ["m.sticker", "m.image", "m.file", "m.video", "m.audio"];
-        return mxEv.getType() === attachmentTypes[0] || attachmentTypes.includes(mxEv.getContent().msgtype);
+        return mxEv.getType() === attachmentTypes[0] || attachmentTypes.includes(mxEv.getContent().msgtype!);
     }
 
     public abstract export(): Promise<void>;

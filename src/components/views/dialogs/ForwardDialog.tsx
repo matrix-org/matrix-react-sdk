@@ -29,7 +29,6 @@ import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
 import { useSettingValue } from "../../../hooks/useSettings";
 import { Layout } from "../../../settings/enums/Layout";
-import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import { avatarUrlForUser } from "../../../Avatar";
 import EventTile from "../rooms/EventTile";
@@ -55,13 +54,14 @@ import { RoomContextDetails } from "../rooms/RoomContextDetails";
 
 const AVATAR_SIZE = 30;
 
-interface IProps extends IDialogProps {
+interface IProps {
     matrixClient: MatrixClient;
     // The event to forward
     event: MatrixEvent;
     // We need a permalink creator for the source room to pass through to EventTile
     // in case the event is a reply (even though the user can't get at the link)
     permalinkCreator: RoomPermalinkCreator;
+    onFinished(): void;
 }
 
 interface IEntryProps {
@@ -227,11 +227,16 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
     const lcQuery = query.toLowerCase();
 
     const previewLayout = useSettingValue<Layout>("layout");
+    const msc3946DynamicRoomPredecessors = useSettingValue<boolean>("feature_dynamic_room_predecessors");
 
     let rooms = useMemo(
         () =>
-            sortRooms(cli.getVisibleRooms().filter((room) => room.getMyMembership() === "join" && !room.isSpaceRoom())),
-        [cli],
+            sortRooms(
+                cli
+                    .getVisibleRooms(msc3946DynamicRoomPredecessors)
+                    .filter((room) => room.getMyMembership() === "join" && !room.isSpaceRoom()),
+            ),
+        [cli, msc3946DynamicRoomPredecessors],
     );
 
     if (lcQuery) {
@@ -243,7 +248,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
     }
 
     const [truncateAt, setTruncateAt] = useState(20);
-    function overflowTile(overflowCount, totalCount): JSX.Element {
+    function overflowTile(overflowCount: number, totalCount: number): JSX.Element {
         const text = _t("and %(count)s others...", { count: overflowCount });
         return (
             <EntityTile

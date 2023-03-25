@@ -18,7 +18,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import classNames from "classnames";
 
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
@@ -36,11 +36,12 @@ interface IProps {
     name: string;
     // Button title
     title: string;
+    children?: ReactNode;
 }
 
 // TODO: replace this, the composer buttons and the right panel buttons with a unified representation
 export default class HeaderButton extends React.Component<IProps> {
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const { isHighlighted, isUnread = false, onClick, name, title, ...props } = this.props;
 
         const classes = classNames({

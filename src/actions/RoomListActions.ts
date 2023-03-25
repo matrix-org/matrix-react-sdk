@@ -26,7 +26,7 @@ import { _t } from "../languageHandler";
 import { AsyncActionPayload } from "../dispatcher/payloads";
 import RoomListStore from "../stores/room-list/RoomListStore";
 import { SortAlgorithm } from "../stores/room-list/algorithms/models";
-import { DefaultTagID } from "../stores/room-list/models";
+import { DefaultTagID, TagID } from "../stores/room-list/models";
 import ErrorDialog from "../components/views/dialogs/ErrorDialog";
 
 export default class RoomListActions {
@@ -49,12 +49,12 @@ export default class RoomListActions {
     public static tagRoom(
         matrixClient: MatrixClient,
         room: Room,
-        oldTag: string,
-        newTag: string,
-        oldIndex: number | null,
-        newIndex: number | null,
+        oldTag: TagID | null,
+        newTag: TagID | null,
+        oldIndex?: number,
+        newIndex?: number,
     ): AsyncActionPayload {
-        let metaData = null;
+        let metaData: Parameters<MatrixClient["setRoomTag"]>[2] | null = null;
 
         // Is the tag ordered manually?
         const store = RoomListStore.instance;
@@ -81,7 +81,7 @@ export default class RoomListActions {
         return asyncAction(
             "RoomListActions.tagRoom",
             () => {
-                const promises = [];
+                const promises: Promise<any>[] = [];
                 const roomId = room.roomId;
 
                 // Evil hack to get DMs behaving
@@ -120,7 +120,7 @@ export default class RoomListActions {
                 if (newTag && newTag !== DefaultTagID.DM && (hasChangedSubLists || metaData)) {
                     // metaData is the body of the PUT to set the tag, so it must
                     // at least be an empty object.
-                    metaData = metaData || {};
+                    metaData = metaData || ({} as typeof metaData);
 
                     const promiseToAdd = matrixClient.setRoomTag(roomId, newTag, metaData).catch(function (err) {
                         logger.error("Failed to add tag " + newTag + " to room: " + err);

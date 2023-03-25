@@ -79,8 +79,8 @@ export default class DownloadActionButton extends React.PureComponent<IProps, IS
         this.setState({ loading: false });
     }
 
-    public render(): JSX.Element {
-        let spinner: JSX.Element;
+    public render(): React.ReactNode {
+        let spinner: JSX.Element | undefined;
         if (this.state.loading) {
             spinner = <Spinner w={18} h={18} />;
         }

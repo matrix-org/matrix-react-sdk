@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 import { MSC3906Rendezvous, MSC3906RendezvousPayload, RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous";
 import { MSC3886SimpleHttpRendezvousTransport } from "matrix-js-sdk/src/rendezvous/transports";
-import { MSC3903ECDHPayload, MSC3903ECDHv1RendezvousChannel } from "matrix-js-sdk/src/rendezvous/channels";
+import { MSC3903ECDHPayload, MSC3903ECDHv2RendezvousChannel } from "matrix-js-sdk/src/rendezvous/channels";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
@@ -75,7 +75,7 @@ interface IState {
  * This uses the unstable feature of MSC3906: https://github.com/matrix-org/matrix-spec-proposals/pull/3906
  */
 export default class LoginWithQR extends React.Component<IProps, IState> {
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -158,7 +158,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 client: this.props.client,
             });
 
-            const channel = new MSC3903ECDHv1RendezvousChannel<MSC3906RendezvousPayload>(
+            const channel = new MSC3903ECDHv2RendezvousChannel<MSC3906RendezvousPayload>(
                 transport,
                 undefined,
                 this.onFailure,
@@ -229,7 +229,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         }
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <LoginWithQRFlow
                 onClick={this.onClick}

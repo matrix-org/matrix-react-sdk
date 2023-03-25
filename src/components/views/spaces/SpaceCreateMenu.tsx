@@ -14,7 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps, RefObject, SyntheticEvent, KeyboardEvent, useContext, useRef, useState } from "react";
+import React, {
+    ComponentProps,
+    RefObject,
+    SyntheticEvent,
+    KeyboardEvent,
+    useContext,
+    useRef,
+    useState,
+    ChangeEvent,
+    ReactNode,
+} from "react";
 import classNames from "classnames";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
@@ -47,7 +57,7 @@ export const createSpace = async (
     avatar?: string | File,
     createOpts: Partial<ICreateRoomOpts> = {},
     otherOpts: Partial<Omit<ICreateOpts, "createOpts">> = {},
-): Promise<string> => {
+): Promise<string | null> => {
     return createRoom({
         createOpts: {
             name,
@@ -149,6 +159,7 @@ interface ISpaceCreateFormProps extends BProps {
     nameFieldRef: RefObject<Field>;
     aliasFieldRef: RefObject<RoomAliasField>;
     showAliasField?: boolean;
+    children?: ReactNode;
     onSubmit(e: SyntheticEvent): void;
     setAlias(alias: string): void;
 }
@@ -170,7 +181,7 @@ export const SpaceCreateForm: React.FC<ISpaceCreateFormProps> = ({
     children,
 }) => {
     const cli = useContext(MatrixClientContext);
-    const domain = cli.getDomain();
+    const domain = cli.getDomain() ?? undefined;
 
     const onKeyDown = (ev: KeyboardEvent): void => {
         const action = getKeyBindingsManager().getAccessibilityAction(ev);
@@ -190,7 +201,7 @@ export const SpaceCreateForm: React.FC<ISpaceCreateFormProps> = ({
                 label={_t("Name")}
                 autoFocus={true}
                 value={name}
-                onChange={(ev) => {
+                onChange={(ev: ChangeEvent<HTMLInputElement>) => {
                     const newName = ev.target.value;
                     if (!alias || alias === `#${nameToLocalpart(name)}:${domain}`) {
                         setAlias(`#${nameToLocalpart(newName)}:${domain}`);
@@ -222,7 +233,7 @@ export const SpaceCreateForm: React.FC<ISpaceCreateFormProps> = ({
                 name="spaceTopic"
                 element="textarea"
                 label={_t("Description")}
-                value={topic}
+                value={topic ?? ""}
                 onChange={(ev) => setTopic(ev.target.value)}
                 rows={3}
                 disabled={busy}
@@ -236,14 +247,14 @@ export const SpaceCreateForm: React.FC<ISpaceCreateFormProps> = ({
 const SpaceCreateMenu: React.FC<{
     onFinished(): void;
 }> = ({ onFinished }) => {
-    const [visibility, setVisibility] = useState<Visibility>(null);
+    const [visibility, setVisibility] = useState<Visibility | null>(null);
     const [busy, setBusy] = useState<boolean>(false);
 
     const [name, setName] = useState("");
     const spaceNameField = useRef<Field>();
     const [alias, setAlias] = useState("");
     const spaceAliasField = useRef<RoomAliasField>();
-    const [avatar, setAvatar] = useState<File>(null);
+    const [avatar, setAvatar] = useState<File | undefined>(undefined);
     const [topic, setTopic] = useState<string>("");
 
     const onSpaceCreateClick = async (e: ButtonEvent): Promise<void> => {
@@ -252,14 +263,18 @@ const SpaceCreateMenu: React.FC<{
 
         setBusy(true);
         // require & validate the space name field
-        if (!(await spaceNameField.current.validate({ allowEmpty: false }))) {
+        if (spaceNameField.current && !(await spaceNameField.current.validate({ allowEmpty: false }))) {
             spaceNameField.current.focus();
             spaceNameField.current.validate({ allowEmpty: false, focused: true });
             setBusy(false);
             return;
         }
 
-        if (visibility === Visibility.Public && !(await spaceAliasField.current.validate({ allowEmpty: false }))) {
+        if (
+            spaceAliasField.current &&
+            visibility === Visibility.Public &&
+            !(await spaceAliasField.current.validate({ allowEmpty: false }))
+        ) {
             spaceAliasField.current.focus();
             spaceAliasField.current.validate({ allowEmpty: false, focused: true });
             setBusy(false);
@@ -335,7 +350,7 @@ const SpaceCreateMenu: React.FC<{
                 />
 
                 <AccessibleButton kind="primary" onClick={onSpaceCreateClick} disabled={busy}>
-                    {busy ? _t("Creating...") : _t("Create")}
+                    {busy ? _t("Creating…") : _t("Create")}
                 </AccessibleButton>
             </React.Fragment>
         );

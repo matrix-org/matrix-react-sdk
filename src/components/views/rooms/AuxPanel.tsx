@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { lexicographicCompare } from "matrix-js-sdk/src/utils";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { throttle } from "lodash";
@@ -36,6 +36,7 @@ interface IProps {
     userId: string;
     showApps: boolean; // Render apps
     resizeNotifier: ResizeNotifier;
+    children?: ReactNode;
 }
 
 interface Counter {
@@ -55,7 +56,7 @@ export default class AuxPanel extends React.Component<IProps, IState> {
         showApps: true,
     };
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -76,7 +77,7 @@ export default class AuxPanel extends React.Component<IProps, IState> {
         }
     }
 
-    public shouldComponentUpdate(nextProps, nextState): boolean {
+    public shouldComponentUpdate(nextProps: IProps, nextState: IState): boolean {
         return objectHasDiff(this.props, nextProps) || objectHasDiff(this.state, nextState);
     }
 
@@ -125,7 +126,7 @@ export default class AuxPanel extends React.Component<IProps, IState> {
         return counters;
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const callView = (
             <LegacyCallViewForRoom
                 roomId={this.props.room.roomId}
@@ -146,9 +147,9 @@ export default class AuxPanel extends React.Component<IProps, IState> {
             );
         }
 
-        let stateViews = null;
+        let stateViews: JSX.Element | null = null;
         if (this.state.counters && SettingsStore.getValue("feature_state_counters")) {
-            const counters = [];
+            const counters: JSX.Element[] = [];
 
             this.state.counters.forEach((counter, idx) => {
                 const title = counter.title;

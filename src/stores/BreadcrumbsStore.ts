@@ -62,12 +62,20 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
     }
 
     public get visible(): boolean {
-        return this.state.enabled && this.meetsRoomRequirement;
+        return !!this.state.enabled && this.meetsRoomRequirement;
     }
 
+    /**
+     * Do we have enough rooms to justify showing the breadcrumbs?
+     * (Or is the labs feature enabled?)
+     *
+     * @returns true if there are at least 20 visible rooms or
+     *          feature_breadcrumbs_v2 is enabled.
+     */
     public get meetsRoomRequirement(): boolean {
         if (SettingsStore.getValue("feature_breadcrumbs_v2")) return true;
-        return this.matrixClient?.getVisibleRooms().length >= 20;
+        const msc3946ProcessDynamicPredecessor = SettingsStore.getValue("feature_dynamic_room_predecessors");
+        return this.matrixClient?.getVisibleRooms(msc3946ProcessDynamicPredecessor).length >= 20;
     }
 
     protected async onAction(payload: SettingUpdatedPayload | ViewRoomPayload | JoinRoomPayload): Promise<void> {
@@ -126,7 +134,7 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
     };
 
     private async updateRooms(): Promise<void> {
-        let roomIds = SettingsStore.getValue("breadcrumb_rooms");
+        let roomIds = SettingsStore.getValue<string[]>("breadcrumb_rooms");
         if (!roomIds || roomIds.length === 0) roomIds = [];
 
         const rooms = roomIds.map((r) => this.matrixClient.getRoom(r)).filter((r) => !!r);
@@ -138,10 +146,11 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
     private async appendRoom(room: Room): Promise<void> {
         let updated = false;
         const rooms = (this.state.rooms || []).slice(); // cheap clone
+        const msc3946ProcessDynamicPredecessor = SettingsStore.getValue("feature_dynamic_room_predecessors");
 
         // If the room is upgraded, use that room instead. We'll also splice out
         // any children of the room.
-        const history = this.matrixClient.getRoomUpgradeHistory(room.roomId);
+        const history = this.matrixClient.getRoomUpgradeHistory(room.roomId, false, msc3946ProcessDynamicPredecessor);
         if (history.length > 1) {
             room = history[history.length - 1]; // Last room is most recent in history
 

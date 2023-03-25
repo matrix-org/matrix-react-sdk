@@ -21,7 +21,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { BetaPill } from "../beta/BetaCard";
 import Field from "../elements/Field";
@@ -44,7 +44,7 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
     const spaceNameField = useRef<Field>();
     const [alias, setAlias] = useState("");
     const spaceAliasField = useRef<RoomAliasField>();
-    const [avatar, setAvatar] = useState<File>(null);
+    const [avatar, setAvatar] = useState<File | undefined>();
     const [topic, setTopic] = useState<string>("");
 
     const spaceJoinRule = space.getJoinRule();
@@ -54,9 +54,9 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
     }
     const [joinRule, setJoinRule] = useState<JoinRule>(defaultJoinRule);
 
-    const onCreateSubspaceClick = async (e): Promise<void> => {
+    const onCreateSubspaceClick = async (e: ButtonEvent): Promise<void> => {
         e.preventDefault();
-        if (busy) return;
+        if (busy || !spaceNameField.current || !spaceAliasField.current) return;
 
         setBusy(true);
         // require & validate the space name field
@@ -83,7 +83,7 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
         }
     };
 
-    let joinRuleMicrocopy: JSX.Element;
+    let joinRuleMicrocopy: JSX.Element | undefined;
     if (joinRule === JoinRule.Restricted) {
         joinRuleMicrocopy = (
             <p>
@@ -179,7 +179,7 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
                         {_t("Cancel")}
                     </AccessibleButton>
                     <AccessibleButton kind="primary" disabled={busy} onClick={onCreateSubspaceClick}>
-                        {busy ? _t("Adding...") : _t("Add")}
+                        {busy ? _t("Adding…") : _t("Add")}
                     </AccessibleButton>
                 </div>
             </MatrixClientContext.Provider>

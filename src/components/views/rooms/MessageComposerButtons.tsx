@@ -17,7 +17,7 @@ limitations under the License.
 import classNames from "classnames";
 import { IEventRelation } from "matrix-js-sdk/src/models/event";
 import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
-import React, { createContext, MouseEventHandler, ReactElement, useContext, useRef } from "react";
+import React, { createContext, MouseEventHandler, ReactElement, ReactNode, useContext, useRef } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
@@ -172,7 +172,8 @@ export const UploadButtonContext = createContext<UploadButtonFn | null>(null);
 
 interface IUploadButtonProps {
     roomId: string;
-    relation?: IEventRelation | null;
+    relation?: IEventRelation;
+    children: ReactNode;
 }
 
 // We put the file input outside the UploadButton component so that it doesn't get killed when the context menu closes.
@@ -196,11 +197,11 @@ const UploadButtonContextProvider: React.FC<IUploadButtonProps> = ({ roomId, rel
     });
 
     const onUploadFileInputChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
-        if (ev.target.files.length === 0) return;
+        if (ev.target.files?.length === 0) return;
 
         // Take a copy, so we can safely reset the value of the form control
         ContentMessages.sharedInstance().sendContentListToRoom(
-            Array.from(ev.target.files),
+            Array.from(ev.target.files!),
             roomId,
             relation,
             cli,
@@ -315,7 +316,7 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
             });
         } else {
             const threadId =
-                this.props.relation?.rel_type === THREAD_RELATION_TYPE.name ? this.props.relation.event_id : null;
+                this.props.relation?.rel_type === THREAD_RELATION_TYPE.name ? this.props.relation.event_id : undefined;
 
             Modal.createDialog(
                 PollCreateDialog,
@@ -330,7 +331,7 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
         }
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         // do not allow sending polls within threads at this time
         if (this.props.relation?.rel_type === THREAD_RELATION_TYPE.name) return null;
 

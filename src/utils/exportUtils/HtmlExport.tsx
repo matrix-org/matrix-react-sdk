@@ -1,5 +1,5 @@
 /*
-Copyright 2021, 2023 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import Exporter from "./Exporter";
-import SettingsStore from "../../settings/SettingsStore";
 import { mediaFromMxc } from "../../customisations/Media";
 import { Layout } from "../../settings/enums/Layout";
 import { shouldFormContinuation } from "../../components/structures/MessagePanel";
@@ -47,7 +46,6 @@ export default class HTMLExporter extends Exporter {
     protected permalinkCreator: RoomPermalinkCreator;
     protected totalSize: number;
     protected mediaOmitText: string;
-    private threadsEnabled: boolean;
 
     public constructor(
         room: Room,
@@ -62,7 +60,6 @@ export default class HTMLExporter extends Exporter {
         this.mediaOmitText = !this.exportOptions.attachmentsIncluded
             ? _t("Media omitted")
             : _t("Media omitted - file size limit exceeded");
-        this.threadsEnabled = SettingsStore.getValue("feature_threadenabled");
     }
 
     protected async getRoomAvatar(): Promise<string> {
@@ -92,7 +89,7 @@ export default class HTMLExporter extends Exporter {
         return renderToStaticMarkup(avatar);
     }
 
-    protected async wrapHTML(content: string): Promise<string> {
+    protected async wrapHTML(content: string, currentPage: number, nbPages: number): Promise<string> {
         const roomAvatar = await this.getRoomAvatar();
         const exportDate = formatFullDateNoDayNoTime(new Date());
         const creator = this.room.currentState.getStateEvents(EventType.RoomCreate, "")?.getSender();
@@ -131,6 +128,29 @@ export default class HTMLExporter extends Exporter {
         );
 
         const topicText = topic ? _t("Topic: %(topic)s", { topic }) : "";
+        const previousMessagesLink = renderToStaticMarkup(
+            currentPage !== 0 ? (
+                <div style={{ textAlign: "center" }}>
+                    <a href={`./messages${currentPage === 1 ? "" : currentPage}.html`} style={{ fontWeight: "bold" }}>
+                        Previous group of messages
+                    </a>
+                </div>
+            ) : (
+                <></>
+            ),
+        );
+
+        const nextMessagesLink = renderToStaticMarkup(
+            currentPage < nbPages - 1 ? (
+                <div style={{ textAlign: "center", margin: "10px" }}>
+                    <a href={"./messages" + (currentPage + 2) + ".html"} style={{ fontWeight: "bold" }}>
+                        Next group of messages
+                    </a>
+                </div>
+            ) : (
+                <></>
+            ),
+        );
 
         return `
           <!DOCTYPE html>
@@ -171,6 +191,7 @@ export default class HTMLExporter extends Exporter {
                             <div class="mx_RoomHeader_topic" dir="auto"> ${topic} </div>
                         </div>
                         </div>
+                        ${previousMessagesLink}
                         <div class="mx_MainSplit">
                         <div class="mx_RoomView_body">
                             <div
@@ -189,13 +210,17 @@ export default class HTMLExporter extends Exporter {
                                     aria-live="polite"
                                     role="list"
                                 >
-                                <div class="mx_NewRoomIntro">
-                                    ${roomAvatar}
-                                    <h2> ${this.room.name} </h2>
-                                    <p> ${createdText} <br/><br/> ${exportedText} </p>
-                                    <br/>
-                                    <p> ${topicText} </p>
-                                </div>
+                                ${
+                                    currentPage == 0
+                                        ? `<div class="mx_NewRoomIntro">
+                                        ${roomAvatar}
+                                        <h2> ${this.room.name} </h2>
+                                        <p> ${createdText} <br/><br/> ${exportedText} </p>
+                                        <br/>
+                                        <p> ${topicText} </p>
+                                    </div>`
+                                        : ""
+                                }
                                 ${content}
                                 </ol>
                                 </div>
@@ -208,6 +233,7 @@ export default class HTMLExporter extends Exporter {
                             </div>
                         </div>
                         </div>
+                        ${nextMessagesLink}
                     </main>
                     </div>
                 </div>
@@ -217,10 +243,10 @@ export default class HTMLExporter extends Exporter {
         </html>`;
     }
 
-    protected getAvatarURL(event: MatrixEvent): string | undefined {
+    protected getAvatarURL(event: MatrixEvent): string | null {
         const member = event.sender;
         const avatarUrl = member?.getMxcAvatarUrl();
-        return avatarUrl ? mediaFromMxc(avatarUrl).getThumbnailOfSourceHttp(30, 30, "crop") : undefined;
+        return avatarUrl ? mediaFromMxc(avatarUrl).getThumbnailOfSourceHttp(30, 30, "crop") : null;
     }
 
     protected async saveAvatarIfNeeded(event: MatrixEvent): Promise<void> {
@@ -384,9 +410,14 @@ export default class HTMLExporter extends Exporter {
         return eventTile;
     }
 
-    protected async createHTML(events: MatrixEvent[], start: number): Promise<string> {
+    protected async createHTML(
+        events: MatrixEvent[],
+        start: number,
+        currentPage: number,
+        nbPages: number,
+    ): Promise<string> {
         let content = "";
-        let prevEvent = null;
+        let prevEvent: MatrixEvent | null = null;
         for (let i = start; i < Math.min(start + 1000, events.length); i++) {
             const event = events[i];
             this.updateProgress(
@@ -402,18 +433,17 @@ export default class HTMLExporter extends Exporter {
 
             content += this.needsDateSeparator(event, prevEvent) ? this.getDateSeparator(event) : "";
             const shouldBeJoined =
-                !this.needsDateSeparator(event, prevEvent) &&
-                shouldFormContinuation(prevEvent, event, false, this.threadsEnabled);
+                !this.needsDateSeparator(event, prevEvent) && shouldFormContinuation(prevEvent, event, false);
             const body = await this.createMessageBody(event, shouldBeJoined);
             this.totalSize += Buffer.byteLength(body);
             content += body;
             prevEvent = event;
         }
-        return this.wrapHTML(content);
+        return this.wrapHTML(content, currentPage, nbPages);
     }
 
     public async export(): Promise<void> {
-        this.updateProgress(_t("Starting export..."));
+        this.updateProgress(_t("Starting export…"));
 
         const fetchStart = performance.now();
         const res = await this.getRequiredEvents();
@@ -428,11 +458,11 @@ export default class HTMLExporter extends Exporter {
             false,
         );
 
-        this.updateProgress(_t("Creating HTML..."));
+        this.updateProgress(_t("Creating HTML…"));
 
         const usedClasses = new Set<string>();
         for (let page = 0; page < res.length / 1000; page++) {
-            const html = await this.createHTML(res, page * 1000);
+            const html = await this.createHTML(res, page * 1000, page, res.length / 1000);
             const document = new DOMParser().parseFromString(html, "text/html");
             document.querySelectorAll("*").forEach((element) => {
                 element.classList.forEach((c) => usedClasses.add(c));

@@ -53,8 +53,8 @@ type CryptoContext = {
 };
 
 type DeviceContext = {
-    device_id: string;
-    mx_local_settings: string;
+    device_id?: string;
+    mx_local_settings: string | null;
     modernizr_missing_features?: string;
 };
 
@@ -68,7 +68,7 @@ type Contexts = {
 /* eslint-enable camelcase */
 
 async function getStorageContext(): Promise<StorageContext> {
-    const result = {};
+    const result: StorageContext = {};
 
     // add storage persistence/quota information
     if (navigator.storage && navigator.storage.persisted) {
@@ -87,9 +87,9 @@ async function getStorageContext(): Promise<StorageContext> {
             result["storageManager_quota"] = String(estimate.quota);
             result["storageManager_usage"] = String(estimate.usage);
             if (estimate.usageDetails) {
-                const usageDetails = [];
+                const usageDetails: string[] = [];
                 Object.keys(estimate.usageDetails).forEach((k) => {
-                    usageDetails.push(`${k}: ${String(estimate.usageDetails[k])}`);
+                    usageDetails.push(`${k}: ${String(estimate.usageDetails![k])}`);
                 });
                 result[`storageManager_usage`] = usageDetails.join(", ");
             }
@@ -101,7 +101,7 @@ async function getStorageContext(): Promise<StorageContext> {
 
 function getUserContext(client: MatrixClient): UserContext {
     return {
-        username: client.credentials.userId,
+        username: client.credentials.userId!,
         enabled_labs: getEnabledLabs(),
         low_bandwidth: SettingsStore.getValue("lowBandwidth") ? "enabled" : "disabled",
     };
@@ -135,11 +135,11 @@ async function getCryptoContext(client: MatrixClient): Promise<CryptoContext> {
         cross_signing_supported_by_hs: String(
             await client.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing"),
         ),
-        cross_signing_key: crossSigning.getId(),
+        cross_signing_key: crossSigning.getId()!,
         cross_signing_privkey_in_secret_storage: String(!!(await crossSigning.isStoredInSecretStorage(secretStorage))),
-        cross_signing_master_privkey_cached: String(!!(pkCache && (await pkCache.getCrossSigningKeyCache("master")))),
+        cross_signing_master_privkey_cached: String(!!(pkCache && (await pkCache.getCrossSigningKeyCache?.("master")))),
         cross_signing_user_signing_privkey_cached: String(
-            !!(pkCache && (await pkCache.getCrossSigningKeyCache("user_signing"))),
+            !!(pkCache && (await pkCache.getCrossSigningKeyCache?.("user_signing"))),
         ),
         secret_storage_ready: String(await client.isSecretStorageReady()),
         secret_storage_key_in_account: String(!!(await secretStorage.hasKey())),
@@ -150,13 +150,15 @@ async function getCryptoContext(client: MatrixClient): Promise<CryptoContext> {
 }
 
 function getDeviceContext(client: MatrixClient): DeviceContext {
-    const result = {
-        device_id: client?.deviceId,
+    const result: DeviceContext = {
+        device_id: client?.deviceId ?? undefined,
         mx_local_settings: localStorage.getItem("mx_local_settings"),
     };
 
     if (window.Modernizr) {
-        const missingFeatures = Object.keys(window.Modernizr).filter((key) => window.Modernizr[key] === false);
+        const missingFeatures = Object.keys(window.Modernizr).filter(
+            (key) => window.Modernizr[key as keyof ModernizrStatic] === false,
+        );
         if (missingFeatures.length > 0) {
             result["modernizr_missing_features"] = missingFeatures.join(", ");
         }
@@ -175,7 +177,7 @@ async function getContexts(): Promise<Contexts> {
     };
 }
 
-export async function sendSentryReport(userText: string, issueUrl: string, error: Error): Promise<void> {
+export async function sendSentryReport(userText: string, issueUrl: string, error?: Error): Promise<void> {
     const sentryConfig = SdkConfig.getObject("sentry");
     if (!sentryConfig) return;
 

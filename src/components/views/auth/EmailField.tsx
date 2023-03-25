@@ -21,7 +21,7 @@ import { _t, _td } from "../../../languageHandler";
 import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
 import * as Email from "../../../email";
 
-interface IProps extends Omit<IInputProps, "onValidate"> {
+interface IProps extends Omit<IInputProps, "onValidate" | "element"> {
     id?: string;
     fieldRef?: RefCallback<Field> | RefObject<Field>;
     value: string;
@@ -50,12 +50,12 @@ class EmailField extends PureComponent<IProps> {
             {
                 key: "required",
                 test: ({ value, allowEmpty }) => allowEmpty || !!value,
-                invalid: () => _t(this.props.labelRequired),
+                invalid: () => _t(this.props.labelRequired!),
             },
             {
                 key: "email",
                 test: ({ value }) => !value || Email.looksValid(value),
-                invalid: () => _t(this.props.labelInvalid),
+                invalid: () => _t(this.props.labelInvalid!),
             },
         ],
     });
@@ -74,13 +74,13 @@ class EmailField extends PureComponent<IProps> {
         return result;
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <Field
                 id={this.props.id}
                 ref={this.props.fieldRef}
                 type="text"
-                label={_t(this.props.label)}
+                label={_t(this.props.label!)}
                 value={this.props.value}
                 autoFocus={this.props.autoFocus}
                 onChange={this.props.onChange}

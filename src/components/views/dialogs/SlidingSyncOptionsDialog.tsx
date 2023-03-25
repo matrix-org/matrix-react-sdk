@@ -19,7 +19,6 @@ import { MatrixClient, Method } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
-import { IDialogProps } from "./IDialogProps";
 import SettingsStore from "../../../settings/SettingsStore";
 import TextInputDialog from "./TextInputDialog";
 import withValidation from "../elements/Validation";
@@ -63,7 +62,7 @@ async function proxyHealthCheck(endpoint: string, hsUrl?: string): Promise<void>
     logger.info("sliding sync proxy is OK");
 }
 
-export const SlidingSyncOptionsDialog: React.FC<IDialogProps> = ({ onFinished }) => {
+export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): void }> = ({ onFinished }) => {
     const cli = MatrixClientPeg.get();
     const currentProxy = SettingsStore.getValue("feature_sliding_sync_proxy_url");
     const hasNativeSupport = useAsyncMemo(
@@ -78,7 +77,7 @@ export const SlidingSyncOptionsDialog: React.FC<IDialogProps> = ({ onFinished })
 
     let nativeSupport: string;
     if (hasNativeSupport === null) {
-        nativeSupport = _t("Checking...");
+        nativeSupport = _t("Checking…");
     } else {
         nativeSupport = hasNativeSupport
             ? _t("Your server has native support")
@@ -97,7 +96,7 @@ export const SlidingSyncOptionsDialog: React.FC<IDialogProps> = ({ onFinished })
         rules: [
             {
                 key: "required",
-                test: async ({ value }) => !!value || hasNativeSupport,
+                test: async ({ value }) => !!value || !!hasNativeSupport,
                 invalid: () => _t("Your server lacks native support, you must specify a proxy"),
             },
             {
@@ -105,7 +104,7 @@ export const SlidingSyncOptionsDialog: React.FC<IDialogProps> = ({ onFinished })
                 final: true,
                 test: async (_, { error }) => !error,
                 valid: () => _t("Looks good"),
-                invalid: ({ error }) => error?.message,
+                invalid: ({ error }) => error?.message ?? null,
             },
         ],
     });

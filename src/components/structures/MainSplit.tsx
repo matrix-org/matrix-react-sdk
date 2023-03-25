@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { NumberSize, Resizable } from "re-resizable";
 import { Direction } from "re-resizable/lib/resizer";
 
@@ -25,6 +25,7 @@ interface IProps {
     resizeNotifier: ResizeNotifier;
     collapsedRhs?: boolean;
     panel?: JSX.Element;
+    children: ReactNode;
 }
 
 export default class MainSplit extends React.Component<IProps> {
@@ -47,7 +48,7 @@ export default class MainSplit extends React.Component<IProps> {
     };
 
     private loadSidePanelSize(): { height: string | number; width: number } {
-        let rhsSize = parseInt(window.localStorage.getItem("mx_rhs_size"), 10);
+        let rhsSize = parseInt(window.localStorage.getItem("mx_rhs_size")!, 10);
 
         if (isNaN(rhsSize)) {
             rhsSize = 350;
@@ -59,7 +60,7 @@ export default class MainSplit extends React.Component<IProps> {
         };
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const bodyView = React.Children.only(this.props.children);
         const panelView = this.props.panel;
 

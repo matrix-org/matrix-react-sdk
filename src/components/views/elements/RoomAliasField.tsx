@@ -44,7 +44,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
 
     private fieldRef = createRef<Field>();
 
-    public constructor(props, context) {
+    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);
 
         this.state = {
@@ -71,13 +71,13 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
         const postfix = domain ? <span title={`:${domain}`}>{`:${domain}`}</span> : <span />;
         const maxlength = domain ? 255 - domain.length - 2 : 255 - 1; // 2 for # and :
         const value = domain
-            ? this.props.value.substring(1, this.props.value.length - this.props.domain.length - 1)
+            ? this.props.value.substring(1, this.props.value.length - domain.length - 1)
             : this.props.value.substring(1);
 
         return { prefix, postfix, value, maxlength };
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const { prefix, postfix, value, maxlength } = this.domainProps;
         return (
             <Field
@@ -104,7 +104,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
 
     private onValidate = async (fieldState: IFieldState): Promise<IValidationResult> => {
         const result = await this.validationRules(fieldState);
-        this.setState({ isValid: result.valid });
+        this.setState({ isValid: !!result.valid });
         return result;
     };
 
@@ -225,8 +225,9 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
         return this.state.isValid;
     }
 
-    public validate(options: IValidateOpts): Promise<boolean> {
-        return this.fieldRef.current?.validate(options);
+    public async validate(options: IValidateOpts): Promise<boolean> {
+        const val = await this.fieldRef.current?.validate(options);
+        return val ?? false;
     }
 
     public focus(): void {

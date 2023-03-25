@@ -43,18 +43,18 @@ interface IProps {
 interface IState {
     sendLogs: boolean;
     busy: boolean;
-    err: string;
+    err: string | null;
     issueUrl: string;
     text: string;
-    progress: string;
+    progress: string | null;
     downloadBusy: boolean;
-    downloadProgress: string;
+    downloadProgress: string | null;
 }
 
 export default class BugReportDialog extends React.Component<IProps, IState> {
     private unmounted: boolean;
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             sendLogs: true,
@@ -180,13 +180,13 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
         this.setState({ downloadProgress });
     };
 
-    public render(): JSX.Element {
-        let error = null;
+    public render(): React.ReactNode {
+        let error: JSX.Element | undefined;
         if (this.state.err) {
             error = <div className="error">{this.state.err}</div>;
         }
 
-        let progress = null;
+        let progress: JSX.Element | undefined;
         if (this.state.busy) {
             progress = (
                 <div className="progress">
@@ -196,7 +196,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             );
         }
 
-        let warning;
+        let warning: JSX.Element | undefined;
         if (window.Modernizr && Object.values(window.Modernizr).some((support) => support === false)) {
             warning = (
                 <p>

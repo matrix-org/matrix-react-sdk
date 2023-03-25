@@ -104,7 +104,7 @@ describe("HTMLExport", () => {
     /** set a mock fetch response for an MXC */
     function mockMxc(mxc: string, body: string) {
         const media = mediaFromMxc(mxc, client);
-        fetchMock.get(media.srcHttp, body);
+        fetchMock.get(media.srcHttp!, body);
     }
 
     it("should have an SDK-branded destination file name", () => {
@@ -286,7 +286,7 @@ describe("HTMLExport", () => {
 
         // Ensure that the attachment is present
         const files = getFiles(exporter);
-        const file = files[Object.keys(files).find((k) => k.endsWith(".txt"))];
+        const file = files[Object.keys(files).find((k) => k.endsWith(".txt"))!];
         expect(file).not.toBeUndefined();
 
         // Ensure that the attachment has the expected content
@@ -314,5 +314,43 @@ describe("HTMLExport", () => {
         for (const fileName of Object.keys(files)) {
             expect(fileName).not.toMatch(/^files\/hello/);
         }
+    });
+
+    it("should add link to next and previous file", async () => {
+        const exporter = new HTMLExporter(
+            room,
+            ExportType.LastNMessages,
+            {
+                attachmentsIncluded: false,
+                maxSize: 1_024 * 1_024,
+            },
+            () => {},
+        );
+
+        // test link to the first page
+        //@ts-ignore private access
+        let result = await exporter.wrapHTML("", 0, 3);
+        expect(result).not.toContain("Previous group of messages");
+        expect(result).toContain(
+            '<div style="text-align:center;margin:10px"><a href="./messages2.html" style="font-weight:bold">Next group of messages</a></div>',
+        );
+
+        // test link for a middle page
+        //@ts-ignore private access
+        result = await exporter.wrapHTML("", 1, 3);
+        expect(result).toContain(
+            '<div style="text-align:center"><a href="./messages.html" style="font-weight:bold">Previous group of messages</a></div>',
+        );
+        expect(result).toContain(
+            '<div style="text-align:center;margin:10px"><a href="./messages3.html" style="font-weight:bold">Next group of messages</a></div>',
+        );
+
+        // test link for last page
+        //@ts-ignore private access
+        result = await exporter.wrapHTML("", 2, 3);
+        expect(result).toContain(
+            '<div style="text-align:center"><a href="./messages2.html" style="font-weight:bold">Previous group of messages</a></div>',
+        );
+        expect(result).not.toContain("Next group of messages");
     });
 });

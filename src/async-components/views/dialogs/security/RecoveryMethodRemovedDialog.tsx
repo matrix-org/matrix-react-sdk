@@ -21,11 +21,12 @@ import dis from "../../../../dispatcher/dispatcher";
 import { _t } from "../../../../languageHandler";
 import Modal from "../../../../Modal";
 import { Action } from "../../../../dispatcher/actions";
-import { IDialogProps } from "../../../../components/views/dialogs/IDialogProps";
 import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
 import DialogButtons from "../../../../components/views/elements/DialogButtons";
 
-interface IProps extends IDialogProps {}
+interface IProps {
+    onFinished(): void;
+}
 
 export default class RecoveryMethodRemovedDialog extends React.PureComponent<IProps> {
     private onGoToSettingsClick = (): void => {
@@ -37,14 +38,14 @@ export default class RecoveryMethodRemovedDialog extends React.PureComponent<IPr
         this.props.onFinished();
         Modal.createDialogAsync(
             import("./CreateKeyBackupDialog") as unknown as Promise<ComponentType<{}>>,
-            null,
-            null,
+            undefined,
+            undefined,
             /* priority = */ false,
             /* static = */ true,
         );
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const title = <span className="mx_KeyBackupFailedDialog_title">{_t("Recovery Method Removed")}</span>;
 
         return (

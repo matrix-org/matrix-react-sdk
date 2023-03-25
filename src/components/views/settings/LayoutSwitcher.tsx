@@ -28,10 +28,10 @@ import { SettingLevel } from "../../../settings/SettingLevel";
 
 interface IProps {
     userId?: string;
-    displayName: string;
-    avatarUrl: string;
+    displayName?: string;
+    avatarUrl?: string;
     messagePreviewText: string;
-    onLayoutChanged?: (layout: Layout) => void;
+    onLayoutChanged: (layout: Layout) => void;
 }
 
 interface IState {
@@ -55,7 +55,7 @@ export default class LayoutSwitcher extends React.Component<IProps, IState> {
         this.props.onLayoutChanged(layout);
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const ircClasses = classNames("mx_LayoutSwitcher_RadioButton", {
             mx_LayoutSwitcher_RadioButton_selected: this.state.layout == Layout.IRC,
         });

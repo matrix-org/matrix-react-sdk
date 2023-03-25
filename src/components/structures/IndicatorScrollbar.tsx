@@ -44,7 +44,7 @@ export default class IndicatorScrollbar<T extends keyof JSX.IntrinsicElements> e
 > {
     private autoHideScrollbar = createRef<AutoHideScrollbar<any>>();
     private scrollElement: HTMLDivElement;
-    private likelyTrackpadUser: boolean = null;
+    private likelyTrackpadUser: boolean | null = null;
     private checkAgainForTrackpad = 0; // ts in milliseconds to recheck this._likelyTrackpadUser
 
     public constructor(props: IProps<T>) {
@@ -177,7 +177,7 @@ export default class IndicatorScrollbar<T extends keyof JSX.IntrinsicElements> e
         }
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { children, trackHorizontalOverflow, verticalScrollsHorizontally, ...otherProps } = this.props;
 

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ComponentProps } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { User } from "matrix-js-sdk/src/models/user";
@@ -29,7 +29,7 @@ import InviteDialog from "./components/views/dialogs/InviteDialog";
 import BaseAvatar from "./components/views/avatars/BaseAvatar";
 import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
-import { KIND_DM, KIND_INVITE } from "./components/views/dialogs/InviteDialogTypes";
+import { InviteKind } from "./components/views/dialogs/InviteDialogTypes";
 import { Member } from "./utils/direct-messages";
 
 export interface IInviteResult {
@@ -64,7 +64,7 @@ export function showStartChatInviteDialog(initialText = ""): void {
     // This dialog handles the room creation internally - we don't need to worry about it.
     Modal.createDialog(
         InviteDialog,
-        { kind: KIND_DM, initialText },
+        { kind: InviteKind.Dm, initialText },
         /*className=*/ "mx_InviteDialog_flexWrapper",
         /*isPriority=*/ false,
         /*isStatic=*/ true,
@@ -76,10 +76,10 @@ export function showRoomInviteDialog(roomId: string, initialText = ""): void {
     Modal.createDialog(
         InviteDialog,
         {
-            kind: KIND_INVITE,
+            kind: InviteKind.Invite,
             initialText,
             roomId,
-        },
+        } as Omit<ComponentProps<typeof InviteDialog>, "onFinished">,
         /*className=*/ "mx_InviteDialog_flexWrapper",
         /*isPriority=*/ false,
         /*isStatic=*/ true,
@@ -112,7 +112,7 @@ export function inviteUsersToRoom(
 ): Promise<void> {
     return inviteMultipleToRoom(roomId, userIds, sendSharedHistoryKeys, progressCallback)
         .then((result) => {
-            const room = MatrixClientPeg.get().getRoom(roomId);
+            const room = MatrixClientPeg.get().getRoom(roomId)!;
             showAnyInviteErrors(result.states, room, result.inviter);
         })
         .catch((err) => {
@@ -142,7 +142,7 @@ export function showAnyInviteErrors(
         });
         return false;
     } else {
-        const errorList = [];
+        const errorList: string[] = [];
         for (const addr of failedUsers) {
             if (states[addr] === "error") {
                 const reason = inviter.getErrorText(addr);
@@ -173,16 +173,19 @@ export function showAnyInviteErrors(
                                 <div key={addr} className="mx_InviteDialog_tile mx_InviteDialog_tile--inviterError">
                                     <div className="mx_InviteDialog_tile_avatarStack">
                                         <BaseAvatar
-                                            url={avatarUrl ? mediaFromMxc(avatarUrl).getSquareThumbnailHttp(24) : null}
-                                            name={name}
-                                            idName={user.userId}
+                                            url={
+                                                (avatarUrl && mediaFromMxc(avatarUrl).getSquareThumbnailHttp(24)) ??
+                                                undefined
+                                            }
+                                            name={name!}
+                                            idName={user?.userId}
                                             width={36}
                                             height={36}
                                         />
                                     </div>
                                     <div className="mx_InviteDialog_tile_nameStack">
                                         <span className="mx_InviteDialog_tile_nameStack_name">{name}</span>
-                                        <span className="mx_InviteDialog_tile_nameStack_userId">{user.userId}</span>
+                                        <span className="mx_InviteDialog_tile_nameStack_userId">{user?.userId}</span>
                                     </div>
                                     <div className="mx_InviteDialog_tile--inviterError_errorText">
                                         {inviter.getErrorText(addr)}

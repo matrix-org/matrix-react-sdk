@@ -22,13 +22,13 @@ import { decodeRecoveryKey } from "matrix-js-sdk/src/crypto/recoverykey";
 import { encodeBase64 } from "matrix-js-sdk/src/crypto/olmlib";
 import { DeviceTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ComponentType } from "react";
 
+import type CreateSecretStorageDialog from "./async-components/views/dialogs/security/CreateSecretStorageDialog";
 import Modal from "./Modal";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { _t } from "./languageHandler";
 import { isSecureBackupRequired } from "./utils/WellKnownUtils";
-import AccessSecretStorageDialog from "./components/views/dialogs/security/AccessSecretStorageDialog";
+import AccessSecretStorageDialog, { KeyParams } from "./components/views/dialogs/security/AccessSecretStorageDialog";
 import RestoreKeyBackupDialog from "./components/views/dialogs/security/RestoreKeyBackupDialog";
 import SettingsStore from "./settings/SettingsStore";
 import SecurityCustomisations from "./customisations/Security";
@@ -83,15 +83,14 @@ async function confirmToDismiss(): Promise<boolean> {
     return !sure;
 }
 
-type KeyParams = { passphrase: string; recoveryKey: string };
-
 function makeInputToKey(keyInfo: ISecretStorageKeyInfo): (keyParams: KeyParams) => Promise<Uint8Array> {
     return async ({ passphrase, recoveryKey }): Promise<Uint8Array> => {
         if (passphrase) {
             return deriveKey(passphrase, keyInfo.passphrase.salt, keyInfo.passphrase.iterations);
-        } else {
+        } else if (recoveryKey) {
             return decodeRecoveryKey(recoveryKey);
         }
+        throw new Error("Invalid input, passphrase or recoveryKey need to be provided");
     };
 }
 
@@ -102,14 +101,14 @@ async function getSecretStorageKey({
 }): Promise<[string, Uint8Array]> {
     const cli = MatrixClientPeg.get();
     let keyId = await cli.getDefaultSecretStorageKeyId();
-    let keyInfo: ISecretStorageKeyInfo;
+    let keyInfo!: ISecretStorageKeyInfo;
     if (keyId) {
         // use the default SSSS key if set
         keyInfo = keyInfos[keyId];
         if (!keyInfo) {
             // if the default key is not available, pretend the default key
             // isn't set
-            keyId = undefined;
+            keyId = null;
         }
     }
     if (!keyId) {
@@ -156,7 +155,7 @@ async function getSecretStorageKey({
                 return MatrixClientPeg.get().checkSecretStorageKey(key, keyInfo);
             },
         },
-        /* className= */ null,
+        /* className= */ undefined,
         /* isPriorityModal= */ false,
         /* isStaticModal= */ false,
         /* options= */ {
@@ -182,7 +181,7 @@ async function getSecretStorageKey({
 
 export async function getDehydrationKey(
     keyInfo: ISecretStorageKeyInfo,
-    checkFunc: (Uint8Array) => void,
+    checkFunc: (data: Uint8Array) => void,
 ): Promise<Uint8Array> {
     const keyFromCustomisations = SecurityCustomisations.getSecretStorageKey?.();
     if (keyFromCustomisations) {
@@ -196,7 +195,7 @@ export async function getDehydrationKey(
         /* props= */
         {
             keyInfo,
-            checkPrivateKey: async (input): Promise<boolean> => {
+            checkPrivateKey: async (input: KeyParams): Promise<boolean> => {
                 const key = await inputToKey(input);
                 try {
                     checkFunc(key);
@@ -206,7 +205,7 @@ export async function getDehydrationKey(
                 }
             },
         },
-        /* className= */ null,
+        /* className= */ undefined,
         /* isPriorityModal= */ false,
         /* isStaticModal= */ false,
         /* options= */ {
@@ -243,7 +242,7 @@ async function onSecretRequested(
     requestId: string,
     name: string,
     deviceTrust: DeviceTrustLevel,
-): Promise<string> {
+): Promise<string | undefined> {
     logger.log("onSecretRequested", userId, deviceId, requestId, name, deviceTrust);
     const client = MatrixClientPeg.get();
     if (userId !== client.getUserId()) {
@@ -259,19 +258,19 @@ async function onSecretRequested(
         name === "m.cross_signing.user_signing"
     ) {
         const callbacks = client.getCrossSigningCacheCallbacks();
-        if (!callbacks.getCrossSigningKeyCache) return;
+        if (!callbacks?.getCrossSigningKeyCache) return;
         const keyId = name.replace("m.cross_signing.", "");
         const key = await callbacks.getCrossSigningKeyCache(keyId);
         if (!key) {
             logger.log(`${keyId} requested by ${deviceId}, but not found in cache`);
         }
-        return key && encodeBase64(key);
+        return key ? encodeBase64(key) : undefined;
     } else if (name === "m.megolm_backup.v1") {
-        const key = await client.crypto.getSessionBackupPrivateKey();
+        const key = await client.crypto?.getSessionBackupPrivateKey();
         if (!key) {
             logger.log(`session backup key requested by ${deviceId}, but not found in cache`);
         }
-        return key && encodeBase64(key);
+        return key ? encodeBase64(key) : undefined;
     }
     logger.warn("onSecretRequested didn't recognise the secret named ", name);
 }
@@ -284,15 +283,15 @@ export const crossSigningCallbacks: ICryptoCallbacks = {
 };
 
 export async function promptForBackupPassphrase(): Promise<Uint8Array> {
-    let key: Uint8Array;
+    let key!: Uint8Array;
 
     const { finished } = Modal.createDialog(
         RestoreKeyBackupDialog,
         {
             showSummary: false,
-            keyCallback: (k) => (key = k),
+            keyCallback: (k: Uint8Array) => (key = k),
         },
-        null,
+        undefined,
         /* priority = */ false,
         /* static = */ true,
     );
@@ -333,12 +332,12 @@ export async function accessSecretStorage(func = async (): Promise<void> => {}, 
             // passphrase creation.
             const { finished } = Modal.createDialogAsync(
                 import("./async-components/views/dialogs/security/CreateSecretStorageDialog") as unknown as Promise<
-                    ComponentType<{}>
+                    typeof CreateSecretStorageDialog
                 >,
                 {
                     forceReset,
                 },
-                null,
+                undefined,
                 /* priority = */ false,
                 /* static = */ true,
                 /* options = */ {

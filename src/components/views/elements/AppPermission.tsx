@@ -61,8 +61,6 @@ export default class AppPermission extends React.Component<IProps, IState> {
 
         // Set all this into the initial state
         this.state = {
-            widgetDomain: null,
-            isWrapped: null,
             roomMember,
             ...urlInfo,
         };
@@ -88,7 +86,7 @@ export default class AppPermission extends React.Component<IProps, IState> {
         }
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const brand = SdkConfig.get().brand;
 
         const displayName = this.state.roomMember ? this.state.roomMember.name : this.props.creatorUserId;

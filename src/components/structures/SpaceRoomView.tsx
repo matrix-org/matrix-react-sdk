@@ -18,7 +18,7 @@ import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule, Preset } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import React, { RefObject, useCallback, useContext, useRef, useState } from "react";
+import React, { MutableRefObject, useCallback, useContext, useRef, useState } from "react";
 
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import createRoom, { IOpts } from "../../createRoom";
@@ -77,11 +77,13 @@ import { ChevronFace, ContextMenuButton, useContextMenu } from "./ContextMenu";
 import MainSplit from "./MainSplit";
 import RightPanel from "./RightPanel";
 import SpaceHierarchy, { showRoom } from "./SpaceHierarchy";
+import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 
 interface IProps {
     space: Room;
     justCreatedOpts?: IOpts;
     resizeNotifier: ResizeNotifier;
+    permalinkCreator: RoomPermalinkCreator;
     onJoinButtonClicked(): void;
     onRejectButtonClicked(): void;
 }
@@ -112,7 +114,7 @@ const SpaceLandingAddButton: React.FC<{ space: Room }> = ({ space }) => {
 
     let contextMenu: JSX.Element | null = null;
     if (menuDisplayed) {
-        const rect = handle.current.getBoundingClientRect();
+        const rect = handle.current!.getBoundingClientRect();
         contextMenu = (
             <IconizedContextMenu
                 left={rect.left + window.scrollX + 0}
@@ -213,7 +215,7 @@ const SpaceLandingAddButton: React.FC<{ space: Room }> = ({ space }) => {
 const SpaceLanding: React.FC<{ space: Room }> = ({ space }) => {
     const cli = useContext(MatrixClientContext);
     const myMembership = useMyRoomMembership(space);
-    const userId = cli.getUserId();
+    const userId = cli.getSafeUserId();
 
     const storeIsShowingSpaceMembers = useCallback(
         () =>
@@ -318,7 +320,7 @@ const SpaceSetupFirstRooms: React.FC<{
                 label={_t("Room name")}
                 placeholder={placeholders[i]}
                 value={roomNames[i]}
-                onChange={(ev) => setRoomName(i, ev.target.value)}
+                onChange={(ev: React.ChangeEvent<HTMLInputElement>) => setRoomName(i, ev.target.value)}
                 autoFocus={i === 2}
                 disabled={busy}
                 autoComplete="off"
@@ -366,7 +368,7 @@ const SpaceSetupFirstRooms: React.FC<{
     let buttonLabel = _t("Skip for now");
     if (roomNames.some((name) => name.trim())) {
         onClick = onNextClick;
-        buttonLabel = busy ? _t("Creating rooms...") : _t("Continue");
+        buttonLabel = busy ? _t("Creating rooms…") : _t("Continue");
     }
 
     return (
@@ -415,7 +417,7 @@ const SpaceAddExistingRooms: React.FC<{
                         {_t("Skip for now")}
                     </AccessibleButton>
                 }
-                filterPlaceholder={_t("Search for rooms or spaces")}
+                filterPlaceholder={_t("Search for rooms")}
                 onFinished={onFinished}
                 roomsRenderer={defaultRoomsRenderer}
                 dmsRenderer={defaultDmsRenderer}
@@ -458,7 +460,7 @@ const SpaceSetupPublicShare: React.FC<ISpaceSetupPublicShareProps> = ({
 
 const SpaceSetupPrivateScope: React.FC<{
     space: Room;
-    justCreatedOpts: IOpts;
+    justCreatedOpts?: IOpts;
     onFinished(createRooms: boolean): void;
 }> = ({ space, justCreatedOpts, onFinished }) => {
     return (
@@ -509,7 +511,7 @@ const SpaceSetupPrivateInvite: React.FC<{
     const [busy, setBusy] = useState(false);
     const [error, setError] = useState("");
     const numFields = 3;
-    const fieldRefs: RefObject<Field>[] = [useRef(), useRef(), useRef()];
+    const fieldRefs: MutableRefObject<Field | undefined>[] = [useRef(), useRef(), useRef()];
     const [emailAddresses, setEmailAddress] = useStateArray(numFields, "");
     const fields = new Array(numFields).fill(0).map((x, i) => {
         const name = "emailAddress" + i;
@@ -575,7 +577,7 @@ const SpaceSetupPrivateInvite: React.FC<{
     let buttonLabel = _t("Skip for now");
     if (emailAddresses.some((name) => name.trim())) {
         onClick = onNextClick;
-        buttonLabel = busy ? _t("Inviting...") : _t("Continue");
+        buttonLabel = busy ? _t("Inviting…") : _t("Continue");
     }
 
     return (
@@ -647,7 +649,7 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
 
         if (showSetup) {
             phase =
-                this.props.justCreatedOpts.createOpts.preset === Preset.PublicChat
+                this.props.justCreatedOpts!.createOpts?.preset === Preset.PublicChat
                     ? Phase.PublicCreateRooms
                     : Phase.PrivateScope;
         }
@@ -814,11 +816,15 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
         }
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const rightPanel =
             this.state.showRightPanel && this.state.phase === Phase.Landing ? (
-                <RightPanel room={this.props.space} resizeNotifier={this.props.resizeNotifier} />
-            ) : null;
+                <RightPanel
+                    room={this.props.space}
+                    resizeNotifier={this.props.resizeNotifier}
+                    permalinkCreator={this.props.permalinkCreator}
+                />
+            ) : undefined;
 
         return (
             <main className="mx_SpaceRoomView">

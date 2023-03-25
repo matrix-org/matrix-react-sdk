@@ -41,7 +41,7 @@ import { MPollEndBody } from "./MPollEndBody";
 import MLocationBody from "./MLocationBody";
 import MjolnirBody from "./MjolnirBody";
 import MBeaconBody from "./MBeaconBody";
-import DecryptionFailureBody from "./DecryptionFailureBody";
+import { DecryptionFailureBody } from "./DecryptionFailureBody";
 import { GetRelationsForEvent, IEventTileOps } from "../rooms/EventTile";
 import { VoiceBroadcastBody, VoiceBroadcastInfoEventType, VoiceBroadcastInfoState } from "../../../voice-broadcast";
 
@@ -58,7 +58,7 @@ interface IProps extends Omit<IBodyProps, "onMessageAllowed" | "mediaEventHelper
 }
 
 export interface IOperableEventTile {
-    getEventTileOps(): IEventTileOps;
+    getEventTileOps(): IEventTileOps | null;
 }
 
 const baseBodyTypes = new Map<string, typeof React.Component>([
@@ -149,7 +149,7 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
         this.forceUpdate();
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const content = this.props.mxEvent.getContent();
         const type = this.props.mxEvent.getType();
         const msgtype = content.msgtype;
@@ -159,12 +159,12 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
             if (this.props.mxEvent.isDecryptionFailure()) {
                 BodyType = DecryptionFailureBody;
             } else if (type && this.evTypes.has(type)) {
-                BodyType = this.evTypes.get(type);
+                BodyType = this.evTypes.get(type)!;
             } else if (msgtype && this.bodyTypes.has(msgtype)) {
-                BodyType = this.bodyTypes.get(msgtype);
+                BodyType = this.bodyTypes.get(msgtype)!;
             } else if (content.url) {
                 // Fallback to MFileBody if there's a content URL
-                BodyType = this.bodyTypes.get(MsgType.File);
+                BodyType = this.bodyTypes.get(MsgType.File)!;
             } else {
                 // Fallback to UnknownBody otherwise if not redacted
                 BodyType = UnknownBody;

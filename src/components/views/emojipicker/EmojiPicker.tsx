@@ -26,6 +26,7 @@ import Search from "./Search";
 import Preview from "./Preview";
 import QuickReactions from "./QuickReactions";
 import Category, { ICategory, CategoryKey } from "./Category";
+import { filterBoolean } from "../../../utils/arrays";
 
 export const CATEGORY_HEADER_HEIGHT = 20;
 export const EMOJI_HEIGHT = 35;
@@ -35,7 +36,6 @@ const ZERO_WIDTH_JOINER = "\u200D";
 
 interface IProps {
     selectedEmojis?: Set<string>;
-    showQuickReactions?: boolean;
     onChoose(unicode: string): boolean;
     isEmojiDisabled?: (unicode: string) => boolean;
 }
@@ -62,13 +62,12 @@ class EmojiPicker extends React.Component<IProps, IState> {
 
         this.state = {
             filter: "",
-            previewEmoji: null,
             scrollTop: 0,
             viewportHeight: 280,
         };
 
         // Convert recent emoji characters to emoji data, removing unknowns and duplicates
-        this.recentlyUsed = Array.from(new Set(recent.get().map(getEmojiFromUnicode).filter(Boolean)));
+        this.recentlyUsed = Array.from(new Set(filterBoolean(recent.get().map(getEmojiFromUnicode))));
         this.memoizedDataByCategory = {
             recent: this.recentlyUsed,
             ...DATA_BY_CATEGORY,
@@ -143,6 +142,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
 
     private onScroll = (): void => {
         const body = this.scrollRef.current?.containerRef.current;
+        if (!body) return;
         this.setState({
             scrollTop: body.scrollTop,
             viewportHeight: body.clientHeight,
@@ -152,12 +152,13 @@ class EmojiPicker extends React.Component<IProps, IState> {
 
     private updateVisibility = (): void => {
         const body = this.scrollRef.current?.containerRef.current;
+        if (!body) return;
         const rect = body.getBoundingClientRect();
         for (const cat of this.categories) {
             const elem = body.querySelector(`[data-category-id="${cat.id}"]`);
             if (!elem) {
                 cat.visible = false;
-                cat.ref.current.classList.remove("mx_EmojiPicker_anchor_visible");
+                cat.ref.current?.classList.remove("mx_EmojiPicker_anchor_visible");
                 continue;
             }
             const elemRect = elem.getBoundingClientRect();
@@ -165,6 +166,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
             const yEnd = elemRect.y + elemRect.height - rect.y;
             cat.visible = y < rect.height && yEnd > 0;
             // We update this here instead of through React to avoid re-render on scroll.
+            if (!cat.ref.current) continue;
             if (cat.visible) {
                 cat.ref.current.classList.add("mx_EmojiPicker_anchor_visible");
                 cat.ref.current.setAttribute("aria-selected", "true");
@@ -180,13 +182,13 @@ class EmojiPicker extends React.Component<IProps, IState> {
     private scrollToCategory = (category: string): void => {
         this.scrollRef.current?.containerRef.current
             ?.querySelector(`[data-category-id="${category}"]`)
-            .scrollIntoView();
+            ?.scrollIntoView();
     };
 
     private onChangeFilter = (filter: string): void => {
         const lcFilter = filter.toLowerCase().trim(); // filter is case insensitive
         for (const cat of this.categories) {
-            let emojis;
+            let emojis: IEmoji[];
             // If the new filter string includes the old filter string, we don't have to re-filter the whole dataset.
             if (lcFilter.includes(this.state.filter)) {
                 emojis = this.memoizedDataByCategory[cat.id];
@@ -194,10 +196,30 @@ class EmojiPicker extends React.Component<IProps, IState> {
                 emojis = cat.id === "recent" ? this.recentlyUsed : DATA_BY_CATEGORY[cat.id];
             }
             emojis = emojis.filter((emoji) => this.emojiMatchesFilter(emoji, lcFilter));
+            emojis = emojis.sort((a, b) => {
+                const indexA = a.shortcodes[0].indexOf(lcFilter);
+                const indexB = b.shortcodes[0].indexOf(lcFilter);
+
+                // Prioritize emojis containing the filter in its shortcode
+                if (indexA == -1 || indexB == -1) {
+                    return indexB - indexA;
+                }
+
+                // If both emojis start with the filter
+                // put the shorter emoji first
+                if (indexA == 0 && indexB == 0) {
+                    return a.shortcodes[0].length - b.shortcodes[0].length;
+                }
+
+                // Prioritize emojis starting with the filter
+                return indexA - indexB;
+            });
             this.memoizedDataByCategory[cat.id] = emojis;
             cat.enabled = emojis.length > 0;
             // The setState below doesn't re-render the header and we already have the refs for updateVisibility, so...
-            cat.ref.current.disabled = !cat.enabled;
+            if (cat.ref.current) {
+                cat.ref.current.disabled = !cat.enabled;
+            }
         }
         this.setState({ filter });
         // Header underlines need to be updated, but updating requires knowing
@@ -230,9 +252,9 @@ class EmojiPicker extends React.Component<IProps, IState> {
         });
     };
 
-    private onHoverEmojiEnd = (emoji: IEmoji): void => {
+    private onHoverEmojiEnd = (): void => {
         this.setState({
-            previewEmoji: null,
+            previewEmoji: undefined,
         });
     };
 
@@ -249,7 +271,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
         return CATEGORY_HEADER_HEIGHT + Math.ceil(count / EMOJIS_PER_ROW) * EMOJI_HEIGHT;
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let heightBefore = 0;
         return (
             <div className="mx_EmojiPicker" data-testid="mx_EmojiPicker">
@@ -279,7 +301,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
                         return categoryElement;
                     })}
                 </AutoHideScrollbar>
-                {this.state.previewEmoji || !this.props.showQuickReactions ? (
+                {this.state.previewEmoji ? (
                     <Preview emoji={this.state.previewEmoji} />
                 ) : (
                     <QuickReactions onClick={this.onClickEmoji} selectedEmojis={this.props.selectedEmojis} />

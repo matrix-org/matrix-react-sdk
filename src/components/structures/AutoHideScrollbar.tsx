@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import React, { HTMLAttributes, ReactHTML, WheelEvent } from "react";
+import React, { HTMLAttributes, ReactHTML, ReactNode, WheelEvent } from "react";
 
 type DynamicHtmlElementProps<T extends keyof JSX.IntrinsicElements> =
     JSX.IntrinsicElements[T] extends HTMLAttributes<{}> ? DynamicElementProps<T> : DynamicElementProps<"div">;
@@ -29,7 +29,8 @@ export type IProps<T extends keyof JSX.IntrinsicElements> = Omit<DynamicHtmlElem
     onWheel?: (event: WheelEvent) => void;
     style?: React.CSSProperties;
     tabIndex?: number;
-    wrappedRef?: (ref: HTMLDivElement) => void;
+    wrappedRef?: (ref: HTMLDivElement | null) => void;
+    children: ReactNode;
 };
 
 export default class AutoHideScrollbar<T extends keyof JSX.IntrinsicElements> extends React.Component<IProps<T>> {
@@ -55,7 +56,7 @@ export default class AutoHideScrollbar<T extends keyof JSX.IntrinsicElements> ex
         }
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { element, className, onScroll, tabIndex, wrappedRef, children, ...otherProps } = this.props;
 

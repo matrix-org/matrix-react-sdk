@@ -23,15 +23,15 @@ import { _t } from "../../languageHandler";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { canEditContent } from "../../utils/EventUtils";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
-import { IDialogProps } from "../views/dialogs/IDialogProps";
 import BaseDialog from "../views/dialogs/BaseDialog";
 import { DevtoolsContext } from "../views/dialogs/devtools/BaseTool";
 import { StateEventEditor } from "../views/dialogs/devtools/RoomState";
 import { stringify, TimelineEventEditor } from "../views/dialogs/devtools/Event";
 import CopyableText from "../views/elements/CopyableText";
 
-interface IProps extends IDialogProps {
+interface IProps {
     mxEvent: MatrixEvent; // the MatrixEvent associated with the context menu
+    onFinished(): void;
 }
 
 interface IState {
@@ -68,7 +68,7 @@ export default class ViewSource extends React.Component<IProps, IState> {
         };
         if (isEncrypted) {
             const copyDecryptedFunc = (): string => {
-                return stringify(decryptedEventSource);
+                return stringify(decryptedEventSource || {});
             };
             return (
                 <>
@@ -117,7 +117,7 @@ export default class ViewSource extends React.Component<IProps, IState> {
             return (
                 <MatrixClientContext.Consumer>
                     {(cli) => (
-                        <DevtoolsContext.Provider value={{ room: cli.getRoom(roomId) }}>
+                        <DevtoolsContext.Provider value={{ room: cli.getRoom(roomId)! }}>
                             <StateEventEditor onBack={this.onBack} mxEvent={mxEvent} />
                         </DevtoolsContext.Provider>
                     )}
@@ -128,7 +128,7 @@ export default class ViewSource extends React.Component<IProps, IState> {
         return (
             <MatrixClientContext.Consumer>
                 {(cli) => (
-                    <DevtoolsContext.Provider value={{ room: cli.getRoom(roomId) }}>
+                    <DevtoolsContext.Provider value={{ room: cli.getRoom(roomId)! }}>
                         <TimelineEventEditor onBack={this.onBack} mxEvent={mxEvent} />
                     </DevtoolsContext.Provider>
                 )}
@@ -139,15 +139,15 @@ export default class ViewSource extends React.Component<IProps, IState> {
     private canSendStateEvent(mxEvent: MatrixEvent): boolean {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(mxEvent.getRoomId());
-        return room.currentState.mayClientSendStateEvent(mxEvent.getType(), cli);
+        return !!room?.currentState.mayClientSendStateEvent(mxEvent.getType(), cli);
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const mxEvent = this.props.mxEvent.replacingEvent() || this.props.mxEvent; // show the replacing event, not the original, if it is an edit
 
         const isEditing = this.state.isEditing;
-        const roomId = mxEvent.getRoomId();
-        const eventId = mxEvent.getId();
+        const roomId = mxEvent.getRoomId()!;
+        const eventId = mxEvent.getId()!;
         const canEdit = mxEvent.isState() ? this.canSendStateEvent(mxEvent) : canEditContent(this.props.mxEvent);
         return (
             <BaseDialog className="mx_ViewSource" onFinished={this.props.onFinished} title={_t("View Source")}>

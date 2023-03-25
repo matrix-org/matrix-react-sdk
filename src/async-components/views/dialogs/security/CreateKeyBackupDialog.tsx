@@ -26,7 +26,6 @@ import { accessSecretStorage } from "../../../../SecurityManager";
 import AccessibleButton from "../../../../components/views/elements/AccessibleButton";
 import { copyNode } from "../../../../utils/strings";
 import PassphraseField from "../../../../components/views/auth/PassphraseField";
-import { IDialogProps } from "../../../../components/views/dialogs/IDialogProps";
 import Field from "../../../../components/views/elements/Field";
 import Spinner from "../../../../components/views/elements/Spinner";
 import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
@@ -45,10 +44,12 @@ enum Phase {
 
 const PASSWORD_MIN_SCORE = 4; // So secure, many characters, much complex, wow, etc, etc.
 
-interface IProps extends IDialogProps {}
+interface IProps {
+    onFinished(done?: boolean): void;
+}
 
 interface IState {
-    secureSecretStorage: boolean;
+    secureSecretStorage: boolean | null;
     phase: Phase;
     passPhrase: string;
     passPhraseValid: boolean;
@@ -120,7 +121,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         const { secureSecretStorage } = this.state;
         this.setState({
             phase: Phase.BackingUp,
-            error: null,
+            error: undefined,
         });
         let info;
         try {
@@ -218,7 +219,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
 
     private onPassPhraseValidate = (result: IValidationResult): void => {
         this.setState({
-            passPhraseValid: result.valid,
+            passPhraseValid: !!result.valid,
         });
     };
 
@@ -239,7 +240,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             <form onSubmit={this.onPassPhraseNextClick}>
                 <p>
                     {_t(
-                        "<b>Warning</b>: You should only set up key backup from a trusted computer.",
+                        "<b>Warning</b>: you should only set up key backup from a trusted computer.",
                         {},
                         { b: (sub) => <b>{sub}</b> },
                     )}
@@ -305,7 +306,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             changeText = _t("Go back to set it again.");
         }
 
-        let passPhraseMatch = null;
+        let passPhraseMatch: JSX.Element | undefined;
         if (matchText) {
             passPhraseMatch = (
                 <div className="mx_CreateKeyBackupDialog_passPhraseMatch">
@@ -327,7 +328,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
                                 onChange={this.onPassPhraseConfirmChange}
                                 value={this.state.passPhraseConfirm}
                                 className="mx_CreateKeyBackupDialog_passPhraseInput"
-                                placeholder={_t("Repeat your Security Phrase...")}
+                                placeholder={_t("Repeat your Security Phrase…")}
                                 autoFocus={true}
                             />
                         </div>
@@ -451,7 +452,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             case Phase.KeepItSafe:
                 return _t("Make a copy of your Security Key");
             case Phase.BackingUp:
-                return _t("Starting backup...");
+                return _t("Starting backup…");
             case Phase.Done:
                 return _t("Success!");
             default:
@@ -459,7 +460,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         }
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let content;
         if (this.state.error) {
             content = (

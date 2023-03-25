@@ -40,7 +40,7 @@ interface IProps {
 
 interface IState {
     searchQuery: string;
-    langs: Languages;
+    langs: Languages | null;
 }
 
 export default class LanguageDropdown extends React.Component<IProps, IState> {
@@ -83,7 +83,7 @@ export default class LanguageDropdown extends React.Component<IProps, IState> {
         });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         if (this.state.langs === null) {
             return <Spinner />;
         }
@@ -103,8 +103,8 @@ export default class LanguageDropdown extends React.Component<IProps, IState> {
 
         // default value here too, otherwise we need to handle null / undefined
         // values between mounting and the initial value propagating
-        let language = SettingsStore.getValue("language", null, /*excludeDefault:*/ true);
-        let value = null;
+        let language = SettingsStore.getValue<string | undefined>("language", null, /*excludeDefault:*/ true);
+        let value: string | undefined;
         if (language) {
             value = this.props.value || language;
         } else {

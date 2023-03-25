@@ -68,7 +68,7 @@ interface IState {
 }
 
 export default class MemberList extends React.Component<IProps, IState> {
-    private showPresence = true;
+    private readonly showPresence: boolean;
     private mounted = false;
 
     public static contextType = SDKContext;
@@ -123,7 +123,9 @@ export default class MemberList extends React.Component<IProps, IState> {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.roomId);
 
-        return room?.canInvite(cli.getUserId()) || (room?.isSpaceRoom() && room.getJoinRule() === JoinRule.Public);
+        return (
+            !!room?.canInvite(cli.getSafeUserId()) || !!(room?.isSpaceRoom() && room.getJoinRule() === JoinRule.Public)
+        );
     }
 
     private getMembersState(invitedMembers: Array<RoomMember>, joinedMembers: Array<RoomMember>): IState {
@@ -195,7 +197,8 @@ export default class MemberList extends React.Component<IProps, IState> {
         { leading: true, trailing: true },
     );
 
-    private async updateListNow(showLoadingSpinner: boolean): Promise<void> {
+    // XXX: exported for tests
+    public async updateListNow(showLoadingSpinner?: boolean): Promise<void> {
         if (!this.mounted) {
             return;
         }
@@ -258,32 +261,6 @@ export default class MemberList extends React.Component<IProps, IState> {
         });
     };
 
-    /**
-     * SHOULD ONLY BE USED BY TESTS
-     */
-    public memberString(member: RoomMember): string {
-        if (!member) {
-            return "(null)";
-        } else {
-            const u = member.user;
-            return (
-                "(" +
-                member.name +
-                ", " +
-                member.powerLevel +
-                ", " +
-                (u ? u.lastActiveAgo : "<null>") +
-                ", " +
-                (u ? u.getLastActiveTs() : "<null>") +
-                ", " +
-                (u ? u.currentlyActive : "<null>") +
-                ", " +
-                (u ? u.presence : "<null>") +
-                ")"
-            );
-        }
-    }
-
     public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any): void {
         if (prevProps.searchQuery !== this.props.searchQuery) {
             this.updateListNow(false);
@@ -301,7 +278,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         });
     };
 
-    private getPending3PidInvites(): Array<MatrixEvent> {
+    private getPending3PidInvites(): MatrixEvent[] | undefined {
         // include 3pid invites (m.room.third_party_invite) state events.
         // The HS may have already converted these into m.room.member invites so
         // we shouldn't add them if the 3pid invite state key (token) is in the
@@ -359,7 +336,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         return this.state.filteredInvitedMembers.length + (this.getPending3PidInvites() || []).length;
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         if (this.state.loading) {
             return (
                 <BaseCard className="mx_MemberList" onClose={this.props.onClose}>

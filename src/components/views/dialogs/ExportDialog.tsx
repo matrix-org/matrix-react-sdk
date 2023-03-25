@@ -19,13 +19,19 @@ import { Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
-import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import Field from "../elements/Field";
 import StyledRadioGroup from "../elements/StyledRadioGroup";
 import StyledCheckbox from "../elements/StyledCheckbox";
-import { ExportFormat, ExportType, textForFormat, textForType } from "../../../utils/exportUtils/exportUtils";
+import {
+    ExportFormat,
+    ExportFormatKey,
+    ExportType,
+    ExportTypeKey,
+    textForFormat,
+    textForType,
+} from "../../../utils/exportUtils/exportUtils";
 import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
 import HTMLExporter from "../../../utils/exportUtils/HtmlExport";
 import JSONExporter from "../../../utils/exportUtils/JSONExport";
@@ -37,8 +43,9 @@ import InfoDialog from "./InfoDialog";
 import ChatExport from "../../../customisations/ChatExport";
 import { validateNumberInRange } from "../../../utils/validate";
 
-interface IProps extends IDialogProps {
+interface IProps {
     room: Room;
+    onFinished(doExport?: boolean): void;
 }
 
 interface ExportConfig {
@@ -66,7 +73,7 @@ const useExportFormState = (): ExportConfig => {
     const [exportType, setExportType] = useState(config.range ?? ExportType.Timeline);
     const [includeAttachments, setAttachments] = useState(config.includeAttachments ?? false);
     const [numberOfMessages, setNumberOfMessages] = useState<number>(config.numberOfMessages ?? 100);
-    const [sizeLimit, setSizeLimit] = useState<number | null>(config.sizeMb ?? 8);
+    const [sizeLimit, setSizeLimit] = useState<number>(config.sizeMb ?? 8);
 
     return {
         exportFormat,
@@ -99,15 +106,18 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
     const [isExporting, setExporting] = useState(false);
     const sizeLimitRef = useRef<Field>();
     const messageCountRef = useRef<Field>();
-    const [exportProgressText, setExportProgressText] = useState(_t("Processing..."));
+    const [exportProgressText, setExportProgressText] = useState(_t("Processing…"));
     const [displayCancel, setCancelWarning] = useState(false);
     const [exportCancelled, setExportCancelled] = useState(false);
     const [exportSuccessful, setExportSuccessful] = useState(false);
-    const [exporter, setExporter] = useStateCallback<Exporter>(null, async (exporter: Exporter): Promise<void> => {
-        await exporter?.export().then(() => {
-            if (!exportCancelled) setExportSuccessful(true);
-        });
-    });
+    const [exporter, setExporter] = useStateCallback<Exporter | null>(
+        null,
+        async (exporter: Exporter | null): Promise<void> => {
+            await exporter?.export().then(() => {
+                if (!exportCancelled) setExportSuccessful(true);
+            });
+        },
+    );
 
     const startExport = async (): Promise<void> => {
         const exportOptions = {
@@ -237,20 +247,20 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
         setExporter(null);
     };
 
-    const exportFormatOptions = Object.keys(ExportFormat).map((format) => ({
-        value: ExportFormat[format],
-        label: textForFormat(ExportFormat[format]),
+    const exportFormatOptions = Object.values(ExportFormat).map((format) => ({
+        value: format,
+        label: textForFormat(format),
     }));
 
-    const exportTypeOptions = Object.keys(ExportType).map((type) => {
+    const exportTypeOptions = Object.values(ExportType).map((type) => {
         return (
-            <option key={type} value={ExportType[type]}>
-                {textForType(ExportType[type])}
+            <option key={ExportType[type]} value={type}>
+                {textForType(type)}
             </option>
         );
     });
 
-    let messageCount = null;
+    let messageCount: JSX.Element | undefined;
     if (exportType === ExportType.LastNMessages && setNumberOfMessages) {
         messageCount = (
             <Field
@@ -332,7 +342,7 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
                             <StyledRadioGroup
                                 name="exportFormat"
                                 value={exportFormat}
-                                onChange={(key) => setExportFormat(ExportFormat[key])}
+                                onChange={(key: ExportFormatKey) => setExportFormat(ExportFormat[key])}
                                 definitions={exportFormatOptions}
                             />
                         </>
@@ -347,7 +357,7 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
                                 element="select"
                                 value={exportType}
                                 onChange={(e) => {
-                                    setExportType(ExportType[e.target.value]);
+                                    setExportType(ExportType[e.target.value as ExportTypeKey]);
                                 }}
                             >
                                 {exportTypeOptions}

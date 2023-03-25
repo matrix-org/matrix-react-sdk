@@ -154,12 +154,10 @@ export enum KeyBindingAction {
     ToggleHiddenEventVisibility = "KeyBinding.toggleHiddenEventVisibility",
 }
 
-type KeyboardShortcutSetting = IBaseSetting<KeyCombo>;
+type KeyboardShortcutSetting = Omit<IBaseSetting<KeyCombo>, "supportedLevels">;
 
-export type IKeyboardShortcuts = {
-    // TODO: We should figure out what to do with the keyboard shortcuts that are not handled by KeybindingManager
-    [k in KeyBindingAction]?: KeyboardShortcutSetting;
-};
+// TODO: We should figure out what to do with the keyboard shortcuts that are not handled by KeybindingManager
+export type IKeyboardShortcuts = Partial<Record<KeyBindingAction, KeyboardShortcutSetting>>;
 
 export interface ICategory {
     categoryLabel?: string;

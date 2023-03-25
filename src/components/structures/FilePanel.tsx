@@ -43,7 +43,7 @@ interface IProps {
 }
 
 interface IState {
-    timelineSet: EventTimelineSet;
+    timelineSet: EventTimelineSet | null;
     narrow: boolean;
 }
 
@@ -59,14 +59,14 @@ class FilePanel extends React.Component<IProps, IState> {
     public noRoom: boolean;
     private card = createRef<HTMLDivElement>();
 
-    public state = {
+    public state: IState = {
         timelineSet: null,
         narrow: false,
     };
 
     private onRoomTimeline = (
         ev: MatrixEvent,
-        room: Room | null,
+        room: Room | undefined,
         toStartOfTimeline: boolean,
         removed: boolean,
         data: IRoomTimelineData,
@@ -78,7 +78,7 @@ class FilePanel extends React.Component<IProps, IState> {
         client.decryptEventIfNeeded(ev);
 
         if (ev.isBeingDecrypted()) {
-            this.decryptingEvents.add(ev.getId());
+            this.decryptingEvents.add(ev.getId()!);
         } else {
             this.addEncryptedLiveEvent(ev);
         }
@@ -86,7 +86,7 @@ class FilePanel extends React.Component<IProps, IState> {
 
     private onEventDecrypted = (ev: MatrixEvent, err?: any): void => {
         if (ev.getRoomId() !== this.props.roomId) return;
-        const eventId = ev.getId();
+        const eventId = ev.getId()!;
 
         if (!this.decryptingEvents.delete(eventId)) return;
         if (err) return;
@@ -99,11 +99,11 @@ class FilePanel extends React.Component<IProps, IState> {
 
         const timeline = this.state.timelineSet.getLiveTimeline();
         if (ev.getType() !== "m.room.message") return;
-        if (["m.file", "m.image", "m.video", "m.audio"].indexOf(ev.getContent().msgtype) == -1) {
+        if (!["m.file", "m.image", "m.video", "m.audio"].includes(ev.getContent().msgtype!)) {
             return;
         }
 
-        if (!this.state.timelineSet.eventIdToTimeline(ev.getId())) {
+        if (!this.state.timelineSet.eventIdToTimeline(ev.getId()!)) {
             this.state.timelineSet.addEventToTimeline(ev, timeline, false);
         }
     }
@@ -176,7 +176,7 @@ class FilePanel extends React.Component<IProps, IState> {
         // the event index to fulfill the pagination request. Asking the server
         // to paginate won't ever work since the server can't correctly filter
         // out events containing URLs
-        if (client.isRoomEncrypted(roomId) && eventIndex !== null) {
+        if (room && client.isRoomEncrypted(roomId) && eventIndex !== null) {
             return eventIndex.paginateTimelineWindow(room, timelineWindow, direction, limit);
         } else {
             return timelineWindow.paginate(direction, limit);
@@ -223,7 +223,7 @@ class FilePanel extends React.Component<IProps, IState> {
         }
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         if (MatrixClientPeg.get().isGuest()) {
             return (
                 <BaseCard className="mx_FilePanel mx_RoomView_messageListWrapper" onClose={this.props.onClose}>

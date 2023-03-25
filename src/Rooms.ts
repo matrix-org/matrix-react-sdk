@@ -16,6 +16,7 @@ limitations under the License.
 
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import AliasCustomisations from "./customisations/Alias";
@@ -29,13 +30,13 @@ import AliasCustomisations from "./customisations/Alias";
  * @param {Object} room The room object
  * @returns {string} A display alias for the given room
  */
-export function getDisplayAliasForRoom(room: Room): string | undefined {
+export function getDisplayAliasForRoom(room: Room): string | null {
     return getDisplayAliasForAliasSet(room.getCanonicalAlias(), room.getAltAliases());
 }
 
 // The various display alias getters should all feed through this one path so
 // there's a single place to change the logic.
-export function getDisplayAliasForAliasSet(canonicalAlias: string, altAliases: string[]): string {
+export function getDisplayAliasForAliasSet(canonicalAlias: string | null, altAliases: string[]): string | null {
     if (AliasCustomisations.getDisplayAliasForAliasSet) {
         return AliasCustomisations.getDisplayAliasForAliasSet(canonicalAlias, altAliases);
     }
@@ -45,7 +46,7 @@ export function getDisplayAliasForAliasSet(canonicalAlias: string, altAliases: s
 export function guessAndSetDMRoom(room: Room, isDirect: boolean): Promise<void> {
     let newTarget;
     if (isDirect) {
-        const guessedUserId = guessDMRoomTargetId(room, MatrixClientPeg.get().getUserId());
+        const guessedUserId = guessDMRoomTargetId(room, MatrixClientPeg.get().getUserId()!);
         newTarget = guessedUserId;
     } else {
         newTarget = null;
@@ -109,8 +110,8 @@ export async function setDMRoom(roomId: string, userId: string | null): Promise<
  * @returns {string} User ID of the user that the room is probably a DM with
  */
 function guessDMRoomTargetId(room: Room, myUserId: string): string {
-    let oldestTs;
-    let oldestUser;
+    let oldestTs: number | undefined;
+    let oldestUser: RoomMember | undefined;
 
     // Pick the joined user who's been here longest (and isn't us),
     for (const user of room.getJoinedMembers()) {
@@ -118,7 +119,7 @@ function guessDMRoomTargetId(room: Room, myUserId: string): string {
 
         if (oldestTs === undefined || (user.events.member && user.events.member.getTs() < oldestTs)) {
             oldestUser = user;
-            oldestTs = user.events.member.getTs();
+            oldestTs = user.events.member?.getTs();
         }
     }
     if (oldestUser) return oldestUser.userId;
@@ -129,7 +130,7 @@ function guessDMRoomTargetId(room: Room, myUserId: string): string {
 
         if (oldestTs === undefined || (user.events.member && user.events.member.getTs() < oldestTs)) {
             oldestUser = user;
-            oldestTs = user.events.member.getTs();
+            oldestTs = user.events.member?.getTs();
         }
     }
 

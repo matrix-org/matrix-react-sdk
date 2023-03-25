@@ -165,7 +165,7 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
                         {this.props.timestamp}
                     </div>
                 );
-            } else if ([CallErrorCode.UserHangup, "user hangup"].includes(hangupReason) || !hangupReason) {
+            } else if (!hangupReason || [CallErrorCode.UserHangup, "user hangup"].includes(hangupReason)) {
                 // workaround for https://github.com/vector-im/element-web/issues/5178
                 // it seems Android randomly sets a reason of "user hangup" which is
                 // interpreted as an error code :(
@@ -188,6 +188,13 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
                     <div className="mx_LegacyCallEvent_content">
                         {_t("No answer")}
                         {this.renderCallBackButton(_t("Call back"))}
+                        {this.props.timestamp}
+                    </div>
+                );
+            } else if (hangupReason === CallErrorCode.AnsweredElsewhere) {
+                return (
+                    <div className="mx_LegacyCallEvent_content">
+                        {_t("Answered elsewhere")}
                         {this.props.timestamp}
                     </div>
                 );
@@ -261,7 +268,7 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
         );
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const event = this.props.mxEvent;
         const sender = event.sender ? event.sender.name : event.getSender();
         const isVoice = this.props.callEventGrouper.isVoice;

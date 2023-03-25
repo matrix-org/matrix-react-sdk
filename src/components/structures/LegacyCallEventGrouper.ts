@@ -35,7 +35,7 @@ const CONNECTING_STATES = [
     CallState.CreateAnswer,
 ];
 
-const SUPPORTED_STATES = [CallState.Connected, CallState.Ringing];
+const SUPPORTED_STATES = [CallState.Connected, CallState.Ringing, CallState.Ended];
 
 export enum CustomCallState {
     Missed = "missed",
@@ -72,7 +72,7 @@ export function buildLegacyCallEventGroupers(
 
 export default class LegacyCallEventGrouper extends EventEmitter {
     private events: Set<MatrixEvent> = new Set<MatrixEvent>();
-    private call: MatrixCall;
+    private call: MatrixCall | null = null;
     public state: CallState | CustomCallState;
 
     public constructor() {
@@ -85,23 +85,23 @@ export default class LegacyCallEventGrouper extends EventEmitter {
         );
     }
 
-    private get invite(): MatrixEvent {
+    private get invite(): MatrixEvent | undefined {
         return [...this.events].find((event) => event.getType() === EventType.CallInvite);
     }
 
-    private get hangup(): MatrixEvent {
+    private get hangup(): MatrixEvent | undefined {
         return [...this.events].find((event) => event.getType() === EventType.CallHangup);
     }
 
-    private get reject(): MatrixEvent {
+    private get reject(): MatrixEvent | undefined {
         return [...this.events].find((event) => event.getType() === EventType.CallReject);
     }
 
-    private get selectAnswer(): MatrixEvent {
+    private get selectAnswer(): MatrixEvent | undefined {
         return [...this.events].find((event) => event.getType() === EventType.CallSelectAnswer);
     }
 
-    public get isVoice(): boolean {
+    public get isVoice(): boolean | undefined {
         const invite = this.invite;
         if (!invite) return;
 
@@ -111,10 +111,10 @@ export default class LegacyCallEventGrouper extends EventEmitter {
     }
 
     public get hangupReason(): string | null {
-        return this.hangup?.getContent()?.reason;
+        return this.call?.hangupReason ?? this.hangup?.getContent()?.reason ?? null;
     }
 
-    public get rejectParty(): string {
+    public get rejectParty(): string | undefined {
         return this.reject?.getSender();
     }
 

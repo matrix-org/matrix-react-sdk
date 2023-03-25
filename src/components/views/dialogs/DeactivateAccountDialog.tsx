@@ -28,25 +28,35 @@ import BaseDialog from "./BaseDialog";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 
+type DialogAesthetics = Partial<{
+    [x in AuthType]: {
+        [x: number]: {
+            body: string;
+            continueText?: string;
+            continueKind?: string;
+        };
+    };
+}>;
+
 interface IProps {
-    onFinished: (success: boolean) => void;
+    onFinished: (success?: boolean) => void;
 }
 
 interface IState {
     shouldErase: boolean;
-    errStr: string;
+    errStr: string | null;
     authData: any; // for UIA
     authEnabled: boolean; // see usages for information
 
     // A few strings that are passed to InteractiveAuth for design or are displayed
     // next to the InteractiveAuth component.
-    bodyText: string;
-    continueText: string;
-    continueKind: string;
+    bodyText?: string;
+    continueText?: string;
+    continueKind?: string;
 }
 
 export default class DeactivateAccountDialog extends React.Component<IProps, IState> {
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -54,18 +64,12 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
             errStr: null,
             authData: null, // for UIA
             authEnabled: true, // see usages for information
-
-            // A few strings that are passed to InteractiveAuth for design or are displayed
-            // next to the InteractiveAuth component.
-            bodyText: null,
-            continueText: null,
-            continueKind: null,
         };
 
         this.initAuth(/* shouldErase= */ false);
     }
 
-    private onStagePhaseChange = (stage: AuthType, phase: string): void => {
+    private onStagePhaseChange = (stage: AuthType, phase: number): void => {
         const dialogAesthetics = {
             [SSOAuthEntry.PHASE_PREAUTH]: {
                 body: _t("Confirm your account deactivation by using Single Sign On to prove your identity."),
@@ -80,7 +84,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         };
 
         // This is the same as aestheticsForStagePhases in InteractiveAuthDialog minus the `title`
-        const DEACTIVATE_AESTHETICS = {
+        const DEACTIVATE_AESTHETICS: DialogAesthetics = {
             [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
             [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
             [PasswordAuthEntry.LOGIN_TYPE]: {
@@ -91,14 +95,16 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         };
 
         const aesthetics = DEACTIVATE_AESTHETICS[stage];
-        let bodyText = null;
-        let continueText = null;
-        let continueKind = null;
+        let bodyText: string | undefined;
+        let continueText: string | undefined;
+        let continueKind: string | undefined;
         if (aesthetics) {
             const phaseAesthetics = aesthetics[phase];
-            if (phaseAesthetics && phaseAesthetics.body) bodyText = phaseAesthetics.body;
-            if (phaseAesthetics && phaseAesthetics.continueText) continueText = phaseAesthetics.continueText;
-            if (phaseAesthetics && phaseAesthetics.continueKind) continueKind = phaseAesthetics.continueKind;
+            if (phaseAesthetics) {
+                if (phaseAesthetics.body) bodyText = phaseAesthetics.body;
+                if (phaseAesthetics.continueText) continueText = phaseAesthetics.continueText;
+                if (phaseAesthetics.continueKind) continueKind = phaseAesthetics.continueKind;
+            }
         }
         this.setState({ bodyText, continueText, continueKind });
     };
@@ -172,13 +178,13 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
             });
     }
 
-    public render(): JSX.Element {
-        let error = null;
+    public render(): React.ReactNode {
+        let error: JSX.Element | undefined;
         if (this.state.errStr) {
             error = <div className="error">{this.state.errStr}</div>;
         }
 
-        let auth = <div>{_t("Loading...")}</div>;
+        let auth = <div>{_t("Loading…")}</div>;
         if (this.state.authData && this.state.authEnabled) {
             auth = (
                 <div>

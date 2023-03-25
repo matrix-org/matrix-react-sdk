@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IAnnotatedPushRule, PushRuleAction } from "matrix-js-sdk/src/@types/PushRules";
+import { IAnnotatedPushRule, PushRuleAction, RuleId } from "matrix-js-sdk/src/@types/PushRules";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _td } from "../languageHandler";
@@ -29,27 +29,32 @@ type StateToActionsMap = {
 interface IVectorPushRuleDefinition {
     description: string;
     vectorStateToActions: StateToActionsMap;
+    /**
+     * Rules that should be updated to be kept in sync
+     * when this rule changes
+     */
+    syncedRuleIds?: (RuleId | string)[];
 }
 
 class VectorPushRuleDefinition {
     public readonly description: string;
     public readonly vectorStateToActions: StateToActionsMap;
+    public readonly syncedRuleIds?: (RuleId | string)[];
 
     public constructor(opts: IVectorPushRuleDefinition) {
         this.description = opts.description;
         this.vectorStateToActions = opts.vectorStateToActions;
+        this.syncedRuleIds = opts.syncedRuleIds;
     }
 
     // Translate the rule actions and its enabled value into vector state
-    public ruleToVectorState(rule: IAnnotatedPushRule): VectorState {
+    public ruleToVectorState(rule: IAnnotatedPushRule): VectorState | undefined {
         let enabled = false;
         if (rule) {
             enabled = rule.enabled;
         }
 
-        for (const stateKey in PushRuleVectorState.states) {
-            // eslint-disable-line guard-for-in
-            const state: VectorState = PushRuleVectorState.states[stateKey];
+        for (const state of Object.values(PushRuleVectorState.states)) {
             const vectorStateToActions = this.vectorStateToActions[state];
 
             if (!vectorStateToActions) {
@@ -85,7 +90,7 @@ export type { VectorPushRuleDefinition };
 /**
  * The descriptions of rules managed by the Vector UI.
  */
-export const VectorPushRulesDefinitions = {
+export const VectorPushRulesDefinitions: Record<string, VectorPushRuleDefinition> = {
     // Messages containing user's display name
     ".m.rule.contains_display_name": new VectorPushRuleDefinition({
         description: _td("Messages containing my display name"), // passed through _t() translation in src/components/views/settings/Notifications.js
@@ -127,6 +132,12 @@ export const VectorPushRulesDefinitions = {
             [VectorState.Loud]: StandardActions.ACTION_NOTIFY_DEFAULT_SOUND,
             [VectorState.Off]: StandardActions.ACTION_DONT_NOTIFY,
         },
+        syncedRuleIds: [
+            RuleId.PollStartOneToOne,
+            RuleId.PollStartOneToOneUnstable,
+            RuleId.PollEndOneToOne,
+            RuleId.PollEndOneToOneUnstable,
+        ],
     }),
 
     // Encrypted messages just sent to the user in a 1:1 room
@@ -149,6 +160,7 @@ export const VectorPushRulesDefinitions = {
             [VectorState.Loud]: StandardActions.ACTION_NOTIFY_DEFAULT_SOUND,
             [VectorState.Off]: StandardActions.ACTION_DONT_NOTIFY,
         },
+        syncedRuleIds: [RuleId.PollStart, RuleId.PollStartUnstable, RuleId.PollEnd, RuleId.PollEndUnstable],
     }),
 
     // Encrypted messages just sent to a group chat room

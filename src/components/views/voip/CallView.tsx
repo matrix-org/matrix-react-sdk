@@ -150,7 +150,7 @@ export const Lobby: FC<LobbyProps> = ({ room, joinCallButtonDisabledTooltip, con
     }, [videoMuted, setVideoMuted]);
 
     const [videoStream, audioInputs, videoInputs] = useAsyncMemo(
-        async (): Promise<[MediaStream, MediaDeviceInfo[], MediaDeviceInfo[]]> => {
+        async (): Promise<[MediaStream | null, MediaDeviceInfo[], MediaDeviceInfo[]]> => {
             let devices = await MediaDeviceHandler.getDevices();
 
             // We get the preview stream before requesting devices: this is because
@@ -158,14 +158,14 @@ export const Lobby: FC<LobbyProps> = ({ room, joinCallButtonDisabledTooltip, con
             // non-blank labels for the devices.
             let stream: MediaStream | null = null;
             try {
-                if (devices.audioinput.length > 0) {
+                if (devices!.audioinput.length > 0) {
                     // Holding just an audio stream will be enough to get us all device labels, so
                     // if video is muted, don't bother requesting video.
                     stream = await navigator.mediaDevices.getUserMedia({
                         audio: true,
-                        video: !videoMuted && devices.videoinput.length > 0 && { deviceId: videoInputId },
+                        video: !videoMuted && devices!.videoinput.length > 0 && { deviceId: videoInputId },
                     });
-                } else if (devices.videoinput.length > 0) {
+                } else if (devices!.videoinput.length > 0) {
                     // We have to resort to a video stream, even if video is supposed to be muted.
                     stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: videoInputId } });
                 }
@@ -182,7 +182,7 @@ export const Lobby: FC<LobbyProps> = ({ room, joinCallButtonDisabledTooltip, con
                 stream = null;
             }
 
-            return [stream, devices.audioinput, devices.videoinput];
+            return [stream, devices?.audioinput ?? [], devices?.videoinput ?? []];
         },
         [videoInputId, videoMuted],
         [null, [], []],
@@ -335,7 +335,7 @@ const StartCallView: FC<StartCallViewProps> = ({ room, resizing, call, setStarti
                 <AppTile
                     app={call.widget}
                     room={room}
-                    userId={cli.credentials.userId}
+                    userId={cli.credentials.userId!}
                     creatorUserId={call.widget.creatorUserId}
                     waitForIframeLoad={call.widget.waitForIframeLoad}
                     showMenubar={false}
@@ -402,7 +402,7 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call }) => {
             <AppTile
                 app={call.widget}
                 room={room}
-                userId={cli.credentials.userId}
+                userId={cli.credentials.userId!}
                 creatorUserId={call.widget.creatorUserId}
                 waitForIframeLoad={call.widget.waitForIframeLoad}
                 showMenubar={false}

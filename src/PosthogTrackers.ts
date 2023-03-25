@@ -54,8 +54,8 @@ export default class PosthogTrackers {
     }
 
     private view: Views = Views.LOADING;
-    private pageType?: PageType = null;
-    private override?: ScreenName = null;
+    private pageType?: PageType;
+    private override?: ScreenName;
 
     public trackPageChange(view: Views, pageType: PageType | undefined, durationMs: number): void {
         this.view = view;
@@ -66,7 +66,7 @@ export default class PosthogTrackers {
 
     private trackPage(durationMs?: number): void {
         const screenName =
-            this.view === Views.LOGGED_IN ? loggedInPageTypeMap[this.pageType] : notLoggedInMap[this.view];
+            this.view === Views.LOGGED_IN ? loggedInPageTypeMap[this.pageType!] : notLoggedInMap[this.view];
         PosthogAnalytics.instance.trackEvent<ScreenEvent>({
             eventName: "$pageview",
             $current_url: screenName,
@@ -85,7 +85,7 @@ export default class PosthogTrackers {
 
     public clearOverride(screenName: ScreenName): void {
         if (screenName !== this.override) return;
-        this.override = null;
+        this.override = undefined;
         this.trackPage();
     }
 
@@ -120,7 +120,7 @@ export class PosthogScreenTracker extends PureComponent<{ screenName: ScreenName
         PosthogTrackers.instance.clearOverride(this.props.screenName);
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return null; // no need to render anything, we just need to hook into the React lifecycle
     }
 }

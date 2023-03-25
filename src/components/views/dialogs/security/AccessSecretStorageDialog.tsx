@@ -24,7 +24,6 @@ import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Field from "../../elements/Field";
 import AccessibleButton from "../../elements/AccessibleButton";
 import { _t } from "../../../../languageHandler";
-import { IDialogProps } from "../IDialogProps";
 import { accessSecretStorage } from "../../../../SecurityManager";
 import Modal from "../../../../Modal";
 import InteractiveAuthDialog from "../InteractiveAuthDialog";
@@ -40,9 +39,12 @@ const KEY_FILE_MAX_SIZE = 128;
 // Don't shout at the user that their key is invalid every time they type a key: wait a short time
 const VALIDATION_THROTTLE_MS = 200;
 
-interface IProps extends IDialogProps {
-    keyInfo: ISecretStorageKeyInfo;
-    checkPrivateKey: (k: { passphrase?: string; recoveryKey?: string }) => boolean;
+export type KeyParams = { passphrase?: string; recoveryKey?: string };
+
+interface IProps {
+    keyInfo?: ISecretStorageKeyInfo;
+    checkPrivateKey: (k: KeyParams) => Promise<boolean>;
+    onFinished(result?: false | KeyParams): void;
 }
 
 interface IState {
@@ -61,8 +63,9 @@ interface IState {
  */
 export default class AccessSecretStorageDialog extends React.PureComponent<IProps, IState> {
     private fileUpload = React.createRef<HTMLInputElement>();
+    private inputRef = React.createRef<HTMLInputElement>();
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -137,7 +140,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
     };
 
     private onRecoveryKeyFileChange = async (ev: ChangeEvent<HTMLInputElement>): Promise<void> => {
-        if (ev.target.files.length === 0) return;
+        if (!ev.target.files?.length) return;
 
         const f = ev.target.files[0];
 
@@ -170,13 +173,16 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
     };
 
     private onRecoveryKeyFileUploadClick = (): void => {
-        this.fileUpload.current.click();
+        this.fileUpload.current?.click();
     };
 
     private onPassPhraseNext = async (ev: FormEvent<HTMLFormElement> | React.MouseEvent): Promise<void> => {
         ev.preventDefault();
 
-        if (this.state.passPhrase.length <= 0) return;
+        if (this.state.passPhrase.length <= 0) {
+            this.inputRef.current?.focus();
+            return;
+        }
 
         this.setState({ keyMatches: null });
         const input = { passphrase: this.state.passPhrase };
@@ -185,6 +191,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
             this.props.onFinished(input);
         } else {
             this.setState({ keyMatches });
+            this.inputRef.current?.focus();
         }
     };
 
@@ -246,7 +253,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
 
                 // Now we can indicate that the user is done pressing buttons, finally.
                 // Upstream flows will detect the new secret storage, key backup, etc and use it.
-                this.props.onFinished(true);
+                this.props.onFinished({});
             }, true);
         } catch (e) {
             logger.error(e);
@@ -268,16 +275,12 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         }
     }
 
-    public render(): JSX.Element {
-        const hasPassphrase =
-            this.props.keyInfo &&
-            this.props.keyInfo.passphrase &&
-            this.props.keyInfo.passphrase.salt &&
-            this.props.keyInfo.passphrase.iterations;
+    public render(): React.ReactNode {
+        const hasPassphrase = this.props.keyInfo?.passphrase?.salt && this.props.keyInfo?.passphrase?.iterations;
 
         const resetButton = (
             <div className="mx_AccessSecretStorageDialog_reset">
-                {_t("Forgotten or lost all recovery methods? <a>Reset all</a>", null, {
+                {_t("Forgotten or lost all recovery methods? <a>Reset all</a>", undefined, {
                     a: (sub) => (
                         <AccessibleButton
                             kind="link_inline"
@@ -353,6 +356,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
 
                     <form className="mx_AccessSecretStorageDialog_primaryContainer" onSubmit={this.onPassPhraseNext}>
                         <Field
+                            inputRef={this.inputRef}
                             id="mx_passPhraseInput"
                             className="mx_AccessSecretStorageDialog_passPhraseInput"
                             type="password"
@@ -405,7 +409,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                                     value={this.state.recoveryKey}
                                     onChange={this.onRecoveryKeyChange}
                                     autoFocus={true}
-                                    forceValidity={this.state.recoveryKeyCorrect}
+                                    forceValidity={this.state.recoveryKeyCorrect ?? undefined}
                                     autoComplete="off"
                                 />
                             </div>

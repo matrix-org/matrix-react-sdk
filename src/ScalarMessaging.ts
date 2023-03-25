@@ -358,7 +358,7 @@ function inviteUser(event: MessageEvent<any>, roomId: string, userId: string): v
     if (room) {
         // if they are already invited or joined we can resolve immediately.
         const member = room.getMember(userId);
-        if (member && ["join", "invite"].includes(member.membership)) {
+        if (member && ["join", "invite"].includes(member.membership!)) {
             sendResponse(event, {
                 success: true,
             });
@@ -389,7 +389,7 @@ function kickUser(event: MessageEvent<any>, roomId: string, userId: string): voi
     if (room) {
         // if they are already not in the room we can resolve immediately.
         const member = room.getMember(userId);
-        if (!member || getEffectiveMembership(member.membership) === EffectiveMembership.Leave) {
+        if (!member || getEffectiveMembership(member.membership!) === EffectiveMembership.Leave) {
             sendResponse(event, {
                 success: true,
             });
@@ -472,7 +472,7 @@ function setWidget(event: MessageEvent<any>, roomId: string | null): void {
     } else {
         // Room widget
         if (!roomId) {
-            sendError(event, _t("Missing roomId."), null);
+            sendError(event, _t("Missing roomId."));
             return;
         }
         WidgetUtils.setRoomWidget(
@@ -675,7 +675,7 @@ function canSendEvent(event: MessageEvent<any>, roomId: string): void {
         sendError(event, _t("You are not in this room."));
         return;
     }
-    const me = client.credentials.userId;
+    const me = client.credentials.userId!;
 
     let canSend = false;
     if (isState) {
@@ -858,8 +858,7 @@ async function readEvents(
 
 const onMessage = function (event: MessageEvent<any>): void {
     if (!event.origin) {
-        // stupid chrome
-        // @ts-ignore
+        // @ts-ignore - stupid chrome
         event.origin = event.originalEvent.origin;
     }
 
@@ -867,10 +866,10 @@ const onMessage = function (event: MessageEvent<any>): void {
     // This means the URL could contain a path (like /develop) and still be used
     // to validate event origins, which do not specify paths.
     // (See https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage)
-    let configUrl;
+    let configUrl: URL | undefined;
     try {
-        if (!openManagerUrl) openManagerUrl = IntegrationManagers.sharedInstance().getPrimaryManager().uiUrl;
-        configUrl = new URL(openManagerUrl);
+        if (!openManagerUrl) openManagerUrl = IntegrationManagers.sharedInstance().getPrimaryManager()?.uiUrl;
+        configUrl = new URL(openManagerUrl!);
     } catch (e) {
         // No integrations UI URL, ignore silently.
         return;
@@ -987,7 +986,7 @@ const onMessage = function (event: MessageEvent<any>): void {
 };
 
 let listenerCount = 0;
-let openManagerUrl: string | null = null;
+let openManagerUrl: string | undefined;
 
 export function startListening(): void {
     if (listenerCount === 0) {
