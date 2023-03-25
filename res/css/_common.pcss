@@ -457,7 +457,7 @@ legend {
     text-align: center;
 }
 .mx_Dialog_header.mx_Dialog_headerWithCancel {
-   display:flex
+    padding-right: 20px; /* leave space for the 'X' cancel button */
 }
 
 .mx_Dialog_title.danger {
@@ -465,35 +465,35 @@ legend {
 }
 
 @define-mixin customisedCancelButton {
-    mask: url("$(res)/img/cancel.svg");
-    mask-repeat: no-repeat;
-    mask-position: center;
-    mask-size: cover;
-    background-color: $dialog-close-fg-color;
+    background-image: url("$(res)/img/cancel.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     cursor: pointer;
     position: unset;
     width: unset;
     height: unset;
 }
 
-.mx_Dialog_cancelButton_wrapper {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    cursor: pointer;
-    padding: 10px;
-}
-
-.mx_Dialog_cancelButton_wrapper:hover {
-  border: 1px solid #9fa9ba;
-  border-radius:5px;
-}
-
 .mx_Dialog_cancelButton {
     @mixin customisedCancelButton;
-    width: 20px;
-    height: 20px;
+    position: relative;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 10px;
+    right: 0;
 }
+
+.mx_Dialog_cancelButton::before{
+    content: "";
+    position: absolute;
+    height: 50px;
+    right: -5px;
+    bottom: -5px;
+    left: -20px;
+}
+
 
 .mx_Dialog_content {
     margin: 24px 0 68px;
