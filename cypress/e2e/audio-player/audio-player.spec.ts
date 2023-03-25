@@ -330,10 +330,10 @@ describe("Audio player", () => {
 
                 cy.get(".mx_EventTile_last .mx_MAudioBody").should("be.visible");
                 cy.get(".mx_EventTile_last").percySnapshotElement(
-                    `"EventTile of audio player with a reply on ${layout} layout"`,
+                    `EventTile of audio player with a reply on ${layout} layout`,
                     { percyCSS },
                 );
-                cy.log(`"Took a snapshot of EventTile of audio player with a reply on ${layout} layout"`);
+                cy.log(`Took a snapshot of EventTile of audio player with a reply on ${layout} layout`);
             };
 
             // Take a snapshot of EventTile with a reply on group layout
@@ -435,10 +435,10 @@ describe("Audio player", () => {
 
                 cy.get(".mx_EventTile_last .mx_ReplyChain").should("be.visible");
                 cy.get(".mx_EventTile_last").percySnapshotElement(
-                    `"EventTile of audio player with ReplyChain on ${layout} layout"`,
+                    `EventTile of audio player with ReplyChain on ${layout} layout`,
                     { percyCSS },
                 );
-                cy.log(`"Took a snapshot of EventTile of audio player with ReplyChain on ${layout} layout"`);
+                cy.log(`Took a snapshot of EventTile of audio player with ReplyChain on ${layout} layout`);
             };
 
             // Take a snapshot of EventTile with ReplyChain on group layout
@@ -462,11 +462,11 @@ describe("Audio player", () => {
                 cy.get(".mx_EventTile.mx_EventTile_selected .mx_MAudioBody").should("be.visible");
             });
 
-            cy.get(".mx_MainSplit").percySnapshotElement(`"Narrow main timeline with ThreadView on ${layout} layout"`, {
+            cy.get(".mx_MainSplit").percySnapshotElement(`Narrow main timeline with ThreadView on ${layout} layout`, {
                 percyCSS,
                 widths: [600], // magic number
             });
-            cy.log(`"Took a snapshot of Narrow main timeline with ThreadView on ${layout} layout"`);
+            cy.log(`Took a snapshot of Narrow main timeline with ThreadView on ${layout} layout`);
         };
 
         visitRoom();
