@@ -75,9 +75,12 @@ describe("Timeline", () => {
     let oldAvatarUrl: string;
     let newAvatarUrl: string;
 
-    // View the room with a specified layout, waiting for confirmation message
+    /**
+     * Visit a room in the given layout.
+     * @param layout The layout name in which the room is opened. The name
+     * must be either IRC, Group, or Bubble.
+     */
     const viewRoomByLayout = (layout: string) => {
-        // Select the layout of the room which should be visited
         if (layout == "IRC") {
             // Enable IRC layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
