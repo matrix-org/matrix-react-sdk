@@ -857,6 +857,8 @@ describe("Timeline", () => {
             cy.get(".mx_EventTile_last[data-layout='irc'] .mx_ReplyChain").should("have.css", "margin", "0px");
 
             // Take a snapshot on IRC layout
+            // Note that because zero margin is applied to mx_ReplyChain, the left borders of two mx_ReplyChain
+            // components may seem to be connected to one.
             cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on IRC layout", {
                 percyCSS,
             });
