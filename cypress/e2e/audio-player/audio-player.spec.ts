@@ -77,6 +77,15 @@ describe("Audio player", () => {
         });
     };
 
+    // Check that the audio player is rendered and its button becomes visible
+    const checkPlayerVisibility = () => {
+        // Assert that the player is visible
+        cy.get(".mx_MAudioBody").should("be.visible");
+
+        // Assert that rendering of it settled and the play button is visible
+        cy.get(".mx_MAudioBody [data-testid='play-pause-button'][aria-label='Play']").should("be.visible");
+    };
+
     /**
      * Take snapshots on modern and bubble layouts, outputting log for reference/debugging.
      * Note that this does not take snapshot of players on IRC layout to keep the number of
@@ -96,7 +105,7 @@ describe("Audio player", () => {
         cy.get(`${wrapper}.mx_EventTile_last[data-layout='group'] .mx_MessageTimestamp`).click();
 
         // Assert that rendering of the player settled and the play button is visible before taking a snapshot
-        cy.get(`${wrapper}.mx_MAudioBody [data-testid='play-pause-button'][aria-label='Play']`).should("be.visible");
+        checkPlayerVisibility();
 
         // Take a snapshot on group layout
         cy.get(`${wrapper}.mx_MAudioBody`).percySnapshotElement(detail + " on group layout", {
@@ -112,8 +121,7 @@ describe("Audio player", () => {
         // Click the timestamp to highlight the event tile in case it is not visible after changing the layout
         cy.get(`${wrapper}.mx_EventTile_last[data-layout='bubble'] .mx_MessageTimestamp`).click();
 
-        // Assert that rendering of the player settled and the play button is visible before taking a snapshot
-        cy.get(`${wrapper}.mx_MAudioBody [data-testid='play-pause-button'][aria-label='Play']`).should("be.visible");
+        checkPlayerVisibility();
 
         // Take a snapshot on bubble layout
         cy.get(`${wrapper}.mx_MAudioBody`).percySnapshotElement(detail + " on bubble layout", {
@@ -251,8 +259,7 @@ describe("Audio player", () => {
 
         cy.get(".mx_RoomView_MessageList").within(() => {
             // Click the timestamp to highlight the event tile on which player is rendered
-            cy.get(".mx_EventTile .mx_MessageTimestamp").click();
-            cy.get(".mx_EventTile.mx_EventTile_selected .mx_MAudioBody").should("be.visible");
+            cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
 
             // Take snapshots (high contrast, light theme only)
             takeSnapshots("", "Audio player (high contrast)");
@@ -357,11 +364,7 @@ describe("Audio player", () => {
                 cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
 
                 cy.get(".mx_EventTile_last.mx_EventTile_selected").within(() => {
-                    // Assert that the audio player is visible
-                    cy.get(".mx_MAudioBody").should("be.visible");
-
-                    // Assert that rendering of it settled and the play button is visible before taking a snapshot
-                    cy.get(".mx_MAudioBody [data-testid='play-pause-button'][aria-label='Play']").should("be.visible");
+                    checkPlayerVisibility();
                 });
 
                 cy.get(".mx_EventTile_last").percySnapshotElement(
@@ -473,11 +476,7 @@ describe("Audio player", () => {
                 cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
 
                 cy.get(".mx_EventTile_last.mx_EventTile_selected").within(() => {
-                    // Assert that the audio player is visible
-                    cy.get(".mx_MAudioBody").should("be.visible");
-
-                    // Assert that rendering of it settled and the play button is visible before taking a snapshot
-                    cy.get(".mx_MAudioBody [data-testid='play-pause-button'][aria-label='Play']").should("be.visible");
+                    checkPlayerVisibility();
                 });
 
                 cy.get(".mx_EventTile_last .mx_ReplyChain").should("be.visible");
@@ -508,11 +507,7 @@ describe("Audio player", () => {
                 cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
 
                 cy.get(".mx_EventTile_last.mx_EventTile_selected").within(() => {
-                    // Assert that the audio player is visible
-                    cy.get(".mx_MAudioBody").should("be.visible");
-
-                    // Assert that rendering of it settled and the play button is visible before taking a snapshot
-                    cy.get(".mx_MAudioBody [data-testid='play-pause-button'][aria-label='Play']").should("be.visible");
+                    checkPlayerVisibility();
                 });
             });
 
@@ -532,12 +527,8 @@ describe("Audio player", () => {
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
 
         cy.get(".mx_RoomView_body .mx_RoomView_MessageList").within(() => {
-            // Assert the audio player is rendered
-            cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
-
             // Click the timestamp to highlight the event tile on which player is rendered
             cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
-            cy.get(".mx_EventTile.mx_EventTile_selected .mx_MAudioBody").should("be.visible");
 
             cy.get(".mx_EventTile_last")
                 .realHover()
@@ -567,14 +558,6 @@ describe("Audio player", () => {
 
             // Click the timestamp to highlight the event tile on which player is rendered
             cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
-
-            cy.get(".mx_EventTile_last.mx_EventTile_selected").within(() => {
-                // Assert that the audio player is visible
-                cy.get(".mx_MAudioBody").should("be.visible");
-
-                // Assert that rendering of it settled and the play button is visible before taking a snapshot
-                cy.get(".mx_MAudioBody [data-testid='play-pause-button'][aria-label='Play']").should("be.visible");
-            });
         });
 
         // Take snapshots of audio player on a thread
