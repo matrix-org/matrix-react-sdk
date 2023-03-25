@@ -143,7 +143,10 @@ describe("Audio player", () => {
         cy.stopHomeserver(homeserver);
     });
 
-    it("should be correctly rendered on each layout", () => {
+    it("should be correctly rendered on IRC layout", () => {
+        // Check the audio player's design on IRC layout here. Please note that takeSnapshots() is not to be used here
+        // as it does not take snapshots on IRC layout. The design of it should be same as on modern layout.
+
         visitRoom();
 
         // Upload one second audio file with a long file name
@@ -155,8 +158,6 @@ describe("Audio player", () => {
         cy.get(".mx_RoomView_MessageList").within(() => {
             checkPlayerFilenameLong();
 
-            // Check audio player on IRC layout here.
-            // The design of the player for IRC layout should be same as for modern layout
             // Enable IRC layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
 
@@ -173,6 +174,20 @@ describe("Audio player", () => {
                 widths: [267],
             });
             cy.log("Took a snapshot of Audio player (light theme) on IRC layout");
+        });
+    });
+
+    it("should be correctly rendered on modern and bubble layouts", () => {
+        visitRoom();
+
+        // Upload one second audio file with a long file name
+        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
+
+        // Scroll to the bottom to make the audio player visible for Percy tests
+        cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
+
+        cy.get(".mx_RoomView_MessageList").within(() => {
+            checkPlayerFilenameLong();
 
             // Reset to the default layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
