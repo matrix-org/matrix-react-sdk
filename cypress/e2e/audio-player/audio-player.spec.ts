@@ -99,11 +99,9 @@ describe("Audio player", () => {
         cy.get(`${wrapper}.mx_MAudioBody [data-testid='play-pause-button'][aria-label='Play']`).should("be.visible");
 
         // Take a snapshot on group layout
-        // 243 + 12px + 12px = 267px
-        // See _MediaBody.pcss and _AudioPlayer.pcss for spacing
         cy.get(`${wrapper}.mx_MAudioBody`).percySnapshotElement(detail + " on group layout", {
             percyCSS,
-            widths: [267],
+            widths: [267], // 243 + 12px + 12px = 267px. See _MediaBody.pcss and _AudioPlayer.pcss for spacing
         });
 
         cy.log("Took a snapshot of " + detail + " on group layout");
@@ -118,11 +116,9 @@ describe("Audio player", () => {
         cy.get(`${wrapper}.mx_MAudioBody [data-testid='play-pause-button'][aria-label='Play']`).should("be.visible");
 
         // Take a snapshot on bubble layout
-        // 243px + 12px + 48px = 303px
-        // See _EventBubbleTile.pcss and _AudioPlayer.pcss for spacing
         cy.get(`${wrapper}.mx_MAudioBody`).percySnapshotElement(detail + " on bubble layout", {
             percyCSS,
-            widths: [303],
+            widths: [303], // 243px + 12px + 48px = 303px. See _EventBubbleTile.pcss and _AudioPlayer.pcss for spacing
         });
 
         cy.log("Took a snapshot of " + detail + " on bubble layout");
@@ -172,11 +168,9 @@ describe("Audio player", () => {
             // Assert that rendering of the player settled and the play button is visible before taking a snapshot
             cy.get(".mx_MAudioBody [data-testid='play-pause-button'][aria-label='Play']").should("be.visible");
 
-            // 243 + 12px + 12px = 267px
-            // See _MediaBody.pcss and _AudioPlayer.pcss for spacing
             cy.get(".mx_MAudioBody").percySnapshotElement("Audio player (light theme) on IRC layout", {
                 percyCSS,
-                widths: [267],
+                widths: [267], // 243 + 12px + 12px = 267px. See _MediaBody.pcss and _AudioPlayer.pcss for spacing
             });
 
             // Output a log for reference/debugging
