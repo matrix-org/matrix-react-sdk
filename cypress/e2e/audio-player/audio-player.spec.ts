@@ -183,7 +183,7 @@ describe("Audio player", () => {
         });
     });
 
-    it("should render player on high contrast theme", () => {
+    it("should be correctly rendered on high contrast theme", () => {
         visitRoom();
 
         // Upload one second audio file with a long file name
