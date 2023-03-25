@@ -355,9 +355,15 @@ describe("Audio player", () => {
             const takeSnapshotReply = (layout: string) => {
                 // Click the timestamp to highlight the event tile on which player is rendered
                 cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
-                cy.get(".mx_EventTile.mx_EventTile_selected .mx_MAudioBody").should("be.visible");
 
-                cy.get(".mx_EventTile_last .mx_MAudioBody").should("be.visible");
+                cy.get(".mx_EventTile_last.mx_EventTile_selected").within(() => {
+                    // Assert that the audio player is visible
+                    cy.get(".mx_MAudioBody").should("be.visible");
+
+                    // Assert that rendering of it settled and the play button is visible before taking a snapshot
+                    cy.get(".mx_MAudioBody [data-testid='play-pause-button'][aria-label='Play']").should("be.visible");
+                });
+
                 cy.get(".mx_EventTile_last").percySnapshotElement(
                     `EventTile of audio player with a reply on ${layout} layout`,
                     { percyCSS },
@@ -465,7 +471,14 @@ describe("Audio player", () => {
             const takeSnapshotReplyChain = (layout: string) => {
                 // Click the timestamp to highlight the event tile on which player is rendered
                 cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
-                cy.get(".mx_EventTile.mx_EventTile_selected .mx_MAudioBody").should("be.visible");
+
+                cy.get(".mx_EventTile_last.mx_EventTile_selected").within(() => {
+                    // Assert that the audio player is visible
+                    cy.get(".mx_MAudioBody").should("be.visible");
+
+                    // Assert that rendering of it settled and the play button is visible before taking a snapshot
+                    cy.get(".mx_MAudioBody [data-testid='play-pause-button'][aria-label='Play']").should("be.visible");
+                });
 
                 cy.get(".mx_EventTile_last .mx_ReplyChain").should("be.visible");
                 cy.get(".mx_EventTile_last").percySnapshotElement(
@@ -491,12 +504,14 @@ describe("Audio player", () => {
                 // Scroll to the bottom to make the audio player visible for Percy tests
                 cy.get(".mx_ScrollPanel").scrollTo("bottom");
 
-                cy.get(".mx_EventTile_last").should("be.visible").within(() => {
-                    // Click the timestamp to ensure the event tile with the player is visible
-                    cy.get(".mx_MessageTimestamp").click();
+                // Click the timestamp to highlight the event tile on which player is rendered
+                cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
 
-                    // Assert that rendering of the player settled and the play button is visible
-                    // before taking a snapshot
+                cy.get(".mx_EventTile_last.mx_EventTile_selected").within(() => {
+                    // Assert that the audio player is visible
+                    cy.get(".mx_MAudioBody").should("be.visible");
+
+                    // Assert that rendering of it settled and the play button is visible before taking a snapshot
                     cy.get(".mx_MAudioBody [data-testid='play-pause-button'][aria-label='Play']").should("be.visible");
                 });
             });
@@ -550,12 +565,14 @@ describe("Audio player", () => {
             // Scroll to the bottom to make the audio player visible for Percy tests
             cy.get(".mx_ScrollPanel").scrollTo("bottom");
 
-            cy.get(".mx_EventTile_last").should("be.visible").within(() => {
-                // Click the timestamp to ensure the event tile with the player is visible
-                cy.get(".mx_MessageTimestamp").click();
+            // Click the timestamp to highlight the event tile on which player is rendered
+            cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
 
-                // Assert that rendering of the player settled and the play button is visible
-                // before taking a snapshot
+            cy.get(".mx_EventTile_last.mx_EventTile_selected").within(() => {
+                // Assert that the audio player is visible
+                cy.get(".mx_MAudioBody").should("be.visible");
+
+                // Assert that rendering of it settled and the play button is visible before taking a snapshot
                 cy.get(".mx_MAudioBody [data-testid='play-pause-button'][aria-label='Play']").should("be.visible");
             });
         });
