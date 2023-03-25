@@ -346,7 +346,12 @@ describe("Audio player", () => {
         });
     });
 
-    it("should create ReplyChain with multiple audio files", () => {
+    it("should support creating a reply chain with multiple audio files", () => {
+        // Note: "mx_ReplyChain" element is used not only for replies which
+        // create a reply chain, but also for a single reply without a replied
+        // message. This test checks whether a reply chain which consists of
+        // multiple audio file replies is rendered properly.
+
         const clickButtonReply = () => {
             cy.get(".mx_EventTile_last")
                 .realHover()
@@ -393,7 +398,7 @@ describe("Audio player", () => {
 
         cy.get(".mx_RoomView_MessageList").within(() => {
             cy.get(".mx_EventTile_last").within(() => {
-                // Assert that there are two "mx_ReplyChain"
+                // Assert that there are two "mx_ReplyChain" elements
                 cy.get(".mx_ReplyChain").should("have.length", 2);
 
                 // Assert that one line contains the user name
