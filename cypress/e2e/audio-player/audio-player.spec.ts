@@ -77,8 +77,13 @@ describe("Audio player", () => {
         });
     };
 
-    // Take snapshots in modern and bubble layout, outputting log for reference/debugging
-    // We don't test IRC layout, since it should be the same as group layout.
+    /**
+     * Take snapshots on modern and bubble layouts, outputting log for reference/debugging.
+     * Note that this does not take snapshot of players on IRC layout to keep the number of
+     * taking snapshots as low as possible.
+     * @param wrapper The className of the element which includes mx_EventTile_last for the player.
+     * @param detail The Percy snapshot name. Used for outputting logs too.
+     */
     const takeSnapshots = (wrapper: string, detail: string) => {
         // Check the status of the seek bar
         // TODO: check if visible - currently visibility check on a narrow timeline causes an error
@@ -144,8 +149,8 @@ describe("Audio player", () => {
     });
 
     it("should be correctly rendered on IRC layout", () => {
-        // Check the audio player's design on IRC layout here. Please note that takeSnapshots() is not to be used here
-        // as it does not take snapshots on IRC layout. The design of it should be same as on modern layout.
+        // Please note that takeSnapshots() is not to be used here since it does not take snapshots on IRC layout.
+        // The design of it should be same as on modern layout.
 
         visitRoom();
 
@@ -173,6 +178,8 @@ describe("Audio player", () => {
                 percyCSS,
                 widths: [267],
             });
+
+            // Output a log for reference/debugging
             cy.log("Took a snapshot of Audio player (light theme) on IRC layout");
         });
     });
