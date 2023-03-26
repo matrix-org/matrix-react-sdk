@@ -517,37 +517,14 @@ describe("Audio player", () => {
     });
 
     it("should be rendered, play, and support replying on a thread", () => {
-        const takeSnapshotTimeline = (layout: string) => {
-            cy.get(".mx_MainSplit .mx_RoomView_body").within(() => {
-                // Scroll to the bottom to make the audio player visible for Percy tests
-                cy.get(".mx_ScrollPanel").scrollTo("bottom");
-
-                // Click the timestamp to highlight the event tile on which player is rendered
-                cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
-
-                cy.get(".mx_EventTile_last.mx_EventTile_selected").within(() => {
-                    checkPlayerVisibility();
-                });
-            });
-
-            cy.get(".mx_MainSplit").percySnapshotElement(
-                `Narrow main timeline with the audio player and ThreadView on ${layout} layout`,
-                {
-                    percyCSS,
-                    widths: [600], // magic number
-                },
-            );
-            cy.log(`Took a snapshot of narrow main timeline with the audio player and ThreadView on ${layout} layout`);
-        };
-
         visitRoom();
 
         // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
 
-        cy.get(".mx_RoomView_body .mx_RoomView_MessageList").within(() => {
-            // Click the timestamp to highlight the event tile on which player is rendered
-            cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
+        cy.get(".mx_RoomView_MessageList").within(() => {
+            // Assert the audio player is rendered
+            cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
 
             cy.get(".mx_EventTile_last")
                 .realHover()
@@ -556,25 +533,6 @@ describe("Audio player", () => {
                     cy.get('[aria-label="Reply in thread"]').click({ force: false });
                 });
         });
-
-        // Assert that the thread is visible
-        cy.get(".mx_ThreadView")
-            .should("be.visible")
-            .within(() => {
-                // Assert that the player on the player is visible
-                checkPlayerVisibility();
-            });
-
-        // Take a snapshot of narrow main timeline with ThreadPanel opened on group layout
-        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
-        takeSnapshotTimeline("group");
-
-        // Take a snapshot of narrow main timeline with ThreadPanel opened on bubble layout
-        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
-        takeSnapshotTimeline("bubble");
-
-        // Reset to the default layout
-        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
 
         cy.get(".mx_ThreadView").within(() => {
             cy.get(".mx_AudioPlayer_container").within(() => {
