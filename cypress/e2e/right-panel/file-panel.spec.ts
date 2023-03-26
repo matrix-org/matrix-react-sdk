@@ -97,7 +97,7 @@ describe("FilePanel", () => {
             cy.get(".mx_FilePanel").within(() => {
                 cy.get(".mx_RoomView_MessageList").within(() => {
                     // Assert that data-layout attribute is not applied to file tiles on the panel
-                    cy.get(".mx_EventTile[data-layout='group']").should("not.exist");
+                    cy.get(".mx_EventTile[data-layout]").should("not.exist");
 
                     // Assert that all of the file tiles are rendered
                     cy.get(".mx_EventTile").should("have.length", 3);
