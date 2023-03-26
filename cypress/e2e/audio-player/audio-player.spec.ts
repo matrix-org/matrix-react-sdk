@@ -251,8 +251,7 @@ describe("Audio player", () => {
                 });
             });
 
-        // Close the user settings dialog
-        cy.get("[aria-label='Close dialog']").click();
+        cy.closeDialog();
 
         // Scroll to the bottom to make the audio player visible for Percy tests
         cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
