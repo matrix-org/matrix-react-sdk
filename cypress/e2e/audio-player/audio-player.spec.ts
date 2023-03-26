@@ -496,7 +496,7 @@ describe("Audio player", () => {
         });
     });
 
-    it("should render, play, and reply on a thread", () => {
+    it("should be rendered, play, and support replying on a thread", () => {
         const takeSnapshotTimeline = (layout: string) => {
             cy.get(".mx_MainSplit .mx_RoomView_body").within(() => {
                 // Scroll to the bottom to make the audio player visible for Percy tests
@@ -538,7 +538,12 @@ describe("Audio player", () => {
         });
 
         // Assert that the thread is visible
-        cy.get(".mx_ThreadView").should("be.visible");
+        cy.get(".mx_ThreadView")
+            .should("be.visible")
+            .within(() => {
+                // Assert that the player on the player is visible
+                checkPlayerVisibility();
+            });
 
         // Take a snapshot of narrow main timeline with ThreadPanel opened on group layout
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
