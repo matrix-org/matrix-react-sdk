@@ -87,6 +87,20 @@ describe("Audio player", () => {
     };
 
     /**
+     * Define snapshot widths for various scenarios.
+     *
+     * 267: 243px + 12px + 12px = 267px. Refer _MediaBody.pcss and _AudioPlayer.pcss
+     * 133: 267px / 2 = 133.5px
+     * 303: 243px + 12px + 48px = 303px. Refer _EventBubbleTile.pcss and _AudioPlayer.pcss
+     * 151: 303px / 2 = 151.5px
+     * 1024 and 1920: default values specified on .percy.yml
+     */
+    const snapshotWidthsGroup = [133, 267];
+    const snapshotWidthsIRC = snapshotWidthsGroup;
+    const snapshotWidthsBubble = [151, 303];
+    const snapshotWidthsEventTile = [133, 151, 267, 303, 1024, 1920];
+
+    /**
      * Take snapshots on modern and bubble layouts, outputting log for reference/debugging.
      * Note that this does not take snapshot of players on IRC layout to keep the number of
      * taking snapshots as low as possible.
@@ -109,7 +123,7 @@ describe("Audio player", () => {
         // Take a snapshot on group layout
         cy.get(".mx_MAudioBody").percySnapshotElement(detail + " on group layout", {
             percyCSS,
-            widths: [133, 267], // 243 + 12px + 12px = 267px. See _MediaBody.pcss and _AudioPlayer.pcss for spacing
+            widths: snapshotWidthsGroup,
         });
 
         cy.log("Took a snapshot of " + detail + " on group layout");
@@ -126,7 +140,7 @@ describe("Audio player", () => {
         cy.get(".mx_MAudioBody").percySnapshotElement(detail + " on bubble layout", {
             percyCSS,
             // 243px + 12px + 48px = 303px. See _EventBubbleTile.pcss and _AudioPlayer.pcss for spacing
-            widths: [151, 303],
+            widths: snapshotWidthsBubble,
         });
 
         cy.log("Took a snapshot of " + detail + " on bubble layout");
@@ -178,7 +192,7 @@ describe("Audio player", () => {
 
             cy.get(".mx_MAudioBody").percySnapshotElement("Audio player (light theme) on IRC layout", {
                 percyCSS,
-                widths: [133, 267], // 243 + 12px + 12px = 267px. See _MediaBody.pcss and _AudioPlayer.pcss for spacing
+                widths: snapshotWidthsIRC,
             });
 
             // Output a log for reference/debugging
@@ -368,7 +382,10 @@ describe("Audio player", () => {
 
                 cy.get(".mx_EventTile_last").percySnapshotElement(
                     `Selected EventTile of audio player with a reply on ${layout} layout`,
-                    { percyCSS },
+                    {
+                        percyCSS,
+                        widths: snapshotWidthsEventTile,
+                    },
                 );
                 cy.log(`Took a snapshot of selected EventTile of audio player with a reply on ${layout} layout`);
             };
@@ -481,7 +498,10 @@ describe("Audio player", () => {
                 cy.get(".mx_EventTile_last .mx_ReplyChain").should("be.visible");
                 cy.get(".mx_EventTile_last").percySnapshotElement(
                     `Selected EventTile of audio player with ReplyChain on ${layout} layout`,
-                    { percyCSS },
+                    {
+                        percyCSS,
+                        widths: snapshotWidthsEventTile,
+                    },
                 );
                 cy.log(`Took a snapshot of selected EventTile of audio player with ReplyChain on ${layout} layout`);
             };
