@@ -368,10 +368,10 @@ describe("Audio player", () => {
                 });
 
                 cy.get(".mx_EventTile_last").percySnapshotElement(
-                    `EventTile of audio player with a reply on ${layout} layout`,
+                    `Selected EventTile of audio player with a reply on ${layout} layout`,
                     { percyCSS },
                 );
-                cy.log(`Took a snapshot of EventTile of audio player with a reply on ${layout} layout`);
+                cy.log(`Took a snapshot of selected EventTile of audio player with a reply on ${layout} layout`);
             };
 
             // Take a snapshot of EventTile with a reply on group layout
@@ -481,10 +481,10 @@ describe("Audio player", () => {
 
                 cy.get(".mx_EventTile_last .mx_ReplyChain").should("be.visible");
                 cy.get(".mx_EventTile_last").percySnapshotElement(
-                    `EventTile of audio player with ReplyChain on ${layout} layout`,
+                    `Selected EventTile of audio player with ReplyChain on ${layout} layout`,
                     { percyCSS },
                 );
-                cy.log(`Took a snapshot of EventTile of audio player with ReplyChain on ${layout} layout`);
+                cy.log(`Took a snapshot of selected EventTile of audio player with ReplyChain on ${layout} layout`);
             };
 
             // Take a snapshot of EventTile with ReplyChain on group layout
