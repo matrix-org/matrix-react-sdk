@@ -203,8 +203,8 @@ Chrome and Edge. Each `percySnapshot` actually creates 8 screenshots (4
 browsers, 2 sizes). Since we have a limited budget for Percy screenshots, by
 default we only run Percy once per day against the `develop` branch, based on a
 nightly build at approximately 04:00 UTC every day. (The schedule is defined in
-[element-web.yaml](.github/workflows/element-web.yaml) and the Percy tests are
-enabled/disabled in [cypress.yaml](.github/workflows/cypress.yaml).)
+[element-web.yaml](../.github/workflows/element-web.yaml) and the Percy tests are
+enabled/disabled in [cypress.yaml](../.github/workflows/cypress.yaml).)
 
 If your pull request makes visual changes, you are encouraged to request Percy
 to run by adding the label `X-Needs-Percy` to the PR. This will help us find any
