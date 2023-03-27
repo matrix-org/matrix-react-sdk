@@ -21,7 +21,6 @@ exports[`<DecryptionFailureBar /> Displays a general error message if there are 
     </div>
     <div
       class="mx_DecryptionFailureBar_start_headline"
-      data-testid="decryption-failure-bar-headline-error"
     >
       Some messages could not be decrypted
     </div>
@@ -32,7 +31,7 @@ exports[`<DecryptionFailureBar /> Displays a general error message if there are 
     </div>
   </div>
   <div
-    class="mx_DecryptionFailureBar_end--buttons"
+    class="mx_DecryptionFailureBar_end"
   />
 </div>
 `;
@@ -65,7 +64,6 @@ exports[`<DecryptionFailureBar /> Displays a loading spinner 1`] = `
     </div>
     <div
       class="mx_DecryptionFailureBar_start_headline"
-      data-testid="decryption-failure-bar-headline-waiting"
     >
       Decrypting messages…
     </div>
@@ -76,14 +74,14 @@ exports[`<DecryptionFailureBar /> Displays a loading spinner 1`] = `
     </div>
   </div>
   <div
-    class="mx_DecryptionFailureBar_end--buttons"
+    class="mx_DecryptionFailureBar_end"
   />
 </div>
 `;
 
 exports[`<DecryptionFailureBar /> Displays button to resend key requests if we are verified 1`] = `
 <div
-  class="mx_DecryptionFailureBar"
+  class="mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd"
 >
   <div
     class="mx_DecryptionFailureBar_start"
@@ -102,7 +100,6 @@ exports[`<DecryptionFailureBar /> Displays button to resend key requests if we a
     </div>
     <div
       class="mx_DecryptionFailureBar_start_headline"
-      data-testid="decryption-failure-bar-headline-devicelist"
     >
       Open another device to load encrypted messages
     </div>
@@ -113,21 +110,19 @@ exports[`<DecryptionFailureBar /> Displays button to resend key requests if we a
     </div>
   </div>
   <div
-    class="mx_DecryptionFailureBar_end--buttons"
+    class="mx_DecryptionFailureBar_end"
   >
     <div
-      class="mx_AccessibleButton mx_DecryptionFailureBar_end--buttons_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+      class="mx_AccessibleButton mx_DecryptionFailureBar_end_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
       data-testid="decryption-failure-bar-button"
-      data-testid-button="decryption-failure-bar-button-devicelist"
       role="button"
       tabindex="0"
     >
       View your device list
     </div>
     <div
-      class="mx_AccessibleButton mx_DecryptionFailureBar_end--buttons_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+      class="mx_AccessibleButton mx_DecryptionFailureBar_end_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
       data-testid="decryption-failure-bar-button"
-      data-testid-button="decryption-failure-bar-button-resend"
       role="button"
       tabindex="0"
     >
@@ -139,7 +134,7 @@ exports[`<DecryptionFailureBar /> Displays button to resend key requests if we a
 
 exports[`<DecryptionFailureBar /> Displays button to resend key requests if we are verified 2`] = `
 <div
-  class="mx_DecryptionFailureBar"
+  class="mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd"
 >
   <div
     class="mx_DecryptionFailureBar_start"
@@ -158,7 +153,6 @@ exports[`<DecryptionFailureBar /> Displays button to resend key requests if we a
     </div>
     <div
       class="mx_DecryptionFailureBar_start_headline"
-      data-testid="decryption-failure-bar-headline-devicelist"
     >
       Open another device to load encrypted messages
     </div>
@@ -169,12 +163,11 @@ exports[`<DecryptionFailureBar /> Displays button to resend key requests if we a
     </div>
   </div>
   <div
-    class="mx_DecryptionFailureBar_end--buttons"
+    class="mx_DecryptionFailureBar_end"
   >
     <div
-      class="mx_AccessibleButton mx_DecryptionFailureBar_end--buttons_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+      class="mx_AccessibleButton mx_DecryptionFailureBar_end_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
       data-testid="decryption-failure-bar-button"
-      data-testid-button="decryption-failure-bar-button-devicelist"
       role="button"
       tabindex="0"
     >
@@ -186,7 +179,7 @@ exports[`<DecryptionFailureBar /> Displays button to resend key requests if we a
 
 exports[`<DecryptionFailureBar /> Displays the button to resend key requests only if there are sessions we haven't already requested 1`] = `
 <div
-  class="mx_DecryptionFailureBar"
+  class="mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd"
 >
   <div
     class="mx_DecryptionFailureBar_start"
@@ -205,7 +198,6 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
     </div>
     <div
       class="mx_DecryptionFailureBar_start_headline"
-      data-testid="decryption-failure-bar-headline-devicelist"
     >
       Open another device to load encrypted messages
     </div>
@@ -216,21 +208,19 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
     </div>
   </div>
   <div
-    class="mx_DecryptionFailureBar_end--buttons"
+    class="mx_DecryptionFailureBar_end"
   >
     <div
-      class="mx_AccessibleButton mx_DecryptionFailureBar_end--buttons_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+      class="mx_AccessibleButton mx_DecryptionFailureBar_end_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
       data-testid="decryption-failure-bar-button"
-      data-testid-button="decryption-failure-bar-button-devicelist"
       role="button"
       tabindex="0"
     >
       View your device list
     </div>
     <div
-      class="mx_AccessibleButton mx_DecryptionFailureBar_end--buttons_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+      class="mx_AccessibleButton mx_DecryptionFailureBar_end_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
       data-testid="decryption-failure-bar-button"
-      data-testid-button="decryption-failure-bar-button-resend"
       role="button"
       tabindex="0"
     >
@@ -242,7 +232,7 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
 
 exports[`<DecryptionFailureBar /> Displays the button to resend key requests only if there are sessions we haven't already requested 2`] = `
 <div
-  class="mx_DecryptionFailureBar"
+  class="mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd"
 >
   <div
     class="mx_DecryptionFailureBar_start"
@@ -261,7 +251,6 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
     </div>
     <div
       class="mx_DecryptionFailureBar_start_headline"
-      data-testid="decryption-failure-bar-headline-devicelist"
     >
       Open another device to load encrypted messages
     </div>
@@ -272,12 +261,11 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
     </div>
   </div>
   <div
-    class="mx_DecryptionFailureBar_end--buttons"
+    class="mx_DecryptionFailureBar_end"
   >
     <div
-      class="mx_AccessibleButton mx_DecryptionFailureBar_end--buttons_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+      class="mx_AccessibleButton mx_DecryptionFailureBar_end_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
       data-testid="decryption-failure-bar-button"
-      data-testid-button="decryption-failure-bar-button-devicelist"
       role="button"
       tabindex="0"
     >
@@ -289,7 +277,7 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
 
 exports[`<DecryptionFailureBar /> Displays the button to resend key requests only if there are sessions we haven't already requested 3`] = `
 <div
-  class="mx_DecryptionFailureBar"
+  class="mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd"
 >
   <div
     class="mx_DecryptionFailureBar_start"
@@ -308,7 +296,6 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
     </div>
     <div
       class="mx_DecryptionFailureBar_start_headline"
-      data-testid="decryption-failure-bar-headline-devicelist"
     >
       Open another device to load encrypted messages
     </div>
@@ -319,21 +306,19 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
     </div>
   </div>
   <div
-    class="mx_DecryptionFailureBar_end--buttons"
+    class="mx_DecryptionFailureBar_end"
   >
     <div
-      class="mx_AccessibleButton mx_DecryptionFailureBar_end--buttons_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+      class="mx_AccessibleButton mx_DecryptionFailureBar_end_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
       data-testid="decryption-failure-bar-button"
-      data-testid-button="decryption-failure-bar-button-devicelist"
       role="button"
       tabindex="0"
     >
       View your device list
     </div>
     <div
-      class="mx_AccessibleButton mx_DecryptionFailureBar_end--buttons_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+      class="mx_AccessibleButton mx_DecryptionFailureBar_end_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
       data-testid="decryption-failure-bar-button"
-      data-testid-button="decryption-failure-bar-button-resend"
       role="button"
       tabindex="0"
     >
@@ -345,7 +330,7 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
 
 exports[`<DecryptionFailureBar /> Displays the button to resend key requests only if there are sessions we haven't already requested 4`] = `
 <div
-  class="mx_DecryptionFailureBar"
+  class="mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd"
 >
   <div
     class="mx_DecryptionFailureBar_start"
@@ -364,7 +349,6 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
     </div>
     <div
       class="mx_DecryptionFailureBar_start_headline"
-      data-testid="decryption-failure-bar-headline-devicelist"
     >
       Open another device to load encrypted messages
     </div>
@@ -375,12 +359,11 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
     </div>
   </div>
   <div
-    class="mx_DecryptionFailureBar_end--buttons"
+    class="mx_DecryptionFailureBar_end"
   >
     <div
-      class="mx_AccessibleButton mx_DecryptionFailureBar_end--buttons_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+      class="mx_AccessibleButton mx_DecryptionFailureBar_end_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
       data-testid="decryption-failure-bar-button"
-      data-testid-button="decryption-failure-bar-button-devicelist"
       role="button"
       tabindex="0"
     >
@@ -392,7 +375,7 @@ exports[`<DecryptionFailureBar /> Displays the button to resend key requests onl
 
 exports[`<DecryptionFailureBar /> Does not display a button to send key requests if we are unverified 1`] = `
 <div
-  class="mx_DecryptionFailureBar"
+  class="mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd"
 >
   <div
     class="mx_DecryptionFailureBar_start"
@@ -411,7 +394,6 @@ exports[`<DecryptionFailureBar /> Does not display a button to send key requests
     </div>
     <div
       class="mx_DecryptionFailureBar_start_headline"
-      data-testid="decryption-failure-bar-headline-verify"
     >
       Verify this device to access all messages
     </div>
@@ -422,12 +404,11 @@ exports[`<DecryptionFailureBar /> Does not display a button to send key requests
     </div>
   </div>
   <div
-    class="mx_DecryptionFailureBar_end--buttons"
+    class="mx_DecryptionFailureBar_end"
   >
     <div
-      class="mx_AccessibleButton mx_DecryptionFailureBar_end--buttons_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+      class="mx_AccessibleButton mx_DecryptionFailureBar_end_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
       data-testid="decryption-failure-bar-button"
-      data-testid-button="decryption-failure-bar-button-verify"
       role="button"
       tabindex="0"
     >
@@ -439,7 +420,7 @@ exports[`<DecryptionFailureBar /> Does not display a button to send key requests
 
 exports[`<DecryptionFailureBar /> Handles device updates 1`] = `
 <div
-  class="mx_DecryptionFailureBar"
+  class="mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd"
 >
   <div
     class="mx_DecryptionFailureBar_start"
@@ -458,7 +439,6 @@ exports[`<DecryptionFailureBar /> Handles device updates 1`] = `
     </div>
     <div
       class="mx_DecryptionFailureBar_start_headline"
-      data-testid="decryption-failure-bar-headline-verify"
     >
       Verify this device to access all messages
     </div>
@@ -469,12 +449,11 @@ exports[`<DecryptionFailureBar /> Handles device updates 1`] = `
     </div>
   </div>
   <div
-    class="mx_DecryptionFailureBar_end--buttons"
+    class="mx_DecryptionFailureBar_end"
   >
     <div
-      class="mx_AccessibleButton mx_DecryptionFailureBar_end--buttons_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+      class="mx_AccessibleButton mx_DecryptionFailureBar_end_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
       data-testid="decryption-failure-bar-button"
-      data-testid-button="decryption-failure-bar-button-verify"
       role="button"
       tabindex="0"
     >
@@ -486,7 +465,7 @@ exports[`<DecryptionFailureBar /> Handles device updates 1`] = `
 
 exports[`<DecryptionFailureBar /> Handles device updates 2`] = `
 <div
-  class="mx_DecryptionFailureBar"
+  class="mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd"
 >
   <div
     class="mx_DecryptionFailureBar_start"
@@ -505,7 +484,6 @@ exports[`<DecryptionFailureBar /> Handles device updates 2`] = `
     </div>
     <div
       class="mx_DecryptionFailureBar_start_headline"
-      data-testid="decryption-failure-bar-headline-devicelist"
     >
       Open another device to load encrypted messages
     </div>
@@ -516,21 +494,19 @@ exports[`<DecryptionFailureBar /> Handles device updates 2`] = `
     </div>
   </div>
   <div
-    class="mx_DecryptionFailureBar_end--buttons"
+    class="mx_DecryptionFailureBar_end"
   >
     <div
-      class="mx_AccessibleButton mx_DecryptionFailureBar_end--buttons_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+      class="mx_AccessibleButton mx_DecryptionFailureBar_end_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
       data-testid="decryption-failure-bar-button"
-      data-testid-button="decryption-failure-bar-button-devicelist"
       role="button"
       tabindex="0"
     >
       View your device list
     </div>
     <div
-      class="mx_AccessibleButton mx_DecryptionFailureBar_end--buttons_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+      class="mx_AccessibleButton mx_DecryptionFailureBar_end_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
       data-testid="decryption-failure-bar-button"
-      data-testid-button="decryption-failure-bar-button-resend"
       role="button"
       tabindex="0"
     >
@@ -542,7 +518,7 @@ exports[`<DecryptionFailureBar /> Handles device updates 2`] = `
 
 exports[`<DecryptionFailureBar /> Prompts the user to reset if they have no other verified devices and no backups 1`] = `
 <div
-  class="mx_DecryptionFailureBar"
+  class="mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd"
 >
   <div
     class="mx_DecryptionFailureBar_start"
@@ -561,7 +537,6 @@ exports[`<DecryptionFailureBar /> Prompts the user to reset if they have no othe
     </div>
     <div
       class="mx_DecryptionFailureBar_start_headline"
-      data-testid="decryption-failure-bar-headline-reset"
     >
       Reset your keys to prevent future decryption errors
     </div>
@@ -572,12 +547,11 @@ exports[`<DecryptionFailureBar /> Prompts the user to reset if they have no othe
     </div>
   </div>
   <div
-    class="mx_DecryptionFailureBar_end--buttons"
+    class="mx_DecryptionFailureBar_end"
   >
     <div
-      class="mx_AccessibleButton mx_DecryptionFailureBar_end--buttons_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+      class="mx_AccessibleButton mx_DecryptionFailureBar_end_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
       data-testid="decryption-failure-bar-button"
-      data-testid-button="decryption-failure-bar-button-reset"
       role="button"
       tabindex="0"
     >
@@ -589,7 +563,7 @@ exports[`<DecryptionFailureBar /> Prompts the user to reset if they have no othe
 
 exports[`<DecryptionFailureBar /> Prompts the user to verify if they have backups 1`] = `
 <div
-  class="mx_DecryptionFailureBar"
+  class="mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd"
 >
   <div
     class="mx_DecryptionFailureBar_start"
@@ -608,7 +582,6 @@ exports[`<DecryptionFailureBar /> Prompts the user to verify if they have backup
     </div>
     <div
       class="mx_DecryptionFailureBar_start_headline"
-      data-testid="decryption-failure-bar-headline-verify"
     >
       Verify this device to access all messages
     </div>
@@ -619,12 +592,11 @@ exports[`<DecryptionFailureBar /> Prompts the user to verify if they have backup
     </div>
   </div>
   <div
-    class="mx_DecryptionFailureBar_end--buttons"
+    class="mx_DecryptionFailureBar_end"
   >
     <div
-      class="mx_AccessibleButton mx_DecryptionFailureBar_end--buttons_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+      class="mx_AccessibleButton mx_DecryptionFailureBar_end_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
       data-testid="decryption-failure-bar-button"
-      data-testid-button="decryption-failure-bar-button-verify"
       role="button"
       tabindex="0"
     >
@@ -636,7 +608,7 @@ exports[`<DecryptionFailureBar /> Prompts the user to verify if they have backup
 
 exports[`<DecryptionFailureBar /> Prompts the user to verify if they have other devices 1`] = `
 <div
-  class="mx_DecryptionFailureBar"
+  class="mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd"
 >
   <div
     class="mx_DecryptionFailureBar_start"
@@ -655,7 +627,6 @@ exports[`<DecryptionFailureBar /> Prompts the user to verify if they have other 
     </div>
     <div
       class="mx_DecryptionFailureBar_start_headline"
-      data-testid="decryption-failure-bar-headline-verify"
     >
       Verify this device to access all messages
     </div>
@@ -666,12 +637,11 @@ exports[`<DecryptionFailureBar /> Prompts the user to verify if they have other 
     </div>
   </div>
   <div
-    class="mx_DecryptionFailureBar_end--buttons"
+    class="mx_DecryptionFailureBar_end"
   >
     <div
-      class="mx_AccessibleButton mx_DecryptionFailureBar_end--buttons_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+      class="mx_AccessibleButton mx_DecryptionFailureBar_end_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
       data-testid="decryption-failure-bar-button"
-      data-testid-button="decryption-failure-bar-button-verify"
       role="button"
       tabindex="0"
     >
@@ -683,7 +653,7 @@ exports[`<DecryptionFailureBar /> Prompts the user to verify if they have other 
 
 exports[`<DecryptionFailureBar /> Recommends opening other devices if there are other verified devices 1`] = `
 <div
-  class="mx_DecryptionFailureBar"
+  class="mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd"
 >
   <div
     class="mx_DecryptionFailureBar_start"
@@ -702,7 +672,6 @@ exports[`<DecryptionFailureBar /> Recommends opening other devices if there are 
     </div>
     <div
       class="mx_DecryptionFailureBar_start_headline"
-      data-testid="decryption-failure-bar-headline-devicelist"
     >
       Open another device to load encrypted messages
     </div>
@@ -713,21 +682,19 @@ exports[`<DecryptionFailureBar /> Recommends opening other devices if there are 
     </div>
   </div>
   <div
-    class="mx_DecryptionFailureBar_end--buttons"
+    class="mx_DecryptionFailureBar_end"
   >
     <div
-      class="mx_AccessibleButton mx_DecryptionFailureBar_end--buttons_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+      class="mx_AccessibleButton mx_DecryptionFailureBar_end_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
       data-testid="decryption-failure-bar-button"
-      data-testid-button="decryption-failure-bar-button-devicelist"
       role="button"
       tabindex="0"
     >
       View your device list
     </div>
     <div
-      class="mx_AccessibleButton mx_DecryptionFailureBar_end--buttons_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+      class="mx_AccessibleButton mx_DecryptionFailureBar_end_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
       data-testid="decryption-failure-bar-button"
-      data-testid-button="decryption-failure-bar-button-resend"
       role="button"
       tabindex="0"
     >

@@ -150,8 +150,8 @@ describe("Decryption Failure Bar", () => {
                         },
                     );
 
-                    cy.contains(".mx_DecryptionFailureBar_end--buttons", "Resend key requests").should("not.exist");
-                    cy.contains(".mx_DecryptionFailureBar_end--buttons", "Verify").should("be.visible").click();
+                    cy.contains(".mx_DecryptionFailureBar_end", "Resend key requests").should("not.exist");
+                    cy.contains(".mx_DecryptionFailureBar_end", "Verify").should("be.visible").click();
 
                     const verificationRequestPromise = waitForVerificationRequest(otherDevice);
                     cy.get(".mx_CompleteSecurity_actionRow .mx_AccessibleButton").click();
@@ -188,12 +188,12 @@ describe("Decryption Failure Bar", () => {
             );
 
             cy.intercept("/_matrix/client/r0/sendToDevice/m.room_key_request/*").as("keyRequest");
-            cy.contains(".mx_DecryptionFailureBar_end--buttons_button", "Resend key requests")
+            cy.contains(".mx_DecryptionFailureBar_end_button", "Resend key requests")
                 .should("be.visible")
                 .click();
             cy.wait("@keyRequest");
-            cy.contains(".mx_DecryptionFailureBar_end--buttons_button", "Resend key requests").should("not.be.visible");
-            cy.contains(".mx_DecryptionFailureBar_end--buttons_button", "View your device list").should("be.visible");
+            cy.contains(".mx_DecryptionFailureBar_end_button", "Resend key requests").should("not.exist");
+            cy.contains(".mx_DecryptionFailureBar_end_button", "View your device list").should("be.visible");
 
             checkTimelineNarrow();
 
@@ -228,7 +228,7 @@ describe("Decryption Failure Bar", () => {
                 widths: [320, 640],
             });
 
-            cy.contains(".mx_DecryptionFailureBar_end--buttons_button", "Reset").should("be.visible").click();
+            cy.contains(".mx_DecryptionFailureBar_end_button", "Reset").should("be.visible").click();
 
             // Set up key backup
             cy.get(".mx_Dialog").within(() => {

@@ -25,11 +25,20 @@ limitations under the License.
     margin-inline: $spacing-16;
     border-radius: 4px;
 
-    display: flex;
-    flex-flow: wrap;
-    align-items: flex-start;
-    justify-content: space-between;
-    row-gap: calc(var(--gap-row) + $spacing-4); /* Increase spacing between the message and the buttons */
+    &.mx_DecryptionFailureBar--withEnd {
+        display: flex;
+        flex-flow: wrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        row-gap: calc(var(--gap-row) + $spacing-4); /* Increase spacing between the message and the buttons */
+
+        .mx_DecryptionFailureBar_end {
+            display: flex;
+            flex-wrap: wrap; /* Let the buttons wrapped on a narrow column */
+            gap: var(--buttons-dialog-gap-row) var(--buttons-dialog-gap-column);
+            margin-inline-start: calc(var(--size-icon) + var(--gap-column)); /* Align the button(s) and the message */
+        }
+    }
 
     .mx_DecryptionFailureBar_start {
         display: grid;
@@ -74,12 +83,5 @@ limitations under the License.
 
             color: $secondary-content;
         }
-    }
-
-    .mx_DecryptionFailureBar_end--buttons {
-        display: flex;
-        flex-wrap: wrap; /* Let the buttons wrapped on a narrow column */
-        gap: var(--buttons-dialog-gap-row) var(--buttons-dialog-gap-column);
-        margin-inline-start: calc(var(--size-icon) + var(--gap-column)); /* Align the button(s) and the message */
     }
 }
