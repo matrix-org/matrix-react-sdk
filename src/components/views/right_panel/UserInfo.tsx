@@ -450,7 +450,7 @@ export const UserOptionsSection: React.FC<{
                         if (inviter.getCompletionState(member.userId) !== "invited") {
                             throw new Error(
                                 inviter.getErrorText(member.userId) ||
-                                    `User (${member.userId}) did not end up as invited but no error was given from the inviter utility`,
+                                    `User (${member.userId}) did not end up as invited to ${roomId} but no error was given from the inviter utility`,
                             );
                         }
                     });
