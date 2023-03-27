@@ -25,11 +25,10 @@ describe("Audio player", () => {
     let roomId: string;
     const TEST_USER = "Hanako";
 
-    // Exclude from snapshots
     const percyCSS =
         // FIXME: hide mx_SeekBar because flaky - see https://github.com/vector-im/element-web/issues/24898
         ".mx_SeekBar, " +
-        // Hide for screenshot consistency
+        // Exclude various components from the snapshot, for consistency
         ".mx_JumpToBottomButton, " +
         ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
 
