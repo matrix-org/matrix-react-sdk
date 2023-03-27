@@ -166,8 +166,8 @@ describe("Audio player", () => {
     });
 
     it("should be correctly rendered on IRC layout", () => {
-        // Please note that takeSnapshots() is not to be used here since it does not take snapshots on IRC layout.
-        // The design of it should be same as on modern layout.
+        // We cannot use takeSnapshots() here since it does not take snapshots on IRC layout.
+        // The design of the player on IRC layout should be same as on modern layout.
 
         visitRoom();
 
