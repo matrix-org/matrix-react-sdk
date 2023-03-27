@@ -51,6 +51,20 @@ const EVENT_ATTACHMENT: IRoomEvent = {
     },
 };
 
+const EVENT_ATTACHMENT_MALFORMED: IRoomEvent = {
+    event_id: "$2",
+    type: EventType.RoomMessage,
+    sender: "@alice:example.com",
+    origin_server_ts: 1,
+    content: {
+        msgtype: MsgType.File,
+        body: "hello.txt",
+        file: {
+            url: undefined
+        },
+    },
+};
+
 describe("HTMLExport", () => {
     let client: jest.Mocked<MatrixClient>;
     let room: Room;
@@ -308,6 +322,38 @@ describe("HTMLExport", () => {
         // Ensure that the attachment has the expected content
         const text = await file.text();
         expect(text).toBe(attachmentBody);
+    });
+
+    it("should handle when attachment cannot be fetched", async () => {
+        mockMessages(EVENT_MESSAGE, EVENT_ATTACHMENT_MALFORMED, EVENT_ATTACHMENT);
+        const attachmentBody = "Lorem ipsum dolor sit amet";
+
+        mockMxc("mxc://example.org/test-id", attachmentBody);
+
+        const exporter = new HTMLExporter(
+            room,
+            ExportType.Timeline,
+            {
+                attachmentsIncluded: true,
+                maxSize: 1_024 * 1_024,
+            },
+            () => {},
+        );
+
+        await exporter.export();
+
+        // good attachment present
+        const files = getFiles(exporter);
+        const file = files[Object.keys(files).find((k) => k.endsWith(".txt"))!];
+        expect(file).not.toBeUndefined();
+
+        // Ensure that the attachment has the expected content
+        const text = await file.text();
+        expect(text).toBe(attachmentBody);
+
+        // messages export still successful
+        const messagesFile = getMessageFile(exporter);
+        expect(await messagesFile.text()).toBeTruthy();
     });
 
     it("should omit attachments", async () => {
