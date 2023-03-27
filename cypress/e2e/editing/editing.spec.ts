@@ -120,6 +120,7 @@ describe("Editing", () => {
                     .should("have.css", "position", "absolute")
                     .should("have.css", "inset-inline-start", "0px")
                     .should("have.css", "text-align", "center");
+                // Assert that monospace characters can fill the content line as expected
                 cy.get(".mx_EventTile .mx_EventTile_content").should("have.css", "margin-inline-end", "0px");
 
                 // Assert that zero block start padding is applied to mx_EventTile as expected
