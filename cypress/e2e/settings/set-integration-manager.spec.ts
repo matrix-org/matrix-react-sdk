@@ -53,6 +53,8 @@ describe("Set integration manager", () => {
             });
         });
 
-        cy.get(".mx_SetIntegrationManager").percySnapshotElement("'Manage integrations' on General settings tab");
+        cy.get(".mx_SetIntegrationManager").percySnapshotElement("'Manage integrations' on General settings tab", {
+            widths: [692], // actual width of mx_SetIntegrationManager
+        });
     });
 });
