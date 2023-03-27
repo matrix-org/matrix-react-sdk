@@ -42,6 +42,8 @@ interface WysiwygComposerProps {
     children?: (ref: MutableRefObject<HTMLDivElement | null>, wysiwyg: FormattingFunctions) => ReactNode;
 }
 
+// add comment
+
 export const WysiwygComposer = memo(function WysiwygComposer({
     disabled = false,
     onChange,
