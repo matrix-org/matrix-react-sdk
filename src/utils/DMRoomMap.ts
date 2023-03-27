@@ -23,6 +23,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Optional } from "matrix-events-sdk";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
+import { filterBoolean } from "./arrays";
 
 /**
  * Class that takes a Matrix Client and flips the m.direct map
@@ -187,13 +188,20 @@ export default class DMRoomMap {
 
     public getUniqueRoomsWithIndividuals(): { [userId: string]: Room } {
         if (!this.roomToUser) return {}; // No rooms means no map.
-        return Object.keys(this.roomToUser)
-            .map((r) => ({ userId: this.getUserIdForRoomId(r), room: this.matrixClient.getRoom(r) }))
-            .filter((r) => r.userId && r.room?.getInvitedAndJoinedMemberCount() === 2)
-            .reduce((obj, r) => {
-                obj[r.userId] = r.room;
-                return obj;
-            }, {} as Record<string, Room>);
+        return filterBoolean<{ userId: string; room: Room }>(
+            Object.keys(this.roomToUser).map((r) => {
+                const userId = this.getUserIdForRoomId(r);
+                const room = this.matrixClient.getRoom(r);
+                const hasTwoMembers = room?.getInvitedAndJoinedMemberCount() === 2;
+                if (userId && room && hasTwoMembers) {
+                    return { userId, room };
+                }
+                return undefined;
+            }),
+        ).reduce((obj, r) => {
+            obj[r.userId] = r.room;
+            return obj;
+        }, {} as Record<string, Room>);
     }
 
     /**
