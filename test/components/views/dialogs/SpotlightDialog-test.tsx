@@ -359,7 +359,7 @@ describe("Spotlight Dialog", () => {
         expect(startDmOnFirstMessage).toHaveBeenCalledWith(mockedClient, [new DirectoryMember(testPerson)]);
     });
 
-    it("should pass via of the server being explored when joining room from directrory", async () => {
+    it("should pass via of the server being explored when joining room from directory", async () => {
         SdkConfig.put({
             room_directory: {
                 servers: ["example.tld"],
