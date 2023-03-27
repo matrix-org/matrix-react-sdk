@@ -316,9 +316,12 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
 
             if (opts.dmUserId) await Rooms.setDMRoom(roomId, opts.dmUserId);
         })
-        .then(() => {
+        .then(async () => {
             if (opts.encryption && opts.useMls) {
-                client.crypto.mlsProvider.createGroup(roomId);
+                return await client.crypto.mlsProvider.createGroup(
+                    await room,
+                    createOpts.invite || [],
+                );
             }
         })
         .then(() => {
