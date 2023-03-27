@@ -118,11 +118,11 @@ describe("EventListSummary", function () {
         ...mockClientMethodsUser(),
     });
 
-    const defaultProps: ComponentProps<typeof EventListSummary> = {
+    const defaultProps = {
         layout: Layout.Bubble,
         events: [],
         children: [],
-    };
+    } as ComponentProps<typeof EventListSummary>;
     const renderComponent = (props = {}): RenderResult => {
         return render(
             <MatrixClientContext.Provider value={mockClient}>
