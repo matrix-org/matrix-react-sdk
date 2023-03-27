@@ -452,8 +452,8 @@ export const UserOptionsSection: React.FC<{
                                 throw new Error(inviter.getErrorText(member.userId));
                             } else {
                                 throw new UserFriendlyError(
-                                    `User (%(userId)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility`,
-                                    { userId: member.userId, roomId, cause: undefined },
+                                    `User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility`,
+                                    { user: member.userId, roomId, cause: undefined },
                                 );
                             }
                         }
