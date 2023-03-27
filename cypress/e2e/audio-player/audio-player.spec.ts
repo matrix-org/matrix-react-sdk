@@ -138,7 +138,6 @@ describe("Audio player", () => {
         // Take a snapshot on bubble layout
         cy.get(".mx_MAudioBody").percySnapshotElement(detail + " on bubble layout", {
             percyCSS,
-            // 243px + 12px + 48px = 303px. See _EventBubbleTile.pcss and _AudioPlayer.pcss for spacing
             widths: snapshotWidthsBubble,
         });
 
