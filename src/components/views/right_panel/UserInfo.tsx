@@ -34,7 +34,7 @@ import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 
 import dis from "../../../dispatcher/dispatcher";
 import Modal from "../../../Modal";
-import { _t } from "../../../languageHandler";
+import { _t, UserFriendlyError } from "../../../languageHandler";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import SdkConfig from "../../../SdkConfig";
@@ -448,13 +448,14 @@ export const UserOptionsSection: React.FC<{
                     const inviter = new MultiInviter(roomId || "");
                     await inviter.invite([member.userId]).then(() => {
                         if (inviter.getCompletionState(member.userId) !== "invited") {
-                            throw new Error(
-                                inviter.getErrorText(member.userId) ||
-                                    _t(
-                                        `User (%(userId)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility`,
-                                        { userId: member.userId, roomId },
-                                    ),
-                            );
+                            if (inviter.getErrorText(member.userId)) {
+                                throw new Error(inviter.getErrorText(member.userId));
+                            } else {
+                                throw new UserFriendlyError(
+                                    `User (%(userId)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility`,
+                                    { userId: member.userId, roomId, cause: undefined },
+                                );
+                            }
                         }
                     });
                 } catch (err) {
