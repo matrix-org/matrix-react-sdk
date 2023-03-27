@@ -244,9 +244,8 @@ export default class AutoDiscoveryUtils {
 
         const preferredHomeserverUrl = hsResult["base_url"];
 
-        // It should have been set by now, so check it
         if (!preferredHomeserverUrl) {
-            logger.error("Failed to parse homeserver name from homeserver URL");
+            logger.error("No homeserver URL configured");
             throw newTranslatableError(_td("Unexpected error resolving homeserver configuration"));
         }
 
