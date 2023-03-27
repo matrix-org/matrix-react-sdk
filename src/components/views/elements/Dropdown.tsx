@@ -156,8 +156,8 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
 
     private reindexChildren(children: ReactElement[]): void {
         this.childrenByKey = {};
-        React.Children.forEach(children, (child: DropdownProps["children"][number]) => {
-            this.childrenByKey[child.key] = child;
+        React.Children.forEach(children, (child) => {
+            this.childrenByKey[(child as DropdownProps["children"][number]).key] = child;
         });
     }
 
