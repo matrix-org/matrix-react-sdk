@@ -26,6 +26,7 @@ import {
     RoomNotifState,
     getUnreadNotificationCount,
     determineUnreadState,
+    setRoomNotifsState,
 } from "../src/RoomNotifs";
 import { NotificationColor } from "../src/stores/notifications/NotificationColor";
 import SettingsStore from "../src/settings/SettingsStore";
@@ -298,6 +299,23 @@ describe("RoomNotifs test", () => {
 
             expect(color).toBe(NotificationColor.Red);
             expect(count).toBe(888);
+        });
+    });
+
+    describe("setRoomNotifsState", () => {
+        it("should include a message condition on all messages override", () => {
+            (client as any).addPushRule = jest.fn();
+            setRoomNotifsState("!room:server", RoomNotifState.AllMessagesLoud);
+            expect(client.addPushRule).toHaveBeenCalledWith("global", "room", "!room:server", {
+                conditions: [
+                    {
+                        kind: "event_match",
+                        key: "type",
+                        pattern: "m.room.message",
+                    },
+                ],
+                actions: ["notify", { set_tweak: "sound", value: "default" }],
+            });
         });
     });
 });
