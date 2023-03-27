@@ -600,7 +600,10 @@ export const Commands = [
                                 if (inviter.getCompletionState(address) !== "invited") {
                                     throw new Error(
                                         inviter.getErrorText(address) ||
-                                            `User (${address}) did not end up as invited to ${roomId} but no error was given from the inviter utility`,
+                                            _t(
+                                                "User (%(address)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility",
+                                                { address, roomId, cause: undefined },
+                                            ),
                                     );
                                 }
                             }),
