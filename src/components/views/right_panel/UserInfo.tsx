@@ -769,8 +769,8 @@ export const BanToggleButton = ({
                               const myMember = child.getMember(cli.credentials.userId || "");
                               const theirMember = child.getMember(member.userId);
                               return (
-                                  myMember &&
-                                  theirMember &&
+                                  !!myMember &&
+                                  !!theirMember &&
                                   theirMember.membership !== "ban" &&
                                   myMember.powerLevel > theirMember.powerLevel &&
                                   child.currentState.hasSufficientPowerLevelFor("ban", myMember.powerLevel)
