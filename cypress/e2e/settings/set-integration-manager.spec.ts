@@ -20,7 +20,7 @@ import { HomeserverInstance } from "../../plugins/utils/homeserver";
 
 const USER_NAME = "Alice";
 
-describe("Set integration manager on General settings tab", () => {
+describe("Set integration manager", () => {
     let homeserver: HomeserverInstance;
 
     beforeEach(() => {
@@ -34,31 +34,25 @@ describe("Set integration manager on General settings tab", () => {
         cy.stopHomeserver(homeserver);
     });
 
-    it("should set integration manager", () => {
+    it("should be correctly rendered", () => {
         cy.openUserSettings("General");
-        cy.contains("Manage integrations").should("exist");
 
-        // Make sure integration manager's toggle switch is enabled
-        cy.get(".mx_SetIntegrationManager .mx_ToggleSwitch_enabled").should("exist");
+        cy.get(".mx_SetIntegrationManager").within(() => {
+            // Assert the toggle switch is enabled by default
+            cy.get(".mx_ToggleSwitch_enabled").should("exist");
 
-        // Check the default margin set to mx_SettingsTab_heading on the settings tab
-        cy.get(".mx_SettingsTab > .mx_SettingsTab_heading").should("have.css", "margin-right", "100px");
+            // Assert space between "Manage integrations" and the integration server address is set to 4px;
+            cy.get(".mx_SetIntegrationManager_heading_manager").should("have.css", "column-gap", "4px");
 
-        // Make sure the space between "Manage integrations" and the integration server address is set to 4px;
-        cy.get(".mx_SettingsTab .mx_SetIntegrationManager_heading_manager > .mx_SettingsTab_heading").should(
-            "have.css",
-            "margin-inline-end",
-            "0px",
-        );
-        cy.get(".mx_SettingsTab .mx_SetIntegrationManager_heading_manager > .mx_SettingsTab_subheading").should(
-            "have.css",
-            "margin-inline-end",
-            "0px",
-        );
-        cy.get(".mx_SettingsTab .mx_SetIntegrationManager_heading_manager").should("have.css", "column-gap", "4px");
+            cy.get(".mx_SetIntegrationManager_heading_manager").within(() => {
+                cy.get(".mx_SettingsTab_heading").should("have.text", "Manage integrations");
 
-        cy.get(".mx_SettingsTab .mx_SetIntegrationManager_heading_manager").percySnapshotElement(
-            "'Manage integrations' on General settings tab",
-        );
+                // Assert the headings' inline end margin values are set to zero in favor of the column-gap declaration
+                cy.get(".mx_SettingsTab_heading").should("have.css", "margin-inline-end", "0px");
+                cy.get(".mx_SettingsTab_subheading").should("have.css", "margin-inline-end", "0px");
+            });
+        });
+
+        cy.get(".mx_SetIntegrationManager").percySnapshotElement("'Manage integrations' on General settings tab");
     });
 });
