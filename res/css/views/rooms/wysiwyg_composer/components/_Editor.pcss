@@ -101,9 +101,9 @@ limitations under the License.
             }
         }
 
-        /* this selector represents what will become a pill, nb despite there
-        being mx_UserPill and mx_RoomPill classes appended to these pills, 
-        there doesn't appear to be any styles associated with those classes
+        /* this selector represents what will become a pill
+        nb despite there being mx_UserPill and mx_RoomPill classes appended to these pills
+        in the current composer, there don't appear to be any styles associated with those classes
         in this repo */
         a[data-mention-type] {
             /* these entries duplicate mx_Pill from _Pill.pcss */
@@ -116,7 +116,8 @@ limitations under the License.
             the Avatars 
             display: inline-flex; 
             align-items: center; not required with the above turned off 
-            Potential fix is display: inline, width: fit-content
+            
+            Potential fix is using display: inline, width: fit-content
             */
             box-sizing: border-box;
             max-width: 100%;
@@ -125,7 +126,7 @@ limitations under the License.
             color: $accent-fg-color;
             background-color: $pill-bg-color;
 
-            /* combining the avoce with the overrides from _BasicMessageComposer.pcss */
+            /* combining the overrides from _BasicMessageComposer.pcss */
             user-select: all;
             position: relative;
             cursor: unset; /* We don't want indicate clickability */
