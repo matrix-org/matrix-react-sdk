@@ -239,9 +239,6 @@ describe("Audio player", () => {
             checkPlayerFilenameLong();
         });
 
-        // Disable "Match system theme" in case
-        cy.setSettingValue("use_system_theme", null, SettingLevel.DEVICE, false);
-
         // Enable high contrast manually
         cy.openUserSettings("Appearance")
             .get(".mx_ThemeChoicePanel")
