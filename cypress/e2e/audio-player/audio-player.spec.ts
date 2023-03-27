@@ -113,7 +113,7 @@ describe("Audio player", () => {
         // Enable group layout
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
 
-        // Click the timestamp to highlight the event tile in case it is not visible
+        // click the event timestamp to highlight the event tile in case it is not visible
         cy.get(".mx_EventTile_last[data-layout='group'] .mx_MessageTimestamp").click();
 
         // Assert that rendering of the player settled and the play button is visible before taking a snapshot
@@ -130,7 +130,7 @@ describe("Audio player", () => {
         // Enable bubble layout
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
 
-        // Click the timestamp to highlight the event tile in case it is not visible after changing the layout
+        // click the event timestamp to highlight the event tile in case it is not visible after changing the layout
         cy.get(".mx_EventTile_last[data-layout='bubble'] .mx_MessageTimestamp").click();
 
         checkPlayerVisibility();
@@ -183,7 +183,7 @@ describe("Audio player", () => {
             // Enable IRC layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
 
-            // Click the timestamp to highlight the event tile in case it is not visible
+            // click the event timestamp to highlight the event tile in case it is not visible
             cy.get(".mx_EventTile_last[data-layout='irc'] .mx_MessageTimestamp").click();
 
             // Assert that rendering of the player settled and the play button is visible before taking a snapshot
@@ -270,7 +270,7 @@ describe("Audio player", () => {
         cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
 
         cy.get(".mx_RoomView_MessageList").within(() => {
-            // Click the timestamp to highlight the event tile on which player is rendered
+            // click the event timestamp to highlight the event tile on which player is rendered
             cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
 
             // Take snapshots (high contrast, light theme only)
@@ -372,7 +372,7 @@ describe("Audio player", () => {
 
         cy.get(".mx_RoomView_MessageList").within(() => {
             const takeSnapshotReply = (layout: string) => {
-                // Click the timestamp to highlight the event tile on which player is rendered
+                // click the event timestamp to highlight the event tile on which player is rendered
                 cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
 
                 cy.get(".mx_EventTile_last.mx_EventTile_selected").within(() => {
@@ -487,7 +487,7 @@ describe("Audio player", () => {
 
         cy.get(".mx_RoomView_MessageList").within(() => {
             const takeSnapshotReplyChain = (layout: string) => {
-                // Click the timestamp to highlight the event tile on which player is rendered
+                // click the event timestamp to highlight the event tile on which player is rendered
                 cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
 
                 cy.get(".mx_EventTile_last.mx_EventTile_selected").within(() => {
