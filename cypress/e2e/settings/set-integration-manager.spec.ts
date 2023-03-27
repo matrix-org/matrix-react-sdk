@@ -53,11 +53,6 @@ describe("Set integration manager", () => {
             });
         });
 
-        // Scroll to 'mx_SetIntegrationManager' and take a snapshot of the dialog
-        cy.get(".mx_SetIntegrationManager")
-            .scrollIntoView()
-            .should("be.visible")
-            .get(".mx_Dialog_wrapper")
-            .percySnapshotElement("'Manage integrations' on General settings tab");
+        cy.get(".mx_SetIntegrationManager").percySnapshotElement("'Manage integrations' on General settings tab");
     });
 });
