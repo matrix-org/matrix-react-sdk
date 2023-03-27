@@ -598,8 +598,9 @@ export const Commands = [
                             })
                             .then(() => {
                                 if (inviter.getCompletionState(address) !== "invited") {
-                                    if (inviter.getErrorText(address)) {
-                                        throw new Error(inviter.getErrorText(address));
+                                    const errorStringFromInviterUtility = inviter.getErrorText(address);
+                                    if (errorStringFromInviterUtility) {
+                                        throw new Error(errorStringFromInviterUtility);
                                     } else {
                                         throw new UserFriendlyError(
                                             "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility",
