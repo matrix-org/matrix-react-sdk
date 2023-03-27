@@ -102,7 +102,7 @@ describe("Audio player", () => {
     /**
      * Take snapshots on modern and bubble layouts, outputting log for reference/debugging.
      * Note that this does not take snapshot of players on IRC layout to keep the number of
-     * taking snapshots as low as possible.
+     * snapshots as low as possible (it should normally be the same as modern layout).
      * @param detail The Percy snapshot name. Used for outputting logs too.
      */
     const takeSnapshots = (detail: string) => {
