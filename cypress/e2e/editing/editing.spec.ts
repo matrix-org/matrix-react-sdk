@@ -166,9 +166,7 @@ describe("Editing", () => {
             });
 
             // Do nothing and close the dialog to confirm that the message edit history dialog is rendered
-            cy.get(".mx_TextInputDialog").within(() => {
-                cy.get("[aria-label='Close dialog']").click();
-            });
+            cy.get(".mx_TextInputDialog").closeDialog();
 
             // Assert that the message edit history dialog is rendered again after it was closed
             cy.get(".mx_MessageEditHistoryDialog li:nth-child(2) .mx_EventTile").within(() => {
@@ -199,8 +197,7 @@ describe("Editing", () => {
                 // Assert that the edited message is gone
                 cy.contains(".mx_EventTile_content .mx_EventTile_body", "Meassage").should("not.exist");
 
-                // Close the dialog
-                cy.get("[aria-label='Close dialog']").click();
+                cy.closeDialog();
             });
         });
 
@@ -239,8 +236,7 @@ describe("Editing", () => {
                     .should("not.exist");
             });
 
-            // Close the dialog
-            cy.get("[aria-label='Close dialog']").click();
+            cy.closeDialog();
         });
 
         // Enable developer mode
@@ -262,11 +258,8 @@ describe("Editing", () => {
                 clickButtonViewSource();
             });
 
-            // Assert that view source dialog is rendered
-            cy.get(".mx_ViewSource").within(() => {
-                // Close the dialog
-                cy.get("[aria-label='Close dialog']").click();
-            });
+            // Assert that view source dialog is rendered and close the dialog
+            cy.get(".mx_ViewSource").closeDialog();
 
             // Assert that the original message is rendered
             cy.get(".mx_MessageEditHistoryDialog li:nth-child(3)").within(() => {
@@ -279,11 +272,8 @@ describe("Editing", () => {
                 clickButtonViewSource();
             });
 
-            // Assert that view source dialog is rendered
-            cy.get(".mx_ViewSource").within(() => {
-                // Close the dialog
-                cy.get("[aria-label='Close dialog']").click();
-            });
+            // Assert that view source dialog is rendered and close the dialog
+            cy.get(".mx_ViewSource").closeDialog();
         });
     });
 
