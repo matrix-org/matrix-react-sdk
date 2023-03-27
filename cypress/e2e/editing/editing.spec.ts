@@ -287,9 +287,6 @@ describe("Editing", () => {
                 cy.get("[aria-label='Close dialog']").click();
             });
         });
-
-        // Disable developer mode
-        cy.setSettingValue("developerMode", null, SettingLevel.ACCOUNT, false);
     });
 
     it("should close the composer when clicking save after making a change and undoing it", () => {
