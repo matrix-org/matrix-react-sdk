@@ -210,9 +210,6 @@ describe("Audio player", () => {
         cy.get(".mx_RoomView_MessageList").within(() => {
             checkPlayerFilenameLong();
 
-            // Reset to the default layout
-            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
-
             // Take snapshots (light theme)
             takeSnapshots("Audio player (light theme)");
 
