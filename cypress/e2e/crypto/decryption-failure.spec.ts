@@ -188,9 +188,7 @@ describe("Decryption Failure Bar", () => {
             );
 
             cy.intercept("/_matrix/client/r0/sendToDevice/m.room_key_request/*").as("keyRequest");
-            cy.contains(".mx_DecryptionFailureBar_end_button", "Resend key requests")
-                .should("be.visible")
-                .click();
+            cy.contains(".mx_DecryptionFailureBar_end_button", "Resend key requests").should("be.visible").click();
             cy.wait("@keyRequest");
             cy.contains(".mx_DecryptionFailureBar_end_button", "Resend key requests").should("not.exist");
             cy.contains(".mx_DecryptionFailureBar_end_button", "View your device list").should("be.visible");
