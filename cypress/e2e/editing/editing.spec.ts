@@ -154,11 +154,8 @@ describe("Editing", () => {
         // Exclude timestamps from a snapshot
         const percyCSS = ".mx_MessageTimestamp { visibility: hidden !important; }";
 
-        // Take a snapshot
-        cy.get(".mx_Dialog .mx_MessageEditHistoryDialog").percySnapshotElement("Message edit history dialog", {
-            percyCSS,
-            widths: [704], // See: .mx_Dialog_fixedWidth max-width
-        });
+        // Take a snapshot of the dialog
+        cy.get(".mx_Dialog_wrapper").percySnapshotElement("Message edit history dialog", { percyCSS });
 
         cy.get(".mx_Dialog").within(() => {
             cy.get(".mx_MessageEditHistoryDialog li:nth-child(2) .mx_EventTile").within(() => {
