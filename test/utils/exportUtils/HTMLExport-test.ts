@@ -60,7 +60,7 @@ const EVENT_ATTACHMENT_MALFORMED: IRoomEvent = {
         msgtype: MsgType.File,
         body: "hello.txt",
         file: {
-            url: undefined
+            url: undefined,
         },
     },
 };
