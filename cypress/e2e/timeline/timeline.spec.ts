@@ -147,7 +147,10 @@ describe("Timeline", () => {
         });
     });
 
-    describe("message displaying", () => {
+    describe("configure room", () => {
+        // Exclude timestamp and read marker from snapshots
+        const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
+
         beforeEach(() => {
             cy.injectAxe();
         });
@@ -182,6 +185,65 @@ describe("Timeline", () => {
             cy.get(".mx_MainSplit").percySnapshotElement("Configured room on IRC layout");
         });
 
+        it("should have an expanded generic event list summary (GELS) on IRC layout", () => {
+            cy.visit("/#/room/" + roomId);
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
+
+            // Wait until configuration is finished
+            cy.contains(
+                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
+                "created and configured the room.",
+            ).should("exist");
+
+            // Click "expand" link button
+            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
+
+            // Make sure the "expand" link button worked
+            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=true]").should("exist");
+
+            // Check the height of expanded GELS line
+            cy.get(".mx_GenericEventListSummary[data-layout=irc] .mx_GenericEventListSummary_spacer").should(
+                "have.css",
+                "line-height",
+                "18px", // $irc-line-height: $font-18px (See: _IRCLayout.pcss)
+            );
+
+            cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on IRC layout", { percyCSS });
+        });
+
+        it("should have an expanded generic event list summary (GELS) on compact modern/group layout", () => {
+            cy.visit("/#/room/" + roomId);
+
+            // Set compact modern layout
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group).setSettingValue(
+                "useCompactLayout",
+                null,
+                SettingLevel.DEVICE,
+                true,
+            );
+
+            // Wait until configuration is finished
+            cy.contains(
+                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
+                "created and configured the room.",
+            ).should("exist");
+
+            // Click "expand" link button
+            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
+
+            // Make sure the "expand" link button worked
+            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=true]").should("exist");
+
+            // Check the height of expanded GELS line
+            cy.get(".mx_GenericEventListSummary[data-layout=group] .mx_GenericEventListSummary_spacer").should(
+                "have.css",
+                "line-height",
+                "22px", // $font-22px (See: _GenericEventListSummary.pcss)
+            );
+
+            cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on modern layout", { percyCSS });
+        });
+
         it("should add inline start margin to an event line on IRC layout", () => {
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
@@ -211,6 +273,12 @@ describe("Timeline", () => {
                 percyCSS,
             });
             cy.checkA11y();
+        });
+    });
+
+    describe("message displaying", () => {
+        beforeEach(() => {
+            cy.injectAxe();
         });
 
         it("should align generic event list summary with messages and emote on IRC layout", () => {
@@ -321,8 +389,11 @@ describe("Timeline", () => {
         });
 
         it("should render EventTiles on IRC, modern (group), and bubble layout", () => {
-            // Exclude timestamp and read marker from snapshots
-            const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
+            const percyCSS =
+                // Hide because flaky - See https://github.com/vector-im/element-web/issues/24957
+                ".mx_TopUnreadMessagesBar, " +
+                // Exclude timestamp and read marker from snapshots
+                ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
 
             sendEvent(roomId);
             sendEvent(roomId); // check continuation
@@ -569,12 +640,29 @@ describe("Timeline", () => {
             // Click "expand" link button
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
 
+            // Make sure the "expand" link button worked
+            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=true]").should("exist");
+
+            // Make sure spacer is not visible on bubble layout
+            cy.get(".mx_GenericEventListSummary[data-layout=bubble] .mx_GenericEventListSummary_spacer").should(
+                "not.be.visible", // See: _GenericEventListSummary.pcss
+            );
+
+            // Exclude timestamp from snapshot
+            const percyCSS = ".mx_MessageTimestamp { visibility: hidden !important; }";
+
+            // Save snapshot of expanded generic event list summary on bubble layout
+            cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on bubble layout", { percyCSS });
+
             // Click "collapse" link button on the first hovered info event line
             cy.get(".mx_GenericEventListSummary_unstyledList .mx_EventTile_info:first-of-type").realHover();
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=true]").click({ force: false });
 
             // Make sure "collapse" link button worked
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").should("exist");
+
+            // Save snapshot of collapsed generic event list summary on bubble layout
+            cy.get(".mx_MainSplit").percySnapshotElement("Collapsed GELS on bubble layout", { percyCSS });
         });
 
         it("should highlight search result words regardless of formatting", () => {
@@ -760,41 +848,41 @@ describe("Timeline", () => {
             clickButtonReply();
             cy.getComposer().type(`${reply2}{enter}`);
 
-            // Make sure 'reply2' was sent
+            // Assert that 'reply2' was sent
             cy.contains(".mx_RoomView_MessageList .mx_EventTile_last", reply2).should("exist");
+            cy.get(".mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
 
             // Exclude timestamp and read marker from snapshot
-            //const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
+            const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
 
             // Check the margin value of ReplyChains of EventTile at the bottom on IRC layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
             cy.get(".mx_EventTile_last[data-layout='irc'] .mx_ReplyChain").should("have.css", "margin", "0px");
 
             // Take a snapshot on IRC layout
-            // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24881
-            /*cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on IRC layout", {
+            // Note that because zero margin is applied to mx_ReplyChain, the left borders of two mx_ReplyChain
+            // components may seem to be connected to one.
+            cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on IRC layout", {
                 percyCSS,
-            });*/
+            });
 
             // Check the margin value of ReplyChains of EventTile at the bottom on group/modern layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
             cy.get(".mx_EventTile_last[data-layout='group'] .mx_ReplyChain").should("have.css", "margin-bottom", "8px");
 
             // Take a snapshot on modern layout
-            // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24881
-            /*cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on modern layout", {
+            cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on modern layout", {
                 percyCSS,
-            });*/
+            });
 
             // Check the margin value of ReplyChains of EventTile at the bottom on group/modern compact layout
             cy.setSettingValue("useCompactLayout", null, SettingLevel.DEVICE, true);
             cy.get(".mx_EventTile_last[data-layout='group'] .mx_ReplyChain").should("have.css", "margin-bottom", "4px");
 
             // Take a snapshot on compact modern layout
-            // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24881
-            /*cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on compact modern layout", {
+            cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on compact modern layout", {
                 percyCSS,
-            });*/
+            });
 
             // Check the margin value of ReplyChains of EventTile at the bottom on bubble layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
@@ -805,10 +893,9 @@ describe("Timeline", () => {
             );
 
             // Take a snapshot on bubble layout
-            // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24881
-            /*cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on bubble layout", {
+            cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on bubble layout", {
                 percyCSS,
-            });*/
+            });
         });
 
         it("should send, reply, and display long strings without overflowing", () => {
