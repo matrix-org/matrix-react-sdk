@@ -18,6 +18,7 @@ import React, { ForwardedRef, forwardRef } from "react";
 import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 import { Attributes, FormattingFunctions, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 
+import * as Avatar from "../../../../../Avatar";
 import { useRoomContext } from "../../../../../contexts/RoomContext";
 import Autocomplete from "../../Autocomplete";
 import { ICompletion } from "../../../../../autocomplete/Autocompleter";
@@ -95,10 +96,36 @@ function getMentionDisplayText(completion: ICompletion, client: MatrixClient): s
  * @param client - the MatrixClient is required for us to look up the correct room mention text
  * @returns an object of attributes containing HTMLAnchor attributes or data-* attri
  */
-function getMentionAttributes(completion: ICompletion, client: MatrixClient): Attributes {
+function getMentionAttributes(completion: ICompletion, client: MatrixClient, room: Room): Attributes {
+    let background = "background";
+    let letter = "letter";
+    if (completion.type === "user") {
+        // TODO try and get the avatar background url and avatar letter for a user
+        // looks like we need a RoomMember
+        // which you get by calling this.room.getMember(userId)
+        // and it looks like the userId is actually the display name which is completion.completion
+        const member = room.getMember(completion.completionId);
+
+        if (!member) return;
+
+        const name = member.name || member.userId;
+        const defaultAvatarUrl = Avatar.defaultAvatarUrlForString(member.userId);
+        const avatarUrl = Avatar.avatarUrlForMember(member, 16, 16, "crop");
+        let initialLetter = "";
+        if (avatarUrl === defaultAvatarUrl) {
+            initialLetter = Avatar.getInitialLetter(name) ?? "";
+        }
+
+        background = `url(${avatarUrl})`;
+        letter = `'${initialLetter}'`; // not a mistake, need to ensure it's there
+    }
+    if (completion.type === "room") {
+        // TODO try and get the avatar background url and avatar letter for a room
+    }
+
     return {
         "data-mention-type": completion.type,
-        "style": "this-will-be-the-avatar-url",
+        "style": `--avatar-background: ${background}; --avatar-letter: ${letter}`,
     };
 }
 
@@ -117,14 +144,14 @@ const WysiwygAutocomplete = forwardRef(
         function handleConfirm(completion: ICompletion): void {
             if (!completion.href) return;
 
-            console.log(completion, " <<< comp ");
-
-            // TODO handle the other type functionality like completion.type === "command"
+            // for now we can use this if to make sure we handle only the mentions we know we can handle properly
+            // in the model
+            // TODO handle all of the completion types
             if (completion.type === "room" || completion.type === "user") {
                 handleMention(
                     completion.href,
                     getMentionDisplayText(completion, client),
-                    getMentionAttributes(completion, client),
+                    getMentionAttributes(completion, client, room),
                 );
             }
         }
