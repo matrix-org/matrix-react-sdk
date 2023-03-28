@@ -48,6 +48,7 @@ import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { editorRoomKey, editorStateKey } from "../../../Editing";
 import DocumentOffset from "../../../editor/offset";
+import { attachMentions, attachRelation } from "./SendMessageComposer";
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
     const html = mxEvent.getContent().formatted_body;
@@ -90,8 +91,9 @@ export function createEditContent(model: EditorModel, editedEvent: MatrixEvent):
         body: body,
     };
     const contentBody: IContent = {
-        msgtype: newContent.msgtype,
-        body: `${plainPrefix} * ${body}`,
+        "msgtype": newContent.msgtype,
+        "body": `${plainPrefix} * ${body}`,
+        "m.new_content": newContent,
     };
 
     const formattedBody = htmlSerializeIfNeeded(model, {
@@ -105,16 +107,15 @@ export function createEditContent(model: EditorModel, editedEvent: MatrixEvent):
         contentBody.formatted_body = `${htmlPrefix} * ${formattedBody}`;
     }
 
-    return Object.assign(
-        {
-            "m.new_content": newContent,
-            "m.relates_to": {
-                rel_type: "m.replace",
-                event_id: editedEvent.getId(),
-            },
-        },
-        contentBody,
-    );
+    // Build the mentions properties for both the content and new_content.
+    //
+    // TODO If this is a reply we need to include all the users from it.
+    if (SettingsStore.getValue("feature_intentional_mentions")) {
+        attachMentions(editedEvent.sender!.userId, contentBody, model, undefined, editedEvent.getContent());
+    }
+    attachRelation(contentBody, { rel_type: "m.replace", event_id: editedEvent.getId() });
+
+    return contentBody;
 }
 
 interface IEditMessageComposerProps extends MatrixClientProps {
@@ -149,7 +150,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         this.dispatcherRef = dis.register(this.onAction);
     }
 
-    private getRoom(): Room {
+    private getRoom(): Room | null {
         return this.props.mxClient.getRoom(this.props.editState.getEvent().getRoomId());
     }
 
@@ -237,10 +238,10 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     }
 
     private get events(): MatrixEvent[] {
-        const liveTimelineEvents = this.context.liveTimeline.getEvents();
-        const pendingEvents = this.getRoom().getPendingEvents();
+        const liveTimelineEvents = this.context.liveTimeline?.getEvents();
+        const pendingEvents = this.getRoom()?.getPendingEvents();
         const isInThread = Boolean(this.props.editState.getEvent().getThread());
-        return liveTimelineEvents.concat(isInThread ? [] : pendingEvents);
+        return liveTimelineEvents?.concat(isInThread ? [] : pendingEvents) ?? [];
     }
 
     private cancelEdit = (): void => {
@@ -304,10 +305,10 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         });
 
         // Replace emoticon at the end of the message
-        if (SettingsStore.getValue("MessageComposerInput.autoReplaceEmoji")) {
-            const caret = this.editorRef.current?.getCaret();
+        if (SettingsStore.getValue("MessageComposerInput.autoReplaceEmoji") && this.editorRef.current) {
+            const caret = this.editorRef.current.getCaret();
             const position = this.model.positionForOffset(caret.offset, caret.atNodeEnd);
-            this.editorRef.current?.replaceEmoticon(position, REGEX_EMOTICON);
+            this.editorRef.current.replaceEmoticon(position, REGEX_EMOTICON);
         }
         const editContent = createEditContent(this.model, editedEvent);
         const newContent = editContent["m.new_content"];
@@ -382,7 +383,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         // store caret and serialized parts in the
         // editorstate so it can be restored when the remote echo event tile gets rendered
         // in case we're currently editing a pending event
-        const sel = document.getSelection();
+        const sel = document.getSelection()!;
         let caret: DocumentOffset | undefined;
         if (sel.focusNode) {
             caret = getCaretOffsetAndText(this.editorRef.current?.editorRef.current, sel).caret;

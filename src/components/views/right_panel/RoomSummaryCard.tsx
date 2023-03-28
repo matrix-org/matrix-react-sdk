@@ -130,12 +130,14 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
     let contextMenu;
     if (menuDisplayed) {
-        const rect = handle.current.getBoundingClientRect();
+        const rect = handle.current?.getBoundingClientRect();
+        const rightMargin = rect?.right ?? 0;
+        const topMargin = rect?.top ?? 0;
         contextMenu = (
             <WidgetContextMenu
                 chevronFace={ChevronFace.None}
-                right={UIStore.instance.windowWidth - rect.right}
-                bottom={UIStore.instance.windowHeight - rect.top}
+                right={UIStore.instance.windowWidth - rightMargin}
+                bottom={UIStore.instance.windowHeight - topMargin}
                 onFinished={closeMenu}
                 app={app}
             />
@@ -226,7 +228,7 @@ const AppsSection: React.FC<IAppsSectionProps> = ({ room }) => {
             managers.openNoManagerDialog();
         } else {
             // noinspection JSIgnoredPromiseFromCall
-            managers.getPrimaryManager().open(room);
+            managers.getPrimaryManager()?.open(room);
         }
     };
 
@@ -327,8 +329,6 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) 
     const pinningEnabled = useFeatureEnabled("feature_pinning");
     const pinCount = usePinnedEvents(pinningEnabled ? room : undefined)?.length;
 
-    const isPollHistoryEnabled = useFeatureEnabled("feature_poll_history");
-
     return (
         <BaseCard header={header} className="mx_RoomSummaryCard" onClose={onClose}>
             <Group title={_t("About")} className="mx_RoomSummaryCard_aboutGroup">
@@ -341,7 +341,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) 
                         {_t("Files")}
                     </Button>
                 )}
-                {!isVideoRoom && isPollHistoryEnabled && (
+                {!isVideoRoom && (
                     <Button className="mx_RoomSummaryCard_icon_poll" onClick={onRoomPollHistoryClick}>
                         {_t("Polls history")}
                     </Button>
