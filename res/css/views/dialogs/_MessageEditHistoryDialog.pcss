@@ -74,20 +74,13 @@ limitations under the License.
         }
     }
 
-    .mx_MessageActionBar {
-        &.mx_MessageActionBar--noButton {
-            /* Hide if neither redact nor view source button is rendered inside it */
-            display: none;
-        }
+    .mx_MessageActionBar .mx_AccessibleButton {
+        display: flex;
+        align-items: center;
 
-        .mx_AccessibleButton {
-            display: flex;
-            align-items: center;
+        padding-inline-start: $spacing-8;
+        padding-inline-end: $spacing-8;
 
-            padding-inline-start: $spacing-8;
-            padding-inline-end: $spacing-8;
-
-            font-size: $font-15px;
-        }
+        font-size: $font-15px;
     }
 }

@@ -141,13 +141,9 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
             );
         }
 
-        const classes = classNames("mx_MessageActionBar", {
-            "mx_MessageActionBar--noButton": !SettingsStore.getValue("developerMode") && !redactButton,
-        });
-
         // disabled remove button when not allowed
         return (
-            <div className={classes}>
+            <div className="mx_MessageActionBar">
                 {redactButton}
                 {viewSourceButton}
             </div>
