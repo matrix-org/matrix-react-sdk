@@ -263,12 +263,12 @@ describe("Decryption Failure Bar", () => {
         cy.get(".mx_DecryptionFailureBar").should("exist");
         cy.get(".mx_DecryptionFailureBar .mx_Spinner").should("exist");
 
-        checkTimelineNarrow();
-
         cy.get(".mx_DecryptionFailureBar").percySnapshotElement("DecryptionFailureBar displays loading spinner", {
             allowSpinners: true,
             widths: [320, 640],
         });
+
+        checkTimelineNarrow();
 
         cy.wait(5000);
         cy.get(".mx_DecryptionFailureBar .mx_Spinner").should("not.exist");
