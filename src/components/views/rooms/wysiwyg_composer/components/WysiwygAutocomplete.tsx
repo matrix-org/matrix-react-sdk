@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { ForwardedRef, forwardRef } from "react";
 import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
-import { FormattingFunctions, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
+import { Attributes, FormattingFunctions, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 
 import { useRoomContext } from "../../../../../contexts/RoomContext";
 import Autocomplete from "../../Autocomplete";
@@ -56,34 +56,50 @@ function buildQuery(suggestion: MappedSuggestion | null): string {
 }
 
 /**
- * Given a room type mention, determine the text that should be displayed in the mention
- * TODO expand this function to more generally handle outputting the display text from a
- * given completion
+ * Given an autocomplete suggestion, determine the text to display in the pill
  *
- * @param completion - the item selected from the autocomplete, currently treated as a room completion
+ * @param completion - the item selected from the autocomplete
  * @param client - the MatrixClient is required for us to look up the correct room mention text
  * @returns the text to display in the mention
  */
-function getRoomMentionText(completion: ICompletion, client: MatrixClient): string {
-    const roomId = completion.completionId;
-    const alias = completion.completion;
+function getMentionDisplayText(completion: ICompletion, client: MatrixClient): string {
+    if (completion.type === "user") {
+        return completion.completion;
+    } else if (completion.type === "room") {
+        const roomId = completion.completionId;
+        const alias = completion.completion;
 
-    let roomForAutocomplete: Room | null | undefined;
+        let roomForAutocomplete: Room | null | undefined;
 
-    // Not quite sure if the logic here makes sense - specifically calling .getRoom with an alias
-    // that doesn't start with #, but keeping the logic the same as in PartCreator.roomPill for now
-    if (roomId) {
-        roomForAutocomplete = client.getRoom(roomId);
-    } else if (!alias.startsWith("#")) {
-        roomForAutocomplete = client.getRoom(alias);
-    } else {
-        roomForAutocomplete = client.getRooms().find((r) => {
-            return r.getCanonicalAlias() === alias || r.getAltAliases().includes(alias);
-        });
+        // Not quite sure if the logic here makes sense - specifically calling .getRoom with an alias
+        // that doesn't start with #, but keeping the logic the same as in PartCreator.roomPill for now
+        if (roomId) {
+            roomForAutocomplete = client.getRoom(roomId);
+        } else if (!alias.startsWith("#")) {
+            roomForAutocomplete = client.getRoom(alias);
+        } else {
+            roomForAutocomplete = client.getRooms().find((r) => {
+                return r.getCanonicalAlias() === alias || r.getAltAliases().includes(alias);
+            });
+        }
+
+        // if we haven't managed to find the room, use the alias as a fallback
+        return roomForAutocomplete?.name || alias;
     }
+}
 
-    // if we haven't managed to find the room, use the alias as a fallback
-    return roomForAutocomplete?.name || alias;
+/**
+ * For a given completion, the attributes will change depending on the completion type
+ *
+ * @param completion - the item selected from the autocomplete
+ * @param client - the MatrixClient is required for us to look up the correct room mention text
+ * @returns an object of attributes containing HTMLAnchor attributes or data-* attri
+ */
+function getMentionAttributes(completion: ICompletion, client: MatrixClient): Attributes {
+    return {
+        "data-mention-type": completion.type,
+        "style": "this-will-be-the-avatar-url",
+    };
 }
 
 /**
@@ -101,20 +117,15 @@ const WysiwygAutocomplete = forwardRef(
         function handleConfirm(completion: ICompletion): void {
             if (!completion.href) return;
 
-            switch (completion.type) {
-                case "user":
-                    handleMention(completion.href, completion.completion);
-                    break;
-                case "room": {
-                    handleMention(completion.href, getRoomMentionText(completion, client));
-                    break;
-                }
-                // TODO implement the command functionality
-                // case "command":
-                //     console.log("/command functionality not yet in place");
-                //     break;
-                default:
-                    break;
+            console.log(completion, " <<< comp ");
+
+            // TODO handle the other type functionality like completion.type === "command"
+            if (completion.type === "room" || completion.type === "user") {
+                handleMention(
+                    completion.href,
+                    getMentionDisplayText(completion, client),
+                    getMentionAttributes(completion, client),
+                );
             }
         }
 
