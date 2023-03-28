@@ -141,13 +141,18 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
             );
         }
 
-        // disabled remove button when not allowed
-        return (
-            <div className="mx_MessageActionBar">
-                {redactButton}
-                {viewSourceButton}
-            </div>
-        );
+        if (!redactButton && !viewSourceButton) {
+            // Hide the empty MessageActionBar
+            return null;
+        } else {
+            // disabled remove button when not allowed
+            return (
+                <div className="mx_MessageActionBar">
+                    {redactButton}
+                    {viewSourceButton}
+                </div>
+            );
+        }
     }
 
     public render(): React.ReactNode {
