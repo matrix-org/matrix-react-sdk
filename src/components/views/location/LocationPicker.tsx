@@ -99,11 +99,13 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                 this.setState({ error: LocationShareError.MapStyleUrlNotReachable });
             });
 
-            this.map.on("load", () => {
+            this.map.once("load", () => {
                 this.geolocate?.trigger();
             });
 
-            this.geolocate.on("error", this.onGeolocateError);
+            // geolocate control is removed or error screen shown
+            // after first error
+            this.geolocate.once("error", this.onGeolocateError);
 
             if (isSharingOwnLocation(this.props.shareType)) {
                 this.geolocate.on("geolocate", this.onGeolocate);
