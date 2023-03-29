@@ -28,8 +28,6 @@ import { PermalinkParts } from "./permalinks/PermalinkConstructor";
 /**
  * A node here is an A element with a href attribute tag.
  *
- * It should not be pillified if the permalink parser result contains an event Id.
- *
  * It should be pillified if the permalink parser returns a result and one of the following conditions match:
  * - Text content equals href. This is the case when sending a plain permalink inside a message.
  * - The link does not have the "linkified" class.
@@ -37,9 +35,14 @@ import { PermalinkParts } from "./permalinks/PermalinkConstructor";
  *   Linkify will not linkify things again. → There won't be a "linkified" class.
  */
 const shouldBePillified = (node: Element, href: string, parts: PermalinkParts | null): boolean => {
-    if (!parts || parts.eventId) return false;
+    // permalink parser didn't return any parts
+    if (!parts) return false;
 
     const textContent = node.textContent;
+
+    // event permalink with custom label
+    if (parts.eventId && href !== textContent) return false;
+
     return href === textContent || !node.classList.contains("linkified");
 };
 
@@ -79,7 +82,7 @@ export function pillifyLinks(nodes: ArrayLike<Element>, mxEvent: MatrixEvent, pi
                 );
 
                 ReactDOM.render(pill, pillContainer);
-                node.parentNode.replaceChild(pillContainer, node);
+                node.parentNode?.replaceChild(pillContainer, node);
                 pills.push(pillContainer);
                 // Pills within pills aren't going to go well, so move on
                 pillified = true;
@@ -92,10 +95,10 @@ export function pillifyLinks(nodes: ArrayLike<Element>, mxEvent: MatrixEvent, pi
             // as applying pills happens outside of react, make sure we're not doubly
             // applying @room pills here, as a rerender with the same content won't touch the DOM
             // to clear the pills from the last run of pillifyLinks
-            !node.parentElement.classList.contains("mx_AtRoomPill")
+            !node.parentElement?.classList.contains("mx_AtRoomPill")
         ) {
             let currentTextNode = node as Node as Text | null;
-            const roomNotifTextNodes = [];
+            const roomNotifTextNodes: Text[] = [];
 
             // Take a textNode and break it up to make all the instances of @room their
             // own textNode, adding those nodes to roomNotifTextNodes
@@ -106,7 +109,7 @@ export function pillifyLinks(nodes: ArrayLike<Element>, mxEvent: MatrixEvent, pi
                     let roomTextNode = currentTextNode;
 
                     if (roomNotifPos > 0) roomTextNode = roomTextNode.splitText(roomNotifPos);
-                    if (roomTextNode.textContent.length > pillRoomNotifLen()) {
+                    if (roomTextNode.textContent && roomTextNode.textContent.length > pillRoomNotifLen()) {
                         nextTextNode = roomTextNode.splitText(pillRoomNotifLen());
                     }
                     roomNotifTextNodes.push(roomTextNode);
@@ -137,7 +140,7 @@ export function pillifyLinks(nodes: ArrayLike<Element>, mxEvent: MatrixEvent, pi
                         );
 
                         ReactDOM.render(pill, pillContainer);
-                        roomNotifTextNode.parentNode.replaceChild(pillContainer, roomNotifTextNode);
+                        roomNotifTextNode.parentNode?.replaceChild(pillContainer, roomNotifTextNode);
                         pills.push(pillContainer);
                     }
                     // Nothing else to do for a text node (and we don't need to advance
