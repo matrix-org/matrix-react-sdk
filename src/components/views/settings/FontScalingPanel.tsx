@@ -141,13 +141,7 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
                             const size = parseInt(this.state.fontSize, 10);
                             const clamped = clamp(size, min, max);
                             if (clamped !== size) {
-                                this.setState({ fontSize: clamped.toString() });
-                                SettingsStore.setValue(
-                                    "baseFontSize",
-                                    null,
-                                    SettingLevel.DEVICE,
-                                    clamped - FontWatcher.SIZE_DIFF,
-                                );
+                                this.onFontSizeChanged(clamped);
                             }
                         }
                     }}
