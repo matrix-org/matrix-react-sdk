@@ -239,7 +239,7 @@ describe("Audio player", () => {
             checkPlayerFilenameLong();
         });
 
-        // Disable "Match system theme" in case
+        // Disable system theme (enabled by default) so that high contrast theme can be enabled
         cy.setSettingValue("use_system_theme", null, SettingLevel.DEVICE, false);
 
         // Enable high contrast manually
