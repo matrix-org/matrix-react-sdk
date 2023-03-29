@@ -110,7 +110,7 @@ limitations under the License.
             padding: $font-1px 0.4em $font-1px 0.4em;
             line-height: $font-17px;
             border-radius: $font-16px;
-            vertical-align: text-top;
+            /* vertical-align: text-top; turning this off stops the vertical alignement issue */
             /* TODO turning this on hides the cursor from the composer for some 
             reason, so comment out for now and assess if it's needed when we add
             the Avatars 
@@ -119,6 +119,7 @@ limitations under the License.
             
             Potential fix is using display: inline, width: fit-content
             */
+            display: inline; /* this, combined with omitting vertical-align, looks good */
             box-sizing: border-box;
             max-width: 100%;
             overflow: hidden;
@@ -133,8 +134,19 @@ limitations under the License.
             text-overflow: ellipsis;
             white-space: nowrap;
 
-            /* avatar psuedo element */
+            /* avatar pseudo element */
+            /* TODO figure out why the application of this alters the 
+            *  vertical alignment of the pill - bottom appears clipped and 
+            *  the avatar appears too high (but I think it may be correct, 
+            *  it just looks this way because the body of the pill is lower)
+            */
             &::before {
+                /* from _Pill */
+                margin-inline-start: -0.3em; /* Otherwise the gap is too large */
+                margin-inline-end: 0.2em;
+                min-width: $font-16px; /* ensure the avatar is not compressed */
+
+                /* from _BasicMessageComposer */
                 display: inline-block;
                 content: var(--avatar-letter);
                 width: $font-16px;
@@ -148,8 +160,17 @@ limitations under the License.
                 border-radius: $font-16px;
                 text-align: center;
                 font-weight: normal;
-                line-height: $font-16px;
+                line-height: $font-17px; /* amend to match a text */
                 font-size: $font-10-4px;
+
+                /* TODO consolidate this whole block of CSS - there's some useless 
+                *  and overwritten stuff here, so pick the useful stuff out and 
+                *  arrange into a block that makes sense to read
+                */
+
+                /* overrides to get the positioning just right */
+                vertical-align: -3px;
+                margin-inline-start: -0.4rem;
             }
         }
     }
