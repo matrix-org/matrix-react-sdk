@@ -563,16 +563,13 @@ describe("Timeline", () => {
             cy.get(".mx_RoomView_MessageList > .mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
 
             // Delete the message
-            cy.get(".mx_RoomView_MessageList > .mx_EventTile_last").realHover();
-            cy.get(".mx_RoomView_MessageList > .mx_EventTile_last .mx_MessageActionBar_optionsButton", {
-                timeout: 1000,
-            })
+            cy.get(".mx_RoomView_MessageList > .mx_EventTile_last")
+                .realHover()
+                .findButton("Options")
                 .should("exist")
                 .realHover()
-                .click({ force: false });
-            cy.get(".mx_IconizedContextMenu_item[aria-label=Remove]", { timeout: 1000 })
-                .should("be.visible")
-                .click({ force: false });
+                .click();
+            cy.findMenuitem("Remove").should("be.visible").click();
 
             // Confirm deletion
             cy.get(".mx_Dialog_buttons button[data-testid=dialog-primary-button]")
