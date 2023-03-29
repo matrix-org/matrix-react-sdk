@@ -53,9 +53,10 @@ interface IState {
 
 export default class BugReportDialog extends React.Component<IProps, IState> {
     private unmounted: boolean;
-
+    private issueRef: any;
     public constructor(props: IProps) {
         super(props);
+        this.issueRef = React.createRef();
         this.state = {
             sendLogs: true,
             busy: false,
@@ -66,6 +67,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             downloadBusy: false,
             downloadProgress: null,
         };
+        
         this.unmounted = false;
 
         // Get all of the extra info dumped to the console when someone is about
@@ -79,6 +81,10 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
         });
     }
 
+    public componentDidMount(): void {
+        this.issueRef.current?.focus();
+    }
+    
     public componentWillUnmount(): void {
         this.unmounted = true;
     }
@@ -255,6 +261,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                         onChange={this.onIssueUrlChange}
                         value={this.state.issueUrl}
                         placeholder="https://github.com/vector-im/element-web/issues/..."
+                        ref={this.issueRef}
                     />
                     <Field
                         className="mx_BugReportDialog_field_input"
