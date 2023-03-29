@@ -100,10 +100,6 @@ function getMentionAttributes(completion: ICompletion, client: MatrixClient, roo
     let background = "background";
     let letter = "letter";
     if (completion.type === "user") {
-        // TODO try and get the avatar background url and avatar letter for a user
-        // looks like we need a RoomMember
-        // which you get by calling this.room.getMember(userId)
-        // and it looks like the userId is actually the display name which is completion.completion
         const member = room.getMember(completion.completionId);
 
         if (!member) return;
@@ -120,7 +116,29 @@ function getMentionAttributes(completion: ICompletion, client: MatrixClient, roo
         letter = `'${initialLetter}'`; // not a mistake, need to ensure it's there
     }
     if (completion.type === "room") {
-        // TODO try and get the avatar background url and avatar letter for a room
+        console.log(completion, "<<<comp");
+        const roomId = completion.completionId;
+        const alias = completion.completion;
+        // TODO note this is the same logic as in getMentionDisplayText - extract into
+        // a separate function
+        let room: Room | undefined;
+        if (roomId || alias[0] !== "#") {
+            room = client.getRoom(roomId || alias) ?? undefined;
+        } else {
+            room = client.getRooms().find((r) => {
+                return r.getCanonicalAlias() === alias || r.getAltAliases().includes(alias);
+            });
+        }
+
+        let initialLetter = "";
+        let avatarUrl = Avatar.avatarUrlForRoom(room ?? null, 16, 16, "crop");
+        if (!avatarUrl) {
+            initialLetter = Avatar.getInitialLetter(room?.name || alias) ?? "";
+            avatarUrl = Avatar.defaultAvatarUrlForString(room?.roomId ?? alias);
+        }
+
+        background = `url(${avatarUrl})`;
+        letter = `'${initialLetter}'`; // not a mistake, need to ensure it's there
     }
 
     return {
