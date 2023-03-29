@@ -19,7 +19,7 @@ limitations under the License.
     margin: 0;
     flex-grow: 1;
 
-    input[type=range] {
+    input[type="range"] {
         height: 2.4em;
         appearance: none;
         width: 100%;
@@ -85,7 +85,8 @@ limitations under the License.
             border-color: transparent;
             color: transparent;
         }
-        &::-ms-fill-lower, &::-ms-fill-upper {
+        &::-ms-fill-lower,
+        &::-ms-fill-upper {
             background: $slider-background-color;
             border: 0 solid #000000;
             border-radius: 10px;
@@ -100,8 +101,9 @@ limitations under the License.
         &:focus::-ms-fill-upper {
             background: $slider-background-color;
         }
-        &::-ms-fill-lower, &:focus::-ms-fill-lower {
-            background: var(--active-color)
+        &::-ms-fill-lower,
+        &:focus::-ms-fill-lower {
+            background: var(--active-color);
         }
     }
 
