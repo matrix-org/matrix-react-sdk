@@ -34,7 +34,7 @@ describe("RoomStatusBar", () => {
 
         stubClient();
         client = MatrixClientPeg.get();
-        room = new Room(ROOM_ID, client, client.getUserId(), {
+        room = new Room(ROOM_ID, client, client.getUserId()!, {
             pendingEventOrdering: PendingEventOrdering.Detached,
         });
         event = mkEvent({
@@ -72,7 +72,7 @@ describe("RoomStatusBar", () => {
                 length: 2,
             });
             rootEvent.status = EventStatus.NOT_SENT;
-            room.addPendingEvent(rootEvent, rootEvent.getId());
+            room.addPendingEvent(rootEvent, rootEvent.getId()!);
             for (const event of events) {
                 event.status = EventStatus.NOT_SENT;
                 room.addPendingEvent(event, Date.now() + Math.random() + "");
@@ -85,7 +85,7 @@ describe("RoomStatusBar", () => {
             expect(pendingEvents[2].threadRootId).toBe(rootEvent.getId());
 
             // Filters out the non thread events
-            expect(pendingEvents.every(ev => ev.getId() !== event.getId())).toBe(true);
+            expect(pendingEvents.every((ev) => ev.getId() !== event.getId())).toBe(true);
         });
     });
 });

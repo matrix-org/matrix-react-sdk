@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022-2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,28 +16,28 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import Chainable = Cypress.Chainable;
 
 function openCreateRoomDialog(): Chainable<JQuery<HTMLElement>> {
-    cy.get('[aria-label="Add room"]').click();
-    cy.get('.mx_ContextualMenu [aria-label="New room"]').click();
+    cy.findButton("Add room").click();
+    cy.findMenuitem("New room").click();
     return cy.get(".mx_CreateRoomDialog");
 }
 
 describe("Create Room", () => {
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
 
     beforeEach(() => {
-        cy.startSynapse("default").then(data => {
-            synapse = data;
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
 
-            cy.initTestUser(synapse, "Jim");
+            cy.initTestUser(homeserver, "Jim");
         });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
     });
 
     it("should allow us to create a public room with name, topic & address set", () => {
@@ -46,19 +46,49 @@ describe("Create Room", () => {
 
         openCreateRoomDialog().within(() => {
             // Fill name & topic
-            cy.get('[label="Name"]').type(name);
-            cy.get('[label="Topic (optional)"]').type(topic);
+            cy.findTextbox("Name").type(name);
+            cy.findTextbox("Topic (optional)").type(topic);
             // Change room to public
-            cy.get('[aria-label="Room visibility"]').click();
-            cy.get("#mx_JoinRuleDropdown__public").click();
+            cy.findButton("Room visibility").click();
+            cy.findOption("Public room").click();
             // Fill room address
-            cy.get('[label="Room address"]').type("test-room-1");
+            cy.findTextbox("Room address").type("test-room-1");
             // Submit
-            cy.get(".mx_Dialog_primary").click();
+            cy.findButton("Create room").click();
         });
 
         cy.url().should("contain", "/#/room/#test-room-1:localhost");
-        cy.contains(".mx_RoomHeader_nametext", name);
-        cy.contains(".mx_RoomHeader_topic", topic);
+
+        cy.get(".mx_RoomHeader").within(() => {
+            cy.findByText(name);
+            cy.findByText(topic);
+        });
+    });
+
+    it("should create a room with a long room name, which is displayed with ellipsis", () => {
+        let roomId: string;
+        const LONG_ROOM_NAME =
+            "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore " +
+            "et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut " +
+            "aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum " +
+            "dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui " +
+            "officia deserunt mollit anim id est laborum.";
+
+        cy.createRoom({ name: LONG_ROOM_NAME }).then((_roomId) => {
+            roomId = _roomId;
+            cy.visit("/#/room/" + roomId);
+        });
+
+        // Wait until the room name is set
+        cy.get(".mx_RoomHeader_nametext").contains("Lorem ipsum");
+
+        // Make sure size of buttons on RoomHeader (except .mx_RoomHeader_name) are specified
+        // and the buttons are not compressed
+        // TODO: use a same class name
+        cy.get(".mx_RoomHeader_button").should("have.css", "height", "32px").should("have.css", "width", "32px");
+        cy.get(".mx_HeaderButtons > .mx_RightPanel_headerButton")
+            .should("have.css", "height", "32px")
+            .should("have.css", "width", "32px");
+        cy.get(".mx_RoomHeader").percySnapshotElement("Room header with a long room name");
     });
 });

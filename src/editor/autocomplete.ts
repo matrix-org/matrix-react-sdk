@@ -34,13 +34,12 @@ export type UpdateQuery = (test: string) => Promise<void>;
 export default class AutocompleteWrapperModel {
     private partIndex: number;
 
-    constructor(
+    public constructor(
         private updateCallback: UpdateCallback,
         private getAutocompleterComponent: GetAutocompleterComponent,
         private updateQuery: UpdateQuery,
         private partCreator: PartCreator | CommandPartCreator,
-    ) {
-    }
+    ) {}
 
     public onEscape(e: KeyboardEvent): void {
         this.getAutocompleterComponent().onEscape(e);
@@ -100,12 +99,15 @@ export default class AutocompleteWrapperModel {
         const text = completion.completion;
         switch (completion.type) {
             case "room":
-                return [this.partCreator.roomPill(text, completionId), this.partCreator.plain(completion.suffix)];
+                return [this.partCreator.roomPill(text, completionId), this.partCreator.plain(completion.suffix || "")];
             case "at-room":
-                return [this.partCreator.atRoomPill(completionId), this.partCreator.plain(completion.suffix)];
+                return [
+                    this.partCreator.atRoomPill(completionId || ""),
+                    this.partCreator.plain(completion.suffix || ""),
+                ];
             case "user":
                 // Insert suffix only if the pill is the part with index 0 - we are at the start of the composer
-                return this.partCreator.createMentionParts(this.partIndex === 0, text, completionId);
+                return this.partCreator.createMentionParts(this.partIndex === 0, text, completionId || "");
             case "command":
                 // command needs special handling for auto complete, but also renders as plain texts
                 return [(this.partCreator as CommandPartCreator).command(text)];

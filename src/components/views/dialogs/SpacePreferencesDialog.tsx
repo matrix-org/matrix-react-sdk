@@ -17,9 +17,8 @@ limitations under the License.
 import React, { ChangeEvent } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import { _t, _td } from '../../../languageHandler';
+import { _t, _td } from "../../../languageHandler";
 import BaseDialog from "../dialogs/BaseDialog";
-import { IDialogProps } from "./IDialogProps";
 import TabbedView, { Tab } from "../../structures/TabbedView";
 import StyledCheckbox from "../elements/StyledCheckbox";
 import { useSettingValue } from "../../../hooks/useSettings";
@@ -27,18 +26,20 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import RoomName from "../elements/RoomName";
 import { SpacePreferenceTab } from "../../../dispatcher/payloads/OpenSpacePreferencesPayload";
+import { NonEmptyArray } from "../../../@types/common";
 
-interface IProps extends IDialogProps {
+interface IProps {
     space: Room;
     initialTabId?: SpacePreferenceTab;
+    onFinished(): void;
 }
 
-const SpacePreferencesAppearanceTab = ({ space }: Pick<IProps, "space">) => {
+const SpacePreferencesAppearanceTab: React.FC<Pick<IProps, "space">> = ({ space }) => {
     const showPeople = useSettingValue("Spaces.showPeopleInSpace", space.roomId);
 
     return (
         <div className="mx_SettingsTab">
-            <div className="mx_SettingsTab_heading">{ _t("Sections to show") }</div>
+            <div className="mx_SettingsTab_heading">{_t("Sections to show")}</div>
 
             <div className="mx_SettingsTab_section">
                 <StyledCheckbox
@@ -52,13 +53,16 @@ const SpacePreferencesAppearanceTab = ({ space }: Pick<IProps, "space">) => {
                         );
                     }}
                 >
-                    { _t("People") }
+                    {_t("People")}
                 </StyledCheckbox>
                 <p>
-                    { _t("This groups your chats with members of this space. " +
-                        "Turning this off will hide those chats from your view of %(spaceName)s.", {
-                        spaceName: space.name,
-                    }) }
+                    {_t(
+                        "This groups your chats with members of this space. " +
+                            "Turning this off will hide those chats from your view of %(spaceName)s.",
+                        {
+                            spaceName: space.name,
+                        },
+                    )}
                 </p>
             </div>
         </div>
@@ -66,7 +70,7 @@ const SpacePreferencesAppearanceTab = ({ space }: Pick<IProps, "space">) => {
 };
 
 const SpacePreferencesDialog: React.FC<IProps> = ({ space, initialTabId, onFinished }) => {
-    const tabs = [
+    const tabs: NonEmptyArray<Tab> = [
         new Tab(
             SpacePreferenceTab.Appearance,
             _td("Appearance"),

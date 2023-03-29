@@ -19,13 +19,13 @@ import { DialogContent, DialogProps } from "@matrix-org/react-sdk-module-api/lib
 import { logger } from "matrix-js-sdk/src/logger";
 
 import ScrollableBaseModal, { IScrollableBaseState } from "./ScrollableBaseModal";
-import { IDialogProps } from "./IDialogProps";
 import { _t } from "../../../languageHandler";
 
-interface IProps extends IDialogProps {
-    contentFactory: (props: DialogProps, ref: React.Ref<DialogContent>) => React.ReactNode;
+interface IProps<C extends React.Component = React.Component> {
+    contentFactory: (props: DialogProps, ref: React.Ref<C>) => React.ReactNode;
     contentProps: DialogProps;
     title: string;
+    onFinished(ok?: boolean, model?: Awaited<ReturnType<DialogContent["trySubmit"]>>): void;
 }
 
 interface IState extends IScrollableBaseState {
@@ -45,7 +45,7 @@ export class ModuleUiDialog extends ScrollableBaseModal<IProps, IState> {
         };
     }
 
-    protected async submit() {
+    protected async submit(): Promise<void> {
         try {
             const model = await this.contentRef.current.trySubmit();
             this.props.onFinished(true, model);
@@ -59,8 +59,10 @@ export class ModuleUiDialog extends ScrollableBaseModal<IProps, IState> {
     }
 
     protected renderContent(): React.ReactNode {
-        return <div className="mx_ModuleUiDialog">
-            { this.props.contentFactory(this.props.contentProps, this.contentRef) }
-        </div>;
+        return (
+            <div className="mx_ModuleUiDialog">
+                {this.props.contentFactory(this.props.contentProps, this.contentRef)}
+            </div>
+        );
     }
 }

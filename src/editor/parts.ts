@@ -21,16 +21,14 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import AutocompleteWrapperModel, {
-    GetAutocompleterComponent,
-    UpdateCallback,
-    UpdateQuery,
-} from "./autocomplete";
+import AutocompleteWrapperModel, { GetAutocompleterComponent, UpdateCallback, UpdateQuery } from "./autocomplete";
 import { unicodeToShortcode } from "../HtmlUtils";
 import * as Avatar from "../Avatar";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { Action } from "../dispatcher/actions";
 import SettingsStore from "../settings/SettingsStore";
+
+const REGIONAL_EMOJI_SEPARATOR = String.fromCodePoint(0x200b);
 
 interface ISerializedPart {
     type: Type.Plain | Type.Newline | Type.Emoji | Type.Command | Type.PillCandidate;
@@ -72,11 +70,13 @@ interface IBasePart {
     updateDOMNode(node: Node): void;
     canUpdateDOMNode(node: Node): boolean;
     toDOMNode(): Node;
+
+    merge?(part: Part): boolean;
 }
 
 interface IPillCandidatePart extends Omit<IBasePart, "type" | "createAutoComplete"> {
     type: Type.PillCandidate | Type.Command;
-    createAutoComplete(updateCallback: UpdateCallback): AutocompleteWrapperModel;
+    createAutoComplete(updateCallback: UpdateCallback): AutocompleteWrapperModel | undefined;
 }
 
 interface IPillPart extends Omit<IBasePart, "type" | "resourceId"> {
@@ -89,7 +89,7 @@ export type Part = IBasePart | IPillCandidatePart | IPillPart;
 abstract class BasePart {
     protected _text: string;
 
-    constructor(text = "") {
+    public constructor(text = "") {
         this._text = text;
     }
 
@@ -117,7 +117,7 @@ abstract class BasePart {
     public remove(offset: number, len: number): string | undefined {
         // validate
         const strWithRemoval = this.text.slice(0, offset) + this.text.slice(offset + len);
-        for (let i = offset; i < (len + offset); ++i) {
+        for (let i = offset; i < len + offset; ++i) {
             const chr = this.text.charAt(i);
             if (!this.acceptsRemoval(i, chr)) {
                 return strWithRemoval;
@@ -214,10 +214,13 @@ abstract class PlainBasePart extends BasePart {
                 return false;
             }
 
-            // or split if the previous character is a space
+            // or split if the previous character is a space or regional emoji separator
             // or if it is a + and this is a :
-            return this._text[offset - 1] !== " " &&
-                (this._text[offset - 1] !== "+" || chr !== ":");
+            return (
+                this._text[offset - 1] !== " " &&
+                this._text[offset - 1] !== REGIONAL_EMOJI_SEPARATOR &&
+                (this._text[offset - 1] !== "+" || chr !== ":")
+            );
         }
         return true;
     }
@@ -226,7 +229,7 @@ abstract class PlainBasePart extends BasePart {
         return document.createTextNode(this.text);
     }
 
-    public merge(part): boolean {
+    public merge(part: Part): boolean {
         if (part.type === this.type) {
             this._text = this.text + part.text;
             return true;
@@ -253,7 +256,7 @@ export class PlainPart extends PlainBasePart implements IBasePart {
 }
 
 export abstract class PillPart extends BasePart implements IPillPart {
-    constructor(public resourceId: string, label) {
+    public constructor(public resourceId: string, label: string) {
         super(label);
     }
 
@@ -262,14 +265,14 @@ export abstract class PillPart extends BasePart implements IPillPart {
     }
 
     protected acceptsRemoval(position: number, chr: string): boolean {
-        return position !== 0;  //if you remove initial # or @, pill should become plain
+        return position !== 0; //if you remove initial # or @, pill should become plain
     }
 
     public toDOMNode(): Node {
         const container = document.createElement("span");
         container.setAttribute("spellcheck", "false");
         container.setAttribute("contentEditable", "false");
-        container.onclick = this.onClick;
+        if (this.onClick) container.onclick = this.onClick;
         container.className = this.className;
         container.appendChild(document.createTextNode(this.text));
         this.setAvatar(container);
@@ -284,17 +287,19 @@ export abstract class PillPart extends BasePart implements IPillPart {
         if (node.className !== this.className) {
             node.className = this.className;
         }
-        if (node.onclick !== this.onClick) {
+        if (this.onClick && node.onclick !== this.onClick) {
             node.onclick = this.onClick;
         }
         this.setAvatar(node);
     }
 
     public canUpdateDOMNode(node: HTMLElement): boolean {
-        return node.nodeType === Node.ELEMENT_NODE &&
-               node.nodeName === "SPAN" &&
-               node.childNodes.length === 1 &&
-               node.childNodes[0].nodeType === Node.TEXT_NODE;
+        return (
+            node.nodeType === Node.ELEMENT_NODE &&
+            node.nodeName === "SPAN" &&
+            node.childNodes.length === 1 &&
+            node.childNodes[0].nodeType === Node.TEXT_NODE
+        );
     }
 
     // helper method for subclasses
@@ -411,15 +416,15 @@ export class EmojiPart extends BasePart implements IBasePart {
 }
 
 class RoomPillPart extends PillPart {
-    constructor(resourceId: string, label: string, private room?: Room) {
+    public constructor(resourceId: string, label: string, private room?: Room) {
         super(resourceId, label);
     }
 
     protected setAvatar(node: HTMLElement): void {
         let initialLetter = "";
-        let avatarUrl = Avatar.avatarUrlForRoom(this.room, 16, 16, "crop");
+        let avatarUrl = Avatar.avatarUrlForRoom(this.room ?? null, 16, 16, "crop");
         if (!avatarUrl) {
-            initialLetter = Avatar.getInitialLetter(this.room?.name || this.resourceId);
+            initialLetter = Avatar.getInitialLetter(this.room?.name || this.resourceId) ?? "";
             avatarUrl = Avatar.defaultAvatarUrlForString(this.room?.roomId ?? this.resourceId);
         }
         this.setAvatarVars(node, avatarUrl, initialLetter);
@@ -429,13 +434,13 @@ class RoomPillPart extends PillPart {
         return Type.RoomPill;
     }
 
-    protected get className() {
+    protected get className(): string {
         return "mx_Pill " + (this.room?.isSpaceRoom() ? "mx_SpacePill" : "mx_RoomPill");
     }
 }
 
 class AtRoomPillPart extends RoomPillPart {
-    constructor(text: string, room: Room) {
+    public constructor(text: string, room: Room) {
         super(text, text, room);
     }
 
@@ -452,7 +457,7 @@ class AtRoomPillPart extends RoomPillPart {
 }
 
 class UserPillPart extends PillPart {
-    constructor(userId, displayName, private member: RoomMember) {
+    public constructor(userId: string, displayName: string, private member?: RoomMember) {
         super(userId, displayName);
     }
 
@@ -460,7 +465,7 @@ class UserPillPart extends PillPart {
         return Type.UserPill;
     }
 
-    protected get className() {
+    protected get className(): string {
         return "mx_UserPill mx_Pill";
     }
 
@@ -473,7 +478,7 @@ class UserPillPart extends PillPart {
         const avatarUrl = Avatar.avatarUrlForMember(this.member, 16, 16, "crop");
         let initialLetter = "";
         if (avatarUrl === defaultAvatarUrl) {
-            initialLetter = Avatar.getInitialLetter(name);
+            initialLetter = Avatar.getInitialLetter(name) ?? "";
         }
         this.setAvatarVars(node, avatarUrl, initialLetter);
     }
@@ -487,12 +492,12 @@ class UserPillPart extends PillPart {
 }
 
 class PillCandidatePart extends PlainBasePart implements IPillCandidatePart {
-    constructor(text: string, private autoCompleteCreator: IAutocompleteCreator) {
+    public constructor(text: string, private autoCompleteCreator: IAutocompleteCreator) {
         super(text);
     }
 
-    public createAutoComplete(updateCallback: UpdateCallback): AutocompleteWrapperModel {
-        return this.autoCompleteCreator.create(updateCallback);
+    public createAutoComplete(updateCallback: UpdateCallback): AutocompleteWrapperModel | undefined {
+        return this.autoCompleteCreator.create?.(updateCallback);
     }
 
     protected acceptsInsertion(chr: string, offset: number, inputType: string): boolean {
@@ -511,7 +516,7 @@ class PillCandidatePart extends PlainBasePart implements IPillCandidatePart {
         return true;
     }
 
-    get type(): IPillCandidatePart["type"] {
+    public get type(): IPillCandidatePart["type"] {
         return Type.PillCandidate;
     }
 }
@@ -519,12 +524,7 @@ class PillCandidatePart extends PlainBasePart implements IPillCandidatePart {
 export function getAutoCompleteCreator(getAutocompleterComponent: GetAutocompleterComponent, updateQuery: UpdateQuery) {
     return (partCreator: PartCreator) => {
         return (updateCallback: UpdateCallback) => {
-            return new AutocompleteWrapperModel(
-                updateCallback,
-                getAutocompleterComponent,
-                updateQuery,
-                partCreator,
-            );
+            return new AutocompleteWrapperModel(updateCallback, getAutocompleterComponent, updateQuery, partCreator);
         };
     };
 }
@@ -532,16 +532,16 @@ export function getAutoCompleteCreator(getAutocompleterComponent: GetAutocomplet
 type AutoCompleteCreator = ReturnType<typeof getAutoCompleteCreator>;
 
 interface IAutocompleteCreator {
-    create(updateCallback: UpdateCallback): AutocompleteWrapperModel;
+    create: ((updateCallback: UpdateCallback) => AutocompleteWrapperModel) | undefined;
 }
 
 export class PartCreator {
     protected readonly autoCompleteCreator: IAutocompleteCreator;
 
-    constructor(
+    public constructor(
         private readonly room: Room,
         private readonly client: MatrixClient,
-        autoCompleteCreator: AutoCompleteCreator = null,
+        autoCompleteCreator: AutoCompleteCreator | null = null,
     ) {
         // pre-create the creator as an object even without callback so it can already be passed
         // to PillCandidatePart (e.g. while deserializing) and set later on
@@ -574,7 +574,7 @@ export class PartCreator {
         return this.plain(text);
     }
 
-    public deserializePart(part: SerializedPart): Part {
+    public deserializePart(part: SerializedPart): Part | undefined {
         switch (part.type) {
             case Type.Plain:
                 return this.plain(part.text);
@@ -587,9 +587,9 @@ export class PartCreator {
             case Type.PillCandidate:
                 return this.pillCandidate(part.text);
             case Type.RoomPill:
-                return this.roomPill(part.resourceId);
+                return part.resourceId ? this.roomPill(part.resourceId) : undefined;
             case Type.UserPill:
-                return this.userPill(part.text, part.resourceId);
+                return part.resourceId ? this.userPill(part.text, part.resourceId) : undefined;
         }
     }
 
@@ -612,11 +612,10 @@ export class PartCreator {
     public roomPill(alias: string, roomId?: string): RoomPillPart {
         let room: Room | undefined;
         if (roomId || alias[0] !== "#") {
-            room = this.client.getRoom(roomId || alias);
+            room = this.client.getRoom(roomId || alias) ?? undefined;
         } else {
             room = this.client.getRooms().find((r) => {
-                return r.getCanonicalAlias() === alias ||
-                       r.getAltAliases().includes(alias);
+                return r.getCanonicalAlias() === alias || r.getAltAliases().includes(alias);
             });
         }
         return new RoomPillPart(alias, room ? room.name : alias, room);
@@ -628,11 +627,16 @@ export class PartCreator {
 
     public userPill(displayName: string, userId: string): UserPillPart {
         const member = this.room.getMember(userId);
-        return new UserPillPart(userId, displayName, member);
+        return new UserPillPart(userId, displayName, member || undefined);
+    }
+
+    private static isRegionalIndicator(c: string): boolean {
+        const codePoint = c.codePointAt(0) ?? 0;
+        return codePoint != 0 && c.length == 2 && 0x1f1e6 <= codePoint && codePoint <= 0x1f1ff;
     }
 
     public plainWithEmoji(text: string): (PlainPart | EmojiPart)[] {
-        const parts = [];
+        const parts: (PlainPart | EmojiPart)[] = [];
         let plainText = "";
 
         // We use lodash's grapheme splitter to avoid breaking apart compound emojis
@@ -643,6 +647,9 @@ export class PartCreator {
                     plainText = "";
                 }
                 parts.push(this.emoji(char));
+                if (PartCreator.isRegionalIndicator(text)) {
+                    parts.push(this.plain(REGIONAL_EMOJI_SEPARATOR));
+                }
             } else {
                 plainText += char;
             }
@@ -684,7 +691,7 @@ export class CommandPartCreator extends PartCreator {
         return new CommandPart(text, this.autoCompleteCreator);
     }
 
-    public deserializePart(part: SerializedPart): Part {
+    public deserializePart(part: SerializedPart): Part | undefined {
         if (part.type === Type.Command) {
             return this.command(part.text);
         } else {

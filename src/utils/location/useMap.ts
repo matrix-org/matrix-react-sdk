@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useEffect, useState } from 'react';
-import { Map as MapLibreMap } from 'maplibre-gl';
+import { useEffect, useState } from "react";
+import { Map as MapLibreMap } from "maplibre-gl";
 
 import { createMap } from "./map";
 
 interface UseMapProps {
     bodyId: string;
-    onError: (error: Error) => void;
+    onError?: (error: Error) => void;
     interactive?: boolean;
 }
 
@@ -31,19 +31,15 @@ interface UseMapProps {
  * Make sure `onError` has a stable reference
  * As map is recreated on changes to it
  */
-export const useMap = ({
-    interactive,
-    bodyId,
-    onError,
-}: UseMapProps): MapLibreMap | undefined => {
+export const useMap = ({ interactive, bodyId, onError }: UseMapProps): MapLibreMap | undefined => {
     const [map, setMap] = useState<MapLibreMap>();
 
     useEffect(
         () => {
             try {
-                setMap(createMap(interactive, bodyId, onError));
+                setMap(createMap(!!interactive, bodyId, onError));
             } catch (error) {
-                onError(error);
+                onError?.(error);
             }
             return () => {
                 if (map) {
@@ -59,4 +55,3 @@ export const useMap = ({
 
     return map;
 };
-

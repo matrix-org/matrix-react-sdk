@@ -14,19 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { richToPlain, plainToRich } from "@matrix-org/matrix-wysiwyg";
 import { IContent, IEventRelation, MatrixEvent, MsgType } from "matrix-js-sdk/src/matrix";
 
-import { htmlSerializeFromMdIfNeeded } from "../../../../../editor/serialize";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { RoomPermalinkCreator } from "../../../../../utils/permalinks/Permalinks";
 import { addReplyToMessageContent } from "../../../../../utils/Reply";
-import { htmlToPlainText } from "../../../../../utils/room/htmlToPlaintext";
 
 // Merges favouring the given relation
 function attachRelation(content: IContent, relation?: IEventRelation): void {
     if (relation) {
-        content['m.relates_to'] = {
-            ...(content['m.relates_to'] || {}),
+        content["m.relates_to"] = {
+            ...(content["m.relates_to"] || {}),
             ...relation,
         };
     }
@@ -44,10 +43,10 @@ function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
 
 function getTextReplyFallback(mxEvent: MatrixEvent): string {
     const body = mxEvent.getContent().body;
-    if (typeof body !== 'string') {
+    if (typeof body !== "string") {
         return "";
     }
-    const lines = body.split("\n").map(l => l.trim());
+    const lines = body.split("\n").map((l) => l.trim());
     if (lines.length > 2 && lines[0].startsWith("> ") && lines[1].length === 0) {
         return `${lines[0]}\n\n`;
     }
@@ -62,12 +61,17 @@ interface CreateMessageContentParams {
     editedEvent?: MatrixEvent;
 }
 
-export function createMessageContent(
+export async function createMessageContent(
     message: string,
     isHTML: boolean,
-    { relation, replyToEvent, permalinkCreator, includeReplyLegacyFallback = true, editedEvent }:
-    CreateMessageContentParams,
-): IContent {
+    {
+        relation,
+        replyToEvent,
+        permalinkCreator,
+        includeReplyLegacyFallback = true,
+        editedEvent,
+    }: CreateMessageContentParams,
+): Promise<IContent> {
     // TODO emote ?
 
     const isEditing = Boolean(editedEvent);
@@ -85,27 +89,22 @@ export function createMessageContent(
 
     // const body = textSerialize(model);
 
-    // TODO remove this ugly hack for replace br tag
-    const body = isHTML && htmlToPlainText(message) || message.replace(/<br>/g, '\n');
-    const bodyPrefix = isReplyAndEditing && getTextReplyFallback(editedEvent) || '';
-    const formattedBodyPrefix = isReplyAndEditing && getHtmlReplyFallback(editedEvent) || '';
+    // if we're editing rich text, the message content is pure html
+    // BUT if we're not, the message content will be plain text
+    const body = isHTML ? await richToPlain(message) : message;
+    const bodyPrefix = (isReplyAndEditing && getTextReplyFallback(editedEvent)) || "";
+    const formattedBodyPrefix = (isReplyAndEditing && getHtmlReplyFallback(editedEvent)) || "";
 
     const content: IContent = {
         // TODO emote
         msgtype: MsgType.Text,
-        // TODO when available, use HTML --> Plain text conversion from wysiwyg rust model
         body: isEditing ? `${bodyPrefix} * ${body}` : body,
     };
 
     // TODO markdown support
 
     const isMarkdownEnabled = SettingsStore.getValue<boolean>("MessageComposerInput.useMarkdown");
-    const formattedBody =
-        isHTML ?
-            message :
-            isMarkdownEnabled ?
-                htmlSerializeFromMdIfNeeded(message, { forceHTML: isReply }) :
-                null;
+    const formattedBody = isHTML ? message : isMarkdownEnabled ? await plainToRich(message) : null;
 
     if (formattedBody) {
         content.format = "org.matrix.custom.html";
@@ -113,21 +112,21 @@ export function createMessageContent(
     }
 
     if (isEditing) {
-        content['m.new_content'] = {
-            "msgtype": content.msgtype,
-            "body": body,
+        content["m.new_content"] = {
+            msgtype: content.msgtype,
+            body: body,
         };
 
         if (formattedBody) {
-            content['m.new_content'].format = "org.matrix.custom.html";
-            content['m.new_content']['formatted_body'] = formattedBody;
+            content["m.new_content"].format = "org.matrix.custom.html";
+            content["m.new_content"]["formatted_body"] = formattedBody;
         }
     }
 
-    const newRelation = isEditing ?
-        { ...relation, 'rel_type': 'm.replace', 'event_id': editedEvent.getId() }
-        : relation;
+    const newRelation = isEditing ? { ...relation, rel_type: "m.replace", event_id: editedEvent.getId() } : relation;
 
+    // TODO Do we need to attach mentions here?
+    // TODO Handle editing?
     attachRelation(content, newRelation);
 
     if (!isEditing && replyToEvent && permalinkCreator) {

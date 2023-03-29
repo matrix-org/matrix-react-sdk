@@ -67,7 +67,7 @@ function isInUpperLeftHalf(x: number, y: number, rect: IRect): boolean {
     // Negative slope because Y values grow downwards and for this case, the
     // diagonal goes from larger to smaller Y values.
     const diagonalSlope = getDiagonalSlope(rect) * -1;
-    return isInRect(x, y, rect) && (y <= bottom + diagonalSlope * (x - left));
+    return isInRect(x, y, rect) && y <= bottom + diagonalSlope * (x - left);
 }
 
 function isInLowerRightHalf(x: number, y: number, rect: IRect): boolean {
@@ -75,7 +75,7 @@ function isInLowerRightHalf(x: number, y: number, rect: IRect): boolean {
     // Negative slope because Y values grow downwards and for this case, the
     // diagonal goes from larger to smaller Y values.
     const diagonalSlope = getDiagonalSlope(rect) * -1;
-    return isInRect(x, y, rect) && (y >= bottom + diagonalSlope * (x - left));
+    return isInRect(x, y, rect) && y >= bottom + diagonalSlope * (x - left);
 }
 
 function isInUpperRightHalf(x: number, y: number, rect: IRect): boolean {
@@ -83,7 +83,7 @@ function isInUpperRightHalf(x: number, y: number, rect: IRect): boolean {
     // Positive slope because Y values grow downwards and for this case, the
     // diagonal goes from smaller to larger Y values.
     const diagonalSlope = getDiagonalSlope(rect) * 1;
-    return isInRect(x, y, rect) && (y <= top + diagonalSlope * (x - left));
+    return isInRect(x, y, rect) && y <= top + diagonalSlope * (x - left);
 }
 
 function isInLowerLeftHalf(x: number, y: number, rect: IRect): boolean {
@@ -91,7 +91,7 @@ function isInLowerLeftHalf(x: number, y: number, rect: IRect): boolean {
     // Positive slope because Y values grow downwards and for this case, the
     // diagonal goes from smaller to larger Y values.
     const diagonalSlope = getDiagonalSlope(rect) * 1;
-    return isInRect(x, y, rect) && (y >= top + diagonalSlope * (x - left));
+    return isInRect(x, y, rect) && y >= top + diagonalSlope * (x - left);
 }
 
 export enum Direction {
@@ -284,10 +284,7 @@ export function mouseWithinRegion(
 }
 
 interface IProps {
-    children(props: {
-        ref: RefCallback<HTMLElement>;
-        onMouseOver: MouseEventHandler;
-    }): ReactNode;
+    children(props: { ref: RefCallback<HTMLElement>; onMouseOver: MouseEventHandler }): ReactNode;
     // Content to show in the tooltip
     content: ReactNode;
     direction?: Direction;
@@ -296,7 +293,7 @@ interface IProps {
 }
 
 interface IState {
-    contentRect: DOMRect;
+    contentRect?: DOMRect;
     visible: boolean;
 }
 
@@ -311,16 +308,15 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
         side: Direction.Top,
     };
 
-    constructor(props, context) {
-        super(props, context);
+    public constructor(props: IProps) {
+        super(props);
 
         this.state = {
-            contentRect: null,
             visible: false,
         };
     }
 
-    componentDidUpdate() {
+    public componentDidUpdate(): void {
         // Whenever this passthrough component updates, also render the tooltip
         // in a separate DOM tree. This allows the tooltip content to participate
         // the normal React rendering cycle: when this component re-renders, the
@@ -330,11 +326,11 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
         this.renderTooltip();
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         document.removeEventListener("mousemove", this.onMouseMove);
     }
 
-    private collectContentRect = (element: HTMLElement): void => {
+    private collectContentRect = (element: HTMLElement | null): void => {
         // We don't need to clean up when unmounting, so ignore
         if (!element) return;
 
@@ -343,7 +339,7 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
         });
     };
 
-    private collectTarget = (element: HTMLElement) => {
+    private collectTarget = (element: HTMLElement): void => {
         this.target = element;
     };
 
@@ -353,11 +349,11 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
 
         if (this.props.direction === Direction.Left) {
             const targetLeft = targetRect.left + window.scrollX;
-            return !contentRect || (targetLeft - contentRect.width > MIN_SAFE_DISTANCE_TO_WINDOW_EDGE);
+            return !contentRect || targetLeft - contentRect.width > MIN_SAFE_DISTANCE_TO_WINDOW_EDGE;
         } else {
             const targetRight = targetRect.right + window.scrollX;
             const spaceOnRight = UIStore.instance.windowWidth - targetRight;
-            return contentRect && (spaceOnRight - contentRect.width < MIN_SAFE_DISTANCE_TO_WINDOW_EDGE);
+            return !!contentRect && spaceOnRight - contentRect.width < MIN_SAFE_DISTANCE_TO_WINDOW_EDGE;
         }
     }
 
@@ -367,11 +363,11 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
 
         if (this.props.direction === Direction.Top) {
             const targetTop = targetRect.top + window.scrollY;
-            return !contentRect || (targetTop - contentRect.height > MIN_SAFE_DISTANCE_TO_WINDOW_EDGE);
+            return !contentRect || targetTop - contentRect.height > MIN_SAFE_DISTANCE_TO_WINDOW_EDGE;
         } else {
             const targetBottom = targetRect.bottom + window.scrollY;
             const spaceBelow = UIStore.instance.windowHeight - targetBottom;
-            return contentRect && (spaceBelow - contentRect.height < MIN_SAFE_DISTANCE_TO_WINDOW_EDGE);
+            return !!contentRect && spaceBelow - contentRect.height < MIN_SAFE_DISTANCE_TO_WINDOW_EDGE;
         }
     }
 
@@ -379,9 +375,10 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
         return this.props.direction === Direction.Left || this.props.direction === Direction.Right;
     }
 
-    private onMouseMove = (ev: MouseEvent) => {
+    private onMouseMove = (ev: MouseEvent): void => {
         const { clientX: x, clientY: y } = ev;
         const { contentRect } = this.state;
+        if (!contentRect) return;
         const targetRect = this.target.getBoundingClientRect();
 
         let direction: Direction;
@@ -411,7 +408,7 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
         document.addEventListener("mousemove", this.onMouseMove);
     }
 
-    public hideTooltip() {
+    public hideTooltip(): void {
         this.setState({
             visible: false,
         });
@@ -419,7 +416,7 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
         document.removeEventListener("mousemove", this.onMouseMove);
     }
 
-    private renderTooltip() {
+    private renderTooltip(): ReactNode {
         const { contentRect, visible } = this.state;
         if (!visible) {
             ReactDOM.unmountComponentAtNode(getOrCreateContainer());
@@ -438,7 +435,7 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
         // tooltip content would extend past the safe area towards the window
         // edge, flip around to below the target.
         const position: Partial<IRect> = {};
-        let chevronFace: ChevronFace = null;
+        let chevronFace: ChevronFace | null = null;
         if (this.isOnTheSide) {
             if (this.onLeftOfTarget()) {
                 position.left = targetLeft;
@@ -464,12 +461,11 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
 
         const chevron = <div className={"mx_InteractiveTooltip_chevron_" + chevronFace} />;
 
-        const menuClasses = classNames({
-            'mx_InteractiveTooltip': true,
-            'mx_InteractiveTooltip_withChevron_top': chevronFace === ChevronFace.Top,
-            'mx_InteractiveTooltip_withChevron_left': chevronFace === ChevronFace.Left,
-            'mx_InteractiveTooltip_withChevron_right': chevronFace === ChevronFace.Right,
-            'mx_InteractiveTooltip_withChevron_bottom': chevronFace === ChevronFace.Bottom,
+        const menuClasses = classNames("mx_InteractiveTooltip", {
+            mx_InteractiveTooltip_withChevron_top: chevronFace === ChevronFace.Top,
+            mx_InteractiveTooltip_withChevron_left: chevronFace === ChevronFace.Left,
+            mx_InteractiveTooltip_withChevron_right: chevronFace === ChevronFace.Right,
+            mx_InteractiveTooltip_withChevron_bottom: chevronFace === ChevronFace.Bottom,
         });
 
         const menuStyle: CSSProperties = {};
@@ -477,17 +473,19 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
             menuStyle.left = `-${contentRect.width / 2}px`;
         }
 
-        const tooltip = <div className="mx_InteractiveTooltip_wrapper" style={{ ...position }}>
-            <div className={menuClasses} style={menuStyle} ref={this.collectContentRect}>
-                { chevron }
-                { this.props.content }
+        const tooltip = (
+            <div className="mx_InteractiveTooltip_wrapper" style={{ ...position }}>
+                <div className={menuClasses} style={menuStyle} ref={this.collectContentRect}>
+                    {chevron}
+                    {this.props.content}
+                </div>
             </div>
-        </div>;
+        );
 
         ReactDOM.render(tooltip, getOrCreateContainer());
     }
 
-    render() {
+    public render(): ReactNode {
         return this.props.children({
             ref: this.collectTarget,
             onMouseOver: this.onTargetMouseOver,

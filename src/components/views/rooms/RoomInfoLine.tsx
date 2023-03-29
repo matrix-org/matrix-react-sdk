@@ -17,6 +17,7 @@ limitations under the License.
 import React, { FC } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { _t } from "../../../languageHandler";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
@@ -33,15 +34,15 @@ interface IProps {
 
 const RoomInfoLine: FC<IProps> = ({ room }) => {
     // summary will begin as undefined whilst loading and go null if it fails to load or we are not invited.
-    const summary = useAsyncMemo(async () => {
+    const summary = useAsyncMemo(async (): Promise<Awaited<ReturnType<MatrixClient["getRoomSummary"]>> | null> => {
         if (room.getMyMembership() !== "invite") return null;
         try {
-            return room.client.getRoomSummary(room.roomId);
+            return await room.client.getRoomSummary(room.roomId);
         } catch (e) {
             return null;
         }
     }, [room]);
-    const joinRule = useRoomState(room, state => state.getJoinRule());
+    const joinRule = useRoomState(room, (state) => state.getJoinRule());
     const membership = useMyRoomMembership(room);
     const memberCount = useRoomMemberCount(room);
 
@@ -61,30 +62,34 @@ const RoomInfoLine: FC<IProps> = ({ room }) => {
         roomType = room.isSpaceRoom() ? _t("Private space") : _t("Private room");
     }
 
-    let members: JSX.Element;
+    let members: JSX.Element | undefined;
     if (membership === "invite" && summary) {
         // Don't trust local state and instead use the summary API
-        members = <span className="mx_RoomInfoLine_members">
-            { _t("%(count)s members", { count: summary.num_joined_members }) }
-        </span>;
-    } else if (memberCount && summary !== undefined) { // summary is not still loading
-        const viewMembers = () => RightPanelStore.instance.setCard({
-            phase: room.isSpaceRoom() ? RightPanelPhases.SpaceMemberList : RightPanelPhases.RoomMemberList,
-        });
+        members = (
+            <span className="mx_RoomInfoLine_members">
+                {_t("%(count)s members", { count: summary.num_joined_members })}
+            </span>
+        );
+    } else if (memberCount && summary !== undefined) {
+        // summary is not still loading
+        const viewMembers = (): void =>
+            RightPanelStore.instance.setCard({
+                phase: room.isSpaceRoom() ? RightPanelPhases.SpaceMemberList : RightPanelPhases.RoomMemberList,
+            });
 
-        members = <AccessibleButton
-            kind="link"
-            className="mx_RoomInfoLine_members"
-            onClick={viewMembers}
-        >
-            { _t("%(count)s members", { count: memberCount }) }
-        </AccessibleButton>;
+        members = (
+            <AccessibleButton kind="link" className="mx_RoomInfoLine_members" onClick={viewMembers}>
+                {_t("%(count)s members", { count: memberCount })}
+            </AccessibleButton>
+        );
     }
 
-    return <div className={`mx_RoomInfoLine ${iconClass}`}>
-        { roomType }
-        { members }
-    </div>;
+    return (
+        <div className={`mx_RoomInfoLine ${iconClass}`}>
+            {roomType}
+            {members}
+        </div>
+    );
 };
 
 export default RoomInfoLine;

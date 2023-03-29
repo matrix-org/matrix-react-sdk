@@ -14,14 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from 'react';
-import { AutoDiscovery } from "matrix-js-sdk/src/autodiscovery";
+import React, { ReactNode } from "react";
+import { AutoDiscovery, ClientConfig } from "matrix-js-sdk/src/autodiscovery";
 import { logger } from "matrix-js-sdk/src/logger";
+import { IClientWellKnown } from "matrix-js-sdk/src/matrix";
 
 import { _t, _td, newTranslatableError } from "../languageHandler";
 import { makeType } from "./TypeUtils";
-import SdkConfig from '../SdkConfig';
-import { ValidatedServerConfig } from './ValidatedServerConfig';
+import SdkConfig from "../SdkConfig";
+import { ValidatedServerConfig } from "./ValidatedServerConfig";
 
 const LIVELINESS_DISCOVERY_ERRORS: string[] = [
     AutoDiscovery.ERROR_INVALID_HOMESERVER,
@@ -42,9 +43,11 @@ export default class AutoDiscoveryUtils {
      * @param {string | Error} error The error to check
      * @returns {boolean} True if the error is a liveliness error.
      */
-    static isLivelinessError(error: string | Error): boolean {
+    public static isLivelinessError(error: string | Error): boolean {
         if (!error) return false;
-        return !!LIVELINESS_DISCOVERY_ERRORS.find(e => typeof error === "string" ? e === error : e === error.message);
+        return !!LIVELINESS_DISCOVERY_ERRORS.find((e) =>
+            typeof error === "string" ? e === error : e === error.message,
+        );
     }
 
     /**
@@ -55,7 +58,7 @@ export default class AutoDiscoveryUtils {
      * implementation for known values.
      * @returns {*} The state for the component, given the error.
      */
-    static authComponentStateForError(err: string | Error | null, pageName = "login"): IAuthComponentState {
+    public static authComponentStateForError(err: string | Error | null, pageName = "login"): IAuthComponentState {
         if (!err) {
             return {
                 serverIsAlive: true,
@@ -75,11 +78,15 @@ export default class AutoDiscoveryUtils {
                 },
                 {
                     a: (sub) => {
-                        return <a
-                            href="https://github.com/vector-im/element-web/blob/master/docs/config.md"
-                            target="_blank"
-                            rel="noreferrer noopener"
-                        >{ sub }</a>;
+                        return (
+                            <a
+                                href="https://github.com/vector-im/element-web/blob/master/docs/config.md"
+                                target="_blank"
+                                rel="noreferrer noopener"
+                            >
+                                {sub}
+                            </a>
+                        );
                     },
                 },
             );
@@ -96,20 +103,20 @@ export default class AutoDiscoveryUtils {
             if (pageName === "register") {
                 body = _t(
                     "You can register, but some features will be unavailable until the identity server is " +
-                    "back online. If you keep seeing this warning, check your configuration or contact a server " +
-                    "admin.",
+                        "back online. If you keep seeing this warning, check your configuration or contact a server " +
+                        "admin.",
                 );
             } else if (pageName === "reset_password") {
                 body = _t(
                     "You can reset your password, but some features will be unavailable until the identity " +
-                    "server is back online. If you keep seeing this warning, check your configuration or contact " +
-                    "a server admin.",
+                        "server is back online. If you keep seeing this warning, check your configuration or contact " +
+                        "a server admin.",
                 );
             } else {
                 body = _t(
                     "You can log in, but some features will be unavailable until the identity server is " +
-                    "back online. If you keep seeing this warning, check your configuration or contact a server " +
-                    "admin.",
+                        "back online. If you keep seeing this warning, check your configuration or contact a server " +
+                        "admin.",
                 );
             }
         }
@@ -119,8 +126,8 @@ export default class AutoDiscoveryUtils {
             serverErrorIsFatal: isFatalError,
             serverDeadError: (
                 <div>
-                    <strong>{ title }</strong>
-                    <div>{ body }</div>
+                    <strong>{title}</strong>
+                    <div>{body}</div>
                 </div>
             ),
         };
@@ -134,7 +141,7 @@ export default class AutoDiscoveryUtils {
      * not be raised.
      * @returns {Promise<ValidatedServerConfig>} Resolves to the validated configuration.
      */
-    static async validateServerConfigWithStaticUrls(
+    public static async validateServerConfigWithStaticUrls(
         homeserverUrl: string,
         identityUrl?: string,
         syntaxOnly = false,
@@ -143,14 +150,14 @@ export default class AutoDiscoveryUtils {
             throw newTranslatableError(_td("No homeserver URL provided"));
         }
 
-        const wellknownConfig = {
+        const wellknownConfig: IClientWellKnown = {
             "m.homeserver": {
                 base_url: homeserverUrl,
             },
         };
 
         if (identityUrl) {
-            wellknownConfig['m.identity_server'] = {
+            wellknownConfig["m.identity_server"] = {
                 base_url: identityUrl,
             };
         }
@@ -168,7 +175,7 @@ export default class AutoDiscoveryUtils {
      * @param {string} serverName The homeserver domain name (eg: "matrix.org") to validate.
      * @returns {Promise<ValidatedServerConfig>} Resolves to the validated configuration.
      */
-    static async validateServerName(serverName: string): Promise<ValidatedServerConfig> {
+    public static async validateServerName(serverName: string): Promise<ValidatedServerConfig> {
         const result = await AutoDiscovery.findClientConfig(serverName);
         return AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, result);
     }
@@ -182,8 +189,12 @@ export default class AutoDiscoveryUtils {
      * @param {boolean} isSynthetic If true, then the discoveryResult was synthesised locally.
      * @returns {Promise<ValidatedServerConfig>} Resolves to the validated configuration.
      */
-    static buildValidatedConfigFromDiscovery(
-        serverName: string, discoveryResult, syntaxOnly=false, isSynthetic=false): ValidatedServerConfig {
+    public static buildValidatedConfigFromDiscovery(
+        serverName: string,
+        discoveryResult: ClientConfig,
+        syntaxOnly = false,
+        isSynthetic = false,
+    ): ValidatedServerConfig {
         if (!discoveryResult || !discoveryResult["m.homeserver"]) {
             // This shouldn't happen without major misconfiguration, so we'll log a bit of information
             // in the log so we can find this bit of codee but otherwise tell teh user "it broke".
@@ -191,8 +202,8 @@ export default class AutoDiscoveryUtils {
             throw newTranslatableError(_td("Unexpected error resolving homeserver configuration"));
         }
 
-        const hsResult = discoveryResult['m.homeserver'];
-        const isResult = discoveryResult['m.identity_server'];
+        const hsResult = discoveryResult["m.homeserver"];
+        const isResult = discoveryResult["m.identity_server"];
 
         const defaultConfig = SdkConfig.get("validated_server_config");
 
@@ -203,14 +214,14 @@ export default class AutoDiscoveryUtils {
         // lack of identity server provided by the discovery method), we intentionally do not
         // validate it. This has already been validated and this helps some off-the-grid usage
         // of Element.
-        let preferredIdentityUrl = defaultConfig && defaultConfig['isUrl'];
+        let preferredIdentityUrl = defaultConfig && defaultConfig["isUrl"];
         if (isResult && isResult.state === AutoDiscovery.SUCCESS) {
             preferredIdentityUrl = isResult["base_url"];
         } else if (isResult && isResult.state !== AutoDiscovery.PROMPT) {
             logger.error("Error determining preferred identity server URL:", isResult);
             if (isResult.state === AutoDiscovery.FAIL_ERROR) {
-                if (AutoDiscovery.ALL_ERRORS.indexOf(isResult.error) !== -1) {
-                    throw newTranslatableError(isResult.error);
+                if (AutoDiscovery.ALL_ERRORS.indexOf(isResult.error as string) !== -1) {
+                    throw newTranslatableError(isResult.error as string);
                 }
                 throw newTranslatableError(_td("Unexpected error resolving identity server configuration"));
             } // else the error is not related to syntax - continue anyways.
@@ -225,8 +236,8 @@ export default class AutoDiscoveryUtils {
         if (hsResult.state !== AutoDiscovery.SUCCESS) {
             logger.error("Error processing homeserver config:", hsResult);
             if (!syntaxOnly || !AutoDiscoveryUtils.isLivelinessError(hsResult.error)) {
-                if (AutoDiscovery.ALL_ERRORS.indexOf(hsResult.error) !== -1) {
-                    throw newTranslatableError(hsResult.error);
+                if (AutoDiscovery.ALL_ERRORS.indexOf(hsResult.error as string) !== -1) {
+                    throw newTranslatableError(hsResult.error as string);
                 }
                 throw newTranslatableError(_td("Unexpected error resolving homeserver configuration"));
             } // else the error is not related to syntax - continue anyways.

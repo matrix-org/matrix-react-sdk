@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import classnames from "classnames";
+import { ComponentProps } from "react";
 
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
@@ -43,24 +44,29 @@ export class DialogOpener {
 
     private isRegistered = false;
 
-    private constructor() {
-    }
+    private constructor() {}
 
     // We could do this in the constructor, but then we wouldn't have
     // a function to call from Lifecycle to capture the class.
-    public prepare() {
+    public prepare(): void {
         if (this.isRegistered) return;
         defaultDispatcher.register(this.onDispatch);
         this.isRegistered = true;
     }
 
-    private onDispatch = (payload: ActionPayload) => {
+    private onDispatch = (payload: ActionPayload): void => {
         switch (payload.action) {
-            case 'open_room_settings':
-                Modal.createDialog(RoomSettingsDialog, {
-                    roomId: payload.room_id || SdkContextClass.instance.roomViewStore.getRoomId(),
-                    initialTabId: payload.initial_tab_id,
-                }, /*className=*/null, /*isPriority=*/false, /*isStatic=*/true);
+            case "open_room_settings":
+                Modal.createDialog(
+                    RoomSettingsDialog,
+                    {
+                        roomId: payload.room_id || SdkContextClass.instance.roomViewStore.getRoomId(),
+                        initialTabId: payload.initial_tab_id,
+                    },
+                    /*className=*/ undefined,
+                    /*isPriority=*/ false,
+                    /*isStatic=*/ true,
+                );
                 break;
             case Action.OpenForwardDialog:
                 Modal.createDialog(ForwardDialog, {
@@ -70,31 +76,52 @@ export class DialogOpener {
                 });
                 break;
             case Action.OpenReportEventDialog:
-                Modal.createDialog(ReportEventDialog, {
-                    mxEvent: payload.event,
-                }, 'mx_Dialog_reportEvent');
+                Modal.createDialog(
+                    ReportEventDialog,
+                    {
+                        mxEvent: payload.event,
+                    },
+                    "mx_Dialog_reportEvent",
+                );
                 break;
             case Action.OpenSpacePreferences:
-                Modal.createDialog(SpacePreferencesDialog, {
-                    initialTabId: payload.initalTabId,
-                    space: payload.space,
-                }, null, false, true);
+                Modal.createDialog(
+                    SpacePreferencesDialog,
+                    {
+                        initialTabId: payload.initalTabId,
+                        space: payload.space,
+                    },
+                    undefined,
+                    false,
+                    true,
+                );
                 break;
             case Action.OpenSpaceSettings:
-                Modal.createDialog(SpaceSettingsDialog, {
-                    matrixClient: payload.space.client,
-                    space: payload.space,
-                }, /*className=*/null, /*isPriority=*/false, /*isStatic=*/true);
+                Modal.createDialog(
+                    SpaceSettingsDialog,
+                    {
+                        matrixClient: payload.space.client,
+                        space: payload.space,
+                    },
+                    /*className=*/ undefined,
+                    /*isPriority=*/ false,
+                    /*isStatic=*/ true,
+                );
                 break;
             case Action.OpenInviteDialog:
-                Modal.createDialog(InviteDialog, {
-                    kind: payload.kind,
-                    call: payload.call,
-                    roomId: payload.roomId,
-                }, classnames("mx_InviteDialog_flexWrapper", payload.className), false, true).finished
-                    .then((results) => {
-                        payload.onFinishedCallback?.(results);
-                    });
+                Modal.createDialog(
+                    InviteDialog,
+                    {
+                        kind: payload.kind,
+                        call: payload.call,
+                        roomId: payload.roomId,
+                    } as Omit<ComponentProps<typeof InviteDialog>, "onFinished">,
+                    classnames("mx_InviteDialog_flexWrapper", payload.className),
+                    false,
+                    true,
+                ).finished.then((results) => {
+                    payload.onFinishedCallback?.(results);
+                });
                 break;
             case Action.OpenAddToExistingSpaceDialog: {
                 const space = payload.space;

@@ -43,15 +43,15 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
         return instance;
     })();
 
-    private monitoredUser: User;
+    private monitoredUser: User | null;
 
     private constructor() {
         // seed from localstorage because otherwise we won't get these values until a whole network
         // round-trip after the client is ready, and we often load widgets in that time, and we'd
         // and up passing them an incorrect display name
         super(defaultDispatcher, {
-            displayName: window.localStorage.getItem(KEY_DISPLAY_NAME),
-            avatarUrl: window.localStorage.getItem(KEY_AVATAR_URL),
+            displayName: window.localStorage.getItem(KEY_DISPLAY_NAME) || undefined,
+            avatarUrl: window.localStorage.getItem(KEY_AVATAR_URL) || undefined,
         });
     }
 
@@ -62,7 +62,7 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
     /**
      * Gets the display name for the user, or null if not present.
      */
-    public get displayName(): string {
+    public get displayName(): string | null {
         if (!this.matrixClient) return this.state.displayName || null;
 
         if (this.matrixClient.isGuest()) {
@@ -81,7 +81,7 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
     /**
      * Gets the MXC URI of the user's avatar, or null if not present.
      */
-    public get avatarMxc(): string {
+    public get avatarMxc(): string | null {
         return this.state.avatarUrl || null;
     }
 
@@ -92,7 +92,7 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
      * will be returned as an HTTP URL.
      * @returns The HTTP URL of the user's avatar
      */
-    public getHttpAvatarUrl(size = 0): string {
+    public getHttpAvatarUrl(size = 0): string | null {
         if (!this.avatarMxc) return null;
         const media = mediaFromMxc(this.avatarMxc);
         if (!size || size <= 0) {
@@ -102,7 +102,7 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
         }
     }
 
-    protected async onNotReady() {
+    protected async onNotReady(): Promise<void> {
         if (this.monitoredUser) {
             this.monitoredUser.removeListener(UserEvent.DisplayName, this.onProfileUpdate);
             this.monitoredUser.removeListener(UserEvent.AvatarUrl, this.onProfileUpdate);
@@ -111,8 +111,8 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
         await this.reset({});
     }
 
-    protected async onReady() {
-        const myUserId = this.matrixClient.getUserId();
+    protected async onReady(): Promise<void> {
+        const myUserId = this.matrixClient.getUserId()!;
         this.monitoredUser = this.matrixClient.getUser(myUserId);
         if (this.monitoredUser) {
             this.monitoredUser.on(UserEvent.DisplayName, this.onProfileUpdate);
@@ -126,33 +126,37 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
         await this.onProfileUpdate(); // trigger an initial update
     }
 
-    protected async onAction(payload: ActionPayload) {
+    protected async onAction(payload: ActionPayload): Promise<void> {
         // we don't actually do anything here
     }
 
-    private onProfileUpdate = throttle(async () => {
-        // We specifically do not use the User object we stored for profile info as it
-        // could easily be wrong (such as per-room instead of global profile).
-        const profileInfo = await this.matrixClient.getProfileInfo(this.matrixClient.getUserId());
-        if (profileInfo.displayname) {
-            window.localStorage.setItem(KEY_DISPLAY_NAME, profileInfo.displayname);
-        } else {
-            window.localStorage.removeItem(KEY_DISPLAY_NAME);
-        }
-        if (profileInfo.avatar_url) {
-            window.localStorage.setItem(KEY_AVATAR_URL, profileInfo.avatar_url);
-        } else {
-            window.localStorage.removeItem(KEY_AVATAR_URL);
-        }
+    private onProfileUpdate = throttle(
+        async (): Promise<void> => {
+            // We specifically do not use the User object we stored for profile info as it
+            // could easily be wrong (such as per-room instead of global profile).
+            const profileInfo = await this.matrixClient.getProfileInfo(this.matrixClient.getUserId()!);
+            if (profileInfo.displayname) {
+                window.localStorage.setItem(KEY_DISPLAY_NAME, profileInfo.displayname);
+            } else {
+                window.localStorage.removeItem(KEY_DISPLAY_NAME);
+            }
+            if (profileInfo.avatar_url) {
+                window.localStorage.setItem(KEY_AVATAR_URL, profileInfo.avatar_url);
+            } else {
+                window.localStorage.removeItem(KEY_AVATAR_URL);
+            }
 
-        await this.updateState({
-            displayName: profileInfo.displayname,
-            avatarUrl: profileInfo.avatar_url,
-            fetchedAt: Date.now(),
-        });
-    }, 200, { trailing: true, leading: true });
+            await this.updateState({
+                displayName: profileInfo.displayname,
+                avatarUrl: profileInfo.avatar_url,
+                fetchedAt: Date.now(),
+            });
+        },
+        200,
+        { trailing: true, leading: true },
+    );
 
-    private onStateEvents = async (ev: MatrixEvent) => {
+    private onStateEvents = async (ev: MatrixEvent): Promise<void> => {
         const myUserId = MatrixClientPeg.get().getUserId();
         if (ev.getType() === EventType.RoomMember && ev.getSender() === myUserId && ev.getStateKey() === myUserId) {
             await this.onProfileUpdate();

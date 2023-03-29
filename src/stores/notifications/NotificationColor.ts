@@ -14,12 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { _t } from "../../languageHandler";
+
 export enum NotificationColor {
     // Inverted (None -> Red) because we do integer comparisons on this
     None, // nothing special
     // TODO: Remove bold with notifications: https://github.com/vector-im/element-web/issues/14227
     Bold, // no badge, show as unread
     Grey, // unread notified messages
-    Red,  // unread pings
+    Red, // unread pings
     Unsent, // some messages failed to send
+}
+
+export function humanReadableNotificationColor(color: NotificationColor): string {
+    switch (color) {
+        case NotificationColor.None:
+            return _t("None");
+        case NotificationColor.Bold:
+            return _t("Bold");
+        case NotificationColor.Grey:
+            return _t("Grey");
+        case NotificationColor.Red:
+            return _t("Red");
+        case NotificationColor.Unsent:
+            return _t("Unsent");
+        default:
+            return _t("unknown");
+    }
 }

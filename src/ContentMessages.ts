@@ -27,9 +27,9 @@ import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 import { removeElement } from "matrix-js-sdk/src/utils";
 
 import { IEncryptedFile, IMediaEventContent, IMediaEventInfo } from "./customisations/models/IMediaEventContent";
-import dis from './dispatcher/dispatcher';
-import { _t } from './languageHandler';
-import Modal from './Modal';
+import dis from "./dispatcher/dispatcher";
+import { _t } from "./languageHandler";
+import Modal from "./Modal";
 import Spinner from "./components/views/elements/Spinner";
 import { Action } from "./dispatcher/actions";
 import {
@@ -48,7 +48,7 @@ import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import UploadFailureDialog from "./components/views/dialogs/UploadFailureDialog";
 import UploadConfirmDialog from "./components/views/dialogs/UploadConfirmDialog";
 import { createThumbnail } from "./utils/image-media";
-import { attachRelation } from "./components/views/rooms/SendMessageComposer";
+import { attachMentions, attachRelation } from "./components/views/rooms/SendMessageComposer";
 import { doMaybeLocalRoomAction } from "./utils/local-room";
 import { SdkContextClass } from "./contexts/SDKContext";
 
@@ -68,16 +68,20 @@ interface IMediaConfig {
  * @param {File} imageFile The file to load in an image element.
  * @return {Promise} A promise that resolves with the html image element.
  */
-async function loadImageElement(imageFile: File) {
+async function loadImageElement(imageFile: File): Promise<{
+    width: number;
+    height: number;
+    img: HTMLImageElement;
+}> {
     // Load the file into an html element
     const img = new Image();
     const objectUrl = URL.createObjectURL(imageFile);
     const imgPromise = new Promise((resolve, reject) => {
-        img.onload = function() {
+        img.onload = function (): void {
             URL.revokeObjectURL(objectUrl);
             resolve(img);
         };
-        img.onerror = function(e) {
+        img.onerror = function (e): void {
             reject(e);
         };
     });
@@ -85,29 +89,34 @@ async function loadImageElement(imageFile: File) {
 
     // check for hi-dpi PNGs and fudge display resolution as needed.
     // this is mainly needed for macOS screencaps
-    let parsePromise: Promise<boolean>;
+    let parsePromise = Promise.resolve(false);
     if (imageFile.type === "image/png") {
         // in practice macOS happens to order the chunks so they fall in
         // the first 0x1000 bytes (thanks to a massive ICC header).
         // Thus we could slice the file down to only sniff the first 0x1000
         // bytes (but this makes extractPngChunks choke on the corrupt file)
         const headers = imageFile; //.slice(0, 0x1000);
-        parsePromise = readFileAsArrayBuffer(headers).then(arrayBuffer => {
-            const buffer = new Uint8Array(arrayBuffer);
-            const chunks = extractPngChunks(buffer);
-            for (const chunk of chunks) {
-                if (chunk.name === 'pHYs') {
-                    if (chunk.data.byteLength !== PHYS_HIDPI.length) return;
-                    return chunk.data.every((val, i) => val === PHYS_HIDPI[i]);
+        parsePromise = readFileAsArrayBuffer(headers)
+            .then((arrayBuffer) => {
+                const buffer = new Uint8Array(arrayBuffer);
+                const chunks = extractPngChunks(buffer);
+                for (const chunk of chunks) {
+                    if (chunk.name === "pHYs") {
+                        if (chunk.data.byteLength !== PHYS_HIDPI.length) return false;
+                        return chunk.data.every((val, i) => val === PHYS_HIDPI[i]);
+                    }
                 }
-            }
-            return false;
-        });
+                return false;
+            })
+            .catch((e) => {
+                console.error("Failed to parse PNG", e);
+                return false;
+            });
     }
 
     const [hidpi] = await Promise.all([parsePromise, imgPromise]);
-    const width = hidpi ? (img.width >> 1) : img.width;
-    const height = hidpi ? (img.height >> 1) : img.height;
+    const width = hidpi ? img.width >> 1 : img.width;
+    const height = hidpi ? img.height >> 1 : img.height;
     return { width, height, img };
 }
 
@@ -148,13 +157,13 @@ async function infoForImageFile(
     // For lesser supported image types, always include the thumbnail even if it is larger
     if (!ALWAYS_INCLUDE_THUMBNAIL.includes(imageFile.type)) {
         // we do all sizing checks here because we still rely on thumbnail generation for making a blurhash from.
-        const sizeDifference = imageFile.size - imageInfo.thumbnail_info.size;
+        const sizeDifference = imageFile.size - imageInfo.thumbnail_info!.size;
         if (
             // image is small enough already
             imageFile.size <= IMAGE_SIZE_THRESHOLD_THUMBNAIL ||
             // thumbnail is not sufficiently smaller than original
             (sizeDifference <= IMAGE_THUMBNAIL_MIN_REDUCTION_SIZE &&
-                sizeDifference <= (imageFile.size * IMAGE_THUMBNAIL_MIN_REDUCTION_PERCENT))
+                sizeDifference <= imageFile.size * IMAGE_THUMBNAIL_MIN_REDUCTION_PERCENT)
         ) {
             delete imageInfo["thumbnail_info"];
             return imageInfo;
@@ -185,20 +194,20 @@ function loadVideoElement(videoFile: File): Promise<HTMLVideoElement> {
 
         const reader = new FileReader();
 
-        reader.onload = function(ev) {
+        reader.onload = function (ev): void {
             // Wait until we have enough data to thumbnail the first frame.
-            video.onloadeddata = async function() {
+            video.onloadeddata = async function (): Promise<void> {
                 resolve(video);
                 video.pause();
             };
-            video.onerror = function(e) {
+            video.onerror = function (e): void {
                 reject(e);
             };
 
-            let dataUrl = ev.target.result as string;
+            let dataUrl = ev.target?.result as string;
             // Chrome chokes on quicktime but likes mp4, and `file.type` is
             // read only, so do this horrible hack to unbreak quicktime
-            if (dataUrl.startsWith("data:video/quicktime;")) {
+            if (dataUrl?.startsWith("data:video/quicktime;")) {
                 dataUrl = dataUrl.replace("data:video/quicktime;", "data:video/mp4;");
             }
 
@@ -206,7 +215,7 @@ function loadVideoElement(videoFile: File): Promise<HTMLVideoElement> {
             video.load();
             video.play();
         };
-        reader.onerror = function(e) {
+        reader.onerror = function (e): void {
             reject(e);
         };
         reader.readAsDataURL(videoFile);
@@ -229,16 +238,19 @@ function infoForVideoFile(
     const thumbnailType = "image/jpeg";
 
     let videoInfo: Partial<IMediaEventInfo>;
-    return loadVideoElement(videoFile).then((video) => {
-        return createThumbnail(video, video.videoWidth, video.videoHeight, thumbnailType);
-    }).then((result) => {
-        videoInfo = result.info;
-        return uploadFile(matrixClient, roomId, result.thumbnail);
-    }).then((result) => {
-        videoInfo.thumbnail_url = result.url;
-        videoInfo.thumbnail_file = result.file;
-        return videoInfo;
-    });
+    return loadVideoElement(videoFile)
+        .then((video) => {
+            return createThumbnail(video, video.videoWidth, video.videoHeight, thumbnailType);
+        })
+        .then((result) => {
+            videoInfo = result.info;
+            return uploadFile(matrixClient, roomId, result.thumbnail);
+        })
+        .then((result) => {
+            videoInfo.thumbnail_url = result.url;
+            videoInfo.thumbnail_file = result.file;
+            return videoInfo;
+        });
 }
 
 /**
@@ -250,10 +262,10 @@ function infoForVideoFile(
 function readFileAsArrayBuffer(file: File | Blob): Promise<ArrayBuffer> {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
-        reader.onload = function(e) {
-            resolve(e.target.result as ArrayBuffer);
+        reader.onload = function (e): void {
+            resolve(e.target?.result as ArrayBuffer);
         };
-        reader.onerror = function(e) {
+        reader.onerror = function (e): void {
             reject(e);
         };
         reader.readAsArrayBuffer(file);
@@ -280,7 +292,7 @@ export async function uploadFile(
     file: File | Blob,
     progressHandler?: UploadOpts["progressHandler"],
     controller?: AbortController,
-): Promise<{ url?: string, file?: IEncryptedFile }> {
+): Promise<{ url?: string; file?: IEncryptedFile }> {
     const abortController = controller ?? new AbortController();
 
     // If the room is encrypted then encrypt the file before uploading it.
@@ -300,6 +312,7 @@ export async function uploadFile(
             progressHandler,
             abortController,
             includeFilename: false,
+            type: "application/octet-stream",
         });
         if (abortController.signal.aborted) throw new UploadCanceledError();
 
@@ -321,7 +334,7 @@ export async function uploadFile(
 
 export default class ContentMessages {
     private inprogress: RoomUpload[] = [];
-    private mediaConfig: IMediaConfig = null;
+    private mediaConfig: IMediaConfig | null = null;
 
     public sendStickerContentToRoom(
         url: string,
@@ -357,19 +370,25 @@ export default class ContentMessages {
         context = TimelineRenderingType.Room,
     ): Promise<void> {
         if (matrixClient.isGuest()) {
-            dis.dispatch({ action: 'require_registration' });
+            dis.dispatch({ action: "require_registration" });
             return;
         }
 
         const replyToEvent = SdkContextClass.instance.roomViewStore.getQuotingEvent();
-        if (!this.mediaConfig) { // hot-path optimization to not flash a spinner if we don't need to
-            const modal = Modal.createDialog(Spinner, null, 'mx_Dialog_spinner');
-            await this.ensureMediaConfigFetched(matrixClient);
-            modal.close();
+        if (!this.mediaConfig) {
+            // hot-path optimization to not flash a spinner if we don't need to
+            const modal = Modal.createDialog(Spinner, undefined, "mx_Dialog_spinner");
+            await Promise.race([this.ensureMediaConfigFetched(matrixClient), modal.finished]);
+            if (!this.mediaConfig) {
+                // User cancelled by clicking away on the spinner
+                return;
+            } else {
+                modal.close();
+            }
         }
 
-        const tooBigFiles = [];
-        const okFiles = [];
+        const tooBigFiles: File[] = [];
+        const okFiles: File[] = [];
 
         for (const file of files) {
             if (this.isFileSizeAcceptable(file)) {
@@ -380,7 +399,7 @@ export default class ContentMessages {
         }
 
         if (tooBigFiles.length > 0) {
-            const { finished } = Modal.createDialog<[boolean]>(UploadFailureDialog, {
+            const { finished } = Modal.createDialog(UploadFailureDialog, {
                 badFiles: tooBigFiles,
                 totalFiles: files.length,
                 contentMessages: this,
@@ -398,7 +417,7 @@ export default class ContentMessages {
             const loopPromiseBefore = promBefore;
 
             if (!uploadAll) {
-                const { finished } = Modal.createDialog<[boolean, boolean]>(UploadConfirmDialog, {
+                const { finished } = Modal.createDialog(UploadConfirmDialog, {
                     file,
                     currentIndex: i,
                     totalFiles: okFiles.length,
@@ -410,14 +429,13 @@ export default class ContentMessages {
                 }
             }
 
-            promBefore = doMaybeLocalRoomAction(
-                roomId,
-                (actualRoomId) => this.sendContentToRoom(
+            promBefore = doMaybeLocalRoomAction(roomId, (actualRoomId) =>
+                this.sendContentToRoom(
                     file,
                     actualRoomId,
                     relation,
                     matrixClient,
-                    replyToEvent,
+                    replyToEvent ?? undefined,
                     loopPromiseBefore,
                 ),
             );
@@ -440,11 +458,13 @@ export default class ContentMessages {
     }
 
     public getCurrentUploads(relation?: IEventRelation): RoomUpload[] {
-        return this.inprogress.filter(roomUpload => {
+        return this.inprogress.filter((roomUpload) => {
             const noRelation = !relation && !roomUpload.relation;
-            const matchingRelation = relation && roomUpload.relation
-                && relation.rel_type === roomUpload.relation.rel_type
-                && relation.event_id === roomUpload.relation.event_id;
+            const matchingRelation =
+                relation &&
+                roomUpload.relation &&
+                relation.rel_type === roomUpload.relation.rel_type &&
+                relation.event_id === roomUpload.relation.event_id;
 
             return (noRelation || matchingRelation) && !roomUpload.cancelled;
         });
@@ -462,7 +482,7 @@ export default class ContentMessages {
         matrixClient: MatrixClient,
         replyToEvent: MatrixEvent | undefined,
         promBefore?: Promise<any>,
-    ) {
+    ): Promise<void> {
         const fileName = file.name || _t("Attachment");
         const content: Omit<IMediaEventContent, "info"> & { info: Partial<IMediaEventInfo> } = {
             body: fileName,
@@ -472,6 +492,8 @@ export default class ContentMessages {
             msgtype: MsgType.File, // set more specifically later
         };
 
+        // Attach mentions, which really only applies if there's a replyToEvent.
+        attachMentions(matrixClient.getSafeUserId(), content, null, replyToEvent);
         attachRelation(content, relation);
         if (replyToEvent) {
             addReplyToMessageContent(content, replyToEvent, {
@@ -492,13 +514,13 @@ export default class ContentMessages {
         this.inprogress.push(upload);
         dis.dispatch<UploadStartedPayload>({ action: Action.UploadStarted, upload });
 
-        function onProgress(progress: UploadProgress) {
+        function onProgress(progress: UploadProgress): void {
             upload.onProgress(progress);
             dis.dispatch<UploadProgressPayload>({ action: Action.UploadProgress, upload });
         }
 
         try {
-            if (file.type.startsWith('image/')) {
+            if (file.type.startsWith("image/")) {
                 content.msgtype = MsgType.Image;
                 try {
                     const imageInfo = await infoForImageFile(matrixClient, roomId, file);
@@ -508,9 +530,9 @@ export default class ContentMessages {
                     logger.error(e);
                     content.msgtype = MsgType.File;
                 }
-            } else if (file.type.indexOf('audio/') === 0) {
+            } else if (file.type.indexOf("audio/") === 0) {
                 content.msgtype = MsgType.Audio;
-            } else if (file.type.indexOf('video/') === 0) {
+            } else if (file.type.indexOf("video/") === 0) {
                 content.msgtype = MsgType.Video;
                 try {
                     const videoInfo = await infoForVideoFile(matrixClient, roomId, file);
@@ -536,14 +558,14 @@ export default class ContentMessages {
             if (upload.cancelled) throw new UploadCanceledError();
             const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation.event_id : null;
 
-            const response = await matrixClient.sendMessage(roomId, threadId, content);
+            const response = await matrixClient.sendMessage(roomId, threadId ?? null, content);
 
             if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
                 sendRoundTripMetric(matrixClient, roomId, response.event_id);
             }
 
             dis.dispatch<UploadFinishedPayload>({ action: Action.UploadFinished, upload });
-            dis.dispatch({ action: 'message_sent' });
+            dis.dispatch({ action: "message_sent" });
         } catch (error) {
             // 413: File was too big or upset the server in some way:
             // clear the media size limit so we fetch it again next time we try to upload
@@ -554,48 +576,53 @@ export default class ContentMessages {
             if (!upload.cancelled) {
                 let desc = _t("The file '%(fileName)s' failed to upload.", { fileName: upload.fileName });
                 if (error.httpStatus === 413) {
-                    desc = _t(
-                        "The file '%(fileName)s' exceeds this homeserver's size limit for uploads",
-                        { fileName: upload.fileName },
-                    );
+                    desc = _t("The file '%(fileName)s' exceeds this homeserver's size limit for uploads", {
+                        fileName: upload.fileName,
+                    });
                 }
                 Modal.createDialog(ErrorDialog, {
-                    title: _t('Upload Failed'),
+                    title: _t("Upload Failed"),
                     description: desc,
                 });
                 dis.dispatch<UploadErrorPayload>({ action: Action.UploadFailed, upload, error });
             }
         } finally {
-            removeElement(this.inprogress, e => e.promise === upload.promise);
+            removeElement(this.inprogress, (e) => e.promise === upload.promise);
         }
     }
 
-    private isFileSizeAcceptable(file: File) {
-        if (this.mediaConfig !== null &&
+    private isFileSizeAcceptable(file: File): boolean {
+        if (
+            this.mediaConfig !== null &&
             this.mediaConfig["m.upload.size"] !== undefined &&
-            file.size > this.mediaConfig["m.upload.size"]) {
+            file.size > this.mediaConfig["m.upload.size"]
+        ) {
             return false;
         }
         return true;
     }
 
     private ensureMediaConfigFetched(matrixClient: MatrixClient): Promise<void> {
-        if (this.mediaConfig !== null) return;
+        if (this.mediaConfig !== null) return Promise.resolve();
 
         logger.log("[Media Config] Fetching");
-        return matrixClient.getMediaConfig().then((config) => {
-            logger.log("[Media Config] Fetched config:", config);
-            return config;
-        }).catch(() => {
-            // Media repo can't or won't report limits, so provide an empty object (no limits).
-            logger.log("[Media Config] Could not fetch config, so not limiting uploads.");
-            return {};
-        }).then((config) => {
-            this.mediaConfig = config;
-        });
+        return matrixClient
+            .getMediaConfig()
+            .then((config) => {
+                logger.log("[Media Config] Fetched config:", config);
+                return config;
+            })
+            .catch(() => {
+                // Media repo can't or won't report limits, so provide an empty object (no limits).
+                logger.log("[Media Config] Could not fetch config, so not limiting uploads.");
+                return {};
+            })
+            .then((config) => {
+                this.mediaConfig = config;
+            });
     }
 
-    static sharedInstance() {
+    public static sharedInstance(): ContentMessages {
         if (window.mxContentMessages === undefined) {
             window.mxContentMessages = new ContentMessages();
         }

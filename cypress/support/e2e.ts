@@ -18,8 +18,9 @@ limitations under the License.
 
 import "@percy/cypress";
 import "cypress-real-events";
+import "@testing-library/cypress/add-commands";
 
-import "./synapse";
+import "./homeserver";
 import "./login";
 import "./labs";
 import "./client";
@@ -37,3 +38,4 @@ import "./network";
 import "./composer";
 import "./proxy";
 import "./axe";
+import "./find";

@@ -15,10 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from "react";
-import classNames from 'classnames';
+import React, { CSSProperties, useState } from "react";
+import classNames from "classnames";
 
-import { _t, _td } from '../../../languageHandler';
+import { _t, _td } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import Tooltip, { Alignment } from "../elements/Tooltip";
 import { E2EStatus } from "../../../utils/ShieldUtils";
@@ -65,30 +65,35 @@ const E2EIcon: React.FC<IProps> = ({
 }) => {
     const [hover, setHover] = useState(false);
 
-    const classes = classNames({
-        mx_E2EIcon: true,
-        mx_E2EIcon_bordered: bordered,
-        mx_E2EIcon_warning: status === E2EState.Warning,
-        mx_E2EIcon_normal: status === E2EState.Normal,
-        mx_E2EIcon_verified: status === E2EState.Verified,
-    }, className);
+    const classes = classNames(
+        {
+            mx_E2EIcon: true,
+            mx_E2EIcon_bordered: bordered,
+            mx_E2EIcon_warning: status === E2EState.Warning,
+            mx_E2EIcon_normal: status === E2EState.Normal,
+            mx_E2EIcon_verified: status === E2EState.Verified,
+        },
+        className,
+    );
 
-    let e2eTitle;
-    if (isUser) {
-        e2eTitle = crossSigningUserTitles[status];
-    } else {
-        e2eTitle = crossSigningRoomTitles[status];
+    let e2eTitle: string | undefined;
+    if (status) {
+        if (isUser) {
+            e2eTitle = crossSigningUserTitles[status];
+        } else {
+            e2eTitle = crossSigningRoomTitles[status];
+        }
     }
 
-    let style;
+    let style: CSSProperties | undefined;
     if (size) {
         style = { width: `${size}px`, height: `${size}px` };
     }
 
-    const onMouseOver = () => setHover(true);
-    const onMouseLeave = () => setHover(false);
+    const onMouseOver = (): void => setHover(true);
+    const onMouseLeave = (): void => setHover(false);
 
-    let tip;
+    let tip: JSX.Element | undefined;
     if (hover && !hideTooltip) {
         tip = <Tooltip label={e2eTitle ? _t(e2eTitle) : ""} alignment={tooltipAlignment} />;
     }
@@ -102,14 +107,16 @@ const E2EIcon: React.FC<IProps> = ({
                 className={classes}
                 style={style}
             >
-                { tip }
+                {tip}
             </AccessibleButton>
         );
     }
 
-    return <div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} className={classes} style={style}>
-        { tip }
-    </div>;
+    return (
+        <div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} className={classes} style={style}>
+            {tip}
+        </div>
+    );
 };
 
 export default E2EIcon;

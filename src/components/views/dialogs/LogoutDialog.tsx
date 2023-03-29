@@ -15,15 +15,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentType } from 'react';
+import React from "react";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import Modal from '../../../Modal';
-import dis from '../../../dispatcher/dispatcher';
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import RestoreKeyBackupDialog from './security/RestoreKeyBackupDialog';
+import type CreateKeyBackupDialog from "../../../async-components/views/dialogs/security/CreateKeyBackupDialog";
+import type ExportE2eKeysDialog from "../../../async-components/views/dialogs/security/ExportE2eKeysDialog";
+import Modal from "../../../Modal";
+import dis from "../../../dispatcher/dispatcher";
+import { _t } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import RestoreKeyBackupDialog from "./security/RestoreKeyBackupDialog";
 import QuestionDialog from "./QuestionDialog";
 import BaseDialog from "./BaseDialog";
 import Spinner from "../elements/Spinner";
@@ -36,16 +38,16 @@ interface IProps {
 interface IState {
     shouldLoadBackupStatus: boolean;
     loading: boolean;
-    backupInfo: IKeyBackupInfo;
+    backupInfo: IKeyBackupInfo | null;
     error?: string;
 }
 
 export default class LogoutDialog extends React.Component<IProps, IState> {
-    static defaultProps = {
-        onFinished: function() {},
+    public static defaultProps = {
+        onFinished: function () {},
     };
 
-    constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         const cli = MatrixClientPeg.get();
@@ -55,7 +57,6 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
             shouldLoadBackupStatus: shouldLoadBackupStatus,
             loading: shouldLoadBackupStatus,
             backupInfo: null,
-            error: null,
         };
 
         if (shouldLoadBackupStatus) {
@@ -63,7 +64,7 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
         }
     }
 
-    private async loadBackupStatus() {
+    private async loadBackupStatus(): Promise<void> {
         try {
             const backupInfo = await MatrixClientPeg.get().getKeyBackupVersion();
             this.setState({
@@ -81,21 +82,21 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
 
     private onExportE2eKeysClicked = (): void => {
         Modal.createDialogAsync(
-            import(
-                '../../../async-components/views/dialogs/security/ExportE2eKeysDialog'
-            ) as unknown as Promise<ComponentType<{}>>,
+            import("../../../async-components/views/dialogs/security/ExportE2eKeysDialog") as unknown as Promise<
+                typeof ExportE2eKeysDialog
+            >,
             {
                 matrixClient: MatrixClientPeg.get(),
             },
         );
     };
 
-    private onFinished = (confirmed: boolean): void => {
+    private onFinished = (confirmed?: boolean): void => {
         if (confirmed) {
-            dis.dispatch({ action: 'logout' });
+            dis.dispatch({ action: "logout" });
         }
         // close dialog
-        this.props.onFinished(confirmed);
+        this.props.onFinished(!!confirmed);
     };
 
     private onSetRecoveryMethodClick = (): void => {
@@ -103,13 +104,22 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
             // A key backup exists for this account, but the creating device is not
             // verified, so restore the backup which will give us the keys from it and
             // allow us to trust it (ie. upload keys to it)
-            Modal.createDialog(RestoreKeyBackupDialog, null, null, /* priority = */ false, /* static = */ true);
+            Modal.createDialog(
+                RestoreKeyBackupDialog,
+                undefined,
+                undefined,
+                /* priority = */ false,
+                /* static = */ true,
+            );
         } else {
             Modal.createDialogAsync(
-                import(
-                    "../../../async-components/views/dialogs/security/CreateKeyBackupDialog"
-                ) as unknown as Promise<ComponentType<{}>>,
-                null, null, /* priority = */ false, /* static = */ true,
+                import("../../../async-components/views/dialogs/security/CreateKeyBackupDialog") as unknown as Promise<
+                    typeof CreateKeyBackupDialog
+                >,
+                undefined,
+                undefined,
+                /* priority = */ false,
+                /* static = */ true,
             );
         }
 
@@ -118,27 +128,33 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
     };
 
     private onLogoutConfirm = (): void => {
-        dis.dispatch({ action: 'logout' });
+        dis.dispatch({ action: "logout" });
 
         // close dialog
         this.props.onFinished(true);
     };
 
-    render() {
+    public render(): React.ReactNode {
         if (this.state.shouldLoadBackupStatus) {
-            const description = <div>
-                <p>{ _t(
-                    "Encrypted messages are secured with end-to-end encryption. " +
-                    "Only you and the recipient(s) have the keys to read these messages.",
-                ) }</p>
-                <p>{ _t(
-                    "When you sign out, these keys will be deleted from this device, " +
-                    "which means you won't be able to read encrypted messages unless you " +
-                    "have the keys for them on your other devices, or backed them up to the " +
-                    "server.",
-                ) }</p>
-                <p>{ _t("Back up your keys before signing out to avoid losing them.") }</p>
-            </div>;
+            const description = (
+                <div>
+                    <p>
+                        {_t(
+                            "Encrypted messages are secured with end-to-end encryption. " +
+                                "Only you and the recipient(s) have the keys to read these messages.",
+                        )}
+                    </p>
+                    <p>
+                        {_t(
+                            "When you sign out, these keys will be deleted from this device, " +
+                                "which means you won't be able to read encrypted messages unless you " +
+                                "have the keys for them on your other devices, or backed them up to the " +
+                                "server.",
+                        )}
+                    </p>
+                    <p>{_t("Back up your keys before signing out to avoid losing them.")}</p>
+                </div>
+            );
 
             let dialogContent;
             if (this.state.loading) {
@@ -153,48 +169,51 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
                     setupButtonCaption = _t("Start using Key Backup");
                 }
 
-                dialogContent = <div>
-                    <div className="mx_Dialog_content" id='mx_Dialog_content'>
-                        { description }
+                dialogContent = (
+                    <div>
+                        <div className="mx_Dialog_content" id="mx_Dialog_content">
+                            {description}
+                        </div>
+                        <DialogButtons
+                            primaryButton={setupButtonCaption}
+                            hasCancel={false}
+                            onPrimaryButtonClick={this.onSetRecoveryMethodClick}
+                            focus={true}
+                        >
+                            <button onClick={this.onLogoutConfirm}>{_t("I don't want my encrypted messages")}</button>
+                        </DialogButtons>
+                        <details>
+                            <summary>{_t("Advanced")}</summary>
+                            <p>
+                                <button onClick={this.onExportE2eKeysClicked}>{_t("Manually export keys")}</button>
+                            </p>
+                        </details>
                     </div>
-                    <DialogButtons primaryButton={setupButtonCaption}
-                        hasCancel={false}
-                        onPrimaryButtonClick={this.onSetRecoveryMethodClick}
-                        focus={true}
-                    >
-                        <button onClick={this.onLogoutConfirm}>
-                            { _t("I don't want my encrypted messages") }
-                        </button>
-                    </DialogButtons>
-                    <details>
-                        <summary>{ _t("Advanced") }</summary>
-                        <p><button onClick={this.onExportE2eKeysClicked}>
-                            { _t("Manually export keys") }
-                        </button></p>
-                    </details>
-                </div>;
+                );
             }
             // Not quite a standard question dialog as the primary button cancels
             // the action and does something else instead, whilst non-default button
             // confirms the action.
-            return (<BaseDialog
-                title={_t("You'll lose access to your encrypted messages")}
-                contentId='mx_Dialog_content'
-                hasCancel={true}
-                onFinished={this.onFinished}
-            >
-                { dialogContent }
-            </BaseDialog>);
+            return (
+                <BaseDialog
+                    title={_t("You'll lose access to your encrypted messages")}
+                    contentId="mx_Dialog_content"
+                    hasCancel={true}
+                    onFinished={this.onFinished}
+                >
+                    {dialogContent}
+                </BaseDialog>
+            );
         } else {
-            return (<QuestionDialog
-                hasCancelButton={true}
-                title={_t("Sign out")}
-                description={_t(
-                    "Are you sure you want to sign out?",
-                )}
-                button={_t("Sign out")}
-                onFinished={this.onFinished}
-            />);
+            return (
+                <QuestionDialog
+                    hasCancelButton={true}
+                    title={_t("Sign out")}
+                    description={_t("Are you sure you want to sign out?")}
+                    button={_t("Sign out")}
+                    onFinished={this.onFinished}
+                />
+            );
         }
     }
 }

@@ -14,29 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentType } from 'react';
+import React from "react";
 
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { _t } from '../../../languageHandler';
-import Modal from '../../../Modal';
+import type ExportE2eKeysDialog from "../../../async-components/views/dialogs/security/ExportE2eKeysDialog";
+import type ImportE2eKeysDialog from "../../../async-components/views/dialogs/security/ImportE2eKeysDialog";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t } from "../../../languageHandler";
+import Modal from "../../../Modal";
 import AccessibleButton from "../elements/AccessibleButton";
 import * as FormattingUtils from "../../../utils/FormattingUtils";
 import SettingsStore from "../../../settings/SettingsStore";
 import SettingsFlag from "../elements/SettingsFlag";
 import { SettingLevel } from "../../../settings/SettingLevel";
 
-interface IProps {
-}
+interface IProps {}
 
-interface IState {
-}
+interface IState {}
 
 export default class CryptographyPanel extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const client = MatrixClientPeg.get();
         const deviceId = client.deviceId;
         let identityKey = client.getDeviceEd25519Key();
@@ -46,69 +46,77 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
             identityKey = FormattingUtils.formatCryptoKey(identityKey);
         }
 
-        let importExportButtons = null;
+        let importExportButtons: JSX.Element | undefined;
         if (client.isCryptoEnabled()) {
             importExportButtons = (
-                <div className='mx_CryptographyPanel_importExportButtons'>
-                    <AccessibleButton kind='primary' onClick={this.onExportE2eKeysClicked}>
-                        { _t("Export E2E room keys") }
+                <div className="mx_CryptographyPanel_importExportButtons">
+                    <AccessibleButton kind="primary" onClick={this.onExportE2eKeysClicked}>
+                        {_t("Export E2E room keys")}
                     </AccessibleButton>
-                    <AccessibleButton kind='primary' onClick={this.onImportE2eKeysClicked}>
-                        { _t("Import E2E room keys") }
+                    <AccessibleButton kind="primary" onClick={this.onImportE2eKeysClicked}>
+                        {_t("Import E2E room keys")}
                     </AccessibleButton>
                 </div>
             );
         }
 
-        let noSendUnverifiedSetting;
+        let noSendUnverifiedSetting: JSX.Element | undefined;
         if (SettingsStore.isEnabled("blacklistUnverifiedDevices")) {
-            noSendUnverifiedSetting = <SettingsFlag
-                name='blacklistUnverifiedDevices'
-                level={SettingLevel.DEVICE}
-                onChange={this.updateBlacklistDevicesFlag}
-            />;
+            noSendUnverifiedSetting = (
+                <SettingsFlag
+                    name="blacklistUnverifiedDevices"
+                    level={SettingLevel.DEVICE}
+                    onChange={this.updateBlacklistDevicesFlag}
+                />
+            );
         }
 
         return (
-            <div className='mx_SettingsTab_section mx_CryptographyPanel'>
-                <span className='mx_SettingsTab_subheading'>{ _t("Cryptography") }</span>
-                <table className='mx_SettingsTab_subsectionText mx_CryptographyPanel_sessionInfo'>
+            <div className="mx_SettingsTab_section mx_CryptographyPanel">
+                <span className="mx_SettingsTab_subheading">{_t("Cryptography")}</span>
+                <table className="mx_SettingsTab_subsectionText mx_CryptographyPanel_sessionInfo">
                     <tbody>
                         <tr>
-                            <td>{ _t("Session ID:") }</td>
-                            <td><code>{ deviceId }</code></td>
+                            <td>{_t("Session ID:")}</td>
+                            <td>
+                                <code>{deviceId}</code>
+                            </td>
                         </tr>
                         <tr>
-                            <td>{ _t("Session key:") }</td>
-                            <td><code><b>{ identityKey }</b></code></td>
+                            <td>{_t("Session key:")}</td>
+                            <td>
+                                <code>
+                                    <b>{identityKey}</b>
+                                </code>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
-                { importExportButtons }
-                { noSendUnverifiedSetting }
+                {importExportButtons}
+                {noSendUnverifiedSetting}
             </div>
         );
     }
 
     private onExportE2eKeysClicked = (): void => {
         Modal.createDialogAsync(
-            import(
-                '../../../async-components/views/dialogs/security/ExportE2eKeysDialog'
-            ) as unknown as Promise<ComponentType<{}>>,
+            import("../../../async-components/views/dialogs/security/ExportE2eKeysDialog") as unknown as Promise<
+                typeof ExportE2eKeysDialog
+            >,
             { matrixClient: MatrixClientPeg.get() },
         );
     };
 
     private onImportE2eKeysClicked = (): void => {
         Modal.createDialogAsync(
-            import(
-                '../../../async-components/views/dialogs/security/ImportE2eKeysDialog'
-            ) as unknown as Promise<ComponentType<{}>>,
+            import("../../../async-components/views/dialogs/security/ImportE2eKeysDialog") as unknown as Promise<
+                typeof ImportE2eKeysDialog
+            >,
             { matrixClient: MatrixClientPeg.get() },
         );
     };
 
-    private updateBlacklistDevicesFlag = (checked): void => {
+    private updateBlacklistDevicesFlag = (checked: boolean): void => {
         MatrixClientPeg.get().setGlobalBlacklistUnverifiedDevices(checked);
     };
 }

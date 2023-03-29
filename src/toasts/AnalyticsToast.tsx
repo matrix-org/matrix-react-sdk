@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from "react";
-import { Optional } from "matrix-events-sdk";
 
 import { _t } from "../languageHandler";
 import SdkConfig from "../SdkConfig";
@@ -30,19 +29,19 @@ import {
 import { Action } from "../dispatcher/actions";
 import SettingsStore from "../settings/SettingsStore";
 
-const onAccept = () => {
+const onAccept = (): void => {
     dis.dispatch({
         action: Action.PseudonymousAnalyticsAccept,
     });
 };
 
-const onReject = () => {
+const onReject = (): void => {
     dis.dispatch({
         action: Action.PseudonymousAnalyticsReject,
     });
 };
 
-const onLearnMoreNoOptIn = () => {
+const onLearnMoreNoOptIn = (): void => {
     showAnalyticsLearnMoreDialog({
         onFinished: (buttonClicked?: ButtonClicked) => {
             if (buttonClicked === ButtonClicked.Primary) {
@@ -56,7 +55,7 @@ const onLearnMoreNoOptIn = () => {
     });
 };
 
-const onLearnMorePreviouslyOptedIn = () => {
+const onLearnMorePreviouslyOptedIn = (): void => {
     showAnalyticsLearnMoreDialog({
         onFinished: (buttonClicked?: ButtonClicked) => {
             if (buttonClicked === ButtonClicked.Primary) {
@@ -75,7 +74,7 @@ const onLearnMorePreviouslyOptedIn = () => {
 
 const TOAST_KEY = "analytics";
 
-export function getPolicyUrl(): Optional<string> {
+export function getPolicyUrl(): string | undefined {
     return SdkConfig.get("privacy_policy_url");
 }
 
@@ -88,7 +87,8 @@ export const showToast = (): void => {
         // them to opt in again.
         props = {
             description: _t(
-                "You previously consented to share anonymous usage data with us. We're updating how that works."),
+                "You previously consented to share anonymous usage data with us. We're updating how that works.",
+            ),
             acceptLabel: _t("That's fine"),
             onAccept,
             rejectLabel: _t("Learn more"),
@@ -97,19 +97,25 @@ export const showToast = (): void => {
     } else if (legacyAnalyticsOptIn === null || legacyAnalyticsOptIn === undefined) {
         // The user had no analytics setting previously set, so we just need to prompt to opt-in, rather than
         // explaining any change.
-        const learnMoreLink = (sub: string) => (
-            <AccessibleButton kind="link_inline" onClick={onLearnMoreNoOptIn}>{ sub }</AccessibleButton>
+        const learnMoreLink = (sub: string): JSX.Element => (
+            <AccessibleButton kind="link_inline" onClick={onLearnMoreNoOptIn}>
+                {sub}
+            </AccessibleButton>
         );
         props = {
             description: _t(
                 "Share anonymous data to help us identify issues. Nothing personal. No third parties. " +
-                "<LearnMoreLink>Learn More</LearnMoreLink>", {}, { "LearnMoreLink": learnMoreLink }),
+                    "<LearnMoreLink>Learn More</LearnMoreLink>",
+                {},
+                { LearnMoreLink: learnMoreLink },
+            ),
             acceptLabel: _t("Yes"),
             onAccept,
             rejectLabel: _t("No"),
             onReject,
         };
-    } else { // false
+    } else {
+        // false
         // The user previously opted out of analytics, don't ask again
         return;
     }
@@ -125,6 +131,6 @@ export const showToast = (): void => {
     });
 };
 
-export const hideToast = () => {
+export const hideToast = (): void => {
     ToastStore.sharedInstance().dismissToast(TOAST_KEY);
 };

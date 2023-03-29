@@ -14,20 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { createRef } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
-import AccessibleButton from "../../../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../../elements/AccessibleButton";
 import Notifier from "../../../../../Notifier";
-import SettingsStore from '../../../../../settings/SettingsStore';
+import SettingsStore from "../../../../../settings/SettingsStore";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { RoomEchoChamber } from "../../../../../stores/local-echo/RoomEchoChamber";
-import { EchoChamber } from '../../../../../stores/local-echo/EchoChamber';
+import { EchoChamber } from "../../../../../stores/local-echo/EchoChamber";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
-import { RoomNotifState } from '../../../../../RoomNotifs';
+import { RoomNotifState } from "../../../../../RoomNotifs";
 import defaultDispatcher from "../../../../../dispatcher/dispatcher";
 import { Action } from "../../../../../dispatcher/actions";
 import { UserTab } from "../../../dialogs/UserTab";
@@ -40,42 +40,38 @@ interface IProps {
 
 interface IState {
     currentSound: string;
-    uploadedFile: File;
+    uploadedFile: File | null;
 }
 
 export default class NotificationsSettingsTab extends React.Component<IProps, IState> {
     private readonly roomProps: RoomEchoChamber;
     private soundUpload = createRef<HTMLInputElement>();
 
-    static contextType = MatrixClientContext;
+    public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
 
-    constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
+    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);
 
         this.roomProps = EchoChamber.forRoom(context.getRoom(this.props.roomId));
 
+        let currentSound = "default";
+        const soundData = Notifier.getSoundForRoom(this.props.roomId);
+        if (soundData) {
+            currentSound = soundData.name || soundData.url;
+        }
+
         this.state = {
-            currentSound: "default",
+            currentSound,
             uploadedFile: null,
         };
-    }
-
-    // TODO: [REACT-WARNING] Replace component with real class, use constructor for refs
-    // eslint-disable-next-line @typescript-eslint/naming-convention, camelcase
-    public UNSAFE_componentWillMount(): void {
-        const soundData = Notifier.getSoundForRoom(this.props.roomId);
-        if (!soundData) {
-            return;
-        }
-        this.setState({ currentSound: soundData.name || soundData.url });
     }
 
     private triggerUploader = async (e: React.MouseEvent): Promise<void> => {
         e.stopPropagation();
         e.preventDefault();
 
-        this.soundUpload.current.click();
+        this.soundUpload.current?.click();
     };
 
     private onSoundUploadChanged = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -99,9 +95,7 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
         try {
             await this.saveSound();
         } catch (ex) {
-            logger.error(
-                `Unable to save notification sound for ${this.props.roomId}`,
-            );
+            logger.error(`Unable to save notification sound for ${this.props.roomId}`);
             logger.error(ex);
         }
     };
@@ -119,23 +113,16 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
             type = "audio/ogg";
         }
 
-        const url = await MatrixClientPeg.get().uploadContent(
-            this.state.uploadedFile, {
-                type,
-            },
-        );
+        const { content_uri: url } = await MatrixClientPeg.get().uploadContent(this.state.uploadedFile, {
+            type,
+        });
 
-        await SettingsStore.setValue(
-            "notificationSound",
-            this.props.roomId,
-            SettingLevel.ROOM_ACCOUNT,
-            {
-                name: this.state.uploadedFile.name,
-                type: type,
-                size: this.state.uploadedFile.size,
-                url,
-            },
-        );
+        await SettingsStore.setValue("notificationSound", this.props.roomId, SettingLevel.ROOM_ACCOUNT, {
+            name: this.state.uploadedFile.name,
+            type: type,
+            size: this.state.uploadedFile.size,
+            url,
+        });
 
         this.setState({
             uploadedFile: null,
@@ -146,24 +133,21 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
     private clearSound = (e: React.MouseEvent): void => {
         e.stopPropagation();
         e.preventDefault();
-        SettingsStore.setValue(
-            "notificationSound",
-            this.props.roomId,
-            SettingLevel.ROOM_ACCOUNT,
-            null,
-        );
+        SettingsStore.setValue("notificationSound", this.props.roomId, SettingLevel.ROOM_ACCOUNT, null);
 
         this.setState({
             currentSound: "default",
         });
     };
 
-    private onRoomNotificationChange = (value: RoomNotifState) => {
+    private onRoomNotificationChange = (value: RoomNotifState): void => {
         this.roomProps.notificationVolume = value;
         this.forceUpdate();
     };
 
-    private onOpenSettingsClick = () => {
+    private onOpenSettingsClick = (event: ButtonEvent): void => {
+        // avoid selecting the radio button
+        event.preventDefault();
         this.props.closeSettingsFn();
         defaultDispatcher.dispatch({
             action: Action.ViewUserSettings,
@@ -171,19 +155,21 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
         });
     };
 
-    public render(): JSX.Element {
-        let currentUploadedFile = null;
+    public render(): React.ReactNode {
+        let currentUploadedFile: JSX.Element | undefined;
         if (this.state.uploadedFile) {
             currentUploadedFile = (
                 <div>
-                    <span>{ _t("Uploaded sound") }: <code>{ this.state.uploadedFile.name }</code></span>
+                    <span>
+                        {_t("Uploaded sound")}: <code>{this.state.uploadedFile.name}</code>
+                    </span>
                 </div>
             );
         }
 
         return (
             <div className="mx_SettingsTab">
-                <div className="mx_SettingsTab_heading">{ _t("Notifications") }</div>
+                <div className="mx_SettingsTab_heading">{_t("Notifications")}</div>
 
                 <div className="mx_SettingsTab_section mx_NotificationSettingsTab_notificationsSection">
                     <StyledRadioGroup
@@ -192,54 +178,77 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
                             {
                                 value: RoomNotifState.AllMessages,
                                 className: "mx_NotificationSettingsTab_defaultEntry",
-                                label: <>
-                                    { _t("Default") }
-                                    <div className="mx_NotificationSettingsTab_microCopy">
-                                        { _t("Get notifications as set up in your <a>settings</a>", {}, {
-                                            a: sub => <AccessibleButton
-                                                kind="link_inline"
-                                                onClick={this.onOpenSettingsClick}
-                                            >
-                                                { sub }
-                                            </AccessibleButton>,
-                                        }) }
-                                    </div>
-                                </>,
-                            }, {
+                                label: (
+                                    <>
+                                        {_t("Default")}
+                                        <div className="mx_NotificationSettingsTab_microCopy">
+                                            {_t(
+                                                "Get notifications as set up in your <a>settings</a>",
+                                                {},
+                                                {
+                                                    a: (sub) => (
+                                                        <AccessibleButton
+                                                            kind="link_inline"
+                                                            onClick={this.onOpenSettingsClick}
+                                                        >
+                                                            {sub}
+                                                        </AccessibleButton>
+                                                    ),
+                                                },
+                                            )}
+                                        </div>
+                                    </>
+                                ),
+                            },
+                            {
                                 value: RoomNotifState.AllMessagesLoud,
                                 className: "mx_NotificationSettingsTab_allMessagesEntry",
-                                label: <>
-                                    { _t("All messages") }
-                                    <div className="mx_NotificationSettingsTab_microCopy">
-                                        { _t("Get notified for every message") }
-                                    </div>
-                                </>,
-                            }, {
+                                label: (
+                                    <>
+                                        {_t("All messages")}
+                                        <div className="mx_NotificationSettingsTab_microCopy">
+                                            {_t("Get notified for every message")}
+                                        </div>
+                                    </>
+                                ),
+                            },
+                            {
                                 value: RoomNotifState.MentionsOnly,
                                 className: "mx_NotificationSettingsTab_mentionsKeywordsEntry",
-                                label: <>
-                                    { _t("@mentions & keywords") }
-                                    <div className="mx_NotificationSettingsTab_microCopy">
-                                        { _t("Get notified only with mentions and keywords " +
-                                            "as set up in your <a>settings</a>", {}, {
-                                            a: sub => <AccessibleButton
-                                                kind="link_inline"
-                                                onClick={this.onOpenSettingsClick}
-                                            >
-                                                { sub }
-                                            </AccessibleButton>,
-                                        }) }
-                                    </div>
-                                </>,
-                            }, {
+                                label: (
+                                    <>
+                                        {_t("@mentions & keywords")}
+                                        <div className="mx_NotificationSettingsTab_microCopy">
+                                            {_t(
+                                                "Get notified only with mentions and keywords " +
+                                                    "as set up in your <a>settings</a>",
+                                                {},
+                                                {
+                                                    a: (sub) => (
+                                                        <AccessibleButton
+                                                            kind="link_inline"
+                                                            onClick={this.onOpenSettingsClick}
+                                                        >
+                                                            {sub}
+                                                        </AccessibleButton>
+                                                    ),
+                                                },
+                                            )}
+                                        </div>
+                                    </>
+                                ),
+                            },
+                            {
                                 value: RoomNotifState.Mute,
                                 className: "mx_NotificationSettingsTab_noneEntry",
-                                label: <>
-                                    { _t("Off") }
-                                    <div className="mx_NotificationSettingsTab_microCopy">
-                                        { _t("You won't get any notifications") }
-                                    </div>
-                                </>,
+                                label: (
+                                    <>
+                                        {_t("Off")}
+                                        <div className="mx_NotificationSettingsTab_microCopy">
+                                            {_t("You won't get any notifications")}
+                                        </div>
+                                    </>
+                                ),
                             },
                         ]}
                         onChange={this.onRoomNotificationChange}
@@ -247,18 +256,25 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
                     />
                 </div>
 
-                <div className='mx_SettingsTab_section mx_SettingsTab_subsectionText'>
-                    <span className='mx_SettingsTab_subheading'>{ _t("Sounds") }</span>
+                <div className="mx_SettingsTab_section mx_SettingsTab_subsectionText">
+                    <span className="mx_SettingsTab_subheading">{_t("Sounds")}</span>
                     <div>
                         <div className="mx_SettingsTab_subsectionText">
-                            <span>{ _t("Notification sound") }: <code>{ this.state.currentSound }</code></span>
+                            <span>
+                                {_t("Notification sound")}: <code>{this.state.currentSound}</code>
+                            </span>
                         </div>
-                        <AccessibleButton className="mx_NotificationSound_resetSound" disabled={this.state.currentSound == "default"} onClick={this.clearSound} kind="primary">
-                            { _t("Reset") }
+                        <AccessibleButton
+                            className="mx_NotificationSound_resetSound"
+                            disabled={this.state.currentSound == "default"}
+                            onClick={this.clearSound}
+                            kind="primary"
+                        >
+                            {_t("Reset")}
                         </AccessibleButton>
                     </div>
                     <div>
-                        <h3>{ _t("Set a new custom sound") }</h3>
+                        <h3>{_t("Set a new custom sound")}</h3>
                         <div className="mx_SettingsFlag">
                             <form autoComplete="off" noValidate={true}>
                                 <input
@@ -271,15 +287,24 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
                                 />
                             </form>
 
-                            { currentUploadedFile }
+                            {currentUploadedFile}
                         </div>
 
-                        <AccessibleButton className="mx_NotificationSound_browse" onClick={this.triggerUploader} kind="primary">
-                            { _t("Browse") }
+                        <AccessibleButton
+                            className="mx_NotificationSound_browse"
+                            onClick={this.triggerUploader}
+                            kind="primary"
+                        >
+                            {_t("Browse")}
                         </AccessibleButton>
 
-                        <AccessibleButton className="mx_NotificationSound_save" disabled={this.state.uploadedFile == null} onClick={this.onClickSaveSound} kind="primary">
-                            { _t("Save") }
+                        <AccessibleButton
+                            className="mx_NotificationSound_save"
+                            disabled={this.state.uploadedFile == null}
+                            onClick={this.onClickSaveSound}
+                            kind="primary"
+                        >
+                            {_t("Save")}
                         </AccessibleButton>
                         <br />
                     </div>

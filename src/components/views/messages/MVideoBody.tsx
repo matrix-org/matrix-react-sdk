@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { ReactNode } from "react";
 import { decode } from "blurhash";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
-import InlineSpinner from '../elements/InlineSpinner';
+import InlineSpinner from "../elements/InlineSpinner";
 import { mediaFromContent } from "../../../customisations/Media";
 import { BLURHASH_FIELD } from "../../../utils/image-media";
 import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
@@ -28,26 +28,26 @@ import { IBodyProps } from "./IBodyProps";
 import MFileBody from "./MFileBody";
 import { ImageSize, suggestedSize as suggestedVideoSize } from "../../../settings/enums/ImageSize";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
-import MediaProcessingError from './shared/MediaProcessingError';
+import MediaProcessingError from "./shared/MediaProcessingError";
 
 interface IState {
-    decryptedUrl?: string;
-    decryptedThumbnailUrl?: string;
-    decryptedBlob?: Blob;
+    decryptedUrl: string | null;
+    decryptedThumbnailUrl: string | null;
+    decryptedBlob: Blob | null;
     error?: any;
     fetchingData: boolean;
     posterLoading: boolean;
-    blurhashUrl: string;
+    blurhashUrl: string | null;
 }
 
 export default class MVideoBody extends React.PureComponent<IBodyProps, IState> {
-    static contextType = RoomContext;
+    public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
 
     private videoRef = React.createRef<HTMLVideoElement>();
     private sizeWatcher: string;
 
-    constructor(props) {
+    public constructor(props: IBodyProps) {
         super(props);
 
         this.state = {
@@ -61,24 +61,24 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         };
     }
 
-    private getContentUrl(): string|null {
+    private getContentUrl(): string | undefined {
         const content = this.props.mxEvent.getContent<IMediaEventContent>();
         // During export, the content url will point to the MSC, which will later point to a local url
-        if (this.props.forExport) return content.file?.url || content.url;
+        if (this.props.forExport) return content.file?.url ?? content.url;
         const media = mediaFromContent(content);
         if (media.isEncrypted) {
-            return this.state.decryptedUrl;
+            return this.state.decryptedUrl ?? undefined;
         } else {
-            return media.srcHttp;
+            return media.srcHttp ?? undefined;
         }
     }
 
     private hasContentUrl(): boolean {
         const url = this.getContentUrl();
-        return url && !url.startsWith("data:");
+        return !!url && !url.startsWith("data:");
     }
 
-    private getThumbUrl(): string|null {
+    private getThumbUrl(): string | null {
         // there's no need of thumbnail when the content is local
         if (this.props.forExport) return null;
 
@@ -96,22 +96,22 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         }
     }
 
-    private loadBlurhash() {
+    private loadBlurhash(): void {
         const info = this.props.mxEvent.getContent()?.info;
         if (!info[BLURHASH_FIELD]) return;
 
         const canvas = document.createElement("canvas");
 
-        const { w: width, h: height } = suggestedVideoSize(
-            SettingsStore.getValue("Images.size") as ImageSize,
-            { w: info.w, h: info.h },
-        );
+        const { w: width, h: height } = suggestedVideoSize(SettingsStore.getValue("Images.size") as ImageSize, {
+            w: info.w,
+            h: info.h,
+        });
 
         canvas.width = width;
         canvas.height = height;
 
         const pixels = decode(info[BLURHASH_FIELD], width, height);
-        const ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext("2d")!;
         const imgData = ctx.createImageData(width, height);
         imgData.data.set(pixels);
         ctx.putImageData(imgData, 0, 0);
@@ -128,11 +128,11 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
             image.onload = () => {
                 this.setState({ posterLoading: false });
             };
-            image.src = media.thumbnailHttp;
+            image.src = media.thumbnailHttp!;
         }
     }
 
-    public async componentDidMount() {
+    public async componentDidMount(): Promise<void> {
         this.sizeWatcher = SettingsStore.watchSetting("Images.size", null, () => {
             this.forceUpdate(); // we don't really have a reliable thing to update, so just update the whole thing
         });
@@ -186,11 +186,11 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         }
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         SettingsStore.unwatchSetting(this.sizeWatcher);
     }
 
-    private videoOnPlay = async () => {
+    private videoOnPlay = async (): Promise<void> => {
         if (this.hasContentUrl() || this.state.fetchingData || this.state.error) {
             // We have the file, we are fetching the file, or there is an error.
             return;
@@ -205,29 +205,34 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
             });
             return;
         }
-        this.setState({
-            decryptedUrl: await this.props.mediaEventHelper.sourceUrl.value,
-            decryptedBlob: await this.props.mediaEventHelper.sourceBlob.value,
-            fetchingData: false,
-        }, () => {
-            if (!this.videoRef.current) return;
-            this.videoRef.current.play();
-        });
+        this.setState(
+            {
+                decryptedUrl: await this.props.mediaEventHelper.sourceUrl.value,
+                decryptedBlob: await this.props.mediaEventHelper.sourceBlob.value,
+                fetchingData: false,
+            },
+            () => {
+                if (!this.videoRef.current) return;
+                this.videoRef.current.play();
+            },
+        );
         this.props.onHeightChanged();
     };
 
     protected get showFileBody(): boolean {
-        return this.context.timelineRenderingType !== TimelineRenderingType.Room &&
+        return (
+            this.context.timelineRenderingType !== TimelineRenderingType.Room &&
             this.context.timelineRenderingType !== TimelineRenderingType.Pinned &&
-            this.context.timelineRenderingType !== TimelineRenderingType.Search;
+            this.context.timelineRenderingType !== TimelineRenderingType.Search
+        );
     }
 
-    private getFileBody = () => {
+    private getFileBody = (): ReactNode => {
         if (this.props.forExport) return null;
         return this.showFileBody && <MFileBody {...this.props} showGenericPlaceholder={false} />;
     };
 
-    render() {
+    public render(): React.ReactNode {
         const content = this.props.mxEvent.getContent();
         const autoplay = SettingsStore.getValue("autoplayVideo");
 
@@ -235,19 +240,17 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         if (content.info?.w && content.info?.h) {
             aspectRatio = `${content.info.w}/${content.info.h}`;
         }
-        const { w: maxWidth, h: maxHeight } = suggestedVideoSize(
-            SettingsStore.getValue("Images.size") as ImageSize,
-            { w: content.info?.w, h: content.info?.h },
-        );
+        const { w: maxWidth, h: maxHeight } = suggestedVideoSize(SettingsStore.getValue("Images.size") as ImageSize, {
+            w: content.info?.w,
+            h: content.info?.h,
+        });
 
         // HACK: This div fills out space while the video loads, to prevent scroll jumps
         const spaceFiller = <div style={{ width: maxWidth, height: maxHeight }} />;
 
         if (this.state.error !== null) {
             return (
-                <MediaProcessingError className="mx_MVideoBody">
-                    { _t("Error decrypting video") }
-                </MediaProcessingError>
+                <MediaProcessingError className="mx_MVideoBody">{_t("Error decrypting video")}</MediaProcessingError>
             );
         }
 
@@ -261,14 +264,14 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                     <div className="mx_MVideoBody_container" style={{ maxWidth, maxHeight, aspectRatio }}>
                         <InlineSpinner />
                     </div>
-                    { spaceFiller }
+                    {spaceFiller}
                 </span>
             );
         }
 
         const contentUrl = this.getContentUrl();
         const thumbUrl = this.getThumbUrl();
-        let poster = null;
+        let poster: string | undefined;
         let preload = "metadata";
         if (content.info && thumbUrl) {
             poster = thumbUrl;
@@ -294,9 +297,9 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                         poster={poster}
                         onPlay={this.videoOnPlay}
                     />
-                    { spaceFiller }
+                    {spaceFiller}
                 </div>
-                { fileBody }
+                {fileBody}
             </span>
         );
     }
