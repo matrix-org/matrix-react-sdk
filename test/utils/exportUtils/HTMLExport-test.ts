@@ -415,6 +415,36 @@ describe("HTMLExport", () => {
         expect(await messagesFile.text()).toBeTruthy();
     });
 
+    it("should handle when attachment srcHttp is falsy", async () => {
+        mockMessages(EVENT_MESSAGE, EVENT_ATTACHMENT);
+        const attachmentBody = "Lorem ipsum dolor sit amet";
+
+        mockMxc("mxc://example.org/test-id", attachmentBody);
+
+        jest.spyOn(client, "mxcUrlToHttp").mockReturnValue(null);
+
+        const exporter = new HTMLExporter(
+            room,
+            ExportType.Timeline,
+            {
+                attachmentsIncluded: true,
+                maxSize: 1_024 * 1_024,
+            },
+            () => {},
+        );
+
+        await exporter.export();
+
+        // attachment not present
+        const files = getFiles(exporter);
+        const file = files[Object.keys(files).find((k) => k.endsWith(".txt"))!];
+        expect(file).toBeUndefined();
+
+        // messages export still successful
+        const messagesFile = getMessageFile(exporter);
+        expect(await messagesFile.text()).toBeTruthy();
+    });
+
     it("should omit attachments", async () => {
         mockMessages(EVENT_MESSAGE, EVENT_ATTACHMENT);
 
