@@ -27,6 +27,7 @@ import { Layout } from "../../../settings/enums/Layout";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import { _t } from "../../../languageHandler";
+import { clamp } from "../../../utils/numbers";
 
 interface IProps {}
 
@@ -103,6 +104,8 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
     };
 
     public render(): React.ReactNode {
+        const sizes = [13, 14, 15, 16, 18];
+
         return (
             <div className="mx_SettingsTab_section mx_FontScalingPanel">
                 <span className="mx_SettingsTab_subheading">{_t("Font size")}</span>
@@ -117,7 +120,7 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
                 <div className="mx_FontScalingPanel_fontSlider">
                     <div className="mx_FontScalingPanel_fontSlider_smallText">Aa</div>
                     <Slider
-                        values={[13, 14, 15, 16, 18]}
+                        values={sizes}
                         value={parseInt(this.state.fontSize, 10)}
                         onSelectionChange={this.onFontSizeChanged}
                         displayFunc={(_) => ""}
@@ -129,7 +132,22 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
                 <SettingsFlag
                     name="useCustomFontSize"
                     level={SettingLevel.ACCOUNT}
-                    onChange={(checked) => this.setState({ useCustomFontSize: checked })}
+                    onChange={(checked) => {
+                        this.setState({ useCustomFontSize: checked });
+                        if (!checked) {
+                            const size = parseInt(this.state.fontSize, 10);
+                            const clamped = clamp(size, sizes[0], sizes[sizes.length - 1]);
+                            if (clamped !== size) {
+                                this.setState({ fontSize: clamped.toString() });
+                                SettingsStore.setValue(
+                                    "baseFontSize",
+                                    null,
+                                    SettingLevel.DEVICE,
+                                    clamped - FontWatcher.SIZE_DIFF,
+                                );
+                            }
+                        }
+                    }}
                     useCheckbox={true}
                 />
 
