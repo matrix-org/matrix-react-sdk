@@ -14,7 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EventType, IRoomEvent, MatrixClient, MatrixEvent, MsgType, Room, RoomMember } from "matrix-js-sdk/src/matrix";
+import {
+    EventType,
+    IRoomEvent,
+    MatrixClient,
+    MatrixEvent,
+    MsgType,
+    Room,
+    RoomMember,
+    RoomState,
+} from "matrix-js-sdk/src/matrix";
 import fetchMock from "fetch-mock-jest";
 
 import { filterConsole, mkStubRoom, REPEATABLE_DATE, stubClient } from "../../test-utils";
@@ -294,6 +303,56 @@ describe("HTMLExport", () => {
 
         // Ensure it has the expected content
         expect(await file.text()).toBe(avatarContent);
+    });
+
+    it("should handle when an event has no sender", async () => {
+        const EVENT_MESSAGE_NO_SENDER: IRoomEvent = {
+            event_id: "$1",
+            type: EventType.RoomMessage,
+            sender: "",
+            origin_server_ts: 0,
+            content: {
+                msgtype: "m.text",
+                body: "Message with no sender",
+            },
+        };
+        mockMessages(EVENT_MESSAGE_NO_SENDER);
+
+        const exporter = new HTMLExporter(
+            room,
+            ExportType.Timeline,
+            {
+                attachmentsIncluded: false,
+                maxSize: 1_024 * 1_024,
+            },
+            () => {},
+        );
+
+        await exporter.export();
+
+        const file = getMessageFile(exporter);
+        expect(await file.text()).toContain(EVENT_MESSAGE_NO_SENDER.content.body);
+    });
+
+    it("should handle when events sender cannot be found in room state", async () => {
+        mockMessages(EVENT_MESSAGE);
+
+        jest.spyOn(RoomState.prototype, "getSentinelMember").mockReturnValue(null);
+
+        const exporter = new HTMLExporter(
+            room,
+            ExportType.Timeline,
+            {
+                attachmentsIncluded: false,
+                maxSize: 1_024 * 1_024,
+            },
+            () => {},
+        );
+
+        await exporter.export();
+
+        const file = getMessageFile(exporter);
+        expect(await file.text()).toContain(EVENT_MESSAGE.content.body);
     });
 
     it("should include attachments", async () => {
