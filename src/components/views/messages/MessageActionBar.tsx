@@ -121,7 +121,6 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
             <ContextMenuTooltipButton
                 className="mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
                 title={_t("Options")}
-                data-testid="message-action-bar-button-options"
                 onClick={onOptionsClick}
                 onContextMenu={onOptionsClick}
                 isExpanded={menuDisplayed}

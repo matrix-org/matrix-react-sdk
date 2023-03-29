@@ -387,7 +387,7 @@ describe("Timeline", () => {
             // 3. Alignment of expanded GELS and placeholder of deleted message
             // Delete the second (last) message
             cy.get(".mx_RoomView_MessageList > .mx_EventTile_last").realHover();
-            cy.get(".mx_RoomView_MessageList > .mx_EventTile_last [data-testid=message-action-bar-button-options]", {
+            cy.get(".mx_RoomView_MessageList > .mx_EventTile_last .mx_MessageActionBar_optionsButton", {
                 timeout: 1000,
             })
                 .should("exist")
@@ -564,7 +564,7 @@ describe("Timeline", () => {
 
             // Delete the message
             cy.get(".mx_RoomView_MessageList > .mx_EventTile_last").realHover();
-            cy.get(".mx_RoomView_MessageList > .mx_EventTile_last [data-testid=message-action-bar-button-options]", {
+            cy.get(".mx_RoomView_MessageList > .mx_EventTile_last .mx_MessageActionBar_optionsButton", {
                 timeout: 1000,
             })
                 .should("exist")

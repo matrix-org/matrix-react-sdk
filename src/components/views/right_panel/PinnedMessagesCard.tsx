@@ -174,9 +174,7 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
                         <div className="mx_MessageActionBar_iconButton">
                             <ReplyIcon />
                         </div>
-                        <div className="mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
-                            data-testid="pinned-messages-card-button-options"
-                        >
+                        <div className="mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton">
                             <ContextMenuIcon />
                         </div>
                     </div>
