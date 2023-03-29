@@ -123,6 +123,7 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
                     <Slider
                         min={min}
                         max={max}
+                        step={1}
                         value={parseInt(this.state.fontSize, 10)}
                         onChange={this.onFontSizeChanged}
                         displayFunc={(_) => ""}
