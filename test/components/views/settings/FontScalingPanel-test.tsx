@@ -43,7 +43,7 @@ describe("FontScalingPanel", () => {
         await waitFor(() => {
             expect(container.querySelector("input[checked]")).toBeDefined();
         });
-        fireEvent.change(container.querySelector("#font_size_field"), { target: { value: "20" } });
+        fireEvent.change(container.querySelector("#font_size_field")!, { target: { value: "20" } });
         fireEvent.click(getByText("Use custom size"));
         await waitFor(() => {
             expect(container.querySelector("#font_size_field")).toHaveValue(18);
