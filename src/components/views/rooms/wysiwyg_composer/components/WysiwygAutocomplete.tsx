@@ -66,7 +66,7 @@ function buildQuery(suggestion: MappedSuggestion | null): string {
  */
 function getRoomFromCompletion(completion: ICompletion, client: MatrixClient): Room | null {
     const roomId = completion.completionId;
-    const alias = completion.completion;
+    const aliasFromCompletion = completion.completion;
 
     let roomToReturn: Room | null | undefined;
 
@@ -74,11 +74,11 @@ function getRoomFromCompletion(completion: ICompletion, client: MatrixClient): R
     // that doesn't start with #, but keeping the logic the same as in PartCreator.roomPill for now
     if (roomId) {
         roomToReturn = client.getRoom(roomId);
-    } else if (!alias.startsWith("#")) {
-        roomToReturn = client.getRoom(alias);
+    } else if (!aliasFromCompletion.startsWith("#")) {
+        roomToReturn = client.getRoom(aliasFromCompletion);
     } else {
         roomToReturn = client.getRooms().find((r) => {
-            return r.getCanonicalAlias() === alias || r.getAltAliases().includes(alias);
+            return r.getCanonicalAlias() === aliasFromCompletion || r.getAltAliases().includes(aliasFromCompletion);
         });
     }
 
@@ -96,25 +96,9 @@ function getMentionDisplayText(completion: ICompletion, client: MatrixClient): s
     if (completion.type === "user") {
         return completion.completion;
     } else if (completion.type === "room") {
-        const roomId = completion.completionId;
-        const alias = completion.completion;
-
-        let roomForAutocomplete: Room | null | undefined;
-
-        // Not quite sure if the logic here makes sense - specifically calling .getRoom with an alias
-        // that doesn't start with #, but keeping the logic the same as in PartCreator.roomPill for now
-        if (roomId) {
-            roomForAutocomplete = client.getRoom(roomId);
-        } else if (!alias.startsWith("#")) {
-            roomForAutocomplete = client.getRoom(alias);
-        } else {
-            roomForAutocomplete = client.getRooms().find((r) => {
-                return r.getCanonicalAlias() === alias || r.getAltAliases().includes(alias);
-            });
-        }
-
-        // if we haven't managed to find the room, use the alias as a fallback
-        return roomForAutocomplete?.name || alias;
+        // try and get the room and use it's name, if not available, fall back to
+        // completion.completion
+        return getRoomFromCompletion(completion, client)?.name || completion.completion;
     }
 }
 
@@ -129,13 +113,13 @@ function getMentionAttributes(completion: ICompletion, client: MatrixClient, roo
     let background = "background";
     let letter = "letter";
     if (completion.type === "user") {
-        const member = room.getMember(completion.completionId);
+        const mentionedMember = room.getMember(completion.completionId);
 
-        if (!member) return;
+        if (!mentionedMember) return;
 
-        const name = member.name || member.userId;
-        const defaultAvatarUrl = Avatar.defaultAvatarUrlForString(member.userId);
-        const avatarUrl = Avatar.avatarUrlForMember(member, 16, 16, "crop");
+        const name = mentionedMember.name || mentionedMember.userId;
+        const defaultAvatarUrl = Avatar.defaultAvatarUrlForString(mentionedMember.userId);
+        const avatarUrl = Avatar.avatarUrlForMember(mentionedMember, 16, 16, "crop");
         let initialLetter = "";
         if (avatarUrl === defaultAvatarUrl) {
             initialLetter = Avatar.getInitialLetter(name) ?? "";
@@ -143,26 +127,15 @@ function getMentionAttributes(completion: ICompletion, client: MatrixClient, roo
 
         background = `url(${avatarUrl})`;
         letter = `'${initialLetter}'`; // not a mistake, need to ensure it's there
-    }
-    if (completion.type === "room") {
-        const roomId = completion.completionId;
-        const alias = completion.completion;
-        // TODO note this is the same logic as in getMentionDisplayText - extract into
-        // a separate function
-        let room: Room | undefined;
-        if (roomId || alias[0] !== "#") {
-            room = client.getRoom(roomId || alias) ?? undefined;
-        } else {
-            room = client.getRooms().find((r) => {
-                return r.getCanonicalAlias() === alias || r.getAltAliases().includes(alias);
-            });
-        }
+    } else if (completion.type === "room") {
+        const mentionedRoom = getRoomFromCompletion(completion, client);
+        const aliasFromCompletion = completion.completion;
 
         let initialLetter = "";
-        let avatarUrl = Avatar.avatarUrlForRoom(room ?? null, 16, 16, "crop");
+        let avatarUrl = Avatar.avatarUrlForRoom(mentionedRoom ?? null, 16, 16, "crop");
         if (!avatarUrl) {
-            initialLetter = Avatar.getInitialLetter(room?.name || alias) ?? "";
-            avatarUrl = Avatar.defaultAvatarUrlForString(room?.roomId ?? alias);
+            initialLetter = Avatar.getInitialLetter(mentionedRoom?.name || aliasFromCompletion) ?? "";
+            avatarUrl = Avatar.defaultAvatarUrlForString(mentionedRoom?.roomId ?? aliasFromCompletion);
         }
 
         background = `url(${avatarUrl})`;
