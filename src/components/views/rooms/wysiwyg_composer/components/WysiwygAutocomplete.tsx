@@ -57,6 +57,35 @@ function buildQuery(suggestion: MappedSuggestion | null): string {
 }
 
 /**
+ * Find the room from the completion by looking it up using the client from the context
+ * we are currently in
+ *
+ * @param completion - the completion from the autocomplete
+ * @param client - the current client we are using
+ * @returns a Room if one is found, null otherwise
+ */
+function getRoomFromCompletion(completion: ICompletion, client: MatrixClient): Room | null {
+    const roomId = completion.completionId;
+    const alias = completion.completion;
+
+    let roomToReturn: Room | null | undefined;
+
+    // Not quite sure if the logic here makes sense - specifically calling .getRoom with an alias
+    // that doesn't start with #, but keeping the logic the same as in PartCreator.roomPill for now
+    if (roomId) {
+        roomToReturn = client.getRoom(roomId);
+    } else if (!alias.startsWith("#")) {
+        roomToReturn = client.getRoom(alias);
+    } else {
+        roomToReturn = client.getRooms().find((r) => {
+            return r.getCanonicalAlias() === alias || r.getAltAliases().includes(alias);
+        });
+    }
+
+    return roomToReturn ?? null;
+}
+
+/**
  * Given an autocomplete suggestion, determine the text to display in the pill
  *
  * @param completion - the item selected from the autocomplete
@@ -116,7 +145,6 @@ function getMentionAttributes(completion: ICompletion, client: MatrixClient, roo
         letter = `'${initialLetter}'`; // not a mistake, need to ensure it's there
     }
     if (completion.type === "room") {
-        console.log(completion, "<<<comp");
         const roomId = completion.completionId;
         const alias = completion.completion;
         // TODO note this is the same logic as in getMentionDisplayText - extract into
@@ -164,7 +192,6 @@ const WysiwygAutocomplete = forwardRef(
 
             // for now we can use this if to make sure we handle only the mentions we know we can handle properly
             // in the model
-            // TODO handle all of the completion types
             if (completion.type === "room" || completion.type === "user") {
                 handleMention(
                     completion.href,
