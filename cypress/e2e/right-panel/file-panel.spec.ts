@@ -172,9 +172,6 @@ describe("FilePanel", () => {
                 percyCSS,
                 widths: [250], // magic number, should be around the default width
             });
-
-            // Reset to the default
-            cy.viewport(1000, 660);
         });
 
         it("should render the audio pleyer and play the audio file on the panel", () => {
