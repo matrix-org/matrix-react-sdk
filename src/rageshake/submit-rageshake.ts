@@ -40,15 +40,12 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
     const progressCallback = opts.progressCallback || ((): void => {});
 
     progressCallback(_t("Collecting app version information"));
-    let version = "UNKNOWN";
+    let version: string | undefined;
     try {
-        version = await PlatformPeg.get().getAppVersion();
+        version = await PlatformPeg.get()?.getAppVersion();
     } catch (err) {} // PlatformPeg already logs this.
 
-    let userAgent = "UNKNOWN";
-    if (window.navigator && window.navigator.userAgent) {
-        userAgent = window.navigator.userAgent;
-    }
+    const userAgent = window.navigator?.userAgent ?? "UNKNOWN";
 
     let installedPWA = "UNKNOWN";
     try {
@@ -69,7 +66,7 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
     const body = new FormData();
     body.append("text", opts.userText || "User did not supply any additional text.");
     body.append("app", opts.customApp || "element-web");
-    body.append("version", version);
+    body.append("version", version ?? "UNKNOWN");
     body.append("user_agent", userAgent);
     body.append("installed_pwa", installedPWA);
     body.append("touch_input", touchInput);
@@ -81,8 +78,8 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
     }
 
     if (client) {
-        body.append("user_id", client.credentials.userId);
-        body.append("device_id", client.deviceId);
+        body.append("user_id", client.credentials.userId!);
+        body.append("device_id", client.deviceId!);
 
         // TODO: make this work with rust crypto
         if (client.isCryptoEnabled() && client.crypto) {
@@ -91,7 +88,7 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
                 keys.push(`curve25519:${client.getDeviceCurve25519Key()}`);
             }
             body.append("device_keys", keys.join(", "));
-            body.append("cross_signing_key", client.getCrossSigningId());
+            body.append("cross_signing_key", client.getCrossSigningId() ?? "n/a");
 
             // add cross-signing status information
             const crossSigning = client.crypto.crossSigningInfo;
@@ -102,7 +99,7 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
                 "cross_signing_supported_by_hs",
                 String(await client.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing")),
             );
-            body.append("cross_signing_key", crossSigning.getId());
+            body.append("cross_signing_key", crossSigning.getId() ?? "n/a");
             body.append(
                 "cross_signing_privkey_in_secret_storage",
                 String(!!(await crossSigning.isStoredInSecretStorage(secretStorage))),
@@ -111,15 +108,15 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
             const pkCache = client.getCrossSigningCacheCallbacks();
             body.append(
                 "cross_signing_master_privkey_cached",
-                String(!!(pkCache && (await pkCache.getCrossSigningKeyCache("master")))),
+                String(!!(pkCache && (await pkCache?.getCrossSigningKeyCache?.("master")))),
             );
             body.append(
                 "cross_signing_self_signing_privkey_cached",
-                String(!!(pkCache && (await pkCache.getCrossSigningKeyCache("self_signing")))),
+                String(!!(pkCache && (await pkCache?.getCrossSigningKeyCache?.("self_signing")))),
             );
             body.append(
                 "cross_signing_user_signing_privkey_cached",
-                String(!!(pkCache && (await pkCache.getCrossSigningKeyCache("user_signing")))),
+                String(!!(pkCache && (await pkCache?.getCrossSigningKeyCache?.("user_signing")))),
             );
 
             body.append("secret_storage_ready", String(await client.isSecretStorageReady()));
@@ -166,14 +163,14 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
             body.append("storageManager_usage", String(estimate.usage));
             if (estimate.usageDetails) {
                 Object.keys(estimate.usageDetails).forEach((k) => {
-                    body.append(`storageManager_usage_${k}`, String(estimate.usageDetails[k]));
+                    body.append(`storageManager_usage_${k}`, String(estimate.usageDetails![k]));
                 });
             }
         } catch (e) {}
     }
 
     if (window.Modernizr) {
-        const missingFeatures = Object.keys(window.Modernizr).filter(
+        const missingFeatures = (Object.keys(window.Modernizr) as [keyof ModernizrStatic]).filter(
             (key: keyof ModernizrStatic) => window.Modernizr[key] === false,
         );
         if (missingFeatures.length > 0) {
@@ -181,7 +178,7 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
         }
     }
 
-    body.append("mx_local_settings", localStorage.getItem("mx_local_settings"));
+    body.append("mx_local_settings", localStorage.getItem("mx_local_settings")!);
 
     if (opts.sendLogs) {
         progressCallback(_t("Collecting logs"));
@@ -217,7 +214,7 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
  *
  * @return {Promise<string>} URL returned by the rageshake server
  */
-export default async function sendBugReport(bugReportEndpoint: string, opts: IOpts = {}): Promise<string> {
+export default async function sendBugReport(bugReportEndpoint?: string, opts: IOpts = {}): Promise<string> {
     if (!bugReportEndpoint) {
         throw new Error("No bug report endpoint has been set.");
     }
@@ -256,7 +253,7 @@ export async function downloadBugReport(opts: IOpts = {}): Promise<void> {
             await new Promise<void>((resolve) => {
                 const reader = new FileReader();
                 reader.addEventListener("loadend", (ev) => {
-                    tape.append(`log-${i++}.log`, new TextDecoder().decode(ev.target.result as ArrayBuffer));
+                    tape.append(`log-${i++}.log`, new TextDecoder().decode(reader.result as ArrayBuffer));
                     resolve();
                 });
                 reader.readAsArrayBuffer(value as Blob);
@@ -291,11 +288,11 @@ export async function submitFeedback(
     label: string,
     comment: string,
     canContact = false,
-    extraData: Record<string, string> = {},
+    extraData: Record<string, any> = {},
 ): Promise<void> {
-    let version = "UNKNOWN";
+    let version: string | undefined;
     try {
-        version = await PlatformPeg.get().getAppVersion();
+        version = await PlatformPeg.get()?.getAppVersion();
     } catch (err) {} // PlatformPeg already logs this.
 
     const body = new FormData();
@@ -304,15 +301,19 @@ export async function submitFeedback(
     body.append("can_contact", canContact ? "yes" : "no");
 
     body.append("app", "element-web");
-    body.append("version", version);
-    body.append("platform", PlatformPeg.get().getHumanReadableName());
-    body.append("user_id", MatrixClientPeg.get()?.getUserId());
+    body.append("version", version || "UNKNOWN");
+    body.append("platform", PlatformPeg.get()?.getHumanReadableName() ?? "n/a");
+    body.append("user_id", MatrixClientPeg.get()?.getUserId() ?? "n/a");
 
     for (const k in extraData) {
         body.append(k, JSON.stringify(extraData[k]));
     }
 
-    await submitReport(SdkConfig.get().bug_report_endpoint_url, body, () => {});
+    const bugReportEndpointUrl = SdkConfig.get().bug_report_endpoint_url;
+
+    if (bugReportEndpointUrl) {
+        await submitReport(bugReportEndpointUrl, body, () => {});
+    }
 }
 
 function submitReport(endpoint: string, body: FormData, progressCallback: (str: string) => void): Promise<string> {

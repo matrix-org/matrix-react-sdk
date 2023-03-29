@@ -43,6 +43,7 @@ import {
 } from "../utils/beacon";
 import { getCurrentPosition } from "../utils/beacon";
 import { doMaybeLocalRoomAction } from "../utils/local-room";
+import SettingsStore from "../settings/SettingsStore";
 
 const isOwnBeacon = (beacon: Beacon, userId: string): boolean => beacon.beaconInfoOwner === userId;
 
@@ -110,15 +111,19 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
      * ordered by creation time descending
      */
     private liveBeaconIds: BeaconIdentifier[] = [];
-    private locationInterval: number;
-    private geolocationError: GeolocationError | undefined;
-    private clearPositionWatch: ClearWatchCallback | undefined;
+    private locationInterval?: number;
+    private geolocationError?: GeolocationError;
+    private clearPositionWatch?: ClearWatchCallback;
     /**
      * Track when the last position was published
      * So we can manually get position on slow interval
      * when the target is stationary
      */
-    private lastPublishedPositionTimestamp: number | undefined;
+    private lastPublishedPositionTimestamp?: number;
+    /**
+     * Ref returned from watchSetting for the MSC3946 labs flag
+     */
+    private dynamicWatcherRef: string | undefined;
 
     public constructor() {
         super(defaultDispatcher);
@@ -142,7 +147,12 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         this.matrixClient.removeListener(BeaconEvent.Update, this.onUpdateBeacon);
         this.matrixClient.removeListener(BeaconEvent.Destroy, this.onDestroyBeacon);
         this.matrixClient.removeListener(RoomStateEvent.Members, this.onRoomStateMembers);
+        SettingsStore.unwatchSetting(this.dynamicWatcherRef ?? "");
 
+        this.clearBeacons();
+    }
+
+    private clearBeacons(): void {
         this.beacons.forEach((beacon) => beacon.destroy());
 
         this.stopPollingLocation();
@@ -159,6 +169,11 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         this.matrixClient.on(BeaconEvent.Update, this.onUpdateBeacon);
         this.matrixClient.on(BeaconEvent.Destroy, this.onDestroyBeacon);
         this.matrixClient.on(RoomStateEvent.Members, this.onRoomStateMembers);
+        this.dynamicWatcherRef = SettingsStore.watchSetting(
+            "feature_dynamic_room_predecessors",
+            null,
+            this.reinitialiseBeaconState,
+        );
 
         this.initialiseBeaconState();
     }
@@ -231,7 +246,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
      */
 
     private onNewBeacon = (_event: MatrixEvent, beacon: Beacon): void => {
-        if (!isOwnBeacon(beacon, this.matrixClient.getUserId())) {
+        if (!isOwnBeacon(beacon, this.matrixClient.getUserId()!)) {
             return;
         }
         this.addBeacon(beacon);
@@ -242,7 +257,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
      * This will be called when a beacon is replaced
      */
     private onUpdateBeacon = (_event: MatrixEvent, beacon: Beacon): void => {
-        if (!isOwnBeacon(beacon, this.matrixClient.getUserId())) {
+        if (!isOwnBeacon(beacon, this.matrixClient.getUserId()!)) {
             return;
         }
 
@@ -308,9 +323,19 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         );
     }
 
+    /**
+     * @internal public for test only
+     */
+    public reinitialiseBeaconState = (): void => {
+        this.clearBeacons();
+        this.initialiseBeaconState();
+    };
+
     private initialiseBeaconState = (): void => {
-        const userId = this.matrixClient.getUserId();
-        const visibleRooms = this.matrixClient.getVisibleRooms();
+        const userId = this.matrixClient.getUserId()!;
+        const visibleRooms = this.matrixClient.getVisibleRooms(
+            SettingsStore.getValue("feature_dynamic_room_predecessors"),
+        );
 
         visibleRooms.forEach((room) => {
             const roomState = room.currentState;
@@ -329,7 +354,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
             this.beaconsByRoomId.set(beacon.roomId, new Set<string>());
         }
 
-        this.beaconsByRoomId.get(beacon.roomId).add(beacon.identifier);
+        this.beaconsByRoomId.get(beacon.roomId)!.add(beacon.identifier);
 
         beacon.monitorLiveness();
     };
@@ -343,7 +368,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         if (!this.beacons.has(beaconId)) {
             return;
         }
-        this.beacons.get(beaconId).destroy();
+        this.beacons.get(beaconId)!.destroy();
         this.beacons.delete(beaconId);
 
         this.checkLiveness();

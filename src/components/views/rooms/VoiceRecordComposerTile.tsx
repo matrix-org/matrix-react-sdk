@@ -39,7 +39,7 @@ import InlineSpinner from "../elements/InlineSpinner";
 import { PlaybackManager } from "../../../audio/PlaybackManager";
 import { doMaybeLocalRoomAction } from "../../../utils/local-room";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
-import { attachRelation } from "./SendMessageComposer";
+import { attachMentions, attachRelation } from "./SendMessageComposer";
 import { addReplyToMessageContent } from "../../../utils/Reply";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import RoomContext from "../../../contexts/RoomContext";
@@ -70,9 +70,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
     public constructor(props: IProps) {
         super(props);
 
-        this.state = {
-            recorder: null, // no recording started by default
-        };
+        this.state = {};
 
         this.voiceRecordingId = VoiceRecordingStore.getVoiceRecordingId(this.props.room, this.props.relation);
     }
@@ -131,6 +129,8 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
                 this.state.recorder.getPlayback().thumbnailWaveform.map((v) => Math.round(v * 1024)),
             );
 
+            // Attach mentions, which really only applies if there's a replyToEvent.
+            attachMentions(MatrixClientPeg.get().getSafeUserId(), content, null, replyToEvent);
             attachRelation(content, relation);
             if (replyToEvent) {
                 addReplyToMessageContent(content, replyToEvent, {
@@ -163,7 +163,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
         await VoiceRecordingStore.instance.disposeRecording(this.voiceRecordingId);
 
         // Reset back to no recording, which means no phase (ie: restart component entirely)
-        this.setState({ recorder: null, recordingPhase: null, didUploadFail: false });
+        this.setState({ recorder: undefined, recordingPhase: undefined, didUploadFail: false });
     }
 
     private onCancel = async (): Promise<void> => {
@@ -220,7 +220,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
 
         try {
             // stop any noises which might be happening
-            PlaybackManager.instance.pauseAllExcept(null);
+            PlaybackManager.instance.pauseAllExcept();
             const recorder = VoiceRecordingStore.instance.startRecording(this.voiceRecordingId);
             await recorder.start();
 

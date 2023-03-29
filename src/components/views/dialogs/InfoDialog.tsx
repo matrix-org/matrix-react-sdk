@@ -19,11 +19,11 @@ import React, { ReactNode, KeyboardEvent } from "react";
 import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
-import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 
-interface IProps extends IDialogProps {
+interface IProps {
+    top?: ReactNode;
     title?: string;
     description?: ReactNode;
     className?: string;
@@ -31,10 +31,11 @@ interface IProps extends IDialogProps {
     hasCloseButton?: boolean;
     fixedWidth?: boolean;
     onKeyDown?(event: KeyboardEvent): void;
+    onFinished(): void;
 }
 
 export default class InfoDialog extends React.Component<IProps> {
-    public static defaultProps = {
+    public static defaultProps: Partial<IProps> = {
         title: "",
         description: "",
         hasCloseButton: false,
@@ -49,6 +50,7 @@ export default class InfoDialog extends React.Component<IProps> {
             <BaseDialog
                 className="mx_InfoDialog"
                 onFinished={this.props.onFinished}
+                top={this.props.top}
                 title={this.props.title}
                 contentId="mx_Dialog_content"
                 hasCancel={this.props.hasCloseButton}

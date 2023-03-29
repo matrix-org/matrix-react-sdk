@@ -193,7 +193,7 @@ export default abstract class BasePlatform {
     public displayNotification(
         title: string,
         msg: string,
-        avatarUrl: string,
+        avatarUrl: string | null,
         room: Room,
         ev?: MatrixEvent,
     ): Notification {
@@ -441,5 +441,13 @@ export default abstract class BasePlatform {
         } catch (e) {
             logger.error("idbDelete failed in destroyPickleKey", e);
         }
+    }
+
+    /**
+     * Clear app storage, called when logging out to perform data clean up.
+     */
+    public async clearStorage(): Promise<void> {
+        window.sessionStorage.clear();
+        window.localStorage.clear();
     }
 }

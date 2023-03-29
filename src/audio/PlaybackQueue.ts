@@ -106,7 +106,7 @@ export class PlaybackQueue {
             // Remove the now-useless clock for some space savings
             this.clockStates.delete(mxEvent.getId()!);
 
-            if (wasLastPlaying) {
+            if (wasLastPlaying && this.currentPlaybackId) {
                 this.recentFullPlays.add(this.currentPlaybackId);
                 const orderClone = arrayFastClone(this.playbackIdOrder);
                 const last = orderClone.pop();
@@ -170,7 +170,7 @@ export class PlaybackQueue {
                             // This should cause a Play event, which will re-populate our playback order
                             // and update our current playback ID.
                             // noinspection JSIgnoredPromiseFromCall
-                            instance.play();
+                            instance?.play();
                         }
                     }
                 } else {
@@ -188,8 +188,8 @@ export class PlaybackQueue {
                 if (order.length === 0 || order[order.length - 1] !== this.currentPlaybackId) {
                     const lastInstance = this.playbacks.get(this.currentPlaybackId);
                     if (
-                        lastInstance.currentState === PlaybackState.Playing ||
-                        lastInstance.currentState === PlaybackState.Paused
+                        lastInstance &&
+                        [PlaybackState.Playing, PlaybackState.Paused].includes(lastInstance.currentState)
                     ) {
                         order.push(this.currentPlaybackId);
                     }

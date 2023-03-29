@@ -2,7 +2,7 @@
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd.
 Copyright 2017, 2018, 2019 New Vector Ltd
-Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -40,6 +40,7 @@ import { SlidingSyncManager } from "./SlidingSyncManager";
 import CryptoStoreTooNewDialog from "./components/views/dialogs/CryptoStoreTooNewDialog";
 import { _t } from "./languageHandler";
 import { SettingLevel } from "./settings/SettingLevel";
+import MatrixClientBackedController from "./settings/controllers/MatrixClientBackedController";
 
 export interface IMatrixClientCreds {
     homeserverUrl: string;
@@ -166,7 +167,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         }
 
         try {
-            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time"), 10);
+            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time")!, 10);
             const diff = Date.now() - registrationTime;
             return diff / 36e5 <= hours;
         } catch (e) {
@@ -176,7 +177,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
 
     public userRegisteredAfter(timestamp: Date): boolean {
         try {
-            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time"), 10);
+            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time")!, 10);
             return timestamp.getTime() <= registrationTime;
         } catch (e) {
             return false;
@@ -218,7 +219,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         opts.pendingEventOrdering = PendingEventOrdering.Detached;
         opts.lazyLoadMembers = true;
         opts.clientWellKnownPollPeriod = 2 * 60 * 60; // 2 hours
-        opts.threadSupport = SettingsStore.getValue("feature_threadenabled");
+        opts.threadSupport = true;
 
         if (SettingsStore.getValue("feature_sliding_sync")) {
             const proxyUrl = SettingsStore.getValue("feature_sliding_sync_proxy_url");
@@ -234,9 +235,12 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             SlidingSyncManager.instance.startSpidering(100, 50); // 100 rooms at a time, 50ms apart
         }
 
+        opts.intentionalMentions = SettingsStore.getValue("feature_intentional_mentions");
+
         // Connect the matrix client to the dispatcher and setting handlers
         MatrixActionCreators.start(this.matrixClient);
         MatrixClientBackedSettingsHandler.matrixClient = this.matrixClient;
+        MatrixClientBackedController.matrixClient = this.matrixClient;
 
         return opts;
     }
@@ -292,7 +296,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     }
 
     public getCredentials(): IMatrixClientCreds {
-        let copiedCredentials = this.currentClientCreds;
+        let copiedCredentials: IMatrixClientCreds | null = this.currentClientCreds;
         if (this.currentClientCreds?.userId !== this.matrixClient?.credentials?.userId) {
             // cached credentials belong to a different user - don't use them
             copiedCredentials = null;
@@ -304,7 +308,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             homeserverUrl: this.matrixClient.baseUrl,
             identityServerUrl: this.matrixClient.idBaseUrl,
             userId: this.matrixClient.credentials.userId,
-            deviceId: this.matrixClient.getDeviceId(),
+            deviceId: this.matrixClient.getDeviceId() ?? undefined,
             accessToken: this.matrixClient.getAccessToken(),
             guest: this.matrixClient.isGuest(),
         };

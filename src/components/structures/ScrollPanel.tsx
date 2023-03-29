@@ -74,6 +74,7 @@ interface IProps {
      * of the wrapper
      */
     fixedChildren?: ReactNode;
+    children?: ReactNode;
 
     /* onFillRequest(backwards): a callback which is called on scroll when
      * the user nears the start (backwards = true) or end (backwards =
@@ -148,7 +149,7 @@ interface IProps {
  */
 
 export interface IScrollState {
-    stuckAtBottom: boolean;
+    stuckAtBottom?: boolean;
     trackedNode?: HTMLElement;
     trackedScrollToken?: string;
     bottomOffset?: number;
@@ -172,7 +173,7 @@ export default class ScrollPanel extends React.Component<IProps> {
         onScroll: function () {},
     };
 
-    private readonly pendingFillRequests: Record<"b" | "f", boolean> = {
+    private readonly pendingFillRequests: Record<"b" | "f", boolean | null> = {
         b: null,
         f: null,
     };
@@ -189,7 +190,7 @@ export default class ScrollPanel extends React.Component<IProps> {
     private pendingFillDueToPropsUpdate: boolean;
     private scrollState: IScrollState;
     private preventShrinkingState: IPreventShrinkingState;
-    private unfillDebouncer: number;
+    private unfillDebouncer: number | null;
     private bottomGrowth: number;
     private minListHeight: number;
     private heightUpdateInProgress: boolean;

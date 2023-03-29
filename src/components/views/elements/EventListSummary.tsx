@@ -78,7 +78,9 @@ enum TransitionType {
 
 const SEP = ",";
 
-export default class EventListSummary extends React.Component<IProps> {
+export default class EventListSummary extends React.Component<
+    IProps & Required<Pick<IProps, "summaryLength" | "threshold" | "avatarsMaxLength" | "layout">>
+> {
     public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
 
@@ -113,7 +115,7 @@ export default class EventListSummary extends React.Component<IProps> {
     private generateSummary(
         eventAggregates: Record<string, string[]>,
         orderedTransitionSequences: string[],
-    ): string | JSX.Element {
+    ): ReactNode {
         const summaries = orderedTransitionSequences.map((transitions) => {
             const userNames = eventAggregates[transitions];
             const nameList = this.renderNameList(userNames);
@@ -187,8 +189,8 @@ export default class EventListSummary extends React.Component<IProps> {
 
             let transition = t;
 
-            if (i < transitions.length - 1 && modMap[t] && modMap[t].after === t2) {
-                transition = modMap[t].newTransition;
+            if (i < transitions.length - 1 && modMap[t] && modMap[t]!.after === t2) {
+                transition = modMap[t]!.newTransition;
                 i++;
             }
 
@@ -380,7 +382,7 @@ export default class EventListSummary extends React.Component<IProps> {
         return res ?? null;
     }
 
-    private static getTransitionSequence(events: IUserEvents[]): TransitionType[] {
+    private static getTransitionSequence(events: IUserEvents[]): Array<TransitionType | null> {
         return events.map(EventListSummary.getTransition);
     }
 
@@ -392,7 +394,7 @@ export default class EventListSummary extends React.Component<IProps> {
      * @returns {string?} the transition type given to this event. This defaults to `null`
      * if a transition is not recognised.
      */
-    private static getTransition(e: IUserEvents): TransitionType {
+    private static getTransition(e: IUserEvents): TransitionType | null {
         if (e.mxEvent.isRedacted()) {
             return TransitionType.MessageRemoved;
         }
@@ -508,12 +510,12 @@ export default class EventListSummary extends React.Component<IProps> {
             const type = e.getType();
 
             let userKey = e.getSender()!;
-            if (type === EventType.RoomThirdPartyInvite) {
+            if (e.isState() && type === EventType.RoomThirdPartyInvite) {
                 userKey = e.getContent().display_name;
-            } else if (type === EventType.RoomMember) {
-                userKey = e.getStateKey();
-            } else if (e.isRedacted()) {
-                userKey = e.getUnsigned()?.redacted_because?.sender;
+            } else if (e.isState() && type === EventType.RoomMember) {
+                userKey = e.getStateKey()!;
+            } else if (e.isRedacted() && e.getUnsigned()?.redacted_because) {
+                userKey = e.getUnsigned().redacted_because!.sender;
             }
 
             // Initialise a user's events

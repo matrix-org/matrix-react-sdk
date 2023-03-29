@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 
 import { _t } from "../../../../languageHandler";
 import AccessibleButton from "../../../views/elements/AccessibleButton";
-import { Icon as RetryIcon } from "../../../../../res/img/element-icons/retry.svg";
+import { Icon as RetryIcon } from "../../../../../res/img/compound/retry-16px.svg";
 import { Icon as EmailPromptIcon } from "../../../../../res/img/element-icons/email-prompt.svg";
 import Tooltip, { Alignment } from "../../../views/elements/Tooltip";
 import { useTimeoutToggle } from "../../../../hooks/useTimeoutToggle";
@@ -26,7 +26,8 @@ import { ErrorMessage } from "../../ErrorMessage";
 
 interface Props {
     email: string;
-    errorText: string | null;
+    errorText: ReactNode | null;
+    onFinished(): void; // This modal is weird in that the way you close it signals intent
     onCloseClick: () => void;
     onReEnterEmailClick: () => void;
     onResendClick: () => Promise<boolean>;

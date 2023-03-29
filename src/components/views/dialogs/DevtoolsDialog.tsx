@@ -65,13 +65,13 @@ const Tools: Record<Category, [label: string, tool: Tool][]> = {
 
 interface IProps {
     roomId: string;
-    onFinished(finished: boolean): void;
+    onFinished(finished?: boolean): void;
 }
 
 type ToolInfo = [label: string, tool: Tool];
 
 const DevtoolsDialog: React.FC<IProps> = ({ roomId, onFinished }) => {
-    const [tool, setTool] = useState<ToolInfo>(null);
+    const [tool, setTool] = useState<ToolInfo | null>(null);
 
     let body: JSX.Element;
     let onBack: () => void;

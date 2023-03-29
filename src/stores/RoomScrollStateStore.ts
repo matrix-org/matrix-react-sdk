@@ -38,7 +38,7 @@ export class RoomScrollStateStore {
     //        from the focussedEvent.
     private scrollStateMap = new Map<string, ScrollState>();
 
-    public getScrollState(roomId: string): ScrollState {
+    public getScrollState(roomId: string): ScrollState | undefined {
         return this.scrollStateMap.get(roomId);
     }
 
@@ -50,4 +50,4 @@ export class RoomScrollStateStore {
 if (window.mxRoomScrollStateStore === undefined) {
     window.mxRoomScrollStateStore = new RoomScrollStateStore();
 }
-export default window.mxRoomScrollStateStore;
+export default window.mxRoomScrollStateStore!;

@@ -23,6 +23,11 @@ import { act, render, RenderResult } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { SpiedFunction } from "jest-mock";
+import {
+    ApprovalOpts,
+    WidgetInfo,
+    WidgetLifecycle,
+} from "@matrix-org/react-sdk-module-api/lib/lifecycles/WidgetLifecycle";
 
 import RightPanel from "../../../../src/components/structures/RightPanel";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -44,6 +49,8 @@ import AppsDrawer from "../../../../src/components/views/rooms/AppsDrawer";
 import { ElementWidgetCapabilities } from "../../../../src/stores/widgets/ElementWidgetCapabilities";
 import { ElementWidget } from "../../../../src/stores/widgets/StopGapWidget";
 import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessagingStore";
+import { ModuleRunner } from "../../../../src/modules/ModuleRunner";
+import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 
 describe("AppTile", () => {
     let cli: MatrixClient;
@@ -147,7 +154,11 @@ describe("AppTile", () => {
         // Run initial render with room 1, and also running lifecycle methods
         const renderResult = render(
             <MatrixClientContext.Provider value={cli}>
-                <RightPanel room={r1} resizeNotifier={resizeNotifier} />
+                <RightPanel
+                    room={r1}
+                    resizeNotifier={resizeNotifier}
+                    permalinkCreator={new RoomPermalinkCreator(r1, r1.roomId)}
+                />
             </MatrixClientContext.Provider>,
         );
         // Wait for RPS room 1 updates to fire
@@ -172,7 +183,11 @@ describe("AppTile", () => {
 
         renderResult.rerender(
             <MatrixClientContext.Provider value={cli}>
-                <RightPanel room={r2} resizeNotifier={resizeNotifier} />
+                <RightPanel
+                    room={r2}
+                    resizeNotifier={resizeNotifier}
+                    permalinkCreator={new RoomPermalinkCreator(r2, r2.roomId)}
+                />
             </MatrixClientContext.Provider>,
         );
 
@@ -208,7 +223,11 @@ describe("AppTile", () => {
         // Run initial render with room 1, and also running lifecycle methods
         const renderResult = render(
             <MatrixClientContext.Provider value={cli}>
-                <RightPanel room={r1} resizeNotifier={resizeNotifier} />
+                <RightPanel
+                    room={r1}
+                    resizeNotifier={resizeNotifier}
+                    permalinkCreator={new RoomPermalinkCreator(r1, r1.roomId)}
+                />
             </MatrixClientContext.Provider>,
         );
         // Wait for RPS room 1 updates to fire
@@ -250,7 +269,11 @@ describe("AppTile", () => {
         });
         renderResult.rerender(
             <MatrixClientContext.Provider value={cli}>
-                <RightPanel room={r2} resizeNotifier={resizeNotifier} />
+                <RightPanel
+                    room={r2}
+                    resizeNotifier={resizeNotifier}
+                    permalinkCreator={new RoomPermalinkCreator(r2, r2.roomId)}
+                />
             </MatrixClientContext.Provider>,
         );
         await rpsUpdated2;
@@ -379,5 +402,22 @@ describe("AppTile", () => {
                 expect(renderResult.getByTitle("Popout widget")).toBeInTheDocument();
             });
         });
+    });
+
+    it("for a pinned widget permission load", () => {
+        jest.spyOn(ModuleRunner.instance, "invoke").mockImplementation((lifecycleEvent, opts, widgetInfo) => {
+            if (lifecycleEvent === WidgetLifecycle.PreLoadRequest && (widgetInfo as WidgetInfo).id === app1.id) {
+                (opts as ApprovalOpts).approved = true;
+            }
+        });
+
+        // userId and creatorUserId are different
+        const renderResult = render(
+            <MatrixClientContext.Provider value={cli}>
+                <AppTile key={app1.id} app={app1} room={r1} userId="@user1" creatorUserId="@userAnother" />
+            </MatrixClientContext.Provider>,
+        );
+
+        expect(renderResult.queryByRole("button", { name: "Continue" })).not.toBeInTheDocument();
     });
 });

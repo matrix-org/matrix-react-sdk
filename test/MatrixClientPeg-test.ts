@@ -15,10 +15,12 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
+import fetchMockJest from "fetch-mock-jest";
 
 import { advanceDateAndTime, stubClient } from "./test-utils";
 import { IMatrixClientPeg, MatrixClientPeg as peg } from "../src/MatrixClientPeg";
 import SettingsStore from "../src/settings/SettingsStore";
+import { SettingLevel } from "../src/settings/SettingLevel";
 
 jest.useFakeTimers();
 
@@ -68,6 +70,7 @@ describe("MatrixClientPeg", () => {
             // instantiate a MatrixClientPegClass instance, with a new MatrixClient
             const PegClass = Object.getPrototypeOf(peg).constructor;
             testPeg = new PegClass();
+            fetchMockJest.get("http://example.com/_matrix/client/versions", {});
             testPeg.replaceUsingCreds({
                 accessToken: "SEKRET",
                 homeserverUrl: "http://example.com",
@@ -119,12 +122,17 @@ describe("MatrixClientPeg", () => {
                 },
             );
 
+            const mockSetValue = jest.spyOn(SettingsStore, "setValue").mockResolvedValue(undefined);
+
             const mockInitCrypto = jest.spyOn(testPeg.get(), "initCrypto").mockResolvedValue(undefined);
             const mockInitRustCrypto = jest.spyOn(testPeg.get(), "initRustCrypto").mockResolvedValue(undefined);
 
             await testPeg.start();
             expect(mockInitCrypto).not.toHaveBeenCalled();
             expect(mockInitRustCrypto).toHaveBeenCalledTimes(1);
+
+            // we should have stashed the setting in the settings store
+            expect(mockSetValue).toHaveBeenCalledWith("feature_rust_crypto", null, SettingLevel.DEVICE, true);
         });
     });
 });

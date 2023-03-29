@@ -81,11 +81,9 @@ module.exports = {
 
         // There are too many a11y violations to fix at once
         // Turn violated rules off until they are fixed
-        "jsx-a11y/alt-text": "off",
         "jsx-a11y/aria-activedescendant-has-tabindex": "off",
         "jsx-a11y/click-events-have-key-events": "off",
         "jsx-a11y/interactive-supports-focus": "off",
-        "jsx-a11y/label-has-associated-control": "off",
         "jsx-a11y/media-has-caption": "off",
         "jsx-a11y/mouse-events-have-key-events": "off",
         "jsx-a11y/no-autofocus": "off",
@@ -165,16 +163,39 @@ module.exports = {
         },
         {
             files: ["test/**/*.{ts,tsx}", "cypress/**/*.ts"],
+            extends: ["plugin:matrix-org/jest"],
             rules: {
                 // We don't need super strict typing in test utilities
                 "@typescript-eslint/explicit-function-return-type": "off",
                 "@typescript-eslint/explicit-member-accessibility": "off",
+
+                // Jest/Cypress specific
+
+                // Disabled tests are a reality for now but as soon as all of the xits are
+                // eliminated, we should enforce this.
+                "jest/no-disabled-tests": "off",
+                // TODO: There are many tests with invalid expects that should be fixed,
+                // https://github.com/vector-im/element-web/issues/24709
+                "jest/valid-expect": "off",
+                // Also treat "oldBackendOnly" as a test function.
+                // Used in some crypto tests.
+                "jest/no-standalone-expect": [
+                    "error",
+                    {
+                        additionalTestBlockFunctions: ["beforeAll", "beforeEach", "oldBackendOnly"],
+                    },
+                ],
             },
         },
         {
             files: ["cypress/**/*.ts"],
             parserOptions: {
                 project: ["./cypress/tsconfig.json"],
+            },
+            rules: {
+                // Cypress "promises" work differently - disable some related rules
+                "jest/valid-expect-in-promise": "off",
+                "jest/no-done-callback": "off",
             },
         },
     ],

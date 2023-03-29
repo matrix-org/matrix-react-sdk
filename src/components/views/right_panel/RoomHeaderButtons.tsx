@@ -3,7 +3,7 @@ Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
 Copyright 2017 New Vector Ltd
 Copyright 2018 New Vector Ltd
-Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -231,7 +231,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
     private onRoomSummaryClicked = (): void => {
         // use roomPanelPhase rather than this.state.phase as it remembers the latest one if we close
         const currentPhase = RightPanelStore.instance.currentCard.phase;
-        if (ROOM_INFO_PHASES.includes(currentPhase)) {
+        if (currentPhase && ROOM_INFO_PHASES.includes(currentPhase)) {
             if (this.state.phase === currentPhase) {
                 this.setPhase(currentPhase);
             } else {
@@ -257,7 +257,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
     };
 
     private onThreadsPanelClicked = (ev: ButtonEvent): void => {
-        if (RoomHeaderButtons.THREAD_PHASES.includes(this.state.phase)) {
+        if (this.state.phase && RoomHeaderButtons.THREAD_PHASES.includes(this.state.phase)) {
             RightPanelStore.instance.togglePanel(this.props.room?.roomId ?? null);
         } else {
             showThreadPanel();
@@ -294,19 +294,17 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         );
         rightPanelPhaseButtons.set(
             RightPanelPhases.ThreadPanel,
-            SettingsStore.getValue("feature_threadenabled") ? (
-                <HeaderButton
-                    key={RightPanelPhases.ThreadPanel}
-                    name="threadsButton"
-                    data-testid="threadsButton"
-                    title={_t("Threads")}
-                    onClick={this.onThreadsPanelClicked}
-                    isHighlighted={this.isPhase(RoomHeaderButtons.THREAD_PHASES)}
-                    isUnread={this.state.threadNotificationColor > 0}
-                >
-                    <UnreadIndicator color={this.state.threadNotificationColor} />
-                </HeaderButton>
-            ) : null,
+            <HeaderButton
+                key={RightPanelPhases.ThreadPanel}
+                name="threadsButton"
+                data-testid="threadsButton"
+                title={_t("Threads")}
+                onClick={this.onThreadsPanelClicked}
+                isHighlighted={this.isPhase(RoomHeaderButtons.THREAD_PHASES)}
+                isUnread={this.state.threadNotificationColor > 0}
+            >
+                <UnreadIndicator color={this.state.threadNotificationColor} />
+            </HeaderButton>,
         );
         rightPanelPhaseButtons.set(
             RightPanelPhases.NotificationPanel,

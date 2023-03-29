@@ -104,16 +104,16 @@ export default class WidgetStore extends AsyncStoreWithClient<IState> {
     private generateApps(room: Room): IApp[] {
         return WidgetEchoStore.getEchoedRoomWidgets(room.roomId, WidgetUtils.getRoomWidgets(room)).map((ev) => {
             return WidgetUtils.makeAppConfig(
-                ev.getStateKey(),
+                ev.getStateKey()!,
                 ev.getContent(),
-                ev.getSender(),
+                ev.getSender()!,
                 ev.getRoomId(),
                 ev.getId(),
             );
         });
     }
 
-    private loadRoomWidgets(room: Room): void {
+    private loadRoomWidgets(room: Room | null): void {
         if (!room) return;
         const roomInfo = this.roomMap.get(room.roomId) || <IRoomWidgets>{};
         roomInfo.widgets = [];
@@ -172,7 +172,7 @@ export default class WidgetStore extends AsyncStoreWithClient<IState> {
 
     private onRoomStateEvents = (ev: MatrixEvent): void => {
         if (ev.getType() !== "im.vector.modular.widgets") return; // TODO: Support m.widget too
-        const roomId = ev.getRoomId();
+        const roomId = ev.getRoomId()!;
         this.initRoom(roomId);
         this.loadRoomWidgets(this.matrixClient.getRoom(roomId));
         this.emit(UPDATE_EVENT, roomId);

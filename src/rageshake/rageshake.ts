@@ -64,19 +64,21 @@ export class ConsoleLogger {
             warn: "W",
             error: "E",
         } as const;
-        Object.keys(consoleFunctionsToLevels).forEach((fnName: keyof typeof consoleFunctionsToLevels) => {
-            const level = consoleFunctionsToLevels[fnName];
-            const originalFn = consoleObj[fnName].bind(consoleObj);
-            this.originalFunctions[fnName] = originalFn;
-            consoleObj[fnName] = (...args) => {
-                this.log(level, ...args);
-                originalFn(...args);
-            };
-        });
+        (Object.keys(consoleFunctionsToLevels) as [keyof typeof consoleFunctionsToLevels]).forEach(
+            (fnName: keyof typeof consoleFunctionsToLevels) => {
+                const level = consoleFunctionsToLevels[fnName];
+                const originalFn = consoleObj[fnName].bind(consoleObj);
+                this.originalFunctions[fnName] = originalFn;
+                consoleObj[fnName] = (...args) => {
+                    this.log(level, ...args);
+                    originalFn(...args);
+                };
+            },
+        );
     }
 
     public bypassRageshake(fnName: LogFunctionName, ...args: (Error | DOMException | object | string)[]): void {
-        this.originalFunctions[fnName](...args);
+        this.originalFunctions[fnName]?.(...args);
     }
 
     public log(level: string, ...args: (Error | DOMException | object | string)[]): void {
@@ -152,7 +154,7 @@ export class IndexedDBLogStore {
             };
 
             req.onerror = () => {
-                const err = "Failed to open log database: " + req.error.name;
+                const err = "Failed to open log database: " + req.error?.name;
                 logger.error(err);
                 reject(new Error(err));
             };
@@ -234,7 +236,7 @@ export class IndexedDBLogStore {
             };
             txn.onerror = () => {
                 logger.error("Failed to flush logs : ", txn.error);
-                reject(new Error("Failed to write logs: " + txn.error.message));
+                reject(new Error("Failed to write logs: " + txn.error?.message));
             };
             objStore.add(this.generateLogEntry(lines));
             const lastModStore = txn.objectStore("logslastmod");
@@ -261,13 +263,15 @@ export class IndexedDBLogStore {
         // Returns: a string representing the concatenated logs for this ID.
         // Stops adding log fragments when the size exceeds maxSize
         function fetchLogs(id: string, maxSize: number): Promise<string> {
+            if (!db) return Promise.reject("DB unavailable");
+
             const objectStore = db.transaction("logs", "readonly").objectStore("logs");
 
             return new Promise((resolve, reject) => {
                 const query = objectStore.index("id").openCursor(IDBKeyRange.only(id), "prev");
                 let lines = "";
                 query.onerror = () => {
-                    reject(new Error("Query failed: " + query.error.message));
+                    reject(new Error("Query failed: " + query.error?.message));
                 };
                 query.onsuccess = () => {
                     const cursor = query.result;
@@ -287,6 +291,8 @@ export class IndexedDBLogStore {
 
         // Returns: A sorted array of log IDs. (newest first)
         function fetchLogIds(): Promise<string[]> {
+            if (!db) return Promise.reject("DB unavailable");
+
             // To gather all the log IDs, query for all records in logslastmod.
             const o = db.transaction("logslastmod", "readonly").objectStore("logslastmod");
             return selectQuery(o, undefined, (cursor) => {
@@ -305,6 +311,8 @@ export class IndexedDBLogStore {
         }
 
         function deleteLogs(id: string): Promise<void> {
+            if (!db) return Promise.reject("DB unavailable");
+
             return new Promise<void>((resolve, reject) => {
                 const txn = db.transaction(["logs", "logslastmod"], "readwrite");
                 const o = txn.objectStore("logs");
@@ -322,7 +330,7 @@ export class IndexedDBLogStore {
                     resolve();
                 };
                 txn.onerror = () => {
-                    reject(new Error("Failed to delete logs for " + `'${id}' : ${query.error.message}`));
+                    reject(new Error("Failed to delete logs for " + `'${id}' : ${query.error?.message}`));
                 };
                 // delete last modified entries
                 const lastModStore = txn.objectStore("logslastmod");
@@ -401,14 +409,14 @@ export class IndexedDBLogStore {
  */
 function selectQuery<T>(
     store: IDBIndex | IDBObjectStore,
-    keyRange: IDBKeyRange,
+    keyRange: IDBKeyRange | undefined,
     resultMapper: (cursor: IDBCursorWithValue) => T,
 ): Promise<T[]> {
     const query = store.openCursor(keyRange);
     return new Promise((resolve, reject) => {
         const results: T[] = [];
         query.onerror = () => {
-            reject(new Error("Query failed: " + query.error.message));
+            reject(new Error("Query failed: " + query.error?.message));
         };
         // collect results
         query.onsuccess = () => {

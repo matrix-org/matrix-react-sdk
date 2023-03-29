@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useContext, useRef } from "react";
+import React, { RefObject, useCallback, useContext, useRef } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import classNames from "classnames";
 import { EventType } from "matrix-js-sdk/src/@types/event";
@@ -33,12 +33,12 @@ import TooltipTarget from "./TooltipTarget";
 import { Linkify, topicToHtml } from "../../../HtmlUtils";
 
 interface IProps extends React.HTMLProps<HTMLDivElement> {
-    room?: Room;
+    room: Room;
 }
 
 export default function RoomTopic({ room, ...props }: IProps): JSX.Element {
     const client = useContext(MatrixClientContext);
-    const ref = useRef<HTMLDivElement>();
+    const ref = useRef() as RefObject<HTMLDivElement>;
 
     const topic = useTopic(room);
     const body = topicToHtml(topic?.text, topic?.html, ref);
@@ -62,7 +62,7 @@ export default function RoomTopic({ room, ...props }: IProps): JSX.Element {
 
     useDispatcher(dis, (payload) => {
         if (payload.action === Action.ShowRoomTopic) {
-            const canSetTopic = room.currentState.maySendStateEvent(EventType.RoomTopic, client.getUserId());
+            const canSetTopic = room.currentState.maySendStateEvent(EventType.RoomTopic, client.getSafeUserId());
             const body = topicToHtml(topic?.text, topic?.html, ref, true);
 
             const modal = Modal.createDialog(InfoDialog, {

@@ -58,12 +58,12 @@ describe("theme", () => {
             // When
             await new Promise((resolve) => {
                 setTheme("light").then(resolve);
-                lightTheme.onload(void 0);
+                lightTheme.onload!({} as Event);
             });
 
             // Then
             expect(spyQuerySelectorAll).toHaveBeenCalledWith("[data-mx-theme]");
-            expect(spyQuerySelectorAll).toBeCalledTimes(1);
+            expect(spyQuerySelectorAll).toHaveBeenCalledTimes(1);
             expect(lightTheme.disabled).toBe(false);
             expect(darkTheme.disabled).toBe(true);
         });
@@ -72,7 +72,7 @@ describe("theme", () => {
             return expect(
                 new Promise((resolve) => {
                     setTheme("light").catch((e) => resolve(e));
-                    lightTheme.onerror("call onerror");
+                    lightTheme.onerror!("call onerror");
                 }),
             ).resolves.toBe("call onerror");
         });

@@ -16,7 +16,7 @@ limitations under the License.
 
 import { mocked, Mocked } from "jest-mock";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
-import { IDevice } from "matrix-js-sdk/src/crypto/deviceinfo";
+import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 
 import { stubClient, setupAsyncStoreWithClient, mockPlatformPeg } from "./test-utils";
@@ -78,22 +78,16 @@ describe("createRoom", () => {
         const createCallSpy = jest.spyOn(ElementCall, "create");
         const roomId = await createRoom({ roomType: RoomType.UnstableCall });
 
-        const [
-            [
-                {
-                    power_level_content_override: {
-                        users: { [userId]: userPower },
-                        events: {
-                            [ElementCall.CALL_EVENT_TYPE.name]: callPower,
-                            [ElementCall.MEMBER_EVENT_TYPE.name]: callMemberPower,
-                        },
-                    },
-                },
-            ],
-        ] = client.createRoom.mock.calls;
+        const userPower = client.createRoom.mock.calls[0][0].power_level_content_override?.users?.[userId];
+        const callPower =
+            client.createRoom.mock.calls[0][0].power_level_content_override?.events?.[ElementCall.CALL_EVENT_TYPE.name];
+        const callMemberPower =
+            client.createRoom.mock.calls[0][0].power_level_content_override?.events?.[
+                ElementCall.MEMBER_EVENT_TYPE.name
+            ];
 
         // We should have had enough power to be able to set up the call
-        expect(userPower).toBeGreaterThanOrEqual(callPower);
+        expect(userPower).toBeGreaterThanOrEqual(callPower!);
         // and should have actually set it up
         expect(createCallSpy).toHaveBeenCalled();
 
@@ -122,18 +116,12 @@ describe("createRoom", () => {
 
         await createRoom({});
 
-        const [
-            [
-                {
-                    power_level_content_override: {
-                        events: {
-                            [ElementCall.CALL_EVENT_TYPE.name]: callPower,
-                            [ElementCall.MEMBER_EVENT_TYPE.name]: callMemberPower,
-                        },
-                    },
-                },
-            ],
-        ] = client.createRoom.mock.calls;
+        const callPower =
+            client.createRoom.mock.calls[0][0].power_level_content_override?.events?.[ElementCall.CALL_EVENT_TYPE.name];
+        const callMemberPower =
+            client.createRoom.mock.calls[0][0].power_level_content_override?.events?.[
+                ElementCall.MEMBER_EVENT_TYPE.name
+            ];
 
         expect(callPower).toBe(100);
         expect(callMemberPower).toBe(100);
@@ -159,12 +147,16 @@ describe("createRoom", () => {
 });
 
 describe("canEncryptToAllUsers", () => {
-    const trueUser = {
-        "@goodUser:localhost": {
-            DEV1: {} as unknown as IDevice,
-            DEV2: {} as unknown as IDevice,
-        },
-    };
+    const trueUser = new Map([
+        [
+            "@goodUser:localhost",
+            new Map([
+                ["DEV1", {} as unknown as DeviceInfo],
+                ["DEV2", {} as unknown as DeviceInfo],
+            ]),
+        ],
+    ]);
+
     const falseUser = {
         "@badUser:localhost": {},
     };

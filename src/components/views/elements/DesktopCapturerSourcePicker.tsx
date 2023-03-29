@@ -23,6 +23,7 @@ import DialogButtons from "./DialogButtons";
 import AccessibleButton from "./AccessibleButton";
 import TabbedView, { Tab, TabLocation } from "../../structures/TabbedView";
 import PlatformPeg from "../../../PlatformPeg";
+import { NonEmptyArray } from "../../../@types/common";
 
 export function getDesktopCapturerSources(): Promise<Array<DesktopCapturerSource>> {
     const options: GetSourcesOptions = {
@@ -32,7 +33,8 @@ export function getDesktopCapturerSources(): Promise<Array<DesktopCapturerSource
         },
         types: ["screen", "window"],
     };
-    return PlatformPeg.get().getDesktopCapturerSources(options);
+    const plaf = PlatformPeg.get();
+    return plaf ? plaf?.getDesktopCapturerSources(options) : Promise.resolve<DesktopCapturerSource[]>([]);
 }
 
 export enum Tabs {
@@ -67,7 +69,7 @@ export class ExistingSource extends React.Component<ExistingSourceIProps> {
                 title={this.props.source.name}
                 onClick={this.onClick}
             >
-                <img className={thumbnailClasses} src={this.props.source.thumbnailURL} />
+                <img alt={this.props.source.name} className={thumbnailClasses} src={this.props.source.thumbnailURL} />
                 <span className="mx_desktopCapturerSourcePicker_source_name">{this.props.source.name}</span>
             </AccessibleButton>
         );
@@ -80,7 +82,7 @@ export interface PickerIState {
     selectedSource: DesktopCapturerSource | null;
 }
 export interface PickerIProps {
-    onFinished(sourceId: string): void;
+    onFinished(sourceId?: string): void;
 }
 
 export default class DesktopCapturerSourcePicker extends React.Component<PickerIProps, PickerIState> {
@@ -121,7 +123,7 @@ export default class DesktopCapturerSourcePicker extends React.Component<PickerI
     };
 
     private onShare = (): void => {
-        this.props.onFinished(this.state.selectedSource.id);
+        this.props.onFinished(this.state.selectedSource?.id);
     };
 
     private onTabChange = (): void => {
@@ -129,7 +131,7 @@ export default class DesktopCapturerSourcePicker extends React.Component<PickerI
     };
 
     private onCloseClick = (): void => {
-        this.props.onFinished(null);
+        this.props.onFinished();
     };
 
     private getTab(type: "screen" | "window", label: string): Tab {
@@ -150,7 +152,7 @@ export default class DesktopCapturerSourcePicker extends React.Component<PickerI
     }
 
     public render(): React.ReactNode {
-        const tabs = [
+        const tabs: NonEmptyArray<Tab> = [
             this.getTab("screen", _t("Share entire screen")),
             this.getTab("window", _t("Application window")),
         ];

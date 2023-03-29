@@ -18,14 +18,14 @@ import * as React from "react";
 import { SyntheticEvent, useRef, useState } from "react";
 
 import { _t, _td } from "../../../languageHandler";
-import { IDialogProps } from "./IDialogProps";
 import Field from "../elements/Field";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import EmailField from "../auth/EmailField";
 
-interface IProps extends IDialogProps {
-    onFinished(continued: boolean, email?: string): void;
+interface IProps {
+    onFinished(continued: false, email?: undefined): void;
+    onFinished(continued: true, email: string): void;
 }
 
 const RegistrationEmailPromptDialog: React.FC<IProps> = ({ onFinished }) => {
@@ -34,6 +34,7 @@ const RegistrationEmailPromptDialog: React.FC<IProps> = ({ onFinished }) => {
 
     const onSubmit = async (e: SyntheticEvent): Promise<void> => {
         e.preventDefault();
+        if (!fieldRef.current) return;
         if (email) {
             const valid = await fieldRef.current.validate({});
 

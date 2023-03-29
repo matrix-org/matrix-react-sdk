@@ -75,13 +75,8 @@ describe("MPollBody", () => {
         // render without waiting for responses
         const renderResult = await newMPollBody(votes, [], undefined, undefined, false);
 
-        // votes still displayed
-        expect(votesCount(renderResult, "pizza")).toBe("2 votes");
-        expect(votesCount(renderResult, "poutine")).toBe("1 vote");
-        expect(votesCount(renderResult, "italian")).toBe("0 votes");
-        expect(votesCount(renderResult, "wings")).toBe("1 vote");
         // spinner rendered
-        expect(renderResult.getByTestId("totalVotes").innerHTML).toMatchSnapshot();
+        expect(renderResult.getByTestId("spinner")).toBeInTheDocument();
     });
 
     it("renders no votes if none were made", async () => {
@@ -770,6 +765,20 @@ describe("MPollBody", () => {
         expect(container).toMatchSnapshot();
     });
 
+    it("renders a warning message when poll has undecryptable relations", async () => {
+        const votes = [
+            responseEvent("@op:example.com", "pizza", 12),
+            responseEvent("@op:example.com", [], 13),
+            responseEvent("@op:example.com", "italian", 14),
+            responseEvent("@me:example.com", "wings", 15),
+            responseEvent("@qr:example.com", "italian", 16),
+        ];
+
+        jest.spyOn(votes[1], "isDecryptionFailure").mockReturnValue(true);
+        const { getByText } = await newMPollBody(votes);
+        expect(getByText("Due to decryption errors, some votes may not be counted")).toBeInTheDocument();
+    });
+
     it("renders a poll with local, non-local and invalid votes", async () => {
         const votes = [
             responseEvent("@a:example.com", "pizza", 12),
@@ -949,7 +958,7 @@ function endedVotesCount(renderResult: RenderResult, value: string): string {
     return votesCount(renderResult, value);
 }
 
-export function newPollStart(answers?: PollAnswer[], question?: string, disclosed = true): PollStartEventContent {
+function newPollStart(answers?: PollAnswer[], question?: string, disclosed = true): PollStartEventContent {
     if (!answers) {
         answers = [
             { id: "pizza", [M_TEXT.name]: "Pizza" },
@@ -1024,7 +1033,7 @@ function expectedResponseEventCall(answer: string) {
     return [roomId, eventType, content];
 }
 
-export function newPollEndEvent(sender = "@me:example.com", ts = 0): MatrixEvent {
+function newPollEndEvent(sender = "@me:example.com", ts = 0): MatrixEvent {
     return makePollEndEvent("$mypoll", "#myroom:example.com", sender, ts);
 }
 

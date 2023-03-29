@@ -57,7 +57,7 @@ export default class WidgetUtils {
      * @return Boolean -- true if the user can modify widgets in this room
      * @throws Error -- specifies the error reason
      */
-    public static canUserModifyWidgets(roomId: string): boolean {
+    public static canUserModifyWidgets(roomId?: string): boolean {
         if (!roomId) {
             logger.warn("No room ID specified");
             return false;
@@ -96,7 +96,7 @@ export default class WidgetUtils {
      * @param  {[type]}  testUrlString URL to check
      * @return {Boolean} True if specified URL is a scalar URL
      */
-    public static isScalarUrl(testUrlString: string): boolean {
+    public static isScalarUrl(testUrlString?: string): boolean {
         if (!testUrlString) {
             logger.error("Scalar URL check failed. No URL specified");
             return false;
@@ -236,13 +236,6 @@ export default class WidgetUtils {
         widgetName: string,
         widgetData: IWidgetData,
     ): Promise<void> {
-        const content = {
-            type: widgetType.preferred,
-            url: widgetUrl,
-            name: widgetName,
-            data: widgetData,
-        };
-
         const client = MatrixClientPeg.get();
         // Get the current widgets and clone them before we modify them, otherwise
         // we'll modify the content of the old event.
@@ -257,11 +250,21 @@ export default class WidgetUtils {
 
         const addingWidget = Boolean(widgetUrl);
 
+        const userId = client.getSafeUserId();
+
+        const content = {
+            type: widgetType.preferred,
+            url: widgetUrl,
+            name: widgetName,
+            data: widgetData,
+            creatorUserId: userId,
+        };
+
         // Add new widget / update
         if (addingWidget) {
             userWidgets[widgetId] = {
                 content: content,
-                sender: client.getUserId()!,
+                sender: userId,
                 state_key: widgetId,
                 type: "m.widget",
                 id: widgetId,
@@ -450,7 +453,7 @@ export default class WidgetUtils {
         oobRoomName?: string,
     ): Promise<void> {
         const domain = Jitsi.getInstance().preferredDomain;
-        const auth = await Jitsi.getInstance().getJitsiAuth();
+        const auth = (await Jitsi.getInstance().getJitsiAuth()) ?? undefined;
         const widgetId = randomString(24); // Must be globally unique
 
         let confId;
@@ -506,6 +509,8 @@ export default class WidgetUtils {
             "conferenceDomain=$domain",
             "conferenceId=$conferenceId",
             "isAudioOnly=$isAudioOnly",
+            "startWithAudioMuted=$startWithAudioMuted",
+            "startWithVideoMuted=$startWithVideoMuted",
             "isVideoChannel=$isVideoChannel",
             "displayName=$matrix_display_name",
             "avatarUrl=$matrix_avatar_url",
@@ -554,7 +559,7 @@ export default class WidgetUtils {
         // noinspection JSIgnoredPromiseFromCall
         IntegrationManagers.sharedInstance()
             .getPrimaryManager()
-            .open(room, "type_" + app.type, app.id);
+            ?.open(room, "type_" + app.type, app.id);
     }
 
     public static isManagedByManager(app: IApp): boolean {
@@ -563,7 +568,7 @@ export default class WidgetUtils {
             if (managers.hasManager()) {
                 // TODO: Pick the right manager for the widget
                 const defaultManager = managers.getPrimaryManager();
-                return WidgetUtils.isScalarUrl(defaultManager.apiUrl);
+                return WidgetUtils.isScalarUrl(defaultManager?.apiUrl);
             }
         }
         return false;
