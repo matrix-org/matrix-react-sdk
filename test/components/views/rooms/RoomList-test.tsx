@@ -185,7 +185,7 @@ describe("RoomList", () => {
 
                 expect(addRoomButton).toBeInTheDocument();
                 expect(menu).toBeInTheDocument();
-                expect(within(menu).queryByRole("menuitem", { name: "Explore rooms" })).not.toBeInTheDocument();
+                expect(within(menu).queryByRole("menuitem", { name: "Explore rooms" })).toBeInTheDocument();
                 expect(within(menu).getByRole("menuitem", { name: "New room" })).toBeInTheDocument();
                 expect(within(menu).getByRole("menuitem", { name: "Add existing room" })).toBeInTheDocument();
             });

@@ -227,23 +227,21 @@ const UntaggedAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex }) => {
 
         contextMenuContent = (
             <IconizedContextMenuOptionList first>
-                {showExploreRooms ? (
-                    <IconizedContextMenuOption
-                        label={_t("Explore rooms")}
-                        iconClassName="mx_RoomList_iconExplore"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            closeMenu();
-                            defaultDispatcher.dispatch<ViewRoomPayload>({
-                                action: Action.ViewRoom,
-                                room_id: activeSpace.roomId,
-                                metricsTrigger: undefined, // other
-                            });
-                            PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuExploreRoomsItem", e);
-                        }}
-                    />
-                ) : null}
+                <IconizedContextMenuOption
+                    label={_t("Explore rooms")}
+                    iconClassName="mx_RoomList_iconExplore"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        closeMenu();
+                        defaultDispatcher.dispatch<ViewRoomPayload>({
+                            action: Action.ViewRoom,
+                            room_id: activeSpace.roomId,
+                            metricsTrigger: undefined, // other
+                        });
+                        PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuExploreRoomsItem", e);
+                    }}
+                />
                 {showCreateRoom ? (
                     <>
                         <IconizedContextMenuOption
