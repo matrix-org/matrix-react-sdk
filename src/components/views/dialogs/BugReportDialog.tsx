@@ -67,7 +67,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             downloadBusy: false,
             downloadProgress: null,
         };
-        
+
         this.unmounted = false;
 
         // Get all of the extra info dumped to the console when someone is about
@@ -84,7 +84,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
     public componentDidMount(): void {
         this.issueRef.current?.focus();
     }
-    
+
     public componentWillUnmount(): void {
         this.unmounted = true;
     }
