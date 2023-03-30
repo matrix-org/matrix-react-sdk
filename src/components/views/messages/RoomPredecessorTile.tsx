@@ -18,6 +18,7 @@ limitations under the License.
 import React, { useCallback, useContext } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
@@ -29,6 +30,7 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import RoomContext from "../../../contexts/RoomContext";
 import { useRoomState } from "../../../hooks/useRoomState";
 import SettingsStore from "../../../settings/SettingsStore";
+import MatrixToPermalinkConstructor from "../../../utils/permalinks/MatrixToPermalinkConstructor";
 
 interface IProps {
     /** The m.room.create MatrixEvent that this tile represents */
@@ -86,7 +88,10 @@ export const RoomPredecessorTile: React.FC<IProps> = ({ mxEvent, timestamp }) =>
     }
 
     const prevRoom = MatrixClientPeg.get().getRoom(predecessor.roomId);
-    if (!prevRoom) {
+
+    // We need either the previous room, or some servers to find it with.
+    // Otherwise, we must bail out here
+    if (!prevRoom && !predecessor.viaServers) {
         logger.warn(`Failed to find predecessor room with id ${predecessor.roomId}`);
         return (
             <EventTileBubble
@@ -104,14 +109,11 @@ export const RoomPredecessorTile: React.FC<IProps> = ({ mxEvent, timestamp }) =>
             </EventTileBubble>
         );
     }
-    const permalinkCreator = new RoomPermalinkCreator(prevRoom, predecessor.roomId);
-    permalinkCreator.load();
-    let predecessorPermalink: string;
-    if (predecessor.eventId) {
-        predecessorPermalink = permalinkCreator.forEvent(predecessor.eventId);
-    } else {
-        predecessorPermalink = permalinkCreator.forRoom();
-    }
+
+    const predecessorPermalink = prevRoom
+        ? createLinkWithRoom(prevRoom, predecessor.roomId, predecessor.eventId)
+        : createLinkWithoutRoom(predecessor.roomId, predecessor.viaServers);
+
     const link = (
         <a href={predecessorPermalink} onClick={onLinkClicked}>
             {_t("Click here to see older messages.")}
@@ -126,4 +128,23 @@ export const RoomPredecessorTile: React.FC<IProps> = ({ mxEvent, timestamp }) =>
             timestamp={timestamp}
         />
     );
+
+    function createLinkWithRoom(room: Room, roomId: string, eventId?: string): string {
+        const permalinkCreator = new RoomPermalinkCreator(room, roomId);
+        permalinkCreator.load();
+        if (eventId) {
+            return permalinkCreator.forEvent(eventId);
+        } else {
+            return permalinkCreator.forRoom();
+        }
+    }
+
+    function createLinkWithoutRoom(roomId: string, viaServers: string[], eventId?: string): string {
+        const matrixToPermalinkConstructor = new MatrixToPermalinkConstructor();
+        if (eventId) {
+            return matrixToPermalinkConstructor.forEvent(roomId, eventId, viaServers);
+        } else {
+            return matrixToPermalinkConstructor.forRoom(roomId, viaServers);
+        }
+    }
 };

@@ -62,6 +62,17 @@ describe("<RoomPredecessorTile />", () => {
         },
         event_id: "$create",
     });
+    const viaPredecessorEvent = new MatrixEvent({
+        type: EventType.RoomPredecessor,
+        state_key: "",
+        sender: userId,
+        room_id: roomId,
+        content: {
+            predecessor_room_id: "old_room_id_from_predecessor",
+            via_servers: ["a.example.com", "b.example.com"],
+        },
+        event_id: "$create",
+    });
     const predecessorEventWithEventId = new MatrixEvent({
         type: EventType.RoomPredecessor,
         state_key: "",
@@ -83,6 +94,8 @@ describe("<RoomPredecessorTile />", () => {
     upsertRoomStateEvents(roomCreateAndPredecessorWithEventId, [createEvent, predecessorEventWithEventId]);
     const roomNoPredecessors = new Room(roomId, client, userId);
     upsertRoomStateEvents(roomNoPredecessors, [createEventWithoutPredecessor]);
+    const roomCreateAndViaPredecessor = new Room(roomId, client, userId);
+    upsertRoomStateEvents(roomCreateAndViaPredecessor, [createEvent, viaPredecessorEvent]);
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -161,7 +174,7 @@ describe("<RoomPredecessorTile />", () => {
             mocked(MatrixClientPeg.get().getRoom).mockReturnValue(null);
         });
 
-        it("Shows an error", () => {
+        it("Shows an error if there are no via servers", () => {
             renderTile(roomCreateAndPredecessor);
             expect(screen.getByText("Can't find the old version of this room", { exact: false })).toBeInTheDocument();
         });
@@ -200,6 +213,29 @@ describe("<RoomPredecessorTile />", () => {
                 "href",
                 "https://matrix.to/#/old_room_id_from_predecessor/tombstone_event_id_from_predecessor",
             );
+        });
+
+        describe("If the predecessor room is not found", () => {
+            filterConsole("Failed to find predecessor room with id old_room_id");
+
+            beforeEach(() => {
+                mocked(MatrixClientPeg.get().getRoom).mockReturnValue(null);
+            });
+
+            it("Shows an error if there are no via servers", () => {
+                renderTile(roomCreateAndPredecessor);
+                expect(
+                    screen.getByText("Can't find the old version of this room", { exact: false }),
+                ).toBeInTheDocument();
+            });
+
+            it("Shows a tile if there are via servers", () => {
+                renderTile(roomCreateAndViaPredecessor);
+                expect(screen.getByText("Click here to see older messages.")).toHaveAttribute(
+                    "href",
+                    "https://matrix.to/#/old_room_id_from_predecessor?via=a.example.com&via=b.example.com",
+                );
+            });
         });
     });
 });
