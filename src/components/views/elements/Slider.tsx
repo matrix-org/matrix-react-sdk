@@ -75,7 +75,7 @@ export default class Slider extends React.Component<IProps> {
                     value={this.props.value}
                     onChange={this.onChange}
                     disabled={this.props.disabled}
-                    step="any"
+                    step={this.props.step}
                     autoComplete="off"
                 />
                 {selection}

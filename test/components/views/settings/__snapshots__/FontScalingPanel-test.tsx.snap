@@ -40,7 +40,7 @@ exports[`FontScalingPanel renders the font scaling UI 1`] = `
           autocomplete="off"
           max="18"
           min="13"
-          step="any"
+          step="1"
           type="range"
           value="15"
         />
