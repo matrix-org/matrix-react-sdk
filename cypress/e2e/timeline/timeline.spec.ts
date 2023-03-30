@@ -284,7 +284,7 @@ describe("Timeline", () => {
                 cy.get(".mx_GenericEventListSummary_unstyledList .mx_EventTile_info:first-of-type")
                     .realHover()
                     .findButton("collapse")
-                    .click({ force: false });
+                    .click();
 
                 // Assert that "collapse" link button worked
                 cy.findButton("expand").should("exist");
@@ -400,12 +400,10 @@ describe("Timeline", () => {
                 .realHover()
                 .findButton("Options")
                 .should("be.visible")
-                .click({ force: false });
-            cy.findMenuitem("Remove").should("be.visible").click({ force: false });
+                .click();
+            cy.findMenuitem("Remove").should("be.visible").click();
             // Confirm deletion
-            cy.get(".mx_Dialog_buttons button[data-testid=dialog-primary-button]")
-                .findButton("Remove")
-                .click({ force: false });
+            cy.get(".mx_Dialog_buttons button[data-testid=dialog-primary-button]").findButton("Remove").click();
             // Make sure the dialog was closed and the second (last) message was redacted
             cy.get(".mx_Dialog").should("not.exist");
             cy.get(".mx_GenericEventListSummary .mx_EventTile_last .mx_RedactedBody").should("be.visible");
@@ -569,7 +567,7 @@ describe("Timeline", () => {
             cy.contains(".mx_RoomView_body .mx_EventTile .mx_EventTile_line", "Message")
                 .realHover()
                 .within(() => {
-                    cy.findButton("Edit").click({ force: false });
+                    cy.findButton("Edit").click();
                     cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
                 });
             cy.contains(".mx_EventTile[data-scroll-tokens]", "MessageEdit").should("exist");
@@ -624,7 +622,7 @@ describe("Timeline", () => {
             cy.contains(".mx_RoomView_body .mx_EventTile .mx_EventTile_line", "Message")
                 .realHover()
                 .within(() => {
-                    cy.findButton("Edit").click({ force: false });
+                    cy.findButton("Edit").click();
                     cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
                 });
             cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", "MessageEdit").should("exist");
@@ -636,7 +634,7 @@ describe("Timeline", () => {
                 .should("exist")
                 .realHover()
                 .within(() => {
-                    cy.findButton("toggle event").click("topLeft", { force: false });
+                    cy.findButton("toggle event").click("topLeft");
                 });
 
             // Make sure the expand toggle works
@@ -651,7 +649,7 @@ describe("Timeline", () => {
                         .should("have.css", "align-self", "flex-end")
 
                         // Click again to collapse the source
-                        .click("topLeft", { force: false });
+                        .click("topLeft");
                 });
 
             // Make sure the collapse toggle works
@@ -673,7 +671,7 @@ describe("Timeline", () => {
                 .should("exist")
                 .realHover()
                 .within(() => {
-                    cy.findButton("toggle event").click("topLeft", { force: false });
+                    cy.findButton("toggle event").click("topLeft");
                 });
 
             // Make sure the expand toggle worked
@@ -752,7 +750,7 @@ describe("Timeline", () => {
             cy.contains(".mx_RoomView_body .mx_EventTile_line", "Hello world")
                 .realHover()
                 .within(() => {
-                    cy.findButton("Reply").click({ force: false });
+                    cy.findButton("Reply").click();
                 });
         };
 
@@ -822,7 +820,7 @@ describe("Timeline", () => {
                         .should("be.visible")
                         .realHover()
                         .findButton("Reply")
-                        .click({ force: false });
+                        .click();
                 });
             };
 
@@ -965,7 +963,7 @@ describe("Timeline", () => {
             cy.get(".mx_EventTile_last")
                 .realHover()
                 .within(() => {
-                    cy.findButton("Reply").click({ force: false });
+                    cy.findButton("Reply").click();
                 });
             cy.getComposer().type(`${reply}{enter}`);
 
