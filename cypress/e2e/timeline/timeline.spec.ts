@@ -331,6 +331,16 @@ describe("Timeline", () => {
             cy.injectAxe();
         });
 
+        const messageEdit = () => {
+            cy.contains(".mx_RoomView_body .mx_EventTile .mx_EventTile_line", "Message")
+                .realHover()
+                .within(() => {
+                    cy.findButton("Edit").click();
+                    cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
+                });
+            cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", "MessageEdit").should("exist");
+        };
+
         it("should align generic event list summary with messages and emote on IRC layout", () => {
             // This test aims to check:
             // 1. Alignment of collapsed GELS (generic event list summary) and messages
@@ -564,13 +574,7 @@ describe("Timeline", () => {
             ).should("exist");
 
             // Edit message
-            cy.contains(".mx_RoomView_body .mx_EventTile .mx_EventTile_line", "Message")
-                .realHover()
-                .within(() => {
-                    cy.findButton("Edit").click();
-                    cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
-                });
-            cy.contains(".mx_EventTile[data-scroll-tokens]", "MessageEdit").should("exist");
+            messageEdit();
 
             // Click timestamp to highlight hidden event line
             cy.get(".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp").click();
@@ -619,13 +623,7 @@ describe("Timeline", () => {
             ).should("exist");
 
             // Edit message
-            cy.contains(".mx_RoomView_body .mx_EventTile .mx_EventTile_line", "Message")
-                .realHover()
-                .within(() => {
-                    cy.findButton("Edit").click();
-                    cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
-                });
-            cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", "MessageEdit").should("exist");
+            messageEdit();
 
             // 1. clickability of top left of view source event toggle
 
