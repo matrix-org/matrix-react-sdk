@@ -49,4 +49,12 @@ describe("MatrixToPermalinkConstructor", () => {
             );
         });
     });
+
+    describe("forEvent", () => {
+        it("constructs a link given an event ID, room ID and via servers", () => {
+            expect(
+                peramlinkConstructor.forEvent("!myroom:example.com", "$event4", ["one.example.com", "two.example.com"]),
+            ).toEqual("https://matrix.to/#/!myroom:example.com/$event4?via=one.example.com&via=two.example.com");
+        });
+    });
 });
