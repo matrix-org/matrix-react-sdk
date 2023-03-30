@@ -151,6 +151,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
     public componentDidUpdate(prevProps: IProps): void {
         if (prevProps.mxEvent !== this.props.mxEvent) {
+            this.setEventId(this.props.mxEvent);
             this.setupThread(this.props.mxEvent);
         }
 
@@ -213,9 +214,8 @@ export default class ThreadView extends React.Component<IProps, IState> {
     };
 
     private setupThread = (mxEv: MatrixEvent): void => {
-        const eventId = mxEv.getId();
-
-        if (!eventId) return;
+        /** presence of event Id has been ensured by {@link setEventId} */
+        const eventId = mxEv.getId()!;
 
         let thread = this.props.room.getThread(eventId);
 
