@@ -47,7 +47,7 @@ const FALLBACK_LOCALE = "en";
 counterpart.setFallbackLocale(FALLBACK_LOCALE);
 
 interface ErrorOptions {
-    // Because we're mixing the subsitution variables and cause into the same object
+    // Because we're mixing the subsitution variables and `cause` into the same object
     // below, we want them to always explicitly say whether there is an underlying error
     // or not to avoid typos of "cause" slipping through unnoticed.
     cause: unknown | undefined;
@@ -402,7 +402,7 @@ export function replaceByRegexes(text: string, mapping: IVariables | Tags): stri
         }
         if (!matchFoundSomewhere) {
             if (
-                // The current regexp did not match anything in the input Missing
+                // The current regexp did not match anything in the input. Missing
                 // matches is entirely possible because you might choose to show some
                 // variables only in the case of e.g. plurals. It's still a bit
                 // suspicious, and could be due to an error, so log it. However, not
