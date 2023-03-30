@@ -110,9 +110,7 @@ export function createEditContent(model: EditorModel, editedEvent: MatrixEvent):
     // Build the mentions properties for both the content and new_content.
     //
     // TODO If this is a reply we need to include all the users from it.
-    if (SettingsStore.getValue("feature_intentional_mentions")) {
-        attachMentions(editedEvent.sender!.userId, contentBody, model, undefined, editedEvent.getContent());
-    }
+    attachMentions(editedEvent.sender!.userId, contentBody, model, undefined, editedEvent.getContent());
     attachRelation(contentBody, { rel_type: "m.replace", event_id: editedEvent.getId() });
 
     return contentBody;
