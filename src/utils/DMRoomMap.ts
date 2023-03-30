@@ -24,7 +24,6 @@ import { Optional } from "matrix-events-sdk";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { filterValidMDirect } from "./dm/filterValidMDirect";
-import { filterBoolean } from "./arrays";
 
 /**
  * Class that takes a Matrix Client and flips the m.direct map
@@ -208,21 +207,15 @@ export default class DMRoomMap {
 
     public getUniqueRoomsWithIndividuals(): { [userId: string]: Room } {
         if (!this.roomToUser) return {}; // No rooms means no map.
-        return filterBoolean<{ userId: string; room: Room }>(
-            // map roomToUser to valid rooms with two participants
-            // return undefined for other rooms
-            Object.keys(this.roomToUser).map((r) => {
-                const userId = this.getUserIdForRoomId(r);
-                const room = this.matrixClient.getRoom(r);
-                const hasTwoMembers = room?.getInvitedAndJoinedMemberCount() === 2;
-                if (userId && room && hasTwoMembers) {
-                    return { userId, room };
-                }
-                return undefined;
-            }),
-        ).reduce((obj, r) => {
-            obj[r.userId] = r.room;
-            return obj;
+        // map roomToUser to valid rooms with two participants
+        return Object.keys(this.roomToUser).reduce((acc, roomId: string) => {
+            const userId = this.getUserIdForRoomId(roomId);
+            const room = this.matrixClient.getRoom(roomId);
+            const hasTwoMembers = room?.getInvitedAndJoinedMemberCount() === 2;
+            if (userId && room && hasTwoMembers) {
+                acc[userId] = room;
+            }
+            return acc;
         }, {} as Record<string, Room>);
     }
 
