@@ -88,7 +88,21 @@ export const RoomPredecessorTile: React.FC<IProps> = ({ mxEvent, timestamp }) =>
     const prevRoom = MatrixClientPeg.get().getRoom(predecessor.roomId);
     if (!prevRoom) {
         logger.warn(`Failed to find predecessor room with id ${predecessor.roomId}`);
-        return <></>;
+        return (
+            <EventTileBubble
+                className="mx_CreateEvent"
+                title={_t("This room is a continuation of another conversation.")}
+                timestamp={timestamp}
+            >
+                <div className="mx_EventTile_body">
+                    <span className="mx_EventTile_tileError">
+                        {_t("Can't find the old version of this room (room id: %(roomId)s).", {
+                            roomId: predecessor.roomId,
+                        })}
+                    </span>
+                </div>
+            </EventTileBubble>
+        );
     }
     const permalinkCreator = new RoomPermalinkCreator(prevRoom, predecessor.roomId);
     permalinkCreator.load();

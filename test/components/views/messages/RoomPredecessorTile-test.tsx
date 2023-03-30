@@ -26,7 +26,7 @@ import { RoomPredecessorTile } from "../../../../src/components/views/messages/R
 import { stubClient, upsertRoomStateEvents } from "../../../test-utils/test-utils";
 import { Action } from "../../../../src/dispatcher/actions";
 import RoomContext from "../../../../src/contexts/RoomContext";
-import { getRoomContext } from "../../../test-utils";
+import { filterConsole, getRoomContext } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 
 jest.mock("../../../../src/dispatcher/dispatcher");
@@ -118,9 +118,14 @@ describe("<RoomPredecessorTile />", () => {
         );
     });
 
-    it("Shows an empty div if there is no predecessor", () => {
-        renderTile(roomNoPredecessors);
-        expect(screen.queryByText("Click here to see older messages.", { exact: false })).toBeNull();
+    describe("(filtering warnings about no predecessor)", () => {
+        filterConsole("RoomPredecessorTile unexpectedly used in a room with no predecessor.");
+
+        it("Shows an empty div if there is no predecessor", () => {
+            filterConsole;
+            renderTile(roomNoPredecessors);
+            expect(screen.queryByText("Click here to see older messages.", { exact: false })).toBeNull();
+        });
     });
 
     it("Opens the old room on click", async () => {
@@ -147,6 +152,19 @@ describe("<RoomPredecessorTile />", () => {
             "href",
             "https://matrix.to/#/old_room_id/tombstone_event_id",
         );
+    });
+
+    describe("If the predecessor room is not found", () => {
+        filterConsole("Failed to find predecessor room with id old_room_id");
+
+        beforeEach(() => {
+            mocked(MatrixClientPeg.get().getRoom).mockReturnValue(null);
+        });
+
+        it("Shows an error", () => {
+            renderTile(roomCreateAndPredecessor);
+            expect(screen.getByText("Can't find the old version of this room", { exact: false })).toBeInTheDocument();
+        });
     });
 
     describe("When feature_dynamic_room_predecessors = true", () => {
