@@ -177,7 +177,7 @@ export async function sendLoginRequest(
 
     const wellknown = data.well_known;
     if (wellknown) {
-        if (["m.homeserver"]?.["base_url"]) {
+        if (wellknown["m.homeserver"]?.["base_url"]) {
             hsUrl = wellknown["m.homeserver"]["base_url"];
             logger.log(`Overrode homeserver setting with ${hsUrl} from login response`);
         }
