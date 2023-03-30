@@ -44,6 +44,7 @@ interface IState {
     upgradeRecommendation?: IRecommendedVersion;
     oldRoomId?: string;
     oldEventId?: string;
+    oldViaServers?: string[];
     upgraded?: boolean;
 }
 
@@ -65,6 +66,7 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
             if (predecessor) {
                 additionalStateChanges.oldRoomId = predecessor.roomId;
                 additionalStateChanges.oldEventId = predecessor.eventId;
+                additionalStateChanges.oldViaServers = predecessor.viaServers;
             }
 
             this.setState({
@@ -88,6 +90,7 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
             action: Action.ViewRoom,
             room_id: this.state.oldRoomId,
             event_id: this.state.oldEventId,
+            via_servers: this.state.oldViaServers,
             metricsTrigger: "WebPredecessorSettings",
             metricsViaKeyboard: e.type !== "click",
         });
