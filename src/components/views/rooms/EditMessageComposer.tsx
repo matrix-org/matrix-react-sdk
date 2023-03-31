@@ -138,7 +138,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         const isRestored = this.createEditorModel();
         const ev = this.props.editState.getEvent();
 
-        this.replyToEvent = ev.replyEventId ? this.context.room.findEventById(ev.replyEventId) : undefined;
+        this.replyToEvent = ev.replyEventId ? this.context.room?.findEventById(ev.replyEventId) : undefined;
 
         const editContent = createEditContent(this.model, ev, this.replyToEvent);
         this.state = {
