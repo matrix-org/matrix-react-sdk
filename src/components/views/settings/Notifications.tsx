@@ -48,6 +48,8 @@ import {
     updatePushRuleActions,
 } from "../../../utils/pushRules/updatePushRuleActions";
 import { Caption } from "../typography/Caption";
+import NotificationSound from "./NotificationSound";
+import {Notifier} from "../../../Notifier";
 
 // TODO: this "view" component still has far too much application logic in it,
 // which should be factored out to other files.
@@ -56,7 +58,7 @@ enum Phase {
     Loading = "loading",
     Ready = "ready",
     Persisting = "persisting", // technically a meta-state for Ready, but whatever
-    // unrecoverable error - eg can't load push rules
+    // unrecoverable error - e.g. can't load push rules
     Error = "error",
     // error saving individual rule
     SavingError = "savingError",
@@ -68,6 +70,7 @@ enum RuleClass {
     // The vector sections map approximately to UI sections
     VectorGlobal = "vector_global",
     VectorMentions = "vector_mentions",
+    // VectorSound = "vector_sound",
     VectorOther = "vector_other",
     Other = "other", // unknown rules, essentially
 }
@@ -108,6 +111,10 @@ interface IVectorPushRule {
 interface IProps {}
 
 interface IState {
+    notificationSettingLevel: SettingLevel;
+    currentSound: string;
+    uploadedFile: File | null;
+
     phase: Phase;
 
     // Optional stuff is required when `phase === Ready`
@@ -148,8 +155,8 @@ const findInDefaultRules = (
 const OrderedVectorStates = [VectorState.Off, VectorState.On, VectorState.Loud];
 
 /**
- * Find the 'loudest' vector state assigned to a rule
- * and it's synced rules
+ * Find the 'loudest' vector state assigned to
+ * a rule and its synced rules
  * If rules have fallen out of sync,
  * the loudest rule can determine the display value
  * @param defaultRules
@@ -176,7 +183,7 @@ const maximumVectorState = (
         if (syncedRule) {
             const syncedRuleVectorState = definition.ruleToVectorState(syncedRule);
             // if syncedRule is 'louder' than current maximum
-            // set maximum to louder vectorState
+            // set to louder vectorState
             if (OrderedVectorStates.indexOf(syncedRuleVectorState) > OrderedVectorStates.indexOf(maxVectorState)) {
                 return syncedRuleVectorState;
             }
@@ -193,14 +200,23 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
     public constructor(props: IProps) {
         super(props);
 
+        let currentSound = "default";
+        const soundData = Notifier.getNotificationSound();
+        if (soundData) {
+            currentSound = soundData.name || soundData.url;
+        }
+
         this.state = {
+            notificationSettingLevel: SettingLevel.ACCOUNT,
+            currentSound: currentSound,
+            uploadedFile: null,
             phase: Phase.Loading,
             deviceNotificationsEnabled: SettingsStore.getValue("deviceNotificationsEnabled") ?? true,
             desktopNotifications: SettingsStore.getValue("notificationsEnabled"),
             desktopShowBody: SettingsStore.getValue("notificationBodyEnabled"),
             audioNotifications: SettingsStore.getValue("audioNotificationsEnabled"),
             clearingNotifications: false,
-            ruleIdsWithError: {},
+            ruleIdsWithError: {}
         };
 
         this.settingWatchers = [
@@ -339,7 +355,11 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
         // Prepare rendering for all of our known rules
         preparedNewState.vectorPushRules = {};
-        const vectorCategories = [RuleClass.VectorGlobal, RuleClass.VectorMentions, RuleClass.VectorOther];
+        const vectorCategories = [RuleClass.VectorGlobal,
+            RuleClass.VectorMentions,
+            // RuleClass.VectorSound,
+            RuleClass.VectorOther];
+
         for (const category of vectorCategories) {
             preparedNewState.vectorPushRules[category] = [];
             for (const rule of defaultRules[category]) {
@@ -709,11 +729,20 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         );
     }
 
+    /*
+    render section for a given category
+
+    returns null if the section should be hidden
+    @param {string} category - the category to render
+    @returns {ReactNode} the rendered section, or null if the section should be hidden
+     */
     private renderCategory(category: RuleClass): ReactNode {
         if (category !== RuleClass.VectorOther && this.isInhibited) {
             return null; // nothing to show for the section
         }
 
+        // if we're showing the 'Other' section, and there are
+        // unread notifications, show a button to clear them
         let clearNotifsButton: JSX.Element | undefined;
         if (
             category === RuleClass.VectorOther &&
@@ -832,6 +861,11 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         );
     }
 
+    /*
+    render section for notification targets
+
+    @returns {ReactNode} the rendered section, or null if the section should be hidden
+     */
     private renderTargets(): ReactNode {
         if (this.isInhibited) return null; // no targets if there's no notifications
 
@@ -868,6 +902,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 {this.renderCategory(RuleClass.VectorGlobal)}
                 {this.renderCategory(RuleClass.VectorMentions)}
                 {this.renderCategory(RuleClass.VectorOther)}
+                <NotificationSound currentSound={this.state.currentSound} level={this.state.notificationSettingLevel} />
                 {this.renderTargets()}
             </div>
         );

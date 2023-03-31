@@ -172,14 +172,24 @@ class NotifierClass {
         }
     }
 
-    public getSoundForRoom(roomId: string): {
+    /*
+       * returns account's default sound if no valid roomId
+       *
+       * We do no caching here because the SDK caches setting
+       * and the browser will cache the sound.
+       *
+       * @returns {object} {url: string, name: string, type: string, size: string} or null
+     */
+    public getNotificationSound(roomId?: string): {
         url: string;
         name: string;
         type: string;
         size: string;
     } | null {
-        // We do no caching here because the SDK caches setting
-        // and the browser will cache the sound.
+        if (!roomId) {
+            return null;
+        }
+
         const content = SettingsStore.getValue("notificationSound", roomId);
         if (!content) {
             return null;
@@ -212,14 +222,13 @@ class NotifierClass {
             return;
         }
 
-        const sound = this.getSoundForRoom(room.roomId);
+        const sound = this.getNotificationSound(room.roomId);
         logger.log(`Got sound ${(sound && sound.name) || "default"} for ${room.roomId}`);
 
         try {
-            const selector = document.querySelector<HTMLAudioElement>(
+            let audioElement = document.querySelector<HTMLAudioElement>(
                 sound ? `audio[src='${sound.url}']` : "#messageAudio",
             );
-            let audioElement = selector;
             if (!audioElement) {
                 if (!sound) {
                     logger.error("No audio element or sound to play for notification");
@@ -330,12 +339,11 @@ class NotifierClass {
         return this.isPossible() && SettingsStore.getValue("notificationsEnabled");
     }
 
+    // returns true if notifications possible, but not necessarily enabled
     public isPossible(): boolean {
-        const plaf = PlatformPeg.get();
-        if (!plaf?.supportsNotifications()) return false;
-        if (!plaf.maySendNotifications()) return false;
-
-        return true; // possible, but not necessarily enabled
+        const platform = PlatformPeg.get();
+        if (!platform?.supportsNotifications()) return false;
+        return platform.maySendNotifications();
     }
 
     public isBodyEnabled(): boolean {
@@ -454,10 +462,10 @@ class NotifierClass {
     };
 
     // XXX: exported for tests
-    public evaluateEvent(ev: MatrixEvent): void {
+    public evaluateEvent(event: MatrixEvent): void {
         // Mute notifications for broadcast info events
-        if (ev.getType() === VoiceBroadcastInfoEventType) return;
-        let roomId = ev.getRoomId()!;
+        if (event.getType() === VoiceBroadcastInfoEventType) return;
+        let roomId = event.getRoomId()!;
         if (LegacyCallHandler.instance.getSupportsVirtualRooms()) {
             // Attempt to translate a virtual room to a native one
             const nativeRoomId = VoipUserMapper.sharedInstance().nativeRoomForVirtualRoom(roomId);
@@ -472,29 +480,28 @@ class NotifierClass {
             return;
         }
 
-        const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
+        const actions = MatrixClientPeg.get().getPushActionsForEvent(event);
 
         if (actions?.notify) {
-            this.performCustomEventHandling(ev);
+            this.performCustomEventHandling(event);
 
             const store = SdkContextClass.instance.roomViewStore;
             const isViewingRoom = store.getRoomId() === room.roomId;
-            const threadId: string | undefined = ev.getId() !== ev.threadRootId ? ev.threadRootId : undefined;
+            const threadId: string | undefined = event.getId() !== event.threadRootId ? event.threadRootId : undefined;
             const isViewingThread = store.getThreadId() === threadId;
-
             const isViewingEventTimeline = isViewingRoom && (!threadId || isViewingThread);
 
+            // if user is in the room, and was recently active: don't notify them
             if (isViewingEventTimeline && UserActivity.sharedInstance().userActiveRecently() && !Modal.hasDialogs()) {
-                // don't bother notifying as user was recently active in this room
                 return;
             }
 
             if (this.isEnabled()) {
-                this.displayPopupNotification(ev, room);
+                this.displayPopupNotification(event, room);
             }
             if (actions.tweaks.sound && this.isAudioEnabled()) {
-                PlatformPeg.get()?.loudNotification(ev, room);
-                this.playAudioNotification(ev, room);
+                PlatformPeg.get()?.loudNotification(event, room);
+                this.playAudioNotification(event, room);
             }
         }
     }
