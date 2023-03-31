@@ -186,11 +186,6 @@ declare global {
         scrollIntoView(arg?: boolean | _ScrollIntoViewOptions): void;
     }
 
-    interface ErrorOptions {
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause
-        cause?: unknown;
-    }
-
     interface Error {
         // Standard
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause
@@ -203,6 +198,14 @@ declare global {
         lineNumber?: number;
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/columnNumber
         columnNumber?: number;
+    }
+
+    // We can remove these pieces if we ever update to `target: "es2022"` in our
+    // TypeScript config which supports the new `cause` property, see
+    // https://github.com/vector-im/element-web/issues/24913
+    interface ErrorOptions {
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause
+        cause?: unknown;
     }
 
     interface ErrorConstructor {

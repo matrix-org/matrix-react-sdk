@@ -21,6 +21,7 @@ import counterpart from "counterpart";
 import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
+import { MapWithDefault, safeSet } from "matrix-js-sdk/src/utils";
 
 import SettingsStore from "./settings/SettingsStore";
 import PlatformPeg from "./PlatformPeg";
@@ -46,7 +47,7 @@ const FALLBACK_LOCALE = "en";
 counterpart.setFallbackLocale(FALLBACK_LOCALE);
 
 interface ErrorOptions {
-    // Because we're mixing the subsitution variables and cause into the same object
+    // Because we're mixing the subsitution variables and `cause` into the same object
     // below, we want them to always explicitly say whether there is an underlying error
     // or not to avoid typos of "cause" slipping through unnoticed.
     cause: unknown | undefined;
@@ -88,23 +89,6 @@ export class UserFriendlyError extends Error {
         // Also provide a translated version of the error in the users locale to display
         this.translatedMessage = _t(message, substitutionVariables);
     }
-}
-
-export interface ITranslatableError extends Error {
-    translatedMessage: string;
-}
-
-/**
- * Helper function to create an error which has an English message
- * with a translatedMessage property for use by the consumer.
- * @param {string} message Message to translate.
- * @param {object} variables Variable substitutions, e.g { foo: 'bar' }
- * @returns {Error} The constructed error.
- */
-export function newTranslatableError(message: string, variables?: IVariables): ITranslatableError {
-    const error = new Error(message) as ITranslatableError;
-    error.translatedMessage = _t(message, variables);
-    return error;
 }
 
 export function getUserLanguage(): string {
@@ -418,7 +402,7 @@ export function replaceByRegexes(text: string, mapping: IVariables | Tags): stri
         }
         if (!matchFoundSomewhere) {
             if (
-                // The current regexp did not match anything in the input Missing
+                // The current regexp did not match anything in the input. Missing
                 // matches is entirely possible because you might choose to show some
                 // variables only in the case of e.g. plurals. It's still a bit
                 // suspicious, and could be due to an error, so log it. However, not
@@ -680,21 +664,16 @@ export class CustomTranslationOptions {
 function doRegisterTranslations(customTranslations: ICustomTranslations): void {
     // We convert the operator-friendly version into something counterpart can
     // consume.
-    const langs: {
-        // same structure, just flipped key order
-        [lang: string]: {
-            [str: string]: string;
-        };
-    } = {};
+    // Map: lang → Record: string → translation
+    const langs: MapWithDefault<string, Record<string, string>> = new MapWithDefault(() => ({}));
     for (const [str, translations] of Object.entries(customTranslations)) {
         for (const [lang, newStr] of Object.entries(translations)) {
-            if (!langs[lang]) langs[lang] = {};
-            langs[lang][str] = newStr;
+            safeSet(langs.getOrCreate(lang), str, newStr);
         }
     }
 
     // Finally, tell counterpart about our translations
-    for (const [lang, translations] of Object.entries(langs)) {
+    for (const [lang, translations] of langs) {
         counterpart.registerTranslations(lang, translations);
     }
 }
