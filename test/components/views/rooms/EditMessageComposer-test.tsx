@@ -17,6 +17,7 @@ limitations under the License.
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import EditMessageComposerWithMatrixClient, {
     createEditContent,
@@ -24,8 +25,6 @@ import EditMessageComposerWithMatrixClient, {
 import EditorModel from "../../../../src/editor/model";
 import { createPartCreator } from "../../../editor/mock";
 import {
-    flushPromises,
-    flushPromisesWithFakeTimers,
     getMockClientWithEventEmitter,
     getRoomContext,
     mkEvent,
@@ -34,7 +33,6 @@ import {
 } from "../../../test-utils";
 import DocumentOffset from "../../../../src/editor/offset";
 import SettingsStore from "../../../../src/settings/SettingsStore";
-import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import EditorStateTransfer from "../../../../src/utils/EditorStateTransfer";
 import RoomContext from "../../../../src/contexts/RoomContext";
 import { IRoomState } from "../../../../src/components/structures/RoomView";
@@ -78,9 +76,9 @@ describe("<EditMessageComposer/>", () => {
         event: true,
     });
 
-    // message composer emojipicker does annoying stuff with this
+    // message composer emojipicker uses this
     // which would require more irrelevant mocking
-    jest.spyOn(SettingsStore, "setValue").mockImplementation(() => {});
+    jest.spyOn(SettingsStore, "setValue").mockResolvedValue(undefined);
 
     const defaultRoomContext = getRoomContext(room, {});
 
@@ -505,7 +503,7 @@ describe("<EditMessageComposer/>", () => {
                     user: "@bert:test",
                     room: roomId,
                     content: {
-                        "body": `reply that mentions the sender of the message we replied to <a href=\"https://matrix.to/#/${originalEvent.getSender()!}\">Ernie</a>`,
+                        "body": `reply that mentions the sender of the message we replied to <a href="https://matrix.to/#/${originalEvent.getSender()!}">Ernie</a>`,
                         "msgtype": "m.text",
                         "m.relates_to": {
                             "m.in_reply_to": {
