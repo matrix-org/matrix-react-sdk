@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk";
 import { ICompletion } from "../../../../../../src/autocomplete/Autocompleter";
 import {
     buildQuery,
@@ -23,6 +22,11 @@ import {
     getMentionAttributes,
 } from "../../../../../../src/components/views/rooms/wysiwyg_composer/utils/autocomplete";
 import { createTestClient } from "../../../../../test-utils";
+
+const mockClient = createTestClient();
+
+beforeEach(() => jest.clearAllMocks());
+afterAll(() => jest.restoreAllMocks());
 
 describe("buildQuery", () => {
     it("returns an empty string for a falsy argument", () => {
@@ -46,20 +50,18 @@ describe("buildQuery", () => {
     });
 });
 
-describe("getRoomFromCompletion", () => {
-    const mockClient = createTestClient();
-
-    const createMockRoomCompletion = (props: Partial<ICompletion>): ICompletion => {
-        return {
-            type: "room",
-            completion: "mock",
-            range: { beginning: true, start: 0, end: 0 },
-            ...props,
-        };
+const createMockCompletion = (props: Partial<ICompletion>): ICompletion => {
+    return {
+        completion: "mock",
+        range: { beginning: true, start: 0, end: 0 },
+        ...props,
     };
+};
 
-    beforeEach(() => jest.clearAllMocks());
-    afterAll(() => jest.restoreAllMocks());
+describe("getRoomFromCompletion", () => {
+    const createMockRoomCompletion = (props: Partial<ICompletion>): ICompletion => {
+        return createMockCompletion({ ...props, type: "room" });
+    };
 
     it("calls getRoom with completionId if present in the completion", () => {
         const testId = "arbitraryId";
@@ -90,5 +92,39 @@ describe("getRoomFromCompletion", () => {
         // in this case, because the mock client returns an empty array of rooms
         // from the call to get rooms, we'd expect the result to be null
         expect(result).toBe(null);
+    });
+});
+
+describe("getMentionDisplayText", () => {
+    it("returns an empty string if we are not handling a user or a room type", () => {
+        const nonHandledCompletionTypes = ["at-room", "community", "command"];
+        const nonHandledCompletions = nonHandledCompletionTypes.map((type) => createMockCompletion({ type }));
+
+        nonHandledCompletions.forEach((completion) => {
+            expect(getMentionDisplayText(completion, mockClient)).toBe("");
+        });
+    });
+
+    it("returns the completion if we are handling a user", () => {
+        const testCompletion = "display this";
+        const userCompletion = createMockCompletion({ type: "user", completion: testCompletion });
+
+        expect(getMentionDisplayText(userCompletion, mockClient)).toBe(testCompletion);
+    });
+
+    it("returns the room name when the room has a valid completionId", () => {
+        const testCompletionId = "testId";
+        const userCompletion = createMockCompletion({ type: "room", completionId: testCompletionId });
+
+        // as this uses the mockClient, the name will be the mock room name returned from there
+        expect(getMentionDisplayText(userCompletion, mockClient)).toBe(mockClient.getRoom("")?.name);
+    });
+
+    it("falls back to the completion for a room if completion starts with #", () => {
+        const testCompletion = "#hash";
+        const userCompletion = createMockCompletion({ type: "room", completion: testCompletion });
+
+        // as this uses the mockClient, the name will be the mock room name returned from there
+        expect(getMentionDisplayText(userCompletion, mockClient)).toBe(testCompletion);
     });
 });
