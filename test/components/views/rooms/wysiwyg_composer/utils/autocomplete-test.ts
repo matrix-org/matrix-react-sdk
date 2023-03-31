@@ -21,9 +21,19 @@ import {
     getMentionDisplayText,
     getMentionAttributes,
 } from "../../../../../../src/components/views/rooms/wysiwyg_composer/utils/autocomplete";
-import { createTestClient } from "../../../../../test-utils";
+import { createTestClient, mkRoom } from "../../../../../test-utils";
 
 const mockClient = createTestClient();
+const mockRoomId = "mockRoomId";
+const mockRoom = mkRoom(mockClient, mockRoomId);
+
+const createMockCompletion = (props: Partial<ICompletion>): ICompletion => {
+    return {
+        completion: "mock",
+        range: { beginning: true, start: 0, end: 0 },
+        ...props,
+    };
+};
 
 beforeEach(() => jest.clearAllMocks());
 afterAll(() => jest.restoreAllMocks());
@@ -49,14 +59,6 @@ describe("buildQuery", () => {
         expect(buildQuery(handledSuggestion)).toBe("@alice");
     });
 });
-
-const createMockCompletion = (props: Partial<ICompletion>): ICompletion => {
-    return {
-        completion: "mock",
-        range: { beginning: true, start: 0, end: 0 },
-        ...props,
-    };
-};
 
 describe("getRoomFromCompletion", () => {
     const createMockRoomCompletion = (props: Partial<ICompletion>): ICompletion => {
@@ -97,7 +99,7 @@ describe("getRoomFromCompletion", () => {
 
 describe("getMentionDisplayText", () => {
     it("returns an empty string if we are not handling a user or a room type", () => {
-        const nonHandledCompletionTypes = ["at-room", "community", "command"];
+        const nonHandledCompletionTypes = ["at-room", "community", "command"] as const;
         const nonHandledCompletions = nonHandledCompletionTypes.map((type) => createMockCompletion({ type }));
 
         nonHandledCompletions.forEach((completion) => {
@@ -126,5 +128,16 @@ describe("getMentionDisplayText", () => {
 
         // as this uses the mockClient, the name will be the mock room name returned from there
         expect(getMentionDisplayText(userCompletion, mockClient)).toBe(testCompletion);
+    });
+});
+
+describe("getMentionAttributes", () => {
+    it("returns an empty object for completion types other than room or user", () => {
+        const nonHandledCompletionTypes = ["at-room", "community", "command"] as const;
+        const nonHandledCompletions = nonHandledCompletionTypes.map((type) => createMockCompletion({ type }));
+
+        nonHandledCompletions.forEach((completion) => {
+            expect(getMentionAttributes(completion, mockClient, mockRoom)).toEqual({});
+        });
     });
 });

@@ -110,6 +110,10 @@ export function getMentionAttributes(completion: ICompletion, client: MatrixClie
 
         background = `url(${avatarUrl})`;
         letter = `'${initialLetter}'`; // not a mistake, need to ensure it's there
+        return {
+            "data-mention-type": completion.type,
+            "style": `--avatar-background: ${background}; --avatar-letter: ${letter}`,
+        };
     } else if (completion.type === "room") {
         const mentionedRoom = getRoomFromCompletion(completion, client);
         const aliasFromCompletion = completion.completion;
@@ -123,10 +127,11 @@ export function getMentionAttributes(completion: ICompletion, client: MatrixClie
 
         background = `url(${avatarUrl})`;
         letter = `'${initialLetter}'`; // not a mistake, need to ensure it's there
+        return {
+            "data-mention-type": completion.type,
+            "style": `--avatar-background: ${background}; --avatar-letter: ${letter}`,
+        };
     }
 
-    return {
-        "data-mention-type": completion.type,
-        "style": `--avatar-background: ${background}; --avatar-letter: ${letter}`,
-    };
+    return {};
 }
