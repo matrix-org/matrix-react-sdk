@@ -103,7 +103,7 @@ describe("Theme Choice Panel", () => {
         cy.createRoom({ name: "Test Room" }).viewRoomByName("Test Room");
 
         cy.get(".mx_GenericEventListSummary").within(() => {
-            // Assert that $primary-content is specified for GELS summary on the light theme
+            // Assert that $primary-content is applied to GELS summary on the light theme
             // $primary-content on the light theme = #17191c = rgb(23, 25, 28)
             cy.get(".mx_TextualEvent.mx_GenericEventListSummary_summary")
                 .should("have.css", "color", "rgb(23, 25, 28)")
