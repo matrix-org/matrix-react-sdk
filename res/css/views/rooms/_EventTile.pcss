@@ -1220,9 +1220,7 @@ $left-gutter: 64px;
 
 /* Cascading - compact modern layout on the main timeline and the right panel */
 .mx_MatrixChat_useCompactLayout {
-    .mx_EventTile {
-        /* Override :not([data-layout="bubble"]) */
-        &[data-layout="group"] {
+    .mx_EventTile[data-layout="group"] {
             --MatrixChat_useCompactLayout_group-padding-top: $spacing-4;
             --MatrixChat_useCompactLayout-top-avatar: 2px;
             --MatrixChat_useCompactLayout-top-e2eIcon: 3px;
@@ -1321,7 +1319,6 @@ $left-gutter: 64px;
             );
         }
     }
-}
 
 .mx_EventTile_details {
     display: flex;
