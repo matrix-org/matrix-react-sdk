@@ -99,7 +99,7 @@ const WysiwygAutocomplete = forwardRef(
         const client = useMatrixClientContext();
 
         function handleConfirm(completion: ICompletion): void {
-            if (!completion.href) return;
+            if (!completion.href || !client) return;
 
             switch (completion.type) {
                 case "user":
