@@ -17,6 +17,8 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
+import { SettingLevel } from "../../../src/settings/SettingLevel";
+import { Layout } from "../../../src/settings/enums/Layout";
 import Chainable = Cypress.Chainable;
 
 const ROOM_NAME = "Test room";
@@ -208,6 +210,22 @@ describe("FilePanel", () => {
                         });
                     });
                 });
+            });
+        });
+
+        it("should not add inline padding to a tile when it is selected with right click", () => {
+            // Upload a file
+            uploadFile("cypress/fixtures/1sec.ogg");
+
+            cy.get(".mx_FilePanel .mx_RoomView_MessageList").within(() => {
+                // Wait until the spinner of the audio player vanishes
+                cy.get(".mx_InlineSpinner").should("not.exist");
+
+                // Right click the uploaded file to select the tile
+                cy.get(".mx_EventTile").rightclick();
+
+                // Assert that inline padding is not applied
+                cy.get(".mx_EventTile_selected .mx_EventTile_line").should("have.css", "padding-inline", "0px");
             });
         });
     });
