@@ -14,12 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Room } from "matrix-js-sdk";
+import { ICompletion } from "../../../../../../src/autocomplete/Autocompleter";
 import {
     buildQuery,
-    getRoomFrom,
+    getRoomFromCompletion,
     getMentionDisplayText,
     getMentionAttributes,
 } from "../../../../../../src/components/views/rooms/wysiwyg_composer/utils/autocomplete";
+import { createTestClient } from "../../../../../test-utils";
 
 describe("buildQuery", () => {
     it("returns an empty string for a falsy argument", () => {
@@ -40,5 +43,52 @@ describe("buildQuery", () => {
     it("combines the keyChar and text of the suggestion in the query", () => {
         const handledSuggestion = { keyChar: "@" as const, text: "alice", type: "mention" as const };
         expect(buildQuery(handledSuggestion)).toBe("@alice");
+    });
+});
+
+describe("getRoomFromCompletion", () => {
+    const mockClient = createTestClient();
+
+    const createMockRoomCompletion = (props: Partial<ICompletion>): ICompletion => {
+        return {
+            type: "room",
+            completion: "mock",
+            range: { beginning: true, start: 0, end: 0 },
+            ...props,
+        };
+    };
+
+    beforeEach(() => jest.clearAllMocks());
+    afterAll(() => jest.restoreAllMocks());
+
+    it("calls getRoom with completionId if present in the completion", () => {
+        const testId = "arbitraryId";
+        const completionWithId = createMockRoomCompletion({ completionId: testId });
+
+        getRoomFromCompletion(completionWithId, mockClient);
+
+        expect(mockClient.getRoom).toHaveBeenCalledWith(testId);
+    });
+
+    it("calls getRoom with completion if present and correct format", () => {
+        const testCompletion = "arbitraryCompletion";
+        const completionWithId = createMockRoomCompletion({ completionId: testCompletion });
+
+        getRoomFromCompletion(completionWithId, mockClient);
+
+        expect(mockClient.getRoom).toHaveBeenCalledWith(testCompletion);
+    });
+
+    it("calls getRooms if no completionId is present and completion starts with #", () => {
+        const completionWithId = createMockRoomCompletion({ completion: "#hash" });
+
+        const result = getRoomFromCompletion(completionWithId, mockClient);
+
+        expect(mockClient.getRoom).not.toHaveBeenCalled();
+        expect(mockClient.getRooms).toHaveBeenCalled();
+
+        // in this case, because the mock client returns an empty array of rooms
+        // from the call to get rooms, we'd expect the result to be null
+        expect(result).toBe(null);
     });
 });
