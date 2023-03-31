@@ -48,8 +48,8 @@ describe("Audio player", () => {
         cy.get(".mx_MessageComposer_actions input[type='file']").selectFile(file, { force: true });
 
         cy.get(".mx_Dialog").within(() => {
-            // Click "Upload" button
-            cy.get("[data-testid='dialog-primary-button']").should("have.text", "Upload").click();
+            // Click primary "Upload" button
+            cy.get("[data-testid='dialog-primary-button']").findButton("Upload").click();
         });
 
         // Wait until the file is sent
@@ -71,7 +71,7 @@ describe("Audio player", () => {
                 });
 
                 // Assert that the play button is rendered
-                cy.get("[data-testid='play-pause-button'][aria-label='Play']").should("exist");
+                cy.findButton("Play").should("exist");
             });
         });
     };
@@ -82,7 +82,7 @@ describe("Audio player", () => {
         cy.get(".mx_MAudioBody").should("be.visible");
 
         // Assert that rendering of it settled and the play button is visible
-        cy.get(".mx_MAudioBody [data-testid='play-pause-button'][aria-label='Play']").should("be.visible");
+        cy.get(".mx_MAudioBody").findButton("Play").should("be.visible");
     };
 
     /**
@@ -186,7 +186,7 @@ describe("Audio player", () => {
             cy.get(".mx_EventTile_last[data-layout='irc'] .mx_MessageTimestamp").click();
 
             // Assert that rendering of the player settled and the play button is visible before taking a snapshot
-            cy.get(".mx_MAudioBody [data-testid='play-pause-button'][aria-label='Play']").should("be.visible");
+            cy.get(".mx_MAudioBody").findButton("Play").should("be.visible");
 
             cy.get(".mx_MAudioBody").percySnapshotElement("Audio player (light theme) on IRC layout", {
                 percyCSS,
@@ -288,16 +288,16 @@ describe("Audio player", () => {
                     cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
                     // Click the play button
-                    cy.get("[data-testid='play-pause-button'][aria-label='Play']").click();
+                    cy.findButton("Play").click();
 
                     // Assert that the pause button is rendered
-                    cy.get("[data-testid='play-pause-button'][aria-label='Pause']").should("exist");
+                    cy.findButton("Pause").should("exist");
 
                     // Assert that the timer is reset when the audio file finished playing
                     cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
                     // Assert that the play button is rendered
-                    cy.get("[data-testid='play-pause-button'][aria-label='Play']").should("exist");
+                    cy.findButton("Play").should("exist");
                 });
             });
         });
@@ -314,7 +314,7 @@ describe("Audio player", () => {
                 .realHover()
                 .within(() => {
                     // Click "Download" button on MessageActionBar
-                    cy.get('[aria-label="Download"]').click({ force: false });
+                    cy.findButton("Download").click();
 
                     // Assert that the file was downloaded
                     cy.readFile("cypress/downloads/1sec.ogg").should("exist");
@@ -332,12 +332,8 @@ describe("Audio player", () => {
             // Assert the audio player is rendered
             cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
 
-            cy.get(".mx_EventTile_last")
-                .realHover()
-                .within(() => {
-                    // Click "Reply" button on MessageActionBar
-                    cy.get('[aria-label="Reply"]').click({ force: false });
-                });
+            // Click "Reply" button on MessageActionBar
+            cy.get(".mx_EventTile_last").realHover().findButton("Reply").click();
         });
 
         // Reply to the player with another audio file
@@ -353,10 +349,8 @@ describe("Audio player", () => {
                     });
                 });
 
-                cy.get(".mx_MAudioBody").within(() => {
-                    // Assert that the play button is visible
-                    cy.get("[data-testid='play-pause-button'][aria-label='Play']").should("be.visible");
-                });
+                // Assert that the play button is visible
+                cy.get(".mx_MAudioBody").findButton("Play").should("be.visible");
             });
         });
 
@@ -399,12 +393,7 @@ describe("Audio player", () => {
         // multiple audio file replies is rendered properly.
 
         const clickButtonReply = () => {
-            cy.get(".mx_EventTile_last")
-                .realHover()
-                .within(() => {
-                    // Click "Reply" button on MessageActionBar
-                    cy.get('[aria-label="Reply"]').click({ force: false });
-                });
+            cy.get(".mx_EventTile_last").realHover().findButton("Reply").click();
         };
 
         visitRoom();
@@ -518,12 +507,7 @@ describe("Audio player", () => {
             // Assert the audio player is rendered
             cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
 
-            cy.get(".mx_EventTile_last")
-                .realHover()
-                .within(() => {
-                    // Click "Reply in thread" button on MessageActionBar
-                    cy.get('[aria-label="Reply in thread"]').click({ force: false });
-                });
+            cy.get(".mx_EventTile_last").realHover().findButton("Reply in thread").click();
         });
 
         cy.get(".mx_ThreadView").within(() => {
@@ -532,24 +516,19 @@ describe("Audio player", () => {
                 cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
                 // Click the play button
-                cy.get("[data-testid='play-pause-button'][aria-label='Play']").click();
+                cy.findButton("Play").click();
 
                 // Assert that the pause button is rendered
-                cy.get("[data-testid='play-pause-button'][aria-label='Pause']").should("exist");
+                cy.findButton("Pause").should("exist");
 
                 // Assert that the timer is reset when the audio file finished playing
                 cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
                 // Assert that the play button is rendered
-                cy.get("[data-testid='play-pause-button'][aria-label='Play']").should("exist");
+                cy.findButton("Play").should("exist");
             });
 
-            cy.get(".mx_EventTile_last")
-                .realHover()
-                .within(() => {
-                    // Click the reply button
-                    cy.get('[aria-label="Reply"]').click({ force: false });
-                });
+            cy.get(".mx_EventTile_last").realHover().findButton("Reply").click();
 
             cy.get(".mx_MessageComposer--compact").within(() => {
                 // Assert that the reply preview is rendered on the message composer
