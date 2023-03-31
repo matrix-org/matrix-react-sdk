@@ -17,6 +17,8 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
+import { SettingLevel } from "../../../src/settings/SettingLevel";
+import { Layout } from "../../../src/settings/enums/Layout";
 import Chainable = Cypress.Chainable;
 
 const ROOM_NAME = "Test room";
@@ -177,6 +179,36 @@ describe("FilePanel", () => {
                     });
                 });
             });
+        });
+
+        it("should not add inline padding to a tile on each layout when the tile is selected with right click", () => {
+            const checker = () => {
+                // Assert that inline padding does not exist
+                cy.get(".mx_FilePanel .mx_RoomView_MessageList .mx_EventTile_selected .mx_EventTile_line").should(
+                    "have.css",
+                    "padding-inline",
+                    "0px",
+                );
+            };
+
+            uploadFile("cypress/fixtures/1sec.ogg");
+
+            cy.get(".mx_FilePanel .mx_RoomView_MessageList").within(() => {
+                // Wait until the spinner vanishes
+                cy.get(".mx_InlineSpinner").should("not.exist");
+
+                // Right click the uploaded file
+                cy.get(".mx_EventTile").rightclick();
+            });
+
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
+            checker();
+
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+            checker();
+
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
+            checker();
         });
     });
 
