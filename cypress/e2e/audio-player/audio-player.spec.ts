@@ -331,7 +331,7 @@ describe("Audio player", () => {
         };
 
         // Upload one second audio file with a long file name
-        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
+        uploadFile("cypress/fixtures/upload-first.ogg");
 
         cy.get(".mx_RoomView_MessageList").within(() => {
             // Assert the audio player is rendered
@@ -341,12 +341,12 @@ describe("Audio player", () => {
         });
 
         // Reply to the player with another audio file
-        uploadFile("cypress/fixtures/1sec.ogg");
+        uploadFile("cypress/fixtures/upload-second.ogg");
 
         clickButtonReply();
 
         // Reply to the player with another audio file
-        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
+        uploadFile("cypress/fixtures/upload-third.ogg");
 
         cy.get(".mx_RoomView_MessageList").within(() => {
             cy.get(".mx_EventTile_last").within(() => {
@@ -369,8 +369,7 @@ describe("Audio player", () => {
                     // Assert that audio file on the first row is rendered as file button
                     cy.get(".mx_MFileBody_info[role='button']").within(() => {
                         // Assert that the file button contains the name of the file sent at first
-                        cy.contains(".mx_MFileBody_info_filename", "1sec-long-name");
-                        cy.get(".mx_MFileBody_info_filename").should("not.have.text", "1sec.ogg");
+                        cy.contains(".mx_MFileBody_info_filename", "upload-first.ogg");
                     });
                 });
             });
