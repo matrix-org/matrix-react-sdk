@@ -554,11 +554,8 @@ describe("Audio player", () => {
             cy.get(".mx_MessageComposer--compact").within(() => {
                 // Assert that the reply preview is rendered on the message composer
                 cy.get(".mx_ReplyPreview").within(() => {
-                    // Assert that the reply preview contains audio ReplyTile
-                    cy.get(".mx_ReplyTile_audio").within(() => {
-                        // Assert that the ReplyTile has the file info button
-                        cy.get(".mx_MFileBody_info[role='button']").should("exist");
-                    });
+                    // Assert that the reply preview contains audio ReplyTile the file info button
+                    cy.get(".mx_ReplyTile_audio .mx_MFileBody_info[role='button']").should("exist");
                 });
 
                 // Select :smile: emoji and send it
