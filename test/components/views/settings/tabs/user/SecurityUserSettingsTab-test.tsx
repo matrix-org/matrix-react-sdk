@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import { fireEvent, render } from "@testing-library/react";
+import { UNSTABLE_MSC3882_CAPABILITY } from "matrix-js-sdk";
 import React from "react";
 
 import SecurityUserSettingsTab from "../../../../../../src/components/views/settings/tabs/user/SecurityUserSettingsTab";
@@ -49,7 +50,7 @@ describe("<SecurityUserSettingsTab />", () => {
             },
         }),
         getCapabilities: jest.fn().mockResolvedValue({
-            "org.matrix.msc3882.get_logintoken": {
+            [UNSTABLE_MSC3882_CAPABILITY.name]: {
                 enabled: true,
             },
         }),

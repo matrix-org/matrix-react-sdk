@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
+import { IMSC3882GetLoginTokenCapability, IServerVersions, UNSTABLE_MSC3882_CAPABILITY } from "matrix-js-sdk/src/matrix";
 
-import type { IServerVersions } from "matrix-js-sdk/src/matrix";
 import { _t } from "../../../../languageHandler";
 import AccessibleButton from "../../elements/AccessibleButton";
 import SettingsSubsection from "../shared/SettingsSubsection";
@@ -36,9 +36,10 @@ export default class LoginWithQRSection extends React.Component<IProps> {
     public render(): JSX.Element | null {
         // Needs server support for MSC3882 and MSC3886:
         // in r0 of MSC3882 it is exposed as a feature flag, but in r1 it is a capability
+        const capability = UNSTABLE_MSC3882_CAPABILITY.findIn<IMSC3882GetLoginTokenCapability>(this.props.capabilities);
         const msc3882Supported =
             !!this.props.versions?.unstable_features?.["org.matrix.msc3882"] ||
-            !!this.props.capabilities?.["org.matrix.msc3882.get_logintoken"]?.enabled;
+            !!capability?.enabled;
         const msc3886Supported = !!this.props.versions?.unstable_features?.["org.matrix.msc3886"];
         const offerShowQr = msc3882Supported && msc3886Supported;
 

@@ -29,6 +29,7 @@ import {
     PUSHER_DEVICE_ID,
     PUSHER_ENABLED,
     IAuthData,
+    UNSTABLE_MSC3882_CAPABILITY,
 } from "matrix-js-sdk/src/matrix";
 
 import { clearAllModals } from "../../../../../test-utils";
@@ -1380,7 +1381,7 @@ describe("<SessionManagerTab />", () => {
                 },
             });
             mockClient.getCapabilities.mockResolvedValue({
-                "org.matrix.msc3882.get_logintoken": {
+                [UNSTABLE_MSC3882_CAPABILITY.name]: {
                     enabled: true,
                 },
             });
