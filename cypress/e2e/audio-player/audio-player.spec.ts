@@ -214,9 +214,7 @@ describe("Audio player", () => {
         // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
 
-        cy.get(".mx_RoomView_MessageList").within(() => {
-            checkPlayerFilenameLong();
-        });
+        checkPlayerFilenameLong();
 
         // Scroll to the bottom to make the audio player visible for Percy tests
         cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
@@ -345,9 +343,7 @@ describe("Audio player", () => {
         // Reply to the player with another audio file
         uploadFile("cypress/fixtures/1sec.ogg");
 
-        cy.get(".mx_RoomView_MessageList").within(() => {
-            clickButtonReply();
-        });
+        clickButtonReply();
 
         // Reply to the player with another audio file
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
