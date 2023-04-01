@@ -65,69 +65,68 @@ describe("Audio player", () => {
         });
     };
 
-    // Check that the audio player is rendered and its button becomes visible
-    const checkPlayerVisibility = () => {
-        // Assert that the player is visible
-        cy.get(".mx_MAudioBody").should("be.visible");
-
-        // Assert that rendering of it settled and the play button is visible
-        cy.get(".mx_MAudioBody").findButton("Play").should("be.visible");
-    };
-
     /**
-     * Define snapshot widths for the player on EventTile.
-     * 50px: narrow enough EventTile to be compressed to check a11y (magic number)
-     * 267px: EventTile width on IRC and modern/group layout, on which the player is rendered in its full width
-     * 285px: EventTile width on bubble layout, on which the player is rendered in its full width
-     */
-    const snapshotWidths = [50, 267, 285];
-
-    /**
-     * Take snapshots on modern and bubble layouts, outputting log for reference/debugging.
-     * Note that this does not take snapshot of players on IRC layout to keep the number of
-     * snapshots as low as possible (it should normally be the same as modern layout).
+     * Take snapshots of mx_EventTile_last on each layout, outputting log for reference/debugging.
      * @param detail The Percy snapshot name. Used for outputting logs too.
      */
     const takeSnapshots = (detail: string) => {
+        // Check that the audio player is rendered and its button becomes visible
+        const checkPlayerVisibility = () => {
+            // Assert that rendering of the player on mx_EventTile_last settled,
+            // and the play button is found and visible
+            cy.get(".mx_EventTile_last").within(() => {
+                cy.get(".mx_MAudioBody").findButton("Play").should("be.visible");
+            });
+        };
+
+        /**
+         * Define snapshot widths of selected EventTile, on which the audio player is rendered
+         *
+         * 50px (magic number): narrow enough EventTile to be compressed to check a11y
+         * 267px: EventTile on IRC and modern/group layout, on which the player is rendered in its full width
+         * 285px: EventTile on bubble layout, on which the player is rendered in its full width
+         */
+        const snapshotWidthsIRC = [50, 267];
+        const snapshotWidthsGroup = snapshotWidthsIRC;
+        const snapshotWidthsBubble = [50, 285];
+
         // Check the status of the seek bar
         // TODO: check if visible - currently checking its visibility on a compressed EventTile returns an error
         cy.get(".mx_AudioPlayer_seek input[type='range']").should("exist");
 
-        // Enable group layout
-        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+        // Enable IRC layout
+        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
 
-        // click the event timestamp to highlight the event tile in case it is not visible
-        cy.get(".mx_EventTile_last[data-layout='group'] .mx_MessageTimestamp").click();
+        // Click the event timestamp to highlight EventTile in case it is not visible
+        cy.get(".mx_EventTile_last[data-layout='irc'] .mx_MessageTimestamp").click();
 
         // Assert that rendering of the player settled and the play button is visible before taking a snapshot
         checkPlayerVisibility();
 
-        // Take a snapshot on group layout
-        cy.get(".mx_MAudioBody").percySnapshotElement(detail + " on group layout", {
+        cy.get(".mx_EventTile_last").percySnapshotElement(detail + " on IRC layout", {
             percyCSS,
-            widths: snapshotWidths,
+            widths: snapshotWidthsIRC,
         });
 
+        // Take a snapshot on modern/group layout
+        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+        cy.get(".mx_EventTile_last[data-layout='group'] .mx_MessageTimestamp").click();
+        checkPlayerVisibility();
+        cy.get(".mx_EventTile_last").percySnapshotElement(detail + " on modern/group layout", {
+            percyCSS,
+            widths: snapshotWidthsGroup,
+        });
         cy.log("Took a snapshot of " + detail + " on group layout");
 
-        // Enable bubble layout
-        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
-
-        // click the event timestamp to highlight the event tile in case it is not visible after changing the layout
-        cy.get(".mx_EventTile_last[data-layout='bubble'] .mx_MessageTimestamp").click();
-
-        checkPlayerVisibility();
-
         // Take a snapshot on bubble layout
-        cy.get(".mx_MAudioBody").percySnapshotElement(detail + " on bubble layout", {
+        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
+        cy.get(".mx_EventTile_last[data-layout='bubble'] .mx_MessageTimestamp").click();
+        checkPlayerVisibility();
+        cy.get(".mx_EventTile_last").percySnapshotElement(detail + " on bubble layout", {
             percyCSS,
-            widths: snapshotWidths,
+            widths: snapshotWidthsBubble,
         });
-
         cy.log("Took a snapshot of " + detail + " on bubble layout");
-
-        // Reset the layout
-        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
     };
 
     beforeEach(() => {
@@ -151,10 +150,7 @@ describe("Audio player", () => {
         cy.stopHomeserver(homeserver);
     });
 
-    it("should be correctly rendered on IRC layout", () => {
-        // We cannot use takeSnapshots() here since it does not take snapshots on IRC layout.
-        // The design of the player on IRC layout should be same as on modern layout.
-
+    it("should be correctly rendered - light theme", () => {
         // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
 
@@ -164,26 +160,12 @@ describe("Audio player", () => {
         cy.get(".mx_RoomView_MessageList").within(() => {
             checkPlayerFilenameLong();
 
-            // Enable IRC layout
-            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
-
-            // click the event timestamp to highlight the event tile in case it is not visible
-            cy.get(".mx_EventTile_last[data-layout='irc'] .mx_MessageTimestamp").click();
-
-            // Assert that rendering of the player settled and the play button is visible before taking a snapshot
-            cy.get(".mx_MAudioBody").findButton("Play").should("be.visible");
-
-            cy.get(".mx_MAudioBody").percySnapshotElement("Audio player (light theme) on IRC layout", {
-                percyCSS,
-                widths: snapshotWidths,
-            });
-
-            // Output a log for reference/debugging
-            cy.log("Took a snapshot of Audio player (light theme) on IRC layout");
+            // Take snapshots
+            takeSnapshots("Selected EventTile of audio player (light theme)");
         });
     });
 
-    it("should be correctly rendered on modern and bubble layouts", () => {
+    it("should be correctly rendered - light theme with monospace font", () => {
         // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
 
@@ -193,26 +175,19 @@ describe("Audio player", () => {
         cy.get(".mx_RoomView_MessageList").within(() => {
             checkPlayerFilenameLong();
 
-            // Take snapshots (light theme)
-            takeSnapshots("Audio player (light theme)");
-
-            // Take snapshots (light theme, monospace font)
+            // Enable system font and monospace setting
             cy.setSettingValue("useSystemFont", null, SettingLevel.DEVICE, true);
             cy.setSettingValue("systemFont", null, SettingLevel.DEVICE, "monospace");
+
             // Assert that the monospace timer is visible
             cy.get("[role='timer']").should("have.css", "font-family", '"monospace"').should("be.visible");
-            takeSnapshots("Audio player (light theme, monospace)");
 
-            // Reset font setting
-            cy.setSettingValue("useSystemFont", null, SettingLevel.DEVICE, false);
-
-            // Take snapshots (dark theme)
-            cy.setSettingValue("theme", null, SettingLevel.ACCOUNT, "dark");
-            takeSnapshots("Audio player (dark theme)");
+            // Take snapshots
+            takeSnapshots("Selected EventTile of audio player (light theme, monospace)");
         });
     });
 
-    it("should be correctly rendered on high contrast theme", () => {
+    it("should be correctly rendered - high contrast theme", () => {
         // Disable system theme (enabled by default) so that high contrast theme can be enabled
         cy.setSettingValue("use_system_theme", null, SettingLevel.DEVICE, false);
 
@@ -251,7 +226,24 @@ describe("Audio player", () => {
             cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
 
             // Take snapshots (high contrast, light theme only)
-            takeSnapshots("Audio player (high contrast)");
+            takeSnapshots("Selected EventTile of audio player (high contrast)");
+        });
+    });
+
+    it("should be correctly rendered - dark theme", () => {
+        // Upload one second audio file with a long file name
+        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
+
+        // Scroll to the bottom to make the audio player visible for Percy tests
+        cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
+
+        cy.get(".mx_RoomView_MessageList").within(() => {
+            checkPlayerFilenameLong();
+
+            // Take snapshots (dark theme)
+            cy.setSettingValue("theme", null, SettingLevel.ACCOUNT, "dark");
+
+            takeSnapshots("Selected EventTile of audio player (dark theme)");
         });
     });
 
@@ -323,41 +315,10 @@ describe("Audio player", () => {
                         cy.get(".mx_MFileBody_info_filename").should("exist");
                     });
                 });
-
-                // Assert that the play button is visible
-                cy.get(".mx_MAudioBody").findButton("Play").should("be.visible");
             });
-        });
 
-        // Scroll to the bottom to make the audio player visible for Percy tests
-        cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
-
-        cy.get(".mx_RoomView_MessageList").within(() => {
-            const takeSnapshotReply = (layout: string) => {
-                // click the event timestamp to highlight the event tile on which player is rendered
-                cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
-
-                cy.get(".mx_EventTile_last.mx_EventTile_selected").within(() => {
-                    checkPlayerVisibility();
-                });
-
-                cy.get(".mx_EventTile_last").percySnapshotElement(
-                    `Selected EventTile of audio player with a reply on ${layout} layout`,
-                    {
-                        percyCSS,
-                        widths: snapshotWidths,
-                    },
-                );
-                cy.log(`Took a snapshot of selected EventTile of audio player with a reply on ${layout} layout`);
-            };
-
-            // Take a snapshot of EventTile with a reply on group layout
-            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
-            takeSnapshotReply("group");
-
-            // Take a snapshot of EventTile with a reply on bubble layout
-            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
-            takeSnapshotReply("bubble");
+            // Take snapshots
+            takeSnapshots("Selected EventTile of audio player with a reply");
         });
     });
 
@@ -435,38 +396,9 @@ describe("Audio player", () => {
                     });
                 });
             });
-        });
 
-        // Scroll to the bottom to make the audio player visible for Percy tests
-        cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
-
-        cy.get(".mx_RoomView_MessageList").within(() => {
-            const takeSnapshotReplyChain = (layout: string) => {
-                // click the event timestamp to highlight the event tile on which player is rendered
-                cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
-
-                cy.get(".mx_EventTile_last.mx_EventTile_selected").within(() => {
-                    checkPlayerVisibility();
-                });
-
-                cy.get(".mx_EventTile_last .mx_ReplyChain").should("be.visible");
-                cy.get(".mx_EventTile_last").percySnapshotElement(
-                    `Selected EventTile of audio player with ReplyChain on ${layout} layout`,
-                    {
-                        percyCSS,
-                        widths: snapshotWidths,
-                    },
-                );
-                cy.log(`Took a snapshot of selected EventTile of audio player with ReplyChain on ${layout} layout`);
-            };
-
-            // Take a snapshot of EventTile with ReplyChain on group layout
-            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
-            takeSnapshotReplyChain("group");
-
-            // Take a snapshot of EventTile with ReplyChain on bubble layout
-            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
-            takeSnapshotReplyChain("bubble");
+            // Take snapshots
+            takeSnapshots("Selected EventTile of audio player with a reply chain");
         });
     });
 
