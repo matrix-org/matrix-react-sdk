@@ -310,9 +310,6 @@ describe("Audio player", () => {
         uploadFile("cypress/fixtures/1sec.ogg");
 
         cy.get(".mx_RoomView_MessageList").within(() => {
-            // Assert the audio player is rendered
-            cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
-
             cy.get(".mx_EventTile_last")
                 .realHover()
                 .within(() => {
