@@ -188,7 +188,8 @@ describe("Audio player", () => {
     });
 
     it("should be correctly rendered - high contrast theme", () => {
-        // Disable system theme (enabled by default) so that high contrast theme can be enabled
+        // Disable system theme in case ThemeWatcher enables the theme automatically,
+        // so that the high contrast theme can be enabled
         cy.setSettingValue("use_system_theme", null, SettingLevel.DEVICE, false);
 
         // Enable high contrast manually
