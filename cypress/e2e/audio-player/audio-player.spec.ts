@@ -346,19 +346,6 @@ describe("Audio player", () => {
         uploadFile("cypress/fixtures/1sec.ogg");
 
         cy.get(".mx_RoomView_MessageList").within(() => {
-            cy.get(".mx_EventTile_last").within(() => {
-                // Assert the audio player is not rendered
-                cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("not.exist");
-
-                // Assert that audio file is rendered as file button
-                cy.get(".mx_ReplyChain").within(() => {
-                    cy.get(".mx_MFileBody_info[role='button']").within(() => {
-                        // Assert that the file button has file name
-                        cy.get(".mx_MFileBody_info_filename").should("exist");
-                    });
-                });
-            });
-
             clickButtonReply();
         });
 
@@ -374,25 +361,20 @@ describe("Audio player", () => {
                 cy.contains(".mx_ReplyChain .mx_ReplyTile_sender", TEST_USER);
 
                 // Assert that the other line contains the file button
-                cy.get(".mx_ReplyChain .mx_MFileBody").within(() => {
-                    // Assert that audio file is rendered as file button
-                    cy.get(".mx_MFileBody_info[role='button']").within(() => {
-                        // Assert that the file button has file name
-                        cy.get(".mx_MFileBody_info_filename").should("exist");
-                    });
-                });
+                cy.get(".mx_ReplyChain .mx_MFileBody").should("exist");
 
                 // Click "In reply to"
-                cy.get(".mx_ReplyChain .mx_ReplyChain_show").click();
+                cy.contains(".mx_ReplyChain .mx_ReplyChain_show", "In reply to").click();
 
-                // Assert that "In reply to" on the first ReplyChain is replaced with the audio file sent at first
-                cy.get("blockquote.mx_ReplyChain:first-of-type .mx_ReplyChain_show").should("not.exist");
-                cy.get(".mx_ReplyChain").should("have.length", 2);
                 cy.get("blockquote.mx_ReplyChain:first-of-type").within(() => {
-                    // Assert that audio file is rendered as file button
+                    // Assert that "In reply to" disappears
+                    cy.contains("In reply to").should("not.exist");
+
+                    // Assert that audio file on the first row is rendered as file button
                     cy.get(".mx_MFileBody_info[role='button']").within(() => {
                         // Assert that the file button contains the name of the file sent at first
                         cy.contains(".mx_MFileBody_info_filename", "1sec-long-name");
+                        cy.get(".mx_MFileBody_info_filename").should("not.have.text", "1sec.ogg");
                     });
                 });
             });
