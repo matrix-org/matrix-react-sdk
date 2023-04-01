@@ -22,7 +22,6 @@ import { Layout } from "../../../src/settings/enums/Layout";
 
 describe("Audio player", () => {
     let homeserver: HomeserverInstance;
-    let roomId: string;
     const TEST_USER = "Hanako";
 
     const percyCSS =
