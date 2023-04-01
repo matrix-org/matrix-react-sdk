@@ -32,17 +32,6 @@ describe("Audio player", () => {
         ".mx_JumpToBottomButton, " +
         ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
 
-    const visitRoom = () => {
-        cy.visit("/#/room/" + roomId);
-        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
-
-        // Wait until configuration is finished
-        cy.contains(
-            ".mx_RoomView_body .mx_GenericEventListSummary[data-layout='group'] .mx_GenericEventListSummary_summary",
-            "created and configured the room.",
-        ).should("exist");
-    };
-
     const uploadFile = (file: string) => {
         // Upload a file from the message composer
         cy.get(".mx_MessageComposer_actions input[type='file']").selectFile(file, { force: true });
@@ -150,12 +139,16 @@ describe("Audio player", () => {
     beforeEach(() => {
         cy.startHomeserver("default").then((data) => {
             homeserver = data;
-            cy.initTestUser(homeserver, TEST_USER).then(() =>
-                cy.createRoom({}).then((_roomId) => {
-                    roomId = _roomId;
-                }),
-            );
+            cy.initTestUser(homeserver, TEST_USER);
         });
+
+        cy.createRoom({ name: "Test Room" }).viewRoomByName("Test Room");
+
+        // Wait until configuration is finished
+        cy.contains(
+            ".mx_RoomView_body .mx_GenericEventListSummary[data-layout='group'] .mx_GenericEventListSummary_summary",
+            "created and configured the room.",
+        ).should("exist");
 
         cy.injectAxe();
     });
@@ -167,8 +160,6 @@ describe("Audio player", () => {
     it("should be correctly rendered on IRC layout", () => {
         // We cannot use takeSnapshots() here since it does not take snapshots on IRC layout.
         // The design of the player on IRC layout should be same as on modern layout.
-
-        visitRoom();
 
         // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
@@ -199,8 +190,6 @@ describe("Audio player", () => {
     });
 
     it("should be correctly rendered on modern and bubble layouts", () => {
-        visitRoom();
-
         // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
 
@@ -230,8 +219,6 @@ describe("Audio player", () => {
     });
 
     it("should be correctly rendered on high contrast theme", () => {
-        visitRoom();
-
         // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
 
@@ -275,8 +262,6 @@ describe("Audio player", () => {
     });
 
     it("should play an audio file", () => {
-        visitRoom();
-
         // Upload an audio file
         uploadFile("cypress/fixtures/1sec.ogg");
 
@@ -304,8 +289,6 @@ describe("Audio player", () => {
     });
 
     it("should support downloading an audio file", () => {
-        visitRoom();
-
         // Upload an audio file
         uploadFile("cypress/fixtures/1sec.ogg");
 
@@ -323,8 +306,6 @@ describe("Audio player", () => {
     });
 
     it("should support replying to audio file with another audio file", () => {
-        visitRoom();
-
         // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
 
@@ -395,8 +376,6 @@ describe("Audio player", () => {
         const clickButtonReply = () => {
             cy.get(".mx_EventTile_last").realHover().findButton("Reply").click();
         };
-
-        visitRoom();
 
         // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
@@ -498,8 +477,6 @@ describe("Audio player", () => {
     });
 
     it("should be rendered, play, and support replying on a thread", () => {
-        visitRoom();
-
         // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
 
