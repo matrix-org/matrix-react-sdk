@@ -111,9 +111,9 @@ describe("Audio player", () => {
 
     /**
      * Upload a file and take snapshots
-     * @param theme The theme (light or dark) in which snapshots are taken
+     * @param detail Used for specifying the Percy snapshot name.
      */
-    const uploadAndTakeSnapshots = (theme: string, monospace = false) => {
+    const uploadAndTakeSnapshots = (detail: string, monospace = false) => {
         if (monospace) {
             // Enable system font and monospace setting
             cy.setSettingValue("useSystemFont", null, SettingLevel.DEVICE, true);
@@ -148,7 +148,7 @@ describe("Audio player", () => {
                 cy.get("[role='timer']").should("have.css", "font-family", '"monospace"').should("be.visible");
             }
 
-            takeSnapshots(`Selected EventTile of audio player (${theme})`);
+            takeSnapshots(`Selected EventTile of audio player (${detail})`);
         });
     };
 
