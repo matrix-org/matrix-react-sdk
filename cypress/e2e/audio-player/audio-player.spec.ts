@@ -46,25 +46,6 @@ describe("Audio player", () => {
         cy.get(".mx_EventTile.mx_EventTile_last .mx_EventTile_receiptSent").should("exist");
     };
 
-    // Check that the audio player for the long-name-audio-file has been rendered correctly
-    const checkPlayerFilenameLong = () => {
-        // Detect the audio file
-        cy.get(".mx_EventTile_mediaLine .mx_MAudioBody").within(() => {
-            // Assert that the audio player is rendered
-            cy.get(".mx_AudioPlayer_container").within(() => {
-                // Assert that media information is rendered
-                cy.get(".mx_AudioPlayer_mediaInfo").within(() => {
-                    cy.get(".mx_AudioPlayer_mediaName").should("have.text", "1sec-long-name-audio-file.ogg");
-                    cy.contains(".mx_AudioPlayer_byline", "00:01").should("exist");
-                    cy.contains(".mx_AudioPlayer_byline", "(3.56 KB)").should("exist"); // actual size
-                });
-
-                // Assert that the play button is rendered
-                cy.findButton("Play").should("exist");
-            });
-        });
-    };
-
     /**
      * Take snapshots of mx_EventTile_last on each layout, outputting log for reference/debugging.
      * @param detail The Percy snapshot name. Used for outputting logs too.
@@ -129,6 +110,49 @@ describe("Audio player", () => {
         cy.log("Took a snapshot of " + detail + " on bubble layout");
     };
 
+    /**
+     * Upload a file and take snapshots
+     * @param theme The theme (light or dark) in which snapshots are taken
+     */
+    const uploadAndTakeSnapshots = (theme: string, monospace = false) => {
+        if (monospace) {
+            // Enable system font and monospace setting
+            cy.setSettingValue("useSystemFont", null, SettingLevel.DEVICE, true);
+            cy.setSettingValue("systemFont", null, SettingLevel.DEVICE, "monospace");
+        }
+
+        // Upload one second audio file with a long file name
+        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
+
+        // Scroll to the bottom to make the audio player visible for Percy tests
+        cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
+
+        cy.get(".mx_RoomView_MessageList").within(() => {
+            // Check that the audio player for the long-name-audio-file has been rendered correctly
+            cy.get(".mx_EventTile_mediaLine .mx_MAudioBody").within(() => {
+                // Assert that the audio player is rendered
+                cy.get(".mx_AudioPlayer_container").within(() => {
+                    // Assert that media information is rendered
+                    cy.get(".mx_AudioPlayer_mediaInfo").within(() => {
+                        cy.get(".mx_AudioPlayer_mediaName").should("have.text", "1sec-long-name-audio-file.ogg");
+                        cy.contains(".mx_AudioPlayer_byline", "00:01").should("exist");
+                        cy.contains(".mx_AudioPlayer_byline", "(3.56 KB)").should("exist"); // actual size
+                    });
+
+                    // Assert that the play button is rendered
+                    cy.findButton("Play").should("exist");
+                });
+            });
+
+            if (monospace) {
+                // Assert that the monospace timer is visible
+                cy.get("[role='timer']").should("have.css", "font-family", '"monospace"').should("be.visible");
+            }
+
+            takeSnapshots(`Selected EventTile of audio player (${theme})`);
+        });
+    };
+
     beforeEach(() => {
         cy.startHomeserver("default").then((data) => {
             homeserver = data;
@@ -151,40 +175,11 @@ describe("Audio player", () => {
     });
 
     it("should be correctly rendered - light theme", () => {
-        // Upload one second audio file with a long file name
-        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
-
-        // Scroll to the bottom to make the audio player visible for Percy tests
-        cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
-
-        cy.get(".mx_RoomView_MessageList").within(() => {
-            checkPlayerFilenameLong();
-
-            // Take snapshots
-            takeSnapshots("Selected EventTile of audio player (light theme)");
-        });
+        uploadAndTakeSnapshots("light theme");
     });
 
     it("should be correctly rendered - light theme with monospace font", () => {
-        // Upload one second audio file with a long file name
-        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
-
-        // Scroll to the bottom to make the audio player visible for Percy tests
-        cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
-
-        cy.get(".mx_RoomView_MessageList").within(() => {
-            checkPlayerFilenameLong();
-
-            // Enable system font and monospace setting
-            cy.setSettingValue("useSystemFont", null, SettingLevel.DEVICE, true);
-            cy.setSettingValue("systemFont", null, SettingLevel.DEVICE, "monospace");
-
-            // Assert that the monospace timer is visible
-            cy.get("[role='timer']").should("have.css", "font-family", '"monospace"').should("be.visible");
-
-            // Take snapshots
-            takeSnapshots("Selected EventTile of audio player (light theme, monospace)");
-        });
+        uploadAndTakeSnapshots("light theme with monospace font", true); // Enable monospace
     });
 
     it("should be correctly rendered - high contrast theme", () => {
@@ -212,38 +207,14 @@ describe("Audio player", () => {
 
         cy.closeDialog();
 
-        // Upload one second audio file with a long file name
-        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
-
-        checkPlayerFilenameLong();
-
-        // Scroll to the bottom to make the audio player visible for Percy tests
-        cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
-
-        cy.get(".mx_RoomView_MessageList").within(() => {
-            // click the event timestamp to highlight the event tile on which player is rendered
-            cy.get(".mx_EventTile_last .mx_MessageTimestamp").click();
-
-            // Take snapshots (high contrast, light theme only)
-            takeSnapshots("Selected EventTile of audio player (high contrast)");
-        });
+        uploadAndTakeSnapshots("high contrast light theme");
     });
 
     it("should be correctly rendered - dark theme", () => {
-        // Upload one second audio file with a long file name
-        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
+        // Enable dark theme
+        cy.setSettingValue("theme", null, SettingLevel.ACCOUNT, "dark");
 
-        // Scroll to the bottom to make the audio player visible for Percy tests
-        cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
-
-        cy.get(".mx_RoomView_MessageList").within(() => {
-            checkPlayerFilenameLong();
-
-            // Take snapshots (dark theme)
-            cy.setSettingValue("theme", null, SettingLevel.ACCOUNT, "dark");
-
-            takeSnapshots("Selected EventTile of audio player (dark theme)");
-        });
+        uploadAndTakeSnapshots("dark theme");
     });
 
     it("should play an audio file", () => {
