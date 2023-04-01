@@ -249,15 +249,10 @@ describe("Audio player", () => {
         uploadFile("cypress/fixtures/1sec.ogg");
 
         cy.get(".mx_RoomView_MessageList").within(() => {
-            cy.get(".mx_EventTile_last")
-                .realHover()
-                .within(() => {
-                    // Click "Download" button on MessageActionBar
-                    cy.findButton("Download").click();
+            cy.get(".mx_EventTile_last").realHover().findButton("Download").click();
 
-                    // Assert that the file was downloaded
-                    cy.readFile("cypress/downloads/1sec.ogg").should("exist");
-                });
+            // Assert that the file was downloaded
+            cy.readFile("cypress/downloads/1sec.ogg").should("exist");
         });
     });
 
