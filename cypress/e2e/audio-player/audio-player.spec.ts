@@ -107,7 +107,7 @@ describe("Audio player", () => {
      */
     const takeSnapshots = (detail: string) => {
         // Check the status of the seek bar
-        // TODO: check if visible - currently visibility check on a narrow timeline causes an error
+        // TODO: check if visible - currently checking its visibility on a compressed EventTile returns an error
         cy.get(".mx_AudioPlayer_seek input[type='range']").should("exist");
 
         // Enable group layout
