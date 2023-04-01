@@ -219,13 +219,6 @@ describe("Audio player", () => {
     });
 
     it("should be correctly rendered on high contrast theme", () => {
-        // Upload one second audio file with a long file name
-        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
-
-        cy.get(".mx_RoomView_MessageList").within(() => {
-            checkPlayerFilenameLong();
-        });
-
         // Disable system theme (enabled by default) so that high contrast theme can be enabled
         cy.setSettingValue("use_system_theme", null, SettingLevel.DEVICE, false);
 
@@ -248,6 +241,13 @@ describe("Audio player", () => {
             });
 
         cy.closeDialog();
+
+        // Upload one second audio file with a long file name
+        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
+
+        cy.get(".mx_RoomView_MessageList").within(() => {
+            checkPlayerFilenameLong();
+        });
 
         // Scroll to the bottom to make the audio player visible for Percy tests
         cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
