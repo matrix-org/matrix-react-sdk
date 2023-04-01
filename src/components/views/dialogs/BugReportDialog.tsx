@@ -53,10 +53,11 @@ interface IState {
 
 export default class BugReportDialog extends React.Component<IProps, IState> {
     private unmounted: boolean;
-    private issueRef: any;
+    private issueRef: React.RefObject<Field>;
+
     public constructor(props: IProps) {
         super(props);
-        this.issueRef = React.createRef();
+
         this.state = {
             sendLogs: true,
             busy: false,
@@ -69,6 +70,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
         };
 
         this.unmounted = false;
+        this.issueRef = React.createRef();
 
         // Get all of the extra info dumped to the console when someone is about
         // to send debug logs. Since this is a fire and forget action, we do
