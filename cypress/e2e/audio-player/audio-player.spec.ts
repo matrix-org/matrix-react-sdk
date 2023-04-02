@@ -121,7 +121,7 @@ describe("Audio player", () => {
             percyCSS,
             widths: snapshotWidthsGroup,
         });
-        cy.log("Took a snapshot of " + detail + " on group layout");
+        cy.log("Took a snapshot of " + detail + " on modern/group layout");
 
         // Take a snapshot on bubble layout
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
