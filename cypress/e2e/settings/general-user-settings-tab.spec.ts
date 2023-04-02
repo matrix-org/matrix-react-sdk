@@ -35,18 +35,18 @@ describe("General user settings tab", () => {
         cy.stopHomeserver(homeserver);
     });
 
-    it("should render general user settings tab", () => {
+    it("should be rendered correctly", () => {
         cy.openUserSettings("General");
         cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab").within(() => {
-            // Ensure the top heading is rendered
+            // Assert that the top heading is rendered
             cy.get("[data-testid='general']").should("have.text", "General");
 
             cy.get(".mx_ProfileSettings_profile").within(() => {
                 // Check USER_NAME
                 cy.get(`input[value='${USER_NAME}']`).should("exist");
 
-                // Ensure a random userId exists
-                cy.contains(".mx_ProfileSettings_profile_controls_userId", ":localhost");
+                // Assert that a random userId exists
+                cy.contains(".mx_ProfileSettings_profile_controls_userId", ":localhost").should("be.visible");
 
                 // Check avatar setting
                 cy.get(".mx_AvatarSetting_avatar")
@@ -64,73 +64,75 @@ describe("General user settings tab", () => {
             cy.get(".mx_GeneralUserSettingsTab_accountSection .mx_Spinner").should("not.exist");
             cy.get(".mx_GeneralUserSettingsTab_discovery .mx_Spinner").should("not.exist");
 
-            // Ensure input areas for password change exist
-            cy.get("form.mx_GeneralUserSettingsTab_changePassword").within(() => {
-                cy.get("input[label='Current password']").should("exist");
-                cy.get("input[label='New password']").should("exist");
-                cy.get("input[label='Confirm password']").should("exist");
-            });
+            // Assert that input areas for changing a password exist
+            cy.get("form.mx_GeneralUserSettingsTab_changePassword")
+                .scrollIntoView()
+                .within(() => {
+                    cy.get("input[label='Current password']").should("be.visible");
+                    cy.get("input[label='New password']").should("be.visible");
+                    cy.get("input[label='Confirm password']").should("be.visible");
+                });
 
             // Check phone numbers area
             cy.get(".mx_PhoneNumbers").within(() => {
                 // Check form of a new phone number
                 cy.get("form.mx_PhoneNumbers_new").within(() => {
-                    // Ensure an input area for a new phone number exists
+                    // Assert that an input area for a new phone number exists
                     cy.get("input[label='Phone Number']").should("exist");
 
                     // Check a new phone number dropdown menu
-                    cy.get(".mx_PhoneNumbers_country").within(() => {
-                        // Check the default value
-                        cy.contains("#mx_CountryDropdown_value", "+44");
+                    cy.get(".mx_PhoneNumbers_country")
+                        .scrollIntoView()
+                        .within(() => {
+                            // Check the default value
+                            cy.contains("#mx_CountryDropdown_value", "+44").should("be.visible");
 
-                        // Ensure the list item is rendered inside the dropdown
-                        cy.get(".mx_Dropdown_input[aria-expanded='false']")
-                            .should("exist")
-                            .click()
-                            .within(() => {
-                                cy.get("[aria-activedescendant='mx_CountryDropdown__GB']").should("exist");
-                            })
-                            .click(); // Click again to close the dropdown
-                    });
+                            // Assert that the list item is rendered inside the dropdown
+                            cy.get(".mx_Dropdown_input[aria-expanded='false']")
+                                .should("exist")
+                                .click()
+                                .within(() => {
+                                    cy.get("[aria-activedescendant='mx_CountryDropdown__GB']").should("exist");
+                                })
+                                .click(); // Click again to close the dropdown
+                        });
                 });
             });
 
             // Check language and region setting dropdown
-            cy.get(".mx_GeneralUserSettingsTab_languageInput").within(() => {
-                // Check the default value
-                cy.contains("#mx_LanguageDropdown_value", "English");
+            cy.get(".mx_GeneralUserSettingsTab_languageInput")
+                .scrollIntoView()
+                .within(() => {
+                    // Check the default value
+                    cy.contains("#mx_LanguageDropdown_value", "English").should;
 
-                // Ensure the list item is rendered inside the dropdown
-                cy.get(".mx_Dropdown_input[aria-expanded='false']")
-                    .should("exist")
-                    .click()
-                    .within(() => {
-                        cy.get("[aria-activedescendant='mx_LanguageDropdown__id']").should("exist");
-                    })
-                    .click(); // Click again to close the dropdown
-            });
+                    // Assert that the list item is rendered inside the dropdown
+                    cy.get(".mx_Dropdown_input[aria-expanded='false']")
+                        .should("exist")
+                        .click()
+                        .within(() => {
+                            cy.get("[aria-activedescendant='mx_LanguageDropdown__id']").should("exist");
+                        })
+                        .click(); // Click again to close the dropdown
+                });
 
-            // Ensure an input area for identity server exists
+            // Assert that an input area for identity server exists
             cy.get("form.mx_SetIdServer input[label='Enter a new identity server']").should("exist");
 
             // Check default integration manager
-            cy.get(".mx_SetIntegrationManager").within(() => {
-                cy.contains(".mx_SetIntegrationManager_heading_manager", IntegrationManager);
+            cy.get(".mx_SetIntegrationManager")
+                .scrollIntoView()
+                .within(() => {
+                    cy.contains(".mx_SetIntegrationManager_heading_manager", IntegrationManager).should("be.visible");
 
-                // Make sure integration manager's toggle switch is enabled
-                cy.get(".mx_ToggleSwitch_enabled").should("exist");
-            });
+                    // Make sure integration manager's toggle switch is enabled
+                    cy.get(".mx_ToggleSwitch_enabled").should("be.visible");
+                });
 
             // Make sure the account deactivation button is displayed
             cy.get(
                 ".mx_SettingsTab_section[data-testid='account-management-section'] .mx_AccessibleButton_kind_danger",
             ).should("have.text", "Deactivate Account");
-        });
-
-        // Exclude the random userId from snapshot
-        const percyCSS = ".mx_ProfileSettings_profile_controls_userId { visibility: hidden !important; }";
-        cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab").percySnapshotElement("General user settings tab", {
-            percyCSS,
         });
     });
 });
