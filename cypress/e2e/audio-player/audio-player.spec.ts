@@ -209,24 +209,22 @@ describe("Audio player", () => {
         uploadFile("cypress/fixtures/1sec.ogg");
 
         cy.get(".mx_RoomView_MessageList").within(() => {
-            cy.get(".mx_EventTile_mediaLine .mx_MAudioBody").within(() => {
-                // Assert that the audio player is rendered
-                cy.get(".mx_AudioPlayer_container").within(() => {
-                    // Assert that the counter is zero before clicking the play button
-                    cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
+            // Assert that the audio player is rendered
+            cy.get(".mx_EventTile_last .mx_EventTile_mediaLine .mx_MAudioBody .mx_AudioPlayer_container").within(() => {
+                // Assert that the counter is zero before clicking the play button
+                cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
-                    // Click the play button
-                    cy.findButton("Play").click();
+                // Click the play button
+                cy.findButton("Play").click();
 
-                    // Assert that the pause button is rendered
-                    cy.findButton("Pause").should("exist");
+                // Assert that the pause button is rendered
+                cy.findButton("Pause").should("exist");
 
-                    // Assert that the timer is reset when the audio file finished playing
-                    cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
+                // Assert that the timer is reset when the audio file finished playing
+                cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
-                    // Assert that the play button is rendered
-                    cy.findButton("Play").should("exist");
-                });
+                // Assert that the play button is rendered
+                cy.findButton("Play").should("exist");
             });
         });
     });
@@ -343,7 +341,7 @@ describe("Audio player", () => {
         });
 
         cy.get(".mx_ThreadView").within(() => {
-            cy.get(".mx_AudioPlayer_container").within(() => {
+            cy.get(".mx_EventTile_last .mx_EventTile_mediaLine .mx_MAudioBody .mx_AudioPlayer_container").within(() => {
                 // Assert that the counter is zero before clicking the play button
                 cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
