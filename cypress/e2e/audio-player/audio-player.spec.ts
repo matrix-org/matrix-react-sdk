@@ -208,24 +208,22 @@ describe("Audio player", () => {
         // Upload an audio file
         uploadFile("cypress/fixtures/1sec.ogg");
 
-        cy.get(".mx_RoomView_MessageList").within(() => {
-            // Assert that the audio player is rendered
-            cy.get(".mx_EventTile_last .mx_EventTile_mediaLine .mx_MAudioBody .mx_AudioPlayer_container").within(() => {
-                // Assert that the counter is zero before clicking the play button
-                cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
+        // Assert that the audio player is rendered
+        cy.get(".mx_EventTile_last .mx_EventTile_mediaLine .mx_MAudioBody .mx_AudioPlayer_container").within(() => {
+            // Assert that the counter is zero before clicking the play button
+            cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
-                // Click the play button
-                cy.findButton("Play").click();
+            // Click the play button
+            cy.findButton("Play").click();
 
-                // Assert that the pause button is rendered
-                cy.findButton("Pause").should("exist");
+            // Assert that the pause button is rendered
+            cy.findButton("Pause").should("exist");
 
-                // Assert that the timer is reset when the audio file finished playing
-                cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
+            // Assert that the timer is reset when the audio file finished playing
+            cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
-                // Assert that the play button is rendered
-                cy.findButton("Play").should("exist");
-            });
+            // Assert that the play button is rendered
+            cy.findButton("Play").should("exist");
         });
     });
 
@@ -233,41 +231,38 @@ describe("Audio player", () => {
         // Upload an audio file
         uploadFile("cypress/fixtures/1sec.ogg");
 
-        cy.get(".mx_RoomView_MessageList").within(() => {
-            cy.get(".mx_EventTile_last").realHover().findButton("Download").click();
+        cy.get(".mx_EventTile_last").realHover().findButton("Download").click();
 
-            // Assert that the file was downloaded
-            cy.readFile("cypress/downloads/1sec.ogg").should("exist");
-        });
+        // Assert that the file was downloaded
+        cy.readFile("cypress/downloads/1sec.ogg").should("exist");
     });
 
     it("should support replying to audio file with another audio file", () => {
         // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
 
-        cy.get(".mx_RoomView_MessageList").within(() => {
-            // Assert the audio player is rendered
-            cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
+        // Assert the audio player is rendered
+        cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
 
-            // Click "Reply" button on MessageActionBar
-            cy.get(".mx_EventTile_last").realHover().findButton("Reply").click();
-        });
+        // Click "Reply" button on MessageActionBar
+        cy.get(".mx_EventTile_last").realHover().findButton("Reply").click();
 
         // Reply to the player with another audio file
         uploadFile("cypress/fixtures/1sec.ogg");
 
-        cy.get(".mx_RoomView_MessageList").within(() => {
-            cy.get(".mx_EventTile_last").within(() => {
-                // Assert that replied audio file is rendered as file button inside ReplyChain
-                cy.get(".mx_ReplyChain_wrapper .mx_MFileBody_info[role='button']").within(() => {
-                    // Assert that the file button has file name
-                    cy.get(".mx_MFileBody_info_filename").should("exist");
-                });
-            });
+        cy.get(".mx_EventTile_last").within(() => {
+            // Assert that the audio player is rendered
+            cy.get(".mx_AudioPlayer_container").should("exist");
 
-            // Take snapshots
-            takeSnapshots("Selected EventTile of audio player with a reply");
+            // Assert that replied audio file is rendered as file button inside ReplyChain
+            cy.get(".mx_ReplyChain_wrapper .mx_MFileBody_info[role='button']").within(() => {
+                // Assert that the file button has file name
+                cy.get(".mx_MFileBody_info_filename").should("exist");
+            });
         });
+
+        // Take snapshots
+        takeSnapshots("Selected EventTile of audio player with a reply");
     });
 
     it("should support creating a reply chain with multiple audio files", () => {
@@ -283,56 +278,59 @@ describe("Audio player", () => {
         // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/upload-first.ogg");
 
-        cy.get(".mx_RoomView_MessageList").within(() => {
-            // Assert the audio player is rendered
-            cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
+        // Assert that the audio player is rendered
+        cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
 
-            clickButtonReply();
-        });
+        clickButtonReply();
 
         // Reply to the player with another audio file
         uploadFile("cypress/fixtures/upload-second.ogg");
+
+        // Assert that the audio player is rendered
+        cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
 
         clickButtonReply();
 
         // Reply to the player with another audio file
         uploadFile("cypress/fixtures/upload-third.ogg");
 
-        cy.get(".mx_RoomView_MessageList").within(() => {
-            cy.get(".mx_EventTile_last").within(() => {
-                // Assert that there are two "mx_ReplyChain" elements
-                cy.get(".mx_ReplyChain").should("have.length", 2);
+        cy.get(".mx_EventTile_last").within(() => {
+            // Assert that the audio player is rendered
+            cy.get(".mx_AudioPlayer_container").should("exist");
 
-                // Assert that one line contains the user name
-                cy.contains(".mx_ReplyChain .mx_ReplyTile_sender", TEST_USER);
+            // Assert that there are two "mx_ReplyChain" elements
+            cy.get(".mx_ReplyChain").should("have.length", 2);
 
-                // Assert that the other line contains the file button
-                cy.get(".mx_ReplyChain .mx_MFileBody").should("exist");
+            // Assert that one line contains the user name
+            cy.contains(".mx_ReplyChain .mx_ReplyTile_sender", TEST_USER);
 
-                // Click "In reply to"
-                cy.contains(".mx_ReplyChain .mx_ReplyChain_show", "In reply to").click();
+            // Assert that the other line contains the file button
+            cy.get(".mx_ReplyChain .mx_MFileBody").should("exist");
 
-                cy.get("blockquote.mx_ReplyChain:first-of-type").within(() => {
-                    // Assert that "In reply to" disappears
-                    cy.contains("In reply to").should("not.exist");
+            // Click "In reply to"
+            cy.contains(".mx_ReplyChain .mx_ReplyChain_show", "In reply to").click();
 
-                    // Assert that audio file on the first row is rendered as file button
-                    cy.get(".mx_MFileBody_info[role='button']").within(() => {
-                        // Assert that the file button contains the name of the file sent at first
-                        cy.contains(".mx_MFileBody_info_filename", "upload-first.ogg");
-                    });
+            cy.get("blockquote.mx_ReplyChain:first-of-type").within(() => {
+                // Assert that "In reply to" disappears
+                cy.contains("In reply to").should("not.exist");
+
+                // Assert that audio file on the first row is rendered as file button
+                cy.get(".mx_MFileBody_info[role='button']").within(() => {
+                    // Assert that the file button contains the name of the file sent at first
+                    cy.contains(".mx_MFileBody_info_filename", "upload-first.ogg");
                 });
             });
-
-            // Take snapshots
-            takeSnapshots("Selected EventTile of audio player with a reply chain");
         });
+
+        // Take snapshots
+        takeSnapshots("Selected EventTile of audio player with a reply chain");
     });
 
     it("should be rendered, play, and support replying on a thread", () => {
         // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
 
+        // On the main timeline
         cy.get(".mx_RoomView_MessageList").within(() => {
             // Assert the audio player is rendered
             cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
@@ -340,6 +338,7 @@ describe("Audio player", () => {
             cy.get(".mx_EventTile_last").realHover().findButton("Reply in thread").click();
         });
 
+        // On a thread
         cy.get(".mx_ThreadView").within(() => {
             cy.get(".mx_EventTile_last .mx_EventTile_mediaLine .mx_MAudioBody .mx_AudioPlayer_container").within(() => {
                 // Assert that the counter is zero before clicking the play button
