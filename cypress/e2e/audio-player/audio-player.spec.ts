@@ -102,10 +102,14 @@ describe("Audio player", () => {
             checkPlayerVisibility();
         });
 
+        // Take a snapshot of mx_EventTile_last on IRC layout
         cy.get(".mx_EventTile_last").percySnapshotElement(detail + " on IRC layout", {
             percyCSS,
             widths: snapshotWidthsIRC,
         });
+
+        // Output a log
+        cy.log("Took a snapshot of " + detail + " on IRC layout");
 
         // Take a snapshot on modern/group layout
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
