@@ -48,7 +48,7 @@ export default class HeaderButton extends React.Component<IProps> {
             "mx_RoomHeader_button": true,
             "mx_RoomHeader_button--highlight": isHighlighted,
             "mx_RoomHeader_button--unread": isUnread,
-            [`mx_RightPanel_${name}`]: true,
+            [`mx_RoomHeader_button--${name}`]: true,
         });
 
         return (

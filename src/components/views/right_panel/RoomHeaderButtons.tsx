@@ -95,7 +95,7 @@ const PinnedMessagesHeaderButton: React.FC<IHeaderButtonProps> = ({ room, isHigh
 
     return (
         <HeaderButton
-            name="pinnedMessagesButton"
+            name="pinnedMessages"
             title={_t("Pinned messages")}
             isHighlighted={isHighlighted}
             isUnread={!!unreadIndicator}
@@ -116,7 +116,7 @@ const TimelineCardHeaderButton: React.FC<IHeaderButtonProps> = ({ room, isHighli
             unreadIndicator = <UnreadIndicator color={color} />;
     }
     return (
-        <HeaderButton name="timelineCardButton" title={_t("Chat")} isHighlighted={isHighlighted} onClick={onClick}>
+        <HeaderButton name="timelineCard" title={_t("Chat")} isHighlighted={isHighlighted} onClick={onClick}>
             {unreadIndicator}
         </HeaderButton>
     );
@@ -296,7 +296,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
             RightPanelPhases.ThreadPanel,
             <HeaderButton
                 key={RightPanelPhases.ThreadPanel}
-                name="threadsButton"
+                name="threads"
                 data-testid="threadsButton"
                 title={_t("Threads")}
                 onClick={this.onThreadsPanelClicked}
@@ -310,7 +310,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
             RightPanelPhases.NotificationPanel,
             <HeaderButton
                 key="notifsButton"
-                name="notifsButton"
+                name="notifs"
                 title={_t("Notifications")}
                 isHighlighted={this.isPhase(RightPanelPhases.NotificationPanel)}
                 onClick={this.onNotificationsClicked}
@@ -325,7 +325,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
             RightPanelPhases.RoomSummary,
             <HeaderButton
                 key="roomSummaryButton"
-                name="roomSummaryButton"
+                name="roomSummary"
                 title={_t("Room info")}
                 isHighlighted={this.isPhase(ROOM_INFO_PHASES)}
                 onClick={this.onRoomSummaryClicked}
