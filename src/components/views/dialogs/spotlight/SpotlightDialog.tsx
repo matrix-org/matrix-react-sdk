@@ -440,7 +440,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
         // Sort results by most recent activity
 
-        const myUserId = cli.getUserId();
+        const myUserId = cli.getSafeUserId();
         for (const resultArray of Object.values(results)) {
             resultArray.sort((a: Result, b: Result) => {
                 if (isRoomResult(a) || isRoomResult(b)) {
@@ -492,7 +492,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     }, [results, filter]);
 
     const viewRoom = (
-        room: { roomId: string; roomAlias?: string; autoJoin?: boolean; shouldPeek?: boolean },
+        room: { roomId: string; roomAlias?: string; autoJoin?: boolean; shouldPeek?: boolean; viaServers?: string[] },
         persist = false,
         viaKeyboard = false,
     ): void => {
@@ -518,6 +518,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             room_alias: room.roomAlias,
             auto_join: room.autoJoin,
             should_peek: room.shouldPeek,
+            via_servers: room.viaServers,
         });
         onFinished();
     };
@@ -634,6 +635,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                             roomId: publicRoom.room_id,
                             autoJoin: !result.publicRoom.world_readable && !cli.isGuest(),
                             shouldPeek: result.publicRoom.world_readable || cli.isGuest(),
+                            viaServers: [config.roomServer],
                         },
                         true,
                         ev.type !== "click",
@@ -685,7 +687,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 <Option
                     id={`mx_SpotlightDialog_button_result_${result.name}`}
                     key={`${Section[result.section]}-${result.name}`}
-                    onClick={result.onClick}
+                    onClick={result.onClick ?? null}
                 >
                     {result.avatar}
                     {result.name}

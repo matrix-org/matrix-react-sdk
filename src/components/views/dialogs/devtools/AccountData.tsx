@@ -1,5 +1,6 @@
 /*
 Copyright 2022 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -29,7 +30,7 @@ export const AccountDataEventEditor: React.FC<IEditorProps> = ({ mxEvent, onBack
     const fields = useMemo(() => [eventTypeField(mxEvent?.getType())], [mxEvent]);
 
     const onSend = async ([eventType]: string[], content?: IContent): Promise<void> => {
-        await cli.setAccountData(eventType, content);
+        await cli.setAccountData(eventType, content || {});
     };
 
     const defaultContent = mxEvent ? stringify(mxEvent.getContent()) : undefined;
@@ -43,7 +44,7 @@ export const RoomAccountDataEventEditor: React.FC<IEditorProps> = ({ mxEvent, on
     const fields = useMemo(() => [eventTypeField(mxEvent?.getType())], [mxEvent]);
 
     const onSend = async ([eventType]: string[], content?: IContent): Promise<void> => {
-        await cli.setRoomAccountData(context.room.roomId, eventType, content);
+        await cli.setRoomAccountData(context.room.roomId, eventType, content || {});
     };
 
     const defaultContent = mxEvent ? stringify(mxEvent.getContent()) : undefined;
@@ -51,14 +52,14 @@ export const RoomAccountDataEventEditor: React.FC<IEditorProps> = ({ mxEvent, on
 };
 
 interface IProps extends IDevtoolsProps {
-    events: Record<string, MatrixEvent>;
+    events: Map<string, MatrixEvent>;
     Editor: React.FC<IEditorProps>;
     actionLabel: string;
 }
 
 const BaseAccountDataExplorer: React.FC<IProps> = ({ events, Editor, actionLabel, onBack, setTool }) => {
     const [query, setQuery] = useState("");
-    const [event, setEvent] = useState<MatrixEvent>(null);
+    const [event, setEvent] = useState<MatrixEvent | null>(null);
 
     if (event) {
         const onBack = (): void => {
@@ -74,7 +75,7 @@ const BaseAccountDataExplorer: React.FC<IProps> = ({ events, Editor, actionLabel
     return (
         <BaseTool onBack={onBack} actionLabel={actionLabel} onAction={onAction}>
             <FilteredList query={query} onChange={setQuery}>
-                {Object.entries(events).map(([eventType, ev]) => {
+                {Array.from(events.entries()).map(([eventType, ev]) => {
                     const onClick = (): void => {
                         setEvent(ev);
                     };

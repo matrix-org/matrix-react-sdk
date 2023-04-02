@@ -77,7 +77,7 @@ describe("Poll history", () => {
     function openPollHistory(): void {
         cy.get('.mx_HeaderButtons [aria-label="Room info"]').click();
         cy.get(".mx_RoomSummaryCard").within(() => {
-            cy.contains("Polls history").click();
+            cy.contains("Poll history").click();
         });
     }
 
@@ -87,8 +87,6 @@ describe("Poll history", () => {
         });
         cy.startHomeserver("default").then((data) => {
             homeserver = data;
-
-            cy.enableLabsFeature("feature_poll_history");
 
             cy.initTestUser(homeserver, "Tom");
         });

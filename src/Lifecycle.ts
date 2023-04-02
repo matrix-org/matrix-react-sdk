@@ -200,7 +200,7 @@ export function attemptTokenLogin(
     }
 
     const homeserver = localStorage.getItem(SSO_HOMESERVER_URL_KEY);
-    const identityServer = localStorage.getItem(SSO_ID_SERVER_URL_KEY);
+    const identityServer = localStorage.getItem(SSO_ID_SERVER_URL_KEY) ?? undefined;
     if (!homeserver) {
         logger.warn("Cannot log in with token: can't determine HS URL to use");
         Modal.createDialog(ErrorDialog, {
@@ -862,6 +862,7 @@ export async function onLoggedOut(): Promise<void> {
     stopMatrixClient();
     await clearStorage({ deleteEverything: true });
     LifecycleCustomisations.onLoggedOutAndStorageCleared?.();
+    await PlatformPeg.get()?.clearStorage();
 
     // Do this last, so we can make sure all storage has been cleared and all
     // customisations got the memo.

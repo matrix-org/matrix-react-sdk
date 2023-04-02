@@ -102,6 +102,21 @@ export function formatFullDate(date: Date, showTwelveHour = false, showSeconds =
     });
 }
 
+/**
+ * Formats dates to be compatible with attributes of a `<input type="date">`. Dates
+ * should be formatted like "2020-06-23" (formatted according to ISO8601)
+ *
+ * @param date The date to format.
+ * @returns The date string in ISO8601 format ready to be used with an `<input>`
+ */
+export function formatDateForInput(date: Date): string {
+    const year = `${date.getFullYear()}`.padStart(4, "0");
+    const month = `${date.getMonth() + 1}`.padStart(2, "0");
+    const day = `${date.getDate()}`.padStart(2, "0");
+    const dateInputValue = `${year}-${month}-${day}`;
+    return dateInputValue;
+}
+
 export function formatFullTime(date: Date, showTwelveHour = false): string {
     if (showTwelveHour) {
         return twelveHourTime(date, true);
@@ -171,6 +186,10 @@ function withinPast24Hours(prevDate: Date, nextDate: Date): boolean {
     return Math.abs(prevDate.getTime() - nextDate.getTime()) <= MILLIS_IN_DAY;
 }
 
+function withinCurrentDay(prevDate: Date, nextDate: Date): boolean {
+    return withinPast24Hours(prevDate, nextDate) && prevDate.getDay() === nextDate.getDay();
+}
+
 function withinCurrentYear(prevDate: Date, nextDate: Date): boolean {
     return prevDate.getFullYear() === nextDate.getFullYear();
 }
@@ -214,7 +233,7 @@ export function formatFullDateNoDayNoTime(date: Date): string {
 
 export function formatRelativeTime(date: Date, showTwelveHour = false): string {
     const now = new Date(Date.now());
-    if (withinPast24Hours(date, now)) {
+    if (withinCurrentDay(date, now)) {
         return formatTime(date, showTwelveHour);
     } else {
         const months = getMonthsArray();

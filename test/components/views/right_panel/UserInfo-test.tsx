@@ -45,7 +45,7 @@ import * as mockVerification from "../../../../src/verification";
 import Modal from "../../../../src/Modal";
 import { E2EStatus } from "../../../../src/utils/ShieldUtils";
 import { DirectoryMember, startDmOnFirstMessage } from "../../../../src/utils/direct-messages";
-import { flushPromises } from "../../../test-utils";
+import { clearAllModals, flushPromises } from "../../../test-utils";
 
 jest.mock("../../../../src/utils/direct-messages", () => ({
     ...jest.requireActual("../../../../src/utils/direct-messages"),
@@ -112,6 +112,7 @@ const mockClient = mocked({
     setIgnoredUsers: jest.fn(),
     isCryptoEnabled: jest.fn(),
     getUserId: jest.fn(),
+    getSafeUserId: jest.fn(),
     on: jest.fn(),
     off: jest.fn(),
     isSynapseAdministrator: jest.fn().mockResolvedValue(false),
@@ -348,6 +349,7 @@ describe("<DeviceItem />", () => {
     });
 
     it("when userId is the same as userId from client, uses isCrossSigningVerified to determine if button is shown", () => {
+        mockClient.getSafeUserId.mockReturnValueOnce(defaultUserId);
         mockClient.getUserId.mockReturnValueOnce(defaultUserId);
         renderComponent();
 
@@ -417,7 +419,9 @@ describe("<UserOptionsSection />", () => {
         mockClient.setIgnoredUsers.mockClear();
     });
 
-    afterEach(() => Modal.closeCurrentModal("End of test"));
+    afterEach(async () => {
+        await clearAllModals();
+    });
 
     afterAll(() => {
         inviteSpy.mockRestore();
@@ -429,6 +433,7 @@ describe("<UserOptionsSection />", () => {
     });
 
     it("does not show ignore or direct message buttons when member userId matches client userId", () => {
+        mockClient.getSafeUserId.mockReturnValueOnce(member.userId);
         mockClient.getUserId.mockReturnValueOnce(member.userId);
         renderComponent();
 
@@ -674,6 +679,7 @@ describe("<PowerLevelEditor />", () => {
             content: { users: { [defaultUserId]: startPowerLevel }, users_default: 1 },
         });
         mockRoom.currentState.getStateEvents.mockReturnValue(powerLevelEvent);
+        mockClient.getSafeUserId.mockReturnValueOnce(defaultUserId);
         mockClient.getUserId.mockReturnValueOnce(defaultUserId);
         mockClient.setPowerLevel.mockResolvedValueOnce({ event_id: "123" });
         renderComponent();
@@ -793,7 +799,7 @@ describe("<RoomKickButton />", () => {
             },
         };
 
-        expect(callback(mockRoom)).toBe(null);
+        expect(callback(mockRoom)).toBe(false);
         expect(callback(mockRoom)).toBe(true);
     });
 });
@@ -877,7 +883,7 @@ describe("<BanToggleButton />", () => {
             },
         };
 
-        expect(callback(mockRoom)).toBe(null);
+        expect(callback(mockRoom)).toBe(false);
         expect(callback(mockRoom)).toBe(true);
     });
 
@@ -915,7 +921,7 @@ describe("<BanToggleButton />", () => {
             },
         };
 
-        expect(callback(mockRoom)).toBe(null);
+        expect(callback(mockRoom)).toBe(false);
         expect(callback(mockRoom)).toBe(true);
     });
 });

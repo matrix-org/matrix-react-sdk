@@ -16,7 +16,7 @@ limitations under the License.
 
 import classNames from "classnames";
 import { EventType } from "matrix-js-sdk/src/@types/event";
-import React, { useContext, useRef, useState, MouseEvent, ReactNode } from "react";
+import React, { useContext, useRef, useState, MouseEvent, ReactNode, RefObject } from "react";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import RoomContext from "../../../contexts/RoomContext";
@@ -59,12 +59,13 @@ const MiniAvatarUploader: React.FC<IProps> = ({
         setShow(false);
     }, 13000); // hide after being shown for 10 seconds
 
-    const uploadRef = useRef<HTMLInputElement>();
+    const uploadRef = useRef() as RefObject<HTMLInputElement>;
 
     const label = hasAvatar || busy ? hasAvatarLabel : noAvatarLabel;
 
     const { room } = useContext(RoomContext);
-    const canSetAvatar = isUserAvatar || room?.currentState?.maySendStateEvent(EventType.RoomAvatar, cli.getUserId());
+    const canSetAvatar =
+        isUserAvatar || room?.currentState?.maySendStateEvent(EventType.RoomAvatar, cli.getSafeUserId());
     if (!canSetAvatar) return <React.Fragment>{children}</React.Fragment>;
 
     const visible = !!label && (hover || show);
@@ -96,7 +97,7 @@ const MiniAvatarUploader: React.FC<IProps> = ({
                 })}
                 disabled={busy}
                 onClick={() => {
-                    uploadRef.current.click();
+                    uploadRef.current?.click();
                 }}
                 onMouseOver={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}

@@ -82,7 +82,7 @@ function SendButton(props: ISendButtonProps): JSX.Element {
 interface IProps extends MatrixClientProps {
     room: Room;
     resizeNotifier: ResizeNotifier;
-    permalinkCreator: RoomPermalinkCreator;
+    permalinkCreator?: RoomPermalinkCreator;
     replyToEvent?: MatrixEvent;
     relation?: IEventRelation;
     e2eStatus?: E2EStatus;
@@ -538,6 +538,8 @@ export class MessageComposer extends React.Component<IProps, IState> {
                 <div className="mx_MessageComposer_replaced_wrapper" key="room_replaced">
                     <div className="mx_MessageComposer_replaced_valign">
                         <img
+                            aria-hidden
+                            alt=""
                             className="mx_MessageComposer_roomReplaced_icon"
                             src={require("../../../../res/img/room_replaced.svg").default}
                         />
