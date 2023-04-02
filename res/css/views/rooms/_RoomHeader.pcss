@@ -167,11 +167,15 @@ limitations under the License.
             background-color: $accent !important;
         }
 
-        .mx_RoomHeader_button_unreadIndicator_bg {
+        .mx_RoomHeader_button_unreadIndicator_bg,
+        .mx_RoomHeader_button_unreadIndicator {
             position: absolute;
             right: var(--RoomHeader-indicator-dot-offset);
             top: var(--RoomHeader-indicator-dot-offset);
             margin: 4px;
+        }
+
+        .mx_RoomHeader_button_unreadIndicator_bg {
             width: var(--RoomHeader-indicator-dot-size);
             height: var(--RoomHeader-indicator-dot-size);
             border-radius: 50%;
@@ -181,11 +185,6 @@ limitations under the License.
         }
 
         .mx_RoomHeader_button_unreadIndicator {
-            position: absolute;
-            right: var(--RoomHeader-indicator-dot-offset);
-            top: var(--RoomHeader-indicator-dot-offset);
-            margin: 4px;
-
             &.mx_Indicator_red {
                 background: rgba($alert, 1);
                 box-shadow: rgba($alert, 1);
