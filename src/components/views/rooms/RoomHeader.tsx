@@ -109,7 +109,7 @@ const VoiceCallButton: FC<VoiceCallButtonProps> = ({ room, busy, setBusy, behavi
 
     return (
         <AccessibleTooltipButton
-            className="mx_RoomHeader_button mx_RoomHeader_voiceCallButton"
+            className="mx_RoomHeader_button mx_RoomHeader_button--call--voice"
             onClick={onClick}
             title={_t("Voice call")}
             tooltip={tooltip ?? _t("Voice call")}
@@ -225,7 +225,7 @@ const VideoCallButton: FC<VideoCallButtonProps> = ({ room, busy, setBusy, behavi
         <>
             <AccessibleTooltipButton
                 inputRef={buttonRef}
-                className="mx_RoomHeader_button mx_RoomHeader_videoCallButton"
+                className="mx_RoomHeader_button mx_RoomHeader_button--call--video"
                 onClick={onClick}
                 title={_t("Video call")}
                 tooltip={tooltip ?? _t("Video call")}
@@ -574,7 +574,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (!this.props.viewingCall && this.props.onForgetClick) {
             startButtons.push(
                 <AccessibleTooltipButton
-                    className="mx_RoomHeader_button mx_RoomHeader_forgetButton"
+                    className="mx_RoomHeader_button mx_RoomHeader_button--forget"
                     onClick={this.props.onForgetClick}
                     title={_t("Forget room")}
                     alignment={Alignment.Bottom}
@@ -586,8 +586,8 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (!this.props.viewingCall && this.props.onAppsClick) {
             startButtons.push(
                 <AccessibleTooltipButton
-                    className={classNames("mx_RoomHeader_button mx_RoomHeader_appsButton", {
-                        mx_RoomHeader_appsButton_highlight: this.props.appsShown,
+                    className={classNames("mx_RoomHeader_button mx_RoomHeader_button--apps", {
+                        "mx_RoomHeader_button--apps--highlight": this.props.appsShown,
                     })}
                     onClick={this.props.onAppsClick}
                     title={this.props.appsShown ? _t("Hide Widgets") : _t("Show Widgets")}
@@ -601,7 +601,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (!this.props.viewingCall && this.props.onSearchClick && this.props.inRoom) {
             startButtons.push(
                 <AccessibleTooltipButton
-                    className="mx_RoomHeader_button mx_RoomHeader_searchButton"
+                    className="mx_RoomHeader_button mx_RoomHeader_button--search"
                     onClick={this.props.onSearchClick}
                     title={_t("Search")}
                     alignment={Alignment.Bottom}
@@ -613,7 +613,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (this.props.onInviteClick && (!this.props.viewingCall || isVideoRoom) && this.props.inRoom) {
             startButtons.push(
                 <AccessibleTooltipButton
-                    className="mx_RoomHeader_button mx_RoomHeader_inviteButton"
+                    className="mx_RoomHeader_button mx_RoomHeader_button--invite"
                     onClick={this.props.onInviteClick}
                     title={_t("Invite")}
                     alignment={Alignment.Bottom}
@@ -628,7 +628,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             if (this.props.activeCall === null) {
                 endButtons.push(
                     <AccessibleButton
-                        className="mx_RoomHeader_button mx_RoomHeader_closeButton"
+                        className="mx_RoomHeader_button mx_RoomHeader_button--close"
                         onClick={this.onHideCallClick}
                         title={_t("Close call")}
                         key="close"
@@ -637,7 +637,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             } else {
                 endButtons.push(
                     <AccessibleTooltipButton
-                        className="mx_RoomHeader_button mx_RoomHeader_minimiseButton"
+                        className="mx_RoomHeader_button mx_RoomHeader_button--minimise"
                         onClick={this.onHideCallClick}
                         title={_t("View chat timeline")}
                         alignment={Alignment.Bottom}

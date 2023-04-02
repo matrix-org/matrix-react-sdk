@@ -270,28 +270,28 @@ limitations under the License.
     object-fit: cover;
 }
 
-.mx_RoomHeader_forgetButton::before {
+.mx_RoomHeader_button--forget::before {
     mask-image: url("$(res)/img/element-icons/leave.svg");
     width: 26px;
 }
 
-.mx_RoomHeader_appsButton::before {
+.mx_RoomHeader_button--apps::before {
     mask-image: url("$(res)/img/element-icons/room/apps.svg");
 }
 
-.mx_RoomHeader_appsButton_highlight::before {
+.mx_RoomHeader_button--apps--highlight::before {
     background-color: $accent;
 }
 
-.mx_RoomHeader_searchButton::before {
+.mx_RoomHeader_button--search::before {
     mask-image: url("$(res)/img/element-icons/room/search-inset.svg");
 }
 
-.mx_RoomHeader_inviteButton::before {
+.mx_RoomHeader_button--invite::before {
     mask-image: url("$(res)/img/element-icons/room/invite.svg");
 }
 
-.mx_RoomHeader_voiceCallButton::before {
+.mx_RoomHeader_button--call--voice::before {
     mask-image: url("$(res)/img/element-icons/call/voice-call.svg");
 
     /* The call button SVG is padded slightly differently, so match it up to the size */
@@ -300,7 +300,7 @@ limitations under the License.
     mask-position: center;
 }
 
-.mx_RoomHeader_videoCallButton::before {
+.mx_RoomHeader_button--call--video::before {
     mask-image: url("$(res)/img/element-icons/call/video-call.svg");
 }
 
@@ -314,7 +314,7 @@ limitations under the License.
     mask-image: url("$(res)/img/element-icons/call/spotlight.svg");
 }
 
-.mx_RoomHeader_closeButton {
+.mx_RoomHeader_button--close {
     &::before {
         mask-image: url("$(res)/img/cancel.svg");
         mask-size: 20px;
@@ -330,7 +330,7 @@ limitations under the License.
     }
 }
 
-.mx_RoomHeader_minimiseButton::before {
+.mx_RoomHeader_button--minimise::before {
     mask-image: url("$(res)/img/element-icons/reduce.svg");
 }
 
