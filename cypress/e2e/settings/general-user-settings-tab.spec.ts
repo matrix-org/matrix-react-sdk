@@ -29,6 +29,8 @@ describe("General user settings tab", () => {
             homeserver = data;
             cy.initTestUser(homeserver, USER_NAME);
         });
+
+        cy.openUserSettings("General");
     });
 
     afterEach(() => {
@@ -36,7 +38,6 @@ describe("General user settings tab", () => {
     });
 
     it("should be rendered correctly", () => {
-        cy.openUserSettings("General");
         cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab").within(() => {
             // Assert that the top heading is rendered
             cy.get("[data-testid='general']").should("have.text", "General");
@@ -133,6 +134,19 @@ describe("General user settings tab", () => {
             cy.get(
                 ".mx_SettingsTab_section[data-testid='account-management-section'] .mx_AccessibleButton_kind_danger",
             ).should("have.text", "Deactivate Account");
+        });
+    });
+
+    it("should support adding and removing a profile picture", () => {
+        cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab .mx_ProfileSettings").within(() => {
+            // Upload a picture
+            cy.get(".mx_ProfileSettings_avatarUpload").selectFile("cypress/fixtures/riot.png", { force: true });
+
+            // Find and click "Remove" link button
+            cy.get(".mx_ProfileSettings_profile").findButton("Remove").click();
+
+            // Assert that the link button disappeared
+            cy.get(".mx_AvatarSetting_avatar .mx_AccessibleButton_kind_link_sm").should("not.exist");
         });
     });
 });
