@@ -31,18 +31,15 @@ limitations under the License.
         margin-top: var(--SettingsTab-GeneralUserSettingsTab_subheading-margin-top);
     }
 
-    .mx_GeneralUserSettingsTab_accountSection,
-    .mx_GeneralUserSettingsTab_discovery {
+    :is(.mx_GeneralUserSettingsTab_accountSection, .mx_GeneralUserSettingsTab_discovery) {
         .mx_Spinner {
             /* Move the spinner to the left side of the container (default center) */
             justify-content: flex-start;
         }
     }
 
-    .mx_GeneralUserSettingsTab_accountSection .mx_EmailAddresses,
-    .mx_GeneralUserSettingsTab_accountSection .mx_PhoneNumbers,
-    .mx_GeneralUserSettingsTab_discovery .mx_ExistingEmailAddress,
-    .mx_GeneralUserSettingsTab_discovery .mx_ExistingPhoneNumber,
+    .mx_GeneralUserSettingsTab_accountSection :is(.mx_EmailAddresses, .mx_PhoneNumbers),
+    .mx_GeneralUserSettingsTab_discovery :is(.mx_ExistingEmailAddress, .mx_ExistingPhoneNumber),
     .mx_GeneralUserSettingsTab_languageInput {
         margin-inline-end: var(--SettingsTab_fullWidthField-margin-inline-end);
     }
