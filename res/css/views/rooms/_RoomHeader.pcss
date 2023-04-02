@@ -101,6 +101,64 @@ limitations under the License.
             mask-position: center;
         }
 
+        &.mx_RoomHeader_button--forget::before {
+            mask-image: url("$(res)/img/element-icons/leave.svg");
+            width: 26px;
+        }
+
+        &.mx_RoomHeader_button--apps::before {
+            mask-image: url("$(res)/img/element-icons/room/apps.svg");
+        }
+
+        &.mx_RoomHeader_button--apps--highlight::before {
+            background-color: $accent;
+        }
+
+        &.mx_RoomHeader_button--search::before {
+            mask-image: url("$(res)/img/element-icons/room/search-inset.svg");
+        }
+
+        &.mx_RoomHeader_button--invite::before {
+            mask-image: url("$(res)/img/element-icons/room/invite.svg");
+        }
+
+        &.mx_RoomHeader_button--call--voice::before {
+            mask-image: url("$(res)/img/element-icons/call/voice-call.svg");
+
+            /* The call button SVG is padded slightly differently, so match it up to the size */
+            /* of the other icons */
+            mask-size: 20px;
+            mask-position: center;
+        }
+
+        &.mx_RoomHeader_button--call--video::before {
+            mask-image: url("$(res)/img/element-icons/call/video-call.svg");
+        }
+
+        &.mx_RoomHeader_button--close::before {
+            &::before {
+                mask-image: url("$(res)/img/cancel.svg");
+                mask-size: 20px;
+                mask-position: center;
+            }
+
+            &:hover {
+                background: unset; /* remove background color on hover */
+
+                &::before {
+                    background-color: $icon-button-color; /* set the default background color */
+                }
+            }
+        }
+
+        .mx_RoomHeader_button--minimise::before {
+            mask-image: url("$(res)/img/element-icons/reduce.svg");
+        }
+
+        &.mx_RoomHeader_button--unread::before {
+            background-color: $room-icon-unread-color !important;
+        }
+
         &.mx_RoomHeader_button--highlight::before {
             background-color: $accent !important;
         }
@@ -270,40 +328,6 @@ limitations under the License.
     object-fit: cover;
 }
 
-.mx_RoomHeader_button--forget::before {
-    mask-image: url("$(res)/img/element-icons/leave.svg");
-    width: 26px;
-}
-
-.mx_RoomHeader_button--apps::before {
-    mask-image: url("$(res)/img/element-icons/room/apps.svg");
-}
-
-.mx_RoomHeader_button--apps--highlight::before {
-    background-color: $accent;
-}
-
-.mx_RoomHeader_button--search::before {
-    mask-image: url("$(res)/img/element-icons/room/search-inset.svg");
-}
-
-.mx_RoomHeader_button--invite::before {
-    mask-image: url("$(res)/img/element-icons/room/invite.svg");
-}
-
-.mx_RoomHeader_button--call--voice::before {
-    mask-image: url("$(res)/img/element-icons/call/voice-call.svg");
-
-    /* The call button SVG is padded slightly differently, so match it up to the size */
-    /* of the other icons */
-    mask-size: 20px;
-    mask-position: center;
-}
-
-.mx_RoomHeader_button--call--video::before {
-    mask-image: url("$(res)/img/element-icons/call/video-call.svg");
-}
-
 .mx_RoomHeader_layoutButton--freedom::before,
 .mx_RoomHeader_freedomIcon::before {
     mask-image: url("$(res)/img/element-icons/call/freedom.svg");
@@ -312,26 +336,6 @@ limitations under the License.
 .mx_RoomHeader_layoutButton--spotlight::before,
 .mx_RoomHeader_spotlightIcon::before {
     mask-image: url("$(res)/img/element-icons/call/spotlight.svg");
-}
-
-.mx_RoomHeader_button--close {
-    &::before {
-        mask-image: url("$(res)/img/cancel.svg");
-        mask-size: 20px;
-        mask-position: center;
-    }
-
-    &:hover {
-        background: unset; /* remove background color on hover */
-
-        &::before {
-            background-color: $icon-button-color; /* set the default background color */
-        }
-    }
-}
-
-.mx_RoomHeader_button--minimise::before {
-    mask-image: url("$(res)/img/element-icons/reduce.svg");
 }
 
 .mx_RoomHeader_layoutMenu .mx_IconizedContextMenu_icon::before {
