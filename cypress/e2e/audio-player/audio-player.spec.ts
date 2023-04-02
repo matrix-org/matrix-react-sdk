@@ -339,24 +339,29 @@ describe("Audio player", () => {
 
         // On a thread
         cy.get(".mx_ThreadView").within(() => {
-            cy.get(".mx_EventTile_last .mx_EventTile_mediaLine .mx_MAudioBody .mx_AudioPlayer_container").within(() => {
-                // Assert that the counter is zero before clicking the play button
-                cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
+            cy.get(".mx_EventTile_last")
+                .within(() => {
+                    // Assert that the player is correctly rendered on a thread
+                    cy.get(".mx_EventTile_mediaLine .mx_MAudioBody .mx_AudioPlayer_container").within(() => {
+                        // Assert that the counter is zero before clicking the play button
+                        cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
-                // Click the play button
-                cy.findButton("Play").click();
+                        // Click the play button
+                        cy.findButton("Play").click();
 
-                // Assert that the pause button is rendered
-                cy.findButton("Pause").should("exist");
+                        // Assert that the pause button is rendered
+                        cy.findButton("Pause").should("exist");
 
-                // Assert that the timer is reset when the audio file finished playing
-                cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
+                        // Assert that the timer is reset when the audio file finished playing
+                        cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
-                // Assert that the play button is rendered
-                cy.findButton("Play").should("exist");
-            });
-
-            cy.get(".mx_EventTile_last").realHover().findButton("Reply").click();
+                        // Assert that the play button is rendered
+                        cy.findButton("Play").should("exist");
+                    });
+                })
+                .realHover()
+                .findButton("Reply")
+                .click();
 
             cy.get(".mx_MessageComposer--compact").within(() => {
                 // Assert that the reply preview is rendered on the message composer
