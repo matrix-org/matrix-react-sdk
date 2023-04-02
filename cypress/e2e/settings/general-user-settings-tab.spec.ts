@@ -19,6 +19,7 @@ limitations under the License.
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 
 const USER_NAME = "Alice";
+const USER_NAME_NEW = "Naomi";
 const IntegrationManager = "scalar.vector.im";
 
 describe("General user settings tab", () => {
@@ -44,7 +45,7 @@ describe("General user settings tab", () => {
 
             cy.get(".mx_ProfileSettings_profile").within(() => {
                 // Check USER_NAME
-                cy.get(`input[value='${USER_NAME}']`).should("exist");
+                cy.findTextbox("Display Name").get(`input[value='${USER_NAME}']`).should("exist");
 
                 // Assert that a random userId exists
                 cy.contains(".mx_ProfileSettings_profile_controls_userId", ":localhost").should("be.visible");
@@ -148,5 +149,18 @@ describe("General user settings tab", () => {
             // Assert that the link button disappeared
             cy.get(".mx_AvatarSetting_avatar .mx_AccessibleButton_kind_link_sm").should("not.exist");
         });
+    });
+
+    it("should support changing a display name", () => {
+        cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab .mx_ProfileSettings").within(() => {
+            // Change the diaplay name to USER_NAME_NEW
+            cy.findTextbox("Display Name").type(`{selectAll}{del}${USER_NAME_NEW}{enter}`);
+        });
+
+        cy.closeDialog();
+
+        // Assert the avatar's initial characters are set
+        cy.contains(".mx_UserMenu .mx_BaseAvatar_initial", "N").should("exist");
+        cy.contains(".mx_RoomView_wrapper .mx_BaseAvatar_initial", "N").should("exist");
     });
 });
