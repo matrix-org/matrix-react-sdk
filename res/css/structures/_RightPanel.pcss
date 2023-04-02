@@ -37,7 +37,7 @@ limitations under the License.
 /* See: mx_RoomHeader_button, of which this is a copy.
  * TODO: factor out a common component to avoid this duplication.
  */
-.mx_RightPanel_headerButton {
+.mx_RoomHeader_button {
     cursor: pointer;
     flex: 0 0 auto;
     margin-left: 1px;
@@ -93,7 +93,7 @@ $pulse-color: $alert;
     }
 }
 
-.mx_RightPanel_headerButton_unreadIndicator_bg {
+.mx_RoomHeader_button_unreadIndicator_bg {
     position: absolute;
     right: $dot-offset;
     top: $dot-offset;
@@ -106,7 +106,7 @@ $pulse-color: $alert;
     background: rgba($background, 1);
 }
 
-.mx_RightPanel_headerButton_unreadIndicator {
+.mx_RoomHeader_button_unreadIndicator {
     position: absolute;
     right: $dot-offset;
     top: $dot-offset;
@@ -135,14 +135,14 @@ $pulse-color: $alert;
     }
 }
 
-.mx_RightPanel_headerButton_unread {
+.mx_RoomHeader_button_unread {
     &::before {
         background-color: $room-icon-unread-color !important;
     }
 }
 
-.mx_RightPanel_headerButton_highlight,
-.mx_RightPanel_headerButton:hover {
+.mx_RoomHeader_button_highlight,
+.mx_RoomHeader_button:hover {
     &::before {
         background-color: $accent !important;
     }

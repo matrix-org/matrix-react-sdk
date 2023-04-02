@@ -75,10 +75,10 @@ describe("RoomHeaderButtons-test.tsx", function () {
 
     it("thread notification does change the thread button", () => {
         const { container } = getComponent(room);
-        expect(getThreadButton(container)!.className.includes("mx_RightPanel_headerButton_unread")).toBeFalsy();
+        expect(getThreadButton(container)!.className.includes("mx_RoomHeader_button_unread")).toBeFalsy();
 
         room.setThreadUnreadNotificationCount("$123", NotificationCountType.Total, 1);
-        expect(getThreadButton(container)!.className.includes("mx_RightPanel_headerButton_unread")).toBeTruthy();
+        expect(getThreadButton(container)!.className.includes("mx_RoomHeader_button_unread")).toBeTruthy();
         expect(isIndicatorOfType(container, "gray")).toBe(true);
 
         room.setThreadUnreadNotificationCount("$123", NotificationCountType.Highlight, 1);
