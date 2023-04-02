@@ -209,7 +209,6 @@ describe("Audio player", () => {
     });
 
     it("should play an audio file", () => {
-        // Upload an audio file
         uploadFile("cypress/fixtures/1sec.ogg");
 
         // Assert that the audio player is rendered
@@ -232,7 +231,6 @@ describe("Audio player", () => {
     });
 
     it("should support downloading an audio file", () => {
-        // Upload an audio file
         uploadFile("cypress/fixtures/1sec.ogg");
 
         cy.get(".mx_EventTile_last").realHover().findButton("Download").click();
@@ -242,8 +240,7 @@ describe("Audio player", () => {
     });
 
     it("should support replying to audio file with another audio file", () => {
-        // Upload one second audio file with a long file name
-        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
+        uploadFile("cypress/fixtures/1sec.ogg");
 
         // Assert the audio player is rendered
         cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
@@ -279,7 +276,6 @@ describe("Audio player", () => {
             cy.get(".mx_EventTile_last").realHover().findButton("Reply").click();
         };
 
-        // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/upload-first.ogg");
 
         // Assert that the audio player is rendered
@@ -295,7 +291,7 @@ describe("Audio player", () => {
 
         clickButtonReply();
 
-        // Reply to the player with another audio file
+        // Reply to the player with yet another audio file to create a reply chain
         uploadFile("cypress/fixtures/upload-third.ogg");
 
         cy.get(".mx_EventTile_last").within(() => {
@@ -331,7 +327,6 @@ describe("Audio player", () => {
     });
 
     it("should be rendered, play, and support replying on a thread", () => {
-        // Upload one second audio file with a long file name
         uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
 
         // On the main timeline
