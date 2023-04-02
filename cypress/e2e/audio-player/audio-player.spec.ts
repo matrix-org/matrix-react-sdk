@@ -49,14 +49,25 @@ describe("Audio player", () => {
      * Take snapshots of mx_EventTile_last on each layout, outputting log for reference/debugging.
      * @param detail The Percy snapshot name. Used for outputting logs too.
      */
-    const takeSnapshots = (detail: string) => {
+    const takeSnapshots = (detail: string, monospace = false) => {
         // Check that the audio player is rendered and its button becomes visible
         const checkPlayerVisibility = () => {
-            // Assert that rendering of the player on mx_EventTile_last settled,
-            // and the play button is found and visible
-            cy.get(".mx_EventTile_last").within(() => {
-                cy.get(".mx_MAudioBody").findButton("Play").should("be.visible");
-            });
+            // Assert that the audio player and media information are visible
+            cy.get(".mx_EventTile_mediaLine .mx_MAudioBody .mx_AudioPlayer_container .mx_AudioPlayer_mediaInfo").within(
+                () => {
+                    cy.contains(".mx_AudioPlayer_mediaName", ".ogg").should("be.visible"); // extension
+                    cy.contains(".mx_AudioPlayer_byline", "00:01").should("be.visible");
+                    cy.contains(".mx_AudioPlayer_byline", "(3.56 KB)").should("be.visible"); // actual size
+                },
+            );
+
+            // Assert that the play button is rendered
+            cy.findButton("Play").should("be.visible");
+
+            if (monospace) {
+                // Assert that the monospace timer is visible
+                cy.get("[role='timer']").should("have.css", "font-family", '"monospace"').should("be.visible");
+            }
         };
 
         /**
@@ -70,6 +81,12 @@ describe("Audio player", () => {
         const snapshotWidthsGroup = snapshotWidthsIRC;
         const snapshotWidthsBubble = [50, 285];
 
+        if (monospace) {
+            // Enable system font and monospace setting
+            cy.setSettingValue("useSystemFont", null, SettingLevel.DEVICE, true);
+            cy.setSettingValue("systemFont", null, SettingLevel.DEVICE, "monospace");
+        }
+
         // Check the status of the seek bar
         // TODO: check if visible - currently checking its visibility on a compressed EventTile returns an error
         cy.get(".mx_AudioPlayer_seek input[type='range']").should("exist");
@@ -77,11 +94,13 @@ describe("Audio player", () => {
         // Enable IRC layout
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
 
-        // Click the event timestamp to highlight EventTile in case it is not visible
-        cy.get(".mx_EventTile_last[data-layout='irc'] .mx_MessageTimestamp").click();
+        cy.get(".mx_EventTile_last[data-layout='irc']").within(() => {
+            // Click the event timestamp to highlight EventTile in case it is not visible
+            cy.get(".mx_MessageTimestamp").click();
 
-        // Assert that rendering of the player settled and the play button is visible before taking a snapshot
-        checkPlayerVisibility();
+            // Assert that rendering of the player settled and the play button is visible before taking a snapshot
+            checkPlayerVisibility();
+        });
 
         cy.get(".mx_EventTile_last").percySnapshotElement(detail + " on IRC layout", {
             percyCSS,
@@ -90,8 +109,10 @@ describe("Audio player", () => {
 
         // Take a snapshot on modern/group layout
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
-        cy.get(".mx_EventTile_last[data-layout='group'] .mx_MessageTimestamp").click();
-        checkPlayerVisibility();
+        cy.get(".mx_EventTile_last[data-layout='group']").within(() => {
+            cy.get(".mx_MessageTimestamp").click();
+            checkPlayerVisibility();
+        });
         cy.get(".mx_EventTile_last").percySnapshotElement(detail + " on modern/group layout", {
             percyCSS,
             widths: snapshotWidthsGroup,
@@ -100,56 +121,15 @@ describe("Audio player", () => {
 
         // Take a snapshot on bubble layout
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
-        cy.get(".mx_EventTile_last[data-layout='bubble'] .mx_MessageTimestamp").click();
-        checkPlayerVisibility();
+        cy.get(".mx_EventTile_last[data-layout='bubble']").within(() => {
+            cy.get(".mx_MessageTimestamp").click();
+            checkPlayerVisibility();
+        });
         cy.get(".mx_EventTile_last").percySnapshotElement(detail + " on bubble layout", {
             percyCSS,
             widths: snapshotWidthsBubble,
         });
         cy.log("Took a snapshot of " + detail + " on bubble layout");
-    };
-
-    /**
-     * Upload a file and take snapshots
-     * @param detail Used for specifying the Percy snapshot name.
-     */
-    const uploadAndTakeSnapshots = (detail: string, monospace = false) => {
-        if (monospace) {
-            // Enable system font and monospace setting
-            cy.setSettingValue("useSystemFont", null, SettingLevel.DEVICE, true);
-            cy.setSettingValue("systemFont", null, SettingLevel.DEVICE, "monospace");
-        }
-
-        // Upload one second audio file with a long file name
-        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
-
-        // Scroll to the bottom to make the audio player visible for Percy tests
-        cy.get(".mx_MainSplit .mx_ScrollPanel").scrollTo("bottom");
-
-        cy.get(".mx_RoomView_MessageList").within(() => {
-            // Check that the audio player for the long-name-audio-file has been rendered correctly
-            cy.get(".mx_EventTile_mediaLine .mx_MAudioBody").within(() => {
-                // Assert that the audio player is rendered
-                cy.get(".mx_AudioPlayer_container").within(() => {
-                    // Assert that media information is rendered
-                    cy.get(".mx_AudioPlayer_mediaInfo").within(() => {
-                        cy.get(".mx_AudioPlayer_mediaName").should("have.text", "1sec-long-name-audio-file.ogg");
-                        cy.contains(".mx_AudioPlayer_byline", "00:01").should("exist");
-                        cy.contains(".mx_AudioPlayer_byline", "(3.56 KB)").should("exist"); // actual size
-                    });
-
-                    // Assert that the play button is rendered
-                    cy.findButton("Play").should("exist");
-                });
-            });
-
-            if (monospace) {
-                // Assert that the monospace timer is visible
-                cy.get("[role='timer']").should("have.css", "font-family", '"monospace"').should("be.visible");
-            }
-
-            takeSnapshots(`Selected EventTile of audio player (${detail})`);
-        });
     };
 
     beforeEach(() => {
@@ -174,11 +154,15 @@ describe("Audio player", () => {
     });
 
     it("should be correctly rendered - light theme", () => {
-        uploadAndTakeSnapshots("light theme");
+        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
+
+        takeSnapshots("Selected EventTile of audio player (light theme)");
     });
 
     it("should be correctly rendered - light theme with monospace font", () => {
-        uploadAndTakeSnapshots("light theme with monospace font", true); // Enable monospace
+        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
+
+        takeSnapshots("Selected EventTile of audio player (light theme, monospace font)", true); // Enable monospace
     });
 
     it("should be correctly rendered - high contrast theme", () => {
@@ -206,14 +190,18 @@ describe("Audio player", () => {
 
         cy.closeDialog();
 
-        uploadAndTakeSnapshots("high contrast light theme");
+        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
+
+        takeSnapshots("Selected EventTile of audio player (high contrast)");
     });
 
     it("should be correctly rendered - dark theme", () => {
         // Enable dark theme
         cy.setSettingValue("theme", null, SettingLevel.ACCOUNT, "dark");
 
-        uploadAndTakeSnapshots("dark theme");
+        uploadFile("cypress/fixtures/1sec-long-name-audio-file.ogg");
+
+        takeSnapshots("Selected EventTile of audio player (dark theme)");
     });
 
     it("should play an audio file", () => {
