@@ -36,7 +36,7 @@ describe("Audio player", () => {
         cy.get(".mx_MessageComposer_actions input[type='file']").selectFile(file, { force: true });
 
         cy.get(".mx_Dialog").within(() => {
-            // Click primary "Upload" button
+            // Find and click primary "Upload" button
             cy.get("[data-testid='dialog-primary-button']").findButton("Upload").click();
         });
 
@@ -61,7 +61,7 @@ describe("Audio player", () => {
                 },
             );
 
-            // Assert that the play button is rendered
+            // Assert that the play button can be found and is visible
             cy.findButton("Play").should("be.visible");
 
             if (monospace) {
@@ -216,16 +216,16 @@ describe("Audio player", () => {
             // Assert that the counter is zero before clicking the play button
             cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
-            // Click the play button
+            // Find and click "Play" button
             cy.findButton("Play").click();
 
-            // Assert that the pause button is rendered
+            // Assert that "Pause" button can be found
             cy.findButton("Pause").should("exist");
 
             // Assert that the timer is reset when the audio file finished playing
             cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
-            // Assert that the play button is rendered
+            // Assert that "Play" button can be found
             cy.findButton("Play").should("exist");
         });
     });
@@ -233,6 +233,7 @@ describe("Audio player", () => {
     it("should support downloading an audio file", () => {
         uploadFile("cypress/fixtures/1sec.ogg");
 
+        // Find and click "Download" button on MessageActionBar
         cy.get(".mx_EventTile_last").realHover().findButton("Download").click();
 
         // Assert that the file was downloaded
@@ -245,7 +246,7 @@ describe("Audio player", () => {
         // Assert the audio player is rendered
         cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
 
-        // Click "Reply" button on MessageActionBar
+        // Find and click "Reply" button on MessageActionBar
         cy.get(".mx_EventTile_last").realHover().findButton("Reply").click();
 
         // Reply to the player with another audio file
@@ -272,6 +273,7 @@ describe("Audio player", () => {
         // message. This test checks whether a reply chain which consists of
         // multiple audio file replies is rendered properly.
 
+        // Find and click "Reply" button
         const clickButtonReply = () => {
             cy.get(".mx_EventTile_last").realHover().findButton("Reply").click();
         };
@@ -311,7 +313,7 @@ describe("Audio player", () => {
             cy.contains(".mx_ReplyChain .mx_ReplyChain_show", "In reply to").click();
 
             cy.get("blockquote.mx_ReplyChain:first-of-type").within(() => {
-                // Assert that "In reply to" disappears
+                // Assert that "In reply to" has disappeared
                 cy.contains("In reply to").should("not.exist");
 
                 // Assert that audio file on the first row is rendered as file button
@@ -334,6 +336,7 @@ describe("Audio player", () => {
             // Assert the audio player is rendered
             cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
 
+            // Find and click "Reply in thread" button
             cy.get(".mx_EventTile_last").realHover().findButton("Reply in thread").click();
         });
 
@@ -346,22 +349,22 @@ describe("Audio player", () => {
                         // Assert that the counter is zero before clicking the play button
                         cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
-                        // Click the play button
+                        // Find and click "Play" button
                         cy.findButton("Play").click();
 
-                        // Assert that the pause button is rendered
+                        // Assert that "Pause" button can be found
                         cy.findButton("Pause").should("exist");
 
                         // Assert that the timer is reset when the audio file finished playing
                         cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
-                        // Assert that the play button is rendered
+                        // Assert that "Play" button can be found
                         cy.findButton("Play").should("exist");
                     });
                 })
                 .realHover()
                 .findButton("Reply")
-                .click();
+                .click(); // Find and click "Reply" button
 
             cy.get(".mx_MessageComposer--compact").within(() => {
                 // Assert that the reply preview is rendered on the message composer
