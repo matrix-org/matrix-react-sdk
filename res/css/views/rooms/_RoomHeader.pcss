@@ -43,6 +43,108 @@ limitations under the License.
         }
     }
 
+    .mx_RoomHeader_button {
+        cursor: pointer;
+        flex: 0 0 auto;
+        margin-left: 1px;
+        margin-right: 1px;
+        height: 32px;
+        width: 32px;
+        position: relative;
+        border-radius: 100%;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 4px; /* center with parent of 32px */
+            left: 4px; /* center with parent of 32px */
+            height: 24px;
+            width: 24px;
+            background-color: $icon-button-color;
+            mask-repeat: no-repeat;
+            mask-size: contain;
+        }
+
+        &:hover {
+            background: rgba($accent, 0.1);
+
+            &::before {
+                background-color: $accent;
+            }
+        }
+
+        &.mx_RoomHeader_button--unread::before {
+            background-color: $room-icon-unread-color !important;
+        }
+
+        &.mx_RoomHeader_button--threads::before {
+            mask-image: url("$(res)/img/element-icons/room/thread.svg");
+        }
+
+        &.mx_RoomHeader_button--notifs::before {
+            mask-image: url("$(res)/img/element-icons/notifications.svg");
+            mask-position: center;
+        }
+
+        &.mx_RoomHeader_button--roomSummary::before {
+            mask-image: url("$(res)/img/element-icons/room/room-summary.svg");
+            mask-position: center;
+        }
+
+        &.mx_RoomHeader_button--pinnedMessages::before {
+            mask-image: url("$(res)/img/element-icons/room/pin.svg");
+            mask-position: center;
+        }
+
+        &.mx_RoomHeader_button--timelineCard::before {
+            mask-image: url("$(res)/img/element-icons/feedback.svg");
+            mask-position: center;
+        }
+
+        &.mx_RoomHeader_button--highlight::before {
+            background-color: $accent !important;
+        }
+
+        &:hover::before {
+            background-color: $accent !important;
+        }
+
+        .mx_RoomHeader_button_unreadIndicator_bg {
+            position: absolute;
+            right: var(--RoomHeader-indicator-dot-offset);
+            top: var(--RoomHeader-indicator-dot-offset);
+            margin: 4px;
+            width: var(--RoomHeader-indicator-dot-size);
+            height: var(--RoomHeader-indicator-dot-size);
+            border-radius: 50%;
+            transform: scale(1.6);
+            transform-origin: center center;
+            background: rgba($background, 1);
+        }
+
+        .mx_RoomHeader_button_unreadIndicator {
+            position: absolute;
+            right: var(--RoomHeader-indicator-dot-offset);
+            top: var(--RoomHeader-indicator-dot-offset);
+            margin: 4px;
+
+            &.mx_Indicator_red {
+                background: rgba($alert, 1);
+                box-shadow: rgba($alert, 1);
+            }
+
+            &.mx_Indicator_gray {
+                background: rgba($room-icon-unread-color, 1);
+                box-shadow: rgba($room-icon-unread-color, 1);
+            }
+
+            &.mx_Indicator_bold {
+                background: rgba($primary-content, 1);
+                box-shadow: rgba($primary-content, 1);
+            }
+        }
+    }
+
     .mx_CallDuration {
         margin-top: calc(($font-15px - $font-13px) / 2); /* To align with the name */
         font-size: $font-13px;
@@ -166,108 +268,6 @@ limitations under the License.
 
 .mx_RoomHeader_avatar .mx_BaseAvatar_image {
     object-fit: cover;
-}
-
-.mx_RoomHeader_button {
-    cursor: pointer;
-    flex: 0 0 auto;
-    margin-left: 1px;
-    margin-right: 1px;
-    height: 32px;
-    width: 32px;
-    position: relative;
-    border-radius: 100%;
-
-    &::before {
-        content: "";
-        position: absolute;
-        top: 4px; /* center with parent of 32px */
-        left: 4px; /* center with parent of 32px */
-        height: 24px;
-        width: 24px;
-        background-color: $icon-button-color;
-        mask-repeat: no-repeat;
-        mask-size: contain;
-    }
-
-    &:hover {
-        background: rgba($accent, 0.1);
-
-        &::before {
-            background-color: $accent;
-        }
-    }
-
-    &.mx_RoomHeader_button--unread::before {
-        background-color: $room-icon-unread-color !important;
-    }
-
-    &.mx_RoomHeader_button--threads::before {
-        mask-image: url("$(res)/img/element-icons/room/thread.svg");
-    }
-
-    &.mx_RoomHeader_button--notifs::before {
-        mask-image: url("$(res)/img/element-icons/notifications.svg");
-        mask-position: center;
-    }
-
-    &.mx_RoomHeader_button--roomSummary::before {
-        mask-image: url("$(res)/img/element-icons/room/room-summary.svg");
-        mask-position: center;
-    }
-
-    &.mx_RoomHeader_button--pinnedMessages::before {
-        mask-image: url("$(res)/img/element-icons/room/pin.svg");
-        mask-position: center;
-    }
-
-    &.mx_RoomHeader_button--timelineCard::before {
-        mask-image: url("$(res)/img/element-icons/feedback.svg");
-        mask-position: center;
-    }
-
-    &.mx_RoomHeader_button--highlight::before {
-        background-color: $accent !important;
-    }
-
-    &:hover::before {
-        background-color: $accent !important;
-    }
-
-    .mx_RoomHeader_button_unreadIndicator_bg {
-        position: absolute;
-        right: var(--RoomHeader-indicator-dot-offset);
-        top: var(--RoomHeader-indicator-dot-offset);
-        margin: 4px;
-        width: var(--RoomHeader-indicator-dot-size);
-        height: var(--RoomHeader-indicator-dot-size);
-        border-radius: 50%;
-        transform: scale(1.6);
-        transform-origin: center center;
-        background: rgba($background, 1);
-    }
-
-    .mx_RoomHeader_button_unreadIndicator {
-        position: absolute;
-        right: var(--RoomHeader-indicator-dot-offset);
-        top: var(--RoomHeader-indicator-dot-offset);
-        margin: 4px;
-
-        &.mx_Indicator_red {
-            background: rgba($alert, 1);
-            box-shadow: rgba($alert, 1);
-        }
-
-        &.mx_Indicator_gray {
-            background: rgba($room-icon-unread-color, 1);
-            box-shadow: rgba($room-icon-unread-color, 1);
-        }
-
-        &.mx_Indicator_bold {
-            background: rgba($primary-content, 1);
-            box-shadow: rgba($primary-content, 1);
-        }
-    }
 }
 
 .mx_RoomHeader_forgetButton::before {
