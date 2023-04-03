@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { mocked } from "jest-mock";
+
 import { ICompletion } from "../../../../../../src/autocomplete/Autocompleter";
 import {
     buildQuery,
@@ -22,7 +24,7 @@ import {
     getMentionAttributes,
 } from "../../../../../../src/components/views/rooms/wysiwyg_composer/utils/autocomplete";
 import { createTestClient, mkRoom } from "../../../../../test-utils";
-import * as mockAvatar from "../../../../../../src/Avatar";
+import * as _mockAvatar from "../../../../../../src/Avatar";
 
 const mockClient = createTestClient();
 const mockRoomId = "mockRoomId";
@@ -150,7 +152,7 @@ describe("getMentionAttributes", () => {
     const testAvatarUrlForRoom = "www.roomUrl.com";
     const testInitialLetter = "z";
 
-    // TODO figure out how to appease TS here
+    const mockAvatar = mocked(_mockAvatar);
     mockAvatar.defaultAvatarUrlForString.mockReturnValue(testAvatarUrlForString);
     mockAvatar.avatarUrlForMember.mockReturnValue(testAvatarUrlForMember);
     mockAvatar.avatarUrlForRoom.mockReturnValue(testAvatarUrlForRoom);
