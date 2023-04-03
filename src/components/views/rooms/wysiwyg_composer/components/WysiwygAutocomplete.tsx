@@ -100,6 +100,7 @@ function getMentionDisplayText(completion: ICompletion, client: MatrixClient): s
         // completion.completion
         return getRoomFromCompletion(completion, client)?.name || completion.completion;
     }
+    return "";
 }
 
 /**
@@ -113,7 +114,7 @@ function getMentionAttributes(completion: ICompletion, client: MatrixClient, roo
     let background = "background";
     let letter = "letter";
     if (completion.type === "user") {
-        const mentionedMember = room.getMember(completion.completionId);
+        const mentionedMember = room.getMember(completion.completionId || "");
 
         if (!mentionedMember) return;
 
@@ -161,11 +162,9 @@ const WysiwygAutocomplete = forwardRef(
         const client = useMatrixClientContext();
 
         function handleConfirm(completion: ICompletion): void {
-            if (!completion.href || !client) return;
-
-            // for now we can use this if to make sure we handle only the mentions we know we can handle properly
-            // in the model
-            if (completion.type === "room" || completion.type === "user") {
+            // TODO handle all of the completion types
+            // Using this to pick out the ones we can handle during implementation
+            if (room && (completion.type === "room" || completion.type === "user")) {
                 handleMention(
                     completion.href,
                     getMentionDisplayText(completion, client),
