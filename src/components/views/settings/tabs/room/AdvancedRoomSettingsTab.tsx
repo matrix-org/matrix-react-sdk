@@ -42,9 +42,16 @@ interface IRecommendedVersion {
 interface IState {
     // This is eventually set to the value of room.getRecommendedVersion()
     upgradeRecommendation?: IRecommendedVersion;
+
+    /** The room ID of this room's predecessor, if it exists. */
     oldRoomId?: string;
+
+    /** The ID of tombstone event in this room's predecessor, if it exists. */
     oldEventId?: string;
+
+    /** The via servers to use to find this room's predecessor, if it exists. */
     oldViaServers?: string[];
+
     upgraded?: boolean;
 }
 
