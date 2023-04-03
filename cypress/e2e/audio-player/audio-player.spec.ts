@@ -149,8 +149,6 @@ describe("Audio player", () => {
             ".mx_RoomView_body .mx_GenericEventListSummary[data-layout='group'] .mx_GenericEventListSummary_summary",
             "created and configured the room.",
         ).should("exist");
-
-        cy.injectAxe();
     });
 
     afterEach(() => {
