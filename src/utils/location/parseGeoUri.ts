@@ -36,7 +36,7 @@ export const parseGeoUri = (uri: string): GeolocationCoordinates | undefined => 
     const latitude = parse(coords[0]);
     const longitude = parse(coords[1]);
 
-    if (Number.isNaN(latitude) || Number.isNaN(longitude)) {
+    if (latitude === null || longitude === null) {
         return;
     }
 

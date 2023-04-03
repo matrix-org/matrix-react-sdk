@@ -230,16 +230,14 @@ export default class DMRoomMap {
     private getUserToRooms(): { [key: string]: string[] } {
         if (!this.userToRooms) {
             const userToRooms = this.mDirectEvent;
-            const myUserId = this.matrixClient.getSafeUserId();
+            const myUserId = this.matrixClient.getUserId()!;
             const selfDMs = userToRooms[myUserId];
             if (selfDMs?.length) {
                 const neededPatching = this.patchUpSelfDMs(userToRooms);
                 // to avoid multiple devices fighting to correct
                 // the account data, only try to send the corrected
                 // version once.
-                logger.warn(
-                    `Invalid m.direct account data detected (self-chats that shouldn't be), patching it up.`,
-                );
+                logger.warn(`Invalid m.direct account data detected (self-chats that shouldn't be), patching it up.`);
                 if (neededPatching && !this.hasSentOutPatchDirectAccountDataPatch) {
                     this.hasSentOutPatchDirectAccountDataPatch = true;
                     this.matrixClient.setAccountData(EventType.Direct, userToRooms);
