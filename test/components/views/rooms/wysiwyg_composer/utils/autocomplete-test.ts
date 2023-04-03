@@ -22,6 +22,7 @@ import {
     getMentionAttributes,
 } from "../../../../../../src/components/views/rooms/wysiwyg_composer/utils/autocomplete";
 import { createTestClient, mkRoom } from "../../../../../test-utils";
+import * as mockAvatar from "../../../../../../src/Avatar";
 
 const mockClient = createTestClient();
 const mockRoomId = "mockRoomId";
@@ -34,6 +35,8 @@ const createMockCompletion = (props: Partial<ICompletion>): ICompletion => {
         ...props,
     };
 };
+
+jest.mock("../../../../../../src/Avatar");
 
 beforeEach(() => jest.clearAllMocks());
 afterAll(() => jest.restoreAllMocks());
@@ -132,12 +135,88 @@ describe("getMentionDisplayText", () => {
 });
 
 describe("getMentionAttributes", () => {
+    // TODO handle all completion types
     it("returns an empty object for completion types other than room or user", () => {
         const nonHandledCompletionTypes = ["at-room", "community", "command"] as const;
         const nonHandledCompletions = nonHandledCompletionTypes.map((type) => createMockCompletion({ type }));
 
         nonHandledCompletions.forEach((completion) => {
             expect(getMentionAttributes(completion, mockClient, mockRoom)).toEqual({});
+        });
+    });
+
+    const testAvatarUrlForString = "www.stringUrl.com";
+    const testAvatarUrlForMember = "www.memberUrl.com";
+    const testAvatarUrlForRoom = "www.roomUrl.com";
+    const testInitialLetter = "z";
+
+    // TODO figure out how to appease TS here
+    mockAvatar.defaultAvatarUrlForString.mockReturnValue(testAvatarUrlForString);
+    mockAvatar.avatarUrlForMember.mockReturnValue(testAvatarUrlForMember);
+    mockAvatar.avatarUrlForRoom.mockReturnValue(testAvatarUrlForRoom);
+    mockAvatar.getInitialLetter.mockReturnValue(testInitialLetter);
+
+    describe("user mentions", () => {
+        it("returns an empty object when no member can be found", () => {
+            const userCompletion = createMockCompletion({ type: "user" });
+
+            // mock not being able to find a member
+            mockRoom.getMember.mockImplementationOnce(() => null);
+
+            const result = getMentionAttributes(userCompletion, mockClient, mockRoom);
+            expect(result).toEqual({});
+        });
+
+        it("returns expected attributes when avatar url is not default", () => {
+            const userCompletion = createMockCompletion({ type: "user" });
+
+            const result = getMentionAttributes(userCompletion, mockClient, mockRoom);
+
+            expect(result).toEqual({
+                "data-mention-type": "user",
+                "style": `--avatar-background: url(${testAvatarUrlForMember}); --avatar-letter: ''`,
+            });
+        });
+
+        it("returns expected style attributes when avatar url matches default", () => {
+            const userCompletion = createMockCompletion({ type: "user" });
+
+            // mock a single implementation of avatarUrlForMember to make it match the default
+            mockAvatar.avatarUrlForMember.mockReturnValueOnce(testAvatarUrlForString);
+
+            const result = getMentionAttributes(userCompletion, mockClient, mockRoom);
+
+            expect(result).toEqual({
+                "data-mention-type": "user",
+                "style": `--avatar-background: url(${testAvatarUrlForString}); --avatar-letter: '${testInitialLetter}'`,
+            });
+        });
+    });
+
+    describe("room mentions", () => {
+        it("returns expected attributes when avatar url for room is truthy", () => {
+            const userCompletion = createMockCompletion({ type: "room" });
+
+            const result = getMentionAttributes(userCompletion, mockClient, mockRoom);
+
+            expect(result).toEqual({
+                "data-mention-type": "room",
+                "style": `--avatar-background: url(${testAvatarUrlForRoom}); --avatar-letter: ''`,
+            });
+        });
+
+        it("returns expected style attributes when avatar url for room is falsy", () => {
+            const userCompletion = createMockCompletion({ type: "room" });
+
+            // mock a single implementation of avatarUrlForRoom to make it falsy
+            mockAvatar.avatarUrlForRoom.mockReturnValueOnce(null);
+
+            const result = getMentionAttributes(userCompletion, mockClient, mockRoom);
+
+            expect(result).toEqual({
+                "data-mention-type": "room",
+                "style": `--avatar-background: url(${testAvatarUrlForString}); --avatar-letter: '${testInitialLetter}'`,
+            });
         });
     });
 });
