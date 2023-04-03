@@ -96,6 +96,7 @@ export function getMentionAttributes(completion: ICompletion, client: MatrixClie
     let background = "background";
     let letter = "letter";
     if (completion.type === "user") {
+        // logic as used in UserPillPart.setAvatar in parts.ts
         const mentionedMember = room.getMember(completion.completionId || "");
 
         if (!mentionedMember) return {};
@@ -115,6 +116,7 @@ export function getMentionAttributes(completion: ICompletion, client: MatrixClie
             "style": `--avatar-background: ${background}; --avatar-letter: ${letter}`,
         };
     } else if (completion.type === "room") {
+        // logic as used in RoomPillPart.setAvatar in parts.ts
         const mentionedRoom = getRoomFromCompletion(completion, client);
         const aliasFromCompletion = completion.completion;
 
