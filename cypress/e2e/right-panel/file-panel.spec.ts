@@ -17,8 +17,6 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
-import { SettingLevel } from "../../../src/settings/SettingLevel";
-import { Layout } from "../../../src/settings/enums/Layout";
 import Chainable = Cypress.Chainable;
 
 const ROOM_NAME = "Test room";
