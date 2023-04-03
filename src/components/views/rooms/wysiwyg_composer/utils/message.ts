@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
-import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { IContent, IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { ISendEventResponse, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
@@ -33,6 +33,10 @@ import { endEditing, cancelPreviousPendingEdit } from "./editing";
 import EditorStateTransfer from "../../../../../utils/EditorStateTransfer";
 import { createMessageContent } from "./createMessageContent";
 import { isContentModified } from "./isContentModified";
+import { CommandCategories, getCommand } from "../../../../../SlashCommands";
+import { runSlashCommand, shouldSendAnyway } from "../../../../../editor/commands";
+import { attachRelation } from "../../SendMessageComposer";
+import { Action } from "../../../../../dispatcher/actions";
 
 export interface SendMessageParams {
     mxClient: MatrixClient;
@@ -48,6 +52,7 @@ export async function sendMessage(
     isHTML: boolean,
     { roomContext, mxClient, ...params }: SendMessageParams,
 ): Promise<ISendEventResponse> {
+    console.log(`<<< sending ${message}`);
     const { relation, replyToEvent } = params;
     const { room } = roomContext;
     const roomId = room?.roomId;
@@ -71,7 +76,58 @@ export async function sendMessage(
     }*/
     PosthogAnalytics.instance.trackEvent<ComposerEvent>(posthogEvent);
 
-    const content = await createMessageContent(message, isHTML, params);
+    let shouldSend = true;
+    let content: IContent | null = null;
+
+    // TODO slash command - quick and dirty to start
+    if (message[0] === "/") {
+        // then we have a slash command, let's use the existing functions as much as possible for processing
+        const { cmd, args } = getCommand(message);
+        if (cmd) {
+            // debugger; // we will need to handle /me separately, see
+            // /Users/alunturner/code/matrix-react-sdk/src/components/views/rooms/wysiwyg_composer/utils/message.tsx:87
+            const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation?.event_id : null;
+            let commandSuccessful: boolean;
+            [content, commandSuccessful] = await runSlashCommand(cmd, args, roomId, threadId ?? null);
+
+            if (!commandSuccessful) {
+                return; // errored
+            }
+
+            if (cmd.category === CommandCategories.messages || cmd.category === CommandCategories.effects) {
+                attachRelation(content, relation);
+                // if (replyToEvent) {
+                //     addReplyToMessageContent(content, replyToEvent, {
+                //         permalinkCreator: this.props.permalinkCreator,
+                //         // Exclude the legacy fallback for custom event types such as those used by /fireworks
+                //         includeLegacyFallback: content.msgtype?.startsWith("m.") ?? true,
+                //     });
+                // }
+            } else {
+                shouldSend = false;
+            }
+        } else {
+            const sendAnyway = await shouldSendAnyway(message);
+            // re-focus the composer after QuestionDialog is closed
+            dis.dispatch({
+                action: Action.FocusAComposer, // TODO this does not refocus the wysiwyg composer
+                context: roomContext.timelineRenderingType,
+            });
+            // if !sendAnyway bail to let the user edit the composer and try again
+            if (!sendAnyway) return;
+        }
+    }
+
+    // early return to save nesting the whole of the next bit, perhaps this could be handled more neatly
+    // in the if block above?
+    if (!shouldSend) {
+        return;
+    }
+
+    // we haven't done a slash command
+    if (!content) {
+        content = await createMessageContent(message, isHTML, params);
+    }
 
     // TODO slash comment
 
