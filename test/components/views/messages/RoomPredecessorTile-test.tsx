@@ -34,68 +34,61 @@ jest.mock("../../../../src/dispatcher/dispatcher");
 describe("<RoomPredecessorTile />", () => {
     const userId = "@alice:server.org";
     const roomId = "!room:server.org";
-    const createEvent = new MatrixEvent({
-        type: EventType.RoomCreate,
-        state_key: "",
-        sender: userId,
-        room_id: roomId,
-        content: {
-            predecessor: { room_id: "old_room_id", event_id: "tombstone_event_id" },
-        },
-        event_id: "$create",
-    });
-    const createEventWithoutPredecessor = new MatrixEvent({
-        type: EventType.RoomCreate,
-        state_key: "",
-        sender: userId,
-        room_id: roomId,
-        content: {},
-        event_id: "$create",
-    });
-    const predecessorEvent = new MatrixEvent({
-        type: EventType.RoomPredecessor,
-        state_key: "",
-        sender: userId,
-        room_id: roomId,
-        content: {
-            predecessor_room_id: "old_room_id_from_predecessor",
-        },
-        event_id: "$create",
-    });
-    const viaPredecessorEvent = new MatrixEvent({
-        type: EventType.RoomPredecessor,
-        state_key: "",
-        sender: userId,
-        room_id: roomId,
-        content: {
-            predecessor_room_id: "old_room_id_from_predecessor",
-            via_servers: ["a.example.com", "b.example.com"],
-        },
-        event_id: "$create",
-    });
-    const predecessorEventWithEventId = new MatrixEvent({
-        type: EventType.RoomPredecessor,
-        state_key: "",
-        sender: userId,
-        room_id: roomId,
-        content: {
-            predecessor_room_id: "old_room_id_from_predecessor",
-            last_known_event_id: "tombstone_event_id_from_predecessor",
-        },
-        event_id: "$create",
-    });
     stubClient();
     const client = mocked(MatrixClientPeg.get());
-    const roomJustCreate = new Room(roomId, client, userId);
-    upsertRoomStateEvents(roomJustCreate, [createEvent]);
-    const roomCreateAndPredecessor = new Room(roomId, client, userId);
-    upsertRoomStateEvents(roomCreateAndPredecessor, [createEvent, predecessorEvent]);
-    const roomCreateAndPredecessorWithEventId = new Room(roomId, client, userId);
-    upsertRoomStateEvents(roomCreateAndPredecessorWithEventId, [createEvent, predecessorEventWithEventId]);
-    const roomNoPredecessors = new Room(roomId, client, userId);
-    upsertRoomStateEvents(roomNoPredecessors, [createEventWithoutPredecessor]);
-    const roomCreateAndViaPredecessor = new Room(roomId, client, userId);
-    upsertRoomStateEvents(roomCreateAndViaPredecessor, [createEvent, viaPredecessorEvent]);
+
+    function makeRoom({
+        createEventHasPredecessor = false,
+        predecessorEventExists = false,
+        predecessorEventHasEventId = false,
+        predecessorEventHasViaServers = false,
+    }): Room {
+        const room = new Room(roomId, client, userId);
+
+        const createInfo = {
+            type: EventType.RoomCreate,
+            state_key: "",
+            sender: userId,
+            room_id: roomId,
+            content: {},
+            event_id: "$create",
+        };
+
+        if (createEventHasPredecessor) {
+            createInfo.content = {
+                predecessor: { room_id: "old_room_id", event_id: "$tombstone_event_id" },
+            };
+        }
+
+        const createEvent = new MatrixEvent(createInfo);
+        upsertRoomStateEvents(room, [createEvent]);
+
+        if (predecessorEventExists) {
+            const predecessorInfo = {
+                type: EventType.RoomPredecessor,
+                state_key: "",
+                sender: userId,
+                room_id: roomId,
+                content: {
+                    predecessor_room_id: "old_room_id_from_predecessor",
+                    last_known_event_id: undefined,
+                    via_servers: undefined,
+                },
+                event_id: "$predecessor",
+            };
+
+            if (predecessorEventHasEventId) {
+                predecessorInfo.content.last_known_event_id = "$tombstone_event_id_from_predecessor";
+            }
+            if (predecessorEventHasViaServers) {
+                predecessorInfo.content.via_servers = ["a.example.com", "b.example.com"];
+            }
+
+            const predecessorEvent = new MatrixEvent(predecessorInfo);
+            upsertRoomStateEvents(room, [predecessorEvent]);
+        }
+        return room;
+    }
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -111,6 +104,10 @@ describe("<RoomPredecessorTile />", () => {
     });
 
     function renderTile(room: Room) {
+        // Find this room's create event (it should have one!)
+        const createEvent = room.currentState.getStateEvents("m.room.create")[0];
+        expect(createEvent).toBeTruthy();
+
         return render(
             <RoomContext.Provider value={getRoomContext(room, {})}>
                 <RoomPredecessorTile mxEvent={createEvent} />
@@ -119,15 +116,15 @@ describe("<RoomPredecessorTile />", () => {
     }
 
     it("Renders as expected", () => {
-        const roomCreate = renderTile(roomJustCreate);
+        const roomCreate = renderTile(makeRoom({ createEventHasPredecessor: true }));
         expect(roomCreate.asFragment()).toMatchSnapshot();
     });
 
     it("Links to the old version of the room", () => {
-        renderTile(roomJustCreate);
+        renderTile(makeRoom({ createEventHasPredecessor: true }));
         expect(screen.getByText("Click here to see older messages.")).toHaveAttribute(
             "href",
-            "https://matrix.to/#/old_room_id/tombstone_event_id",
+            "https://matrix.to/#/old_room_id/$tombstone_event_id",
         );
     });
 
@@ -136,13 +133,13 @@ describe("<RoomPredecessorTile />", () => {
 
         it("Shows an empty div if there is no predecessor", () => {
             filterConsole;
-            renderTile(roomNoPredecessors);
+            renderTile(makeRoom({}));
             expect(screen.queryByText("Click here to see older messages.", { exact: false })).toBeNull();
         });
     });
 
     it("Opens the old room on click", async () => {
-        renderTile(roomJustCreate);
+        renderTile(makeRoom({ createEventHasPredecessor: true }));
         const link = screen.getByText("Click here to see older messages.");
 
         await act(() => userEvent.click(link));
@@ -150,7 +147,7 @@ describe("<RoomPredecessorTile />", () => {
         await waitFor(() =>
             expect(dis.dispatch).toHaveBeenCalledWith({
                 action: Action.ViewRoom,
-                event_id: "tombstone_event_id",
+                event_id: "$tombstone_event_id",
                 highlighted: true,
                 room_id: "old_room_id",
                 metricsTrigger: "Predecessor",
@@ -160,10 +157,10 @@ describe("<RoomPredecessorTile />", () => {
     });
 
     it("Ignores m.predecessor if labs flag is off", () => {
-        renderTile(roomCreateAndPredecessor);
+        renderTile(makeRoom({ createEventHasPredecessor: true, predecessorEventExists: true }));
         expect(screen.getByText("Click here to see older messages.")).toHaveAttribute(
             "href",
-            "https://matrix.to/#/old_room_id/tombstone_event_id",
+            "https://matrix.to/#/old_room_id/$tombstone_event_id",
         );
     });
 
@@ -175,7 +172,7 @@ describe("<RoomPredecessorTile />", () => {
         });
 
         it("Shows an error if there are no via servers", () => {
-            renderTile(roomCreateAndPredecessor);
+            renderTile(makeRoom({ createEventHasPredecessor: true, predecessorEventExists: true }));
             expect(screen.getByText("Can't find the old version of this room", { exact: false })).toBeInTheDocument();
         });
     });
@@ -192,15 +189,15 @@ describe("<RoomPredecessorTile />", () => {
         });
 
         it("Uses the create event if there is no m.predecessor", () => {
-            renderTile(roomJustCreate);
+            renderTile(makeRoom({ createEventHasPredecessor: true }));
             expect(screen.getByText("Click here to see older messages.")).toHaveAttribute(
                 "href",
-                "https://matrix.to/#/old_room_id/tombstone_event_id",
+                "https://matrix.to/#/old_room_id/$tombstone_event_id",
             );
         });
 
         it("Uses m.predecessor when it's there", () => {
-            renderTile(roomCreateAndPredecessor);
+            renderTile(makeRoom({ createEventHasPredecessor: true, predecessorEventExists: true }));
             expect(screen.getByText("Click here to see older messages.")).toHaveAttribute(
                 "href",
                 "https://matrix.to/#/old_room_id_from_predecessor",
@@ -208,10 +205,16 @@ describe("<RoomPredecessorTile />", () => {
         });
 
         it("Links to the event in the room if event ID is provided", () => {
-            renderTile(roomCreateAndPredecessorWithEventId);
+            renderTile(
+                makeRoom({
+                    createEventHasPredecessor: true,
+                    predecessorEventExists: true,
+                    predecessorEventHasEventId: true,
+                }),
+            );
             expect(screen.getByText("Click here to see older messages.")).toHaveAttribute(
                 "href",
-                "https://matrix.to/#/old_room_id_from_predecessor/tombstone_event_id_from_predecessor",
+                "https://matrix.to/#/old_room_id_from_predecessor/$tombstone_event_id_from_predecessor",
             );
         });
 
@@ -223,14 +226,20 @@ describe("<RoomPredecessorTile />", () => {
             });
 
             it("Shows an error if there are no via servers", () => {
-                renderTile(roomCreateAndPredecessor);
+                renderTile(makeRoom({ createEventHasPredecessor: true, predecessorEventExists: true }));
                 expect(
                     screen.getByText("Can't find the old version of this room", { exact: false }),
                 ).toBeInTheDocument();
             });
 
             it("Shows a tile if there are via servers", () => {
-                renderTile(roomCreateAndViaPredecessor);
+                renderTile(
+                    makeRoom({
+                        createEventHasPredecessor: true,
+                        predecessorEventExists: true,
+                        predecessorEventHasViaServers: true,
+                    }),
+                );
                 expect(screen.getByText("Click here to see older messages.")).toHaveAttribute(
                     "href",
                     "https://matrix.to/#/old_room_id_from_predecessor?via=a.example.com&via=b.example.com",
@@ -238,25 +247,17 @@ describe("<RoomPredecessorTile />", () => {
             });
 
             it("Shows a tile linking to an event if there are via servers", () => {
-                const predecessorEvent = new MatrixEvent({
-                    type: EventType.RoomPredecessor,
-                    state_key: "",
-                    sender: userId,
-                    room_id: roomId,
-                    content: {
-                        predecessor_room_id: "old_room_id_from_predecessor",
-                        last_known_event_id: "$tombstone",
-                        via_servers: ["a.example.com", "b.example.com"],
-                    },
-                    event_id: "$create",
-                });
-                const room = new Room(roomId, client, userId);
-                upsertRoomStateEvents(room, [createEvent, predecessorEvent]);
-
-                renderTile(room);
+                renderTile(
+                    makeRoom({
+                        createEventHasPredecessor: true,
+                        predecessorEventExists: true,
+                        predecessorEventHasEventId: true,
+                        predecessorEventHasViaServers: true,
+                    }),
+                );
                 expect(screen.getByText("Click here to see older messages.")).toHaveAttribute(
                     "href",
-                    "https://matrix.to/#/old_room_id_from_predecessor/$tombstone?via=a.example.com&via=b.example.com",
+                    "https://matrix.to/#/old_room_id_from_predecessor/$tombstone_event_id_from_predecessor?via=a.example.com&via=b.example.com",
                 );
             });
         });
