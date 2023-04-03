@@ -79,13 +79,11 @@ export async function sendMessage(
     let shouldSend = true;
     let content: IContent | null = null;
 
-    // TODO slash command - quick and dirty to start
-    if (message[0] === "/") {
-        // then we have a slash command, let's use the existing functions as much as possible for processing
+    // Functionality here approximates what can be found in SendMessageComposer.sendMessage()
+    if (message.startsWith("/") && !message.startsWith("//")) {
         const { cmd, args } = getCommand(message);
         if (cmd) {
-            // debugger; // we will need to handle /me separately, see
-            // /Users/alunturner/code/matrix-react-sdk/src/components/views/rooms/wysiwyg_composer/utils/message.tsx:87
+            // we will need to handle /me separately, see SlashCommands.tsx:1387
             const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation?.event_id : null;
             let commandSuccessful: boolean;
             [content, commandSuccessful] = await runSlashCommand(cmd, args, roomId, threadId ?? null);
