@@ -24,7 +24,7 @@ import { _t, UserFriendlyError } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Modal from "../../../../Modal";
 import AddThreepid, { Binding } from "../../../../AddThreepid";
-import ErrorDialog from "../../dialogs/ErrorDialog";
+import ErrorDialog, { extractErrorMessageFromError } from "../../dialogs/ErrorDialog";
 import AccessibleButton from "../../elements/AccessibleButton";
 
 /*
@@ -107,10 +107,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description:
-                    (err instanceof UserFriendlyError && err.translatedMessage) ||
-                    (err instanceof Error && err.message) ||
-                    _t("Operation failed"),
+                description: extractErrorMessageFromError(err, _t("Operation failed")),
             });
         }
     }
@@ -145,10 +142,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description:
-                    (err instanceof UserFriendlyError && err.translatedMessage) ||
-                    (err instanceof Error && err.message) ||
-                    _t("Operation failed"),
+                description: extractErrorMessageFromError(err, _t("Operation failed")),
             });
         }
     }
@@ -204,10 +198,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                 logger.error("Unable to verify email address: " + err);
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Unable to verify email address."),
-                    description:
-                        (err instanceof UserFriendlyError && err.translatedMessage) ||
-                        (err instanceof Error && err.message) ||
-                        _t("Operation failed"),
+                    description: extractErrorMessageFromError(err, _t("Operation failed")),
                 });
             }
         }

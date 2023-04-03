@@ -19,11 +19,11 @@ import React from "react";
 import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t, UserFriendlyError } from "../../../../languageHandler";
+import { _t } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Modal from "../../../../Modal";
 import AddThreepid, { Binding } from "../../../../AddThreepid";
-import ErrorDialog from "../../dialogs/ErrorDialog";
+import ErrorDialog, { extractErrorMessageFromError } from "../../dialogs/ErrorDialog";
 import Field from "../../elements/Field";
 import AccessibleButton from "../../elements/AccessibleButton";
 
@@ -107,10 +107,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description:
-                    (err instanceof UserFriendlyError && err.translatedMessage) ||
-                    (err instanceof Error && err.message) ||
-                    _t("Operation failed"),
+                description: extractErrorMessageFromError(err, _t("Operation failed")),
             });
         }
     }
@@ -151,10 +148,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description:
-                    (err instanceof UserFriendlyError && err.translatedMessage) ||
-                    (err instanceof Error && err.message) ||
-                    _t("Operation failed"),
+                description: extractErrorMessageFromError(err, _t("Operation failed")),
             });
         }
     }

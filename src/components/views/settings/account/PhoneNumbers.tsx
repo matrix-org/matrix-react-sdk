@@ -19,14 +19,14 @@ import React from "react";
 import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t, UserFriendlyError } from "../../../../languageHandler";
+import { _t } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Field from "../../elements/Field";
 import AccessibleButton from "../../elements/AccessibleButton";
 import AddThreepid from "../../../../AddThreepid";
 import CountryDropdown from "../../auth/CountryDropdown";
 import Modal from "../../../../Modal";
-import ErrorDialog from "../../dialogs/ErrorDialog";
+import ErrorDialog, { extractErrorMessageFromError } from "../../dialogs/ErrorDialog";
 import { PhoneNumberCountryDefinition } from "../../../../phonenumber";
 
 /*
@@ -192,10 +192,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
                 this.setState({ verifying: false, continueDisabled: false, addTask: null });
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Error"),
-                    description:
-                        (err instanceof UserFriendlyError && err.translatedMessage) ||
-                        (err instanceof Error && err.message) ||
-                        _t("Operation failed"),
+                    description: extractErrorMessageFromError(err, _t("Operation failed")),
                 });
             });
     };

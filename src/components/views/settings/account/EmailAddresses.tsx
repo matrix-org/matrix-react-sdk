@@ -27,7 +27,7 @@ import AccessibleButton from "../../elements/AccessibleButton";
 import * as Email from "../../../../email";
 import AddThreepid from "../../../../AddThreepid";
 import Modal from "../../../../Modal";
-import ErrorDialog from "../../dialogs/ErrorDialog";
+import ErrorDialog, { extractErrorMessageFromError } from "../../dialogs/ErrorDialog";
 
 /*
 TODO: Improve the UX for everything in here.
@@ -191,10 +191,7 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
                 this.setState({ verifying: false, continueDisabled: false, addTask: null });
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Unable to add email address"),
-                    description:
-                        (err instanceof UserFriendlyError && err.translatedMessage) ||
-                        (err instanceof Error && err.message) ||
-                        _t("Operation failed"),
+                    description: extractErrorMessageFromError(err, _t("Operation failed")),
                 });
             });
     };
@@ -240,10 +237,7 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
                     logger.error("Unable to verify email address: ", err);
                     Modal.createDialog(ErrorDialog, {
                         title: _t("Unable to verify email address."),
-                        description:
-                            (err instanceof UserFriendlyError && err.translatedMessage) ||
-                            (err instanceof Error && err.message) ||
-                            _t("Operation failed"),
+                        description: extractErrorMessageFromError(err, _t("Operation failed")),
                     });
                 }
             });

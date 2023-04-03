@@ -24,7 +24,7 @@ import AddThreepid from "../../../AddThreepid";
 import { _t, UserFriendlyError } from "../../../languageHandler";
 import Modal from "../../../Modal";
 import Spinner from "../elements/Spinner";
-import ErrorDialog from "./ErrorDialog";
+import ErrorDialog, { extractErrorMessageFromError } from "./ErrorDialog";
 import QuestionDialog from "./QuestionDialog";
 import BaseDialog from "./BaseDialog";
 import EditableText from "../elements/EditableText";
@@ -89,10 +89,7 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
                 logger.error("Unable to add email address " + emailAddress + " " + err);
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Unable to add email address"),
-                    description:
-                        (err instanceof UserFriendlyError && err.translatedMessage) ||
-                        (err instanceof Error && err.message) ||
-                        _t("Operation failed"),
+                    description: extractErrorMessageFromError(err, _t("Operation failed")),
                 });
             },
         );
@@ -141,10 +138,7 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
                     logger.error("Unable to verify email address: " + err);
                     Modal.createDialog(ErrorDialog, {
                         title: _t("Unable to verify email address."),
-                        description:
-                            (err instanceof UserFriendlyError && err.translatedMessage) ||
-                            (err instanceof Error && err.message) ||
-                            _t("Operation failed"),
+                        description: extractErrorMessageFromError(err, _t("Operation failed")),
                     });
                 }
             },
