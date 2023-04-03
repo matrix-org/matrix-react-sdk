@@ -35,6 +35,12 @@ interface WysiwygAutocompleteProps {
      * a mention in the autocomplete list or pressing enter on a selected item
      */
     handleMention: FormattingFunctions["mention"];
+
+    /**
+     * This handler will be called with the display text for a command on clicking
+     * a command in the autocomplete list or pressing enter on a selected item
+     */
+    handleCommand: FormattingFunctions["command"];
 }
 
 /**
@@ -45,13 +51,22 @@ interface WysiwygAutocompleteProps {
  * @param props.ref - the ref will be attached to the rendered `<Autocomplete />` component
  */
 const WysiwygAutocomplete = forwardRef(
-    ({ suggestion, handleMention }: WysiwygAutocompleteProps, ref: ForwardedRef<Autocomplete>): JSX.Element | null => {
+    (
+        { suggestion, handleMention, handleCommand }: WysiwygAutocompleteProps,
+        ref: ForwardedRef<Autocomplete>,
+    ): JSX.Element | null => {
         const { room } = useRoomContext();
         const client = useMatrixClientContext();
 
         function handleConfirm(completion: ICompletion): void {
             // TODO handle all of the completion types
             // Using this to pick out the ones we can handle during implementation
+            if (completion.type === "command") {
+                // trim the completion text as we add the trailing space in the rust model
+                // nb there are utils like parseCommandString and the CommandMap in SlashCommands.tsx
+                // that might be required here, but for now just use the trimmed completion text
+                handleCommand(completion.completion.trim());
+            }
             if (client && room && completion.href && (completion.type === "room" || completion.type === "user")) {
                 handleMention(
                     completion.href,
