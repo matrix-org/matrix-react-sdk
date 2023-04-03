@@ -76,7 +76,6 @@ export async function sendMessage(
     }*/
     PosthogAnalytics.instance.trackEvent<ComposerEvent>(posthogEvent);
 
-    let shouldSend = true;
     let content: IContent | null = null;
 
     // Functionality here approximates what can be found in SendMessageComposer.sendMessage()
@@ -94,6 +93,7 @@ export async function sendMessage(
 
             if (cmd.category === CommandCategories.messages || cmd.category === CommandCategories.effects) {
                 attachRelation(content, relation);
+                // TODO translate this block for replies
                 // if (replyToEvent) {
                 //     addReplyToMessageContent(content, replyToEvent, {
                 //         permalinkCreator: this.props.permalinkCreator,
@@ -102,7 +102,8 @@ export async function sendMessage(
                 //     });
                 // }
             } else {
-                shouldSend = false;
+                // instead of setting shouldSend to false as in SendMessageComposer, just return
+                return;
             }
         } else {
             const sendAnyway = await shouldSendAnyway(message);
@@ -114,12 +115,6 @@ export async function sendMessage(
             // if !sendAnyway bail to let the user edit the composer and try again
             if (!sendAnyway) return;
         }
-    }
-
-    // early return to save nesting the whole of the next bit, perhaps this could be handled more neatly
-    // in the if block above?
-    if (!shouldSend) {
-        return;
     }
 
     // we haven't done a slash command
