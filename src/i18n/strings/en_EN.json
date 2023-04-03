@@ -1,7 +1,6 @@
 {
     "Identity server not set": "Identity server not set",
     "This email address is already in use": "This email address is already in use",
-    "%(errorMessage)s (Status %(httpStatus)s)": "%(errorMessage)s (Status %(httpStatus)s)",
     "This phone number is already in use": "This phone number is already in use",
     "No identity access token found": "No identity access token found",
     "Use Single Sign On to continue": "Use Single Sign On to continue",
