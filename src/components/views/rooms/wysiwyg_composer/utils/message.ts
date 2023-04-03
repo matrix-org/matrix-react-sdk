@@ -52,7 +52,6 @@ export async function sendMessage(
     isHTML: boolean,
     { roomContext, mxClient, ...params }: SendMessageParams,
 ): Promise<ISendEventResponse> {
-    console.log(`<<< sending ${message}`);
     const { relation, replyToEvent } = params;
     const { room } = roomContext;
     const roomId = room?.roomId;
