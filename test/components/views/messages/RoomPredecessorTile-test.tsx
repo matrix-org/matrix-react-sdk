@@ -236,6 +236,29 @@ describe("<RoomPredecessorTile />", () => {
                     "https://matrix.to/#/old_room_id_from_predecessor?via=a.example.com&via=b.example.com",
                 );
             });
+
+            it("Shows a tile linking to an event if there are via servers", () => {
+                const predecessorEvent = new MatrixEvent({
+                    type: EventType.RoomPredecessor,
+                    state_key: "",
+                    sender: userId,
+                    room_id: roomId,
+                    content: {
+                        predecessor_room_id: "old_room_id_from_predecessor",
+                        last_known_event_id: "$tombstone",
+                        via_servers: ["a.example.com", "b.example.com"],
+                    },
+                    event_id: "$create",
+                });
+                const room = new Room(roomId, client, userId);
+                upsertRoomStateEvents(room, [createEvent, predecessorEvent]);
+
+                renderTile(room);
+                expect(screen.getByText("Click here to see older messages.")).toHaveAttribute(
+                    "href",
+                    "https://matrix.to/#/old_room_id_from_predecessor/$tombstone?via=a.example.com&via=b.example.com",
+                );
+            });
         });
     });
 });

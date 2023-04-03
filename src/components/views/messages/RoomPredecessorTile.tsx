@@ -112,7 +112,7 @@ export const RoomPredecessorTile: React.FC<IProps> = ({ mxEvent, timestamp }) =>
 
     const predecessorPermalink = prevRoom
         ? createLinkWithRoom(prevRoom, predecessor.roomId, predecessor.eventId)
-        : createLinkWithoutRoom(predecessor.roomId, predecessor.viaServers);
+        : createLinkWithoutRoom(predecessor.roomId, predecessor.viaServers, predecessor.eventId);
 
     const link = (
         <a href={predecessorPermalink} onClick={onLinkClicked}>
