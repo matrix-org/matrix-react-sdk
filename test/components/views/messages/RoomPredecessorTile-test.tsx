@@ -132,7 +132,6 @@ describe("<RoomPredecessorTile />", () => {
         filterConsole("RoomPredecessorTile unexpectedly used in a room with no predecessor.");
 
         it("Shows an empty div if there is no predecessor", () => {
-            filterConsole;
             renderTile(makeRoom({}));
             expect(screen.queryByText("Click here to see older messages.", { exact: false })).toBeNull();
         });
