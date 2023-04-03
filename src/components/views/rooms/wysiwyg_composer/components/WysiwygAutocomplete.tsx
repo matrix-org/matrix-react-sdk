@@ -52,9 +52,9 @@ const WysiwygAutocomplete = forwardRef(
         function handleConfirm(completion: ICompletion): void {
             // TODO handle all of the completion types
             // Using this to pick out the ones we can handle during implementation
-            if (room && (completion.type === "room" || completion.type === "user")) {
+            if (client && room && (completion.type === "room" || completion.type === "user")) {
                 handleMention(
-                    completion.href,
+                    completion.href || "",
                     getMentionDisplayText(completion, client),
                     getMentionAttributes(completion, client, room),
                 );
