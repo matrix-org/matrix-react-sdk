@@ -76,12 +76,6 @@ export default class AddThreepid {
         } catch (err) {
             if (err instanceof MatrixError && err.errcode === "M_THREEPID_IN_USE") {
                 throw new UserFriendlyError("This email address is already in use", { cause: err });
-            } else if (err instanceof HTTPError && err.httpStatus) {
-                throw new UserFriendlyError("%(errorMessage)s (Status %(httpStatus)s)", {
-                    errorMessage: err.message,
-                    httpStatus: err.httpStatus,
-                    cause: err,
-                });
             }
             // Otherwise, just blurt out the same error
             throw err;
@@ -113,12 +107,6 @@ export default class AddThreepid {
             } catch (err) {
                 if (err instanceof MatrixError && err.errcode === "M_THREEPID_IN_USE") {
                     throw new UserFriendlyError("This email address is already in use", { cause: err });
-                } else if (err instanceof HTTPError && err.httpStatus) {
-                    throw new UserFriendlyError("%(errorMessage)s (Status %(httpStatus)s)", {
-                        errorMessage: err.message,
-                        httpStatus: err.httpStatus,
-                        cause: err,
-                    });
                 }
                 // Otherwise, just blurt out the same error
                 throw err;
@@ -150,12 +138,6 @@ export default class AddThreepid {
         } catch (err) {
             if (err instanceof MatrixError && err.errcode === "M_THREEPID_IN_USE") {
                 throw new UserFriendlyError("This phone number is already in use", { cause: err });
-            } else if (err instanceof HTTPError && err.httpStatus) {
-                throw new UserFriendlyError("%(errorMessage)s (Status %(httpStatus)s)", {
-                    errorMessage: err.message,
-                    httpStatus: err.httpStatus,
-                    cause: err,
-                });
             }
             // Otherwise, just blurt out the same error
             throw err;
@@ -189,12 +171,6 @@ export default class AddThreepid {
             } catch (err) {
                 if (err instanceof MatrixError && err.errcode === "M_THREEPID_IN_USE") {
                     throw new UserFriendlyError("This phone number is already in use", { cause: err });
-                } else if (err instanceof HTTPError && err.httpStatus) {
-                    throw new UserFriendlyError("%(errorMessage)s (Status %(httpStatus)s)", {
-                        errorMessage: err.message,
-                        httpStatus: err.httpStatus,
-                        cause: err,
-                    });
                 }
                 // Otherwise, just blurt out the same error
                 throw err;
@@ -284,12 +260,6 @@ export default class AddThreepid {
                     "Failed to verify email address: make sure you clicked the link in the email",
                     { cause: err },
                 );
-            } else if (err instanceof HTTPError && err.httpStatus) {
-                throw new UserFriendlyError("%(errorMessage)s (Status %(httpStatus)s)", {
-                    errorMessage: err.message,
-                    httpStatus: err.httpStatus,
-                    cause: err,
-                });
             }
             // Otherwise, just blurt out the same error
             throw err;
