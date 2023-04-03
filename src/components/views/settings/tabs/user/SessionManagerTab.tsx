@@ -132,7 +132,7 @@ const SessionManagerTab: React.FC = () => {
     const userId = matrixClient.getUserId();
     const currentUserMember = (userId && matrixClient.getUser(userId)) || undefined;
     const clientVersions = useAsyncMemo(() => matrixClient.getVersions(), [matrixClient]);
-    const capabilities = useAsyncMemo(() => matrixClient?.getCapabilities(), [matrixClient]);
+    const capabilities = useAsyncMemo(() => matrixClient?.getCapabilities(), [matrixClient], undefined);
 
     const onDeviceExpandToggle = (deviceId: ExtendedDevice["device_id"]): void => {
         if (expandedDeviceIds.includes(deviceId)) {

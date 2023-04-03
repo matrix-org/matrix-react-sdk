@@ -71,7 +71,9 @@ describe("<LoginWithQRSection />", () => {
         });
 
         it("only MSC3882 r1 enabled", async () => {
-            const { container } = render(getComponent({ capabilities: { [UNSTABLE_MSC3882_CAPABILITY.name]: { enabled: true } } }));
+            const { container } = render(
+                getComponent({ capabilities: { [UNSTABLE_MSC3882_CAPABILITY.name]: { enabled: true } } }),
+            );
             expect(container).toMatchSnapshot();
         });
 
