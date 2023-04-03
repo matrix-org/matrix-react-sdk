@@ -106,20 +106,11 @@ limitations under the License.
         in the current composer, there don't appear to be any styles associated with those classes
         in this repo */
         a[data-mention-type] {
-            /* these entries duplicate mx_Pill from _Pill.pcss */
+            /* combine mx_Pill from _Pill.pcss */
             padding: $font-1px 0.4em;
             line-height: $font-17px;
             border-radius: $font-16px;
-            /* vertical-align: text-top; turning this off stops the vertical alignment issue */
-            /* TODO turning this on hides the cursor from the composer for some 
-            reason, so comment out for now and assess if it's needed when we add
-            the Avatars 
-            display: inline-flex; 
-            align-items: center; not required with the above turned off 
-            
-            Potential fix is using display: inline, width: fit-content
-            */
-            display: inline; /* this, combined with omitting vertical-align, looks good */
+            display: inline;
             box-sizing: border-box;
             max-width: 100%;
             overflow: hidden;
@@ -127,7 +118,7 @@ limitations under the License.
             color: $accent-fg-color;
             background-color: $pill-bg-color;
 
-            /* combining the overrides from _BasicMessageComposer.pcss */
+            /* ...with the overrides from _BasicMessageComposer.pcss */
             user-select: all;
             position: relative;
             cursor: unset; /* We don't want indicate clickability */
@@ -135,42 +126,31 @@ limitations under the License.
             white-space: nowrap;
 
             /* avatar pseudo element */
-            /* TODO figure out why the application of this alters the 
-            *  vertical alignment of the pill - bottom appears clipped and 
-            *  the avatar appears too high (but I think it may be correct, 
-            *  it just looks this way because the body of the pill is lower)
-            */
             &::before {
-                /* from _Pill */
-                margin-inline-start: -0.3em; /* Otherwise the gap is too large */
-                margin-inline-end: 0.2em;
-                min-width: $font-16px; /* ensure the avatar is not compressed */
-
-                /* from _BasicMessageComposer */
+                /* After consolidation, all of the styling from _Pill.scss was being overridden,
+                so take what is in _BasicMessageComposer.pcss as the starting point */
                 display: inline-block;
                 content: var(--avatar-letter);
+                background: var(--avatar-background), $background;
+
                 width: $font-16px;
                 min-width: $font-16px; /* ensure the avatar is not compressed */
                 height: $font-16px;
+                line-height: $font-16px;
+                text-align: center;
+
+                /* Get the positioning of the avatar just right for consistency with timeline */
+                margin-inline-start: -0.4rem;
                 margin-inline-end: 0.24rem;
-                background: var(--avatar-background), $background;
-                color: $avatar-initial-color;
+                vertical-align: -0.3rem;
+
                 background-repeat: no-repeat;
                 background-size: $font-16px;
                 border-radius: $font-16px;
-                text-align: center;
+
+                color: $avatar-initial-color;
                 font-weight: normal;
-                line-height: $font-17px; /* amend to match a text */
                 font-size: $font-10-4px;
-
-                /* TODO consolidate this whole block of CSS - there's some useless 
-                *  and overwritten stuff here, so pick the useful stuff out and 
-                *  arrange into a block that makes sense to read
-                */
-
-                /* overrides to get the positioning just right */
-                vertical-align: -3px;
-                margin-inline-start: -0.4rem;
             }
         }
     }
