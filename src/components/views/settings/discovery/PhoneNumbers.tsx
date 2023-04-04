@@ -18,6 +18,7 @@ limitations under the License.
 import React from "react";
 import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { _t, UserFriendlyError } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
@@ -203,7 +204,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
             }
 
             this.setState({ continueDisabled: false });
-            if (underlyingError.errcode !== "M_THREEPID_AUTH_FAILED") {
+            if (underlyingError instanceof MatrixError && underlyingError.errcode !== "M_THREEPID_AUTH_FAILED") {
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Unable to verify phone number."),
                     description: extractErrorMessageFromError(err, _t("Operation failed")),
