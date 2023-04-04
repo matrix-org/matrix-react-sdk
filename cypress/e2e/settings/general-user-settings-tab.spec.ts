@@ -43,62 +43,79 @@ describe("General user settings tab", () => {
             // Assert that the top heading is rendered
             cy.get("[data-testid='general']").should("have.text", "General");
 
-            cy.get(".mx_ProfileSettings_profile").within(() => {
-                // Check USER_NAME
-                cy.findTextbox("Display Name").get(`input[value='${USER_NAME}']`).should("exist");
+            cy.get(".mx_ProfileSettings_profile")
+                .scrollIntoView()
+                .within(() => {
+                    // Check USER_NAME
+                    cy.findTextbox("Display Name").get(`input[value='${USER_NAME}']`).should("be.visible");
 
-                // Assert that a random userId exists
-                cy.contains(".mx_ProfileSettings_profile_controls_userId", ":localhost").should("be.visible");
+                    // Assert that a random userId exists
+                    cy.contains(".mx_ProfileSettings_profile_controls_userId", ":localhost").should("be.visible");
 
-                // Check avatar setting
-                cy.get(".mx_AvatarSetting_avatar")
-                    .should("exist")
-                    .realHover()
-                    .get(".mx_AvatarSetting_avatar_hovering")
-                    .within(() => {
-                        // Hover effect
-                        cy.get(".mx_AvatarSetting_hoverBg").should("exist");
-                        cy.contains(".mx_AvatarSetting_hover span", "Upload");
-                    });
-            });
+                    // Check avatar setting
+                    cy.get(".mx_AvatarSetting_avatar")
+                        .should("exist")
+                        .realHover()
+                        .get(".mx_AvatarSetting_avatar_hovering")
+                        .within(() => {
+                            // Hover effect
+                            cy.get(".mx_AvatarSetting_hoverBg").should("exist");
+                            cy.contains(".mx_AvatarSetting_hover span", "Upload");
+                        });
+                });
 
             // Wait until spinners disappear
             cy.get(".mx_GeneralUserSettingsTab_accountSection .mx_Spinner").should("not.exist");
             cy.get(".mx_GeneralUserSettingsTab_discovery .mx_Spinner").should("not.exist");
 
-            // Assert that input areas for changing a password exist
-            cy.get("form.mx_GeneralUserSettingsTab_changePassword")
-                .scrollIntoView()
-                .within(() => {
-                    cy.get("input[label='Current password']").should("be.visible");
-                    cy.get("input[label='New password']").should("be.visible");
-                    cy.get("input[label='Confirm password']").should("be.visible");
-                });
+            cy.get(".mx_GeneralUserSettingsTab_accountSection").within(() => {
+                // Assert that input areas for changing a password exist
+                cy.get("form.mx_GeneralUserSettingsTab_changePassword")
+                    .scrollIntoView()
+                    .within(() => {
+                        cy.get("input[label='Current password']").should("be.visible");
+                        cy.get("input[label='New password']").should("be.visible");
+                        cy.get("input[label='Confirm password']").should("be.visible");
+                    });
 
-            // Check phone numbers area
-            cy.get(".mx_PhoneNumbers").within(() => {
-                // Check form of a new phone number
-                cy.get("form.mx_PhoneNumbers_new").within(() => {
-                    // Assert that an input area for a new phone number exists
-                    cy.get("input[label='Phone Number']").should("exist");
+                // Check email addresses area
+                cy.get(".mx_EmailAddresses")
+                    .scrollIntoView()
+                    .within(() => {
+                        cy.get("form.mx_EmailAddresses_new").should("be.visible");
 
-                    // Check a new phone number dropdown menu
-                    cy.get(".mx_PhoneNumbers_country")
-                        .scrollIntoView()
-                        .within(() => {
-                            // Check the default value
-                            cy.contains("#mx_CountryDropdown_value", "+44").should("be.visible");
+                        cy.findButton("Add");
+                    });
 
-                            // Assert that the list item is rendered inside the dropdown
-                            cy.get(".mx_Dropdown_input[aria-expanded='false']")
-                                .should("exist")
-                                .click()
+                // Check phone numbers area
+                cy.get(".mx_PhoneNumbers")
+                    .scrollIntoView()
+                    .within(() => {
+                        // Check form of a new phone number
+                        cy.get("form.mx_PhoneNumbers_new").within(() => {
+                            // Assert that an input area for a new phone number exists
+                            cy.findTextbox("Phone Number").should("be.visible");
+
+                            // Check a new phone number dropdown menu
+                            cy.get(".mx_PhoneNumbers_country")
+                                .scrollIntoView()
                                 .within(() => {
-                                    cy.get("[aria-activedescendant='mx_CountryDropdown__GB']").should("exist");
-                                })
-                                .click(); // Click again to close the dropdown
+                                    // Check the default value
+                                    cy.contains("#mx_CountryDropdown_value", "+44").should("be.visible");
+
+                                    // Assert that the list item is rendered inside the dropdown
+                                    cy.get(".mx_Dropdown_input[aria-expanded='false']")
+                                        .should("exist")
+                                        .click()
+                                        .within(() => {
+                                            cy.get("[aria-activedescendant='mx_CountryDropdown__GB']").should("exist");
+                                        })
+                                        .click(); // Click again to close the dropdown
+                                });
                         });
-                });
+
+                        cy.findButton("Add");
+                    });
             });
 
             // Check language and region setting dropdown
@@ -106,20 +123,24 @@ describe("General user settings tab", () => {
                 .scrollIntoView()
                 .within(() => {
                     // Check the default value
-                    cy.contains("#mx_LanguageDropdown_value", "English").should;
+                    cy.contains("#mx_LanguageDropdown_value", "English").should("be.visible");
 
                     // Assert that the list item is rendered inside the dropdown
                     cy.get(".mx_Dropdown_input[aria-expanded='false']")
                         .should("exist")
                         .click()
                         .within(() => {
-                            cy.get("[aria-activedescendant='mx_LanguageDropdown__id']").should("exist");
+                            cy.get("[aria-activedescendant='mx_LanguageDropdown__id']").should("be.visible");
                         })
                         .click(); // Click again to close the dropdown
                 });
 
-            // Assert that an input area for identity server exists
-            cy.get("form.mx_SetIdServer input[label='Enter a new identity server']").should("exist");
+            cy.get("form.mx_SetIdServer")
+                .scrollIntoView()
+                .within(() => {
+                    // Assert that an input area for identity server exists
+                    cy.findTextbox("Enter a new identity server").should("be.visible");
+                });
 
             // Check default integration manager
             cy.get(".mx_SetIntegrationManager")
