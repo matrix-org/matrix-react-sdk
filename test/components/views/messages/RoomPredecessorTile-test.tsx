@@ -71,18 +71,13 @@ describe("<RoomPredecessorTile />", () => {
                 room_id: roomId,
                 content: {
                     predecessor_room_id: "old_room_id_from_predecessor",
-                    last_known_event_id: undefined,
-                    via_servers: undefined,
+                    last_known_event_id: predecessorEventHasEventId
+                        ? "$tombstone_event_id_from_predecessor"
+                        : undefined,
+                    via_servers: predecessorEventHasViaServers ? ["a.example.com", "b.example.com"] : undefined,
                 },
                 event_id: "$predecessor",
             };
-
-            if (predecessorEventHasEventId) {
-                predecessorInfo.content.last_known_event_id = "$tombstone_event_id_from_predecessor";
-            }
-            if (predecessorEventHasViaServers) {
-                predecessorInfo.content.via_servers = ["a.example.com", "b.example.com"];
-            }
 
             const predecessorEvent = new MatrixEvent(predecessorInfo);
             upsertRoomStateEvents(room, [predecessorEvent]);
