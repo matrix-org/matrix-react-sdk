@@ -313,7 +313,8 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
         });
     };
 
-    const wrappedRef = (body: HTMLDivElement): void => {
+    const wrappedRef = (body: HTMLDivElement | null): void => {
+        if (!body) return;
         setScrollState({
             scrollTop: body.scrollTop,
             height: body.clientHeight,

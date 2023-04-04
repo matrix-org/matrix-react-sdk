@@ -144,18 +144,18 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
     const onExportClick = async (): Promise<void> => {
         const isValidSize =
             !setSizeLimit ||
-            (await sizeLimitRef.current.validate({
+            (await sizeLimitRef.current?.validate({
                 focused: false,
             }));
 
         if (!isValidSize) {
-            sizeLimitRef.current.validate({ focused: true });
+            sizeLimitRef.current?.validate({ focused: true });
             return;
         }
         if (exportType === ExportType.LastNMessages) {
-            const isValidNumberOfMessages = await messageCountRef.current.validate({ focused: false });
+            const isValidNumberOfMessages = await messageCountRef.current?.validate({ focused: false });
             if (!isValidNumberOfMessages) {
-                messageCountRef.current.validate({ focused: true });
+                messageCountRef.current?.validate({ focused: true });
                 return;
             }
         }

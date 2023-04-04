@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { IGeneratedSas, ISasEvent, SasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
 import { VerificationBase, VerificationEvent } from "matrix-js-sdk/src/crypto/verification/Base";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -93,7 +93,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
             });
         } catch (e) {
             this.setState({
-                opponentProfileError: e,
+                opponentProfileError: e as Error,
             });
         }
     }
@@ -143,7 +143,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
         this.props.onFinished(true);
     };
 
-    private renderPhaseStart(): JSX.Element {
+    private renderPhaseStart(): ReactNode {
         const isSelf = this.props.verifier.userId === MatrixClientPeg.get().getUserId();
 
         let profile;
@@ -227,7 +227,8 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
         );
     }
 
-    private renderPhaseShowSas(): JSX.Element {
+    private renderPhaseShowSas(): ReactNode {
+        if (!this.showSasEvent) return null;
         return (
             <VerificationShowSas
                 sas={this.showSasEvent.sas}
@@ -239,7 +240,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
         );
     }
 
-    private renderPhaseWaitForPartnerToConfirm(): JSX.Element {
+    private renderPhaseWaitForPartnerToConfirm(): ReactNode {
         return (
             <div>
                 <Spinner />
@@ -248,15 +249,15 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
         );
     }
 
-    private renderPhaseVerified(): JSX.Element {
+    private renderPhaseVerified(): ReactNode {
         return <VerificationComplete onDone={this.onVerifiedDoneClick} />;
     }
 
-    private renderPhaseCancelled(): JSX.Element {
+    private renderPhaseCancelled(): ReactNode {
         return <VerificationCancelled onDone={this.onCancelClick} />;
     }
 
-    public render(): React.ReactNode {
+    public render(): ReactNode {
         let body;
         switch (this.state.phase) {
             case PHASE_START:
