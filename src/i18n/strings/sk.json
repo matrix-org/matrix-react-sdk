@@ -3762,5 +3762,7 @@
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Používateľ (%(user)s) neskončil ako pozvaný do %(roomId)s, ale nástroj pre pozývanie neposkytol žiadnu chybu",
     "Reload": "Znovu načítať",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Môže to byť spôsobené otvorením aplikácie na viacerých kartách alebo vymazaním údajov prehliadača.",
-    "Database unexpectedly closed": "Databáza sa neočakávane zatvorila"
+    "Database unexpectedly closed": "Databáza sa neočakávane zatvorila",
+    "Mute room": "Stlmiť miestnosť",
+    "Match default setting": "Rovnaké ako predvolené nastavenie"
 }
