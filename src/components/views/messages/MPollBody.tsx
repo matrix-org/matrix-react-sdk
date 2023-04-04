@@ -291,7 +291,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         const votes = countVotes(userVotes, pollEvent);
         const totalVotes = this.totalVotes(votes);
         const winCount = Math.max(...votes.values());
-        const userId = this.context.getUserId();
+        const userId = this.context.getSafeUserId();
         const myVote = userVotes?.get(userId)?.answers[0];
         const disclosed = M_POLL_KIND_DISCLOSED.matches(pollEvent.kind.name);
 

@@ -79,7 +79,7 @@ export default class MessageEditHistoryDialog extends React.PureComponent<IProps
             if (error.errcode) {
                 logger.error("fetching /relations failed with error", error);
             }
-            this.setState({ error }, () => reject(error));
+            this.setState({ error: error as MatrixError }, () => reject(error));
             return promise;
         }
 
