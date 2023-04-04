@@ -224,9 +224,9 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
                 });
             })
             .catch((err) => {
+                logger.error("Unable to verify phone number: " + err);
                 this.setState({ continueDisabled: false });
                 if (err.errcode !== "M_THREEPID_AUTH_FAILED") {
-                    logger.error("Unable to verify phone number: " + err);
                     Modal.createDialog(ErrorDialog, {
                         title: _t("Unable to verify phone number."),
                         description: err && err.message ? err.message : _t("Operation failed"),

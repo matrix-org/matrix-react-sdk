@@ -180,7 +180,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                 verifying: false,
             });
         } catch (err) {
-            logger.error(`Error occured while checking if email link clicked:`, err);
+            logger.error(`Unable to verify email address:`, err);
 
             let underlyingError = err;
             if (err instanceof UserFriendlyError) {

@@ -219,6 +219,8 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
                 });
             })
             .catch((err) => {
+                logger.error("Unable to verify email address: ", err);
+
                 this.setState({ continueDisabled: false });
 
                 let underlyingError = err;
@@ -234,7 +236,6 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
                         ),
                     });
                 } else {
-                    logger.error("Unable to verify email address: ", err);
                     Modal.createDialog(ErrorDialog, {
                         title: _t("Unable to verify email address."),
                         description: extractErrorMessageFromError(err, _t("Operation failed")),
