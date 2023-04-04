@@ -93,6 +93,9 @@ export const RoomPredecessorTile: React.FC<IProps> = ({ mxEvent, timestamp }) =>
     // Otherwise, we must bail out here
     if (!prevRoom && !predecessor.viaServers) {
         logger.warn(`Failed to find predecessor room with id ${predecessor.roomId}`);
+
+        const guessedLink = guessLinkForRoomId(predecessor.roomId);
+
         return (
             <EventTileBubble
                 className="mx_CreateEvent"
@@ -101,9 +104,27 @@ export const RoomPredecessorTile: React.FC<IProps> = ({ mxEvent, timestamp }) =>
             >
                 <div className="mx_EventTile_body">
                     <span className="mx_EventTile_tileError">
-                        {_t("Can't find the old version of this room (room id: %(roomId)s).", {
-                            roomId: predecessor.roomId,
-                        })}
+                        {!!guessedLink ? (
+                            <>
+                                {_t(
+                                    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been " +
+                                        "provided with 'via_servers' to look for it. It's possible that guessing the " +
+                                        "server from the room ID will work. If you want to try, click this link:",
+                                    {
+                                        roomId: predecessor.roomId,
+                                    },
+                                )}
+                                <a href={guessedLink}>{guessedLink}</a>
+                            </>
+                        ) : (
+                            _t(
+                                "Can't find the old version of this room (room ID: %(roomId)s), and we have not been " +
+                                    "provided with 'via_servers' to look for it.",
+                                {
+                                    roomId: predecessor.roomId,
+                                },
+                            )
+                        )}
                     </span>
                 </div>
             </EventTileBubble>
@@ -148,6 +169,24 @@ export const RoomPredecessorTile: React.FC<IProps> = ({ mxEvent, timestamp }) =>
             return matrixToPermalinkConstructor.forEvent(roomId, eventId, viaServers);
         } else {
             return matrixToPermalinkConstructor.forRoom(roomId, viaServers);
+        }
+    }
+
+    /**
+     * Guess the permalink for a room based on its room ID.
+     *
+     * The spec says that Room IDs are opaque [1] so this can only ever be a
+     * guess. There is no guarantee that this room exists on this server.
+     *
+     * [1] https://spec.matrix.org/v1.5/appendices/#room-ids-and-event-ids
+     */
+    function guessLinkForRoomId(roomId: string): string | null {
+        const m = roomId.match(/:(.*)$/);
+        if (m) {
+            const serverName = m[1];
+            return new MatrixToPermalinkConstructor().forRoom(roomId, [serverName]);
+        } else {
+            return null;
         }
     }
 };
