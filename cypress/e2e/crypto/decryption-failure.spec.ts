@@ -193,7 +193,7 @@ describe("Decryption Failure Bar", () => {
             cy.findButton("Resend key requests").click();
             cy.wait("@keyRequest");
             cy.contains(".mx_DecryptionFailureBar_end_button", "Resend key requests").should("not.exist");
-            cy.contains(".mx_DecryptionFailureBar_end_button", "View your device list").should("be.visible");
+            cy.findButton("View your device list").should("be.visible");
 
             checkTimelineNarrow();
 
