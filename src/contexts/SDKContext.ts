@@ -41,7 +41,7 @@ import {
 // This context is available to components under MatrixChat,
 // the context must not be used by components outside a SdkContextClass tree.
 // This assertion allows us to make the type not nullable.
-export const SDKContext = createContext<SdkContextClass>({} as SdkContextClass);
+export const SDKContext = createContext<SdkContextClass>(null as any);
 SDKContext.displayName = "SDKContext";
 
 /**
