@@ -1629,7 +1629,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             return 0;
         }
 
-        const userId = cli.;
+        const userId = cli.getSafeUserId();
 
         // get the user's membership at the last event by getting the timeline
         // that the event belongs to, and traversing the timeline looking for
