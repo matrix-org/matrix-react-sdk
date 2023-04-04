@@ -109,6 +109,9 @@ export const RoomPredecessorTile: React.FC<IProps> = ({ mxEvent, timestamp }) =>
             </EventTileBubble>
         );
     }
+    // Otherwise, we expect to be able to find this room either because it is
+    // already loaded, or because we have via_servers that we can use.
+    // So we go ahead with rendering the tile.
 
     const predecessorPermalink = prevRoom
         ? createLinkWithRoom(prevRoom, predecessor.roomId, predecessor.eventId)
