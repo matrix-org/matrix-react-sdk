@@ -687,7 +687,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
     private onSenderProfileClick = (): void => {
         dis.dispatch<ComposerInsertPayload>({
             action: Action.ComposerInsert,
-            userId: this.props.mxEvent.getSender(),
+            userId: this.props.mxEvent.getSender()!,
             timelineRenderingType: this.context.timelineRenderingType,
         });
     };
