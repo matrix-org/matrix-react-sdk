@@ -48,13 +48,13 @@ interface IState {
         // eslint-disable-next-line camelcase
         avatar_url?: string;
         displayname?: string;
-    };
-    opponentProfileError: Error;
-    sas: IGeneratedSas;
+    } | null;
+    opponentProfileError: Error | null;
+    sas: IGeneratedSas | null;
 }
 
 export default class IncomingSasDialog extends React.Component<IProps, IState> {
-    private showSasEvent: ISasEvent;
+    private showSasEvent: ISasEvent | null;
 
     public constructor(props: IProps) {
         super(props);
@@ -133,7 +133,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
     };
 
     private onSasMatchesClick = (): void => {
-        this.showSasEvent.confirm();
+        this.showSasEvent?.confirm();
         this.setState({
             phase: PHASE_WAIT_FOR_PARTNER_TO_CONFIRM,
         });
