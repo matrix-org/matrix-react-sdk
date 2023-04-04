@@ -1587,7 +1587,6 @@
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "Das Durchsuchen von verschlüsselten Nachrichten wird aus Sicherheitsgründen nur von %(brand)s Desktop unterstützt. <desktopLink>Hier gehts zum Download</desktopLink>.",
     "Show rooms with unread messages first": "Räume mit ungelesenen Nachrichten zuerst zeigen",
     "Show previews of messages": "Nachrichtenvorschau anzeigen",
-    "Mentions & Keywords": "Erwähnungen und Schlüsselwörter",
     "Notification options": "Benachrichtigungsoptionen",
     "Forget Room": "Raum vergessen",
     "Favourited": "Favorisiert",
@@ -3763,5 +3762,6 @@
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Der Benutzer (%(user)s) wurde nicht in %(roomId)s eingeladen, aber das Einladungsprogramm meldete keinen Fehler",
     "Reload": "Neu laden",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Dies wurde eventuell durch das Öffnen der App in mehreren Tabs oder das Löschen der Browser-Daten verursacht.",
-    "Database unexpectedly closed": "Datenbank unerwartet geschlossen"
+    "Database unexpectedly closed": "Datenbank unerwartet geschlossen",
+    "Mute room": "Raum stumm stellen"
 }
