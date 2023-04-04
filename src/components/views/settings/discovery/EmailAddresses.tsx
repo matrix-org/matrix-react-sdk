@@ -99,7 +99,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             }
             this.setState({ bound: bind });
         } catch (err) {
-            logger.error(`Unable to ${label} email address ${address} ${err}`);
+            logger.error(`changeBinding: Unable to ${label} email address ${address}`, err);
             this.setState({
                 verifying: false,
                 continueDisabled: false,
@@ -134,7 +134,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                 bound: bind,
             });
         } catch (err) {
-            logger.error(`Unable to ${label} email address ${address} ${err}`);
+            logger.error(`changeBindingTangledAddBind: Unable to ${label} email address ${address}`, err);
             this.setState({
                 verifying: false,
                 continueDisabled: false,
@@ -171,16 +171,16 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         e.stopPropagation();
         e.preventDefault();
 
+        // Prevent the continue button from being pressed multiple times while we're working
         this.setState({ continueDisabled: true });
         try {
             await this.state.addTask?.checkEmailLinkClicked();
             this.setState({
                 addTask: null,
-                continueDisabled: false,
                 verifying: false,
             });
         } catch (err) {
-            this.setState({ continueDisabled: false });
+            logger.error(`Error occured while checking if email link clicked:`, err);
 
             let underlyingError = err;
             if (err instanceof UserFriendlyError) {
@@ -201,6 +201,9 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                     description: extractErrorMessageFromError(err, _t("Operation failed")),
                 });
             }
+        } finally {
+            // Re-enable the continue button so the user can retry
+            this.setState({ continueDisabled: false });
         }
     };
 

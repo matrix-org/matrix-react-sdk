@@ -27,11 +27,11 @@ import { SSOAuthEntry } from "./components/views/auth/InteractiveAuthEntryCompon
 import InteractiveAuthDialog from "./components/views/dialogs/InteractiveAuthDialog";
 
 function getIdServerDomain(): string {
-    const idBaseUrl = MatrixClientPeg.get().idBaseUrl;
+    const idBaseUrl = MatrixClientPeg.get().getIdentityServerUrl(true);
     if (!idBaseUrl) {
         throw new UserFriendlyError("Identity server not set");
     }
-    return idBaseUrl.split("://")[1];
+    return idBaseUrl;
 }
 
 export type Binding = {
