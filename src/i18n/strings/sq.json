@@ -3742,5 +3742,9 @@
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Përdoruesi (%(user)s) s’doli i ftuar te %(roomId)s, por nga mjeti i ftuesit s’u dha gabim",
     "Reload": "Ringarkoje",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Kjo mund të jetë e shkaktuar nga pasja e aplikacionit hapur në shumë skeda, ose për shkak të spastrimit të të dhënave të shfletuesit.",
-    "Database unexpectedly closed": "Baza e të dhënave u mbyll papritur"
+    "Database unexpectedly closed": "Baza e të dhënave u mbyll papritur",
+    "Sliding Sync configuration": "Formësim Sliding Sync-u",
+    "Start DM anyway": "Nis MD sido qoftë",
+    "Start DM anyway and never warn me again": "Nis MD sido qoftë dhe mos më sinjalizo kurrë më",
+    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "S’arrihet të gjenden profile për ID-të Matrix radhitur më poshtë - doni të niset një MD sido që të jetë?"
 }
