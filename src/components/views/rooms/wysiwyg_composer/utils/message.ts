@@ -37,6 +37,7 @@ import { CommandCategories, getCommand } from "../../../../../SlashCommands";
 import { runSlashCommand, shouldSendAnyway } from "../../../../../editor/commands";
 import { attachRelation } from "../../SendMessageComposer";
 import { Action } from "../../../../../dispatcher/actions";
+import { addReplyToMessageContent } from "../../../../../utils/Reply";
 
 export interface SendMessageParams {
     mxClient: MatrixClient;
@@ -52,7 +53,7 @@ export async function sendMessage(
     isHTML: boolean,
     { roomContext, mxClient, ...params }: SendMessageParams,
 ): Promise<ISendEventResponse> {
-    const { relation, replyToEvent } = params;
+    const { relation, replyToEvent, permalinkCreator } = params;
     const { room } = roomContext;
     const roomId = room?.roomId;
 
@@ -92,14 +93,13 @@ export async function sendMessage(
 
             if (cmd.category === CommandCategories.messages || cmd.category === CommandCategories.effects) {
                 attachRelation(content, relation);
-                // TODO translate this block for replies
-                // if (replyToEvent) {
-                //     addReplyToMessageContent(content, replyToEvent, {
-                //         permalinkCreator: this.props.permalinkCreator,
-                //         // Exclude the legacy fallback for custom event types such as those used by /fireworks
-                //         includeLegacyFallback: content.msgtype?.startsWith("m.") ?? true,
-                //     });
-                // }
+                if (replyToEvent) {
+                    addReplyToMessageContent(content, replyToEvent, {
+                        permalinkCreator,
+                        // Exclude the legacy fallback for custom event types such as those used by /fireworks
+                        includeLegacyFallback: content.msgtype?.startsWith("m.") ?? true,
+                    });
+                }
             } else {
                 // instead of setting shouldSend to false as in SendMessageComposer, just return
                 return;
