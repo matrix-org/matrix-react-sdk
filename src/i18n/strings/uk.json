@@ -3757,5 +3757,8 @@
     "Match default setting": "Збігається з типовим налаштуванням",
     "Reload": "Перезавантажити",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Це може бути пов'язано з тим, що застосунок відкрито в кількох вкладках, або з очищенням даних браузера.",
-    "Database unexpectedly closed": "База даних несподівано закрилася"
+    "Database unexpectedly closed": "База даних несподівано закрилася",
+    "Start DM anyway": "Усе одно розпочати особисте спілкування",
+    "Start DM anyway and never warn me again": "Усе одно розпочати особисте спілкування і більше ніколи не попереджати мене",
+    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Не вдалося знайти профілі для перелічених далі Matrix ID — ви все одно хочете розпочати особисте спілкування?"
 }
