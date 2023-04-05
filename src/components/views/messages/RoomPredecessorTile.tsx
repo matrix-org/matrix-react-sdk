@@ -181,7 +181,7 @@ export const RoomPredecessorTile: React.FC<IProps> = ({ mxEvent, timestamp }) =>
      * [1] https://spec.matrix.org/v1.5/appendices/#room-ids-and-event-ids
      */
     function guessLinkForRoomId(roomId: string): string | null {
-        const m = roomId.match(/[^:]*:(.*)/);
+        const m = roomId.match(/:([^:]*)$/);
         if (m) {
             const serverName = m[1];
             return new MatrixToPermalinkConstructor().forRoom(roomId, [serverName]);
