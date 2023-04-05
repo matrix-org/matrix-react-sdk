@@ -93,8 +93,7 @@ export function getMentionDisplayText(completion: ICompletion, client: MatrixCli
  * @returns an object of attributes containing HTMLAnchor attributes or data-* attri
  */
 export function getMentionAttributes(completion: ICompletion, client: MatrixClient, room: Room): Attributes {
-    let background = "background";
-    let letter = "letter";
+    const defaultLetterContent = "-";
     if (completion.type === "user") {
         // logic as used in UserPillPart.setAvatar in parts.ts
         const mentionedMember = room.getMember(completion.completionId || "");
@@ -104,13 +103,13 @@ export function getMentionAttributes(completion: ICompletion, client: MatrixClie
         const name = mentionedMember.name || mentionedMember.userId;
         const defaultAvatarUrl = Avatar.defaultAvatarUrlForString(mentionedMember.userId);
         const avatarUrl = Avatar.avatarUrlForMember(mentionedMember, 16, 16, "crop");
-        let initialLetter = "";
+        let initialLetter = defaultLetterContent;
         if (avatarUrl === defaultAvatarUrl) {
-            initialLetter = Avatar.getInitialLetter(name) ?? "";
+            initialLetter = Avatar.getInitialLetter(name) ?? defaultLetterContent;
         }
 
-        background = `url(${avatarUrl})`;
-        letter = `'${initialLetter}'`; // not a mistake, need to ensure it's there
+        const background = `url(${avatarUrl})`;
+        const letter = `'${initialLetter}'`; // not a mistake, need to ensure it's there
         return {
             "data-mention-type": completion.type,
             "style": `--avatar-background: ${background}; --avatar-letter: ${letter}`,
@@ -120,15 +119,15 @@ export function getMentionAttributes(completion: ICompletion, client: MatrixClie
         const mentionedRoom = getRoomFromCompletion(completion, client);
         const aliasFromCompletion = completion.completion;
 
-        let initialLetter = "";
+        let initialLetter = defaultLetterContent;
         let avatarUrl = Avatar.avatarUrlForRoom(mentionedRoom ?? null, 16, 16, "crop");
         if (!avatarUrl) {
-            initialLetter = Avatar.getInitialLetter(mentionedRoom?.name || aliasFromCompletion) ?? "";
+            initialLetter = Avatar.getInitialLetter(mentionedRoom?.name || aliasFromCompletion) ?? defaultLetterContent;
             avatarUrl = Avatar.defaultAvatarUrlForString(mentionedRoom?.roomId ?? aliasFromCompletion);
         }
 
-        background = `url(${avatarUrl})`;
-        letter = `'${initialLetter}'`; // not a mistake, need to ensure it's there
+        const background = `url(${avatarUrl})`;
+        const letter = `'${initialLetter}'`; // not a mistake, need to ensure it's there
         return {
             "data-mention-type": completion.type,
             "style": `--avatar-background: ${background}; --avatar-letter: ${letter}`,
