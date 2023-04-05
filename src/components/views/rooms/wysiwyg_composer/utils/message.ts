@@ -35,10 +35,18 @@ import { createMessageContent } from "./createMessageContent";
 import { isContentModified } from "./isContentModified";
 import { CommandCategories, getCommand } from "../../../../../SlashCommands";
 import { runSlashCommand, shouldSendAnyway } from "../../../../../editor/commands";
-import { attachRelation } from "../../SendMessageComposer";
 import { Action } from "../../../../../dispatcher/actions";
 import { addReplyToMessageContent } from "../../../../../utils/Reply";
 
+// Merges favouring the given relation - taken from SendMessageComposer to avoid another import
+function attachRelation(content: IContent, relation?: IEventRelation): void {
+    if (relation) {
+        content["m.relates_to"] = {
+            ...(content["m.relates_to"] || {}),
+            ...relation,
+        };
+    }
+}
 export interface SendMessageParams {
     mxClient: MatrixClient;
     relation?: IEventRelation;
