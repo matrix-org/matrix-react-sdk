@@ -2524,7 +2524,6 @@
     "Want to add a new space instead?": "Inkább új teret adna hozzá?",
     "Add existing space": "Meglévő tér hozzáadása",
     "Add space": "Tér hozzáadása",
-    "Spaces are a new feature.": "A Terek egy új funkció.",
     "These are likely ones other room admins are a part of.": "Ezek valószínűleg olyanok, amelyeknek más szoba adminok is tagjai.",
     "Show all rooms": "Minden szoba megjelenítése",
     "All rooms you're in will appear in Home.": "Minden szoba, amelybe belépett megjelenik a Kezdőlapon.",
@@ -3752,5 +3751,14 @@
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Nem sikerült megtalálni az eseményt %(dateString)s után keresve. Próbáljon egy korábbi dátumot kiválasztani.",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Hálózati hiba történt az adott dátum keresése és az ahhoz ugrás során. A Matrix-kiszolgálója lehet, hogy nem érhető el, vagy ideiglenes probléma van az internetkapcsolátával. Próbálja újra később. Ha ez továbbra is fennáll, akkor lépjen kapcsolatba a kiszolgáló rendszergazdájával.",
     "Poll history": "Szavazás előzményei",
-    "Enable intentional mentions": "Szándékos megemlítések engedélyezése"
+    "Enable intentional mentions": "Szándékos megemlítések engedélyezése",
+    "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "A felhasználó (%(user)s) végül nem került meghívásra ebbe a szobába: %(roomId)s, de a meghívó fél nem adott hibát",
+    "Mute room": "Szoba némítása",
+    "Match default setting": "Az alapértelmezett beállítások szerint",
+    "Start DM anyway": "Közvetlen beszélgetés indítása mindenképpen",
+    "Start DM anyway and never warn me again": "Közvetlen beszélgetés indítása mindenképpen és később se figyelmeztessen",
+    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Nem található fiók profil az alábbi Matrix azonosítókhoz - mégis a közvetlen csevegés elindítása mellett dönt?",
+    "Reload": "Újratöltése",
+    "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Ez lehet attól, hogy az alkalmazás több fülön is nyitva van, vagy a böngésző átmeneti tár törölve lett.",
+    "Database unexpectedly closed": "Adatbázis váratlanul zárva van"
 }
