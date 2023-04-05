@@ -2526,7 +2526,6 @@
     "Want to add a new space instead?": "想要新增聊天空間？",
     "Add existing space": "新增既有的聊天空間",
     "Add space": "新增聊天空間",
-    "Spaces are a new feature.": "聊天空間為新功能。",
     "Leave %(spaceName)s": "離開 %(spaceName)s",
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "您是將要離開的聊天室與聊天空間唯一的管理員。您離開之後會讓它們沒有任何管理員。",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "您是此聊天空間唯一的管理員。離開將代表沒有人可以控制它。",
