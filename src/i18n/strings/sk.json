@@ -3757,5 +3757,8 @@
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Môže to byť spôsobené otvorením aplikácie na viacerých kartách alebo vymazaním údajov prehliadača.",
     "Database unexpectedly closed": "Databáza sa neočakávane zatvorila",
     "Mute room": "Stlmiť miestnosť",
-    "Match default setting": "Rovnaké ako predvolené nastavenie"
+    "Match default setting": "Rovnaké ako predvolené nastavenie",
+    "Start DM anyway": "Spustiť priamu správu aj tak",
+    "Start DM anyway and never warn me again": "Spustiť priamu správu aj tak a nikdy ma už nevarovať",
+    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Nie je možné nájsť používateľské profily pre Matrix ID zobrazené nižšie - chcete aj tak začať priamu správu?"
 }
