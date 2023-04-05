@@ -17,6 +17,9 @@ on:
                 type: string
                 required: false
                 description: "The matrix-js-sdk SHA to use"
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: ${{ github.event.workflow_run.event == 'pull_request' }}
 env:
     ENABLE_COVERAGE: ${{ github.event_name != 'merge_group' && inputs.disable_coverage != 'true' }}
     # These must be set for fetchdep.sh to get the right branch
