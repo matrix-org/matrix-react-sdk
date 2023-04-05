@@ -251,6 +251,30 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
 
         this.inputRef = inputRef || React.createRef();
 
+        // Handle displaying feedback on validity
+        let fieldTooltip: JSX.Element | undefined;
+        if (tooltipContent || this.state.feedback) {
+            inputProps["aria-describedby"] = `${this.id}_tooltip`;
+
+            let role: React.AriaRole;
+            if (tooltipContent) {
+                role = "tooltip";
+            } else {
+                role = this.state.valid ? "status" : "alert";
+            }
+
+            fieldTooltip = (
+                <Tooltip
+                    id={inputProps["aria-describedby"]}
+                    tooltipClassName={classNames("mx_Field_tooltip", "mx_Tooltip_noMargin", tooltipClassName)}
+                    visible={(this.state.focused && forceTooltipVisible) || this.state.feedbackVisible}
+                    label={tooltipContent || this.state.feedback}
+                    alignment={Tooltip.Alignment.Right}
+                    role={role}
+                />
+            );
+        }
+
         inputProps.placeholder = inputProps.placeholder ?? inputProps.label;
         inputProps.id = this.id; // this overwrites the id from props
 
@@ -286,27 +310,6 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
             mx_Field_valid: hasValidationFlag ? forceValidity : onValidate && this.state.valid === true,
             mx_Field_invalid: hasValidationFlag ? !forceValidity : onValidate && this.state.valid === false,
         });
-
-        // Handle displaying feedback on validity
-        let fieldTooltip: JSX.Element | undefined;
-        if (tooltipContent || this.state.feedback) {
-            let role: React.AriaRole;
-            if (tooltipContent) {
-                role = "tooltip";
-            } else {
-                role = this.state.valid ? "status" : "alert";
-            }
-
-            fieldTooltip = (
-                <Tooltip
-                    tooltipClassName={classNames("mx_Field_tooltip", "mx_Tooltip_noMargin", tooltipClassName)}
-                    visible={(this.state.focused && forceTooltipVisible) || this.state.feedbackVisible}
-                    label={tooltipContent || this.state.feedback}
-                    alignment={Tooltip.Alignment.Right}
-                    role={role}
-                />
-            );
-        }
 
         return (
             <div className={fieldClasses}>
