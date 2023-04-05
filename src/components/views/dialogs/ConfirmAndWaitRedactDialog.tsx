@@ -29,7 +29,7 @@ interface IProps {
 
 interface IState {
     isRedacting: boolean;
-    redactionErrorCode: string | number;
+    redactionErrorCode: string | number | null;
 }
 
 /*
@@ -53,7 +53,7 @@ export default class ConfirmAndWaitRedactDialog extends React.PureComponent<IPro
         };
     }
 
-    public onParentFinished = async (proceed: boolean): Promise<void> => {
+    public onParentFinished = async (proceed?: boolean): Promise<void> => {
         if (proceed) {
             this.setState({ isRedacting: true });
             try {
