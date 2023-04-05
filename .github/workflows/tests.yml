@@ -78,7 +78,7 @@ jobs:
 
     skip_sonar:
         name: Skip SonarCloud on merge_queue
-        if: env.ENABLE_COVERAGE == false
+        if: github.event_name == 'merge_group' || inputs.disable_coverage == 'true'
         runs-on: ubuntu-latest
         needs: jest
         steps:
