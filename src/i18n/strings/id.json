@@ -1693,8 +1693,6 @@
     "%(count)s unread messages including mentions.|other": "%(count)s pesan yang belum dibaca termasuk sebutan.",
     "Forget Room": "Lupakan Ruangan",
     "Notification options": "Opsi notifikasi",
-    "Mentions & Keywords": "Sebutan & Kata Kunci",
-    "Use default": "Gunakan bawaan",
     "Show less": "Tampilkan lebih sedikit",
     "Show %(count)s more|one": "Tampilkan %(count)s lagi",
     "Show %(count)s more|other": "Tampilkan %(count)s lagi",
