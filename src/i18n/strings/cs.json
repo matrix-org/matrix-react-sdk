@@ -1148,7 +1148,7 @@
     "Failed to connect to integration manager": "Nepovedlo se připojit ke správci integrací",
     "Trusted": "Důvěryhodné",
     "Not trusted": "Nedůvěryhodné",
-    "Messages in this room are end-to-end encrypted.": "V této místnosti jsou zprávy koncově šifrované.",
+    "Messages in this room are end-to-end encrypted.": "Zprávy jsou v této místnosti koncově šifrované.",
     "Security": "Zabezpečení",
     "Verify": "Ověřit",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Tohoto uživatele ignorujete, takže jsou jeho zprávy skryté. <a>Přesto zobrazit.</a>",
@@ -3757,5 +3757,8 @@
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "To může být způsobeno otevřením aplikace na více kartách nebo vymazáním dat prohlížeče.",
     "Database unexpectedly closed": "Databáze byla neočekávaně uzavřena",
     "Mute room": "Ztlumit místnost",
-    "Match default setting": "Odpovídá výchozímu nastavení"
+    "Match default setting": "Odpovídá výchozímu nastavení",
+    "Start DM anyway": "Zahájit přímou zprávu i přesto",
+    "Start DM anyway and never warn me again": "Zahájit přímou zprávu i přesto a nikdy už mě nevarovat",
+    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Není možné najít uživatelské profily pro níže uvedené Matrix ID - chcete přesto založit DM?"
 }
