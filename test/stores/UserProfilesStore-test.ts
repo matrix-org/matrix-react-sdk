@@ -77,16 +77,42 @@ describe("UserProfilesStore", () => {
             expect(userProfilesStore.getProfile(user1Id)).toBe(user1Profile);
         });
 
-        it("for an user that does not exist should return null and cache it", async () => {
-            const profile = await userProfilesStore.fetchProfile(userIdDoesNotExist);
-            expect(profile).toBeNull();
-            expect(userProfilesStore.getProfile(userIdDoesNotExist)).toBeNull();
-        });
-
-        it("when souldThrow = true and there is an error it should raise an error", async () => {
+        it("when shouldThrow = true and there is an error it should raise an error", async () => {
             await expect(userProfilesStore.fetchProfile(userIdDoesNotExist, { shouldThrow: true })).rejects.toThrow(
                 userDoesNotExistError.message,
             );
+        });
+
+        describe("when fetching a profile that does not exist", () => {
+            let profile: IMatrixProfile | null | undefined;
+
+            beforeEach(async () => {
+                profile = await userProfilesStore.fetchProfile(userIdDoesNotExist);
+            });
+
+            it("should return null", () => {
+                expect(profile).toBeNull();
+            });
+
+            it("should cache the error and result", () => {
+                expect(userProfilesStore.getProfile(userIdDoesNotExist)).toBeNull();
+                expect(userProfilesStore.getProfileLookupError(userIdDoesNotExist)).toBe(userDoesNotExistError);
+            });
+
+            describe("when the profile does not exist and fetching it again", () => {
+                beforeEach(async () => {
+                    mockClient.getProfileInfo.mockResolvedValue(user1Profile);
+                    profile = await userProfilesStore.fetchProfile(userIdDoesNotExist);
+                });
+
+                it("should return the profile", () => {
+                    expect(profile).toBe(user1Profile);
+                });
+
+                it("should clear the error", () => {
+                    expect(userProfilesStore.getProfileLookupError(userIdDoesNotExist)).toBeUndefined();
+                });
+            });
         });
     });
 

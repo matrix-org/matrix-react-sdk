@@ -148,6 +148,9 @@ export class UserProfilesStore {
      * @returns The profile information or null on errors
      */
     private async fetchProfileFromApi(userId: string, options?: GetOptions): Promise<IMatrixProfile | null> {
+        // invalidate cached profile errors
+        this.profileLookupErrors.delete(userId);
+
         try {
             return (await this.client.getProfileInfo(userId)) ?? null;
         } catch (e) {
