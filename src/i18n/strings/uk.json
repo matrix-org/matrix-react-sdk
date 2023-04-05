@@ -3759,5 +3759,10 @@
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Ми не змогли знайти подію, після %(dateString)s. Спробуйте вибрати ранішу дату.",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Виникла помилка мережі під час спроби знайти та перейти до вказаної дати. Можливо, ваш домашній сервер не працює або виникли тимчасові проблеми з інтернет-з'єднанням. Повторіть спробу ще раз. Якщо це не допоможе, зверніться до адміністратора вашого домашнього сервера.",
     "Poll history": "Історія опитувань",
-    "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Користувача (%(user)s) не було запрошено до %(roomId)s, але утиліта запрошення не видала жодної помилки"
+    "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Користувача (%(user)s) не було запрошено до %(roomId)s, але утиліта запрошення не видала жодної помилки",
+    "Mute room": "Вимкнути сповіщення кімнати",
+    "Match default setting": "Збігається з типовим налаштуванням",
+    "Reload": "Перезавантажити",
+    "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Це може бути пов'язано з тим, що застосунок відкрито в кількох вкладках, або з очищенням даних браузера.",
+    "Database unexpectedly closed": "База даних несподівано закрилася"
 }
