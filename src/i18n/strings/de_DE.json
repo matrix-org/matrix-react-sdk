@@ -2508,7 +2508,6 @@
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Diese Aktualisierung gewährt Mitgliedern der ausgewählten Spaces Zugang zu diesem Raum ohne Einladung.",
     "Olm version:": "Version von Olm:",
     "Show all rooms": "Alle Räume anzeigen",
-    "Spaces are a new feature.": "Spaces sind eine neue Funktion.",
     "Delete avatar": "Avatar löschen",
     "%(sharerName)s is presenting": "%(sharerName)s präsentiert",
     "You are presenting": "Du präsentierst",
@@ -3757,5 +3756,9 @@
     "Reload": "Neu laden",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Dies wurde eventuell durch das Öffnen der App in mehreren Tabs oder das Löschen der Browser-Daten verursacht.",
     "Database unexpectedly closed": "Datenbank unerwartet geschlossen",
-    "Mute room": "Raum stumm stellen"
+    "Mute room": "Raum stumm stellen",
+    "Match default setting": "Standardeinstellung verwenden",
+    "Start DM anyway": "Dennoch einladen",
+    "Start DM anyway and never warn me again": "Dennoch einladen und mich nicht mehr warnen",
+    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Konnte keine Profile für die nachfolgenden Matrix-IDs finden – möchtest du sie dennoch einladen?"
 }
