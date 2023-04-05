@@ -42,11 +42,13 @@ describe("Theme Choice Panel", () => {
         cy.openUserSettings("Appearance")
             .get(".mx_ThemeChoicePanel")
             .within(() => {
-                cy.contains("Match system theme");
+                cy.findByTestId("checkbox-use-system-theme").within(() => {
+                    cy.findByText("Match system theme").should("be.visible");
 
-                // Assert that 'Match system theme' is not checked
-                // Note that mx_Checkbox_checkmark exists and is hidden by CSS if it is not checked
-                cy.get(".mx_Checkbox .mx_Checkbox_checkmark").should("not.be.visible");
+                    // Assert that 'Match system theme' is not checked
+                    // Note that mx_Checkbox_checkmark exists and is hidden by CSS if it is not checked
+                    cy.get(".mx_Checkbox_checkmark").should("not.be.visible");
+                });
 
                 cy.get(".mx_ThemeSelectors").within(() => {
                     cy.get(".mx_ThemeSelector_light").should("exist");
@@ -55,12 +57,13 @@ describe("Theme Choice Panel", () => {
                     // Assert that the light theme is selected
                     cy.get(".mx_ThemeSelector_light.mx_StyledRadioButton_enabled").should("exist");
 
-                    // Assert that disabled buttons should not exist
-                    cy.get(".mx_StyledRadioButton_disabled").should("not.exist");
+                    // Assert that the buttons for the light and dark theme are not enabled
+                    cy.get(".mx_ThemeSelector_light.mx_StyledRadioButton_disabled").should("not.exist");
+                    cy.get(".mx_ThemeSelector_dark.mx_StyledRadioButton_disabled").should("not.exist");
                 });
 
                 // Assert that the checkbox for the high contrast theme is rendered
-                cy.contains(".mx_Checkbox", "Use high contrast").should("exist");
+                cy.findByLabelText("Use high contrast").should("exist");
             });
     });
 
@@ -70,18 +73,19 @@ describe("Theme Choice Panel", () => {
         () => {
             cy.openUserSettings("Appearance")
                 .get(".mx_ThemeChoicePanel")
-                .get("[data-testid='checkbox-use-system-theme'] .mx_Checkbox")
-                .click();
+                .findByLabelText("Match system theme")
+                .click({ force: true }); // force click because the size of the checkbox is zero
 
             cy.get(".mx_ThemeChoicePanel").within(() => {
                 // Assert that the labels for the light theme and dark theme are disabled
-                cy.get("label.mx_StyledRadioButton_disabled").should("have.length", 2);
+                cy.get(".mx_ThemeSelector_light.mx_StyledRadioButton_disabled").should("exist");
+                cy.get(".mx_ThemeSelector_dark.mx_StyledRadioButton_disabled").should("exist");
 
                 // Assert that there does not exist a label for an enabled theme
                 cy.get("label.mx_StyledRadioButton_enabled").should("not.exist");
 
                 // Assert that the checkbox and label to enable the the high contrast theme should not exist
-                cy.get("[data-testid='theme-choice-panel-highcontrast']").should("not.exist");
+                cy.findByLabelText("Use high contrast").should("not.exist");
             });
         },
     );
@@ -90,13 +94,13 @@ describe("Theme Choice Panel", () => {
         cy.openUserSettings("Appearance");
 
         // Assert that the checkbox and the label to enable the high contrast theme should exist
-        cy.get("[data-testid='theme-choice-panel-highcontrast']").should("exist");
+        cy.findByLabelText("Use high contrast").should("exist");
 
         // Enable the dark theme
         cy.get(".mx_ThemeSelector_dark").click();
 
         // Assert that the checkbox and the label should not exist
-        cy.get("[data-testid='theme-choice-panel-highcontrast']").should("not.exist");
+        cy.findByLabelText("Use high contrast").should("not.exist");
     });
 
     it("should support enabling the high contast theme", () => {
@@ -112,8 +116,8 @@ describe("Theme Choice Panel", () => {
 
         cy.openUserSettings("Appearance")
             .get(".mx_ThemeChoicePanel")
-            .get("[data-testid='theme-choice-panel-highcontrast'] .mx_Checkbox")
-            .click();
+            .findByLabelText("Use high contrast")
+            .click({ force: true }); // force click because the size of the checkbox is zero
 
         cy.closeDialog();
 

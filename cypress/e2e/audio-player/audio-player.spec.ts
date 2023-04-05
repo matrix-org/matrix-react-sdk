@@ -179,7 +179,7 @@ describe("Audio player", () => {
         cy.openUserSettings("Appearance")
             .get(".mx_ThemeChoicePanel")
             .within(() => {
-                cy.get("[data-testid='theme-choice-panel-selectors']").within(() => {
+                cy.findByTestId("theme-choice-panel-selectors").within(() => {
                     // Enable light theme
                     cy.get(".mx_ThemeSelector_light").click();
 
@@ -187,7 +187,7 @@ describe("Audio player", () => {
                     cy.get(".mx_StyledRadioButton_checked input[value='light']").should("exist");
                 });
 
-                cy.get("[data-testid='theme-choice-panel-highcontrast']").within(() => {
+                cy.findByTestId("theme-choice-panel-highcontrast").within(() => {
                     // Click the checkbox
                     cy.get("label .mx_Checkbox_background").click();
                 });
