@@ -93,7 +93,10 @@ export function getMentionDisplayText(completion: ICompletion, client: MatrixCli
  * @returns an object of attributes containing HTMLAnchor attributes or data-* attri
  */
 export function getMentionAttributes(completion: ICompletion, client: MatrixClient, room: Room): Attributes {
+    // to ensure that we always have something set in the --avatar-letter CSS variable
+    // as otherwise alignment varies depending on whether the content is empty or not
     const defaultLetterContent = "-";
+
     if (completion.type === "user") {
         // logic as used in UserPillPart.setAvatar in parts.ts
         const mentionedMember = room.getMember(completion.completionId || "");
@@ -108,11 +111,9 @@ export function getMentionAttributes(completion: ICompletion, client: MatrixClie
             initialLetter = Avatar.getInitialLetter(name) ?? defaultLetterContent;
         }
 
-        const background = `url(${avatarUrl})`;
-        const letter = `'${initialLetter}'`; // not a mistake, need to ensure it's there
         return {
             "data-mention-type": completion.type,
-            "style": `--avatar-background: ${background}; --avatar-letter: ${letter}`,
+            "style": `--avatar-background: url(${avatarUrl}); --avatar-letter: '${initialLetter}'`,
         };
     } else if (completion.type === "room") {
         // logic as used in RoomPillPart.setAvatar in parts.ts
@@ -126,11 +127,9 @@ export function getMentionAttributes(completion: ICompletion, client: MatrixClie
             avatarUrl = Avatar.defaultAvatarUrlForString(mentionedRoom?.roomId ?? aliasFromCompletion);
         }
 
-        const background = `url(${avatarUrl})`;
-        const letter = `'${initialLetter}'`; // not a mistake, need to ensure it's there
         return {
             "data-mention-type": completion.type,
-            "style": `--avatar-background: ${background}; --avatar-letter: ${letter}`,
+            "style": `--avatar-background: url(${avatarUrl}); --avatar-letter: '${initialLetter}'`,
         };
     }
 
