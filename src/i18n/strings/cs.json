@@ -1471,8 +1471,6 @@
     "List options": "Možnosti seznamu",
     "Show %(count)s more|other": "Zobrazit %(count)s dalších",
     "Show %(count)s more|one": "Zobrazit %(count)s další",
-    "Use default": "Použít výchozí",
-    "Mentions & Keywords": "Zmínky a klíčová slova",
     "Notification options": "Možnosti oznámení",
     "Favourited": "Oblíbená",
     "Forget Room": "Zapomenout místnost",
@@ -3764,5 +3762,7 @@
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Uživatel (%(user)s) nebyl pozván do %(roomId)s, ale nástroj pro pozvání nezaznamenal žádnou chybu",
     "Reload": "Znovu načíst",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "To může být způsobeno otevřením aplikace na více kartách nebo vymazáním dat prohlížeče.",
-    "Database unexpectedly closed": "Databáze byla neočekávaně uzavřena"
+    "Database unexpectedly closed": "Databáze byla neočekávaně uzavřena",
+    "Mute room": "Ztlumit místnost",
+    "Match default setting": "Odpovídá výchozímu nastavení"
 }

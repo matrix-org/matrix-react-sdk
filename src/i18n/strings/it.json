@@ -1583,8 +1583,6 @@
     "Unknown caller": "Chiamante sconosciuto",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s non può tenere in cache i messaggi cifrati quando usato in un browser web. Usa <desktopLink>%(brand)s Desktop</desktopLink> affinché i messaggi cifrati appaiano nei risultati di ricerca.",
     "Set the name of a font installed on your system & %(brand)s will attempt to use it.": "Imposta il nome di un font installato nel tuo sistema e %(brand)s proverà ad usarlo.",
-    "Use default": "Usa predefinito",
-    "Mentions & Keywords": "Citazioni e parole chiave",
     "Notification options": "Opzioni di notifica",
     "Favourited": "Preferito",
     "Forget Room": "Dimentica stanza",
