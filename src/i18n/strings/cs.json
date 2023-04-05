@@ -1471,8 +1471,6 @@
     "List options": "Možnosti seznamu",
     "Show %(count)s more|other": "Zobrazit %(count)s dalších",
     "Show %(count)s more|one": "Zobrazit %(count)s další",
-    "Use default": "Použít výchozí",
-    "Mentions & Keywords": "Zmínky a klíčová slova",
     "Notification options": "Možnosti oznámení",
     "Favourited": "Oblíbená",
     "Forget Room": "Zapomenout místnost",
@@ -2516,9 +2514,7 @@
     "Anyone will be able to find and join this room.": "Kdokoliv může najít tuto místnost a připojit se k ní.",
     "Add existing space": "Přidat stávající prostor",
     "Add space": "Přidat prostor",
-    "Give feedback.": "Poskytněte zpětnou vazbu.",
     "Thank you for trying Spaces. Your feedback will help inform the next versions.": "Děkujeme, že jste vyzkoušeli Prostory. Vaše zpětná vazba pomůže při tvorbě dalších verzí.",
-    "Spaces feedback": "Zpětná vazba prostorů",
     "Spaces are a new feature.": "Prostory jsou novou funkcí.",
     "Leave %(spaceName)s": "Opustit %(spaceName)s",
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Jste jediným správcem některých místností nebo prostorů, které chcete opustit. Jejich opuštěním zůstanou bez správců.",
@@ -2967,7 +2963,6 @@
     "You do not have permissions to add spaces to this space": "Nemáte oprávnění přidávat prostory do tohoto prostoru",
     "Click for more info": "Klikněte pro více informací",
     "This is a beta feature": "Jedná se o funkci ve vývoji",
-    "Results not as expected? Please <a>give feedback</a>.": "Výsledky nejsou podle očekávání? Poskytněte prosím <a>zpětnou vazbu</a>.",
     "Use <arrows/> to scroll": "K pohybu použijte <arrows/>",
     "Feedback sent! Thanks, we appreciate it!": "Zpětná vazba odeslána! Děkujeme, vážíme si toho!",
     "Thank you for trying the beta, please go into as much detail as you can so we can improve it.": "Děkujeme za vyzkoušení beta verze a prosíme o co nejpodrobnější informace, abychom ji mohli vylepšit.",
@@ -3367,7 +3362,6 @@
     "Verified sessions": "Ověřené relace",
     "Interactively verify by emoji": "Interaktivní ověření pomocí emoji",
     "Manually verify by text": "Ruční ověření pomocí textu",
-    "We’d appreciate any feedback on how you’re finding %(brand)s.": "Budeme rádi za jakoukoli zpětnou vazbu o tom, jak se vám %(brand)s osvědčil.",
     "How are you finding %(brand)s so far?": "Jak se vám zatím %(brand)s osvědčil?",
     "Don’t miss a thing by taking %(brand)s with you": "Vezměte si %(brand)s s sebou a nic vám neunikne",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Nedoporučuje se šifrovat veřejné místnosti.</b>Veřejné místnosti může najít a připojit se k nim kdokoli, takže si v nich může číst zprávy kdokoli. Nezískáte tak žádnou z výhod šifrování a nebudete ho moci později vypnout. Šifrování zpráv ve veřejné místnosti zpomalí příjem a odesílání zpráv.",
@@ -3764,5 +3758,7 @@
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Uživatel (%(user)s) nebyl pozván do %(roomId)s, ale nástroj pro pozvání nezaznamenal žádnou chybu",
     "Reload": "Znovu načíst",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "To může být způsobeno otevřením aplikace na více kartách nebo vymazáním dat prohlížeče.",
-    "Database unexpectedly closed": "Databáze byla neočekávaně uzavřena"
+    "Database unexpectedly closed": "Databáze byla neočekávaně uzavřena",
+    "Mute room": "Ztlumit místnost",
+    "Match default setting": "Odpovídá výchozímu nastavení"
 }
