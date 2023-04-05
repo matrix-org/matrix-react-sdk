@@ -23,17 +23,19 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
-import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
-import SenderProfile from "../messages/SenderProfile";
+import { makeUserPermalink, RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import MImageReplyBody from "../messages/MImageReplyBody";
 import { isVoiceMessage } from "../../../utils/EventUtils";
 import { getEventDisplayInfo } from "../../../utils/EventRenderingUtils";
 import MFileBody from "../messages/MFileBody";
-import MemberAvatar from "../avatars/MemberAvatar";
 import MVoiceMessageBody from "../messages/MVoiceMessageBody";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { renderReplyTile } from "../../../events/EventTileFactory";
-import { GetRelationsForEvent } from "../rooms/EventTile";
+import { GetRelationsForEvent } from "./EventTile";
+import { Pill, PillType } from "../elements/Pill";
+import SettingsStore from "../../../settings/SettingsStore";
+import { MatrixClient } from "../../../../../matrix-js-sdk";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -51,6 +53,10 @@ export default class ReplyTile extends React.PureComponent<IProps> {
     public static defaultProps = {
         onHeightChanged: () => {},
     };
+
+    private get matrixClient(): MatrixClient {
+        return MatrixClientPeg.get();
+    }
 
     public componentDidMount(): void {
         this.props.mxEvent.on(MatrixEventEvent.Decrypted, this.onDecrypted);
@@ -138,12 +144,17 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         }
 
         let sender;
+        const room = this.matrixClient.getRoom(this.props.mxEvent.getRoomId());
         const hasOwnSender = isInfoMessage || evType === EventType.RoomCreate;
         if (!hasOwnSender) {
             sender = (
                 <div className="mx_ReplyTile_sender">
-                    <MemberAvatar member={mxEvent.sender} fallbackUserId={mxEvent.getSender()} width={16} height={16} />
-                    <SenderProfile mxEvent={mxEvent} />
+                    <Pill
+                        type={PillType.UserMention}
+                        room={room ?? undefined}
+                        url={makeUserPermalink(mxEvent.getSender()!)}
+                        shouldShowPillAvatar={SettingsStore.getValue("Pill.shouldShowPillAvatar")}
+                    />
                 </div>
             );
         }
