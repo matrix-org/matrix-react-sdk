@@ -3762,5 +3762,7 @@
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "L’utilisateur (%(user)s) n’a finalement pas été invité dans %(roomId)s mais aucune erreur n’a été fournie par la routine d’invitation",
     "Reload": "Recharger",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Cela peut être causé par l’application ouverte dans plusieurs onglets, ou après un nettoyage des données du navigateur.",
-    "Database unexpectedly closed": "La base de données s’est fermée de manière inattendue"
+    "Database unexpectedly closed": "La base de données s’est fermée de manière inattendue",
+    "Mute room": "Salon muet",
+    "Match default setting": "Réglage par défaut"
 }
