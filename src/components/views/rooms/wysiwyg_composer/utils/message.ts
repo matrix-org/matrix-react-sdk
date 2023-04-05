@@ -116,8 +116,8 @@ export async function sendMessage(
         }
     }
 
-    // we haven't done a slash command
-    if (!content) {
+    // if content is still null, we haven't done any slash command processing so generate some content
+    if (content === null) {
         content = await createMessageContent(message, isHTML, params);
     }
 
