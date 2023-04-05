@@ -53,12 +53,6 @@ describe("buildQuery", () => {
         expect(buildQuery(noKeyCharSuggestion)).toBe("");
     });
 
-    // it("returns an empty string when suggestion is a command", () => {
-    //     // TODO alter this test when commands are implemented
-    //     const commandSuggestion = { keyChar: "/" as const, text: "slash", type: "command" as const };
-    //     expect(buildQuery(commandSuggestion)).toBe("");
-    // });
-
     it("combines the keyChar and text of the suggestion in the query", () => {
         const handledSuggestion = { keyChar: "@" as const, text: "alice", type: "mention" as const };
         expect(buildQuery(handledSuggestion)).toBe("@alice");
