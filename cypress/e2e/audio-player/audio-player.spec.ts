@@ -48,6 +48,8 @@ describe("Audio player", () => {
     /**
      * Take snapshots of mx_EventTile_last on each layout, outputting log for reference/debugging.
      * @param detail The Percy snapshot name. Used for outputting logs too.
+     * @param monospace This enables a monospace font installed locally. Set to false by default.
+     * Please note that the specific font applied to Percy snapshots can be different among environments.
      */
     const takeSnapshots = (detail: string, monospace = false) => {
         // Check that the audio player is rendered and its button becomes visible
