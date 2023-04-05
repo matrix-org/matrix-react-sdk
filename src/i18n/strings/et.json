@@ -3762,5 +3762,7 @@
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Kasutaja %(user)s siiski ei saanud kutset %(roomId)s jututuppa, kuid kutse saatja liides ei kuvanud ka viga",
     "Reload": "Laadi uuesti",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "See võib olla seotud asjaoluga, et rakendus on avatud mitmes brauseriaknas korraga või brauseri andmete kustutamise tõttu.",
-    "Database unexpectedly closed": "Andmebaasiühendus sulgus ootamatult"
+    "Database unexpectedly closed": "Andmebaasiühendus sulgus ootamatult",
+    "Match default setting": "Sobita vaikimisi seadistusega",
+    "Mute room": "Summuta jututuba"
 }
