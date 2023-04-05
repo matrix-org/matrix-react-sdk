@@ -105,7 +105,7 @@ describe("Decryption Failure Bar", () => {
                 .then(() => {
                     cy.inviteUser(roomId, bot.getUserId());
                     cy.visit("/#/room/" + roomId);
-                    cy.contains(".mx_TextualEvent", BOT_USER + " joined the room").should("exist");
+                    cy.findByText(BOT_USER + " joined the room").should("exist");
                 })
                 .then(() => {
                     cy.getClient()
@@ -135,11 +135,10 @@ describe("Decryption Failure Bar", () => {
                 })
                 .then(() => {
                     cy.botSendMessage(bot, roomId, "test");
-                    cy.contains(".mx_DecryptionFailureBar_start_headline", "Decrypting messages…").should("be.visible");
-                    cy.contains(
-                        ".mx_DecryptionFailureBar_start_headline",
-                        "Verify this device to access all messages",
-                    ).should("be.visible");
+                    cy.get(".mx_DecryptionFailureBar_start_headline").within(() => {
+                        cy.findByText("Decrypting messages…").should("be.visible");
+                        cy.findByText("Verify this device to access all messages").should("be.visible");
+                    });
 
                     checkTimelineNarrow();
 
@@ -150,14 +149,14 @@ describe("Decryption Failure Bar", () => {
                         },
                     );
 
-                    cy.contains(".mx_DecryptionFailureBar_end", "Resend key requests").should("not.exist");
                     cy.get(".mx_DecryptionFailureBar_end").within(() => {
+                        cy.findByText("Resend key requests").should("not.exist");
                         cy.findButton("Verify").click();
                     });
 
                     const verificationRequestPromise = waitForVerificationRequest(otherDevice);
                     cy.findButton("Verify with another device").click();
-                    cy.contains("To proceed, please accept the verification request on your other device.").should(
+                    cy.findByText("To proceed, please accept the verification request on your other device.").should(
                         "be.visible",
                     );
                     cy.wrap(verificationRequestPromise).then((verificationRequest: VerificationRequest) => {
@@ -175,10 +174,9 @@ describe("Decryption Failure Bar", () => {
             cy.get(".mx_VerificationPanel_verified_section .mx_E2EIcon_verified").should("exist");
             cy.findButton("Got it").click();
 
-            cy.contains(
-                ".mx_DecryptionFailureBar_start_headline",
-                "Open another device to load encrypted messages",
-            ).should("be.visible");
+            cy.get(".mx_DecryptionFailureBar_start_headline").within(() => {
+                cy.findByText("Open another device to load encrypted messages").should("be.visible");
+            });
 
             checkTimelineNarrow();
 
@@ -192,8 +190,10 @@ describe("Decryption Failure Bar", () => {
             cy.intercept("/_matrix/client/r0/sendToDevice/m.room_key_request/*").as("keyRequest");
             cy.findButton("Resend key requests").click();
             cy.wait("@keyRequest");
-            cy.contains(".mx_DecryptionFailureBar_end_button", "Resend key requests").should("not.exist");
-            cy.findButton("View your device list").should("be.visible");
+            cy.get(".mx_DecryptionFailureBar_end").within(() => {
+                cy.findByText("Resend key requests").should("not.exist");
+                cy.findButton("View your device list").should("be.visible");
+            });
 
             checkTimelineNarrow();
 
@@ -217,10 +217,9 @@ describe("Decryption Failure Bar", () => {
             );
 
             cy.botSendMessage(bot, roomId, "test");
-            cy.contains(
-                ".mx_DecryptionFailureBar_start_headline",
-                "Reset your keys to prevent future decryption errors",
-            ).should("be.visible");
+            cy.get(".mx_DecryptionFailureBar_start_headline").within(() => {
+                cy.findByText("Reset your keys to prevent future decryption errors").should("be.visible");
+            });
 
             checkTimelineNarrow();
 
@@ -240,9 +239,9 @@ describe("Decryption Failure Bar", () => {
                 cy.findButton("Done").click();
             });
 
-            cy.contains(".mx_DecryptionFailureBar_start_headline", "Some messages could not be decrypted").should(
-                "be.visible",
-            );
+            cy.get(".mx_DecryptionFailureBar_start_headline").within(() => {
+                cy.findByText("Some messages could not be decrypted").should("be.visible");
+            });
 
             checkTimelineNarrow(false); // button should not be rendered here
 
