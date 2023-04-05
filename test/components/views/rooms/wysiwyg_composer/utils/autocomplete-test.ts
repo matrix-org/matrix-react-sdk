@@ -176,7 +176,7 @@ describe("getMentionAttributes", () => {
 
             expect(result).toEqual({
                 "data-mention-type": "user",
-                "style": `--avatar-background: url(${testAvatarUrlForMember}); --avatar-letter: ''`,
+                "style": `--avatar-background: url(${testAvatarUrlForMember}); --avatar-letter: '-'`,
             });
         });
 
@@ -203,7 +203,7 @@ describe("getMentionAttributes", () => {
 
             expect(result).toEqual({
                 "data-mention-type": "room",
-                "style": `--avatar-background: url(${testAvatarUrlForRoom}); --avatar-letter: ''`,
+                "style": `--avatar-background: url(${testAvatarUrlForRoom}); --avatar-letter: '-'`,
             });
         });
 
