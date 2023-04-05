@@ -68,7 +68,7 @@ jobs:
                       --cacheDirectory /tmp/jest_cache
 
             - name: Upload Artifact
-              if: inputs.disable_coverage != 'true'
+              if: env.ENABLE_COVERAGE
               uses: actions/upload-artifact@v3
               with:
                   name: coverage
