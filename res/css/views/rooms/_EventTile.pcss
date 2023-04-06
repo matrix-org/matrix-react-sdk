@@ -36,6 +36,11 @@ $left-gutter: 64px;
         overflow-y: hidden;
     }
 
+    .mx_EventTile_line,
+    .mx_EventTile_reply {
+        text-align: start;
+    }
+
     .mx_EventTile_receiptSent,
     .mx_EventTile_receiptSending {
         position: relative;
@@ -537,7 +542,7 @@ $left-gutter: 64px;
         font-size: $font-12px;
         color: $roomtopic-color;
         display: inline-block;
-        margin-left: 9px;
+        margin-inline-start: 9px; /* TODO: use a spacing variable */
     }
 
     .mx_EventTile_edited {
@@ -550,6 +555,11 @@ $left-gutter: 64px;
         line-height: inherit !important;
         color: inherit; /* inherit the colour from the dark or light theme by default (but not for code blocks) */
         font-size: $font-14px;
+
+        ol,
+        ul {
+            padding-inline: 2em 0; /* replace with logical ones for correct text alignment in RTL languages  */
+        }
 
         pre,
         code {
@@ -617,7 +627,10 @@ $left-gutter: 64px;
         }
 
         blockquote {
-            border-left: 2px solid $blockquote-bar-color;
+            /* Override the default values with logical ones */
+            border-inline-start: 2px solid $blockquote-bar-color;
+            border-inline-end: 0;
+
             border-radius: 2px;
             padding: 0 10px;
         }
