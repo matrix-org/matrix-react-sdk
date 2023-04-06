@@ -129,8 +129,6 @@ export async function sendMessage(
         content = await createMessageContent(message, isHTML, params);
     }
 
-    // TODO slash comment
-
     // TODO replace emotion end of message ?
 
     // TODO quick reaction
