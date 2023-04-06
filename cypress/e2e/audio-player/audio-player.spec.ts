@@ -37,7 +37,7 @@ describe("Audio player", () => {
 
         cy.get(".mx_Dialog").within(() => {
             // Find and click primary "Upload" button
-            cy.get("[data-testid='dialog-primary-button']").findButton("Upload").click();
+            cy.get("[data-testid='dialog-primary-button']").findByRole("button", { name: "Upload" }).click();
         });
 
         // Wait until the file is sent
@@ -65,7 +65,7 @@ describe("Audio player", () => {
             );
 
             // Assert that the play button can be found and is visible
-            cy.findButton("Play").should("be.visible");
+            cy.findByRole("button", { name: "Play" }).should("be.visible");
 
             if (monospace) {
                 // Assert that the monospace timer is visible
@@ -218,16 +218,16 @@ describe("Audio player", () => {
             cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
             // Find and click "Play" button
-            cy.findButton("Play").click();
+            cy.findByRole("button", { name: "Play" }).click();
 
             // Assert that "Pause" button can be found
-            cy.findButton("Pause").should("exist");
+            cy.findByRole("button", { name: "Pause" }).should("exist");
 
             // Assert that the timer is reset when the audio file finished playing
             cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
             // Assert that "Play" button can be found
-            cy.findButton("Play").should("exist");
+            cy.findByRole("button", { name: "Play" }).should("exist");
         });
     });
 
@@ -235,7 +235,7 @@ describe("Audio player", () => {
         uploadFile("cypress/fixtures/1sec.ogg");
 
         // Find and click "Download" button on MessageActionBar
-        cy.get(".mx_EventTile_last").realHover().findButton("Download").click();
+        cy.get(".mx_EventTile_last").realHover().findByRole("button", { name: "Download" }).click();
 
         // Assert that the file was downloaded
         cy.readFile("cypress/downloads/1sec.ogg").should("exist");
@@ -248,7 +248,7 @@ describe("Audio player", () => {
         cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
 
         // Find and click "Reply" button on MessageActionBar
-        cy.get(".mx_EventTile_last").realHover().findButton("Reply").click();
+        cy.get(".mx_EventTile_last").realHover().findByRole("button", { name: "Reply" }).click();
 
         // Reply to the player with another audio file
         uploadFile("cypress/fixtures/1sec.ogg");
@@ -276,7 +276,7 @@ describe("Audio player", () => {
 
         // Find and click "Reply" button
         const clickButtonReply = () => {
-            cy.get(".mx_EventTile_last").realHover().findButton("Reply").click();
+            cy.get(".mx_EventTile_last").realHover().findByRole("button", { name: "Reply" }).click();
         };
 
         uploadFile("cypress/fixtures/upload-first.ogg");
@@ -338,7 +338,7 @@ describe("Audio player", () => {
             cy.get(".mx_EventTile_last .mx_AudioPlayer_container").should("exist");
 
             // Find and click "Reply in thread" button
-            cy.get(".mx_EventTile_last").realHover().findButton("Reply in thread").click();
+            cy.get(".mx_EventTile_last").realHover().findByRole("button", { name: "Reply in thread" }).click();
         });
 
         // On a thread
@@ -351,20 +351,20 @@ describe("Audio player", () => {
                         cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
                         // Find and click "Play" button
-                        cy.findButton("Play").click();
+                        cy.findByRole("button", { name: "Play" }).click();
 
                         // Assert that "Pause" button can be found
-                        cy.findButton("Pause").should("exist");
+                        cy.findByRole("button", { name: "Pause" }).should("exist");
 
                         // Assert that the timer is reset when the audio file finished playing
                         cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
                         // Assert that "Play" button can be found
-                        cy.findButton("Play").should("exist");
+                        cy.findByRole("button", { name: "Play" }).should("exist");
                     });
                 })
                 .realHover()
-                .findButton("Reply")
+                .findByRole("button", { name: "Reply" })
                 .click(); // Find and click "Reply" button
 
             cy.get(".mx_MessageComposer--compact").within(() => {
