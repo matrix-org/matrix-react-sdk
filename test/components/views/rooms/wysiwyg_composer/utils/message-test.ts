@@ -29,6 +29,7 @@ import * as SlashCommands from "../../../../../../src/SlashCommands";
 import * as Commands from "../../../../../../src/editor/commands";
 import * as Reply from "../../../../../../src/utils/Reply";
 import { MatrixClientPeg } from "../../../../../../src/MatrixClientPeg";
+import { Action } from "../../../../../../src/dispatcher/actions";
 
 describe("message", () => {
     const permalinkCreator = {
@@ -355,7 +356,7 @@ describe("message", () => {
                 },
             );
 
-            it("if user enters invalid command and then sends it anyway, message is sent", async () => {
+            it("if user enters invalid command and then sends it anyway", async () => {
                 // mock out returning a true value for `shouldSendAnyway` to avoid rendering the modal
                 jest.spyOn(Commands, "shouldSendAnyway").mockResolvedValue(true);
                 const invalidCommandInput = "/badCommand";
@@ -366,11 +367,14 @@ describe("message", () => {
                     permalinkCreator,
                 });
 
+                // we expect the message to have been sent
+                // and a composer focus action to have been dispatched
                 expect(mockClient.sendMessage).toHaveBeenCalledWith(
                     "myfakeroom",
                     null,
                     expect.objectContaining({ body: invalidCommandInput }),
                 );
+                expect(spyDispatcher).toHaveBeenCalledWith(expect.objectContaining({ action: Action.FocusAComposer }));
             });
 
             it("if user enters invalid command and then does not send, return undefined", async () => {
