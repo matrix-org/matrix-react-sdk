@@ -23,8 +23,11 @@ import { _t } from "../../../languageHandler";
 
 interface IProps<C extends React.Component = React.Component> {
     contentFactory: (props: DialogProps, ref: React.Ref<C>) => React.ReactNode;
-    contentProps: DialogProps;
+    contentProps: Omit<DialogProps, "setCanSubmit">;
+    canSubmit?: boolean;
     title: string;
+    cancelLabel?: string;
+    actionLabel?: string;
     onFinished(ok?: boolean, model?: Awaited<ReturnType<DialogContent["trySubmit"]>>): void;
 }
 
@@ -39,9 +42,10 @@ export class ModuleUiDialog extends ScrollableBaseModal<IProps, IState> {
         super(props);
 
         this.state = {
+            canSubmit: this.props.canSubmit ?? true,
             title: this.props.title,
-            canSubmit: true,
-            actionLabel: _t("OK"),
+            cancelLabel: this.props.cancelLabel,
+            actionLabel: this.props.actionLabel ?? _t("OK"),
         };
     }
 
@@ -59,10 +63,10 @@ export class ModuleUiDialog extends ScrollableBaseModal<IProps, IState> {
     }
 
     protected renderContent(): React.ReactNode {
-        return (
-            <div className="mx_ModuleUiDialog">
-                {this.props.contentFactory(this.props.contentProps, this.contentRef)}
-            </div>
-        );
+        const dialogProps: DialogProps = {
+            ...this.props.contentProps,
+            setCanSubmit: (canSubmit: boolean) => this.setState({ canSubmit }),
+        };
+        return <div className="mx_ModuleUiDialog">{this.props.contentFactory(dialogProps, this.contentRef)}</div>;
     }
 }

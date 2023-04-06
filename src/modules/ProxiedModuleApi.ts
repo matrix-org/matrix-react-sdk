@@ -20,6 +20,7 @@ import { Optional } from "matrix-events-sdk";
 import { DialogProps } from "@matrix-org/react-sdk-module-api/lib/components/DialogContent";
 import React from "react";
 import { AccountAuthInfo } from "@matrix-org/react-sdk-module-api/lib/types/AccountAuthInfo";
+import { ModuleUiDialogProps } from "@matrix-org/react-sdk-module-api/lib/types/ModuleUiDialogProps";
 import { PlainSubstitution } from "@matrix-org/react-sdk-module-api/lib/types/translations";
 import * as Matrix from "matrix-js-sdk/src/matrix";
 import { IRegisterRequestParams } from "matrix-js-sdk/src/matrix";
@@ -86,16 +87,17 @@ export class ProxiedModuleApi implements ModuleApi {
         P extends DialogProps = DialogProps,
         C extends React.Component = React.Component,
     >(
-        title: string,
+        moduleUiDialogProps: ModuleUiDialogProps,
         body: (props: P, ref: React.RefObject<C>) => React.ReactNode,
+        pr,
     ): Promise<{ didOkOrSubmit: boolean; model: M }> {
         return new Promise<{ didOkOrSubmit: boolean; model: M }>((resolve) => {
             Modal.createDialog(
                 ModuleUiDialog,
                 {
-                    title: title,
+                    ...moduleUiDialogProps,
                     contentFactory: body,
-                    contentProps: <DialogProps>{
+                    contentProps: <Omit<DialogProps, "setCanSubmit">>{
                         moduleApi: this,
                     },
                 },
