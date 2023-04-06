@@ -154,7 +154,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
     }
 
     public componentDidMount(): void {
-        const room = this.context.getRoom(this.props.mxEvent.getRoomId());
+        const room = this.context?.getRoom(this.props.mxEvent.getRoomId());
         const poll = room?.polls.get(this.props.mxEvent.getId()!);
         if (poll) {
             this.setPollInstance(poll);
@@ -236,7 +236,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
      * @returns userId -> UserVote
      */
     private collectUserVotes(): Map<string, UserVote> {
-        if (!this.state.voteRelations) {
+        if (!this.state.voteRelations || !this.context) {
             return new Map<string, UserVote>();
         }
         return collectUserVotes(allVotes(this.state.voteRelations), this.context.getUserId(), this.state.selected);
@@ -291,8 +291,8 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         const votes = countVotes(userVotes, pollEvent);
         const totalVotes = this.totalVotes(votes);
         const winCount = Math.max(...votes.values());
-        const userId = this.context.getUserId();
-        const myVote = userVotes?.get(userId!)?.answers[0];
+        const userId = this.context.getSafeUserId();
+        const myVote = userVotes?.get(userId)?.answers[0];
         const disclosed = M_POLL_KIND_DISCLOSED.matches(pollEvent.kind.name);
 
         // Disclosed: votes are hidden until I vote or the poll ends

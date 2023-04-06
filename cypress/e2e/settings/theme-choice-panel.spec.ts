@@ -81,7 +81,7 @@ describe("Theme Choice Panel", () => {
                 cy.get("label.mx_StyledRadioButton_enabled").should("not.exist");
 
                 // Assert that the checkbox and label to enable the the high contrast theme should not exist
-                cy.get("[data-testid='checkbox-use-high-contrast']").should("not.exist");
+                cy.get("[data-testid='theme-choice-panel-highcontrast']").should("not.exist");
             });
         },
     );
@@ -90,13 +90,13 @@ describe("Theme Choice Panel", () => {
         cy.openUserSettings("Appearance");
 
         // Assert that the checkbox and the label to enable the high contrast theme should exist
-        cy.get("[data-testid='checkbox-use-high-contrast']").should("exist");
+        cy.get("[data-testid='theme-choice-panel-highcontrast']").should("exist");
 
         // Enable the dark theme
         cy.get(".mx_ThemeSelector_dark").click();
 
         // Assert that the checkbox and the label should not exist
-        cy.get("[data-testid='checkbox-use-high-contrast']").should("not.exist");
+        cy.get("[data-testid='theme-choice-panel-highcontrast']").should("not.exist");
     });
 
     it("should support enabling the high contast theme", () => {
@@ -112,7 +112,7 @@ describe("Theme Choice Panel", () => {
 
         cy.openUserSettings("Appearance")
             .get(".mx_ThemeChoicePanel")
-            .get("[data-testid='checkbox-use-high-contrast'] .mx_Checkbox")
+            .get("[data-testid='theme-choice-panel-highcontrast'] .mx_Checkbox")
             .click();
 
         cy.closeDialog();
