@@ -45,9 +45,9 @@ export function useEditing(
         [initialContent],
     );
 
-    const editMessageMemoized = useCallback(() => {
+    const editMessageMemoized = useCallback(async () => {
         if (mxClient === undefined || content === undefined) {
-            return Promise.resolve(undefined);
+            return;
         }
         return editMessage(content, { roomContext, mxClient, editorStateTransfer });
     }, [content, roomContext, mxClient, editorStateTransfer]);

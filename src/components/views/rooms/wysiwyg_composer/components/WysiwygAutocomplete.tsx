@@ -62,9 +62,10 @@ const WysiwygAutocomplete = forwardRef(
             // TODO handle all of the completion types
             // Using this to pick out the ones we can handle during implementation
             if (completion.type === "command") {
-                // trim the completion text as we add the trailing space in the rust model
-                // nb there are utils like parseCommandString and the CommandMap in SlashCommands.tsx
-                // that might be required here, but for now just use the trimmed completion text
+                // TODO determine if utils in SlashCommands.tsx are required
+
+                // trim the completion as some include trailing spaces, but we always insert a
+                // trailing space in the rust model anyway
                 handleCommand(completion.completion.trim());
             }
             if (client && room && completion.href && (completion.type === "room" || completion.type === "user")) {

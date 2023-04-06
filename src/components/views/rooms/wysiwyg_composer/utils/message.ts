@@ -37,16 +37,8 @@ import { CommandCategories, getCommand } from "../../../../../SlashCommands";
 import { runSlashCommand, shouldSendAnyway } from "../../../../../editor/commands";
 import { Action } from "../../../../../dispatcher/actions";
 import { addReplyToMessageContent } from "../../../../../utils/Reply";
+import { attachRelation } from "../../SendMessageComposer";
 
-// Merges favouring the given relation - taken from SendMessageComposer to avoid another import
-function attachRelation(content: IContent, relation?: IEventRelation): void {
-    if (relation) {
-        content["m.relates_to"] = {
-            ...(content["m.relates_to"] || {}),
-            ...relation,
-        };
-    }
-}
 export interface SendMessageParams {
     mxClient: MatrixClient;
     relation?: IEventRelation;
@@ -127,10 +119,8 @@ export async function sendMessage(
         }
     }
 
-    // if content is still null, we haven't done any slash command processing so generate some content
-    if (content === null) {
-        content = await createMessageContent(message, isHTML, params);
-    }
+    // if content is null, we haven't done any slash command processing, so generate some content
+    content ??= await createMessageContent(message, isHTML, params);
 
     // TODO replace emotion end of message ?
 
@@ -149,9 +139,7 @@ export async function sendMessage(
 
     const prom = doMaybeLocalRoomAction(
         roomId,
-        (actualRoomId: string) => {
-            return mxClient.sendMessage(actualRoomId, threadId, content as IContent);
-        },
+        (actualRoomId: string) => mxClient.sendMessage(actualRoomId, threadId, content as IContent),
         mxClient,
     );
 
