@@ -144,9 +144,10 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         }
 
         let sender;
-        const room = this.matrixClient.getRoom(this.props.mxEvent.getRoomId());
-        const hasOwnSender = isInfoMessage || evType === EventType.RoomCreate;
-        if (!hasOwnSender) {
+        const isSystemMessage = isInfoMessage || evType === EventType.RoomCreate;
+        // If the event is a system message, don't show display user pill
+        if (!isSystemMessage) {
+            const room = this.matrixClient.getRoom(this.props.mxEvent.getRoomId());
             sender = (
                 <div className="mx_ReplyTile_sender">
                     <Pill

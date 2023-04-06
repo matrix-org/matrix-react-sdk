@@ -539,7 +539,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         this.forceUpdate(this.props.onHeightChanged);
     };
 
-    private onDeviceVerificationChanged = (userId: string, device: string): void => {
+    private onDeviceVerificationChanged = (userId: string): void => {
         if (userId === this.props.mxEvent.getSender()) {
             this.verifyEvent();
         }
@@ -661,7 +661,9 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         const actions = MatrixClientPeg.get().getPushActionsForEvent(
             this.props.mxEvent.replacingEvent() || this.props.mxEvent,
         );
-        if (!actions || !actions.tweaks) {
+
+        // if no actions, or no tweaks, or is replyChain, do not highlight
+        if (!actions || !actions.tweaks || this.getReplyChain()) {
             return false;
         }
 

@@ -35,6 +35,8 @@ interface IState {
 }
 
 /**
+ * Used in: keyword notification creation
+ *
  * A simple, controlled, composer for entering string tags. Contains a simple
  * input, add button, and per-tag remove button.
  */

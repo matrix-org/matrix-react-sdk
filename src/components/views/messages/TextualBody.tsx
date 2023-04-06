@@ -605,6 +605,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             );
         }
 
+        // if highlight-able link, highlight that link
         if (this.props.highlightLink) {
             body = <a href={this.props.highlightLink}>{body}</a>;
         } else if (content.data && typeof content.data["org.matrix.neb.starter_link"] === "string") {

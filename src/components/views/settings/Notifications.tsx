@@ -585,6 +585,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         }
     }
 
+    // store the keyword that user wants to be notified of
     private onKeywordAdd = (keyword: string): void => {
         const originalRules = objectClone(this.state.vectorKeywordRuleInfo.rules);
 
