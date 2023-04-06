@@ -6,7 +6,7 @@ on:
         types:
             - completed
 concurrency:
-    group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch || github.ref }}
+    group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch || github.run_id }}
     cancel-in-progress: ${{ github.event.workflow_run.event == 'pull_request' }}
 jobs:
     prepare:
@@ -33,12 +33,12 @@ jobs:
               with:
                   authToken: ${{ secrets.GITHUB_TOKEN }}
                   state: pending
-                  context: ${{ github.workflow }} / cypress (${{ github.event.workflow_run.event }} => ${{ github.event_name }})
+                  context: ${{ github.workflow }} / cypress
                   sha: ${{ github.event.workflow_run.head_sha }}
                   target_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
             - id: prdetails
-              if: github.event.workflow_run.event == 'pull_request'
+              if: github.event.workflow_run.event == 'pull_request' || github.event.workflow_run.event == 'merge_group'
               uses: matrix-org/pr-details-action@v1.2
               with:
                   owner: ${{ github.event.workflow_run.head_repository.owner.login }}
@@ -46,7 +46,7 @@ jobs:
 
             - name: Get commit details
               id: commit
-              if: github.event.workflow_run.event == 'pull_request'
+              if: github.event.workflow_run.event == 'pull_request' || github.event.workflow_run.event == 'merge_group'
               uses: actions/github-script@v6
               with:
                   script: |
@@ -221,7 +221,7 @@ jobs:
               with:
                   authToken: ${{ secrets.GITHUB_TOKEN }}
                   state: ${{ needs.tests.result == 'success' && 'success' || 'failure' }}
-                  context: ${{ github.workflow }} / cypress (${{ github.event.workflow_run.event }} => ${{ github.event_name }})
+                  context: ${{ github.workflow }} / cypress
                   sha: ${{ github.event.workflow_run.head_sha }}
                   target_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
@@ -232,7 +232,7 @@ jobs:
             - tests
         environment: Kiwi
         runs-on: ubuntu-latest
-        if: ${{ needs.prepare.outputs.kiwi_enable }}
+        if: ${{ needs.prepare.outputs.kiwi_enable == '1' }}
         steps:
             - name: Download all zip files
               uses: actions/download-artifact@v3
