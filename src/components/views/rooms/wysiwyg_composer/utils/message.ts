@@ -116,7 +116,7 @@ export async function sendMessage(
             const sendAnyway = await shouldSendAnyway(message);
             // re-focus the composer after QuestionDialog is closed
             dis.dispatch({
-                action: Action.FocusAComposer, // TODO this does not refocus the wysiwyg composer
+                action: Action.FocusAComposer,
                 context: roomContext.timelineRenderingType,
             });
             // if !sendAnyway bail to let the user edit the composer and try again
