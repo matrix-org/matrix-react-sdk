@@ -150,7 +150,7 @@ export async function sendMessage(
     const prom = doMaybeLocalRoomAction(
         roomId,
         (actualRoomId: string) => {
-            return mxClient.sendMessage(actualRoomId, threadId, content as IContent, undefined);
+            return mxClient.sendMessage(actualRoomId, threadId, content as IContent);
         },
         mxClient,
     );
