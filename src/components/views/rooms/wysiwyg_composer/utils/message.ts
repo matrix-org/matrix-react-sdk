@@ -60,7 +60,7 @@ export async function sendMessage(
     message: string,
     isHTML: boolean,
     { roomContext, mxClient, ...params }: SendMessageParams,
-): Promise<ISendEventResponse> {
+): Promise<ISendEventResponse | undefined> {
     const { relation, replyToEvent, permalinkCreator } = params;
     const { room } = roomContext;
     const roomId = room?.roomId;
@@ -200,7 +200,7 @@ interface EditMessageParams {
 export async function editMessage(
     html: string,
     { roomContext, mxClient, editorStateTransfer }: EditMessageParams,
-): Promise<ISendEventResponse> {
+): Promise<ISendEventResponse | undefined> {
     const editedEvent = editorStateTransfer.getEvent();
 
     PosthogAnalytics.instance.trackEvent<ComposerEvent>({
