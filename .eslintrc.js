@@ -1,8 +1,60 @@
+/*
+Copyright 2023 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+const fs = require("fs");
+
+/** Maximum supported ECMAScript version. */
+const ecmaVersion = 2021;
+
+/**
+ * Generates configs to restrict the code to a specific ECMAScript version.
+ *
+ * @param {number} maxECMAScriptVersion - maximum supported ECMAScript version
+ * @returns {string[]} list of ESLint configs to be used with an "extends" property
+ */
+const determineEsXNoNewInConfigs = (maxECMAScriptVersion) => {
+    // esnext is always unsupported
+    const esXNoNewIn = ["plugin:es-x/no-new-in-esnext", "plugin:es-x/no-new-in-esnext-intl-api"];
+    let esXNoNewInYear = maxECMAScriptVersion;
+    let esXYearConfigExists = false;
+
+    do {
+        esXNoNewInYear++;
+
+        esXYearConfigExists =
+            fs.existsSync(`./node_modules/eslint-plugin-es-x/lib/configs/no-new-in-es${esXNoNewInYear}.js`) &&
+            fs.existsSync(`./node_modules/eslint-plugin-es-x/lib/configs/no-new-in-es${esXNoNewInYear}-intl-api.js`);
+
+        if (esXYearConfigExists) {
+            esXNoNewIn.push(
+                `plugin:es-x/no-new-in-es${esXNoNewInYear}`,
+                `plugin:es-x/no-new-in-es${esXNoNewInYear}-intl-api`,
+            );
+        }
+    } while (esXYearConfigExists);
+
+    return esXNoNewIn;
+};
+
 module.exports = {
-    plugins: ["matrix-org"],
+    plugins: ["matrix-org", "es-x"],
     extends: ["plugin:matrix-org/babel", "plugin:matrix-org/react", "plugin:matrix-org/a11y"],
     parserOptions: {
         project: ["./tsconfig.json"],
+        ecmaVersion,
     },
     env: {
         browser: true,
@@ -97,6 +149,13 @@ module.exports = {
         "matrix-org/require-copyright-header": "error",
     },
     overrides: [
+        {
+            files: ["src/**/*.{ts,tsx}"],
+            extends: determineEsXNoNewInConfigs(ecmaVersion),
+            rules: {
+                "es-x/no-class-fields": "off",
+            },
+        },
         {
             files: ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}", "cypress/**/*.ts"],
             extends: ["plugin:matrix-org/typescript", "plugin:matrix-org/react"],
