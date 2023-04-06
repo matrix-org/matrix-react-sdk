@@ -148,10 +148,9 @@ describe("Audio player", () => {
         cy.createRoom({ name: "Test Room" }).viewRoomByName("Test Room");
 
         // Wait until configuration is finished
-        cy.contains(
-            ".mx_RoomView_body .mx_GenericEventListSummary[data-layout='group'] .mx_GenericEventListSummary_summary",
-            "created and configured the room.",
-        ).should("exist");
+        cy.get(".mx_GenericEventListSummary[data-layout='group'] .mx_GenericEventListSummary_summary").within(() => {
+            cy.findByText(TEST_USER + " created and configured the room.").should("exist");
+        });
     });
 
     afterEach(() => {
@@ -305,7 +304,9 @@ describe("Audio player", () => {
             cy.get(".mx_ReplyChain").should("have.length", 2);
 
             // Assert that one line contains the user name
-            cy.contains(".mx_ReplyChain .mx_ReplyTile_sender", TEST_USER);
+            cy.get(".mx_ReplyChain .mx_ReplyTile_sender").within(() => {
+                cy.findByText(TEST_USER);
+            });
 
             // Assert that the other line contains the file button
             cy.get(".mx_ReplyChain .mx_MFileBody").should("exist");
@@ -315,7 +316,7 @@ describe("Audio player", () => {
 
             cy.get("blockquote.mx_ReplyChain:first-of-type").within(() => {
                 // Assert that "In reply to" has disappeared
-                cy.contains("In reply to").should("not.exist");
+                cy.findByText("In reply to").should("not.exist");
 
                 // Assert that audio file on the first row is rendered as file button
                 cy.get(".mx_MFileBody_info[role='button']").within(() => {
@@ -375,9 +376,9 @@ describe("Audio player", () => {
                 });
 
                 // Select :smile: emoji and send it
-                cy.get("[data-testid='basicmessagecomposer']").type(":smile:");
+                cy.findByTestId("basicmessagecomposer").type(":smile:");
                 cy.get(".mx_Autocomplete_Completion[aria-selected='true']").click();
-                cy.get("[data-testid='basicmessagecomposer']").type("{enter}");
+                cy.findByTestId("basicmessagecomposer").type("{enter}");
             });
 
             cy.get(".mx_EventTile_last").within(() => {
