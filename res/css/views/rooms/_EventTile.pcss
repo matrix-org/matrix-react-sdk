@@ -372,7 +372,7 @@ $left-gutter: 64px;
 
         .mx_ThreadSummary,
         .mx_ThreadSummary_icon {
-            margin-left: $left-gutter;
+            margin-inline-start: $left-gutter;
         }
 
         .mx_ReactionsRow {
@@ -381,7 +381,7 @@ $left-gutter: 64px;
 
         > .mx_DisambiguatedProfile {
             line-height: $font-20px;
-            margin-left: $left-gutter;
+            margin-inline-start: $left-gutter;
             max-width: calc(100% - $left-gutter);
         }
 
@@ -855,7 +855,7 @@ $left-gutter: 64px;
     }
 
     a {
-        margin-left: 1em;
+        margin-inline-start: 1em;
     }
 }
 
@@ -1019,7 +1019,7 @@ $left-gutter: 64px;
         overflow: hidden; /* ensure correct overflow behavior */
         text-overflow: ellipsis;
         position: initial;
-        margin-left: auto; /* to ensure it's end-aligned even if it's the only element of its parent */
+        margin-inline-start: auto; /* to ensure it's end-aligned even if it's the only element of its parent */
     }
 
     &:hover {
@@ -1166,7 +1166,7 @@ $left-gutter: 64px;
                     align-items: center;
 
                     .mx_DisambiguatedProfile {
-                        margin-left: 8px;
+                        margin-inline-start: 8px;
                         flex: 1;
                     }
                 }
@@ -1336,7 +1336,7 @@ $left-gutter: 64px;
     align-items: center;
     justify-content: space-between;
     gap: $spacing-8;
-    margin-left: var(--leftOffset);
+    margin-inline-start: var(--leftOffset);
     .mx_EventTile_truncated {
         flex: 1;
         overflow: hidden;
