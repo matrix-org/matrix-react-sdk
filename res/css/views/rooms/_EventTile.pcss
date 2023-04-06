@@ -345,7 +345,7 @@ $left-gutter: 64px;
         .mx_EventTile_reply {
             padding-top: var(--EventTile_group_line-spacing-block-start);
             padding-bottom: var(--EventTile_group_line-spacing-block-end);
-            padding-left: var(--EventTile_group_line-spacing-inline-start);
+            padding-inline-start: var(--EventTile_group_line-spacing-inline-start);
             line-height: var(--EventTile_group_line-line-height);
         }
 
@@ -506,7 +506,7 @@ $left-gutter: 64px;
         > .mx_EventTile_line {
             /* add --right-padding value of MessageTimestamp and avatar only */
             /* stylelint-disable-next-line declaration-colon-space-after */
-            padding-left: calc(
+            padding-inline-start: calc(
                 var(--name-width) + var(--icon-width) + $MessageTimestamp_width + 2 * var(--right-padding)
             );
         }
@@ -514,11 +514,11 @@ $left-gutter: 64px;
 
     &[data-layout="group"] {
         .mx_EventTile_line {
-            padding-left: $left-gutter;
+            padding-inline-start: $left-gutter;
         }
 
         .mx_GenericEventListSummary_unstyledList > .mx_EventTile_info .mx_EventTile_avatar ~ .mx_EventTile_line {
-            /* override padding-left $left-gutter */
+            /* override padding-inline-start $left-gutter */
             padding-inline-start: calc(var(--EventTile_group_line-spacing-inline-start) + 20px);
         }
     }
@@ -815,7 +815,7 @@ $left-gutter: 64px;
     & span {
         text-align: right;
         display: block;
-        padding-left: 1em;
+        padding-inline-start: 1em;
     }
 }
 
@@ -846,7 +846,7 @@ $left-gutter: 64px;
     margin-inline-end: 0;
 
     .mx_EventTile_line {
-        padding-left: 0;
+        padding-inline-start: 0;
         margin-inline-end: 0;
 
         span {
