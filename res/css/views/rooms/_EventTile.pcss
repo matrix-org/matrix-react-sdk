@@ -147,7 +147,7 @@ $left-gutter: 64px;
         grid-template-columns: 1fr 100px;
 
         .mx_EventTile_line {
-            margin-right: 0;
+            margin-inline-end: 0;
             grid-column: 1 / 3;
             padding: 0 !important; /* override default padding of mx_EventTile_line so that we can be centered */
         }
@@ -192,7 +192,7 @@ $left-gutter: 64px;
         }
 
         .mx_EventTile_reply {
-            margin-right: 10px;
+            margin-inline-end: 10px;
         }
 
         .mx_EventTile_msgOption {
@@ -325,7 +325,7 @@ $left-gutter: 64px;
             .mx_EventTile_avatar {
                 left: var(--EventTile_irc_line_info-margin-inline-start);
                 top: 0;
-                margin-right: var(--right-padding);
+                margin-inline-end: var(--right-padding);
                 padding-block: var(--EventTile_irc_line-padding-block);
             }
 
@@ -396,7 +396,7 @@ $left-gutter: 64px;
             .mx_ThreadSummary,
             .mx_ThreadSummary_icon,
             .mx_EventTile_line {
-                margin-right: $inline-end-margin;
+                margin-inline-end: $inline-end-margin;
                 min-height: $font-14px;
             }
 
@@ -534,7 +534,7 @@ $left-gutter: 64px;
     */
     overflow-y: hidden;
     overflow-x: hidden;
-    margin-right: var(--EventTile_content-margin-inline-end);
+    margin-inline-end: var(--EventTile_content-margin-inline-end);
 
     .mx_EventTile_edited,
     .mx_EventTile_pendingModeration {
@@ -576,7 +576,7 @@ $left-gutter: 64px;
             // Avoid inline code blocks to be sticked when on multiple lines
             line-height: $font-22px;
             // Avoid the border to be glued to the other words
-            margin-right: $spacing-2;
+            margin-inline-end: $spacing-2;
         }
 
         code {
@@ -843,11 +843,11 @@ $left-gutter: 64px;
     text-align: center;
 
     /* Remove some of the default tile padding so that the error is centered */
-    margin-right: 0;
+    margin-inline-end: 0;
 
     .mx_EventTile_line {
         padding-left: 0;
-        margin-right: 0;
+        margin-inline-end: 0;
 
         span {
             padding: $spacing-4 $spacing-8;
@@ -1348,6 +1348,6 @@ $left-gutter: 64px;
 /* Media query for mobile UI */
 @media only screen and (max-width: 480px) {
     .mx_EventTile_content {
-        margin-right: 0;
+        margin-inline-end: 0;
     }
 }
