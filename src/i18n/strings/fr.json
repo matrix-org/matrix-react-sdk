@@ -3757,5 +3757,8 @@
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Cela peut être causé par l’application ouverte dans plusieurs onglets, ou après un nettoyage des données du navigateur.",
     "Database unexpectedly closed": "La base de données s’est fermée de manière inattendue",
     "Mute room": "Salon muet",
-    "Match default setting": "Réglage par défaut"
+    "Match default setting": "Réglage par défaut",
+    "Start DM anyway": "Commencer la conversation privée quand même",
+    "Start DM anyway and never warn me again": "Commencer quand même la conversation privée et ne plus me prévenir",
+    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Impossible de trouver les profils pour les identifiants Matrix listés ci-dessous. Voulez-vous quand même commencer une conversation privée ?"
 }
