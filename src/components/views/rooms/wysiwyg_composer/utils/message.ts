@@ -99,7 +99,10 @@ export async function sendMessage(
                 return; // errored
             }
 
-            if (cmd.category === CommandCategories.messages || cmd.category === CommandCategories.effects) {
+            if (
+                content &&
+                (cmd.category === CommandCategories.messages || cmd.category === CommandCategories.effects)
+            ) {
                 attachRelation(content, relation);
                 if (replyToEvent) {
                     addReplyToMessageContent(content, replyToEvent, {
