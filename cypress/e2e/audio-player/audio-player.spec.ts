@@ -37,7 +37,7 @@ describe("Audio player", () => {
 
         cy.get(".mx_Dialog").within(() => {
             // Find and click primary "Upload" button
-            cy.get("[data-testid='dialog-primary-button']").findByRole("button", { name: "Upload" }).click();
+            cy.findByRole("button", { name: "Upload" }).click();
         });
 
         // Wait until the file is sent
@@ -178,7 +178,7 @@ describe("Audio player", () => {
         cy.openUserSettings("Appearance")
             .get(".mx_ThemeChoicePanel")
             .within(() => {
-                cy.get("[data-testid='theme-choice-panel-selectors']").within(() => {
+                cy.findByTestId("theme-choice-panel-selectors").within(() => {
                     // Enable light theme
                     cy.get(".mx_ThemeSelector_light").click();
 
@@ -186,7 +186,7 @@ describe("Audio player", () => {
                     cy.get(".mx_StyledRadioButton_checked input[value='light']").should("exist");
                 });
 
-                cy.get("[data-testid='theme-choice-panel-highcontrast']").within(() => {
+                cy.findByTestId("theme-choice-panel-highcontrast").within(() => {
                     // Click the checkbox
                     cy.get("label .mx_Checkbox_background").click();
                 });
