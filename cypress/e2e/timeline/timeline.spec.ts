@@ -197,10 +197,10 @@ describe("Timeline", () => {
 
             cy.get(".mx_GenericEventListSummary").within(() => {
                 // Click "expand" link button
-                cy.findButton("expand").click();
+                cy.findByRole("button", { name: "expand" }).click();
 
                 // Assert that the "expand" link button worked
-                cy.findButton("collapse").should("exist");
+                cy.findByRole("button", { name: "collapse" }).should("exist");
             });
 
             // Check the height of expanded GELS line
@@ -232,10 +232,10 @@ describe("Timeline", () => {
 
             cy.get(".mx_GenericEventListSummary").within(() => {
                 // Click "expand" link button
-                cy.findButton("expand").click();
+                cy.findByRole("button", { name: "expand" }).click();
 
                 // Assert that the "expand" link button worked
-                cy.findButton("collapse").should("exist");
+                cy.findByRole("button", { name: "collapse" }).should("exist");
             });
 
             // Check the height of expanded GELS line
@@ -262,10 +262,10 @@ describe("Timeline", () => {
 
             cy.get(".mx_GenericEventListSummary").within(() => {
                 // Click "expand" link button
-                cy.findButton("expand").click();
+                cy.findByRole("button", { name: "expand" }).click();
 
                 // Assert that the "expand" link button worked
-                cy.findButton("collapse").should("exist");
+                cy.findByRole("button", { name: "collapse" }).should("exist");
             });
 
             // Make sure spacer is not visible on bubble layout
@@ -283,11 +283,12 @@ describe("Timeline", () => {
                 // Click "collapse" link button on the first hovered info event line
                 cy.get(".mx_GenericEventListSummary_unstyledList .mx_EventTile_info:first-of-type")
                     .realHover()
-                    .findButton("collapse")
-                    .click();
+                    .findByRole("toolbar", { name: "Message Actions" })
+                    .should("be.visible");
+                cy.findByRole("button", { name: "collapse" }).click();
 
                 // Assert that "collapse" link button worked
-                cy.findButton("expand").should("exist");
+                cy.findByRole("button", { name: "expand" }).should("exist");
             });
 
             // Save snapshot of collapsed generic event list summary on bubble layout
@@ -305,7 +306,7 @@ describe("Timeline", () => {
             ).should("exist");
 
             // Click "expand" link button
-            cy.get(".mx_GenericEventListSummary").findButton("expand").click();
+            cy.get(".mx_GenericEventListSummary").findByRole("button", { name: "expand" }).click();
 
             // Check the event line has margin instead of inset property
             // cf. _EventTile.pcss
@@ -335,7 +336,7 @@ describe("Timeline", () => {
             cy.contains(".mx_RoomView_body .mx_EventTile .mx_EventTile_line", "Message")
                 .realHover()
                 .within(() => {
-                    cy.findButton("Edit").click();
+                    cy.findByRole("button", { name: "Edit" }).click();
                     cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
                 });
             cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", "MessageEdit").should("exist");
@@ -394,7 +395,7 @@ describe("Timeline", () => {
 
             // 2. Alignment of expanded GELS and messages
             // Click "expand" link button
-            cy.get(".mx_GenericEventListSummary").findButton("expand").click();
+            cy.get(".mx_GenericEventListSummary").findByRole("button", { name: "expand" }).click();
             // Check inline start spacing of info line on expanded GELS
             cy.get(".mx_EventTile[data-layout=irc].mx_EventTile_info:first-of-type .mx_EventTile_line")
                 // See: _EventTile.pcss
@@ -408,12 +409,14 @@ describe("Timeline", () => {
             // Delete the second (last) message
             cy.get(".mx_RoomView_MessageList > .mx_EventTile_last")
                 .realHover()
-                .findButton("Options")
+                .findByRole("button", { name: "Options" })
                 .should("be.visible")
                 .click();
-            cy.findMenuitem("Remove").should("be.visible").click();
+            cy.findByRole("menuitem", { name: "Remove" }).should("be.visible").click();
             // Confirm deletion
-            cy.get(".mx_Dialog_buttons button[data-testid=dialog-primary-button]").findButton("Remove").click();
+            cy.get(".mx_Dialog_buttons").within(() => {
+                cy.findByRole("button", { name: "Remove" }).click();
+            });
             // Make sure the dialog was closed and the second (last) message was redacted
             cy.get(".mx_Dialog").should("not.exist");
             cy.get(".mx_GenericEventListSummary .mx_EventTile_last .mx_RedactedBody").should("be.visible");
@@ -632,7 +635,7 @@ describe("Timeline", () => {
                 .should("exist")
                 .realHover()
                 .within(() => {
-                    cy.findButton("toggle event").click("topLeft");
+                    cy.findByRole("button", { name: "toggle event" }).click("topLeft");
                 });
 
             // Make sure the expand toggle works
@@ -640,7 +643,7 @@ describe("Timeline", () => {
                 .should("be.visible")
                 .realHover()
                 .within(() => {
-                    cy.findButton("toggle event")
+                    cy.findByRole("button", { name: "toggle event" })
                         // Check size and position of toggle on expanded view source event
                         // See: _ViewSourceEvent.pcss
                         .should("have.css", "height", "12px") // --ViewSourceEvent_toggle-size
@@ -669,7 +672,7 @@ describe("Timeline", () => {
                 .should("exist")
                 .realHover()
                 .within(() => {
-                    cy.findButton("toggle event").click("topLeft");
+                    cy.findByRole("button", { name: "toggle event" }).click("topLeft");
                 });
 
             // Make sure the expand toggle worked
@@ -681,7 +684,7 @@ describe("Timeline", () => {
             sendEvent(roomId, true);
             cy.visit("/#/room/" + roomId);
 
-            cy.get(".mx_RoomHeader").findButton("Search").click();
+            cy.get(".mx_RoomHeader").findByRole("button", { name: "Search" }).click();
             cy.get(".mx_SearchBar_input input").type("Message{enter}");
 
             cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
@@ -748,7 +751,7 @@ describe("Timeline", () => {
             cy.contains(".mx_RoomView_body .mx_EventTile_line", "Hello world")
                 .realHover()
                 .within(() => {
-                    cy.findButton("Reply").click();
+                    cy.findByRole("button", { name: "Reply" }).click();
                 });
         };
 
@@ -771,10 +774,12 @@ describe("Timeline", () => {
             viewRoomSendMessageAndSetupReply();
 
             cy.openMessageComposerOptions().within(() => {
-                cy.findMenuitem("Voice Message").click();
+                cy.findByRole("menuitem", { name: "Voice Message" }).click();
             });
             cy.wait(3000);
-            cy.get(".mx_RoomView_body .mx_MessageComposer").findButton("Send voice message").click();
+            cy.get(".mx_RoomView_body .mx_MessageComposer")
+                .findByRole("button", { name: "Send voice message" })
+                .click();
 
             cy.get(".mx_RoomView_body .mx_EventTile .mx_EventTile_line .mx_ReplyTile .mx_MTextBody").should(
                 "contain",
@@ -814,10 +819,10 @@ describe("Timeline", () => {
                 cy.get(".mx_RoomView_MessageList").within(() => {
                     cy.get(".mx_EventTile_last")
                         .realHover()
-                        .findButton("Options")
+                        .findByRole("button", { name: "Options" })
                         .should("be.visible")
                         .realHover()
-                        .findButton("Reply")
+                        .findByRole("button", { name: "Reply" })
                         .click();
                 });
             };
@@ -961,7 +966,7 @@ describe("Timeline", () => {
             cy.get(".mx_EventTile_last")
                 .realHover()
                 .within(() => {
-                    cy.findButton("Reply").click();
+                    cy.findByRole("button", { name: "Reply" }).click();
                 });
             cy.getComposer().type(`${reply}{enter}`);
 
