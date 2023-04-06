@@ -269,8 +269,6 @@ describe("message", () => {
                 expect(getCommandSpy).toHaveBeenCalledTimes(0);
             });
 
-            // TODO amend test when TS fixes are made - this currently can't actually return undefined
-            // according to the TS types
             it("returns undefined when the command is not successful", async () => {
                 // When
                 const validCommand = "/spoiler";
@@ -337,8 +335,6 @@ describe("message", () => {
                 expect(addReplySpy).toHaveBeenCalledTimes(1);
             });
 
-            // TODO - type will change here when I fix the TS errors (maybe)
-
             // these test cases are .action and .admin categories
             const otherCategoryTestCases = ["/nick new_nickname", "/roomname new_room_name"];
             it.each(otherCategoryTestCases)(
@@ -377,7 +373,7 @@ describe("message", () => {
             });
 
             it("if user enters invalid command and then does not send, return undefined", async () => {
-                // mock out returning a true value for `shouldSendAnyway` to avoid rendering the modal
+                // mock out returning a false value for `shouldSendAnyway` to avoid rendering the modal
                 jest.spyOn(Commands, "shouldSendAnyway").mockResolvedValueOnce(false);
                 const invalidCommandInput = "/badCommand";
 
