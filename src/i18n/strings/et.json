@@ -3757,5 +3757,8 @@
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "See võib olla seotud asjaoluga, et rakendus on avatud mitmes brauseriaknas korraga või brauseri andmete kustutamise tõttu.",
     "Database unexpectedly closed": "Andmebaasiühendus sulgus ootamatult",
     "Match default setting": "Sobita vaikimisi seadistusega",
-    "Mute room": "Summuta jututuba"
+    "Mute room": "Summuta jututuba",
+    "Start DM anyway": "Ikkagi alusta vestlust",
+    "Start DM anyway and never warn me again": "Alusta siiski ja ära hoiata mind enam",
+    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Allpool loetletud Matrix'i kasutajatunnustele ei leidunud profiile. Kas sa ikkagi tahaksid nendega vestlust alustada?"
 }
