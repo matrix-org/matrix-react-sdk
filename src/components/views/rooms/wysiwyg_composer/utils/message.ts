@@ -165,7 +165,7 @@ export async function sendMessage(
 
     dis.dispatch({ action: "message_sent" });
     CHAT_EFFECTS.forEach((effect) => {
-        if (containsEmoji(content, effect.emojis)) {
+        if (content && containsEmoji(content, effect.emojis)) {
             // For initial threads launch, chat effects are disabled
             // see #19731
             const isNotThread = relation?.rel_type !== THREAD_RELATION_TYPE.name;
