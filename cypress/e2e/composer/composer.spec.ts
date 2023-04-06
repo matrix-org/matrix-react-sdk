@@ -49,19 +49,25 @@ describe("Composer", () => {
             // Click send
             cy.findByRole("button", { name: "Send message" }).click();
             // It has been sent
-            cy.contains(".mx_EventTile_body", "my message 0");
+            cy.get(".mx_EventTile_last .mx_EventTile_body").within(() => {
+                cy.findByText("my message 0").should("exist");
+            });
 
             // Type another and press Enter afterwards
             cy.findByRole("textbox", { name: "Send a message…" }).type("my message 1{enter}");
             // It was sent
-            cy.contains(".mx_EventTile_body", "my message 1");
+            cy.get(".mx_EventTile_last .mx_EventTile_body").within(() => {
+                cy.findByText("my message 1").should("exist");
+            });
         });
 
         it("can write formatted text", () => {
             cy.findByRole("textbox", { name: "Send a message…" }).type("my bold{ctrl+b} message");
             cy.findByRole("button", { name: "Send message" }).click();
             // Note: both "bold" and "message" are bold, which is probably surprising
-            cy.contains(".mx_EventTile_body strong", "bold message");
+            cy.get(".mx_EventTile_body strong").within(() => {
+                cy.findByText("bold message").should("exist");
+            });
         });
 
         it("should allow user to input emoji via graphical picker", () => {
@@ -69,14 +75,16 @@ describe("Composer", () => {
                 cy.findByRole("button", { name: "Emoji" }).click();
             });
 
-            cy.get('[data-testid="mx_EmojiPicker"]').within(() => {
+            cy.findByTestId("mx_EmojiPicker").within(() => {
                 cy.contains(".mx_EmojiPicker_item", "😇").click();
             });
 
             cy.get(".mx_ContextualMenu_background").click(); // Close emoji picker
             cy.findByRole("textbox", { name: "Send a message…" }).type("{enter}"); // Send message
 
-            cy.contains(".mx_EventTile_body", "😇");
+            cy.get(".mx_EventTile_body").within(() => {
+                cy.findByText("😇");
+            });
         });
 
         describe("when Ctrl+Enter is required to send", () => {
@@ -93,7 +101,9 @@ describe("Composer", () => {
                 // Press Ctrl+Enter
                 cy.findByRole("textbox", { name: "Send a message…" }).type("{ctrl+enter}");
                 // It was sent
-                cy.contains(".mx_EventTile_body", "my message 3");
+                cy.get(".mx_EventTile_last .mx_EventTile_body").within(() => {
+                    cy.findByText("my message 3").should("exist");
+                });
             });
         });
     });
@@ -116,14 +126,18 @@ describe("Composer", () => {
             // Click send
             cy.findByRole("button", { name: "Send message" }).click();
             // It has been sent
-            cy.contains(".mx_EventTile_body", "my message 0");
+            cy.get(".mx_EventTile_last .mx_EventTile_body").within(() => {
+                cy.findByText("my message 0").should("exist");
+            });
 
             // Type another
             cy.get("div[contenteditable=true]").type("my message 1");
             // Send message
             cy.get("div[contenteditable=true]").type("{enter}");
             // It was sent
-            cy.contains(".mx_EventTile_body", "my message 1");
+            cy.get(".mx_EventTile_last .mx_EventTile_body").within(() => {
+                cy.findByText("my message 1").should("exist");
+            });
         });
 
         it("sends only one message when you press Enter multiple times", () => {
@@ -137,14 +151,18 @@ describe("Composer", () => {
             cy.get("div[contenteditable=true]").type("{enter}");
             cy.get("div[contenteditable=true]").type("{enter}");
             // It has been sent
-            cy.contains(".mx_EventTile_body", "my message 0");
-            cy.get(".mx_EventTile_body").should("have.length", 1);
+            cy.get(".mx_EventTile_last .mx_EventTile_body").within(() => {
+                cy.findByText("my message 0").should("exist");
+            });
+            cy.get(".mx_EventTile_last .mx_EventTile_body").should("have.length", 1);
         });
 
         it("can write formatted text", () => {
             cy.get("div[contenteditable=true]").type("my {ctrl+b}bold{ctrl+b} message");
             cy.findByRole("button", { name: "Send message" }).click();
-            cy.contains(".mx_EventTile_body strong", "bold");
+            cy.get(".mx_EventTile_body strong").within(() => {
+                cy.findByText("bold").should("exist");
+            });
         });
 
         describe("when Ctrl+Enter is required to send", () => {
@@ -162,7 +180,9 @@ describe("Composer", () => {
                 // Press Ctrl+Enter
                 cy.get("div[contenteditable=true]").type("{ctrl+enter}");
                 // It was sent
-                cy.contains(".mx_EventTile_body", "my message 3");
+                cy.get(".mx_EventTile_last .mx_EventTile_body").within(() => {
+                    cy.findByText("my message 3").should("exist");
+                });
             });
         });
 
@@ -181,7 +201,9 @@ describe("Composer", () => {
                 cy.findByRole("button", { name: "Send message" }).click();
 
                 // It was sent
-                cy.contains(".mx_EventTile_body a", "my message 0");
+                cy.get(".mx_EventTile_body a").within(() => {
+                    cy.findByText("my message 0").should("exist");
+                });
                 cy.get(".mx_EventTile_body a").should("have.attr", "href").and("include", "https://matrix.org/");
             });
         });
