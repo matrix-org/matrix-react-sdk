@@ -77,6 +77,8 @@ const WysiwygAutocomplete = forwardRef(
             }
         }
 
+        // TODO - determine if we show all of the /command suggestions, there are some options in the
+        // list which don't seem to make sense in this context, specifically /html and /plain
         return room ? (
             <div className="mx_WysiwygComposer_AutoCompleteWrapper" data-testid="autocomplete-wrapper">
                 <Autocomplete
