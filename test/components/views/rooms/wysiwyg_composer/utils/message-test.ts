@@ -66,9 +66,11 @@ describe("message", () => {
 
     beforeEach(() => {
         jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
+        jest.clearAllMocks();
     });
-    afterEach(() => {
-        jest.resetAllMocks();
+
+    afterAll(() => {
+        jest.restoreAllMocks();
     });
 
     describe("sendMessage", () => {
@@ -238,15 +240,12 @@ describe("message", () => {
             expect(spyDispatcher).toHaveBeenCalledWith({ action: "effects.confetti" });
         });
 
-        describe.only("slash commands", () => {
-            afterEach(() => {
-                jest.restoreAllMocks();
-            });
+        describe("slash commands", () => {
+            const getCommandSpy = jest.spyOn(SlashCommands, "getCommand");
 
             it("calls getCommand for a message starting with a valid command", async () => {
                 // When
                 const validCommand = "/spoiler";
-                const getCommandSpy = jest.spyOn(SlashCommands, "getCommand");
                 await sendMessage(validCommand, true, {
                     roomContext: defaultRoomContext,
                     mxClient: mockClient,
@@ -260,7 +259,6 @@ describe("message", () => {
             it("does not call getCommand for valid command with invalid prefix", async () => {
                 // When
                 const invalidPrefixCommand = "//spoiler";
-                const getCommandSpy = jest.spyOn(SlashCommands, "getCommand");
                 await sendMessage(invalidPrefixCommand, true, {
                     roomContext: defaultRoomContext,
                     mxClient: mockClient,
@@ -276,7 +274,7 @@ describe("message", () => {
             it("returns undefined when the command is not successful", async () => {
                 // When
                 const validCommand = "/spoiler";
-                jest.spyOn(Commands, "runSlashCommand").mockResolvedValue([{ content: "mock content" }, false]);
+                jest.spyOn(Commands, "runSlashCommand").mockResolvedValueOnce([{ content: "mock content" }, false]);
 
                 const result = await sendMessage(validCommand, true, {
                     roomContext: defaultRoomContext,
@@ -358,7 +356,7 @@ describe("message", () => {
 
             it("if user enters invalid command and then sends it anyway", async () => {
                 // mock out returning a true value for `shouldSendAnyway` to avoid rendering the modal
-                jest.spyOn(Commands, "shouldSendAnyway").mockResolvedValue(true);
+                jest.spyOn(Commands, "shouldSendAnyway").mockResolvedValueOnce(true);
                 const invalidCommandInput = "/badCommand";
 
                 await sendMessage(invalidCommandInput, true, {
@@ -379,7 +377,7 @@ describe("message", () => {
 
             it("if user enters invalid command and then does not send, return undefined", async () => {
                 // mock out returning a true value for `shouldSendAnyway` to avoid rendering the modal
-                jest.spyOn(Commands, "shouldSendAnyway").mockResolvedValue(false);
+                jest.spyOn(Commands, "shouldSendAnyway").mockResolvedValueOnce(false);
                 const invalidCommandInput = "/badCommand";
 
                 const result = await sendMessage(invalidCommandInput, true, {
