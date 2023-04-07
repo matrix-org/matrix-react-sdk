@@ -46,7 +46,7 @@ describe("Editing", () => {
 
     // Edit "Message"
     const editLastMessage = (edit: string) => {
-        cy.get(".mx_EventTile_last").realHover().findButton("Edit").click();
+        cy.get(".mx_EventTile_last").realHover().findByRole("button", { name: "Edit" }).click();
         cy.get(".mx_BasicMessageComposer_input").type(`{selectAll}{del}${edit}{enter}`);
     };
 
@@ -62,7 +62,7 @@ describe("Editing", () => {
 
     const clickButtonViewSource = () => {
         // Assert that "View Source" button is rendered and click it
-        cy.get(".mx_EventTile .mx_EventTile_line").realHover().findButton("View Source").click();
+        cy.get(".mx_EventTile .mx_EventTile_line").realHover().findByRole("button", { name: "View Source" }).click();
     };
 
     beforeEach(() => {
@@ -84,7 +84,7 @@ describe("Editing", () => {
     it("should render and interact with the message edit history dialog", () => {
         // Click the "Remove" button on the message edit history dialog
         const clickButtonRemove = () => {
-            cy.get(".mx_EventTile_line").realHover().findButton("Remove").click();
+            cy.get(".mx_EventTile_line").realHover().findByRole("button", { name: "Remove" }).click();
         };
 
         cy.visit("/#/room/" + roomId);
@@ -241,7 +241,7 @@ describe("Editing", () => {
             // Assert that the edited message is rendered
             cy.get(".mx_MessageEditHistoryDialog li:nth-child(2)").within(() => {
                 // Assert that "Remove" button for the original message is rendered
-                cy.get(".mx_EventTile .mx_EventTile_line").realHover().findButton("Remove");
+                cy.get(".mx_EventTile .mx_EventTile_line").realHover().findByRole("button", { name: "Remove" });
 
                 clickButtonViewSource();
             });
@@ -272,7 +272,7 @@ describe("Editing", () => {
 
         // Edit message
         cy.contains(".mx_RoomView_body .mx_EventTile", "Message").within(() => {
-            cy.get(".mx_EventTile_line").realHover().findButton("Edit").click().checkA11y();
+            cy.get(".mx_EventTile_line").realHover().findByRole("button", { name: "Edit" }).click().checkA11y();
             cy.get(".mx_EventTile_line .mx_BasicMessageComposer_input")
                 .type("Foo{backspace}{backspace}{backspace}{enter}")
                 .checkA11y();
