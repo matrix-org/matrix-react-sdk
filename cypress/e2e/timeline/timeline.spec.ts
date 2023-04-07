@@ -755,19 +755,27 @@ describe("Timeline", () => {
                 });
         };
 
+        // For clicking the reply button on the last line
+        const clickButtonReply = () => {
+            cy.get(".mx_RoomView_MessageList").within(() => {
+                cy.get(".mx_EventTile_last").realHover().findByRole("button", { name: "Reply" }).click();
+            });
+        };
+
         it("can reply with a text message", () => {
             viewRoomSendMessageAndSetupReply();
 
             cy.getComposer().type(`${reply}{enter}`);
 
-            cy.get(".mx_RoomView_body .mx_EventTile .mx_EventTile_line .mx_ReplyTile .mx_MTextBody").should(
-                "contain",
-                MESSAGE,
-            );
-            cy.contains(".mx_RoomView_body .mx_EventTile > .mx_EventTile_line > .mx_MTextBody", reply).should(
-                "have.length",
-                1,
-            );
+            cy.get(".mx_RoomView_body").within(() => {
+                cy.get(".mx_EventTile_last .mx_EventTile_line").within(() => {
+                    cy.get(".mx_ReplyTile .mx_MTextBody").within(() => {
+                        cy.findByText(MESSAGE).should("exist");
+                    });
+
+                    cy.findByText(reply).should("have.length", 1);
+                });
+            });
         });
 
         it("can reply with a voice message", () => {
@@ -776,19 +784,21 @@ describe("Timeline", () => {
             cy.openMessageComposerOptions().within(() => {
                 cy.findByRole("menuitem", { name: "Voice Message" }).click();
             });
-            cy.wait(3000);
-            cy.get(".mx_RoomView_body .mx_MessageComposer")
-                .findByRole("button", { name: "Send voice message" })
-                .click();
 
-            cy.get(".mx_RoomView_body .mx_EventTile .mx_EventTile_line .mx_ReplyTile .mx_MTextBody").should(
-                "contain",
-                MESSAGE,
-            );
-            cy.get(".mx_RoomView_body .mx_EventTile > .mx_EventTile_line > .mx_MVoiceMessageBody").should(
-                "have.length",
-                1,
-            );
+            // Record an empty message
+            cy.wait(3000);
+
+            cy.get(".mx_RoomView_body").within(() => {
+                cy.get(".mx_MessageComposer").findByRole("button", { name: "Send voice message" }).click();
+
+                cy.get(".mx_EventTile_last .mx_EventTile_line").within(() => {
+                    cy.get(".mx_ReplyTile .mx_MTextBody").within(() => {
+                        cy.findByText(MESSAGE).should("exist");
+                    });
+
+                    cy.get(".mx_MVoiceMessageBody").should("have.length", 1);
+                });
+            });
         });
 
         it("should not be possible to send flag with regional emojis", () => {
@@ -813,19 +823,6 @@ describe("Timeline", () => {
         it("should display a reply chain", () => {
             let bot: MatrixClient;
             const reply2 = "Reply again";
-
-            // For clicking the reply button on the last line
-            const clickButtonReply = () => {
-                cy.get(".mx_RoomView_MessageList").within(() => {
-                    cy.get(".mx_EventTile_last")
-                        .realHover()
-                        .findByRole("button", { name: "Options" })
-                        .should("be.visible")
-                        .realHover()
-                        .findByRole("button", { name: "Reply" })
-                        .click();
-                });
-            };
 
             cy.visit("/#/room/" + roomId);
 
@@ -854,19 +851,27 @@ describe("Timeline", () => {
                 cy.botSendMessage(bot, roomId, MESSAGE);
             });
 
+            // Assert that MESSAGE is found
+            cy.findByText(MESSAGE);
+
             // Reply to the message
             clickButtonReply();
             cy.getComposer().type(`${reply}{enter}`);
 
             // Make sure 'reply' was sent
-            cy.contains(".mx_RoomView_MessageList .mx_EventTile_last", reply).should("exist");
+            cy.get(".mx_RoomView_body .mx_EventTile_last").within(() => {
+                cy.findByText(reply).should("exist");
+            });
 
             // Reply again to create a replyChain
             clickButtonReply();
             cy.getComposer().type(`${reply2}{enter}`);
 
             // Assert that 'reply2' was sent
-            cy.contains(".mx_RoomView_MessageList .mx_EventTile_last", reply2).should("exist");
+            cy.get(".mx_RoomView_body .mx_EventTile_last").within(() => {
+                cy.findByText(reply2).should("exist");
+            });
+
             cy.get(".mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
 
             // Exclude timestamp and read marker from snapshot
@@ -960,20 +965,21 @@ describe("Timeline", () => {
             });
 
             // Wait until the message is rendered
-            cy.get(".mx_EventTile_last .mx_MTextBody .mx_EventTile_body").should("have.text", LONG_STRING);
+            cy.get(".mx_EventTile_last .mx_MTextBody .mx_EventTile_body").within(() => {
+                cy.findByText(LONG_STRING);
+            });
 
             // Reply to the message
-            cy.get(".mx_EventTile_last")
-                .realHover()
-                .within(() => {
-                    cy.findByRole("button", { name: "Reply" }).click();
-                });
+            clickButtonReply();
             cy.getComposer().type(`${reply}{enter}`);
 
             // Make sure the reply tile is rendered
-            cy.get(".mx_EventTile_last").within(() => {
-                cy.get(".mx_ReplyTile .mx_MTextBody").should("have.text", LONG_STRING);
-                cy.get(".mx_EventTile_line > .mx_MTextBody").should("have.text", reply);
+            cy.get(".mx_EventTile_last .mx_EventTile_line").within(() => {
+                cy.get(".mx_ReplyTile .mx_MTextBody").within(() => {
+                    cy.findByText(LONG_STRING).should("exist");
+                });
+
+                cy.findByText(reply).should("have.length", 1);
             });
 
             // Change the viewport size
