@@ -3757,5 +3757,8 @@
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Pengguna (%(user)s) akhirnya tidak diundang ke %(roomId)s tetapi tidak ada kesalahan yang diberikan dari utilitas pengundang",
     "Reload": "Muat ulang",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Ini mungkin terjadi karena memiliki aplikasinya terbuka di beberapa tab atau karena menghapus data peramban.",
-    "Database unexpectedly closed": "Basis data ditutup secara tidak terduga"
+    "Database unexpectedly closed": "Basis data ditutup secara tidak terduga",
+    "Start DM anyway": "Mulai percakapan langsung saja",
+    "Start DM anyway and never warn me again": "Mulai percakapan langsung saja dan jangan peringatkan saya lagi",
+    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Tidak dapat menemukan profil untuk ID Matrix yang disertakan di bawah — apakah Anda ingin memulai percakapan langsung saja?"
 }
