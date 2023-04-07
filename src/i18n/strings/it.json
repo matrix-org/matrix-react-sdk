@@ -3755,5 +3755,10 @@
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "L'utente (%(user)s) non è stato segnato come invitato in %(roomId)s, ma non c'è stato alcun errore dall'utilità di invito",
     "Reload": "Ricarica",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Potrebbe essere causato dall'apertura dell'app in schede multiple o dalla cancellazione dei dati del browser.",
-    "Database unexpectedly closed": "Database chiuso inaspettatamente"
+    "Database unexpectedly closed": "Database chiuso inaspettatamente",
+    "Mute room": "Silenzia stanza",
+    "Match default setting": "Corrispondi l'impostazione predefinita",
+    "Start DM anyway": "Inizia il messaggio lo stesso",
+    "Start DM anyway and never warn me again": "Inizia il messaggio lo stesso e non avvisarmi più",
+    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Impossibile trovare profili per gli ID Matrix elencati sotto - vuoi comunque iniziare un messaggio diretto?"
 }
