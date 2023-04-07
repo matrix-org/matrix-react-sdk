@@ -373,7 +373,7 @@ export async function accessSecretStorage(func = async (): Promise<void> => {}, 
             });
 
             const keyId = Object.keys(secretStorageKeys)[0];
-            if (keyId && SettingsStore.getValue("feature_dehydration")) {
+            if (keyId) {
                 let dehydrationKeyInfo = {};
                 if (secretStorageKeyInfo[keyId] && secretStorageKeyInfo[keyId].passphrase) {
                     dehydrationKeyInfo = { passphrase: secretStorageKeyInfo[keyId].passphrase };
