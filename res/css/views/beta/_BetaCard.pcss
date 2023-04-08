@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_BetaCard {
-    margin-bottom: $spacing-20;
+    margin-bottom: var(--spacing-20);
     padding: var(--spacing-24);
     background-color: $system;
     border-radius: 8px;
@@ -25,7 +25,7 @@ limitations under the License.
     .mx_BetaCard_columns {
         display: flex;
         flex-flow: wrap;
-        gap: $spacing-20;
+        gap: var(--spacing-20);
         justify-content: center;
 
         .mx_BetaCard_columns_description {
@@ -52,7 +52,7 @@ limitations under the License.
                 display: flex;
                 flex-wrap: wrap-reverse;
                 gap: $spacing-12;
-                margin: $spacing-20 auto 0;
+                margin: var(--spacing-20) auto 0;
 
                 .mx_AccessibleButton {
                     padding: 7px 40px;
@@ -73,7 +73,7 @@ limitations under the License.
             }
 
             .mx_BetaCard_faq {
-                margin-top: $spacing-20;
+                margin-top: var(--spacing-20);
                 font-size: $font-12px;
                 line-height: $font-15px;
 
