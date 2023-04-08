@@ -407,10 +407,10 @@ legend {
     background-color: $dialog-backdrop-color;
     opacity: 0.8;
     z-index: 4011;
-}
 
-.mx_Dialog_background.mx_Dialog_staticBackground {
-    z-index: 4009;
+    &.mx_Dialog_staticBackground {
+        z-index: 4009;
+    }
 }
 
 .mx_Dialog_wrapperWithStaticUnder .mx_Dialog_background {
@@ -437,12 +437,6 @@ legend {
     padding: 0;
 }
 
-.mx_Dialog_header {
-    position: relative;
-    padding: 3px 0;
-    margin-bottom: 10px;
-}
-
 .mx_Dialog_titleImage {
     vertical-align: sub;
     width: 25px;
@@ -459,16 +453,23 @@ legend {
     box-sizing: border-box;
 }
 
-.mx_Dialog_header.mx_Dialog_headerWithButton > .mx_Dialog_title {
-    text-align: center;
-}
-.mx_Dialog_header.mx_Dialog_headerWithCancel {
-    padding-right: 20px; /* leave space for the 'X' cancel button */
-}
+.mx_Dialog_header {
+    position: relative;
+    padding: 3px 0;
+    margin-bottom: 10px;
 
-.mx_Dialog_header.mx_Dialog_headerWithCancelOnly {
-    padding: 0 20px 0 0;
-    margin: 0;
+    &.mx_Dialog_headerWithButton > .mx_Dialog_title {
+        text-align: center;
+    }
+
+    &.mx_Dialog_headerWithCancel {
+        padding-right: 20px; /* leave space for the 'X' cancel button */
+    }
+
+    &.mx_Dialog_headerWithCancelOnly {
+        padding: 0 20px 0 0;
+        margin: 0;
+    }
 }
 
 .mx_Dialog_title.danger {
