@@ -20,7 +20,7 @@ limitations under the License.
     padding: $spacing-32;
     border-radius: 16px;
     background: $system;
-    gap: $spacing-64;
+    gap: var(--spacing-64);
 
     animation-delay: 1500ms;
     animation-duration: 300ms;
@@ -63,13 +63,13 @@ limitations under the License.
         flex-shrink: 1;
         flex-grow: 1;
         align-self: center;
-        height: calc(100% + $spacing-64 + $spacing-64);
+        height: calc(100% + var(--spacing-64) + var(--spacing-64));
         aspect-ratio: 4 / 3;
         object-fit: contain;
         min-width: 0;
         min-height: 0;
-        margin-top: -$spacing-64;
-        margin-bottom: -$spacing-64;
+        margin-top: -var(--spacing-64);
+        margin-bottom: -var(--spacing-64);
 
         animation-delay: 1500ms;
         animation-duration: 300ms;
