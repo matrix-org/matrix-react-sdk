@@ -53,9 +53,9 @@ $timeline-image-border-radius: 8px;
      */
     --zIndex-dialog-wrapper-default: 4000;
     --zIndex-dialog-static-background: 4009;
-    --zIndex-dialog-static: 4010;
-    --zIndex-dialog-standard-background: 4011;
-    --zIndex-dialog-standard: 4012;
+    --zIndex-dialog-static: calc(var(--zIndex-dialog-static-background) + 1); /* 4010 */
+    --zIndex-dialog-standard-background: calc(var(--zIndex-dialog-static) + 1); /* 4011 */
+    --zIndex-dialog-standard: calc(var(--zIndex-dialog-standard-background) + 1); /* 4012 */
 }
 
 @media only percy {
