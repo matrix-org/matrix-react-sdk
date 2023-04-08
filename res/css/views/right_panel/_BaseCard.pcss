@@ -27,9 +27,9 @@ limitations under the License.
     flex: 1;
 
     .mx_BaseCard_header {
-        --BaseCard_header_button-margin: $spacing-12;
+        --BaseCard_header_button-margin: var(--spacing-12);
 
-        margin: $spacing-4 0 $spacing-12;
+        margin: $spacing-4 0 var(--spacing-12);
 
         > h2 {
             margin: 0 44px; /* TODO: Use a spacing variable */
@@ -147,8 +147,8 @@ limitations under the License.
         margin: var(--spacing-20) 0 var(--spacing-16);
 
         & > * {
-            margin-left: $spacing-12;
-            margin-right: $spacing-12;
+            margin-left: var(--spacing-12);
+            margin-right: var(--spacing-12);
         }
 
         > h1 {
@@ -159,7 +159,7 @@ limitations under the License.
 
         .mx_BaseCard_Button {
             padding: 10px; /* TODO: Use a spacing variable */
-            padding-inline-start: $spacing-12;
+            padding-inline-start: var(--spacing-12);
             margin: 0;
             position: relative;
             font-size: $font-13px;
@@ -181,7 +181,7 @@ limitations under the License.
             }
 
             &.mx_AccessibleButton_disabled {
-                padding-right: $spacing-12;
+                padding-right: var(--spacing-12);
                 &::after {
                     content: unset;
                 }

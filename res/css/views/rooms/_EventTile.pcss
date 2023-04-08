@@ -758,8 +758,8 @@ $left-gutter: 64px;
 
         .mx_EventTile_collapsedCodeBlock {
             max-height: 30vh;
-            padding-top: $spacing-12;
-            padding-bottom: $spacing-12;
+            padding-top: var(--spacing-12);
+            padding-bottom: var(--spacing-12);
         }
 
         /* Inserted adjacent to <pre> blocks, (See TextualBody) */
@@ -865,7 +865,7 @@ $left-gutter: 64px;
 
 .mx_EventTile[data-shape="ThreadsList"],
 .mx_EventTile[data-shape="Notification"] {
-    --topOffset: $spacing-12;
+    --topOffset: var(--spacing-12);
     --leftOffset: 48px;
     $borderRadius: 8px;
     $padding: $spacing-8;

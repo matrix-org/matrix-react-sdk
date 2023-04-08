@@ -54,7 +54,7 @@ limitations under the License.
             height: 24px;
             line-height: $font-24px;
             font-size: $font-14px;
-            padding-inline-start: $spacing-12;
+            padding-inline-start: var(--spacing-12);
             border: 0 !important;
             outline: 0 !important;
             resize: none;
@@ -126,7 +126,7 @@ limitations under the License.
     border-top: 1px solid $input-border-color;
 
     > h3 {
-        margin: $spacing-12 0;
+        margin: var(--spacing-12) 0;
         font-size: $font-12px;
         color: $muted-fg-color;
         font-weight: bold;
@@ -202,7 +202,7 @@ limitations under the License.
 
         .mx_InviteDialog_section {
             padding-bottom: 0;
-            margin-top: $spacing-12;
+            margin-top: var(--spacing-12);
         }
     }
 }
@@ -323,7 +323,7 @@ limitations under the License.
 .mx_InviteDialog_tile {
     cursor: pointer;
     display: grid;
-    gap: $spacing-8 $spacing-12;
+    gap: $spacing-8 var(--spacing-12);
     align-items: center;
 
     &.mx_InviteDialog_tile--room {
