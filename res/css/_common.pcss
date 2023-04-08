@@ -519,21 +519,21 @@ legend {
         float: left;
     }
 
-.mx_Dialog_buttons_row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    text-align: initial;
-    margin-inline-start: auto;
+    .mx_Dialog_buttons_row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        text-align: initial;
+        margin-inline-start: auto;
 
-    /* default gap among elements */
-    column-gap: var(--buttons-dialog-gap-column);
-    row-gap: var(--buttons-dialog-gap-row);
+        /* default gap among elements */
+        column-gap: var(--buttons-dialog-gap-column);
+        row-gap: var(--buttons-dialog-gap-row);
 
-    button {
-        margin: 0 !important; /* override the margin settings */
+        button {
+            margin: 0 !important; /* override the margin settings */
+        }
     }
-}
 }
 
 @define-mixin mx_DialogButton {
