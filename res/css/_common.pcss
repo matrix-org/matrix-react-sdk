@@ -412,18 +412,18 @@ legend {
         z-index: 4009;
     }
 
-.mx_Dialog_wrapperWithStaticUnder & {
-    /* Roughly half of what it would normally be - we don't want to black out */
-    /* the app, just make it clear that the dialogs are stacked. */
-    opacity: 0.4;
-}
+    .mx_Dialog_wrapperWithStaticUnder & {
+        /* Roughly half of what it would normally be - we don't want to black out */
+        /* the app, just make it clear that the dialogs are stacked. */
+        opacity: 0.4;
+    }
 
-.mx_Dialog_lightbox & {
-    opacity: $lightbox-background-bg-opacity;
-    background-color: $lightbox-background-bg-color;
-    animation-name: mx_Dialog_lightbox_background_keyframes;
-    animation-duration: 300ms;
-}
+    .mx_Dialog_lightbox & {
+        opacity: $lightbox-background-bg-opacity;
+        background-color: $lightbox-background-bg-color;
+        animation-name: mx_Dialog_lightbox_background_keyframes;
+        animation-duration: 300ms;
+    }
 }
 
 .mx_Dialog_lightbox .mx_Dialog {
