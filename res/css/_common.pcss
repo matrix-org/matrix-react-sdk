@@ -299,6 +299,7 @@ legend {
     --zIndex-dialog-wrapper-default: 4000;
     --zIndex-dialog-static-background: 4009;
     --zIndex-dialog-static: 4010;
+    --zIndex-dialog-standard-background: 4011;
 }
 
 .mx_Dialog_wrapper {
@@ -423,7 +424,7 @@ legend {
     height: 100%;
     background-color: $dialog-backdrop-color;
     opacity: 0.8;
-    z-index: 4011;
+    z-index: var(--zIndex-dialog-standard-background);
 
     &.mx_Dialog_staticBackground {
         z-index: var(--zIndex-dialog-static-background);
