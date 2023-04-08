@@ -1065,6 +1065,56 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             </>
         );
     }
+    // calculate no of element to jump based on arrow key or page up and page down
+    const getNoOfEleToJump = ({
+        currentIndex,
+        totalElements,
+        noOfJump,
+    }: {
+        currentIndex: number;
+        totalElements: number;
+        noOfJump: number;
+    }) => {
+        if (currentIndex + noOfJump < 0) {
+            return 0;
+        } else if (currentIndex + noOfJump > totalElements - 1) {
+            return totalElements - 1;
+        } else {
+            return currentIndex + noOfJump;
+        }
+    };
+
+    const findNextElementIndex = ({
+        accessibilityAction,
+        idx,
+        refs,
+    }: {
+        accessibilityAction: KeyBindingAction;
+        idx: number;
+        refs: RefObject<HTMLElement>[];
+    }) => {
+        let noOfEleToJump: number = 1;
+        if (accessibilityAction === KeyBindingAction.ArrowUp || accessibilityAction === KeyBindingAction.ArrowDown) {
+            // move to next element in either direct using arrow key
+            noOfEleToJump = getNoOfEleToJump({
+                currentIndex: idx,
+                totalElements: refs.length,
+                noOfJump: accessibilityAction === KeyBindingAction.ArrowUp ? -1 : 1,
+            });
+        } else if (
+            accessibilityAction === KeyBindingAction.PageUp ||
+            accessibilityAction === KeyBindingAction.PageDown
+        ) {
+            // jump 3 next element in either direct using page up and page down key
+            noOfEleToJump = getNoOfEleToJump({
+                currentIndex: idx,
+                totalElements: refs.length,
+                noOfJump: accessibilityAction === KeyBindingAction.PageUp ? -3 : 3,
+            });
+        }
+
+        return noOfEleToJump;
+    };
 
     const onDialogKeyDown = (ev: KeyboardEvent): void => {
         const navigationAction = getKeyBindingsManager().getNavigationAction(ev);
@@ -1086,6 +1136,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 break;
             case KeyBindingAction.ArrowUp:
             case KeyBindingAction.ArrowDown:
+            case KeyBindingAction.PageUp:
+            case KeyBindingAction.PageDown:
                 ev.stopPropagation();
                 ev.preventDefault();
 
@@ -1102,7 +1154,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     }
 
                     const idx = refs.indexOf(rovingContext.state.activeRef);
-                    ref = findSiblingElement(refs, idx + (accessibilityAction === KeyBindingAction.ArrowUp ? -1 : 1));
+                    const nextElementIndex = findNextElementIndex({ accessibilityAction, idx, refs });
+                    ref = findSiblingElement(refs, nextElementIndex);
                 }
                 break;
 

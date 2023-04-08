@@ -149,6 +149,8 @@ export enum KeyBindingAction {
     ArrowDown = "KeyBinding.arrowDown",
     Tab = "KeyBinding.tab",
     Comma = "KeyBinding.comma",
+    PageUp = "KeyBinding.pageUp",
+    PageDown = "KeyBinding.pageDown",
 
     /** Toggle visibility of hidden events */
     ToggleHiddenEventVisibility = "KeyBinding.toggleHiddenEventVisibility",
@@ -269,6 +271,8 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             KeyBindingAction.ArrowRight,
             KeyBindingAction.ArrowDown,
             KeyBindingAction.Comma,
+            KeyBindingAction.PageUp,
+            KeyBindingAction.PageDown,
         ],
     },
     [CategoryName.NAVIGATION]: {
@@ -709,6 +713,16 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
     [KeyBindingAction.Comma]: {
         default: {
             key: Key.COMMA,
+        },
+    },
+    [KeyBindingAction.PageUp]: {
+        default: {
+            key: Key.PAGE_UP,
+        },
+    },
+    [KeyBindingAction.PageDown]: {
+        default: {
+            key: Key.PAGE_DOWN,
         },
     },
 };
