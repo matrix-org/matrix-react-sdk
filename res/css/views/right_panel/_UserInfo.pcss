@@ -48,23 +48,23 @@ limitations under the License.
     }
 
     .mx_UserInfo_container {
-        padding: $spacing-8 var(--spacing-16);
+        padding: var(--spacing-8) var(--spacing-16);
 
         &:not(.mx_UserInfo_separator) {
             padding-top: var(--spacing-16);
             padding-bottom: 0;
 
             > :not(h3) {
-                margin-inline-start: $spacing-8;
+                margin-inline-start: var(--spacing-8);
                 display: flex;
                 flex-flow: column;
                 align-items: flex-start;
-                row-gap: $spacing-8;
+                row-gap: var(--spacing-8);
             }
         }
 
         .mx_UserInfo_container_verifyButton {
-            margin-top: $spacing-8;
+            margin-top: var(--spacing-8);
         }
     }
 
@@ -75,7 +75,7 @@ limitations under the License.
     .mx_UserInfo_memberDetailsContainer {
         padding-top: 0;
         padding-bottom: 0;
-        margin-bottom: $spacing-8;
+        margin-bottom: var(--spacing-8);
     }
 
     .mx_RoomTile_titleContainer {
@@ -241,7 +241,7 @@ limitations under the License.
     .mx_UserInfo_devices {
         .mx_UserInfo_device {
             display: flex;
-            margin: $spacing-8 0;
+            margin: var(--spacing-8) 0;
 
             &.mx_UserInfo_device_verified {
                 .mx_UserInfo_device_trusted {

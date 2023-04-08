@@ -24,7 +24,7 @@ limitations under the License.
 
     #mx_SpotlightDialog_keyboardPrompt {
         position: absolute;
-        padding: $spacing-8;
+        padding: var(--spacing-8);
         border-radius: 8px;
         background-color: $background;
         top: -60px; /* relative to the top of the modal */
@@ -71,12 +71,12 @@ limitations under the License.
             align-content: center;
             align-items: center;
             border-radius: 8px;
-            margin-right: $spacing-8;
+            margin-right: var(--spacing-8);
             background-color: $quinary-content;
             vertical-align: middle;
             color: $primary-content;
             position: relative;
-            padding: $spacing-4 $spacing-8 $spacing-4 37px; /* TODO: Use a spacing variable */
+            padding: $spacing-4 var(--spacing-8) $spacing-4 37px; /* TODO: Use a spacing variable */
 
             &::before {
                 background-color: $secondary-content;
@@ -87,7 +87,7 @@ limitations under the License.
                 width: 18px;
                 height: 18px;
                 position: absolute;
-                left: $spacing-8;
+                left: var(--spacing-8);
                 top: 50%;
                 transform: translateY(-50%);
             }
@@ -107,7 +107,7 @@ limitations under the License.
                 height: 16px;
                 background: $system;
                 border-radius: 8px;
-                margin-left: $spacing-8;
+                margin-left: var(--spacing-8);
                 text-align: center;
                 line-height: 16px;
                 color: $secondary-content;
@@ -166,14 +166,14 @@ limitations under the License.
             }
 
             > h4 {
-                margin-bottom: $spacing-8;
+                margin-bottom: var(--spacing-8);
             }
 
             .mx_SpotlightDialog_sectionHeader {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                margin-bottom: $spacing-8;
+                margin-bottom: var(--spacing-8);
 
                 .mx_SpotlightDialog_options {
                     display: flex;
@@ -258,14 +258,14 @@ limitations under the License.
 
                     .mx_SpotlightDialog_enterPrompt {
                         margin-top: 9px; /* TODO: Use a spacing variable */
-                        margin-right: $spacing-8;
+                        margin-right: var(--spacing-8);
                     }
                 }
 
                 > .mx_SpotlightDialog_metaspaceResult,
                 > .mx_DecoratedRoomAvatar,
                 > .mx_BaseAvatar {
-                    margin-right: $spacing-8;
+                    margin-right: var(--spacing-8);
                     width: 24px;
                     height: 24px;
 
@@ -285,7 +285,7 @@ limitations under the License.
                         display: flex;
                         flex-direction: row;
                         line-height: $font-24px;
-                        margin-right: $spacing-8;
+                        margin-right: var(--spacing-8);
 
                         .mx_SpotlightDialog_result_publicRoomName {
                             color: $primary-content;
@@ -296,7 +296,7 @@ limitations under the License.
                         .mx_SpotlightDialog_result_publicRoomAlias {
                             color: $tertiary-content;
                             font-size: $font-12px;
-                            margin-left: $spacing-8;
+                            margin-left: var(--spacing-8);
                             overflow: hidden;
                             text-overflow: ellipsis;
                         }
@@ -315,7 +315,7 @@ limitations under the License.
                 }
 
                 .mx_NotificationBadge {
-                    margin-left: $spacing-8;
+                    margin-left: var(--spacing-8);
                 }
 
                 .mx_SpotlightDialog_option--menu,
@@ -369,12 +369,12 @@ limitations under the License.
 
         .mx_SpotlightDialog_inviteLink,
         .mx_SpotlightDialog_createRoom {
-            margin-top: $spacing-8;
+            margin-top: var(--spacing-8);
 
             .mx_AccessibleButton {
                 position: relative;
                 margin: 0;
-                padding: 3px $spacing-8 3px var(--spacing-28); /* TODO: Use a spacing variable */
+                padding: 3px var(--spacing-8) 3px var(--spacing-28); /* TODO: Use a spacing variable */
 
                 &::before {
                     content: "";
@@ -383,7 +383,7 @@ limitations under the License.
                     mask-repeat: no-repeat;
                     mask-position: center;
                     mask-size: contain;
-                    left: $spacing-8;
+                    left: var(--spacing-8);
                     width: 16px;
                     height: 16px;
                     background: $accent;
@@ -457,8 +457,8 @@ limitations under the License.
         }
 
         .mx_SpotlightDialog_result_details {
-            margin-left: $spacing-8;
-            margin-right: $spacing-8;
+            margin-left: var(--spacing-8);
+            margin-right: var(--spacing-8);
             color: $tertiary-content;
             font-size: $font-12px;
             line-height: $font-15px;

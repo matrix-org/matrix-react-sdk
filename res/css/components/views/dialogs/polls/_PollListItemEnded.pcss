@@ -30,7 +30,7 @@ limitations under the License.
     display: grid;
     justify-content: left;
     align-items: center;
-    grid-gap: $spacing-8;
+    grid-gap: var(--spacing-8);
     grid-template-columns: min-content 1fr min-content;
     grid-template-rows: auto;
 }
@@ -39,7 +39,7 @@ limitations under the License.
     height: 14px;
     width: 14px;
     color: $quaternary-content;
-    padding-left: $spacing-8;
+    padding-left: var(--spacing-8);
 }
 
 .mx_PollListItemEnded_date {
@@ -55,11 +55,11 @@ limitations under the License.
 
 .mx_PollListItemEnded_answers {
     display: grid;
-    grid-gap: $spacing-8;
+    grid-gap: var(--spacing-8);
     margin-top: var(--spacing-12);
 }
 
 .mx_PollListItemEnded_voteCount {
     // 6px to match PollOption padding
-    margin: $spacing-8 0 0 6px;
+    margin: var(--spacing-8) 0 0 6px;
 }

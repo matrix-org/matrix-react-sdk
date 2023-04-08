@@ -28,7 +28,7 @@ limitations under the License.
     flex-direction: row;
     /* Right margin for the design. We could apply this to the whole dialog, but then the scrollbar */
     /* for the user section gets weird. */
-    margin: $spacing-8 45px 0 0; /* TODO: Use a spacing variable */
+    margin: var(--spacing-8) 45px 0 0; /* TODO: Use a spacing variable */
 
     .mx_InviteDialog_editor {
         flex: 1;
@@ -36,7 +36,7 @@ limitations under the License.
         background-color: $header-panel-bg-color;
         border-radius: 4px;
         min-height: 25px;
-        padding-inline-start: $spacing-8;
+        padding-inline-start: var(--spacing-8);
         overflow-x: hidden;
         overflow-y: auto;
         display: flex;
@@ -109,7 +109,7 @@ limitations under the License.
 }
 
 .mx_InviteDialog_section_hidden_suggestions_disclaimer {
-    padding: $spacing-8 0 var(--spacing-16) 0;
+    padding: var(--spacing-8) 0 var(--spacing-16) 0;
     font-size: $font-14px;
 
     > span {
@@ -148,7 +148,7 @@ limitations under the License.
 
 /* Many of these styles are stolen from mx_UserPill, but adjusted for the invite dialog. */
 .mx_InviteDialog_userTile {
-    margin-inline-end: $spacing-8;
+    margin-inline-end: var(--spacing-8);
 
     .mx_InviteDialog_userTile_pill {
         background-color: $username-variant1-color;
@@ -156,7 +156,7 @@ limitations under the License.
         display: inline-block;
         height: 24px;
         line-height: $font-24px;
-        padding-inline: $spacing-8;
+        padding-inline: var(--spacing-8);
         color: #ffffff; /* this is fine without a var because it's for both themes */
 
         .mx_SearchResultAvatar {
@@ -241,11 +241,11 @@ limitations under the License.
     }
 
     .mx_InviteDialog_addressBar {
-        margin-top: $spacing-8;
+        margin-top: var(--spacing-8);
     }
 
     input[type="checkbox"] {
-        margin-inline-end: $spacing-8;
+        margin-inline-end: var(--spacing-8);
     }
 }
 
@@ -323,13 +323,13 @@ limitations under the License.
 .mx_InviteDialog_tile {
     cursor: pointer;
     display: grid;
-    gap: $spacing-8 var(--spacing-12);
+    gap: var(--spacing-8) var(--spacing-12);
     align-items: center;
 
     &.mx_InviteDialog_tile--room {
         /* mx_InviteDialog_tile_avatarStack, mx_InviteDialog_tile_nameStack, time */
         grid-template-columns: min-content auto auto;
-        padding: $spacing-4 $spacing-8;
+        padding: $spacing-4 var(--spacing-8);
 
         &:hover {
             background-color: $header-panel-bg-color;
@@ -455,5 +455,5 @@ limitations under the License.
 
 .mx_InviteDialog_oneThreepid {
     font-size: $font-12px;
-    margin: $spacing-8 0;
+    margin: var(--spacing-8) 0;
 }

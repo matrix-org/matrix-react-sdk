@@ -17,9 +17,9 @@ limitations under the License.
 .mx_DeviceTypeIcon {
     flex: 0 0 auto;
     position: relative;
-    margin-right: $spacing-8;
+    margin-right: var(--spacing-8);
     /* creates space for verification icon to overlap */
-    padding: 0 $spacing-8 $spacing-8 0;
+    padding: 0 var(--spacing-8) var(--spacing-8) 0;
 }
 
 .mx_DeviceTypeIcon_deviceIconWrapper {
@@ -30,7 +30,7 @@ limitations under the License.
     width: 40px;
     box-sizing: border-box;
 
-    border: $spacing-8 solid var(--background-color);
+    border: var(--spacing-8) solid var(--background-color);
     border-radius: 50%;
     color: var(--icon-color);
     background-color: var(--background-color);

@@ -27,7 +27,7 @@ limitations under the License.
 
 .mx_ThreadSummary,
 .mx_ThreadSummary_icon {
-    margin-top: $spacing-8;
+    margin-top: var(--spacing-8);
 }
 
 .mx_ThreadSummary {
@@ -127,17 +127,17 @@ limitations under the License.
 }
 
 .mx_ThreadSummary_avatar {
-    margin-inline-end: $spacing-8;
+    margin-inline-end: var(--spacing-8);
 }
 
 .mx_ThreadSummary_icon {
     display: inline-block;
-    margin-bottom: $spacing-8;
+    margin-bottom: var(--spacing-8);
 
     &::before {
         @mixin ThreadSummaryIcon;
         vertical-align: middle;
-        margin-inline-end: $spacing-8;
+        margin-inline-end: var(--spacing-8);
         margin-top: -2px;
     }
 

@@ -26,7 +26,7 @@ limitations under the License.
             }
 
             .mx_ThreadPanel_dropdown {
-                padding: 3px $spacing-4 3px $spacing-8; /* TODO: Use a spacing variable */
+                padding: 3px $spacing-4 3px var(--spacing-8); /* TODO: Use a spacing variable */
                 border-radius: 4px;
                 line-height: 1.5;
                 user-select: none;
@@ -102,8 +102,8 @@ limitations under the License.
     }
 
     .mx_RoomView_MessageList {
-        padding-inline-start: $spacing-8;
-        padding-inline-end: $spacing-8;
+        padding-inline-start: var(--spacing-8);
+        padding-inline-end: var(--spacing-8);
         content-visibility: visible;
     }
 

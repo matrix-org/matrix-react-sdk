@@ -19,7 +19,7 @@ limitations under the License.
 }
 
 .mx_AutocompleteInput_search_icon {
-    margin-left: $spacing-8;
+    margin-left: var(--spacing-8);
     fill: $secondary-content;
 }
 
@@ -40,7 +40,7 @@ limitations under the License.
         resize: none;
         // `!important` is required to bypass global input styles.
         margin: 0 !important;
-        padding: $spacing-8 9px;
+        padding: var(--spacing-8) 9px;
         border: none !important;
         color: $primary-content !important;
         font-weight: normal !important;
@@ -63,15 +63,15 @@ limitations under the License.
 
 .mx_AutocompleteInput_editor_selection {
     display: flex;
-    margin-left: $spacing-8;
+    margin-left: var(--spacing-8);
 }
 
 .mx_AutocompleteInput_editor_selection_pill {
     display: flex;
     align-items: center;
     border-radius: 12px;
-    padding-left: $spacing-8;
-    padding-right: $spacing-8;
+    padding-left: var(--spacing-8);
+    padding-right: var(--spacing-8);
     background-color: $username-variant1-color;
     color: #ffffff;
     font-size: $font-12px;
@@ -96,7 +96,7 @@ limitations under the License.
 .mx_AutocompleteInput_suggestion {
     display: flex;
     align-items: center;
-    padding: $spacing-8;
+    padding: var(--spacing-8);
     cursor: pointer;
 
     > * {
@@ -120,7 +120,7 @@ limitations under the License.
 }
 
 .mx_AutocompleteInput_suggestion_title {
-    margin-right: $spacing-8;
+    margin-right: var(--spacing-8);
 }
 
 .mx_AutocompleteInput_suggestion_description {

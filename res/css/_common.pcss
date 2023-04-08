@@ -43,8 +43,8 @@ $timeline-image-border-radius: 8px;
     --transition-short: 0.1s;
     --transition-standard: 0.3s;
     --MessageTimestamp-width: $MessageTimestamp_width;
-    --buttons-dialog-gap-row: $spacing-8;
-    --buttons-dialog-gap-column: $spacing-8;
+    --buttons-dialog-gap-row: var(--spacing-8);
+    --buttons-dialog-gap-column: var(--spacing-8);
 }
 
 @media only percy {
@@ -807,7 +807,7 @@ legend {
     font-weight: $font-semi-bold;
     white-space: nowrap;
     position: relative;
-    padding: 0 var(--spacing-12) 0 $spacing-8;
+    padding: 0 var(--spacing-12) 0 var(--spacing-8);
 }
 
 @define-mixin ThreadSummaryIcon {

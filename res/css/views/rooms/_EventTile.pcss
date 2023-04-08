@@ -271,7 +271,7 @@ $left-gutter: 64px;
         }
 
         .mx_ReplyChain {
-            margin-bottom: $spacing-8;
+            margin-bottom: var(--spacing-8);
         }
     }
 
@@ -333,7 +333,7 @@ $left-gutter: 64px;
     &[data-layout="group"] {
         .mx_EventTile_avatar {
             top: 14px;
-            left: $spacing-8;
+            left: var(--spacing-8);
         }
 
         .mx_EventTile_line,
@@ -765,8 +765,8 @@ $left-gutter: 64px;
         /* Inserted adjacent to <pre> blocks, (See TextualBody) */
         .mx_EventTile_button {
             position: absolute;
-            top: $spacing-8;
-            right: $spacing-8;
+            top: var(--spacing-8);
+            right: var(--spacing-8);
             width: 19px;
             height: 19px;
             visibility: hidden;
@@ -837,7 +837,7 @@ $left-gutter: 64px;
         margin-right: 0;
 
         span {
-            padding: $spacing-4 $spacing-8;
+            padding: $spacing-4 var(--spacing-8);
         }
     }
 
@@ -868,7 +868,7 @@ $left-gutter: 64px;
     --topOffset: var(--spacing-12);
     --leftOffset: 48px;
     $borderRadius: 8px;
-    $padding: $spacing-8;
+    $padding: var(--spacing-8);
     $hrHeight: 1px;
     $notification-dot-size: 8px; /* notification dot next to the timestamp */
 
@@ -913,7 +913,7 @@ $left-gutter: 64px;
         width: $notification-dot-size !important;
         height: $notification-dot-size !important;
         border-radius: 50%;
-        inset: $notification-inset-block-start $spacing-8 auto auto;
+        inset: $notification-inset-block-start var(--spacing-8) auto auto;
     }
 
     .mx_NotificationBadge_count {
@@ -977,7 +977,7 @@ $left-gutter: 64px;
         padding-inline-start: var(--leftOffset);
 
         .mx_ThreadPanel_replies {
-            margin-top: $spacing-8;
+            margin-top: var(--spacing-8);
             display: flex;
             align-items: center;
             position: relative;
@@ -1143,7 +1143,7 @@ $left-gutter: 64px;
                 display: flex;
                 align-items: center;
                 gap: var(--spacing-16); /* gap between the avatar and the sender ID */
-                padding-inline-start: $spacing-8;
+                padding-inline-start: var(--spacing-8);
 
                 a {
                     flex: 1;
@@ -1250,7 +1250,7 @@ $left-gutter: 64px;
             }
 
             &.mx_EventTile_emote {
-                padding-top: $spacing-8; /* add a bit more space for emotes so that avatars don't collide */
+                padding-top: var(--spacing-8); /* add a bit more space for emotes so that avatars don't collide */
 
                 .mx_EventTile_avatar {
                     top: var(--MatrixChat_useCompactLayout-top-avatar);
@@ -1322,7 +1322,7 @@ $left-gutter: 64px;
     width: stretch;
     align-items: center;
     justify-content: space-between;
-    gap: $spacing-8;
+    gap: var(--spacing-8);
     margin-left: var(--leftOffset);
     .mx_EventTile_truncated {
         flex: 1;
