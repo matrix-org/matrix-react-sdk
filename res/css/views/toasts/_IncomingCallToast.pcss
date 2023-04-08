@@ -41,19 +41,19 @@ limitations under the License.
                 line-height: $font-24px;
 
                 /* Prevent overlap with the close button */
-                width: calc(100% - $closeButtonSize - 2 * $spacing-4);
+                width: calc(100% - $closeButtonSize - 2 * var(--spacing-4));
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
 
-                margin-bottom: $spacing-4;
+                margin-bottom: var(--spacing-4);
             }
 
             .mx_IncomingCallToast_message {
                 font-size: $font-12px;
                 line-height: $font-15px;
 
-                margin-bottom: $spacing-4;
+                margin-bottom: var(--spacing-4);
             }
 
             .mx_LiveContentSummary {
@@ -70,15 +70,15 @@ limitations under the License.
         .mx_IncomingCallToast_joinButton {
             position: relative;
 
-            bottom: $spacing-4;
-            right: $spacing-4;
+            bottom: var(--spacing-4);
+            right: var(--spacing-4);
 
             align-self: flex-end;
 
             box-sizing: border-box;
             min-width: 120px;
 
-            padding: $spacing-4 0;
+            padding: var(--spacing-4) 0;
 
             line-height: $font-24px;
         }
@@ -87,8 +87,8 @@ limitations under the License.
     .mx_IncomingCallToast_closeButton {
         position: absolute;
 
-        top: $spacing-4;
-        right: $spacing-4;
+        top: var(--spacing-4);
+        right: var(--spacing-4);
 
         display: flex;
         height: $closeButtonSize;

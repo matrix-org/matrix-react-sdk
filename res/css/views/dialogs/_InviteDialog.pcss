@@ -85,7 +85,7 @@ limitations under the License.
 }
 
 .mx_InviteDialog_section {
-    padding-bottom: $spacing-4;
+    padding-bottom: var(--spacing-4);
 
     h3 {
         font-size: $font-12px;
@@ -181,7 +181,7 @@ limitations under the License.
 
     .mx_InviteDialog_userTile_remove {
         display: inline-block;
-        margin-inline-start: $spacing-4;
+        margin-inline-start: var(--spacing-4);
     }
 }
 
@@ -250,9 +250,9 @@ limitations under the License.
 }
 
 .mx_InviteDialog_userSections {
-    margin-top: $spacing-4;
+    margin-top: var(--spacing-4);
     overflow-y: auto;
-    padding: 0 45px $spacing-4 0; /* TODO: Use a spacing variable */
+    padding: 0 45px var(--spacing-4) 0; /* TODO: Use a spacing variable */
 }
 
 .mx_InviteDialog_helpText {
@@ -329,7 +329,7 @@ limitations under the License.
     &.mx_InviteDialog_tile--room {
         /* mx_InviteDialog_tile_avatarStack, mx_InviteDialog_tile_nameStack, time */
         grid-template-columns: min-content auto auto;
-        padding: $spacing-4 var(--spacing-8);
+        padding: var(--spacing-4) var(--spacing-8);
 
         &:hover {
             background-color: $header-panel-bg-color;

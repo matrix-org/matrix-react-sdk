@@ -29,7 +29,7 @@ limitations under the License.
     .mx_BaseCard_header {
         --BaseCard_header_button-margin: var(--spacing-12);
 
-        margin: $spacing-4 0 var(--spacing-12);
+        margin: var(--spacing-4) 0 var(--spacing-12);
 
         > h2 {
             margin: 0 44px; /* TODO: Use a spacing variable */
@@ -65,7 +65,7 @@ limitations under the License.
 
         .mx_BaseCard_back {
             left: 0;
-            margin-inline-start: calc(var(--BaseCard_header_button-margin) - $spacing-4);
+            margin-inline-start: calc(var(--BaseCard_header_button-margin) - var(--spacing-4));
 
             &::before {
                 transform: rotate(90deg);
@@ -86,7 +86,7 @@ limitations under the License.
 
         .mx_BaseCard_close {
             right: 0;
-            margin-inline-end: calc(var(--BaseCard_header_button-margin) - $spacing-4);
+            margin-inline-end: calc(var(--BaseCard_header_button-margin) - var(--spacing-4));
 
             &::before {
                 mask-image: url("$(res)/img/icons-close.svg");
@@ -190,7 +190,7 @@ limitations under the License.
     }
 
     .mx_BaseCard_footer {
-        padding-top: $spacing-4;
+        padding-top: var(--spacing-4);
         text-align: center;
         display: flex;
         justify-content: space-around;

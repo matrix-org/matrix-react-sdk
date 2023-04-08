@@ -110,7 +110,7 @@ $left-gutter: 64px;
         display: flex;
         flex-flow: wrap;
         align-items: center;
-        gap: $spacing-4;
+        gap: var(--spacing-4);
     }
 
     .mx_ReplyChain--expanded {
@@ -371,7 +371,7 @@ $left-gutter: 64px;
         }
 
         .mx_ReactionsRow {
-            margin: $spacing-4 64px;
+            margin: var(--spacing-4) 64px;
         }
 
         > .mx_DisambiguatedProfile {
@@ -837,7 +837,7 @@ $left-gutter: 64px;
         margin-right: 0;
 
         span {
-            padding: $spacing-4 var(--spacing-8);
+            padding: var(--spacing-4) var(--spacing-8);
         }
     }
 
@@ -1217,7 +1217,7 @@ $left-gutter: 64px;
     .mx_EventTile {
         /* Override :not([data-layout="bubble"]) */
         &[data-layout="group"] {
-            --MatrixChat_useCompactLayout_group-padding-top: $spacing-4;
+            --MatrixChat_useCompactLayout_group-padding-top: var(--spacing-4);
             --MatrixChat_useCompactLayout-top-avatar: 2px;
             --MatrixChat_useCompactLayout-top-e2eIcon: 3px;
             --MatrixChat_useCompactLayout_line-spacing-block: 0px;
@@ -1230,7 +1230,7 @@ $left-gutter: 64px;
             }
 
             .mx_ReplyChain {
-                margin-bottom: $spacing-4;
+                margin-bottom: var(--spacing-4);
             }
 
             &.mx_EventTile_info {
@@ -1302,7 +1302,7 @@ $left-gutter: 64px;
                 blockquote,
                 pre,
                 table {
-                    margin-bottom: $spacing-4; /* 1/4 of the non-compact margin-bottom */
+                    margin-bottom: var(--spacing-4); /* 1/4 of the non-compact margin-bottom */
                 }
             }
         }

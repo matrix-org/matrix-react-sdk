@@ -36,8 +36,8 @@ limitations under the License.
 
         kbd {
             display: inline-block;
-            padding: 2px $spacing-4; /* TODO: Use a spacing variable */
-            margin: 0 $spacing-4;
+            padding: 2px var(--spacing-4); /* TODO: Use a spacing variable */
+            margin: 0 var(--spacing-4);
             border-radius: 6px;
             background-color: $quinary-content;
             vertical-align: middle;
@@ -76,7 +76,7 @@ limitations under the License.
             vertical-align: middle;
             color: $primary-content;
             position: relative;
-            padding: $spacing-4 var(--spacing-8) $spacing-4 37px; /* TODO: Use a spacing variable */
+            padding: var(--spacing-4) var(--spacing-8) var(--spacing-4) 37px; /* TODO: Use a spacing variable */
 
             &::before {
                 background-color: $secondary-content;
@@ -177,7 +177,7 @@ limitations under the License.
 
                 .mx_SpotlightDialog_options {
                     display: flex;
-                    gap: $spacing-4;
+                    gap: var(--spacing-4);
                 }
             }
 
@@ -196,7 +196,7 @@ limitations under the License.
 
             .mx_SpotlightDialog_option {
                 border-radius: 8px;
-                padding: $spacing-4;
+                padding: var(--spacing-4);
                 color: $primary-content;
                 font-size: $font-12px;
                 line-height: $font-15px;
@@ -210,7 +210,7 @@ limitations under the License.
                 text-overflow: ellipsis;
 
                 .mx_DecoratedRoomAvatar {
-                    margin: 0 9px $spacing-4; /* maintain centering */
+                    margin: 0 9px var(--spacing-4); /* maintain centering */
                 }
 
                 & + .mx_SpotlightDialog_option {
@@ -229,7 +229,7 @@ limitations under the License.
         .mx_SpotlightDialog_otherSearches,
         .mx_SpotlightDialog_hiddenResults {
             .mx_SpotlightDialog_option {
-                padding: 6px $spacing-4; /* TODO: Use a spacing variable */
+                padding: 6px var(--spacing-4); /* TODO: Use a spacing variable */
                 border-radius: 8px;
                 font-size: $font-15px;
                 line-height: $font-24px;
@@ -252,8 +252,8 @@ limitations under the License.
                     align-items: flex-start;
 
                     .mx_AccessibleButton {
-                        padding: $spacing-4 var(--spacing-20);
-                        margin: 2px $spacing-4; /* TODO: Use a spacing variable */
+                        padding: var(--spacing-4) var(--spacing-20);
+                        margin: 2px var(--spacing-4); /* TODO: Use a spacing variable */
                     }
 
                     .mx_SpotlightDialog_enterPrompt {
@@ -416,7 +416,7 @@ limitations under the License.
                     width: 24px;
                     height: 24px;
                     position: absolute;
-                    left: $spacing-4;
+                    left: var(--spacing-4);
                     top: 50%;
                     transform: translateY(-50%);
                 }
@@ -475,7 +475,7 @@ limitations under the License.
         }
 
         .mx_SpotlightDialog_enterPrompt {
-            padding: 2px $spacing-4; /* TODO: Use a spacing variable */
+            padding: 2px var(--spacing-4); /* TODO: Use a spacing variable */
             /* To avoid any styling inherent with <kbd> elements */
             font-family: inherit;
             font-weight: inherit;
@@ -484,7 +484,7 @@ limitations under the License.
             color: $tertiary-content;
             border-radius: 6px;
             background-color: $quinary-content;
-            margin-right: $spacing-4;
+            margin-right: var(--spacing-4);
             display: none;
         }
 

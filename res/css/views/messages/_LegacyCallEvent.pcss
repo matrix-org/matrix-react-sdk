@@ -24,10 +24,10 @@ limitations under the License.
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        gap: $spacing-4 0;
+        gap: var(--spacing-4) 0;
 
         position: relative;
-        margin: $spacing-4 0;
+        margin: var(--spacing-4) 0;
         padding: var(--spacing-12) var(--spacing-24);
         box-sizing: border-box;
         background-color: $dark-panel-bg-color;
@@ -112,7 +112,7 @@ limitations under the License.
             .mx_LegacyCallEvent_info_basic {
                 display: flex;
                 flex-direction: column;
-                gap: $spacing-4;
+                gap: var(--spacing-4);
                 margin-left: 10px; /* To match mx_LegacyCallEvent */
                 margin-right: 10px;
                 min-width: 0;
@@ -121,7 +121,7 @@ limitations under the License.
                     font-weight: 600;
                     font-size: 1.5rem;
                     line-height: 1.8rem;
-                    margin-bottom: $spacing-4;
+                    margin-bottom: var(--spacing-4);
 
                     overflow: hidden;
                     white-space: nowrap;
@@ -193,7 +193,7 @@ limitations under the License.
         &.mx_LegacyCallEvent_narrow {
             flex-direction: column;
             align-items: unset;
-            gap: $spacing-4 var(--spacing-16);
+            gap: var(--spacing-4) var(--spacing-16);
             height: unset;
             min-width: 290px;
 
@@ -229,7 +229,7 @@ limitations under the License.
     .mx_LegacyCallEvent_wrapper {
         .mx_LegacyCallEvent {
             &.mx_LegacyCallEvent_narrow {
-                gap: var(--spacing-8) $spacing-4;
+                gap: var(--spacing-8) var(--spacing-4);
             }
         }
     }
@@ -238,7 +238,7 @@ limitations under the License.
 .mx_IRCLayout {
     .mx_LegacyCallEvent_wrapper {
         .mx_LegacyCallEvent {
-            margin-inline-start: $spacing-4; /* display green line */
+            margin-inline-start: var(--spacing-4); /* display green line */
         }
     }
 }
