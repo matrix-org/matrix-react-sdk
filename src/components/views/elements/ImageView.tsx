@@ -50,7 +50,7 @@ const ZOOM_DISTANCE = 10;
 
 // Height of mx_ImageView_panel
 const getPanelHeight = (): number => {
-    const value = getComputedStyle(document.documentElement).getPropertyValue("--image-view-panel-height");
+    const value = getComputedStyle(document.documentElement).getPropertyValue("--panel-height");
     // Return the value as a number without the unit
     return parseInt(value.slice(0, value.length - 2));
 };
