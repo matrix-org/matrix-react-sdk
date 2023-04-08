@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_RoomPreviewCard {
-    padding: var(--spacing-32) $spacing-24 !important; /* Override SpaceRoomView's default padding */
+    padding: var(--spacing-32) var(--spacing-24) !important; /* Override SpaceRoomView's default padding */
     margin: auto;
     flex-grow: 1;
     max-width: 480px;
@@ -29,7 +29,7 @@ limitations under the License.
         font-weight: $font-semi-bold;
         line-height: $font-24px;
         color: $primary-content;
-        margin-top: $spacing-24;
+        margin-top: var(--spacing-24);
         position: relative;
         padding-left: calc(20px + $spacing-8);
 
@@ -104,7 +104,7 @@ limitations under the License.
         .mx_BetaCard_betaPill {
             position: absolute;
             inset-block-start: var(--spacing-32);
-            inset-inline-end: $spacing-24;
+            inset-inline-end: var(--spacing-24);
         }
     }
 

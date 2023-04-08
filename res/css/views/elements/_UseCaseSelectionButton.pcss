@@ -18,7 +18,7 @@ limitations under the License.
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: $spacing-24 $spacing-16;
+    padding: var(--spacing-24) $spacing-16;
     background: $background;
     border: 1px solid $quinary-content;
     border-radius: 8px;
@@ -94,7 +94,7 @@ limitations under the License.
 
     &.mx_UseCaseSelectionButton_selected {
         border: 2px solid $accent;
-        padding: calc($spacing-24 - 1px) calc($spacing-16 - 1px);
+        padding: calc(var(--spacing-24) - 1px) calc($spacing-16 - 1px);
         box-shadow: 0 $spacing-4 $spacing-8 rgba(0, 0, 0, 0.08);
 
         .mx_UseCaseSelectionButton_selectedIcon {
