@@ -320,6 +320,22 @@ legend {
     border-radius: 8px;
     overflow-y: auto;
 
+    .mx_Dialog_staticWrapper & {
+        z-index: 4010;
+        contain: content;
+    }
+
+    .mx_Dialog_lightbox & {
+        border-radius: 0px;
+        background-color: transparent;
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        pointer-events: none;
+        padding: 0;
+    }
+
     /* Styles copied/inspired by GroupLayout, ReplyTile, and EventTile variants. */
     .markdown-body {
         font-family: inherit !important;
@@ -393,11 +409,6 @@ legend {
     max-width: 704px;
 }
 
-.mx_Dialog_staticWrapper .mx_Dialog {
-    z-index: 4010;
-    contain: content;
-}
-
 .mx_Dialog_background {
     position: fixed;
     top: 0;
@@ -424,17 +435,6 @@ legend {
         animation-name: mx_Dialog_lightbox_background_keyframes;
         animation-duration: 300ms;
     }
-}
-
-.mx_Dialog_lightbox .mx_Dialog {
-    border-radius: 0px;
-    background-color: transparent;
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    pointer-events: none;
-    padding: 0;
 }
 
 .mx_Dialog_titleImage {
