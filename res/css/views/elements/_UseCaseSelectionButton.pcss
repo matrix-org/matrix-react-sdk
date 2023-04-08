@@ -18,7 +18,7 @@ limitations under the License.
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: var(--spacing-24) $spacing-16;
+    padding: var(--spacing-24) var(--spacing-16);
     background: $background;
     border: 1px solid $quinary-content;
     border-radius: 8px;
@@ -32,7 +32,7 @@ limitations under the License.
         background: linear-gradient(0deg, rgba(172, 59, 168, 0.15), rgba(172, 59, 168, 0.15)), #ffffff;
         border-radius: 14px;
         padding: $spacing-8;
-        margin-bottom: $spacing-16;
+        margin-bottom: var(--spacing-16);
 
         &::before {
             content: "";
@@ -94,7 +94,7 @@ limitations under the License.
 
     &.mx_UseCaseSelectionButton_selected {
         border: 2px solid $accent;
-        padding: calc(var(--spacing-24) - 1px) calc($spacing-16 - 1px);
+        padding: calc(var(--spacing-24) - 1px) calc(var(--spacing-16) - 1px);
         box-shadow: 0 $spacing-4 $spacing-8 rgba(0, 0, 0, 0.08);
 
         .mx_UseCaseSelectionButton_selectedIcon {

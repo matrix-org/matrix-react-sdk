@@ -63,7 +63,7 @@ limitations under the License.
         margin: 0;
         border: none;
         border-radius: 8px 8px 0 0;
-        padding: $spacing-12 $spacing-16;
+        padding: $spacing-12 var(--spacing-16);
         border-bottom: 1px solid $system;
 
         > .mx_SpotlightDialog_filter {
@@ -146,14 +146,14 @@ limitations under the License.
             flex-grow: 0;
             width: unset;
             height: unset;
-            margin-left: $spacing-16;
+            margin-left: var(--spacing-16);
         }
     }
 
     #mx_SpotlightDialog_content {
         height: 100%;
         overflow-y: auto;
-        padding: $spacing-16;
+        padding: var(--spacing-16);
 
         .mx_SpotlightDialog_section {
             > h4,
@@ -214,7 +214,7 @@ limitations under the License.
                 }
 
                 & + .mx_SpotlightDialog_option {
-                    margin-left: $spacing-16;
+                    margin-left: var(--spacing-16);
                 }
 
                 &:hover,

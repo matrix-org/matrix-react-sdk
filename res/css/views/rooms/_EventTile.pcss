@@ -1105,7 +1105,7 @@ $left-gutter: 64px;
 
         &[data-layout="irc"],
         &[data-layout="group"] {
-            padding-block-start: $spacing-16;
+            padding-block-start: var(--spacing-16);
 
             .mx_EventTile_line,
             .mx_ReactionsRow {
@@ -1142,7 +1142,7 @@ $left-gutter: 64px;
             .mx_EventTile_senderDetails {
                 display: flex;
                 align-items: center;
-                gap: $spacing-16; /* gap between the avatar and the sender ID */
+                gap: var(--spacing-16); /* gap between the avatar and the sender ID */
                 padding-inline-start: $spacing-8;
 
                 a {
