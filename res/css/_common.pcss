@@ -298,6 +298,7 @@ legend {
 
     --zIndex-dialog-wrapper-default: 4000;
     --zIndex-dialog-static-background: 4009;
+    --zIndex-dialog-static: 4010;
 }
 
 .mx_Dialog_wrapper {
@@ -326,7 +327,7 @@ legend {
     overflow-y: auto;
 
     .mx_Dialog_staticWrapper & {
-        z-index: 4010;
+        z-index: var(--zIndex-dialog-static);
         contain: content;
     }
 
