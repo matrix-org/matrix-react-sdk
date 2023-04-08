@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_RoomPreviewCard {
-    padding: $spacing-32 $spacing-24 !important; /* Override SpaceRoomView's default padding */
+    padding: var(--spacing-32) $spacing-24 !important; /* Override SpaceRoomView's default padding */
     margin: auto;
     flex-grow: 1;
     max-width: 480px;
@@ -103,7 +103,7 @@ limitations under the License.
         /* XXX Remove this when video rooms leave beta */
         .mx_BetaCard_betaPill {
             position: absolute;
-            inset-block-start: $spacing-32;
+            inset-block-start: var(--spacing-32);
             inset-inline-end: $spacing-24;
         }
     }
