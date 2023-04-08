@@ -51,11 +51,11 @@ $timeline-image-border-radius: 8px;
        These are set up such that the static dialog always appears
        underneath the standard dialogs.
      */
-    --zIndex-dialog-wrapper-default: 4000;
-    --zIndex-dialog-static-background: 4009;
-    --zIndex-dialog-static: calc(var(--zIndex-dialog-static-background) + 1); /* 4010 */
-    --zIndex-dialog-standard-background: calc(var(--zIndex-dialog-static) + 1); /* 4011 */
-    --zIndex-dialog-standard: calc(var(--zIndex-dialog-standard-background) + 1); /* 4012 */
+    --dialog-zIndex-wrapper-default: 4000;
+    --dialog-zIndex-static-background: 4009;
+    --dialog-zIndex-static: calc(var(--dialog-zIndex-static-background) + 1); /* 4010 */
+    --dialog-zIndex-standard-background: calc(var(--dialog-zIndex-static) + 1); /* 4011 */
+    --dialog-zIndex-standard: calc(var(--dialog-zIndex-standard-background) + 1); /* 4012 */
 }
 
 @media only percy {
@@ -302,7 +302,7 @@ legend {
 
 .mx_Dialog_wrapper {
     position: fixed;
-    z-index: var(--zIndex-dialog-wrapper-default);
+    z-index: var(--dialog-zIndex-wrapper-default);
     top: 0;
     left: 0;
     width: 100%;
@@ -316,7 +316,7 @@ legend {
 .mx_Dialog {
     background-color: $background;
     color: $light-fg-color;
-    z-index: var(--zIndex-dialog-standard);
+    z-index: var(--dialog-zIndex-standard);
     font-size: $font-15px;
     position: relative;
     padding: 24px;
@@ -326,7 +326,7 @@ legend {
     overflow-y: auto;
 
     .mx_Dialog_staticWrapper & {
-        z-index: var(--zIndex-dialog-static);
+        z-index: var(--dialog-zIndex-static);
         contain: content;
     }
 
@@ -422,10 +422,10 @@ legend {
     height: 100%;
     background-color: $dialog-backdrop-color;
     opacity: 0.8;
-    z-index: var(--zIndex-dialog-standard-background);
+    z-index: var(--dialog-zIndex-standard-background);
 
     &.mx_Dialog_staticBackground {
-        z-index: var(--zIndex-dialog-static-background);
+        z-index: var(--dialog-zIndex-static-background);
     }
 
     .mx_Dialog_wrapperWithStaticUnder & {
