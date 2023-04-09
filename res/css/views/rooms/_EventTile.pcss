@@ -608,7 +608,7 @@ $left-gutter: 64px;
         /* Make h1 and h2 the same size as h3. */
         h1,
         h2 {
-            font-size: 1.5em;
+            font-size: 1.5em; /* TODO: use a variable */
             border-bottom: none !important; /* override GFM */
         }
 
@@ -667,7 +667,7 @@ $left-gutter: 64px;
 }
 
 .mx_EventTile_bigEmoji {
-    font-size: 48px;
+    font-size: var(--font-48px);
     line-height: 57px;
 
     .mx_Emoji {
