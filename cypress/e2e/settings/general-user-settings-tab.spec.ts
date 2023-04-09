@@ -41,13 +41,15 @@ describe("General user settings tab", () => {
     it("should be rendered correctly", () => {
         cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab").within(() => {
             // Assert that the top heading is rendered
-            cy.get("[data-testid='general']").should("have.text", "General");
+            cy.findByTestId("general").should("have.text", "General");
 
             cy.get(".mx_ProfileSettings_profile")
                 .scrollIntoView()
                 .within(() => {
                     // Check USER_NAME
-                    cy.findTextbox("Display Name").get(`input[value='${USER_NAME}']`).should("be.visible");
+                    cy.findByRole("textbox", { name: "Display Name" })
+                        .get(`input[value='${USER_NAME}']`)
+                        .should("be.visible");
 
                     // Assert that a random userId exists
                     cy.contains(".mx_ProfileSettings_profile_controls_userId", ":localhost").should("be.visible");
@@ -73,9 +75,9 @@ describe("General user settings tab", () => {
                 cy.get("form.mx_GeneralUserSettingsTab_changePassword")
                     .scrollIntoView()
                     .within(() => {
-                        cy.get("input[label='Current password']").should("be.visible");
-                        cy.get("input[label='New password']").should("be.visible");
-                        cy.get("input[label='Confirm password']").should("be.visible");
+                        cy.findByLabelText("Current password").should("be.visible");
+                        cy.findByLabelText("New password").should("be.visible");
+                        cy.findByLabelText("Confirm password").should("be.visible");
                     });
 
                 // Check email addresses area
@@ -84,7 +86,7 @@ describe("General user settings tab", () => {
                     .within(() => {
                         cy.get("form.mx_EmailAddresses_new").should("be.visible");
 
-                        cy.findButton("Add");
+                        cy.findByRole("button", { name: "Add" });
                     });
 
                 // Check phone numbers area
@@ -94,7 +96,7 @@ describe("General user settings tab", () => {
                         // Check form of a new phone number
                         cy.get("form.mx_PhoneNumbers_new").within(() => {
                             // Assert that an input area for a new phone number exists
-                            cy.findTextbox("Phone Number").should("be.visible");
+                            cy.findByRole("textbox", { name: "Phone Number" }).should("be.visible");
 
                             // Check a new phone number dropdown menu
                             cy.get(".mx_PhoneNumbers_country")
@@ -114,7 +116,7 @@ describe("General user settings tab", () => {
                                 });
                         });
 
-                        cy.findButton("Add");
+                        cy.findByRole("button", { name: "Add" });
                     });
             });
 
@@ -139,7 +141,7 @@ describe("General user settings tab", () => {
                 .scrollIntoView()
                 .within(() => {
                     // Assert that an input area for identity server exists
-                    cy.findTextbox("Enter a new identity server").should("be.visible");
+                    cy.findByRole("textbox", { name: "Enter a new identity server" }).should("be.visible");
                 });
 
             // Check default integration manager
@@ -165,7 +167,9 @@ describe("General user settings tab", () => {
             cy.get(".mx_ProfileSettings_avatarUpload").selectFile("cypress/fixtures/riot.png", { force: true });
 
             // Find and click "Remove" link button
-            cy.get(".mx_ProfileSettings_profile").findButton("Remove").click();
+            cy.get(".mx_ProfileSettings_profile").within(() => {
+                cy.findByRole("button", { name: "Remove" }).click();
+            });
 
             // Assert that the link button disappeared
             cy.get(".mx_AvatarSetting_avatar .mx_AccessibleButton_kind_link_sm").should("not.exist");
@@ -175,7 +179,7 @@ describe("General user settings tab", () => {
     it("should support changing a display name", () => {
         cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab .mx_ProfileSettings").within(() => {
             // Change the diaplay name to USER_NAME_NEW
-            cy.findTextbox("Display Name").type(`{selectAll}{del}${USER_NAME_NEW}{enter}`);
+            cy.findByRole("textbox", { name: "Display Name" }).type(`{selectAll}{del}${USER_NAME_NEW}{enter}`);
         });
 
         cy.closeDialog();
