@@ -16,7 +16,7 @@ limitations under the License.
 
 .mx_WidgetCapabilitiesPromptDialog {
     .text-muted {
-        font-size: $font-12px;
+        font-size: var(--font-12px);
     }
 
     .mx_Dialog_content {
@@ -25,14 +25,14 @@ limitations under the License.
 
     .mx_WidgetCapabilitiesPromptDialog_cap {
         margin-top: 20px;
-        font-size: $font-15px;
-        line-height: $font-15px;
+        font-size: var(--font-15px);
+        line-height: var(--font-15px);
 
         .mx_WidgetCapabilitiesPromptDialog_byline {
             color: $muted-fg-color;
             margin-left: 26px;
-            font-size: $font-12px;
-            line-height: $font-12px;
+            font-size: var(--font-12px);
+            line-height: var(--font-12px);
         }
     }
 
@@ -41,23 +41,23 @@ limitations under the License.
     }
 
     .mx_SettingsFlag {
-        line-height: calc($font-14px + 7px + 7px); /* 7px top & bottom padding */
+        line-height: calc(var(--font-14px) + 7px + 7px); /* 7px top & bottom padding */
         color: $muted-fg-color;
-        font-size: $font-12px;
+        font-size: var(--font-12px);
 
         .mx_ToggleSwitch {
             /* downsize the switch + ball */
-            width: $font-32px;
-            height: $font-15px;
+            width: var(--font-32px);
+            height: var(--font-15px);
 
             &.mx_ToggleSwitch_on > .mx_ToggleSwitch_ball {
-                left: calc(100% - $font-15px);
+                left: calc(100% - var(--font-15px));
             }
 
             .mx_ToggleSwitch_ball {
-                width: $font-15px;
-                height: $font-15px;
-                border-radius: $font-15px;
+                width: var(--font-15px);
+                height: var(--font-15px);
+                border-radius: var(--font-15px);
             }
         }
     }

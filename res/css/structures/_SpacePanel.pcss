@@ -157,8 +157,8 @@ $activeBorderColor: $primary-content;
             display: block;
             text-overflow: ellipsis;
             overflow: hidden;
-            font-size: $font-14px;
-            line-height: $font-18px;
+            font-size: var(--font-14px);
+            line-height: var(--font-18px);
         }
 
         .mx_SpaceButton_toggleCollapse {
@@ -275,9 +275,9 @@ $activeBorderColor: $primary-content;
             color: $secondary-content;
             border-radius: 8px;
             background-color: $panel-actions;
-            font-size: $font-15px !important; /* override inline style */
+            font-size: var(--font-15px) !important; /* override inline style */
             font-weight: $font-semi-bold;
-            line-height: $font-18px;
+            line-height: var(--font-18px);
 
             & + .mx_BaseAvatar_image {
                 visibility: hidden;
@@ -381,8 +381,8 @@ $activeBorderColor: $primary-content;
     .mx_SpacePanel_contextMenu_header {
         margin: 12px 16px 12px;
         font-weight: $font-semi-bold;
-        font-size: $font-15px;
-        line-height: $font-18px;
+        font-size: var(--font-15px);
+        line-height: var(--font-18px);
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -430,8 +430,8 @@ $activeBorderColor: $primary-content;
 
     .mx_SpacePanel_contextMenu_separatorLabel {
         color: $tertiary-content;
-        font-size: $font-10px;
-        line-height: $font-12px;
+        font-size: var(--font-10px);
+        line-height: var(--font-12px);
         font-weight: $font-semi-bold;
         //margin-left: 8px;
     }

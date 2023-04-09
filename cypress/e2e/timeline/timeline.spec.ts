@@ -207,7 +207,7 @@ describe("Timeline", () => {
             cy.get(".mx_GenericEventListSummary[data-layout=irc] .mx_GenericEventListSummary_spacer").should(
                 "have.css",
                 "line-height",
-                "18px", // $irc-line-height: $font-18px (See: _IRCLayout.pcss)
+                "18px", // $irc-line-height: var(--font-18px) (See: _IRCLayout.pcss)
             );
 
             cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on IRC layout", { percyCSS });
@@ -242,7 +242,7 @@ describe("Timeline", () => {
             cy.get(".mx_GenericEventListSummary[data-layout=group] .mx_GenericEventListSummary_spacer").should(
                 "have.css",
                 "line-height",
-                "22px", // $font-22px (See: _GenericEventListSummary.pcss)
+                "22px", // var(--font-22px) (See: _GenericEventListSummary.pcss)
             );
 
             cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on modern layout", { percyCSS });

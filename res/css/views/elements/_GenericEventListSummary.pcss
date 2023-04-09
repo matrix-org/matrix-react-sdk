@@ -24,7 +24,7 @@ limitations under the License.
     .mx_GenericEventListSummary_spacer {
         border-bottom: 1px solid $primary-hairline-color;
         margin-left: 63px; /* TODO: Use a variable */
-        line-height: $font-30px; /* TODO: Use a variable */
+        line-height: var(--font-30px);
 
         .mx_IRCLayout & {
             line-height: var(--line-height);
@@ -91,19 +91,19 @@ limitations under the License.
     }
 
     .mx_MatrixChat_useCompactLayout & {
-        font-size: $font-13px;
+        font-size: var(--font-13px);
         margin-top: $spacing-4;
 
         .mx_EventTile_line {
-            line-height: $font-20px;
+            line-height: var(--font-20px);
         }
 
         .mx_GenericEventListSummary_spacer {
-            line-height: $font-22px;
+            line-height: var(--font-22px);
         }
 
         .mx_TextualEvent.mx_GenericEventListSummary_summary {
-            font-size: $font-13px;
+            font-size: var(--font-13px);
         }
     }
 }
@@ -114,13 +114,13 @@ limitations under the License.
 }
 
 .mx_TextualEvent.mx_GenericEventListSummary_summary {
-    font-size: $font-14px;
+    font-size: var(--font-14px);
     display: inline-flex;
 }
 
 .mx_GenericEventListSummary_avatars {
     display: inline-block;
-    line-height: $font-12px;
+    line-height: var(--font-12px);
 
     .mx_BaseAvatar {
         margin-right: -4px;

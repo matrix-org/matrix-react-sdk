@@ -17,7 +17,7 @@ limitations under the License.
 .mx_ReplyTile {
     position: relative;
     padding: 2px 0;
-    font-size: $font-14px;
+    font-size: var(--font-14px);
 
     &.mx_ReplyTile_audio .mx_MFileBody_info_icon::before {
         mask-image: url("$(res)/img/element-icons/speaker.svg");
@@ -45,7 +45,7 @@ limitations under the License.
     }
 
     .mx_RedactedBody {
-        line-height: $font-18px;
+        line-height: var(--font-18px);
     }
 
     .mx_RedactedBody,
@@ -63,7 +63,7 @@ limitations under the License.
     .mx_EventTile_content {
         grid-area: message;
         $reply-lines: 2;
-        $line-height: $font-18px;
+        $line-height: var(--font-18px);
 
         text-overflow: ellipsis;
         display: -webkit-box;
@@ -71,8 +71,8 @@ limitations under the License.
         -webkit-line-clamp: $reply-lines;
 
         .mx_EventTile_body.mx_EventTile_bigEmoji {
-            line-height: $font-22px !important; /* Same as var(--EventTile_group_line-line-height) */
-            font-size: $font-14px !important; /* Override the big emoji override */
+            line-height: var(--font-22px) !important; /* Same as var(--EventTile_group_line-line-height) */
+            font-size: var(--font-14px) !important; /* Override the big emoji override */
         }
 
         // Hide line numbers and edited indicator
@@ -122,7 +122,7 @@ limitations under the License.
         gap: 4px;
 
         .mx_DisambiguatedProfile {
-            font-size: $font-14px;
+            font-size: var(--font-14px);
 
             display: inline-block; // anti-zalgo, with overflow hidden
             padding: 0;

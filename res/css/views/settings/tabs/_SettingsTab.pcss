@@ -32,7 +32,7 @@ limitations under the License.
 }
 
 .mx_SettingsTab_heading {
-    font-size: $font-20px;
+    font-size: var(--font-20px);
     font-weight: 600;
     color: $primary-content;
     margin-top: 10px; /* TODO: Use a spacing variable */
@@ -45,7 +45,7 @@ limitations under the License.
 }
 
 .mx_SettingsTab_subheading {
-    font-size: $font-16px;
+    font-size: var(--font-16px);
     display: block;
     font-weight: 600;
     color: $primary-content;
@@ -56,7 +56,7 @@ limitations under the License.
 
 .mx_SettingsTab_subsectionText {
     color: $secondary-content;
-    font-size: $font-14px;
+    font-size: var(--font-14px);
     display: block;
     margin-top: 10px; /* TODO: Use a spacing variable */
     margin-inline-end: 80px; /* Align with the rest of the view */
@@ -76,7 +76,7 @@ limitations under the License.
         .mx_SettingsFlag_label {
             vertical-align: middle;
             display: inline-block;
-            max-width: calc(100% - $font-48px); /* Force word wrap instead of colliding with the switch */
+            max-width: calc(100% - var(--font-48px)); /* Force word wrap instead of colliding with the switch */
             box-sizing: border-box;
         }
 

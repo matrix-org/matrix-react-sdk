@@ -37,8 +37,8 @@ limitations under the License.
                 display: inline-block;
 
                 font-weight: $font-semi-bold;
-                font-size: $font-15px;
-                line-height: $font-24px;
+                font-size: var(--font-15px);
+                line-height: var(--font-24px);
 
                 /* Prevent overlap with the close button */
                 width: calc(100% - $closeButtonSize - 2 * $spacing-4);
@@ -50,15 +50,15 @@ limitations under the License.
             }
 
             .mx_IncomingCallToast_message {
-                font-size: $font-12px;
-                line-height: $font-15px;
+                font-size: var(--font-12px);
+                line-height: var(--font-15px);
 
                 margin-bottom: $spacing-4;
             }
 
             .mx_LiveContentSummary {
-                font-size: $font-12px;
-                line-height: $font-15px;
+                font-size: var(--font-12px);
+                line-height: var(--font-15px);
 
                 .mx_LiveContentSummary_participants::before {
                     width: 15px;
@@ -80,7 +80,7 @@ limitations under the License.
 
             padding: $spacing-4 0;
 
-            line-height: $font-24px;
+            line-height: var(--font-24px);
         }
     }
 

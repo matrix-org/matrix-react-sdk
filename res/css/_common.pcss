@@ -73,7 +73,7 @@ html {
 
 body {
     font-family: $font-family;
-    font-size: $font-15px;
+    font-size: var(--font-15px);
     background-color: $background;
     color: $primary-content;
     border: 0px;
@@ -115,7 +115,7 @@ b {
 h2 {
     color: $primary-content;
     font-weight: 400;
-    font-size: $font-18px;
+    font-size: var(--font-18px);
     margin-top: 16px;
     margin-bottom: 16px;
 }
@@ -131,7 +131,7 @@ input[type="search"],
 input[type="password"] {
     font-family: inherit;
     padding: 9px;
-    font-size: $font-14px;
+    font-size: var(--font-14px);
     font-weight: 600;
     min-width: 0;
 }
@@ -317,7 +317,7 @@ legend {
     background-color: $background;
     color: $light-fg-color;
     z-index: 4012;
-    font-size: $font-15px;
+    font-size: var(--font-15px);
     position: relative;
     padding: 24px;
     max-height: 80%;
@@ -332,7 +332,7 @@ legend {
     white-space: normal !important;
     line-height: inherit !important;
     color: inherit; /* inherit the colour from the dark or light theme by default (but not for code blocks) */
-    font-size: $font-14px;
+    font-size: var(--font-14px);
 
     pre,
     code {
@@ -503,7 +503,7 @@ legend {
 
 .mx_Dialog_content {
     margin: 24px 0 68px;
-    font-size: $font-14px;
+    font-size: var(--font-14px);
     color: $primary-content;
     word-wrap: break-word;
 }
@@ -658,7 +658,7 @@ legend {
 }
 
 .mx_TextInputDialog_input {
-    font-size: $font-15px;
+    font-size: var(--font-15px);
     border-radius: 3px;
     border: 1px solid $input-border-color;
     padding: 9px;
@@ -783,8 +783,8 @@ legend {
 @define-mixin LegacyCallButton {
     box-sizing: border-box;
     font-weight: 600;
-    height: $font-24px;
-    line-height: $font-24px;
+    height: var(--font-24px);
+    line-height: var(--font-24px);
     margin-right: 0;
 
     span {

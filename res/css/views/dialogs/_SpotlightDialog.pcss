@@ -30,8 +30,8 @@ limitations under the License.
         top: -60px; /* relative to the top of the modal */
         left: 50%;
         transform: translateX(-50%);
-        font-size: $font-12px;
-        line-height: $font-15px;
+        font-size: var(--font-12px);
+        line-height: var(--font-15px);
         color: $secondary-content;
 
         kbd {
@@ -138,8 +138,8 @@ limitations under the License.
             padding: 0;
             color: $tertiary-content;
             font-weight: normal;
-            font-size: $font-15px;
-            line-height: $font-24px;
+            font-size: var(--font-15px);
+            line-height: var(--font-24px);
         }
 
         > .mx_Spinner {
@@ -159,8 +159,8 @@ limitations under the License.
             > h4,
             > .mx_SpotlightDialog_sectionHeader > h4 {
                 font-weight: $font-semi-bold;
-                font-size: $font-12px;
-                line-height: $font-15px;
+                font-size: var(--font-12px);
+                line-height: var(--font-15px);
                 color: $secondary-content;
                 margin: 0;
             }
@@ -198,8 +198,8 @@ limitations under the License.
                 border-radius: 8px;
                 padding: $spacing-4;
                 color: $primary-content;
-                font-size: $font-12px;
-                line-height: $font-15px;
+                font-size: var(--font-12px);
+                line-height: var(--font-15px);
                 display: inline-block;
                 width: 58px;
                 height: 58px;
@@ -231,8 +231,8 @@ limitations under the License.
             .mx_SpotlightDialog_option {
                 padding: 6px $spacing-4; /* TODO: Use a spacing variable */
                 border-radius: 8px;
-                font-size: $font-15px;
-                line-height: $font-24px;
+                font-size: var(--font-15px);
+                line-height: var(--font-24px);
                 color: $primary-content;
                 position: relative;
                 display: flex;
@@ -284,18 +284,18 @@ limitations under the License.
                     .mx_SpotlightDialog_result_publicRoomHeader {
                         display: flex;
                         flex-direction: row;
-                        line-height: $font-24px;
+                        line-height: var(--font-24px);
                         margin-right: $spacing-8;
 
                         .mx_SpotlightDialog_result_publicRoomName {
                             color: $primary-content;
-                            font-size: $font-15px;
+                            font-size: var(--font-15px);
                             overflow: hidden;
                             text-overflow: ellipsis;
                         }
                         .mx_SpotlightDialog_result_publicRoomAlias {
                             color: $tertiary-content;
-                            font-size: $font-12px;
+                            font-size: var(--font-12px);
                             margin-left: $spacing-8;
                             overflow: hidden;
                             text-overflow: ellipsis;
@@ -303,10 +303,10 @@ limitations under the License.
                     }
                     .mx_SpotlightDialog_result_publicRoomDescription {
                         color: $secondary-content;
-                        font-size: $font-12px;
+                        font-size: var(--font-12px);
                         white-space: normal;
                         word-wrap: break-word;
-                        line-height: $font-20px;
+                        line-height: var(--font-20px);
                         display: -webkit-box;
                         -webkit-box-orient: vertical;
                         -webkit-line-clamp: 3;
@@ -439,8 +439,8 @@ limitations under the License.
             }
 
             .mx_SpotlightDialog_otherSearches_messageSearchText {
-                font-size: $font-15px;
-                line-height: $font-24px;
+                font-size: var(--font-15px);
+                line-height: var(--font-24px);
             }
 
             .mx_SpotlightDialog_otherSearches_messageSearchIcon {
@@ -460,8 +460,8 @@ limitations under the License.
             margin-left: $spacing-8;
             margin-right: $spacing-8;
             color: $tertiary-content;
-            font-size: $font-12px;
-            line-height: $font-15px;
+            font-size: var(--font-12px);
+            line-height: var(--font-15px);
             min-width: 0;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -469,8 +469,8 @@ limitations under the License.
 
         .mx_SpotlightDialog_recentSearches > h4 > .mx_AccessibleButton_kind_link {
             float: right;
-            font-size: $font-12px;
-            line-height: $font-15px;
+            font-size: var(--font-12px);
+            line-height: var(--font-15px);
             color: $secondary-content;
         }
 
@@ -479,8 +479,8 @@ limitations under the License.
             /* To avoid any styling inherent with <kbd> elements */
             font-family: inherit;
             font-weight: inherit;
-            font-size: $font-12px;
-            line-height: $font-15px;
+            font-size: var(--font-12px);
+            line-height: var(--font-15px);
             color: $tertiary-content;
             border-radius: 6px;
             background-color: $quinary-content;

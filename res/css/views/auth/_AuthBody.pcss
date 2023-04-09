@@ -17,7 +17,7 @@ limitations under the License.
 
 .mx_AuthBody {
     width: 500px;
-    font-size: $font-12px;
+    font-size: var(--font-12px);
     color: $authpage-secondary-color;
     background-color: $background;
     border-radius: 0 4px 4px 0;
@@ -34,14 +34,14 @@ limitations under the License.
     }
 
     h1 {
-        font-size: $font-24px;
+        font-size: var(--font-24px);
         font-weight: $font-semi-bold;
         margin-top: $spacing-8;
         color: $authpage-primary-color;
     }
 
     h2 {
-        font-size: $font-14px;
+        font-size: var(--font-14px);
         font-weight: $font-semi-bold;
         color: $authpage-secondary-color;
     }
@@ -140,7 +140,7 @@ limitations under the License.
 
 /* specialisation for password reset views */
 .mx_AuthBody.mx_AuthBody_forgot-password {
-    font-size: $font-14px;
+    font-size: var(--font-14px);
     color: $primary-content;
     padding: 50px 32px;
     min-height: 600px;
@@ -241,8 +241,8 @@ limitations under the License.
 
     .mx_AuthBody_paddedFooter_title {
         margin-top: $spacing-16;
-        font-size: $font-15px;
-        line-height: $font-24px;
+        font-size: var(--font-15px);
+        line-height: var(--font-24px);
 
         .mx_InlineSpinner img {
             vertical-align: sub;
@@ -252,8 +252,8 @@ limitations under the License.
 
     .mx_AuthBody_paddedFooter_subtitle {
         margin-top: $spacing-8;
-        font-size: $font-10px;
-        line-height: $font-14px;
+        font-size: var(--font-10px);
+        line-height: var(--font-14px);
     }
 }
 

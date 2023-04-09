@@ -49,7 +49,7 @@ limitations under the License.
     of the section */
     margin-top: calc(var(--gutterSize) / 2);
     margin-left: var(--EventTile_bubble-margin-inline-start);
-    font-size: $font-14px;
+    font-size: var(--font-14px);
 
     .mx_MessageTimestamp {
         width: unset; /* Cancel the default width */
@@ -106,7 +106,7 @@ limitations under the License.
 
         width: fit-content;
         max-width: var(--EventBubbleTile_line-max-width); /* Align message bubble and displayName */
-        line-height: $font-18px; /* fixed line height to prevent emoji from being taller than text */
+        line-height: var(--font-18px); /* fixed line height to prevent emoji from being taller than text */
     }
 
     /* other users profile on bubble layout */
@@ -136,7 +136,7 @@ limitations under the License.
         position: relative;
         top: -2px;
         left: 2px;
-        font-size: $font-15px;
+        font-size: var(--font-15px);
     }
 
     .mx_MessageActionBar {

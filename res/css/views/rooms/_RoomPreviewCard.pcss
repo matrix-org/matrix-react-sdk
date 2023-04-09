@@ -23,11 +23,11 @@ limitations under the License.
     background-color: $system;
     border-radius: 8px;
     position: relative;
-    font-size: $font-14px;
+    font-size: var(--font-14px);
 
     .mx_RoomPreviewCard_notice {
         font-weight: $font-semi-bold;
-        line-height: $font-24px;
+        line-height: var(--font-24px);
         color: $primary-content;
         margin-top: $spacing-24;
         position: relative;
@@ -36,7 +36,7 @@ limitations under the License.
         &::before {
             content: "";
             position: absolute;
-            height: $font-24px;
+            height: var(--font-24px);
             width: 20px;
             left: 0;
             mask-repeat: no-repeat;
@@ -51,13 +51,13 @@ limitations under the License.
         display: flex;
         align-items: center;
         margin-bottom: $spacing-20;
-        font-size: $font-15px;
+        font-size: var(--font-15px);
 
         > div {
             margin-left: $spacing-8;
 
             .mx_RoomPreviewCard_inviter_name {
-                line-height: $font-18px;
+                line-height: var(--font-18px);
             }
 
             .mx_RoomPreviewCard_inviter_mxid {
@@ -113,7 +113,7 @@ limitations under the License.
     }
 
     .mx_RoomPreviewCard_topic {
-        line-height: $font-22px;
+        line-height: var(--font-22px);
         margin-top: $spacing-16;
         max-height: 160px;
         overflow-y: auto;

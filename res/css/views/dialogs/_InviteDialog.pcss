@@ -52,8 +52,8 @@ limitations under the License.
         > input[type="text"] {
             margin: 6px 0 !important; /* TODO: Use a spacing variable */
             height: 24px;
-            line-height: $font-24px;
-            font-size: $font-14px;
+            line-height: var(--font-24px);
+            font-size: var(--font-14px);
             padding-inline-start: $spacing-12;
             border: 0 !important;
             outline: 0 !important;
@@ -69,7 +69,7 @@ limitations under the License.
         min-width: 48px;
         margin-inline-start: 10px; /* TODO: Use a spacing variable */
         height: 25px;
-        line-height: $font-25px;
+        line-height: var(--font-25px);
     }
 
     .mx_InviteDialog_buttonAndSpinner {
@@ -88,7 +88,7 @@ limitations under the License.
     padding-bottom: $spacing-4;
 
     h3 {
-        font-size: $font-12px;
+        font-size: var(--font-12px);
         color: $muted-fg-color;
         font-weight: bold;
         text-transform: uppercase;
@@ -110,7 +110,7 @@ limitations under the License.
 
 .mx_InviteDialog_section_hidden_suggestions_disclaimer {
     padding: $spacing-8 0 $spacing-16 0;
-    font-size: $font-14px;
+    font-size: var(--font-14px);
 
     > span {
         color: $primary-content;
@@ -127,7 +127,7 @@ limitations under the License.
 
     > h3 {
         margin: $spacing-12 0;
-        font-size: $font-12px;
+        font-size: var(--font-12px);
         color: $muted-fg-color;
         font-weight: bold;
         text-transform: uppercase;
@@ -155,7 +155,7 @@ limitations under the License.
         border-radius: 12px;
         display: inline-block;
         height: 24px;
-        line-height: $font-24px;
+        line-height: var(--font-24px);
         padding-inline: $spacing-8;
         color: #ffffff; /* this is fine without a var because it's for both themes */
 
@@ -359,7 +359,7 @@ limitations under the License.
         .mx_InviteDialog_tile--room_time {
             margin-inline-start: auto;
             width: max-content;
-            font-size: $font-12px;
+            font-size: var(--font-12px);
             color: $muted-fg-color;
         }
 
@@ -380,7 +380,7 @@ limitations under the License.
             grid-row-start: 2;
             grid-column-start: 2;
 
-            font-size: $font-15px;
+            font-size: var(--font-15px);
             color: $alert;
         }
     }
@@ -428,13 +428,13 @@ limitations under the License.
         }
 
         .mx_InviteDialog_tile_nameStack_name {
-            font-size: $font-15px;
+            font-size: var(--font-15px);
             font-weight: $font-semi-bold;
             color: $primary-content;
         }
 
         .mx_InviteDialog_tile_nameStack_userId {
-            font-size: $font-12px;
+            font-size: var(--font-12px);
             color: $muted-fg-color;
         }
     }
@@ -442,8 +442,8 @@ limitations under the License.
 
 .mx_InviteDialog_multiInviterError {
     > h4 {
-        font-size: $font-15px;
-        line-height: $font-24px;
+        font-size: var(--font-15px);
+        line-height: var(--font-24px);
         color: $secondary-content;
         font-weight: normal;
     }
@@ -454,6 +454,6 @@ limitations under the License.
 }
 
 .mx_InviteDialog_oneThreepid {
-    font-size: $font-12px;
+    font-size: var(--font-12px);
     margin: $spacing-8 0;
 }

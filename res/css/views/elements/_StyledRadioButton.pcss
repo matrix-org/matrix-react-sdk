@@ -42,8 +42,8 @@ limitations under the License.
         flex-shrink: 0;
         flex-grow: 0;
 
-        height: $font-16px;
-        width: $font-16px;
+        height: var(--font-16px);
+        width: var(--font-16px);
     }
 
     input[type="radio"] {
@@ -61,20 +61,20 @@ limitations under the License.
             justify-content: center;
 
             box-sizing: border-box;
-            height: $font-16px;
-            width: $font-16px;
+            height: var(--font-16px);
+            width: var(--font-16px);
             margin-left: 2px; /* For the highlight on focus */
 
-            border: $font-1-5px solid $radio-circle-color;
-            border-radius: $font-16px;
+            border: var(--font-1-5px) solid $radio-circle-color;
+            border-radius: var(--font-16px);
 
             > div {
                 box-sizing: border-box;
 
-                height: $font-8px;
-                width: $font-8px;
+                height: var(--font-8px);
+                width: var(--font-8px);
 
-                border-radius: $font-8px;
+                border-radius: var(--font-8px);
             }
         }
 

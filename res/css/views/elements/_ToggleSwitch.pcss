@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 .mx_ToggleSwitch {
-    --ToggleSwitch-min-width: $font-44px;
+    --ToggleSwitch-min-width: var(--font-44px);
 
     transition: background-color 0.2s ease-out 0.1s;
 
-    width: $font-44px;
-    height: $font-20px;
+    width: var(--font-44px);
+    height: var(--font-20px);
     border-radius: 1.5rem;
     padding: 2px;
 
@@ -41,15 +41,15 @@ limitations under the License.
     background-color: $accent;
 
     > .mx_ToggleSwitch_ball {
-        left: calc(100% - $font-20px);
+        left: calc(100% - var(--font-20px));
     }
 }
 
 .mx_ToggleSwitch_ball {
     position: relative;
-    width: $font-20px;
-    height: $font-20px;
-    border-radius: $font-20px;
+    width: var(--font-20px);
+    height: var(--font-20px);
+    border-radius: var(--font-20px);
     background-color: $togglesw-ball-color;
     transition: left 0.15s ease-out 0.1s;
     left: 0;

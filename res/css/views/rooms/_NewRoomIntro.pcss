@@ -30,7 +30,7 @@ limitations under the License.
         gap: 14px 12px;
 
         .mx_AccessibleButton {
-            line-height: $font-24px;
+            line-height: var(--font-24px);
             display: inline-block;
 
             &:not(.mx_AccessibleButton_kind_primary_outline)::before {
@@ -54,13 +54,13 @@ limitations under the License.
 
     > h2 {
         margin-top: 24px;
-        font-size: $font-24px;
+        font-size: var(--font-24px);
         font-weight: 600;
     }
 
     > p {
         margin: 0;
-        font-size: $font-15px;
+        font-size: var(--font-15px);
         color: $secondary-content;
     }
 }

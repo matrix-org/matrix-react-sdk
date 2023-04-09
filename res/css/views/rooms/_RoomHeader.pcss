@@ -38,8 +38,8 @@ limitations under the License.
     }
 
     .mx_CallDuration {
-        margin-top: calc(($font-15px - $font-13px) / 2); /* To align with the name */
-        font-size: $font-13px;
+        margin-top: calc((var(--font-15px) - var(--font-13px)) / 2); /* To align with the name */
+        font-size: var(--font-13px);
     }
 }
 
@@ -99,7 +99,7 @@ limitations under the License.
     overflow: hidden;
     color: $primary-content;
     font-weight: $font-semi-bold;
-    font-size: $font-15px;
+    font-size: var(--font-15px);
     min-height: 24px;
     align-items: center;
     border-radius: 6px;
@@ -158,13 +158,13 @@ limitations under the License.
 }
 
 .mx_RoomHeader_topic {
-    $lineHeight: $font-16px;
+    $lineHeight: var(--font-16px);
     $lines: 2;
 
     flex: 1;
     color: $roomtopic-color;
     font-weight: 400;
-    font-size: $font-13px;
+    font-size: var(--font-13px);
     line-height: $lineHeight;
     max-height: calc($lineHeight * $lines);
 

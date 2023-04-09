@@ -43,7 +43,7 @@ limitations under the License.
     border-radius: 40px;
     width: 24px;
     height: 24px;
-    line-height: $font-24px;
+    line-height: var(--font-24px);
     font-size: 0.8em;
     vertical-align: top;
     text-align: center;
@@ -90,18 +90,18 @@ limitations under the License.
             border-radius: 24px !important;
 
             .mx_NotificationBadge_count {
-                font-size: $font-16px !important; /* override default */
+                font-size: var(--font-16px) !important; /* override default */
             }
         }
     }
 
     .mx_RoomStatusBar_unsentTitle {
         color: $alert;
-        font-size: $font-15px;
+        font-size: var(--font-15px);
     }
 
     .mx_RoomStatusBar_unsentDescription {
-        font-size: $font-12px;
+        font-size: var(--font-12px);
     }
 
     .mx_RoomStatusBar_unsentButtonBar {
@@ -173,7 +173,7 @@ limitations under the License.
 
 .mx_RoomStatusBar_connectionLostBar_desc {
     color: $primary-content;
-    font-size: $font-13px;
+    font-size: var(--font-13px);
     opacity: 0.5;
     padding-bottom: 20px;
 }
@@ -186,7 +186,7 @@ limitations under the License.
 
 .mx_RoomStatusBar_typingBar {
     height: 50px;
-    line-height: $font-50px;
+    line-height: var(--font-50px);
 
     color: $primary-content;
     opacity: 0.5;
@@ -205,6 +205,6 @@ limitations under the License.
 
     .mx_RoomStatusBar_typingBar {
         height: 40px;
-        line-height: $font-40px;
+        line-height: var(--font-40px);
     }
 }

@@ -22,8 +22,8 @@ $left-gutter: 64px;
     --EventTile_group_line-spacing-block-start: 1px;
     --EventTile_group_line-spacing-block-end: 3px;
     --EventTile_group_line-spacing-inline-start: $left-gutter;
-    --EventTile_group_line-line-height: $font-22px;
-    --EventTile_ThreadSummary-line-height: calc(2 * $font-12px);
+    --EventTile_group_line-line-height: var(--font-22px);
+    --EventTile_ThreadSummary-line-height: calc(2 * var(--font-12px));
 
     flex-shrink: 0;
 
@@ -100,7 +100,7 @@ $left-gutter: 64px;
 
     .mx_DisambiguatedProfile {
         color: $primary-content;
-        font-size: $font-14px;
+        font-size: var(--font-14px);
         display: inline-block;
         padding-bottom: 0px;
         padding-top: 0px;
@@ -175,8 +175,8 @@ $left-gutter: 64px;
         .mx_MImageBody {
             .mx_MImageBody_thumbnail_container {
                 justify-content: flex-start;
-                min-height: $font-44px;
-                min-width: $font-44px;
+                min-height: var(--font-44px);
+                min-width: var(--font-44px);
             }
         }
 
@@ -355,7 +355,7 @@ $left-gutter: 64px;
                 /* This aligns the avatar with the last line of the */
                 /* message. We want to move it one line up */
                 /* See .mx_EventTile[data-layout=group] .mx_EventTile_line in _EventTile.scss */
-                inset-block-start: calc(-$font-22px - 3px);
+                inset-block-start: calc(-var(--font-22px) - 3px);
             }
         }
 
@@ -375,7 +375,7 @@ $left-gutter: 64px;
         }
 
         > .mx_DisambiguatedProfile {
-            line-height: $font-20px;
+            line-height: var(--font-20px);
             margin-left: $left-gutter;
             max-width: calc(100% - $left-gutter);
         }
@@ -392,7 +392,7 @@ $left-gutter: 64px;
             .mx_ThreadSummary_icon,
             .mx_EventTile_line {
                 margin-right: $inline-end-margin;
-                min-height: $font-14px;
+                min-height: var(--font-14px);
             }
 
             .mx_ThreadSummary {
@@ -461,7 +461,7 @@ $left-gutter: 64px;
 
                 /* (EventTileLine.line-height - ReadReceiptGroup.height) / 2 */
                 /* this centers the ReadReceiptGroup if we’ve got a single line */
-                inset-block-end: calc(($font-18px - 24px) / 2);
+                inset-block-end: calc((var(--font-18px) - 24px) / 2);
             }
         }
         .mx_EventTileBubble {
@@ -484,7 +484,7 @@ $left-gutter: 64px;
     max-width: 100%;
     clear: both;
     padding-top: 18px;
-    font-size: $font-14px;
+    font-size: var(--font-14px);
     position: relative;
 }
 
@@ -534,7 +534,7 @@ $left-gutter: 64px;
     .mx_EventTile_edited,
     .mx_EventTile_pendingModeration {
         user-select: none;
-        font-size: $font-12px;
+        font-size: var(--font-12px);
         color: $roomtopic-color;
         display: inline-block;
         margin-left: 9px;
@@ -549,7 +549,7 @@ $left-gutter: 64px;
         white-space: normal !important;
         line-height: inherit !important;
         color: inherit; /* inherit the colour from the dark or light theme by default (but not for code blocks) */
-        font-size: $font-14px;
+        font-size: var(--font-14px);
 
         pre,
         code {
@@ -564,7 +564,7 @@ $left-gutter: 64px;
             // The horizontal padding is added by gfm.css .markdown-body
             padding: $spacing-2 0;
             // Avoid inline code blocks to be sticked when on multiple lines
-            line-height: $font-22px;
+            line-height: var(--font-22px);
             // Avoid the border to be glued to the other words
             margin-right: $spacing-2;
         }
@@ -653,7 +653,7 @@ $left-gutter: 64px;
 
     .mx_EventTile_spoiler_reason {
         color: $event-timestamp-color;
-        font-size: $font-11px;
+        font-size: var(--font-11px);
     }
 
     .mx_EventTile_spoiler_content {
@@ -989,7 +989,7 @@ $left-gutter: 64px;
             .mx_ThreadPanel_replies_amount {
                 @mixin ThreadRepliesAmount;
                 line-height: var(--EventTile_ThreadSummary-line-height);
-                font-size: $font-12px; /* Same font size as the counter on the main panel */
+                font-size: var(--font-12px); /* Same font size as the counter on the main panel */
             }
 
             .mx_ThreadSummary_content {
@@ -1001,7 +1001,7 @@ $left-gutter: 64px;
     }
 
     .mx_MessageTimestamp {
-        font-size: $font-12px;
+        font-size: var(--font-12px);
         width: unset; /* Cancel the default width */
         overflow: hidden; /* ensure correct overflow behavior */
         text-overflow: ellipsis;
@@ -1053,7 +1053,7 @@ $left-gutter: 64px;
 
             &.mx_EventTile_selected .mx_EventTile_line,
             .mx_EventTile_line {
-                $line-height: $font-12px;
+                $line-height: var(--font-12px);
 
                 padding-inline-start: 0;
                 line-height: $line-height;
@@ -1235,7 +1235,7 @@ $left-gutter: 64px;
 
             &.mx_EventTile_info {
                 padding-top: 0; /* same as the padding for non-compact .mx_EventTile.mx_EventTile_info */
-                font-size: $font-13px;
+                font-size: var(--font-13px);
 
                 .mx_EventTile_e2eIcon,
                 .mx_EventTile_avatar {
@@ -1245,7 +1245,7 @@ $left-gutter: 64px;
 
                 .mx_EventTile_line,
                 .mx_EventTile_reply {
-                    line-height: $font-20px;
+                    line-height: var(--font-20px);
                 }
             }
 
@@ -1283,7 +1283,7 @@ $left-gutter: 64px;
             }
 
             .mx_DisambiguatedProfile {
-                font-size: $font-13px;
+                font-size: var(--font-13px);
             }
 
             .mx_EventTile_msgOption {
