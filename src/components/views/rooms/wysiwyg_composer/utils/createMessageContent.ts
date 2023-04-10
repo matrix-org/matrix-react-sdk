@@ -84,13 +84,13 @@ export async function createMessageContent(
 
     const isEmote = message.startsWith(EMOTE_PREFIX);
     if (isEmote) {
-        // if an emote, remove the emote prefix - nb assuming here it's plain
-        // text as wrapping /me in a <p> tag won't hit here
+        // if we are dealing with an emote we want to remove the prefix so that `/me` does not
+        // appear after the `* <userName>` text in the timeline
         message = message.slice(EMOTE_PREFIX.length);
     }
     if (message.startsWith("//")) {
         // if user wants to enter a single slash at the start of a message, this
-        // is how they have to do it (due to it clashing with commands), so we
+        // is how they have to do it (due to it clashing with commands), so here we
         // remove the first character to make sure //word displays as /word
         message = message.slice(1);
     }
