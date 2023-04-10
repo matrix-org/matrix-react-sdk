@@ -96,7 +96,7 @@ export function getMentionAttributes(completion: ICompletion, client: MatrixClie
     // To ensure that we always have something set in the --avatar-letter CSS variable
     // as otherwise alignment varies depending on whether the content is empty or not.
 
-    // Wse a zero width space so that it counts as content, but does not display anything.
+    // Use a zero width space so that it counts as content, but does not display anything.
     const defaultLetterContent = "\u200b";
 
     if (completion.type === "user") {
