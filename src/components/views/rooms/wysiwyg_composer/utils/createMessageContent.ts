@@ -66,7 +66,7 @@ interface CreateMessageContentParams {
 const isMatrixEvent = (e: MatrixEvent | undefined): e is MatrixEvent => e instanceof MatrixEvent;
 
 export async function createMessageContent(
-    messageProp: string,
+    message: string,
     isHTML: boolean,
     {
         relation,
@@ -79,8 +79,6 @@ export async function createMessageContent(
     const isEditing = isMatrixEvent(editedEvent);
     const isReply = isEditing ? Boolean(editedEvent.replyEventId) : isMatrixEvent(replyToEvent);
     const isReplyAndEditing = isEditing && isReply;
-
-    let message = messageProp;
 
     const isEmote = message.startsWith(EMOTE_PREFIX);
     if (isEmote) {
