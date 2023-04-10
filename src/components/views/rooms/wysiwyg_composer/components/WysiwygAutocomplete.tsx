@@ -85,7 +85,7 @@ const WysiwygAutocomplete = forwardRef(
                 }
                 case "room":
                 case "user": {
-                    if (Boolean(completion.href)) {
+                    if (typeof completion.href === "string") {
                         handleMention(
                             completion.href,
                             getMentionDisplayText(completion, client),
