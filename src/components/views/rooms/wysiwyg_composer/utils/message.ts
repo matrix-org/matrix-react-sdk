@@ -83,7 +83,6 @@ export async function sendMessage(
     if (message.startsWith("/") && !message.startsWith("//") && !message.startsWith(EMOTE_PREFIX)) {
         const { cmd, args } = getCommand(message);
         if (cmd) {
-            // TODO handle /me special case separately, see end of SlashCommands.Commands
             const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation?.event_id : null;
             let commandSuccessful: boolean;
             [content, commandSuccessful] = await runSlashCommand(cmd, args, roomId, threadId ?? null);
