@@ -74,7 +74,6 @@ export function getRoomFromCompletion(completion: ICompletion, client: MatrixCli
  * @returns the text to display in the mention
  */
 export function getMentionDisplayText(completion: ICompletion, client: MatrixClient): string {
-    console.log(completion, "<<< completion");
     if (completion.type === "user") {
         return completion.completion;
     } else if (completion.type === "room") {
