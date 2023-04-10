@@ -63,13 +63,7 @@ interface CreateMessageContentParams {
     editedEvent?: MatrixEvent;
 }
 
-function isMatrixEvent(e: MatrixEvent | undefined): e is MatrixEvent {
-    return Boolean(e);
-}
-
-function isMatrixEventAndReply(areWeEditing: boolean, e: MatrixEvent | undefined): e is MatrixEvent {
-    return areWeEditing ? Boolean(e?.replyEventId) : Boolean(e);
-}
+const isMatrixEvent = (e: MatrixEvent | undefined): e is MatrixEvent => e instanceof MatrixEvent;
 
 export async function createMessageContent(
     messageProp: string,
@@ -83,7 +77,7 @@ export async function createMessageContent(
     }: CreateMessageContentParams,
 ): Promise<IContent> {
     const isEditing = isMatrixEvent(editedEvent);
-    const isReply = isMatrixEventAndReply(isEditing, isEditing ? editedEvent : replyToEvent);
+    const isReply = isEditing ? Boolean(editedEvent.replyEventId) : isMatrixEvent(replyToEvent);
     const isReplyAndEditing = isEditing && isReply;
 
     let message = messageProp;
