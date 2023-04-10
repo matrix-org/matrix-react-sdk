@@ -59,16 +59,28 @@ const WysiwygAutocomplete = forwardRef(
         const client = useMatrixClientContext();
 
         function handleConfirm(completion: ICompletion): void {
-            // TODO handle all of the completion types
-            // Using this to pick out the ones we can handle during implementation
+            if (client === undefined || room === undefined) {
+                return;
+            }
             if (completion.type === "command") {
                 // TODO determine if utils in SlashCommands.tsx are required
-
                 // trim the completion as some include trailing spaces, but we always insert a
                 // trailing space in the rust model anyway
                 handleCommand(completion.completion.trim());
             }
-            if (client && room && completion.href && (completion.type === "room" || completion.type === "user")) {
+            if (completion.type === "at-room") {
+                // TODO improve handling of at-room to either become a span or use a placeholder href
+                // We have an issue in that we can't use a placeholder because the rust model is always
+                // applying a prefix to the href, so an href of "#" becomes https://# and also we can not
+                // represent a plain span in rust
+                handleMention(
+                    window.location.href,
+                    getMentionDisplayText(completion, client),
+                    getMentionAttributes(completion, client, room),
+                );
+            }
+
+            if (completion.href && (completion.type === "room" || completion.type === "user")) {
                 handleMention(
                     completion.href,
                     getMentionDisplayText(completion, client),
