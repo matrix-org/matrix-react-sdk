@@ -95,7 +95,9 @@ export function getMentionDisplayText(completion: ICompletion, client: MatrixCli
 export function getMentionAttributes(completion: ICompletion, client: MatrixClient, room: Room): Attributes {
     // to ensure that we always have something set in the --avatar-letter CSS variable
     // as otherwise alignment varies depending on whether the content is empty or not
-    const defaultLetterContent = "-";
+
+    // use a zero width space so that it counts as content, but does not display anything
+    const defaultLetterContent = "\u200b";
 
     if (completion.type === "user") {
         // logic as used in UserPillPart.setAvatar in parts.ts
