@@ -63,31 +63,40 @@ const WysiwygAutocomplete = forwardRef(
                 return;
             }
 
-            // TODO determine if utils in SlashCommands.tsx are required.
-            // Trim the completion as some include trailing spaces, but we always insert a
-            // trailing space in the rust model anyway
-            if (completion.type === "command") {
-                handleCommand(completion.completion.trim());
-            }
-
-            // TODO improve handling of at-room to either become a span or use a placeholder href
-            // We have an issue in that we can't use a placeholder because the rust model is always
-            // applying a prefix to the href, so an href of "#" becomes https://# and also we can not
-            // represent a plain span in rust
-            if (completion.type === "at-room") {
-                handleMention(
-                    window.location.href,
-                    getMentionDisplayText(completion, client),
-                    getMentionAttributes(completion, client, room),
-                );
-            }
-
-            if (completion.href && (completion.type === "room" || completion.type === "user")) {
-                handleMention(
-                    completion.href,
-                    getMentionDisplayText(completion, client),
-                    getMentionAttributes(completion, client, room),
-                );
+            switch (completion.type) {
+                case "command": {
+                    // TODO determine if utils in SlashCommands.tsx are required.
+                    // Trim the completion as some include trailing spaces, but we always insert a
+                    // trailing space in the rust model anyway
+                    handleCommand(completion.completion.trim());
+                    return;
+                }
+                case "at-room": {
+                    // TODO improve handling of at-room to either become a span or use a placeholder href
+                    // We have an issue in that we can't use a placeholder because the rust model is always
+                    // applying a prefix to the href, so an href of "#" becomes https://# and also we can not
+                    // represent a plain span in rust
+                    handleMention(
+                        window.location.href,
+                        getMentionDisplayText(completion, client),
+                        getMentionAttributes(completion, client, room),
+                    );
+                    return;
+                }
+                case "room":
+                case "user": {
+                    if (Boolean(completion.href)) {
+                        handleMention(
+                            completion.href,
+                            getMentionDisplayText(completion, client),
+                            getMentionAttributes(completion, client, room),
+                        );
+                    }
+                    return;
+                }
+                // TODO - handle "community" type
+                default:
+                    return;
             }
         }
 
