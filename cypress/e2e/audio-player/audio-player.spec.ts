@@ -177,20 +177,8 @@ describe("Audio player", () => {
         // Enable high contrast manually
         cy.openUserSettings("Appearance")
             .get(".mx_ThemeChoicePanel")
-            .within(() => {
-                cy.findByTestId("theme-choice-panel-selectors").within(() => {
-                    // Enable light theme
-                    cy.get(".mx_ThemeSelector_light").click();
-
-                    // Assert that the radio button for light theme was checked
-                    cy.get(".mx_StyledRadioButton_checked input[value='light']").should("exist");
-                });
-
-                cy.findByTestId("theme-choice-panel-highcontrast").within(() => {
-                    // Click the checkbox
-                    cy.get("label .mx_Checkbox_background").click();
-                });
-            });
+            .findByLabelText("Use high contrast")
+            .click({ force: true }); // force click because the size of the checkbox is zero
 
         cy.closeDialog();
 
