@@ -55,7 +55,7 @@ export function PlainTextComposer({
     const handleMention = (): void => {};
     const handleCommand = (): void => {};
 
-    const { ref, onInput, onPaste, onKeyDown, content, setContent, suggestion } = usePlainTextListeners(
+    const { ref, onInput, onPaste, onKeyDown, content, setContent, suggestion, onSelect } = usePlainTextListeners(
         autocompleteRef,
         initialContent,
         onChange,
@@ -76,6 +76,7 @@ export function PlainTextComposer({
             onInput={onInput}
             onPaste={onPaste}
             onKeyDown={onKeyDown}
+            onSelect={onSelect}
         >
             <WysiwygAutocomplete
                 ref={autocompleteRef}

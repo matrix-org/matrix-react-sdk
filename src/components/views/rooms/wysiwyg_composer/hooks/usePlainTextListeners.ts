@@ -15,13 +15,14 @@ limitations under the License.
 */
 
 import { MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
-import { KeyboardEvent, RefObject, SyntheticEvent, useCallback, useRef, useEffect, useState } from "react";
+import { KeyboardEvent, RefObject, SyntheticEvent, useCallback, useRef, useState } from "react";
 
 import { useSettingValue } from "../../../../../hooks/useSettings";
 import { IS_MAC, Key } from "../../../../../Keyboard";
 import Autocomplete from "../../Autocomplete";
 import { getKeyBindingsManager } from "../../../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../../../accessibility/KeyboardShortcuts";
+import { first } from "cheerio/lib/api/traversing";
 
 function isDivElement(target: EventTarget): target is HTMLDivElement {
     return target instanceof HTMLDivElement;
@@ -38,6 +39,8 @@ function amendInnerHtml(text: string): string {
 }
 
 const emptySuggestion = { keyChar: "", text: "", type: "unknown" } as const;
+type SuggestionCandidate = { node: Node | null; startOffset: number; endOffset: number };
+const emptySuggestionCandidate: SuggestionCandidate = { node: null, startOffset: NaN, endOffset: NaN };
 
 export function usePlainTextListeners(
     autocompleteRef: React.RefObject<Autocomplete>,
@@ -52,10 +55,12 @@ export function usePlainTextListeners(
     onKeyDown(event: KeyboardEvent<HTMLDivElement>): void;
     setContent(text: string): void;
     suggestion: MappedSuggestion;
+    onSelect(): void;
 } {
     const ref = useRef<HTMLDivElement | null>(null);
     const [content, setContent] = useState<string | undefined>(initialContent);
     const [suggestion, setSuggestion] = useState<MappedSuggestion>(emptySuggestion);
+    const [suggestionNodeInfo, setSuggestionNodeInfo] = useState<SuggestionCandidate>(emptySuggestionCandidate);
 
     const send = useCallback(() => {
         if (ref.current) {
@@ -148,19 +153,56 @@ export function usePlainTextListeners(
         [autocompleteRef, enterShouldSend, send],
     );
 
-    useEffect(() => {
-        // do we need to do this onSelect? Initial thought was yes, but perhaps we can actually just
-        // do checks on input? onInput would probably be easier to be honest, but then with the initial
-        // implementation this wouldn't allow us to
-        // when there's a selection change, we need to figure out if we are doing some
-        // sort of suggestion
+    // do for slash commands first
+    const onSelect = (): void => {
+        // whenever there's a change in selection, we're going to have to do some magic
+        const s = document.getSelection();
 
-        // lets do slash first, probably more straightforward
-        if (content && content.startsWith("/") && !content.startsWith("//")) {
-            // then we have a command
-            setSuggestion({ keyChar: "/", text: content.slice(1), type: "command" });
+        // if we have a cursor inside a text node, then we're potentially interested in the text content
+        if (s && s.isCollapsed && s.anchorNode?.nodeName === "#text" && ref.current) {
+            // first check is that the text node is the first text node of the editor as we can also have
+            // <p> tags in the markup
+            const firstTextNode = document.createNodeIterator(ref.current, NodeFilter.SHOW_TEXT).nextNode();
+            const isFirstTextNode = s.anchorNode === firstTextNode;
+            const textContent = s.anchorNode.textContent;
+
+            // if we're not in the first text node or we have no text content, return
+            if (!isFirstTextNode || textContent === null) {
+                return;
+            }
+
+            // it's a command if: it starts with /, not //, then has letters all the way up to the end of the textContent
+            const commandRegex = /^\/{1}(\w*)$/;
+            const commandMatches = textContent.match(commandRegex);
+
+            // if we don't have a command, clear the suggestion state and return
+            if (commandMatches === null) {
+                if (suggestionNodeInfo.node !== null) {
+                    setSuggestionNodeInfo(emptySuggestionCandidate);
+                    setSuggestion(emptySuggestion);
+                }
+                return;
+            }
+
+            // but if we do have some matches, use that to populate the suggestion state
+            setSuggestionNodeInfo({ node: s.anchorNode, startOffset: 0, endOffset: textContent.length });
+            setSuggestion({ keyChar: "/", type: "command", text: commandMatches[1] });
         }
-    }, [content]);
+    };
+
+    // useEffect(() => {
+    //     // do we need to do this onSelect? Initial thought was yes, but perhaps we can actually just
+    //     // do checks on input? onInput would probably be easier to be honest, but then with the initial
+    //     // implementation this wouldn't allow us to
+    //     // when there's a selection change, we need to figure out if we are doing some
+    //     // sort of suggestion
+
+    //     // lets do slash first, probably more straightforward
+    //     if (content && content.startsWith("/") && !content.startsWith("//")) {
+    //         // then we have a command
+    //         setSuggestion({ keyChar: "/", text: content.slice(1), type: "command" });
+    //     }
+    // }, [content]);
 
     return {
         ref,
@@ -170,5 +212,6 @@ export function usePlainTextListeners(
         content,
         setContent: setText,
         suggestion,
+        onSelect,
     };
 }
