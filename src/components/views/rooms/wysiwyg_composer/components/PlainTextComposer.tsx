@@ -71,13 +71,17 @@ export function PlainTextComposer({
         // if this gets triggered, then we have a command on the page, so what we want to do is
         // manually amend the html text content with the stored state
         const { node, startOffset, endOffset } = suggestionNodeInfo;
-        if (node === null || node.textContent === null) return;
+        if (ref.current === null || node === null || node.textContent === null) return;
 
         // for a command we know we're starting at the beginning, so it's a bit easier
-        const newContent = `${replacementText} `;
-        node.textContent = newContent; // note the trailing space
-        // then set the cursor to the end of the node before clearing the suggestion
+        const newContent = `${replacementText} `; // note the trailing space
+        node.textContent = newContent;
+
+        // then set the cursor to the end of the node, fire an inputEvent (updates
+        // the hook state), clear the suggestions from state
         document.getSelection()?.setBaseAndExtent(node, newContent.length, node, newContent.length);
+        const event = new Event("inputEvent");
+        ref.current.dispatchEvent(event);
         clearSuggestions();
     };
 
