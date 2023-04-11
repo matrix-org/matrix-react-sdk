@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import React, { MutableRefObject, ReactNode } from "react";
+import React, { MutableRefObject, ReactNode, useRef } from "react";
 
 import { useComposerFunctions } from "../hooks/useComposerFunctions";
 import { useIsFocused } from "../hooks/useIsFocused";
@@ -24,6 +24,8 @@ import { usePlainTextListeners } from "../hooks/usePlainTextListeners";
 import { useSetCursorPosition } from "../hooks/useSetCursorPosition";
 import { ComposerFunctions } from "../types";
 import { Editor } from "./Editor";
+import Autocomplete from "../../Autocomplete";
+import { WysiwygAutocomplete } from "./WysiwygAutocomplete";
 
 interface PlainTextComposerProps {
     disabled?: boolean;
@@ -48,7 +50,13 @@ export function PlainTextComposer({
     leftComponent,
     rightComponent,
 }: PlainTextComposerProps): JSX.Element {
-    const { ref, onInput, onPaste, onKeyDown, content, setContent } = usePlainTextListeners(
+    // WIP - hack in an autocomplete implementation
+    const autocompleteRef = useRef<Autocomplete | null>(null);
+    const handleMention = (): void => {};
+    const handleCommand = (): void => {};
+
+    const { ref, onInput, onPaste, onKeyDown, content, setContent, suggestion } = usePlainTextListeners(
+        autocompleteRef,
         initialContent,
         onChange,
         onSend,
@@ -69,6 +77,12 @@ export function PlainTextComposer({
             onPaste={onPaste}
             onKeyDown={onKeyDown}
         >
+            <WysiwygAutocomplete
+                ref={autocompleteRef}
+                suggestion={suggestion}
+                handleMention={handleMention}
+                handleCommand={handleCommand}
+            />
             <Editor
                 ref={ref}
                 disabled={disabled}
