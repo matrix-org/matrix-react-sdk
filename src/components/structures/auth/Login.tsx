@@ -587,18 +587,16 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         }
 
         let footer;
-        if (this.props.isSyncing || this.state.busyLoggingIn) {
+        if (this.props.isSyncing) {
             footer = (
                 <div className="mx_AuthBody_paddedFooter">
                     <div className="mx_AuthBody_paddedFooter_title">
                         <InlineSpinner w={20} h={20} />
-                        {this.props.isSyncing ? _t("Syncing…") : _t("Signing In…")}
+                        {_t("Syncing…")}
                     </div>
-                    {this.props.isSyncing && (
-                        <div className="mx_AuthBody_paddedFooter_subtitle">
-                            {_t("If you've joined lots of rooms, this might take a while")}
-                        </div>
-                    )}
+                    <div className="mx_AuthBody_paddedFooter_subtitle">
+                        {_t("If you've joined lots of rooms, this might take a while")}
+                    </div>
                 </div>
             );
         } else if (SettingsStore.getValue(UIFeature.Registration)) {

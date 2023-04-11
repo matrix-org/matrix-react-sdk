@@ -26,6 +26,7 @@ import Field from "../elements/Field";
 import CountryDropdown from "./CountryDropdown";
 import EmailField from "./EmailField";
 import { PhoneNumberCountryDefinition } from "../../../phonenumber";
+import InlineSpinner from "../elements/InlineSpinner";
 
 // For validating phone numbers without country codes
 const PHONE_NUMBER_REGEX = /^[0-9()\-\s]*$/;
@@ -437,14 +438,10 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
                         ref={(field) => (this[LoginField.Password] = field)}
                     />
                     {forgotPasswordJsx}
-                    {!this.props.busy && (
-                        <input
-                            className="mx_Login_submit"
-                            type="submit"
-                            value={_t("Sign in")}
-                            disabled={this.props.disableSubmit}
-                        />
-                    )}
+                    <button className="mx_Login_submit" type="submit" disabled={this.props.disableSubmit || this.props.busy}>
+                        {this.props.busy ? <InlineSpinner w={20} h={20} /> : _t("Sign in")}
+                    </button>;
+
                 </form>
             </div>
         );
