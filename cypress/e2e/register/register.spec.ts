@@ -69,7 +69,11 @@ describe("Registration", () => {
         cy.percySnapshot("Registration terms prompt", { percyCSS });
         cy.checkA11y();
 
-        cy.get(".mx_InteractiveAuthEntryComponents_termsPolicy input").click();
+        cy.get(".mx_InteractiveAuthEntryComponents_termsPolicy").within(() => {
+            cy.findByRole("checkbox").click(); // Click the checkbox before privacy policy anchor link
+            cy.findByLabelText("Privacy Policy").should("be.visible");
+        });
+
         cy.findByRole("button", { name: "Accept" }).click();
 
         cy.get(".mx_UseCaseSelection_skip", { timeout: 30000 }).should("exist");
