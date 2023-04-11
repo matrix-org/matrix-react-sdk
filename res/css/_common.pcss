@@ -38,20 +38,8 @@ $container-gap-width: 8px; /* only even numbers should be used because otherwise
 
 $timeline-image-border-radius: 8px;
 
-:root, html {
-    background-color: #15191e;
-}
-html {
-    transition: 1s;
-    transition-duration: 1s;
-}
-body {
-    background-color: transparent;
-    transition: 1s;
-    transition-duration: 1s;
-}
-
 :root {
+    background-color: #15191e;
     font-size: 10px;
 
     --transition-short: 0.1s;
@@ -66,6 +54,9 @@ body {
 }
 
 html {
+    background-color: #15191e;
+    transition: 1s;
+    transition-duration: 1s;
     /* hack to stop overscroll bounce on OSX and iOS.
        N.B. Breaks things when we have legitimate horizontal overscroll */
     height: 100%;
@@ -75,6 +66,9 @@ html {
 }
 
 body {
+    background-color: transparent;
+    transition: 1s;
+    transition-duration: 1s;
     font-family: $font-family;
     font-size: $font-15px;
     color: $primary-content;
