@@ -116,7 +116,8 @@ export default class UploadConfirmDialog extends React.Component<IProps> {
                             {preview && <div>{preview}</div>}
                             <div id={fileId}>
                                 {placeholder}
-                                {this.props.file.name} ({filesize(this.props.file.size)})
+                                {this.props.file.name} ({filesize(this.props.file.size, { base: 2, standard: "jedec" })}
+                                )
                             </div>
                         </div>
                     </div>

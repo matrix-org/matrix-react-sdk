@@ -351,7 +351,9 @@ export default class MFileBody extends React.Component<IProps, IState> {
                             </a>
                             {this.context.timelineRenderingType === TimelineRenderingType.File && (
                                 <div className="mx_MImageBody_size">
-                                    {this.content.info?.size ? filesize(this.content.info.size) : ""}
+                                    {this.content.info?.size
+                                        ? filesize(this.content.info.size, { base: 2, standard: "jedec" })
+                                        : ""}
                                 </div>
                             )}
                         </div>
