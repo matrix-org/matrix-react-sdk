@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,9 +26,10 @@ import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../../../../src/models/LocalRoo
 import { DirectoryMember, startDmOnFirstMessage } from "../../../../src/utils/direct-messages";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import { flushPromisesWithFakeTimers, mkRoom, stubClient } from "../../../test-utils";
-import { shouldShowFeedback } from "../../../../src/utils/Feedback";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../../src/settings/SettingLevel";
+import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
+import SdkConfig from "../../../../src/SdkConfig";
 
 jest.useFakeTimers();
 
@@ -38,6 +39,11 @@ jest.mock("../../../../src/utils/direct-messages", () => ({
     // @ts-ignore
     ...jest.requireActual("../../../../src/utils/direct-messages"),
     startDmOnFirstMessage: jest.fn(),
+}));
+
+jest.mock("../../../../src/dispatcher/dispatcher", () => ({
+    register: jest.fn(),
+    dispatch: jest.fn(),
 }));
 
 interface IUserChunkMember {
@@ -122,7 +128,7 @@ describe("Spotlight Dialog", () => {
     };
 
     const testPublicRoom: IPublicRoomsChunkRoom = {
-        room_id: "@room247:matrix.org",
+        room_id: "!room247:matrix.org",
         name: "Room #247",
         topic: "We hope you'll have a <b>shining</b> experience!",
         world_readable: false,
@@ -352,26 +358,33 @@ describe("Spotlight Dialog", () => {
         expect(startDmOnFirstMessage).toHaveBeenCalledWith(mockedClient, [new DirectoryMember(testPerson)]);
     });
 
-    describe("Feedback prompt", () => {
-        it("should show feedback prompt if feedback is enabled", async () => {
-            mocked(shouldShowFeedback).mockReturnValue(true);
-
-            render(<SpotlightDialog initialText="test23" onFinished={() => null} />);
-            jest.advanceTimersByTime(200);
-            await flushPromisesWithFakeTimers();
-
-            expect(screen.getByText("give feedback")).toBeInTheDocument();
+    it("should pass via of the server being explored when joining room from directory", async () => {
+        SdkConfig.put({
+            room_directory: {
+                servers: ["example.tld"],
+            },
         });
+        localStorage.setItem("mx_last_room_directory_server", "example.tld");
 
-        it("should hide feedback prompt if feedback is disabled", async () => {
-            mocked(shouldShowFeedback).mockReturnValue(false);
+        render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />);
 
-            render(<SpotlightDialog initialText="test23" onFinished={() => null} />);
-            jest.advanceTimersByTime(200);
-            await flushPromisesWithFakeTimers();
+        jest.advanceTimersByTime(200);
+        await flushPromisesWithFakeTimers();
 
-            expect(screen.queryByText("give feedback")).not.toBeInTheDocument();
-        });
+        const content = document.querySelector("#mx_SpotlightDialog_content")!;
+        const options = content.querySelectorAll("div.mx_SpotlightDialog_option");
+        expect(options.length).toBe(1);
+        expect(options[0].innerHTML).toContain(testPublicRoom.name);
+
+        fireEvent.click(options[0].querySelector("[role='button']")!);
+        expect(defaultDispatcher.dispatch).toHaveBeenCalledTimes(1);
+        expect(defaultDispatcher.dispatch).toHaveBeenCalledWith(
+            expect.objectContaining({
+                action: "view_room",
+                room_id: testPublicRoom.room_id,
+                via_servers: ["example.tld"],
+            }),
+        );
     });
 
     describe("nsfw public rooms filter", () => {

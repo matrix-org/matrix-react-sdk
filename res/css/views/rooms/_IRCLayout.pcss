@@ -20,8 +20,9 @@ $irc-line-height: $font-18px;
     --name-width: 80px; // cf. ircDisplayNameWidth on Settings.tsx
     --icon-width: 14px;
     --right-padding: 5px;
+    --line-height: $irc-line-height;
 
-    line-height: $irc-line-height !important;
+    line-height: var(--line-height) !important;
 
     .mx_NewRoomIntro {
         > h2 {
@@ -179,13 +180,6 @@ $irc-line-height: $font-18px;
         .mx_TextualEvent {
             line-height: $irc-line-height;
         }
-    }
-
-    /* Suppress highlight thing from the normal Layout. */
-    .mx_EventTile:hover.mx_EventTile_verified .mx_EventTile_line,
-    .mx_EventTile:hover.mx_EventTile_unverified .mx_EventTile_line,
-    .mx_EventTile:hover.mx_EventTile_unknown .mx_EventTile_line {
-        border-left: 0;
     }
 
     .mx_ReplyChain {

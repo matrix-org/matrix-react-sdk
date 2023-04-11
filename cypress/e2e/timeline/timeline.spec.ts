@@ -147,7 +147,10 @@ describe("Timeline", () => {
         });
     });
 
-    describe("message displaying", () => {
+    describe("configure room", () => {
+        // Exclude timestamp and read marker from snapshots
+        const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
+
         beforeEach(() => {
             cy.injectAxe();
         });
@@ -182,6 +185,116 @@ describe("Timeline", () => {
             cy.get(".mx_MainSplit").percySnapshotElement("Configured room on IRC layout");
         });
 
+        it("should have an expanded generic event list summary (GELS) on IRC layout", () => {
+            cy.visit("/#/room/" + roomId);
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
+
+            // Wait until configuration is finished
+            cy.contains(
+                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
+                "created and configured the room.",
+            ).should("exist");
+
+            cy.get(".mx_GenericEventListSummary").within(() => {
+                // Click "expand" link button
+                cy.findByRole("button", { name: "expand" }).click();
+
+                // Assert that the "expand" link button worked
+                cy.findByRole("button", { name: "collapse" }).should("exist");
+            });
+
+            // Check the height of expanded GELS line
+            cy.get(".mx_GenericEventListSummary[data-layout=irc] .mx_GenericEventListSummary_spacer").should(
+                "have.css",
+                "line-height",
+                "18px", // $irc-line-height: $font-18px (See: _IRCLayout.pcss)
+            );
+
+            cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on IRC layout", { percyCSS });
+        });
+
+        it("should have an expanded generic event list summary (GELS) on compact modern/group layout", () => {
+            cy.visit("/#/room/" + roomId);
+
+            // Set compact modern layout
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group).setSettingValue(
+                "useCompactLayout",
+                null,
+                SettingLevel.DEVICE,
+                true,
+            );
+
+            // Wait until configuration is finished
+            cy.contains(
+                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
+                "created and configured the room.",
+            ).should("exist");
+
+            cy.get(".mx_GenericEventListSummary").within(() => {
+                // Click "expand" link button
+                cy.findByRole("button", { name: "expand" }).click();
+
+                // Assert that the "expand" link button worked
+                cy.findByRole("button", { name: "collapse" }).should("exist");
+            });
+
+            // Check the height of expanded GELS line
+            cy.get(".mx_GenericEventListSummary[data-layout=group] .mx_GenericEventListSummary_spacer").should(
+                "have.css",
+                "line-height",
+                "22px", // $font-22px (See: _GenericEventListSummary.pcss)
+            );
+
+            cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on modern layout", { percyCSS });
+        });
+
+        it("should click 'collapse' on the first hovered info event line inside GELS on bubble layout", () => {
+            // This test checks clickability of the "Collapse" link button, which had been covered with
+            // MessageActionBar's safe area - https://github.com/vector-im/element-web/issues/22864
+
+            cy.visit("/#/room/" + roomId);
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
+            cy.contains(
+                ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=bubble] " +
+                    ".mx_GenericEventListSummary_summary",
+                "created and configured the room.",
+            ).should("exist");
+
+            cy.get(".mx_GenericEventListSummary").within(() => {
+                // Click "expand" link button
+                cy.findByRole("button", { name: "expand" }).click();
+
+                // Assert that the "expand" link button worked
+                cy.findByRole("button", { name: "collapse" }).should("exist");
+            });
+
+            // Make sure spacer is not visible on bubble layout
+            cy.get(".mx_GenericEventListSummary[data-layout=bubble] .mx_GenericEventListSummary_spacer").should(
+                "not.be.visible", // See: _GenericEventListSummary.pcss
+            );
+
+            // Exclude timestamp from snapshot
+            const percyCSS = ".mx_MessageTimestamp { visibility: hidden !important; }";
+
+            // Save snapshot of expanded generic event list summary on bubble layout
+            cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on bubble layout", { percyCSS });
+
+            cy.get(".mx_GenericEventListSummary").within(() => {
+                // Click "collapse" link button on the first hovered info event line
+                cy.get(".mx_GenericEventListSummary_unstyledList .mx_EventTile_info:first-of-type")
+                    .realHover()
+                    .findByRole("toolbar", { name: "Message Actions" })
+                    .should("be.visible");
+                cy.findByRole("button", { name: "collapse" }).click();
+
+                // Assert that "collapse" link button worked
+                cy.findByRole("button", { name: "expand" }).should("exist");
+            });
+
+            // Save snapshot of collapsed generic event list summary on bubble layout
+            cy.get(".mx_MainSplit").percySnapshotElement("Collapsed GELS on bubble layout", { percyCSS });
+        });
+
         it("should add inline start margin to an event line on IRC layout", () => {
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
@@ -193,7 +306,7 @@ describe("Timeline", () => {
             ).should("exist");
 
             // Click "expand" link button
-            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
+            cy.get(".mx_GenericEventListSummary").findByRole("button", { name: "expand" }).click();
 
             // Check the event line has margin instead of inset property
             // cf. _EventTile.pcss
@@ -212,6 +325,22 @@ describe("Timeline", () => {
             });
             cy.checkA11y();
         });
+    });
+
+    describe("message displaying", () => {
+        beforeEach(() => {
+            cy.injectAxe();
+        });
+
+        const messageEdit = () => {
+            cy.contains(".mx_RoomView_body .mx_EventTile .mx_EventTile_line", "Message")
+                .realHover()
+                .within(() => {
+                    cy.findByRole("button", { name: "Edit" }).click();
+                    cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
+                });
+            cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", "MessageEdit").should("exist");
+        };
 
         it("should align generic event list summary with messages and emote on IRC layout", () => {
             // This test aims to check:
@@ -266,7 +395,7 @@ describe("Timeline", () => {
 
             // 2. Alignment of expanded GELS and messages
             // Click "expand" link button
-            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
+            cy.get(".mx_GenericEventListSummary").findByRole("button", { name: "expand" }).click();
             // Check inline start spacing of info line on expanded GELS
             cy.get(".mx_EventTile[data-layout=irc].mx_EventTile_info:first-of-type .mx_EventTile_line")
                 // See: _EventTile.pcss
@@ -278,18 +407,16 @@ describe("Timeline", () => {
 
             // 3. Alignment of expanded GELS and placeholder of deleted message
             // Delete the second (last) message
-            cy.get(".mx_RoomView_MessageList > .mx_EventTile_last").realHover();
-            cy.get(".mx_RoomView_MessageList > .mx_EventTile_last .mx_MessageActionBar_optionsButton", {
-                timeout: 1000,
-            })
-                .should("exist")
+            cy.get(".mx_RoomView_MessageList > .mx_EventTile_last")
                 .realHover()
-                .click({ force: false });
-            cy.get(".mx_IconizedContextMenu_item[aria-label=Remove]").should("be.visible").click({ force: false });
+                .findByRole("button", { name: "Options" })
+                .should("be.visible")
+                .click();
+            cy.findByRole("menuitem", { name: "Remove" }).should("be.visible").click();
             // Confirm deletion
-            cy.get(".mx_Dialog_buttons button[data-testid=dialog-primary-button]")
-                .should("have.text", "Remove")
-                .click({ force: false });
+            cy.get(".mx_Dialog_buttons").within(() => {
+                cy.findByRole("button", { name: "Remove" }).click();
+            });
             // Make sure the dialog was closed and the second (last) message was redacted
             cy.get(".mx_Dialog").should("not.exist");
             cy.get(".mx_GenericEventListSummary .mx_EventTile_last .mx_RedactedBody").should("be.visible");
@@ -321,8 +448,11 @@ describe("Timeline", () => {
         });
 
         it("should render EventTiles on IRC, modern (group), and bubble layout", () => {
-            // Exclude timestamp and read marker from snapshots
-            const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
+            const percyCSS =
+                // Hide because flaky - See https://github.com/vector-im/element-web/issues/24957
+                ".mx_TopUnreadMessagesBar, " +
+                // Exclude timestamp and read marker from snapshots
+                ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
 
             sendEvent(roomId);
             sendEvent(roomId); // check continuation
@@ -447,11 +577,7 @@ describe("Timeline", () => {
             ).should("exist");
 
             // Edit message
-            cy.contains(".mx_RoomView_body .mx_EventTile .mx_EventTile_line", "Message").within(() => {
-                cy.get('[aria-label="Edit"]').click({ force: true }); // Cypress has no ability to hover
-                cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
-            });
-            cy.contains(".mx_EventTile[data-scroll-tokens]", "MessageEdit").should("exist");
+            messageEdit();
 
             // Click timestamp to highlight hidden event line
             cy.get(".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp").click();
@@ -500,11 +626,7 @@ describe("Timeline", () => {
             ).should("exist");
 
             // Edit message
-            cy.contains(".mx_RoomView_body .mx_EventTile .mx_EventTile_line", "Message").within(() => {
-                cy.get('[aria-label="Edit"]').click({ force: true }); // Cypress has no ability to hover
-                cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
-            });
-            cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", "MessageEdit").should("exist");
+            messageEdit();
 
             // 1. clickability of top left of view source event toggle
 
@@ -513,7 +635,7 @@ describe("Timeline", () => {
                 .should("exist")
                 .realHover()
                 .within(() => {
-                    cy.get(".mx_ViewSourceEvent_toggle").click("topLeft", { force: false });
+                    cy.findByRole("button", { name: "toggle event" }).click("topLeft");
                 });
 
             // Make sure the expand toggle works
@@ -521,14 +643,14 @@ describe("Timeline", () => {
                 .should("be.visible")
                 .realHover()
                 .within(() => {
-                    cy.get(".mx_ViewSourceEvent_toggle")
+                    cy.findByRole("button", { name: "toggle event" })
                         // Check size and position of toggle on expanded view source event
                         // See: _ViewSourceEvent.pcss
                         .should("have.css", "height", "12px") // --ViewSourceEvent_toggle-size
                         .should("have.css", "align-self", "flex-end")
 
                         // Click again to collapse the source
-                        .click("topLeft", { force: false });
+                        .click("topLeft");
                 });
 
             // Make sure the collapse toggle works
@@ -550,31 +672,11 @@ describe("Timeline", () => {
                 .should("exist")
                 .realHover()
                 .within(() => {
-                    cy.get(".mx_ViewSourceEvent_toggle").click("topLeft", { force: false });
+                    cy.findByRole("button", { name: "toggle event" }).click("topLeft");
                 });
 
             // Make sure the expand toggle worked
             cy.get(".mx_EventTile[data-layout=irc] .mx_ViewSourceEvent_expanded").should("be.visible");
-        });
-
-        it("should click 'collapse' link button on the first hovered info event line on bubble layout", () => {
-            cy.visit("/#/room/" + roomId);
-            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=bubble] " +
-                    ".mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
-
-            // Click "expand" link button
-            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
-
-            // Click "collapse" link button on the first hovered info event line
-            cy.get(".mx_GenericEventListSummary_unstyledList .mx_EventTile_info:first-of-type").realHover();
-            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=true]").click({ force: false });
-
-            // Make sure "collapse" link button worked
-            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").should("exist");
         });
 
         it("should highlight search result words regardless of formatting", () => {
@@ -582,7 +684,7 @@ describe("Timeline", () => {
             sendEvent(roomId, true);
             cy.visit("/#/room/" + roomId);
 
-            cy.get(".mx_RoomHeader_searchButton").click();
+            cy.get(".mx_RoomHeader").findByRole("button", { name: "Search" }).click();
             cy.get(".mx_SearchBar_input input").type("Message{enter}");
 
             cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
@@ -646,8 +748,17 @@ describe("Timeline", () => {
             cy.getComposer().type(`${MESSAGE}{enter}`);
 
             // Reply to the message
-            cy.contains(".mx_RoomView_body .mx_EventTile_line", "Hello world").within(() => {
-                cy.get('[aria-label="Reply"]').click({ force: true }); // Cypress has no ability to hover
+            cy.contains(".mx_RoomView_body .mx_EventTile_line", "Hello world")
+                .realHover()
+                .within(() => {
+                    cy.findByRole("button", { name: "Reply" }).click();
+                });
+        };
+
+        // For clicking the reply button on the last line
+        const clickButtonReply = () => {
+            cy.get(".mx_RoomView_MessageList").within(() => {
+                cy.get(".mx_EventTile_last").realHover().findByRole("button", { name: "Reply" }).click();
             });
         };
 
@@ -656,33 +767,38 @@ describe("Timeline", () => {
 
             cy.getComposer().type(`${reply}{enter}`);
 
-            cy.get(".mx_RoomView_body .mx_EventTile .mx_EventTile_line .mx_ReplyTile .mx_MTextBody").should(
-                "contain",
-                MESSAGE,
-            );
-            cy.contains(".mx_RoomView_body .mx_EventTile > .mx_EventTile_line > .mx_MTextBody", reply).should(
-                "have.length",
-                1,
-            );
+            cy.get(".mx_RoomView_body").within(() => {
+                cy.get(".mx_EventTile_last .mx_EventTile_line").within(() => {
+                    cy.get(".mx_ReplyTile .mx_MTextBody").within(() => {
+                        cy.findByText(MESSAGE).should("exist");
+                    });
+
+                    cy.findByText(reply).should("have.length", 1);
+                });
+            });
         });
 
         it("can reply with a voice message", () => {
             viewRoomSendMessageAndSetupReply();
 
             cy.openMessageComposerOptions().within(() => {
-                cy.get(`[aria-label="Voice Message"]`).click();
+                cy.findByRole("menuitem", { name: "Voice Message" }).click();
             });
-            cy.wait(3000);
-            cy.get(".mx_RoomView_body .mx_MessageComposer .mx_MessageComposer_sendMessage").click();
 
-            cy.get(".mx_RoomView_body .mx_EventTile .mx_EventTile_line .mx_ReplyTile .mx_MTextBody").should(
-                "contain",
-                MESSAGE,
-            );
-            cy.get(".mx_RoomView_body .mx_EventTile > .mx_EventTile_line > .mx_MVoiceMessageBody").should(
-                "have.length",
-                1,
-            );
+            // Record an empty message
+            cy.wait(3000);
+
+            cy.get(".mx_RoomView_body").within(() => {
+                cy.get(".mx_MessageComposer").findByRole("button", { name: "Send voice message" }).click();
+
+                cy.get(".mx_EventTile_last .mx_EventTile_line").within(() => {
+                    cy.get(".mx_ReplyTile .mx_MTextBody").within(() => {
+                        cy.findByText(MESSAGE).should("exist");
+                    });
+
+                    cy.get(".mx_MVoiceMessageBody").should("have.length", 1);
+                });
+            });
         });
 
         it("should not be possible to send flag with regional emojis", () => {
@@ -707,20 +823,6 @@ describe("Timeline", () => {
         it("should display a reply chain", () => {
             let bot: MatrixClient;
             const reply2 = "Reply again";
-
-            // For clicking the reply button on the last line
-            const clickButtonReply = () => {
-                cy.get(".mx_RoomView_MessageList").within(() => {
-                    cy.get(".mx_EventTile_last").realHover();
-                    cy.get(".mx_EventTile_last .mx_MessageActionBar_optionsButton", {
-                        timeout: 1000,
-                    })
-                        .should("exist")
-                        .realHover()
-                        .get('.mx_EventTile_last [aria-label="Reply"]')
-                        .click({ force: false });
-                });
-            };
 
             cy.visit("/#/room/" + roomId);
 
@@ -749,52 +851,60 @@ describe("Timeline", () => {
                 cy.botSendMessage(bot, roomId, MESSAGE);
             });
 
+            // Assert that MESSAGE is found
+            cy.findByText(MESSAGE);
+
             // Reply to the message
             clickButtonReply();
             cy.getComposer().type(`${reply}{enter}`);
 
             // Make sure 'reply' was sent
-            cy.contains(".mx_RoomView_MessageList .mx_EventTile_last", reply).should("exist");
+            cy.get(".mx_RoomView_body .mx_EventTile_last").within(() => {
+                cy.findByText(reply).should("exist");
+            });
 
             // Reply again to create a replyChain
             clickButtonReply();
             cy.getComposer().type(`${reply2}{enter}`);
 
-            // Make sure 'reply2' was sent
-            cy.contains(".mx_RoomView_MessageList .mx_EventTile_last", reply2).should("exist");
+            // Assert that 'reply2' was sent
+            cy.get(".mx_RoomView_body .mx_EventTile_last").within(() => {
+                cy.findByText(reply2).should("exist");
+            });
+
+            cy.get(".mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
 
             // Exclude timestamp and read marker from snapshot
-            //const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
+            const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
 
             // Check the margin value of ReplyChains of EventTile at the bottom on IRC layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
             cy.get(".mx_EventTile_last[data-layout='irc'] .mx_ReplyChain").should("have.css", "margin", "0px");
 
             // Take a snapshot on IRC layout
-            // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24881
-            /*cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on IRC layout", {
+            // Note that because zero margin is applied to mx_ReplyChain, the left borders of two mx_ReplyChain
+            // components may seem to be connected to one.
+            cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on IRC layout", {
                 percyCSS,
-            });*/
+            });
 
             // Check the margin value of ReplyChains of EventTile at the bottom on group/modern layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
             cy.get(".mx_EventTile_last[data-layout='group'] .mx_ReplyChain").should("have.css", "margin-bottom", "8px");
 
             // Take a snapshot on modern layout
-            // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24881
-            /*cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on modern layout", {
+            cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on modern layout", {
                 percyCSS,
-            });*/
+            });
 
             // Check the margin value of ReplyChains of EventTile at the bottom on group/modern compact layout
             cy.setSettingValue("useCompactLayout", null, SettingLevel.DEVICE, true);
             cy.get(".mx_EventTile_last[data-layout='group'] .mx_ReplyChain").should("have.css", "margin-bottom", "4px");
 
             // Take a snapshot on compact modern layout
-            // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24881
-            /*cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on compact modern layout", {
+            cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on compact modern layout", {
                 percyCSS,
-            });*/
+            });
 
             // Check the margin value of ReplyChains of EventTile at the bottom on bubble layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
@@ -805,10 +915,9 @@ describe("Timeline", () => {
             );
 
             // Take a snapshot on bubble layout
-            // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24881
-            /*cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on bubble layout", {
+            cy.get(".mx_EventTile_last").percySnapshotElement("EventTile with reply chains on bubble layout", {
                 percyCSS,
-            });*/
+            });
         });
 
         it("should send, reply, and display long strings without overflowing", () => {
@@ -856,20 +965,21 @@ describe("Timeline", () => {
             });
 
             // Wait until the message is rendered
-            cy.get(".mx_EventTile_last .mx_MTextBody .mx_EventTile_body").should("have.text", LONG_STRING);
+            cy.get(".mx_EventTile_last .mx_MTextBody .mx_EventTile_body").within(() => {
+                cy.findByText(LONG_STRING);
+            });
 
             // Reply to the message
-            cy.get(".mx_EventTile_last")
-                .realHover()
-                .within(() => {
-                    cy.get('[aria-label="Reply"]').click({ force: false });
-                });
+            clickButtonReply();
             cy.getComposer().type(`${reply}{enter}`);
 
             // Make sure the reply tile is rendered
-            cy.get(".mx_EventTile_last").within(() => {
-                cy.get(".mx_ReplyTile .mx_MTextBody").should("have.text", LONG_STRING);
-                cy.get(".mx_EventTile_line > .mx_MTextBody").should("have.text", reply);
+            cy.get(".mx_EventTile_last .mx_EventTile_line").within(() => {
+                cy.get(".mx_ReplyTile .mx_MTextBody").within(() => {
+                    cy.findByText(LONG_STRING).should("exist");
+                });
+
+                cy.findByText(reply).should("have.length", 1);
             });
 
             // Change the viewport size

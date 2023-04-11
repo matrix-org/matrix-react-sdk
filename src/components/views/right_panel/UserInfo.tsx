@@ -34,7 +34,7 @@ import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 
 import dis from "../../../dispatcher/dispatcher";
 import Modal from "../../../Modal";
-import { _t } from "../../../languageHandler";
+import { _t, UserFriendlyError } from "../../../languageHandler";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import SdkConfig from "../../../SdkConfig";
@@ -448,7 +448,15 @@ export const UserOptionsSection: React.FC<{
                     const inviter = new MultiInviter(roomId || "");
                     await inviter.invite([member.userId]).then(() => {
                         if (inviter.getCompletionState(member.userId) !== "invited") {
-                            throw new Error(inviter.getErrorText(member.userId));
+                            const errorStringFromInviterUtility = inviter.getErrorText(member.userId);
+                            if (errorStringFromInviterUtility) {
+                                throw new Error(errorStringFromInviterUtility);
+                            } else {
+                                throw new UserFriendlyError(
+                                    `User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility`,
+                                    { user: member.userId, roomId, cause: undefined },
+                                );
+                            }
                         }
                     });
                 } catch (err) {
@@ -766,8 +774,8 @@ export const BanToggleButton = ({
                               const myMember = child.getMember(cli.credentials.userId || "");
                               const theirMember = child.getMember(member.userId);
                               return (
-                                  myMember &&
-                                  theirMember &&
+                                  !!myMember &&
+                                  !!theirMember &&
                                   theirMember.membership !== "ban" &&
                                   myMember.powerLevel > theirMember.powerLevel &&
                                   child.currentState.hasSufficientPowerLevelFor("ban", myMember.powerLevel)
@@ -987,19 +995,8 @@ export const RoomAdminToolsContainer: React.FC<IBaseRoomProps> = ({
     return <div />;
 };
 
-const useIsSynapseAdmin = (cli: MatrixClient): boolean => {
-    const [isAdmin, setIsAdmin] = useState(false);
-    useEffect(() => {
-        cli.isSynapseAdministrator().then(
-            (isAdmin) => {
-                setIsAdmin(isAdmin);
-            },
-            () => {
-                setIsAdmin(false);
-            },
-        );
-    }, [cli]);
-    return isAdmin;
+const useIsSynapseAdmin = (cli?: MatrixClient): boolean => {
+    return useAsyncMemo(async () => (cli ? cli.isSynapseAdministrator().catch(() => false) : false), [cli], false);
 };
 
 const useHomeserverSupportsCrossSigning = (cli: MatrixClient): boolean => {

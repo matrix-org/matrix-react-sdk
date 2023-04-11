@@ -33,7 +33,8 @@ interface IProps {
     hasCancel: boolean;
     validator?: (fieldState: IFieldState) => Promise<IValidationResult>; // result of withValidation
     fixedWidth?: boolean;
-    onFinished(ok?: boolean, text?: string): void;
+    onFinished(ok?: false, text?: void): void;
+    onFinished(ok: true, text: string): void;
 }
 
 interface IState {
@@ -100,7 +101,7 @@ export default class TextInputDialog extends React.Component<IProps, IState> {
     };
 
     private onValidate = async (fieldState: IFieldState): Promise<IValidationResult> => {
-        const result = await this.props.validator(fieldState);
+        const result = await this.props.validator!(fieldState);
         this.setState({
             valid: !!result.valid,
         });

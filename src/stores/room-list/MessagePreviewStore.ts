@@ -165,7 +165,7 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
 
             const event = events[i];
 
-            await this.matrixClient.decryptEventIfNeeded(event);
+            await this.matrixClient?.decryptEventIfNeeded(event);
 
             const previewDef = PREVIEWS[event.getType()];
             if (!previewDef) continue;
@@ -210,9 +210,16 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
 
         if (payload.action === "MatrixActions.Room.timeline" || payload.action === "MatrixActions.Event.decrypted") {
             const event = payload.event; // TODO: Type out the dispatcher
+            const roomId = event.getRoomId();
             const isHistoricalEvent = payload.hasOwnProperty("isLiveEvent") && !payload.isLiveEvent;
-            if (!this.previews.has(event.getRoomId()) || isHistoricalEvent) return; // not important
-            await this.generatePreview(this.matrixClient.getRoom(event.getRoomId()), TAG_ANY);
+
+            if (!roomId || !this.previews.has(roomId) || isHistoricalEvent) return;
+
+            const room = this.matrixClient.getRoom(roomId);
+
+            if (!room) return;
+
+            await this.generatePreview(room, TAG_ANY);
         }
     }
 }

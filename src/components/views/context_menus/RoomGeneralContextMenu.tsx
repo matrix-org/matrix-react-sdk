@@ -38,6 +38,8 @@ import IconizedContextMenu, {
     IconizedContextMenuOptionList,
 } from "../context_menus/IconizedContextMenu";
 import { ButtonEvent } from "../elements/AccessibleButton";
+import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../../settings/UIFeature";
 
 export interface RoomGeneralContextMenuProps extends IContextMenuProps {
     room: Room;
@@ -87,6 +89,7 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
     };
 
     const onTagRoom = (ev: ButtonEvent, tagId: TagID): void => {
+        if (!cli) return;
         if (tagId === DefaultTagID.Favourite || tagId === DefaultTagID.LowPriority) {
             const inverseTag = tagId === DefaultTagID.Favourite ? DefaultTagID.LowPriority : DefaultTagID.Favourite;
             const isApplied = RoomListStore.instance.getTagsForRoom(room).includes(tagId);
@@ -119,7 +122,7 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
     );
 
     let inviteOption: JSX.Element | null = null;
-    if (room.canInvite(cli.getUserId()!) && !isDm) {
+    if (room.canInvite(cli.getUserId()!) && !isDm && shouldShowComponent(UIComponent.InviteUsers)) {
         inviteOption = (
             <IconizedContextMenuOption
                 onClick={wrapHandler(

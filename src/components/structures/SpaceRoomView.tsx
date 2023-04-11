@@ -18,7 +18,7 @@ import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule, Preset } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import React, { MutableRefObject, useCallback, useContext, useRef, useState } from "react";
+import React, { RefObject, useCallback, useContext, useRef, useState } from "react";
 
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import createRoom, { IOpts } from "../../createRoom";
@@ -71,7 +71,6 @@ import RoomTopic from "../views/elements/RoomTopic";
 import withValidation from "../views/elements/Validation";
 import RoomInfoLine from "../views/rooms/RoomInfoLine";
 import RoomPreviewCard from "../views/rooms/RoomPreviewCard";
-import { SpaceFeedbackPrompt } from "../views/spaces/SpaceCreateMenu";
 import SpacePublicShare from "../views/spaces/SpacePublicShare";
 import { ChevronFace, ContextMenuButton, useContextMenu } from "./ContextMenu";
 import MainSplit from "./MainSplit";
@@ -269,7 +268,6 @@ const SpaceLanding: React.FC<{ space: Room }> = ({ space }) => {
         <div className="mx_SpaceRoomView_landing">
             <div className="mx_SpaceRoomView_landing_header">
                 <RoomAvatar room={space} height={80} width={80} viewAvatarOnClick={true} />
-                <SpaceFeedbackPrompt />
             </div>
             <div className="mx_SpaceRoomView_landing_name">
                 <RoomName room={space}>
@@ -353,7 +351,7 @@ const SpaceSetupFirstRooms: React.FC<{
                     });
                 }),
             );
-            onFinished(roomIds[0]);
+            onFinished(roomIds[0] ?? undefined);
         } catch (e) {
             logger.error("Failed to create initial space rooms", e);
             setError(_t("Failed to create initial space rooms"));
@@ -511,7 +509,7 @@ const SpaceSetupPrivateInvite: React.FC<{
     const [busy, setBusy] = useState(false);
     const [error, setError] = useState("");
     const numFields = 3;
-    const fieldRefs: MutableRefObject<Field | undefined>[] = [useRef(), useRef(), useRef()];
+    const fieldRefs = [useRef(), useRef(), useRef()] as RefObject<Field>[];
     const [emailAddresses, setEmailAddress] = useStateArray(numFields, "");
     const fields = new Array(numFields).fill(0).map((x, i) => {
         const name = "emailAddress" + i;
@@ -537,12 +535,12 @@ const SpaceSetupPrivateInvite: React.FC<{
         if (busy) return;
         setError("");
         for (const fieldRef of fieldRefs) {
-            const valid = await fieldRef.current.validate({ allowEmpty: true });
+            const valid = await fieldRef.current?.validate({ allowEmpty: true });
 
             if (valid === false) {
                 // true/null are allowed
-                fieldRef.current.focus();
-                fieldRef.current.validate({ allowEmpty: true, focused: true });
+                fieldRef.current!.focus();
+                fieldRef.current!.validate({ allowEmpty: true, focused: true });
                 return;
             }
         }
@@ -636,7 +634,6 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
 
-    private readonly creator: string;
     private readonly dispatcherRef: string;
 
     public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
@@ -644,8 +641,8 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
 
         let phase = Phase.Landing;
 
-        this.creator = this.props.space.currentState.getStateEvents(EventType.RoomCreate, "")?.getSender();
-        const showSetup = this.props.justCreatedOpts && context.getUserId() === this.creator;
+        const creator = this.props.space.currentState.getStateEvents(EventType.RoomCreate, "")?.getSender();
+        const showSetup = this.props.justCreatedOpts && context.getSafeUserId() === creator;
 
         if (showSetup) {
             phase =

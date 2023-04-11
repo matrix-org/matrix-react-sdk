@@ -84,9 +84,9 @@ const ANY_REGEX = /.*/;
 export class RoomPermalinkCreator {
     private roomId: string;
     private highestPlUserId: string | null = null;
-    private populationMap: { [serverName: string]: number } | null = null;
-    private bannedHostsRegexps: RegExp[] | null = null;
-    private allowedHostsRegexps: RegExp[] | null = null;
+    private populationMap: { [serverName: string]: number } = {};
+    private bannedHostsRegexps: RegExp[] = [];
+    private allowedHostsRegexps: RegExp[] = [];
     private _serverCandidates?: string[];
     private started = false;
 
@@ -475,8 +475,8 @@ function isHostnameIpAddress(hostname: string): boolean {
     return isIp(hostname);
 }
 
-export const calculateRoomVia = (room: Room): string[] | undefined => {
+export const calculateRoomVia = (room: Room): string[] => {
     const permalinkCreator = new RoomPermalinkCreator(room);
     permalinkCreator.load();
-    return permalinkCreator.serverCandidates;
+    return permalinkCreator.serverCandidates ?? [];
 };
