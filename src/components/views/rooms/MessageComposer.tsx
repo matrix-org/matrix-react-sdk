@@ -324,8 +324,8 @@ export class MessageComposer extends React.Component<IProps, IState> {
 
     private sendMessage = async (): Promise<void> => {
         if (this.state.haveRecording && this.voiceRecordingButton.current) {
-            // There shouldn't be any text message to send when a voice recording is active, so
-            // just send out the voice recording.
+            // There shouldn't be any text message to send when a voice recording is active,
+            // so just send out the voice recording.
             await this.voiceRecordingButton.current?.send();
             return;
         }
