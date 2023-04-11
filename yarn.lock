@@ -1649,10 +1649,10 @@
   resolved "https://registry.yarnpkg.com/@matrix-org/analytics-events/-/analytics-events-0.5.0.tgz#38b69c4e29d243944c5712cca7b674a3432056e6"
   integrity sha512-uL5kf7MqC+GxsGJtimPVbFliyaFinohTHSzohz31JTysktHsjRR2SC+vV7sy2/dstTWVdG9EGOnohyPsB+oi3A==
 
-"@matrix-org/matrix-sdk-crypto-js@^0.1.0-alpha.5":
-  version "0.1.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-sdk-crypto-js/-/matrix-sdk-crypto-js-0.1.0-alpha.5.tgz#60ede2c43b9d808ba8cf46085a3b347b290d9658"
-  integrity sha512-2KjAgWNGfuGLNjJwsrs6gGX157vmcTfNrA4u249utgnMPbJl7QwuUqh1bGxQ0PpK06yvZjgPlkna0lTbuwtuQw==
+"@matrix-org/matrix-sdk-crypto-js@^0.1.0-alpha.6":
+  version "0.1.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-sdk-crypto-js/-/matrix-sdk-crypto-js-0.1.0-alpha.6.tgz#c0bdb9ab0d30179b8ef744d1b4010b0ad0ab9c3a"
+  integrity sha512-7hMffzw7KijxDyyH/eUyTfrLeCQHuyU3kaPOKGhcl3DZ3vx7bCncqjGMGTnxNPoP23I6gosvKSbO+3wYOT24Xg==
 
 "@matrix-org/matrix-wysiwyg@^2.0.0":
   version "2.0.0"
@@ -6503,11 +6503,11 @@ matrix-events-sdk@0.0.1:
   integrity sha512-1QEOsXO+bhyCroIe2/A5OwaxHvBm7EsSQ46DEDn8RBIfQwN5HWBpFvyWWR4QY0KHPPnnJdI99wgRiAl7Ad5qaA==
 
 "matrix-js-sdk@github:matrix-org/matrix-js-sdk#develop":
-  version "24.0.0"
-  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/5fc6b3ed171105370c7a4bf557d19ba7189e395a"
+  version "24.1.0"
+  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/70e34ffb76634cf3d8ad1cc73d87f89723ec76c0"
   dependencies:
     "@babel/runtime" "^7.12.5"
-    "@matrix-org/matrix-sdk-crypto-js" "^0.1.0-alpha.5"
+    "@matrix-org/matrix-sdk-crypto-js" "^0.1.0-alpha.6"
     another-json "^0.2.0"
     bs58 "^5.0.0"
     content-type "^1.0.4"
