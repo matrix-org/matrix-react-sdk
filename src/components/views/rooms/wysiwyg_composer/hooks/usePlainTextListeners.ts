@@ -14,10 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { KeyboardEvent, RefObject, SyntheticEvent, useCallback, useRef, useState } from "react";
+import { MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
+import { KeyboardEvent, RefObject, SyntheticEvent, useCallback, useRef, useEffect, useState } from "react";
 
 import { useSettingValue } from "../../../../../hooks/useSettings";
 import { IS_MAC, Key } from "../../../../../Keyboard";
+import Autocomplete from "../../Autocomplete";
+import { getKeyBindingsManager } from "../../../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../../../accessibility/KeyboardShortcuts";
 
 function isDivElement(target: EventTarget): target is HTMLDivElement {
     return target instanceof HTMLDivElement;
@@ -33,7 +37,10 @@ function amendInnerHtml(text: string): string {
         .replace(/<\/div>/g, "");
 }
 
+const emptySuggestion = { keyChar: "", text: "", type: "unknown" } as const;
+
 export function usePlainTextListeners(
+    autocompleteRef: React.RefObject<Autocomplete>,
     initialContent?: string,
     onChange?: (content: string) => void,
     onSend?: () => void,
@@ -44,9 +51,12 @@ export function usePlainTextListeners(
     onPaste(event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>): void;
     onKeyDown(event: KeyboardEvent<HTMLDivElement>): void;
     setContent(text: string): void;
+    suggestion: MappedSuggestion;
 } {
     const ref = useRef<HTMLDivElement | null>(null);
     const [content, setContent] = useState<string | undefined>(initialContent);
+    const [suggestion, setSuggestion] = useState<MappedSuggestion>(emptySuggestion);
+
     const send = useCallback(() => {
         if (ref.current) {
             ref.current.innerHTML = "";
@@ -76,6 +86,46 @@ export function usePlainTextListeners(
 
     const onKeyDown = useCallback(
         (event: KeyboardEvent<HTMLDivElement>) => {
+            // WIP drop in the autocomplete handling
+            const autocompleteIsOpen = autocompleteRef?.current && !autocompleteRef.current.state.hide;
+
+            // we need autocomplete to take priority when it is open for using enter to select
+            if (autocompleteIsOpen) {
+                let handled = false;
+                const autocompleteAction = getKeyBindingsManager().getAutocompleteAction(event);
+                const component = autocompleteRef.current;
+                if (component && component.countCompletions() > 0) {
+                    switch (autocompleteAction) {
+                        case KeyBindingAction.ForceCompleteAutocomplete:
+                        case KeyBindingAction.CompleteAutocomplete:
+                            autocompleteRef.current.onConfirmCompletion();
+                            handled = true;
+                            break;
+                        case KeyBindingAction.PrevSelectionInAutocomplete:
+                            autocompleteRef.current.moveSelection(-1);
+                            handled = true;
+                            break;
+                        case KeyBindingAction.NextSelectionInAutocomplete:
+                            autocompleteRef.current.moveSelection(1);
+                            handled = true;
+                            break;
+                        case KeyBindingAction.CancelAutocomplete:
+                            autocompleteRef.current.onEscape(event as {} as React.KeyboardEvent);
+                            handled = true;
+                            break;
+                        default:
+                            break; // don't return anything, allow event to pass through
+                    }
+                }
+
+                if (handled) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    return;
+                }
+            }
+
+            // resume regular flow
             if (event.key === Key.ENTER) {
                 // TODO use getKeyBindingsManager().getMessageComposerAction(event) like in useInputEventProcessor
                 const sendModifierIsPressed = IS_MAC ? event.metaKey : event.ctrlKey;
@@ -95,8 +145,30 @@ export function usePlainTextListeners(
                 }
             }
         },
-        [enterShouldSend, send],
+        [autocompleteRef, enterShouldSend, send],
     );
 
-    return { ref, onInput, onPaste: onInput, onKeyDown, content, setContent: setText };
+    useEffect(() => {
+        // do we need to do this onSelect? Initial thought was yes, but perhaps we can actually just
+        // do checks on input? onInput would probably be easier to be honest, but then with the initial
+        // implementation this wouldn't allow us to
+        // when there's a selection change, we need to figure out if we are doing some
+        // sort of suggestion
+
+        // lets do slash first, probably more straightforward
+        if (content && content.startsWith("/") && !content.startsWith("//")) {
+            // then we have a command
+            setSuggestion({ keyChar: "/", text: content.slice(1), type: "command" });
+        }
+    }, [content]);
+
+    return {
+        ref,
+        onInput,
+        onPaste: onInput,
+        onKeyDown,
+        content,
+        setContent: setText,
+        suggestion,
+    };
 }
