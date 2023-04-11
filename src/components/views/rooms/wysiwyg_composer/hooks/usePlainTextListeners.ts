@@ -171,7 +171,9 @@ export function usePlainTextListeners(
                 return;
             }
 
-            // it's a command if: it starts with /, not //, then has letters all the way up to the end of the textContent
+            // it's a command if: it is the first textnode, it starts with /, not //, then has letters all the way up to
+            // the end of the textcontent - nb think this last assumption may give us some behavioural inconsistency
+            // between the rust model and this, but it's a decent starting point
             const commandRegex = /^\/{1}(\w*)$/;
             const commandMatches = textContent.match(commandRegex);
 
