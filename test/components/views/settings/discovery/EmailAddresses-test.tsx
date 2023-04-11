@@ -75,7 +75,7 @@ describe("<EmailAddress/>", () => {
     describe("Email verification share phase", () => {
         it("shows translated error message", async () => {
             render(<EmailAddress email={emailThreepidFixture} />);
-            mockClient.doesServerSupportSeparateAddAndBind.mockReturnValue(Promise.resolve(true));
+            mockClient.doesServerSupportSeparateAddAndBind.mockResolvedValue(true);
             mockClient.requestEmailToken.mockRejectedValue(
                 new MatrixError(
                     { errcode: "M_THREEPID_IN_USE", error: "Some fake MatrixError occured" },
@@ -94,10 +94,8 @@ describe("<EmailAddress/>", () => {
         beforeEach(async () => {
             // Start these tests out at the "Complete" phase
             render(<EmailAddress email={emailThreepidFixture} />);
-            mockClient.requestEmailToken.mockReturnValue(
-                Promise.resolve({ sid: "123-fake-sid" } satisfies IRequestTokenResponse),
-            );
-            mockClient.doesServerSupportSeparateAddAndBind.mockReturnValue(Promise.resolve(true));
+            mockClient.requestEmailToken.mockResolvedValue({ sid: "123-fake-sid" } satisfies IRequestTokenResponse);
+            mockClient.doesServerSupportSeparateAddAndBind.mockResolvedValue(true);
             fireEvent.click(screen.getByText("Share"));
             // Then wait for the completion screen to come up
             await screen.findByText("Complete");
