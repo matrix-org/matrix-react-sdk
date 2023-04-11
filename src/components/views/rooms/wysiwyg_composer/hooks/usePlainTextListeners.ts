@@ -22,7 +22,6 @@ import { IS_MAC, Key } from "../../../../../Keyboard";
 import Autocomplete from "../../Autocomplete";
 import { getKeyBindingsManager } from "../../../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../../../accessibility/KeyboardShortcuts";
-import { first } from "cheerio/lib/api/traversing";
 
 function isDivElement(target: EventTarget): target is HTMLDivElement {
     return target instanceof HTMLDivElement;
@@ -56,6 +55,8 @@ export function usePlainTextListeners(
     setContent(text: string): void;
     suggestion: MappedSuggestion;
     onSelect(): void;
+    clearSuggestions(): void;
+    suggestionNodeInfo: SuggestionCandidate;
 } {
     const ref = useRef<HTMLDivElement | null>(null);
     const [content, setContent] = useState<string | undefined>(initialContent);
@@ -180,8 +181,7 @@ export function usePlainTextListeners(
             // if we don't have a command, clear the suggestion state and return
             if (commandMatches === null) {
                 if (suggestionNodeInfo.node !== null) {
-                    setSuggestionNodeInfo(emptySuggestionCandidate);
-                    setSuggestion(emptySuggestion);
+                    clearSuggestions();
                 }
                 return;
             }
@@ -192,19 +192,10 @@ export function usePlainTextListeners(
         }
     };
 
-    // useEffect(() => {
-    //     // do we need to do this onSelect? Initial thought was yes, but perhaps we can actually just
-    //     // do checks on input? onInput would probably be easier to be honest, but then with the initial
-    //     // implementation this wouldn't allow us to
-    //     // when there's a selection change, we need to figure out if we are doing some
-    //     // sort of suggestion
-
-    //     // lets do slash first, probably more straightforward
-    //     if (content && content.startsWith("/") && !content.startsWith("//")) {
-    //         // then we have a command
-    //         setSuggestion({ keyChar: "/", text: content.slice(1), type: "command" });
-    //     }
-    // }, [content]);
+    const clearSuggestions = (): void => {
+        setSuggestion(emptySuggestion);
+        setSuggestionNodeInfo(emptySuggestionCandidate);
+    };
 
     return {
         ref,
@@ -215,5 +206,7 @@ export function usePlainTextListeners(
         setContent: setText,
         suggestion,
         onSelect,
+        clearSuggestions,
+        suggestionNodeInfo,
     };
 }

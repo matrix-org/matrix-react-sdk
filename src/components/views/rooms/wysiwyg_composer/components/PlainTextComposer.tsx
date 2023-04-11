@@ -52,15 +52,35 @@ export function PlainTextComposer({
 }: PlainTextComposerProps): JSX.Element {
     // WIP - hack in an autocomplete implementation
     const autocompleteRef = useRef<Autocomplete | null>(null);
-    const handleMention = (): void => {};
-    const handleCommand = (): void => {};
 
-    const { ref, onInput, onPaste, onKeyDown, content, setContent, suggestion, onSelect } = usePlainTextListeners(
-        autocompleteRef,
-        initialContent,
-        onChange,
-        onSend,
-    );
+    const {
+        ref,
+        onInput,
+        onPaste,
+        onKeyDown,
+        content,
+        setContent,
+        suggestion,
+        onSelect,
+        clearSuggestions,
+        suggestionNodeInfo,
+    } = usePlainTextListeners(autocompleteRef, initialContent, onChange, onSend);
+
+    const handleMention = (): void => {};
+    const handleCommand = (replacementText: string): void => {
+        // if this gets triggered, then we have a command on the page, so what we want to do is
+        // manually amend the html text content with the stored state
+        const { node, startOffset, endOffset } = suggestionNodeInfo;
+        if (node === null || node.textContent === null) return;
+
+        // for a command we know we're starting at the beginning, so it's a bit easier
+        const newContent = `${replacementText} `;
+        node.textContent = newContent; // note the trailing space
+        // then set the cursor to the end of the node before clearing the suggestion
+        document.getSelection()?.setBaseAndExtent(node, newContent.length, node, newContent.length);
+        clearSuggestions();
+    };
+
     const composerFunctions = useComposerFunctions(ref, setContent);
     usePlainTextInitialization(initialContent, ref);
     useSetCursorPosition(disabled, ref);
