@@ -1152,10 +1152,11 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         // exclude all other recently viewed items from the list so up/down arrows skip them
                         refs = refs.filter((ref) => ref === keptRecentlyViewedRef || !refIsForRecentlyViewed(ref));
                     }
-
-                    const idx = refs.indexOf(rovingContext.state.activeRef);
-                    const nextElementIndex = findNextElementIndex({ accessibilityAction, idx, refs });
-                    ref = findSiblingElement(refs, nextElementIndex);
+                    if (rovingContext.state.activeRef) {
+                        const idx = refs.indexOf(rovingContext.state.activeRef);
+                        const nextElementIndex = findNextElementIndex({ accessibilityAction, idx, refs });
+                        ref = findSiblingElement(refs, nextElementIndex);
+                    }
                 }
                 break;
 
@@ -1173,8 +1174,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     ev.preventDefault();
 
                     const refs = rovingContext.state.refs.filter(refIsForRecentlyViewed);
-                    const idx = refs.indexOf(rovingContext.state.activeRef);
-                    ref = findSiblingElement(refs, idx + (accessibilityAction === KeyBindingAction.ArrowLeft ? -1 : 1));
+                    if (rovingContext.state.activeRef) {
+                        const idx = refs.indexOf(rovingContext.state.activeRef);
+                        ref = findSiblingElement(
+                            refs,
+                            idx + (accessibilityAction === KeyBindingAction.ArrowLeft ? -1 : 1),
+                        );
+                    }
                 }
                 break;
         }
