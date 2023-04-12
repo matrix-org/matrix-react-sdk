@@ -392,6 +392,9 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     ): JSX.Element {
         if (!thumbUrl) thumbUrl = contentUrl; // fallback
 
+        // these are clamped down by `suggestedImageSize` below
+        // if not set by the conditions below, `suggestedImageSize` 
+        // will use the maximum sizes in ImageSize.ts
         let infoWidth = Number.MAX_SAFE_INTEGER;
         let infoHeight = Number.MAX_SAFE_INTEGER;
         let infoSvg = false;
