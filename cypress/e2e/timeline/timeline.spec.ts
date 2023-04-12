@@ -700,7 +700,7 @@ describe("Timeline", () => {
             cy.get(".mx_RoomView_statusArea_expanded").should("not.exist");
             cy.get(".mx_EventTile.mx_EventTile_last .mx_EventTile_receiptSent").should("exist");
 
-            // Assert that the file size is displayed in kilobyte, not kibibyte (kB)
+            // Assert that the file size is displayed in kibibytes (1024 bytes), not kilobytes (1000 bytes)
             // See: https://github.com/vector-im/element-web/issues/24866
             cy.get(".mx_EventTile_last").within(() => {
                 cy.contains(".mx_MFileBody_info_filename", "1.12 KB").should("exist"); // actual file size in kilobyte
