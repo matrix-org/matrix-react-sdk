@@ -49,7 +49,7 @@ export interface IMatrixClientCreds {
     identityServerUrl?: string;
     userId: string;
     deviceId?: string;
-    accessToken: string;
+    accessToken?: string;
     guest?: boolean;
     pickleKey?: string;
     freshLogin?: boolean;
@@ -73,7 +73,7 @@ export interface IMatrixClientPeg {
      */
     getHomeserverName(): string;
 
-    get(): MatrixClient;
+    get(): MatrixClient | null;
     unset(): void;
     assign(): Promise<any>;
     start(): Promise<any>;
@@ -134,14 +134,14 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         initialSyncLimit: 20,
     };
 
-    private matrixClient: MatrixClient = null;
+    private matrixClient: MatrixClient | null = null;
     private justRegisteredUserId: string | null = null;
 
     // the credentials used to init the current client object.
     // used if we tear it down & recreate it with a different store
-    private currentClientCreds: IMatrixClientCreds;
+    private currentClientCreds: IMatrixClientCreds | null = null;
 
-    public get(): MatrixClient {
+    public get(): MatrixClient | null {
         return this.matrixClient;
     }
 
@@ -213,17 +213,30 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         PlatformPeg.get()?.reload();
     };
 
+    /**
+     * @throws an Error if no MatrixClient is available
+     */
+    private getSafeClient(): MatrixClient {
+        if (!this.matrixClient) {
+            throw new Error("Function was called before MatrixClient was created");
+        }
+
+        return this.matrixClient;
+    }
+
     public async assign(): Promise<any> {
+        const matrixClient = this.getSafeClient();
+
         for (const dbType of ["indexeddb", "memory"]) {
             try {
-                const promise = this.matrixClient.store.startup();
+                const promise = matrixClient.store.startup();
                 logger.log("MatrixClientPeg: waiting for MatrixClient store to initialise");
                 await promise;
                 break;
             } catch (err) {
                 if (dbType === "indexeddb") {
                     logger.error("Error starting matrixclient store - falling back to memory store", err);
-                    this.matrixClient.store = new MemoryStore({
+                    matrixClient.store = new MemoryStore({
                         localStorage: localStorage,
                     });
                 } else {
@@ -232,7 +245,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
                 }
             }
         }
-        this.matrixClient.store.on?.("closed", this.onUnexpectedStoreClose);
+        matrixClient.store.on?.("closed", this.onUnexpectedStoreClose);
 
         // try to initialise e2e on the new client
         if (!SettingsStore.getValue("lowBandwidth")) {
@@ -253,19 +266,16 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             } else {
                 logger.log("Activating sliding sync");
             }
-            opts.slidingSync = SlidingSyncManager.instance.configure(
-                this.matrixClient,
-                proxyUrl || this.matrixClient.baseUrl,
-            );
+            opts.slidingSync = SlidingSyncManager.instance.configure(matrixClient, proxyUrl || matrixClient.baseUrl);
             SlidingSyncManager.instance.startSpidering(100, 50); // 100 rooms at a time, 50ms apart
         }
 
         opts.intentionalMentions = SettingsStore.getValue("feature_intentional_mentions");
 
         // Connect the matrix client to the dispatcher and setting handlers
-        MatrixActionCreators.start(this.matrixClient);
-        MatrixClientBackedSettingsHandler.matrixClient = this.matrixClient;
-        MatrixClientBackedController.matrixClient = this.matrixClient;
+        MatrixActionCreators.start(matrixClient);
+        MatrixClientBackedSettingsHandler.matrixClient = matrixClient;
+        MatrixClientBackedController.matrixClient = matrixClient;
 
         return opts;
     }
@@ -274,6 +284,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
      * Attempt to initialize the crypto layer on a newly-created MatrixClient
      */
     private async initClientCrypto(): Promise<void> {
+        const matrixClient = this.getSafeClient();
         const useRustCrypto = SettingsStore.getValue("feature_rust_crypto");
 
         // we want to make sure that the same crypto implementation is used throughout the lifetime of a device,
@@ -284,7 +295,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
 
         // Now we can initialise the right crypto impl.
         if (useRustCrypto) {
-            await this.matrixClient.initRustCrypto();
+            await matrixClient.initRustCrypto();
 
             // TODO: device dehydration and whathaveyou
             return;
@@ -293,12 +304,12 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         // fall back to the libolm layer.
         try {
             // check that we have a version of the js-sdk which includes initCrypto
-            if (this.matrixClient.initCrypto) {
-                await this.matrixClient.initCrypto();
-                this.matrixClient.setCryptoTrustCrossSignedDevices(
+            if (matrixClient.initCrypto) {
+                await matrixClient.initCrypto();
+                matrixClient.setCryptoTrustCrossSignedDevices(
                     !SettingsStore.getValue("e2ee.manuallyVerifyAllSessions"),
                 );
-                await tryToUnlockSecretStorageWithDehydrationKey(this.matrixClient);
+                await tryToUnlockSecretStorageWithDehydrationKey(matrixClient);
                 StorageManager.setCryptoInitialised(true);
             }
         } catch (e) {
@@ -316,11 +327,12 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         const opts = await this.assign();
 
         logger.log(`MatrixClientPeg: really starting MatrixClient`);
-        await this.get().startClient(opts);
+        await this.getSafeClient().startClient(opts);
         logger.log(`MatrixClientPeg: MatrixClient started`);
     }
 
     public getCredentials(): IMatrixClientCreds {
+        const matrixClient = this.getSafeClient();
         let copiedCredentials: IMatrixClientCreds | null = this.currentClientCreds;
         if (this.currentClientCreds?.userId !== this.matrixClient?.credentials?.userId) {
             // cached credentials belong to a different user - don't use them
@@ -330,17 +342,17 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             // Copy the cached credentials before overriding what we can.
             ...(copiedCredentials ?? {}),
 
-            homeserverUrl: this.matrixClient.baseUrl,
-            identityServerUrl: this.matrixClient.idBaseUrl,
-            userId: this.matrixClient.getSafeUserId(),
-            deviceId: this.matrixClient.getDeviceId() ?? undefined,
-            accessToken: this.matrixClient.getAccessToken(),
-            guest: this.matrixClient.isGuest(),
+            homeserverUrl: matrixClient.baseUrl,
+            identityServerUrl: matrixClient.idBaseUrl,
+            userId: matrixClient.getSafeUserId(),
+            deviceId: matrixClient.getDeviceId() ?? undefined,
+            accessToken: matrixClient.getAccessToken() ?? undefined,
+            guest: matrixClient.isGuest(),
         };
     }
 
     public getHomeserverName(): string {
-        const matches = /^@[^:]+:(.+)$/.exec(this.matrixClient.getSafeUserId());
+        const matches = /^@[^:]+:(.+)$/.exec(this.getSafeClient().getSafeUserId());
         if (matches === null || matches.length < 1) {
             throw new Error("Failed to derive homeserver name from user ID!");
         }
