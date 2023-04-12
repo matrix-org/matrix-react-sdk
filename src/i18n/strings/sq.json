@@ -3746,5 +3746,7 @@
     "Sliding Sync configuration": "Formësim Sliding Sync-u",
     "Start DM anyway": "Nis MD sido qoftë",
     "Start DM anyway and never warn me again": "Nis MD sido qoftë dhe mos më sinjalizo kurrë më",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "S’arrihet të gjenden profile për ID-të Matrix radhitur më poshtë - doni të niset një MD sido që të jetë?"
+    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "S’arrihet të gjenden profile për ID-të Matrix radhitur më poshtë - doni të niset një MD sido që të jetë?",
+    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.": "S’gjendet dot versioni i vjetër i kësaj dhome (ID dhome: %(roomId)s) dhe s’na është dhënë “via_servers” që të shohim për të.",
+    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "S’gjendet dot versioni i vjetër i kësaj dhome (ID dhome: %(roomId)s) dhe s’na është dhënë “via_servers” që të shohim për të. Ka mundësi që hamendësimi i shërbyesit prej ID-së së dhomës të funksionojë. Nëse doni të provoni, klikoni këtë lidhje:"
 }
