@@ -3760,5 +3760,6 @@
     "Database unexpectedly closed": "База даних несподівано закрилася",
     "Start DM anyway": "Усе одно розпочати особисте спілкування",
     "Start DM anyway and never warn me again": "Усе одно розпочати особисте спілкування і більше ніколи не попереджати мене",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Не вдалося знайти профілі для перелічених далі Matrix ID — ви все одно хочете розпочати особисте спілкування?"
+    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Не вдалося знайти профілі для перелічених далі Matrix ID — ви все одно хочете розпочати особисте спілкування?",
+    "Formatting": "Форматування"
 }
