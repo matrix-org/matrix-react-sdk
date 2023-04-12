@@ -181,12 +181,30 @@ export const RoomPredecessorTile: React.FC<IProps> = ({ mxEvent, timestamp }) =>
      * [1] https://spec.matrix.org/v1.5/appendices/#room-ids-and-event-ids
      */
     function guessLinkForRoomId(roomId: string): string | null {
-        const m = roomId.match(/:([^:]*)$/);
-        if (m) {
-            const serverName = m[1];
+        const serverName = guessServerNameFromRoomId(roomId);
+        if (serverName) {
             return new MatrixToPermalinkConstructor().forRoom(roomId, [serverName]);
         } else {
             return null;
         }
     }
 };
+
+/**
+ * @internal Public for test only
+ *
+ * Guess the server name for a room based on its room ID.
+ *
+ * The spec says that Room IDs are opaque [1] so this can only ever be a
+ * guess. There is no guarantee that this room exists on this server.
+ *
+ * [1] https://spec.matrix.org/v1.5/appendices/#room-ids-and-event-ids
+ */
+export function guessServerNameFromRoomId(roomId: string): string | null {
+    const m = roomId.match(/[^:]*:(.*)/);
+    if (m) {
+        return m[1];
+    } else {
+        return null;
+    }
+}

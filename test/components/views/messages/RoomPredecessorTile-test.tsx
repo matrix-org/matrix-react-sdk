@@ -22,7 +22,10 @@ import { EventType, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 
 import dis from "../../../../src/dispatcher/dispatcher";
 import SettingsStore from "../../../../src/settings/SettingsStore";
-import { RoomPredecessorTile } from "../../../../src/components/views/messages/RoomPredecessorTile";
+import {
+    guessServerNameFromRoomId,
+    RoomPredecessorTile,
+} from "../../../../src/components/views/messages/RoomPredecessorTile";
 import { stubClient, upsertRoomStateEvents } from "../../../test-utils/test-utils";
 import { Action } from "../../../../src/dispatcher/actions";
 import RoomContext from "../../../../src/contexts/RoomContext";
@@ -255,5 +258,35 @@ describe("<RoomPredecessorTile />", () => {
                 );
             });
         });
+    });
+});
+
+describe("guessServerNameFromRoomId", () => {
+    it("Extracts the domain name from a standard room ID", () => {
+        expect(guessServerNameFromRoomId("!436456:example.com")).toEqual("example.com");
+    });
+
+    it("Extracts the domain name and port when included", () => {
+        expect(guessServerNameFromRoomId("!436456:example.com:8888")).toEqual("example.com:8888");
+    });
+
+    it("Handles an IPv4 address for server name", () => {
+        expect(guessServerNameFromRoomId("!436456:127.0.0.1")).toEqual("127.0.0.1");
+    });
+
+    it("Handles an IPv4 address and port", () => {
+        expect(guessServerNameFromRoomId("!436456:127.0.0.1:81")).toEqual("127.0.0.1:81");
+    });
+
+    it("Handles an IPv6 address for server name", () => {
+        expect(guessServerNameFromRoomId("!436456:::1")).toEqual("::1");
+    });
+
+    it("Handles an IPv6 address and port", () => {
+        expect(guessServerNameFromRoomId("!436456:::1:8080")).toEqual("::1:8080");
+    });
+
+    it("Returns null when the room ID contains no colon", () => {
+        expect(guessServerNameFromRoomId("!436456")).toBeNull();
     });
 });
