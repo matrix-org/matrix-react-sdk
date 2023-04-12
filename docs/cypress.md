@@ -158,9 +158,7 @@ creation that can be called to set up tests.
 
 Like for instance a user will not look for a button by querying a CSS selector. Instead you should work
 with roles / labels etc.. You can make use of `cy.findBy…` queries provided by
-[Cypress Testing Library](https://github.com/testing-library/cypress-testing-library) and some convencience
-commands, such as `findButton(name)` or `findTextbox(name)`.
-See [`/cypress/support/find.ts`](../cypress/support/find.ts) for a complete list.
+[Cypress Testing Library](https://github.com/testing-library/cypress-testing-library).
 
 ### Using matrix-js-sdk
 
@@ -215,7 +213,8 @@ nightly build at approximately 04:00 UTC every day. (The schedule is defined in
 enabled/disabled in [cypress.yaml](../.github/workflows/cypress.yaml).)
 
 If your pull request makes visual changes, you are encouraged to request Percy
-to run by adding the label `X-Needs-Percy` to the PR. This will help us find any
+to run by adding the label `X-Needs-Percy` to the PR, these will only run in
+the merge queue to save snapshots. This will help us find any
 visual bugs or validate visual changes at the time they are made, instead of
 having to figure it out later after the nightly build. If you don't have
 permission to add a label, please ask your reviewer to do it. Note: it's best to
