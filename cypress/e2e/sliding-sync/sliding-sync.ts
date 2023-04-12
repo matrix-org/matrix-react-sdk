@@ -109,9 +109,14 @@ describe("Sliding Sync", () => {
         cy.get(".mx_RoomTile").should("have.length", 4); // due to the Test Room in beforeEach
         checkOrder(["Orange", "Pineapple", "Apple", "Test Room"]);
 
-        cy.contains(".mx_RoomSublist", "Rooms").find(".mx_RoomSublist_menuButton").click({ force: true });
-        cy.contains("A-Z").click();
-        cy.get(".mx_StyledRadioButton_checked").should("contain.text", "A-Z");
+        cy.contains(".mx_RoomSublist", "Rooms").within(() => {
+            cy.get(".mx_RoomSublist_stickable").realHover().findByRole("button", { name: "List options" }).click();
+        });
+
+        // force click as the radio button's size is zero
+        cy.findByRole("menuitemradio", { name: "A-Z" }).click({ force: true });
+
+        cy.get(".mx_StyledRadioButton_checked").findByText("A-Z").should("exist");
         checkOrder(["Apple", "Orange", "Pineapple", "Test Room"]);
     });
 
@@ -201,8 +206,11 @@ describe("Sliding Sync", () => {
         createAndJoinBob();
 
         // disable notifs in this room (TODO: CS API call?)
-        cy.contains(".mx_RoomTile", "Test Room").find(".mx_RoomTile_notificationsButton").click({ force: true });
-        cy.contains("Mute room").click();
+        cy.contains(".mx_RoomTile", "Test Room")
+            .realHover()
+            .findByRole("button", { name: "Notification options" })
+            .click();
+        cy.findByRole("menuitemradio", { name: "Mute room" }).click();
 
         // create a new room so we know when the message has been received as it'll re-shuffle the room list
         cy.createRoom({
@@ -220,9 +228,9 @@ describe("Sliding Sync", () => {
     });
 
     it("should update user settings promptly", () => {
-        cy.get(".mx_UserMenu_userAvatar").click();
-        cy.contains("All settings").click();
-        cy.contains("Preferences").click();
+        cy.findByRole("button", { name: "User menu" }).click();
+        cy.findByRole("button", { name: "All settings" }).click();
+        cy.findByRole("button", { name: "Preferences" }).click();
         cy.contains(".mx_SettingsFlag", "Show timestamps in 12 hour format")
             .should("exist")
             .find(".mx_ToggleSwitch_on")
@@ -277,12 +285,16 @@ describe("Sliding Sync", () => {
         cy.get(".mx_RoomTile").should("have.length", 4); // due to the Test Room in beforeEach
 
         cy.contains(".mx_RoomTile", "Join").click();
-        cy.contains(".mx_AccessibleButton", "Accept").click();
+        cy.findByRole("button", { name: "Accept" }).click();
 
         checkOrder(["Join", "Test Room"]);
 
-        cy.contains(".mx_RoomTile", "Reject").click();
-        cy.contains(".mx_RoomView .mx_AccessibleButton", "Reject").click();
+        cy.get(".mx_RoomTile").within(() => {
+            cy.findByRole("button", { name: "Reject" }).click();
+        });
+        cy.get(".mx_RoomView").within(() => {
+            cy.findByRole("button", { name: "Reject" }).click();
+        });
 
         // wait for the rejected room to disappear
         cy.get(".mx_RoomTile").should("have.length", 3);
@@ -340,9 +352,14 @@ describe("Sliding Sync", () => {
         cy.contains(".mx_RoomTile", "Test Room").click();
         cy.get(".mx_ReplyPreview").should("not.exist");
         // click reply-to on the Hello World message
-        cy.contains(".mx_EventTile", "Hello world")
-            .find('.mx_AccessibleButton[aria-label="Reply"]')
-            .click({ force: true });
+        cy.get(".mx_EventTile")
+            .last()
+            .within(() => {
+                cy.findByText("Hello world");
+            })
+            .realHover()
+            .findByRole("button", { name: "Reply" })
+            .click();
         // check it's visible
         cy.get(".mx_ReplyPreview").should("exist");
         // now click Other Room
@@ -381,9 +398,14 @@ describe("Sliding Sync", () => {
         cy.contains(".mx_RoomTile", "Test Room").click();
         cy.get(".mx_ReplyPreview").should("not.exist");
         // click reply-to on the Reply to me message
-        cy.contains(".mx_EventTile", "Reply to me")
-            .find('.mx_AccessibleButton[aria-label="Reply"]')
-            .click({ force: true });
+        cy.get(".mx_EventTile")
+            .last()
+            .within(() => {
+                cy.findByText("Reply to me");
+            })
+            .realHover()
+            .findByRole("button", { name: "Reply" })
+            .click();
         // check it's visible
         cy.get(".mx_ReplyPreview").should("exist");
         // now click on the permalink for Permalink me
