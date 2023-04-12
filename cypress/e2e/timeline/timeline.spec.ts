@@ -679,7 +679,7 @@ describe("Timeline", () => {
             cy.get(".mx_EventTile[data-layout=irc] .mx_ViewSourceEvent_expanded").should("be.visible");
         });
 
-        it("should render file size in kilobyte on a file tile", () => {
+        it("should render file size in kibibytes on a file tile", () => {
             cy.visit("/#/room/" + roomId);
             cy.get(".mx_GenericEventListSummary_summary").within(() => {
                 cy.findByText(OLD_NAME + " created and configured the room.").should("exist");
@@ -703,7 +703,7 @@ describe("Timeline", () => {
             // Assert that the file size is displayed in kibibytes (1024 bytes), not kilobytes (1000 bytes)
             // See: https://github.com/vector-im/element-web/issues/24866
             cy.get(".mx_EventTile_last").within(() => {
-                cy.contains(".mx_MFileBody_info_filename", "1.12 KB").should("exist"); // actual file size in kilobyte
+                cy.contains(".mx_MFileBody_info_filename", "1.12 KB").should("exist"); // actual file size in kibibytes
             });
         });
 

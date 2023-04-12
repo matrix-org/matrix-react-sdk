@@ -211,14 +211,14 @@ describe("FilePanel", () => {
             });
         });
 
-        it("should render file size in kilobyte on a file tile", () => {
-            const size = "1.12 KB"; // actual file size in kilobyte (KB)
+        it("should render file size in kibibytes on a file tile", () => {
+            const size = "1.12 KB"; // actual file size in kibibytes (1024 bytes)
 
             // Upload a file
             uploadFile("cypress/fixtures/matrix-org-client-versions.json");
 
             cy.get(".mx_FilePanel .mx_EventTile").within(() => {
-                // Assert that the file size is displayed in kilobyte, not kibibyte (kB)
+                // Assert that the file size is displayed in kibibytes, not kilobytes (1000 bytes)
                 // See: https://github.com/vector-im/element-web/issues/24866
                 cy.contains(".mx_MFileBody_info_filename", size).should("exist");
                 cy.get(".mx_MFileBody_download").within(() => {
