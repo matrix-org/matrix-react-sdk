@@ -3760,5 +3760,6 @@
     "Match default setting": "Odpovídá výchozímu nastavení",
     "Start DM anyway": "Zahájit přímou zprávu i přesto",
     "Start DM anyway and never warn me again": "Zahájit přímou zprávu i přesto a nikdy už mě nevarovat",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Není možné najít uživatelské profily pro níže uvedené Matrix ID - chcete přesto založit DM?"
+    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Není možné najít uživatelské profily pro níže uvedené Matrix ID - chcete přesto založit DM?",
+    "Formatting": "Formátování"
 }
