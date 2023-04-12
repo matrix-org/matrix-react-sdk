@@ -24,7 +24,6 @@ import { mocked } from "jest-mock";
 import MImageBody from "../../../../src/components/views/messages/MImageBody";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import {
-    flushPromises,
     getMockClientWithEventEmitter,
     mockClientMethodsCrypto,
     mockClientMethodsDevice,
@@ -88,6 +87,7 @@ describe("<MImageBody/>", () => {
             />,
         );
 
+        // thumbnail with dimensions present
         expect(container).toMatchSnapshot();
     });
 

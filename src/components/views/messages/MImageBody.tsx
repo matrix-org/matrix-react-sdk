@@ -596,7 +596,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             thumbUrl = this.state.thumbUrl ?? this.state.contentUrl;
         }
 
-        const thumbnail = contentUrl ? this.messageContent(contentUrl, thumbUrl, content) : undefined;
+        const thumbnail = this.messageContent(contentUrl, thumbUrl, content);
         const fileBody = this.getFileBody();
 
         return (
