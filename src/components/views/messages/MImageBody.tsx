@@ -385,22 +385,22 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     }
 
     protected messageContent(
-        contentUrl: string,
+        contentUrl: string | null,
         thumbUrl: string | null,
         content: IMediaEventContent,
         forcedHeight?: number,
     ): JSX.Element {
         if (!thumbUrl) thumbUrl = contentUrl; // fallback
 
-        let infoWidth: number;
-        let infoHeight: number;
+        let infoWidth = Number.MAX_SAFE_INTEGER;
+        let infoHeight = Number.MAX_SAFE_INTEGER;
         let infoSvg = false;
 
         if (content.info?.w && content.info?.h) {
             infoWidth = content.info.w;
             infoHeight = content.info.h;
             infoSvg = content.info.mimetype === "image/svg+xml";
-        } else {
+        } else if (thumbUrl && contentUrl) {
             // Whilst the image loads, display nothing. We also don't display a blurhash image
             // because we don't really know what size of image we'll end up with.
             //
@@ -522,7 +522,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             </div>
         );
 
-        return this.wrapImage(contentUrl, thumbnail);
+        return contentUrl ? this.wrapImage(contentUrl, thumbnail) : thumbnail;
     }
 
     // Overridden by MStickerBody
