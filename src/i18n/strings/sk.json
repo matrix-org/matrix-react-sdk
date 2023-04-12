@@ -3760,5 +3760,8 @@
     "Match default setting": "Rovnaké ako predvolené nastavenie",
     "Start DM anyway": "Spustiť priamu správu aj tak",
     "Start DM anyway and never warn me again": "Spustiť priamu správu aj tak a nikdy ma už nevarovať",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Nie je možné nájsť používateľské profily pre Matrix ID zobrazené nižšie - chcete aj tak začať priamu správu?"
+    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Nie je možné nájsť používateľské profily pre Matrix ID zobrazené nižšie - chcete aj tak začať priamu správu?",
+    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.": "Nie je možné nájsť starú verziu tejto miestnosti (ID miestnosti: %(roomId)s) a nebol nám poskytnutý parameter 'via_servers' na jej vyhľadanie.",
+    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "Nie je možné nájsť starú verziu tejto miestnosti (ID miestnosti: %(roomId)s) a nebol nám poskytnutý parameter 'via_servers' na jej vyhľadanie. Je možné, že uhádnutie servera na základe ID miestnosti bude fungovať. Ak to chcete skúsiť, kliknite na tento odkaz:",
+    "Formatting": "Formátovanie"
 }
