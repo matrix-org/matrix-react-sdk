@@ -118,6 +118,18 @@ describe("LocationPicker", () => {
             expect(getByText("This homeserver is not configured to display maps.")).toBeInTheDocument();
         });
 
+        it("displays error when WebGl is not enabled", () => {
+            // suppress expected error log
+            jest.spyOn(logger, "error").mockImplementation(() => {});
+            mocked(findMapStyleUrl).mockImplementation(() => {
+                throw new Error("Failed to initialize WebGL");
+            });
+
+            const { getByText } = getComponent();
+
+            expect(getByText("WebGL is required for this site, please enable it in your browser settings.")).toBeInTheDocument();
+        });
+
         it("displays error when map setup throws", () => {
             // suppress expected error log
             jest.spyOn(logger, "error").mockImplementation(() => {});
