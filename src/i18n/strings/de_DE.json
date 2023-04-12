@@ -3761,5 +3761,7 @@
     "Start DM anyway": "Dennoch einladen",
     "Start DM anyway and never warn me again": "Dennoch einladen und mich nicht mehr warnen",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Konnte keine Profile für die nachfolgenden Matrix-IDs finden – möchtest du sie dennoch einladen?",
-    "Formatting": "Formatierung"
+    "Formatting": "Formatierung",
+    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.": "Konnte die alte Version dieses Raumes nicht finden (Raum-ID: %(roomId)s) und uns wurde „via_servers“ nicht mitgeteilt, um danach zu suchen.",
+    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "Konnte die alte Version dieses Raumes nicht finden (Raum-ID: %(roomId)s) und uns wurde „via_servers“ nicht mitgeteilt, um danach zu suchen. Es ist möglich, dass das Erraten des Servers basierend auf der Raum-ID funktioniert. Wenn du dies probieren möchtest, klicke auf folgenden Link:"
 }
