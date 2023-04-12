@@ -24,6 +24,7 @@ import { mocked } from "jest-mock";
 import MImageBody from "../../../../src/components/views/messages/MImageBody";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import {
+    flushPromises,
     getMockClientWithEventEmitter,
     mockClientMethodsCrypto,
     mockClientMethodsDevice,
@@ -61,6 +62,10 @@ describe("<MImageBody/>", () => {
         sender: userId,
         type: EventType.RoomMessage,
         content: {
+            info: {
+                w: 40,
+                h: 50,
+            },
             file: {
                 url: "mxc://server/encrypted-image",
             },
@@ -71,6 +76,20 @@ describe("<MImageBody/>", () => {
         onMessageAllowed: jest.fn(),
         permalinkCreator: new RoomPermalinkCreator(new Room(encryptedMediaEvent.getRoomId()!, cli, cli.getUserId()!)),
     };
+
+    it("should show a thumbnail while image is being downloaded", async () => {
+        fetchMock.getOnce(url, { status: 200 });
+
+        const { container } = render(
+            <MImageBody
+                {...props}
+                mxEvent={encryptedMediaEvent}
+                mediaEventHelper={new MediaEventHelper(encryptedMediaEvent)}
+            />,
+        );
+
+        expect(container).toMatchSnapshot();
+    });
 
     it("should show error when encrypted media cannot be downloaded", async () => {
         fetchMock.getOnce(url, { status: 500 });
