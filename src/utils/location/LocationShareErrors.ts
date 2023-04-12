@@ -19,6 +19,7 @@ import { _t } from "../../languageHandler";
 export enum LocationShareError {
     MapStyleUrlNotConfigured = "MapStyleUrlNotConfigured",
     MapStyleUrlNotReachable = "MapStyleUrlNotReachable",
+    WebGLNotEnabled = "WebGLNotEnabled",
     Default = "Default",
 }
 
@@ -27,6 +28,8 @@ export const getLocationShareErrorMessage = (errorType?: LocationShareError): st
         case LocationShareError.MapStyleUrlNotConfigured:
             return _t("This homeserver is not configured to display maps.");
         case LocationShareError.MapStyleUrlNotReachable:
+        case LocationShareError.WebGLNotEnabled:
+            return _t("WebGL is required for this site, please enable it in your browser settings.")
         default:
             return _t(
                 `This homeserver is not configured correctly to display maps, ` +
