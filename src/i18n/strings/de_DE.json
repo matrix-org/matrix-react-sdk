@@ -3760,5 +3760,6 @@
     "Match default setting": "Standardeinstellung verwenden",
     "Start DM anyway": "Dennoch einladen",
     "Start DM anyway and never warn me again": "Dennoch einladen und mich nicht mehr warnen",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Konnte keine Profile für die nachfolgenden Matrix-IDs finden – möchtest du sie dennoch einladen?"
+    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Konnte keine Profile für die nachfolgenden Matrix-IDs finden – möchtest du sie dennoch einladen?",
+    "Formatting": "Formatierung"
 }
