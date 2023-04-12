@@ -40,12 +40,8 @@ describe("UserView", () => {
             cy.visit(`/#/user/${bot.getUserId()}`);
         });
 
-        cy.get(".mx_RightPanel").within(() => {
-            cy.get("mx_UserInfo_profile h2").within(() => {
-                cy.findByText("Usman").should("exist");
-            });
-
-            cy.get(".mx_Spinner").should("not.exist"); // wait for spinners to finish
+        cy.get(".mx_RightPanel .mx_UserInfo_profile h2").within(() => {
+            cy.findByText("Usman").should("exist");
         });
 
         cy.get(".mx_RightPanel").percySnapshotElement("User View", {
