@@ -254,7 +254,11 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         // Handle displaying feedback on validity
         let fieldTooltip: JSX.Element | undefined;
         if (tooltipContent || this.state.feedback) {
-            inputProps["aria-describedby"] = `${this.id}_tooltip`;
+            const tooltipId = `${this.id}_tooltip`;
+            const visible = (this.state.focused && forceTooltipVisible) || this.state.feedbackVisible;
+            if (visible) {
+                inputProps["aria-describedby"] = tooltipId;
+            }
 
             let role: React.AriaRole;
             if (tooltipContent) {
@@ -265,9 +269,9 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
 
             fieldTooltip = (
                 <Tooltip
-                    id={inputProps["aria-describedby"]}
+                    id={tooltipId}
                     tooltipClassName={classNames("mx_Field_tooltip", "mx_Tooltip_noMargin", tooltipClassName)}
-                    visible={(this.state.focused && forceTooltipVisible) || this.state.feedbackVisible}
+                    visible={visible}
                     label={tooltipContent || this.state.feedback}
                     alignment={Tooltip.Alignment.Right}
                     role={role}
