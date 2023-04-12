@@ -3710,5 +3710,13 @@
     "Requires your server to support MSC3030": "Kräver att din server stöder MSC3030",
     "Requires your server to support the stable version of MSC3827": "Kräver att din server stöder den stabila versionen av MSC3827",
     "If you know a room address, try joining through that instead.": "Om du känner till en rumsadress, försök gå med via den istället.",
-    "You attempted to join using a room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.": "Du försökte gå med med ett rums-ID utan att tillhandahålla en lista över servrar att gå med via. Rums-ID:n är interna identifierare och kan inte användas för att gå med i ett rum utan ytterligare information."
+    "You attempted to join using a room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.": "Du försökte gå med med ett rums-ID utan att tillhandahålla en lista över servrar att gå med via. Rums-ID:n är interna identifierare och kan inte användas för att gå med i ett rum utan ytterligare information.",
+    "Room directory": "Rumskatalog",
+    "Identity server is <code>%(identityServerUrl)s</code>": "Identitetsservern är <code>%(identityServerUrl)s</code>",
+    "Homeserver is <code>%(homeserverUrl)s</code>": "Hemservern är <code>%(homeserverUrl)s</code>",
+    "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Ett fel uppstod när du uppdaterade dina aviseringsinställningar. Pröva att växla alternativet igen.",
+    "Verify Session": "Verifiera session",
+    "Ignore (%(counter)s)": "Ignorera (%(counter)s)",
+    "User": "Användare",
+    "Log out and back in to disable": "Logga ut och in igen för att inaktivera"
 }
