@@ -201,7 +201,7 @@ export const RoomPredecessorTile: React.FC<IProps> = ({ mxEvent, timestamp }) =>
  * [1] https://spec.matrix.org/v1.5/appendices/#room-ids-and-event-ids
  */
 export function guessServerNameFromRoomId(roomId: string): string | null {
-    const m = roomId.match(/[^:]*:(.*)/);
+    const m = roomId.match(/^[^:]*:(.*)/);
     if (m) {
         return m[1];
     } else {
