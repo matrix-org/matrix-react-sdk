@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 import { KeyboardEvent, RefObject, SyntheticEvent, useCallback, useRef, useState } from "react";
 
 import { useSettingValue } from "../../../../../hooks/useSettings";
@@ -36,10 +35,6 @@ function amendInnerHtml(text: string): string {
         .replace(/<\/div>/g, "");
 }
 
-const emptySuggestion = { keyChar: "", text: "", type: "unknown" } as const;
-type SuggestionCandidate = { node: Node | null; startOffset: number; endOffset: number };
-const emptySuggestionCandidate: SuggestionCandidate = { node: null, startOffset: NaN, endOffset: NaN };
-
 export function usePlainTextListeners(
     autocompleteRef: React.RefObject<Autocomplete>,
     initialContent?: string,
@@ -52,15 +47,9 @@ export function usePlainTextListeners(
     onPaste(event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>): void;
     onKeyDown(event: KeyboardEvent<HTMLDivElement>): void;
     setContent(text: string): void;
-    suggestion: MappedSuggestion;
-    onSelect(): void;
-    clearSuggestions(): void;
-    suggestionNodeInfo: SuggestionCandidate;
 } {
     const ref = useRef<HTMLDivElement | null>(null);
     const [content, setContent] = useState<string | undefined>(initialContent);
-    const [suggestion, setSuggestion] = useState<MappedSuggestion>(emptySuggestion);
-    const [suggestionNodeInfo, setSuggestionNodeInfo] = useState<SuggestionCandidate>(emptySuggestionCandidate);
 
     const send = useCallback(() => {
         if (ref.current) {
@@ -119,49 +108,6 @@ export function usePlainTextListeners(
         [autocompleteRef, enterShouldSend, send],
     );
 
-    // do for slash commands first
-    const onSelect = (): void => {
-        // whenever there's a change in selection, we're going to have to do some magic
-        const s = document.getSelection();
-
-        // if we have a cursor inside a text node, then we're potentially interested in the text content
-        if (s && s.isCollapsed && s.anchorNode?.nodeName === "#text" && ref.current) {
-            // first check is that the text node is the first text node of the editor as we can also have
-            // <p> tags in the markup
-            const firstTextNode = document.createNodeIterator(ref.current, NodeFilter.SHOW_TEXT).nextNode();
-            const isFirstTextNode = s.anchorNode === firstTextNode;
-            const textContent = s.anchorNode.textContent;
-
-            // if we're not in the first text node or we have no text content, return
-            if (!isFirstTextNode || textContent === null) {
-                return;
-            }
-
-            // it's a command if: it is the first textnode, it starts with /, not //, then has letters all the way up to
-            // the end of the textcontent - nb think this last assumption may give us some behavioural inconsistency
-            // between the rust model and this, but it's a decent starting point
-            const commandRegex = /^\/{1}(\w*)$/;
-            const commandMatches = textContent.match(commandRegex);
-
-            // if we don't have a command, clear the suggestion state and return
-            if (commandMatches === null) {
-                if (suggestionNodeInfo.node !== null) {
-                    clearSuggestions();
-                }
-                return;
-            }
-
-            // but if we do have some matches, use that to populate the suggestion state
-            setSuggestionNodeInfo({ node: s.anchorNode, startOffset: 0, endOffset: textContent.length });
-            setSuggestion({ keyChar: "/", type: "command", text: commandMatches[1] });
-        }
-    };
-
-    const clearSuggestions = (): void => {
-        setSuggestion(emptySuggestion);
-        setSuggestionNodeInfo(emptySuggestionCandidate);
-    };
-
     return {
         ref,
         onInput,
@@ -169,9 +115,5 @@ export function usePlainTextListeners(
         onKeyDown,
         content,
         setContent: setText,
-        suggestion,
-        onSelect,
-        clearSuggestions,
-        suggestionNodeInfo,
     };
 }
