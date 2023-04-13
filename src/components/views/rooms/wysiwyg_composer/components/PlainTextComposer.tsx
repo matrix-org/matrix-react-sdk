@@ -51,7 +51,6 @@ export function PlainTextComposer({
     leftComponent,
     rightComponent,
 }: PlainTextComposerProps): JSX.Element {
-    // WIP - hack in an autocomplete implementation
     const autocompleteRef = useRef<Autocomplete | null>(null);
 
     const {
