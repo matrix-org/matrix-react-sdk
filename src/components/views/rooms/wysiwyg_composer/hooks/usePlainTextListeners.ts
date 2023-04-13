@@ -22,6 +22,7 @@ import { IS_MAC, Key } from "../../../../../Keyboard";
 import Autocomplete from "../../Autocomplete";
 import { getKeyBindingsManager } from "../../../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../../../accessibility/KeyboardShortcuts";
+import { handleEventWithAutocomplete } from "./utils";
 
 function isDivElement(target: EventTarget): target is HTMLDivElement {
     return target instanceof HTMLDivElement;
@@ -92,43 +93,9 @@ export function usePlainTextListeners(
 
     const onKeyDown = useCallback(
         (event: KeyboardEvent<HTMLDivElement>) => {
-            // WIP drop in the autocomplete handling
-            const autocompleteIsOpen = autocompleteRef?.current && !autocompleteRef.current.state.hide;
-
-            // we need autocomplete to take priority when it is open for using enter to select
-            if (autocompleteIsOpen) {
-                let handled = false;
-                const autocompleteAction = getKeyBindingsManager().getAutocompleteAction(event);
-                const component = autocompleteRef.current;
-                if (component && component.countCompletions() > 0) {
-                    switch (autocompleteAction) {
-                        case KeyBindingAction.ForceCompleteAutocomplete:
-                        case KeyBindingAction.CompleteAutocomplete:
-                            autocompleteRef.current.onConfirmCompletion();
-                            handled = true;
-                            break;
-                        case KeyBindingAction.PrevSelectionInAutocomplete:
-                            autocompleteRef.current.moveSelection(-1);
-                            handled = true;
-                            break;
-                        case KeyBindingAction.NextSelectionInAutocomplete:
-                            autocompleteRef.current.moveSelection(1);
-                            handled = true;
-                            break;
-                        case KeyBindingAction.CancelAutocomplete:
-                            autocompleteRef.current.onEscape(event as {} as React.KeyboardEvent);
-                            handled = true;
-                            break;
-                        default:
-                            break; // don't return anything, allow event to pass through
-                    }
-                }
-
-                if (handled) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    return;
-                }
+            const isHandledByAutocomplete = handleEventWithAutocomplete(autocompleteRef, event);
+            if (isHandledByAutocomplete) {
+                return;
             }
 
             // resume regular flow
