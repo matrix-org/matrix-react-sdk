@@ -70,7 +70,7 @@ export function PlainTextComposer({
     const handleCommand = (replacementText: string): void => {
         // if this gets triggered, then we have a command on the page, so what we want to do is
         // manually amend the html text content with the stored state
-        const { node, startOffset, endOffset } = suggestionNodeInfo;
+        const { node /* startOffset, endOffset */ } = suggestionNodeInfo;
         if (ref.current === null || node === null || node.textContent === null) return;
 
         // for a command we know we're starting at the beginning, so it's a bit easier
