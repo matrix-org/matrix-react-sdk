@@ -127,7 +127,7 @@ describe("LocationPicker", () => {
 
             const { getByText } = getComponent();
 
-            expect(getByText("WebGL is requiredto display maps, please enable it in your browser settings.")).toBeInTheDocument();
+            expect(getByText("WebGL is required to display maps, please enable it in your browser settings.")).toBeInTheDocument();
         });
 
         it("displays error when map setup throws", () => {
