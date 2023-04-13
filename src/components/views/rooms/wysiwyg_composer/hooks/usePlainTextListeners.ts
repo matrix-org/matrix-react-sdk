@@ -20,8 +20,6 @@ import { KeyboardEvent, RefObject, SyntheticEvent, useCallback, useRef, useState
 import { useSettingValue } from "../../../../../hooks/useSettings";
 import { IS_MAC, Key } from "../../../../../Keyboard";
 import Autocomplete from "../../Autocomplete";
-import { getKeyBindingsManager } from "../../../../../KeyBindingsManager";
-import { KeyBindingAction } from "../../../../../accessibility/KeyboardShortcuts";
 import { handleEventWithAutocomplete } from "./utils";
 
 function isDivElement(target: EventTarget): target is HTMLDivElement {
