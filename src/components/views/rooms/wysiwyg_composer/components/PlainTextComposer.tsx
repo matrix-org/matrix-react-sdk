@@ -54,18 +54,20 @@ export function PlainTextComposer({
     // WIP - hack in an autocomplete implementation
     const autocompleteRef = useRef<Autocomplete | null>(null);
 
-    const { ref, onInput, onPaste, onKeyDown, content, setContent } = usePlainTextListeners(
-        autocompleteRef,
-        initialContent,
-        onChange,
-        onSend,
-    );
+    const {
+        ref: editorRef,
+        onInput,
+        onPaste,
+        onKeyDown,
+        content,
+        setContent,
+    } = usePlainTextListeners(autocompleteRef, initialContent, onChange, onSend);
 
-    const { suggestion, onSelect, handleCommand, handleMention } = useSuggestion(ref, autocompleteRef);
+    const { suggestion, onSelect, handleCommand, handleMention } = useSuggestion(editorRef);
 
-    const composerFunctions = useComposerFunctions(ref, setContent);
-    usePlainTextInitialization(initialContent, ref);
-    useSetCursorPosition(disabled, ref);
+    const composerFunctions = useComposerFunctions(editorRef, setContent);
+    usePlainTextInitialization(initialContent, editorRef);
+    useSetCursorPosition(disabled, editorRef);
     const { isFocused, onFocus } = useIsFocused();
     const computedPlaceholder = (!content && placeholder) || undefined;
 
@@ -87,13 +89,13 @@ export function PlainTextComposer({
                 handleCommand={handleCommand}
             />
             <Editor
-                ref={ref}
+                ref={editorRef}
                 disabled={disabled}
                 leftComponent={leftComponent}
                 rightComponent={rightComponent}
                 placeholder={computedPlaceholder}
             />
-            {children?.(ref, composerFunctions)}
+            {children?.(editorRef, composerFunctions)}
         </div>
     );
 }
