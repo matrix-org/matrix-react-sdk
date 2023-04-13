@@ -29,7 +29,7 @@ export const getLocationShareErrorMessage = (errorType?: LocationShareError): st
             return _t("This homeserver is not configured to display maps.");
         case LocationShareError.MapStyleUrlNotReachable:
         case LocationShareError.WebGLNotEnabled:
-            return _t("WebGL is required for this site, please enable it in your browser settings.")
+            return _t("WebGL is requiredto display maps, please enable it in your browser settings.")
         default:
             return _t(
                 `This homeserver is not configured correctly to display maps, ` +
