@@ -51,11 +51,8 @@ $timeline-image-border-radius: 8px;
     }
 }
 
-html, body, #matrixchat {
-    height: 100%;
-}
-
 html {
+    height: 100%;
     /* hack to stop overscroll bounce on OSX and iOS.
        N.B. Breaks things when we have legitimate horizontal overscroll */
     overflow: hidden;
@@ -64,6 +61,7 @@ html {
 }
 
 body {
+    height: 100%;
     font-family: $font-family;
     font-size: $font-15px;
     background-color: $background;
@@ -74,6 +72,10 @@ body {
     /* see https://github.com/vector-im/element-web/issues/11425 */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+#matrixchat {
+    height: 100%;
 }
 
 pre,
