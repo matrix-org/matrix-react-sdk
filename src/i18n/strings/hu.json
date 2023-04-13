@@ -3760,5 +3760,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Nem található fiók profil az alábbi Matrix azonosítókhoz - mégis a közvetlen csevegés elindítása mellett dönt?",
     "Reload": "Újratöltés",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Ez lehet attól, hogy az alkalmazás több lapon is nyitva van, vagy hogy a böngészőadatok törölve lettek.",
-    "Database unexpectedly closed": "Az adatbázis váratlanul lezárult"
+    "Database unexpectedly closed": "Az adatbázis váratlanul lezárult",
+    "Formatting": "Formázás"
 }
