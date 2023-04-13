@@ -92,7 +92,7 @@ function handleKeyboardEvent(
     editor: HTMLElement,
     roomContext: IRoomState,
     composerContext: ComposerContextState,
-    mxClient: MatrixClient,
+    mxClient: MatrixClient | undefined,
     autocompleteRef: React.RefObject<Autocomplete>,
 ): KeyboardEvent | null {
     const { editorStateTransfer } = composerContext;
@@ -104,6 +104,11 @@ function handleKeyboardEvent(
     const isHandledByAutocomplete = handleEventWithAutocomplete(autocompleteRef, event);
     if (isHandledByAutocomplete) {
         return event;
+    }
+
+    // taking the client from context gives us an client | undefined type, narrow it down
+    if (mxClient === undefined) {
+        return null;
     }
 
     switch (action) {
