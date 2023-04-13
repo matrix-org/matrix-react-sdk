@@ -66,6 +66,10 @@ export abstract class NotificationState
         return this._color;
     }
 
+    public get muted(): boolean {
+        return this._muted;
+    }
+
     public get isIdle(): boolean {
         return this.color <= NotificationColor.None;
     }

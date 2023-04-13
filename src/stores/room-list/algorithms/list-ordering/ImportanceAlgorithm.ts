@@ -42,6 +42,7 @@ const CATEGORY_ORDER = [
     NotificationColor.Grey,
     NotificationColor.Bold,
     NotificationColor.None, // idle
+    NotificationColor.Muted
 ];
 
 /**
@@ -81,6 +82,7 @@ export class ImportanceAlgorithm extends OrderingAlgorithm {
             [NotificationColor.Grey]: [],
             [NotificationColor.Bold]: [],
             [NotificationColor.None]: [],
+            [NotificationColor.Muted]: [],
         };
         for (const room of rooms) {
             const category = this.getRoomCategory(room);
@@ -94,7 +96,8 @@ export class ImportanceAlgorithm extends OrderingAlgorithm {
         // It's fine for us to call this a lot because it's cached, and we shouldn't be
         // wasting anything by doing so as the store holds single references
         const state = RoomNotificationStateStore.instance.getRoomState(room);
-        return state.color;
+        console.log('hhh', room.roomId, state)
+        return state.muted ? NotificationColor.Muted : state.color;
     }
 
     public setRooms(rooms: Room[]): void {
