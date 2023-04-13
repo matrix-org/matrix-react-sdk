@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MutableRefObject, RefObject, KeyboardEvent } from "react";
+import { MutableRefObject, RefObject } from "react";
 
 import { TimelineRenderingType } from "../../../../../contexts/RoomContext";
 import { IRoomState } from "../../../../structures/RoomView";
@@ -66,7 +66,8 @@ export function setCursorPositionAtTheEnd(element: HTMLElement): void {
  */
 export function handleEventWithAutocomplete(
     autocompleteRef: RefObject<Autocomplete>,
-    event: KeyboardEvent<HTMLDivElement>,
+    // we get a React Keyboard event from plain text, a Keyboard Event from the rich text
+    event: KeyboardEvent | React.KeyboardEvent<HTMLDivElement>,
 ): boolean {
     const autocompleteIsOpen = autocompleteRef?.current && !autocompleteRef.current.state.hide;
     let handled = false;
