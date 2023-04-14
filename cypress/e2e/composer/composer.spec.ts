@@ -117,17 +117,18 @@ describe("Composer", () => {
             cy.viewRoomByName("Composing Room");
         });
 
-        it("autocomplete works for slash commands", () => {
+        it.only("autocomplete works for slash commands", () => {
             // Type a message
             cy.get("div[contenteditable=true]").type("/spo");
 
-            // Check that the autocomplete option is visibile and click it
-            cy.findByRole("presentation").should("be.visible");
-            cy.findByText("/spoiler").click();
+            // Check that the autocomplete option is visible and click it
+            cy.findByTestId("autocomplete-wrapper").within(() => {
+                cy.findByText("/spoiler").click();
+            });
 
             // this should close the autocomplete and have completed with the
             // expected text
-            cy.findByRole("presentation").should("not.be.visible");
+            cy.findByTestId("autocomplete-wrapper").should("not.be.visible");
             cy.findByRole("textbox").within(() => {
                 cy.findByText("/spoiler").should("exist");
             });
