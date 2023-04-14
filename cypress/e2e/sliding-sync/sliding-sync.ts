@@ -275,9 +275,9 @@ describe("Sliding Sync", () => {
             .then((bob) => {
                 bobClient = bob;
                 return Promise.all([
-                    bob.createRoom({ name: "Join" }),
-                    bob.createRoom({ name: "Reject" }),
-                    bob.createRoom({ name: "Rescind" }),
+                    bob.createRoom({ name: "Room to Join" }),
+                    bob.createRoom({ name: "Room to Reject" }),
+                    bob.createRoom({ name: "Room to Rescind" }),
                 ]);
             })
             .then(([join, reject, rescind]) => {
@@ -291,32 +291,45 @@ describe("Sliding Sync", () => {
                 ]);
             });
 
-        // wait for them all to be on the UI
         cy.findByRole("group", { name: "Invites" }).within(() => {
-            cy.findAllByRole("treeitem").should("have.length", 3);
+            // Exclude headerText
+            cy.get(".mx_RoomSublist_tiles").within(() => {
+
+                // Wait for them all to be on the UI
+                cy.findAllByRole("treeitem").should("have.length", 3);
+            });
         });
 
-        cy.findByRole("treeitem", { name: "Join" }).click();
+        // Select the room to join
+        cy.findByRole("treeitem", { name: "Room to Join" }).click();
 
         cy.get(".mx_RoomView").within(() => {
+            // Accept the invite
             cy.findByRole("button", { name: "Accept" }).click();
         });
 
-        checkOrder(["Join", "Test Room"]);
+        checkOrder(["Room to Join", "Test Room"]);
 
-        cy.findByRole("treeitem", { name: "Reject" }).click();
+        // Select the room to reject
+        cy.findByRole("treeitem", { name: "Room to Reject" }).click();
 
         cy.get(".mx_RoomView").within(() => {
+            // Reject the invite
             cy.findByRole("button", { name: "Reject" }).click();
         });
 
-        // wait for the rejected room to disappear
         cy.findByRole("group", { name: "Invites" }).within(() => {
-            cy.findAllByRole("treeitem").should("have.length", 2);
+            // Exclude headerText
+            cy.get(".mx_RoomSublist_tiles").within(() => {
+
+                // Wait for the rejected room to disappear
+                cy.findAllByRole("treeitem").should("have.length", 2);
+            });
         });
 
         // check the lists are correct
-        checkOrder(["Join", "Test Room"]);
+        checkOrder(["Room to Join", "Test Room"]);
+
         cy.findByRole("group", { name: "Invites" })
             .find(".mx_RoomTile_title")
             .should((elements) => {
@@ -325,7 +338,7 @@ describe("Sliding Sync", () => {
                         return e.textContent;
                     }),
                     "rooms are sorted",
-                ).to.deep.equal(["Rescind"]);
+                ).to.deep.equal(["Room to Rescind"]);
             });
 
         // now rescind the invite
@@ -333,12 +346,16 @@ describe("Sliding Sync", () => {
             return bob.kick(roomRescind, clientUserId);
         });
 
-        // wait for the rescind to take effect and check the joined list once more
         cy.findByRole("group", { name: "Rooms" }).within(() => {
-            cy.findAllByRole("treeitem").should("have.length", 2);
+            // Exclude headerText
+            cy.get(".mx_RoomSublist_tiles").within(() => {
+
+                // Wait for the rescind to take effect and check the joined list once more
+                cy.findAllByRole("treeitem").should("have.length", 2);
+            });
         });
 
-        checkOrder(["Join", "Test Room"]);
+        checkOrder(["Room to Join", "Test Room"]);
     });
 
     it("should show a favourite DM only in the favourite sublist", () => {
