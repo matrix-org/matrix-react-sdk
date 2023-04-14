@@ -3762,5 +3762,9 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Není možné najít uživatelské profily pro níže uvedené Matrix ID - chcete přesto založit DM?",
     "Formatting": "Formátování",
     "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.": "Nepodařilo se najít starou verzi této místnosti (ID místnosti: %(roomId)s), a nebyl poskytnut parametr 'via_servers', který by umožnil její vyhledání.",
-    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "Nepodařilo se najít starou verzi této místnosti (ID místnosti: %(roomId)s), a nebyl poskytnut parametr 'via_servers', který by umožnil její vyhledání. Je možné, že odhad serveru z ID místnosti bude fungovat. Pokud to chcete zkusit, klikněte na tento odkaz:"
+    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "Nepodařilo se najít starou verzi této místnosti (ID místnosti: %(roomId)s), a nebyl poskytnut parametr 'via_servers', který by umožnil její vyhledání. Je možné, že odhad serveru z ID místnosti bude fungovat. Pokud to chcete zkusit, klikněte na tento odkaz:",
+    "Start messages with <code>/plain</code> to send without markdown.": "Začněte zprávy s <code>/plain</code> pro odeslání bez markdown.",
+    "The add / bind with MSISDN flow is misconfigured": "Přidání/připojení s MSISDN je nesprávně nakonfigurováno",
+    "No identity access token found": "Nebyl nalezen žádný přístupový token identity",
+    "Identity server not set": "Server identit není nastaven"
 }
