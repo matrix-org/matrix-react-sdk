@@ -18,7 +18,6 @@ import React from "react";
 import { act, fireEvent, render, RenderResult } from "@testing-library/react";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { logger } from "matrix-js-sdk/src/logger";
-import { DeviceTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { defer, sleep } from "matrix-js-sdk/src/utils";
 import {
@@ -30,7 +29,10 @@ import {
     PUSHER_ENABLED,
     IAuthData,
     UNSTABLE_MSC3882_CAPABILITY,
+    CryptoApi,
+    DeviceVerificationStatus,
 } from "matrix-js-sdk/src/matrix";
+import { mocked } from "jest-mock";
 
 import { clearAllModals } from "../../../../../test-utils";
 import SessionManagerTab from "../../../../../../src/components/views/settings/tabs/user/SessionManagerTab";
@@ -78,9 +80,14 @@ describe("<SessionManagerTab />", () => {
         cancel: jest.fn(),
         on: jest.fn(),
     } as unknown as VerificationRequest;
+
+    const mockCrypto = mocked({
+        getDeviceVerificationStatus: jest.fn(),
+    } as unknown as CryptoApi);
+
     const mockClient = getMockClientWithEventEmitter({
         ...mockClientMethodsUser(aliceId),
-        checkDeviceTrust: jest.fn(),
+        getCrypto: jest.fn().mockReturnValue(mockCrypto),
         getDevices: jest.fn(),
         getStoredDevice: jest.fn(),
         getDeviceId: jest.fn().mockReturnValue(deviceId),
@@ -171,7 +178,9 @@ describe("<SessionManagerTab />", () => {
             const device = [alicesDevice, alicesMobileDevice].find((device) => device.device_id === id);
             return device ? new DeviceInfo(device.device_id) : null;
         });
-        mockClient.checkDeviceTrust.mockReset().mockReturnValue(new DeviceTrustLevel(false, false, false, false));
+        mockCrypto.getDeviceVerificationStatus
+            .mockReset()
+            .mockResolvedValue(new DeviceVerificationStatus(false, false, false, false));
 
         mockClient.getDevices.mockReset().mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
 
@@ -221,13 +230,13 @@ describe("<SessionManagerTab />", () => {
     });
 
     it("does not fail when checking device verification fails", async () => {
-        const logSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+        const logSpy = jest.spyOn(console, "error").mockImplementation((e) => {});
         mockClient.getDevices.mockResolvedValue({
             devices: [alicesDevice, alicesMobileDevice],
         });
-        const noCryptoError = new Error("End-to-end encryption disabled");
-        mockClient.checkDeviceTrust.mockImplementation(() => {
-            throw noCryptoError;
+        const failError = new Error("non-specific failure");
+        mockCrypto.getDeviceVerificationStatus.mockImplementation(() => {
+            throw failError;
         });
         render(getComponent());
 
@@ -236,9 +245,9 @@ describe("<SessionManagerTab />", () => {
         });
 
         // called for each device despite error
-        expect(mockClient.checkDeviceTrust).toHaveBeenCalledWith(aliceId, alicesDevice.device_id);
-        expect(mockClient.checkDeviceTrust).toHaveBeenCalledWith(aliceId, alicesMobileDevice.device_id);
-        expect(logSpy).toHaveBeenCalledWith("Error getting device cross-signing info", noCryptoError);
+        expect(mockCrypto.getDeviceVerificationStatus).toHaveBeenCalledWith(aliceId, alicesDevice.device_id);
+        expect(mockCrypto.getDeviceVerificationStatus).toHaveBeenCalledWith(aliceId, alicesMobileDevice.device_id);
+        expect(logSpy).toHaveBeenCalledWith("Error getting device cross-signing info", failError);
     });
 
     it("sets device verification status correctly", async () => {
@@ -246,14 +255,14 @@ describe("<SessionManagerTab />", () => {
             devices: [alicesDevice, alicesMobileDevice, alicesOlderMobileDevice],
         });
         mockClient.getStoredDevice.mockImplementation((_userId, deviceId) => new DeviceInfo(deviceId));
-        mockClient.checkDeviceTrust.mockImplementation((_userId, deviceId) => {
+        mockCrypto.getDeviceVerificationStatus.mockImplementation(async (_userId, deviceId) => {
             // alices device is trusted
             if (deviceId === alicesDevice.device_id) {
-                return new DeviceTrustLevel(true, true, false, false);
+                return new DeviceVerificationStatus(true, true, false, false);
             }
             // alices mobile device is not
             if (deviceId === alicesMobileDevice.device_id) {
-                return new DeviceTrustLevel(false, false, false, false);
+                return new DeviceVerificationStatus(false, false, false, false);
             }
             // alicesOlderMobileDevice does not support encryption
             throw new Error("encryption not supported");
@@ -265,7 +274,7 @@ describe("<SessionManagerTab />", () => {
             await flushPromises();
         });
 
-        expect(mockClient.checkDeviceTrust).toHaveBeenCalledTimes(3);
+        expect(mockCrypto.getDeviceVerificationStatus).toHaveBeenCalledTimes(3);
         expect(
             getByTestId(`device-tile-${alicesDevice.device_id}`).querySelector('[aria-label="Verified"]'),
         ).toBeTruthy();
@@ -418,7 +427,9 @@ describe("<SessionManagerTab />", () => {
                 devices: [alicesDevice, alicesMobileDevice],
             });
             mockClient.getStoredDevice.mockImplementation(() => new DeviceInfo(alicesDevice.device_id));
-            mockClient.checkDeviceTrust.mockReturnValue(new DeviceTrustLevel(true, true, false, false));
+            mockCrypto.getDeviceVerificationStatus.mockResolvedValue(
+                new DeviceVerificationStatus(true, true, false, false),
+            );
 
             const { getByTestId } = render(getComponent());
 
@@ -520,11 +531,11 @@ describe("<SessionManagerTab />", () => {
                 devices: [alicesDevice, alicesMobileDevice],
             });
             mockClient.getStoredDevice.mockImplementation((_userId, deviceId) => new DeviceInfo(deviceId));
-            mockClient.checkDeviceTrust.mockImplementation((_userId, deviceId) => {
+            mockCrypto.getDeviceVerificationStatus.mockImplementation(async (_userId, deviceId) => {
                 if (deviceId === alicesDevice.device_id) {
-                    return new DeviceTrustLevel(true, true, false, false);
+                    return new DeviceVerificationStatus(true, true, false, false);
                 }
-                return new DeviceTrustLevel(false, false, false, false);
+                return new DeviceVerificationStatus(false, false, false, false);
             });
 
             const { getByTestId } = render(getComponent());
@@ -547,12 +558,13 @@ describe("<SessionManagerTab />", () => {
                 devices: [alicesDevice, alicesMobileDevice],
             });
             mockClient.getStoredDevice.mockImplementation((_userId, deviceId) => new DeviceInfo(deviceId));
-            mockClient.checkDeviceTrust.mockImplementation((_userId, deviceId) => {
+            mockCrypto.getDeviceVerificationStatus.mockImplementation(async (_userId, deviceId) => {
                 // current session verified = able to verify other sessions
                 if (deviceId === alicesDevice.device_id) {
-                    return new DeviceTrustLevel(true, true, false, false);
+                    return new DeviceVerificationStatus(true, true, false, false);
                 }
                 // but alicesMobileDevice doesn't support encryption
+                // XXX this is not what happens if a device doesn't support encryption.
                 throw new Error("encryption not supported");
             });
 
@@ -581,11 +593,11 @@ describe("<SessionManagerTab />", () => {
                 devices: [alicesDevice, alicesMobileDevice],
             });
             mockClient.getStoredDevice.mockImplementation((_userId, deviceId) => new DeviceInfo(deviceId));
-            mockClient.checkDeviceTrust.mockImplementation((_userId, deviceId) => {
+            mockCrypto.getDeviceVerificationStatus.mockImplementation(async (_userId, deviceId) => {
                 if (deviceId === alicesDevice.device_id) {
-                    return new DeviceTrustLevel(true, true, false, false);
+                    return new DeviceVerificationStatus(true, true, false, false);
                 }
-                return new DeviceTrustLevel(false, false, false, false);
+                return new DeviceVerificationStatus(false, false, false, false);
             });
 
             const { getByTestId } = render(getComponent());
