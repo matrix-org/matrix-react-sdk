@@ -2162,7 +2162,6 @@
     "Use a system font": "ໃຊ້ຕົວອັກສອນຂອງລະບົບ",
     "Match system theme": "ລະບົບຈັບຄູ່ຫົວຂໍ້",
     "Mirror local video feed": "ເບິ່ງຟີດວິດີໂອທ້ອງຖິ່ນ",
-    "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "ເລີ່ມຕົ້ນຂໍ້ຄວາມດ້ວຍ <code>/plain</code> ສົ່ງໂດຍບໍ່ມີການ markdown ແລະ <code>/md</code> ເພື່ອສົ່ງດ້ວຍ.",
     "Enable Markdown": "ເປີດໃຊ້ Markdown",
     "Automatically replace plain text Emoji": "ປ່ຽນແທນ Emoji ຂໍ້ຄວາມທຳມະດາໂດຍອັດຕະໂນມັດ",
     "Surround selected text when typing special characters": "ອ້ອມຮອບຂໍ້ຄວາມທີ່ເລືອກໃນເວລາພິມຕົວອັກສອນພິເສດ",

@@ -3148,7 +3148,6 @@
     "Disinvite from space": "Zrušiť pozvánku z priestoru",
     "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.": "<b>Tip:</b> Použite položku “%(replyInThread)s”, keď prejdete ponad správu.",
     "No live locations": "Žiadne polohy v reálnom čase",
-    "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Začnite správy s <code>/plain</code> pre odoslanie bez formátovania Markdown a <code>/md</code> pre odoslanie s formátovaním.",
     "Enable Markdown": "Povoliť funkciu Markdown",
     "Close sidebar": "Zatvoriť bočný panel",
     "View List": "Zobraziť zoznam",

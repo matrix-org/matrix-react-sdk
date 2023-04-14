@@ -3155,7 +3155,6 @@
     "Audio devices": "Hang eszközök",
     "sends hearts": "szívecskék küldése",
     "Sends the given message with hearts": "Az üzenet elküldése szívecskékkel",
-    "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Üzenet kezdése <code>/plain</code>-nel markdown formázás nélkül és <code>/md</code>-vel a markdown formázással való küldéshez.",
     "Enable Markdown": "Markdown engedélyezése",
     "Failed to join": "Csatlakozás sikertelen",
     "The person who invited you has already left, or their server is offline.": "Aki meghívott a szobába már távozott, vagy a szervere elérhetetlen.",

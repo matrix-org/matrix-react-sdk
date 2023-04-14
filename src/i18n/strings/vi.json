@@ -2898,7 +2898,6 @@
     "Sorry, your homeserver is too old to participate here.": "Xin lỗi, homeserver của bạn quá cũ để tham gia vào đây.",
     "Enable hardware acceleration (restart %(appName)s to take effect)": "Bật tăng tốc phần cứng (khởi động lại %(appName)s để có hiệu lực)",
     "Enable hardware acceleration": "Bật tăng tốc phần cứng",
-    "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Bắt đầu các tin nhắn với <code>/plain</code> để gửi không đánh dấu và <code>/md</code> để gửi có đánh dấu.",
     "Enable Markdown": "Bật đánh dấu",
     "There was an error joining.": "Đã xảy ra lỗi khi tham gia.",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s đang thử nghiệm trên trình duyệt web di động. Để có trải nghiệm tốt hơn và các tính năng mới nhất, hãy sử dụng ứng dụng gốc miễn phí của chúng tôi.",

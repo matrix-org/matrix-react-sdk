@@ -2110,7 +2110,6 @@
     "Space options": "Erdvės parinktys",
     "Recommended for public spaces.": "Rekomenduojama viešosiose erdvėse.",
     "Allow people to preview your space before they join.": "Leisti žmonėms peržiūrėti jūsų erdvę prieš prisijungiant.",
-    "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Pradėkite žinutes su <code>/plain</code>, kad siųstumėte be markdown, ir <code>/md</code>, kad siųstumėte su markdown.",
     "Enable Markdown": "Įjungti Markdown",
     "Surround selected text when typing special characters": "Apvesti pasirinktą tekstą rašant specialiuosius simbolius",
     "Use Command + F to search timeline": "Naudokite Command + F ieškojimui laiko juostoje",

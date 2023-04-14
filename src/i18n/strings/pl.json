@@ -2206,7 +2206,6 @@
     "Show all rooms in Home": "Pokaż wszystkie pokoje na ekranie głównym",
     "Show chat effects (animations when receiving e.g. confetti)": "Pokaż efekty czatu (animacje po odebraniu np. confetti)",
     "Show shortcut to welcome checklist above the room list": "Pokaż skrót do listy powitalnej nad listą pokojów",
-    "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Użyj <code>/plain</code> na początku wiadomości aby wysłać ją bez Markdown lub <code>/md</code>, aby wysłać ją z jego użyciem.",
     "Enable Markdown": "Włącz Markdown",
     "Surround selected text when typing special characters": "Otocz zaznaczony tekst podczas wpisywania specjalnych znakóœ",
     "Use Ctrl + F to search timeline": "Użyj Ctrl + F aby przeszukać oś czasu",

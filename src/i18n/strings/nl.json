@@ -3178,7 +3178,6 @@
     "Unmute microphone": "Microfoon inschakelen",
     "Mute microphone": "Microfoon dempen",
     "Audio devices": "Audio-apparaten",
-    "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Begin berichten met <code>/plain</code> om ze zonder markdown te verzenden en met <code>/md</code> om ze met markdown te verzenden.",
     "Enable Markdown": "Markdown inschakelen",
     "An error occurred while stopping your live location": "Er is een fout opgetreden bij het stoppen van je live locatie",
     "Enable live location sharing": "Live locatie delen inschakelen",

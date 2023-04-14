@@ -3044,7 +3044,6 @@
     "%(value)sm": "%(value)smin",
     "%(value)sh": "%(value)sh",
     "%(value)sd": "%(value)sd",
-    "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Beginne Nachrichten mit <code>/plain</code>, um Nachrichten ohne Markdown zu schreiben und mit <code>/md</code>, um sie mit Markdown zu schreiben.",
     "Enable Markdown": "Markdown aktivieren",
     "Failed to join": "Betreten fehlgeschlagen",
     "The person who invited you has already left, or their server is offline.": "Die dich einladende Person hat den Raum verlassen oder ihr Heim-Server ist außer Betrieb.",

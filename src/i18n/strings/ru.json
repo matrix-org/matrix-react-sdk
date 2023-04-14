@@ -3036,7 +3036,6 @@
     "%(value)sm": "%(value)sм",
     "%(value)sh": "%(value)sч",
     "%(value)sd": "%(value)sд",
-    "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Начните сообщение с <code>/plain</code>, чтобы отправить его без markdown, и с <code>/md</code>, чтобы отправить с ним.",
     "Enable Markdown": "Использовать Markdown",
     "The person who invited you has already left.": "Человек, который вас пригласил, уже ушёл.",
     "There was an error joining.": "Ошибка при вступлении.",

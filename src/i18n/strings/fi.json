@@ -2832,7 +2832,6 @@
     "%(count)s people joined|other": "%(count)s ihmistä liittyi",
     "sends hearts": "lähettää sydämiä",
     "Sends the given message with hearts": "Lähettää viestin sydämien kera",
-    "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Lähetä ilman markdownia laittamalla viestin alkuun <code>/plain</code> ja lähetä markdownilla laittamalla viestin alkuun <code>/md</code>.",
     "Enable Markdown": "Ota Markdown käyttöön",
     "Insert a trailing colon after user mentions at the start of a message": "Lisää kaksoispiste käyttäjän maininnan perään viestin alussa",
     "Developer": "Kehittäjä",

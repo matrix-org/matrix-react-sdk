@@ -3148,7 +3148,6 @@
     "Disinvite from space": "從聊天空間取消邀請",
     "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.": "<b>秘訣：</b>在滑鼠游標停於訊息上時使用「%(replyInThread)s」。",
     "No live locations": "無即時位置",
-    "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "以 <code>/plain</code> 當訊息的開頭時不以 markdown 傳送，或以 <code>/md</code> 開頭來以 markdown 格式傳送。",
     "Enable Markdown": "啟用 Markdown",
     "Close sidebar": "關閉側邊欄",
     "View List": "檢視清單",

@@ -3461,7 +3461,6 @@
     "Turn off to disable notifications on all your devices and sessions": "オフにすると、全ての端末とセッションで通知が無効になります",
     "Enable notifications for this device": "この端末で通知を有効にする",
     "Deactivating your account is a permanent action — be careful!": "アカウントを無効化すると取り消せません。ご注意ください！",
-    "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "<code>/plain</code>を先頭に置くとマークダウンを無効にしてメッセージを送信し、<code>/md</code>を先頭に置くとマークダウンを有効にしてメッセージを送信。",
     "Verify your email to continue": "続行するには電子メールを認証してください",
     "Did not receive it?": "届きませんでしたか？",
     "Verification link email resent!": "認証リンクの電子メールを再送信しました！",
