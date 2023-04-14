@@ -3763,5 +3763,7 @@
     "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.": "Impossibile trovare la vecchia versione della stanza (ID stanza: %(roomId)s) e non ci è stato fornito 'via_servers' per cercarla.",
     "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "Impossibile trovare la vecchia versione della stanza (ID stanza: %(roomId)s) e non ci è stato fornito 'via_servers' per cercarla. È possibile che indovinare il server dall'ID della stanza possa funzionare. Se vuoi provare, clicca questo link:",
     "Formatting": "Formattazione",
-    "Start messages with <code>/plain</code> to send without markdown.": "Inizia i messaggi con <code>/plain</code> per inviarli senza markdown."
+    "Start messages with <code>/plain</code> to send without markdown.": "Inizia i messaggi con <code>/plain</code> per inviarli senza markdown.",
+    "No identity access token found": "Nessun token di accesso d'identità trovato",
+    "Identity server not set": "Server d'identità non impostato"
 }
