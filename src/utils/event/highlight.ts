@@ -17,19 +17,35 @@ limitations under the License.
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { IAnnotatedPushRule, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
+import { TimelineRenderingType } from "../../contexts/RoomContext";
+
 /**
  * Determine whether an event should be highlighted
  * For edited events, if a previous version of the event was highlighted
  * the event should remain highlighted as the user may have been notified
- * @returns boolean
+ * @returns {boolean}
  */
-export const shouldHighlightEvent = (event: MatrixEvent, client: MatrixClient): boolean => {
-    return getEventHighlightInfo(event, client).isHighlighted;
+export const shouldHighlightEvent = (event: MatrixEvent, client: MatrixClient, timelineRenderingType: TimelineRenderingType): boolean => {
+    return getEventHighlightInfo(event, client, timelineRenderingType).isHighlighted;
 }
 
-export const getEventHighlightInfo = (event: MatrixEvent, client: MatrixClient): {
+/**
+ * Determine whether an event should be highlighted and why
+ * For edited events, if a previous version of the event was highlighted
+ * the event should remain highlighted as the user may have been notified
+ * @returns {boolean} isHighlighted
+ * @returns {boolean} isBecausePreviousEvent - true when a pervious version of the event triggered a highlight
+ *                      but the current replaced event does not
+ * @returns {IAnnotatedPushRule} rule - the rule that triggered the highlight
+
+ */
+export const getEventHighlightInfo = (event: MatrixEvent, client: MatrixClient, timelineRenderingType: TimelineRenderingType): {
     isHighlighted: boolean; isBecausePreviousEvent?: boolean; rule?: IAnnotatedPushRule;
 } => {
+
+    if (timelineRenderingType === TimelineRenderingType.Notification) return { isHighlighted: false };
+    if (timelineRenderingType === TimelineRenderingType.ThreadsList) return { isHighlighted: false };
+
     // don't show self-highlights from another of our clients
     if (event.getSender() === client.getSafeUserId()) {
         return { isHighlighted: false };

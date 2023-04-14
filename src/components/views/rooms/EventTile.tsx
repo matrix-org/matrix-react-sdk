@@ -664,10 +664,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
      */
     private shouldHighlight(): boolean {
         if (this.props.forExport) return false;
-        if (this.context.timelineRenderingType === TimelineRenderingType.Notification) return false;
-        if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList) return false;
 
-        return shouldHighlightEvent(this.props.mxEvent, MatrixClientPeg.get());
+        return shouldHighlightEvent(this.props.mxEvent, MatrixClientPeg.get(), this.context.timelineRenderingType);
     }
 
     private onSenderProfileClick = (): void => {
