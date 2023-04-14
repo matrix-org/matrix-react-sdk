@@ -28,16 +28,16 @@ export class ReactionEventPreview implements IPreview {
         const roomId = event.getRoomId();
         if (!roomId) return null; // not a room event
 
-        const cli = MatrixClientPeg.get();
-        const room = cli?.getRoom(roomId);
-        const relatedEvent = room?.findEventById(event.relationEventId);
-        if (!relatedEvent) return null;
-
         const relation = event.getRelation();
         if (!relation) return null; // invalid reaction (probably redacted)
 
         const reaction = relation.key;
         if (!reaction) return null; // invalid reaction (unknown format)
+
+        const cli = MatrixClientPeg.get();
+        const room = cli?.getRoom(roomId);
+        const relatedEvent = relation.event_id ? room?.findEventById(relation.event_id) : null;
+        if (!relatedEvent) return null;
 
         const message = MessagePreviewStore.instance.generatePreviewForEvent(relatedEvent);
         if (isSelf(event)) {
