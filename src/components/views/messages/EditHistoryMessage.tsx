@@ -31,6 +31,7 @@ import AccessibleButton from "../elements/AccessibleButton";
 import ConfirmAndWaitRedactDialog from "../dialogs/ConfirmAndWaitRedactDialog";
 import ViewSource from "../../structures/ViewSource";
 import SettingsStore from "../../../settings/SettingsStore";
+import { MsgType } from "../../../../../matrix-js-sdk";
 
 function getReplacedContent(event: MatrixEvent): IContent {
     const originalContent = event.getOriginalContent();
@@ -166,7 +167,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
                     returnString: false,
                 });
             }
-            if (mxEvent.getContent().msgtype === "m.emote") {
+            if (mxEvent.getContent().msgtype === MsgType.Emote) {
                 const name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
                 contentContainer = (
                     <div className="mx_EventTile_content" ref={this.content}>

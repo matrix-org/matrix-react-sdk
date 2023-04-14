@@ -23,6 +23,7 @@ import * as Avatar from "../../../Avatar";
 import EventTile from "../rooms/EventTile";
 import { Layout } from "../../../settings/enums/Layout";
 import Spinner from "./Spinner";
+import { MsgType } from "../../../../../matrix-js-sdk";
 
 interface IProps {
     /**
@@ -78,12 +79,12 @@ export default class EventTilePreview extends React.Component<IProps, IState> {
             sender: this.props.userId,
             content: {
                 "m.new_content": {
-                    msgtype: "m.text",
+                    msgtype: MsgType.Text,
                     body: message,
                     displayname: this.props.displayName,
                     avatar_url: this.props.avatarUrl,
                 },
-                "msgtype": "m.text",
+                "msgtype": MsgType.Text,
                 "body": message,
                 "displayname": this.props.displayName,
                 "avatar_url": this.props.avatarUrl,

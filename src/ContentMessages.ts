@@ -526,7 +526,7 @@ export default class ContentMessages {
                     const imageInfo = await infoForImageFile(matrixClient, roomId, file);
                     Object.assign(content.info, imageInfo);
                 } catch (e) {
-                    // Failed to thumbnail, fall back to uploading an m.file
+                    // Failed to thumbnail, fall back to uploading a MsgType.File
                     logger.error(e);
                     content.msgtype = MsgType.File;
                 }
@@ -538,7 +538,7 @@ export default class ContentMessages {
                     const videoInfo = await infoForVideoFile(matrixClient, roomId, file);
                     Object.assign(content.info, videoInfo);
                 } catch (e) {
-                    // Failed to thumbnail, fall back to uploading an m.file
+                    // Failed to thumbnail, fall back to uploading a MsgType.File
                     logger.error(e);
                     content.msgtype = MsgType.File;
                 }
