@@ -290,6 +290,16 @@ describe("WysiwygComposer", () => {
             });
         });
 
+        it("typing with the autocomplete open still works as expected", async () => {
+            await insertMentionInput();
+
+            // add some more text, then check the autocomplete is open AND the text is in the composer
+            await userEvent.keyboard("extra");
+
+            expect(screen.queryByRole("presentation")).toBeInTheDocument();
+            expect(screen.getByRole("textbox")).toHaveTextContent("@abcextra");
+        });
+
         it("clicking on a mention in the composer dispatches the correct action", async () => {
             await insertMentionInput();
 
