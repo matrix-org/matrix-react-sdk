@@ -123,10 +123,10 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
             let errorType;
             if (errorMessage === LocationShareError.MapStyleUrlNotConfigured)
                 errorType = LocationShareError.MapStyleUrlNotConfigured;
-            else if (errorMessage.includes('Failed to initialize WebGL'))
+            else if (errorMessage.includes("Failed to initialize WebGL"))
                 errorType = LocationShareError.WebGLNotEnabled;
             else errorType = LocationShareError.Default;
-            this.setState({error: errorType});
+            this.setState({ error: errorType });
         }
     }
 
