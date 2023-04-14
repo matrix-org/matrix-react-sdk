@@ -105,8 +105,11 @@ describe("Sliding Sync", () => {
         cy.createRoom({ name: "Apple" }).then(() => cy.findByRole("treeitem", { name: "Apple" }));
         cy.createRoom({ name: "Pineapple" }).then(() => cy.findByRole("treeitem", { name: "Pineapple" }));
         cy.createRoom({ name: "Orange" }).then(() => cy.findByRole("treeitem", { name: "Orange" }));
-        // check the rooms are in the right order
-        cy.get(".mx_RoomTile").should("have.length", 4); // due to the Test Room in beforeEach
+
+        cy.get(".mx_RoomSublist_tiles").within(() => {
+            cy.findAllByRole("treeitem").should("have.length", 4); // due to the Test Room in beforeEach
+        });
+
         checkOrder(["Orange", "Pineapple", "Apple", "Test Room"]);
 
         cy.findByRole("group", { name: "Rooms" }).within(() => {
@@ -116,7 +119,11 @@ describe("Sliding Sync", () => {
         // force click as the radio button's size is zero
         cy.findByRole("menuitemradio", { name: "A-Z" }).click({ force: true });
 
-        cy.get(".mx_StyledRadioButton_checked").findByText("A-Z").should("exist");
+        // Assert that the radio button is checked
+        cy.get(".mx_StyledRadioButton_checked").within(() => {
+            cy.findByText("A-Z").should("exist");
+        });
+
         checkOrder(["Apple", "Orange", "Pineapple", "Test Room"]);
     });
 
