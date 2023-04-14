@@ -18,12 +18,12 @@ import React from "react";
 import classnames from "classnames";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
 
 import * as Avatar from "../../../Avatar";
 import EventTile from "../rooms/EventTile";
 import { Layout } from "../../../settings/enums/Layout";
 import Spinner from "./Spinner";
-import { MsgType } from "../../../../../matrix-js-sdk";
 
 interface IProps {
     /**
