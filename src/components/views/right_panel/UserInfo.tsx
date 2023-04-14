@@ -242,15 +242,17 @@ function DevicesSection({
 
     const [isExpanded, setExpanded] = useState(false);
 
-    if (loading) {
+    const deviceTrusts = useAsyncMemo(() => {
+        const cryptoApi = cli.getCrypto();
+        if (!cryptoApi) return null;
+        return Promise.all(devices.map((d) => cryptoApi.getDeviceVerificationStatus(userId, d.deviceId)));
+    }, [cli, userId, devices]);
+
+    if (loading || deviceTrusts === undefined) {
         // still loading
         return <Spinner />;
     }
-    if (devices === null) {
-        return <p>{_t("Unable to load session list")}</p>;
-    }
     const isMe = userId === cli.getUserId();
-    const deviceTrusts = devices.map((d) => cli.checkDeviceTrust(userId, d.deviceId));
 
     let expandSectionDevices: IDevice[] = [];
     const unverifiedDevices: IDevice[] = [];
@@ -268,7 +270,7 @@ function DevicesSection({
             // cross-signing so that other users can then safely trust you.
             // For other people's devices, the more general verified check that
             // includes locally verified devices can be used.
-            const isVerified = isMe ? deviceTrust.isCrossSigningVerified() : deviceTrust.isVerified();
+            const isVerified = deviceTrust && (isMe ? deviceTrust.crossSigningVerified : deviceTrust.isVerified());
 
             if (isVerified) {
                 expandSectionDevices.push(device);
