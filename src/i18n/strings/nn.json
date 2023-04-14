@@ -879,7 +879,6 @@
     "Report a bug": "Send inn feilrapport",
     "Feedback": "Tilbakemeldingar",
     "All settings": "Alle innstillingar",
-    "Use default": "Bruk standard",
     "Delete Backup": "Slett sikkerheitskopi",
     "Restore from Backup": "Gjenopprett frå sikkerheitskopi",
     "Encryption": "Kryptografi",
@@ -1037,5 +1036,13 @@
     "No other application is using the webcam": "Ingen andre program brukar nettkameraet",
     "Permission is granted to use the webcam": "Tilgang til nettkamera er aktivert",
     "A microphone and webcam are plugged in and set up correctly": "Du har kopla til mikrofon og nettkamera, og at desse fungerer som dei skal",
-    "Call failed because microphone could not be accessed. Check that a microphone is plugged in and set up correctly.": "Samtalen feila fordi mikrofonen ikkje kunne aktiverast. Sjekk att ein mikrofon er tilkopla og at den fungerer."
+    "Call failed because microphone could not be accessed. Check that a microphone is plugged in and set up correctly.": "Samtalen feila fordi mikrofonen ikkje kunne aktiverast. Sjekk att ein mikrofon er tilkopla og at den fungerer.",
+    "Try again": "Prøv på nytt",
+    "%(minutes)sm %(seconds)ss": "%(minutes)sm %(seconds)ss",
+    "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)st %(minutes)sm %(seconds)ss",
+    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sd %(hours)st %(minutes)sm %(seconds)ss",
+    "%(value)sd": "%(value)sd",
+    "%(seconds)ss left": "%(seconds)ss att",
+    "%(minutes)sm %(seconds)ss left": "%(minutes)sm %(seconds)ss att",
+    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)st %(minutes)sm %(seconds)ss att"
 }
