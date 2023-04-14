@@ -17,6 +17,7 @@ limitations under the License.
 import React, { createRef } from "react";
 import { EventStatus, IContent, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import classNames from "classnames";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
 
 import * as HtmlUtils from "../../../HtmlUtils";
 import { editBodyDiffToHtml } from "../../../utils/MessageDiffUtils";
@@ -31,7 +32,6 @@ import AccessibleButton from "../elements/AccessibleButton";
 import ConfirmAndWaitRedactDialog from "../dialogs/ConfirmAndWaitRedactDialog";
 import ViewSource from "../../structures/ViewSource";
 import SettingsStore from "../../../settings/SettingsStore";
-import { MsgType } from "../../../../../matrix-js-sdk";
 
 function getReplacedContent(event: MatrixEvent): IContent {
     const originalContent = event.getOriginalContent();
