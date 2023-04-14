@@ -3763,5 +3763,8 @@
     "Formatting": "Formatierung",
     "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.": "Konnte die alte Version dieses Raumes nicht finden (Raum-ID: %(roomId)s) und uns wurde „via_servers“ nicht mitgeteilt, um danach zu suchen.",
     "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "Konnte die alte Version dieses Raumes nicht finden (Raum-ID: %(roomId)s) und uns wurde „via_servers“ nicht mitgeteilt, um danach zu suchen. Es ist möglich, dass das Erraten des Servers basierend auf der Raum-ID funktioniert. Wenn du dies probieren möchtest, klicke auf folgenden Link:",
-    "Start messages with <code>/plain</code> to send without markdown.": "Beginne Nachrichten mit <code>/plain</code>, um sie ohne Markdown zu senden."
+    "Start messages with <code>/plain</code> to send without markdown.": "Beginne Nachrichten mit <code>/plain</code>, um sie ohne Markdown zu senden.",
+    "The add / bind with MSISDN flow is misconfigured": "Das MSISDN-Verknüpfungsverfahren ist falsch konfiguriert",
+    "No identity access token found": "Kein Identitäts-Zugangs-Token gefunden",
+    "Identity server not set": "Kein Identitäts-Server festgelegt"
 }
