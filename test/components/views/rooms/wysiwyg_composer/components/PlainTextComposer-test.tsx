@@ -15,20 +15,14 @@ limitations under the License.
 */
 
 import React from "react";
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { PlainTextComposer } from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/PlainTextComposer";
 import * as mockUseSettingsHook from "../../../../../../src/hooks/useSettings";
 import * as mockKeyboard from "../../../../../../src/Keyboard";
 import { createMocks } from "../utils";
-import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
 import RoomContext from "../../../../../../src/contexts/RoomContext";
-import defaultDispatcher from "../../../../../../src/dispatcher/dispatcher";
-import Autocompleter, { ICompletion } from "../../../../../../src/autocomplete/Autocompleter";
-import AutocompleteProvider from "../../../../../../src/autocomplete/AutocompleteProvider";
-import * as Permalinks from "../../../../../../src/utils/permalinks/Permalinks";
-import { PermalinkParts } from "../../../../../../src/utils/permalinks/PermalinkConstructor";
 
 describe("PlainTextComposer", () => {
     const customRender = (
