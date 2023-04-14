@@ -301,7 +301,7 @@ describe("WysiwygComposer", () => {
         it("pressing escape closes the autocomplete", async () => {
             await insertMentionInput();
 
-            // press enter
+            // press escape
             await userEvent.keyboard("{Escape}");
 
             // check that it closes the autocomplete
