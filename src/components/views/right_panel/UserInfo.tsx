@@ -162,14 +162,20 @@ function useHasCrossSigningKeys(
 export function DeviceItem({ userId, device }: { userId: string; device: IDevice }): JSX.Element {
     const cli = useContext(MatrixClientContext);
     const isMe = userId === cli.getUserId();
-    const deviceTrust = cli.checkDeviceTrust(userId, device.deviceId);
     const userTrust = cli.checkUserTrust(userId);
-    // For your own devices, we use the stricter check of cross-signing
-    // verification to encourage everyone to trust their own devices via
-    // cross-signing so that other users can then safely trust you.
-    // For other people's devices, the more general verified check that
-    // includes locally verified devices can be used.
-    const isVerified = isMe ? deviceTrust.isCrossSigningVerified() : deviceTrust.isVerified();
+
+    /** is the device verified? */
+    const isVerified = useAsyncMemo(async () => {
+        const deviceTrust = await cli.getCrypto()?.getDeviceVerificationStatus(userId, device.deviceId);
+        if (!deviceTrust) return false;
+
+        // For your own devices, we use the stricter check of cross-signing
+        // verification to encourage everyone to trust their own devices via
+        // cross-signing so that other users can then safely trust you.
+        // For other people's devices, the more general verified check that
+        // includes locally verified devices can be used.
+        return isMe ? deviceTrust.crossSigningVerified : deviceTrust.isVerified();
+    }, [cli, userId, device]);
 
     const classes = classNames("mx_UserInfo_device", {
         mx_UserInfo_device_verified: isVerified,
@@ -200,7 +206,10 @@ export function DeviceItem({ userId, device }: { userId: string; device: IDevice
     let trustedLabel: string | undefined;
     if (userTrust.isVerified()) trustedLabel = isVerified ? _t("Trusted") : _t("Not trusted");
 
-    if (isVerified) {
+    if (isVerified === undefined) {
+        // we're still deciding if the device is verified
+        return <div className={classes} title={device.deviceId} />;
+    } else if (isVerified) {
         return (
             <div className={classes} title={device.deviceId}>
                 <div className={iconClasses} />
