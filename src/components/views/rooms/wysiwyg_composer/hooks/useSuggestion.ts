@@ -14,104 +14,119 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Attributes, MappedSuggestion /* SuggestionChar */ } from "@matrix-org/matrix-wysiwyg";
+import { SuggestionType } from "@matrix-org/matrix-wysiwyg";
+import { Attributes, MappedSuggestion, SuggestionChar } from "@matrix-org/matrix-wysiwyg";
 import { SyntheticEvent, useState } from "react";
 
-// WIP suggestion stuff, this needs tidying to be a single piece of state
-// try to make this like the rust model for consistency, in Rust:
-/**
- * pub struct SuggestionPattern {
- * pub key: PatternKey, // translate to keyChar so we're not using an enum
- * pub text: String,
- * pub start: usize, // use startOffset as we'll track the node
- * pub end: usize, // use endOffset as we'll track the node
- * }
- */
-// but we also need to know which node we're looking at
-// TODO shift over to using this type and the refactoring it will require, but get tests written first to
-// give a safety net for the refactoring
+// This type is a close approximation of what we use in the Rust model for the rich version of the
+// editor, we use this to try and make this simple model as similar as possible to allow reuse of
+// the autocomplete component
+type PlainTextSuggestionPattern = {
+    keyChar: SuggestionChar;
+    type: SuggestionType;
+    text: string;
+    node: Node;
+    startOffset: number;
+    endOffset: number;
+} | null;
 
-// type PlainTextSuggestionPattern = {
-//     keyChar: SuggestionChar;
-//     text: string;
-//     node: Node;
-//     startOffset: number;
-//     endOffset: number;
-// } | null;
-const emptySuggestion: MappedSuggestion = { keyChar: "", text: "", type: "unknown" };
-type SuggestionCandidate = { node: Node | null; startOffset: number; endOffset: number };
-const emptySuggestionCandidate: SuggestionCandidate = { node: null, startOffset: NaN, endOffset: NaN };
+const mapSuggestion = (suggestion: PlainTextSuggestionPattern | null): MappedSuggestion | null => {
+    if (suggestion === null) {
+        return null;
+    } else {
+        const { node, startOffset, endOffset, ...mappedSuggestion } = suggestion;
+        return mappedSuggestion;
+    }
+};
 
 export function useSuggestion(editorRef: React.RefObject<HTMLDivElement>): {
-    suggestion: MappedSuggestion;
     handleMention: (link: string, text: string, attributes: Attributes) => void;
     handleCommand: (text: string) => void;
     onSelect: (event: SyntheticEvent<HTMLDivElement>) => void;
+    suggestion: MappedSuggestion | null;
 } {
-    // WIP - may become a custom hook in keeping with the rest of the design
-    const [suggestion, setSuggestion] = useState<MappedSuggestion>(emptySuggestion);
-    const [suggestionNodeInfo, setSuggestionNodeInfo] = useState<SuggestionCandidate>(emptySuggestionCandidate);
-    const clearSuggestions = (): void => {
-        setSuggestion(emptySuggestion);
-        setSuggestionNodeInfo(emptySuggestionCandidate);
-    };
+    const [suggestion, setSuggestion] = useState<PlainTextSuggestionPattern | null>(null);
+
     // TODO handle the mentions (@user, #room etc)
     const handleMention = (): void => {};
 
     const handleCommand = (replacementText: string): void => {
-        // if this gets triggered, then we have a command on the page, so what we want to do is
-        // manually amend the html text content with the stored state
-        const { node /* startOffset, endOffset */ } = suggestionNodeInfo;
-        if (editorRef.current === null || node === null || node.textContent === null) return;
+        // if we do not have any of the values we need to do the work, do nothing
+        if (
+            suggestion === null ||
+            editorRef.current === null ||
+            suggestion.node === null ||
+            suggestion.node.textContent === null
+        ) {
+            return;
+        }
 
-        // for a command we know we're starting at the beginning, so it's a bit easier
-        const newContent = `${replacementText} `; // note the trailing space
+        const { node } = suggestion;
+
+        // for a command we know we start at the beginning of the text node, so build the replacement
+        // string (note trailing space) and manually adjust the node's textcontent
+        const newContent = `${replacementText} `;
         node.textContent = newContent;
 
-        // then set the cursor to the end of the node, fire an inputEvent (updates
-        // the hook state), clear the suggestions from state
+        // then set the cursor to the end of the node, fire an inputEvent to update the hook state
+        // and then clear the suggestion from state
         document.getSelection()?.setBaseAndExtent(node, newContent.length, node, newContent.length);
-        const event = new Event("inputEvent");
-        editorRef.current.dispatchEvent(event);
-        clearSuggestions();
+        editorRef.current.dispatchEvent(new Event("inputEvent"));
+        setSuggestion(null);
     };
-    // do for slash commands first, should probably use the event somehow
-    const onSelect = (): void => {
-        // whenever there's a change in selection, we're going to have to do some magic
-        const s = document.getSelection();
 
-        // if we have a cursor inside a text node, then we're potentially interested in the text content
-        if (s && s.isCollapsed && s.anchorNode?.nodeName === "#text" && editorRef.current) {
-            // first check is that the text node is the first text node of the editor as we can also have
-            // <p> tags in the markup
+    // We create a `seletionchange` handler here because we need to know when the user has moved the cursor,
+    // we can not depend on input events only
+    const onSelect = (): void => {
+        if (editorRef.current === null) {
+            return;
+        }
+        const selection = document.getSelection();
+
+        // only carry out the checking if we have cursor inside a text node
+        if (selection && selection.isCollapsed && selection.anchorNode?.nodeName === "#text") {
+            // here we have established that anchorNode === focusNode, so rename to
+            const { anchorNode: currentNode } = selection;
+
+            // first check is that the text node is the first text node of the editor, as adding paragraphs can result
+            // in nested <p> tags inside the editor <div>
             const firstTextNode = document.createNodeIterator(editorRef.current, NodeFilter.SHOW_TEXT).nextNode();
-            const isFirstTextNode = s.anchorNode === firstTextNode;
-            const textContent = s.anchorNode.textContent;
 
             // if we're not in the first text node or we have no text content, return
-            if (!isFirstTextNode || textContent === null) {
+            if (currentNode !== firstTextNode || currentNode.textContent === null) {
                 return;
             }
 
-            // it's a command if: it is the first textnode, it starts with /, not //, then has letters all the way up to
-            // the end of the textcontent - nb think this last assumption may give us some behavioural inconsistency
-            // between the rust model and this, but it's a decent starting point
-            const commandRegex = /^\/{1}(\w*)$/;
-            const commandMatches = textContent.match(commandRegex);
+            // it's a command if:
+            // it is the first textnode AND
+            // it starts with /, not // AND
+            // then has letters all the way up to the end of the textcontent
+            const commandRegex = /^\/(\w*)$/;
+            const commandMatches = currentNode.textContent.match(commandRegex);
 
-            // if we don't have a command, clear the suggestion state and return
+            // if we don't have any matches, return, clearing the suggesiton state if it is non-null
             if (commandMatches === null) {
-                if (suggestionNodeInfo.node !== null) {
-                    clearSuggestions();
+                if (suggestion !== null) {
+                    setSuggestion(null);
                 }
                 return;
+            } else {
+                setSuggestion({
+                    keyChar: "/",
+                    type: "command",
+                    text: commandMatches[1],
+                    node: selection.anchorNode,
+                    startOffset: 0,
+                    endOffset: currentNode.textContent.length,
+                });
             }
-
-            // but if we do have some matches, use that to populate the suggestion state
-            setSuggestionNodeInfo({ node: s.anchorNode, startOffset: 0, endOffset: textContent.length });
-            setSuggestion({ keyChar: "/", type: "command", text: commandMatches[1] });
         }
     };
 
-    return { suggestion, handleCommand, handleMention, onSelect };
+    return {
+        suggestion: mapSuggestion(suggestion),
+        handleCommand,
+        handleMention,
+        onSelect,
+    };
 }
