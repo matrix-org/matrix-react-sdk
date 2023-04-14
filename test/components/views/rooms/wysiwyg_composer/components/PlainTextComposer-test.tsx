@@ -284,7 +284,7 @@ describe("PlainTextComposer", () => {
 
         render(
             <RoomContext.Provider value={defaultRoomContext}>
-                <PlainTextComposer onChange={jest.fn()} onSend={jest.fn()} disabled={false} initialContent={""} />
+                <PlainTextComposer onChange={jest.fn()} onSend={jest.fn()} disabled={false} initialContent="" />
             </RoomContext.Provider>,
         );
 

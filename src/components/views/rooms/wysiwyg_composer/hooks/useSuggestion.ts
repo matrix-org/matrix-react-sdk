@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Attributes, MappedSuggestion, SuggestionChar } from "@matrix-org/matrix-wysiwyg";
+import { Attributes, MappedSuggestion /* SuggestionChar */ } from "@matrix-org/matrix-wysiwyg";
 import { SyntheticEvent, useState } from "react";
 
 // WIP suggestion stuff, this needs tidying to be a single piece of state
@@ -31,13 +31,13 @@ import { SyntheticEvent, useState } from "react";
 // TODO shift over to using this type and the refactoring it will require, but get tests written first to
 // give a safety net for the refactoring
 
-type PlainTextSuggestionPattern = {
-    keyChar: SuggestionChar;
-    text: string;
-    node: Node;
-    startOffset: number;
-    endOffset: number;
-} | null;
+// type PlainTextSuggestionPattern = {
+//     keyChar: SuggestionChar;
+//     text: string;
+//     node: Node;
+//     startOffset: number;
+//     endOffset: number;
+// } | null;
 const emptySuggestion: MappedSuggestion = { keyChar: "", text: "", type: "unknown" };
 type SuggestionCandidate = { node: Node | null; startOffset: number; endOffset: number };
 const emptySuggestionCandidate: SuggestionCandidate = { node: null, startOffset: NaN, endOffset: NaN };
@@ -75,8 +75,8 @@ export function useSuggestion(editorRef: React.RefObject<HTMLDivElement>): {
         editorRef.current.dispatchEvent(event);
         clearSuggestions();
     };
-    // do for slash commands first
-    const onSelect = (e): void => {
+    // do for slash commands first, should probably use the event somehow
+    const onSelect = (): void => {
         // whenever there's a change in selection, we're going to have to do some magic
         const s = document.getSelection();
 
