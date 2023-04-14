@@ -32,6 +32,7 @@ import { Icon as StarIcon } from "../../../../res/img/element-icons/room/message
 import { Icon as ReplyIcon } from "../../../../res/img/element-icons/room/message-bar/reply.svg";
 import { Icon as ExpandMessageIcon } from "../../../../res/img/element-icons/expand-message.svg";
 import { Icon as CollapseMessageIcon } from "../../../../res/img/element-icons/collapse-message.svg";
+import { Icon as NotificationIcon } from "../../../../res/img/element-icons/notifications.svg";
 import type { Relations } from "matrix-js-sdk/src/models/relations";
 import { _t } from "../../../languageHandler";
 import dis, { defaultDispatcher } from "../../../dispatcher/dispatcher";
@@ -58,6 +59,8 @@ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayloa
 import useFavouriteMessages from "../../../hooks/useFavouriteMessages";
 import { GetRelationsForEvent } from "../rooms/EventTile";
 import { VoiceBroadcastInfoEventType } from "../../../voice-broadcast/types";
+import { getEventHighlightInfo } from "../../../utils/event/highlight";
+import TooltipTarget from "../elements/TooltipTarget";
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -576,6 +579,23 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                     key="menu"
                     getRelationsForEvent={this.props.getRelationsForEvent}
                 />,
+            );
+        }
+
+        const highlightInfo = getEventHighlightInfo(this.props.mxEvent, MatrixClientPeg.get(), this.context.timelineRenderingType);
+
+        if (highlightInfo.isHighlighted) {
+            toolbarOpts.splice(
+                0,
+                0,
+                <TooltipTarget
+                    
+                    label={highlightInfo?.rule?.rule_id || 'TODO fallback reason'}
+                >
+                    <div className="mx_MessageActionBar_infoElement">
+                    <NotificationIcon />
+                    </div>
+                </TooltipTarget>,
             );
         }
 

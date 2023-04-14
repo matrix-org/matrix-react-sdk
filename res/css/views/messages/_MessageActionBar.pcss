@@ -24,7 +24,7 @@ limitations under the License.
     --MessageActionBar-star-button-color: #ffa534;
 
     position: absolute;
-    visibility: hidden;
+    /* visibility: hidden; */
     cursor: pointer;
     display: flex;
     height: var(--MessageActionBar-size-box);
@@ -93,8 +93,13 @@ limitations under the License.
         }
     }
 
+    --MessageActionBar-icon-size: 18px;
+    .mx_MessageActionBar_infoElement {
+        cursor: auto;
+    }
+
+    .mx_MessageActionBar_infoElement,
     .mx_MessageActionBar_iconButton {
-        --MessageActionBar-icon-size: 18px;
         width: var(--MessageActionBar-size-button);
         height: var(--MessageActionBar-size-button);
         color: $secondary-content;
@@ -107,7 +112,9 @@ limitations under the License.
             width: var(--MessageActionBar-icon-size);
             flex: 0 0 var(--MessageActionBar-icon-size);
         }
+    }
 
+    .mx_MessageActionBar_iconButton {
         &:disabled,
         &[disabled] {
             cursor: not-allowed;
