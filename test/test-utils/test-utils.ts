@@ -122,6 +122,7 @@ export function createTestClient(): MatrixClient {
         },
 
         getPushActionsForEvent: jest.fn(),
+        getPushDetailsForEvent: jest.fn(),
         getRoom: jest.fn().mockImplementation((roomId) => mkStubRoom(roomId, "My room", client)),
         getRooms: jest.fn().mockReturnValue([]),
         getVisibleRooms: jest.fn().mockReturnValue([]),

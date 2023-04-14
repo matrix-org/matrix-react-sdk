@@ -77,6 +77,7 @@ import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
 import { ElementCall } from "../../../models/Call";
 import { UnreadNotificationBadge } from "./NotificationBadge/UnreadNotificationBadge";
 import { EventTileThreadToolbar } from "./EventTile/EventTileThreadToolbar";
+import { shouldHighlightEvent } from "../../../utils/event/highlight";
 
 export type GetRelationsForEvent = (
     eventId: string,
@@ -666,22 +667,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         if (this.context.timelineRenderingType === TimelineRenderingType.Notification) return false;
         if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList) return false;
 
-        const cli = MatrixClientPeg.get();
-        const actions = cli.getPushActionsForEvent(this.props.mxEvent.replacingEvent() || this.props.mxEvent);
-        // get the actions for the previous version of the event too if it is an edit
-        const previousActions = this.props.mxEvent.replacingEvent()
-            ? cli.getPushActionsForEvent(this.props.mxEvent)
-            : undefined;
-        if (!actions?.tweaks && !previousActions?.tweaks) {
-            return false;
-        }
-
-        // don't show self-highlights from another of our clients
-        if (this.props.mxEvent.getSender() === MatrixClientPeg.get().credentials.userId) {
-            return false;
-        }
-
-        return !!(actions?.tweaks.highlight || previousActions?.tweaks.highlight);
+        return shouldHighlightEvent(this.props.mxEvent, MatrixClientPeg.get());
     }
 
     private onSenderProfileClick = (): void => {
@@ -926,6 +912,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
         const isRenderingNotification = this.context.timelineRenderingType === TimelineRenderingType.Notification;
 
+        const isEventHighlighted = this.shouldHighlight();
+
         const isEditing = !!this.props.editState;
         const classes = classNames({
             mx_EventTile_bubbleContainer: isBubbleMessage,
@@ -936,7 +924,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             mx_EventTile_12hr: this.props.isTwelveHour,
             // Note: we keep the `sending` state class for tests, not for our styles
             mx_EventTile_sending: !isEditing && isSending,
-            mx_EventTile_highlight: this.shouldHighlight(),
+            mx_EventTile_highlight: isEventHighlighted,
             mx_EventTile_selected: this.props.isSelectedEvent || this.state.contextMenu,
             mx_EventTile_continuation:
                 isContinuation || eventType === EventType.CallInvite || ElementCall.CALL_EVENT_TYPE.matches(eventType),

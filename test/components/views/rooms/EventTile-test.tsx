@@ -381,27 +381,28 @@ describe("EventTile", () => {
             !!container.getElementsByClassName("mx_EventTile_highlight").length;
 
         beforeEach(() => {
-            mocked(client.getPushActionsForEvent).mockReturnValue(null);
+            mocked(client.getPushDetailsForEvent).mockReturnValue(null);
         });
 
         it("does not highlight message where message matches no push actions", () => {
             const { container } = getComponent();
 
-            expect(client.getPushActionsForEvent).toHaveBeenCalledWith(mxEvent);
+            expect(client.getPushDetailsForEvent).toHaveBeenCalledWith(mxEvent);
             expect(isHighlighted(container)).toBeFalsy();
         });
 
         it(`does not highlight when message's push actions does not have a highlight tweak`, () => {
-            mocked(client.getPushActionsForEvent).mockReturnValue({ notify: true, tweaks: {} });
+            mocked(client.getPushDetailsForEvent).mockReturnValue({ notify: true, tweaks: {} });
             const { container } = getComponent();
 
             expect(isHighlighted(container)).toBeFalsy();
         });
 
         it(`highlights when message's push actions have a highlight tweak`, () => {
-            mocked(client.getPushActionsForEvent).mockReturnValue({
+            mocked(client.getPushDetailsForEvent).mockReturnValue({ actions: {
                 notify: true,
                 tweaks: { [TweakName.Highlight]: true },
+            }
             });
             const { container } = getComponent();
 
@@ -436,24 +437,24 @@ describe("EventTile", () => {
                 const { container } = getComponent();
 
                 // get push actions for both events
-                expect(client.getPushActionsForEvent).toHaveBeenCalledWith(mxEvent);
-                expect(client.getPushActionsForEvent).toHaveBeenCalledWith(editingEvent);
+                expect(client.getPushDetailsForEvent).toHaveBeenCalledWith(mxEvent);
+                expect(client.getPushDetailsForEvent).toHaveBeenCalledWith(editingEvent);
                 expect(isHighlighted(container)).toBeFalsy();
             });
 
             it(`does not highlight when no version of message's push actions have a highlight tweak`, () => {
-                mocked(client.getPushActionsForEvent).mockReturnValue({ notify: true, tweaks: {} });
+                mocked(client.getPushDetailsForEvent).mockReturnValue({ actions: { notify: true, tweaks: {} }});
                 const { container } = getComponent();
 
                 expect(isHighlighted(container)).toBeFalsy();
             });
 
             it(`highlights when previous version of message's push actions have a highlight tweak`, () => {
-                mocked(client.getPushActionsForEvent).mockImplementation((event: MatrixEvent) => {
+                mocked(client.getPushDetailsForEvent).mockImplementation((event: MatrixEvent) => {
                     if (event === mxEvent) {
-                        return { notify: true, tweaks: { [TweakName.Highlight]: true } };
+                        return { actions: { notify: true, tweaks: { [TweakName.Highlight]: true } }};
                     }
-                    return { notify: false, tweaks: {} };
+                    return { actions: { notify: false, tweaks: {} }};
                 });
                 const { container } = getComponent();
 
@@ -461,11 +462,11 @@ describe("EventTile", () => {
             });
 
             it(`highlights when new version of message's push actions have a highlight tweak`, () => {
-                mocked(client.getPushActionsForEvent).mockImplementation((event: MatrixEvent) => {
+                mocked(client.getPushDetailsForEvent).mockImplementation((event: MatrixEvent) => {
                     if (event === editingEvent) {
-                        return { notify: true, tweaks: { [TweakName.Highlight]: true } };
+                        return { actions: { notify: true, tweaks: { [TweakName.Highlight]: true } }};
                     }
-                    return { notify: false, tweaks: {} };
+                    return { actions: { notify: false, tweaks: {} }};
                 });
                 const { container } = getComponent();
 
