@@ -59,19 +59,15 @@ const parseDeviceExtendedInformation = (matrixClient: MatrixClient, device: IMyD
 export async function fetchExtendedDeviceInformation(matrixClient: MatrixClient): Promise<DevicesDictionary> {
     const { devices } = await matrixClient.getDevices();
 
-    const devicesDict = devices.reduce(
-        (acc, device: IMyDevice) => ({
-            ...acc,
-            [device.device_id]: {
-                ...device,
-                isVerified: isDeviceVerified(matrixClient, device.device_id),
-                ...parseDeviceExtendedInformation(matrixClient, device),
-                ...parseUserAgent(device[UNSTABLE_MSC3852_LAST_SEEN_UA.name]),
-            },
-        }),
-        {},
-    );
-
+    const devicesDict: DevicesDictionary = {};
+    for (const device of devices) {
+        devicesDict[device.device_id] = {
+            ...device,
+            isVerified: await isDeviceVerified(matrixClient, device.device_id),
+            ...parseDeviceExtendedInformation(matrixClient, device),
+            ...parseUserAgent(device[UNSTABLE_MSC3852_LAST_SEEN_UA.name]),
+        };
+    }
     return devicesDict;
 }
 
