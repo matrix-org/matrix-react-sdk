@@ -117,21 +117,58 @@ describe("Composer", () => {
             cy.viewRoomByName("Composing Room");
         });
 
-        it.only("autocomplete works for slash commands", () => {
-            // Type a message
-            cy.get("div[contenteditable=true]").type("/spo");
+        describe("commands", () => {
+            describe("plain text mode", () => {
+                it("autocomplete opens when / is entered and is populated", () => {
+                    // Select plain text mode after composer is ready
+                    cy.get("div[contenteditable=true]").should("exist");
+                    cy.findByRole("button", { name: "Hide formatting" }).click();
 
-            // Check that the autocomplete option is visible and click it
-            cy.findByTestId("autocomplete-wrapper").within(() => {
-                cy.findByText("/spoiler").click();
+                    // Type a /
+                    cy.get("div[contenteditable=true]").type("/");
+
+                    // Check that the autocomplete options are visible and there are more than 0
+                    cy.findByTestId("autocomplete-wrapper").within(() => {
+                        cy.findAllByRole("presentation").should("have.length.above", 0);
+                    });
+                });
+
+                it("autocomplete can be used to enter a command", () => {
+                    // Select plain text mode after composer is ready
+                    cy.get("div[contenteditable=true]").should("exist");
+                    cy.findByRole("button", { name: "Hide formatting" }).click();
+
+                    // Type a message
+                    cy.get("div[contenteditable=true]").type("/spo");
+
+                    // Check that the autocomplete /spoiler option is visible and click it
+                    cy.findByTestId("autocomplete-wrapper").within(() => {
+                        cy.findByText("/spoiler").click();
+                    });
+
+                    // this should close the autocomplete and have inserted with the completion text
+                    cy.findByTestId("autocomplete-wrapper").should("not.be.visible");
+                    cy.findByRole("textbox").within(() => {
+                        cy.findByText("/spoiler").should("exist");
+                    });
+                });
+
+                it("autocomplete is not displayed for a message starting with //", () => {
+                    // Select plain text mode after composer is ready
+                    cy.get("div[contenteditable=true]").should("exist");
+                    cy.findByRole("button", { name: "Hide formatting" }).click();
+
+                    // Type a message
+                    cy.get("div[contenteditable=true]").type("//spo");
+
+                    // Check that the autocomplete options are not visible
+                    cy.findByTestId("autocomplete-wrapper").within(() => {
+                        cy.findAllByRole("presentation").should("have.length", 0);
+                    });
+                });
             });
 
-            // this should close the autocomplete and have completed with the
-            // expected text
-            cy.findByTestId("autocomplete-wrapper").should("not.be.visible");
-            cy.findByRole("textbox").within(() => {
-                cy.findByText("/spoiler").should("exist");
-            });
+            // TODO add tests for rich text mode
         });
 
         it("sends a message when you click send or press Enter", () => {
