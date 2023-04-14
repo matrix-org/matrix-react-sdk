@@ -278,6 +278,18 @@ describe("WysiwygComposer", () => {
             expect(screen.getByRole("link", { name: mockCompletions[0].completion })).toBeInTheDocument();
         });
 
+        it("pressing escape closes the autocomplete", async () => {
+            await insertMentionInput();
+
+            // press enter
+            await userEvent.keyboard("{Escape}");
+
+            // check that it closes the autocomplete
+            await waitFor(() => {
+                expect(screen.queryByRole("presentation")).not.toBeInTheDocument();
+            });
+        });
+
         it("clicking on a mention in the composer dispatches the correct action", async () => {
             await insertMentionInput();
 
