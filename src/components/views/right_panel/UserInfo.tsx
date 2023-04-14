@@ -79,6 +79,7 @@ import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { DirectoryMember, startDmOnFirstMessage } from "../../../utils/direct-messages";
 import { SdkContextClass } from "../../../contexts/SDKContext";
+import { asyncSome } from "../../../utils/arrays";
 
 export interface IDevice extends DeviceInfo {
     ambiguous?: boolean;
@@ -101,22 +102,22 @@ export const disambiguateDevices = (devices: IDevice[]): void => {
     }
 };
 
-export const getE2EStatus = (cli: MatrixClient, userId: string, devices: IDevice[]): E2EStatus => {
+export const getE2EStatus = async (cli: MatrixClient, userId: string, devices: IDevice[]): Promise<E2EStatus> => {
     const isMe = userId === cli.getUserId();
     const userTrust = cli.checkUserTrust(userId);
     if (!userTrust.isCrossSigningVerified()) {
         return userTrust.wasCrossSigningVerified() ? E2EStatus.Warning : E2EStatus.Normal;
     }
 
-    const anyDeviceUnverified = devices.some((device) => {
+    const anyDeviceUnverified = await asyncSome(devices, async (device) => {
         const { deviceId } = device;
         // For your own devices, we use the stricter check of cross-signing
         // verification to encourage everyone to trust their own devices via
         // cross-signing so that other users can then safely trust you.
         // For other people's devices, the more general verified check that
         // includes locally verified devices can be used.
-        const deviceTrust = cli.checkDeviceTrust(userId, deviceId);
-        return isMe ? !deviceTrust.isCrossSigningVerified() : !deviceTrust.isVerified();
+        const deviceTrust = await cli.getCrypto()?.getDeviceVerificationStatus(userId, deviceId);
+        return isMe ? !deviceTrust?.crossSigningVerified : !deviceTrust?.isVerified();
     });
     return anyDeviceUnverified ? E2EStatus.Warning : E2EStatus.Verified;
 };
@@ -1611,10 +1612,13 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
     const isRoomEncrypted = useIsEncrypted(cli, room);
     const devices = useDevices(user.userId) ?? [];
 
-    let e2eStatus: E2EStatus | undefined;
-    if (isRoomEncrypted && devices) {
-        e2eStatus = getE2EStatus(cli, user.userId, devices);
-    }
+    const e2eStatus = useAsyncMemo(async () => {
+        if (!isRoomEncrypted || !devices) {
+            return undefined;
+        } else {
+            return await getE2EStatus(cli, user.userId, devices);
+        }
+    }, [cli, isRoomEncrypted, user.userId, devices]);
 
     const classes = ["mx_UserInfo"];
 
