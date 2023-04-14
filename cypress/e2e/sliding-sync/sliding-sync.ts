@@ -292,10 +292,15 @@ describe("Sliding Sync", () => {
             });
 
         // wait for them all to be on the UI
-        cy.get(".mx_RoomTile").should("have.length", 4); // due to the Test Room in beforeEach
+        cy.findByRole("group", { name: "Invites" }).within(() => {
+            cy.findAllByRole("treeitem").should("have.length", 3);
+        });
 
         cy.findByRole("treeitem", { name: "Join" }).click();
-        cy.findByRole("button", { name: "Accept" }).click();
+
+        cy.get(".mx_RoomView").within(() => {
+            cy.findByRole("button", { name: "Accept" }).click();
+        });
 
         checkOrder(["Join", "Test Room"]);
 
@@ -306,7 +311,9 @@ describe("Sliding Sync", () => {
         });
 
         // wait for the rejected room to disappear
-        cy.get(".mx_RoomTile").should("have.length", 3);
+        cy.findByRole("group", { name: "Invites" }).within(() => {
+            cy.findAllByRole("treeitem").should("have.length", 2);
+        });
 
         // check the lists are correct
         checkOrder(["Join", "Test Room"]);
@@ -327,7 +334,10 @@ describe("Sliding Sync", () => {
         });
 
         // wait for the rescind to take effect and check the joined list once more
-        cy.get(".mx_RoomTile").should("have.length", 2);
+        cy.findByRole("group", { name: "Rooms" }).within(() => {
+            cy.findAllByRole("treeitem").should("have.length", 2);
+        });
+
         checkOrder(["Join", "Test Room"]);
     });
 
