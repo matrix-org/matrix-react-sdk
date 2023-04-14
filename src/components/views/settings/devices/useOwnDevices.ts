@@ -50,7 +50,13 @@ const parseDeviceExtendedInformation = (matrixClient: MatrixClient, device: IMyD
     };
 };
 
-const fetchDevicesWithVerification = async (matrixClient: MatrixClient): Promise<DevicesState["devices"]> => {
+/**
+ * Fetch extended details of the user's own devices
+ *
+ * @param matrixClient - Matrix Client
+ * @returns A dictionary mapping from device ID to ExtendedDevice
+ */
+export async function fetchExtendedDeviceInformation(matrixClient: MatrixClient): Promise<DevicesDictionary> {
     const { devices } = await matrixClient.getDevices();
 
     const devicesDict = devices.reduce(
@@ -67,7 +73,7 @@ const fetchDevicesWithVerification = async (matrixClient: MatrixClient): Promise
     );
 
     return devicesDict;
-};
+}
 
 export enum OwnDevicesError {
     Unsupported = "Unsupported",
@@ -112,7 +118,7 @@ export const useOwnDevices = (): DevicesState => {
     const refreshDevices = useCallback(async (): Promise<void> => {
         setIsLoadingDeviceList(true);
         try {
-            const devices = await fetchDevicesWithVerification(matrixClient);
+            const devices = await fetchExtendedDeviceInformation(matrixClient);
             setDevices(devices);
 
             const { pushers } = await matrixClient.getPushers();
