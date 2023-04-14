@@ -20,7 +20,7 @@ import { SyntheticEvent, useState } from "react";
 // This type is a close approximation of what we use in the Rust model for the rich version of the
 // editor, we use this to try and make this simple model as similar as possible to allow reuse of
 // the autocomplete component
-type PlainTextSuggestionPattern = {
+export type PlainTextSuggestionPattern = {
     keyChar: SuggestionChar;
     type: SuggestionType;
     text: string;
@@ -69,7 +69,7 @@ export function useSuggestion(editorRef: React.RefObject<HTMLDivElement>): {
  * @returns - null if the input is null, a MappedSuggestion if the input is non-null
  *
  */
-const mapSuggestion = (suggestion: PlainTextSuggestionPattern | null): MappedSuggestion | null => {
+export const mapSuggestion = (suggestion: PlainTextSuggestionPattern | null): MappedSuggestion | null => {
     if (suggestion === null) {
         return null;
     } else {
