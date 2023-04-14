@@ -29,7 +29,7 @@ import {
     DeviceVerificationStatus,
 } from "matrix-js-sdk/src/matrix";
 import { Phase, VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { DeviceTrustLevel, UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
+import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { defer } from "matrix-js-sdk/src/utils";
 
@@ -148,7 +148,6 @@ beforeEach(() => {
         currentState: {
             on: jest.fn(),
         },
-        checkDeviceTrust: jest.fn(),
         checkUserTrust: jest.fn(),
         getRoom: jest.fn(),
         credentials: {},
@@ -266,7 +265,6 @@ describe("<UserInfo />", () => {
         beforeEach(() => {
             mockClient.isCryptoEnabled.mockReturnValue(true);
             mockClient.checkUserTrust.mockReturnValue(new UserTrustLevel(false, false, false));
-            mockClient.checkDeviceTrust.mockReturnValue(new DeviceTrustLevel(false, false, false, false));
 
             const device1 = DeviceInfo.fromStorage(
                 {
