@@ -29,9 +29,8 @@ import * as Avatar from "../../../../../Avatar";
  * with @ for a user query, # for a room or space query
  */
 export function buildQuery(suggestion: MappedSuggestion | null): string {
-    if (!suggestion || !suggestion.keyChar || suggestion.type === "command") {
+    if (!suggestion || !suggestion.keyChar) {
         // if we have an empty key character, we do not build a query
-        // TODO implement the command functionality
         return "";
     }
 
@@ -75,7 +74,7 @@ export function getRoomFromCompletion(completion: ICompletion, client: MatrixCli
  * @returns the text to display in the mention
  */
 export function getMentionDisplayText(completion: ICompletion, client: MatrixClient): string {
-    if (completion.type === "user") {
+    if (completion.type === "user" || completion.type === "at-room") {
         return completion.completion;
     } else if (completion.type === "room") {
         // try and get the room and use it's name, if not available, fall back to
@@ -90,12 +89,14 @@ export function getMentionDisplayText(completion: ICompletion, client: MatrixCli
  *
  * @param completion - the item selected from the autocomplete
  * @param client - the MatrixClient is required for us to look up the correct room mention text
- * @returns an object of attributes containing HTMLAnchor attributes or data-* attri
+ * @returns an object of attributes containing HTMLAnchor attributes or data-* attributes
  */
 export function getMentionAttributes(completion: ICompletion, client: MatrixClient, room: Room): Attributes {
-    // to ensure that we always have something set in the --avatar-letter CSS variable
-    // as otherwise alignment varies depending on whether the content is empty or not
-    const defaultLetterContent = "-";
+    // To ensure that we always have something set in the --avatar-letter CSS variable
+    // as otherwise alignment varies depending on whether the content is empty or not.
+
+    // Use a zero width space so that it counts as content, but does not display anything.
+    const defaultLetterContent = "\u200b";
 
     if (completion.type === "user") {
         // logic as used in UserPillPart.setAvatar in parts.ts
@@ -131,7 +132,8 @@ export function getMentionAttributes(completion: ICompletion, client: MatrixClie
             "data-mention-type": completion.type,
             "style": `--avatar-background: url(${avatarUrl}); --avatar-letter: '${initialLetter}'`,
         };
+    } else if (completion.type === "at-room") {
+        return { "data-mention-type": completion.type };
     }
-
     return {};
 }
