@@ -294,7 +294,6 @@ describe("Sliding Sync", () => {
         cy.findByRole("group", { name: "Invites" }).within(() => {
             // Exclude headerText
             cy.get(".mx_RoomSublist_tiles").within(() => {
-
                 // Wait for them all to be on the UI
                 cy.findAllByRole("treeitem").should("have.length", 3);
             });
@@ -321,7 +320,6 @@ describe("Sliding Sync", () => {
         cy.findByRole("group", { name: "Invites" }).within(() => {
             // Exclude headerText
             cy.get(".mx_RoomSublist_tiles").within(() => {
-
                 // Wait for the rejected room to disappear
                 cy.findAllByRole("treeitem").should("have.length", 2);
             });
@@ -349,7 +347,6 @@ describe("Sliding Sync", () => {
         cy.findByRole("group", { name: "Rooms" }).within(() => {
             // Exclude headerText
             cy.get(".mx_RoomSublist_tiles").within(() => {
-
                 // Wait for the rescind to take effect and check the joined list once more
                 cy.findAllByRole("treeitem").should("have.length", 2);
             });
