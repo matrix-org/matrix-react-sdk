@@ -23,7 +23,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { IDelegatedAuthConfig, M_AUTHENTICATION } from "matrix-js-sdk/src/matrix";
 import { HTTPError } from "matrix-js-sdk/src/matrix";
 
-import { _t } from "../../../../../languageHandler";
+import { UserFriendlyError, _t } from "../../../../../languageHandler";
 import ProfileSettings from "../../ProfileSettings";
 import * as languageHandler from "../../../../../languageHandler";
 import SettingsStore from "../../../../../settings/SettingsStore";
@@ -256,15 +256,25 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private onPasswordChangeError = (err: Error): void => {
         logger.error("Failed to change password: " + err);
 
-        const errorMessage = extractErrorMessageFromError(err, _t("Unknown password change error"));
+        let underlyingError = err;
+        if (err instanceof UserFriendlyError && err.cause instanceof Error) {
+            underlyingError = err.cause;
+        }
+
+        const errorMessage = extractErrorMessageFromError(
+            err,
+            _t("Unknown password change error (%(stringifiedError)s)", {
+                stringifiedError: String(err),
+            }),
+        );
 
         let errorMessageToDisplay;
-        if (err instanceof HTTPError && err.httpStatus === 403) {
+        if (underlyingError instanceof HTTPError && underlyingError.httpStatus === 403) {
             errorMessageToDisplay = _t("Failed to change password. Is your password correct?");
-        } else if (err instanceof HTTPError) {
+        } else if (underlyingError instanceof HTTPError) {
             errorMessageToDisplay = _t("%(errorMessage)s (HTTP status %(httpStatus)s)", {
                 errorMessage,
-                httpStatus: err.httpStatus,
+                httpStatus: underlyingError.httpStatus,
             });
         } else {
             errorMessageToDisplay = errorMessage;
