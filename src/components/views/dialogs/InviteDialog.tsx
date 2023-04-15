@@ -1412,7 +1412,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                     visibilityEvent && visibilityEvent.getContent() && visibilityEvent.getContent().history_visibility;
                 if (visibility === "world_readable" || visibility === "shared") {
                     keySharingWarning = (
-                        <p className="mx_InviteDialog_helpText">
+                        <p className="mx_InviteDialog_content_helpText">
                             <InfoIcon height={14} width={14} />
                             {" " + _t("Invited people will be able to read old messages.")}
                         </p>
@@ -1480,7 +1480,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
 
         const usersSection = (
             <React.Fragment>
-                <p className="mx_InviteDialog_helpText">{helpText}</p>
+                <p className="mx_InviteDialog_content_helpText">{helpText}</p>
                 <div className="mx_InviteDialog_addressBar">
                     {this.renderEditor()}
                     <div className="mx_InviteDialog_buttonAndSpinner">
