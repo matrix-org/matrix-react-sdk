@@ -44,7 +44,7 @@ class NotificationSound extends React.Component<IProps, IState> {
 
         let currentSound = "default";
         const soundData: { url: string; name: string; type: string; size: string } =
-            Notifier.getNotificationSound(this.props.roomId);
+            Notifier.getNotificationSound(this.props.roomId);  // we should set roomId to account when notificationSettingLevel is account
         if (soundData) {
             currentSound = soundData.name || soundData.url;
         }
@@ -62,7 +62,6 @@ class NotificationSound extends React.Component<IProps, IState> {
      */
     private async saveSound(level: SettingLevel): Promise<void> {
         // if no file, or SettingLevel is not ROOM_ACCOUNT or ACCOUNT, return
-
         if (!this.state.uploadedFile ||
             (level !== SettingLevel.ROOM_ACCOUNT && level !== SettingLevel.ACCOUNT)) {
             return;
@@ -93,12 +92,12 @@ class NotificationSound extends React.Component<IProps, IState> {
         });
     }
 
-    private onClickSaveSound = async (e: React.MouseEvent): Promise<void> => { // TODO add ", level: SettingLevel" to the function parameters
+    private onClickSaveSound = async (e: React.MouseEvent): Promise<void> => {
         e.stopPropagation();
         e.preventDefault();
 
         try {
-            await this.saveSound(SettingLevel.ACCOUNT); // TODO this should be a variable
+            await this.saveSound(this.props.level);
         } catch (ex) {
             if (this.props.roomId) {
                 logger.error(`Unable to save notification sound for ${this.props.roomId}`);
