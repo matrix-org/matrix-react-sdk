@@ -74,12 +74,12 @@ describe("Invite dialog", function () {
         cy.get(".mx_Dialog_wrapper").percySnapshotElement("Invite Dialog - Room (without a user)", { percyCSS });
 
         cy.get(".mx_InviteDialog--other").within(() => {
-            cy.get(".mx_InviteDialog_identityServer").should("not.exist");
+            cy.get(".mx_InviteDialog_content_identityServer").should("not.exist");
 
             cy.findByTestId("invite-dialog-input").type(bot.getUserId());
 
             // Assert that notification about identity servers appears after typing userId
-            cy.get(".mx_InviteDialog_identityServer").should("exist");
+            cy.get(".mx_InviteDialog_content_identityServer").should("exist");
 
             cy.get(".mx_InviteDialog_tile_nameStack").within(() => {
                 cy.get(".mx_InviteDialog_tile_nameStack_userId").within(() => {
