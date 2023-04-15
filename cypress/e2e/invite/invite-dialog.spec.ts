@@ -57,7 +57,7 @@ describe("Invite dialog", function () {
             cy.findByRole("button", { name: /Invite to this room/ }).click();
         });
 
-        cy.get(".mx_InviteDialog_other").within(() => {
+        cy.get(".mx_InviteDialog--other").within(() => {
             cy.get(".mx_Dialog_header .mx_Dialog_title").within(() => {
                 // Assert that the header is rendered
                 cy.findByText("Invite to Test Room").should("exist");
@@ -73,7 +73,7 @@ describe("Invite dialog", function () {
         // Take a snapshot of the invite dialog including its wrapper
         cy.get(".mx_Dialog_wrapper").percySnapshotElement("Invite Dialog - Room (without a user)", { percyCSS });
 
-        cy.get(".mx_InviteDialog_other").within(() => {
+        cy.get(".mx_InviteDialog--other").within(() => {
             cy.get(".mx_InviteDialog_identityServer").should("not.exist");
 
             cy.findByTestId("invite-dialog-input").type(bot.getUserId());
@@ -100,13 +100,13 @@ describe("Invite dialog", function () {
         // Take a snapshot of the invite dialog with a user pill
         cy.get(".mx_Dialog_wrapper").percySnapshotElement("Invite Dialog - Room (with a user pill)", { percyCSS });
 
-        cy.get(".mx_InviteDialog_other").within(() => {
+        cy.get(".mx_InviteDialog--other").within(() => {
             // Invite the bot
             cy.findByRole("button", { name: "Invite" }).click();
         });
 
         // Assert that the invite dialog disappears
-        cy.get(".mx_InviteDialog_other").should("not.exist");
+        cy.get(".mx_InviteDialog--other").should("not.exist");
 
         // Assert that they were invited and joined
         cy.findByText(`${botName} joined the room`).should("exist");
@@ -117,7 +117,7 @@ describe("Invite dialog", function () {
             cy.findByRole("button", { name: "Start chat" }).click();
         });
 
-        cy.get(".mx_InviteDialog_other").within(() => {
+        cy.get(".mx_InviteDialog--other").within(() => {
             cy.get(".mx_Dialog_header .mx_Dialog_title").within(() => {
                 // Assert that the header is rendered
                 cy.findByText("Direct Messages").should("exist");
@@ -136,7 +136,7 @@ describe("Invite dialog", function () {
             percyCSS,
         });
 
-        cy.get(".mx_InviteDialog_other").within(() => {
+        cy.get(".mx_InviteDialog--other").within(() => {
             cy.findByTestId("invite-dialog-input").type(bot.getUserId());
 
             cy.get(".mx_InviteDialog_tile_nameStack").within(() => {
@@ -154,13 +154,13 @@ describe("Invite dialog", function () {
             percyCSS,
         });
 
-        cy.get(".mx_InviteDialog_other").within(() => {
+        cy.get(".mx_InviteDialog--other").within(() => {
             // Open a direct message UI
             cy.findByRole("button", { name: "Go" }).click();
         });
 
         // Assert that the invite dialog disappears
-        cy.get(".mx_InviteDialog_other").should("not.exist");
+        cy.get(".mx_InviteDialog--other").should("not.exist");
 
         // Send a message to invite the bots
         cy.getComposer().type("Hello{enter}");

@@ -217,12 +217,12 @@ describe("Spaces", () => {
             cy.findByRole("button", { name: /Invite people/ }).click();
         });
 
-        cy.get(".mx_InviteDialog_other").within(() => {
+        cy.get(".mx_InviteDialog--other").within(() => {
             cy.findByRole("textbox").type(bot.getUserId());
             cy.findByRole("button", { name: "Invite" }).click();
         });
 
-        cy.get(".mx_InviteDialog_other").should("not.exist");
+        cy.get(".mx_InviteDialog--other").should("not.exist");
     });
 
     it("should show space invites at the top of the space panel", () => {

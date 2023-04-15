@@ -1562,9 +1562,10 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         return (
             <BaseDialog
                 className={classNames({
-                    mx_InviteDialog_transfer: this.props.kind === InviteKind.CallTransfer,
-                    mx_InviteDialog_other: this.props.kind !== InviteKind.CallTransfer,
-                    mx_InviteDialog_hasFooter: !!footer,
+                    "mx_InviteDialog": true,
+                    "mx_InviteDialog--transfer": this.props.kind === InviteKind.CallTransfer,
+                    "mx_InviteDialog--other": this.props.kind !== InviteKind.CallTransfer,
+                    "mx_InviteDialog--hasFooter": !!footer,
                 })}
                 hasCancel={true}
                 onFinished={this.props.onFinished}
