@@ -212,6 +212,19 @@ limitations under the License.
     flex-direction: column;
     flex-grow: 1;
     overflow: hidden;
+
+    .mx_InviteDialog_content_helpText {
+        margin: 0;
+    }
+
+    .mx_InviteDialog_content_identityServer {
+        margin-top: 1em; /* TODO: Use a spacing variable */
+    }
+
+    .mx_InviteDialog_content_oneThreepid {
+        font-size: $font-12px;
+        margin: $spacing-8 0;
+    }
 }
 
 .mx_InviteDialog--transfer {
@@ -253,10 +266,6 @@ limitations under the License.
     margin-top: $spacing-4;
     overflow-y: auto;
     padding: 0 45px $spacing-4 0; /* TODO: Use a spacing variable */
-}
-
-.mx_InviteDialog_content_helpText {
-    margin: 0;
 }
 
 .mx_InviteDialog_dialPad {
@@ -447,13 +456,4 @@ limitations under the License.
         color: $secondary-content;
         font-weight: normal;
     }
-}
-
-.mx_InviteDialog_content_identityServer {
-    margin-top: 1em; /* TODO: Use a spacing variable */
-}
-
-.mx_InviteDialog_content_oneThreepid {
-    font-size: $font-12px;
-    margin: $spacing-8 0;
 }
