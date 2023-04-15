@@ -113,7 +113,7 @@ describe("Sliding Sync", () => {
         checkOrder(["Orange", "Pineapple", "Apple", "Test Room"]);
 
         cy.findByRole("group", { name: "Rooms" }).within(() => {
-            cy.get(".mx_RoomSublist_stickable").realHover().findByRole("button", { name: "List options" }).click();
+            cy.get("[aria-label='Header of Rooms']").realHover().findByRole("button", { name: "List options" }).click();
         });
 
         // force click as the radio button's size is zero

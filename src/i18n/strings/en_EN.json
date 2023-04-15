@@ -2119,6 +2119,7 @@
     "Activity": "Activity",
     "A-Z": "A-Z",
     "List options": "List options",
+    "Header of %(roomHeaderLabel)s": "Header of %(roomHeaderLabel)s",
     "Show %(count)s more|other": "Show %(count)s more",
     "Show %(count)s more|one": "Show %(count)s more",
     "Show less": "Show less",

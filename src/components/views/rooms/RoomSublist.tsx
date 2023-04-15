@@ -693,7 +693,9 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                             className={classes}
                             onKeyDown={this.onHeaderKeyDown}
                             onFocus={onFocus}
-                            aria-label={this.props.label}
+                            aria-label={_t("Header of %(roomHeaderLabel)s", {
+                                roomHeaderLabel: this.props.label,
+                            })}
                         >
                             <div className="mx_RoomSublist_stickableContainer">
                                 <div className="mx_RoomSublist_stickable">
