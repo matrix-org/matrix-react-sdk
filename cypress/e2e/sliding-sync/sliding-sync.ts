@@ -385,10 +385,9 @@ describe("Sliding Sync", () => {
         cy.findByRole("treeitem", { name: "Test Room" }).click();
         cy.get(".mx_ReplyPreview").should("not.exist");
         // click reply-to on the Hello World message
-        cy.get(".mx_EventTile")
-            .last()
+        cy.get(".mx_EventTile_last")
             .within(() => {
-                cy.findByText("Hello world");
+                cy.findByText("Hello world", { timeout: 1000 });
             })
             .realHover()
             .findByRole("button", { name: "Reply" })
