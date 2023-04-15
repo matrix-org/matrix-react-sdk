@@ -900,7 +900,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 {this.renderCategory(RuleClass.VectorGlobal)}
                 {this.renderCategory(RuleClass.VectorMentions)}
                 {this.renderCategory(RuleClass.VectorOther)}
-                <NotificationSound currentSound={this.state.currentSound} level={this.state.notificationSettingLevel} />
+                <NotificationSound roomId="account" currentSound={this.state.currentSound} level={this.state.notificationSettingLevel} />
                 {this.renderTargets()}
             </div>
         );
