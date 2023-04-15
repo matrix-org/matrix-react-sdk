@@ -1423,7 +1423,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             title = _t("Transfer");
 
             consultConnectSection = (
-                <div className="mx_InviteDialog_transferConsultConnect">
+                <div className="mx_InviteDialog_content_transfer">
                     <label>
                         <input type="checkbox" checked={this.state.consultFirst} onChange={this.onConsultFirstChange} />
                         {_t("Consult first")}
@@ -1431,7 +1431,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                     <AccessibleButton
                         kind="secondary"
                         onClick={this.onCancel}
-                        className="mx_InviteDialog_transferConsultConnect_pushRight"
+                        className="mx_InviteDialog_content_transfer_pushRight"
                     >
                         {_t("Cancel")}
                     </AccessibleButton>
