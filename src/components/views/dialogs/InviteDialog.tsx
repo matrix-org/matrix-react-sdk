@@ -1122,7 +1122,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             />
         );
         return (
-            <div className="mx_InviteDialog_editor" onClick={this.onClickInputArea}>
+            <div className="mx_InviteDialog_content_addressBar_editor" onClick={this.onClickInputArea}>
                 {targets}
                 {input}
             </div>

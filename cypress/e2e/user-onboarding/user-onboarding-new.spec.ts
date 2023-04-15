@@ -75,7 +75,7 @@ describe("User Onboarding (new user)", () => {
                 const findPeopleAction = cy.findByRole("button", { name: "Find friends" });
                 expect(findPeopleAction).to.exist;
                 findPeopleAction.click();
-                cy.get(".mx_InviteDialog_editor").findByRole("textbox").type(bot1.getUserId());
+                cy.get(".mx_InviteDialog_content_addressBar_editor").findByRole("textbox").type(bot1.getUserId());
                 cy.findByRole("button", { name: "Go" }).click();
                 cy.get(".mx_InviteDialog_buttonAndSpinner").should("not.exist");
                 const message = "Hi!";
