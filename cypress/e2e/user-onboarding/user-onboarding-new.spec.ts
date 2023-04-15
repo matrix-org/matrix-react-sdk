@@ -77,7 +77,7 @@ describe("User Onboarding (new user)", () => {
                 findPeopleAction.click();
                 cy.get(".mx_InviteDialog_content_addressBar_editor").findByRole("textbox").type(bot1.getUserId());
                 cy.findByRole("button", { name: "Go" }).click();
-                cy.get(".mx_InviteDialog_buttonAndSpinner").should("not.exist");
+                cy.get(".mx_InviteDialog_content_addressBar_buttonAndSpinner").should("not.exist");
                 const message = "Hi!";
                 cy.findByRole("textbox", { name: "Send a message…" }).type(`${message}{enter}`);
                 cy.get(".mx_MTextBody.mx_EventTile_content").findByText(message);

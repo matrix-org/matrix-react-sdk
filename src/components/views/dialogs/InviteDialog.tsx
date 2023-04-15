@@ -1451,7 +1451,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 <AccessibleButton
                     kind="primary"
                     onClick={goButtonFn}
-                    className="mx_InviteDialog_buttonAndSpinner_goButton"
+                    className="mx_InviteDialog_content_addressBar_buttonAndSpinner_goButton"
                     disabled={this.state.busy || !hasSelection}
                 >
                     {buttonText}
@@ -1483,7 +1483,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 <p className="mx_InviteDialog_content_helpText">{helpText}</p>
                 <div className="mx_InviteDialog_content_addressBar">
                     {this.renderEditor()}
-                    <div className="mx_InviteDialog_buttonAndSpinner">
+                    <div className="mx_InviteDialog_content_addressBar_buttonAndSpinner">
                         {goButton}
                         {spinner}
                     </div>
