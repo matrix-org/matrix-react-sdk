@@ -205,22 +205,6 @@ export default class ChangePassword extends React.Component<IProps, IState> {
             });
     }
 
-    /**
-     * Checks the `newPass` and throws an error if it is unacceptable.
-     * @param oldPass The old password
-     * @param newPass The new password that the user is trying to be set
-     * @param confirmPass The confirmation password where the user types the `newPass`
-     * again for confirmation and should match the `newPass` before we accept their new
-     * password.
-     */
-    private checkPassword(oldPass: string, newPass: string, confirmPass: string): void {
-        if (newPass !== confirmPass) {
-            throw new UserFriendlyError("New passwords don't match");
-        } else if (!newPass || newPass.length === 0) {
-            throw new UserFriendlyError("Passwords can't be empty");
-        }
-    }
-
     private optionallySetEmail(): Promise<boolean> {
         // Ask for an email otherwise the user has no way to reset their password
         const modal = Modal.createDialog(SetEmailDialog, {
@@ -319,13 +303,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
 
         const oldPassword = this.state.oldPassword;
         const newPassword = this.state.newPassword;
-        const confirmPassword = this.state.newPasswordConfirm;
-        try {
-            this.checkPassword(oldPassword, newPassword, confirmPassword);
-            return this.onChangePassword(oldPassword, newPassword);
-        } catch (err) {
-            this.props.onError(err);
-        }
+        return this.onChangePassword(oldPassword, newPassword);
     };
 
     private async verifyFieldsBeforeSubmit(): Promise<boolean> {
