@@ -17,7 +17,7 @@ limitations under the License.
 import classNames from "classnames";
 import { IEventRelation } from "matrix-js-sdk/src/models/event";
 import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
-import React, { createContext, MouseEventHandler, ReactElement, ReactNode, useContext, useRef } from "react";
+import React, { createContext, MouseEventHandler, ReactElement, ReactNode, RefObject, useContext, useRef } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
@@ -64,7 +64,7 @@ type OverflowMenuCloser = () => void;
 export const OverflowMenuContext = createContext<OverflowMenuCloser | null>(null);
 
 const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
-    const matrixClient: MatrixClient = useContext(MatrixClientContext);
+    const matrixClient = useContext(MatrixClientContext);
     const { room, roomId, narrow } = useContext(RoomContext);
 
     const isWysiwygLabEnabled = useSettingValue<boolean>("feature_wysiwyg_composer");
@@ -180,10 +180,10 @@ interface IUploadButtonProps {
 const UploadButtonContextProvider: React.FC<IUploadButtonProps> = ({ roomId, relation, children }) => {
     const cli = useContext(MatrixClientContext);
     const roomContext = useContext(RoomContext);
-    const uploadInput = useRef<HTMLInputElement>();
+    const uploadInput = useRef() as RefObject<HTMLInputElement>;
 
     const onUploadClick = (): void => {
-        if (cli.isGuest()) {
+        if (cli?.isGuest()) {
             dis.dispatch({ action: "require_registration" });
             return;
         }
