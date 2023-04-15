@@ -64,7 +64,7 @@ describe("Invite dialog", function () {
             });
 
             // Assert that the bar is rendered
-            cy.get(".mx_InviteDialog_addressBar").should("exist");
+            cy.get(".mx_InviteDialog_content_addressBar").should("exist");
         });
 
         // TODO: unhide userId
@@ -124,7 +124,7 @@ describe("Invite dialog", function () {
             });
 
             // Assert that the bar is rendered
-            cy.get(".mx_InviteDialog_addressBar").should("exist");
+            cy.get(".mx_InviteDialog_content_addressBar").should("exist");
         });
 
         // TODO: unhide userId and invite link
