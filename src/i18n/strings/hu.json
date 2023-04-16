@@ -2326,7 +2326,7 @@
     "We were unable to access your microphone. Please check your browser settings and try again.": "Nem lehet a mikrofont használni. Ellenőrizze a böngésző beállításait és próbálja újra.",
     "Unable to access your microphone": "A mikrofont nem lehet használni",
     "Your access token gives full access to your account. Do not share it with anyone.": "A hozzáférési kulcs teljes elérést biztosít a fiókhoz. Soha ne ossza meg mással.",
-    "Access Token": "Elérési kulcs",
+    "Access Token": "Hozzáférési kulcs",
     "Please enter a name for the space": "Kérem adjon meg egy nevet a térhez",
     "Connecting": "Kapcsolás",
     "To leave the beta, visit your settings.": "A beállításokban tudja elhagyni a bétát.",
@@ -2996,7 +2996,7 @@
     "Pinned": "Kitűzött",
     "Open thread": "Üzenetszál megnyitása",
     "Remove messages sent by me": "Általam küldött üzenetek törlése",
-    "No virtual room for this room": "Ehhez a szobához  virtuális szoba",
+    "No virtual room for this room": "Ehhez a szobához nincs virtuális szoba",
     "Switches to this room's virtual room, if it has one": "Átváltás a szoba virtuális szobájába, ha létezik",
     "Export Cancelled": "Exportálás megszakítva",
     "Match system": "Rendszer beállításával megegyező",
@@ -3760,5 +3760,11 @@
     "Reload": "Újratöltés",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Ez lehet attól, hogy az alkalmazás több lapon is nyitva van, vagy hogy a böngészőadatok törölve lettek.",
     "Database unexpectedly closed": "Az adatbázis váratlanul lezárult",
-    "Formatting": "Formázás"
+    "Formatting": "Formázás",
+    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.": "A szoba régi verziója nem található (szobaazonosító: %(roomId)s), és a megkereséséhez nem lett megadva a „via_servers”.",
+    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "A szoba régi verziója nem található (szobaazonosító: %(roomId)s), és a megkereséséhez nem lett megadva a „via_servers”. Lehetséges, hogy a szobaazonosító kitalálása működni fog. Ha meg akarja próbálni, kattintson erre a hivatkozásra:",
+    "Start messages with <code>/plain</code> to send without markdown.": "Kezdje az üzenetet a <code>/plain</code> paranccsal, hogy markdown formázás nélkül küldje el.",
+    "The add / bind with MSISDN flow is misconfigured": "Az MSISDN folyamattal történő hozzáadás / kötés hibásan van beállítva",
+    "No identity access token found": "Nem található személyazonosság-hozzáférési kulcs",
+    "Identity server not set": "Az azonosítási kiszolgáló nincs megadva"
 }
