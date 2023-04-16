@@ -3762,5 +3762,9 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Allpool loetletud Matrix'i kasutajatunnustele ei leidunud profiile. Kas sa ikkagi tahaksid nendega vestlust alustada?",
     "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.": "Me ei leia selle jututoa vana versiooni (jututoa tunnus: %(roomId)s) ja meil pole otsimiseks ka teavet „via_servers“ meetodi alusel.",
     "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "Me ei leia selle jututoa vana versiooni (jututoa tunnus: %(roomId)s) ja meil pole otsimiseks ka teavet „via_servers“ meetodi alusel. Võimalik, et me suudame jututoa tunnuse alusel serveri nime välja mõelda. Kui tahad proovida, siis klõpsi seda linki:",
-    "Formatting": "Vormindame andmeid"
+    "Formatting": "Vormindame andmeid",
+    "Start messages with <code>/plain</code> to send without markdown.": "Vormindamata teksti koostamiseks alusta sõnumeid <code>/plain</code> käsuga.",
+    "The add / bind with MSISDN flow is misconfigured": "„Add“ ja „bind“ meetodid MSISDN jaoks on valesti seadistatud",
+    "No identity access token found": "Ei leidu tunnusluba isikutuvastusserveri jaoks",
+    "Identity server not set": "Isikutuvastusserver on määramata"
 }
