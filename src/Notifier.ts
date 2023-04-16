@@ -173,8 +173,6 @@ class NotifierClass {
     }
 
     /*
-       * returns account's default sound if no valid roomId
-       *
        * We do no caching here because the SDK caches setting
        * and the browser will cache the sound.
        *
