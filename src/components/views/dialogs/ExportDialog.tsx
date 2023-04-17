@@ -104,8 +104,8 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
     } = useExportFormState();
 
     const [isExporting, setExporting] = useState(false);
-    const sizeLimitRef = useRef<Field>();
-    const messageCountRef = useRef<Field>();
+    const sizeLimitRef = useRef<Field>(null);
+    const messageCountRef = useRef<Field>(null);
     const [exportProgressText, setExportProgressText] = useState(_t("Processing…"));
     const [displayCancel, setCancelWarning] = useState(false);
     const [exportCancelled, setExportCancelled] = useState(false);
@@ -144,18 +144,18 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
     const onExportClick = async (): Promise<void> => {
         const isValidSize =
             !setSizeLimit ||
-            (await sizeLimitRef.current.validate({
+            (await sizeLimitRef.current?.validate({
                 focused: false,
             }));
 
         if (!isValidSize) {
-            sizeLimitRef.current.validate({ focused: true });
+            sizeLimitRef.current?.validate({ focused: true });
             return;
         }
         if (exportType === ExportType.LastNMessages) {
-            const isValidNumberOfMessages = await messageCountRef.current.validate({ focused: false });
+            const isValidNumberOfMessages = await messageCountRef.current?.validate({ focused: false });
             if (!isValidNumberOfMessages) {
-                messageCountRef.current.validate({ focused: true });
+                messageCountRef.current?.validate({ focused: true });
                 return;
             }
         }
@@ -182,7 +182,7 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
             {
                 key: "number",
                 test: ({ value }) => {
-                    const parsedSize = parseInt(value, 10);
+                    const parsedSize = parseInt(value!, 10);
                     return validateNumberInRange(1, 2000)(parsedSize);
                 },
                 invalid: () => {
@@ -218,7 +218,7 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
             {
                 key: "number",
                 test: ({ value }) => {
-                    const parsedSize = parseInt(value, 10);
+                    const parsedSize = parseInt(value!, 10);
                     return validateNumberInRange(1, 10 ** 8)(parsedSize);
                 },
                 invalid: () => {
@@ -398,7 +398,7 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
                     )}
                 </div>
                 {isExporting ? (
-                    <div data-test-id="export-progress" className="mx_ExportDialog_progress">
+                    <div data-testid="export-progress" className="mx_ExportDialog_progress">
                         <Spinner w={24} h={24} />
                         <p>{exportProgressText}</p>
                         <DialogButtons

@@ -995,19 +995,8 @@ export const RoomAdminToolsContainer: React.FC<IBaseRoomProps> = ({
     return <div />;
 };
 
-const useIsSynapseAdmin = (cli: MatrixClient): boolean => {
-    const [isAdmin, setIsAdmin] = useState(false);
-    useEffect(() => {
-        cli.isSynapseAdministrator().then(
-            (isAdmin) => {
-                setIsAdmin(isAdmin);
-            },
-            () => {
-                setIsAdmin(false);
-            },
-        );
-    }, [cli]);
-    return isAdmin;
+const useIsSynapseAdmin = (cli?: MatrixClient): boolean => {
+    return useAsyncMemo(async () => (cli ? cli.isSynapseAdministrator().catch(() => false) : false), [cli], false);
 };
 
 const useHomeserverSupportsCrossSigning = (cli: MatrixClient): boolean => {
@@ -1515,9 +1504,10 @@ export const UserInfoHeader: React.FC<{
         const avatarUrl = (member as RoomMember).getMxcAvatarUrl
             ? (member as RoomMember).getMxcAvatarUrl()
             : (member as User).avatarUrl;
-        if (!avatarUrl) return;
 
         const httpUrl = mediaFromMxc(avatarUrl).srcHttp;
+        if (!httpUrl) return;
+
         const params = {
             src: httpUrl,
             name: (member as RoomMember).name || (member as User).displayName,

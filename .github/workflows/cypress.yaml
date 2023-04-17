@@ -6,7 +6,7 @@ on:
         types:
             - completed
 concurrency:
-    group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch || github.ref }}
+    group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch || github.run_id }}
     cancel-in-progress: ${{ github.event.workflow_run.event == 'pull_request' }}
 jobs:
     prepare:
@@ -33,20 +33,20 @@ jobs:
               with:
                   authToken: ${{ secrets.GITHUB_TOKEN }}
                   state: pending
-                  context: ${{ github.workflow }} / cypress (${{ github.event.workflow_run.event }} => ${{ github.event_name }})
+                  context: ${{ github.workflow }} / cypress
                   sha: ${{ github.event.workflow_run.head_sha }}
                   target_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
             - id: prdetails
-              if: github.event.workflow_run.event == 'pull_request'
-              uses: matrix-org/pr-details-action@v1.2
+              if: github.event.workflow_run.event == 'pull_request' || github.event.workflow_run.event == 'merge_group'
+              uses: matrix-org/pr-details-action@v1.3
               with:
                   owner: ${{ github.event.workflow_run.head_repository.owner.login }}
                   branch: ${{ github.event.workflow_run.head_branch }}
 
             - name: Get commit details
               id: commit
-              if: github.event.workflow_run.event == 'pull_request'
+              if: github.event.workflow_run.event == 'pull_request' || github.event.workflow_run.event == 'merge_group'
               uses: actions/github-script@v6
               with:
                   script: |
@@ -65,10 +65,10 @@ jobs:
               if: |
                   github.event.workflow_run.event == 'schedule' ||
                   (
-                    github.event.workflow_run.event == 'pull_request' &&
+                    github.event.workflow_run.event == 'merge_queue' &&
                     contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy')
                   )
-              run: echo "::set-output name=value::1"
+              run: echo "value=1" >> $GITHUB_OUTPUT
 
             # Only export to kiwi when it is demanded or on develop
             - name: Disable Kiwi if not needed
@@ -76,11 +76,11 @@ jobs:
               if: |
                   github.event.workflow_run.event == 'pull_request' &&
                   !contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Send-Kiwi')
-              run: echo "::set-output name=value::0"
+              run: echo "value=0" >> $GITHUB_OUTPUT
 
             - name: Generate unique ID 💎
               id: uuid
-              run: echo "::set-output name=value::sha-$GITHUB_SHA-time-$(date +"%s")"
+              run: echo "value=sha-$GITHUB_SHA-time-$(date +"%s")" >> $GITHUB_OUTPUT
 
     tests:
         name: "Run Tests"
@@ -125,7 +125,7 @@ jobs:
                   path: webapp
 
             - name: Run Cypress tests
-              uses: cypress-io/github-action@v5.5.0
+              uses: cypress-io/github-action@v5.6.1
               with:
                   # The built-in Electron runner seems to grind to a halt trying
                   # to run the tests, so use chrome.
@@ -184,7 +184,7 @@ jobs:
 
             - name: Upload reports
               if: always()
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v3
               with:
                   name: cypress-junit
                   path: cypress/results
@@ -221,7 +221,7 @@ jobs:
               with:
                   authToken: ${{ secrets.GITHUB_TOKEN }}
                   state: ${{ needs.tests.result == 'success' && 'success' || 'failure' }}
-                  context: ${{ github.workflow }} / cypress (${{ github.event.workflow_run.event }} => ${{ github.event_name }})
+                  context: ${{ github.workflow }} / cypress
                   sha: ${{ github.event.workflow_run.head_sha }}
                   target_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
