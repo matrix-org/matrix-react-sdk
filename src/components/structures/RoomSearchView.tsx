@@ -227,7 +227,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
             const result = results.results[i];
 
             const mxEv = result.context.getEvent();
-            const roomId = mxEv.getRoomId();
+            const roomId = mxEv.getRoomId()!;
             const room = client.getRoom(roomId);
             if (!room) {
                 // if we do not have the room in js-sdk stores then hide it as we cannot easily show it
@@ -296,7 +296,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
             let permalinkCreator = _permalinkCreator;
             if (roomId !== permalinkCreator.roomId) {
                 if (permalinkCreators.has(roomId)) {
-                    permalinkCreator = permalinkCreators.get(roomId);
+                    permalinkCreator = permalinkCreators.get(roomId)!;
                 } else {
                     permalinkCreator = new RoomPermalinkCreator(client.getRoom(roomId), roomId);
                     permalinkCreators.set(roomId, permalinkCreator);
