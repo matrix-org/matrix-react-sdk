@@ -3704,7 +3704,7 @@
     "Due to decryption errors, some votes may not be counted": "因為解密錯誤，不會計算部份投票",
     "The sender has blocked you from receiving this message": "傳送者已封鎖您，因此無法接收此訊息",
     "Room directory": "聊天室目錄",
-    "Identity server is <code>%(identityServerUrl)s</code>": "身份識別伺服器為 <code>%(identityServerUrl)s</code>",
+    "Identity server is <code>%(identityServerUrl)s</code>": "身分伺服器為 <code>%(identityServerUrl)s</code>",
     "Homeserver is <code>%(homeserverUrl)s</code>": "家伺服器為 <code>%(homeserverUrl)s</code>",
     "Show NSFW content": "顯示工作不宜的 NSFW 內容",
     "View poll": "檢視投票",
@@ -3762,5 +3762,9 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "找不到下方列出的 Matrix ID 個人檔案，您是否仍要開始直接訊息？",
     "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.": "找不到此聊天室的舊版本（聊天室 ID：%(roomId)s），且我們未提供「via_servers」來檢視它。",
     "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "找不到此聊天室的舊版本（聊天室 ID：%(roomId)s），且我們未提供「via_servers」來檢視它。從聊天室 ID 猜測伺服器可能會有用。若您想嘗試，請點擊此連結：",
-    "Formatting": "格式化"
+    "Formatting": "格式化",
+    "Start messages with <code>/plain</code> to send without markdown.": "使用 <code>/plain</code> 開頭以不使用 Markdown 傳送訊息。",
+    "The add / bind with MSISDN flow is misconfigured": "新增/綁定 MSISDN 流程設定錯誤",
+    "No identity access token found": "找不到身分存取權杖",
+    "Identity server not set": "身分伺服器未設定"
 }
