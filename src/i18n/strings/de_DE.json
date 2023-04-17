@@ -3766,5 +3766,6 @@
     "Start messages with <code>/plain</code> to send without markdown.": "Beginne Nachrichten mit <code>/plain</code>, um sie ohne Markdown zu senden.",
     "The add / bind with MSISDN flow is misconfigured": "Das MSISDN-Verknüpfungsverfahren ist falsch konfiguriert",
     "No identity access token found": "Kein Identitäts-Zugangs-Token gefunden",
-    "Identity server not set": "Kein Identitäts-Server festgelegt"
+    "Identity server not set": "Kein Identitäts-Server festgelegt",
+    "WebGL is required to display maps, please enable it in your browser settings.": "Für die Darstellung von Karten ist WebGL erforderlich, bitte aktiviere es in den Einstellungen deines Browsers."
 }
