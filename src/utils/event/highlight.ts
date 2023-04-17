@@ -97,7 +97,7 @@ export const getHighlightReasonMessage = (rule: IAnnotatedPushRule): string => {
         return _t("Your display name was mentioned.");
     }
     if (rule.rule_id === RuleId.AtRoomNotification || rule.rule_id === RuleId.IsRoomMention) {
-        return _t("This messages mentions the room.");
+        return _t("This message mentions the room.");
     }
     if (rule.rule_id === RuleId.IsUserMention) {
         return _t("You were explicitly mentioned.");

@@ -593,7 +593,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             toolbarOpts.splice(
                 0,
                 0,
-                <TooltipTarget label={reason}>
+                <TooltipTarget key="highlight-annotation" data-testid="highlight-annotation" label={reason}>
                     <div className="mx_MessageActionBar_infoElement">
                         <NotificationIcon />
                     </div>

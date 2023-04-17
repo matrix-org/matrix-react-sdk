@@ -15,8 +15,18 @@ limitations under the License.
 */
 
 import React from "react";
-import { act, render, fireEvent } from "@testing-library/react";
-import { EventType, EventStatus, MatrixEvent, MatrixEventEvent, MsgType, Room } from "matrix-js-sdk/src/matrix";
+import { act, render, fireEvent, screen } from "@testing-library/react";
+import {
+    EventType,
+    EventStatus,
+    MatrixEvent,
+    MatrixEventEvent,
+    MsgType,
+    Room,
+    PushRuleActionName,
+    TweakName,
+    PushRuleKind,
+} from "matrix-js-sdk/src/matrix";
 import { FeatureSupport, Thread } from "matrix-js-sdk/src/models/thread";
 
 import MessageActionBar from "../../../../src/components/views/messages/MessageActionBar";
@@ -32,6 +42,7 @@ import { IRoomState } from "../../../../src/components/structures/RoomView";
 import dispatcher from "../../../../src/dispatcher/dispatcher";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { Action } from "../../../../src/dispatcher/actions";
+import { makeAnnotatedPushRule } from "../../../test-utils/pushRules";
 
 jest.mock("../../../../src/dispatcher/dispatcher");
 
@@ -69,6 +80,7 @@ describe("<MessageActionBar />", () => {
     const client = getMockClientWithEventEmitter({
         ...mockClientMethodsUser(userId),
         ...mockClientMethodsEvents(),
+        getPushDetailsForEvent: jest.fn(),
         getRoom: jest.fn(),
     });
 
@@ -539,5 +551,48 @@ describe("<MessageActionBar />", () => {
         const { queryByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
         fireEvent.contextMenu(queryByLabelText("Options")!);
         expect(queryByTestId("mx_MessageContextMenu")).toBeTruthy();
+    });
+
+    describe("highlight annotation", () => {
+        const message = new MatrixEvent({
+            type: EventType.RoomMessage,
+            sender: "@xavier:example.org",
+            room_id: roomId,
+            content: {
+                msgtype: MsgType.Text,
+                body: "I love bananas",
+            },
+            event_id: "$x_message",
+        });
+        const bananaRule = makeAnnotatedPushRule(PushRuleKind.ContentSpecific, "banana-rule", {
+            actions: [PushRuleActionName.Notify, { set_tweak: TweakName.Highlight, value: true }],
+            pattern: "banana",
+        });
+
+        beforeEach(() => {
+            client.getPushDetailsForEvent.mockImplementation(message.getPushDetails);
+        });
+
+        it("does not annotate an event that is not highlighted", () => {
+            getComponent({ mxEvent: alicesMessageEvent });
+
+            expect(screen.queryByTestId("highlight-annotation")).not.toBeInTheDocument();
+        });
+
+        it("annotates an event that is highlighted", () => {
+            message.setPushDetails(
+                {
+                    notify: true,
+                    tweaks: { highlight: true },
+                },
+                bananaRule,
+            );
+
+            client.getPushDetailsForEvent.mockReturnValue(message.getPushDetails());
+
+            getComponent({ mxEvent: message });
+
+            expect(screen.getByTestId("highlight-annotation")).toBeInTheDocument();
+        });
     });
 });
