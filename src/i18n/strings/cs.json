@@ -3766,5 +3766,6 @@
     "Start messages with <code>/plain</code> to send without markdown.": "Začněte zprávy s <code>/plain</code> pro odeslání bez markdown.",
     "The add / bind with MSISDN flow is misconfigured": "Přidání/připojení s MSISDN je nesprávně nakonfigurováno",
     "No identity access token found": "Nebyl nalezen žádný přístupový token identity",
-    "Identity server not set": "Server identit není nastaven"
+    "Identity server not set": "Server identit není nastaven",
+    "WebGL is required to display maps, please enable it in your browser settings.": "Pro zobrazení map je vyžadována technologie WebGL, povolte ji v nastavení prohlížeče."
 }
