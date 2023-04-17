@@ -3767,5 +3767,7 @@
     "The add / bind with MSISDN flow is misconfigured": "Неправильно налаштовано додавання / зв'язування з потоком MSISDN",
     "No identity access token found": "Токен доступу до ідентифікації не знайдено",
     "Identity server not set": "Сервер ідентифікації не налаштовано",
-    "WebGL is required to display maps, please enable it in your browser settings.": "Для показу карт потрібен WebGL, увімкніть його в налаштуваннях браузера."
+    "WebGL is required to display maps, please enable it in your browser settings.": "Для показу карт потрібен WebGL, увімкніть його в налаштуваннях браузера.",
+    "Image view": "Перегляд зображення",
+    "Upload custom sound": "Вивантажити власний звук"
 }
