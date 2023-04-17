@@ -55,7 +55,6 @@ export default class HeaderButton extends React.Component<IProps> {
             <AccessibleTooltipButton
                 {...props}
                 aria-selected={isHighlighted}
-                role="tab"
                 title={title}
                 alignment={Alignment.Bottom}
                 className={classes}
