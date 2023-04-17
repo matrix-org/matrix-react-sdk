@@ -3766,5 +3766,6 @@
     "Start messages with <code>/plain</code> to send without markdown.": "使用 <code>/plain</code> 開頭以不使用 Markdown 傳送訊息。",
     "The add / bind with MSISDN flow is misconfigured": "新增/綁定 MSISDN 流程設定錯誤",
     "No identity access token found": "找不到身分存取權杖",
-    "Identity server not set": "身分伺服器未設定"
+    "Identity server not set": "身分伺服器未設定",
+    "WebGL is required to display maps, please enable it in your browser settings.": "需要開啟 WebGL 功能才可以顯示地圖，請到瀏覽器設定中開啟。"
 }
