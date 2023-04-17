@@ -131,7 +131,7 @@ export default class TabbedView extends React.Component<IProps, IState> {
     }
 
     private getTabId(tab: Tab): string {
-        return `mx_tabpanel_${tab.label}`;
+        return `mx_tabpanel_${tab.id}`;
     }
 
     private renderTabPanel(tab: Tab): React.ReactNode {
