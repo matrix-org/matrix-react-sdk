@@ -14,11 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-    IAnnotatedPushRule,
-    PushRuleKind,
-    RuleId,
-} from "matrix-js-sdk/src/matrix";
+import { IAnnotatedPushRule, PushRuleKind, RuleId } from "matrix-js-sdk/src/matrix";
 
 import { getHighlightReasonMessage } from "../../../src/utils/event/highlight";
 import { getDefaultAnnotatedRule, makeAnnotatedPushRule } from "../../test-utils/pushRules";

@@ -392,7 +392,7 @@ describe("EventTile", () => {
         });
 
         it(`does not highlight when message's push actions does not have a highlight tweak`, () => {
-            mocked(client.getPushDetailsForEvent).mockReturnValue({ actions: { notify: true, tweaks: {} }});
+            mocked(client.getPushDetailsForEvent).mockReturnValue({ actions: { notify: true, tweaks: {} } });
             const { container } = getComponent();
 
             expect(isHighlighted(container)).toBeFalsy();
