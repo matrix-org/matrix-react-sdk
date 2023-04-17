@@ -57,6 +57,7 @@ describe("MessagePanel", function () {
         getRoom: jest.fn(),
         getClientWellKnown: jest.fn().mockReturnValue({}),
         supportsThreads: jest.fn().mockReturnValue(true),
+        getPushDetailsForEvent: jest.fn().mockReturnValue({}),
     });
     jest.spyOn(MatrixClientPeg, "get").mockReturnValue(client);
 
