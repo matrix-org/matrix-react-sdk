@@ -91,6 +91,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
             ViewSource,
             {
                 mxEvent: this.props.mxEvent,
+                ignoreEdits: true,
             },
             "mx_Dialog_viewsource",
         );
