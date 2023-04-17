@@ -399,10 +399,11 @@ describe("EventTile", () => {
         });
 
         it(`highlights when message's push actions have a highlight tweak`, () => {
-            mocked(client.getPushDetailsForEvent).mockReturnValue({ actions: {
-                notify: true,
-                tweaks: { [TweakName.Highlight]: true },
-            }
+            mocked(client.getPushDetailsForEvent).mockReturnValue({
+                actions: {
+                    notify: true,
+                    tweaks: { [TweakName.Highlight]: true },
+                },
             });
             const { container } = getComponent();
 
@@ -443,7 +444,7 @@ describe("EventTile", () => {
             });
 
             it(`does not highlight when no version of message's push actions have a highlight tweak`, () => {
-                mocked(client.getPushDetailsForEvent).mockReturnValue({ actions: { notify: true, tweaks: {} }});
+                mocked(client.getPushDetailsForEvent).mockReturnValue({ actions: { notify: true, tweaks: {} } });
                 const { container } = getComponent();
 
                 expect(isHighlighted(container)).toBeFalsy();
@@ -452,9 +453,9 @@ describe("EventTile", () => {
             it(`highlights when previous version of message's push actions have a highlight tweak`, () => {
                 mocked(client.getPushDetailsForEvent).mockImplementation((event: MatrixEvent) => {
                     if (event === mxEvent) {
-                        return { actions: { notify: true, tweaks: { [TweakName.Highlight]: true } }};
+                        return { actions: { notify: true, tweaks: { [TweakName.Highlight]: true } } };
                     }
-                    return { actions: { notify: false, tweaks: {} }};
+                    return { actions: { notify: false, tweaks: {} } };
                 });
                 const { container } = getComponent();
 
@@ -464,9 +465,9 @@ describe("EventTile", () => {
             it(`highlights when new version of message's push actions have a highlight tweak`, () => {
                 mocked(client.getPushDetailsForEvent).mockImplementation((event: MatrixEvent) => {
                     if (event === editingEvent) {
-                        return { actions: { notify: true, tweaks: { [TweakName.Highlight]: true } }};
+                        return { actions: { notify: true, tweaks: { [TweakName.Highlight]: true } } };
                     }
-                    return { actions: { notify: false, tweaks: {} }};
+                    return { actions: { notify: false, tweaks: {} } };
                 });
                 const { container } = getComponent();
 

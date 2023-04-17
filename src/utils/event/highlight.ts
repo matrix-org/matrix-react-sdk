@@ -15,9 +15,10 @@ limitations under the License.
 */
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { IAnnotatedPushRule, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { IAnnotatedPushRule, MatrixEvent, PushRuleKind, RuleId } from "matrix-js-sdk/src/matrix";
 
 import { TimelineRenderingType } from "../../contexts/RoomContext";
+import { _t } from "../../languageHandler";
 
 /**
  * Determine whether an event should be highlighted
@@ -25,9 +26,13 @@ import { TimelineRenderingType } from "../../contexts/RoomContext";
  * the event should remain highlighted as the user may have been notified
  * @returns {boolean}
  */
-export const shouldHighlightEvent = (event: MatrixEvent, client: MatrixClient, timelineRenderingType: TimelineRenderingType): boolean => {
+export const shouldHighlightEvent = (
+    event: MatrixEvent,
+    client: MatrixClient,
+    timelineRenderingType: TimelineRenderingType,
+): boolean => {
     return getEventHighlightInfo(event, client, timelineRenderingType).isHighlighted;
-}
+};
 
 /**
  * Determine whether an event should be highlighted and why
@@ -39,10 +44,15 @@ export const shouldHighlightEvent = (event: MatrixEvent, client: MatrixClient, t
  * @returns {IAnnotatedPushRule} rule - the rule that triggered the highlight
 
  */
-export const getEventHighlightInfo = (event: MatrixEvent, client: MatrixClient, timelineRenderingType: TimelineRenderingType): {
-    isHighlighted: boolean; isBecausePreviousEvent?: boolean; rule?: IAnnotatedPushRule;
+export const getEventHighlightInfo = (
+    event: MatrixEvent,
+    client: MatrixClient,
+    timelineRenderingType: TimelineRenderingType,
+): {
+    isHighlighted: boolean;
+    isBecausePreviousEvent?: boolean;
+    rule?: IAnnotatedPushRule;
 } => {
-
     if (timelineRenderingType === TimelineRenderingType.Notification) return { isHighlighted: false };
     if (timelineRenderingType === TimelineRenderingType.ThreadsList) return { isHighlighted: false };
 
@@ -50,12 +60,10 @@ export const getEventHighlightInfo = (event: MatrixEvent, client: MatrixClient, 
     if (event.getSender() === client.getSafeUserId()) {
         return { isHighlighted: false };
     }
-    
+
     const pushDetails = client.getPushDetailsForEvent(event.replacingEvent() || event);
     // get the actions for the previous version of the event too if it is an edit
-    const previousPushDetails = event.replacingEvent()
-        ? client.getPushDetailsForEvent(event)
-        : null;
+    const previousPushDetails = event.replacingEvent() ? client.getPushDetailsForEvent(event) : null;
 
     if (!pushDetails?.actions?.tweaks && !previousPushDetails?.actions?.tweaks) {
         return { isHighlighted: false };
@@ -66,7 +74,7 @@ export const getEventHighlightInfo = (event: MatrixEvent, client: MatrixClient, 
         return {
             isHighlighted: true,
             rule: pushDetails.rule,
-        }
+        };
     }
 
     // previous version of the event triggered a highlight
@@ -74,9 +82,28 @@ export const getEventHighlightInfo = (event: MatrixEvent, client: MatrixClient, 
         return {
             isHighlighted: true,
             rule: previousPushDetails.rule,
-            isBecausePreviousEvent: true
-        }
+            isBecausePreviousEvent: true,
+        };
     }
 
     return { isHighlighted: false };
-}
+};
+
+export const getHighlightReasonMessage = (rule: IAnnotatedPushRule): string => {
+    if (rule.rule_id === RuleId.ContainsUserName) {
+        return _t("Your username was mentioned.");
+    }
+    if (rule.rule_id === RuleId.ContainsDisplayName) {
+        return _t("Your display name was mentioned.");
+    }
+    if (rule.rule_id === RuleId.AtRoomNotification || rule.rule_id === RuleId.IsRoomMention) {
+        return _t("This messages mentions the room.");
+    }
+    if (rule.rule_id === RuleId.IsUserMention) {
+        return _t("You were explicitly mentioned.");
+    }
+    if (rule.kind === PushRuleKind.ContentSpecific) {
+        return _t(`Your keyword '%(keyword)s' was mentioned.`, { keyword: rule.pattern! });
+    }
+    return "";
+};

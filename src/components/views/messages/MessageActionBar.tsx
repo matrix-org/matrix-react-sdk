@@ -59,7 +59,7 @@ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayloa
 import useFavouriteMessages from "../../../hooks/useFavouriteMessages";
 import { GetRelationsForEvent } from "../rooms/EventTile";
 import { VoiceBroadcastInfoEventType } from "../../../voice-broadcast/types";
-import { getEventHighlightInfo } from "../../../utils/event/highlight";
+import { getEventHighlightInfo, getHighlightReasonMessage } from "../../../utils/event/highlight";
 import TooltipTarget from "../elements/TooltipTarget";
 
 interface IOptionsButtonProps {
@@ -582,18 +582,20 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             );
         }
 
-        const highlightInfo = getEventHighlightInfo(this.props.mxEvent, MatrixClientPeg.get(), this.context.timelineRenderingType);
+        const highlightInfo = getEventHighlightInfo(
+            this.props.mxEvent,
+            MatrixClientPeg.get(),
+            this.context.timelineRenderingType,
+        );
 
-        if (highlightInfo.isHighlighted) {
+        if (highlightInfo.isHighlighted && highlightInfo.rule) {
+            const reason = getHighlightReasonMessage(highlightInfo.rule);
             toolbarOpts.splice(
                 0,
                 0,
-                <TooltipTarget
-                    
-                    label={highlightInfo?.rule?.rule_id || 'TODO fallback reason'}
-                >
+                <TooltipTarget label={reason}>
                     <div className="mx_MessageActionBar_infoElement">
-                    <NotificationIcon />
+                        <NotificationIcon />
                     </div>
                 </TooltipTarget>,
             );
