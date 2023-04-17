@@ -82,7 +82,7 @@ const ANY_REGEX = /.*/;
 // the list and magically have the link work.
 
 export class RoomPermalinkCreator {
-    private roomId: string;
+    public readonly roomId: string;
     private highestPlUserId: string | null = null;
     private populationMap: { [serverName: string]: number } = {};
     private bannedHostsRegexps: RegExp[] = [];

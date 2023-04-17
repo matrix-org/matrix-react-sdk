@@ -59,7 +59,16 @@ interface Props {
 // XXX: why doesn't searching on name work?
 export const RoomSearchView = forwardRef<ScrollPanel, Props>(
     (
-        { term, scope, promise, abortController, resizeNotifier, permalinkCreator, className, onUpdate }: Props,
+        {
+            term,
+            scope,
+            promise,
+            abortController,
+            resizeNotifier,
+            permalinkCreator: _permalinkCreator,
+            className,
+            onUpdate,
+        }: Props,
         ref: RefObject<ScrollPanel>,
     ) => {
         const client = useContext(MatrixClientContext);
@@ -68,6 +77,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
         const [highlights, setHighlights] = useState<string[] | null>(null);
         const [results, setResults] = useState<ISearchResults | null>(null);
         const aborted = useRef(false);
+        const permalinkCreators = useRef(new Map<string, RoomPermalinkCreator>()).current;
 
         const handleSearchResult = useCallback(
             (searchPromise: Promise<ISearchResults>): Promise<boolean> => {
@@ -281,6 +291,16 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                 mergedTimeline = result.context.getTimeline();
                 ourEventsIndexes = [];
                 ourEventsIndexes.push(result.context.getOurEventIndex());
+            }
+
+            let permalinkCreator = _permalinkCreator;
+            if (roomId !== permalinkCreator.roomId) {
+                if (permalinkCreators.has(roomId)) {
+                    permalinkCreator = permalinkCreators.get(roomId);
+                } else {
+                    permalinkCreator = new RoomPermalinkCreator(client.getRoom(roomId), roomId);
+                    permalinkCreators.set(roomId, permalinkCreator);
+                }
             }
 
             ret.push(
