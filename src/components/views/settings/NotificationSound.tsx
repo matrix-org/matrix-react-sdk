@@ -189,6 +189,7 @@ class NotificationSound extends React.Component<IProps, IState> {
                             onClick={chromeFileInputFix}
                             onChange={this.onSoundUploadChanged}
                             accept="audio/*"
+                            aria-label={_t("Upload custom sound")}
                         />
                     </form>
 
