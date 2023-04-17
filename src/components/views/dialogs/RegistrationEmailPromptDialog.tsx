@@ -30,7 +30,7 @@ interface IProps {
 
 const RegistrationEmailPromptDialog: React.FC<IProps> = ({ onFinished }) => {
     const [email, setEmail] = useState("");
-    const fieldRef = useRef<Field>();
+    const fieldRef = useRef<Field>(null);
 
     const onSubmit = async (e: SyntheticEvent): Promise<void> => {
         e.preventDefault();

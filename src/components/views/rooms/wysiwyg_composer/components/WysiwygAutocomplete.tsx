@@ -35,6 +35,12 @@ interface WysiwygAutocompleteProps {
      * a mention in the autocomplete list or pressing enter on a selected item
      */
     handleMention: FormattingFunctions["mention"];
+
+    /**
+     * This handler will be called with the display text for a command on clicking
+     * a command in the autocomplete list or pressing enter on a selected item
+     */
+    handleCommand: FormattingFunctions["command"];
 }
 
 /**
@@ -45,22 +51,57 @@ interface WysiwygAutocompleteProps {
  * @param props.ref - the ref will be attached to the rendered `<Autocomplete />` component
  */
 const WysiwygAutocomplete = forwardRef(
-    ({ suggestion, handleMention }: WysiwygAutocompleteProps, ref: ForwardedRef<Autocomplete>): JSX.Element | null => {
+    (
+        { suggestion, handleMention, handleCommand }: WysiwygAutocompleteProps,
+        ref: ForwardedRef<Autocomplete>,
+    ): JSX.Element | null => {
         const { room } = useRoomContext();
         const client = useMatrixClientContext();
 
         function handleConfirm(completion: ICompletion): void {
-            // TODO handle all of the completion types
-            // Using this to pick out the ones we can handle during implementation
-            if (client && room && completion.href && (completion.type === "room" || completion.type === "user")) {
-                handleMention(
-                    completion.href,
-                    getMentionDisplayText(completion, client),
-                    getMentionAttributes(completion, client, room),
-                );
+            if (client === undefined || room === undefined) {
+                return;
+            }
+
+            switch (completion.type) {
+                case "command": {
+                    // TODO determine if utils in SlashCommands.tsx are required.
+                    // Trim the completion as some include trailing spaces, but we always insert a
+                    // trailing space in the rust model anyway
+                    handleCommand(completion.completion.trim());
+                    return;
+                }
+                case "at-room": {
+                    // TODO improve handling of at-room to either become a span or use a placeholder href
+                    // We have an issue in that we can't use a placeholder because the rust model is always
+                    // applying a prefix to the href, so an href of "#" becomes https://# and also we can not
+                    // represent a plain span in rust
+                    handleMention(
+                        window.location.href,
+                        getMentionDisplayText(completion, client),
+                        getMentionAttributes(completion, client, room),
+                    );
+                    return;
+                }
+                case "room":
+                case "user": {
+                    if (typeof completion.href === "string") {
+                        handleMention(
+                            completion.href,
+                            getMentionDisplayText(completion, client),
+                            getMentionAttributes(completion, client, room),
+                        );
+                    }
+                    return;
+                }
+                // TODO - handle "community" type
+                default:
+                    return;
             }
         }
 
+        // TODO - determine if we show all of the /command suggestions, there are some options in the
+        // list which don't seem to make sense in this context, specifically /html and /plain
         return room ? (
             <div className="mx_WysiwygComposer_AutoCompleteWrapper" data-testid="autocomplete-wrapper">
                 <Autocomplete
