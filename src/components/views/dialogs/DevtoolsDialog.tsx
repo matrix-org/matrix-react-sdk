@@ -34,6 +34,10 @@ import ServerInfo from "./devtools/ServerInfo";
 import { Features } from "../../../settings/Settings";
 import CopyableText from "../elements/CopyableText";
 import RoomNotifications from "./devtools/RoomNotifications";
+import { RoomDropdown } from "./devtools/RoomDropdown";
+import { Icon as BackIcon } from "../../../../res/img/compound/back-16px.svg";
+import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 enum Category {
     Room,
@@ -70,8 +74,9 @@ interface IProps {
 
 type ToolInfo = [label: string, tool: Tool];
 
-const DevtoolsDialog: React.FC<IProps> = ({ roomId, onFinished }) => {
+const DevtoolsDialog: React.FC<IProps> = ({ roomId: roomPropId, onFinished }) => {
     const [tool, setTool] = useState<ToolInfo | null>(null);
+    const [roomId, setRoomId] = useState(roomPropId);
 
     let body: JSX.Element;
     let onBack: () => void;
@@ -115,6 +120,31 @@ const DevtoolsDialog: React.FC<IProps> = ({ roomId, onFinished }) => {
         );
     }
 
+    const cli = MatrixClientPeg.get();
+    const room = cli.getRoom(roomId);
+
+    const roomIdOrSelect = !!tool ? (
+        // Developer tools are currently displaying a tool.
+        // No room selection is supported at this point.
+        <>
+            <CopyableText className="mx_DevTools_label_right" getTextToCopy={() => roomId} border={false}>
+                {_t("Room ID: %(roomId)s", { roomId })}
+            </CopyableText>
+            <div> {_t("Room name: %(roomName)s", { roomName: room?.name })} </div>
+            <div className="mx_DevTools_label_bottom" />
+        </>
+    ) : (
+        // Developer tools currently display the tools overview.
+        // Display a room selection here.
+        <div className="mx_DevTools_roomIdRow">
+            <RoomDropdown value={roomId} onValueChange={(value) => setRoomId(() => value)} />
+            <AccessibleTooltipButton title={_t("Reset to current room")} onClick={() => setRoomId(() => roomPropId)}>
+                <BackIcon className="mx_Icon mx_Icon_16" />
+            </AccessibleTooltipButton>
+            <CopyableText getTextToCopy={() => roomId} border={false} />
+        </div>
+    );
+
     const label = tool ? tool[0] : _t("Toolbox");
     return (
         <BaseDialog className="mx_QuestionDialog" onFinished={onFinished} title={_t("Developer Tools")}>
@@ -122,10 +152,7 @@ const DevtoolsDialog: React.FC<IProps> = ({ roomId, onFinished }) => {
                 {(cli) => (
                     <>
                         <div className="mx_DevTools_label_left">{label}</div>
-                        <CopyableText className="mx_DevTools_label_right" getTextToCopy={() => roomId} border={false}>
-                            {_t("Room ID: %(roomId)s", { roomId })}
-                        </CopyableText>
-                        <div className="mx_DevTools_label_bottom" />
+                        {roomIdOrSelect}
                         {cli.getRoom(roomId) && (
                             <DevtoolsContext.Provider value={{ room: cli.getRoom(roomId)! }}>
                                 {body}

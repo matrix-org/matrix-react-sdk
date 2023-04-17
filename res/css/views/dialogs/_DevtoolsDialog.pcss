@@ -185,3 +185,20 @@ limitations under the License.
     /* used on focus */
     color: $links !important;
 }
+
+.mx_DevTools_roomIdRow {
+    align-items: center;
+    display: flex;
+    gap: $spacing-12;
+}
+
+.mx_DevTools_roomIdRow .mx_Dropdown {
+    flex: 1 0 auto;
+}
+
+.mx_DevTools_roomIdRow .mx_CopyableText .mx_CopyableText_copyButton,
+.mx_DevTools_roomIdRow .mx_AccessibleButton {
+    // layout tweaks
+    line-height: 0;
+    padding: 0;
+}
