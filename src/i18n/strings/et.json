@@ -3767,5 +3767,7 @@
     "The add / bind with MSISDN flow is misconfigured": "„Add“ ja „bind“ meetodid MSISDN jaoks on valesti seadistatud",
     "No identity access token found": "Ei leidu tunnusluba isikutuvastusserveri jaoks",
     "Identity server not set": "Isikutuvastusserver on määramata",
-    "WebGL is required to display maps, please enable it in your browser settings.": "Kaartide kuvamiseks on vajalik WebGL, seega palun luba WebGL'i kasutamine oma veebibrauseri seadistustes."
+    "WebGL is required to display maps, please enable it in your browser settings.": "Kaartide kuvamiseks on vajalik WebGL, seega palun luba WebGL'i kasutamine oma veebibrauseri seadistustes.",
+    "Image view": "Pildivaade",
+    "Upload custom sound": "Laadi üles oma helifail"
 }
