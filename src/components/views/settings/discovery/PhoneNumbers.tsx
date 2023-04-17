@@ -222,7 +222,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
         let status;
         if (verifying) {
             status = (
-                <span className="mx_ExistingPhoneNumber_verification">
+                <span className="mx_PhoneNumber--existing_verification">
                     <span>
                         {_t("Please enter verification code sent via text.")}
                         <br />
@@ -243,7 +243,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
         } else if (bound) {
             status = (
                 <AccessibleButton
-                    className="mx_ExistingPhoneNumber_confirmBtn"
+                    className="mx_PhoneNumber--existing_confirmBtn"
                     kind="danger_sm"
                     onClick={this.onRevokeClick}
                 >
@@ -253,7 +253,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
         } else {
             status = (
                 <AccessibleButton
-                    className="mx_ExistingPhoneNumber_confirmBtn"
+                    className="mx_PhoneNumber--existing_confirmBtn"
                     kind="primary_sm"
                     onClick={this.onShareClick}
                 >
@@ -263,8 +263,8 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
         }
 
         return (
-            <div className="mx_ExistingPhoneNumber">
-                <span className="mx_ExistingPhoneNumber_address">+{address}</span>
+            <div className="mx_PhoneNumber--existing">
+                <span className="mx_PhoneNumber--existing_address">+{address}</span>
                 {status}
             </div>
         );
