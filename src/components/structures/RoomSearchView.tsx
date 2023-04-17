@@ -82,6 +82,13 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
         // to be able to generate share permalinks for results from other rooms
         const permalinkCreators = useRef(new Map<string, RoomPermalinkCreator>()).current;
 
+        useEffect(() => {
+            return () => {
+                permalinkCreators.forEach((pc) => pc.stop());
+                permalinkCreators.clear();
+            };
+        }, [permalinkCreators]);
+
         const handleSearchResult = useCallback(
             (searchPromise: Promise<ISearchResults>): Promise<boolean> => {
                 setInProgress(true);
@@ -302,6 +309,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                     permalinkCreator = permalinkCreators.get(roomId)!;
                 } else {
                     permalinkCreator = new RoomPermalinkCreator(client.getRoom(roomId), roomId);
+                    permalinkCreator.start();
                     permalinkCreators.set(roomId, permalinkCreator);
                 }
             }
