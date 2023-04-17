@@ -3766,5 +3766,6 @@
     "Start messages with <code>/plain</code> to send without markdown.": "Vormindamata teksti koostamiseks alusta sõnumeid <code>/plain</code> käsuga.",
     "The add / bind with MSISDN flow is misconfigured": "„Add“ ja „bind“ meetodid MSISDN jaoks on valesti seadistatud",
     "No identity access token found": "Ei leidu tunnusluba isikutuvastusserveri jaoks",
-    "Identity server not set": "Isikutuvastusserver on määramata"
+    "Identity server not set": "Isikutuvastusserver on määramata",
+    "WebGL is required to display maps, please enable it in your browser settings.": "Kaartide kuvamiseks on vajalik WebGL, seega palun luba WebGL'i kasutamine oma veebibrauseri seadistustes."
 }
