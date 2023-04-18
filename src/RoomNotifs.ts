@@ -205,15 +205,14 @@ function isMuteRule(rule: IPushRule): boolean {
 export function determineUnreadState(
     room?: Room,
     threadId?: string,
-): { color: NotificationColor; symbol: string | null; count: number; muted: boolean; } {
+): { color: NotificationColor; symbol: string | null; count: number; muted: boolean } {
     if (!room) {
         return { symbol: null, count: 0, color: NotificationColor.None, muted: false };
     }
 
     const echoChamber = EchoChamber.forRoom(room);
-    const notifVolume= echoChamber.notificationVolume;
+    const notifVolume = echoChamber.notificationVolume;
     const muted = notifVolume === RoomNotifState.Mute;
-    console.log('hhh', room?.roomId, muted, { room, echoChamber });
 
     if (getUnsentMessages(room, threadId).length > 0) {
         return { symbol: "!", count: 1, color: NotificationColor.Unsent, muted };

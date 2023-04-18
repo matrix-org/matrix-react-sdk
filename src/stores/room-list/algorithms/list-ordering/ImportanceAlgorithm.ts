@@ -42,7 +42,7 @@ const CATEGORY_ORDER = [
     NotificationColor.Grey,
     NotificationColor.Bold,
     NotificationColor.None, // idle
-    NotificationColor.Muted
+    NotificationColor.Muted,
 ];
 
 /**
@@ -166,7 +166,11 @@ export class ImportanceAlgorithm extends OrderingAlgorithm {
             return this.handleSplice(room, cause);
         }
 
-        if (cause !== RoomUpdateCause.Timeline && cause !== RoomUpdateCause.ReadReceipt) {
+        if (
+            cause !== RoomUpdateCause.Timeline &&
+            cause !== RoomUpdateCause.ReadReceipt &&
+            cause !== RoomUpdateCause.PossibleMuteChange
+        ) {
             throw new Error(`Unsupported update cause: ${cause}`);
         }
 

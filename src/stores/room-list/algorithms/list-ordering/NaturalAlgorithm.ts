@@ -26,7 +26,7 @@ import { RoomNotificationStateStore } from "../../../notifications/RoomNotificat
 type NaturalCategorizedRoomMap = {
     defaultRooms: Room[];
     mutedRooms: Room[];
-}
+};
 
 /**
  * Uses the natural tag sorting algorithm order to determine tag ordering. No
@@ -34,35 +34,30 @@ type NaturalCategorizedRoomMap = {
  */
 export class NaturalAlgorithm extends OrderingAlgorithm {
     private cachedCategorizedOrderedRooms: NaturalCategorizedRoomMap = {
-        defaultRooms: [], mutedRooms: []
+        defaultRooms: [],
+        mutedRooms: [],
     };
     public constructor(tagId: TagID, initialSortingAlgorithm: SortAlgorithm) {
         super(tagId, initialSortingAlgorithm);
     }
 
     public setRooms(rooms: Room[]): void {
-        const { defaultRooms, mutedRooms} = this.categorizeRooms(rooms);
-
-        console.log('hhh', { rooms, defaultRooms, mutedRooms });
+        const { defaultRooms, mutedRooms } = this.categorizeRooms(rooms);
 
         this.cachedCategorizedOrderedRooms = {
             defaultRooms: sortRoomsWithAlgorithm(defaultRooms, this.tagId, this.sortingAlgorithm),
-            mutedRooms: sortRoomsWithAlgorithm(
-                mutedRooms,
-                this.tagId,
-                this.sortingAlgorithm,
-            )
-        }
+            mutedRooms: sortRoomsWithAlgorithm(mutedRooms, this.tagId, this.sortingAlgorithm),
+        };
         this.buildCachedOrderedRooms();
     }
 
     public handleRoomUpdate(room: Room, cause: RoomUpdateCause): boolean {
         const isSplice = cause === RoomUpdateCause.NewRoom || cause === RoomUpdateCause.RoomRemoved;
-        const isInPlace = cause === RoomUpdateCause.Timeline || cause === RoomUpdateCause.ReadReceipt;
+        const isInPlace =
+            cause === RoomUpdateCause.Timeline ||
+            cause === RoomUpdateCause.ReadReceipt ||
+            cause === RoomUpdateCause.PossibleMuteChange;
         const isMuted = this.getRoomIsMuted(room);
-
-        // TODO(kerrya) case for room becoming muted
-        // TODO(kerrya) can we assume room mutedness won't change without an event?
 
         if (!isSplice && !isInPlace) {
             throw new Error(`Unsupported update cause: ${cause}`);
@@ -74,18 +69,20 @@ export class NaturalAlgorithm extends OrderingAlgorithm {
                     [...this.cachedCategorizedOrderedRooms.mutedRooms, room],
                     this.tagId,
                     this.sortingAlgorithm,
-                )
+                );
             } else {
                 this.cachedCategorizedOrderedRooms.defaultRooms = sortRoomsWithAlgorithm(
                     [...this.cachedCategorizedOrderedRooms.defaultRooms, room],
                     this.tagId,
                     this.sortingAlgorithm,
-                )
+                );
             }
             this.buildCachedOrderedRooms();
             return true;
         } else if (cause === RoomUpdateCause.RoomRemoved) {
             return this.removeRoom(room);
+        } else if (cause === RoomUpdateCause.PossibleMuteChange) {
+            return this.onPossibleMuteChange(room);
         }
 
         // @TODO(kerrya) what cases are hitting here? should they cause a reorder?)
@@ -96,13 +93,13 @@ export class NaturalAlgorithm extends OrderingAlgorithm {
                 this.cachedCategorizedOrderedRooms.mutedRooms,
                 this.tagId,
                 this.sortingAlgorithm,
-            )
+            );
         } else {
             this.cachedCategorizedOrderedRooms.defaultRooms = sortRoomsWithAlgorithm(
                 this.cachedCategorizedOrderedRooms.defaultRooms,
                 this.tagId,
                 this.sortingAlgorithm,
-            )
+            );
         }
         this.buildCachedOrderedRooms();
         return true;
@@ -114,13 +111,13 @@ export class NaturalAlgorithm extends OrderingAlgorithm {
      * @returns {boolean} true when room list should update as result
      */
     private removeRoom(room: Room): boolean {
-        const defaultIndex = this.cachedCategorizedOrderedRooms.defaultRooms.findIndex(r => r.roomId === room.roomId);
+        const defaultIndex = this.cachedCategorizedOrderedRooms.defaultRooms.findIndex((r) => r.roomId === room.roomId);
         if (defaultIndex > -1) {
             this.cachedCategorizedOrderedRooms.defaultRooms.splice(defaultIndex, 1);
             this.buildCachedOrderedRooms();
             return true;
         }
-        const mutedIndex = this.cachedCategorizedOrderedRooms.mutedRooms.findIndex(r => r.roomId === room.roomId);
+        const mutedIndex = this.cachedCategorizedOrderedRooms.mutedRooms.findIndex((r) => r.roomId === room.roomId);
         if (mutedIndex > -1) {
             this.cachedCategorizedOrderedRooms.mutedRooms.splice(mutedIndex, 1);
             this.buildCachedOrderedRooms();
@@ -150,13 +147,59 @@ export class NaturalAlgorithm extends OrderingAlgorithm {
     }
 
     private categorizeRooms(rooms: Room[]): NaturalCategorizedRoomMap {
-        return rooms.reduce<NaturalCategorizedRoomMap>((acc, room: Room) => {
-            if (this.getRoomIsMuted(room)) {
-                acc.mutedRooms.push(room);
-            } else {
-                acc.defaultRooms.push(room);
-            };
-            return acc;
-        }, { defaultRooms: [], mutedRooms: []} as NaturalCategorizedRoomMap)
+        return rooms.reduce<NaturalCategorizedRoomMap>(
+            (acc, room: Room) => {
+                if (this.getRoomIsMuted(room)) {
+                    acc.mutedRooms.push(room);
+                } else {
+                    acc.defaultRooms.push(room);
+                }
+                return acc;
+            },
+            { defaultRooms: [], mutedRooms: [] } as NaturalCategorizedRoomMap,
+        );
+    }
+
+    private onPossibleMuteChange(room: Room): boolean {
+        const isMuted = this.getRoomIsMuted(room);
+        if (isMuted) {
+            const defaultIndex = this.cachedCategorizedOrderedRooms.defaultRooms.findIndex(
+                (r) => r.roomId === room.roomId,
+            );
+
+            // room has been muted
+            if (defaultIndex > -1) {
+                // remove from the default list
+                this.cachedCategorizedOrderedRooms.defaultRooms.splice(defaultIndex, 1);
+                // add to muted list and reorder
+                this.cachedCategorizedOrderedRooms.mutedRooms = sortRoomsWithAlgorithm(
+                    [...this.cachedCategorizedOrderedRooms.mutedRooms, room],
+                    this.tagId,
+                    this.sortingAlgorithm,
+                );
+                // rebuild
+                this.buildCachedOrderedRooms();
+                return true;
+            }
+        } else {
+            const mutedIndex = this.cachedCategorizedOrderedRooms.mutedRooms.findIndex((r) => r.roomId === room.roomId);
+
+            // room has been unmuted
+            if (mutedIndex > -1) {
+                // remove from the muted list
+                this.cachedCategorizedOrderedRooms.mutedRooms.splice(mutedIndex, 1);
+                // add to default list and reorder
+                this.cachedCategorizedOrderedRooms.defaultRooms = sortRoomsWithAlgorithm(
+                    [...this.cachedCategorizedOrderedRooms.defaultRooms, room],
+                    this.tagId,
+                    this.sortingAlgorithm,
+                );
+                // rebuild
+                this.buildCachedOrderedRooms();
+                return true;
+            }
+        }
+
+        return false;
     }
 }
