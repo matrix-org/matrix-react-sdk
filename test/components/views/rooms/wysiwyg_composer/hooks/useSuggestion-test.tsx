@@ -20,7 +20,9 @@ import {
     PlainTextSuggestionPattern,
     mapSuggestion,
     processCommand,
+    processSelectionChange,
 } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/useSuggestion";
+import { text } from "stream/consumers";
 
 const createMockPlainTextSuggestionPattern = (
     props: Partial<PlainTextSuggestionPattern> = {},
@@ -116,5 +118,79 @@ describe("processCommand", () => {
 
         // check that the text has changed and includes a trailing space
         expect(mockSetText).toHaveBeenCalledWith(`${replacementText} `);
+    });
+});
+
+describe.only("processSelectionChange", () => {
+    it("returns early if current editorRef is null", () => {
+        const mockEditorRef = { current: null } as React.RefObject<HTMLDivElement>;
+        const getSelectionSpy = jest.spyOn(document, "getSelection");
+        processSelectionChange(mockEditorRef, null, jest.fn());
+        expect(getSelectionSpy).not.toHaveBeenCalled();
+    });
+
+    it("does not call setSuggestion if selection is not a cursor", () => {
+        const mockEditor = document.createElement("div");
+        const textContent = document.createTextNode("content");
+        mockEditor.appendChild(textContent);
+        const mockSetSuggestion = jest.fn();
+        const mockEditorRef = { current: mockEditor } as React.RefObject<HTMLDivElement>;
+
+        document.getSelection()?.setBaseAndExtent(textContent, 0, textContent, 4);
+
+        processSelectionChange(mockEditorRef, createMockPlainTextSuggestionPattern(), mockSetSuggestion);
+
+        expect(mockSetSuggestion).not.toHaveBeenCalled();
+    });
+
+    it("does not call setSuggestion if selection cursor is not inside a text node", () => {
+        const mockEditor = document.createElement("div");
+        const textContent = document.createTextNode("content");
+        mockEditor.appendChild(textContent);
+        const mockSetSuggestion = jest.fn();
+        const mockEditorRef = { current: mockEditor } as React.RefObject<HTMLDivElement>;
+
+        document.getSelection()?.setBaseAndExtent(mockEditor, 0, mockEditor, 0);
+
+        processSelectionChange(mockEditorRef, createMockPlainTextSuggestionPattern(), mockSetSuggestion);
+
+        expect(mockSetSuggestion).not.toHaveBeenCalled();
+    });
+
+    it("calls setSuggestion with null if we have an existing suggestion but no command match", () => {
+        const mockEditor = document.createElement("div");
+        const textNode = document.createTextNode("this will not match");
+        mockEditor.appendChild(textNode);
+        document.body.appendChild(mockEditor);
+        const mockSetSuggestion = jest.fn();
+        const mockEditorRef = { current: mockEditor } as React.RefObject<HTMLDivElement>;
+
+        document.getSelection()?.setBaseAndExtent(textNode, 0, textNode, 0);
+
+        processSelectionChange(mockEditorRef, createMockPlainTextSuggestionPattern(), mockSetSuggestion);
+
+        expect(mockSetSuggestion).toHaveBeenCalledWith(null);
+    });
+
+    it("calls setSuggestion with the expected arguments when text node is valid command", () => {
+        const mockEditor = document.createElement("div");
+        const textNode = document.createTextNode("/potentialCommand");
+        mockEditor.appendChild(textNode);
+        document.body.appendChild(mockEditor);
+        const mockSetSuggestion = jest.fn();
+        const mockEditorRef = { current: mockEditor } as React.RefObject<HTMLDivElement>;
+
+        document.getSelection()?.setBaseAndExtent(textNode, 3, textNode, 3);
+
+        processSelectionChange(mockEditorRef, null, mockSetSuggestion);
+
+        expect(mockSetSuggestion).toHaveBeenCalledWith({
+            keyChar: "/",
+            type: "command",
+            text: "potentialCommand",
+            node: textNode,
+            startOffset: 0,
+            endOffset: 17,
+        });
     });
 });
