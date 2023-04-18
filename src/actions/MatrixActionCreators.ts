@@ -58,12 +58,17 @@ function createSyncAction(matrixClient: MatrixClient, state: string, prevState: 
  * @param {MatrixEvent} accountDataEvent the account data event.
  * @returns {AccountDataAction} an action of type MatrixActions.accountData.
  */
-function createAccountDataAction(matrixClient: MatrixClient, accountDataEvent: MatrixEvent): ActionPayload {
+function createAccountDataAction(
+    matrixClient: MatrixClient,
+    accountDataEvent: MatrixEvent,
+    previousAccountDataEvent?: MatrixEvent,
+): ActionPayload {
     return {
         action: "MatrixActions.accountData",
         event: accountDataEvent,
         event_type: accountDataEvent.getType(),
         event_content: accountDataEvent.getContent(),
+        previousEvent: previousAccountDataEvent,
     };
 }
 
