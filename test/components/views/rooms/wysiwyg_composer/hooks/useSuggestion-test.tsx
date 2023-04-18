@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from "react";
-import { MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 
 import {
     PlainTextSuggestionPattern,
@@ -42,22 +41,20 @@ describe("mapSuggestion", () => {
     });
 
     it("returns a mapped suggestion when passed a suggestion", () => {
-        const input = createMockPlainTextSuggestionPattern();
-
-        const expected: MappedSuggestion = {
-            keyChar: "/",
-            type: "command",
+        const inputFields = {
+            keyChar: "/" as const,
+            type: "command" as const,
             text: "some text",
         };
-
+        const input = createMockPlainTextSuggestionPattern(inputFields);
         const output = mapSuggestion(input);
 
-        expect(output).toEqual(expected);
+        expect(output).toEqual(inputFields);
     });
 });
 
 describe("processCommand", () => {
-    it("does not change parent hook state if suggestion or editor ref is null", () => {
+    it("does not change parent hook state if editor ref or suggestion is null", () => {
         // create a div and append a text node to it with some initial text
         const editorDiv = document.createElement("div");
         const initialText = "text";
@@ -121,75 +118,94 @@ describe("processCommand", () => {
 });
 
 describe("processSelectionChange", () => {
+    function createMockEditorRef(element: HTMLDivElement | null = null): React.RefObject<HTMLDivElement> {
+        return { current: element } as React.RefObject<HTMLDivElement>;
+    }
+
+    function appendEditorWithTextNodeContaining(initialText = ""): [HTMLDivElement, Node] {
+        // create the elements/nodes
+        const mockEditor = document.createElement("div");
+        const textNode = document.createTextNode(initialText);
+
+        // append text node to the editor, editor to the document body
+        mockEditor.appendChild(textNode);
+        document.body.appendChild(mockEditor);
+
+        return [mockEditor, textNode];
+    }
+
+    const mockSetSuggestion = jest.fn();
+    beforeEach(() => {
+        mockSetSuggestion.mockClear();
+    });
+
     it("returns early if current editorRef is null", () => {
-        const mockEditorRef = { current: null } as React.RefObject<HTMLDivElement>;
+        const mockEditorRef = createMockEditorRef(null);
+        // we monitor for the call to document.getSelection to indicate an early return
         const getSelectionSpy = jest.spyOn(document, "getSelection");
+
         processSelectionChange(mockEditorRef, null, jest.fn());
         expect(getSelectionSpy).not.toHaveBeenCalled();
+
+        // tidy up to avoid potential impacts on other tests
+        getSelectionSpy.mockRestore();
     });
 
     it("does not call setSuggestion if selection is not a cursor", () => {
-        const mockEditor = document.createElement("div");
-        const textContent = document.createTextNode("content");
-        mockEditor.appendChild(textContent);
-        const mockSetSuggestion = jest.fn();
-        const mockEditorRef = { current: mockEditor } as React.RefObject<HTMLDivElement>;
+        const [mockEditor, textNode] = appendEditorWithTextNodeContaining("content");
+        const mockEditorRef = createMockEditorRef(mockEditor);
 
-        document.getSelection()?.setBaseAndExtent(textContent, 0, textContent, 4);
+        // create a selection in the text node that has different start and end locations ie it
+        // is not a cursor
+        document.getSelection()?.setBaseAndExtent(textNode, 0, textNode, 4);
 
+        // process the selection and check that we do not attempt to set the suggestion
         processSelectionChange(mockEditorRef, createMockPlainTextSuggestionPattern(), mockSetSuggestion);
-
         expect(mockSetSuggestion).not.toHaveBeenCalled();
     });
 
     it("does not call setSuggestion if selection cursor is not inside a text node", () => {
-        const mockEditor = document.createElement("div");
-        const textContent = document.createTextNode("content");
-        mockEditor.appendChild(textContent);
-        const mockSetSuggestion = jest.fn();
-        const mockEditorRef = { current: mockEditor } as React.RefObject<HTMLDivElement>;
+        const [mockEditor] = appendEditorWithTextNodeContaining("content");
+        const mockEditorRef = createMockEditorRef(mockEditor);
 
+        // create a selection that points at the editor element, not the text node it contains
         document.getSelection()?.setBaseAndExtent(mockEditor, 0, mockEditor, 0);
 
+        // process the selection and check that we do not attempt to set the suggestion
         processSelectionChange(mockEditorRef, createMockPlainTextSuggestionPattern(), mockSetSuggestion);
-
         expect(mockSetSuggestion).not.toHaveBeenCalled();
     });
 
     it("calls setSuggestion with null if we have an existing suggestion but no command match", () => {
-        const mockEditor = document.createElement("div");
-        const textNode = document.createTextNode("this will not match");
-        mockEditor.appendChild(textNode);
-        document.body.appendChild(mockEditor);
-        const mockSetSuggestion = jest.fn();
-        const mockEditorRef = { current: mockEditor } as React.RefObject<HTMLDivElement>;
+        const [mockEditor, textNode] = appendEditorWithTextNodeContaining("content");
+        const mockEditorRef = createMockEditorRef(mockEditor);
 
+        // create a selection in the text node that has identical start and end locations, ie it is a cursor
         document.getSelection()?.setBaseAndExtent(textNode, 0, textNode, 0);
 
+        // the call to process the selection will have an existing suggestion in state due to the second
+        // argument being non-null, expect that we clear this suggestion now that the text is not a command
         processSelectionChange(mockEditorRef, createMockPlainTextSuggestionPattern(), mockSetSuggestion);
-
         expect(mockSetSuggestion).toHaveBeenCalledWith(null);
     });
 
     it("calls setSuggestion with the expected arguments when text node is valid command", () => {
-        const mockEditor = document.createElement("div");
-        const textNode = document.createTextNode("/potentialCommand");
-        mockEditor.appendChild(textNode);
-        document.body.appendChild(mockEditor);
-        const mockSetSuggestion = jest.fn();
-        const mockEditorRef = { current: mockEditor } as React.RefObject<HTMLDivElement>;
+        const commandText = "/potentialCommand";
+        const [mockEditor, textNode] = appendEditorWithTextNodeContaining(commandText);
+        const mockEditorRef = createMockEditorRef(mockEditor);
 
+        // create a selection in the text node that has identical start and end locations, ie it is a cursor
         document.getSelection()?.setBaseAndExtent(textNode, 3, textNode, 3);
 
+        // process the change and check the suggestion that is set looks as we expect it to
         processSelectionChange(mockEditorRef, null, mockSetSuggestion);
-
         expect(mockSetSuggestion).toHaveBeenCalledWith({
             keyChar: "/",
             type: "command",
             text: "potentialCommand",
             node: textNode,
             startOffset: 0,
-            endOffset: 17,
+            endOffset: commandText.length,
         });
     });
 });
