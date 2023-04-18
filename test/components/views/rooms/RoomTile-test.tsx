@@ -94,6 +94,37 @@ describe("RoomTile", () => {
         "Room !1:example.org does not have an m.room.create event",
     );
 
+    const addMessageToRoom = (ts: number) => {
+        const message = mkMessage({
+            event: true,
+            room: room.roomId,
+            msg: "test message",
+            user: client.getSafeUserId(),
+            ts,
+        });
+
+        room.timeline.push(message);
+    };
+
+    const addThreadMessageToRoom = (ts: number) => {
+        const message = mkMessage({
+            event: true,
+            room: room.roomId,
+            msg: "test thread reply",
+            user: client.getSafeUserId(),
+            ts,
+        });
+
+        // Mock thread reply for tests.
+        jest.spyOn(room, "getThreads").mockReturnValue([
+            // @ts-ignore
+            {
+                lastReply: () => message,
+                timeline: [],
+            } as Thread,
+        ]);
+    };
+
     beforeEach(() => {
         sdkContext = new TestSdkContext();
 
@@ -262,14 +293,7 @@ describe("RoomTile", () => {
 
         describe("and there is a message in the room", () => {
             beforeEach(() => {
-                const message = mkMessage({
-                    event: true,
-                    room: room.roomId,
-                    msg: "test message",
-                    user: client.getSafeUserId(),
-                });
-
-                room.timeline.push(message);
+                addMessageToRoom(23);
             });
 
             it("should render as expected", async () => {
@@ -281,27 +305,33 @@ describe("RoomTile", () => {
 
         describe("and there is a message in a thread", () => {
             beforeEach(() => {
-                const message = mkMessage({
-                    event: true,
-                    room: room.roomId,
-                    msg: "test thread reply",
-                    user: client.getSafeUserId(),
-                });
-
-                // Mock thread reply for tests.
-                jest.spyOn(room, "getThreads").mockReturnValue([
-                    // @ts-ignore
-                    {
-                        lastReply: () => message,
-                        timeline: [],
-                    } as Thread,
-                ]);
+                addThreadMessageToRoom(23);
             });
 
             it("should render as expected", async () => {
                 renderRoomTile();
                 expect(await screen.findByText("test thread reply")).toBeInTheDocument();
                 expect(renderResult.asFragment()).toMatchSnapshot();
+            });
+        });
+
+        describe("and there is a mesage and a thread without a reply", () => {
+            beforeEach(() => {
+                addMessageToRoom(23);
+
+                // Mock thread reply for tests.
+                jest.spyOn(room, "getThreads").mockReturnValue([
+                    // @ts-ignore
+                    {
+                        lastReply: () => null,
+                        timeline: [],
+                    } as Thread,
+                ]);
+            });
+
+            it("should render the message preview", async () => {
+                renderRoomTile();
+                expect(await screen.findByText("test message")).toBeInTheDocument();
             });
         });
     });
