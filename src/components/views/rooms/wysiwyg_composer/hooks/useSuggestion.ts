@@ -94,9 +94,9 @@ export const processCommand = (
     // if we do not have any of the values we need to do the work, do nothing
     if (
         suggestion === null ||
-        editorRef.current === null ||
-        suggestion.node === null ||
-        suggestion.node.textContent === null
+        editorRef.current === null
+        // suggestion.node === null || // don't think these can be hit?
+        // suggestion.node.textContent === null
     ) {
         return;
     }
@@ -111,7 +111,11 @@ export const processCommand = (
     // then set the cursor to the end of the node, fire an inputEvent to update the hook state
     // and then clear the suggestion from state
     document.getSelection()?.setBaseAndExtent(node, newContent.length, node, newContent.length);
-    editorRef.current.dispatchEvent(new Event("change"));
+    // this isn't quite right, we still need to figure out how to get the state updated
+    // in the useListeners hook
+    const inputEvent = new Event("input");
+    editorRef.current.dispatchEvent(inputEvent);
+    console.log("<<< firing an event,", editorRef.current, inputEvent);
     setSuggestion(null);
 };
 
