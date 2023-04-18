@@ -115,7 +115,6 @@ export const processCommand = (
     // in the useListeners hook
     const inputEvent = new Event("input");
     editorRef.current.dispatchEvent(inputEvent);
-    console.log("<<< firing an event,", editorRef.current, inputEvent);
     setSuggestion(null);
 };
 
