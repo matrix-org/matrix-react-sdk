@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -46,6 +46,27 @@ const QuickSettingsButton: React.FC<{
     const { [MetaSpace.Favourites]: favouritesEnabled, [MetaSpace.People]: peopleEnabled } =
         useSettingValue<Record<MetaSpace, boolean>>("Spaces.enabledMetaSpaces");
 
+    const currentRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
+
+    const developerToolsButton =
+        currentRoomId && SettingsStore.getValue("developerMode") ? (
+            <AccessibleButton
+                onClick={() => {
+                    closeMenu();
+                    Modal.createDialog(
+                        DevtoolsDialog,
+                        {
+                            roomId: currentRoomId,
+                        },
+                        "mx_DevtoolsDialog_wrapper",
+                    );
+                }}
+                kind="danger_outline"
+            >
+                {_t("Developer tools")}
+            </AccessibleButton>
+        ) : null;
+
     let contextMenu: JSX.Element | undefined;
     if (menuDisplayed && handle.current) {
         contextMenu = (
@@ -68,23 +89,7 @@ const QuickSettingsButton: React.FC<{
                     {_t("All settings")}
                 </AccessibleButton>
 
-                {SettingsStore.getValue("developerMode") && SdkContextClass.instance.roomViewStore.getRoomId() && (
-                    <AccessibleButton
-                        onClick={() => {
-                            closeMenu();
-                            Modal.createDialog(
-                                DevtoolsDialog,
-                                {
-                                    roomId: SdkContextClass.instance.roomViewStore.getRoomId()!,
-                                },
-                                "mx_DevtoolsDialog_wrapper",
-                            );
-                        }}
-                        kind="danger_outline"
-                    >
-                        {_t("Developer tools")}
-                    </AccessibleButton>
-                )}
+                {developerToolsButton}
 
                 <h4 className="mx_QuickSettingsButton_pinToSidebarHeading">
                     <PinUprightIcon className="mx_QuickSettingsButton_icon" />
