@@ -91,6 +91,7 @@ export function usePlainTextListeners(
 
     const onKeyDown = useCallback(
         (event: KeyboardEvent<HTMLDivElement>) => {
+            // we need autocomplete to take priority when it is open for using enter to select
             const isHandledByAutocomplete = handleEventWithAutocomplete(autocompleteRef, event);
             if (isHandledByAutocomplete) {
                 return;
