@@ -26,7 +26,6 @@ import { ComposerFunctions } from "../types";
 import { Editor } from "./Editor";
 import Autocomplete from "../../Autocomplete";
 import { WysiwygAutocomplete } from "./WysiwygAutocomplete";
-import { useSuggestion } from "../hooks/useSuggestion";
 
 interface PlainTextComposerProps {
     disabled?: boolean;
