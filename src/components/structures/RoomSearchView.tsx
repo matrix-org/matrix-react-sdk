@@ -67,9 +67,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
         const [highlights, setHighlights] = useState<string[] | null>(null);
         const [results, setResults] = useState<ISearchResults | null>(null);
         const aborted = useRef(false);
-        // The permalinkCreator prop we are passed is only for the room the user was viewing
-        // So we will need to create additional room permalink creators for "All rooms" mode results
-        // to be able to generate share permalinks for results from other rooms
+        // A map from room ID to permalink creator
         const permalinkCreators = useRef(new Map<string, RoomPermalinkCreator>()).current;
 
         useEffect(() => {
