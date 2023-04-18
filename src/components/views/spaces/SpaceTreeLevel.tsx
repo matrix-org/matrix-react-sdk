@@ -133,8 +133,9 @@ export const SpaceButton = forwardRef<HTMLElement, IButtonProps>(
         }
 
         const viewSpaceHome = (): void =>
+            // space is set here because of the assignment condition of onClick
             defaultDispatcher.dispatch({ action: Action.ViewRoom, room_id: space!.roomId });
-        const activateSpace = (): void => SpaceStore.instance.setActiveSpace(spaceKey ?? space!.roomId);
+        const activateSpace = (): void => SpaceStore.instance.setActiveSpace(spaceKey ?? space?.roomId ?? "");
         const onClick = props.onClick ?? (selected && space ? viewSpaceHome : activateSpace);
 
         return (
