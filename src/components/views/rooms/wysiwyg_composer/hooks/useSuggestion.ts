@@ -36,7 +36,10 @@ export type PlainTextSuggestionPattern = {
  *
  * @param editorRef - a ref to the div that is the composer textbox
  */
-export function useSuggestion(editorRef: React.RefObject<HTMLDivElement>): {
+export function useSuggestion(
+    editorRef: React.RefObject<HTMLDivElement>,
+    setText: (text: string) => void,
+): {
     handleMention: (link: string, text: string, attributes: Attributes) => void;
     handleCommand: (text: string) => void;
     onSelect: (event: SyntheticEvent<HTMLDivElement>) => void;
@@ -52,7 +55,7 @@ export function useSuggestion(editorRef: React.RefObject<HTMLDivElement>): {
     const onSelect = (): void => processSelectionChange(editorRef, suggestion, setSuggestion);
 
     const handleCommand = (replacementText: string): void =>
-        processCommand(replacementText, editorRef, suggestion, setSuggestion);
+        processCommand(replacementText, editorRef, suggestion, setSuggestion, setText);
 
     return {
         suggestion: mapSuggestion(suggestion),
@@ -90,6 +93,7 @@ export const processCommand = (
     editorRef: React.RefObject<HTMLDivElement>,
     suggestion: PlainTextSuggestionPattern | null,
     setSuggestion: React.Dispatch<React.SetStateAction<PlainTextSuggestionPattern>>,
+    setText: (text: string) => void,
 ): void => {
     // if we do not have any of the values we need to do the work, do nothing
     if (
@@ -108,13 +112,10 @@ export const processCommand = (
     const newContent = `${replacementText} `;
     node.textContent = newContent;
 
-    // then set the cursor to the end of the node, fire an inputEvent to update the hook state
-    // and then clear the suggestion from state
+    // then set the cursor to the end of the node, update the `content` state in the usePlainTextListeners
+    // hook and clear the suggestion from state
     document.getSelection()?.setBaseAndExtent(node, newContent.length, node, newContent.length);
-    // this isn't quite right, we still need to figure out how to get the state updated
-    // in the useListeners hook
-    const inputEvent = new Event("input");
-    editorRef.current.dispatchEvent(inputEvent);
+    setText(newContent);
     setSuggestion(null);
 };
 
@@ -149,7 +150,7 @@ export const processSelectionChange = (
         const commandRegex = /^\/(\w*)$/;
         const commandMatches = currentNode.textContent.match(commandRegex);
 
-        // if we don't have any matches, return, clearing the suggesiton state if it is non-null
+        // if we don't have any matches, return, clearing the suggeston state if it is non-null
         if (commandMatches === null) {
             if (suggestion !== null) {
                 setSuggestion(null);

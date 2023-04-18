@@ -15,11 +15,13 @@ limitations under the License.
 */
 
 import { KeyboardEvent, RefObject, SyntheticEvent, useCallback, useRef, useState } from "react";
+import { Attributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 
 import { useSettingValue } from "../../../../../hooks/useSettings";
 import { IS_MAC, Key } from "../../../../../Keyboard";
 import Autocomplete from "../../Autocomplete";
 import { handleEventWithAutocomplete } from "./utils";
+import { useSuggestion } from "./useSuggestion";
 
 function isDivElement(target: EventTarget): target is HTMLDivElement {
     return target instanceof HTMLDivElement;
@@ -47,6 +49,10 @@ export function usePlainTextListeners(
     onPaste(event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>): void;
     onKeyDown(event: KeyboardEvent<HTMLDivElement>): void;
     setContent(text: string): void;
+    handleMention: (link: string, text: string, attributes: Attributes) => void;
+    handleCommand: (text: string) => void;
+    onSelect: (event: SyntheticEvent<HTMLDivElement>) => void;
+    suggestion: MappedSuggestion | null;
 } {
     const ref = useRef<HTMLDivElement | null>(null);
     const [content, setContent] = useState<string | undefined>(initialContent);
@@ -65,6 +71,11 @@ export function usePlainTextListeners(
         },
         [onChange],
     );
+
+    // For separation of concerns, the suggestion handling is kept in a separate hook but is
+    // nested here because we do need to be able to update the `content` state in this hook
+    // when a user selects a suggestion from the autocomplete menu
+    const { suggestion, onSelect, handleCommand, handleMention } = useSuggestion(ref, setText);
 
     const enterShouldSend = !useSettingValue<boolean>("MessageComposerInput.ctrlEnterToSend");
     const onInput = useCallback(
@@ -115,5 +126,9 @@ export function usePlainTextListeners(
         onKeyDown,
         content,
         setContent: setText,
+        suggestion,
+        onSelect,
+        handleCommand,
+        handleMention,
     };
 }

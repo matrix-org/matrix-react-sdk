@@ -60,9 +60,11 @@ export function PlainTextComposer({
         onKeyDown,
         content,
         setContent,
+        suggestion,
+        onSelect,
+        handleCommand,
+        handleMention,
     } = usePlainTextListeners(autocompleteRef, initialContent, onChange, onSend);
-
-    const { suggestion, onSelect, handleCommand, handleMention } = useSuggestion(editorRef);
 
     const composerFunctions = useComposerFunctions(editorRef, setContent);
     usePlainTextInitialization(initialContent, editorRef);
