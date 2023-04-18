@@ -65,7 +65,6 @@ describe("DeviceSettingsHandler", () => {
         });
 
         afterEach(() => {
-            // @ts-ignore Allow returning a null MatrixClient
             MatrixClientPeg.get = () => null;
         });
 
