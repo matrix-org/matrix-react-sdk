@@ -18,8 +18,32 @@ import React from "react";
 import { render } from "@testing-library/react";
 
 import CountryDropdown from "../../../../src/components/views/auth/CountryDropdown";
+import SdkConfig from "../../../../src/SdkConfig";
 
 describe("CountryDropdown", () => {
+    describe("default_country_code", () => {
+        afterEach(() => {
+            SdkConfig.unset();
+        });
+
+        it.each([
+            ["GB", 44],
+            ["IE", 353],
+            ["ES", 34],
+            ["FR", 33],
+            ["PL", 48],
+            ["DE", 49],
+        ])("should respect configured default country code for %s", (config, defaultCountryCode) => {
+            SdkConfig.add({
+                default_country_code: config,
+            });
+
+            const fn = jest.fn();
+            render(<CountryDropdown onOptionChange={fn} isSmall={false} showPrefix={false} />);
+            expect(fn).toHaveBeenCalledWith(expect.objectContaining({ prefix: defaultCountryCode.toString() }));
+        });
+    });
+
     describe("defaultCountry", () => {
         it.each([
             ["en-GB", 44],
@@ -29,16 +53,15 @@ describe("CountryDropdown", () => {
             ["pl", 48],
             ["de-DE", 49],
         ])("should pick appropriate default country for %s", (language, defaultCountryCode) => {
-            const fn = jest.fn();
-
             Object.defineProperty(navigator, "language", {
                 configurable: true,
                 get() {
                     return language;
                 },
             });
-            render(<CountryDropdown onOptionChange={fn} isSmall={false} showPrefix={false} />);
 
+            const fn = jest.fn();
+            render(<CountryDropdown onOptionChange={fn} isSmall={false} showPrefix={false} />);
             expect(fn).toHaveBeenCalledWith(expect.objectContaining({ prefix: defaultCountryCode.toString() }));
         });
     });
