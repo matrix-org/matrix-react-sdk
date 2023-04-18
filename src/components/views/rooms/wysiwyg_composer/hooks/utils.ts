@@ -66,7 +66,7 @@ export function setCursorPositionAtTheEnd(element: HTMLElement): void {
  */
 export function handleEventWithAutocomplete(
     autocompleteRef: RefObject<Autocomplete>,
-    // we get a React Keyboard event from plain text, a Keyboard Event from the rich text
+    // we get a React Keyboard event from plain text composer, a Keyboard Event from the rich text composer
     event: KeyboardEvent | React.KeyboardEvent<HTMLDivElement>,
 ): boolean {
     const autocompleteIsOpen = autocompleteRef?.current && !autocompleteRef.current.state.hide;

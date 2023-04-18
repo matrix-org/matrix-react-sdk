@@ -96,12 +96,7 @@ export const processCommand = (
     setText: (text: string) => void,
 ): void => {
     // if we do not have any of the values we need to do the work, do nothing
-    if (
-        suggestion === null ||
-        editorRef.current === null
-        // suggestion.node === null || // don't think these can be hit?
-        // suggestion.node.textContent === null
-    ) {
+    if (suggestion === null || editorRef.current === null) {
         return;
     }
 
