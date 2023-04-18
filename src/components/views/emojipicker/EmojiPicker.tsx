@@ -163,14 +163,15 @@ class EmojiPicker extends React.Component<IProps, IState> {
             case Key.ARROW_DOWN: {
                 const node = state.activeRef.current;
                 const parent = node.parentElement;
+                if (!parent) return;
                 const rowIndex = Array.from(parent.children).indexOf(node);
                 const refIndex = state.refs.indexOf(state.activeRef);
 
                 let newParent: HTMLElement | null | undefined;
                 if (ev.key === Key.ARROW_UP) {
-                    newParent = state.refs[refIndex - rowIndex - 1]?.current.parentElement;
+                    newParent = state.refs[refIndex - rowIndex - 1]?.current?.parentElement;
                 } else {
-                    newParent = state.refs[refIndex - rowIndex + EMOJIS_PER_ROW]?.current.parentElement;
+                    newParent = state.refs[refIndex - rowIndex + EMOJIS_PER_ROW]?.current?.parentElement;
                 }
 
                 const newTarget = newParent?.children[clamp(rowIndex, 0, newParent.children.length - 1)] as
