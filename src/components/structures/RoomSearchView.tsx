@@ -293,7 +293,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
 
             let permalinkCreator = permalinkCreators.get(roomId);
             if (!permalinkCreator) {
-                permalinkCreator = new RoomPermalinkCreator(client.getRoom(roomId), roomId);
+                permalinkCreator = new RoomPermalinkCreator(room);
                 permalinkCreator.start();
                 permalinkCreators.set(roomId, permalinkCreator);
             }
