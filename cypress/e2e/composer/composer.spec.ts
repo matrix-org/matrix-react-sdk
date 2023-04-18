@@ -120,7 +120,7 @@ describe("Composer", () => {
         describe("commands", () => {
             // TODO add tests for rich text mode
 
-            describe.only("plain text mode", () => {
+            describe("plain text mode", () => {
                 it("autocomplete opens when / is pressed and contains autocomplete items", () => {
                     // Select plain text mode after composer is ready
                     cy.get("div[contenteditable=true]").should("exist");
