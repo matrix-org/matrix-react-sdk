@@ -49,7 +49,7 @@ describe("<RoomSearchView/>", () => {
         stubClient();
         client = MatrixClientPeg.get();
         client.supportsThreads = jest.fn().mockReturnValue(true);
-        room = new Room("!room:server", client, client.getUserId()!);
+        room = new Room("!room:server", client, client.getSafeUserId());
         mocked(client.getRoom).mockReturnValue(room);
         permalinkCreator = new RoomPermalinkCreator(room, room.roomId);
 
@@ -92,7 +92,7 @@ describe("<RoomSearchView/>", () => {
                                     result: {
                                         room_id: room.roomId,
                                         event_id: "$2",
-                                        sender: client.getUserId()!,
+                                        sender: client.getSafeUserId(),
                                         origin_server_ts: 1,
                                         content: { body: "Foo Test Bar", msgtype: "m.text" },
                                         type: EventType.RoomMessage,
@@ -103,7 +103,7 @@ describe("<RoomSearchView/>", () => {
                                             {
                                                 room_id: room.roomId,
                                                 event_id: "$1",
-                                                sender: client.getUserId()!,
+                                                sender: client.getSafeUserId(),
                                                 origin_server_ts: 1,
                                                 content: { body: "Before", msgtype: "m.text" },
                                                 type: EventType.RoomMessage,
@@ -113,7 +113,7 @@ describe("<RoomSearchView/>", () => {
                                             {
                                                 room_id: room.roomId,
                                                 event_id: "$3",
-                                                sender: client.getUserId()!,
+                                                sender: client.getSafeUserId(),
                                                 origin_server_ts: 1,
                                                 content: { body: "After", msgtype: "m.text" },
                                                 type: EventType.RoomMessage,
@@ -154,7 +154,7 @@ describe("<RoomSearchView/>", () => {
                                     result: {
                                         room_id: room.roomId,
                                         event_id: "$2",
-                                        sender: client.getUserId()!,
+                                        sender: client.getSafeUserId(),
                                         origin_server_ts: 1,
                                         content: { body: "Foo Test Bar", msgtype: "m.text" },
                                         type: EventType.RoomMessage,
@@ -192,7 +192,7 @@ describe("<RoomSearchView/>", () => {
                         result: {
                             room_id: room.roomId,
                             event_id: "$2",
-                            sender: client.getUserId()!,
+                            sender: client.getSafeUserId(),
                             origin_server_ts: 1,
                             content: { body: "Foo Test Bar", msgtype: "m.text" },
                             type: EventType.RoomMessage,
@@ -221,7 +221,7 @@ describe("<RoomSearchView/>", () => {
                         result: {
                             room_id: room.roomId,
                             event_id: "$4",
-                            sender: client.getUserId()!,
+                            sender: client.getSafeUserId(),
                             origin_server_ts: 4,
                             content: { body: "Potato", msgtype: "m.text" },
                             type: EventType.RoomMessage,
@@ -436,5 +436,132 @@ describe("<RoomSearchView/>", () => {
         expect(fooNode.compareDocumentPosition(betweenNode) == Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
         expect(betweenNode.compareDocumentPosition(foo2Node) == Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
         expect(foo2Node.compareDocumentPosition(afterNode) == Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    });
+
+    it("should pass appropriate permalink creator for all rooms search", async () => {
+        const room2 = new Room("!room2:server", client, client.getSafeUserId());
+        const room3 = new Room("!room3:server", client, client.getSafeUserId());
+        mocked(client.getRoom).mockImplementation(
+            (roomId) => [room, room2, room3].find((r) => r.roomId === roomId) ?? null,
+        );
+
+        render(
+            <MatrixClientContext.Provider value={client}>
+                <RoomSearchView
+                    term="search term"
+                    scope={SearchScope.All}
+                    promise={Promise.resolve<ISearchResults>({
+                        results: [
+                            SearchResult.fromJson(
+                                {
+                                    rank: 1,
+                                    result: {
+                                        room_id: room.roomId,
+                                        event_id: "$2",
+                                        sender: client.getSafeUserId(),
+                                        origin_server_ts: 1,
+                                        content: { body: "Room 1", msgtype: "m.text" },
+                                        type: EventType.RoomMessage,
+                                    },
+                                    context: {
+                                        profile_info: {},
+                                        events_before: [],
+                                        events_after: [],
+                                    },
+                                },
+                                eventMapper,
+                            ),
+                            SearchResult.fromJson(
+                                {
+                                    rank: 2,
+                                    result: {
+                                        room_id: room2.roomId,
+                                        event_id: "$22",
+                                        sender: client.getSafeUserId(),
+                                        origin_server_ts: 1,
+                                        content: { body: "Room 2", msgtype: "m.text" },
+                                        type: EventType.RoomMessage,
+                                    },
+                                    context: {
+                                        profile_info: {},
+                                        events_before: [],
+                                        events_after: [],
+                                    },
+                                },
+                                eventMapper,
+                            ),
+                            SearchResult.fromJson(
+                                {
+                                    rank: 2,
+                                    result: {
+                                        room_id: room2.roomId,
+                                        event_id: "$23",
+                                        sender: client.getSafeUserId(),
+                                        origin_server_ts: 2,
+                                        content: { body: "Room 2 message 2", msgtype: "m.text" },
+                                        type: EventType.RoomMessage,
+                                    },
+                                    context: {
+                                        profile_info: {},
+                                        events_before: [],
+                                        events_after: [],
+                                    },
+                                },
+                                eventMapper,
+                            ),
+                            SearchResult.fromJson(
+                                {
+                                    rank: 3,
+                                    result: {
+                                        room_id: room3.roomId,
+                                        event_id: "$32",
+                                        sender: client.getSafeUserId(),
+                                        origin_server_ts: 1,
+                                        content: { body: "Room 3", msgtype: "m.text" },
+                                        type: EventType.RoomMessage,
+                                    },
+                                    context: {
+                                        profile_info: {},
+                                        events_before: [],
+                                        events_after: [],
+                                    },
+                                },
+                                eventMapper,
+                            ),
+                        ],
+                        highlights: [],
+                        count: 1,
+                    })}
+                    resizeNotifier={resizeNotifier}
+                    permalinkCreator={permalinkCreator}
+                    className="someClass"
+                    onUpdate={jest.fn()}
+                />
+            </MatrixClientContext.Provider>,
+        );
+
+        const event1 = await screen.findByText("Room 1");
+        expect(event1.closest(".mx_EventTile_line").querySelector("a")).toHaveAttribute(
+            "href",
+            `https://matrix.to/#/${room.roomId}/$2`,
+        );
+
+        const event2 = await screen.findByText("Room 2");
+        expect(event2.closest(".mx_EventTile_line").querySelector("a")).toHaveAttribute(
+            "href",
+            `https://matrix.to/#/${room2.roomId}/$22`,
+        );
+
+        const event2Message2 = await screen.findByText("Room 2 message 2");
+        expect(event2Message2.closest(".mx_EventTile_line").querySelector("a")).toHaveAttribute(
+            "href",
+            `https://matrix.to/#/${room2.roomId}/$23`,
+        );
+
+        const event3 = await screen.findByText("Room 3");
+        expect(event3.closest(".mx_EventTile_line").querySelector("a")).toHaveAttribute(
+            "href",
+            `https://matrix.to/#/${room3.roomId}/$32`,
+        );
     });
 });
