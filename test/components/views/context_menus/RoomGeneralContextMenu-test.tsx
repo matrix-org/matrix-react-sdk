@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@ import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import { mkMessage, stubClient } from "../../../test-utils/test-utils";
 import { shouldShowComponent } from "../../../../src/customisations/helpers/UIComponents";
 import { UIComponent } from "../../../../src/settings/UIFeature";
+import SettingsStore from "../../../../src/settings/SettingsStore";
 
 jest.mock("../../../../src/customisations/helpers/UIComponents", () => ({
     shouldShowComponent: jest.fn(),
@@ -137,5 +138,21 @@ describe("RoomGeneralContextMenu", () => {
 
         expect(mockClient.sendReadReceipt).toHaveBeenCalledWith(event, ReceiptType.Read, true);
         expect(onFinished).toHaveBeenCalled();
+    });
+
+    it("when developer mode is disabled, it should not render the developer tools option", () => {
+        getComponent();
+        expect(screen.queryByText("Developer tools")).not.toBeInTheDocument();
+    });
+
+    describe("when developer mode is enabled", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((setting) => setting === "developerMode");
+        });
+
+        it("should render the developer tools option", () => {
+            getComponent();
+            expect(screen.getByText("Developer tools")).toBeInTheDocument();
+        });
     });
 });
