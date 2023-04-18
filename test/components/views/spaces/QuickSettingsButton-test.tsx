@@ -20,8 +20,11 @@ import userEvent from "@testing-library/user-event";
 
 import QuickSettingsButton from "../../../../src/components/views/spaces/QuickSettingsButton";
 import SettingsStore from "../../../../src/settings/SettingsStore";
+import { SdkContextClass } from "../../../../src/contexts/SDKContext";
 
 describe("QuickSettingsButton", () => {
+    const roomId = "!room:example.com";
+
     const renderQuickSettingsButton = () => {
         render(<QuickSettingsButton isPanelCollapsed={true} />);
     };
@@ -58,13 +61,26 @@ describe("QuickSettingsButton", () => {
             renderQuickSettingsButton();
         });
 
-        describe("and the quick settings are open", () => {
-            beforeEach(async () => {
-                await openQuickSettings();
+        describe("and no room is viewed", () => {
+            it("should not render the »Developer tools« button", () => {
+                renderQuickSettingsButton();
+                expect(screen.queryByText("Developer tools")).not.toBeInTheDocument();
+            });
+        });
+
+        describe("and a room is viewed", () => {
+            beforeEach(() => {
+                jest.spyOn(SdkContextClass.instance.roomViewStore, "getRoomId").mockReturnValue(roomId);
             });
 
-            it("should render the »Developer tools« button", () => {
-                expect(screen.getByRole("button", { name: "Developer tools" })).toBeInTheDocument();
+            describe("and the quick settings are open", () => {
+                beforeEach(async () => {
+                    await openQuickSettings();
+                });
+
+                it("should render the »Developer tools« button", () => {
+                    expect(screen.getByRole("button", { name: "Developer tools" })).toBeInTheDocument();
+                });
             });
         });
     });
