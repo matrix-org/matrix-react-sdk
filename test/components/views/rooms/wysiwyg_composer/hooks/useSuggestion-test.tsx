@@ -22,7 +22,6 @@ import {
     processCommand,
     processSelectionChange,
 } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/useSuggestion";
-import { text } from "stream/consumers";
 
 const createMockPlainTextSuggestionPattern = (
     props: Partial<PlainTextSuggestionPattern> = {},
