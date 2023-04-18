@@ -2261,7 +2261,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     promise={this.state.search.promise}
                     abortController={this.state.search.abortController}
                     resizeNotifier={this.props.resizeNotifier}
-                    permalinkCreator={this.permalinkCreator}
                     className={this.messagePanelClassNames}
                     onUpdate={this.onSearchUpdate}
                 />

@@ -28,7 +28,6 @@ import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { RoomSearchView } from "../../../src/components/structures/RoomSearchView";
 import { SearchScope } from "../../../src/components/views/rooms/SearchBar";
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";
-import { RoomPermalinkCreator } from "../../../src/utils/permalinks/Permalinks";
 import { stubClient } from "../../test-utils";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
@@ -43,7 +42,6 @@ describe("<RoomSearchView/>", () => {
     const resizeNotifier = new ResizeNotifier();
     let client: MatrixClient;
     let room: Room;
-    let permalinkCreator: RoomPermalinkCreator;
 
     beforeEach(async () => {
         stubClient();
@@ -51,7 +49,6 @@ describe("<RoomSearchView/>", () => {
         client.supportsThreads = jest.fn().mockReturnValue(true);
         room = new Room("!room:server", client, client.getSafeUserId());
         mocked(client.getRoom).mockReturnValue(room);
-        permalinkCreator = new RoomPermalinkCreator(room, room.roomId);
 
         jest.spyOn(Element.prototype, "clientHeight", "get").mockReturnValue(100);
     });
@@ -69,7 +66,6 @@ describe("<RoomSearchView/>", () => {
                 scope={SearchScope.All}
                 promise={deferred.promise}
                 resizeNotifier={resizeNotifier}
-                permalinkCreator={permalinkCreator}
                 className="someClass"
                 onUpdate={jest.fn()}
             />,
@@ -128,7 +124,6 @@ describe("<RoomSearchView/>", () => {
                         count: 1,
                     })}
                     resizeNotifier={resizeNotifier}
-                    permalinkCreator={permalinkCreator}
                     className="someClass"
                     onUpdate={jest.fn()}
                 />
@@ -172,7 +167,6 @@ describe("<RoomSearchView/>", () => {
                         count: 1,
                     })}
                     resizeNotifier={resizeNotifier}
-                    permalinkCreator={permalinkCreator}
                     className="someClass"
                     onUpdate={jest.fn()}
                 />
@@ -245,7 +239,6 @@ describe("<RoomSearchView/>", () => {
                     scope={SearchScope.All}
                     promise={Promise.resolve(searchResults)}
                     resizeNotifier={resizeNotifier}
-                    permalinkCreator={permalinkCreator}
                     className="someClass"
                     onUpdate={jest.fn()}
                 />
@@ -267,7 +260,6 @@ describe("<RoomSearchView/>", () => {
                     scope={SearchScope.All}
                     promise={deferred.promise}
                     resizeNotifier={resizeNotifier}
-                    permalinkCreator={permalinkCreator}
                     className="someClass"
                     onUpdate={jest.fn()}
                 />
@@ -291,7 +283,6 @@ describe("<RoomSearchView/>", () => {
                     scope={SearchScope.All}
                     promise={deferred.promise}
                     resizeNotifier={resizeNotifier}
-                    permalinkCreator={permalinkCreator}
                     className="someClass"
                     onUpdate={jest.fn()}
                 />
@@ -315,7 +306,6 @@ describe("<RoomSearchView/>", () => {
                     scope={SearchScope.All}
                     promise={deferred.promise}
                     resizeNotifier={resizeNotifier}
-                    permalinkCreator={permalinkCreator}
                     className="someClass"
                     onUpdate={jest.fn()}
                 />
@@ -417,7 +407,6 @@ describe("<RoomSearchView/>", () => {
                     scope={SearchScope.All}
                     promise={Promise.resolve(searchResults)}
                     resizeNotifier={resizeNotifier}
-                    permalinkCreator={permalinkCreator}
                     className="someClass"
                     onUpdate={jest.fn()}
                 />
@@ -533,7 +522,6 @@ describe("<RoomSearchView/>", () => {
                         count: 1,
                     })}
                     resizeNotifier={resizeNotifier}
-                    permalinkCreator={permalinkCreator}
                     className="someClass"
                     onUpdate={jest.fn()}
                 />

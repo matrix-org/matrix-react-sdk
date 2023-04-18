@@ -50,7 +50,6 @@ interface Props {
     promise: Promise<ISearchResults>;
     abortController?: AbortController;
     resizeNotifier: ResizeNotifier;
-    permalinkCreator: RoomPermalinkCreator;
     className: string;
     onUpdate(inProgress: boolean, results: ISearchResults | null): void;
 }
@@ -59,16 +58,7 @@ interface Props {
 // XXX: why doesn't searching on name work?
 export const RoomSearchView = forwardRef<ScrollPanel, Props>(
     (
-        {
-            term,
-            scope,
-            promise,
-            abortController,
-            resizeNotifier,
-            permalinkCreator: _permalinkCreator,
-            className,
-            onUpdate,
-        }: Props,
+        { term, scope, promise, abortController, resizeNotifier, className, onUpdate }: Props,
         ref: RefObject<ScrollPanel>,
     ) => {
         const client = useContext(MatrixClientContext);
@@ -303,15 +293,11 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                 ourEventsIndexes.push(result.context.getOurEventIndex());
             }
 
-            let permalinkCreator = _permalinkCreator;
-            if (roomId !== permalinkCreator.roomId) {
-                if (permalinkCreators.has(roomId)) {
-                    permalinkCreator = permalinkCreators.get(roomId)!;
-                } else {
-                    permalinkCreator = new RoomPermalinkCreator(client.getRoom(roomId), roomId);
-                    permalinkCreator.start();
-                    permalinkCreators.set(roomId, permalinkCreator);
-                }
+            let permalinkCreator = permalinkCreators.get(roomId);
+            if (!permalinkCreator) {
+                permalinkCreator = new RoomPermalinkCreator(client.getRoom(roomId), roomId);
+                permalinkCreator.start();
+                permalinkCreators.set(roomId, permalinkCreator);
             }
 
             ret.push(
