@@ -121,7 +121,7 @@ describe("processCommand", () => {
     });
 });
 
-describe.only("processSelectionChange", () => {
+describe("processSelectionChange", () => {
     it("returns early if current editorRef is null", () => {
         const mockEditorRef = { current: null } as React.RefObject<HTMLDivElement>;
         const getSelectionSpy = jest.spyOn(document, "getSelection");
