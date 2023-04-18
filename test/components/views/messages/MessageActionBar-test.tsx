@@ -36,13 +36,13 @@ import {
     mockClientMethodsEvents,
     makeBeaconInfoEvent,
 } from "../../../test-utils";
+import { makeAnnotatedPushRule } from "../../../test-utils/pushRules";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import RoomContext, { TimelineRenderingType } from "../../../../src/contexts/RoomContext";
 import { IRoomState } from "../../../../src/components/structures/RoomView";
 import dispatcher from "../../../../src/dispatcher/dispatcher";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { Action } from "../../../../src/dispatcher/actions";
-import { makeAnnotatedPushRule } from "../../../test-utils/pushRules";
 
 jest.mock("../../../../src/dispatcher/dispatcher");
 

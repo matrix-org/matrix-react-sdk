@@ -42,7 +42,6 @@ export const shouldHighlightEvent = (
  * @returns {boolean} isBecausePreviousEvent - true when a pervious version of the event triggered a highlight
  *                      but the current replaced event does not
  * @returns {IAnnotatedPushRule} rule - the rule that triggered the highlight
-
  */
 export const getEventHighlightInfo = (
     event: MatrixEvent,
