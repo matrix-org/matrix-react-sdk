@@ -45,12 +45,12 @@ export class ReactionEventPreview implements IPreview {
                 reaction,
                 message,
             });
-        } else {
-            return _t("%(sender)s reacted %(reaction)s to %(message)s", {
-                sender: getSenderName(event),
-                reaction,
-                message,
-            });
         }
+
+        return _t("%(sender)s reacted %(reaction)s to %(message)s", {
+            sender: getSenderName(event),
+            reaction,
+            message,
+        });
     }
 }

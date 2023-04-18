@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { RelationType, Room } from "matrix-js-sdk/src/matrix";
+import { RelationType, Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 
 import { mkEvent, stubClient } from "../../../test-utils";
@@ -67,7 +67,7 @@ describe("ReactionEventPreview", () => {
             const message = mkEvent({
                 event: true,
                 content: {
-                    "body": "",
+                    "body": "duck duck goose",
                     "m.relates_to": {
                         rel_type: RelationType.Thread,
                         event_id: "$foo:bar",
@@ -93,7 +93,47 @@ describe("ReactionEventPreview", () => {
                 type: "m.reaction",
                 room: roomId,
             });
-            expect(preview.getTextFor(event)).toMatchInlineSnapshot(`"You reacted 🪿 to "`);
+            expect(preview.getTextFor(event)).toMatchInlineSnapshot(`"You reacted 🪿 to duck duck goose"`);
+        });
+
+        it("should use display name for your others' reactions", () => {
+            const cli = MatrixClientPeg.get();
+            const room = new Room(roomId, cli, userId);
+            mocked(cli.getRoom).mockReturnValue(room);
+
+            const message = mkEvent({
+                event: true,
+                content: {
+                    "body": "duck duck goose",
+                    "m.relates_to": {
+                        rel_type: RelationType.Thread,
+                        event_id: "$foo:bar",
+                    },
+                },
+                user: userId,
+                type: "m.room.message",
+                room: roomId,
+            });
+
+            room.getUnfilteredTimelineSet().addLiveEvent(message, {});
+
+            const event = mkEvent({
+                event: true,
+                content: {
+                    "m.relates_to": {
+                        rel_type: RelationType.Annotation,
+                        key: "🪿",
+                        event_id: message.getId(),
+                    },
+                },
+                user: userId,
+                type: "m.reaction",
+                room: roomId,
+            });
+            event.sender = new RoomMember(roomId, userId);
+            event.sender.name = "Bob";
+
+            expect(preview.getTextFor(event)).toMatchInlineSnapshot(`"Bob reacted 🪿 to duck duck goose"`);
         });
     });
 });
