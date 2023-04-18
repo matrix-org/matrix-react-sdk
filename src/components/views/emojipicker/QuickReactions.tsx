@@ -20,6 +20,7 @@ import React from "react";
 import { _t } from "../../../languageHandler";
 import { getEmojiFromUnicode, IEmoji } from "../../../emoji";
 import Emoji from "./Emoji";
+import { ButtonEvent } from "../elements/AccessibleButton";
 
 // We use the variation-selector Heart in Quick Reactions for some reason
 const QUICK_REACTIONS = ["👍", "👎", "😄", "🎉", "😕", "❤️", "🚀", "👀"].map((emoji) => {
@@ -32,7 +33,7 @@ const QUICK_REACTIONS = ["👍", "👎", "😄", "🎉", "😕", "❤️", "🚀
 
 interface IProps {
     selectedEmojis?: Set<string>;
-    onClick(emoji: IEmoji): void;
+    onClick(ev: ButtonEvent, emoji: IEmoji): void;
 }
 
 interface IState {

@@ -19,11 +19,12 @@ import React from "react";
 
 import { MenuItem } from "../../structures/ContextMenu";
 import { IEmoji } from "../../../emoji";
+import { ButtonEvent } from "../elements/AccessibleButton";
 
 interface IProps {
     emoji: IEmoji;
     selectedEmojis?: Set<string>;
-    onClick(emoji: IEmoji): void;
+    onClick(ev: ButtonEvent, emoji: IEmoji): void;
     onMouseEnter(emoji: IEmoji): void;
     onMouseLeave(emoji: IEmoji): void;
     disabled?: boolean;
@@ -32,11 +33,11 @@ interface IProps {
 class Emoji extends React.PureComponent<IProps> {
     public render(): React.ReactNode {
         const { onClick, onMouseEnter, onMouseLeave, emoji, selectedEmojis } = this.props;
-        const isSelected = selectedEmojis && selectedEmojis.has(emoji.unicode);
+        const isSelected = selectedEmojis?.has(emoji.unicode);
         return (
             <MenuItem
                 element="li"
-                onClick={() => onClick(emoji)}
+                onClick={(ev) => onClick(ev, emoji)}
                 onMouseEnter={() => onMouseEnter(emoji)}
                 onMouseLeave={() => onMouseLeave(emoji)}
                 className="mx_EmojiPicker_item_wrapper"

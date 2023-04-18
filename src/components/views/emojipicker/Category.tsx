@@ -21,6 +21,7 @@ import { CATEGORY_HEADER_HEIGHT, EMOJI_HEIGHT, EMOJIS_PER_ROW } from "./EmojiPic
 import LazyRenderList from "../elements/LazyRenderList";
 import { DATA_BY_CATEGORY, IEmoji } from "../../../emoji";
 import Emoji from "./Emoji";
+import { ButtonEvent } from "../elements/AccessibleButton";
 
 const OVERFLOW_ROWS = 3;
 
@@ -42,7 +43,7 @@ interface IProps {
     heightBefore: number;
     viewportHeight: number;
     scrollTop: number;
-    onClick(emoji: IEmoji): void;
+    onClick(ev: ButtonEvent, emoji: IEmoji): void;
     onMouseEnter(emoji: IEmoji): void;
     onMouseLeave(emoji: IEmoji): void;
     isEmojiDisabled?: (unicode: string) => boolean;
