@@ -103,7 +103,7 @@ export default class LegacyCallEventGrouper extends EventEmitter {
 
     public get isVoice(): boolean | undefined {
         const invite = this.invite;
-        if (!invite) return;
+        if (!invite) return undefined;
 
         // FIXME: Find a better way to determine this from the event?
         if (invite.getContent()?.offer?.sdp?.indexOf("m=video") !== -1) return false;
@@ -177,9 +177,9 @@ export default class LegacyCallEventGrouper extends EventEmitter {
     }
 
     private setState = (): void => {
-        if (CONNECTING_STATES.includes(this.call?.state)) {
+        if (this.call && CONNECTING_STATES.includes(this.call.state)) {
             this.state = CallState.Connecting;
-        } else if (SUPPORTED_STATES.includes(this.call?.state)) {
+        } else if (this.call && SUPPORTED_STATES.includes(this.call.state)) {
             this.state = this.call.state;
         } else {
             if (this.callWasMissed) this.state = CustomCallState.Missed;

@@ -1,5 +1,5 @@
 /*
-Copyright 2021-2022 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -54,7 +54,6 @@ import { useUserDirectory } from "../../../../hooks/useUserDirectory";
 import { getKeyBindingsManager } from "../../../../KeyBindingsManager";
 import { _t } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
-import Modal from "../../../../Modal";
 import { PosthogAnalytics } from "../../../../PosthogAnalytics";
 import { getCachedRoomIDForAlias } from "../../../../RoomAliasCache";
 import { showStartChatInviteDialog } from "../../../../RoomInvite";
@@ -81,14 +80,12 @@ import LabelledCheckbox from "../../elements/LabelledCheckbox";
 import Spinner from "../../elements/Spinner";
 import NotificationBadge from "../../rooms/NotificationBadge";
 import BaseDialog from "../BaseDialog";
-import FeedbackDialog from "../FeedbackDialog";
 import { Option } from "./Option";
 import { PublicRoomResultDetails } from "./PublicRoomResultDetails";
 import { RoomResultContextMenus } from "./RoomResultContextMenus";
 import { RoomContextDetails } from "../../rooms/RoomContextDetails";
 import { TooltipOption } from "./TooltipOption";
 import { isLocalRoom } from "../../../../utils/localRoom/isLocalRoom";
-import { shouldShowFeedback } from "../../../../utils/Feedback";
 import RoomAvatar from "../../avatars/RoomAvatar";
 import { useFeatureEnabled } from "../../../../hooks/useSettings";
 import { filterBoolean } from "../../../../utils/arrays";
@@ -291,8 +288,8 @@ interface IDirectoryOpts {
 }
 
 const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = null, onFinished }) => {
-    const inputRef = useRef<HTMLInputElement>();
-    const scrollContainerRef = useRef<HTMLDivElement>();
+    const inputRef = useRef<HTMLInputElement>(null);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
     const cli = MatrixClientPeg.get();
     const rovingContext = useContext(RovingTabIndexContext);
     const [query, _setQuery] = useState(initialText);
@@ -627,6 +624,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     clientRoom?.getMyMembership() === "join" || result.publicRoom.world_readable || cli.isGuest();
 
                 const listener = (ev: ButtonEvent): void => {
+                    ev.stopPropagation();
+
                     const { publicRoom } = result;
                     viewRoom(
                         {
@@ -1157,14 +1156,6 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         }
     };
 
-    const openFeedback = shouldShowFeedback()
-        ? () => {
-              Modal.createDialog(FeedbackDialog, {
-                  feature: "spotlight",
-              });
-          }
-        : null;
-
     const activeDescendant = rovingContext.state.activeRef?.current?.id;
 
     return (
@@ -1241,26 +1232,6 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     aria-describedby="mx_SpotlightDialog_keyboardPrompt"
                 >
                     {content}
-                </div>
-
-                <div className="mx_SpotlightDialog_footer">
-                    {openFeedback &&
-                        _t(
-                            "Results not as expected? Please <a>give feedback</a>.",
-                            {},
-                            {
-                                a: (sub) => (
-                                    <AccessibleButton kind="link_inline" onClick={openFeedback}>
-                                        {sub}
-                                    </AccessibleButton>
-                                ),
-                            },
-                        )}
-                    {openFeedback && (
-                        <AccessibleButton kind="primary_outline" onClick={openFeedback}>
-                            {_t("Feedback")}
-                        </AccessibleButton>
-                    )}
                 </div>
             </BaseDialog>
         </>

@@ -43,10 +43,12 @@ export default class LinkPreviewWidget extends React.Component<IProps> {
         if (ev.button != 0 || ev.metaKey) return;
         ev.preventDefault();
 
-        let src = p["og:image"];
+        let src: string | null | undefined = p["og:image"];
         if (src?.startsWith("mxc://")) {
             src = mediaFromMxc(src).srcHttp;
         }
+
+        if (!src) return;
 
         const params: Omit<ComponentProps<typeof ImageView>, "onFinished"> = {
             src: src,
@@ -89,15 +91,9 @@ export default class LinkPreviewWidget extends React.Component<IProps> {
             image = mediaFromMxc(image).getThumbnailOfSourceHttp(imageMaxWidth, imageMaxHeight, "scale");
         }
 
-        let thumbHeight = imageMaxHeight;
-        if (p["og:image:width"] && p["og:image:height"]) {
-            thumbHeight = ImageUtils.thumbHeight(
-                p["og:image:width"],
-                p["og:image:height"],
-                imageMaxWidth,
-                imageMaxHeight,
-            );
-        }
+        const thumbHeight =
+            ImageUtils.thumbHeight(p["og:image:width"], p["og:image:height"], imageMaxWidth, imageMaxHeight) ??
+            imageMaxHeight;
 
         let img: JSX.Element | undefined;
         if (image) {
