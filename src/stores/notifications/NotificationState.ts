@@ -24,6 +24,7 @@ export interface INotificationStateSnapshotParams {
     symbol: string | null;
     count: number;
     color: NotificationColor;
+    muted: boolean;
 }
 
 export enum NotificationStateEvents {
