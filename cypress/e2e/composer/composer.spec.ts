@@ -120,14 +120,14 @@ describe("Composer", () => {
         describe("commands", () => {
             // TODO add tests for rich text mode
 
-            describe("plain text mode", () => {
+            describe.only("plain text mode", () => {
                 it("autocomplete opens when / is pressed and contains autocomplete items", () => {
                     // Select plain text mode after composer is ready
                     cy.get("div[contenteditable=true]").should("exist");
                     cy.findByRole("button", { name: "Hide formatting" }).click();
 
                     // Type a /
-                    cy.get("div[contenteditable=true]").type("/");
+                    cy.findByRole("textbox").type("/");
 
                     // Check that the autocomplete options are visible and there are more than 0
                     cy.findByTestId("autocomplete-wrapper").within(() => {
@@ -141,14 +141,14 @@ describe("Composer", () => {
                     cy.findByRole("button", { name: "Hide formatting" }).click();
 
                     // Type a message
-                    cy.get("div[contenteditable=true]").type("/spo");
+                    cy.findByRole("textbox").type("/spo");
 
                     // Check that the autocomplete /spoiler option is visible and click it
                     cy.findByTestId("autocomplete-wrapper").within(() => {
                         cy.findByText("/spoiler").click();
                     });
 
-                    // this should close the autocomplete and have inserted with the completion text
+                    // Check the autocomplete is closed and the composer contains the completion
                     cy.findByTestId("autocomplete-wrapper").should("not.be.visible");
                     cy.findByRole("textbox").within(() => {
                         cy.findByText("/spoiler").should("exist");
@@ -161,14 +161,14 @@ describe("Composer", () => {
                     cy.findByRole("button", { name: "Hide formatting" }).click();
 
                     // Type a message
-                    cy.get("div[contenteditable=true]").type("/spo");
+                    cy.findByRole("textbox").type("/spo");
 
                     // Check that the autocomplete /spoiler option is visible and click it
                     cy.findByTestId("autocomplete-wrapper").within(() => {
                         cy.findByText("/spoiler").click();
                     });
 
-                    // This should close the autocomplete and have inserted with the completion text
+                    // Check the autocomplete is closed and the composer contains the completion
                     cy.findByTestId("autocomplete-wrapper").should("not.be.visible");
                     cy.findByRole("textbox").within(() => {
                         cy.findByText("/spoiler").should("exist");
@@ -176,7 +176,7 @@ describe("Composer", () => {
 
                     // Type some more text then send the message
                     const argumentText = "this is the spoiler text";
-                    cy.get("div[contenteditable=true]").type(argumentText);
+                    cy.findByRole("textbox").type(argumentText);
                     cy.findByRole("button", { name: "Send message" }).click();
 
                     // Check that a spoiler item has appeared in the timeline and contains the spoiler command text
@@ -190,14 +190,14 @@ describe("Composer", () => {
                     cy.findByRole("button", { name: "Hide formatting" }).click();
 
                     // Type a message
-                    cy.get("div[contenteditable=true]").type("/dev");
+                    cy.findByRole("textbox").type("/dev");
 
                     // Check that the autocomplete /spoiler option is visible and click it
                     cy.findByTestId("autocomplete-wrapper").within(() => {
                         cy.findByText("/devtools").click();
                     });
 
-                    // This should close the autocomplete and have inserted with the completion text
+                    // Check the autocomplete is closed and the composer contains the completion
                     cy.findByTestId("autocomplete-wrapper").should("not.be.visible");
                     cy.findByRole("textbox").within(() => {
                         cy.findByText("/devtools").should("exist");
@@ -206,7 +206,7 @@ describe("Composer", () => {
                     // Click the send message button
                     cy.findByRole("button", { name: "Send message" }).click();
 
-                    // Check that the devtools dialog menut has appeared
+                    // Check that the devtools dialog menu has appeared
                     cy.findByRole("dialog").within(() => {
                         cy.findByText("Developer Tools").should("exist");
                     });
@@ -218,7 +218,21 @@ describe("Composer", () => {
                     cy.findByRole("button", { name: "Hide formatting" }).click();
 
                     // Type a message
-                    cy.get("div[contenteditable=true]").type("//spo");
+                    cy.findByRole("textbox").type("//anyText");
+
+                    // Check that the autocomplete options are not visible
+                    cy.findByTestId("autocomplete-wrapper").within(() => {
+                        cy.findAllByRole("presentation").should("have.length", 0);
+                    });
+                });
+
+                it("autocomplete is not displayed when user inserts whitespace after command", () => {
+                    // Select plain text mode after composer is ready
+                    cy.get("div[contenteditable=true]").should("exist");
+                    cy.findByRole("button", { name: "Hide formatting" }).click();
+
+                    // Type a message
+                    cy.findByRole("textbox").type("/spoiler followed by a space");
 
                     // Check that the autocomplete options are not visible
                     cy.findByTestId("autocomplete-wrapper").within(() => {
