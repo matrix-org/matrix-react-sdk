@@ -118,8 +118,10 @@ describe("Composer", () => {
         });
 
         describe("commands", () => {
+            // TODO add tests for rich text mode
+
             describe("plain text mode", () => {
-                it("autocomplete opens when / is entered and is populated", () => {
+                it("autocomplete opens when / is pressed and contains autocomplete items", () => {
                     // Select plain text mode after composer is ready
                     cy.get("div[contenteditable=true]").should("exist");
                     cy.findByRole("button", { name: "Hide formatting" }).click();
@@ -153,6 +155,64 @@ describe("Composer", () => {
                     });
                 });
 
+                it("autocomplete can be used to write and send a command that takes arguments", () => {
+                    // Select plain text mode after composer is ready
+                    cy.get("div[contenteditable=true]").should("exist");
+                    cy.findByRole("button", { name: "Hide formatting" }).click();
+
+                    // Type a message
+                    cy.get("div[contenteditable=true]").type("/spo");
+
+                    // Check that the autocomplete /spoiler option is visible and click it
+                    cy.findByTestId("autocomplete-wrapper").within(() => {
+                        cy.findByText("/spoiler").click();
+                    });
+
+                    // This should close the autocomplete and have inserted with the completion text
+                    cy.findByTestId("autocomplete-wrapper").should("not.be.visible");
+                    cy.findByRole("textbox").within(() => {
+                        cy.findByText("/spoiler").should("exist");
+                    });
+
+                    // Type some more text then send the message
+                    const argumentText = "this is the spoiler text";
+                    cy.get("div[contenteditable=true]").type(argumentText);
+                    cy.findByRole("button", { name: "Send message" }).click();
+
+                    // Check that a spoiler item has appeared in the timeline and contains the spoiler command text
+                    cy.get("mx_EventTile_Spoiler").within(() => {
+                        cy.findByText("this is the spoiler text").should("exist");
+                    });
+                });
+
+                it("autocomplete can be used to write and send a command that takes no arguments", () => {
+                    // Select plain text mode after composer is ready
+                    cy.get("div[contenteditable=true]").should("exist");
+                    cy.findByRole("button", { name: "Hide formatting" }).click();
+
+                    // Type a message
+                    cy.get("div[contenteditable=true]").type("/dev");
+
+                    // Check that the autocomplete /spoiler option is visible and click it
+                    cy.findByTestId("autocomplete-wrapper").within(() => {
+                        cy.findByText("/devtools").click();
+                    });
+
+                    // This should close the autocomplete and have inserted with the completion text
+                    cy.findByTestId("autocomplete-wrapper").should("not.be.visible");
+                    cy.findByRole("textbox").within(() => {
+                        cy.findByText("/devtools").should("exist");
+                    });
+
+                    // Click the send message button
+                    cy.findByRole("button", { name: "Send message" }).click();
+
+                    // Check that the devtools dialog menut has appeared
+                    cy.findByRole("dialog").within(() => {
+                        cy.findByText("Developer Tools").should("exist");
+                    });
+                });
+
                 it("autocomplete is not displayed for a message starting with //", () => {
                     // Select plain text mode after composer is ready
                     cy.get("div[contenteditable=true]").should("exist");
@@ -167,8 +227,6 @@ describe("Composer", () => {
                     });
                 });
             });
-
-            // TODO add tests for rich text mode
         });
 
         it("sends a message when you click send or press Enter", () => {
