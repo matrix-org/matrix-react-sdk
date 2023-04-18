@@ -56,7 +56,7 @@ describe("mapSuggestion", () => {
 });
 
 describe("processCommand", () => {
-    it("does not change suggestion node text content if suggestion or editor ref is null", () => {
+    it("does not change parent hook state if suggestion or editor ref is null", () => {
         // create a div and append a text node to it with some initial text
         const editorDiv = document.createElement("div");
         const initialText = "text";
@@ -66,6 +66,7 @@ describe("processCommand", () => {
         // create a mockSuggestion using the text node above
         const mockSuggestion = createMockPlainTextSuggestionPattern({ node: textNode });
         const mockSetSuggestion = jest.fn();
+        const mockSetText = jest.fn();
 
         // call the function with a null editorRef.current value
         processCommand(
@@ -73,10 +74,11 @@ describe("processCommand", () => {
             { current: null } as React.RefObject<HTMLDivElement>,
             mockSuggestion,
             mockSetSuggestion,
+            mockSetText,
         );
 
-        // check that the text has not changed
-        expect(textNode.textContent).toBe(initialText);
+        // check that the parent state setter has not been called
+        expect(mockSetText).not.toHaveBeenCalled();
 
         // call the function with a valid editorRef.current, but a null suggestion
         processCommand(
@@ -84,13 +86,14 @@ describe("processCommand", () => {
             { current: editorDiv } as React.RefObject<HTMLDivElement>,
             null,
             mockSetSuggestion,
+            mockSetText,
         );
 
-        // check that the text has not changed
-        expect(textNode.textContent).toBe(initialText);
+        // check that the parent state setter has not been called
+        expect(mockSetText).not.toHaveBeenCalled();
     });
 
-    it("can change the text content of the suggestion node", () => {
+    it("can change the parent hook state when required", () => {
         // create a div and append a text node to it with some initial text
         const editorDiv = document.createElement("div");
         const initialText = "text";
@@ -100,6 +103,7 @@ describe("processCommand", () => {
         // create a mockSuggestion using the text node above
         const mockSuggestion = createMockPlainTextSuggestionPattern({ node: textNode });
         const mockSetSuggestion = jest.fn();
+        const mockSetText = jest.fn();
         const replacementText = "/replacement text";
 
         processCommand(
@@ -107,9 +111,10 @@ describe("processCommand", () => {
             { current: editorDiv } as React.RefObject<HTMLDivElement>,
             mockSuggestion,
             mockSetSuggestion,
+            mockSetText,
         );
 
         // check that the text has changed and includes a trailing space
-        expect(textNode.textContent).toBe(`${replacementText} `);
+        expect(mockSetText).toHaveBeenCalledWith(`${replacementText} `);
     });
 });
