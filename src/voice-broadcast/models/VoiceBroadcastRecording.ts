@@ -46,6 +46,7 @@ import { ActionPayload } from "../../dispatcher/payloads";
 import { VoiceBroadcastChunkEvents } from "../utils/VoiceBroadcastChunkEvents";
 import { RelationsHelper, RelationsHelperEvent } from "../../events/RelationsHelper";
 import { createReconnectedListener } from "../../utils/connection";
+import { localNotificationsAreSilenced } from "../../utils/notifications";
 
 export enum VoiceBroadcastRecordingEvent {
     StateChanged = "liveness_changed",
@@ -333,8 +334,18 @@ export class VoiceBroadcastRecording
      * It sets the connection error state and stops the recorder.
      */
     private async onConnectionError(): Promise<void> {
+        this.playConnectionErrorAudioNotification();
         await this.stopRecorder(false);
         this.setState("connection_error");
+    }
+
+    private playConnectionErrorAudioNotification(): void {
+        if (localNotificationsAreSilenced(this.client)) {
+            return;
+        }
+
+        const audioElement = document.querySelector<HTMLAudioElement>("audio#messageAudio");
+        audioElement?.play();
     }
 
     private async uploadFile(chunk: ChunkRecordedPayload): ReturnType<typeof uploadFile> {
