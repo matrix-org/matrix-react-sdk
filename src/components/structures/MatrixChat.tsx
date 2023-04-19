@@ -134,7 +134,7 @@ import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { UseCaseSelection } from "../views/elements/UseCaseSelection";
 import { ValidatedServerConfig } from "../../utils/ValidatedServerConfig";
 import { isLocalRoom } from "../../utils/localRoom/isLocalRoom";
-import { SdkContextClass, SDKContext } from "../../contexts/SDKContext";
+import { SdkContextClass, SDKContext, LoggedInSdkContextClass } from "../../contexts/SDKContext";
 import { viewUserDeviceSettings } from "../../actions/handlers/viewUserDeviceSettings";
 import { cleanUpBroadcasts, VoiceBroadcastResumer } from "../../voice-broadcast";
 import GenericToast from "../views/toasts/GenericToast";

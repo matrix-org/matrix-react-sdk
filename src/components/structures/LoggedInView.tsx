@@ -71,6 +71,7 @@ import LeftPanelLiveShareWarning from "../views/beacon/LeftPanelLiveShareWarning
 import { UserOnboardingPage } from "../views/user-onboarding/UserOnboardingPage";
 import { PipContainer } from "./PipContainer";
 import { monitorSyncedPushRules } from "../../utils/pushRules/monitorSyncedPushRules";
+import { LoggedInSDKContext, LoggedInSdkContextClass, SdkContextClass } from "../../contexts/SDKContext";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -663,43 +664,47 @@ class LoggedInView extends React.Component<IProps, IState> {
             return <AudioFeedArrayForLegacyCall call={call} key={call.callId} />;
         });
 
+        SdkContextClass.instance.client = this._matrixClient;
+
         return (
-            <MatrixClientContext.Provider value={this._matrixClient}>
-                <div
-                    onPaste={this.onPaste}
-                    onKeyDown={this.onReactKeyDown}
-                    className={wrapperClasses}
-                    aria-hidden={this.props.hideToSRUsers}
-                >
-                    <ToastContainer />
-                    <div className={bodyClasses}>
-                        <div className="mx_LeftPanel_outerWrapper">
-                            <LeftPanelLiveShareWarning isMinimized={this.props.collapseLhs || false} />
-                            <nav className="mx_LeftPanel_wrapper">
-                                <BackdropPanel blurMultiplier={0.5} backgroundImage={this.state.backgroundImage} />
-                                <SpacePanel />
-                                <BackdropPanel backgroundImage={this.state.backgroundImage} />
-                                <div
-                                    className="mx_LeftPanel_wrapper--user"
-                                    ref={this._resizeContainer}
-                                    data-collapsed={this.props.collapseLhs ? true : undefined}
-                                >
-                                    <LeftPanel
-                                        pageType={this.props.page_type as PageTypes}
-                                        isMinimized={this.props.collapseLhs || false}
-                                        resizeNotifier={this.props.resizeNotifier}
-                                    />
-                                </div>
-                            </nav>
+            <LoggedInSDKContext.Provider value={SdkContextClass.instance as LoggedInSdkContextClass}>
+                <MatrixClientContext.Provider value={this._matrixClient}>
+                    <div
+                        onPaste={this.onPaste}
+                        onKeyDown={this.onReactKeyDown}
+                        className={wrapperClasses}
+                        aria-hidden={this.props.hideToSRUsers}
+                    >
+                        <ToastContainer />
+                        <div className={bodyClasses}>
+                            <div className="mx_LeftPanel_outerWrapper">
+                                <LeftPanelLiveShareWarning isMinimized={this.props.collapseLhs || false} />
+                                <nav className="mx_LeftPanel_wrapper">
+                                    <BackdropPanel blurMultiplier={0.5} backgroundImage={this.state.backgroundImage} />
+                                    <SpacePanel />
+                                    <BackdropPanel backgroundImage={this.state.backgroundImage} />
+                                    <div
+                                        className="mx_LeftPanel_wrapper--user"
+                                        ref={this._resizeContainer}
+                                        data-collapsed={this.props.collapseLhs ? true : undefined}
+                                    >
+                                        <LeftPanel
+                                            pageType={this.props.page_type as PageTypes}
+                                            isMinimized={this.props.collapseLhs || false}
+                                            resizeNotifier={this.props.resizeNotifier}
+                                        />
+                                    </div>
+                                </nav>
+                            </div>
+                            <ResizeHandle passRef={this.resizeHandler} id="lp-resizer" />
+                            <div className="mx_RoomView_wrapper">{pageElement}</div>
                         </div>
-                        <ResizeHandle passRef={this.resizeHandler} id="lp-resizer" />
-                        <div className="mx_RoomView_wrapper">{pageElement}</div>
                     </div>
-                </div>
-                <PipContainer />
-                <NonUrgentToastContainer />
-                {audioFeedArraysForCalls}
-            </MatrixClientContext.Provider>
+                    <PipContainer />
+                    <NonUrgentToastContainer />
+                    {audioFeedArraysForCalls}
+                </MatrixClientContext.Provider>
+            </LoggedInSDKContext.Provider>
         );
     }
 }

@@ -24,6 +24,7 @@ import SettingsStore from "../settings/SettingsStore";
 import { Pill, PillType, pillRoomNotifLen, pillRoomNotifPos } from "../components/views/elements/Pill";
 import { parsePermalink } from "./permalinks/Permalinks";
 import { PermalinkParts } from "./permalinks/PermalinkConstructor";
+import { LoggedInSDKContext, LoggedInSdkContextClass } from "../contexts/SDKContext";
 
 /**
  * A node here is an A element with a href attribute tag.
@@ -59,8 +60,13 @@ const shouldBePillified = (node: Element, href: string, parts: PermalinkParts | 
  *   React components which have been mounted as part of this.
  *   The initial caller should pass in an empty array to seed the accumulator.
  */
-export function pillifyLinks(nodes: ArrayLike<Element>, mxEvent: MatrixEvent, pills: Element[]): void {
-    const room = MatrixClientPeg.get().getRoom(mxEvent.getRoomId()) ?? undefined;
+export function pillifyLinks(
+    context: LoggedInSdkContextClass,
+    nodes: ArrayLike<Element>,
+    mxEvent: MatrixEvent,
+    pills: Element[],
+): void {
+    const room = context.client.getRoom(mxEvent.getRoomId()) ?? undefined;
     const shouldShowPillAvatar = SettingsStore.getValue("Pill.shouldShowPillAvatar");
     let node = nodes[0];
     while (node) {
@@ -78,7 +84,9 @@ export function pillifyLinks(nodes: ArrayLike<Element>, mxEvent: MatrixEvent, pi
                 const pillContainer = document.createElement("span");
 
                 const pill = (
-                    <Pill url={href} inMessage={true} room={room} shouldShowPillAvatar={shouldShowPillAvatar} />
+                    <LoggedInSDKContext.Provider value={context}>
+                        <Pill url={href} inMessage={true} room={room} shouldShowPillAvatar={shouldShowPillAvatar} />
+                    </LoggedInSDKContext.Provider>
                 );
 
                 ReactDOM.render(pill, pillContainer);
@@ -151,7 +159,7 @@ export function pillifyLinks(nodes: ArrayLike<Element>, mxEvent: MatrixEvent, pi
         }
 
         if (node.childNodes && node.childNodes.length && !pillified) {
-            pillifyLinks(node.childNodes as NodeListOf<Element>, mxEvent, pills);
+            pillifyLinks(context, node.childNodes as NodeListOf<Element>, mxEvent, pills);
         }
 
         node = node.nextSibling as Element;

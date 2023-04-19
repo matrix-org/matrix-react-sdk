@@ -25,13 +25,13 @@ import { formatTime } from "../../../DateUtils";
 import { pillifyLinks, unmountPills } from "../../../utils/pillify";
 import { tooltipifyLinks, unmountTooltips } from "../../../utils/tooltipify";
 import { _t } from "../../../languageHandler";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Modal from "../../../Modal";
 import RedactedBody from "./RedactedBody";
 import AccessibleButton from "../elements/AccessibleButton";
 import ConfirmAndWaitRedactDialog from "../dialogs/ConfirmAndWaitRedactDialog";
 import ViewSource from "../../structures/ViewSource";
 import SettingsStore from "../../../settings/SettingsStore";
+import { LoggedInSDKContext } from "../../../contexts/SDKContext";
 
 function getReplacedContent(event: MatrixEvent): IContent {
     const originalContent = event.getOriginalContent();
@@ -52,17 +52,20 @@ interface IState {
 }
 
 export default class EditHistoryMessage extends React.PureComponent<IProps, IState> {
+    public static contextType = LoggedInSDKContext;
+    public context!: React.ContextType<typeof LoggedInSDKContext>;
+
     private content = createRef<HTMLDivElement>();
     private pills: Element[] = [];
     private tooltips: Element[] = [];
 
-    public constructor(props: IProps) {
+    public constructor(props: IProps, context: React.ContextType<typeof LoggedInSDKContext>) {
         super(props);
 
-        const cli = MatrixClientPeg.get();
-        const userId = cli.getSafeUserId();
+        this.context = context;
+        const userId = this.context.client.getSafeUserId();
         const event = this.props.mxEvent;
-        const room = cli.getRoom(event.getRoomId());
+        const room = this.context.client.getRoom(event.getRoomId());
         event.localRedactionEvent()?.on(MatrixEventEvent.Status, this.onAssociatedStatusChanged);
         const canRedact = room?.currentState.maySendRedactionForEvent(event, userId) ?? false;
         this.state = { canRedact, sendStatus: event.getAssociatedStatus() };
@@ -74,13 +77,12 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
 
     private onRedactClick = async (): Promise<void> => {
         const event = this.props.mxEvent;
-        const cli = MatrixClientPeg.get();
 
         Modal.createDialog(
             ConfirmAndWaitRedactDialog,
             {
                 redact: async () => {
-                    await cli.redactEvent(event.getRoomId()!, event.getId()!);
+                    await this.context.client.redactEvent(event.getRoomId()!, event.getId()!);
                 },
             },
             "mx_Dialog_confirmredact",
@@ -101,7 +103,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
     private pillifyLinks(): void {
         // not present for redacted events
         if (this.content.current) {
-            pillifyLinks(this.content.current.children, this.props.mxEvent, this.pills);
+            pillifyLinks(this.context, this.content.current.children, this.props.mxEvent, this.pills);
         }
     }
 

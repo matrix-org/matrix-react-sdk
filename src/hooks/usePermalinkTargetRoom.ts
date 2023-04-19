@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/matrix";
-import { useEffect, useState } from "react";
+import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import { useContext, useEffect, useState } from "react";
 
 import { PillType } from "../components/views/elements/Pill";
-import { MatrixClientPeg } from "../MatrixClientPeg";
 import { PermalinkParts } from "../utils/permalinks/PermalinkConstructor";
+import { LoggedInSDKContext } from "../contexts/SDKContext";
 
 /**
  * Tries to determine the initial room.
@@ -37,6 +37,7 @@ const determineInitialRoom = (
     type: PillType | null,
     parseResult: PermalinkParts | null,
     permalinkRoom: Room | undefined,
+    client: MatrixClient,
 ): Room | null => {
     if (type === PillType.AtRoomMention && permalinkRoom) return permalinkRoom;
 
@@ -45,7 +46,7 @@ const determineInitialRoom = (
     }
 
     if (parseResult?.roomIdOrAlias) {
-        const room = findRoom(parseResult.roomIdOrAlias);
+        const room = findRoom(parseResult.roomIdOrAlias, client);
         if (room) return room;
     }
 
@@ -56,11 +57,10 @@ const determineInitialRoom = (
  * Tries to find a room by room Id or searching all rooms for an alias.
  *
  * @param roomIdOrAlias - Id or alias of the room to find.
+ * @param client - Matrix client
  * @returns Room if found, else null.
  */
-const findRoom = (roomIdOrAlias: string): Room | null => {
-    const client = MatrixClientPeg.get();
-
+const findRoom = (roomIdOrAlias: string, client: MatrixClient): Room | null => {
     return roomIdOrAlias[0] === "#"
         ? client.getRooms().find((r) => {
               return r.getCanonicalAlias() === roomIdOrAlias || r.getAltAliases().includes(roomIdOrAlias);
@@ -85,19 +85,20 @@ export const usePermalinkTargetRoom = (
     parseResult: PermalinkParts | null,
     permalinkRoom: Room | undefined,
 ): Room | null => {
+    const client = useContext(LoggedInSDKContext).client;
     // The listed permalink types require a room.
     // If it cannot be initially determined, it will be looked up later by a memo hook.
     const shouldLookUpRoom =
         type && [PillType.RoomMention, PillType.EventInSameRoom, PillType.EventInOtherRoom, "space"].includes(type);
-    const initialRoom = determineInitialRoom(type, parseResult, permalinkRoom);
+    const initialRoom = determineInitialRoom(type, parseResult, permalinkRoom, client);
     const [targetRoom, setTargetRoom] = useState<Room | null>(initialRoom);
 
     useEffect(() => {
         if (shouldLookUpRoom && !targetRoom && parseResult?.roomIdOrAlias) {
-            const newRoom = findRoom(parseResult.roomIdOrAlias);
+            const newRoom = findRoom(parseResult.roomIdOrAlias, client);
             setTargetRoom(newRoom);
         }
-    }, [parseResult?.roomIdOrAlias, shouldLookUpRoom, targetRoom]);
+    }, [client, parseResult?.roomIdOrAlias, shouldLookUpRoom, targetRoom]);
 
     return targetRoom;
 };

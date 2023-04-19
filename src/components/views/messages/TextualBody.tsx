@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, SyntheticEvent, MouseEvent } from "react";
+import React, { createRef, SyntheticEvent, MouseEvent, useContext } from "react";
 import ReactDOM from "react-dom";
 import highlight from "highlight.js";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
@@ -48,6 +48,7 @@ import { options as linkifyOpts } from "../../../linkify-matrix";
 import { getParentEventId } from "../../../utils/Reply";
 import { EditWysiwygComposer } from "../rooms/wysiwyg_composer";
 import { IEventTileOps } from "../rooms/EventTile";
+import { LoggedInSDKContext, LoggedInSdkContextClass } from "../../../contexts/SDKContext";
 
 const MAX_HIGHLIGHT_LENGTH = 4096;
 
@@ -59,7 +60,11 @@ interface IState {
     widgetHidden: boolean;
 }
 
-export default class TextualBody extends React.Component<IBodyProps, IState> {
+interface Props extends IBodyProps {
+    loggedInSDKContext: LoggedInSdkContextClass;
+}
+
+export class TextualBody extends React.Component<Props, IState> {
     private readonly contentRef = createRef<HTMLSpanElement>();
 
     private unmounted = false;
@@ -68,10 +73,12 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
     public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
+    private loggedInSDKContext: LoggedInSdkContextClass;
 
-    public constructor(props: IBodyProps) {
+    public constructor(props: Props) {
         super(props);
 
+        this.loggedInSDKContext = props.loggedInSDKContext;
         this.state = {
             links: [],
             widgetHidden: false,
@@ -92,7 +99,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         this.activateSpoilers([content]);
 
         HtmlUtils.linkifyElement(content);
-        pillifyLinks([content], this.props.mxEvent, this.pills);
+        pillifyLinks(this.loggedInSDKContext, [content], this.props.mxEvent, this.pills);
 
         this.calculateUrlPreview();
 
@@ -659,3 +666,10 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         );
     }
 }
+
+const TextualBodyWithLoggedInSDKContext: React.FC<IBodyProps> = (props) => {
+    const loggedInSDKContext = useContext(LoggedInSDKContext);
+    return <TextualBody loggedInSDKContext={loggedInSDKContext} {...props} />;
+};
+
+export default TextualBodyWithLoggedInSDKContext;

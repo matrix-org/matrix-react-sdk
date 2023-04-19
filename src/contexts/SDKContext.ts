@@ -207,3 +207,11 @@ export class SdkContextClass {
         this._UserProfilesStore = undefined;
     }
 }
+
+export const LoggedInSDKContext = createContext<LoggedInSdkContextClass>(null as any);
+LoggedInSDKContext.displayName = "LoggedInSDKContext";
+
+export class LoggedInSdkContextClass extends SdkContextClass {
+    public static instance: LoggedInSdkContextClass = SdkContextClass.instance as LoggedInSdkContextClass;
+    public client: MatrixClient;
+}
