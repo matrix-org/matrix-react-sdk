@@ -553,6 +553,8 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
      */
     public regenerateAllLists({ trigger = true }): void {
         logger.warn("Regenerating all room lists");
+        
+        debugger;
 
         const rooms = this.getPlausibleRooms();
 

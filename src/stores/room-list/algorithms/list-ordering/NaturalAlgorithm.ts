@@ -42,6 +42,7 @@ export class NaturalAlgorithm extends OrderingAlgorithm {
     }
 
     public setRooms(rooms: Room[]): void {
+        console.log('hhh', 'NaturalAlgorithm:setRooms', this.isMutedToBottom);
         const { defaultRooms, mutedRooms } = this.categorizeRooms(rooms);
 
         this.cachedCategorizedOrderedRooms = {
@@ -52,12 +53,13 @@ export class NaturalAlgorithm extends OrderingAlgorithm {
     }
 
     public handleRoomUpdate(room: Room, cause: RoomUpdateCause): boolean {
+        console.log('hhh', 'NaturalAlgorithm:handleRoomUpdate', this.isMutedToBottom);
         const isSplice = cause === RoomUpdateCause.NewRoom || cause === RoomUpdateCause.RoomRemoved;
         const isInPlace =
             cause === RoomUpdateCause.Timeline ||
             cause === RoomUpdateCause.ReadReceipt ||
             cause === RoomUpdateCause.PossibleMuteChange;
-        const isMuted = this.getRoomIsMuted(room);
+        const isMuted = this.isMutedToBottom && this.getRoomIsMuted(room);
 
         if (!isSplice && !isInPlace) {
             throw new Error(`Unsupported update cause: ${cause}`);
@@ -81,7 +83,7 @@ export class NaturalAlgorithm extends OrderingAlgorithm {
             return true;
         } else if (cause === RoomUpdateCause.RoomRemoved) {
             return this.removeRoom(room);
-        } else if (cause === RoomUpdateCause.PossibleMuteChange) {
+        } else if (this.isMutedToBottom && cause === RoomUpdateCause.PossibleMuteChange) {
             return this.onPossibleMuteChange(room);
         }
 
@@ -147,6 +149,9 @@ export class NaturalAlgorithm extends OrderingAlgorithm {
     }
 
     private categorizeRooms(rooms: Room[]): NaturalCategorizedRoomMap {
+        if (!this.isMutedToBottom) {
+            return { defaultRooms: rooms, mutedRooms: []};
+        }
         return rooms.reduce<NaturalCategorizedRoomMap>(
             (acc, room: Room) => {
                 if (this.getRoomIsMuted(room)) {

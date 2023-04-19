@@ -21,12 +21,12 @@ import { TagID } from "../../models";
 import { OrderingAlgorithm } from "./OrderingAlgorithm";
 
 interface AlgorithmFactory {
-    (tagId: TagID, initialSortingAlgorithm: SortAlgorithm): OrderingAlgorithm;
+    (tagId: TagID, initialSortingAlgorithm: SortAlgorithm, mutedToTheBottom?: boolean): OrderingAlgorithm;
 }
 
 const ALGORITHM_FACTORIES: { [algorithm in ListAlgorithm]: AlgorithmFactory } = {
-    [ListAlgorithm.Natural]: (tagId, initSort) => new NaturalAlgorithm(tagId, initSort),
-    [ListAlgorithm.Importance]: (tagId, initSort) => new ImportanceAlgorithm(tagId, initSort),
+    [ListAlgorithm.Natural]: (tagId, initSort, mutedToTheBottom) => new NaturalAlgorithm(tagId, initSort, mutedToTheBottom),
+    [ListAlgorithm.Importance]: (tagId, initSort, mutedToTheBottom) => new ImportanceAlgorithm(tagId, initSort, mutedToTheBottom),
 };
 
 /**
@@ -40,10 +40,11 @@ export function getListAlgorithmInstance(
     algorithm: ListAlgorithm,
     tagId: TagID,
     initSort: SortAlgorithm,
+    mutedToTheBottom?: boolean,
 ): OrderingAlgorithm {
     if (!ALGORITHM_FACTORIES[algorithm]) {
         throw new Error(`${algorithm} is not a known algorithm`);
     }
 
-    return ALGORITHM_FACTORIES[algorithm](tagId, initSort);
+    return ALGORITHM_FACTORIES[algorithm](tagId, initSort, mutedToTheBottom);
 }

@@ -96,10 +96,11 @@ export class ImportanceAlgorithm extends OrderingAlgorithm {
         // It's fine for us to call this a lot because it's cached, and we shouldn't be
         // wasting anything by doing so as the store holds single references
         const state = RoomNotificationStateStore.instance.getRoomState(room);
-        return state.muted ? NotificationColor.Muted : state.color;
+        return (this.isMutedToBottom && state.muted) ? NotificationColor.Muted : state.color;
     }
 
     public setRooms(rooms: Room[]): void {
+        console.log('hhh', 'ImportanceAlgorithm:setRooms', this.isMutedToBottom);
         if (this.sortingAlgorithm === SortAlgorithm.Manual) {
             this.cachedOrderedRooms = sortRoomsWithAlgorithm(rooms, this.tagId, this.sortingAlgorithm);
         } else {
@@ -162,6 +163,7 @@ export class ImportanceAlgorithm extends OrderingAlgorithm {
     }
 
     public handleRoomUpdate(room: Room, cause: RoomUpdateCause): boolean {
+        console.log('hhh', 'ImportanceAlgorithm:handleRoomUpdate', this.isMutedToBottom);
         if (cause === RoomUpdateCause.NewRoom || cause === RoomUpdateCause.RoomRemoved) {
             return this.handleSplice(room, cause);
         }
@@ -172,6 +174,10 @@ export class ImportanceAlgorithm extends OrderingAlgorithm {
             cause !== RoomUpdateCause.PossibleMuteChange
         ) {
             throw new Error(`Unsupported update cause: ${cause}`);
+        }
+
+        if (cause === RoomUpdateCause.PossibleMuteChange && !this.isMutedToBottom) {
+            return;
         }
 
         const category = this.getRoomCategory(room);
