@@ -92,7 +92,9 @@ export class RoomNotificationState extends NotificationState implements IDestroy
     private updateNotificationState(): void {
         const snapshot = this.snapshot();
 
-        const { color, symbol, count, muted } = RoomNotifs.determineUnreadState(this.room);
+        const { color, symbol, count } = RoomNotifs.determineUnreadState(this.room);
+        const muted =
+            RoomNotifs.getRoomNotifsState(this.room.client, this.room.roomId) === RoomNotifs.RoomNotifState.Mute;
         this._color = color;
         this._symbol = symbol;
         this._count = count;

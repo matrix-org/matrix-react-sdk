@@ -190,12 +190,20 @@ function findOverrideMuteRule(roomId: string): IPushRule | null {
     return null;
 }
 
-function isRuleForRoom(roomId: string, rule: IPushRule): boolean {
+export function isRuleRoomSpecific(rule: IPushRule): boolean {
     if (rule.conditions?.length !== 1) {
         return false;
     }
     const cond = rule.conditions[0];
-    return cond.kind === ConditionKind.EventMatch && cond.key === "room_id" && cond.pattern === roomId;
+    return cond.kind === ConditionKind.EventMatch && cond.key === "room_id";
+}
+
+function isRuleForRoom(roomId: string, rule: IPushRule): boolean {
+    if (!isRuleRoomSpecific(rule)) {
+        return false;
+    }
+    const cond = rule.conditions[0];
+    return cond.pattern === roomId;
 }
 
 function isMuteRule(rule: IPushRule): boolean {
@@ -205,25 +213,21 @@ function isMuteRule(rule: IPushRule): boolean {
 export function determineUnreadState(
     room?: Room,
     threadId?: string,
-): { color: NotificationColor; symbol: string | null; count: number; muted: boolean } {
+): { color: NotificationColor; symbol: string | null; count: number } {
     if (!room) {
-        return { symbol: null, count: 0, color: NotificationColor.None, muted: false };
+        return { symbol: null, count: 0, color: NotificationColor.None };
     }
 
-    const echoChamber = EchoChamber.forRoom(room);
-    const notifVolume = echoChamber.notificationVolume;
-    const muted = notifVolume === RoomNotifState.Mute;
-
     if (getUnsentMessages(room, threadId).length > 0) {
-        return { symbol: "!", count: 1, color: NotificationColor.Unsent, muted };
+        return { symbol: "!", count: 1, color: NotificationColor.Unsent };
     }
 
     if (getEffectiveMembership(room.getMyMembership()) === EffectiveMembership.Invite) {
-        return { symbol: "!", count: 1, color: NotificationColor.Red, muted };
+        return { symbol: "!", count: 1, color: NotificationColor.Red };
     }
 
     if (getRoomNotifsState(room.client, room.roomId) === RoomNotifState.Mute) {
-        return { symbol: null, count: 0, color: NotificationColor.None, muted };
+        return { symbol: null, count: 0, color: NotificationColor.None };
     }
 
     const redNotifs = getUnreadNotificationCount(room, NotificationCountType.Highlight, threadId);
@@ -231,11 +235,11 @@ export function determineUnreadState(
 
     const trueCount = greyNotifs || redNotifs;
     if (redNotifs > 0) {
-        return { symbol: null, count: trueCount, color: NotificationColor.Red, muted };
+        return { symbol: null, count: trueCount, color: NotificationColor.Red };
     }
 
     if (greyNotifs > 0) {
-        return { symbol: null, count: trueCount, color: NotificationColor.Grey, muted };
+        return { symbol: null, count: trueCount, color: NotificationColor.Grey };
     }
 
     // We don't have any notified messages, but we might have unread messages. Let's
@@ -248,6 +252,5 @@ export function determineUnreadState(
         symbol: null,
         count: trueCount,
         color: hasUnread ? NotificationColor.Bold : NotificationColor.None,
-        muted,
     };
 }
