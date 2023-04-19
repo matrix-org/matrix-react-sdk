@@ -193,8 +193,7 @@ describe("General user settings tab", () => {
                         cy.findByRole("button", { name: "Country Dropdown" }).click();
 
                         // Assert that the option for calling code of United Kingdom is visible
-                        cy.findByRole("option", { name: /United Kingdom/ })
-                            .should("be.visible")
+                        cy.findByRole("option", { name: /United Kingdom/ }).should("be.visible");
 
                         // Click again to close the dropdown
                         cy.findByRole("button", { name: "Country Dropdown" }).click();
