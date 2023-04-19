@@ -187,7 +187,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             plContent["events"][powerLevelKey.slice(eventsLevelPrefix.length)] = value;
         } else {
             const keyPath = powerLevelKey.split(".");
-            let parentObj: IContent | undefined;
+            let parentObj: IContent = {};
             let currentObj = plContent;
             for (const key of keyPath) {
                 if (!currentObj[key]) {
@@ -402,16 +402,16 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
                     <ul>
                         {banned.map((member) => {
                             const banEvent = member.events.member?.getContent();
-                            const sender = room.getMember(member.events.member.getSender());
-                            let bannedBy = member.events.member?.getSender(); // start by falling back to mxid
-                            if (sender) bannedBy = sender.name;
+                            const bannedById = member.events.member?.getSender();
+                            const sender = bannedById ? room.getMember(bannedById) : undefined;
+                            const bannedBy = sender?.name || bannedById; // fallback to mxid
                             return (
                                 <BannedUser
                                     key={member.userId}
                                     canUnban={canBanUsers}
                                     member={member}
                                     reason={banEvent?.reason}
-                                    by={bannedBy}
+                                    by={bannedBy!}
                                 />
                             );
                         })}
