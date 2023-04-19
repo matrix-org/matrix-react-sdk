@@ -21,6 +21,7 @@ import { _t } from "../../../languageHandler";
 import { getEmojiFromUnicode, IEmoji } from "../../../emoji";
 import Emoji from "./Emoji";
 import { ButtonEvent } from "../elements/AccessibleButton";
+import Toolbar from "../../../accessibility/Toolbar";
 
 // We use the variation-selector Heart in Quick Reactions for some reason
 const QUICK_REACTIONS = ["👍", "👎", "😄", "🎉", "😕", "❤️", "🚀", "👀"].map((emoji) => {
@@ -71,7 +72,7 @@ class QuickReactions extends React.Component<IProps, IState> {
                         </React.Fragment>
                     )}
                 </h2>
-                <ul className="mx_EmojiPicker_list" aria-label={_t("Quick Reactions")}>
+                <Toolbar className="mx_EmojiPicker_list" aria-label={_t("Quick Reactions")}>
                     {QUICK_REACTIONS.map((emoji) => (
                         <Emoji
                             key={emoji.hexcode}
@@ -82,7 +83,7 @@ class QuickReactions extends React.Component<IProps, IState> {
                             selectedEmojis={this.props.selectedEmojis}
                         />
                     ))}
-                </ul>
+                </Toolbar>
             </section>
         );
     }

@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { Dispatch } from "react";
 
 import { _t } from "../../../languageHandler";
 import * as recent from "../../../emojipicker/recent";
@@ -27,7 +27,12 @@ import Preview from "./Preview";
 import QuickReactions from "./QuickReactions";
 import Category, { CategoryKey, ICategory } from "./Category";
 import { filterBoolean } from "../../../utils/arrays";
-import { IState as RovingState, RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
+import {
+    IAction as RovingAction,
+    IState as RovingState,
+    RovingTabIndexProvider,
+    Type,
+} from "../../../accessibility/RovingTabIndex";
 import { Key } from "../../../Keyboard";
 import { clamp } from "../../../utils/numbers";
 import { ButtonEvent } from "../elements/AccessibleButton";
@@ -155,7 +160,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
         this.updateVisibility();
     };
 
-    private onKeyDown = (ev: React.KeyboardEvent, state: RovingState): void => {
+    private onKeyDown = (ev: React.KeyboardEvent, state: RovingState, dispatch: Dispatch<RovingAction>): void => {
         if (!state.activeRef?.current) return;
 
         switch (ev.key) {
@@ -178,12 +183,18 @@ class EmojiPicker extends React.Component<IProps, IState> {
                     | HTMLElement
                     | undefined;
 
-                newTarget?.focus();
-                newTarget?.scrollIntoView({
-                    behavior: "auto",
-                    block: "center",
-                    inline: "center",
-                });
+                if (newTarget) {
+                    const ref = state.refs.find((r) => r.current === newTarget);
+                    dispatch({
+                        type: Type.SetFocus,
+                        payload: { ref },
+                    });
+                    newTarget.scrollIntoView({
+                        behavior: "auto",
+                        block: "center",
+                        inline: "center",
+                    });
+                }
 
                 ev.stopPropagation();
                 ev.preventDefault();
@@ -316,7 +327,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
 
     public render(): React.ReactNode {
         return (
-            <RovingTabIndexProvider onKeyDown={this.onKeyDown} handleLeftRight handleInputKeys>
+            <RovingTabIndexProvider onKeyDown={this.onKeyDown} handleLeftRight handleInputKeys onlySetFocus>
                 {({ onKeyDownHandler }) => {
                     let heightBefore = 0;
                     return (
@@ -326,8 +337,10 @@ class EmojiPicker extends React.Component<IProps, IState> {
                                 query={this.state.filter}
                                 onChange={this.onChangeFilter}
                                 onEnter={this.onEnterFilter}
+                                onKeyDown={onKeyDownHandler}
                             />
                             <AutoHideScrollbar
+                                id="mx_EmojiPicker_body"
                                 className="mx_EmojiPicker_body"
                                 ref={this.scrollRef}
                                 onScroll={this.onScroll}
@@ -359,8 +372,6 @@ class EmojiPicker extends React.Component<IProps, IState> {
                                 <Preview emoji={this.state.previewEmoji} />
                             ) : (
                                 <QuickReactions
-                                    // We want to re-render this when filter changes to reset roving order
-                                    key={this.state.filter}
                                     onClick={this.onClickEmoji}
                                     selectedEmojis={this.props.selectedEmojis}
                                 />

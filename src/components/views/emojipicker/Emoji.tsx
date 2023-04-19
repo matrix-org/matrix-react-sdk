@@ -17,9 +17,9 @@ limitations under the License.
 
 import React from "react";
 
-import { MenuItem } from "../../structures/ContextMenu";
 import { IEmoji } from "../../../emoji";
 import { ButtonEvent } from "../elements/AccessibleButton";
+import { RovingAccessibleButton } from "../../../accessibility/RovingTabIndex";
 
 interface IProps {
     emoji: IEmoji;
@@ -28,6 +28,8 @@ interface IProps {
     onMouseEnter(emoji: IEmoji): void;
     onMouseLeave(emoji: IEmoji): void;
     disabled?: boolean;
+    id?: string;
+    role?: string;
 }
 
 class Emoji extends React.PureComponent<IProps> {
@@ -35,19 +37,20 @@ class Emoji extends React.PureComponent<IProps> {
         const { onClick, onMouseEnter, onMouseLeave, emoji, selectedEmojis } = this.props;
         const isSelected = selectedEmojis?.has(emoji.unicode);
         return (
-            <MenuItem
-                element="li"
+            <RovingAccessibleButton
+                id={this.props.id}
                 onClick={(ev) => onClick(ev, emoji)}
                 onMouseEnter={() => onMouseEnter(emoji)}
                 onMouseLeave={() => onMouseLeave(emoji)}
                 className="mx_EmojiPicker_item_wrapper"
-                label={emoji.unicode}
                 disabled={this.props.disabled}
+                role={this.props.role}
+                focusOnMouseOver
             >
                 <div className={`mx_EmojiPicker_item ${isSelected ? "mx_EmojiPicker_item_selected" : ""}`}>
                     {emoji.unicode}
                 </div>
-            </MenuItem>
+            </RovingAccessibleButton>
         );
     }
 }

@@ -49,12 +49,25 @@ interface IProps {
     isEmojiDisabled?: (unicode: string) => boolean;
 }
 
+function hexEncode(str: string): string {
+    let hex: string;
+    let i: number;
+
+    let result = "";
+    for (i = 0; i < str.length; i++) {
+        hex = str.charCodeAt(i).toString(16);
+        result += ("000" + hex).slice(-4);
+    }
+
+    return result;
+}
+
 class Category extends React.PureComponent<IProps> {
     private renderEmojiRow = (rowIndex: number): JSX.Element => {
         const { onClick, onMouseEnter, onMouseLeave, selectedEmojis, emojis } = this.props;
         const emojisForRow = emojis.slice(rowIndex * 8, (rowIndex + 1) * 8);
         return (
-            <div key={rowIndex}>
+            <div key={rowIndex} role="row">
                 {emojisForRow.map((emoji) => (
                     <Emoji
                         key={emoji.hexcode}
@@ -64,6 +77,8 @@ class Category extends React.PureComponent<IProps> {
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
                         disabled={this.props.isEmojiDisabled?.(emoji.unicode)}
+                        id={`mx_EmojiPicker_item_${this.props.id}_${hexEncode(emoji.unicode)}`}
+                        role="gridcell"
                     />
                 ))}
             </div>
@@ -102,7 +117,6 @@ class Category extends React.PureComponent<IProps> {
             >
                 <h2 className="mx_EmojiPicker_category_label">{name}</h2>
                 <LazyRenderList
-                    element="ul"
                     className="mx_EmojiPicker_list"
                     itemHeight={EMOJI_HEIGHT}
                     items={rows}
@@ -111,6 +125,7 @@ class Category extends React.PureComponent<IProps> {
                     overflowItems={OVERFLOW_ROWS}
                     overflowMargin={0}
                     renderItem={this.renderEmojiRow}
+                    role="grid"
                 />
             </section>
         );
