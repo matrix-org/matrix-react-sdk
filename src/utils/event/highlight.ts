@@ -89,17 +89,18 @@ export const getEventHighlightInfo = (
 };
 
 export const getHighlightReasonMessage = (rule: IAnnotatedPushRule): string => {
-    if (rule.rule_id === RuleId.ContainsUserName) {
-        return _t("Your username was mentioned.");
-    }
-    if (rule.rule_id === RuleId.ContainsDisplayName) {
-        return _t("Your display name was mentioned.");
-    }
-    if (rule.rule_id === RuleId.AtRoomNotification || rule.rule_id === RuleId.IsRoomMention) {
-        return _t("This message mentions the room.");
-    }
-    if (rule.rule_id === RuleId.IsUserMention) {
-        return _t("You were explicitly mentioned.");
+    switch (rule.rule_id) {
+        case RuleId.ContainsUserName:
+            return _t("Your username was mentioned.");
+        case RuleId.ContainsDisplayName:
+            return _t("Your display name was mentioned.");
+        case RuleId.AtRoomNotification:
+        case RuleId.IsRoomMention:
+            return _t("This message mentions the room.");
+        case RuleId.IsUserMention:
+            return _t("You were explicitly mentioned.");
+        default:
+        // pass thru
     }
     if (rule.kind === PushRuleKind.ContentSpecific) {
         return _t(`Your keyword '%(keyword)s' was mentioned.`, { keyword: rule.pattern! });
