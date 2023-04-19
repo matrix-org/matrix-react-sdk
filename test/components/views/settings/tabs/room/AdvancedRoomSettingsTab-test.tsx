@@ -36,7 +36,7 @@ describe("AdvancedRoomSettingsTab", () => {
     let room: Room;
 
     const renderTab = (): RenderResult => {
-        return render(<AdvancedRoomSettingsTab roomId={roomId} closeSettingsFn={jest.fn()} />);
+        return render(<AdvancedRoomSettingsTab room={room} closeSettingsFn={jest.fn()} />);
     };
 
     beforeEach(() => {

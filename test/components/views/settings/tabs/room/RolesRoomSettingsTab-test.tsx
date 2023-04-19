@@ -35,7 +35,7 @@ describe("RolesRoomSettingsTab", () => {
     let room: Room;
 
     const renderTab = (): RenderResult => {
-        return render(<RolesRoomSettingsTab roomId={roomId} />);
+        return render(<RolesRoomSettingsTab room={room} />);
     };
 
     const getVoiceBroadcastsSelect = (): HTMLElement => {
