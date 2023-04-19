@@ -44,17 +44,22 @@ describe("<RoomSettingsDialog />", () => {
     beforeEach(() => {
         jest.clearAllMocks();
 
-        mockClient.getRoom.mockReturnValue(room);
+        mockClient.getRoom.mockImplementation((roomId) => (roomId === room.roomId ? room : null));
 
         jest.spyOn(SettingsStore, "getValue").mockReset().mockReturnValue(false);
     });
 
-    const getComponent = (onFinished = jest.fn()) =>
-        render(<RoomSettingsDialog roomId={roomId} onFinished={onFinished} />, {
+    const getComponent = (onFinished = jest.fn(), propRoomId = roomId) =>
+        render(<RoomSettingsDialog roomId={propRoomId} onFinished={onFinished} />, {
             wrapper: ({ children }) => (
                 <MatrixClientContext.Provider value={mockClient}>{children}</MatrixClientContext.Provider>
             ),
         });
+
+    it("catches errors when room is not found", () => {
+        getComponent(undefined, "!room-that-does-not-exist");
+        expect(screen.getByText("Something went wrong!")).toBeInTheDocument();
+    });
 
     describe("Settings tabs", () => {
         it("renders default tabs correctly", () => {

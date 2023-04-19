@@ -36,6 +36,7 @@ import { VoipRoomSettingsTab } from "../settings/tabs/room/VoipRoomSettingsTab";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { NonEmptyArray } from "../../../@types/common";
 import { PollHistoryTab } from "../settings/tabs/room/PollHistoryTab";
+import ErrorBoundary from "../elements/ErrorBoundary";
 
 export const ROOM_GENERAL_TAB = "ROOM_GENERAL_TAB";
 export const ROOM_VOIP_TAB = "ROOM_VOIP_TAB";
@@ -57,7 +58,7 @@ interface IState {
     room: Room;
 }
 
-export default class RoomSettingsDialog extends React.Component<IProps, IState> {
+class RoomSettingsDialog extends React.Component<IProps, IState> {
     private dispatcherRef: string;
 
     public constructor(props: IProps) {
@@ -229,3 +230,11 @@ export default class RoomSettingsDialog extends React.Component<IProps, IState> 
         );
     }
 }
+
+const WrappedRoomSettingsDialog: React.FC<IProps> = (props) => (
+    <ErrorBoundary>
+        <RoomSettingsDialog {...props} />
+    </ErrorBoundary>
+);
+
+export default WrappedRoomSettingsDialog;
