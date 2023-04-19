@@ -604,7 +604,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             // has in memory because we never gave the component a chance to scroll
             // itself into the right place
             return new Promise((resolve) => {
-                this.setState(newState, () => {
+                this.setState<null>(newState, () => {
                     // we can continue paginating in the given direction if:
                     // - timelineWindow.paginate says we can
                     // - we're paginating forwards, or we won't be trying to

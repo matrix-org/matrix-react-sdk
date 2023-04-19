@@ -1195,7 +1195,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     private onRoomTimeline = (
         ev: MatrixEvent,
         room: Room | undefined,
-        toStartOfTimeline: boolean,
+        toStartOfTimeline: boolean | undefined,
         removed: boolean,
         data: IRoomTimelineData,
     ): void => {
