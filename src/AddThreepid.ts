@@ -311,7 +311,7 @@ export default class AddThreepid {
         } else {
             throw new UserFriendlyError("The add / bind with MSISDN flow is misconfigured");
         }
-        if (result instanceof MatrixError) {
+        if (result instanceof Error) {
             throw result;
         }
 
