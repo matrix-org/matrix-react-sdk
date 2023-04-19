@@ -48,25 +48,6 @@ const QuickSettingsButton: React.FC<{
     const currentRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
     const developerModeEnabled = useSettingValue("developerMode");
 
-    const developerToolsButton =
-        currentRoomId && developerModeEnabled ? (
-            <AccessibleButton
-                onClick={() => {
-                    closeMenu();
-                    Modal.createDialog(
-                        DevtoolsDialog,
-                        {
-                            roomId: currentRoomId,
-                        },
-                        "mx_DevtoolsDialog_wrapper",
-                    );
-                }}
-                kind="danger_outline"
-            >
-                {_t("Developer tools")}
-            </AccessibleButton>
-        ) : null;
-
     let contextMenu: JSX.Element | undefined;
     if (menuDisplayed && handle.current) {
         contextMenu = (
@@ -89,7 +70,23 @@ const QuickSettingsButton: React.FC<{
                     {_t("All settings")}
                 </AccessibleButton>
 
-                {developerToolsButton}
+                {currentRoomId && developerModeEnabled && (
+                    <AccessibleButton
+                        onClick={() => {
+                            closeMenu();
+                            Modal.createDialog(
+                                DevtoolsDialog,
+                                {
+                                    roomId: currentRoomId,
+                                },
+                                "mx_DevtoolsDialog_wrapper",
+                            );
+                        }}
+                        kind="danger_outline"
+                    >
+                        {_t("Developer tools")}
+                    </AccessibleButton>
+                )}
 
                 <h4 className="mx_QuickSettingsButton_pinToSidebarHeading">
                     <PinUprightIcon className="mx_QuickSettingsButton_icon" />
