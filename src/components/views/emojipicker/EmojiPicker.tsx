@@ -185,15 +185,17 @@ class EmojiPicker extends React.Component<IProps, IState> {
 
                 if (newTarget) {
                     const ref = state.refs.find((r) => r.current === newTarget);
-                    dispatch({
-                        type: Type.SetFocus,
-                        payload: { ref },
-                    });
-                    newTarget.scrollIntoView({
-                        behavior: "auto",
-                        block: "center",
-                        inline: "center",
-                    });
+                    if (ref) {
+                        dispatch({
+                            type: Type.SetFocus,
+                            payload: { ref },
+                        });
+                        newTarget.scrollIntoView({
+                            behavior: "auto",
+                            block: "center",
+                            inline: "center",
+                        });
+                    }
                 }
 
                 ev.stopPropagation();

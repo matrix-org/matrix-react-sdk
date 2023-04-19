@@ -295,7 +295,7 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
                 });
             }
         },
-        [context, onKeyDown, handleHomeEnd, handleUpDown, handleLeftRight, handleInputKeys],
+        [context, onKeyDown, handleHomeEnd, handleUpDown, handleLeftRight, handleInputKeys, onlySetFocus],
     );
 
     return (
