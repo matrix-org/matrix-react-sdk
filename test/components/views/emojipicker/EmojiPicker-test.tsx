@@ -48,12 +48,12 @@ describe("EmojiPicker", function () {
         const onFinished = jest.fn();
         const { container } = render(<EmojiPicker onChoose={onChoose} onFinished={onFinished} />);
 
-        const input = container.querySelector("input");
+        const input = container.querySelector("input")!;
         expect(input).toHaveFocus();
 
         function getEmoji(): string {
             const activeDescendant = input.getAttribute("aria-activedescendant");
-            return container.querySelector("#" + activeDescendant).textContent;
+            return container.querySelector("#" + activeDescendant)!.textContent!;
         }
 
         expect(getEmoji()).toEqual("😀");
@@ -61,7 +61,7 @@ describe("EmojiPicker", function () {
         expect(getEmoji()).toEqual("🙂");
         await userEvent.keyboard("[ArrowUp]");
         expect(getEmoji()).toEqual("😀");
-        await userEvent.type(input, "Flag");
+        await userEvent.keyboard("Flag");
         await userEvent.keyboard("[ArrowRight]");
         await userEvent.keyboard("[ArrowRight]");
         expect(getEmoji()).toEqual("📫️");
