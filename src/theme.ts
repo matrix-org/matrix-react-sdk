@@ -84,7 +84,6 @@ export function enumerateThemes(): { [key: string]: string } {
     for (const { name } of customThemes) {
         customThemeNames[`custom-${name}`] = name;
     }
-
     return Object.assign({}, customThemeNames, BUILTIN_THEMES);
 }
 
