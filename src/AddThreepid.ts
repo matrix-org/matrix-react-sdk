@@ -306,7 +306,7 @@ export default class AddThreepid {
                 this.sessionId,
                 this.clientSecret,
                 msisdnToken,
-                await authClient.getAccessToken()!,
+                await authClient.getAccessToken(),
             );
         } else {
             throw new UserFriendlyError("The add / bind with MSISDN flow is misconfigured");
@@ -321,7 +321,7 @@ export default class AddThreepid {
                     sid: this.sessionId,
                     client_secret: this.clientSecret,
                     id_server: getIdServerDomain(),
-                    id_access_token: await authClient.getAccessToken()!,
+                    id_access_token: await authClient.getAccessToken(),
                 });
             } else {
                 try {
