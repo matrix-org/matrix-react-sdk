@@ -590,9 +590,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
 
         if (highlightInfo.isHighlighted && highlightInfo.rule) {
             const reason = getHighlightReasonMessage(highlightInfo.rule);
-            toolbarOpts.splice(
-                0,
-                0,
+            toolbarOpts.unshift(
                 <TooltipTarget key="highlight-annotation" data-testid="highlight-annotation" label={reason}>
                     <div className="mx_MessageActionBar_infoElement">
                         <NotificationIcon />
