@@ -40,8 +40,8 @@ import IconizedContextMenu, {
 import { ButtonEvent } from "../elements/AccessibleButton";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
-import SettingsStore from "../../../settings/SettingsStore";
 import { DeveloperToolsOption } from "./DeveloperToolsOption";
+import { useSettingValue } from "../../../hooks/useSettings";
 
 export interface RoomGeneralContextMenuProps extends IContextMenuProps {
     room: Room;
@@ -226,7 +226,8 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
             />
         ) : null;
 
-    const developerToolsOption = SettingsStore.getValue("developerMode") ? (
+    const developerModeEnabled = useSettingValue<boolean>("developerMode");
+    const developerToolsOption = developerModeEnabled ? (
         <DeveloperToolsOption onFinished={onFinished} roomId={room.roomId} />
     ) : null;
 
