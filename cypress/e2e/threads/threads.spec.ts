@@ -31,7 +31,6 @@ describe("Threads", () => {
         });
         cy.startHomeserver("default").then((data) => {
             homeserver = data;
-
             cy.initTestUser(homeserver, "Tom");
         });
     });
@@ -50,12 +49,15 @@ describe("Threads", () => {
         });
 
         let roomId: string;
-        cy.createRoom({}).then((_roomId) => {
-            roomId = _roomId;
-            cy.inviteUser(roomId, bot.getUserId());
-            bot.joinRoom(roomId);
-            cy.visit("/#/room/" + roomId);
-        });
+        cy.createRoom({})
+            .then((_roomId) => {
+                roomId = _roomId;
+                return cy.inviteUser(roomId, bot.getUserId());
+            })
+            .then(async () => {
+                await bot.joinRoom(roomId);
+                cy.visit("/#/room/" + roomId);
+            });
 
         // Around 200 characters
         const MessageLong =
@@ -392,7 +394,7 @@ describe("Threads", () => {
     it("should send location and reply to the location on ThreadView", () => {
         // See: location.spec.ts
         const selectLocationShareTypeOption = (shareType: string): Chainable<JQuery> => {
-            return cy.get(`[data-test-id="share-location-option-${shareType}"]`);
+            return cy.get(`[data-testid="share-location-option-${shareType}"]`);
         };
         const submitShareLocation = (): void => {
             cy.get('[data-testid="location-picker-submit-button"]').click();
@@ -407,12 +409,15 @@ describe("Threads", () => {
         });
 
         let roomId: string;
-        cy.createRoom({}).then((_roomId) => {
-            roomId = _roomId;
-            cy.inviteUser(roomId, bot.getUserId());
-            bot.joinRoom(roomId);
-            cy.visit("/#/room/" + roomId);
-        });
+        cy.createRoom({})
+            .then((_roomId) => {
+                roomId = _roomId;
+                return cy.inviteUser(roomId, bot.getUserId());
+            })
+            .then(async () => {
+                await bot.joinRoom(roomId);
+                cy.visit("/#/room/" + roomId);
+            });
 
         // Exclude timestamp, read marker, and mapboxgl-map from snapshots
         const percyCSS =
