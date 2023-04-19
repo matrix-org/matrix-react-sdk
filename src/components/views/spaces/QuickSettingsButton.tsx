@@ -33,7 +33,6 @@ import { Icon as PinUprightIcon } from "../../../../res/img/element-icons/room/p
 import { Icon as EllipsisIcon } from "../../../../res/img/element-icons/room/ellipsis.svg";
 import { Icon as MembersIcon } from "../../../../res/img/element-icons/room/members.svg";
 import { Icon as FavoriteIcon } from "../../../../res/img/element-icons/roomlist/favorite.svg";
-import SettingsStore from "../../../settings/SettingsStore";
 import Modal from "../../../Modal";
 import DevtoolsDialog from "../dialogs/DevtoolsDialog";
 import { SdkContextClass } from "../../../contexts/SDKContext";
@@ -47,9 +46,10 @@ const QuickSettingsButton: React.FC<{
         useSettingValue<Record<MetaSpace, boolean>>("Spaces.enabledMetaSpaces");
 
     const currentRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
+    const developerModeEnabled = useSettingValue("developerMode");
 
     const developerToolsButton =
-        currentRoomId && SettingsStore.getValue("developerMode") ? (
+        currentRoomId && developerModeEnabled ? (
             <AccessibleButton
                 onClick={() => {
                     closeMenu();
