@@ -71,8 +71,8 @@ interface IState {
     secondaryCall: MatrixCall;
 
     // widget candidate to be displayed in the pip view.
-    persistentWidgetId: string;
-    persistentRoomId: string;
+    persistentWidgetId: string | null;
+    persistentRoomId: string | null;
     showWidgetInPip: boolean;
 }
 
