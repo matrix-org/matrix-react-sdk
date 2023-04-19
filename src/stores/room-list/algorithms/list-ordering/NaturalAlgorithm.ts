@@ -42,7 +42,6 @@ export class NaturalAlgorithm extends OrderingAlgorithm {
     }
 
     public setRooms(rooms: Room[]): void {
-        console.log('hhh', 'NaturalAlgorithm:setRooms', this.isMutedToBottom);
         const { defaultRooms, mutedRooms } = this.categorizeRooms(rooms);
 
         this.cachedCategorizedOrderedRooms = {
@@ -53,7 +52,6 @@ export class NaturalAlgorithm extends OrderingAlgorithm {
     }
 
     public handleRoomUpdate(room: Room, cause: RoomUpdateCause): boolean {
-        console.log('hhh', 'NaturalAlgorithm:handleRoomUpdate', this.isMutedToBottom);
         const isSplice = cause === RoomUpdateCause.NewRoom || cause === RoomUpdateCause.RoomRemoved;
         const isInPlace =
             cause === RoomUpdateCause.Timeline ||
@@ -150,7 +148,7 @@ export class NaturalAlgorithm extends OrderingAlgorithm {
 
     private categorizeRooms(rooms: Room[]): NaturalCategorizedRoomMap {
         if (!this.isMutedToBottom) {
-            return { defaultRooms: rooms, mutedRooms: []};
+            return { defaultRooms: rooms, mutedRooms: [] };
         }
         return rooms.reduce<NaturalCategorizedRoomMap>(
             (acc, room: Room) => {

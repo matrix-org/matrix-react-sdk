@@ -43,7 +43,7 @@ export abstract class NotificationState
     protected _symbol: string | null = null;
     protected _count = 0;
     protected _color: NotificationColor = NotificationColor.None;
-    protected _muted: boolean = false;
+    protected _muted = false;
 
     private watcherReferences: string[] = [];
 

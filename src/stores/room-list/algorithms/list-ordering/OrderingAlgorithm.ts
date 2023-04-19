@@ -42,7 +42,7 @@ export abstract class OrderingAlgorithm {
         return this.cachedOrderedRooms;
     }
 
-    private get isMutedToBottom(): boolean {
+    public get isMutedToBottom(): boolean {
         return this.sortingAlgorithm === SortAlgorithm.Recent;
     }
 
