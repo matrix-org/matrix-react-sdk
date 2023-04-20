@@ -22,9 +22,9 @@ import {
     processSelectionChange,
 } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/useSuggestion";
 
-const createMockPlainTextSuggestionPattern = (
+function createMockPlainTextSuggestionPattern(
     props: Partial<PlainTextSuggestionPattern> = {},
-): PlainTextSuggestionPattern => {
+): PlainTextSuggestionPattern {
     return {
         keyChar: "/",
         type: "command",
@@ -34,7 +34,8 @@ const createMockPlainTextSuggestionPattern = (
         endOffset: 0,
         ...props,
     };
-};
+}
+
 describe("mapSuggestion", () => {
     it("returns null if called with a null argument", () => {
         expect(mapSuggestion(null)).toBeNull();
