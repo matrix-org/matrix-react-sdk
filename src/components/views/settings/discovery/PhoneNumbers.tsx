@@ -243,7 +243,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
         } else if (bound) {
             status = (
                 <AccessibleButton
-                    className="mx_GeneralUserSettingsTab_discovery_existing_confirmBtn"
+                    className="mx_GeneralUserSettingsTab_discovery_existing_button"
                     kind="danger_sm"
                     onClick={this.onRevokeClick}
                 >
@@ -253,7 +253,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
         } else {
             status = (
                 <AccessibleButton
-                    className="mx_GeneralUserSettingsTab_discovery_existing_confirmBtn"
+                    className="mx_GeneralUserSettingsTab_discovery_existing_button"
                     kind="primary_sm"
                     onClick={this.onShareClick}
                 >

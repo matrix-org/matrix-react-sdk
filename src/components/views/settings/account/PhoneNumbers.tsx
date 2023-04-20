@@ -96,14 +96,14 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
                     <AccessibleButton
                         onClick={this.onActuallyRemove}
                         kind="danger_sm"
-                        className="mx_GeneralUserSettingsTab_discovery_existing_confirmBtn"
+                        className="mx_GeneralUserSettingsTab_discovery_existing_button"
                     >
                         {_t("Remove")}
                     </AccessibleButton>
                     <AccessibleButton
                         onClick={this.onDontRemove}
                         kind="link_sm"
-                        className="mx_GeneralUserSettingsTab_discovery_existing_confirmBtn"
+                        className="mx_GeneralUserSettingsTab_discovery_existing_button"
                     >
                         {_t("Cancel")}
                     </AccessibleButton>
