@@ -36,6 +36,7 @@ export const Option: React.FC<OptionProps> = ({ inputRef, children, endAdornment
             tabIndex={-1}
             aria-selected={isActive}
             role="option"
+            element="li"
         >
             {children}
             <div className="mx_SpotlightDialog_option--endAdornment">
