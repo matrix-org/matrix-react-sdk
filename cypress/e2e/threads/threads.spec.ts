@@ -73,7 +73,7 @@ describe("Threads", () => {
 
         cy.get(".mx_RoomView_body").within(() => {
             // User sends message
-            cy.get(".mx_BasicMessageComposer_input").type("Hello Mr. Bot{enter}");
+            cy.findByRole("textbox", { name: "Send a message…" }).type("Hello Mr. Bot{enter}");
 
             // Check the colour of timestamp on the main timeline
             cy.get(".mx_EventTile_last .mx_EventTile_line .mx_MessageTimestamp").should(
@@ -150,7 +150,7 @@ describe("Threads", () => {
 
         cy.get(".mx_ThreadView").within(() => {
             // User responds in thread
-            cy.get(".mx_BasicMessageComposer_input").type("Test{enter}");
+            cy.findByRole("textbox", { name: "Send a message…" }).type("Test{enter}");
 
             // Check the colour of timestamp on EventTile in a thread (mx_ThreadView)
             cy.get(".mx_EventTile_last[data-layout='group'] .mx_EventTile_line .mx_MessageTimestamp").should(
@@ -323,7 +323,7 @@ describe("Threads", () => {
         // User edits & asserts
         cy.contains(".mx_ThreadView .mx_EventTile_last .mx_EventTile_line", "Great!").within(() => {
             cy.get('[aria-label="Edit"]').click({ force: true }); // Cypress has no ability to hover
-            cy.get(".mx_BasicMessageComposer_input").type(" How about yourself?{enter}");
+            cy.findByRole("textbox").type(" How about yourself?{enter}");
         });
         cy.get(".mx_RoomView_body .mx_ThreadSummary").within(() => {
             cy.get(".mx_ThreadSummary_sender").should("contain", "Tom");
@@ -389,7 +389,7 @@ describe("Threads", () => {
 
         // Send message
         cy.get(".mx_RoomView_body").within(() => {
-            cy.get(".mx_BasicMessageComposer_input").type("Hello Mr. Bot{enter}");
+            cy.findByRole("textbox", { name: "Send a message…" }).type("Hello Mr. Bot{enter}");
 
             // Create thread
             cy.contains(".mx_EventTile[data-scroll-tokens]", "Hello Mr. Bot")
@@ -440,7 +440,7 @@ describe("Threads", () => {
 
         cy.get(".mx_RoomView_body").within(() => {
             // User sends message
-            cy.get(".mx_BasicMessageComposer_input").type("Hello Mr. Bot{enter}");
+            cy.findByRole("textbox", { name: "Send a message…" }).type("Hello Mr. Bot{enter}");
 
             // Wait for message to send, get its ID and save as @threadId
             cy.contains(".mx_EventTile[data-scroll-tokens]", "Hello Mr. Bot")
@@ -475,7 +475,7 @@ describe("Threads", () => {
                     cy.get("[aria-label='Reply']").click({ force: false });
                 });
 
-            cy.get(".mx_BasicMessageComposer_input").type("Please come here.{enter}");
+            cy.findByRole("textbox", { name: "Reply to thread…" }).type("Please come here.{enter}");
 
             // Wait until the reply is sent
             cy.get(".mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
@@ -495,7 +495,7 @@ describe("Threads", () => {
 
         // Send message
         cy.get(".mx_RoomView_body").within(() => {
-            cy.get(".mx_BasicMessageComposer_input").type("Hello Mr. Bot{enter}");
+            cy.findByRole("textbox", { name: "Send a message…" }).type("Hello Mr. Bot{enter}");
 
             // Create thread
             cy.contains(".mx_EventTile[data-scroll-tokens]", "Hello Mr. Bot")
@@ -507,7 +507,7 @@ describe("Threads", () => {
 
         // Send message to thread
         cy.get(".mx_BaseCard").within(() => {
-            cy.get(".mx_BasicMessageComposer_input").type("Hello Mr. User{enter}");
+            cy.findByRole("textbox", { name: "Send a message…" }).type("Hello Mr. User{enter}");
             cy.get(".mx_EventTile").should("contain", "Hello Mr. User");
         });
 
