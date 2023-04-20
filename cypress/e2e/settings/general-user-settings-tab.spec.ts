@@ -96,6 +96,9 @@ describe("General user settings tab", () => {
                 cy.get(".mx_EmailAddresses")
                     .scrollIntoView()
                     .within(() => {
+                        // Assert that an input area for a new email address is rendered
+                        cy.findByRole("textbox", { name: "Email Address" }).should("be.visible");
+
                         // Assert the add button is visible
                         cy.findByRole("button", { name: "Add" }).should("be.visible");
                     });
