@@ -174,12 +174,17 @@ describe("Threads", () => {
         cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
 
         // User reacts to message instead
-        cy.contains(".mx_ThreadView .mx_EventTile .mx_EventTile_line", "Hello there")
-            .find('[aria-label="React"]')
-            .click({ force: true }); // Cypress has no ability to hover
+        cy.get(".mx_ThreadView").within(() => {
+            cy.contains(".mx_EventTile .mx_EventTile_line", "Hello there")
+                .realHover()
+                .findByRole("toolbar", { name: "Message Actions" })
+                .findByRole("button", { name: "React" })
+                .click();
+        });
+
         cy.get(".mx_EmojiPicker").within(() => {
-            cy.get('input[type="text"]').type("wave");
-            cy.contains('[role="gridcell"]', "👋").click();
+            cy.findByRole("textbox").type("wave");
+            cy.findByRole("gridcell", { name: "👋" }).click();
         });
 
         cy.get(".mx_ThreadView").within(() => {
