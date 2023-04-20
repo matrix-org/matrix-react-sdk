@@ -78,6 +78,7 @@ export interface DropdownProps {
     label: string;
     value?: string;
     className?: string;
+    autoComplete?: string;
     children: NonEmptyArray<ReactElement & { key: string }>;
     // negative for consistency with HTML
     disabled?: boolean;
@@ -327,12 +328,12 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
     }
 
     public render(): React.ReactNode {
-        let currentValue;
+        let currentValue: JSX.Element | undefined;
 
         const menuStyle: CSSProperties = {};
         if (this.props.menuWidth) menuStyle.width = this.props.menuWidth;
 
-        let menu;
+        let menu: JSX.Element | undefined;
         if (this.state.expanded) {
             if (this.props.searchEnabled) {
                 currentValue = (
@@ -340,6 +341,7 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
                         id={`${this.props.id}_input`}
                         type="text"
                         autoFocus={true}
+                        autoComplete={this.props.autoComplete}
                         className="mx_Dropdown_option"
                         onChange={this.onInputChange}
                         value={this.state.searchQuery}
