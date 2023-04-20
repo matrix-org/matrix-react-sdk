@@ -100,8 +100,8 @@ describe("Threads", () => {
         // User asserts timeline thread summary visible & clicks it
         cy.get(".mx_RoomView_body .mx_ThreadSummary")
             .within(() => {
-                cy.get(".mx_ThreadSummary_sender").should("contain", "BotBob");
-                cy.get(".mx_ThreadSummary_content").should("contain", "Hello there");
+                cy.get(".mx_ThreadSummary_sender").findByText("BotBob").should("exist");
+                cy.get(".mx_ThreadSummary_content").findByText(MessageLong).should("exist");
             })
             .click();
 
@@ -162,8 +162,8 @@ describe("Threads", () => {
 
         // User asserts summary was updated correctly
         cy.get(".mx_RoomView_body .mx_ThreadSummary").within(() => {
-            cy.get(".mx_ThreadSummary_sender").should("contain", "Tom");
-            cy.get(".mx_ThreadSummary_content").should("contain", "Test");
+            cy.get(".mx_ThreadSummary_sender").findByText("Tom").should("exist");
+            cy.get(".mx_ThreadSummary_content").findByText("Test").should("exist");
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -241,13 +241,14 @@ describe("Threads", () => {
 
         // User redacts their prior response
         cy.contains(".mx_ThreadView .mx_EventTile .mx_EventTile_line", "Test")
-            .find('[aria-label="Options"]')
-            .click({ force: true }); // Cypress has no ability to hover
+            .realHover()
+            .findByRole("button", { name: "Options" })
+            .click();
         cy.get(".mx_IconizedContextMenu").within(() => {
-            cy.contains('[role="menuitem"]', "Remove").click();
+            cy.findByRole("menuitem", { name: "Remove" }).click();
         });
         cy.get(".mx_TextInputDialog").within(() => {
-            cy.contains(".mx_Dialog_primary", "Remove").click();
+            cy.findByRole("button", { name: "Remove" }).should("have.class", "mx_Dialog_primary").click();
         });
 
         cy.get(".mx_ThreadView").within(() => {
@@ -271,8 +272,8 @@ describe("Threads", () => {
 
         // User asserts summary was updated correctly
         cy.get(".mx_RoomView_body .mx_ThreadSummary").within(() => {
-            cy.get(".mx_ThreadSummary_sender").should("contain", "BotBob");
-            cy.get(".mx_ThreadSummary_content").should("contain", "Hello there");
+            cy.get(".mx_ThreadSummary_sender").findByText("BotBob").should("exist");
+            cy.get(".mx_ThreadSummary_content").findByText(MessageLong).should("exist");
         });
 
         // User closes right panel after clicking back to thread list
@@ -290,8 +291,8 @@ describe("Threads", () => {
         });
 
         cy.get(".mx_RoomView_body .mx_ThreadSummary").within(() => {
-            cy.get(".mx_ThreadSummary_sender").should("contain", "BotBob");
-            cy.get(".mx_ThreadSummary_content").should("contain", "How are things?");
+            cy.get(".mx_ThreadSummary_sender").findByText("BotBob").should("exist");
+            cy.get(".mx_ThreadSummary_content").findByText("How are things?").should("exist");
         });
 
         // User asserts thread list unread indicator
@@ -302,11 +303,11 @@ describe("Threads", () => {
 
         // User asserts thread with correct root & latest events & unread dot
         cy.get(".mx_ThreadPanel .mx_EventTile_last").within(() => {
-            cy.get(".mx_EventTile_body").should("contain", "Hello Mr. Bot");
-            cy.get(".mx_ThreadSummary_content").should("contain", "How are things?");
+            cy.get(".mx_EventTile_body").findByText("Hello Mr. Bot").should("exist");
+            cy.get(".mx_ThreadSummary_content").findByText("How are things?").should("exist");
 
             // Check the number of the replies
-            cy.get(".mx_ThreadPanel_replies_amount").findByText("2");
+            cy.get(".mx_ThreadPanel_replies_amount").findByText("2").should("exist");
 
             // Check the colour of timestamp on thread list
             cy.get(".mx_EventTile_details .mx_MessageTimestamp").should("have.css", "color", MessageTimestampColor);
@@ -321,8 +322,8 @@ describe("Threads", () => {
         // User responds & asserts
         cy.get(".mx_ThreadView .mx_BasicMessageComposer_input").type("Great!{enter}");
         cy.get(".mx_RoomView_body .mx_ThreadSummary").within(() => {
-            cy.get(".mx_ThreadSummary_sender").should("contain", "Tom");
-            cy.get(".mx_ThreadSummary_content").should("contain", "Great!");
+            cy.get(".mx_ThreadSummary_sender").findByText("Tom").should("exist");
+            cy.get(".mx_ThreadSummary_content").findByText("Great!").should("exist");
         });
 
         // User edits & asserts
@@ -331,8 +332,8 @@ describe("Threads", () => {
             cy.findByRole("textbox").type(" How about yourself?{enter}");
         });
         cy.get(".mx_RoomView_body .mx_ThreadSummary").within(() => {
-            cy.get(".mx_ThreadSummary_sender").should("contain", "Tom");
-            cy.get(".mx_ThreadSummary_content").should("contain", "Great! How about yourself?");
+            cy.get(".mx_ThreadSummary_sender").findByText("Tom").should("exist");
+            cy.get(".mx_ThreadSummary_content").findByText("Great! How about yourself?").should("exist");
         });
 
         // User closes right panel
@@ -352,8 +353,8 @@ describe("Threads", () => {
 
         // User asserts
         cy.get(".mx_RoomView_body .mx_ThreadSummary").within(() => {
-            cy.get(".mx_ThreadSummary_sender").should("contain", "BotBob");
-            cy.get(".mx_ThreadSummary_content").should("contain", "I'm very good thanks");
+            cy.get(".mx_ThreadSummary_sender").findByText("BotBob").should("exist");
+            cy.get(".mx_ThreadSummary_content").findByText("I'm very good thanks").should("exist");
         });
 
         // Bot edits their latest event
@@ -374,8 +375,8 @@ describe("Threads", () => {
 
         // User asserts
         cy.get(".mx_RoomView_body .mx_ThreadSummary").within(() => {
-            cy.get(".mx_ThreadSummary_sender").should("contain", "BotBob");
-            cy.get(".mx_ThreadSummary_content").should("contain", "I'm very good thanks :)");
+            cy.get(".mx_ThreadSummary_sender").findByText("BotBob").should("exist");
+            cy.get(".mx_ThreadSummary_content").findByText("I'm very good thanks :)").should("exist");
         });
     });
 
@@ -513,7 +514,7 @@ describe("Threads", () => {
         // Send message to thread
         cy.get(".mx_BaseCard").within(() => {
             cy.findByRole("textbox", { name: "Send a message…" }).type("Hello Mr. User{enter}");
-            cy.get(".mx_EventTile").should("contain", "Hello Mr. User");
+            cy.get(".mx_EventTile_last").findByText("Hello Mr. User").should("exist");
         });
 
         // Close thread
@@ -527,8 +528,8 @@ describe("Threads", () => {
         cy.get(".mx_ThreadView_timelinePanelWrapper").should("have.length", 1);
 
         cy.get(".mx_BaseCard").within(() => {
-            cy.get(".mx_EventTile").should("contain", "Hello Mr. Bot");
-            cy.get(".mx_EventTile").should("contain", "Hello Mr. User");
+            cy.get(".mx_EventTile").first().findByText("Hello Mr. Bot").should("exist");
+            cy.get(".mx_EventTile").last().findByText("Hello Mr. User").should("exist");
         });
     });
 });
