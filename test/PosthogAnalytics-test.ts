@@ -62,18 +62,16 @@ describe("PosthogAnalytics", () => {
                         for (let c = 0; c < hexHash.length; c += 2) {
                             bytes.push(parseInt(hexHash.slice(c, c + 2), 16));
                         }
-                        return bytes as unknown as ArrayBuffer;
+                        return bytes;
                     },
-                } as unknown as SubtleCrypto,
+                },
             },
-            writable: true,
         });
     });
 
     afterEach(() => {
         Object.defineProperty(window, "crypto", {
-            value: undefined,
-            writable: true,
+            value: null,
         });
         SdkConfig.unset(); // we touch the config, so clean up
     });

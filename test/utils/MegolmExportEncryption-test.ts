@@ -81,7 +81,6 @@ describe("MegolmExportEncryption", function () {
                 randomUUID: jest.fn().mockReturnValue("not-random-uuid"),
                 subtle: webCrypto.subtle,
             },
-            writable: true,
         });
         MegolmExportEncryption = require("../../src/utils/MegolmExportEncryption");
     });
