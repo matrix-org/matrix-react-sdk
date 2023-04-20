@@ -142,14 +142,14 @@ describe("processSelectionChange", () => {
 
     it("returns early if current editorRef is null", () => {
         const mockEditorRef = createMockEditorRef(null);
-        // we monitor for the call to document.getSelection to indicate an early return
-        const getSelectionSpy = jest.spyOn(document, "getSelection");
+        // we monitor for the call to document.createNodeIterator to indicate an early return
+        const nodeIteratorSpy = jest.spyOn(document, "createNodeIterator");
 
         processSelectionChange(mockEditorRef, null, jest.fn());
-        expect(getSelectionSpy).not.toHaveBeenCalled();
+        expect(nodeIteratorSpy).not.toHaveBeenCalled();
 
         // tidy up to avoid potential impacts on other tests
-        getSelectionSpy.mockRestore();
+        nodeIteratorSpy.mockRestore();
     });
 
     it("does not call setSuggestion if selection is not a cursor", () => {
