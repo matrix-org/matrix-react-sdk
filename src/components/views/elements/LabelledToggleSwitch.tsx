@@ -44,7 +44,7 @@ interface IProps {
 }
 
 export default class LabelledToggleSwitch extends React.PureComponent<IProps> {
-    private readonly id = `mx_LabelledToggleSwitch_${randomString}`;
+    private readonly id = `mx_LabelledToggleSwitch_${randomString(12)}`;
 
     public render(): React.ReactNode {
         // This is a minimal version of a SettingsFlag
