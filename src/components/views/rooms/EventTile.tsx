@@ -1010,7 +1010,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         }
 
         if (this.props.mxEvent.sender && avatarSize) {
-            let member: RoomMember | undefined;
+            let member: RoomMember | null = null;
             // set member to receiver (target) if it is a 3PID invite
             // so that the correct avatar is shown as the text is
             // `$target accepted the invitation for $email`
@@ -1028,7 +1028,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             avatar = (
                 <div className="mx_EventTile_avatar">
                     <MemberAvatar
-                        member={member ?? null}
+                        member={member}
                         width={avatarSize}
                         height={avatarSize}
                         viewUserOnClick={viewUserOnClick}
