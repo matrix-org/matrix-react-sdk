@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent, EventType, IPushRules, IPushRule } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, EventType, IPushRules } from "matrix-js-sdk/src/matrix";
 
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { isRuleRoomSpecific } from "../../../RoomNotifs";

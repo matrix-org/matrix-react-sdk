@@ -14,11 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-    IAnnotatedPushRule,
-    IPushRule,
-    IPushRules, PushRuleActionName, PushRuleKind, RuleId, TweakName,
-} from "matrix-js-sdk/src/matrix";
+import { IAnnotatedPushRule, IPushRule, IPushRules, PushRuleKind, RuleId } from "matrix-js-sdk/src/matrix";
 
 export const DEFAULT_PUSH_RULES: IPushRules = Object.freeze({
     global: {
@@ -312,30 +308,30 @@ export const DEFAULT_PUSH_RULES: IPushRules = Object.freeze({
 
 /**
  * gets default rule by id from default rules
- * @param ruleId 
+ * @param ruleId
  * @returns {IPushRule} matching push rule
  * @returns {PushRuleKind}
  * @throws when no rule is found with ruleId
  */
-export const getDefaultRuleWithKind = (ruleId: RuleId | string): { rule: IPushRule, kind: PushRuleKind} => {
+export const getDefaultRuleWithKind = (ruleId: RuleId | string): { rule: IPushRule; kind: PushRuleKind } => {
     for (const kind of Object.keys(DEFAULT_PUSH_RULES.global)) {
-        const rule = DEFAULT_PUSH_RULES.global[kind].find(r => r.rule_id === ruleId);
+        const rule = DEFAULT_PUSH_RULES.global[kind].find((r) => r.rule_id === ruleId);
         if (rule) {
             return { rule, kind: kind as PushRuleKind };
         }
     }
 
     throw new Error(`Could not find default rule for id ${ruleId}`);
-}
+};
 
 export const getDefaultAnnotatedRule = (ruleId: RuleId | string): IAnnotatedPushRule => {
     const { rule, kind } = getDefaultRuleWithKind(ruleId);
 
     return {
         ...rule,
-        kind
+        kind,
     };
-}
+};
 
 export const makePushRule = (ruleId: RuleId | string, ruleOverrides: Partial<IPushRule> = {}): IPushRule => ({
     actions: [],
@@ -345,7 +341,11 @@ export const makePushRule = (ruleId: RuleId | string, ruleOverrides: Partial<IPu
     rule_id: ruleId,
 });
 
-export const makeAnnotatedPushRule = (kind: PushRuleKind, ruleId: RuleId | string, ruleOverrides: Partial<IPushRule> = {}): IAnnotatedPushRule => ({
+export const makeAnnotatedPushRule = (
+    kind: PushRuleKind,
+    ruleId: RuleId | string,
+    ruleOverrides: Partial<IPushRule> = {},
+): IAnnotatedPushRule => ({
     ...makePushRule(ruleId, ruleOverrides),
-    kind
+    kind,
 });

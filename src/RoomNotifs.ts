@@ -27,7 +27,6 @@ import { getUnsentMessages } from "./components/structures/RoomStatusBar";
 import { doesRoomHaveUnreadMessages, doesRoomOrThreadHaveUnreadMessages } from "./Unread";
 import { EffectiveMembership, getEffectiveMembership } from "./utils/membership";
 import SettingsStore from "./settings/SettingsStore";
-import { EchoChamber } from "./stores/local-echo/EchoChamber";
 
 export enum RoomNotifState {
     AllMessagesLoud = "all_messages_loud",
