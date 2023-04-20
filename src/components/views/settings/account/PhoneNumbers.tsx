@@ -113,7 +113,9 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
 
         return (
             <div className="mx_GeneralUserSettingsTab_discovery_existing">
-                <span className="mx_GeneralUserSettingsTab_discovery_existing_address">+{this.props.msisdn.address}</span>
+                <span className="mx_GeneralUserSettingsTab_discovery_existing_address">
+                    +{this.props.msisdn.address}
+                </span>
                 <AccessibleButton onClick={this.onRemove} kind="danger_sm">
                     {_t("Remove")}
                 </AccessibleButton>
