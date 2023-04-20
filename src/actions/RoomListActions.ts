@@ -51,8 +51,8 @@ export default class RoomListActions {
         room: Room,
         oldTag: TagID | null,
         newTag: TagID | null,
-        oldIndex?: number,
-        newIndex?: number,
+        oldIndex: number | undefined,
+        newIndex: number,
     ): AsyncActionPayload {
         let metaData: Parameters<MatrixClient["setRoomTag"]>[2] | null = null;
 
@@ -65,7 +65,7 @@ export default class RoomListActions {
 
             // If the room was moved "down" (increasing index) in the same list we
             // need to use the orders of the tiles with indices shifted by +1
-            const offset = newTag === oldTag && oldIndex < newIndex ? 1 : 0;
+            const offset = newTag === oldTag && oldIndex != null && oldIndex < newIndex ? 1 : 0;
 
             const indexBefore = offset + newIndex - 1;
             const indexAfter = offset + newIndex;
