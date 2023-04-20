@@ -360,14 +360,6 @@ legend {
             white-space: pre-wrap; /* don't collapse spaces in inline code blocks */
         }
 
-        pre code {
-            white-space: pre; /* we want code blocks to be scrollable and not wrap */
-
-            > * {
-                display: inline;
-            }
-        }
-
         pre {
             /* have to use overlay rather than auto otherwise Linux and Windows */
             /* Chrome gets very confused about vertical spacing: */
@@ -377,6 +369,14 @@ legend {
 
             &::-webkit-scrollbar-corner {
                 background: transparent;
+            }
+
+            code {
+                white-space: pre; /* we want code blocks to be scrollable and not wrap */
+
+                > * {
+                    display: inline;
+                }
             }
         }
 
