@@ -18,7 +18,7 @@ import { Attributes, MappedSuggestion, SuggestionChar, SuggestionType } from "@m
 import { SyntheticEvent, useState } from "react";
 
 // This type is a close approximation of what we use in the Rust model for the rich version of the
-// editor, we use this to try and make this simple model as similar as possible to allow reuse of
+// editor. We use this to try and make this simple model as similar as possible to allow reuse of
 // the autocomplete component
 export type PlainTextSuggestionPattern = {
     keyChar: SuggestionChar;
@@ -102,7 +102,7 @@ export const processCommand = (
 
     const { node } = suggestion;
 
-    // for a command we know we start at the beginning of the text node, so build the replacement
+    // for a command, we know we start at the beginning of the text node, so build the replacement
     // string (note trailing space) and manually adjust the node's textcontent
     const newContent = `${replacementText} `;
     node.textContent = newContent;
@@ -114,6 +114,16 @@ export const processCommand = (
     setSuggestion(null);
 };
 
+/**
+ * When the selection changes inside the current editor, check to see if the cursor is inside
+ * something that could require the autocomplete to be opened and update the suggestion state
+ * if so
+ * TODO expand this to handle mentions
+ *
+ * @param editorRef - ref to the composer
+ * @param suggestion - the current suggestion state
+ * @param setSuggestion - the setter for the suggestion state
+ */
 export const processSelectionChange = (
     editorRef: React.RefObject<HTMLDivElement>,
     suggestion: PlainTextSuggestionPattern | null,
