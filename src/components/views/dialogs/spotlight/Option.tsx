@@ -25,7 +25,7 @@ interface OptionProps {
     endAdornment?: ReactNode;
     id?: string;
     className?: string;
-    onClick(ev: ButtonEvent): void;
+    onClick: ((ev: ButtonEvent) => void) | null;
 }
 
 export const Option: React.FC<OptionProps> = ({ inputRef, children, endAdornment, className, ...props }) => {
