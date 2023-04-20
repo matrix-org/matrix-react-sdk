@@ -1108,7 +1108,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             );
         }
 
-        const linkedTimestamp = timestamp ? (
+        const linkedTimestamp = !this.props.hideTimestamp ? (
             <a
                 href={permalink}
                 onClick={this.onPermalinkClicked}
