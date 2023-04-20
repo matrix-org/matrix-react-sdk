@@ -107,7 +107,7 @@ describe("Threads", () => {
 
         // Wait until the both messages are read
         cy.get(".mx_ThreadView .mx_EventTile_last[data-layout=group]").within(() => {
-            cy.get(".mx_EventTile_line .mx_MTextBody").should("have.text", MessageLong);
+            cy.get(".mx_EventTile_line .mx_MTextBody").findByText(MessageLong).should("exist");
             cy.get(".mx_ReadReceiptGroup .mx_BaseAvatar_image").should("be.visible");
 
             // Make sure the CSS style for spacing is applied to mx_EventTile_line on group/modern layout
@@ -125,7 +125,7 @@ describe("Threads", () => {
 
         cy.get(".mx_ThreadView .mx_EventTile[data-layout='group'].mx_EventTile_last").within(() => {
             // Wait until the messages are rendered
-            cy.get(".mx_EventTile_line .mx_MTextBody").should("have.text", MessageLong);
+            cy.get(".mx_EventTile_line .mx_MTextBody").findByText(MessageLong).should("exist");
 
             // Make sure the avatar inside ReadReceiptGroup is visible on the group layout
             cy.get(".mx_ReadReceiptGroup .mx_BaseAvatar_image").should("be.visible");
@@ -301,7 +301,7 @@ describe("Threads", () => {
             cy.get(".mx_ThreadSummary_content").should("contain", "How are things?");
 
             // Check the number of the replies
-            cy.get(".mx_ThreadPanel_replies_amount").should("have.text", "2");
+            cy.get(".mx_ThreadPanel_replies_amount").findByText("2");
 
             // Check the colour of timestamp on thread list
             cy.get(".mx_EventTile_details .mx_MessageTimestamp").should("have.css", "color", MessageTimestampColor);
