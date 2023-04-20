@@ -129,47 +129,52 @@ export const processSelectionChange = (
     suggestion: PlainTextSuggestionPattern | null,
     setSuggestion: React.Dispatch<React.SetStateAction<PlainTextSuggestionPattern>>,
 ): void => {
-    if (editorRef.current === null) {
-        return;
-    }
     const selection = document.getSelection();
 
-    // only carry out the checking if we have cursor inside a text node
-    if (selection && selection.isCollapsed && selection.anchorNode?.nodeName === "#text") {
-        // here we have established that anchorNode === focusNode, so rename to
-        const { anchorNode: currentNode } = selection;
+    // return early if we do not have a current editor ref with a cursor selection inside a text node
+    if (
+        editorRef.current === null ||
+        selection === null ||
+        !selection.isCollapsed ||
+        selection.anchorNode?.nodeName !== "#text"
+    ) {
+        return;
+    }
 
-        // first check is that the text node is the first text node of the editor, as adding paragraphs can result
-        // in nested <p> tags inside the editor <div>
-        const firstTextNode = document.createNodeIterator(editorRef.current, NodeFilter.SHOW_TEXT).nextNode();
+    // here we have established that both anchor and focus nodes in the selection are
+    // the same node, so rename to `currentNode` for later use
+    const { anchorNode: currentNode } = selection;
 
-        // if we're not in the first text node or we have no text content, return
-        if (currentNode !== firstTextNode || currentNode.textContent === null) {
-            return;
+    // first check is that the text node is the first text node of the editor, as adding paragraphs can result
+    // in nested <p> tags inside the editor <div>
+    const firstTextNode = document.createNodeIterator(editorRef.current, NodeFilter.SHOW_TEXT).nextNode();
+
+    // if we're not in the first text node or we have no text content, return
+    if (currentNode !== firstTextNode || currentNode.textContent === null) {
+        return;
+    }
+
+    // it's a command if:
+    // it is the first textnode AND
+    // it starts with /, not // AND
+    // then has letters all the way up to the end of the textcontent
+    const commandRegex = /^\/(\w*)$/;
+    const commandMatches = currentNode.textContent.match(commandRegex);
+
+    // if we don't have any matches, return, clearing the suggeston state if it is non-null
+    if (commandMatches === null) {
+        if (suggestion !== null) {
+            setSuggestion(null);
         }
-
-        // it's a command if:
-        // it is the first textnode AND
-        // it starts with /, not // AND
-        // then has letters all the way up to the end of the textcontent
-        const commandRegex = /^\/(\w*)$/;
-        const commandMatches = currentNode.textContent.match(commandRegex);
-
-        // if we don't have any matches, return, clearing the suggeston state if it is non-null
-        if (commandMatches === null) {
-            if (suggestion !== null) {
-                setSuggestion(null);
-            }
-            return;
-        } else {
-            setSuggestion({
-                keyChar: "/",
-                type: "command",
-                text: commandMatches[1],
-                node: selection.anchorNode,
-                startOffset: 0,
-                endOffset: currentNode.textContent.length,
-            });
-        }
+        return;
+    } else {
+        setSuggestion({
+            keyChar: "/",
+            type: "command",
+            text: commandMatches[1],
+            node: selection.anchorNode,
+            startOffset: 0,
+            endOffset: currentNode.textContent.length,
+        });
     }
 };
