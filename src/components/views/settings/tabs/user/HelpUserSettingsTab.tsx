@@ -1,5 +1,5 @@
 /*
-Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -338,15 +338,16 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                             )}
                         </div>
                         <div>
-                            {_t(
-                                "Identity server is <code>%(identityServerUrl)s</code>",
-                                {
-                                    identityServerUrl: MatrixClientPeg.get().getIdentityServerUrl(),
-                                },
-                                {
-                                    code: (sub) => <code>{sub}</code>,
-                                },
-                            )}
+                            {MatrixClientPeg.get().getIdentityServerUrl() &&
+                                _t(
+                                    "Identity server is <code>%(identityServerUrl)s</code>",
+                                    {
+                                        identityServerUrl: MatrixClientPeg.get().getIdentityServerUrl(),
+                                    },
+                                    {
+                                        code: (sub) => <code>{sub}</code>,
+                                    },
+                                )}
                         </div>
                         <details>
                             <summary>{_t("Access Token")}</summary>

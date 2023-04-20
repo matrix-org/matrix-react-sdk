@@ -1,5 +1,5 @@
 /*
-Copyright 2021-2022 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -35,7 +35,6 @@ import React, {
 import sanitizeHtml from "sanitize-html";
 
 import { KeyBindingAction } from "../../../../accessibility/KeyboardShortcuts";
-import { Ref } from "../../../../accessibility/roving/types";
 import {
     findSiblingElement,
     RovingTabIndexContext,
@@ -55,7 +54,6 @@ import { useUserDirectory } from "../../../../hooks/useUserDirectory";
 import { getKeyBindingsManager } from "../../../../KeyBindingsManager";
 import { _t } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
-import Modal from "../../../../Modal";
 import { PosthogAnalytics } from "../../../../PosthogAnalytics";
 import { getCachedRoomIDForAlias } from "../../../../RoomAliasCache";
 import { showStartChatInviteDialog } from "../../../../RoomInvite";
@@ -82,14 +80,12 @@ import LabelledCheckbox from "../../elements/LabelledCheckbox";
 import Spinner from "../../elements/Spinner";
 import NotificationBadge from "../../rooms/NotificationBadge";
 import BaseDialog from "../BaseDialog";
-import FeedbackDialog from "../FeedbackDialog";
 import { Option } from "./Option";
 import { PublicRoomResultDetails } from "./PublicRoomResultDetails";
 import { RoomResultContextMenus } from "./RoomResultContextMenus";
 import { RoomContextDetails } from "../../rooms/RoomContextDetails";
 import { TooltipOption } from "./TooltipOption";
 import { isLocalRoom } from "../../../../utils/localRoom/isLocalRoom";
-import { shouldShowFeedback } from "../../../../utils/Feedback";
 import RoomAvatar from "../../avatars/RoomAvatar";
 import { useFeatureEnabled } from "../../../../hooks/useSettings";
 import { filterBoolean } from "../../../../utils/arrays";
@@ -104,8 +100,8 @@ interface IProps {
     onFinished(): void;
 }
 
-function refIsForRecentlyViewed(ref: RefObject<HTMLElement>): boolean {
-    return ref.current?.id?.startsWith("mx_SpotlightDialog_button_recentlyViewed_") === true;
+function refIsForRecentlyViewed(ref?: RefObject<HTMLElement>): boolean {
+    return ref?.current?.id?.startsWith("mx_SpotlightDialog_button_recentlyViewed_") === true;
 }
 
 function getRoomTypes(showRooms: boolean, showSpaces: boolean): Set<RoomType | null> {
@@ -292,8 +288,8 @@ interface IDirectoryOpts {
 }
 
 const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = null, onFinished }) => {
-    const inputRef = useRef<HTMLInputElement>();
-    const scrollContainerRef = useRef<HTMLDivElement>();
+    const inputRef = useRef<HTMLInputElement>(null);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
     const cli = MatrixClientPeg.get();
     const rovingContext = useContext(RovingTabIndexContext);
     const [query, _setQuery] = useState(initialText);
@@ -366,7 +362,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         return [
             ...SpaceStore.instance.enabledMetaSpaces.map((spaceKey) => ({
                 section: Section.Spaces,
-                filter: [],
+                filter: [] as Filter[],
                 avatar: (
                     <div
                         className={classNames(
@@ -456,6 +452,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
                     return memberComparator(a.member, b.member);
                 }
+                return 0;
             });
         }
 
@@ -474,17 +471,16 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     };
     useEffect(() => {
         setImmediate(() => {
-            let ref: Ref | undefined;
-            if (rovingContext.state.refs) {
-                ref = rovingContext.state.refs[0];
+            const ref = rovingContext.state.refs[0];
+            if (ref) {
+                rovingContext.dispatch({
+                    type: Type.SetFocus,
+                    payload: { ref },
+                });
+                ref.current?.scrollIntoView?.({
+                    block: "nearest",
+                });
             }
-            rovingContext.dispatch({
-                type: Type.SetFocus,
-                payload: { ref },
-            });
-            ref?.current?.scrollIntoView?.({
-                block: "nearest",
-            });
         });
         // we intentionally ignore changes to the rovingContext for the purpose of this hook
         // we only want to reset the focus whenever the results or filters change
@@ -628,6 +624,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     clientRoom?.getMyMembership() === "join" || result.publicRoom.world_readable || cli.isGuest();
 
                 const listener = (ev: ButtonEvent): void => {
+                    ev.stopPropagation();
+
                     const { publicRoom } = result;
                     viewRoom(
                         {
@@ -635,7 +633,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                             roomId: publicRoom.room_id,
                             autoJoin: !result.publicRoom.world_readable && !cli.isGuest(),
                             shouldPeek: result.publicRoom.world_readable || cli.isGuest(),
-                            viaServers: [config.roomServer],
+                            viaServers: config ? [config.roomServer] : undefined,
                         },
                         true,
                         ev.type !== "click",
@@ -1158,14 +1156,6 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         }
     };
 
-    const openFeedback = shouldShowFeedback()
-        ? () => {
-              Modal.createDialog(FeedbackDialog, {
-                  feature: "spotlight",
-              });
-          }
-        : null;
-
     const activeDescendant = rovingContext.state.activeRef?.current?.id;
 
     return (
@@ -1242,26 +1232,6 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     aria-describedby="mx_SpotlightDialog_keyboardPrompt"
                 >
                     {content}
-                </div>
-
-                <div className="mx_SpotlightDialog_footer">
-                    {openFeedback &&
-                        _t(
-                            "Results not as expected? Please <a>give feedback</a>.",
-                            {},
-                            {
-                                a: (sub) => (
-                                    <AccessibleButton kind="link_inline" onClick={openFeedback}>
-                                        {sub}
-                                    </AccessibleButton>
-                                ),
-                            },
-                        )}
-                    {openFeedback && (
-                        <AccessibleButton kind="primary_outline" onClick={openFeedback}>
-                            {_t("Feedback")}
-                        </AccessibleButton>
-                    )}
                 </div>
             </BaseDialog>
         </>
