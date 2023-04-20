@@ -278,8 +278,8 @@ describe("Threads", () => {
 
         // User closes right panel after clicking back to thread list
         cy.get(".mx_ThreadPanel").within(() => {
-            cy.get(".mx_BaseCard_back").click();
-            cy.get(".mx_BaseCard_close").click();
+            cy.findByRole("button", { name: "Threads" }).click();
+            cy.findByRole("button", { name: "Close" }).click();
         });
 
         // Bot responds to thread
@@ -337,7 +337,9 @@ describe("Threads", () => {
         });
 
         // User closes right panel
-        cy.get(".mx_ThreadView .mx_BaseCard_close").click();
+        cy.get(".mx_ThreadPanel").within(() => {
+            cy.findByRole("button", { name: "Close" }).click();
+        });
 
         // Bot responds to thread and saves the id of their message to @eventId
         cy.get<string>("@threadId").then((threadId) => {
@@ -512,13 +514,13 @@ describe("Threads", () => {
         cy.get(".mx_ThreadView_timelinePanelWrapper").should("have.length", 1);
 
         // Send message to thread
-        cy.get(".mx_BaseCard").within(() => {
+        cy.get(".mx_ThreadPanel").within(() => {
             cy.findByRole("textbox", { name: "Send a message…" }).type("Hello Mr. User{enter}");
             cy.get(".mx_EventTile_last").findByText("Hello Mr. User").should("exist");
-        });
 
-        // Close thread
-        cy.get(".mx_BaseCard_close").click();
+            // Close thread
+            cy.findByRole("button", { name: "Close" }).click();
+        });
 
         // Open existing thread
         cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", "Hello Mr. Bot")
