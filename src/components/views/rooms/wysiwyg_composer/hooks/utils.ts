@@ -70,39 +70,43 @@ export function handleEventWithAutocomplete(
     event: KeyboardEvent | React.KeyboardEvent<HTMLDivElement>,
 ): boolean {
     const autocompleteIsOpen = autocompleteRef?.current && !autocompleteRef.current.state.hide;
+
+    if (!autocompleteIsOpen) {
+        return false;
+    }
+
     let handled = false;
+    const autocompleteAction = getKeyBindingsManager().getAutocompleteAction(event);
+    const component = autocompleteRef.current;
 
-    if (autocompleteIsOpen) {
-        const autocompleteAction = getKeyBindingsManager().getAutocompleteAction(event);
-        const component = autocompleteRef.current;
-        if (component && component.countCompletions() > 0) {
-            switch (autocompleteAction) {
-                case KeyBindingAction.ForceCompleteAutocomplete:
-                case KeyBindingAction.CompleteAutocomplete:
-                    autocompleteRef.current.onConfirmCompletion();
-                    handled = true;
-                    break;
-                case KeyBindingAction.PrevSelectionInAutocomplete:
-                    autocompleteRef.current.moveSelection(-1);
-                    handled = true;
-                    break;
-                case KeyBindingAction.NextSelectionInAutocomplete:
-                    autocompleteRef.current.moveSelection(1);
-                    handled = true;
-                    break;
-                case KeyBindingAction.CancelAutocomplete:
-                    autocompleteRef.current.onEscape(event as {} as React.KeyboardEvent);
-                    handled = true;
-                    break;
-                default:
-                    break; // don't return anything, allow event to pass through
-            }
-        }
-
-        if (handled) {
-            event.preventDefault();
-            event.stopPropagation();
+    if (component && component.countCompletions() > 0) {
+        switch (autocompleteAction) {
+            case KeyBindingAction.ForceCompleteAutocomplete:
+            case KeyBindingAction.CompleteAutocomplete:
+                autocompleteRef.current.onConfirmCompletion();
+                handled = true;
+                break;
+            case KeyBindingAction.PrevSelectionInAutocomplete:
+                autocompleteRef.current.moveSelection(-1);
+                handled = true;
+                break;
+            case KeyBindingAction.NextSelectionInAutocomplete:
+                autocompleteRef.current.moveSelection(1);
+                handled = true;
+                break;
+            case KeyBindingAction.CancelAutocomplete:
+                autocompleteRef.current.onEscape(event as {} as React.KeyboardEvent);
+                handled = true;
+                break;
+            default:
+                break; // don't return anything, allow event to pass through
         }
     }
+
+    if (handled) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
     return handled;
 }
