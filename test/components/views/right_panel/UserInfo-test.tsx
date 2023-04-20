@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, screen, waitFor, cleanup, act } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, cleanup, act, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Mocked, mocked } from "jest-mock";
 import { Room, User, MatrixClient, RoomMember, MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
@@ -110,6 +110,7 @@ beforeEach(() => {
         currentState: {
             getStateEvents: jest.fn(),
             on: jest.fn(),
+            off: jest.fn(),
         },
         getEventReadUpTo: jest.fn(),
     } as unknown as Room);
@@ -138,6 +139,8 @@ beforeEach(() => {
         getRoom: jest.fn(),
         credentials: {},
         setPowerLevel: jest.fn(),
+        downloadKeys: jest.fn(),
+        getStoredDevicesForUser: jest.fn(),
     } as unknown as MatrixClient);
 
     jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
@@ -241,6 +244,68 @@ describe("<UserInfo />", () => {
             // the verificationRequest has phase of Phase.Ready but .otherPartySupportsMethod
             // will not return true, so we expect to see the noCommonMethod error from VerificationPanel
             expect(screen.getByText(/try with a different client/i)).toBeInTheDocument();
+        });
+    });
+
+    describe("with crypto enabled", () => {
+        beforeEach(() => {
+            mockClient.isCryptoEnabled.mockReturnValue(true);
+            mockClient.checkUserTrust.mockReturnValue(new UserTrustLevel(false, false, false));
+            mockClient.checkDeviceTrust.mockReturnValue(new DeviceTrustLevel(false, false, false, false));
+
+            const device1 = DeviceInfo.fromStorage(
+                {
+                    unsigned: { device_display_name: "my device" },
+                },
+                "d1",
+            );
+            mockClient.getStoredDevicesForUser.mockReturnValue([device1]);
+        });
+
+        it("renders a device list which can be expanded", async () => {
+            renderComponent();
+            await act(flushPromises);
+
+            // check the button exists with the expected text
+            const devicesButton = screen.getByRole("button", { name: "1 session" });
+
+            // click it
+            await userEvent.click(devicesButton);
+
+            // there should now be a button with the device id ...
+            const deviceButton = screen.getByRole("button", { description: "d1" });
+
+            // ... which should contain the device name
+            expect(within(deviceButton).getByText("my device")).toBeInTheDocument();
+        });
+    });
+
+    describe("with an encrypted room", () => {
+        beforeEach(() => {
+            mockClient.isCryptoEnabled.mockReturnValue(true);
+            mockClient.isRoomEncrypted.mockReturnValue(true);
+        });
+
+        it("renders unverified user info", async () => {
+            mockClient.checkUserTrust.mockReturnValue(new UserTrustLevel(false, false, false));
+            renderComponent({ room: mockRoom });
+            await act(flushPromises);
+
+            const userHeading = screen.getByRole("heading", { name: defaultUserId });
+
+            // there should be a "normal" E2E padlock
+            expect(userHeading.getElementsByClassName("mx_E2EIcon_normal")).toHaveLength(1);
+        });
+
+        it("renders verified user info", async () => {
+            mockClient.checkUserTrust.mockReturnValue(new UserTrustLevel(true, false, false));
+            renderComponent({ room: mockRoom });
+            await act(flushPromises);
+
+            const userHeading = screen.getByRole("heading", { name: defaultUserId });
+
+            // there should be a "verified" E2E padlock
+            expect(userHeading.getElementsByClassName("mx_E2EIcon_verified")).toHaveLength(1);
         });
     });
 });
