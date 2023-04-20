@@ -19,7 +19,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
+import { Device } from "matrix-js-sdk/src/models/device";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import * as FormattingUtils from "../../../utils/FormattingUtils";
@@ -28,7 +28,7 @@ import QuestionDialog from "./QuestionDialog";
 
 interface IProps {
     userId: string;
-    device: DeviceInfo;
+    device: Device;
     onFinished(confirm?: boolean): void;
 }
 

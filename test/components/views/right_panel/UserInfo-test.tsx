@@ -21,7 +21,7 @@ import { mocked } from "jest-mock";
 import { Room, User, MatrixClient, RoomMember, MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { Phase, VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { DeviceTrustLevel, UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
-import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
+import { Device } from "matrix-js-sdk/src/models/device";
 import { defer } from "matrix-js-sdk/src/utils";
 
 import UserInfo, {
@@ -283,7 +283,7 @@ describe("<UserInfoHeader />", () => {
 });
 
 describe("<DeviceItem />", () => {
-    const device = { deviceId: "deviceId", getDisplayName: () => "deviceName" } as DeviceInfo;
+    const device = { deviceId: "deviceId", getDisplayName: () => "deviceName" } as Device;
     const defaultProps = {
         userId: defaultUserId,
         device,
@@ -1001,9 +1001,9 @@ describe("<RoomAdminToolsContainer />", () => {
 describe("disambiguateDevices", () => {
     it("does not add ambiguous key to unique names", () => {
         const initialDevices = [
-            { deviceId: "id1", getDisplayName: () => "name1" } as DeviceInfo,
-            { deviceId: "id2", getDisplayName: () => "name2" } as DeviceInfo,
-            { deviceId: "id3", getDisplayName: () => "name3" } as DeviceInfo,
+            { deviceId: "id1", getDisplayName: () => "name1" } as Device,
+            { deviceId: "id2", getDisplayName: () => "name2" } as Device,
+            { deviceId: "id3", getDisplayName: () => "name3" } as Device,
         ];
         disambiguateDevices(initialDevices);
 
@@ -1015,14 +1015,14 @@ describe("disambiguateDevices", () => {
 
     it("adds ambiguous key to all ids with non-unique names", () => {
         const uniqueNameDevices = [
-            { deviceId: "id3", getDisplayName: () => "name3" } as DeviceInfo,
-            { deviceId: "id4", getDisplayName: () => "name4" } as DeviceInfo,
-            { deviceId: "id6", getDisplayName: () => "name6" } as DeviceInfo,
+            { deviceId: "id3", getDisplayName: () => "name3" } as Device,
+            { deviceId: "id4", getDisplayName: () => "name4" } as Device,
+            { deviceId: "id6", getDisplayName: () => "name6" } as Device,
         ];
         const nonUniqueNameDevices = [
-            { deviceId: "id1", getDisplayName: () => "nonUnique" } as DeviceInfo,
-            { deviceId: "id2", getDisplayName: () => "nonUnique" } as DeviceInfo,
-            { deviceId: "id5", getDisplayName: () => "nonUnique" } as DeviceInfo,
+            { deviceId: "id1", getDisplayName: () => "nonUnique" } as Device,
+            { deviceId: "id2", getDisplayName: () => "nonUnique" } as Device,
+            { deviceId: "id5", getDisplayName: () => "nonUnique" } as Device,
         ];
         const initialDevices = [...uniqueNameDevices, ...nonUniqueNameDevices];
         disambiguateDevices(initialDevices);

@@ -30,7 +30,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
-import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
+import { Device } from "matrix-js-sdk/src/models/device";
 
 import dis from "../../../dispatcher/dispatcher";
 import Modal from "../../../Modal";
@@ -80,7 +80,7 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { DirectoryMember, startDmOnFirstMessage } from "../../../utils/direct-messages";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 
-export interface IDevice extends DeviceInfo {
+export interface IDevice extends Device {
     ambiguous?: boolean;
 }
 
@@ -1178,6 +1178,19 @@ export const PowerLevelEditor: React.FC<{
     );
 };
 
+async function getUserDeviceInfo(
+    userId: string,
+    cli: MatrixClient,
+    downloadUncached = false,
+): Promise<Device[] | undefined> {
+    const userDeviceMap = await cli.getUserDeviceInfo([userId], downloadUncached);
+    const devicesMap = userDeviceMap.get(userId);
+
+    if (!devicesMap) return;
+
+    return Array.from(devicesMap.values());
+}
+
 export const useDevices = (userId: string): IDevice[] | undefined | null => {
     const cli = useContext(MatrixClientContext);
 
@@ -1191,10 +1204,9 @@ export const useDevices = (userId: string): IDevice[] | undefined | null => {
 
         async function downloadDeviceList(): Promise<void> {
             try {
-                await cli.downloadKeys([userId], true);
-                const devices = cli.getStoredDevicesForUser(userId);
+                const devices = await getUserDeviceInfo(userId, cli, true);
 
-                if (cancelled) {
+                if (cancelled || !devices) {
                     // we got cancelled - presumably a different user now
                     return;
                 }
@@ -1217,8 +1229,8 @@ export const useDevices = (userId: string): IDevice[] | undefined | null => {
     useEffect(() => {
         let cancel = false;
         const updateDevices = async (): Promise<void> => {
-            const newDevices = cli.getStoredDevicesForUser(userId);
-            if (cancel) return;
+            const newDevices = await getUserDeviceInfo(userId, cli);
+            if (cancel || !newDevices) return;
             setDevices(newDevices);
         };
         const onDevicesUpdated = (users: string[]): void => {
