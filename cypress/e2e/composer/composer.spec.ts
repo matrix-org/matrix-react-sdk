@@ -117,127 +117,61 @@ describe("Composer", () => {
             cy.viewRoomByName("Composing Room");
         });
 
-        describe("commands", () => {
+        describe("Commands", () => {
             // TODO add tests for rich text mode
 
-            describe("plain text mode", () => {
-                it("autocomplete opens when / is pressed and contains autocomplete items", () => {
+            describe("Plain text mode", () => {
+                it("autocomplete behaviour tests", () => {
                     // Select plain text mode after composer is ready
                     cy.get("div[contenteditable=true]").should("exist");
                     cy.findByRole("button", { name: "Hide formatting" }).click();
 
-                    // Type a /
+                    // Typing a single / displays the autocomplete menu and contents
                     cy.findByRole("textbox").type("/");
 
-                    // Check that the autocomplete options are visible and there are more than 0
-                    cy.findByTestId("autocomplete-wrapper").within(() => {
-                        cy.findAllByRole("presentation").should("have.length.above", 0);
-                    });
-                });
+                    // Check that the autocomplete options are visible and there are more than 0 items
+                    cy.findByTestId("autocomplete-wrapper").should("not.be.empty");
 
-                it("autocomplete can be used to enter a command", () => {
-                    // Select plain text mode after composer is ready
-                    cy.get("div[contenteditable=true]").should("exist");
-                    cy.findByRole("button", { name: "Hide formatting" }).click();
+                    // Entering `//` or `/ ` hides the autocomplete contents
+                    cy.findByRole("textbox").type(" ");
+                    cy.findByTestId("autocomplete-wrapper").should("be.empty");
+                    cy.findByRole("textbox").type("{Backspace}/");
+                    cy.findByTestId("autocomplete-wrapper").should("be.empty");
 
-                    // Type a message
-                    cy.findByRole("textbox").type("/spo");
-
-                    // Check that the autocomplete /spoiler option is visible and click it
-                    cy.findByTestId("autocomplete-wrapper").within(() => {
-                        cy.findByText("/spoiler").click();
-                    });
-
-                    // Check the autocomplete is closed and the composer contains the completion
-                    cy.findByTestId("autocomplete-wrapper").should("not.be.visible");
-                    cy.findByRole("textbox").within(() => {
-                        cy.findByText("/spoiler").should("exist");
-                    });
-                });
-
-                it("autocomplete can be used to write and send a command that takes arguments", () => {
-                    // Select plain text mode after composer is ready
-                    cy.get("div[contenteditable=true]").should("exist");
-                    cy.findByRole("button", { name: "Hide formatting" }).click();
-
-                    // Type a message
-                    cy.findByRole("textbox").type("/spo");
-
-                    // Check that the autocomplete /spoiler option is visible and click it
-                    cy.findByTestId("autocomplete-wrapper").within(() => {
-                        cy.findByText("/spoiler").click();
-                    });
-
-                    // Check the autocomplete is closed and the composer contains the completion
-                    cy.findByTestId("autocomplete-wrapper").should("not.be.visible");
-                    cy.findByRole("textbox").within(() => {
-                        cy.findByText("/spoiler").should("exist");
-                    });
-
-                    // Type some more text then send the message
-                    const argumentText = "this is the spoiler text";
-                    cy.findByRole("textbox").type(argumentText);
-                    cy.findByRole("button", { name: "Send message" }).click();
-
-                    // Check that a spoiler item has appeared in the timeline and contains the spoiler command text
-                    cy.get("span.mx_EventTile_spoiler").should("exist");
-                    cy.findByText("this is the spoiler text").should("exist");
-                });
-
-                it("autocomplete can be used to write and send a command that takes no arguments", () => {
-                    // Select plain text mode after composer is ready
-                    cy.get("div[contenteditable=true]").should("exist");
-                    cy.findByRole("button", { name: "Hide formatting" }).click();
-
-                    // Type a message
-                    cy.findByRole("textbox").type("/dev");
-
-                    // Check that the autocomplete /spoiler option is visible and click it
+                    // Typing a command that takes no arguments (/devtools) and selecting by click works
+                    cy.findByRole("textbox").type("{Backspace}dev");
                     cy.findByTestId("autocomplete-wrapper").within(() => {
                         cy.findByText("/devtools").click();
                     });
-
-                    // Check the autocomplete is closed and the composer contains the completion
+                    // Check it has closed the autocomplete and put the text into the composer
                     cy.findByTestId("autocomplete-wrapper").should("not.be.visible");
                     cy.findByRole("textbox").within(() => {
                         cy.findByText("/devtools").should("exist");
                     });
-
-                    // Click the send message button
+                    // Send the message and check the devtools dialog appeared, then close it
                     cy.findByRole("button", { name: "Send message" }).click();
-
-                    // Check that the devtools dialog menu has appeared
                     cy.findByRole("dialog").within(() => {
                         cy.findByText("Developer Tools").should("exist");
                     });
-                });
+                    cy.findByRole("button", { name: "Close dialog" }).click();
 
-                it("autocomplete is not displayed for a message starting with //", () => {
-                    // Select plain text mode after composer is ready
-                    cy.get("div[contenteditable=true]").should("exist");
-                    cy.findByRole("button", { name: "Hide formatting" }).click();
-
-                    // Type a message
-                    cy.findByRole("textbox").type("//anyText");
-
-                    // Check that the autocomplete options are not visible
+                    // Typing a command that takes arguments (/spoiler) and selecting with enter works
+                    cy.findByRole("textbox").type("/spoil");
                     cy.findByTestId("autocomplete-wrapper").within(() => {
-                        cy.findAllByRole("presentation").should("have.length", 0);
+                        cy.findByText("/spoiler").should("exist");
                     });
-                });
-
-                it("autocomplete is not displayed when user inserts whitespace after command", () => {
-                    // Select plain text mode after composer is ready
-                    cy.get("div[contenteditable=true]").should("exist");
-                    cy.findByRole("button", { name: "Hide formatting" }).click();
-
-                    // Type a message
-                    cy.findByRole("textbox").type("/spoiler followed by a space");
-
-                    // Check that the autocomplete options are not visible
-                    cy.findByTestId("autocomplete-wrapper").within(() => {
-                        cy.findAllByRole("presentation").should("have.length", 0);
+                    cy.findByRole("textbox").type("{Enter}");
+                    // Check it has closed the autocomplete and put the text into the composer
+                    cy.findByTestId("autocomplete-wrapper").should("not.be.visible");
+                    cy.findByRole("textbox").within(() => {
+                        cy.findByText("/spoiler").should("exist");
                     });
+                    // Enter some more text, then send the message
+                    cy.findByRole("textbox").type("this is the spoiler text ");
+                    cy.findByRole("button", { name: "Send message" }).click();
+                    // Check that a spoiler item has appeared in the timeline and contains the spoiler command text
+                    cy.get("span.mx_EventTile_spoiler").should("exist");
+                    cy.findByText("this is the spoiler text").should("exist");
                 });
             });
         });
