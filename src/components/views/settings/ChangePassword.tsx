@@ -187,7 +187,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                         this.props.onError(err);
                     } else {
                         this.props.onError(
-                            new UserFriendlyError("Error while setting password: %(error)s", {
+                            new UserFriendlyError("Error while changing password: %(error)s", {
                                 error: String(err),
                                 cause: undefined,
                             }),
@@ -328,7 +328,16 @@ export default class ChangePassword extends React.Component<IProps, IState> {
             this.checkPassword(oldPassword, newPassword, confirmPassword);
             return this.onChangePassword(oldPassword, newPassword);
         } catch (err) {
-            this.props.onError(err);
+            if (err instanceof Error) {
+                this.props.onError(err);
+            } else {
+                this.props.onError(
+                    new UserFriendlyError("Error while changing password: %(error)s", {
+                        error: String(err),
+                        cause: undefined,
+                    }),
+                );
+            }
         }
     };
 

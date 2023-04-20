@@ -1343,7 +1343,7 @@
     "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.",
     "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "You can also ask your homeserver admin to upgrade the server to change this behaviour.",
     "Export E2E room keys": "Export E2E room keys",
-    "Error while setting password: %(error)s": "Error while setting password: %(error)s",
+    "Error while changing password: %(error)s": "Error while changing password: %(error)s",
     "New passwords don't match": "New passwords don't match",
     "Passwords can't be empty": "Passwords can't be empty",
     "Do you want to set an email address?": "Do you want to set an email address?",
