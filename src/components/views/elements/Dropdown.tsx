@@ -30,7 +30,7 @@ interface IMenuOptionProps {
     highlighted?: boolean;
     dropdownKey: string;
     id?: string;
-    inputRef?: Ref<HTMLDivElement>;
+    inputRef?: Ref<HTMLLIElement>;
     onClick(dropdownKey: string): void;
     onMouseEnter(dropdownKey: string): void;
 }
@@ -57,7 +57,7 @@ class MenuOption extends React.Component<IMenuOptionProps> {
         });
 
         return (
-            <div
+            <li
                 id={this.props.id}
                 className={optClasses}
                 onClick={this.onClick}
@@ -67,7 +67,7 @@ class MenuOption extends React.Component<IMenuOptionProps> {
                 ref={this.props.inputRef}
             >
                 {this.props.children}
-            </div>
+            </li>
         );
     }
 }
@@ -319,9 +319,9 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
         });
         if (!options?.length) {
             return [
-                <div key="0" className="mx_Dropdown_option" role="option" aria-selected={false}>
+                <li key="0" className="mx_Dropdown_option" role="option" aria-selected={false}>
                     {_t("No results")}
-                </div>,
+                </li>,
             ];
         }
         return options;
@@ -357,9 +357,9 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
                 );
             }
             menu = (
-                <div className="mx_Dropdown_menu" style={menuStyle} role="listbox" id={`${this.props.id}_listbox`}>
+                <ul className="mx_Dropdown_menu" style={menuStyle} role="listbox" id={`${this.props.id}_listbox`}>
                     {this.getMenuOptions()}
-                </div>
+                </ul>
             );
         }
 
