@@ -162,50 +162,47 @@ class EmojiPicker extends React.Component<IProps, IState> {
     };
 
     private keyboardNavigation(ev: React.KeyboardEvent, state: RovingState, dispatch: Dispatch<RovingAction>): void {
-        let ref: Ref | undefined;
-
         const node = state.activeRef.current;
         const parent = node.parentElement;
         if (!parent) return;
         const rowIndex = Array.from(parent.children).indexOf(node);
         const refIndex = state.refs.indexOf(state.activeRef);
 
+        let focusRef: Ref | undefined;
         let newParent: HTMLElement | undefined;
-        let newTarget: Element | undefined;
         switch (ev.key) {
             case Key.ARROW_LEFT:
-                newTarget = state.refs[refIndex - 1]?.current;
-                newParent = newTarget?.parentElement;
+                focusRef = state.refs[refIndex - 1];
+                newParent = focusRef?.current?.parentElement;
                 break;
 
             case Key.ARROW_RIGHT:
-                newTarget = state.refs[refIndex + 1]?.current;
-                newParent = newTarget?.parentElement;
+                focusRef = state.refs[refIndex + 1];
+                newParent = focusRef?.current?.parentElement;
                 break;
 
             case Key.ARROW_UP:
-                newParent = state.refs[refIndex - rowIndex - 1]?.current?.parentElement;
-                newTarget = newParent?.children[clamp(rowIndex, 0, newParent.children.length - 1)];
+            case Key.ARROW_DOWN: {
+                // For up/down we find the prev/next parent by inspecting the refs either side of our row
+                const ref =
+                    ev.key === Key.ARROW_UP
+                        ? state.refs[refIndex - rowIndex - 1]
+                        : state.refs[refIndex - rowIndex + EMOJIS_PER_ROW];
+                newParent = ref?.current?.parentElement;
+                const newTarget = newParent?.children[clamp(rowIndex, 0, newParent.children.length - 1)];
+                focusRef = state.refs.find((r) => r.current === newTarget);
                 break;
-
-            case Key.ARROW_DOWN:
-                newParent = state.refs[refIndex - rowIndex + EMOJIS_PER_ROW]?.current?.parentElement;
-                newTarget = newParent?.children[clamp(rowIndex, 0, newParent.children.length - 1)];
-                break;
+            }
         }
 
-        if (newTarget) {
-            ref = state.refs.find((r) => r.current === newTarget);
-        }
-
-        if (ref) {
+        if (focusRef) {
             dispatch({
                 type: Type.SetFocus,
-                payload: { ref },
+                payload: { ref: focusRef },
             });
 
             if (parent !== newParent) {
-                ref.current?.scrollIntoView({
+                focusRef.current?.scrollIntoView({
                     behavior: "auto",
                     block: "center",
                     inline: "center",
