@@ -159,10 +159,6 @@ interface IProps {
     handleHomeEnd?: boolean;
     handleUpDown?: boolean;
     handleLeftRight?: boolean;
-    handleInputKeys?: boolean;
-    // Whether to only dispatch SetFocus on keyboard handling
-    // useful for aria-activedescendant widgets
-    onlySetFocus?: boolean;
     children(renderProps: { onKeyDownHandler(ev: React.KeyboardEvent): void }): ReactNode;
     onKeyDown?(ev: React.KeyboardEvent, state: IState, dispatch: Dispatch<IAction>): void;
 }
@@ -192,8 +188,6 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
     handleHomeEnd,
     handleUpDown,
     handleLeftRight,
-    handleInputKeys,
-    onlySetFocus,
     onKeyDown,
 }) => {
     const [state, dispatch] = useReducer<Reducer<IState, IAction>>(reducer, {
@@ -216,7 +210,7 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
             let focusRef: RefObject<HTMLElement> | undefined;
             // Don't interfere with input default keydown behaviour
             // but allow people to move focus from it with Tab.
-            if (!handleInputKeys && checkInputableElement(ev.target as HTMLElement)) {
+            if (checkInputableElement(ev.target as HTMLElement)) {
                 switch (action) {
                     case KeyBindingAction.Tab:
                         handled = true;
@@ -285,7 +279,7 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
             }
 
             if (focusRef) {
-                if (!onlySetFocus) focusRef.current?.focus();
+                focusRef.current?.focus();
                 // programmatic focus doesn't fire the onFocus handler, so we must do the do ourselves
                 dispatch({
                     type: Type.SetFocus,
@@ -295,7 +289,7 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
                 });
             }
         },
-        [context, onKeyDown, handleHomeEnd, handleUpDown, handleLeftRight, handleInputKeys, onlySetFocus],
+        [context, onKeyDown, handleHomeEnd, handleUpDown, handleLeftRight],
     );
 
     return (
