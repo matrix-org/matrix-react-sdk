@@ -37,6 +37,21 @@ function amendInnerHtml(text: string): string {
         .replace(/<\/div>/g, "");
 }
 
+/**
+ * Generates all of the listeners and the ref to be attached to the editor. Also returns
+ * pieces of state and utility functions that are required for use in other hooks and by
+ * the autocomplete component.
+ *
+ * @param autocompleteRef - a ref to the autocomplete used for commands and mentions
+ * @param initialContent - can set the content of the editor on mount
+ * @param onChange - called whenever there is change in the editor content
+ * @param onSend - called whenever the user sends the message
+ * @returns
+ * - a ref to be attached the editor
+ * - the editor's current content and a setter
+ * - handlers for input, paste and keyDown events
+ * - the output from the {@link useSuggestion} hook
+ */
 export function usePlainTextListeners(
     autocompleteRef: React.RefObject<Autocomplete>,
     initialContent?: string,
