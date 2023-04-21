@@ -1,6 +1,8 @@
 /*
 Copyright 2019 New Vector Ltd
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2023 The Matrix.org Foundation C.I.C.
+
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -64,13 +66,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
     public constructor(props: IProps) {
         super(props);
 
-        const room = MatrixClientPeg.get().getRoom(this.props.roomId)!;
-
-        // something is really wrong if we encounter this
-        if (!room) {
-            throw new Error(`Cannot find room ${this.props.roomId}`);
-        }
-
+        const room = this.getRoom();
         this.state = { roomName: "", room };
     }
 
@@ -82,12 +78,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
 
     public componentDidUpdate(): void {
         if (this.props.roomId !== this.state.room.roomId) {
-            const room = MatrixClientPeg.get().getRoom(this.props.roomId)!;
-
-            // something is really wrong if we encounter this
-            if (!room) {
-                throw new Error(`Cannot find room ${this.props.roomId}`);
-            }
+            const room = this.getRoom();
             this.setState({ room });
         }
     }
@@ -98,6 +89,21 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
         }
 
         MatrixClientPeg.get().removeListener(RoomEvent.Name, this.onRoomName);
+    }
+
+    /**
+     * Get room from client
+     * @returns Room
+     * @throws when room is not found
+     */
+    private getRoom(): Room {
+        const room = MatrixClientPeg.get().getRoom(this.props.roomId)!;
+
+        // something is really wrong if we encounter this
+        if (!room) {
+            throw new Error(`Cannot find room ${this.props.roomId}`);
+        }
+        return room;
     }
 
     private onAction = (payload: ActionPayload): void => {
