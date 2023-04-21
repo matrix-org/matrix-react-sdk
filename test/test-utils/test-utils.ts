@@ -121,6 +121,7 @@ export function createTestClient(): MatrixClient {
                 downloadKeys: jest.fn(),
             },
         },
+        getCrypto: jest.fn().mockReturnValue({ getUserDeviceInfo: jest.fn() }),
 
         getPushActionsForEvent: jest.fn(),
         getRoom: jest.fn().mockImplementation((roomId) => mkStubRoom(roomId, "My room", client)),
