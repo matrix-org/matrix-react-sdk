@@ -19,9 +19,10 @@ limitations under the License.
  * Avoid using these in new code: we cannot adjust their values without causing massive confusion, so they are
  * effectively equivalent to using hardcoded values.
  *
- * In future, we plan to variables named according to their purpose rather than their size, so we might have
- * `$spacing-standard` or something. For now, you might as well use hardcoded px values for lengths (except for font
- * sizes, for which see the `$font-<N>px` variables.
+ * In future, we plan to introduce variables named according to their purpose rather than their size. Additionally,
+ * we want switch to custom CSS properties (https://github.com/vector-im/element-web/issues/21656), so we might have
+ * `--spacing-standard` or something. For now, you might as well use hardcoded px values for lengths (except for font
+ * sizes, for which see the `$font-<N>px` variables).
  */
 $spacing-2: 2px;
 $spacing-4: 4px;
