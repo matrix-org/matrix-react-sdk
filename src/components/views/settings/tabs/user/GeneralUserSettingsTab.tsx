@@ -268,7 +268,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             }),
         );
 
-        let errorMessageToDisplay;
+        let errorMessageToDisplay = errorMessage;
         if (underlyingError instanceof HTTPError && underlyingError.httpStatus === 403) {
             errorMessageToDisplay = _t("Failed to change password. Is your password correct?");
         } else if (underlyingError instanceof HTTPError) {
@@ -276,8 +276,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                 errorMessage,
                 httpStatus: underlyingError.httpStatus,
             });
-        } else {
-            errorMessageToDisplay = errorMessage;
         }
 
         // TODO: Figure out a design that doesn't involve replacing the current dialog
