@@ -353,7 +353,10 @@ const SpacePanel: React.FC = () => {
             <RovingTabIndexProvider handleHomeEnd handleUpDown>
                 {({ onKeyDownHandler }) => (
                     <div
-                        className={classNames("mx_SpacePanel", { collapsed: isPanelCollapsed })}
+                        className={classNames("mx_SpacePanel", {
+                            "mx_SpacePanel--collapsed": isPanelCollapsed,
+                            "mx_SpacePanel--expanded": !isPanelCollapsed,
+                        })}
                         onKeyDown={onKeyDownHandler}
                         ref={ref}
                     >

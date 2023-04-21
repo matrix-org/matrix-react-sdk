@@ -300,14 +300,14 @@ describe("Spaces", () => {
             },
         };
         cy.checkA11y(undefined, axeOptions);
-        cy.get(".mx_SpacePanel").percySnapshotElement("Space panel collapsed", { widths: [68] });
+        cy.get(".mx_SpacePanel--collapsed").percySnapshotElement("Space panel collapsed", { widths: [68] });
 
         cy.findByRole("tree", { name: "Spaces" }).within(() => {
             // This finds the expand button with the class name "mx_SpaceButton_toggleCollapse". Note there is another
             // button with the same name with different class name "mx_SpacePanel_toggleCollapse".
             cy.findByRole("button", { name: "Expand" }).realHover().click();
         });
-        cy.get(".mx_SpacePanel:not(.collapsed)").should("exist"); // TODO: replace :not() selector
+        cy.get(".mx_SpacePanel--expanded").should("exist");
 
         cy.contains(".mx_SpaceItem", "Root Space")
             .should("exist")
