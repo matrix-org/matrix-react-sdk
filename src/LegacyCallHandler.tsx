@@ -66,6 +66,7 @@ import { getJoinedNonFunctionalMembers } from "./utils/room/getJoinedNonFunction
 import { localNotificationsAreSilenced } from "./utils/notifications";
 import { SdkContextClass } from "./contexts/SDKContext";
 import { showCantStartACallDialog } from "./voice-broadcast/utils/showCantStartACallDialog";
+import { isNotNull } from "./Typeguards";
 
 export const PROTOCOL_PSTN = "m.protocol.pstn";
 export const PROTOCOL_PSTN_PREFIXED = "im.vector.protocol.pstn";
@@ -145,10 +146,6 @@ export enum LegacyCallHandlerEvent {
     CallChangeRoom = "call_change_room",
     SilencedCallsChanged = "silenced_calls_changed",
     CallState = "call_state",
-}
-
-function isNotNull<T>(arg: T): arg is Exclude<T, null> {
-    return arg !== null;
 }
 
 /**
