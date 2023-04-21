@@ -118,6 +118,7 @@ jobs:
             # The workflow_run.head_sha is the sha of the head commit but the element-web was built using a simulated
             # merge commit - https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
             # so use the sha from the tarball for the checkout of the cypress tests
+            # to make sure we get a matching set of code and tests.
             - name: Grab sha from webapp
               id: sha
               run: |
