@@ -293,7 +293,7 @@ export class ImportanceAlgorithm extends OrderingAlgorithm {
             const thisCat = CATEGORY_ORDER[i];
             const thisCatIndex = indices[thisCat];
 
-            if (lastCatIndex === undefined || thisCatIndex === undefined || lastCatIndex > thisCatIndex) {
+            if (lastCatIndex !== undefined && thisCatIndex !== undefined && lastCatIndex > thisCatIndex) {
                 // "should never happen" disclaimer goes here
                 logger.warn(
                     `!! Room list index corruption: ${lastCat} (i:${indices[lastCat]}) is greater ` +
