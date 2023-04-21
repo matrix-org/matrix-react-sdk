@@ -1215,8 +1215,8 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         }
     };
 
-    private onTabChange = (tabId: TabId): void => {
-        this.setState({ currentTabId: tabId });
+    private onTabChange = (tabId: string): void => {
+        this.setState({ currentTabId: tabId as TabId });
     };
 
     private async onLinkClick(e: React.MouseEvent<HTMLAnchorElement>): Promise<void> {
@@ -1278,7 +1278,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         let title;
         let helpText;
         let buttonText;
-        let goButtonFn;
+        let goButtonFn: (() => Promise<void>) | null = null;
         let consultConnectSection;
         let extraSection;
         let footer;
