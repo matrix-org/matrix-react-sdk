@@ -47,9 +47,10 @@ function amendInnerHtml(text: string): string {
  * @param onChange - called whenever there is change in the editor content
  * @param onSend - called whenever the user sends the message
  * @returns
- * - a ref to be attached the editor
- * - the editor's current content and a setter
- * - handlers for input, paste and keyDown events
+ * - `ref`: a ref object which the caller must attach to the HTML `div` node for the editor
+ * - `content`: state representing the editor's current text content
+ * - `setContent`: the setter for the content state
+ * - `onInput`, `onPaste`, `onKeyDown`: handlers for input, paste and keyDown events
  * - the output from the {@link useSuggestion} hook
  */
 export function usePlainTextListeners(
