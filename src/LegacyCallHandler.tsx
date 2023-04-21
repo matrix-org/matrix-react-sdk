@@ -147,8 +147,8 @@ export enum LegacyCallHandlerEvent {
     CallState = "call_state",
 }
 
-function isNonNull<T>(thing: T | null): thing is T {
-    return thing !== null;
+function isNotNull<T>(arg: T): arg is Exclude<T, null> {
+    return arg !== null;
 }
 
 /**
@@ -586,7 +586,7 @@ export default class LegacyCallHandler extends EventEmitter {
         call.on(CallEvent.Hangup, () => {
             if (!this.matchesCallForThisRoom(call)) return;
 
-            if (isNonNull(mappedRoomId)) {
+            if (isNotNull(mappedRoomId)) {
                 this.removeCallForRoom(mappedRoomId);
             }
         });
@@ -604,7 +604,7 @@ export default class LegacyCallHandler extends EventEmitter {
                 this.pause(AudioID.Ringback);
             }
 
-            if (isNonNull(mappedRoomId)) {
+            if (isNotNull(mappedRoomId)) {
                 this.removeCallForRoom(mappedRoomId);
                 this.addCallForRoom(mappedRoomId, newCall);
             }
@@ -643,7 +643,7 @@ export default class LegacyCallHandler extends EventEmitter {
 
                 const newMappedRoomId = this.roomIdForCall(call);
                 logger.log(`Old room ID: ${mappedRoomId}, new room ID: ${newMappedRoomId}`);
-                if (newMappedRoomId !== mappedRoomId && isNonNull(mappedRoomId) && isNonNull(newMappedRoomId)) {
+                if (newMappedRoomId !== mappedRoomId && isNotNull(mappedRoomId) && isNotNull(newMappedRoomId)) {
                     this.removeCallForRoom(mappedRoomId);
                     mappedRoomId = newMappedRoomId;
                     logger.log("Moving call to room " + mappedRoomId);
@@ -703,7 +703,7 @@ export default class LegacyCallHandler extends EventEmitter {
             }
             case CallState.Ended: {
                 const hangupReason = call.hangupReason;
-                if (isNonNull(mappedRoomId)) {
+                if (isNotNull(mappedRoomId)) {
                     this.removeCallForRoom(mappedRoomId);
                 }
 
@@ -738,7 +738,7 @@ export default class LegacyCallHandler extends EventEmitter {
                     this.play(AudioID.CallEnd);
                 }
 
-                if (isNonNull(mappedRoomId)) {
+                if (isNotNull(mappedRoomId)) {
                     this.logCallStats(call, mappedRoomId);
                 }
                 break;
@@ -1097,7 +1097,7 @@ export default class LegacyCallHandler extends EventEmitter {
 
         const roomId = await ensureDMExists(MatrixClientPeg.get(), nativeUserId);
 
-        if (isNonNull(roomId)) {
+        if (isNotNull(roomId)) {
             dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: roomId,
@@ -1135,7 +1135,7 @@ export default class LegacyCallHandler extends EventEmitter {
     public async startTransferToMatrixID(call: MatrixCall, destination: string, consultFirst: boolean): Promise<void> {
         if (consultFirst) {
             const dmRoomId = await ensureDMExists(MatrixClientPeg.get(), destination);
-            if (isNonNull(dmRoomId)) {
+            if (isNotNull(dmRoomId)) {
                 this.placeCall(dmRoomId, call.type, call);
                 dis.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
@@ -1196,7 +1196,7 @@ export default class LegacyCallHandler extends EventEmitter {
         if (widget) {
             // If there already is a Jitsi widget, pin it
             const room = client.getRoom(roomId);
-            if (isNonNull(room)) {
+            if (isNotNull(room)) {
                 WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Top);
             }
             return;
