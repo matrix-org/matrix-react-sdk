@@ -57,7 +57,7 @@ $activeBorderColor: $primary-content;
             transform: rotate(270deg);
         }
 
-        &:not(.expanded) {
+        &.mx_SpacePanel_toggleCollapse--collapsed {
             opacity: 0;
 
             &::before {
@@ -65,7 +65,7 @@ $activeBorderColor: $primary-content;
             }
         }
 
-        &.expanded::before {
+        &.mx_SpacePanel_toggleCollapse--expanded::before {
             transform: rotate(90deg);
         }
     }

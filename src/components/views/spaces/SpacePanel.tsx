@@ -362,7 +362,10 @@ const SpacePanel: React.FC = () => {
                     >
                         <UserMenu isPanelCollapsed={isPanelCollapsed}>
                             <AccessibleTooltipButton
-                                className={classNames("mx_SpacePanel_toggleCollapse", { expanded: !isPanelCollapsed })}
+                                className={classNames("mx_SpacePanel_toggleCollapse", {
+                                    "mx_SpacePanel_toggleCollapse--collapsed": isPanelCollapsed,
+                                    "mx_SpacePanel_toggleCollapse--expanded": !isPanelCollapsed,
+                                })}
                                 onClick={() => setPanelCollapsed(!isPanelCollapsed)}
                                 title={isPanelCollapsed ? _t("Expand") : _t("Collapse")}
                                 tooltip={
