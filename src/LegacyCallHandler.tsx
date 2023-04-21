@@ -18,6 +18,7 @@ limitations under the License.
 */
 
 import React from "react";
+import { MatrixError } from "matrix-js-sdk/src/matrix";
 import {
     CallError,
     CallErrorCode,
@@ -1134,15 +1135,16 @@ export default class LegacyCallHandler extends EventEmitter {
     public async startTransferToMatrixID(call: MatrixCall, destination: string, consultFirst: boolean): Promise<void> {
         if (consultFirst) {
             const dmRoomId = await ensureDMExists(MatrixClientPeg.get(), destination);
-
-            this.placeCall(dmRoomId, call.type, call);
-            dis.dispatch<ViewRoomPayload>({
-                action: Action.ViewRoom,
-                room_id: dmRoomId,
-                should_peek: false,
-                joining: false,
-                metricsTrigger: undefined, // other
-            });
+            if (isNonNull(dmRoomId)) {
+                this.placeCall(dmRoomId, call.type, call);
+                dis.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
+                    room_id: dmRoomId,
+                    should_peek: false,
+                    joining: false,
+                    metricsTrigger: undefined, // other
+                });
+            }
         } else {
             try {
                 await call.transfer(destination);
@@ -1204,7 +1206,7 @@ export default class LegacyCallHandler extends EventEmitter {
             await WidgetUtils.addJitsiWidget(roomId, type, "Jitsi", false);
             logger.log("Jitsi widget added");
         } catch (e) {
-            if (e.errcode === "M_FORBIDDEN") {
+            if (e instanceof MatrixError && e.errcode === "M_FORBIDDEN") {
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Permission Required"),
                     description: _t("You do not have permission to start a conference call in this room"),
