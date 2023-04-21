@@ -57,7 +57,7 @@ describe("ImportanceAlgorithm", () => {
     const roomE = makeRoom("!eee:server.org", "Echo", 3);
     const roomX = makeRoom("!xxx:server.org", "Xylophone", 99);
 
-    const unreadStates = {
+    const unreadStates: Record<string, ReturnType<(typeof RoomNotifs)["determineUnreadState"]>> = {
         red: { symbol: null, count: 1, color: NotificationColor.Red },
         grey: { symbol: null, count: 1, color: NotificationColor.Grey },
         none: { symbol: null, count: 0, color: NotificationColor.None },
