@@ -27,7 +27,8 @@ export type PlainTextSuggestionPattern = {
     node: Node;
     startOffset: number;
     endOffset: number;
-} | null;
+};
+type Suggestion = PlainTextSuggestionPattern | null;
 
 /**
  * Given an input div element, return the current suggestion found in that div element if present
@@ -45,7 +46,7 @@ export function useSuggestion(
     onSelect: (event: SyntheticEvent<HTMLDivElement>) => void;
     suggestion: MappedSuggestion | null;
 } {
-    const [suggestion, setSuggestion] = useState<PlainTextSuggestionPattern | null>(null);
+    const [suggestion, setSuggestion] = useState<Suggestion>(null);
 
     // TODO handle the mentions (@user, #room etc)
     const handleMention = (): void => {};
@@ -72,7 +73,7 @@ export function useSuggestion(
  * @returns - null if the input is null, a MappedSuggestion if the input is non-null
  *
  */
-export const mapSuggestion = (suggestion: PlainTextSuggestionPattern | null): MappedSuggestion | null => {
+export const mapSuggestion = (suggestion: Suggestion): MappedSuggestion | null => {
     if (suggestion === null) {
         return null;
     } else {
@@ -91,8 +92,8 @@ export const mapSuggestion = (suggestion: PlainTextSuggestionPattern | null): Ma
 export const processCommand = (
     replacementText: string,
     editorRef: React.RefObject<HTMLDivElement>,
-    suggestion: PlainTextSuggestionPattern | null,
-    setSuggestion: React.Dispatch<React.SetStateAction<PlainTextSuggestionPattern>>,
+    suggestion: Suggestion,
+    setSuggestion: React.Dispatch<React.SetStateAction<Suggestion>>,
     setText: (text: string) => void,
 ): void => {
     // if we do not have any of the values we need to do the work, do nothing
@@ -126,8 +127,8 @@ export const processCommand = (
  */
 export const processSelectionChange = (
     editorRef: React.RefObject<HTMLDivElement>,
-    suggestion: PlainTextSuggestionPattern | null,
-    setSuggestion: React.Dispatch<React.SetStateAction<PlainTextSuggestionPattern>>,
+    suggestion: Suggestion,
+    setSuggestion: React.Dispatch<React.SetStateAction<Suggestion>>,
 ): void => {
     const selection = document.getSelection();
 
