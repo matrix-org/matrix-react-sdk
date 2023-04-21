@@ -52,7 +52,7 @@ interface IState {
 }
 
 export default class VideoFeed extends React.PureComponent<IProps, IState> {
-    private element: HTMLVideoElement;
+    private element: HTMLVideoElement | undefined;
 
     public constructor(props: IProps) {
         super(props);
