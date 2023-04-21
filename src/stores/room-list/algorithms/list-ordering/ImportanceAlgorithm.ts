@@ -96,6 +96,7 @@ export class ImportanceAlgorithm extends OrderingAlgorithm {
         // It's fine for us to call this a lot because it's cached, and we shouldn't be
         // wasting anything by doing so as the store holds single references
         const state = RoomNotificationStateStore.instance.getRoomState(room);
+        console.log(room.roomId, state.muted, state.color);
         return this.isMutedToBottom && state.muted ? NotificationColor.Muted : state.color;
     }
 
@@ -174,14 +175,16 @@ export class ImportanceAlgorithm extends OrderingAlgorithm {
             throw new Error(`Unsupported update cause: ${cause}`);
         }
 
+        // don't react to mute changes when we are not sorting by mute
         if (cause === RoomUpdateCause.PossibleMuteChange && !this.isMutedToBottom) {
-            return;
+            return false;
         }
 
-        const category = this.getRoomCategory(room);
         if (this.sortingAlgorithm === SortAlgorithm.Manual) {
             return false; // Nothing to do here.
         }
+
+        const category = this.getRoomCategory(room);
 
         const roomIdx = this.getRoomIndex(room);
         if (roomIdx === -1) {
