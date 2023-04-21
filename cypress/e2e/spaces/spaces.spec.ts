@@ -303,9 +303,10 @@ describe("Spaces", () => {
         cy.get(".mx_SpacePanel--collapsed").percySnapshotElement("Space panel collapsed", { widths: [68] });
 
         cy.findByRole("tree", { name: "Spaces" }).within(() => {
-            // This finds the expand button with the class name "mx_SpaceButton_toggleCollapse". Note there is another
-            // button with the same name with different class name "mx_SpacePanel_toggleCollapse".
-            cy.findByRole("button", { name: "Expand" }).realHover().click();
+            cy.findByRole("button", { name: "Expand" })
+                .should("have.class", "mx_SpaceButton_toggleCollapse")
+                .realHover()
+                .click();
         });
         cy.get(".mx_SpacePanel--expanded").should("exist");
 
@@ -316,6 +317,32 @@ describe("Spaces", () => {
 
         cy.checkA11y(undefined, axeOptions);
         cy.get(".mx_SpacePanel").percySnapshotElement("Space panel expanded", { widths: [258] });
+    });
+
+    it("should change the panel and its expand/collapse button's class name when the panel is expanded", () => {
+        cy.createSpace({ name: "My Space" });
+        cy.getSpacePanelButton("My Space").should("exist");
+
+        cy.get(".mx_SpacePanel--collapsed")
+            .should("exist")
+            .within(() => {
+                // Assert that "Expand" panel button is rendered
+                cy.findByRole("button", { name: "Expand" })
+                    .should("have.class", "mx_SpacePanel_toggleCollapse")
+                    .should("have.class", "mx_SpacePanel_toggleCollapse--collapsed") // "Expand" button is collapsed
+                    .should("not.have.class", "mx_SpaceButton_toggleCollapse") // another button w/ the same name
+                    .realHover()
+                    .click(); // Click the button
+            });
+
+        cy.get(".mx_SpacePanel--expanded")
+            .should("exist")
+            .within(() => {
+                // Assert that "Collapse" panel button is rendered
+                cy.findByRole("button", { name: "Collapse" })
+                    .should("have.class", "mx_SpacePanel_toggleCollapse--expanded") // "Collapse" button is expanded
+                    .should("exist");
+            });
     });
 
     it("should not soft crash when joining a room from space hierarchy which has a link in its topic", () => {
