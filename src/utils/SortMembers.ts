@@ -67,7 +67,7 @@ interface IActivityScore {
 // We do this by checking every room to see who has sent a message in the last few hours, and giving them
 // a score which correlates to the freshness of their message. In theory, this results in suggestions
 // which are closer to "continue this conversation" rather than "this person exists".
-export function buildActivityScores(cli: MatrixClient): { [key: string]: IActivityScore } {
+export function buildActivityScores(cli: MatrixClient): { [userId: string]: IActivityScore } {
     const now = new Date().getTime();
     const earliestAgeConsidered = now - 60 * 60 * 1000; // 1 hour ago
     const maxMessagesConsidered = 50; // so we don't iterate over a huge amount of traffic
@@ -97,7 +97,7 @@ interface IMemberScore {
     numRooms: number;
 }
 
-export function buildMemberScores(cli: MatrixClient): { [key: string]: IMemberScore } {
+export function buildMemberScores(cli: MatrixClient): { [userId: string]: IMemberScore } {
     const maxConsideredMembers = 200;
     const consideredRooms = joinedRooms(cli).filter((room) => room.getJoinedMemberCount() < maxConsideredMembers);
     const memberPeerEntries = consideredRooms.flatMap((room) =>
@@ -114,5 +114,5 @@ export function buildMemberScores(cli: MatrixClient): { [key: string]: IMemberSc
             numRooms: roomMemberships.length,
             score: Math.max(0, Math.pow(1 - totalPeers / maximumPeers, 5)),
         };
-    }) as { [key: string]: IMemberScore };
+    }) as { [userId: string]: IMemberScore };
 }
