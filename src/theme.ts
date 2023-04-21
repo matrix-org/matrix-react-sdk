@@ -79,7 +79,7 @@ export function enumerateThemes(): { [key: string]: string } {
         "light-high-contrast": _t("Light high contrast"),
         "dark": _t("Dark"),
     };
-    const customThemes = SettingsStore.getValue("custom_themes");
+    const customThemes = SettingsStore.getValue("custom_themes") || {};
     const customThemeNames: Record<string, string> = {};
     for (const { name } of customThemes) {
         customThemeNames[`custom-${name}`] = name;
