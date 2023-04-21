@@ -17,9 +17,10 @@ limitations under the License.
 import { Attributes, MappedSuggestion, SuggestionChar, SuggestionType } from "@matrix-org/matrix-wysiwyg";
 import { SyntheticEvent, useState } from "react";
 
-// This type is a close approximation of what we use in the Rust model for the rich version of the
-// editor. We use this to try and make this simple model as similar as possible to allow reuse of
-// the autocomplete component
+/* To allow reuse of the autocomplete component, we need to record similar information as used in 
+the Rust model (keyChar, type and text) as well as information required to allow us to do the 
+DOM manipulation when replacing the suggestion with a mention or command (node, start and
+end offsets). */
 export type PlainTextSuggestionPattern = {
     keyChar: SuggestionChar;
     type: SuggestionType;
@@ -31,12 +32,22 @@ export type PlainTextSuggestionPattern = {
 type Suggestion = PlainTextSuggestionPattern | null;
 
 /**
- * Given an input div element, return the current suggestion found in that div element if present
- * as well as handlers for command or mention completions from the autocomplete, and a listener
- * to be attached to the PlainTextComposer
+ * React hook to allow tracking and replacing of mentions and commands in a div element
  *
  * @param editorRef - a ref to the div that is the composer textbox
+ * @param setText - setter function to allow the hook to update the content state when replacing
+ * text with text selected from the autocomplete
+ * @returns
+ * - `handleMention`: TODO a function that will allow @ or # mentions to be selected from
+ * the autocomplete and inserted into the composer
+ * - `handleCommand`: a function that allows slash commands selected from the autocomplete to be inserted
+ * into the composer
+ * - `onSelect`: a selection change listener to be attached to the plain text composer
+ * - `suggestion`: if the cursor is inside something that could be interpreted as a command or a mention,
+ * this will be an object representing that command or mention, otherwise it is null
+ *
  */
+
 export function useSuggestion(
     editorRef: React.RefObject<HTMLDivElement>,
     setText: (text: string) => void,
@@ -83,11 +94,15 @@ export const mapSuggestion = (suggestion: Suggestion): MappedSuggestion | null =
 };
 
 /**
- * When a command is selected from the autocomplete, this function allows us to replace the relevant part
- * of the editor text with the replacement text
+ * Replaces the relevant part of the editor text with the replacement text after a command is selected
+ * from the autocomplete.
  *
  * @param replacementText - the text that we will insert into the DOM
+ * @param editorRef - a ref to the editor
  * @param suggestion - representation of the part of the DOM that will be replaced
+ * @param setSuggestion - a setter to allow the suggestion state to be updated
+ * @param setText - a setter to update the state of the composer content after replacing a mention
+ * or a command
  */
 export const processCommand = (
     replacementText: string,
