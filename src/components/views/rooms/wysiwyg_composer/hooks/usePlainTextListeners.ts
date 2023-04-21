@@ -42,24 +42,24 @@ function amendInnerHtml(text: string): string {
  * pieces of state and utility functions that are required for use in other hooks and by
  * the autocomplete component.
  *
- * @param autocompleteRef - a ref to the autocomplete used for commands and mentions
  * @param initialContent - can set the content of the editor on mount
  * @param onChange - called whenever there is change in the editor content
  * @param onSend - called whenever the user sends the message
  * @returns
  * - `ref`: a ref object which the caller must attach to the HTML `div` node for the editor
+ * * `autocompleteRef`: a ref object which the caller must attach to the autocomplete component
  * - `content`: state representing the editor's current text content
  * - `setContent`: the setter for the content state
  * - `onInput`, `onPaste`, `onKeyDown`: handlers for input, paste and keyDown events
  * - the output from the {@link useSuggestion} hook
  */
 export function usePlainTextListeners(
-    autocompleteRef: React.RefObject<Autocomplete>,
     initialContent?: string,
     onChange?: (content: string) => void,
     onSend?: () => void,
 ): {
     ref: RefObject<HTMLDivElement>;
+    autocompleteRef: React.RefObject<Autocomplete>;
     content?: string;
     onInput(event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>): void;
     onPaste(event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>): void;
@@ -71,6 +71,7 @@ export function usePlainTextListeners(
     suggestion: MappedSuggestion | null;
 } {
     const ref = useRef<HTMLDivElement | null>(null);
+    const autocompleteRef = useRef<Autocomplete | null>(null);
     const [content, setContent] = useState<string | undefined>(initialContent);
 
     const send = useCallback(() => {
@@ -138,6 +139,7 @@ export function usePlainTextListeners(
 
     return {
         ref,
+        autocompleteRef,
         onInput,
         onPaste: onInput,
         onKeyDown,

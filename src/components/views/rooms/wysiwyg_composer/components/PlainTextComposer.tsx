@@ -24,7 +24,6 @@ import { usePlainTextListeners } from "../hooks/usePlainTextListeners";
 import { useSetCursorPosition } from "../hooks/useSetCursorPosition";
 import { ComposerFunctions } from "../types";
 import { Editor } from "./Editor";
-import Autocomplete from "../../Autocomplete";
 import { WysiwygAutocomplete } from "./WysiwygAutocomplete";
 
 interface PlainTextComposerProps {
@@ -50,10 +49,9 @@ export function PlainTextComposer({
     leftComponent,
     rightComponent,
 }: PlainTextComposerProps): JSX.Element {
-    const autocompleteRef = useRef<Autocomplete | null>(null);
-
     const {
         ref: editorRef,
+        autocompleteRef,
         onInput,
         onPaste,
         onKeyDown,
@@ -63,7 +61,7 @@ export function PlainTextComposer({
         onSelect,
         handleCommand,
         handleMention,
-    } = usePlainTextListeners(autocompleteRef, initialContent, onChange, onSend);
+    } = usePlainTextListeners(initialContent, onChange, onSend);
 
     const composerFunctions = useComposerFunctions(editorRef, setContent);
     usePlainTextInitialization(initialContent, editorRef);
