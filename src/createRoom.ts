@@ -397,7 +397,10 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
  */
 export async function canEncryptToAllUsers(client: MatrixClient, userIds: string[]): Promise<boolean> {
     try {
-        const usersDeviceMap = await client.getUserDeviceInfo(userIds, true);
+        const usersDeviceMap = await client.getCrypto()?.getUserDeviceInfo(userIds, true);
+        if (!usersDeviceMap) {
+            return false;
+        }
 
         for (const devices of usersDeviceMap.values()) {
             if (devices.size === 0) {
