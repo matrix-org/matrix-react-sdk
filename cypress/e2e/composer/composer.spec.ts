@@ -135,6 +135,8 @@ describe("Composer", () => {
                     // Entering `//` or `/ ` hides the autocomplete contents
                     cy.findByRole("textbox").type(" ");
                     cy.findByTestId("autocomplete-wrapper").should("be.empty");
+                    cy.findByRole("textbox").type("{Backspace}");
+                    cy.findByTestId("autocomplete-wrapper").should("not.be.empty");
                     cy.findByRole("textbox").type("{Backspace}/");
                     cy.findByTestId("autocomplete-wrapper").should("be.empty");
 
