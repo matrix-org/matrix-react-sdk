@@ -37,6 +37,7 @@ import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContex
 import { ReadPinsEventId } from "./types";
 import Heading from "../typography/Heading";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
+import { filterBoolean } from "../../../utils/arrays";
 
 interface IProps {
     room: Room;
@@ -44,50 +45,53 @@ interface IProps {
     onClose(): void;
 }
 
-export const usePinnedEvents = (room: Room): string[] => {
-    const [pinnedEvents, setPinnedEvents] = useState<string[]>([]);
+function getPinnedEventIds(room?: Room): string[] {
+    return room?.currentState.getStateEvents(EventType.RoomPinnedEvents, "")?.getContent()?.pinned ?? [];
+}
+
+export const usePinnedEvents = (room?: Room): string[] => {
+    const [pinnedEvents, setPinnedEvents] = useState<string[]>(getPinnedEventIds(room));
 
     const update = useCallback(
         (ev?: MatrixEvent) => {
-            if (!room) return;
             if (ev && ev.getType() !== EventType.RoomPinnedEvents) return;
-            setPinnedEvents(
-                room.currentState.getStateEvents(EventType.RoomPinnedEvents, "")?.getContent()?.pinned || [],
-            );
+            setPinnedEvents(getPinnedEventIds(room));
         },
         [room],
     );
 
     useTypedEventEmitter(room?.currentState, RoomStateEvent.Events, update);
     useEffect(() => {
-        update();
+        setPinnedEvents(getPinnedEventIds(room));
         return () => {
             setPinnedEvents([]);
         };
-    }, [update]);
+    }, [room]);
     return pinnedEvents;
 };
 
-export const useReadPinnedEvents = (room: Room): Set<string> => {
+function getReadPinnedEventIds(room?: Room): Set<string> {
+    return new Set(room?.getAccountData(ReadPinsEventId)?.getContent()?.event_ids ?? []);
+}
+
+export const useReadPinnedEvents = (room?: Room): Set<string> => {
     const [readPinnedEvents, setReadPinnedEvents] = useState<Set<string>>(new Set());
 
     const update = useCallback(
         (ev?: MatrixEvent) => {
-            if (!room) return;
             if (ev && ev.getType() !== ReadPinsEventId) return;
-            const readPins = room.getAccountData(ReadPinsEventId)?.getContent()?.event_ids;
-            setReadPinnedEvents(new Set(readPins || []));
+            setReadPinnedEvents(getReadPinnedEventIds(room));
         },
         [room],
     );
 
     useTypedEventEmitter(room, RoomEvent.AccountData, update);
     useEffect(() => {
-        update();
+        setReadPinnedEvents(getReadPinnedEventIds(room));
         return () => {
             setReadPinnedEvents(new Set());
         };
-    }, [update]);
+    }, [room]);
     return readPinnedEvents;
 };
 
@@ -102,7 +106,7 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
         const newlyRead = pinnedEventIds.filter((id) => !readPinnedEvents.has(id));
         if (newlyRead.length > 0) {
             // clear out any read pinned events which no longer are pinned
-            cli.setRoomAccountData(room.roomId, ReadPinsEventId, {
+            cli?.setRoomAccountData(room.roomId, ReadPinsEventId, {
                 event_ids: pinnedEventIds,
             });
         }
@@ -135,9 +139,10 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
                     }
                     await room.processPollEvents([event]);
 
-                    if (event && PinningUtils.isPinnable(event)) {
+                    const senderUserId = event.getSender();
+                    if (senderUserId && PinningUtils.isPinnable(event)) {
                         // Inject sender information
-                        event.sender = room.getMember(event.getSender());
+                        event.sender = room.getMember(senderUserId);
                         // Also inject any edits we've found
                         if (edit) event.makeReplaced(edit);
 
@@ -156,35 +161,8 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
         null,
     );
 
-    let content;
-    if (!pinnedEvents) {
-        content = <Spinner />;
-    } else if (pinnedEvents.length > 0) {
-        const onUnpinClicked = async (event: MatrixEvent): Promise<void> => {
-            const pinnedEvents = room.currentState.getStateEvents(EventType.RoomPinnedEvents, "");
-            if (pinnedEvents?.getContent()?.pinned) {
-                const pinned = pinnedEvents.getContent().pinned;
-                const index = pinned.indexOf(event.getId());
-                if (index !== -1) {
-                    pinned.splice(index, 1);
-                    await cli.sendStateEvent(room.roomId, EventType.RoomPinnedEvents, { pinned }, "");
-                }
-            }
-        };
-
-        // show them in reverse, with latest pinned at the top
-        content = pinnedEvents
-            .filter(Boolean)
-            .reverse()
-            .map((ev) => (
-                <PinnedEventTile
-                    key={ev.getId()}
-                    event={ev}
-                    onUnpinClicked={canUnpin ? () => onUnpinClicked(ev) : undefined}
-                    permalinkCreator={permalinkCreator}
-                />
-            ));
-    } else {
+    let content: JSX.Element[] | JSX.Element | undefined;
+    if (!pinnedEventIds.length) {
         content = (
             <div className="mx_PinnedMessagesCard_empty_wrapper">
                 <div className="mx_PinnedMessagesCard_empty">
@@ -215,6 +193,32 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
                 </div>
             </div>
         );
+    } else if (pinnedEvents?.length) {
+        const onUnpinClicked = async (event: MatrixEvent): Promise<void> => {
+            const pinnedEvents = room.currentState.getStateEvents(EventType.RoomPinnedEvents, "");
+            if (pinnedEvents?.getContent()?.pinned) {
+                const pinned = pinnedEvents.getContent().pinned;
+                const index = pinned.indexOf(event.getId());
+                if (index !== -1) {
+                    pinned.splice(index, 1);
+                    await cli.sendStateEvent(room.roomId, EventType.RoomPinnedEvents, { pinned }, "");
+                }
+            }
+        };
+
+        // show them in reverse, with latest pinned at the top
+        content = filterBoolean(pinnedEvents)
+            .reverse()
+            .map((ev) => (
+                <PinnedEventTile
+                    key={ev.getId()}
+                    event={ev}
+                    onUnpinClicked={canUnpin ? () => onUnpinClicked(ev) : undefined}
+                    permalinkCreator={permalinkCreator}
+                />
+            ));
+    } else {
+        content = <Spinner />;
     }
 
     return (

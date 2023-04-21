@@ -85,25 +85,25 @@ export default class LegacyCallEventGrouper extends EventEmitter {
         );
     }
 
-    private get invite(): MatrixEvent {
+    private get invite(): MatrixEvent | undefined {
         return [...this.events].find((event) => event.getType() === EventType.CallInvite);
     }
 
-    private get hangup(): MatrixEvent {
+    private get hangup(): MatrixEvent | undefined {
         return [...this.events].find((event) => event.getType() === EventType.CallHangup);
     }
 
-    private get reject(): MatrixEvent {
+    private get reject(): MatrixEvent | undefined {
         return [...this.events].find((event) => event.getType() === EventType.CallReject);
     }
 
-    private get selectAnswer(): MatrixEvent {
+    private get selectAnswer(): MatrixEvent | undefined {
         return [...this.events].find((event) => event.getType() === EventType.CallSelectAnswer);
     }
 
-    public get isVoice(): boolean {
+    public get isVoice(): boolean | undefined {
         const invite = this.invite;
-        if (!invite) return;
+        if (!invite) return undefined;
 
         // FIXME: Find a better way to determine this from the event?
         if (invite.getContent()?.offer?.sdp?.indexOf("m=video") !== -1) return false;
@@ -114,7 +114,7 @@ export default class LegacyCallEventGrouper extends EventEmitter {
         return this.call?.hangupReason ?? this.hangup?.getContent()?.reason ?? null;
     }
 
-    public get rejectParty(): string {
+    public get rejectParty(): string | undefined {
         return this.reject?.getSender();
     }
 
@@ -123,8 +123,8 @@ export default class LegacyCallEventGrouper extends EventEmitter {
     }
 
     public get duration(): number | null {
-        if (!this.hangup || !this.selectAnswer) return null;
-        return this.hangup.getDate().getTime() - this.selectAnswer.getDate().getTime();
+        if (!this.hangup?.getDate() || !this.selectAnswer?.getDate()) return null;
+        return this.hangup.getDate()!.getTime() - this.selectAnswer.getDate()!.getTime();
     }
 
     /**
@@ -177,9 +177,9 @@ export default class LegacyCallEventGrouper extends EventEmitter {
     }
 
     private setState = (): void => {
-        if (CONNECTING_STATES.includes(this.call?.state)) {
+        if (this.call && CONNECTING_STATES.includes(this.call.state)) {
             this.state = CallState.Connecting;
-        } else if (SUPPORTED_STATES.includes(this.call?.state)) {
+        } else if (this.call && SUPPORTED_STATES.includes(this.call.state)) {
             this.state = this.call.state;
         } else {
             if (this.callWasMissed) this.state = CustomCallState.Missed;

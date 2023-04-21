@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 export interface ScrollState {
-    focussedEvent: string;
-    pixelOffset: number;
+    focussedEvent?: string;
+    pixelOffset?: number;
 }
 
 /**
@@ -50,4 +50,4 @@ export class RoomScrollStateStore {
 if (window.mxRoomScrollStateStore === undefined) {
     window.mxRoomScrollStateStore = new RoomScrollStateStore();
 }
-export default window.mxRoomScrollStateStore;
+export default window.mxRoomScrollStateStore!;

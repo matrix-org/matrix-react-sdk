@@ -35,17 +35,19 @@ interface IProps {
     onKeyDown?(ev: KeyboardEvent): void;
     cardState?: any;
     ref?: Ref<HTMLDivElement>;
+    children: ReactNode;
 }
 
 interface IGroupProps {
     className?: string;
     title: string;
+    children: ReactNode;
 }
 
 export const Group: React.FC<IGroupProps> = ({ className, title, children }) => {
     return (
         <div className={classNames("mx_BaseCard_Group", className)}>
-            <h1>{title}</h1>
+            <h2>{title}</h2>
             {children}
         </div>
     );

@@ -38,7 +38,7 @@ export const SpaceAvatar: React.FC<Pick<IProps, "avatarUrl" | "avatarDisabled" |
     avatarDisabled = false,
     setAvatar,
 }) => {
-    const avatarUploadRef = useRef<HTMLInputElement>();
+    const avatarUploadRef = useRef<HTMLInputElement>(null);
     const [avatar, setAvatarDataUrl] = useState(avatarUrl); // avatar data url cache
 
     let avatarSection;
@@ -61,7 +61,7 @@ export const SpaceAvatar: React.FC<Pick<IProps, "avatarUrl" | "avatarDisabled" |
                     />
                     <AccessibleButton
                         onClick={() => {
-                            avatarUploadRef.current.value = "";
+                            if (avatarUploadRef.current) avatarUploadRef.current.value = "";
                             setAvatarDataUrl(undefined);
                             setAvatar(undefined);
                         }}

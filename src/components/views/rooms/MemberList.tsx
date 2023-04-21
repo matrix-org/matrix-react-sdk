@@ -77,7 +77,7 @@ export default class MemberList extends React.Component<IProps, IState> {
     public constructor(props: IProps, context: React.ContextType<typeof SDKContext>) {
         super(props);
         this.state = this.getMembersState([], []);
-        this.showPresence = context.memberListStore.isPresenceEnabled();
+        this.showPresence = context?.memberListStore.isPresenceEnabled() ?? true;
         this.mounted = true;
         this.listenForMembersChanges();
     }
@@ -123,7 +123,9 @@ export default class MemberList extends React.Component<IProps, IState> {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.roomId);
 
-        return room?.canInvite(cli.getUserId()) || (room?.isSpaceRoom() && room.getJoinRule() === JoinRule.Public);
+        return (
+            !!room?.canInvite(cli.getSafeUserId()) || !!(room?.isSpaceRoom() && room.getJoinRule() === JoinRule.Public)
+        );
     }
 
     private getMembersState(invitedMembers: Array<RoomMember>, joinedMembers: Array<RoomMember>): IState {
@@ -276,7 +278,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         });
     };
 
-    private getPending3PidInvites(): Array<MatrixEvent> {
+    private getPending3PidInvites(): MatrixEvent[] {
         // include 3pid invites (m.room.third_party_invite) state events.
         // The HS may have already converted these into m.room.member invites so
         // we shouldn't add them if the 3pid invite state key (token) is in the
@@ -289,11 +291,13 @@ export default class MemberList extends React.Component<IProps, IState> {
 
                 // discard all invites which have a m.room.member event since we've
                 // already added them.
-                const memberEvent = room.currentState.getInviteForThreePidToken(e.getStateKey());
+                const memberEvent = room.currentState.getInviteForThreePidToken(e.getStateKey()!);
                 if (memberEvent) return false;
                 return true;
             });
         }
+
+        return [];
     }
 
     private makeMemberTiles(members: Array<RoomMember | MatrixEvent>): JSX.Element[] {

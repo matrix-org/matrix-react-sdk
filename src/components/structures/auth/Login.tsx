@@ -90,7 +90,7 @@ interface IState {
 
     // used for preserving form values when changing homeserver
     username: string;
-    phoneCountry?: string;
+    phoneCountry: string;
     phoneNumber: string;
 
     // We perform liveliness checks later, but for now suppress the errors.
@@ -126,6 +126,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             canTryLogin: true,
 
             username: props.defaultUsername ? props.defaultUsername : "",
+            phoneCountry: "",
             phoneNumber: "",
 
             serverIsAlive: true,
@@ -217,7 +218,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 let errorText: ReactNode;
 
                 // Some error strings only apply for logging in
-                const usingEmail = username?.indexOf("@") > 0;
+                const usingEmail = username && username.indexOf("@") > 0;
                 if (error.httpStatus === 400 && usingEmail) {
                     errorText = _t("This homeserver does not support login using email address.");
                 } else if (error.errcode === "M_RESOURCE_LIMIT_EXCEEDED") {
@@ -368,7 +369,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             isDefaultServer = true;
         }
 
-        const fallbackHsUrl = isDefaultServer ? this.props.fallbackHsUrl : null;
+        const fallbackHsUrl = isDefaultServer ? this.props.fallbackHsUrl! : null;
 
         const loginLogic = new Login(hsUrl, isUrl, fallbackHsUrl, {
             defaultDeviceDisplayName: this.props.defaultDeviceDisplayName,
@@ -514,7 +515,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         // this is the ideal order we want to show the flows in
         const order = ["m.login.password", "m.login.sso"];
 
-        const flows = filterBoolean(order.map((type) => this.state.flows.find((flow) => flow.type === type)));
+        const flows = filterBoolean(order.map((type) => this.state.flows?.find((flow) => flow.type === type)));
         return (
             <React.Fragment>
                 {flows.map((flow) => {
@@ -546,7 +547,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
     };
 
     private renderSsoStep = (loginType: "cas" | "sso"): JSX.Element => {
-        const flow = this.state.flows.find((flow) => flow.type === "m.login." + loginType) as ISSOFlow;
+        const flow = this.state.flows?.find((flow) => flow.type === "m.login." + loginType) as ISSOFlow;
 
         return (
             <SSOButtons
@@ -554,7 +555,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 flow={flow}
                 loginType={loginType}
                 fragmentAfterLogin={this.props.fragmentAfterLogin}
-                primary={!this.state.flows.find((flow) => flow.type === "m.login.password")}
+                primary={!this.state.flows?.find((flow) => flow.type === "m.login.password")}
                 action={SSOAction.LOGIN}
             />
         );

@@ -27,7 +27,7 @@ export enum CachedRoomKey {
     NotificationVolume,
 }
 
-export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedRoomKey, RoomNotifState> {
+export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedRoomKey, RoomNotifState | undefined> {
     private properties = new Map<CachedRoomKey, RoomNotifState>();
 
     public constructor(context: RoomEchoContext) {
@@ -47,6 +47,7 @@ export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedR
     }
 
     private onAccountData = (event: MatrixEvent): void => {
+        if (!this.matrixClient) return;
         if (event.getType() === EventType.PushRules) {
             const currentVolume = this.properties.get(CachedRoomKey.NotificationVolume);
             const newVolume = getRoomNotifsState(this.matrixClient, this.context.room.roomId);
@@ -66,11 +67,12 @@ export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedR
 
     // ---- helpers below here ----
 
-    public get notificationVolume(): RoomNotifState {
+    public get notificationVolume(): RoomNotifState | undefined {
         return this.getValue(CachedRoomKey.NotificationVolume);
     }
 
-    public set notificationVolume(v: RoomNotifState) {
+    public set notificationVolume(v: RoomNotifState | undefined) {
+        if (v === undefined) return;
         this.setValue(
             _t("Change notification settings"),
             CachedRoomKey.NotificationVolume,

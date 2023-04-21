@@ -17,6 +17,7 @@ limitations under the License.
 import React, { createRef } from "react";
 import { EventStatus, IContent, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import classNames from "classnames";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
 
 import * as HtmlUtils from "../../../HtmlUtils";
 import { editBodyDiffToHtml } from "../../../utils/MessageDiffUtils";
@@ -47,7 +48,7 @@ interface IProps {
 
 interface IState {
     canRedact: boolean;
-    sendStatus: EventStatus;
+    sendStatus: EventStatus | null;
 }
 
 export default class EditHistoryMessage extends React.PureComponent<IProps, IState> {
@@ -59,13 +60,11 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
         super(props);
 
         const cli = MatrixClientPeg.get();
-        const { userId } = cli.credentials;
+        const userId = cli.getSafeUserId();
         const event = this.props.mxEvent;
         const room = cli.getRoom(event.getRoomId());
-        if (event.localRedactionEvent()) {
-            event.localRedactionEvent().on(MatrixEventEvent.Status, this.onAssociatedStatusChanged);
-        }
-        const canRedact = room.currentState.maySendRedactionForEvent(event, userId);
+        event.localRedactionEvent()?.on(MatrixEventEvent.Status, this.onAssociatedStatusChanged);
+        const canRedact = room?.currentState.maySendRedactionForEvent(event, userId) ?? false;
         this.state = { canRedact, sendStatus: event.getAssociatedStatus() };
     }
 
@@ -81,7 +80,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
             ConfirmAndWaitRedactDialog,
             {
                 redact: async () => {
-                    await cli.redactEvent(event.getRoomId(), event.getId());
+                    await cli.redactEvent(event.getRoomId()!, event.getId()!);
                 },
             },
             "mx_Dialog_confirmredact",
@@ -93,6 +92,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
             ViewSource,
             {
                 mxEvent: this.props.mxEvent,
+                ignoreEdits: true,
             },
             "mx_Dialog_viewsource",
         );
@@ -121,9 +121,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
         unmountPills(this.pills);
         unmountTooltips(this.tooltips);
         const event = this.props.mxEvent;
-        if (event.localRedactionEvent()) {
-            event.localRedactionEvent().off(MatrixEventEvent.Status, this.onAssociatedStatusChanged);
-        }
+        event.localRedactionEvent()?.off(MatrixEventEvent.Status, this.onAssociatedStatusChanged);
     }
 
     public componentDidUpdate(): void {
@@ -133,12 +131,12 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
 
     private renderActionBar(): JSX.Element {
         // hide the button when already redacted
-        let redactButton: JSX.Element;
+        let redactButton: JSX.Element | undefined;
         if (!this.props.mxEvent.isRedacted() && !this.props.isBaseEvent && this.state.canRedact) {
             redactButton = <AccessibleButton onClick={this.onRedactClick}>{_t("Remove")}</AccessibleButton>;
         }
 
-        let viewSourceButton: JSX.Element;
+        let viewSourceButton: JSX.Element | undefined;
         if (SettingsStore.getValue("developerMode")) {
             viewSourceButton = (
                 <AccessibleButton onClick={this.onViewSourceClick}>{_t("View Source")}</AccessibleButton>
@@ -170,7 +168,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
                     returnString: false,
                 });
             }
-            if (mxEvent.getContent().msgtype === "m.emote") {
+            if (mxEvent.getContent().msgtype === MsgType.Emote) {
                 const name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
                 contentContainer = (
                     <div className="mx_EventTile_content" ref={this.content}>
@@ -189,9 +187,8 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
         }
 
         const timestamp = formatTime(new Date(mxEvent.getTs()), this.props.isTwelveHour);
-        const isSending = ["sending", "queued", "encrypting"].indexOf(this.state.sendStatus) !== -1;
-        const classes = classNames({
-            mx_EventTile: true,
+        const isSending = ["sending", "queued", "encrypting"].includes(this.state.sendStatus!);
+        const classes = classNames("mx_EventTile", {
             // Note: we keep the `sending` state class for tests, not for our styles
             mx_EventTile_sending: isSending,
         });

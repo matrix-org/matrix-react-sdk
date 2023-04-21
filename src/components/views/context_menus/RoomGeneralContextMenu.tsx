@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -38,6 +38,10 @@ import IconizedContextMenu, {
     IconizedContextMenuOptionList,
 } from "../context_menus/IconizedContextMenu";
 import { ButtonEvent } from "../elements/AccessibleButton";
+import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../../settings/UIFeature";
+import { DeveloperToolsOption } from "./DeveloperToolsOption";
+import { useSettingValue } from "../../../hooks/useSettings";
 
 export interface RoomGeneralContextMenuProps extends IContextMenuProps {
     room: Room;
@@ -50,6 +54,9 @@ export interface RoomGeneralContextMenuProps extends IContextMenuProps {
     onPostLeaveClick?: (event: ButtonEvent) => void;
 }
 
+/**
+ * Room context menu accessible via the room list.
+ */
 export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
     room,
     onFinished,
@@ -87,12 +94,13 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
     };
 
     const onTagRoom = (ev: ButtonEvent, tagId: TagID): void => {
+        if (!cli) return;
         if (tagId === DefaultTagID.Favourite || tagId === DefaultTagID.LowPriority) {
             const inverseTag = tagId === DefaultTagID.Favourite ? DefaultTagID.LowPriority : DefaultTagID.Favourite;
             const isApplied = RoomListStore.instance.getTagsForRoom(room).includes(tagId);
             const removeTag = isApplied ? tagId : inverseTag;
             const addTag = isApplied ? null : tagId;
-            dis.dispatch(RoomListActions.tagRoom(cli, room, removeTag, addTag, undefined, 0));
+            dis.dispatch(RoomListActions.tagRoom(cli, room, removeTag, addTag, 0));
         } else {
             logger.warn(`Unexpected tag ${tagId} applied to ${room.roomId}`);
         }
@@ -119,7 +127,7 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
     );
 
     let inviteOption: JSX.Element | null = null;
-    if (room.canInvite(cli.getUserId()!) && !isDm) {
+    if (room.canInvite(cli.getUserId()!) && !isDm && shouldShowComponent(UIComponent.InviteUsers)) {
         inviteOption = (
             <IconizedContextMenuOption
                 onClick={wrapHandler(
@@ -218,6 +226,11 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
             />
         ) : null;
 
+    const developerModeEnabled = useSettingValue<boolean>("developerMode");
+    const developerToolsOption = developerModeEnabled ? (
+        <DeveloperToolsOption onFinished={onFinished} roomId={room.roomId} />
+    ) : null;
+
     return (
         <IconizedContextMenu {...props} onFinished={onFinished} className="mx_RoomGeneralContextMenu" compact>
             <IconizedContextMenuOptionList>
@@ -231,6 +244,7 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
                         {settingsOption}
                     </>
                 )}
+                {developerToolsOption}
             </IconizedContextMenuOptionList>
             <IconizedContextMenuOptionList red>{leaveOption}</IconizedContextMenuOptionList>
         </IconizedContextMenu>

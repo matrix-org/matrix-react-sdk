@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, screen, waitFor, cleanup, act } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, cleanup, act, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { mocked } from "jest-mock";
+import { Mocked, mocked } from "jest-mock";
 import { Room, User, MatrixClient, RoomMember, MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { Phase, VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { DeviceTrustLevel, UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
@@ -45,7 +45,7 @@ import * as mockVerification from "../../../../src/verification";
 import Modal from "../../../../src/Modal";
 import { E2EStatus } from "../../../../src/utils/ShieldUtils";
 import { DirectoryMember, startDmOnFirstMessage } from "../../../../src/utils/direct-messages";
-import { flushPromises } from "../../../test-utils";
+import { clearAllModals, flushPromises } from "../../../test-utils";
 
 jest.mock("../../../../src/utils/direct-messages", () => ({
     ...jest.requireActual("../../../../src/utils/direct-messages"),
@@ -72,72 +72,78 @@ jest.mock("../../../../src/utils/DMRoomMap", () => {
     };
 });
 
-const mockRoom = mocked({
-    roomId: "!fkfk",
-    getType: jest.fn().mockReturnValue(undefined),
-    isSpaceRoom: jest.fn().mockReturnValue(false),
-    getMember: jest.fn().mockReturnValue(undefined),
-    getMxcAvatarUrl: jest.fn().mockReturnValue("mock-avatar-url"),
-    name: "test room",
-    on: jest.fn(),
-    off: jest.fn(),
-    currentState: {
-        getStateEvents: jest.fn(),
-        on: jest.fn(),
-    },
-    getEventReadUpTo: jest.fn(),
-} as unknown as Room);
-
-const mockSpace = mocked({
-    roomId: "!fkfk",
-    getType: jest.fn().mockReturnValue("m.space"),
-    isSpaceRoom: jest.fn().mockReturnValue(true),
-    getMember: jest.fn().mockReturnValue(undefined),
-    getMxcAvatarUrl: jest.fn().mockReturnValue("mock-avatar-url"),
-    name: "test room",
-    on: jest.fn(),
-    off: jest.fn(),
-    currentState: {
-        getStateEvents: jest.fn(),
-        on: jest.fn(),
-    },
-    getEventReadUpTo: jest.fn(),
-} as unknown as Room);
-
-const mockClient = mocked({
-    getUser: jest.fn(),
-    isGuest: jest.fn().mockReturnValue(false),
-    isUserIgnored: jest.fn(),
-    getIgnoredUsers: jest.fn(),
-    setIgnoredUsers: jest.fn(),
-    isCryptoEnabled: jest.fn(),
-    getUserId: jest.fn(),
-    on: jest.fn(),
-    off: jest.fn(),
-    isSynapseAdministrator: jest.fn().mockResolvedValue(false),
-    isRoomEncrypted: jest.fn().mockReturnValue(false),
-    doesServerSupportUnstableFeature: jest.fn().mockReturnValue(false),
-    mxcUrlToHttp: jest.fn().mockReturnValue("mock-mxcUrlToHttp"),
-    removeListener: jest.fn(),
-    currentState: {
-        on: jest.fn(),
-    },
-    checkDeviceTrust: jest.fn(),
-    checkUserTrust: jest.fn(),
-    getRoom: jest.fn(),
-    credentials: {},
-    setPowerLevel: jest.fn(),
-} as unknown as MatrixClient);
-
+const defaultRoomId = "!fkfk";
 const defaultUserId = "@user:example.com";
 const defaultUser = new User(defaultUserId);
 
-beforeEach(() => {
-    jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
-});
+let mockRoom: Mocked<Room>;
+let mockSpace: Mocked<Room>;
+let mockClient: Mocked<MatrixClient>;
 
-afterEach(() => {
-    mockClient.getUser.mockClear().mockReturnValue({} as unknown as User);
+beforeEach(() => {
+    mockRoom = mocked({
+        roomId: defaultRoomId,
+        getType: jest.fn().mockReturnValue(undefined),
+        isSpaceRoom: jest.fn().mockReturnValue(false),
+        getMember: jest.fn().mockReturnValue(undefined),
+        getMxcAvatarUrl: jest.fn().mockReturnValue("mock-avatar-url"),
+        name: "test room",
+        on: jest.fn(),
+        off: jest.fn(),
+        currentState: {
+            getStateEvents: jest.fn(),
+            on: jest.fn(),
+            off: jest.fn(),
+        },
+        getEventReadUpTo: jest.fn(),
+    } as unknown as Room);
+
+    mockSpace = mocked({
+        roomId: defaultRoomId,
+        getType: jest.fn().mockReturnValue("m.space"),
+        isSpaceRoom: jest.fn().mockReturnValue(true),
+        getMember: jest.fn().mockReturnValue(undefined),
+        getMxcAvatarUrl: jest.fn().mockReturnValue("mock-avatar-url"),
+        name: "test room",
+        on: jest.fn(),
+        off: jest.fn(),
+        currentState: {
+            getStateEvents: jest.fn(),
+            on: jest.fn(),
+            off: jest.fn(),
+        },
+        getEventReadUpTo: jest.fn(),
+    } as unknown as Room);
+
+    mockClient = mocked({
+        getUser: jest.fn(),
+        isGuest: jest.fn().mockReturnValue(false),
+        isUserIgnored: jest.fn(),
+        getIgnoredUsers: jest.fn(),
+        setIgnoredUsers: jest.fn(),
+        isCryptoEnabled: jest.fn(),
+        getUserId: jest.fn(),
+        getSafeUserId: jest.fn(),
+        on: jest.fn(),
+        off: jest.fn(),
+        isSynapseAdministrator: jest.fn().mockResolvedValue(false),
+        isRoomEncrypted: jest.fn().mockReturnValue(false),
+        doesServerSupportUnstableFeature: jest.fn().mockReturnValue(false),
+        mxcUrlToHttp: jest.fn().mockReturnValue("mock-mxcUrlToHttp"),
+        removeListener: jest.fn(),
+        currentState: {
+            on: jest.fn(),
+        },
+        checkDeviceTrust: jest.fn(),
+        checkUserTrust: jest.fn(),
+        getRoom: jest.fn(),
+        credentials: {},
+        setPowerLevel: jest.fn(),
+        downloadKeys: jest.fn(),
+        getStoredDevicesForUser: jest.fn(),
+    } as unknown as MatrixClient);
+
+    jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
 });
 
 describe("<UserInfo />", () => {
@@ -240,14 +246,76 @@ describe("<UserInfo />", () => {
             expect(screen.getByText(/try with a different client/i)).toBeInTheDocument();
         });
     });
+
+    describe("with crypto enabled", () => {
+        beforeEach(() => {
+            mockClient.isCryptoEnabled.mockReturnValue(true);
+            mockClient.checkUserTrust.mockReturnValue(new UserTrustLevel(false, false, false));
+            mockClient.checkDeviceTrust.mockReturnValue(new DeviceTrustLevel(false, false, false, false));
+
+            const device1 = DeviceInfo.fromStorage(
+                {
+                    unsigned: { device_display_name: "my device" },
+                },
+                "d1",
+            );
+            mockClient.getStoredDevicesForUser.mockReturnValue([device1]);
+        });
+
+        it("renders a device list which can be expanded", async () => {
+            renderComponent();
+            await act(flushPromises);
+
+            // check the button exists with the expected text
+            const devicesButton = screen.getByRole("button", { name: "1 session" });
+
+            // click it
+            await userEvent.click(devicesButton);
+
+            // there should now be a button with the device id ...
+            const deviceButton = screen.getByRole("button", { description: "d1" });
+
+            // ... which should contain the device name
+            expect(within(deviceButton).getByText("my device")).toBeInTheDocument();
+        });
+    });
+
+    describe("with an encrypted room", () => {
+        beforeEach(() => {
+            mockClient.isCryptoEnabled.mockReturnValue(true);
+            mockClient.isRoomEncrypted.mockReturnValue(true);
+        });
+
+        it("renders unverified user info", async () => {
+            mockClient.checkUserTrust.mockReturnValue(new UserTrustLevel(false, false, false));
+            renderComponent({ room: mockRoom });
+            await act(flushPromises);
+
+            const userHeading = screen.getByRole("heading", { name: defaultUserId });
+
+            // there should be a "normal" E2E padlock
+            expect(userHeading.getElementsByClassName("mx_E2EIcon_normal")).toHaveLength(1);
+        });
+
+        it("renders verified user info", async () => {
+            mockClient.checkUserTrust.mockReturnValue(new UserTrustLevel(true, false, false));
+            renderComponent({ room: mockRoom });
+            await act(flushPromises);
+
+            const userHeading = screen.getByRole("heading", { name: defaultUserId });
+
+            // there should be a "verified" E2E padlock
+            expect(userHeading.getElementsByClassName("mx_E2EIcon_verified")).toHaveLength(1);
+        });
+    });
 });
 
 describe("<UserInfoHeader />", () => {
-    const defaultMember = new RoomMember(mockRoom.roomId, defaultUserId);
+    const defaultMember = new RoomMember(defaultRoomId, defaultUserId);
 
     const defaultProps = {
         member: defaultMember,
-        roomId: mockRoom.roomId,
+        roomId: defaultRoomId,
     };
 
     const renderComponent = (props = {}) => {
@@ -348,6 +416,7 @@ describe("<DeviceItem />", () => {
     });
 
     it("when userId is the same as userId from client, uses isCrossSigningVerified to determine if button is shown", () => {
+        mockClient.getSafeUserId.mockReturnValueOnce(defaultUserId);
         mockClient.getUserId.mockReturnValueOnce(defaultUserId);
         renderComponent();
 
@@ -397,7 +466,7 @@ describe("<DeviceItem />", () => {
 });
 
 describe("<UserOptionsSection />", () => {
-    const member = new RoomMember(mockRoom.roomId, defaultUserId);
+    const member = new RoomMember(defaultRoomId, defaultUserId);
     const defaultProps = { member, isIgnored: false, canInvite: false, isSpace: false };
 
     const renderComponent = (props = {}) => {
@@ -417,7 +486,9 @@ describe("<UserOptionsSection />", () => {
         mockClient.setIgnoredUsers.mockClear();
     });
 
-    afterEach(() => Modal.closeCurrentModal("End of test"));
+    afterEach(async () => {
+        await clearAllModals();
+    });
 
     afterAll(() => {
         inviteSpy.mockRestore();
@@ -429,6 +500,7 @@ describe("<UserOptionsSection />", () => {
     });
 
     it("does not show ignore or direct message buttons when member userId matches client userId", () => {
+        mockClient.getSafeUserId.mockReturnValueOnce(member.userId);
         mockClient.getUserId.mockReturnValueOnce(member.userId);
         renderComponent();
 
@@ -639,17 +711,20 @@ describe("<UserOptionsSection />", () => {
 });
 
 describe("<PowerLevelEditor />", () => {
-    const defaultMember = new RoomMember(mockRoom.roomId, defaultUserId);
+    const defaultMember = new RoomMember(defaultRoomId, defaultUserId);
 
-    const defaultProps = {
-        user: defaultMember,
-        room: mockRoom,
-        roomPermissions: {
-            modifyLevelMax: 100,
-            canEdit: false,
-            canInvite: false,
-        },
-    };
+    let defaultProps: Parameters<typeof PowerLevelEditor>[0];
+    beforeEach(() => {
+        defaultProps = {
+            user: defaultMember,
+            room: mockRoom,
+            roomPermissions: {
+                modifyLevelMax: 100,
+                canEdit: false,
+                canInvite: false,
+            },
+        };
+    });
 
     const renderComponent = (props = {}) => {
         const Wrapper = (wrapperProps = {}) => {
@@ -674,6 +749,7 @@ describe("<PowerLevelEditor />", () => {
             content: { users: { [defaultUserId]: startPowerLevel }, users_default: 1 },
         });
         mockRoom.currentState.getStateEvents.mockReturnValue(powerLevelEvent);
+        mockClient.getSafeUserId.mockReturnValueOnce(defaultUserId);
         mockClient.getUserId.mockReturnValueOnce(defaultUserId);
         mockClient.setPowerLevel.mockResolvedValueOnce({ event_id: "123" });
         renderComponent();
@@ -699,11 +775,14 @@ describe("<PowerLevelEditor />", () => {
 });
 
 describe("<RoomKickButton />", () => {
-    const defaultMember = new RoomMember(mockRoom.roomId, defaultUserId);
+    const defaultMember = new RoomMember(defaultRoomId, defaultUserId);
     const memberWithInviteMembership = { ...defaultMember, membership: "invite" };
     const memberWithJoinMembership = { ...defaultMember, membership: "join" };
 
-    const defaultProps = { room: mockRoom, member: defaultMember, startUpdating: jest.fn(), stopUpdating: jest.fn() };
+    let defaultProps: Parameters<typeof RoomKickButton>[0];
+    beforeEach(() => {
+        defaultProps = { room: mockRoom, member: defaultMember, startUpdating: jest.fn(), stopUpdating: jest.fn() };
+    });
 
     const renderComponent = (props = {}) => {
         const Wrapper = (wrapperProps = {}) => {
@@ -793,16 +872,18 @@ describe("<RoomKickButton />", () => {
             },
         };
 
-        expect(callback(mockRoom)).toBe(null);
+        expect(callback(mockRoom)).toBe(false);
         expect(callback(mockRoom)).toBe(true);
     });
 });
 
 describe("<BanToggleButton />", () => {
-    const defaultMember = new RoomMember(mockRoom.roomId, defaultUserId);
+    const defaultMember = new RoomMember(defaultRoomId, defaultUserId);
     const memberWithBanMembership = { ...defaultMember, membership: "ban" };
-
-    const defaultProps = { room: mockRoom, member: defaultMember, startUpdating: jest.fn(), stopUpdating: jest.fn() };
+    let defaultProps: Parameters<typeof BanToggleButton>[0];
+    beforeEach(() => {
+        defaultProps = { room: mockRoom, member: defaultMember, startUpdating: jest.fn(), stopUpdating: jest.fn() };
+    });
 
     const renderComponent = (props = {}) => {
         const Wrapper = (wrapperProps = {}) => {
@@ -877,7 +958,7 @@ describe("<BanToggleButton />", () => {
             },
         };
 
-        expect(callback(mockRoom)).toBe(null);
+        expect(callback(mockRoom)).toBe(false);
         expect(callback(mockRoom)).toBe(true);
     });
 
@@ -915,22 +996,25 @@ describe("<BanToggleButton />", () => {
             },
         };
 
-        expect(callback(mockRoom)).toBe(null);
+        expect(callback(mockRoom)).toBe(false);
         expect(callback(mockRoom)).toBe(true);
     });
 });
 
 describe("<RoomAdminToolsContainer />", () => {
-    const defaultMember = new RoomMember(mockRoom.roomId, defaultUserId);
+    const defaultMember = new RoomMember(defaultRoomId, defaultUserId);
     defaultMember.membership = "invite";
 
-    const defaultProps = {
-        room: mockRoom,
-        member: defaultMember,
-        startUpdating: jest.fn(),
-        stopUpdating: jest.fn(),
-        powerLevels: {},
-    };
+    let defaultProps: Parameters<typeof RoomAdminToolsContainer>[0];
+    beforeEach(() => {
+        defaultProps = {
+            room: mockRoom,
+            member: defaultMember,
+            startUpdating: jest.fn(),
+            stopUpdating: jest.fn(),
+            powerLevels: {},
+        };
+    });
 
     const renderComponent = (props = {}) => {
         const Wrapper = (wrapperProps = {}) => {
@@ -1033,7 +1117,7 @@ describe("disambiguateDevices", () => {
 
 describe("isMuted", () => {
     // this member has a power level of 0
-    const isMutedMember = new RoomMember(mockRoom.roomId, defaultUserId);
+    const isMutedMember = new RoomMember(defaultRoomId, defaultUserId);
 
     it("returns false if either argument is falsy", () => {
         // @ts-ignore to let us purposely pass incorrect args

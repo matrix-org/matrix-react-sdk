@@ -38,7 +38,12 @@ interface IError {
     errcode: string;
 }
 
-const UNKNOWN_PROFILE_ERRORS = ["M_NOT_FOUND", "M_USER_NOT_FOUND", "M_PROFILE_UNDISCLOSED", "M_PROFILE_NOT_FOUND"];
+export const UNKNOWN_PROFILE_ERRORS = [
+    "M_NOT_FOUND",
+    "M_USER_NOT_FOUND",
+    "M_PROFILE_UNDISCLOSED",
+    "M_PROFILE_NOT_FOUND",
+];
 
 export type CompletionStates = Record<string, InviteState>;
 
@@ -141,8 +146,8 @@ export default class MultiInviter {
         return this.completionStates[addr];
     }
 
-    public getErrorText(addr: string): string {
-        return this.errors[addr] ? this.errors[addr].errorText : null;
+    public getErrorText(addr: string): string | null {
+        return this.errors[addr]?.errorText ?? null;
     }
 
     private async inviteToRoom(roomId: string, addr: string, ignoreProfile = false): Promise<{}> {

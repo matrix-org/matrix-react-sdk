@@ -39,8 +39,8 @@ interface IProps {
 
 interface IState {
     phase: Phase;
-    verificationRequest: VerificationRequest;
-    backupInfo: IKeyBackupInfo;
+    verificationRequest: VerificationRequest | null;
+    backupInfo: IKeyBackupInfo | null;
     lostKeys: boolean;
 }
 
@@ -88,7 +88,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
 
     private onVerifyClick = (): void => {
         const cli = MatrixClientPeg.get();
-        const userId = cli.getUserId();
+        const userId = cli.getSafeUserId();
         const requestPromise = cli.requestVerification(userId);
 
         // We need to call onFinished now to close this dialog, and
@@ -96,7 +96,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
         this.props.onFinished();
         Modal.createDialog(VerificationRequestDialog, {
             verificationRequestPromise: requestPromise,
-            member: cli.getUser(userId),
+            member: cli.getUser(userId) ?? undefined,
             onFinished: async (): Promise<void> => {
                 const request = await requestPromise;
                 request.cancel();
@@ -142,15 +142,16 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
     };
 
     public render(): React.ReactNode {
+        const cli = MatrixClientPeg.get();
         const { phase, lostKeys } = this.state;
 
-        if (this.state.verificationRequest) {
+        if (this.state.verificationRequest && cli.getUser(this.state.verificationRequest.otherUserId)) {
             return (
                 <EncryptionPanel
                     layout="dialog"
                     verificationRequest={this.state.verificationRequest}
                     onClose={this.onEncryptionPanelClose}
-                    member={MatrixClientPeg.get().getUser(this.state.verificationRequest.otherUserId)}
+                    member={cli.getUser(this.state.verificationRequest.otherUserId)!}
                     isRoomEncrypted={false}
                 />
             );
@@ -212,7 +213,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                             {useRecoveryKeyButton}
                         </div>
                         <div className="mx_SetupEncryptionBody_reset">
-                            {_t("Forgotten or lost all recovery methods? <a>Reset all</a>", null, {
+                            {_t("Forgotten or lost all recovery methods? <a>Reset all</a>", undefined, {
                                 a: (sub) => (
                                     <AccessibleButton
                                         kind="link_inline"
@@ -228,7 +229,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                 );
             }
         } else if (phase === Phase.Done) {
-            let message;
+            let message: JSX.Element;
             if (this.state.backupInfo) {
                 message = (
                     <p>

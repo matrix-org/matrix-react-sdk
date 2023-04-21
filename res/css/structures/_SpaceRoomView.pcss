@@ -23,15 +23,14 @@ $SpaceRoomViewInnerWidth: 428px;
     box-sizing: border-box;
     border-radius: 8px;
     border: 1px solid $input-border-color;
-    font-size: $font-15px;
+    font-size: $font-17px;
+    font-weight: var(--font-semi-bold);
     margin: 20px 0;
 
-    > h3 {
-        font-weight: $font-semi-bold;
-        margin: 0 0 4px;
-    }
-
-    > span {
+    > div {
+        margin-top: 4px;
+        font-weight: normal;
+        font-size: $font-15px;
         color: $secondary-content;
     }
 
@@ -74,7 +73,7 @@ $SpaceRoomViewInnerWidth: 428px;
         h1 {
             margin: 0;
             font-size: $font-24px;
-            font-weight: $font-semi-bold;
+            font-weight: var(--font-semi-bold);
             color: $primary-content;
             width: max-content;
         }
@@ -94,10 +93,6 @@ $SpaceRoomViewInnerWidth: 428px;
                 height: calc(100vh - 360px);
                 max-height: 400px;
             }
-        }
-
-        &:not(.mx_SpaceRoomView_landing) .mx_SpaceFeedbackPrompt {
-            width: $SpaceRoomViewInnerWidth;
         }
 
         .mx_SpaceRoomView_buttons {
@@ -125,7 +120,7 @@ $SpaceRoomViewInnerWidth: 428px;
         }
 
         .mx_SpaceRoomView_errorText {
-            font-weight: $font-semi-bold;
+            font-weight: var(--font-semi-bold);
             font-size: $font-12px;
             line-height: $font-15px;
             color: $alert;
@@ -152,16 +147,6 @@ $SpaceRoomViewInnerWidth: 428px;
                 .mx_BaseAvatar_image {
                     border-radius: 12px;
                 }
-            }
-
-            /* XXX: Temporary for the Spaces release only */
-            .mx_SpaceFeedbackPrompt {
-                padding: 7px; /* 8px - 1px border */
-                border: 1px solid rgba($primary-content, 0.1);
-                border-radius: 8px;
-                width: max-content;
-                height: fit-content;
-                margin-left: 24px;
             }
         }
 

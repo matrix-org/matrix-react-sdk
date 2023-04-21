@@ -43,19 +43,21 @@ interface IProps {
 interface IState {
     sendLogs: boolean;
     busy: boolean;
-    err: string;
+    err: string | null;
     issueUrl: string;
     text: string;
-    progress: string;
+    progress: string | null;
     downloadBusy: boolean;
-    downloadProgress: string;
+    downloadProgress: string | null;
 }
 
 export default class BugReportDialog extends React.Component<IProps, IState> {
     private unmounted: boolean;
+    private issueRef: React.RefObject<Field>;
 
     public constructor(props: IProps) {
         super(props);
+
         this.state = {
             sendLogs: true,
             busy: false,
@@ -66,7 +68,9 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             downloadBusy: false,
             downloadProgress: null,
         };
+
         this.unmounted = false;
+        this.issueRef = React.createRef();
 
         // Get all of the extra info dumped to the console when someone is about
         // to send debug logs. Since this is a fire and forget action, we do
@@ -77,6 +81,10 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
         defaultDispatcher.dispatch({
             action: Action.DumpDebugLogs,
         });
+    }
+
+    public componentDidMount(): void {
+        this.issueRef.current?.focus();
     }
 
     public componentWillUnmount(): void {
@@ -181,12 +189,12 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
     };
 
     public render(): React.ReactNode {
-        let error = null;
+        let error: JSX.Element | undefined;
         if (this.state.err) {
             error = <div className="error">{this.state.err}</div>;
         }
 
-        let progress = null;
+        let progress: JSX.Element | undefined;
         if (this.state.busy) {
             progress = (
                 <div className="progress">
@@ -196,7 +204,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             );
         }
 
-        let warning;
+        let warning: JSX.Element | undefined;
         if (window.Modernizr && Object.values(window.Modernizr).some((support) => support === false)) {
             warning = (
                 <p>
@@ -255,6 +263,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                         onChange={this.onIssueUrlChange}
                         value={this.state.issueUrl}
                         placeholder="https://github.com/vector-im/element-web/issues/..."
+                        ref={this.issueRef}
                     />
                     <Field
                         className="mx_BugReportDialog_field_input"

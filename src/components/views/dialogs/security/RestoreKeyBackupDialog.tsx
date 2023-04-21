@@ -52,19 +52,19 @@ interface IProps {
 }
 
 interface IState {
-    backupInfo: IKeyBackupInfo;
-    backupKeyStored: Record<string, ISecretStorageKeyInfo>;
+    backupInfo: IKeyBackupInfo | null;
+    backupKeyStored: Record<string, ISecretStorageKeyInfo> | null;
     loading: boolean;
-    loadError: string;
+    loadError: string | null;
     restoreError: {
         errcode: string;
-    };
+    } | null;
     recoveryKey: string;
-    recoverInfo: IKeyBackupRestoreResult;
+    recoverInfo: IKeyBackupRestoreResult | null;
     recoveryKeyValid: boolean;
     forceRecoveryKey: boolean;
     passPhrase: string;
-    restoreType: RestoreType;
+    restoreType: RestoreType | null;
     progress: {
         stage: ProgressState;
         total?: number;
@@ -247,7 +247,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
         }
     }
 
-    private async restoreWithCachedKey(backupInfo?: IKeyBackupInfo): Promise<boolean> {
+    private async restoreWithCachedKey(backupInfo: IKeyBackupInfo | null): Promise<boolean> {
         if (!backupInfo) return false;
         try {
             const recoverInfo = await MatrixClientPeg.get().restoreKeyBackupWithCache(
@@ -275,7 +275,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
             const cli = MatrixClientPeg.get();
             const backupInfo = await cli.getKeyBackupVersion();
             const has4S = await cli.hasSecretStorageKey();
-            const backupKeyStored = has4S && (await cli.isKeyBackupKeyStored());
+            const backupKeyStored = has4S ? await cli.isKeyBackupKeyStored() : null;
             this.setState({
                 backupInfo,
                 backupKeyStored,
@@ -324,7 +324,10 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                 details = _t("Fetching keys from server…");
             } else if (this.state.progress.stage === ProgressState.LoadKeys) {
                 const { total, successes, failures } = this.state.progress;
-                details = _t("%(completed)s of %(total)s keys restored", { total, completed: successes + failures });
+                details = _t("%(completed)s of %(total)s keys restored", {
+                    total,
+                    completed: (successes ?? 0) + (failures ?? 0),
+                });
             } else if (this.state.progress.stage === ProgressState.PreFetch) {
                 details = _t("Fetching keys from server…");
             }

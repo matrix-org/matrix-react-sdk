@@ -61,18 +61,25 @@ interface IProps {
 
 interface IState {
     language: string;
-    spellCheckEnabled: boolean;
+    spellCheckEnabled?: boolean;
     spellCheckLanguages: string[];
     haveIdServer: boolean;
     serverSupportsSeparateAddAndBind?: boolean;
     idServerHasUnsignedTerms: boolean;
-    requiredPolicyInfo: {
-        // This object is passed along to a component for handling
-        hasTerms: boolean;
-        policiesAndServices: ServicePolicyPair[] | null; // From the startTermsFlow callback
-        agreedUrls: string[] | null; // From the startTermsFlow callback
-        resolve: ((values: string[]) => void) | null; // Promise resolve function for startTermsFlow callback
-    };
+    requiredPolicyInfo:
+        | {
+              // This object is passed along to a component for handling
+              hasTerms: false;
+              policiesAndServices: null; // From the startTermsFlow callback
+              agreedUrls: null; // From the startTermsFlow callback
+              resolve: null; // Promise resolve function for startTermsFlow callback
+          }
+        | {
+              hasTerms: boolean;
+              policiesAndServices: ServicePolicyPair[];
+              agreedUrls: string[];
+              resolve: (values: string[]) => void;
+          };
     emails: IThreepid[];
     msisdns: IThreepid[];
     loading3pids: boolean; // whether or not the emails and msisdns have been loaded
@@ -191,19 +198,19 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     }
 
     private async checkTerms(): Promise<void> {
-        if (!this.state.haveIdServer) {
+        // By starting the terms flow we get the logic for checking which terms the user has signed
+        // for free. So we might as well use that for our own purposes.
+        const idServerUrl = MatrixClientPeg.get().getIdentityServerUrl();
+        if (!this.state.haveIdServer || !idServerUrl) {
             this.setState({ idServerHasUnsignedTerms: false });
             return;
         }
 
-        // By starting the terms flow we get the logic for checking which terms the user has signed
-        // for free. So we might as well use that for our own purposes.
-        const idServerUrl = MatrixClientPeg.get().getIdentityServerUrl();
         const authClient = new IdentityAuthClient();
         try {
             const idAccessToken = await authClient.getAccessToken({ check: false });
             await startTermsFlow(
-                [new Service(SERVICE_TYPES.IS, idServerUrl, idAccessToken)],
+                [new Service(SERVICE_TYPES.IS, idServerUrl, idAccessToken!)],
                 (policiesAndServices, agreedUrls, extraClassNames) => {
                     return new Promise((resolve, reject) => {
                         this.setState({
@@ -406,7 +413,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             <div className="mx_SettingsTab_section mx_SettingsTab_section_spellcheck">
                 <span className="mx_SettingsTab_subheading">
                     {_t("Spell check")}
-                    <ToggleSwitch checked={this.state.spellCheckEnabled} onChange={this.onSpellCheckEnabledChange} />
+                    <ToggleSwitch checked={!!this.state.spellCheckEnabled} onChange={this.onSpellCheckEnabledChange} />
                 </span>
                 {this.state.spellCheckEnabled && !IS_MAC && (
                     <SpellCheckSettings
@@ -468,7 +475,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private renderManagementSection(): JSX.Element {
         // TODO: Improve warning text for account deactivation
         return (
-            <div className="mx_SettingsTab_section">
+            <div className="mx_SettingsTab_section" data-testid="account-management-section">
                 <span className="mx_SettingsTab_subheading">{_t("Account management")}</span>
                 <span className="mx_SettingsTab_subsectionText">
                     {_t("Deactivating your account is a permanent action — be careful!")}
@@ -528,8 +535,10 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         }
 
         return (
-            <div className="mx_SettingsTab">
-                <div className="mx_SettingsTab_heading">{_t("General")}</div>
+            <div className="mx_SettingsTab mx_GeneralUserSettingsTab">
+                <div className="mx_SettingsTab_heading" data-testid="general">
+                    {_t("General")}
+                </div>
                 {this.renderProfileSection()}
                 {this.renderAccountSection()}
                 {this.renderLanguageSection()}

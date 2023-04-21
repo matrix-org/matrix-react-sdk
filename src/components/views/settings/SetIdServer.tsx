@@ -72,8 +72,8 @@ interface IProps {
 
 interface IState {
     defaultIdServer?: string;
-    currentClientIdServer: string;
-    idServer?: string;
+    currentClientIdServer?: string;
+    idServer: string;
     error?: string;
     busy: boolean;
     disconnectBusy: boolean;

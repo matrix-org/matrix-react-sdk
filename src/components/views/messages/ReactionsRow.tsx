@@ -34,8 +34,8 @@ const MAX_ITEMS_WHEN_LIMITED = 8;
 const ReactButton: React.FC<IProps> = ({ mxEvent, reactions }) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
-    let contextMenu;
-    if (menuDisplayed) {
+    let contextMenu: JSX.Element | undefined;
+    if (menuDisplayed && button.current) {
         const buttonRect = button.current.getBoundingClientRect();
         contextMenu = (
             <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu} managed={false}>
@@ -73,7 +73,7 @@ interface IProps {
 }
 
 interface IState {
-    myReactions: MatrixEvent[];
+    myReactions: MatrixEvent[] | null;
     showAll: boolean;
 }
 
@@ -142,13 +142,14 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
         this.forceUpdate();
     };
 
-    private getMyReactions(): MatrixEvent[] {
+    private getMyReactions(): MatrixEvent[] | null {
         const reactions = this.props.reactions;
         if (!reactions) {
             return null;
         }
-        const userId = this.context.room.client.getUserId();
-        const myReactions = reactions.getAnnotationsBySender()[userId];
+        const userId = this.context.room?.client.getUserId();
+        if (!userId) return null;
+        const myReactions = reactions.getAnnotationsBySender()?.[userId];
         if (!myReactions) {
             return null;
         }
@@ -171,19 +172,17 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
 
         let items = reactions
             .getSortedAnnotationsByKey()
-            .map(([content, events]) => {
+            ?.map(([content, events]) => {
                 const count = events.size;
                 if (!count) {
                     return null;
                 }
-                const myReactionEvent =
-                    myReactions &&
-                    myReactions.find((mxEvent) => {
-                        if (mxEvent.isRedacted()) {
-                            return false;
-                        }
-                        return mxEvent.getRelation().key === content;
-                    });
+                const myReactionEvent = myReactions?.find((mxEvent) => {
+                    if (mxEvent.isRedacted()) {
+                        return false;
+                    }
+                    return mxEvent.getRelation()?.key === content;
+                });
                 return (
                     <ReactionsRowButton
                         key={content}
@@ -201,12 +200,12 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
             })
             .filter((item) => !!item);
 
-        if (!items.length) return null;
+        if (!items?.length) return null;
 
         // Show the first MAX_ITEMS if there are MAX_ITEMS + 1 or more items.
         // The "+ 1" ensure that the "show all" reveals something that takes up
         // more space than the button itself.
-        let showAllButton: JSX.Element;
+        let showAllButton: JSX.Element | undefined;
         if (items.length > MAX_ITEMS_WHEN_LIMITED + 1 && !showAll) {
             items = items.slice(0, MAX_ITEMS_WHEN_LIMITED);
             showAllButton = (
@@ -216,7 +215,7 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
             );
         }
 
-        let addReactionButton: JSX.Element;
+        let addReactionButton: JSX.Element | undefined;
         if (this.context.canReact) {
             addReactionButton = <ReactButton mxEvent={mxEvent} reactions={reactions} />;
         }

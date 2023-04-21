@@ -155,10 +155,15 @@ limitations under the License.
         overflow-y: auto;
         padding: $spacing-16;
 
+        ul {
+            padding: 0;
+            margin: 0;
+        }
+
         .mx_SpotlightDialog_section {
             > h4,
             > .mx_SpotlightDialog_sectionHeader > h4 {
-                font-weight: $font-semi-bold;
+                font-weight: var(--font-semi-bold);
                 font-size: $font-12px;
                 line-height: $font-15px;
                 color: $secondary-content;
@@ -509,26 +514,6 @@ limitations under the License.
             &.mx_SpotlightDialog_metaspaceResult_orphans-space {
                 mask-image: url("$(res)/img/element-icons/roomlist/hash-circle.svg");
             }
-        }
-    }
-
-    .mx_SpotlightDialog_footer {
-        font-size: $font-12px;
-        line-height: $font-15px;
-        color: $secondary-content;
-        padding: $spacing-12 $spacing-16 $spacing-16;
-        display: flex;
-        border-top: 1px solid $quinary-content;
-
-        > span {
-            align-self: center;
-        }
-
-        .mx_AccessibleButton_kind_primary_outline {
-            padding: $spacing-4 $spacing-8;
-            border-color: $secondary-content;
-            color: $secondary-content;
-            margin-left: auto;
         }
     }
 }

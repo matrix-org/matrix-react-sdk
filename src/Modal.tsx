@@ -32,8 +32,19 @@ export type ComponentType = React.ComponentType<{
     onFinished?(...args: any): void;
 }>;
 
+type Defaultize<P, D> = P extends any
+    ? string extends keyof P
+        ? P
+        : Pick<P, Exclude<keyof P, keyof D>> &
+              Partial<Pick<P, Extract<keyof P, keyof D>>> &
+              Partial<Pick<D, Exclude<keyof D, keyof P>>>
+    : never;
+
 // Generic type which returns the props of the Modal component with the onFinished being optional.
-export type ComponentProps<C extends ComponentType> = Omit<React.ComponentProps<C>, "onFinished"> &
+export type ComponentProps<C extends ComponentType> = Defaultize<
+    Omit<React.ComponentProps<C>, "onFinished">,
+    C["defaultProps"]
+> &
     Partial<Pick<React.ComponentProps<C>, "onFinished">>;
 
 export interface IModal<C extends ComponentType> {
@@ -138,13 +149,18 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
         return this.appendDialogAsync<C>(Promise.resolve(Element), props, className);
     }
 
-    public closeCurrentModal(reason: string): void {
+    /**
+     * @param reason either "backgroundClick" or undefined
+     * @return whether a modal was closed
+     */
+    public closeCurrentModal(reason?: string): boolean {
         const modal = this.getCurrentModal();
         if (!modal) {
-            return;
+            return false;
         }
         modal.closeReason = reason;
         modal.close();
+        return true;
     }
 
     private buildModal<C extends ComponentType>(
@@ -335,6 +351,8 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
     }
 
     private async reRender(): Promise<void> {
+        // TODO: We should figure out how to remove this weird sleep. It also makes testing harder
+        //
         // await next tick because sometimes ReactDOM can race with itself and cause the modal to wrongly stick around
         await sleep(0);
 

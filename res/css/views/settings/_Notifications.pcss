@@ -53,13 +53,21 @@ limitations under the License.
 }
 .mx_UserNotifSettings_gridRowHeading {
     font-size: $font-18px;
-    font-weight: $font-semi-bold;
+    font-weight: var(--font-semi-bold);
 }
 
 .mx_UserNotifSettings_gridColumnLabel {
     color: $secondary-content;
     font-size: $font-12px;
-    font-weight: $font-semi-bold;
+    font-weight: var(--font-semi-bold);
+}
+.mx_UserNotifSettings_gridRowError {
+    // occupy full row
+    grid-column: 1/-1;
+    justify-self: start;
+    padding-right: 30%;
+    // collapse half of the grid-gap
+    margin-top: -$spacing-4;
 }
 
 .mx_UserNotifSettings {
@@ -71,7 +79,7 @@ limitations under the License.
         & > div:first-child {
             /* section header */
             font-size: $font-18px;
-            font-weight: $font-semi-bold;
+            font-weight: var(--font-semi-bold);
         }
 
         > table {

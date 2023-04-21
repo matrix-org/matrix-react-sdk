@@ -36,9 +36,9 @@ interface IProps {
     // The list of room members for which to show avatars next to the summary
     "summaryMembers"?: RoomMember[];
     // The text to show as the summary of this event list
-    "summaryText"?: string | JSX.Element;
+    "summaryText"?: ReactNode;
     // An array of EventTiles to render when expanded
-    "children": ReactNode[];
+    "children": ReactNode[] | null;
     // Called when the event list expansion is toggled
     onToggle?(): void;
     // The layout currently used
@@ -86,7 +86,7 @@ const GenericEventListSummary: React.FC<IProps> = ({
     if (expanded) {
         body = (
             <React.Fragment>
-                <div className="mx_GenericEventListSummary_line">&nbsp;</div>
+                <div className="mx_GenericEventListSummary_spacer">&nbsp;</div>
                 <ol className="mx_GenericEventListSummary_unstyledList">{children}</ol>
             </React.Fragment>
         );

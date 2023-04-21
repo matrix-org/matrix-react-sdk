@@ -40,6 +40,7 @@ import { StopGapWidgetDriver } from "../../../src/stores/widgets/StopGapWidgetDr
 import { stubClient } from "../../test-utils";
 import { ModuleRunner } from "../../../src/modules/ModuleRunner";
 import dis from "../../../src/dispatcher/dispatcher";
+import SettingsStore from "../../../src/settings/SettingsStore";
 
 describe("StopGapWidgetDriver", () => {
     let client: MockedObject<MatrixClient>;
@@ -184,10 +185,18 @@ describe("StopGapWidgetDriver", () => {
             const aliceMobile = new DeviceInfo("aliceMobile");
             const bobDesktop = new DeviceInfo("bobDesktop");
 
-            mocked(client.crypto!.deviceList).downloadKeys.mockResolvedValue({
-                "@alice:example.org": { aliceWeb, aliceMobile },
-                "@bob:example.org": { bobDesktop },
-            });
+            mocked(client.crypto!.deviceList).downloadKeys.mockResolvedValue(
+                new Map([
+                    [
+                        "@alice:example.org",
+                        new Map([
+                            ["aliceWeb", aliceWeb],
+                            ["aliceMobile", aliceMobile],
+                        ]),
+                    ],
+                    ["@bob:example.org", new Map([["bobDesktop", bobDesktop]])],
+                ]),
+            );
 
             await driver.sendToDevice("org.example.foo", true, contentMap);
             expect(client.encryptAndSendToDevices.mock.calls).toMatchSnapshot();
@@ -364,6 +373,69 @@ describe("StopGapWidgetDriver", () => {
             );
 
             expect(dis.dispatch).not.toHaveBeenCalled();
+        });
+    });
+
+    describe("If the feature_dynamic_room_predecessors feature is not enabled", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+        });
+
+        it("passes the flag through to getVisibleRooms", () => {
+            const driver = mkDefaultDriver();
+            driver.readRoomEvents(EventType.CallAnswer, "", 0, ["*"]);
+            expect(client.getVisibleRooms).toHaveBeenCalledWith(false);
+        });
+    });
+
+    describe("If the feature_dynamic_room_predecessors is enabled", () => {
+        beforeEach(() => {
+            // Turn on feature_dynamic_room_predecessors setting
+            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                (settingName) => settingName === "feature_dynamic_room_predecessors",
+            );
+        });
+
+        it("passes the flag through to getVisibleRooms", () => {
+            const driver = mkDefaultDriver();
+            driver.readRoomEvents(EventType.CallAnswer, "", 0, ["*"]);
+            expect(client.getVisibleRooms).toHaveBeenCalledWith(true);
+        });
+    });
+
+    describe("searchUserDirectory", () => {
+        let driver: WidgetDriver;
+
+        beforeEach(() => {
+            driver = mkDefaultDriver();
+        });
+
+        it("searches for users in the user directory", async () => {
+            client.searchUserDirectory.mockResolvedValue({
+                limited: false,
+                results: [{ user_id: "@user", display_name: "Name", avatar_url: "mxc://" }],
+            });
+
+            await expect(driver.searchUserDirectory("foo")).resolves.toEqual({
+                limited: false,
+                results: [{ userId: "@user", displayName: "Name", avatarUrl: "mxc://" }],
+            });
+
+            expect(client.searchUserDirectory).toHaveBeenCalledWith({ term: "foo", limit: undefined });
+        });
+
+        it("searches for users with a custom limit", async () => {
+            client.searchUserDirectory.mockResolvedValue({
+                limited: true,
+                results: [],
+            });
+
+            await expect(driver.searchUserDirectory("foo", 25)).resolves.toEqual({
+                limited: true,
+                results: [],
+            });
+
+            expect(client.searchUserDirectory).toHaveBeenCalledWith({ term: "foo", limit: 25 });
         });
     });
 });
