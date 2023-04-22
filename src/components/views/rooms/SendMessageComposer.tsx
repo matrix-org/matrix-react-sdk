@@ -18,7 +18,7 @@ import React, { ClipboardEvent, createRef, KeyboardEvent } from "react";
 import EMOJI_REGEX from "emojibase-regex";
 import { IContent, MatrixEvent, IEventRelation, IMentions } from "matrix-js-sdk/src/models/event";
 import { DebouncedFunc, throttle } from "lodash";
-import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
@@ -187,7 +187,7 @@ export function createMessageContent(
     const body = textSerialize(model);
 
     const content: IContent = {
-        msgtype: isEmote ? "m.emote" : "m.text",
+        msgtype: isEmote ? MsgType.Emote : MsgType.Text,
         body: body,
     };
     const formattedBody = htmlSerializeIfNeeded(model, {
@@ -372,7 +372,10 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 return false;
             }
             this.currentlyComposedEditorState = this.model.serializeParts();
-        } else if (this.sendHistoryManager.currentIndex + delta === this.sendHistoryManager.history.length) {
+        } else if (
+            this.currentlyComposedEditorState &&
+            this.sendHistoryManager.currentIndex + delta === this.sendHistoryManager.history.length
+        ) {
             // True when we return to the message being composed currently
             this.model.reset(this.currentlyComposedEditorState);
             this.sendHistoryManager.currentIndex = this.sendHistoryManager.history.length;
@@ -393,6 +396,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
     private sendQuickReaction(): void {
         const timeline = this.context.liveTimeline;
+        if (!timeline) return;
         const events = timeline.getEvents();
         const reaction = this.model.parts[1].text;
         for (let i = events.length - 1; i >= 0; i--) {
@@ -443,8 +447,8 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             isReply: !!this.props.replyToEvent,
             inThread: this.props.relation?.rel_type === THREAD_RELATION_TYPE.name,
         };
-        if (posthogEvent.inThread) {
-            const threadRoot = this.props.room.findEventById(this.props.relation.event_id);
+        if (posthogEvent.inThread && this.props.relation!.event_id) {
+            const threadRoot = this.props.room.findEventById(this.props.relation!.event_id);
             posthogEvent.startsThread = threadRoot?.getThread()?.events.length === 1;
         }
         PosthogAnalytics.instance.trackEvent<ComposerEvent>(posthogEvent);
@@ -480,7 +484,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     return; // errored
                 }
 
-                if (cmd.category === CommandCategories.messages || cmd.category === CommandCategories.effects) {
+                if (content && [CommandCategories.messages, CommandCategories.effects].includes(cmd.category)) {
                     // Attach any mentions which might be contained in the command content.
                     attachMentions(this.props.mxClient.getSafeUserId(), content, model, replyToEvent);
                     attachRelation(content, this.props.relation);
