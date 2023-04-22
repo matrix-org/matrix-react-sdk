@@ -14,10 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
+
 import { createTestClient, mkStubRoom, REPEATABLE_DATE } from "../../test-utils";
 import { ExportType, IExportOptions } from "../../../src/utils/exportUtils/exportUtils";
 import PlainTextExporter from "../../../src/utils/exportUtils/PlainTextExport";
-import { MatrixEvent, Room } from "../../../../matrix-js-sdk";
 import SettingsStore from "../../../src/settings/SettingsStore";
 
 class TestablePlainTextExporter extends PlainTextExporter {
