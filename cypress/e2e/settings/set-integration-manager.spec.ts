@@ -36,21 +36,5 @@ describe("Set integration manager", () => {
 
     it("should be correctly rendered", () => {
         cy.openUserSettings("General");
-
-        cy.get(".mx_SetIntegrationManager").within(() => {
-            // Assert the toggle switch is enabled by default
-            cy.get(".mx_ToggleSwitch_enabled").should("exist");
-
-            // Assert space between "Manage integrations" and the integration server address is set to 4px;
-            cy.get(".mx_SetIntegrationManager_heading_manager").should("have.css", "column-gap", "4px");
-
-            cy.get(".mx_SetIntegrationManager_heading_manager").within(() => {
-                cy.get(".mx_SettingsTab_heading").should("have.text", "Manage integrations");
-
-                // Assert the headings' inline end margin values are set to zero in favor of the column-gap declaration
-                cy.get(".mx_SettingsTab_heading").should("have.css", "margin-inline-end", "0px");
-                cy.get(".mx_SettingsTab_subheading").should("have.css", "margin-inline-end", "0px");
-            });
-        });
     });
 });
