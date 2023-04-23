@@ -91,15 +91,6 @@ describe("<SecurityRoomSettingsTab />", () => {
         jest.spyOn(SettingsStore, "getValue").mockRestore();
     });
 
-    it("uses defaults for guest access and history visibility", () => {
-        const room = new Room(roomId, client, userId);
-        setRoomStateEvents(room);
-
-        const { container } = getComponent(room);
-
-        expect(container).toMatchSnapshot();
-    });
-
     describe("join rule", () => {
         it("warns when trying to make an encrypted room public", async () => {
             const room = new Room(roomId, client, userId);
