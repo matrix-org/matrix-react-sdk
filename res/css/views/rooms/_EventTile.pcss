@@ -281,12 +281,6 @@ $left-gutter: 64px;
     }
 
     &[data-layout="irc"] {
-        .mx_EventTile_msgOption {
-            .mx_ReadReceiptGroup {
-                inset-block-start: -0.3rem; /* ($irc-line-height - avatar height) / 2 */
-            }
-        }
-
         .mx_MessageTimestamp {
             text-align: right;
         }
@@ -462,6 +456,10 @@ $left-gutter: 64px;
 
         .mx_EventTile_msgOption {
             order: 5;
+
+            .mx_ReadReceiptGroup {
+                inset-block-start: -0.3rem; /* ($irc-line-height - avatar height) / 2 */
+            }
         }
 
         .mx_EditMessageComposer_buttons {
