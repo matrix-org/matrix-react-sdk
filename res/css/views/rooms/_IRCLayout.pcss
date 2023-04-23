@@ -14,12 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-$irc-line-height: $font-18px;
+:root {
+    --irc-line-height: $font-18px;
+}
 
 .mx_IRCLayout {
     --name-width: 80px; /* cf. ircDisplayNameWidth on Settings.tsx */
     --icon-width: 14px;
-    --line-height: $irc-line-height;
+    --line-height: var(--irc-line-height);
     --right-padding: 5px; /* TODO: Use a spacing variable */
 
     line-height: var(--line-height) !important;
@@ -30,7 +32,7 @@ $irc-line-height: $font-18px;
 
     .mx_NewRoomIntro {
         > h2 {
-            line-height: initial; /* Cancel $irc-line-height */
+            line-height: initial; /* Cancel var(--irc-line-height) */
         }
     }
 

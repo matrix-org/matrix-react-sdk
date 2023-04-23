@@ -304,7 +304,7 @@ $left-gutter: 64px;
 
         .mx_EventTile_avatar,
         .mx_EventTile_e2eIcon {
-            height: $irc-line-height;
+            height: var(--irc-line-height);
         }
 
         .mx_EventTile_avatar,
@@ -415,7 +415,7 @@ $left-gutter: 64px;
             order: 5;
 
             .mx_ReadReceiptGroup {
-                inset-block-start: -0.3rem; /* ($irc-line-height - avatar height) / 2 */
+                inset-block-start: -0.3rem; /* (var(--irc-line-height) - avatar height) / 2 */
             }
         }
 
@@ -465,7 +465,7 @@ $left-gutter: 64px;
 
             .mx_ViewSourceEvent, /* For hidden events */
             .mx_TextualEvent {
-                line-height: $irc-line-height;
+                line-height: var(--irc-line-height);
             }
         }
     }
