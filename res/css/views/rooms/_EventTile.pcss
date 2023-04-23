@@ -281,15 +281,6 @@ $left-gutter: 64px;
     }
 
     &[data-layout="irc"] {
-        .mx_EventTileBubble {
-            position: relative;
-            left: var(--EventTile_irc_line_info-margin-inline-start);
-
-            &.mx_cryptoEvent {
-                left: unset;
-            }
-        }
-
         .mx_ReplyChain {
             margin: 0;
         }
@@ -464,6 +455,15 @@ $left-gutter: 64px;
 
         .mx_EditMessageComposer_buttons {
             position: relative;
+        }
+
+        .mx_EventTileBubble {
+            position: relative;
+            left: var(--EventTile_irc_line_info-margin-inline-start);
+
+            &.mx_cryptoEvent {
+                left: unset;
+            }
         }
 
         &.mx_EventTile_info {
