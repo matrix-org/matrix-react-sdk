@@ -281,10 +281,6 @@ $left-gutter: 64px;
     }
 
     &[data-layout="irc"] {
-        .mx_ReplyChain {
-            margin: 0;
-        }
-
         .mx_ReplyTile .mx_EventTileBubble {
             left: unset; /* Cancel the value specified above for the tile inside ReplyTile */
         }
@@ -447,6 +443,10 @@ $left-gutter: 64px;
             .mx_ReadReceiptGroup {
                 inset-block-start: -0.3rem; /* ($irc-line-height - avatar height) / 2 */
             }
+        }
+
+        .mx_ReplyChain {
+            margin: 0;
         }
 
         .mx_MessageTimestamp {
