@@ -281,21 +281,6 @@ $left-gutter: 64px;
     }
 
     &[data-layout="irc"] {
-        &.mx_EventTile_info {
-            .mx_EventTile_avatar {
-                left: var(--EventTile_irc_line_info-margin-inline-start);
-                top: 0;
-                margin-right: var(--right-padding);
-                padding-block: var(--EventTile_irc_line-padding-block);
-            }
-
-            .mx_EventTile_line {
-                margin-inline-start: var(--EventTile_irc_line_info-margin-inline-start);
-            }
-        }
-    }
-
-    &[data-layout="irc"] {
         --EventTile_irc_line-padding-block: 1px;
 
         /* add --right-padding value of MessageTimestamp only */
@@ -467,6 +452,17 @@ $left-gutter: 64px;
         }
 
         &.mx_EventTile_info {
+            .mx_EventTile_avatar {
+                left: var(--EventTile_irc_line_info-margin-inline-start);
+                top: 0;
+                margin-right: var(--right-padding);
+                padding-block: var(--EventTile_irc_line-padding-block);
+            }
+
+            .mx_EventTile_line {
+                margin-inline-start: var(--EventTile_irc_line_info-margin-inline-start);
+            }
+
             .mx_ViewSourceEvent, /* For hidden events */
             .mx_TextualEvent {
                 line-height: $irc-line-height;
