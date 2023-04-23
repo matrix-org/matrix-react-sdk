@@ -152,9 +152,6 @@ describe("General user settings tab", () => {
                     // Make sure integration manager's toggle switch is enabled
                     cy.get(".mx_ToggleSwitch_enabled").should("be.visible");
 
-                    // Assert the toggle switch is enabled by default
-                    cy.get(".mx_ToggleSwitch_enabled").should("exist");
-
                     // Assert space between "Manage integrations" and the integration server address is set to 4px;
                     cy.get(".mx_SetIntegrationManager_heading_manager").should("have.css", "column-gap", "4px");
 
