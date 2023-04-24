@@ -155,10 +155,15 @@ limitations under the License.
         overflow-y: auto;
         padding: $spacing-16;
 
+        ul {
+            padding: 0;
+            margin: 0;
+        }
+
         .mx_SpotlightDialog_section {
             > h4,
             > .mx_SpotlightDialog_sectionHeader > h4 {
-                font-weight: $font-semi-bold;
+                font-weight: var(--font-semi-bold);
                 font-size: $font-12px;
                 line-height: $font-15px;
                 color: $secondary-content;
