@@ -218,6 +218,10 @@ export interface EventTileProps {
     // displayed to the current user either because they're
     // the author or they are a moderator
     isSeeingThroughMessageHiddenForModeration?: boolean;
+
+    // The following properties are used by EventTilePreview to disable tab indexes within the event tile
+    hideTimestamp?: boolean;
+    inhibitInteraction?: boolean;
 }
 
 interface IState {
@@ -260,6 +264,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
     public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
+
+    private unmounted = false;
 
     public constructor(props: EventTileProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);
@@ -416,6 +422,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             this.props.mxEvent.removeListener(MatrixEventEvent.RelationsCreated, this.onReactionsCreated);
         }
         this.props.mxEvent.off(ThreadEvent.Update, this.updateThread);
+        this.unmounted = false;
     }
 
     public componentDidUpdate(prevProps: Readonly<EventTileProps>, prevState: Readonly<IState>): void {
@@ -557,7 +564,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         this.verifyEvent();
     };
 
-    private verifyEvent(): void {
+    private async verifyEvent(): Promise<void> {
         // if the event was edited, show the verification info for the edit, not
         // the original
         const mxEvent = this.props.mxEvent.replacingEvent() ?? this.props.mxEvent;
@@ -586,7 +593,14 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         }
 
         const eventSenderTrust =
-            encryptionInfo.sender && MatrixClientPeg.get().checkDeviceTrust(senderId, encryptionInfo.sender.deviceId);
+            senderId &&
+            encryptionInfo.sender &&
+            (await MatrixClientPeg.get()
+                .getCrypto()
+                ?.getDeviceVerificationStatus(senderId, encryptionInfo.sender.deviceId));
+
+        if (this.unmounted) return;
+
         if (!eventSenderTrust) {
             this.setState({ verified: E2EState.Unknown });
             return;
@@ -1006,7 +1020,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         }
 
         if (this.props.mxEvent.sender && avatarSize) {
-            let member;
+            let member: RoomMember | null = null;
             // set member to receiver (target) if it is a 3PID invite
             // so that the correct avatar is shown as the text is
             // `$target accepted the invitation for $email`
@@ -1016,9 +1030,11 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                 member = this.props.mxEvent.sender;
             }
             // In the ThreadsList view we use the entire EventTile as a click target to open the thread instead
-            const viewUserOnClick = ![TimelineRenderingType.ThreadsList, TimelineRenderingType.Notification].includes(
-                this.context.timelineRenderingType,
-            );
+            const viewUserOnClick =
+                !this.props.inhibitInteraction &&
+                ![TimelineRenderingType.ThreadsList, TimelineRenderingType.Notification].includes(
+                    this.context.timelineRenderingType,
+                );
             avatar = (
                 <div className="mx_EventTile_avatar">
                     <MemberAvatar
@@ -1064,6 +1080,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
         const showTimestamp =
             this.props.mxEvent.getTs() &&
+            !this.props.hideTimestamp &&
             (this.props.alwaysShowTimestamps ||
                 this.props.last ||
                 this.state.hover ||
@@ -1101,7 +1118,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             );
         }
 
-        const linkedTimestamp = (
+        const linkedTimestamp = !this.props.hideTimestamp ? (
             <a
                 href={permalink}
                 onClick={this.onPermalinkClicked}
@@ -1110,7 +1127,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             >
                 {timestamp}
             </a>
-        );
+        ) : null;
 
         const useIRCLayout = this.props.layout === Layout.IRC;
         const groupTimestamp = !useIRCLayout ? linkedTimestamp : null;
