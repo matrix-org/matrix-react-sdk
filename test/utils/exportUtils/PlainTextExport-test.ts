@@ -49,9 +49,9 @@ describe("PlainTextExport", () => {
     });
 
     it.each([
-        [24, false, /^\d{1,2}\/\d{1,2}\/\d{4},\s\d{1,2}:\d{2}:\d{2}\s-\s/],
-        [12, true, /^\d{1,2}\/\d{1,2}\/\d{4},\s\d{1,2}:\d{2}:\d{2}\s(?:am|pm|AM|PM)\s-\s/],
-    ])("should return text with %i hr time format", async (hour: number, setting: boolean, expectedPattern: RegExp) => {
+        [24, false, "16/4/2021, 17:20:00 - @alice:example.com: Hello, world!\n"],
+        [12, true, "16/4/2021, 5:20:00 pm - @alice:example.com: Hello, world!\n"],
+    ])("should return text with %i hr time format", async (hour: number, setting: boolean, expectedessage: string) => {
         jest.spyOn(SettingsStore, "getValue").mockImplementation((settingName: string) =>
             settingName === "showTwelveHourTimestamps" ? setting : undefined,
         );
@@ -67,6 +67,6 @@ describe("PlainTextExport", () => {
         ];
         const exporter = new TestablePlainTextExporter(stubRoom, ExportType.Timeline, stubOptions, () => {});
         const output = await exporter.testCreateOutput(events);
-        expect(expectedPattern.test(output)).toBe(true);
+        expect(expectedessage).toBe(output);
     });
 });
