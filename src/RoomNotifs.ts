@@ -201,7 +201,8 @@ function isRuleForRoom(roomId: string, rule: IPushRule): boolean {
     if (!isRuleRoomSpecific(rule)) {
         return false;
     }
-    const cond = rule.conditions[0];
+    // isRuleRoomSpecific checks this condition exists
+    const cond = rule.conditions![0]!;
     return cond.pattern === roomId;
 }
 

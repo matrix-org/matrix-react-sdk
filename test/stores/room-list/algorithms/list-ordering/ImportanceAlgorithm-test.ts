@@ -71,7 +71,7 @@ describe("ImportanceAlgorithm", () => {
     client.pushRules = {
         global: {
             ...DEFAULT_PUSH_RULES.global,
-            override: [...DEFAULT_PUSH_RULES.global.override, muteRoomARule, muteRoomBRule],
+            override: [...DEFAULT_PUSH_RULES.global.override!, muteRoomARule, muteRoomBRule],
         },
     };
 

@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ConditionKind, EventType, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { ConditionKind, EventType, IPushRule, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { getChangedOverrideRoomPushRules } from "../../../../src/stores/room-list/utils/roomMute";
 import { DEFAULT_PUSH_RULES, getDefaultRuleWithKind, makePushRule } from "../../../test-utils/pushRules";
 
 describe("getChangedOverrideRoomPushRules()", () => {
-    const makePushRulesEvent = (overrideRules = []): MatrixEvent => {
+    const makePushRulesEvent = (overrideRules: IPushRule[] = []): MatrixEvent => {
         return new MatrixEvent({
             type: EventType.PushRules,
             content: {

@@ -39,12 +39,12 @@ export const getChangedOverrideRoomPushRules = (actionPayload: ActionPayload): s
         return undefined;
     }
 
-    const roomPushRules = (event.getContent() as IPushRules)?.global?.override.filter(isRuleRoomSpecific);
-    const prevRoomPushRules = (prevEvent?.getContent() as IPushRules)?.global?.override.filter(isRuleRoomSpecific);
+    const roomPushRules = (event.getContent() as IPushRules)?.global?.override?.filter(isRuleRoomSpecific);
+    const prevRoomPushRules = (prevEvent?.getContent() as IPushRules)?.global?.override?.filter(isRuleRoomSpecific);
 
     const { added, removed } = arrayDiff(
-        prevRoomPushRules?.map((rule) => rule.rule_id),
-        roomPushRules?.map((rule) => rule.rule_id),
+        prevRoomPushRules?.map((rule) => rule.rule_id) || [],
+        roomPushRules?.map((rule) => rule.rule_id) || [],
     );
 
     return [...added, ...removed];

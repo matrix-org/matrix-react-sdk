@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ConditionKind, EventType, MatrixEvent, PendingEventOrdering, Room } from "matrix-js-sdk/src/matrix";
+import { ConditionKind, EventType, IPushRule, MatrixEvent, PendingEventOrdering, Room } from "matrix-js-sdk/src/matrix";
 
 import defaultDispatcher, { MatrixDispatcher } from "../../../src/dispatcher/dispatcher";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
@@ -287,7 +287,7 @@ describe("RoomListStore", () => {
         };
 
         describe("push rules updates", () => {
-            const makePushRulesEvent = (overrideRules = []): MatrixEvent => {
+            const makePushRulesEvent = (overrideRules: IPushRule[] = []): MatrixEvent => {
                 return new MatrixEvent({
                     type: EventType.PushRules,
                     content: {
