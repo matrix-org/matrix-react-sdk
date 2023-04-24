@@ -81,11 +81,14 @@ export class NaturalAlgorithm extends OrderingAlgorithm {
             return true;
         } else if (cause === RoomUpdateCause.RoomRemoved) {
             return this.removeRoom(room);
-        } else if (this.isMutedToBottom && cause === RoomUpdateCause.PossibleMuteChange) {
-            return this.onPossibleMuteChange(room);
+        } else if (cause === RoomUpdateCause.PossibleMuteChange) {
+            if (this.isMutedToBottom) {
+                return this.onPossibleMuteChange(room);
+            } else {
+                return false;
+            }
         }
 
-        // @TODO(kerrya) what cases are hitting here? should they cause a reorder?)
         // TODO: Optimize this to avoid useless operations: https://github.com/vector-im/element-web/issues/14457
         // For example, we can skip updates to alphabetic (sometimes) and manually ordered tags
         if (isMuted) {

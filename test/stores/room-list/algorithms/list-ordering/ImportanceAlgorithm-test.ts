@@ -87,8 +87,6 @@ describe("ImportanceAlgorithm", () => {
             count: 0,
             color: NotificationColor.None,
         });
-
-        jest.spyOn;
     });
 
     const setupAlgorithm = (sortAlgorithm: SortAlgorithm, rooms?: Room[]) => {
