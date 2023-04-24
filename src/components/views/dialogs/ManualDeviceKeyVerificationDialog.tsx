@@ -48,14 +48,15 @@ export default class ManualDeviceKeyVerificationDialog extends React.Component<I
             text = _t("Confirm this user's session by comparing the following with their User Settings:");
         }
 
-        const key = FormattingUtils.formatCryptoKey(this.props.device.getFingerprint());
+        const fingerprint = this.props.device.getFingerprint();
+        const key = fingerprint && FormattingUtils.formatCryptoKey(fingerprint);
         const body = (
             <div>
                 <p>{text}</p>
                 <div className="mx_DeviceVerifyDialog_cryptoSection">
                     <ul>
                         <li>
-                            <label>{_t("Session name")}:</label> <span>{this.props.device.getDisplayName()}</span>
+                            <label>{_t("Session name")}:</label> <span>{this.props.device.displayName}</span>
                         </li>
                         <li>
                             <label>{_t("Session ID")}:</label>{" "}
