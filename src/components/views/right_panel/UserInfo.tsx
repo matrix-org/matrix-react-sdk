@@ -88,7 +88,7 @@ export interface IDevice extends Device {
 export const disambiguateDevices = (devices: IDevice[]): void => {
     const names = Object.create(null);
     for (let i = 0; i < devices.length; i++) {
-        const name = devices[i].getDisplayName() ?? "";
+        const name = devices[i].displayName ?? "";
         const indexList = names[name] || [];
         indexList.push(i);
         names[name] = indexList;
@@ -195,12 +195,10 @@ export function DeviceItem({ userId, device }: { userId: string; device: IDevice
     };
 
     let deviceName;
-    if (!device.getDisplayName()?.trim()) {
+    if (!device.displayName?.trim()) {
         deviceName = device.deviceId;
     } else {
-        deviceName = device.ambiguous
-            ? device.getDisplayName() + " (" + device.deviceId + ")"
-            : device.getDisplayName();
+        deviceName = device.ambiguous ? device.displayName + " (" + device.deviceId + ")" : device.displayName;
     }
 
     let trustedLabel: string | undefined;
@@ -1195,8 +1193,8 @@ async function getUserDeviceInfo(
     cli: MatrixClient,
     downloadUncached = false,
 ): Promise<Device[] | undefined> {
-    const userDeviceMap = await cli.getUserDeviceInfo([userId], downloadUncached);
-    const devicesMap = userDeviceMap.get(userId);
+    const userDeviceMap = await cli.getCrypto()?.getUserDeviceInfo([userId], downloadUncached);
+    const devicesMap = userDeviceMap?.get(userId);
 
     if (!devicesMap) return;
 

@@ -30,7 +30,6 @@ import {
 } from "matrix-js-sdk/src/matrix";
 import { Phase, VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
-import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { Device } from "matrix-js-sdk/src/models/device";
 import { defer } from "matrix-js-sdk/src/utils";
 
@@ -128,6 +127,7 @@ beforeEach(() => {
 
     mockCrypto = mocked({
         getDeviceVerificationStatus: jest.fn(),
+        getUserDeviceInfo: jest.fn(),
     } as unknown as CryptoApi);
 
     mockClient = mocked({
@@ -267,13 +267,16 @@ describe("<UserInfo />", () => {
             mockClient.isCryptoEnabled.mockReturnValue(true);
             mockClient.checkUserTrust.mockReturnValue(new UserTrustLevel(false, false, false));
 
-            const device1 = DeviceInfo.fromStorage(
-                {
-                    unsigned: { device_display_name: "my device" },
-                },
-                "d1",
-            );
-            mockClient.getStoredDevicesForUser.mockReturnValue([device1]);
+            const device = new Device({
+                deviceId: "d1",
+                userId: defaultUserId,
+                displayName: "my device",
+                algorithms: [],
+                keys: new Map(),
+            });
+            const devicesMap = new Map<string, Device>([[device.deviceId, device]]);
+            const userDeviceMap = new Map<string, Map<string, Device>>([[defaultUserId, devicesMap]]);
+            mockCrypto.getUserDeviceInfo.mockResolvedValue(userDeviceMap);
         });
 
         it("renders a device list which can be expanded", async () => {
@@ -364,7 +367,7 @@ describe("<UserInfoHeader />", () => {
 });
 
 describe("<DeviceItem />", () => {
-    const device = { deviceId: "deviceId", getDisplayName: () => "deviceName" } as Device;
+    const device = { deviceId: "deviceId", displayName: "deviceName" } as Device;
     const defaultProps = {
         userId: defaultUserId,
         device,
@@ -411,7 +414,7 @@ describe("<DeviceItem />", () => {
         renderComponent();
         await act(flushPromises);
 
-        expect(screen.getByRole("button", { name: device.getDisplayName()! })).toBeInTheDocument;
+        expect(screen.getByRole("button", { name: device.displayName! })).toBeInTheDocument();
         expect(screen.queryByText(/trusted/i)).not.toBeInTheDocument();
     });
 
@@ -420,7 +423,7 @@ describe("<DeviceItem />", () => {
         renderComponent();
         await act(flushPromises);
 
-        expect(screen.getByRole("button", { name: `${device.getDisplayName()} Not trusted` })).toBeInTheDocument;
+        expect(screen.getByRole("button", { name: `${device.displayName} Not trusted` })).toBeInTheDocument();
     });
 
     it("with verified device only, displays no button without a label", async () => {
@@ -428,7 +431,7 @@ describe("<DeviceItem />", () => {
         renderComponent();
         await act(flushPromises);
 
-        expect(screen.getByText(device.getDisplayName()!)).toBeInTheDocument();
+        expect(screen.getByText(device.displayName!)).toBeInTheDocument();
         expect(screen.queryByText(/trusted/)).not.toBeInTheDocument();
     });
 
@@ -442,8 +445,9 @@ describe("<DeviceItem />", () => {
         setMockDeviceTrust(false, true);
 
         // expect to see no button in this case
+        // TODO `toBeInTheDocument` is not called, if called the test is failing
         expect(screen.queryByRole("button")).not.toBeInTheDocument;
-        expect(screen.getByText(device.getDisplayName()!)).toBeInTheDocument();
+        expect(screen.getByText(device.displayName!)).toBeInTheDocument();
     });
 
     it("with verified user and device, displays no button and a 'Trusted' label", async () => {
@@ -452,8 +456,8 @@ describe("<DeviceItem />", () => {
         renderComponent();
         await act(flushPromises);
 
-        expect(screen.queryByRole("button")).not.toBeInTheDocument;
-        expect(screen.getByText(device.getDisplayName()!)).toBeInTheDocument();
+        expect(screen.queryByRole("button")).not.toBeInTheDocument();
+        expect(screen.getByText(device.displayName!)).toBeInTheDocument();
         expect(screen.getByText("Trusted")).toBeInTheDocument();
     });
 
@@ -462,8 +466,8 @@ describe("<DeviceItem />", () => {
         renderComponent();
         await act(flushPromises);
 
-        const button = screen.getByRole("button", { name: device.getDisplayName()! });
-        expect(button).toBeInTheDocument;
+        const button = screen.getByRole("button", { name: device.displayName! });
+        expect(button).toBeInTheDocument();
         await userEvent.click(button);
 
         expect(mockVerifyDevice).not.toHaveBeenCalled();
@@ -477,8 +481,8 @@ describe("<DeviceItem />", () => {
         renderComponent();
         await act(flushPromises);
 
-        const button = screen.getByRole("button", { name: device.getDisplayName()! });
-        expect(button).toBeInTheDocument;
+        const button = screen.getByRole("button", { name: device.displayName! });
+        expect(button).toBeInTheDocument();
         await userEvent.click(button);
 
         expect(mockVerifyDevice).toHaveBeenCalledTimes(1);
@@ -1100,9 +1104,9 @@ describe("<RoomAdminToolsContainer />", () => {
 describe("disambiguateDevices", () => {
     it("does not add ambiguous key to unique names", () => {
         const initialDevices = [
-            { deviceId: "id1", getDisplayName: () => "name1" } as Device,
-            { deviceId: "id2", getDisplayName: () => "name2" } as Device,
-            { deviceId: "id3", getDisplayName: () => "name3" } as Device,
+            { deviceId: "id1", displayName: "name1" } as Device,
+            { deviceId: "id2", displayName: "name2" } as Device,
+            { deviceId: "id3", displayName: "name3" } as Device,
         ];
         disambiguateDevices(initialDevices);
 
@@ -1114,14 +1118,14 @@ describe("disambiguateDevices", () => {
 
     it("adds ambiguous key to all ids with non-unique names", () => {
         const uniqueNameDevices = [
-            { deviceId: "id3", getDisplayName: () => "name3" } as Device,
-            { deviceId: "id4", getDisplayName: () => "name4" } as Device,
-            { deviceId: "id6", getDisplayName: () => "name6" } as Device,
+            { deviceId: "id3", displayName: "name3" } as Device,
+            { deviceId: "id4", displayName: "name4" } as Device,
+            { deviceId: "id6", displayName: "name6" } as Device,
         ];
         const nonUniqueNameDevices = [
-            { deviceId: "id1", getDisplayName: () => "nonUnique" } as Device,
-            { deviceId: "id2", getDisplayName: () => "nonUnique" } as Device,
-            { deviceId: "id5", getDisplayName: () => "nonUnique" } as Device,
+            { deviceId: "id1", displayName: "nonUnique" } as Device,
+            { deviceId: "id2", displayName: "nonUnique" } as Device,
+            { deviceId: "id5", displayName: "nonUnique" } as Device,
         ];
         const initialDevices = [...uniqueNameDevices, ...nonUniqueNameDevices];
         disambiguateDevices(initialDevices);
