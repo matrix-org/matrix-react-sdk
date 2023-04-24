@@ -125,7 +125,7 @@ export default class PlainTextExporter extends Exporter {
             const textForEvent = await this.plainTextForEvent(event);
             content +=
                 textForEvent &&
-                `${new Date(event.getTs()).toLocaleString("en-US", {
+                `${new Date(event.getTs()).toLocaleString([], {
                     hour12: SettingsStore.getValue("showTwelveHourTimestamps"),
                 })} - ${textForEvent}\n`;
         }
