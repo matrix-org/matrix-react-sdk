@@ -324,8 +324,8 @@ export default class DeviceListener {
                 if (device.deviceId === cli.deviceId) continue;
 
                 const deviceTrust = await cli
-                    .getCrypto()
-                    !.getDeviceVerificationStatus(cli.getUserId()!, device.deviceId!);
+                    .getCrypto()!
+                    .getDeviceVerificationStatus(cli.getUserId()!, device.deviceId!);
                 if (!deviceTrust?.crossSigningVerified && !this.dismissed.has(device.deviceId)) {
                     if (this.ourDeviceIdsAtStart?.has(device.deviceId)) {
                         oldUnverifiedDeviceIds.add(device.deviceId);
