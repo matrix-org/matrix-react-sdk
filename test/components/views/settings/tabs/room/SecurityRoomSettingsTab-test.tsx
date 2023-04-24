@@ -23,6 +23,7 @@ import SecurityRoomSettingsTab from "../../../../../../src/components/views/sett
 import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
 import SettingsStore from "../../../../../../src/settings/SettingsStore";
 import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../../../test-utils";
+import { filterBoolean } from "../../../../../../src/utils/arrays";
 
 describe("<SecurityRoomSettingsTab />", () => {
     const userId = "@alice:server.org";
@@ -48,7 +49,7 @@ describe("<SecurityRoomSettingsTab />", () => {
         guestAccess?: GuestAccess,
         history?: HistoryVisibility,
     ): void => {
-        const events = [
+        const events = filterBoolean<MatrixEvent>([
             new MatrixEvent({
                 type: EventType.RoomCreate,
                 content: { version: "test" },
@@ -80,13 +81,13 @@ describe("<SecurityRoomSettingsTab />", () => {
                     state_key: "",
                     room_id: room.roomId,
                 }),
-        ].filter(Boolean);
+        ]);
 
         room.currentState.setStateEvents(events);
     };
 
     beforeEach(() => {
-        client.sendStateEvent.mockReset().mockResolvedValue(undefined);
+        client.sendStateEvent.mockReset().mockResolvedValue({ event_id: 'test'});
         client.isRoomEncrypted.mockReturnValue(false);
         jest.spyOn(SettingsStore, "getValue").mockRestore();
     });
