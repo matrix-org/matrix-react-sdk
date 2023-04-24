@@ -50,7 +50,7 @@ describe("PlainTextExport", () => {
 
     it.each([
         [24, false, "4/16/2021, 17:20:00 - @alice:example.com: Hello, world!\n"],
-        [12, true, "4/16/2021, 5:20:00 pm - @alice:example.com: Hello, world!\n"],
+        [12, true, "4/16/2021, 5:20:00 PM - @alice:example.com: Hello, world!\n"],
     ])("should return text with %i hr time format", async (hour: number, setting: boolean, expectedMessage: string) => {
         jest.spyOn(SettingsStore, "getValue").mockImplementation((settingName: string) =>
             settingName === "showTwelveHourTimestamps" ? setting : undefined,
