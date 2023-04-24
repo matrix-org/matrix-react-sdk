@@ -1626,9 +1626,8 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
     const e2eStatus = useAsyncMemo(async () => {
         if (!isRoomEncrypted || !devices) {
             return undefined;
-        } else {
-            return await getE2EStatus(cli, user.userId, devices);
         }
+        return await getE2EStatus(cli, user.userId, devices);
     }, [cli, isRoomEncrypted, user.userId, devices]);
 
     const classes = ["mx_UserInfo"];
