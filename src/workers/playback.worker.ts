@@ -16,7 +16,7 @@ limitations under the License.
 
 import { WorkerPayload } from "./worker";
 import { arrayRescale, arraySmoothingResample } from "../utils/arrays";
-import { PLAYBACK_WAVEFORM_SAMPLES } from "../audio/Playback";
+import { PLAYBACK_WAVEFORM_SAMPLES } from "../audio/consts";
 
 const ctx: Worker = self as any;
 
@@ -32,7 +32,7 @@ ctx.addEventListener("message", async (event: MessageEvent<Request & WorkerPaylo
     const { seq, data } = event.data;
 
     // First, convert negative amplitudes to positive so we don't detect zero as "noisy".
-    const noiseWaveform = data.map(v => Math.abs(v));
+    const noiseWaveform = data.map((v) => Math.abs(v));
 
     // Then, we'll resample the waveform using a smoothing approach so we can keep the same rough shape.
     // We also rescale the waveform to be 0-1 so we end up with a clamped waveform to rely upon.

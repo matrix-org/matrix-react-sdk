@@ -21,12 +21,13 @@ import { logger } from "matrix-js-sdk/src/logger";
 // @ts-ignore - `.ts` is needed here to make TS happy
 import PlaybackWorker, { Request, Response } from "../workers/playback.worker.ts";
 import { UPDATE_EVENT } from "../stores/AsyncStore";
-import { arrayFastResample, arraySeed } from "../utils/arrays";
+import { arrayFastResample } from "../utils/arrays";
 import { IDestroyable } from "../utils/IDestroyable";
 import { PlaybackClock } from "./PlaybackClock";
 import { createAudioContext, decodeOgg } from "./compat";
 import { clamp } from "../utils/numbers";
 import { WorkerManager } from "../WorkerManager";
+import { DEFAULT_WAVEFORM, PLAYBACK_WAVEFORM_SAMPLES } from "./consts";
 
 export enum PlaybackState {
     Decoding = "decoding",
@@ -42,9 +43,7 @@ export interface PlaybackInterface {
     skipTo(timeSeconds: number): Promise<void>;
 }
 
-export const PLAYBACK_WAVEFORM_SAMPLES = 39;
 const THUMBNAIL_WAVEFORM_SAMPLES = 100; // arbitrary: [30,120]
-export const DEFAULT_WAVEFORM = arraySeed(0, PLAYBACK_WAVEFORM_SAMPLES);
 
 export class Playback extends EventEmitter implements IDestroyable {
     /**
@@ -54,10 +53,10 @@ export class Playback extends EventEmitter implements IDestroyable {
     public readonly thumbnailWaveform: number[];
 
     private readonly context: AudioContext;
-    private source: AudioBufferSourceNode | MediaElementAudioSourceNode;
+    private source?: AudioBufferSourceNode | MediaElementAudioSourceNode;
     private state = PlaybackState.Decoding;
-    private audioBuf: AudioBuffer;
-    private element: HTMLAudioElement;
+    private audioBuf?: AudioBuffer;
+    private element?: HTMLAudioElement;
     private resampledWaveform: number[];
     private waveformObservable = new SimpleObservable<number[]>();
     private readonly clock: PlaybackClock;
@@ -220,7 +219,7 @@ export class Playback extends EventEmitter implements IDestroyable {
 
     private makePlaybackWaveform(input: Float32Array): Promise<number[]> {
         // const waveform = Array.from();
-        return this.worker.call({ data: Array.from(input) }).then(resp => resp.waveform);
+        return this.worker.call({ data: Array.from(input) }).then((resp) => resp.waveform);
     }
 
     private onPlaybackEnd = async (): Promise<void> => {

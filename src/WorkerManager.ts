@@ -23,12 +23,12 @@ export class WorkerManager<Request, Response> {
     private seq = 0;
     private pendingDeferredMap = new Map<number, IDeferred<Response>>();
 
-    constructor(WorkerConstructor: { new (): Worker }) {
+    public constructor(WorkerConstructor: { new (): Worker }) {
         this.worker = new WorkerConstructor();
         this.worker.onmessage = this.onMessage;
     }
 
-    private onMessage = (ev: MessageEvent<Response & WorkerPayload>) => {
+    private onMessage = (ev: MessageEvent<Response & WorkerPayload>): void => {
         const deferred = this.pendingDeferredMap.get(ev.data.seq);
         if (deferred) {
             this.pendingDeferredMap.delete(ev.data.seq);
@@ -44,4 +44,3 @@ export class WorkerManager<Request, Response> {
         return deferred.promise;
     }
 }
-
