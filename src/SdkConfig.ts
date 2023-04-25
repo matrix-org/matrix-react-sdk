@@ -127,7 +127,7 @@ export default class SdkConfig {
         SdkConfig.setInstance(<IConfigOptions>{}); // safe to cast - defaults will be applied
     }
 
-    public static add(cfg: Partial<IConfigOptions>): void {
+    public static add(cfg: Partial<ConfigOptions>): void {
         SdkConfig.put(mergeConfig(SdkConfig.get(), cfg));
     }
 }
