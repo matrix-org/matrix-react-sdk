@@ -28,6 +28,6 @@ export class BlurhashEncoder {
     private readonly worker = new WorkerManager<Request, Response>(BlurhashWorker);
 
     public getBlurhash(imageData: ImageData): Promise<string> {
-        return this.worker.call({ imageData }).then(resp => resp.blurhash);
+        return this.worker.call({ imageData }).then((resp) => resp.blurhash);
     }
 }
