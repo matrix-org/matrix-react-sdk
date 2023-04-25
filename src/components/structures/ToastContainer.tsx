@@ -25,8 +25,8 @@ interface IState {
 }
 
 export default class ToastContainer extends React.Component<{}, IState> {
-    constructor(props, context) {
-        super(props, context);
+    public constructor(props: {}) {
+        super(props);
         this.state = {
             toasts: ToastStore.sharedInstance().getToasts(),
             countSeen: ToastStore.sharedInstance().getCountSeen(),
@@ -36,31 +36,31 @@ export default class ToastContainer extends React.Component<{}, IState> {
         // toasts may dismiss themselves in their didMount if they find
         // they're already irrelevant by the time they're mounted, and
         // our own componentDidMount is too late.
-        ToastStore.sharedInstance().on('update', this.onToastStoreUpdate);
+        ToastStore.sharedInstance().on("update", this.onToastStoreUpdate);
     }
 
-    componentWillUnmount() {
-        ToastStore.sharedInstance().removeListener('update', this.onToastStoreUpdate);
+    public componentWillUnmount(): void {
+        ToastStore.sharedInstance().removeListener("update", this.onToastStoreUpdate);
     }
 
-    private onToastStoreUpdate = () => {
+    private onToastStoreUpdate = (): void => {
         this.setState({
             toasts: ToastStore.sharedInstance().getToasts(),
             countSeen: ToastStore.sharedInstance().getCountSeen(),
         });
     };
 
-    render() {
+    public render(): React.ReactNode {
         const totalCount = this.state.toasts.length;
         const isStacked = totalCount > 1;
         let toast;
         let containerClasses;
         if (totalCount !== 0) {
             const topToast = this.state.toasts[0];
-            const { title, icon, key, component, className, bodyClassName, props } = topToast;
+            const { title, icon, iconElement, key, component, className, bodyClassName, props } = topToast;
             const bodyClasses = classNames("mx_Toast_body", bodyClassName);
             const toastClasses = classNames("mx_Toast_toast", className, {
-                "mx_Toast_hasIcon": icon,
+                mx_Toast_hasIcon: icon || iconElement,
                 [`mx_Toast_icon_${icon}`]: icon,
             });
             const toastProps = Object.assign({}, props, {
@@ -70,7 +70,7 @@ export default class ToastContainer extends React.Component<{}, IState> {
             const content = React.createElement(component, toastProps);
 
             let countIndicator;
-            if (title && isStacked || this.state.countSeen > 0) {
+            if ((title && isStacked) || this.state.countSeen > 0) {
                 countIndicator = ` (${this.state.countSeen + 1}/${this.state.countSeen + totalCount})`;
             }
 
@@ -78,29 +78,28 @@ export default class ToastContainer extends React.Component<{}, IState> {
             if (title) {
                 titleElement = (
                     <div className="mx_Toast_title">
-                        <h2>{ title }</h2>
-                        <span className="mx_Toast_title_countIndicator">{ countIndicator }</span>
+                        <h2>{title}</h2>
+                        <span className="mx_Toast_title_countIndicator">{countIndicator}</span>
                     </div>
                 );
             }
 
             toast = (
                 <div className={toastClasses}>
-                    { titleElement }
-                    <div className={bodyClasses}>{ content }</div>
+                    {iconElement}
+                    {titleElement}
+                    <div className={bodyClasses}>{content}</div>
                 </div>
             );
 
             containerClasses = classNames("mx_ToastContainer", {
-                "mx_ToastContainer_stacked": isStacked,
+                mx_ToastContainer_stacked: isStacked,
             });
         }
-        return toast
-            ? (
-                <div className={containerClasses} role="alert">
-                    { toast }
-                </div>
-            )
-            : null;
+        return toast ? (
+            <div className={containerClasses} role="alert">
+                {toast}
+            </div>
+        ) : null;
     }
 }

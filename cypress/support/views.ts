@@ -54,11 +54,11 @@ declare global {
 }
 
 Cypress.Commands.add("viewRoomByName", (name: string): Chainable<JQuery<HTMLElement>> => {
-    return cy.get(`.mx_RoomTile[aria-label="${name}"]`).click();
+    return cy.findByRole("treeitem", { name: name }).should("have.class", "mx_RoomTile").click();
 });
 
 Cypress.Commands.add("getSpacePanelButton", (name: string): Chainable<JQuery<HTMLElement>> => {
-    return cy.get(`.mx_SpaceButton[aria-label="${name}"]`);
+    return cy.findByRole("button", { name: name }).should("have.class", "mx_SpaceButton");
 });
 
 Cypress.Commands.add("viewSpaceByName", (name: string): Chainable<JQuery<HTMLElement>> => {
@@ -70,4 +70,4 @@ Cypress.Commands.add("viewSpaceHomeByName", (name: string): Chainable<JQuery<HTM
 });
 
 // Needed to make this file a module
-export { };
+export {};

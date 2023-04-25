@@ -21,7 +21,7 @@ import { MatrixGlob } from "../utils/MatrixGlob";
 export const RECOMMENDATION_BAN = "m.ban";
 export const RECOMMENDATION_BAN_TYPES = [RECOMMENDATION_BAN, "org.matrix.mjolnir.ban"];
 
-export function recommendationToStable(recommendation: string, unstable = true): string {
+export function recommendationToStable(recommendation: string, unstable = true): string | null {
     if (RECOMMENDATION_BAN_TYPES.includes(recommendation)) {
         return unstable ? RECOMMENDATION_BAN_TYPES[RECOMMENDATION_BAN_TYPES.length - 1] : RECOMMENDATION_BAN;
     }
@@ -29,13 +29,13 @@ export function recommendationToStable(recommendation: string, unstable = true):
 }
 
 export class ListRule {
-    _glob: MatrixGlob;
-    _entity: string;
-    _action: string;
-    _reason: string;
-    _kind: string;
+    private _glob: MatrixGlob;
+    private readonly _entity: string;
+    private readonly _action: string | null;
+    private readonly _reason: string;
+    private readonly _kind: string;
 
-    constructor(entity: string, action: string, reason: string, kind: string) {
+    public constructor(entity: string, action: string, reason: string, kind: string) {
         this._glob = new MatrixGlob(entity);
         this._entity = entity;
         this._action = recommendationToStable(action, false);
@@ -43,23 +43,23 @@ export class ListRule {
         this._kind = kind;
     }
 
-    get entity(): string {
+    public get entity(): string {
         return this._entity;
     }
 
-    get reason(): string {
+    public get reason(): string {
         return this._reason;
     }
 
-    get kind(): string {
+    public get kind(): string {
         return this._kind;
     }
 
-    get recommendation(): string {
+    public get recommendation(): string | null {
         return this._action;
     }
 
-    isMatch(entity: string): boolean {
+    public isMatch(entity: string): boolean {
         return this._glob.test(entity);
     }
 }

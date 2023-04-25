@@ -22,6 +22,7 @@ import React from "react";
 import { AccountAuthInfo } from "@matrix-org/react-sdk-module-api/lib/types/AccountAuthInfo";
 import { PlainSubstitution } from "@matrix-org/react-sdk-module-api/lib/types/translations";
 import * as Matrix from "matrix-js-sdk/src/matrix";
+import { IRegisterRequestParams } from "matrix-js-sdk/src/matrix";
 
 import Modal from "../Modal";
 import { _t } from "../languageHandler";
@@ -35,6 +36,7 @@ import { MatrixClientPeg } from "../MatrixClientPeg";
 import { getCachedRoomIDForAlias } from "../RoomAliasCache";
 import { Action } from "../dispatcher/actions";
 import { OverwriteLoginPayload } from "../dispatcher/payloads/OverwriteLoginPayload";
+import { ActionPayload } from "../dispatcher/payloads";
 
 /**
  * Glue between the `ModuleApi` interface and the react-sdk. Anticipates one instance
@@ -42,6 +44,18 @@ import { OverwriteLoginPayload } from "../dispatcher/payloads/OverwriteLoginPayl
  */
 export class ProxiedModuleApi implements ModuleApi {
     private cachedTranslations: Optional<TranslationStringsObject>;
+
+    private overrideLoginResolve?: () => void;
+
+    public constructor() {
+        dispatcher.register(this.onAction);
+    }
+
+    private onAction = (payload: ActionPayload): void => {
+        if (payload.action === Action.OnLoggedIn) {
+            this.overrideLoginResolve?.();
+        }
+    };
 
     /**
      * All custom translations used by the associated module.
@@ -74,16 +88,20 @@ export class ProxiedModuleApi implements ModuleApi {
     >(
         title: string,
         body: (props: P, ref: React.RefObject<C>) => React.ReactNode,
-    ): Promise<{ didOkOrSubmit: boolean, model: M }> {
-        return new Promise<{ didOkOrSubmit: boolean, model: M }>((resolve) => {
-            Modal.createDialog(ModuleUiDialog, {
-                title: title,
-                contentFactory: body,
-                contentProps: <DialogProps>{
-                    moduleApi: this,
+    ): Promise<{ didOkOrSubmit: boolean; model: M }> {
+        return new Promise<{ didOkOrSubmit: boolean; model: M }>((resolve) => {
+            Modal.createDialog(
+                ModuleUiDialog,
+                {
+                    title: title,
+                    contentFactory: body,
+                    contentProps: <DialogProps>{
+                        moduleApi: this,
+                    },
                 },
-            }, "mx_CompoundDialog").finished.then(([didOkOrSubmit, model]) => {
-                resolve({ didOkOrSubmit, model });
+                "mx_CompoundDialog",
+            ).finished.then(([didOkOrSubmit, model]) => {
+                resolve({ didOkOrSubmit: !!didOkOrSubmit, model: model as M });
             });
         });
     }
@@ -96,24 +114,27 @@ export class ProxiedModuleApi implements ModuleApi {
         password: string,
         displayName?: string,
     ): Promise<AccountAuthInfo> {
-        const hsUrl = SdkConfig.get("validated_server_config").hsUrl;
+        const hsUrl = SdkConfig.get("validated_server_config")?.hsUrl;
+        if (!hsUrl) throw new Error("Could not get homeserver url");
         const client = Matrix.createClient({ baseUrl: hsUrl });
-        const deviceName = SdkConfig.get("default_device_display_name")
-            || PlatformPeg.get().getDefaultDeviceDisplayName();
-        const req = {
+        const deviceName =
+            SdkConfig.get("default_device_display_name") || PlatformPeg.get()?.getDefaultDeviceDisplayName();
+        const req: IRegisterRequestParams = {
             username,
             password,
             initial_device_display_name: deviceName,
             auth: undefined,
             inhibit_login: false,
         };
-        const creds = await (client.registerRequest(req).catch(resp => client.registerRequest({
-            ...req,
-            auth: {
-                session: resp.data.session,
-                type: "m.login.dummy",
-            },
-        })));
+        const creds = await client.registerRequest(req).catch((resp) =>
+            client.registerRequest({
+                ...req,
+                auth: {
+                    session: resp.data.session,
+                    type: "m.login.dummy",
+                },
+            }),
+        );
 
         if (displayName) {
             const profileClient = Matrix.createClient({
@@ -127,9 +148,9 @@ export class ProxiedModuleApi implements ModuleApi {
 
         return {
             homeserverUrl: hsUrl,
-            userId: creds.user_id,
-            deviceId: creds.device_id,
-            accessToken: creds.access_token,
+            userId: creds.user_id!,
+            deviceId: creds.device_id!,
+            accessToken: creds.access_token!,
         };
     }
 
@@ -137,13 +158,21 @@ export class ProxiedModuleApi implements ModuleApi {
      * @override
      */
     public async overwriteAccountAuth(accountInfo: AccountAuthInfo): Promise<void> {
-        dispatcher.dispatch<OverwriteLoginPayload>({
-            action: Action.OverwriteLogin,
-            credentials: {
-                ...accountInfo,
-                guest: false,
+        dispatcher.dispatch<OverwriteLoginPayload>(
+            {
+                action: Action.OverwriteLogin,
+                credentials: {
+                    ...accountInfo,
+                    guest: false,
+                },
             },
-        }, true); // require to be sync to match inherited interface behaviour
+            true,
+        ); // require to be sync to match inherited interface behaviour
+
+        // wait for login to complete
+        await new Promise<void>((resolve) => {
+            this.overrideLoginResolve = resolve;
+        });
     }
 
     /**
@@ -153,8 +182,8 @@ export class ProxiedModuleApi implements ModuleApi {
         navigateToPermalink(uri);
 
         const parts = parsePermalink(uri);
-        if (parts.roomIdOrAlias && andJoin) {
-            let roomId = parts.roomIdOrAlias;
+        if (parts?.roomIdOrAlias && andJoin) {
+            let roomId: string | undefined = parts.roomIdOrAlias;
             let servers = parts.viaServers;
             if (roomId.startsWith("#")) {
                 roomId = getCachedRoomIDForAlias(parts.roomIdOrAlias);

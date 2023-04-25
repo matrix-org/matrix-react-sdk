@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import React, { createRef } from "react";
 import {
     AuthType,
     IAuthData,
@@ -23,26 +24,23 @@ import {
     IStageStatus,
 } from "matrix-js-sdk/src/interactive-auth";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import React, { createRef } from 'react';
 import { logger } from "matrix-js-sdk/src/logger";
+import { UIAResponse } from "matrix-js-sdk/src/@types/uia";
 
-import getEntryComponentForLoginType, { IStageComponent } from '../views/auth/InteractiveAuthEntryComponents';
+import getEntryComponentForLoginType, { IStageComponent } from "../views/auth/InteractiveAuthEntryComponents";
 import Spinner from "../views/elements/Spinner";
 
 export const ERROR_USER_CANCELLED = new Error("User cancelled auth session");
 
 type InteractiveAuthCallbackSuccess = (
     success: true,
-    response: IAuthData,
-    extra?: { emailSid?: string, clientSecret?: string }
+    response?: IAuthData,
+    extra?: { emailSid?: string; clientSecret?: string },
 ) => void;
-type InteractiveAuthCallbackFailure = (
-    success: false,
-    response: IAuthData | Error,
-) => void;
+type InteractiveAuthCallbackFailure = (success: false, response: IAuthData | Error) => void;
 export type InteractiveAuthCallback = InteractiveAuthCallbackSuccess & InteractiveAuthCallbackFailure;
 
-interface IProps {
+export interface InteractiveAuthProps<T> {
     // matrix client to use for UI auth requests
     matrixClient: MatrixClient;
     // response from initial request. If not supplied, will do a request on mount.
@@ -64,7 +62,7 @@ interface IProps {
     continueText?: string;
     continueKind?: string;
     // callback
-    makeRequest(auth: IAuthData): Promise<IAuthData>;
+    makeRequest(auth?: IAuthData): Promise<UIAResponse<T>>;
     // callback called when the auth process has finished,
     // successfully or unsuccessfully.
     // @param {boolean} status True if the operation requiring
@@ -83,7 +81,7 @@ interface IProps {
     // Called when the stage changes, or the stage's phase changes. First
     // argument is the stage, second is the phase. Some stages do not have
     // phases and will be counted as 0 (numeric).
-    onStagePhaseChange?(stage: string, phase: string | number): void;
+    onStagePhaseChange?(stage: AuthType | null, phase: number): void;
 }
 
 interface IState {
@@ -95,21 +93,18 @@ interface IState {
     submitButtonEnabled: boolean;
 }
 
-export default class InteractiveAuthComponent extends React.Component<IProps, IState> {
+export default class InteractiveAuthComponent<T> extends React.Component<InteractiveAuthProps<T>, IState> {
     private readonly authLogic: InteractiveAuth;
-    private readonly intervalId: number = null;
+    private readonly intervalId: number | null = null;
     private readonly stageComponent = createRef<IStageComponent>();
 
     private unmounted = false;
 
-    constructor(props) {
+    public constructor(props: InteractiveAuthProps<T>) {
         super(props);
 
         this.state = {
-            authStage: null,
             busy: false,
-            errorText: null,
-            errorCode: null,
             submitButtonEnabled: false,
         };
 
@@ -127,36 +122,38 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
         });
 
         if (this.props.poll) {
-            this.intervalId = setInterval(() => {
+            this.intervalId = window.setInterval(() => {
                 this.authLogic.poll();
             }, 2000);
         }
     }
 
-    // TODO: [REACT-WARNING] Replace component with real class, use constructor for refs
-    UNSAFE_componentWillMount() { // eslint-disable-line @typescript-eslint/naming-convention, camelcase
-        this.authLogic.attemptAuth().then((result) => {
-            const extra = {
-                emailSid: this.authLogic.getEmailSid(),
-                clientSecret: this.authLogic.getClientSecret(),
-            };
-            this.props.onAuthFinished(true, result, extra);
-        }).catch((error) => {
-            this.props.onAuthFinished(false, error);
-            logger.error("Error during user-interactive auth:", error);
-            if (this.unmounted) {
-                return;
-            }
+    public componentDidMount(): void {
+        this.authLogic
+            .attemptAuth()
+            .then((result) => {
+                const extra = {
+                    emailSid: this.authLogic.getEmailSid(),
+                    clientSecret: this.authLogic.getClientSecret(),
+                };
+                this.props.onAuthFinished(true, result, extra);
+            })
+            .catch((error) => {
+                this.props.onAuthFinished(false, error);
+                logger.error("Error during user-interactive auth:", error);
+                if (this.unmounted) {
+                    return;
+                }
 
-            const msg = error.message || error.toString();
-            this.setState({
-                errorText: msg,
-                errorCode: error.errcode,
+                const msg = error.message || error.toString();
+                this.setState({
+                    errorText: msg,
+                    errorCode: error.errcode,
+                });
             });
-        });
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.unmounted = true;
 
         if (this.intervalId !== null) {
@@ -169,12 +166,13 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
         secret: string,
         attempt: number,
         session: string,
-    ): Promise<{sid: string}> => {
+    ): Promise<{ sid: string }> => {
         this.setState({
             busy: true,
         });
         try {
-            return await this.props.requestEmailToken(email, secret, attempt, session);
+            // We know this method only gets called on flows where requestEmailToken is passed but types don't
+            return await this.props.requestEmailToken!(email, secret, attempt, session);
         } finally {
             this.setState({
                 busy: false,
@@ -184,22 +182,25 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
 
     private authStateUpdated = (stageType: AuthType, stageState: IStageStatus): void => {
         const oldStage = this.state.authStage;
-        this.setState({
-            busy: false,
-            authStage: stageType,
-            stageState: stageState,
-            errorText: stageState.error,
-            errorCode: stageState.errcode,
-        }, () => {
-            if (oldStage !== stageType) {
-                this.setFocus();
-            } else if (!stageState.error) {
-                this.stageComponent.current?.attemptFailed?.();
-            }
-        });
+        this.setState(
+            {
+                busy: false,
+                authStage: stageType,
+                stageState: stageState,
+                errorText: stageState.error,
+                errorCode: stageState.errcode,
+            },
+            () => {
+                if (oldStage !== stageType) {
+                    this.setFocus();
+                } else if (!stageState.error) {
+                    this.stageComponent.current?.attemptFailed?.();
+                }
+            },
+        );
     };
 
-    private requestCallback = (auth: IAuthData, background: boolean): Promise<IAuthData> => {
+    private requestCallback = (auth: IAuthData | null, background: boolean): Promise<IAuthData> => {
         // This wrapper just exists because the js-sdk passes a second
         // 'busy' param for backwards compat. This throws the tests off
         // so discard it here.
@@ -211,8 +212,8 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
         if (busy) {
             this.setState({
                 busy: true,
-                errorText: null,
-                errorCode: null,
+                errorText: undefined,
+                errorCode: undefined,
             });
         }
         // The JS SDK eagerly reports itself as "not busy" right after any
@@ -232,7 +233,7 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
     };
 
     private onPhaseChange = (newPhase: number): void => {
-        this.props.onStagePhaseChange?.(this.state.authStage, newPhase || 0);
+        this.props.onStagePhaseChange?.(this.state.authStage ?? null, newPhase || 0);
     };
 
     private onStageCancel = (): void => {
@@ -247,7 +248,7 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
         this.authLogic.setEmailSid(sid);
     };
 
-    render() {
+    public render(): React.ReactNode {
         const stage = this.state.authStage;
         if (!stage) {
             if (this.state.busy) {

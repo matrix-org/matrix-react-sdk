@@ -31,4 +31,3 @@ export class BlurhashEncoder {
         return this.worker.call({ imageData }).then(resp => resp.blurhash);
     }
 }
-

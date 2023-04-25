@@ -14,54 +14,96 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-// eslint-disable-next-line deprecate/import
-import { mount } from 'enzyme';
-import { mocked } from 'jest-mock';
+import React, { ReactElement } from "react";
+import { mocked } from "jest-mock";
+import { render, screen } from "@testing-library/react";
+import { IContent } from "matrix-js-sdk/src/models/event";
 
-import { topicToHtml } from '../src/HtmlUtils';
-import SettingsStore from '../src/settings/SettingsStore';
+import { bodyToHtml, topicToHtml } from "../src/HtmlUtils";
+import SettingsStore from "../src/settings/SettingsStore";
 
 jest.mock("../src/settings/SettingsStore");
 
 const enableHtmlTopicFeature = () => {
-    mocked(SettingsStore).getValue.mockImplementation((arg) => {
+    mocked(SettingsStore).getValue.mockImplementation((arg): any => {
         return arg === "feature_html_topic";
     });
 };
 
-describe('HtmlUtils', () => {
-    it('converts plain text topic to HTML', () => {
-        const component = mount(<div>{ topicToHtml("pizza", null, null, false) }</div>);
-        const wrapper = component.render();
-        expect(wrapper.children().first().html()).toEqual("pizza");
+describe("topicToHtml", () => {
+    function getContent() {
+        return screen.getByRole("contentinfo").children[0].innerHTML;
+    }
+
+    it("converts plain text topic to HTML", () => {
+        render(<div role="contentinfo">{topicToHtml("pizza", undefined, null, false)}</div>);
+        expect(getContent()).toEqual("pizza");
     });
 
-    it('converts plain text topic with emoji to HTML', () => {
-        const component = mount(<div>{ topicToHtml("pizza 🍕", null, null, false) }</div>);
-        const wrapper = component.render();
-        expect(wrapper.children().first().html()).toEqual("pizza <span class=\"mx_Emoji\" title=\":pizza:\">🍕</span>");
+    it("converts plain text topic with emoji to HTML", () => {
+        render(<div role="contentinfo">{topicToHtml("pizza 🍕", undefined, null, false)}</div>);
+        expect(getContent()).toEqual('pizza <span class="mx_Emoji" title=":pizza:">🍕</span>');
     });
 
-    it('converts literal HTML topic to HTML', async () => {
+    it("converts literal HTML topic to HTML", async () => {
         enableHtmlTopicFeature();
-        const component = mount(<div>{ topicToHtml("<b>pizza</b>", null, null, false) }</div>);
-        const wrapper = component.render();
-        expect(wrapper.children().first().html()).toEqual("&lt;b&gt;pizza&lt;/b&gt;");
+        render(<div role="contentinfo">{topicToHtml("<b>pizza</b>", undefined, null, false)}</div>);
+        expect(getContent()).toEqual("&lt;b&gt;pizza&lt;/b&gt;");
     });
 
-    it('converts true HTML topic to HTML', async () => {
+    it("converts true HTML topic to HTML", async () => {
         enableHtmlTopicFeature();
-        const component = mount(<div>{ topicToHtml("**pizza**", "<b>pizza</b>", null, false) }</div>);
-        const wrapper = component.render();
-        expect(wrapper.children().first().html()).toEqual("<b>pizza</b>");
+        render(<div role="contentinfo">{topicToHtml("**pizza**", "<b>pizza</b>", null, false)}</div>);
+        expect(getContent()).toEqual("<b>pizza</b>");
     });
 
-    it('converts true HTML topic with emoji to HTML', async () => {
+    it("converts true HTML topic with emoji to HTML", async () => {
         enableHtmlTopicFeature();
-        const component = mount(<div>{ topicToHtml("**pizza** 🍕", "<b>pizza</b> 🍕", null, false) }</div>);
-        const wrapper = component.render();
-        expect(wrapper.children().first().html())
-            .toEqual("<b>pizza</b> <span class=\"mx_Emoji\" title=\":pizza:\">🍕</span>");
+        render(<div role="contentinfo">{topicToHtml("**pizza** 🍕", "<b>pizza</b> 🍕", null, false)}</div>);
+        expect(getContent()).toEqual('<b>pizza</b> <span class="mx_Emoji" title=":pizza:">🍕</span>');
+    });
+});
+
+describe("bodyToHtml", () => {
+    function getHtml(content: IContent, highlights?: string[]): string {
+        return (bodyToHtml(content, highlights, {}) as ReactElement).props.dangerouslySetInnerHTML.__html;
+    }
+
+    it("should apply highlights to HTML messages", () => {
+        const html = getHtml(
+            {
+                body: "test **foo** bar",
+                msgtype: "m.text",
+                formatted_body: "test <b>foo</b> bar",
+                format: "org.matrix.custom.html",
+            },
+            ["test"],
+        );
+
+        expect(html).toMatchInlineSnapshot(`"<span class="mx_EventTile_searchHighlight">test</span> <b>foo</b> bar"`);
+    });
+
+    it("should apply highlights to plaintext messages", () => {
+        const html = getHtml(
+            {
+                body: "test foo bar",
+                msgtype: "m.text",
+            },
+            ["test"],
+        );
+
+        expect(html).toMatchInlineSnapshot(`"<span class="mx_EventTile_searchHighlight">test</span> foo bar"`);
+    });
+
+    it("should not respect HTML tags in plaintext message highlighting", () => {
+        const html = getHtml(
+            {
+                body: "test foo <b>bar",
+                msgtype: "m.text",
+            },
+            ["test"],
+        );
+
+        expect(html).toMatchInlineSnapshot(`"<span class="mx_EventTile_searchHighlight">test</span> foo &lt;b&gt;bar"`);
     });
 });

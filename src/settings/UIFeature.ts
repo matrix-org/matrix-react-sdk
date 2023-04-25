@@ -31,6 +31,7 @@ export enum UIFeature {
     AdvancedSettings = "UIFeature.advancedSettings",
     RoomHistorySettings = "UIFeature.roomHistorySettings",
     TimelineEnableRelativeDates = "UIFeature.timelineEnableRelativeDates",
+    BulkUnverifiedSessionsReminder = "UIFeature.BulkUnverifiedSessionsReminder",
 }
 
 export enum UIComponent {
@@ -63,4 +64,9 @@ export enum UIComponent {
      * and integrations to the room, such as from the room information card.
      */
     AddIntegrations = "UIComponent.addIntegrations",
+
+    /**
+     * Component that lead to the user being able to search, dial, explore rooms
+     */
+    FilterContainer = "UIComponent.filterContainer",
 }

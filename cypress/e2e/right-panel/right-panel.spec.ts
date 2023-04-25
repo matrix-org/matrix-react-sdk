@@ -16,7 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import Chainable = Cypress.Chainable;
 
 const ROOM_NAME = "Test room";
@@ -25,10 +25,6 @@ const NAME = "Alice";
 
 const getMemberTileByName = (name: string): Chainable<JQuery<HTMLElement>> => {
     return cy.get(`.mx_EntityTile, [title="${name}"]`);
-};
-
-const goBack = (): Chainable<JQuery<HTMLElement>> => {
-    return cy.get(".mx_BaseCard_back").click();
 };
 
 const viewRoomSummaryByName = (name: string): Chainable<JQuery<HTMLElement>> => {
@@ -43,12 +39,12 @@ const checkRoomSummaryCard = (name: string): Chainable<JQuery<HTMLElement>> => {
 };
 
 describe("RightPanel", () => {
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
 
     beforeEach(() => {
-        cy.startSynapse("default").then(data => {
-            synapse = data;
-            cy.initTestUser(synapse, NAME).then(() =>
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
+            cy.initTestUser(homeserver, NAME).then(() =>
                 cy.window({ log: false }).then(() => {
                     cy.createRoom({ name: ROOM_NAME });
                     cy.createSpace({ name: SPACE_NAME });
@@ -58,64 +54,69 @@ describe("RightPanel", () => {
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
     });
 
     describe("in rooms", () => {
         it("should handle clicking add widgets", () => {
             viewRoomSummaryByName(ROOM_NAME);
 
-            cy.get(".mx_RoomSummaryCard_appsGroup .mx_AccessibleButton").click();
+            cy.findByRole("button", { name: "Add widgets, bridges & bots" }).click();
             cy.get(".mx_IntegrationManager").should("have.length", 1);
         });
 
         it("should handle viewing export chat", () => {
             viewRoomSummaryByName(ROOM_NAME);
 
-            cy.get(".mx_RoomSummaryCard_icon_export").click();
+            cy.findByRole("button", { name: "Export chat" }).click();
             cy.get(".mx_ExportDialog").should("have.length", 1);
         });
 
         it("should handle viewing share room", () => {
             viewRoomSummaryByName(ROOM_NAME);
 
-            cy.get(".mx_RoomSummaryCard_icon_share").click();
+            cy.findByRole("button", { name: "Share room" }).click();
             cy.get(".mx_ShareDialog").should("have.length", 1);
         });
 
         it("should handle viewing room settings", () => {
             viewRoomSummaryByName(ROOM_NAME);
 
-            cy.get(".mx_RoomSummaryCard_icon_settings").click();
+            cy.findByRole("button", { name: "Room settings" }).click();
             cy.get(".mx_RoomSettingsDialog").should("have.length", 1);
-            cy.get(".mx_Dialog_title").should("contain", ROOM_NAME);
+            cy.get(".mx_Dialog_title").within(() => {
+                cy.findByText("Room Settings - " + ROOM_NAME).should("exist");
+            });
         });
 
         it("should handle viewing files", () => {
             viewRoomSummaryByName(ROOM_NAME);
 
-            cy.get(".mx_RoomSummaryCard_icon_files").click();
+            cy.findByRole("button", { name: "Files" }).click();
             cy.get(".mx_FilePanel").should("have.length", 1);
             cy.get(".mx_FilePanel_empty").should("have.length", 1);
 
-            goBack();
+            cy.findByRole("button", { name: "Room information" }).click();
             checkRoomSummaryCard(ROOM_NAME);
         });
 
         it("should handle viewing room member", () => {
             viewRoomSummaryByName(ROOM_NAME);
 
-            cy.get(".mx_RoomSummaryCard_icon_people").click();
+            // \d represents the number of the room members inside mx_BaseCard_Button_sublabel
+            cy.findByRole("button", { name: /People \d/ }).click();
             cy.get(".mx_MemberList").should("have.length", 1);
 
             getMemberTileByName(NAME).click();
             cy.get(".mx_UserInfo").should("have.length", 1);
-            cy.get(".mx_UserInfo_profile").should("contain", NAME);
+            cy.get(".mx_UserInfo_profile").within(() => {
+                cy.findByText(NAME);
+            });
 
-            goBack();
+            cy.findByRole("button", { name: "Room members" }).click();
             cy.get(".mx_MemberList").should("have.length", 1);
 
-            goBack();
+            cy.findByRole("button", { name: "Room information" }).click();
             checkRoomSummaryCard(ROOM_NAME);
         });
     });
@@ -123,16 +124,26 @@ describe("RightPanel", () => {
     describe("in spaces", () => {
         it("should handle viewing space member", () => {
             cy.viewSpaceHomeByName(SPACE_NAME);
-            cy.get(".mx_RoomInfoLine_members").click();
+
+            cy.get(".mx_RoomInfoLine_private").within(() => {
+                // \d represents the number of the space members
+                cy.findByRole("button", { name: /\d member/ }).click();
+            });
             cy.get(".mx_MemberList").should("have.length", 1);
-            cy.get(".mx_RightPanel_scopeHeader").should("contain", SPACE_NAME);
+            cy.get(".mx_RightPanel_scopeHeader").within(() => {
+                cy.findByText(SPACE_NAME);
+            });
 
             getMemberTileByName(NAME).click();
             cy.get(".mx_UserInfo").should("have.length", 1);
-            cy.get(".mx_UserInfo_profile").should("contain", NAME);
-            cy.get(".mx_RightPanel_scopeHeader").should("contain", SPACE_NAME);
+            cy.get(".mx_UserInfo_profile").within(() => {
+                cy.findByText(NAME);
+            });
+            cy.get(".mx_RightPanel_scopeHeader").within(() => {
+                cy.findByText(SPACE_NAME);
+            });
 
-            goBack();
+            cy.findByRole("button", { name: "Back" }).click();
             cy.get(".mx_MemberList").should("have.length", 1);
         });
     });

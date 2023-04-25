@@ -114,7 +114,7 @@ limitations under the License.
 
     > span {
         color: $primary-content;
-        font-weight: 600;
+        font-weight: var(--font-semi-bold);
     }
 
     > p {
@@ -277,7 +277,7 @@ limitations under the License.
 
         input {
             font-size: 18px;
-            font-weight: 600;
+            font-weight: var(--font-semi-bold);
             padding-top: 0;
         }
 
@@ -313,11 +313,11 @@ limitations under the License.
 }
 
 .mx_InviteDialog_userDirectoryIcon::before {
-    mask-image: url('$(res)/img/voip/tab-userdirectory.svg');
+    mask-image: url("$(res)/img/voip/tab-userdirectory.svg");
 }
 
 .mx_InviteDialog_dialPadIcon::before {
-    mask-image: url('$(res)/img/voip/tab-dialpad.svg');
+    mask-image: url("$(res)/img/voip/tab-dialpad.svg");
 }
 
 .mx_InviteDialog_tile {
@@ -429,7 +429,7 @@ limitations under the License.
 
         .mx_InviteDialog_tile_nameStack_name {
             font-size: $font-15px;
-            font-weight: $font-semi-bold;
+            font-weight: var(--font-semi-bold);
             color: $primary-content;
         }
 
@@ -451,4 +451,9 @@ limitations under the License.
 
 .mx_InviteDialog_identityServer {
     margin-top: 1em; /* TODO: Use a spacing variable */
+}
+
+.mx_InviteDialog_oneThreepid {
+    font-size: $font-12px;
+    margin: $spacing-8 0;
 }

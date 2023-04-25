@@ -7,6 +7,24 @@ exports[`<DeviceTile /> renders a device with no metadata 1`] = `
     data-testid="device-tile-123"
   >
     <div
+      class="mx_DeviceTypeIcon"
+    >
+      <div
+        class="mx_DeviceTypeIcon_deviceIconWrapper"
+      >
+        <div
+          aria-label="Unknown session type"
+          class="mx_DeviceTypeIcon_deviceIcon"
+          role="img"
+        />
+      </div>
+      <div
+        aria-label="Unverified"
+        class="mx_DeviceTypeIcon_verificationIcon unverified"
+        role="img"
+      />
+    </div>
+    <div
       class="mx_DeviceTile_info"
     >
       <h4
@@ -23,7 +41,11 @@ exports[`<DeviceTile /> renders a device with no metadata 1`] = `
           Unverified
         </span>
          · 
-         · 
+        <span
+          data-testid="device-metadata-deviceId"
+        >
+          123
+        </span>
       </div>
     </div>
     <div
@@ -40,6 +62,24 @@ exports[`<DeviceTile /> renders a verified device with no metadata 1`] = `
     data-testid="device-tile-123"
   >
     <div
+      class="mx_DeviceTypeIcon"
+    >
+      <div
+        class="mx_DeviceTypeIcon_deviceIconWrapper"
+      >
+        <div
+          aria-label="Unknown session type"
+          class="mx_DeviceTypeIcon_deviceIcon"
+          role="img"
+        />
+      </div>
+      <div
+        aria-label="Unverified"
+        class="mx_DeviceTypeIcon_verificationIcon unverified"
+        role="img"
+      />
+    </div>
+    <div
       class="mx_DeviceTile_info"
     >
       <h4
@@ -56,7 +96,11 @@ exports[`<DeviceTile /> renders a verified device with no metadata 1`] = `
           Unverified
         </span>
          · 
-         · 
+        <span
+          data-testid="device-metadata-deviceId"
+        >
+          123
+        </span>
       </div>
     </div>
     <div
@@ -73,17 +117,31 @@ exports[`<DeviceTile /> renders display name with a tooltip 1`] = `
     data-testid="device-tile-123"
   >
     <div
-      class="mx_DeviceTile_info"
+      class="mx_DeviceTypeIcon"
     >
       <div
-        tabindex="0"
+        class="mx_DeviceTypeIcon_deviceIconWrapper"
       >
-        <h4
-          class="mx_Heading_h4"
-        >
-          My device
-        </h4>
+        <div
+          aria-label="Unknown session type"
+          class="mx_DeviceTypeIcon_deviceIcon"
+          role="img"
+        />
       </div>
+      <div
+        aria-label="Unverified"
+        class="mx_DeviceTypeIcon_verificationIcon unverified"
+        role="img"
+      />
+    </div>
+    <div
+      class="mx_DeviceTile_info"
+    >
+      <h4
+        class="mx_Heading_h4"
+      >
+        My device
+      </h4>
       <div
         class="mx_DeviceTile_metadata"
       >
@@ -93,7 +151,11 @@ exports[`<DeviceTile /> renders display name with a tooltip 1`] = `
           Unverified
         </span>
          · 
-         · 
+        <span
+          data-testid="device-metadata-deviceId"
+        >
+          123
+        </span>
       </div>
     </div>
     <div
@@ -109,6 +171,24 @@ exports[`<DeviceTile /> separates metadata with a dot 1`] = `
     class="mx_DeviceTile"
     data-testid="device-tile-123"
   >
+    <div
+      class="mx_DeviceTypeIcon"
+    >
+      <div
+        class="mx_DeviceTypeIcon_deviceIconWrapper"
+      >
+        <div
+          aria-label="Unknown session type"
+          class="mx_DeviceTypeIcon_deviceIcon"
+          role="img"
+        />
+      </div>
+      <div
+        aria-label="Unverified"
+        class="mx_DeviceTypeIcon_verificationIcon unverified"
+        role="img"
+      />
+    </div>
     <div
       class="mx_DeviceTile_info"
     >
@@ -136,6 +216,12 @@ exports[`<DeviceTile /> separates metadata with a dot 1`] = `
           data-testid="device-metadata-lastSeenIp"
         >
           1.2.3.4
+        </span>
+         · 
+        <span
+          data-testid="device-metadata-deviceId"
+        >
+          123
         </span>
       </div>
     </div>

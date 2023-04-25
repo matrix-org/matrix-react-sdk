@@ -17,40 +17,41 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import url from 'url';
-import React, { ContextType, createRef, MutableRefObject } from 'react';
-import classNames from 'classnames';
+import url from "url";
+import React, { ContextType, createRef, CSSProperties, MutableRefObject, ReactNode } from "react";
+import classNames from "classnames";
 import { MatrixCapabilities } from "matrix-widget-api";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
+import { ApprovalOpts, WidgetLifecycle } from "@matrix-org/react-sdk-module-api/lib/lifecycles/WidgetLifecycle";
 
-import AccessibleButton from './AccessibleButton';
-import { _t } from '../../../languageHandler';
-import AppPermission from './AppPermission';
-import AppWarning from './AppWarning';
-import Spinner from './Spinner';
-import dis from '../../../dispatcher/dispatcher';
-import ActiveWidgetStore from '../../../stores/ActiveWidgetStore';
+import AccessibleButton from "./AccessibleButton";
+import { _t } from "../../../languageHandler";
+import AppPermission from "./AppPermission";
+import AppWarning from "./AppWarning";
+import Spinner from "./Spinner";
+import dis from "../../../dispatcher/dispatcher";
+import ActiveWidgetStore from "../../../stores/ActiveWidgetStore";
 import SettingsStore from "../../../settings/SettingsStore";
 import { aboveLeftOf, ContextMenuButton } from "../../structures/ContextMenu";
 import PersistedElement, { getPersistKey } from "./PersistedElement";
 import { WidgetType } from "../../../widgets/WidgetType";
 import { ElementWidget, StopGapWidget } from "../../../stores/widgets/StopGapWidget";
-import { ElementWidgetActions } from "../../../stores/widgets/ElementWidgetActions";
-import WidgetContextMenu from "../context_menus/WidgetContextMenu";
+import { WidgetContextMenu } from "../context_menus/WidgetContextMenu";
 import WidgetAvatar from "../avatars/WidgetAvatar";
-import CallHandler from '../../../CallHandler';
+import LegacyCallHandler from "../../../LegacyCallHandler";
 import { IApp } from "../../../stores/WidgetStore";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
-import { OwnProfileStore } from '../../../stores/OwnProfileStore';
-import { UPDATE_EVENT } from '../../../stores/AsyncStore';
-import { RoomViewStore } from '../../../stores/RoomViewStore';
-import WidgetUtils from '../../../utils/WidgetUtils';
+import { OwnProfileStore } from "../../../stores/OwnProfileStore";
+import { UPDATE_EVENT } from "../../../stores/AsyncStore";
+import WidgetUtils from "../../../utils/WidgetUtils";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { ActionPayload } from "../../../dispatcher/payloads";
-import { Action } from '../../../dispatcher/actions';
-import { ElementWidgetCapabilities } from '../../../stores/widgets/ElementWidgetCapabilities';
-import { WidgetMessagingStore } from '../../../stores/widgets/WidgetMessagingStore';
+import { Action } from "../../../dispatcher/actions";
+import { ElementWidgetCapabilities } from "../../../stores/widgets/ElementWidgetCapabilities";
+import { WidgetMessagingStore } from "../../../stores/widgets/WidgetMessagingStore";
+import { SdkContextClass } from "../../../contexts/SDKContext";
+import { ModuleRunner } from "../../../modules/ModuleRunner";
 
 interface IProps {
     app: IApp;
@@ -82,11 +83,11 @@ interface IProps {
     // Is this an instance of a user widget
     userWidget: boolean;
     // sets the pointer-events property on the iframe
-    pointerEvents?: string;
+    pointerEvents?: CSSProperties["pointerEvents"];
     widgetPageTitle?: string;
     showLayoutButtons?: boolean;
     // Handle to manually notify the PersistedElement that it needs to move
-    movePersistedElement?: MutableRefObject<() => void>;
+    movePersistedElement?: MutableRefObject<(() => void) | undefined>;
 }
 
 interface IState {
@@ -98,15 +99,14 @@ interface IState {
     hasPermissionToLoad: boolean;
     // Wait for user profile load to display correct name
     isUserProfileReady: boolean;
-    error: Error;
+    error: Error | null;
     menuDisplayed: boolean;
-    widgetPageTitle: string;
     requiresClient: boolean;
 }
 
 export default class AppTile extends React.Component<IProps, IState> {
     public static contextType = MatrixClientContext;
-    context: ContextType<typeof MatrixClientContext>;
+    public context: ContextType<typeof MatrixClientContext>;
 
     public static defaultProps: Partial<IProps> = {
         waitForIframeLoad: true,
@@ -124,11 +124,11 @@ export default class AppTile extends React.Component<IProps, IState> {
     private iframe: HTMLIFrameElement; // ref to the iframe (callback style)
     private allowedWidgetsWatchRef: string;
     private persistKey: string;
-    private sgWidget: StopGapWidget;
+    private sgWidget: StopGapWidget | null;
     private dispatcherRef: string;
     private unmounted: boolean;
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         // Tiles in miniMode are floating, and therefore not docked
@@ -149,7 +149,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         this.state = this.getNewState(props);
     }
 
-    private watchUserReady = () => {
+    private watchUserReady = (): void => {
         if (OwnProfileStore.instance.isProfileInfoFetched) {
             return;
         }
@@ -164,21 +164,23 @@ export default class AppTile extends React.Component<IProps, IState> {
     private hasPermissionToLoad = (props: IProps): boolean => {
         if (this.usingLocalWidget()) return true;
         if (!props.room) return true; // user widgets always have permissions
+        const opts: ApprovalOpts = { approved: undefined };
+        ModuleRunner.instance.invoke(WidgetLifecycle.PreLoadRequest, opts, new ElementWidget(this.props.app));
+        if (opts.approved) return true;
 
         const currentlyAllowedWidgets = SettingsStore.getValue("allowedWidgets", props.room.roomId);
-        if (currentlyAllowedWidgets[props.app.eventId] === undefined) {
-            return props.userId === props.creatorUserId;
-        }
-        return !!currentlyAllowedWidgets[props.app.eventId];
+        const allowed = props.app.eventId !== undefined && (currentlyAllowedWidgets[props.app.eventId] ?? false);
+        return allowed || props.userId === props.creatorUserId;
     };
 
-    private onUserLeftRoom() {
+    private onUserLeftRoom(): void {
         const isActiveWidget = ActiveWidgetStore.instance.getWidgetPersistence(
-            this.props.app.id, this.props.app.roomId,
+            this.props.app.id,
+            this.props.app.roomId,
         );
         if (isActiveWidget) {
             // We just left the room that the active widget was from.
-            if (this.props.room && RoomViewStore.instance.getRoomId() !== this.props.room.roomId) {
+            if (this.props.room && SdkContextClass.instance.roomViewStore.getRoomId() !== this.props.room.roomId) {
                 // If we are not actively looking at the room then destroy this widget entirely.
                 this.endWidgetActions();
             } else if (WidgetType.JITSI.matches(this.props.app.type)) {
@@ -200,7 +202,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     private determineInitialRequiresClientState(): boolean {
         try {
             const mockWidget = new ElementWidget(this.props.app);
-            const widgetApi = WidgetMessagingStore.instance.getMessaging(mockWidget, this.props.room.roomId);
+            const widgetApi = WidgetMessagingStore.instance.getMessaging(mockWidget, this.props.room?.roomId);
             if (widgetApi) {
                 // Load value from existing API to prevent resetting the requiresClient value on layout changes.
                 return widgetApi.hasCapability(ElementWidgetCapabilities.RequiresClient);
@@ -232,7 +234,6 @@ export default class AppTile extends React.Component<IProps, IState> {
             isUserProfileReady: OwnProfileStore.instance.isProfileInfoFetched,
             error: null,
             menuDisplayed: false,
-            widgetPageTitle: this.props.widgetPageTitle,
             requiresClient: this.determineInitialRequiresClientState(),
         };
     }
@@ -254,9 +255,14 @@ export default class AppTile extends React.Component<IProps, IState> {
         const parentContentProtocol = window.location.protocol;
         const u = url.parse(this.props.app.url);
         const childContentProtocol = u.protocol;
-        if (parentContentProtocol === 'https:' && childContentProtocol !== 'https:') {
-            logger.warn("Refusing to load mixed-content app:",
-                parentContentProtocol, childContentProtocol, window.location, this.props.app.url);
+        if (parentContentProtocol === "https:" && childContentProtocol !== "https:") {
+            logger.warn(
+                "Refusing to load mixed-content app:",
+                parentContentProtocol,
+                childContentProtocol,
+                window.location,
+                this.props.app.url,
+            );
             return true;
         }
         return false;
@@ -303,17 +309,15 @@ export default class AppTile extends React.Component<IProps, IState> {
         OwnProfileStore.instance.removeListener(UPDATE_EVENT, this.onUserReady);
     }
 
-    private setupSgListeners() {
-        this.sgWidget.on("preparing", this.onWidgetPreparing);
-        this.sgWidget.on("ready", this.onWidgetReady);
+    private setupSgListeners(): void {
+        this.sgWidget?.on("preparing", this.onWidgetPreparing);
         // emits when the capabilities have been set up or changed
-        this.sgWidget.on("capabilitiesNotified", this.onWidgetCapabilitiesNotified);
+        this.sgWidget?.on("capabilitiesNotified", this.onWidgetCapabilitiesNotified);
     }
 
-    private stopSgListeners() {
+    private stopSgListeners(): void {
         if (!this.sgWidget) return;
         this.sgWidget.off("preparing", this.onWidgetPreparing);
-        this.sgWidget.off("ready", this.onWidgetReady);
         this.sgWidget.off("capabilitiesNotified", this.onWidgetCapabilitiesNotified);
     }
 
@@ -332,13 +336,13 @@ export default class AppTile extends React.Component<IProps, IState> {
     }
 
     private startWidget(): void {
-        this.sgWidget.prepare().then(() => {
+        this.sgWidget?.prepare().then(() => {
             if (this.unmounted) return;
             this.setState({ initialising: false });
         });
     }
 
-    private startMessaging() {
+    private startMessaging(): void {
         try {
             this.sgWidget?.startMessaging(this.iframe);
         } catch (e) {
@@ -356,20 +360,12 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
     };
 
-    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    public UNSAFE_componentWillReceiveProps(nextProps: IProps): void { // eslint-disable-line camelcase
-        if (nextProps.app.url !== this.props.app.url) {
-            this.getNewState(nextProps);
+    public componentDidUpdate(prevProps: IProps): void {
+        if (prevProps.app.url !== this.props.app.url) {
+            this.getNewState(this.props);
             if (this.state.hasPermissionToLoad) {
-                this.resetWidget(nextProps);
+                this.resetWidget(this.props);
             }
-        }
-
-        if (nextProps.widgetPageTitle !== this.props.widgetPageTitle) {
-            this.setState({
-                widgetPageTitle: nextProps.widgetPageTitle,
-            });
         }
     }
 
@@ -378,7 +374,8 @@ export default class AppTile extends React.Component<IProps, IState> {
      * @private
      * @returns {Promise<*>} Resolves when the widget is terminated, or timeout passed.
      */
-    private async endWidgetActions(): Promise<void> { // widget migration dev note: async to maintain signature
+    private async endWidgetActions(): Promise<void> {
+        // widget migration dev note: async to maintain signature
         // HACK: This is a really dirty way to ensure that Jitsi cleans up
         // its hold on the webcam. Without this, the widget holds a media
         // stream open, even after death. See https://github.com/vector-im/element-web/issues/7351
@@ -389,11 +386,11 @@ export default class AppTile extends React.Component<IProps, IState> {
             // the iframe at a page that is reasonably safe to use in the
             // event the iframe doesn't wink away.
             // This is relative to where the Element instance is located.
-            this.iframe.src = 'about:blank';
+            this.iframe.src = "about:blank";
         }
 
         if (WidgetType.JITSI.matches(this.props.app.type) && this.props.room) {
-            CallHandler.instance.hangupCallApp(this.props.room.roomId);
+            LegacyCallHandler.instance.hangupCallApp(this.props.room.roomId);
         }
 
         // Delete the widget from the persisted store for good measure.
@@ -407,34 +404,29 @@ export default class AppTile extends React.Component<IProps, IState> {
         this.setState({ loading: false });
     };
 
-    private onWidgetReady = (): void => {
-        if (WidgetType.JITSI.matches(this.props.app.type)) {
-            this.sgWidget.widgetApi.transport.send(ElementWidgetActions.ClientReady, {});
-        }
-    };
-
     private onWidgetCapabilitiesNotified = (): void => {
         this.setState({
-            requiresClient: this.sgWidget.widgetApi.hasCapability(ElementWidgetCapabilities.RequiresClient),
+            requiresClient: !!this.sgWidget?.widgetApi?.hasCapability(ElementWidgetCapabilities.RequiresClient),
         });
     };
 
     private onAction = (payload: ActionPayload): void => {
         switch (payload.action) {
-            case 'm.sticker':
-                if (payload.widgetId === this.props.app.id &&
-                    this.sgWidget.widgetApi.hasCapability(MatrixCapabilities.StickerSending)
+            case "m.sticker":
+                if (
+                    payload.widgetId === this.props.app.id &&
+                    this.sgWidget?.widgetApi?.hasCapability(MatrixCapabilities.StickerSending)
                 ) {
                     dis.dispatch({
-                        action: 'post_sticker_message',
+                        action: "post_sticker_message",
                         data: {
                             ...payload.data,
                             threadId: this.props.threadId,
                         },
                     });
-                    dis.dispatch({ action: 'stickerpicker_close' });
+                    dis.dispatch({ action: "stickerpicker_close" });
                 } else {
-                    logger.warn('Ignoring sticker message. Invalid capability');
+                    logger.warn("Ignoring sticker message. Invalid capability");
                 }
                 break;
 
@@ -451,17 +443,19 @@ export default class AppTile extends React.Component<IProps, IState> {
         const roomId = this.props.room?.roomId;
         logger.info("Granting permission for widget to load: " + this.props.app.eventId);
         const current = SettingsStore.getValue("allowedWidgets", roomId);
-        current[this.props.app.eventId] = true;
-        const level = SettingsStore.firstSupportedLevel("allowedWidgets");
-        SettingsStore.setValue("allowedWidgets", roomId, level, current).then(() => {
-            this.setState({ hasPermissionToLoad: true });
+        if (this.props.app.eventId !== undefined) current[this.props.app.eventId] = true;
+        const level = SettingsStore.firstSupportedLevel("allowedWidgets")!;
+        SettingsStore.setValue("allowedWidgets", roomId ?? null, level, current)
+            .then(() => {
+                this.setState({ hasPermissionToLoad: true });
 
-            // Fetch a token for the integration manager, now that we're allowed to
-            this.startWidget();
-        }).catch(err => {
-            logger.error(err);
-            // We don't really need to do anything about this - the user will just hit the button again.
-        });
+                // Fetch a token for the integration manager, now that we're allowed to
+                this.startWidget();
+            })
+            .catch((err) => {
+                logger.error(err);
+                // We don't really need to do anything about this - the user will just hit the button again.
+            });
     };
 
     private formatAppTileName(): string {
@@ -484,27 +478,30 @@ export default class AppTile extends React.Component<IProps, IState> {
     private getTileTitle(): JSX.Element {
         const name = this.formatAppTileName();
         const titleSpacer = <span>&nbsp;-&nbsp;</span>;
-        let title = '';
-        if (this.state.widgetPageTitle && this.state.widgetPageTitle !== this.formatAppTileName()) {
-            title = this.state.widgetPageTitle;
+        let title = "";
+        if (this.props.widgetPageTitle && this.props.widgetPageTitle !== this.formatAppTileName()) {
+            title = this.props.widgetPageTitle;
         }
 
         return (
             <span>
                 <WidgetAvatar app={this.props.app} />
-                <b>{ name }</b>
-                <span>{ title ? titleSpacer : '' }{ title }</span>
+                <b>{name}</b>
+                <span>
+                    {title ? titleSpacer : ""}
+                    {title}
+                </span>
             </span>
         );
     }
 
-    private reload() {
+    private reload(): void {
         this.endWidgetActions().then(() => {
             // reset messaging
             this.resetWidget(this.props);
             this.startMessaging();
 
-            if (this.iframe) {
+            if (this.iframe && this.sgWidget) {
                 // Reload iframe
                 this.iframe.src = this.sgWidget.embedUrl;
             }
@@ -520,16 +517,22 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
         // Using Object.assign workaround as the following opens in a new window instead of a new tab.
         // window.open(this._getPopoutUrl(), '_blank', 'noopener=yes');
-        Object.assign(document.createElement('a'),
-            { target: '_blank', href: this.sgWidget.popoutUrl, rel: 'noreferrer noopener' }).click();
+        Object.assign(document.createElement("a"), {
+            target: "_blank",
+            href: this.sgWidget?.popoutUrl,
+            rel: "noreferrer noopener",
+        }).click();
     };
 
     private onToggleMaximisedClick = (): void => {
         if (!this.props.room) return; // ignore action - it shouldn't even be visible
-        const targetContainer =
-            WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Center)
-                ? Container.Top
-                : Container.Center;
+        const targetContainer = WidgetLayoutStore.instance.isInContainer(
+            this.props.room,
+            this.props.app,
+            Container.Center,
+        )
+            ? Container.Top
+            : Container.Center;
         WidgetLayoutStore.instance.moveToContainer(this.props.room, this.props.app, targetContainer);
     };
 
@@ -546,7 +549,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         this.setState({ menuDisplayed: false });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let appTileBody;
 
         // Note that there is advice saying allow-scripts shouldn't be used with allow-same-origin
@@ -554,22 +557,24 @@ export default class AppTile extends React.Component<IProps, IState> {
         // this would only be for content hosted on the same origin as the element client: anything
         // hosted on the same origin as the client will get the same access as if you clicked
         // a link to it.
-        const sandboxFlags = "allow-forms allow-popups allow-popups-to-escape-sandbox " +
+        const sandboxFlags =
+            "allow-forms allow-popups allow-popups-to-escape-sandbox " +
             "allow-same-origin allow-scripts allow-presentation allow-downloads";
 
         // Additional iframe feature permissions
         // (see - https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-permissions-in-cross-origin-iframes and https://wicg.github.io/feature-policy/)
-        const iframeFeatures = "microphone; camera; encrypted-media; autoplay; display-capture; clipboard-write;";
+        const iframeFeatures =
+            "microphone; camera; encrypted-media; autoplay; display-capture; clipboard-write; " + "clipboard-read;";
 
-        const appTileBodyClass = 'mx_AppTileBody' + (this.props.miniMode ? '_mini  ' : ' ');
-        const appTileBodyStyles = {};
+        const appTileBodyClass = "mx_AppTileBody" + (this.props.miniMode ? "_mini  " : " ");
+        const appTileBodyStyles: CSSProperties = {};
         if (this.props.pointerEvents) {
-            appTileBodyStyles['pointerEvents'] = this.props.pointerEvents;
+            appTileBodyStyles.pointerEvents = this.props.pointerEvents;
         }
 
         const loadingElement = (
             <div className="mx_AppLoading_spinner_fadeIn">
-                <Spinner message={_t("Loading...")} />
+                <Spinner message={_t("Loading…")} />
             </div>
         );
 
@@ -581,7 +586,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                     <AppWarning errorMsg={_t("Error loading Widget")} />
                 </div>
             );
-        } else if (!this.state.hasPermissionToLoad) {
+        } else if (!this.state.hasPermissionToLoad && this.props.room) {
             // only possible for room widgets, can assert this.props.room here
             const isEncrypted = this.context.isRoomEncrypted(this.props.room.roomId);
             appTileBody = (
@@ -597,8 +602,11 @@ export default class AppTile extends React.Component<IProps, IState> {
             );
         } else if (this.state.initialising || !this.state.isUserProfileReady) {
             appTileBody = (
-                <div className={appTileBodyClass + (this.state.loading ? 'mx_AppLoading' : '')} style={appTileBodyStyles}>
-                    { loadingElement }
+                <div
+                    className={appTileBodyClass + (this.state.loading ? "mx_AppLoading" : "")}
+                    style={appTileBodyStyles}
+                >
+                    {loadingElement}
                 </div>
             );
         } else {
@@ -610,8 +618,11 @@ export default class AppTile extends React.Component<IProps, IState> {
                 );
             } else {
                 appTileBody = (
-                    <div className={appTileBodyClass + (this.state.loading ? 'mx_AppLoading' : '')} style={appTileBodyStyles}>
-                        { this.state.loading && loadingElement }
+                    <div
+                        className={appTileBodyClass + (this.state.loading ? "mx_AppLoading" : "")}
+                        style={appTileBodyStyles}
+                    >
+                        {this.state.loading && loadingElement}
                         <iframe
                             title={widgetTitle}
                             allow={iframeFeatures}
@@ -636,15 +647,17 @@ export default class AppTile extends React.Component<IProps, IState> {
                     // otherwise there are issues that the PiP view is drawn UNDER another widget (Persistent app) when dragged around.
                     const zIndexAboveOtherPersistentElements = 101;
 
-                    appTileBody = <div className="mx_AppTile_persistedWrapper">
-                        <PersistedElement
-                            zIndex={this.props.miniMode ? zIndexAboveOtherPersistentElements : 9}
-                            persistKey={this.persistKey}
-                            moveRef={this.props.movePersistedElement}
-                        >
-                            { appTileBody }
-                        </PersistedElement>
-                    </div>;
+                    appTileBody = (
+                        <div className="mx_AppTile_persistedWrapper">
+                            <PersistedElement
+                                zIndex={this.props.miniMode ? zIndexAboveOtherPersistentElements : 9}
+                                persistKey={this.persistKey}
+                                moveRef={this.props.movePersistedElement}
+                            >
+                                {appTileBody}
+                            </PersistedElement>
+                        </div>
+                    );
                 }
             }
         }
@@ -663,7 +676,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (this.state.menuDisplayed) {
             contextMenu = (
                 <WidgetContextMenu
-                    {...aboveLeftOf(this.contextMenuButton.current.getBoundingClientRect(), null)}
+                    {...aboveLeftOf(this.contextMenuButton.current.getBoundingClientRect())}
                     app={this.props.app}
                     onFinished={this.closeContextMenu}
                     showUnpin={!this.props.userWidget}
@@ -674,59 +687,70 @@ export default class AppTile extends React.Component<IProps, IState> {
             );
         }
 
-        const layoutButtons: React.ReactNodeArray = [];
+        const layoutButtons: ReactNode[] = [];
         if (this.props.showLayoutButtons) {
-            const isMaximised = WidgetLayoutStore.instance.
-                isInContainer(this.props.room, this.props.app, Container.Center);
+            const isMaximised =
+                this.props.room &&
+                WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Center);
             const maximisedClasses = classNames({
-                "mx_AppTileMenuBar_iconButton": true,
-                "mx_AppTileMenuBar_iconButton_collapse": isMaximised,
-                "mx_AppTileMenuBar_iconButton_maximise": !isMaximised,
+                mx_AppTileMenuBar_iconButton: true,
+                mx_AppTileMenuBar_iconButton_collapse: isMaximised,
+                mx_AppTileMenuBar_iconButton_maximise: !isMaximised,
             });
-            layoutButtons.push(<AccessibleButton
-                key="toggleMaximised"
-                className={maximisedClasses}
-                title={
-                    isMaximised ? _t("Un-maximise") : _t("Maximise")
-                }
-                onClick={this.onToggleMaximisedClick}
-            />);
+            layoutButtons.push(
+                <AccessibleButton
+                    key="toggleMaximised"
+                    className={maximisedClasses}
+                    title={isMaximised ? _t("Un-maximise") : _t("Maximise")}
+                    onClick={this.onToggleMaximisedClick}
+                />,
+            );
 
-            layoutButtons.push(<AccessibleButton
-                key="minimise"
-                className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_minimise"
-                title={_t("Minimise")}
-                onClick={this.onMinimiseClicked}
-            />);
+            layoutButtons.push(
+                <AccessibleButton
+                    key="minimise"
+                    className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_minimise"
+                    title={_t("Minimise")}
+                    onClick={this.onMinimiseClicked}
+                />,
+            );
         }
 
-        return <React.Fragment>
-            <div className={appTileClasses} id={this.props.app.id}>
-                { this.props.showMenubar &&
-                    <div className="mx_AppTileMenuBar">
-                        <span className="mx_AppTileMenuBarTitle" style={{ pointerEvents: (this.props.handleMinimisePointerEvents ? 'all' : "none") }}>
-                            { this.props.showTitle && this.getTileTitle() }
-                        </span>
-                        <span className="mx_AppTileMenuBarWidgets">
-                            { layoutButtons }
-                            { (this.props.showPopout && !this.state.requiresClient) && <AccessibleButton
-                                className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_popout"
-                                title={_t('Popout widget')}
-                                onClick={this.onPopoutWidgetClick}
-                            /> }
-                            <ContextMenuButton
-                                className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_menu"
-                                label={_t("Options")}
-                                isExpanded={this.state.menuDisplayed}
-                                inputRef={this.contextMenuButton}
-                                onClick={this.onContextMenuClick}
-                            />
-                        </span>
-                    </div> }
-                { appTileBody }
-            </div>
+        return (
+            <React.Fragment>
+                <div className={appTileClasses} id={this.props.app.id}>
+                    {this.props.showMenubar && (
+                        <div className="mx_AppTileMenuBar">
+                            <span
+                                className="mx_AppTileMenuBarTitle"
+                                style={{ pointerEvents: this.props.handleMinimisePointerEvents ? "all" : "none" }}
+                            >
+                                {this.props.showTitle && this.getTileTitle()}
+                            </span>
+                            <span className="mx_AppTileMenuBarWidgets">
+                                {layoutButtons}
+                                {this.props.showPopout && !this.state.requiresClient && (
+                                    <AccessibleButton
+                                        className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_popout"
+                                        title={_t("Popout widget")}
+                                        onClick={this.onPopoutWidgetClick}
+                                    />
+                                )}
+                                <ContextMenuButton
+                                    className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_menu"
+                                    label={_t("Options")}
+                                    isExpanded={this.state.menuDisplayed}
+                                    inputRef={this.contextMenuButton}
+                                    onClick={this.onContextMenuClick}
+                                />
+                            </span>
+                        </div>
+                    )}
+                    {appTileBody}
+                </div>
 
-            { contextMenu }
-        </React.Fragment>;
+                {contextMenu}
+            </React.Fragment>
+        );
     }
 }
