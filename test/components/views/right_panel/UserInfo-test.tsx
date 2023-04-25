@@ -260,6 +260,17 @@ describe("<UserInfo />", () => {
             // will not return true, so we expect to see the noCommonMethod error from VerificationPanel
             expect(screen.getByText(/try with a different client/i)).toBeInTheDocument();
         });
+
+        it("renders <BasicUserInfo />", () => {
+            const { container } = renderComponent({
+                phase: RightPanelPhases.SpaceMemberInfo,
+                verificationRequest,
+                room: mockRoom,
+            });
+
+            expect(screen.queryByRole("heading", { name: /encryption/i })).not.toBeInTheDocument();
+            expect(container).toMatchSnapshot();
+        });
     });
 
     describe("with crypto enabled", () => {

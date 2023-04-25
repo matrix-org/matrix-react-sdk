@@ -45,3 +45,136 @@ exports[`<DeviceItem /> without display name 1`] = `
   </div>
 </div>
 `;
+
+exports[`<UserInfo /> with a room renders <BasicUserInfo /> 1`] = `
+<div>
+  <div
+    class="mx_BaseCard mx_UserInfo"
+  >
+    <div
+      class="mx_BaseCard_header"
+    >
+      <div
+        class="mx_AccessibleButton mx_BaseCard_close"
+        data-testid="base-card-close-button"
+        role="button"
+        tabindex="0"
+        title="Close"
+      />
+      <div
+        class="mx_UserInfo_avatar"
+      >
+        <div
+          class="mx_UserInfo_avatar_transition"
+        >
+          <div
+            class="mx_UserInfo_avatar_transition_child"
+          >
+            <span
+              aria-label="Avatar"
+              aria-live="off"
+              class="mx_AccessibleButton mx_BaseAvatar"
+              role="button"
+              tabindex="0"
+            >
+              <span
+                aria-hidden="true"
+                class="mx_BaseAvatar_initial"
+                style="font-size: 299.52px; width: 460.79999999999995px; line-height: 460.79999999999995px;"
+              >
+                U
+              </span>
+              <img
+                alt=""
+                aria-hidden="true"
+                class="mx_BaseAvatar_image"
+                data-testid="avatar-img"
+                src="data:image/png;base64,00"
+                style="width: 460.79999999999995px; height: 460.79999999999995px;"
+              />
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="mx_UserInfo_container mx_UserInfo_separator"
+      >
+        <div
+          class="mx_UserInfo_profile"
+        >
+          <div>
+            <h2>
+              <span
+                aria-label="@user:example.com"
+                dir="auto"
+                title="@user:example.com"
+              >
+                @user:example.com
+              </span>
+            </h2>
+          </div>
+          <div
+            class="mx_UserInfo_profile_mxid"
+          >
+            customUserIdentifier
+          </div>
+          <div
+            class="mx_UserInfo_profileStatus"
+          >
+            <div
+              class="mx_PresenceLabel"
+            >
+              Unknown
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="mx_AutoHideScrollbar"
+      tabindex="-1"
+    >
+      <div
+        class="mx_UserInfo_container"
+      >
+        <h3>
+          Security
+        </h3>
+        <p>
+          This client does not support end-to-end encryption.
+        </p>
+      </div>
+      <div
+        class="mx_UserInfo_container"
+      >
+        <h3>
+          Options
+        </h3>
+        <div>
+          <div
+            class="mx_AccessibleButton mx_UserInfo_field mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link"
+            role="button"
+            tabindex="0"
+          >
+            Message
+          </div>
+          <div
+            class="mx_AccessibleButton mx_UserInfo_field mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link"
+            role="button"
+            tabindex="0"
+          >
+            Share Link to User
+          </div>
+          <div
+            class="mx_AccessibleButton mx_UserInfo_field mx_UserInfo_destructive mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link"
+            role="button"
+            tabindex="0"
+          >
+            Ignore
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
