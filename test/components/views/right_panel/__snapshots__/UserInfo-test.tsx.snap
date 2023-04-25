@@ -69,7 +69,7 @@ exports[`<DeviceItem /> without display name 1`] = `
 </div>
 `;
 
-exports[`<UserInfo /> with a room renders <BasicUserInfo /> 1`] = `
+exports[`<UserInfo /> with crypto enabled renders <BasicUserInfo /> 1`] = `
 <div>
   <div
     class="mx_BaseCard mx_UserInfo"
@@ -164,8 +164,38 @@ exports[`<UserInfo /> with a room renders <BasicUserInfo /> 1`] = `
           Security
         </h3>
         <p>
-          This client does not support end-to-end encryption.
+          Messages in this room are not end-to-end encrypted.
         </p>
+        <div
+          class="mx_UserInfo_container_verifyButton"
+        >
+          <div
+            class="mx_AccessibleButton mx_UserInfo_field mx_UserInfo_verifyButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link"
+            role="button"
+            tabindex="0"
+          >
+            Verify
+          </div>
+        </div>
+        <div
+          class="mx_UserInfo_devices"
+        >
+          <div />
+          <div>
+            <div
+              class="mx_AccessibleButton mx_UserInfo_expand mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="mx_E2EIcon mx_E2EIcon_normal"
+              />
+              <div>
+                1 session
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div
         class="mx_UserInfo_container"

@@ -156,6 +156,7 @@ beforeEach(() => {
         downloadKeys: jest.fn(),
         getStoredDevicesForUser: jest.fn(),
         getCrypto: jest.fn().mockReturnValue(mockCrypto),
+        getStoredCrossSigningForUser: jest.fn(),
     } as unknown as MatrixClient);
 
     jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
@@ -260,23 +261,13 @@ describe("<UserInfo />", () => {
             // will not return true, so we expect to see the noCommonMethod error from VerificationPanel
             expect(screen.getByText(/try with a different client/i)).toBeInTheDocument();
         });
-
-        it("renders <BasicUserInfo />", () => {
-            const { container } = renderComponent({
-                phase: RightPanelPhases.SpaceMemberInfo,
-                verificationRequest,
-                room: mockRoom,
-            });
-
-            expect(screen.queryByRole("heading", { name: /encryption/i })).not.toBeInTheDocument();
-            expect(container).toMatchSnapshot();
-        });
     });
 
     describe("with crypto enabled", () => {
         beforeEach(() => {
             mockClient.isCryptoEnabled.mockReturnValue(true);
             mockClient.checkUserTrust.mockReturnValue(new UserTrustLevel(false, false, false));
+            mockClient.doesServerSupportUnstableFeature.mockResolvedValue(true);
 
             const device = new Device({
                 deviceId: "d1",
@@ -305,6 +296,18 @@ describe("<UserInfo />", () => {
 
             // ... which should contain the device name
             expect(within(deviceButton).getByText("my device")).toBeInTheDocument();
+        });
+
+        it("renders <BasicUserInfo />", async () => {
+            const { container } = renderComponent({
+                phase: RightPanelPhases.SpaceMemberInfo,
+                verificationRequest,
+                room: mockRoom,
+            });
+            await act(flushPromises);
+
+            await waitFor(() => expect(screen.getByRole("button", { name: "Verify" })).toBeInTheDocument());
+            expect(container).toMatchSnapshot();
         });
     });
 
