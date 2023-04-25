@@ -52,7 +52,6 @@ describe("ImportanceAlgorithm", () => {
     const client = getMockClientWithEventEmitter({
         ...mockClientMethodsUser(userId),
     });
-
     const roomA = makeRoom("!aaa:server.org", "Alpha", 2);
     const roomB = makeRoom("!bbb:server.org", "Bravo", 5);
     const roomC = makeRoom("!ccc:server.org", "Charlie", 1);
