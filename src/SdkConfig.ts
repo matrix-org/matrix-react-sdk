@@ -77,6 +77,10 @@ function mergeConfig(config: IConfigOptions, changes: Partial<IConfigOptions>): 
     });
 }
 
+type ObjectType<K extends keyof IConfigOptions> = IConfigOptions[K] extends {}
+    ? SnakedObject<NonNullable<IConfigOptions[K]>>
+    : Optional<SnakedObject<NonNullable<IConfigOptions[K]>>>;
+
 export default class SdkConfig {
     private static instance: IConfigOptions;
     private static fallback: SnakedObject<IConfigOptions>;
@@ -102,17 +106,14 @@ export default class SdkConfig {
         return SdkConfig.fallback.get(key, altCaseName);
     }
 
-    public static getObject<K extends keyof IConfigOptions>(
-        key: K,
-        altCaseName?: string,
-    ): Optional<SnakedObject<NonNullable<IConfigOptions[K]>>> {
+    public static getObject<K extends keyof IConfigOptions>(key: K, altCaseName?: string): ObjectType<K> {
         const val = SdkConfig.get(key, altCaseName);
         if (val !== null && val !== undefined) {
             return new SnakedObject(val);
         }
 
         // return the same type for sensitive callers (some want `undefined` specifically)
-        return val === undefined ? undefined : null;
+        return (val === undefined ? undefined : null) as ObjectType<K>;
     }
 
     public static put(cfg: Partial<IConfigOptions>): void {
