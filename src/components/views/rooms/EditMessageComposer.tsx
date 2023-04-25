@@ -229,18 +229,20 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     }
 
     private get editorRoomKey(): string {
-        return editorRoomKey(this.props.editState.getEvent().getRoomId(), this.context.timelineRenderingType);
+        return editorRoomKey(this.props.editState.getEvent().getRoomId()!, this.context.timelineRenderingType);
     }
 
     private get editorStateKey(): string {
-        return editorStateKey(this.props.editState.getEvent().getId());
+        return editorStateKey(this.props.editState.getEvent().getId()!);
     }
 
     private get events(): MatrixEvent[] {
         const liveTimelineEvents = this.context.liveTimeline?.getEvents();
-        const pendingEvents = this.getRoom()?.getPendingEvents();
+        const room = this.getRoom();
+        if (!liveTimelineEvents || !room) return [];
+        const pendingEvents = room.getPendingEvents();
         const isInThread = Boolean(this.props.editState.getEvent().getThread());
-        return liveTimelineEvents?.concat(isInThread ? [] : pendingEvents) ?? [];
+        return liveTimelineEvents.concat(isInThread ? [] : pendingEvents);
     }
 
     private cancelEdit = (): void => {
@@ -273,7 +275,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     private saveStoredEditorState = (): void => {
         const item = SendHistoryManager.createItem(this.model);
         this.clearPreviousEdit();
-        localStorage.setItem(this.editorRoomKey, this.props.editState.getEvent().getId());
+        localStorage.setItem(this.editorRoomKey, this.props.editState.getEvent().getId()!);
         localStorage.setItem(this.editorStateKey, JSON.stringify(item));
     };
 
@@ -327,7 +329,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
 
         // If content is modified then send an updated event into the room
         if (this.isContentModified(newContent)) {
-            const roomId = editedEvent.getRoomId();
+            const roomId = editedEvent.getRoomId()!;
             if (!containsEmote(this.model) && isSlashCommand(this.model)) {
                 const [cmd, args, commandText] = getSlashCommand(this.model);
                 if (cmd) {
@@ -384,8 +386,8 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         // in case we're currently editing a pending event
         const sel = document.getSelection()!;
         let caret: DocumentOffset | undefined;
-        if (sel.focusNode) {
-            caret = getCaretOffsetAndText(this.editorRef.current?.editorRef.current, sel).caret;
+        if (sel.focusNode && this.editorRef.current?.editorRef.current) {
+            caret = getCaretOffsetAndText(this.editorRef.current.editorRef.current, sel).caret;
         }
         const parts = this.model.serializeParts();
         // if caret is undefined because for some reason there isn't a valid selection,
@@ -456,12 +458,15 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     };
 
     public render(): React.ReactNode {
+        const room = this.getRoom();
+        if (!room) return null;
+
         return (
             <div className={classNames("mx_EditMessageComposer", this.props.className)} onKeyDown={this.onKeyDown}>
                 <BasicMessageComposer
                     ref={this.editorRef}
                     model={this.model}
-                    room={this.getRoom()}
+                    room={room}
                     threadId={this.props.editState?.getEvent()?.getThread()?.id}
                     initialCaret={this.props.editState.getCaret() ?? undefined}
                     label={_t("Edit message")}

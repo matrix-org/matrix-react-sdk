@@ -288,8 +288,8 @@ interface IDirectoryOpts {
 }
 
 const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = null, onFinished }) => {
-    const inputRef = useRef<HTMLInputElement>();
-    const scrollContainerRef = useRef<HTMLDivElement>();
+    const inputRef = useRef<HTMLInputElement>(null);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
     const cli = MatrixClientPeg.get();
     const rovingContext = useContext(RovingTabIndexContext);
     const [query, _setQuery] = useState(initialText);
@@ -1089,7 +1089,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 ev.stopPropagation();
                 ev.preventDefault();
 
-                if (rovingContext.state.refs.length > 0) {
+                if (rovingContext.state.activeRef && rovingContext.state.refs.length > 0) {
                     let refs = rovingContext.state.refs;
                     if (!query && !filter !== null) {
                         // If the current selection is not in the recently viewed row then only include the
@@ -1112,6 +1112,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 if (
                     !query &&
                     !filter !== null &&
+                    rovingContext.state.activeRef &&
                     rovingContext.state.refs.length > 0 &&
                     refIsForRecentlyViewed(rovingContext.state.activeRef)
                 ) {

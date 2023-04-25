@@ -18,15 +18,18 @@ limitations under the License.
     margin-top: 15px;
 
     .mx_CreateRoomDialog_details_summary {
-        outline: none;
         list-style: none;
-        font-weight: 600;
+        font-weight: var(--font-semi-bold);
         cursor: pointer;
         color: $accent;
 
         /* list-style doesn't do it for webkit */
         &::-webkit-details-marker {
             display: none;
+        }
+
+        &:not(.focus-visible) {
+            outline: none;
         }
     }
 
@@ -93,7 +96,7 @@ limitations under the License.
     .mx_SettingsFlag_label {
         flex: 1 1 0;
         min-width: 0;
-        font-weight: 600;
+        font-weight: var(--font-semi-bold);
     }
 
     .mx_ToggleSwitch {
