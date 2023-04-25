@@ -14,38 +14,38 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Attributes, MappedSuggestion, SuggestionChar, SuggestionType } from "@matrix-org/matrix-wysiwyg";
+import { Attributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 import { SyntheticEvent, useState } from "react";
 
-/* To allow reuse of the autocomplete component, we need to record similar information as used in 
-the Rust model (keyChar, type and text) as well as information required to allow us to do the 
-DOM manipulation when replacing the suggestion with a mention or command (node, start and
-end offsets). */
-export type PlainTextSuggestionPattern = {
-    keyChar: SuggestionChar;
-    type: SuggestionType;
-    text: string;
+/**
+ * Information about the current state of the `useSuggestion` hook.
+ */
+export type Suggestion = MappedSuggestion & {
+    /**
+     * The information in a `MappedSuggestion` is sufficient to generate a query for the autocomplete
+     * component but more information is required to allow manipulation of the correct part of the DOM
+     * when selecting an option from the autocomplete. These three pieces of information allow us to
+     * do that.
+     */
     node: Node;
     startOffset: number;
     endOffset: number;
 };
-type Suggestion = PlainTextSuggestionPattern | null;
+type SuggestionState = Suggestion | null;
 
 /**
  * React hook to allow tracking and replacing of mentions and commands in a div element
  *
  * @param editorRef - a ref to the div that is the composer textbox
- * @param setText - setter function to allow the hook to update the content state when replacing
- * text with text selected from the autocomplete
+ * @param setText - setter function to set the content of the composer
  * @returns
- * - `handleMention`: TODO a function that will allow @ or # mentions to be selected from
- * the autocomplete and inserted into the composer
- * - `handleCommand`: a function that allows slash commands selected from the autocomplete to be inserted
- * into the composer
+ * - `handleMention`: TODO a function that will insert @ or # mentions which are selected from
+ * the autocomplete into the composer
+ * - `handleCommand`: a function that will replace the content of the composer with the given replacement text.
+ * Can be used to process autocomplete of slash commands
  * - `onSelect`: a selection change listener to be attached to the plain text composer
  * - `suggestion`: if the cursor is inside something that could be interpreted as a command or a mention,
  * this will be an object representing that command or mention, otherwise it is null
- *
  */
 
 export function useSuggestion(
@@ -57,7 +57,7 @@ export function useSuggestion(
     onSelect: (event: SyntheticEvent<HTMLDivElement>) => void;
     suggestion: MappedSuggestion | null;
 } {
-    const [suggestion, setSuggestion] = useState<Suggestion>(null);
+    const [suggestion, setSuggestion] = useState<SuggestionState>(null);
 
     // TODO handle the mentions (@user, #room etc)
     const handleMention = (): void => {};
@@ -67,7 +67,7 @@ export function useSuggestion(
     const onSelect = (): void => processSelectionChange(editorRef, suggestion, setSuggestion);
 
     const handleCommand = (replacementText: string): void =>
-        processCommand(replacementText, editorRef, suggestion, setSuggestion, setText);
+        processCommand(replacementText, suggestion, setSuggestion, setText);
 
     return {
         suggestion: mapSuggestion(suggestion),
@@ -82,9 +82,8 @@ export function useSuggestion(
  *
  * @param suggestion - the suggestion that is the JS equivalent of the rust model's representation
  * @returns - null if the input is null, a MappedSuggestion if the input is non-null
- *
  */
-export const mapSuggestion = (suggestion: Suggestion): MappedSuggestion | null => {
+export const mapSuggestion = (suggestion: SuggestionState): MappedSuggestion | null => {
     if (suggestion === null) {
         return null;
     } else {
@@ -98,21 +97,18 @@ export const mapSuggestion = (suggestion: Suggestion): MappedSuggestion | null =
  * from the autocomplete.
  *
  * @param replacementText - the text that we will insert into the DOM
- * @param editorRef - a ref to the editor
  * @param suggestion - representation of the part of the DOM that will be replaced
- * @param setSuggestion - a setter to allow the suggestion state to be updated
- * @param setText - a setter to update the state of the composer content after replacing a mention
- * or a command
+ * @param setSuggestion - setter function to set the suggestion state
+ * @param setText - setter function to set the content of the composer
  */
 export const processCommand = (
     replacementText: string,
-    editorRef: React.RefObject<HTMLDivElement>,
-    suggestion: Suggestion,
-    setSuggestion: React.Dispatch<React.SetStateAction<Suggestion>>,
+    suggestion: SuggestionState,
+    setSuggestion: React.Dispatch<React.SetStateAction<SuggestionState>>,
     setText: (text: string) => void,
 ): void => {
-    // if we do not have any of the values we need to do the work, do nothing
-    if (suggestion === null || editorRef.current === null) {
+    // if we do not have a suggestion, return early
+    if (suggestion === null) {
         return;
     }
 
@@ -142,8 +138,8 @@ export const processCommand = (
  */
 export const processSelectionChange = (
     editorRef: React.RefObject<HTMLDivElement>,
-    suggestion: Suggestion,
-    setSuggestion: React.Dispatch<React.SetStateAction<Suggestion>>,
+    suggestion: SuggestionState,
+    setSuggestion: React.Dispatch<React.SetStateAction<SuggestionState>>,
 ): void => {
     const selection = document.getSelection();
 
