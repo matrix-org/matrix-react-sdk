@@ -77,7 +77,7 @@ function mergeConfig(config: IConfigOptions, changes: Partial<IConfigOptions>): 
     });
 }
 
-type ObjectType<K extends keyof IConfigOptions> = IConfigOptions[K] extends {}
+type ObjectType<K extends keyof IConfigOptions> = IConfigOptions[K] extends object
     ? SnakedObject<NonNullable<IConfigOptions[K]>>
     : Optional<SnakedObject<NonNullable<IConfigOptions[K]>>>;
 
@@ -108,7 +108,7 @@ export default class SdkConfig {
 
     public static getObject<K extends keyof IConfigOptions>(key: K, altCaseName?: string): ObjectType<K> {
         const val = SdkConfig.get(key, altCaseName);
-        if (val !== null && val !== undefined) {
+        if (isObject(val)) {
             return new SnakedObject(val);
         }
 
