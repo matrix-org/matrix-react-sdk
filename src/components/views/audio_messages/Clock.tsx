@@ -46,7 +46,9 @@ export default class Clock extends React.Component<Props> {
     }
 
     private calculateDuration(seconds: number): string {
-        return new Temporal.Duration(0, 0, 0, 0, 0, 0, seconds).toString();
+        return new Temporal.Duration(0, 0, 0, 0, 0, 0, seconds)
+            .round({ smallestUnit: "seconds", largestUnit: "hours" })
+            .toString();
     }
 
     public render(): React.ReactNode {
