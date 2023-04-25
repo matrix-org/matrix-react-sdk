@@ -38,18 +38,19 @@ function amendInnerHtml(text: string): string {
 }
 
 /**
- * Generates all of the listeners and the ref to be attached to the editor. Also returns
- * pieces of state and utility functions that are required for use in other hooks and by
- * the autocomplete component.
+ * React hook which generates all of the listeners and the ref to be attached to the editor.
  *
- * @param initialContent - can set the content of the editor on mount
+ * Also returns pieces of state and utility functions that are required for use in other hooks
+ * and by the autocomplete component.
+ *
+ * @param initialContent - the content of the editor when it is first mounted
  * @param onChange - called whenever there is change in the editor content
  * @param onSend - called whenever the user sends the message
  * @returns
  * - `ref`: a ref object which the caller must attach to the HTML `div` node for the editor
  * * `autocompleteRef`: a ref object which the caller must attach to the autocomplete component
  * - `content`: state representing the editor's current text content
- * - `setContent`: the setter for the content state
+ * - `setContent`: the setter function for `content`
  * - `onInput`, `onPaste`, `onKeyDown`: handlers for input, paste and keyDown events
  * - the output from the {@link useSuggestion} hook
  */
