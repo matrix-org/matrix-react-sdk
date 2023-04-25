@@ -218,7 +218,6 @@ export class Playback extends EventEmitter implements IDestroyable {
     }
 
     private makePlaybackWaveform(input: Float32Array): Promise<number[]> {
-        // const waveform = Array.from();
         return this.worker.call({ data: Array.from(input) }).then((resp) => resp.waveform);
     }
 
