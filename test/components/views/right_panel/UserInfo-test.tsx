@@ -514,6 +514,14 @@ describe("<DeviceItem />", () => {
 
         expect(container).toMatchSnapshot();
     });
+
+    it("ambiguous display name", async () => {
+        const device = { deviceId: "deviceId", ambiguous: true, displayName: "my display name" };
+        const { container } = renderComponent({ device, userId: defaultUserId });
+        await act(flushPromises);
+
+        expect(container).toMatchSnapshot();
+    });
 });
 
 describe("<UserOptionsSection />", () => {
