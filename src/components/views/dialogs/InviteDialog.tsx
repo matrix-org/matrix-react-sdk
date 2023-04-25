@@ -1216,6 +1216,9 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
     };
 
     private onTabChange = (tabId: string): void => {
+        // Tabs that this function can be called with are generated in the `render()` method of this
+        // class. When generating each tab, the `TabId` enum is used to generate the corresponding
+        // tabId so the parameter will always be a string from the `TabId` enum.
         this.setState({ currentTabId: tabId as TabId });
     };
 
