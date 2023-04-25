@@ -488,6 +488,21 @@ describe("<DeviceItem />", () => {
         expect(mockVerifyDevice).toHaveBeenCalledTimes(1);
         expect(mockVerifyDevice).toHaveBeenCalledWith(defaultUser, device);
     });
+
+    it("with display name", async () => {
+        const { container } = renderComponent();
+        await act(flushPromises);
+
+        expect(container).toMatchSnapshot();
+    });
+
+    it("without display name", async () => {
+        const device = { deviceId: "deviceId" } as Device;
+        const { container } = renderComponent({ device, userId: defaultUserId });
+        await act(flushPromises);
+
+        expect(container).toMatchSnapshot();
+    });
 });
 
 describe("<UserOptionsSection />", () => {
