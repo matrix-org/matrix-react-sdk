@@ -210,7 +210,7 @@ export class Playback extends EventEmitter implements IDestroyable {
         this.waveformObservable.update(this.resampledWaveform);
 
         this.clock.flagLoadTime(); // must happen first because setting the duration fires a clock update
-        this.clock.durationSeconds = this.element?.duration ?? this.audioBuf.duration;
+        this.clock.durationSeconds = this.element?.duration ?? this.audioBuf!.duration;
 
         // Signal that we're not decoding anymore. This is done last to ensure the clock is updated for
         // when the downstream callers try to use it.
