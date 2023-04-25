@@ -28,21 +28,19 @@ enum DialPadButtonKind {
     Dial,
 }
 
-type DigitButton = {
+type DigitButtonProps = {
     kind: DialPadButtonKind.Digit;
     digit: string;
     digitSubtext: string;
     onButtonPress: (digit: string, ev: ButtonEvent) => void;
 };
 
-type DialButton = {
+type DialButtonProps = {
     kind: DialPadButtonKind.Dial;
     onButtonPress: () => void;
 };
 
-type IButtonProps = DigitButton | DialButton;
-
-class DialPadButton extends React.PureComponent<IButtonProps> {
+class DialPadButton extends React.PureComponent<DigitButtonProps | DialButtonProps> {
     public onClick = (ev: ButtonEvent): void => {
         switch (this.props.kind) {
             case DialPadButtonKind.Digit:
