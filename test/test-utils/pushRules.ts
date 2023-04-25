@@ -23,6 +23,11 @@ import {
     RuleId,
 } from "matrix-js-sdk/src/matrix";
 
+/**
+ * Default set of push rules for a new account
+ * Use to mock push rule fetching, or use `getDefaultRuleWithKind`
+ * to use default examples of specific push rules
+ */
 export const DEFAULT_PUSH_RULES: IPushRules = Object.freeze({
     global: {
         underride: [
@@ -314,7 +319,7 @@ export const DEFAULT_PUSH_RULES: IPushRules = Object.freeze({
 } as IPushRules);
 
 /**
- * gets default rule by id from default rules
+ * Get rule by id from default rules
  * @param ruleId
  * @returns {IPushRule} matching push rule
  * @returns {PushRuleKind}
@@ -331,6 +336,11 @@ export const getDefaultRuleWithKind = (ruleId: RuleId | string): { rule: IPushRu
     throw new Error(`Could not find default rule for id ${ruleId}`);
 };
 
+/**
+ * Get rule by id from default rules as an IAnnotatedPushRule
+ * @param ruleId
+ * @returns
+ */
 export const getDefaultAnnotatedRule = (ruleId: RuleId | string): IAnnotatedPushRule => {
     const { rule, kind } = getDefaultRuleWithKind(ruleId);
 
@@ -340,6 +350,12 @@ export const getDefaultAnnotatedRule = (ruleId: RuleId | string): IAnnotatedPush
     };
 };
 
+/**
+ * Make a push rule with default values
+ * @param ruleId
+ * @param ruleOverrides
+ * @returns IPushRule
+ */
 export const makePushRule = (ruleId: RuleId | string, ruleOverrides: Partial<IPushRule> = {}): IPushRule => ({
     actions: [],
     enabled: true,
