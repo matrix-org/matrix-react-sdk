@@ -16,9 +16,11 @@ limitations under the License.
 */
 
 import { Optional } from "matrix-events-sdk";
+import { mergeWith } from "lodash";
 
 import { SnakedObject } from "./utils/SnakedObject";
 import { IConfigOptions, ISsoRedirectOptions } from "./IConfigOptions";
+import { isObject } from "./utils/objects";
 
 // see element-web config.md for docs, or the IConfigOptions interface for dev docs
 export const DEFAULTS: IConfigOptions = {
@@ -57,6 +59,20 @@ export const DEFAULTS: IConfigOptions = {
         new_issue_url: "https://github.com/vector-im/element-web/issues/new/choose",
     },
 };
+
+function mergeConfig(config: IConfigOptions, changes: Partial<IConfigOptions>): IConfigOptions {
+    return mergeWith(config, changes, (objValue, srcValue) => {
+        // Don't merge arrays, prefer values from newer object
+        if (Array.isArray(objValue)) {
+            return srcValue;
+        }
+
+        // Don't allow objects to get nulled out, this will break our types
+        if (isObject(objValue) && !isObject(srcValue)) {
+            return objValue;
+        }
+    });
+}
 
 export default class SdkConfig {
     private static instance: IConfigOptions;
@@ -97,7 +113,7 @@ export default class SdkConfig {
     }
 
     public static put(cfg: Partial<IConfigOptions>): void {
-        SdkConfig.setInstance({ ...DEFAULTS, ...cfg });
+        SdkConfig.setInstance(mergeConfig(DEFAULTS, cfg));
     }
 
     /**
@@ -108,7 +124,7 @@ export default class SdkConfig {
     }
 
     public static add(cfg: Partial<IConfigOptions>): void {
-        SdkConfig.put({ ...SdkConfig.get(), ...cfg });
+        SdkConfig.put(mergeConfig(SdkConfig.get(), cfg));
     }
 }
 
