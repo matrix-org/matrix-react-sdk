@@ -42,13 +42,13 @@ describe("ManualDeviceKeyVerificationDialog", () => {
         // When
         const deviceId = "XYZ";
         const device = new Device({
-            userId: mockClient.getUserId(),
+            userId: mockClient.getUserId()!,
             deviceId,
             displayName: "my device",
             algorithms: [],
             keys: new Map([[`ed25519:${deviceId}`, "ABCDEFGH"]]),
         });
-        const { container } = renderDialog(mockClient.getUserId(), device, jest.fn());
+        const { container } = renderDialog(mockClient.getUserId()!, device, jest.fn());
 
         // Then
         expect(container).toMatchSnapshot();
@@ -75,14 +75,14 @@ describe("ManualDeviceKeyVerificationDialog", () => {
         // When
         const deviceId = "XYZ";
         const device = new Device({
-            userId: mockClient.getUserId(),
+            userId: mockClient.getUserId()!,
             deviceId,
             displayName: "my device",
             algorithms: [],
             keys: new Map([[`ed25519:${deviceId}`, "ABCDEFGH"]]),
         });
         const onFinished = jest.fn();
-        renderDialog(mockClient.getUserId(), device, onFinished);
+        renderDialog(mockClient.getUserId()!, device, onFinished);
 
         screen.getByRole("button", { name: "Verify session" }).click();
 
@@ -95,14 +95,14 @@ describe("ManualDeviceKeyVerificationDialog", () => {
         // When
         const deviceId = "XYZ";
         const device = new Device({
-            userId: mockClient.getUserId(),
+            userId: mockClient.getUserId()!,
             deviceId,
             displayName: "my device",
             algorithms: [],
             keys: new Map([[`ed25519:${deviceId}`, "ABCDEFGH"]]),
         });
         const onFinished = jest.fn();
-        renderDialog(mockClient.getUserId(), device, onFinished);
+        renderDialog(mockClient.getUserId()!, device, onFinished);
 
         screen.getByRole("button", { name: "Cancel" }).click();
 
