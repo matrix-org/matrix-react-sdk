@@ -50,6 +50,12 @@ export const DEFAULTS: IConfigOptions = {
         chunk_length: 2 * 60, // two minutes
         max_length: 4 * 60 * 60, // four hours
     },
+
+    feedback: {
+        existing_issues_url:
+            "https://github.com/vector-im/element-web/issues?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc",
+        new_issue_url: "https://github.com/vector-im/element-web/issues/new/choose",
+    },
 };
 
 export default class SdkConfig {
