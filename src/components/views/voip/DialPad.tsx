@@ -37,15 +37,22 @@ type DigitButton = {
 
 type DialButton = {
     kind: DialPadButtonKind.Dial;
-    onButtonPress: (digit: string, ev: ButtonEvent) => void;
+    onButtonPress: () => void;
 };
 
 type IButtonProps = DigitButton | DialButton;
 
 class DialPadButton extends React.PureComponent<IButtonProps> {
     public onClick = (ev: ButtonEvent): void => {
-        if (this.props.kind === DialPadButtonKind.Digit) {
-            this.props.onButtonPress(this.props.digit, ev);
+        switch (this.props.kind) {
+            case DialPadButtonKind.Digit:
+                this.props.onButtonPress(this.props.digit, ev);
+                break;
+            case DialPadButtonKind.Dial:
+                this.props.onButtonPress();
+                break;
+            default:
+                break;
         }
     };
 
