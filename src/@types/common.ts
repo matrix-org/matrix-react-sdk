@@ -54,3 +54,11 @@ export type KeysStartingWith<Input extends object, Str extends string> = {
 }[keyof Input];
 
 export type NonEmptyArray<T> = [T, ...T[]];
+
+export type Defaultize<P, D> = P extends any
+    ? string extends keyof P
+        ? P
+        : Pick<P, Exclude<keyof P, keyof D>> &
+              Partial<Pick<P, Extract<keyof P, keyof D>>> &
+              Partial<Pick<D, Exclude<keyof D, keyof P>>>
+    : never;

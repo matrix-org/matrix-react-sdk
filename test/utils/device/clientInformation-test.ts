@@ -20,6 +20,7 @@ import BasePlatform from "../../../src/BasePlatform";
 import { IConfigOptions } from "../../../src/IConfigOptions";
 import { getDeviceClientInformation, recordClientInformation } from "../../../src/utils/device/clientInformation";
 import { getMockClientWithEventEmitter } from "../../test-utils";
+import { DEFAULTS } from "../../../src/SdkConfig";
 
 describe("recordClientInformation()", () => {
     const deviceId = "my-device-id";
@@ -32,6 +33,7 @@ describe("recordClientInformation()", () => {
     });
 
     const sdkConfig: IConfigOptions = {
+        ...DEFAULTS,
         brand: "Test Brand",
         element_call: { url: "", use_exclusively: false, brand: "Element Call" },
     };

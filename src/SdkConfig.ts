@@ -21,6 +21,7 @@ import { mergeWith } from "lodash";
 import { SnakedObject } from "./utils/SnakedObject";
 import { IConfigOptions, ISsoRedirectOptions } from "./IConfigOptions";
 import { isObject } from "./utils/objects";
+import { Defaultize } from "./@types/common";
 
 // see element-web config.md for docs, or the IConfigOptions interface for dev docs
 export const DEFAULTS: IConfigOptions = {
@@ -59,6 +60,8 @@ export const DEFAULTS: IConfigOptions = {
         new_issue_url: "https://github.com/vector-im/element-web/issues/new/choose",
     },
 };
+
+export type ConfigOptions = Defaultize<IConfigOptions, typeof DEFAULTS>;
 
 function mergeConfig(config: IConfigOptions, changes: Partial<IConfigOptions>): IConfigOptions {
     return mergeWith(config, changes, (objValue, srcValue) => {
