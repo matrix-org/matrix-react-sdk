@@ -124,7 +124,6 @@ export function pendingVerificationRequestForUser(user: User | RoomMember): Veri
     const cli = MatrixClientPeg.get();
     const dmRoom = findDMForUser(cli, user.userId);
     if (dmRoom) {
-        // TODO Use new crypto
         return cli.findVerificationRequestDMInProgress(dmRoom.roomId);
     }
 }
