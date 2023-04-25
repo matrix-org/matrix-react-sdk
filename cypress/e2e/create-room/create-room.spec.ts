@@ -86,7 +86,7 @@ describe("Create Room", () => {
         // and the buttons are not compressed
         // TODO: use a same class name
         cy.get(".mx_RoomHeader_button").should("have.css", "height", "32px").should("have.css", "width", "32px");
-        cy.get(".mx_HeaderButtons > .mx_RightPanel_headerButton")
+        cy.get(".mx_RoomHeader .mx_RightPanel_headerButton")
             .should("have.css", "height", "32px")
             .should("have.css", "width", "32px");
         cy.get(".mx_RoomHeader").percySnapshotElement("Room header with a long room name");
