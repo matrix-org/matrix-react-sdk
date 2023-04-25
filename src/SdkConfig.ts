@@ -116,7 +116,7 @@ export default class SdkConfig {
         return (val === undefined ? undefined : null) as ObjectType<K>;
     }
 
-    public static put(cfg: Partial<IConfigOptions>): void {
+    public static put(cfg: ConfigOptions): void {
         SdkConfig.setInstance(mergeConfig(DEFAULTS, cfg));
     }
 
