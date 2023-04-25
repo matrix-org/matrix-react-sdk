@@ -16,15 +16,13 @@ limitations under the License.
 import React from "react";
 
 import {
-    PlainTextSuggestionPattern,
+    Suggestion,
     mapSuggestion,
     processCommand,
     processSelectionChange,
 } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/useSuggestion";
 
-function createMockPlainTextSuggestionPattern(
-    props: Partial<PlainTextSuggestionPattern> = {},
-): PlainTextSuggestionPattern {
+function createMockPlainTextSuggestionPattern(props: Partial<Suggestion> = {}): Suggestion {
     return {
         keyChar: "/",
         type: "command",
@@ -55,38 +53,13 @@ describe("mapSuggestion", () => {
 });
 
 describe("processCommand", () => {
-    it("does not change parent hook state if editor ref or suggestion is null", () => {
-        // create a div and append a text node to it with some initial text
-        const editorDiv = document.createElement("div");
-        const initialText = "text";
-        const textNode = document.createTextNode(initialText);
-        editorDiv.appendChild(textNode);
-
+    it("does not change parent hook state if suggestion is null", () => {
         // create a mockSuggestion using the text node above
-        const mockSuggestion = createMockPlainTextSuggestionPattern({ node: textNode });
         const mockSetSuggestion = jest.fn();
         const mockSetText = jest.fn();
 
-        // call the function with a null editorRef.current value
-        processCommand(
-            "should not be seen",
-            { current: null } as React.RefObject<HTMLDivElement>,
-            mockSuggestion,
-            mockSetSuggestion,
-            mockSetText,
-        );
-
-        // check that the parent state setter has not been called
-        expect(mockSetText).not.toHaveBeenCalled();
-
-        // call the function with a valid editorRef.current, but a null suggestion
-        processCommand(
-            "should not be seen",
-            { current: editorDiv } as React.RefObject<HTMLDivElement>,
-            null,
-            mockSetSuggestion,
-            mockSetText,
-        );
+        // call the function with a null suggestion
+        processCommand("should not be seen", null, mockSetSuggestion, mockSetText);
 
         // check that the parent state setter has not been called
         expect(mockSetText).not.toHaveBeenCalled();
@@ -105,13 +78,7 @@ describe("processCommand", () => {
         const mockSetText = jest.fn();
         const replacementText = "/replacement text";
 
-        processCommand(
-            replacementText,
-            { current: editorDiv } as React.RefObject<HTMLDivElement>,
-            mockSuggestion,
-            mockSetSuggestion,
-            mockSetText,
-        );
+        processCommand(replacementText, mockSuggestion, mockSetSuggestion, mockSetText);
 
         // check that the text has changed and includes a trailing space
         expect(mockSetText).toHaveBeenCalledWith(`${replacementText} `);
