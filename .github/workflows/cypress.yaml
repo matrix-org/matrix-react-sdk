@@ -113,7 +113,6 @@ jobs:
               with:
                   run_id: ${{ github.event.workflow_run.id }}
                   name: previewbuild
-                  path: .
 
             # This is necessary as Cypress relies on eval for passing functions between processes
             - name: Allow CSP script-src unsafe-eval
