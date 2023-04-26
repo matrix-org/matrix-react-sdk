@@ -18,7 +18,6 @@ import {
     IAnnotatedPushRule,
     IPushRule,
     IPushRules,
-    PushRuleActionName,
     PushRuleKind,
     RuleId,
 } from "matrix-js-sdk/src/matrix";
@@ -327,7 +326,7 @@ export const DEFAULT_PUSH_RULES: IPushRules = Object.freeze({
  */
 export const getDefaultRuleWithKind = (ruleId: RuleId | string): { rule: IPushRule; kind: PushRuleKind } => {
     for (const kind of Object.keys(DEFAULT_PUSH_RULES.global)) {
-        const rule = DEFAULT_PUSH_RULES.global[kind as PushRuleActionName].find((r: IPushRule) => r.rule_id === ruleId);
+        const rule = DEFAULT_PUSH_RULES.global[kind as PushRuleKind].find((r: IPushRule) => r.rule_id === ruleId);
         if (rule) {
             return { rule, kind: kind as PushRuleKind };
         }
