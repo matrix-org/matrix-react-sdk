@@ -158,11 +158,11 @@ describe("Timeline", () => {
         it("should create and configure a room on IRC layout", () => {
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=irc] " +
-                    ".mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_RoomView_body .mx_GenericEventListSummary[data-layout='irc']").within(() => {
+                cy.get(".mx_GenericEventListSummary_summary")
+                    .findByText(OLD_NAME + " created and configured the room.")
+                    .should("exist");
+            });
 
             cy.get(".mx_IRCLayout").within(() => {
                 // Check room name line-height is reset
@@ -190,10 +190,11 @@ describe("Timeline", () => {
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
 
             // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_RoomView_body .mx_GenericEventListSummary[data-layout='irc']").within(() => {
+                cy.get(".mx_GenericEventListSummary_summary")
+                    .findByText(OLD_NAME + " created and configured the room.")
+                    .should("exist");
+            });
 
             cy.get(".mx_GenericEventListSummary").within(() => {
                 // Click "expand" link button
@@ -225,10 +226,11 @@ describe("Timeline", () => {
             );
 
             // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_RoomView_body .mx_GenericEventListSummary[data-layout='group']").within(() => {
+                cy.get(".mx_GenericEventListSummary_summary")
+                    .findByText(OLD_NAME + " created and configured the room.")
+                    .should("exist");
+            });
 
             cy.get(".mx_GenericEventListSummary").within(() => {
                 // Click "expand" link button
@@ -254,11 +256,11 @@ describe("Timeline", () => {
 
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=bubble] " +
-                    ".mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_RoomView_body .mx_GenericEventListSummary[data-layout='bubble']").within(() => {
+                cy.get(".mx_GenericEventListSummary_summary")
+                    .findByText(OLD_NAME + " created and configured the room.")
+                    .should("exist");
+            });
 
             cy.get(".mx_GenericEventListSummary").within(() => {
                 // Click "expand" link button
@@ -300,10 +302,11 @@ describe("Timeline", () => {
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
 
             // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary " + ".mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_RoomView_body .mx_GenericEventListSummary[data-layout='irc']").within(() => {
+                cy.get(".mx_GenericEventListSummary_summary")
+                    .findByText(OLD_NAME + " created and configured the room.")
+                    .should("exist");
+            });
 
             // Click "expand" link button
             cy.get(".mx_GenericEventListSummary").findByRole("button", { name: "expand" }).click();
@@ -356,10 +359,9 @@ describe("Timeline", () => {
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
 
             // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_GenericEventListSummary_summary").within(() => {
+                cy.findByText(OLD_NAME + " created and configured the room.").should("exist");
+            });
 
             // Send messages
             cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("Hello Mr. Bot{enter}");
@@ -467,10 +469,9 @@ describe("Timeline", () => {
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
 
             // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=irc] .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_GenericEventListSummary_summary").within(() => {
+                cy.findByText(OLD_NAME + " created and configured the room.").should("exist");
+            });
 
             cy.get(".mx_RoomView_body[data-layout=irc]").within(() => {
                 // Ensure CSS declarations which cannot be detected with a screenshot test are applied as expected
@@ -571,10 +572,9 @@ describe("Timeline", () => {
             sendEvent(roomId);
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_GenericEventListSummary_summary").within(() => {
+                cy.findByText(OLD_NAME + " created and configured the room.").should("exist");
+            });
 
             // Edit message
             messageEdit();
@@ -620,10 +620,9 @@ describe("Timeline", () => {
             sendEvent(roomId);
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary " + ".mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_GenericEventListSummary_summary").within(() => {
+                cy.findByText(OLD_NAME + " created and configured the room.").should("exist");
+            });
 
             // Edit message
             messageEdit();
@@ -855,10 +854,9 @@ describe("Timeline", () => {
             cy.visit("/#/room/" + roomId);
 
             // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_GenericEventListSummary_summary").within(() => {
+                cy.findByText(OLD_NAME + " created and configured the room.").should("exist");
+            });
 
             // Create a bot "BotBob" and invite it
             cy.getBot(homeserver, {
@@ -975,10 +973,9 @@ describe("Timeline", () => {
                 });
 
             // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_GenericEventListSummary_summary").within(() => {
+                cy.findByText(OLD_NAME + " created and configured the room.").should("exist");
+            });
 
             // Set the display name to "LONG_STRING 2" in order to avoid a warning in Percy tests from being triggered
             // due to the generated random mxid being displayed inside the GELS summary.
