@@ -17,6 +17,7 @@ limitations under the License.
 import React, { InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes, RefObject } from "react";
 import classNames from "classnames";
 import { debounce } from "lodash";
+import memoizeOne from "memoize-one";
 
 import { IFieldState, IValidationResult } from "./Validation";
 import Tooltip from "./Tooltip";
@@ -195,12 +196,18 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         this.props.onBlur?.(ev);
     };
 
+    // Memoize latest result as some validation functions can be costly, e.g. API hits
+    private onValidate = memoizeOne(
+        (fieldState: IFieldState): Promise<IValidationResult> => this.props.onValidate!(fieldState),
+        ([a], [b]) => a.value === b.value && a.focused === b.focused && a.allowEmpty === b.allowEmpty,
+    );
+
     public async validate({ focused, allowEmpty = true }: IValidateOpts): Promise<boolean | undefined> {
         if (!this.props.onValidate) {
             return;
         }
         const value = this.inputRef.current?.value ?? null;
-        const { valid, feedback } = await this.props.onValidate({
+        const { valid, feedback } = await this.onValidate({
             value,
             focused: !!focused,
             allowEmpty,
