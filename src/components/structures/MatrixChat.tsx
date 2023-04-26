@@ -161,7 +161,6 @@ interface IScreen {
 
 interface IProps {
     config: IConfigOptions;
-    serverConfig?: ValidatedServerConfig; // only seemingly used for unit tests
     onNewScreen: (screen: string, replaceLast: boolean) => void;
     enableGuest?: boolean;
     // the queryParams extracted from the [real] query-string of the URI
@@ -478,9 +477,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     private getServerProperties(): { serverConfig: ValidatedServerConfig } {
-        let props = this.state.serverConfig;
-        if (!props) props = this.props.serverConfig; // for unit tests
-        if (!props) props = SdkConfig.get("validated_server_config")!;
+        const props = this.state.serverConfig || SdkConfig.get("validated_server_config")!;
         return { serverConfig: props };
     }
 
