@@ -113,7 +113,6 @@ jobs:
               with:
                   run_id: ${{ github.event.workflow_run.id }}
                   name: previewbuild
-                  path: .
 
             - name: Run Cypress tests
               uses: cypress-io/github-action@59c3b9b4a1a6e623c29806797d849845443487d1
