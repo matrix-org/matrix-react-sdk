@@ -49,8 +49,6 @@ class DialPadButton extends React.PureComponent<DigitButtonProps | DialButtonPro
             case DialPadButtonKind.Dial:
                 this.props.onButtonPress();
                 break;
-            default:
-                break;
         }
     };
 
