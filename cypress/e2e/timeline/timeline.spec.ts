@@ -336,13 +336,18 @@ describe("Timeline", () => {
         });
 
         const messageEdit = () => {
-            cy.contains(".mx_RoomView_body .mx_EventTile .mx_EventTile_line", "Message")
+            cy.contains(".mx_EventTile .mx_EventTile_line", "Message")
                 .realHover()
-                .within(() => {
-                    cy.findByRole("button", { name: "Edit" }).click();
-                    cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
-                });
-            cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", "MessageEdit").should("exist");
+                .findByRole("toolbar", { name: "Message Actions" })
+                .findByRole("button", { name: "Edit" })
+                .click();
+            cy.findByRole("textbox", { name: "Edit message" }).type("Edit{enter}");
+
+            // Assert that the edited message and the link button are found
+            cy.contains(".mx_EventTile .mx_EventTile_line", "MessageEdit").within(() => {
+                // Regex patterns due to the edited date
+                cy.findByRole("button", { name: /Edited at .*? Click to view edits./ });
+            });
         };
 
         it("should align generic event list summary with messages and emote on IRC layout", () => {
@@ -364,8 +369,11 @@ describe("Timeline", () => {
             });
 
             // Send messages
-            cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("Hello Mr. Bot{enter}");
-            cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("Hello again, Mr. Bot{enter}");
+            cy.get(".mx_RoomView_body").within(() => {
+                cy.findByRole("textbox", { name: "Send a message…" }).type("Hello Mr. Bot{enter}");
+                cy.findByRole("textbox", { name: "Send a message…" }).type("Hello again, Mr. Bot{enter}");
+            });
+
             // Make sure the second message was sent
             cy.get(".mx_RoomView_MessageList > .mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
 
@@ -430,7 +438,9 @@ describe("Timeline", () => {
 
             // 4. Alignment of expanded GELS, placeholder of deleted message, and emote
             // Send a emote
-            cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("/me says hello to Mr. Bot{enter}");
+            cy.get(".mx_RoomView_body").within(() => {
+                cy.findByRole("textbox", { name: "Send a message…" }).type("/me says hello to Mr. Bot{enter}");
+            });
             // Check inline start margin of its avatar
             // Here --right-padding is for the avatar on the message line
             // See: _IRCLayout.pcss
@@ -702,7 +712,10 @@ describe("Timeline", () => {
             // Assert that the file size is displayed in kibibytes (1024 bytes), not kilobytes (1000 bytes)
             // See: https://github.com/vector-im/element-web/issues/24866
             cy.get(".mx_EventTile_last").within(() => {
-                cy.contains(".mx_MFileBody_info_filename", "1.12 KB").should("exist"); // actual file size in kibibytes
+                // actual file size in kibibytes
+                cy.get(".mx_MFileBody_info_filename")
+                    .findByText(/1.12 KB/)
+                    .should("exist");
             });
         });
 
@@ -712,7 +725,7 @@ describe("Timeline", () => {
             cy.visit("/#/room/" + roomId);
 
             cy.get(".mx_RoomHeader").findByRole("button", { name: "Search" }).click();
-            cy.get(".mx_SearchBar_input input").type("Message{enter}");
+            cy.get(".mx_SearchBar_input").findByRole("textbox").type("Message{enter}");
 
             cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
             cy.get(".mx_RoomView_searchResultsPanel").percySnapshotElement("Highlighted search results");
@@ -748,7 +761,7 @@ describe("Timeline", () => {
             });
             cy.visit("/#/room/" + roomId);
 
-            cy.get(".mx_LinkPreviewWidget").should("exist").should("contain.text", "Element Call");
+            cy.get(".mx_LinkPreviewWidget").should("exist").findByText("Element Call");
 
             cy.wait("@preview_url");
             cy.wait("@mxc");
@@ -775,11 +788,13 @@ describe("Timeline", () => {
             cy.getComposer().type(`${MESSAGE}{enter}`);
 
             // Reply to the message
-            cy.contains(".mx_RoomView_body .mx_EventTile_line", "Hello world")
-                .realHover()
+            cy.get(".mx_EventTile_last")
                 .within(() => {
-                    cy.findByRole("button", { name: "Reply" }).click();
-                });
+                    cy.findByText("Hello world", { timeout: 1000 });
+                })
+                .realHover()
+                .findByRole("button", { name: "Reply" })
+                .click();
         };
 
         // For clicking the reply button on the last line
@@ -868,10 +883,9 @@ describe("Timeline", () => {
                 bot.joinRoom(roomId);
 
                 // Make sure the bot joined the room
-                cy.contains(
-                    ".mx_GenericEventListSummary .mx_EventTile_info.mx_EventTile_last",
-                    "BotBob joined the room",
-                ).should("exist");
+                cy.get(".mx_GenericEventListSummary .mx_EventTile_info.mx_EventTile_last").within(() => {
+                    cy.findByText("BotBob joined the room").should("exist");
+                });
 
                 // Have bot send MESSAGE to roomId
                 cy.botSendMessage(bot, roomId, MESSAGE);
