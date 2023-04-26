@@ -88,7 +88,7 @@ describe("Appearance user settings tab", () => {
             // Select the last layout
             cy.get(".mx_LayoutSwitcher_RadioButton").last().click();
 
-            // Assert that the layout selected is "IRC (Experimental)"
+            // Assert that the layout selected is "Message bubbles"
             cy.get(".mx_LayoutSwitcher_RadioButton_selected .mx_StyledRadioButton_enabled").within(() => {
                 cy.findByLabelText("Message bubbles").should("exist");
             });
