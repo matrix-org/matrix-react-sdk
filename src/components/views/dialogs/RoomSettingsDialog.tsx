@@ -56,7 +56,6 @@ interface IProps {
 }
 
 interface IState {
-    roomName: string;
     room: Room;
 }
 
@@ -67,7 +66,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
         super(props);
 
         const room = this.getRoom();
-        this.state = { roomName: "", room };
+        this.state = { room };
     }
 
     public componentDidMount(): void {
@@ -79,7 +78,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
     public componentDidUpdate(): void {
         if (this.props.roomId !== this.state.room.roomId) {
             const room = this.getRoom();
-            this.setState({ room, roomName: room.name ?? "" });
+            this.setState({ room });
         }
     }
 
@@ -115,9 +114,8 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
     };
 
     private onRoomName = (): void => {
-        this.setState({
-            roomName: this.state.room.name ?? "",
-        });
+        // rerender when the room name changes
+        this.forceUpdate();
     };
 
     private getTabs(): NonEmptyArray<Tab> {
@@ -217,7 +215,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
     }
 
     public render(): React.ReactNode {
-        const roomName = this.state.roomName;
+        const roomName = this.state.room.name;
         return (
             <BaseDialog
                 className="mx_RoomSettingsDialog"
