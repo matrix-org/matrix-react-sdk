@@ -1228,6 +1228,8 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         switch (this.props.kind) {
             case InviteKind.Dm:
                 return "StartChat";
+            default:
+                return undefined;
         }
     }
 
@@ -1431,7 +1433,6 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                     <AccessibleButton
                         kind="primary"
                         onClick={this.transferCall}
-                        className="mx_InviteDialog_transferButton"
                         disabled={!hasSelection && this.state.dialPadValue === ""}
                     >
                         {_t("Transfer")}
