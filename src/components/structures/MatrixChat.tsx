@@ -161,7 +161,7 @@ interface IScreen {
 
 interface IProps {
     config: IConfigOptions;
-    serverConfig?: ValidatedServerConfig;
+    serverConfig?: ValidatedServerConfig; // only seemingly used for unit tests
     onNewScreen: (screen: string, replaceLast: boolean) => void;
     enableGuest?: boolean;
     // the queryParams extracted from the [real] query-string of the URI
@@ -472,7 +472,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }, 1000);
 
     private getFallbackHsUrl(): string | undefined {
-        if (this.props.serverConfig?.isDefault) {
+        if (this.getServerProperties().serverConfig?.isDefault) {
             return this.props.config.fallback_hs_url;
         }
     }
@@ -1774,7 +1774,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         } else if (screen === "start_sso" || screen === "start_cas") {
             let cli = MatrixClientPeg.get();
             if (!cli) {
-                const { hsUrl, isUrl } = this.props.serverConfig;
+                const { hsUrl, isUrl } = this.getServerProperties().serverConfig;
                 cli = createClient({
                     baseUrl: hsUrl,
                     idBaseUrl: isUrl,
