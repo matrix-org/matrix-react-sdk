@@ -87,7 +87,7 @@ describe("<SecurityRoomSettingsTab />", () => {
     };
 
     beforeEach(() => {
-        client.sendStateEvent.mockReset().mockResolvedValue({ event_id: 'test'});
+        client.sendStateEvent.mockReset().mockResolvedValue({ event_id: "test" });
         client.isRoomEncrypted.mockReturnValue(false);
         jest.spyOn(SettingsStore, "getValue").mockRestore();
     });
