@@ -37,16 +37,17 @@ export enum PlaybackState {
     Playing = "playing", // active progress through timeline
 }
 
+const THUMBNAIL_WAVEFORM_SAMPLES = 100; // arbitrary: [30,120]
+
 export interface PlaybackInterface {
+    readonly currentState: PlaybackState;
     readonly liveData: SimpleObservable<number[]>;
     readonly timeSeconds: number;
     readonly durationSeconds: number;
     skipTo(timeSeconds: number): Promise<void>;
 }
 
-const THUMBNAIL_WAVEFORM_SAMPLES = 100; // arbitrary: [30,120]
-
-export class Playback extends EventEmitter implements IDestroyable {
+export class Playback extends EventEmitter implements IDestroyable, PlaybackInterface {
     /**
      * Stable waveform for representing a thumbnail of the media. Values are
      * guaranteed to be between zero and one, inclusive.
