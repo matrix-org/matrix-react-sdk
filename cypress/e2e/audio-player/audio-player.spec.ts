@@ -205,6 +205,8 @@ describe("Audio player", () => {
             cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
             // Find and click "Play" button
+            cy.findByRole("button", { name: "Play" }).should("exist");
+            cy.wait(100);
             cy.findByRole("button", { name: "Play" }).click();
 
             // Assert that "Pause" button can be found
@@ -340,6 +342,8 @@ describe("Audio player", () => {
                         cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
                         // Find and click "Play" button
+                        cy.findByRole("button", { name: "Play" }).should("exist");
+                        cy.wait(100);
                         cy.findByRole("button", { name: "Play" }).click();
 
                         // Assert that "Pause" button can be found
