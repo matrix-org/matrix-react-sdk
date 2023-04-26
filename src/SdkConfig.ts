@@ -20,11 +20,11 @@ import { mergeWith } from "lodash";
 
 import { SnakedObject } from "./utils/SnakedObject";
 import { IConfigOptions, ISsoRedirectOptions } from "./IConfigOptions";
-import { isObject } from "./utils/objects";
-import { Defaultize } from "./@types/common";
+import { isObject, objectClone } from "./utils/objects";
+import { DeepReadonly, Defaultize } from "./@types/common";
 
 // see element-web config.md for docs, or the IConfigOptions interface for dev docs
-export const DEFAULTS: IConfigOptions = {
+export const DEFAULTS: DeepReadonly<IConfigOptions> = {
     brand: "Element",
     integrations_ui_url: "https://scalar.vector.im/",
     integrations_rest_url: "https://scalar.vector.im/api",
@@ -63,8 +63,12 @@ export const DEFAULTS: IConfigOptions = {
 
 export type ConfigOptions = Defaultize<IConfigOptions, typeof DEFAULTS>;
 
-function mergeConfig(config: IConfigOptions, changes: Partial<IConfigOptions>): IConfigOptions {
-    return mergeWith(config, changes, (objValue, srcValue) => {
+function mergeConfig(
+    config: DeepReadonly<IConfigOptions>,
+    changes: DeepReadonly<Partial<IConfigOptions>>,
+): DeepReadonly<IConfigOptions> {
+    // return { ...config, ...changes };
+    return mergeWith(objectClone(config), changes, (objValue, srcValue) => {
         // Don't merge arrays, prefer values from newer object
         if (Array.isArray(objValue)) {
             return srcValue;
@@ -82,10 +86,10 @@ type ObjectType<K extends keyof IConfigOptions> = IConfigOptions[K] extends obje
     : Optional<SnakedObject<NonNullable<IConfigOptions[K]>>>;
 
 export default class SdkConfig {
-    private static instance: IConfigOptions;
-    private static fallback: SnakedObject<IConfigOptions>;
+    private static instance: DeepReadonly<IConfigOptions>;
+    private static fallback: SnakedObject<DeepReadonly<IConfigOptions>>;
 
-    private static setInstance(i: IConfigOptions): void {
+    private static setInstance(i: DeepReadonly<IConfigOptions>): void {
         SdkConfig.instance = i;
         SdkConfig.fallback = new SnakedObject(i);
 
@@ -98,7 +102,7 @@ export default class SdkConfig {
     public static get<K extends keyof IConfigOptions = never>(
         key?: K,
         altCaseName?: string,
-    ): IConfigOptions | IConfigOptions[K] {
+    ): DeepReadonly<IConfigOptions> | DeepReadonly<IConfigOptions>[K] {
         if (key === undefined) {
             // safe to cast as a fallback - we want to break the runtime contract in this case
             return SdkConfig.instance || <IConfigOptions>{};
@@ -116,15 +120,15 @@ export default class SdkConfig {
         return (val === undefined ? undefined : null) as ObjectType<K>;
     }
 
-    public static put(cfg: ConfigOptions): void {
+    public static put(cfg: DeepReadonly<ConfigOptions>): void {
         SdkConfig.setInstance(mergeConfig(DEFAULTS, cfg));
     }
 
     /**
-     * Resets the config to be completely empty.
+     * Resets the config.
      */
-    public static unset(): void {
-        SdkConfig.setInstance(<IConfigOptions>{}); // safe to cast - defaults will be applied
+    public static reset(): void {
+        SdkConfig.setInstance(mergeConfig(DEFAULTS, {})); // safe to cast - defaults will be applied
     }
 
     public static add(cfg: Partial<ConfigOptions>): void {
