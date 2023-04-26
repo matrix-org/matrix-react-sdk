@@ -14,13 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-    IAnnotatedPushRule,
-    IPushRule,
-    IPushRules,
-    PushRuleKind,
-    RuleId,
-} from "matrix-js-sdk/src/matrix";
+import { IAnnotatedPushRule, IPushRule, IPushRules, PushRuleKind, RuleId } from "matrix-js-sdk/src/matrix";
 
 /**
  * Default set of push rules for a new account
@@ -326,7 +320,7 @@ export const DEFAULT_PUSH_RULES: IPushRules = Object.freeze({
  */
 export const getDefaultRuleWithKind = (ruleId: RuleId | string): { rule: IPushRule; kind: PushRuleKind } => {
     for (const kind of Object.keys(DEFAULT_PUSH_RULES.global)) {
-        const rule = DEFAULT_PUSH_RULES.global[kind as PushRuleKind].find((r: IPushRule) => r.rule_id === ruleId);
+        const rule = DEFAULT_PUSH_RULES.global[kind as PushRuleKind]!.find((r: IPushRule) => r.rule_id === ruleId);
         if (rule) {
             return { rule, kind: kind as PushRuleKind };
         }
