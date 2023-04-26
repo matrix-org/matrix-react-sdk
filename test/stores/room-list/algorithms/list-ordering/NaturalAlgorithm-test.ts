@@ -60,7 +60,7 @@ describe("NaturalAlgorithm", () => {
     client.pushRules = {
         global: {
             ...DEFAULT_PUSH_RULES.global,
-            override: [...DEFAULT_PUSH_RULES.global.override, muteRoomARule, muteRoomDRule],
+            override: [...DEFAULT_PUSH_RULES.global!.override!, muteRoomARule, muteRoomDRule],
         },
     };
 
@@ -265,7 +265,7 @@ describe("NaturalAlgorithm", () => {
                     conditions: [{ kind: ConditionKind.EventMatch, key: "room_id", pattern: roomE.roomId }],
                 });
                 const pushRulesEvent = new MatrixEvent({ type: EventType.PushRules });
-                client.pushRules.global.override.push(muteRoomERule);
+                client.pushRules!.global!.override!.push(muteRoomERule);
                 client.emit(ClientEvent.AccountData, pushRulesEvent);
 
                 const shouldTriggerUpdate = algorithm.handleRoomUpdate(roomE, RoomUpdateCause.PossibleMuteChange);
