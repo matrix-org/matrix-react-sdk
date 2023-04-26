@@ -29,13 +29,19 @@ function getToast(expectedTitle: string): Chainable<JQuery> {
 
 function acceptToast(expectedTitle: string): void {
     getToast(expectedTitle).within(() => {
-        cy.get(".mx_Toast_buttons .mx_AccessibleButton_kind_primary").click();
+        cy.get(".mx_Toast_buttons")
+            .findAllByRole("button")
+            .should("have.class", "mx_AccessibleButton_kind_primary")
+            .click();
     });
 }
 
 function rejectToast(expectedTitle: string): void {
     getToast(expectedTitle).within(() => {
-        cy.get(".mx_Toast_buttons .mx_AccessibleButton_kind_danger_outline").click();
+        cy.get(".mx_Toast_buttons")
+            .findAllByRole("button")
+            .should("have.class", "mx_AccessibleButton_kind_danger_outline")
+            .click();
     });
 }
 
