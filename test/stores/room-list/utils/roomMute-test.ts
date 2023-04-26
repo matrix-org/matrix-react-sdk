@@ -43,13 +43,13 @@ describe("getChangedOverrideRoomPushRules()", () => {
     });
 
     it("returns undefined when actions event is falsy", () => {
-        const action = { action: "MatrixActions.accountData", event: undefined };
+        const action = { action: "MatrixActions.accountData" };
         expect(getChangedOverrideRoomPushRules(action)).toBeUndefined();
     });
 
     it("returns undefined when actions previousEvent is falsy", () => {
         const pushRulesEvent = makePushRulesEvent();
-        const action = { action: "MatrixActions.accountData", event: pushRulesEvent, previousEvent: undefined };
+        const action = { action: "MatrixActions.accountData", event: pushRulesEvent };
         expect(getChangedOverrideRoomPushRules(action)).toBeUndefined();
     });
 
