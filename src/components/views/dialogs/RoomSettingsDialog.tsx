@@ -79,7 +79,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
     public componentDidUpdate(): void {
         if (this.props.roomId !== this.state.room.roomId) {
             const room = this.getRoom();
-            this.setState({ room });
+            this.setState({ room, roomName: room.name ?? "" });
         }
     }
 
