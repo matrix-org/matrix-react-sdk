@@ -38,13 +38,13 @@ describe("getMaxBroadcastLength", () => {
 
     describe("when Sdk config does not provide a value", () => {
         it("should return this value", () => {
-            expect(getMaxBroadcastLength()).toBe(DEFAULTS.voice_broadcast.max_length);
+            expect(getMaxBroadcastLength()).toBe(DEFAULTS.voice_broadcast!.max_length);
         });
     });
 
     describe("if there are no defaults", () => {
         it("should return the fallback value", () => {
-            expect(DEFAULTS.voice_broadcast.max_length).toBe(4 * 60 * 60);
+            expect(DEFAULTS.voice_broadcast!.max_length).toBe(4 * 60 * 60);
             expect(getMaxBroadcastLength()).toBe(4 * 60 * 60);
         });
     });
