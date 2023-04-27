@@ -37,7 +37,7 @@ import { ActionPayload } from "../../../dispatcher/payloads";
 import { NonEmptyArray } from "../../../@types/common";
 import { PollHistoryTab } from "../settings/tabs/room/PollHistoryTab";
 
-export enum RoomSettingsTab {
+export const enum RoomSettingsTab {
     General = "ROOM_GENERAL_TAB",
     Voip = "ROOM_VOIP_TAB",
     Security = "ROOM_SECURITY_TAB",
