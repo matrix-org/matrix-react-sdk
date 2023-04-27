@@ -25,6 +25,7 @@ import { ExportType, IExportOptions } from "./exportUtils";
 import { textForEvent } from "../../TextForEvent";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
 import SettingsStore from "../../settings/SettingsStore";
+import { formatFullDate } from "../../DateUtils";
 
 export default class PlainTextExporter extends Exporter {
     protected totalSize: number;
@@ -125,9 +126,10 @@ export default class PlainTextExporter extends Exporter {
             const textForEvent = await this.plainTextForEvent(event);
             content +=
                 textForEvent &&
-                `${new Date(event.getTs()).toLocaleString([], {
-                    hour12: SettingsStore.getValue("showTwelveHourTimestamps"),
-                })} - ${textForEvent}\n`;
+                `${formatFullDate(
+                    new Date(event.getTs()),
+                    SettingsStore.getValue("showTwelveHourTimestamps"),
+                )} - ${textForEvent}\n`;
         }
         return content;
     }
