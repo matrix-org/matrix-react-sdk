@@ -18,7 +18,7 @@ import { defer, IDeferred } from "matrix-js-sdk/src/utils";
 
 import { WorkerPayload } from "./workers/worker";
 
-export class WorkerManager<Request, Response> {
+export class WorkerManager<Request extends {}, Response> {
     private readonly worker: Worker;
     private seq = 0;
     private pendingDeferredMap = new Map<number, IDeferred<Response>>();
