@@ -103,8 +103,8 @@ describe("processMention", () => {
         // placeholder testing for the changed content - these tests will all be changed
         // when the mention is inserted as an <a> tagfs
         const { textContent } = textNode;
-        expect(textContent.includes(href)).toBe(true);
-        expect(textContent.includes(displayName)).toBe(true);
+        expect(textContent!.includes(href)).toBe(true);
+        expect(textContent!.includes(displayName)).toBe(true);
 
         expect(mockSetText).toHaveBeenCalledWith(expect.stringContaining(displayName));
         expect(mockSetSuggestion).toHaveBeenCalledWith(null);
