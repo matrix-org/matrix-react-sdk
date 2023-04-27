@@ -20,7 +20,7 @@ import { UIAResponse } from "matrix-js-sdk/src/@types/uia";
 import Modal from "../Modal";
 import InteractiveAuthDialog, { InteractiveAuthDialogProps } from "../components/views/dialogs/InteractiveAuthDialog";
 
-type FunctionWithUIA<R, A> = (auth: IAuthDict | null, ...args: A[]) => Promise<UIAResponse<R>>;
+type FunctionWithUIA<R, A> = (auth?: IAuthDict | null, ...args: A[]) => Promise<UIAResponse<R>>;
 
 export function wrapRequestWithDialog<R, A = any>(
     requestFunction: FunctionWithUIA<R, A>,

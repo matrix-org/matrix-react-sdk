@@ -112,30 +112,25 @@ export default class ShareDialog extends React.PureComponent<XOR<Props, EventPro
     };
 
     private getUrl(): string {
-        let matrixToUrl;
-
         if (this.props.target instanceof Room) {
             if (this.state.linkSpecificEvent) {
                 const events = this.props.target.getLiveTimeline().getEvents();
-                matrixToUrl = this.state.permalinkCreator!.forEvent(events[events.length - 1].getId()!);
+                return this.state.permalinkCreator!.forEvent(events[events.length - 1].getId()!);
             } else {
-                matrixToUrl = this.state.permalinkCreator!.forShareableRoom();
+                return this.state.permalinkCreator!.forShareableRoom();
             }
         } else if (this.props.target instanceof User || this.props.target instanceof RoomMember) {
-            matrixToUrl = makeUserPermalink(this.props.target.userId);
-        } else if (this.props.target instanceof MatrixEvent) {
-            if (this.state.linkSpecificEvent) {
-                matrixToUrl = this.props.permalinkCreator!.forEvent(this.props.target.getId()!);
-            } else {
-                matrixToUrl = this.props.permalinkCreator!.forShareableRoom();
-            }
+            return makeUserPermalink(this.props.target.userId);
+        } else if (this.state.linkSpecificEvent) {
+            return this.props.permalinkCreator!.forEvent(this.props.target.getId()!);
+        } else {
+            return this.props.permalinkCreator!.forShareableRoom();
         }
-        return matrixToUrl;
     }
 
     public render(): React.ReactNode {
-        let title;
-        let checkbox;
+        let title: string | undefined;
+        let checkbox: JSX.Element | undefined;
 
         if (this.props.target instanceof Room) {
             title = _t("Share Room");
