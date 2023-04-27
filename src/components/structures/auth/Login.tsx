@@ -212,13 +212,18 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             (error) => {
                 if (this.unmounted) return;
 
+                let errorText: ReactNode;
                 // Some error strings only apply for logging in
-                const usingEmail = username && username.indexOf("@") > 0;
+                if (error.httpStatus === 400 && username && username.indexOf("@") > 0) {
+                    errorText = _t("This homeserver does not support login using email address.");
+                } else {
+                    errorText = messageForLoginError(error, this.props.serverConfig);
+                }
 
                 this.setState({
                     busy: false,
                     busyLoggingIn: false,
-                    errorText: messageForLoginError(error, this.props.serverConfig, usingEmail),
+                    errorText,
                     // 401 would be the sensible status code for 'incorrect password'
                     // but the login API gives a 403 https://matrix.org/jira/browse/SYN-744
                     // mentions this (although the bug is for UI auth which is not this)

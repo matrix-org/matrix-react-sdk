@@ -21,6 +21,16 @@ import { _t, _td, Tags, TranslatedString } from "../languageHandler";
 import SdkConfig from "../SdkConfig";
 import { ValidatedServerConfig } from "./ValidatedServerConfig";
 
+export const resourceLimitStrings = {
+    "monthly_active_user": _td("This homeserver has hit its Monthly Active User limit."),
+    "hs_blocked": _td("This homeserver has been blocked by its administrator."),
+    "": _td("This homeserver has exceeded one of its resource limits."),
+};
+
+export const adminContactStrings = {
+    "": _td("Please <a>contact your service administrator</a> to continue using this service."),
+};
+
 /**
  * Produce a translated error message for a
  * M_RESOURCE_LIMIT_EXCEEDED error
@@ -65,14 +75,16 @@ export function messageForResourceLimitError(
 
 export function messageForSyncError(err: Error): ReactNode {
     if (err instanceof MatrixError && err.errcode === "M_RESOURCE_LIMIT_EXCEEDED") {
-        const limitError = messageForResourceLimitError(err.data.limit_type, err.data.admin_contact, {
-            "monthly_active_user": _td("This homeserver has hit its Monthly Active User limit."),
-            "hs_blocked": _td("This homeserver has been blocked by its administrator."),
-            "": _td("This homeserver has exceeded one of its resource limits."),
-        });
-        const adminContact = messageForResourceLimitError(err.data.limit_type, err.data.admin_contact, {
-            "": _td("Please <a>contact your service administrator</a> to continue using the service."),
-        });
+        const limitError = messageForResourceLimitError(
+            err.data.limit_type,
+            err.data.admin_contact,
+            resourceLimitStrings,
+        );
+        const adminContact = messageForResourceLimitError(
+            err.data.limit_type,
+            err.data.admin_contact,
+            adminContactStrings,
+        );
         return (
             <div>
                 <div>{limitError}</div>
@@ -87,19 +99,18 @@ export function messageForSyncError(err: Error): ReactNode {
 export function messageForLoginError(
     err: MatrixError,
     serverConfig: Pick<ValidatedServerConfig, "hsName" | "hsUrl">,
-    usingEmail = false,
 ): ReactNode {
-    if (err.httpStatus === 400 && usingEmail) {
-        return _t("This homeserver does not support login using email address.");
-    } else if (err.errcode === "M_RESOURCE_LIMIT_EXCEEDED") {
-        const errorTop = messageForResourceLimitError(err.data.limit_type, err.data.admin_contact, {
-            "monthly_active_user": _td("This homeserver has hit its Monthly Active User limit."),
-            "hs_blocked": _td("This homeserver has been blocked by its administrator."),
-            "": _td("This homeserver has exceeded one of its resource limits."),
-        });
-        const errorDetail = messageForResourceLimitError(err.data.limit_type, err.data.admin_contact, {
-            "": _td("Please <a>contact your service administrator</a> to continue using this service."),
-        });
+    if (err.errcode === "M_RESOURCE_LIMIT_EXCEEDED") {
+        const errorTop = messageForResourceLimitError(
+            err.data.limit_type,
+            err.data.admin_contact,
+            resourceLimitStrings,
+        );
+        const errorDetail = messageForResourceLimitError(
+            err.data.limit_type,
+            err.data.admin_contact,
+            adminContactStrings,
+        );
         return (
             <div>
                 <div>{errorTop}</div>
