@@ -140,24 +140,17 @@ export function messageForLoginError(
 }
 
 export function messageForConnectionError(
-    err: MatrixError,
+    err: Error,
     serverConfig: Pick<ValidatedServerConfig, "hsName" | "hsUrl">,
 ): ReactNode {
-    let errCode = err.errcode;
-    if (!errCode && err.httpStatus) {
-        errCode = "HTTP " + err.httpStatus;
-    }
-
-    let errorText: ReactNode =
-        _t("There was a problem communicating with the homeserver, please try again later.") +
-        (errCode ? " (" + errCode + ")" : "");
+    let errorText = _t("There was a problem communicating with the homeserver, please try again later.");
 
     if (err instanceof ConnectionError) {
         if (
             window.location.protocol === "https:" &&
             (serverConfig.hsUrl.startsWith("http:") || !serverConfig.hsUrl.startsWith("http"))
         ) {
-            errorText = (
+            return (
                 <span>
                     {_t(
                         "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. " +
@@ -179,25 +172,32 @@ export function messageForConnectionError(
                     )}
                 </span>
             );
-        } else {
-            errorText = (
-                <span>
-                    {_t(
-                        "Can't connect to homeserver - please check your connectivity, ensure your " +
-                            "<a>homeserver's SSL certificate</a> is trusted, and that a browser extension " +
-                            "is not blocking requests.",
-                        {},
-                        {
-                            a: (sub) => (
-                                <a target="_blank" rel="noreferrer noopener" href={serverConfig.hsUrl}>
-                                    {sub}
-                                </a>
-                            ),
-                        },
-                    )}
-                </span>
-            );
         }
+
+        return (
+            <span>
+                {_t(
+                    "Can't connect to homeserver - please check your connectivity, ensure your " +
+                        "<a>homeserver's SSL certificate</a> is trusted, and that a browser extension " +
+                        "is not blocking requests.",
+                    {},
+                    {
+                        a: (sub) => (
+                            <a target="_blank" rel="noreferrer noopener" href={serverConfig.hsUrl}>
+                                {sub}
+                            </a>
+                        ),
+                    },
+                )}
+            </span>
+        );
+    } else if (err instanceof MatrixError) {
+        let errCode = err.errcode;
+        if (!errCode && err.httpStatus) {
+            errCode = "HTTP " + err.httpStatus;
+        }
+
+        errorText += errCode ? " (" + errCode + ")" : "";
     }
 
     return errorText;
