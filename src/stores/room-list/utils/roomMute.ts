@@ -17,15 +17,16 @@ limitations under the License.
 import { MatrixEvent, EventType, IPushRules } from "matrix-js-sdk/src/matrix";
 
 import { ActionPayload } from "../../../dispatcher/payloads";
-import { isRuleRoomSpecific } from "../../../RoomNotifs";
+import { isRuleMaybeRoomMuteRule } from "../../../RoomNotifs";
 import { arrayDiff } from "../../../utils/arrays";
 
 /**
  * Gets any changed push rules that are room specific overrides
+ * that mute notifications
  * @param actionPayload
  * @returns {string[]} ruleIds of added or removed rules
  */
-export const getChangedOverrideRoomPushRules = (actionPayload: ActionPayload): string[] | undefined => {
+export const getChangedOverrideRoomMutePushRules = (actionPayload: ActionPayload): string[] | undefined => {
     if (
         actionPayload.action !== "MatrixActions.accountData" ||
         actionPayload.event?.getType() !== EventType.PushRules
@@ -39,8 +40,10 @@ export const getChangedOverrideRoomPushRules = (actionPayload: ActionPayload): s
         return undefined;
     }
 
-    const roomPushRules = (event.getContent() as IPushRules)?.global?.override?.filter(isRuleRoomSpecific);
-    const prevRoomPushRules = (prevEvent?.getContent() as IPushRules)?.global?.override?.filter(isRuleRoomSpecific);
+    const roomPushRules = (event.getContent() as IPushRules)?.global?.override?.filter(isRuleMaybeRoomMuteRule);
+    const prevRoomPushRules = (prevEvent?.getContent() as IPushRules)?.global?.override?.filter(
+        isRuleMaybeRoomMuteRule,
+    );
 
     const { added, removed } = arrayDiff(
         prevRoomPushRules?.map((rule) => rule.rule_id) || [],

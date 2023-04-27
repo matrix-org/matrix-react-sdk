@@ -14,7 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ConditionKind, EventType, IPushRule, MatrixEvent, PendingEventOrdering, Room } from "matrix-js-sdk/src/matrix";
+import {
+    ConditionKind,
+    EventType,
+    IPushRule,
+    MatrixEvent,
+    PendingEventOrdering,
+    PushRuleActionName,
+    Room,
+} from "matrix-js-sdk/src/matrix";
 
 import defaultDispatcher, { MatrixDispatcher } from "../../../src/dispatcher/dispatcher";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
@@ -301,6 +309,7 @@ describe("RoomListStore", () => {
 
             it("triggers a room update when room mutes have changed", async () => {
                 const rule = makePushRule(normalRoom.roomId, {
+                    actions: [PushRuleActionName.DontNotify],
                     conditions: [{ kind: ConditionKind.EventMatch, key: "room_id", pattern: normalRoom.roomId }],
                 });
                 const event = makePushRulesEvent([rule]);
@@ -319,6 +328,7 @@ describe("RoomListStore", () => {
 
             it("handles when a muted room is unknown by the room list", async () => {
                 const rule = makePushRule(normalRoom.roomId, {
+                    actions: [PushRuleActionName.DontNotify],
                     conditions: [{ kind: ConditionKind.EventMatch, key: "room_id", pattern: normalRoom.roomId }],
                 });
                 const unknownRoomRule = makePushRule("!unknown:server.org", {

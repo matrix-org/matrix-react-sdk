@@ -14,14 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-    IAnnotatedPushRule,
-    IPushRule,
-    IPushRules,
-    PushRuleActionName,
-    PushRuleKind,
-    RuleId,
-} from "matrix-js-sdk/src/matrix";
+import { IAnnotatedPushRule, IPushRule, IPushRules, PushRuleKind, RuleId } from "matrix-js-sdk/src/matrix";
 
 /**
  * Default set of push rules for a new account
