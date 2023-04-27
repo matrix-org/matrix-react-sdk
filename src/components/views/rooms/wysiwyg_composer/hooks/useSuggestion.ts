@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { Attributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useMemo, useState } from "react";
 
 /**
  * Information about the current state of the `useSuggestion` hook.
@@ -47,7 +47,6 @@ type SuggestionState = Suggestion | null;
  * - `suggestion`: if the cursor is inside something that could be interpreted as a command or a mention,
  * this will be an object representing that command or mention, otherwise it is null
  */
-
 export function useSuggestion(
     editorRef: React.RefObject<HTMLDivElement>,
     setText: (text: string) => void,
@@ -59,18 +58,24 @@ export function useSuggestion(
 } {
     const [suggestion, setSuggestion] = useState<SuggestionState>(null);
 
-    // TODO handle the mentions (@user, #room etc)
-    const handleMention = (): void => {};
-
-    // We create a `seletionchange` handler here because we need to know when the user has moved the cursor,
+    // We create a `selectionchange` handler here because we need to know when the user has moved the cursor,
     // we can not depend on input events only
-    const onSelect = (): void => processSelectionChange(editorRef, suggestion, setSuggestion);
+    const onSelect = (): void => processSelectionChange(editorRef, setSuggestion);
+
+    const handleMention = (href: string, displayName: string, attributes: Attributes): void =>
+        processMention(href, displayName, attributes, suggestion, setSuggestion, setText);
 
     const handleCommand = (replacementText: string): void =>
         processCommand(replacementText, suggestion, setSuggestion, setText);
 
+    const memoizedMappedSuggestion: MappedSuggestion | null = useMemo(() => {
+        return suggestion !== null
+            ? { keyChar: suggestion.keyChar, type: suggestion.type, text: suggestion.text }
+            : null;
+    }, [suggestion]);
+
     return {
-        suggestion: mapSuggestion(suggestion),
+        suggestion: memoizedMappedSuggestion,
         handleCommand,
         handleMention,
         onSelect,
@@ -78,19 +83,45 @@ export function useSuggestion(
 }
 
 /**
- * Convert a PlainTextSuggestionPattern (or null) to a MappedSuggestion (or null)
+ * Replaces the relevant part of the editor text with a link representing a mention after it
+ * is selected from the autocomplete.
  *
- * @param suggestion - the suggestion that is the JS equivalent of the rust model's representation
- * @returns - null if the input is null, a MappedSuggestion if the input is non-null
+ * @param href - the href that the inserted link will use
+ * @param displayName - the text content of the link
+ * @param attributes - additional attributes to add to the link, can include data-* attributes
+ * @param suggestion - representation of the part of the DOM that will be replaced
+ * @param setSuggestion - setter function to set the suggestion state
+ * @param setText - setter function to set the content of the composer
  */
-export const mapSuggestion = (suggestion: SuggestionState): MappedSuggestion | null => {
+export function processMention(
+    href: string,
+    displayName: string,
+    attributes: Attributes, // these will be used when formatting the link as a pill
+    suggestion: SuggestionState,
+    setSuggestion: React.Dispatch<React.SetStateAction<SuggestionState>>,
+    setText: (text: string) => void,
+): void {
+    // if we do not have any of the values we need to do the work, do nothing
     if (suggestion === null) {
-        return null;
-    } else {
-        const { node, startOffset, endOffset, ...mappedSuggestion } = suggestion;
-        return mappedSuggestion;
+        return;
     }
-};
+
+    const { node } = suggestion;
+
+    const textBeforeReplacement = node.textContent?.slice(0, suggestion.startOffset) ?? "";
+    const textAfterReplacement = node.textContent?.slice(suggestion.endOffset) ?? "";
+
+    // TODO replace this markdown style text insertion with a pill representation
+    const newText = `[${displayName}](<${href}>) `;
+    const newCursorOffset = textBeforeReplacement.length + newText.length;
+    const newContent = textBeforeReplacement + newText + textAfterReplacement;
+
+    // insert the new text, move the cursor, set the text state, clear the suggestion state
+    node.textContent = newContent;
+    document.getSelection()?.setBaseAndExtent(node, newCursorOffset, node, newCursorOffset);
+    setText(newContent);
+    setSuggestion(null);
+}
 
 /**
  * Replaces the relevant part of the editor text with the replacement text after a command is selected
@@ -101,12 +132,12 @@ export const mapSuggestion = (suggestion: SuggestionState): MappedSuggestion | n
  * @param setSuggestion - setter function to set the suggestion state
  * @param setText - setter function to set the content of the composer
  */
-export const processCommand = (
+export function processCommand(
     replacementText: string,
     suggestion: SuggestionState,
     setSuggestion: React.Dispatch<React.SetStateAction<SuggestionState>>,
     setText: (text: string) => void,
-): void => {
+): void {
     // if we do not have a suggestion, return early
     if (suggestion === null) {
         return;
@@ -124,23 +155,83 @@ export const processCommand = (
     document.getSelection()?.setBaseAndExtent(node, newContent.length, node, newContent.length);
     setText(newContent);
     setSuggestion(null);
-};
+}
+
+/**
+ * Given some text content from a node and the cursor position, search through the content
+ * to find a mention or a command. If there is one present, return a slice of the content
+ * from the special character to the end of the input
+ *
+ * @param text - the text content of a node
+ * @param offset - the current cursor offset position
+ * @returns an empty string if no mention or command is found, otherwise the mention/command substring
+ */
+export function findMentionOrCommand(text: string, offset: number): { text: string; startOffset: number } | null {
+    // return early if the offset is outside the content
+    if (offset < 0 || offset > text.length) {
+        return null;
+    }
+
+    let startCharIndex = offset - 1; // due to us searching left from here
+    let endCharIndex = offset; // due to us searching right from here
+
+    const keepMovingLeft = (): boolean => {
+        const specialStartChars = /[@#/]/;
+        const currentChar = text[startCharIndex];
+        const precedingChar = text[startCharIndex - 1] ?? "";
+
+        const currentCharIsSpecial = specialStartChars.test(currentChar);
+
+        const shouldIgnoreMentionChar = (currentChar === "@" || currentChar === "#") && /\S/.test(precedingChar);
+
+        return startCharIndex >= 0 && (!currentCharIsSpecial || shouldIgnoreMentionChar);
+    };
+
+    const keepMovingRight = (): boolean => {
+        const specialEndChars = /\s/;
+        return !specialEndChars.test(text[endCharIndex]) && endCharIndex < text.length;
+    };
+
+    while (keepMovingLeft()) {
+        // special case - if we hit some whitespace, just return null, this is to catch cases
+        // where user types a special character then whitespace
+        if (/\s/.test(text[startCharIndex])) {
+            return null;
+        }
+        startCharIndex--;
+    }
+
+    while (keepMovingRight()) {
+        endCharIndex++;
+    }
+
+    // we have looped through the first part of the string => if we get a minus one
+    // as the index, we haven't found a start point, so return
+    // alternatively if we have found command (/) and the startCharIndex isn't 0, return ""
+    // or also if we hav found a command and the end index isn't the end of the content
+    const startCharIsCommand = text[startCharIndex] === "/";
+    if (
+        startCharIndex < 0 ||
+        (startCharIsCommand && startCharIndex !== 0) ||
+        (startCharIsCommand && endCharIndex !== text.length)
+    ) {
+        return null;
+    } else {
+        return { text: text.slice(startCharIndex, endCharIndex), startOffset: startCharIndex };
+    }
+}
 
 /**
  * When the selection changes inside the current editor, check to see if the cursor is inside
- * something that could require the autocomplete to be opened and update the suggestion state
- * if so
- * TODO expand this to handle mentions
+ * something that could be a command or a mention and update the suggestion state if so
  *
  * @param editorRef - ref to the composer
- * @param suggestion - the current suggestion state
  * @param setSuggestion - the setter for the suggestion state
  */
-export const processSelectionChange = (
+export function processSelectionChange(
     editorRef: React.RefObject<HTMLDivElement>,
-    suggestion: SuggestionState,
     setSuggestion: React.Dispatch<React.SetStateAction<SuggestionState>>,
-): void => {
+): void {
     const selection = document.getSelection();
 
     // return early if we do not have a current editor ref with a cursor selection inside a text node
@@ -150,43 +241,65 @@ export const processSelectionChange = (
         !selection.isCollapsed ||
         selection.anchorNode?.nodeName !== "#text"
     ) {
+        setSuggestion(null);
         return;
     }
 
-    // here we have established that both anchor and focus nodes in the selection are
-    // the same node, so rename to `currentNode` for later use
-    const { anchorNode: currentNode } = selection;
+    // here we have established that we have a cursor and both anchor and focus nodes in the selection
+    // are the same node, so rename to `currentNode` and `currentOffset` for subsequent use
+    const { anchorNode: currentNode, anchorOffset: currentOffset } = selection;
 
     // first check is that the text node is the first text node of the editor, as adding paragraphs can result
     // in nested <p> tags inside the editor <div>
     const firstTextNode = document.createNodeIterator(editorRef.current, NodeFilter.SHOW_TEXT).nextNode();
 
-    // if we're not in the first text node or we have no text content, return
-    if (currentNode !== firstTextNode || currentNode.textContent === null) {
+    // if we have no text content, return
+    if (currentNode.textContent === null) return;
+
+    const mentionOrCommand = findMentionOrCommand(currentNode.textContent, currentOffset);
+
+    // if we don't have any mentionsOrCommands, return, clearing the suggestion state
+    if (mentionOrCommand === null) {
+        setSuggestion(null);
         return;
     }
 
-    // it's a command if:
-    // it is the first textnode AND
-    // it starts with /, not // AND
-    // then has letters all the way up to the end of the textcontent
-    const commandRegex = /^\/(\w*)$/;
-    const commandMatches = currentNode.textContent.match(commandRegex);
+    // else we do have something, so get the constituent parts
+    const suggestionParts = getMentionOrCommandParts(mentionOrCommand.text);
 
-    // if we don't have any matches, return, clearing the suggeston state if it is non-null
-    if (commandMatches === null) {
-        if (suggestion !== null) {
-            setSuggestion(null);
-        }
+    // if we have a command at the beginning of a node, but that node isn't the first text node, return
+    if (suggestionParts.type === "command" && currentNode !== firstTextNode) {
+        setSuggestion(null);
         return;
     } else {
+        // else, we have found a mention or a command
         setSuggestion({
-            keyChar: "/",
-            type: "command",
-            text: commandMatches[1],
+            ...suggestionParts,
             node: selection.anchorNode,
-            startOffset: 0,
-            endOffset: currentNode.textContent.length,
+            startOffset: mentionOrCommand.startOffset,
+            endOffset: mentionOrCommand.startOffset + mentionOrCommand.text.length,
         });
     }
-};
+}
+
+/**
+ * Given a string that represents a suggestion in the composer, return an object that represents
+ * that text as a `MappedSuggestion`.
+ *
+ * @param suggestionText - string that could be a mention of a command type suggestion
+ * @returns an object representing the `MappedSuggestion` from that string
+ */
+export function getMentionOrCommandParts(suggestionText: string): MappedSuggestion {
+    const firstChar = suggestionText.charAt(0);
+    const restOfString = suggestionText.slice(1);
+
+    switch (firstChar) {
+        case "/":
+            return { keyChar: firstChar, text: restOfString, type: "command" };
+        case "#":
+        case "@":
+            return { keyChar: firstChar, text: restOfString, type: "mention" };
+        default:
+            return { keyChar: "", text: "", type: "unknown" };
+    }
+}
