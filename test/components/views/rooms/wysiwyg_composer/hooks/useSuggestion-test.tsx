@@ -18,6 +18,7 @@ import React from "react";
 import {
     Suggestion,
     findMentionOrCommand,
+    getMentionOrCommandParts,
     processCommand,
     processMention,
     processSelectionChange,
@@ -300,5 +301,32 @@ describe("findMentionOrCommand", () => {
     it("returns null when user inputs any whitespace after the special character", () => {
         const mentionWithSpaceAfter = "@ somebody";
         expect(findMentionOrCommand(mentionWithSpaceAfter, 2)).toBeNull();
+    });
+});
+
+describe("getMentionOrCommandParts", () => {
+    it("returns an empty mapped suggestion when first character is not / # @", () => {
+        expect(getMentionOrCommandParts("Zzz")).toEqual({ type: "unknown", keyChar: "", text: "" });
+    });
+
+    it("returns the expected mapped suggestion when first character is # or @", () => {
+        expect(getMentionOrCommandParts("@user-mention")).toEqual({
+            type: "mention",
+            keyChar: "@",
+            text: "user-mention",
+        });
+        expect(getMentionOrCommandParts("#room-mention")).toEqual({
+            type: "mention",
+            keyChar: "#",
+            text: "room-mention",
+        });
+    });
+
+    it("returns the expected mapped suggestion when first character is /", () => {
+        expect(getMentionOrCommandParts("/command")).toEqual({
+            type: "command",
+            keyChar: "/",
+            text: "command",
+        });
     });
 });
