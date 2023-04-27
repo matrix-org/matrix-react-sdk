@@ -226,11 +226,9 @@ describe("Timeline", () => {
             );
 
             // Wait until configuration is finished
-            cy.get(".mx_RoomView_body .mx_GenericEventListSummary[data-layout='group']").within(() => {
-                cy.get(".mx_GenericEventListSummary_summary")
-                    .findByText(OLD_NAME + " created and configured the room.")
-                    .should("exist");
-            });
+            cy.get(".mx_RoomView_body .mx_GenericEventListSummary[data-layout='group']")
+                .findByText(OLD_NAME + " created and configured the room.")
+                .should("exist");
 
             cy.get(".mx_GenericEventListSummary").within(() => {
                 // Click "expand" link button
@@ -790,7 +788,7 @@ describe("Timeline", () => {
             // Reply to the message
             cy.get(".mx_EventTile_last")
                 .within(() => {
-                    cy.findByText("Hello world", { timeout: 1000 });
+                    cy.findByText(MESSAGE);
                 })
                 .realHover()
                 .findByRole("button", { name: "Reply" })
