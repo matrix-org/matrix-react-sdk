@@ -11,7 +11,7 @@ exports[`<Pill> should not render an avatar or link when called with inMessage =
   <div>
     <bdi>
       <span
-        aria-describedby="mx_Pill_0.6576780592529059"
+        aria-describedby="mx_Pill_0.123456"
         class="mx_Pill mx_RoomPill"
       >
         <span
@@ -30,7 +30,7 @@ exports[`<Pill> should render the expected pill for @room 1`] = `
   <div>
     <bdi>
       <span
-        aria-describedby="mx_Pill_0.5061336147056763"
+        aria-describedby="mx_Pill_0.123456"
         class="mx_Pill mx_AtRoomPill"
       >
         <span
@@ -70,7 +70,7 @@ exports[`<Pill> should render the expected pill for a known user not in the room
   <div>
     <bdi>
       <a
-        aria-describedby="mx_Pill_0.6475136408205684"
+        aria-describedby="mx_Pill_0.123456"
         class="mx_Pill mx_UserPill"
         href="https://matrix.to/#/@user2:example.com"
       >
@@ -111,7 +111,7 @@ exports[`<Pill> should render the expected pill for a message in another room 1`
   <div>
     <bdi>
       <a
-        aria-describedby="mx_Pill_0.34232185507863266"
+        aria-describedby="mx_Pill_0.123456"
         class="mx_Pill mx_EventPill"
         href="https://matrix.to/#/!room1:example.com/$123-456"
       >
@@ -152,7 +152,7 @@ exports[`<Pill> should render the expected pill for a message in the same room 1
   <div>
     <bdi>
       <a
-        aria-describedby="mx_Pill_0.005409390314164542"
+        aria-describedby="mx_Pill_0.123456"
         class="mx_Pill mx_EventPill"
         href="https://matrix.to/#/!room1:example.com/$123-456"
       >
@@ -193,7 +193,7 @@ exports[`<Pill> should render the expected pill for a room alias 1`] = `
   <div>
     <bdi>
       <a
-        aria-describedby="mx_Pill_0.34233696196529273"
+        aria-describedby="mx_Pill_0.123456"
         class="mx_Pill mx_RoomPill"
         href="https://matrix.to/#/#room1:example.com"
       >
@@ -234,7 +234,7 @@ exports[`<Pill> should render the expected pill for a space 1`] = `
   <div>
     <bdi>
       <a
-        aria-describedby="mx_Pill_0.3966980423860371"
+        aria-describedby="mx_Pill_0.123456"
         class="mx_Pill mx_RoomPill"
         href="https://matrix.to/#/!space1:example.com"
       >
@@ -275,7 +275,7 @@ exports[`<Pill> should render the expected pill for an uknown user not in the ro
   <div>
     <bdi>
       <a
-        aria-describedby="mx_Pill_0.2507776407611779"
+        aria-describedby="mx_Pill_0.123456"
         class="mx_Pill mx_UserPill"
         href="https://matrix.to/#/@user3:example.com"
       >
@@ -298,7 +298,7 @@ exports[`<Pill> when rendering a pill for a room should render the expected pill
   <div>
     <bdi>
       <a
-        aria-describedby="mx_Pill_0.9587954175973983"
+        aria-describedby="mx_Pill_0.123456"
         class="mx_Pill mx_RoomPill"
         href="https://matrix.to/#/!room1:example.com"
       >
@@ -339,7 +339,7 @@ exports[`<Pill> when rendering a pill for a user in the room should render as ex
   <div>
     <bdi>
       <a
-        aria-describedby="mx_Pill_0.081742506828959"
+        aria-describedby="mx_Pill_0.123456"
         class="mx_Pill mx_UserPill"
         href="https://matrix.to/#/@user1:example.com"
       >
