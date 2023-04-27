@@ -66,6 +66,13 @@ limitations under the License.
 }
 
 .mx_MessageComposer {
+    .mx_RoomView_body[data-layout="bubble"] & {
+        /* Align with mx_RoomView_timeline and mx_RoomView_statusArea */
+        width: var(--RoomView_timeline-width);
+        max-width: var(--RoomView_timeline-max-width);
+        margin: var(--RoomView_timeline-margin);
+    }
+
     .mx_MessageComposer_avatar {
         position: absolute;
         left: 26px;

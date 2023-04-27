@@ -16,6 +16,9 @@ limitations under the License.
 
 :root {
     --RoomView_MessageList-padding: 18px; /* TODO: use a variable */
+    --RoomView_timeline-width: 100%;
+    --RoomView_timeline-max-width: 1200px;
+    --RoomView_timeline-margin: 0 auto;
 }
 
 .mx_RoomView_wrapper {
@@ -110,6 +113,16 @@ limitations under the License.
         display: flex;
         flex-direction: column;
         margin-right: calc(var(--container-gap-width) / 2);
+    }
+
+    &[data-layout="bubble"] {
+        /* Make widgets and calls span across the whole room width when using bubble layout */
+        .mx_RoomView_timeline,
+        .mx_RoomView_statusArea {
+            width: var(--RoomView_timeline-width);
+            max-width: var(--RoomView_timeline-max-width);
+            margin: var(--RoomView_timeline-margin);
+        }
     }
 }
 
