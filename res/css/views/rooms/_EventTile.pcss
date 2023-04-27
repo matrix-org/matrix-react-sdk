@@ -468,6 +468,13 @@ $left-gutter: 64px;
                 line-height: var(--irc-line-height);
             }
         }
+
+        &.mx_EventTile_emote {
+            .mx_EventTile_avatar {
+                /* add --right-padding value of MessageTimestamp only */
+                margin-left: calc(var(--name-width) + var(--icon-width) + 1 * var(--right-padding));
+            }
+        }
     }
 
     &[data-layout="group"] {
