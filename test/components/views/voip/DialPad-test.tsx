@@ -16,9 +16,9 @@ limitations under the License.
 
 import React from "react";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import DialPad, { BUTTONS, BUTTON_LETTERS } from "../../../../src/components/views/voip/DialPad";
-import userEvent from "@testing-library/user-event";
 
 it("when hasDial is true, displays all expected numbers and letters", () => {
     render(<DialPad onDigitPress={jest.fn()} hasDial={true} onDialPress={jest.fn()} />);
