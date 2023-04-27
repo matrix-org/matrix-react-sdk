@@ -204,10 +204,10 @@ describe("Audio player", () => {
             // Assert that the counter is zero before clicking the play button
             cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
-            // Find and click "Play" button
-            cy.findByRole("button", { name: "Play" })
-                .should(($e) => !$e.prop("disabled"))
-                .click();
+            // Find and click "Play" button, scroll to bottom is to make the test less flaky
+            cy.findByRole("button", { name: "Play" }).should("exist");
+            cy.root().closest(".mx_ScrollPanel").scrollTo("bottom", { ensureScrollable: false });
+            cy.findByRole("button", { name: "Play" }).click();
 
             // Assert that "Pause" button can be found
             cy.findByRole("button", { name: "Pause" }).should("exist");
@@ -341,10 +341,10 @@ describe("Audio player", () => {
                         // Assert that the counter is zero before clicking the play button
                         cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
-                        // Find and click "Play" button
-                        cy.findByRole("button", { name: "Play" })
-                            .should(($e) => !$e.prop("disabled"))
-                            .click();
+                        // Find and click "Play" button, scroll to bottom is to make the test less flaky
+                        cy.findByRole("button", { name: "Play" }).should("exist");
+                        cy.root().closest(".mx_ScrollPanel").scrollTo("bottom", { ensureScrollable: false });
+                        cy.findByRole("button", { name: "Play" }).click();
 
                         // Assert that "Pause" button can be found
                         cy.findByRole("button", { name: "Pause" }).should("exist");
