@@ -88,7 +88,7 @@ interface IDialProps extends IBaseProps {
     onDialPress: () => void;
 }
 
-export default class Dialpad extends React.PureComponent<XOR<IProps, IDialProps>> {
+export default class DialPad extends React.PureComponent<XOR<IProps, IDialProps>> {
     public render(): React.ReactNode {
         const buttonNodes: JSX.Element[] = [];
 
