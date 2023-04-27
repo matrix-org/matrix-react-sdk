@@ -1085,13 +1085,21 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         let noOfEleToJump = 1;
         if (accessibilityAction === KeyBindingAction.ArrowUp || accessibilityAction === KeyBindingAction.ArrowDown) {
             // move to next element in either direct using arrow key
-            noOfEleToJump = clamp(idx + (accessibilityAction === KeyBindingAction.ArrowUp ? -1 : 1), 0, refs.length - 1);
+            noOfEleToJump = clamp(
+                idx + (accessibilityAction === KeyBindingAction.ArrowUp ? -1 : 1),
+                0,
+                refs.length - 1,
+            );
         } else if (
             accessibilityAction === KeyBindingAction.PageUp ||
             accessibilityAction === KeyBindingAction.PageDown
         ) {
             // jump 3 next element in either direct using page up and page down key
-            noOfEleToJump = clamp(idx + (accessibilityAction === KeyBindingAction.PageUp ? -numOfEle : numOfEle), 0, refs.length - 1);
+            noOfEleToJump = clamp(
+                idx + (accessibilityAction === KeyBindingAction.PageUp ? -numOfEle : numOfEle),
+                0,
+                refs.length - 1,
+            );
         }
         return noOfEleToJump;
     };
