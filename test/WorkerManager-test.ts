@@ -47,13 +47,13 @@ describe("WorkerManager", () => {
         const two = postMessage.mock.calls.find((c) => c[0].data === "Two")![0].seq;
         const three = postMessage.mock.calls.find((c) => c[0].data === "Three")![0].seq;
 
-        worker.onmessage({ data: { seq: one, data: 1 } } as MessageEvent);
+        worker.onmessage!({ data: { seq: one, data: 1 } } as MessageEvent);
         await expect(oneProm).resolves.toEqual(expect.objectContaining({ data: 1 }));
 
-        worker.onmessage({ data: { seq: three, data: 3 } } as MessageEvent);
+        worker.onmessage!({ data: { seq: three, data: 3 } } as MessageEvent);
         await expect(threeProm).resolves.toEqual(expect.objectContaining({ data: 3 }));
 
-        worker.onmessage({ data: { seq: two, data: 2 } } as MessageEvent);
+        worker.onmessage!({ data: { seq: two, data: 2 } } as MessageEvent);
         await expect(twoProm).resolves.toEqual(expect.objectContaining({ data: 2 }));
     });
 });
