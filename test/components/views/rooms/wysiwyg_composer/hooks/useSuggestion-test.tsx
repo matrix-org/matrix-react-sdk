@@ -19,6 +19,7 @@ import {
     Suggestion,
     findMentionOrCommand,
     processCommand,
+    processMention,
     processSelectionChange,
 } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/useSuggestion";
 
@@ -64,6 +65,48 @@ describe("processCommand", () => {
 
         // check that the text has changed and includes a trailing space
         expect(mockSetText).toHaveBeenCalledWith(`${replacementText} `);
+    });
+});
+
+describe.only("processMention", () => {
+    // TODO refactor and expand tests when mentions become <a> tags
+    it("returns early when suggestion is null", () => {
+        const mockSetSuggestion = jest.fn();
+        const mockSetText = jest.fn();
+        processMention("href", "displayName", {}, null, mockSetSuggestion, mockSetText);
+
+        expect(mockSetSuggestion).not.toHaveBeenCalled();
+        expect(mockSetText).not.toHaveBeenCalled();
+    });
+
+    it("can insert a mention into an empty text node", () => {
+        // make an empty text node, set the cursor inside it and then append to the document
+        const textNode = document.createTextNode("");
+        document.body.appendChild(textNode);
+        document.getSelection()?.setBaseAndExtent(textNode, 0, textNode, 0);
+
+        // call the util function
+        const href = "www.test.com";
+        const displayName = "displayName";
+        const mockSetSuggestion = jest.fn();
+        const mockSetText = jest.fn();
+        processMention(
+            href,
+            displayName,
+            {},
+            { node: textNode, startOffset: 0, endOffset: 0 } as unknown as Suggestion,
+            mockSetSuggestion,
+            mockSetText,
+        );
+
+        // placeholder testing for the changed content - these tests will all be changed
+        // when the mention is inserted as an <a> tagfs
+        const { textContent } = textNode;
+        expect(textContent.includes(href)).toBe(true);
+        expect(textContent.includes(displayName)).toBe(true);
+
+        expect(mockSetText).toHaveBeenCalledWith(expect.stringContaining(displayName));
+        expect(mockSetSuggestion).toHaveBeenCalledWith(null);
     });
 });
 
