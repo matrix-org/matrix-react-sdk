@@ -68,7 +68,7 @@ describe("processCommand", () => {
     });
 });
 
-describe.only("processMention", () => {
+describe("processMention", () => {
     // TODO refactor and expand tests when mentions become <a> tags
     it("returns early when suggestion is null", () => {
         const mockSetSuggestion = jest.fn();
@@ -200,6 +200,20 @@ describe("processSelectionChange", () => {
             startOffset: 0,
             endOffset: commandText.length,
         });
+    });
+
+    it("does not treat a command outside the first text node to be a suggestion", () => {
+        const [mockEditor] = appendEditorWithTextNodeContaining("some text in first node");
+        const [, commandTextNode] = appendEditorWithTextNodeContaining("/potentialCommand");
+
+        const mockEditorRef = createMockEditorRef(mockEditor);
+
+        // create a selection in the text node that has identical start and end locations, ie it is a cursor
+        document.getSelection()?.setBaseAndExtent(commandTextNode, 3, commandTextNode, 3);
+
+        // process the change and check the suggestion that is set looks as we expect it to
+        processSelectionChange(mockEditorRef, mockSetSuggestion);
+        expect(mockSetSuggestion).toHaveBeenCalledWith(null);
     });
 });
 
