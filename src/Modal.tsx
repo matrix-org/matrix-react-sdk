@@ -275,8 +275,8 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
         prom: Promise<C>,
         props?: ComponentProps<C>,
         className?: string,
-        isPriorityModal: boolean = false,
-        isStaticModal: boolean = false,
+        isPriorityModal = false,
+        isStaticModal = false,
         options: IOptions<C> = {},
     ): IHandle<C> {
         const beforeModal = this.getCurrentModal();
