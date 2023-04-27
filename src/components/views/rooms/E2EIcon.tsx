@@ -54,7 +54,7 @@ interface Props {
 
 interface UserProps extends Props {
     isUser: true;
-    status: E2EState;
+    status: E2EState | E2EStatus;
 }
 
 interface RoomProps extends Props {
