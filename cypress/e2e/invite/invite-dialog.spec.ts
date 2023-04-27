@@ -45,7 +45,7 @@ describe("Invite dialog", function () {
         cy.findByText("Hanako created and configured the room.").should("exist");
 
         // Open the room info panel
-        cy.findByRole("tab", { name: "Room info" }).click();
+        cy.findByRole("button", { name: "Room info" }).click();
 
         // Click "People" button on the panel
         // Regex pattern due to the string of "mx_BaseCard_Button_sublabel"
