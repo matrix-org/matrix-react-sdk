@@ -30,6 +30,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import BaseDialog from "./BaseDialog";
 import CopyableText from "../elements/CopyableText";
+import { XOR } from "../../../@types/common";
 
 const socials = [
     {
@@ -63,10 +64,18 @@ const socials = [
     },
 ];
 
-interface IProps {
-    target: Room | User | RoomMember | MatrixEvent;
-    permalinkCreator?: RoomPermalinkCreator;
+interface BaseProps {
     onFinished(): void;
+}
+
+interface Props extends BaseProps {
+    target: Room | User | RoomMember;
+    permalinkCreator?: RoomPermalinkCreator;
+}
+
+interface EventProps extends BaseProps {
+    target: MatrixEvent;
+    permalinkCreator: RoomPermalinkCreator;
 }
 
 interface IState {
@@ -74,8 +83,8 @@ interface IState {
     permalinkCreator: RoomPermalinkCreator | null;
 }
 
-export default class ShareDialog extends React.PureComponent<IProps, IState> {
-    public constructor(props: IProps) {
+export default class ShareDialog extends React.PureComponent<XOR<Props, EventProps>, IState> {
+    public constructor(props: XOR<Props, EventProps>) {
         super(props);
 
         let permalinkCreator: RoomPermalinkCreator | null = null;
@@ -116,9 +125,9 @@ export default class ShareDialog extends React.PureComponent<IProps, IState> {
             matrixToUrl = makeUserPermalink(this.props.target.userId);
         } else if (this.props.target instanceof MatrixEvent) {
             if (this.state.linkSpecificEvent) {
-                matrixToUrl = this.props.permalinkCreator.forEvent(this.props.target.getId()!);
+                matrixToUrl = this.props.permalinkCreator!.forEvent(this.props.target.getId()!);
             } else {
-                matrixToUrl = this.props.permalinkCreator.forShareableRoom();
+                matrixToUrl = this.props.permalinkCreator!.forShareableRoom();
             }
         }
         return matrixToUrl;

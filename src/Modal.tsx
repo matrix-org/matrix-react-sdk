@@ -30,7 +30,7 @@ const STATIC_DIALOG_CONTAINER_ID = "mx_Dialog_StaticContainer";
 
 // Type which accepts a React Component which looks like a Modal (accepts an onFinished prop)
 export type ComponentType = React.ComponentType<{
-    onFinished?(...args: any): void;
+    onFinished(...args: any): void;
 }>;
 
 // Generic type which returns the props of the Modal component with the onFinished being optional.
@@ -275,8 +275,8 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
         prom: Promise<C>,
         props?: ComponentProps<C>,
         className?: string,
-        isPriorityModal = false,
-        isStaticModal = false,
+        isPriorityModal: boolean = false,
+        isStaticModal: boolean = false,
         options: IOptions<C> = {},
     ): IHandle<C> {
         const beforeModal = this.getCurrentModal();
