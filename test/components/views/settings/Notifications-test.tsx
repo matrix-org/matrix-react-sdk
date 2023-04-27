@@ -257,6 +257,7 @@ describe("<Notifications />", () => {
         getPushers: jest.fn(),
         getThreePids: jest.fn(),
         setPusher: jest.fn(),
+        removePusher: jest.fn(),
         setPushRuleEnabled: jest.fn(),
         setPushRuleActions: jest.fn(),
         getRooms: jest.fn().mockReturnValue([]),
@@ -287,6 +288,7 @@ describe("<Notifications />", () => {
         mockClient.getPushers.mockClear().mockResolvedValue({ pushers: [] });
         mockClient.getThreePids.mockClear().mockResolvedValue({ threepids: [] });
         mockClient.setPusher.mockClear().mockResolvedValue({});
+        mockClient.removePusher.mockClear().mockResolvedValue({});
         mockClient.setPushRuleActions.mockReset().mockResolvedValue({});
         mockClient.pushRules = pushRules;
     });
@@ -396,17 +398,18 @@ describe("<Notifications />", () => {
             });
 
             it("enables email notification when toggling off", async () => {
-                const testPusher = { kind: "email", pushkey: "tester@test.com" } as unknown as IPusher;
+                const testPusher = {
+                    kind: "email",
+                    pushkey: "tester@test.com",
+                    app_id: "testtest",
+                } as unknown as IPusher;
                 mockClient.getPushers.mockResolvedValue({ pushers: [testPusher] });
                 await getComponentAndWait();
 
                 const emailToggle = screen.getByTestId("notif-email-switch").querySelector('div[role="switch"]')!;
                 fireEvent.click(emailToggle);
 
-                expect(mockClient.setPusher).toHaveBeenCalledWith({
-                    ...testPusher,
-                    kind: null,
-                });
+                expect(mockClient.removePusher).toHaveBeenCalledWith(testPusher.pushkey, testPusher.app_id);
             });
         });
 
