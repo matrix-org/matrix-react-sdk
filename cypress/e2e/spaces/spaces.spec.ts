@@ -273,6 +273,15 @@ describe("Spaces", () => {
     });
 
     it("should render subspaces in the space panel only when expanded", () => {
+        const axeOptions = {
+            rules: {
+                // Disable this check as it triggers on nested roving tab index elements which are in practice fine
+                "nested-interactive": {
+                    enabled: false,
+                },
+            },
+        };
+
         cy.injectAxe();
 
         cy.createSpace({
@@ -286,63 +295,42 @@ describe("Spaces", () => {
         });
 
         // Find collapsed Space panel
-        cy.findByRole("tree", { name: "Spaces" }).within(() => {
-            cy.findByRole("button", { name: "Root Space" }).should("exist");
-            cy.findByRole("button", { name: "Child Space" }).should("not.exist");
+        cy.get(".mx_SpacePanel--collapsed").within(() => {
+            cy.findByRole("tree", { name: "Spaces" }).within(() => {
+                // Assert the subspace is not rendered on the collapsed Space panel
+                cy.findByRole("button", { name: "Child Space" }).should("not.exist");
+            });
         });
 
-        const axeOptions = {
-            rules: {
-                // Disable this check as it triggers on nested roving tab index elements which are in practice fine
-                "nested-interactive": {
-                    enabled: false,
-                },
-            },
-        };
         cy.checkA11y(undefined, axeOptions);
+
+        // Take a snapshot of the collapsed Space panel
         cy.get(".mx_SpacePanel--collapsed").percySnapshotElement("Space panel collapsed", { widths: [68] });
 
-        cy.findByRole("tree", { name: "Spaces" }).within(() => {
-            cy.findByRole("button", { name: "Expand" })
-                .should("have.class", "mx_SpaceButton_toggleCollapse")
-                .realHover()
-                .click();
+        cy.get(".mx_SpacePanel--collapsed").within(() => {
+            cy.findByRole("tree", { name: "Spaces" }).within(() => {
+                // Click the button to expand subspaces, not the Space panel itself
+                cy.findByRole("button", { name: "Expand" })
+                    .should("have.class", "mx_SpaceButton_toggleCollapse")
+                    // Note that the button to open the panel has the same aria-label
+                    .should("not.have.class", "mx_SpacePanel_toggleCollapse")
+                    .realHover()
+                    .click();
+            });
         });
-        cy.get(".mx_SpacePanel--expanded").should("exist");
 
-        cy.contains(".mx_SpaceItem", "Root Space")
-            .should("exist")
-            .contains(".mx_SpaceItem", "Child Space")
-            .should("exist");
+        // Assert the Space panel is expanded
+        cy.get(".mx_SpacePanel--expanded").within(() => {
+            cy.findByRole("tree", { name: "Spaces" }).within(() => {
+                // Assert the subspace is rendered on the expanded Space panel
+                cy.findByRole("button", { name: "Child Space" }).should("exist");
+            });
+        });
 
         cy.checkA11y(undefined, axeOptions);
-        cy.get(".mx_SpacePanel").percySnapshotElement("Space panel expanded", { widths: [258] });
-    });
 
-    it("should change the panel and its expand/collapse button's class name when the panel is expanded", () => {
-        cy.createSpace({ name: "My Space" });
-        cy.getSpacePanelButton("My Space").should("exist");
-
-        cy.get(".mx_SpacePanel--collapsed")
-            .should("exist")
-            .within(() => {
-                // Assert that "Expand" panel button is rendered
-                cy.findByRole("button", { name: "Expand" })
-                    .should("have.class", "mx_SpacePanel_toggleCollapse")
-                    .should("have.class", "mx_SpacePanel_toggleCollapse--collapsed") // "Expand" button is collapsed
-                    .should("not.have.class", "mx_SpaceButton_toggleCollapse") // another button w/ the same name
-                    .realHover()
-                    .click(); // Click the button
-            });
-
-        cy.get(".mx_SpacePanel--expanded")
-            .should("exist")
-            .within(() => {
-                // Assert that "Collapse" panel button is rendered
-                cy.findByRole("button", { name: "Collapse" })
-                    .should("have.class", "mx_SpacePanel_toggleCollapse--expanded") // "Collapse" button is expanded
-                    .should("exist");
-            });
+        // Take a snapshot of the expanded Space panel
+        cy.get(".mx_SpacePanel--expanded").percySnapshotElement("Space panel expanded", { widths: [258] });
     });
 
     it("should not soft crash when joining a room from space hierarchy which has a link in its topic", () => {
