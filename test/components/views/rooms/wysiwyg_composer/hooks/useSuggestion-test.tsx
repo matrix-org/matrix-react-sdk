@@ -17,7 +17,7 @@ import React from "react";
 
 import {
     Suggestion,
-    mapSuggestion,
+    findMentionOrCommand,
     processCommand,
     processSelectionChange,
 } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/useSuggestion";
@@ -33,24 +33,6 @@ function createMockPlainTextSuggestionPattern(props: Partial<Suggestion> = {}): 
         ...props,
     };
 }
-
-describe("mapSuggestion", () => {
-    it("returns null if called with a null argument", () => {
-        expect(mapSuggestion(null)).toBeNull();
-    });
-
-    it("returns a mapped suggestion when passed a suggestion", () => {
-        const inputFields = {
-            keyChar: "/" as const,
-            type: "command" as const,
-            text: "some text",
-        };
-        const input = createMockPlainTextSuggestionPattern(inputFields);
-        const output = mapSuggestion(input);
-
-        expect(output).toEqual(inputFields);
-    });
-});
 
 describe("processCommand", () => {
     it("does not change parent hook state if suggestion is null", () => {
@@ -112,14 +94,14 @@ describe("processSelectionChange", () => {
         // we monitor for the call to document.createNodeIterator to indicate an early return
         const nodeIteratorSpy = jest.spyOn(document, "createNodeIterator");
 
-        processSelectionChange(mockEditorRef, null, jest.fn());
+        processSelectionChange(mockEditorRef, jest.fn());
         expect(nodeIteratorSpy).not.toHaveBeenCalled();
 
         // tidy up to avoid potential impacts on other tests
         nodeIteratorSpy.mockRestore();
     });
 
-    it("does not call setSuggestion if selection is not a cursor", () => {
+    it("calls setSuggestion with null if selection is not a cursor", () => {
         const [mockEditor, textNode] = appendEditorWithTextNodeContaining("content");
         const mockEditorRef = createMockEditorRef(mockEditor);
 
@@ -128,11 +110,11 @@ describe("processSelectionChange", () => {
         document.getSelection()?.setBaseAndExtent(textNode, 0, textNode, 4);
 
         // process the selection and check that we do not attempt to set the suggestion
-        processSelectionChange(mockEditorRef, createMockPlainTextSuggestionPattern(), mockSetSuggestion);
-        expect(mockSetSuggestion).not.toHaveBeenCalled();
+        processSelectionChange(mockEditorRef, mockSetSuggestion);
+        expect(mockSetSuggestion).toHaveBeenCalledWith(null);
     });
 
-    it("does not call setSuggestion if selection cursor is not inside a text node", () => {
+    it("calls setSuggestion with null if selection cursor is not inside a text node", () => {
         const [mockEditor] = appendEditorWithTextNodeContaining("content");
         const mockEditorRef = createMockEditorRef(mockEditor);
 
@@ -140,8 +122,8 @@ describe("processSelectionChange", () => {
         document.getSelection()?.setBaseAndExtent(mockEditor, 0, mockEditor, 0);
 
         // process the selection and check that we do not attempt to set the suggestion
-        processSelectionChange(mockEditorRef, createMockPlainTextSuggestionPattern(), mockSetSuggestion);
-        expect(mockSetSuggestion).not.toHaveBeenCalled();
+        processSelectionChange(mockEditorRef, mockSetSuggestion);
+        expect(mockSetSuggestion).toHaveBeenCalledWith(null);
     });
 
     it("calls setSuggestion with null if we have an existing suggestion but no command match", () => {
@@ -153,7 +135,7 @@ describe("processSelectionChange", () => {
 
         // the call to process the selection will have an existing suggestion in state due to the second
         // argument being non-null, expect that we clear this suggestion now that the text is not a command
-        processSelectionChange(mockEditorRef, createMockPlainTextSuggestionPattern(), mockSetSuggestion);
+        processSelectionChange(mockEditorRef, mockSetSuggestion);
         expect(mockSetSuggestion).toHaveBeenCalledWith(null);
     });
 
@@ -166,7 +148,7 @@ describe("processSelectionChange", () => {
         document.getSelection()?.setBaseAndExtent(textNode, 3, textNode, 3);
 
         // process the change and check the suggestion that is set looks as we expect it to
-        processSelectionChange(mockEditorRef, null, mockSetSuggestion);
+        processSelectionChange(mockEditorRef, mockSetSuggestion);
         expect(mockSetSuggestion).toHaveBeenCalledWith({
             keyChar: "/",
             type: "command",
@@ -175,5 +157,91 @@ describe("processSelectionChange", () => {
             startOffset: 0,
             endOffset: commandText.length,
         });
+    });
+});
+
+describe("findMentionOrCommand", () => {
+    const command = "/someCommand";
+    const userMention = "@userMention";
+    const roomMention = "#roomMention";
+
+    const mentionTestCases = [userMention, roomMention];
+    const allTestCases = [command, userMention, roomMention];
+
+    it("returns null if content does not contain any mention or command characters", () => {
+        expect(findMentionOrCommand("hello", 1)).toBeNull();
+    });
+
+    it("returns null if the offset is outside the content length", () => {
+        expect(findMentionOrCommand("hi", 30)).toBeNull();
+        expect(findMentionOrCommand("hi", -10)).toBeNull();
+    });
+
+    it.each(allTestCases)("returns an object when the whole input is special case: %s", (text) => {
+        // test for cursor at after special character, before end, end
+        expect(findMentionOrCommand(text, 1)).toEqual({ text, startOffset: 0 });
+        expect(findMentionOrCommand(text, text.length - 2)).toEqual({ text, startOffset: 0 });
+        expect(findMentionOrCommand(text, text.length)).toEqual({ text, startOffset: 0 });
+    });
+
+    it("returns null when a command is followed by other text", () => {
+        const followingText = " followed by something";
+
+        // check for cursor inside and outside the command
+        expect(findMentionOrCommand(command + followingText, command.length - 2)).toBeNull();
+        expect(findMentionOrCommand(command + followingText, command.length + 2)).toBeNull();
+    });
+
+    it.each(mentionTestCases)("returns an object when a %s is followed by other text", (mention) => {
+        const followingText = " followed by something else";
+        expect(findMentionOrCommand(mention + followingText, mention.length - 2)).toEqual({
+            text: mention,
+            startOffset: 0,
+        });
+    });
+
+    it("returns null if there is a command surrounded by text", () => {
+        const precedingText = "text before the command ";
+        const followingText = " text after the command";
+        expect(findMentionOrCommand(precedingText + command + followingText, precedingText.length + 4)).toBeNull();
+    });
+
+    it.each(mentionTestCases)("returns an object if %s is surrounded by text", (mention) => {
+        const precedingText = "I want to mention ";
+        const followingText = " in my message";
+        expect(findMentionOrCommand(precedingText + mention + followingText, precedingText.length + 3)).toEqual({
+            text: mention,
+            startOffset: precedingText.length,
+        });
+    });
+
+    it("returns null for text content with an email address", () => {
+        const emailInput = "send to user@test.com";
+        expect(findMentionOrCommand(emailInput, 15)).toBeNull();
+    });
+
+    it("returns null for double slashed command", () => {
+        const doubleSlashCommand = "//not a command";
+        expect(findMentionOrCommand(doubleSlashCommand, 4)).toBeNull();
+    });
+
+    it("returns null for slash separated text", () => {
+        const slashSeparatedInput = "please to this/that/the other";
+        expect(findMentionOrCommand(slashSeparatedInput, 21)).toBeNull();
+    });
+
+    it("returns an object for a mention that contains punctuation", () => {
+        const mentionWithPunctuation = "@userX14#5a_-";
+        const precedingText = "mention ";
+        const mentionInput = precedingText + mentionWithPunctuation;
+        expect(findMentionOrCommand(mentionInput, 12)).toEqual({
+            text: mentionWithPunctuation,
+            startOffset: precedingText.length,
+        });
+    });
+
+    it("returns null when user inputs any whitespace after the special character", () => {
+        const mentionWithSpaceAfter = "@ somebody";
+        expect(findMentionOrCommand(mentionWithSpaceAfter, 2)).toBeNull();
     });
 });
