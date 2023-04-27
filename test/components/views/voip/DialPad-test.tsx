@@ -14,7 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { render } from "@testing-library/react";
-import DialPad from "../../../../src/components/views/voip/DialPad";
+import React from "react";
+import { render, screen } from "@testing-library/react";
 
-it("does something", () => {});
+import DialPad, { BUTTONS, BUTTON_LETTERS } from "../../../../src/components/views/voip/DialPad";
+
+it("displays all of the buttons and the associated letters", () => {
+    render(<DialPad onDigitPress={jest.fn()} hasDial={false} />);
+
+    // check that we have the expected number of buttons
+    expect(screen.getAllByRole("button")).toHaveLength(BUTTONS.length);
+
+    // BUTTONS represents the numbers and symbols
+    BUTTONS.forEach((button) => {
+        expect(screen.getByText(button)).toBeInTheDocument();
+    });
+
+    // BUTTON_LETTERS represents the `ABC` type strings you see on the keypad, but also contains
+    // some empty strings, so we filter them out prior to tests
+    BUTTON_LETTERS.filter(Boolean).forEach((letterSet) => {
+        expect(screen.getByText(letterSet)).toBeInTheDocument();
+    });
+});
