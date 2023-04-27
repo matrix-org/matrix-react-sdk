@@ -89,6 +89,7 @@ import { isLocalRoom } from "../../../../utils/localRoom/isLocalRoom";
 import RoomAvatar from "../../avatars/RoomAvatar";
 import { useFeatureEnabled } from "../../../../hooks/useSettings";
 import { filterBoolean } from "../../../../utils/arrays";
+import { clamp } from "../../../../utils/numbers";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -1065,54 +1066,33 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             </>
         );
     }
-    // calculate no of element to jump based on arrow key or page up and page down
-    const getNoOfEleToJump = ({
-        currentIndex,
-        totalElements,
-        noOfJump,
-    }: {
-        currentIndex: number;
-        totalElements: number;
-        noOfJump: number;
-    }) => {
-        if (currentIndex + noOfJump < 0) {
-            return 0;
-        } else if (currentIndex + noOfJump > totalElements - 1) {
-            return totalElements - 1;
-        } else {
-            return currentIndex + noOfJump;
-        }
+
+    const calculateNumOfEleInSection = (refs: RefObject<HTMLElement>): number => {
+        return Math.floor((scrollContainerRef.current?.clientHeight || 1) / (refs.current?.clientHeight || 1));
     };
 
     const findNextElementIndex = ({
         accessibilityAction,
         idx,
+        numOfEle,
         refs,
     }: {
         accessibilityAction: KeyBindingAction;
         idx: number;
+        numOfEle: number;
         refs: RefObject<HTMLElement>[];
-    }) => {
-        let noOfEleToJump: number = 1;
+    }): number => {
+        let noOfEleToJump = 1;
         if (accessibilityAction === KeyBindingAction.ArrowUp || accessibilityAction === KeyBindingAction.ArrowDown) {
             // move to next element in either direct using arrow key
-            noOfEleToJump = getNoOfEleToJump({
-                currentIndex: idx,
-                totalElements: refs.length,
-                noOfJump: accessibilityAction === KeyBindingAction.ArrowUp ? -1 : 1,
-            });
+            noOfEleToJump = clamp(idx + (accessibilityAction === KeyBindingAction.ArrowUp ? -1 : 1), 0, refs.length - 1);
         } else if (
             accessibilityAction === KeyBindingAction.PageUp ||
             accessibilityAction === KeyBindingAction.PageDown
         ) {
             // jump 3 next element in either direct using page up and page down key
-            noOfEleToJump = getNoOfEleToJump({
-                currentIndex: idx,
-                totalElements: refs.length,
-                noOfJump: accessibilityAction === KeyBindingAction.PageUp ? -3 : 3,
-            });
+            noOfEleToJump = clamp(idx + (accessibilityAction === KeyBindingAction.PageUp ? -numOfEle : numOfEle), 0, refs.length - 1);
         }
-
         return noOfEleToJump;
     };
 
@@ -1154,7 +1134,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     }
                     if (rovingContext.state.activeRef) {
                         const idx = refs.indexOf(rovingContext.state.activeRef);
-                        const nextElementIndex = findNextElementIndex({ accessibilityAction, idx, refs });
+                        const numOfEle = calculateNumOfEleInSection(refs[0]);
+                        const nextElementIndex = findNextElementIndex({ accessibilityAction, idx, numOfEle, refs });
                         ref = findSiblingElement(refs, nextElementIndex);
                     }
                 }
