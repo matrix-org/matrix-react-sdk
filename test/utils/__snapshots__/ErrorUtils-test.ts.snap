@@ -18,6 +18,12 @@ exports[`messageForConnectionError should match snapshot for ConnectionError 1`]
 </DocumentFragment>
 `;
 
+exports[`messageForConnectionError should match snapshot for MatrixError M_NOT_FOUND 1`] = `
+<DocumentFragment>
+  There was a problem communicating with the homeserver, please try again later.(M_NOT_FOUND)
+</DocumentFragment>
+`;
+
 exports[`messageForConnectionError should match snapshot for mixed content error 1`] = `
 <DocumentFragment>
   <span>

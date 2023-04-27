@@ -141,6 +141,22 @@ describe("messageForConnectionError", () => {
         expect(asFragment()).toMatchSnapshot();
     });
 
+    it("should match snapshot for MatrixError M_NOT_FOUND", () => {
+        const err = new MatrixError(
+            {
+                errcode: "M_NOT_FOUND",
+            },
+            404,
+        );
+        const { asFragment } = render(
+            messageForConnectionError(err, {
+                hsUrl: "hsUrl",
+                hsName: "hsName",
+            }) as ReactElement,
+        );
+        expect(asFragment()).toMatchSnapshot();
+    });
+
     it("should match snapshot for unknown error", () => {
         const err = new Error("What even");
         const { asFragment } = render(

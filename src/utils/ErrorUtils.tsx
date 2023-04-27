@@ -192,12 +192,11 @@ export function messageForConnectionError(
             </span>
         );
     } else if (err instanceof MatrixError) {
-        let errCode = err.errcode;
-        if (!errCode && err.httpStatus) {
-            errCode = "HTTP " + err.httpStatus;
+        if (err.errcode) {
+            errorText += `(${err.errcode})`;
+        } else if (err.httpStatus) {
+            errorText += ` (HTTP ${err.httpStatus})`;
         }
-
-        errorText += errCode ? " (" + errCode + ")" : "";
     }
 
     return errorText;
