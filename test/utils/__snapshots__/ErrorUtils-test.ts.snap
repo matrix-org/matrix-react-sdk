@@ -18,6 +18,24 @@ exports[`messageForConnectionError should match snapshot for ConnectionError 1`]
 </DocumentFragment>
 `;
 
+exports[`messageForConnectionError should match snapshot for mixed content error 1`] = `
+<DocumentFragment>
+  <span>
+    <span>
+      Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or 
+      <a
+        href="https://www.google.com/search?&q=enable%20unsafe%20scripts"
+        rel="noreferrer noopener"
+        target="_blank"
+      >
+        enable unsafe scripts
+      </a>
+      .
+    </span>
+  </span>
+</DocumentFragment>
+`;
+
 exports[`messageForConnectionError should match snapshot for unknown error 1`] = `
 <DocumentFragment>
   There was a problem communicating with the homeserver, please try again later.
@@ -57,6 +75,22 @@ exports[`messageForLoginError should match snapshot for unknown error 1`] = `
 </DocumentFragment>
 `;
 
+exports[`messageForResourceLimitError should match snapshot for admin contact links 1`] = `
+<DocumentFragment>
+  <span>
+    Please 
+    <a
+      href="some@email"
+      rel="noreferrer noopener"
+      target="_blank"
+    >
+      contact your service administrator
+    </a>
+     to continue using this service.
+  </span>
+</DocumentFragment>
+`;
+
 exports[`messageForResourceLimitError should match snapshot for monthly_active_user 1`] = `
 <DocumentFragment>
   This homeserver has hit its Monthly Active User limit.
@@ -72,6 +106,14 @@ exports[`messageForSyncError should match snapshot for M_RESOURCE_LIMIT_EXCEEDED
     <div>
       Please contact your service administrator to continue using this service.
     </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`messageForSyncError should match snapshot for other errors 1`] = `
+<DocumentFragment>
+  <div>
+    Unable to connect to Homeserver. Retrying…
   </div>
 </DocumentFragment>
 `;

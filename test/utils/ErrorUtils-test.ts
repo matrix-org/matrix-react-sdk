@@ -30,12 +30,15 @@ import {
 describe("messageForResourceLimitError", () => {
     it("should match snapshot for monthly_active_user", () => {
         const { asFragment } = render(
-            messageForResourceLimitError(
-                "monthly_active_user",
-                "some@email",
-                resourceLimitStrings,
-                adminContactStrings,
-            ) as ReactElement,
+            messageForResourceLimitError("monthly_active_user", "some@email", resourceLimitStrings) as ReactElement,
+        );
+
+        expect(asFragment()).toMatchSnapshot();
+    });
+
+    it("should match snapshot for admin contact links", () => {
+        const { asFragment } = render(
+            messageForResourceLimitError("", "some@email", adminContactStrings) as ReactElement,
         );
 
         expect(asFragment()).toMatchSnapshot();
@@ -50,6 +53,14 @@ describe("messageForSyncError", () => {
                 limit_type: "monthly_active_user",
                 admin_contact: "some@email",
             },
+        });
+        const { asFragment } = render(messageForSyncError(err) as ReactElement);
+        expect(asFragment()).toMatchSnapshot();
+    });
+
+    it("should match snapshot for other errors", () => {
+        const err = new MatrixError({
+            errcode: "OTHER_ERROR",
         });
         const { asFragment } = render(messageForSyncError(err) as ReactElement);
         expect(asFragment()).toMatchSnapshot();
@@ -135,6 +146,18 @@ describe("messageForConnectionError", () => {
         const { asFragment } = render(
             messageForConnectionError(err, {
                 hsUrl: "hsUrl",
+                hsName: "hsName",
+            }) as ReactElement,
+        );
+        expect(asFragment()).toMatchSnapshot();
+    });
+
+    it("should match snapshot for mixed content error", () => {
+        const err = new ConnectionError("Mixed content maybe?");
+        Object.defineProperty(window, "location", { value: { protocol: "https:" } });
+        const { asFragment } = render(
+            messageForConnectionError(err, {
+                hsUrl: "http://server.com",
                 hsName: "hsName",
             }) as ReactElement,
         );
