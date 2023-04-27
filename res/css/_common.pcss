@@ -638,15 +638,6 @@ legend {
     overflow-y: hidden;
 }
 
-.mx_DialogDesignChanges_wrapper .mx_Dialog_fixedWidth {
-    max-width: 636px; /* match splash image width */
-
-    .mx_AccessibleButton_kind_link {
-        font-size: inherit;
-        padding: 0;
-    }
-}
-
 /* TODO: Review mx_GeneralButton usage to see if it can use a different class */
 /* These classes were brought in from the old UserSettings and are included here to avoid */
 /* breaking the app. */
@@ -655,11 +646,6 @@ legend {
     @mixin mx_DialogButton;
     display: inline;
     margin: auto;
-}
-
-.mx_linkButton {
-    cursor: pointer;
-    color: $accent;
 }
 
 .mx_TextInputDialog_label {
@@ -674,16 +660,6 @@ legend {
     padding: 9px;
     color: $primary-content;
     background-color: $background;
-}
-
-@define-mixin mx_DialogButton_small {
-    @mixin mx_DialogButton;
-    font-size: $font-15px;
-    padding: 0px 1.5em 0px 1.5em;
-}
-
-.mx_textButton {
-    @mixin mx_DialogButton_small;
 }
 
 .mx_button_row {

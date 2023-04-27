@@ -57,6 +57,7 @@ export function arrayFastResample(input: number[], points: number): number[] {
  * @param {number} points The number of samples to end up with.
  * @returns {number[]} The resampled array.
  */
+// ts-prune-ignore-next
 export function arraySmoothingResample(input: number[], points: number): number[] {
     if (input.length === points) return input; // short-circuit a complicated call
 
@@ -99,6 +100,7 @@ export function arraySmoothingResample(input: number[], points: number): number[
  * @param {number} newMax The maximum value to scale to.
  * @returns {number[]} The rescaled array.
  */
+// ts-prune-ignore-next
 export function arrayRescale(input: number[], newMin: number, newMax: number): number[] {
     const min: number = Math.min(...input);
     const max: number = Math.max(...input);
@@ -322,6 +324,16 @@ export async function asyncEvery<T>(values: T[], predicate: (value: T) => Promis
         if (!(await predicate(value))) return false;
     }
     return true;
+}
+
+/**
+ * Async version of Array.some.
+ */
+export async function asyncSome<T>(values: T[], predicate: (value: T) => Promise<boolean>): Promise<boolean> {
+    for (const value of values) {
+        if (await predicate(value)) return true;
+    }
+    return false;
 }
 
 export function filterBoolean<T>(values: Array<T | null | undefined>): T[] {
