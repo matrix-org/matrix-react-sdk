@@ -87,7 +87,7 @@ describe("processMention", () => {
         document.getSelection()?.setBaseAndExtent(textNode, 0, textNode, 0);
 
         // call the util function
-        const href = "www.test.com";
+        const href = "href";
         const displayName = "displayName";
         const mockSetSuggestion = jest.fn();
         const mockSetText = jest.fn();
