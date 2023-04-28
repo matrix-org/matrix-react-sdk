@@ -567,6 +567,13 @@ legend {
     }
 }
 
+@define-mixin ViewDialog {
+    /* subtract 0.5px to prevent single-pixel margin due to rounding */
+    width: calc(80vw - 0.5px);
+    height: calc(80vh - 0.5px);
+    overflow: hidden;
+}
+
 /* XXX: Our button style are a mess: buttons that happen to appear in dialogs get special styles applied
  * to them that no button anywhere else in the app gets by default. In practice, buttons in other places
  * in the app look the same by being AccessibleButtons, or possibly by having explict button classes.

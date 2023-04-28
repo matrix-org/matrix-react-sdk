@@ -19,10 +19,7 @@ limitations under the License.
 }
 
 .mx_BeaconViewDialog {
-    /* subtract 0.5px to prevent single-pixel margin due to rounding */
-    width: calc(80vw - 0.5px);
-    height: calc(80vh - 0.5px);
-    overflow: hidden;
+    @mixin ViewDialog;
 
     /* sidebar is absolutely positioned inside */
     position: relative;

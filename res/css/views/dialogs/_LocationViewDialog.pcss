@@ -19,10 +19,7 @@ limitations under the License.
 }
 
 .mx_LocationViewDialog {
-    /* subtract 0.5px to prevent single-pixel margin due to rounding */
-    width: calc(80vw - 0.5px);
-    height: calc(80vh - 0.5px);
-    overflow: hidden;
+    @mixin ViewDialog;
 
     .mx_Dialog_header {
         margin: 0px;
