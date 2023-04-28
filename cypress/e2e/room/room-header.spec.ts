@@ -159,13 +159,19 @@ describe("Room Header", () => {
             createVideoRoom();
 
             cy.get(".mx_RoomHeader").within(() => {
-                cy.findByRole("button", { name: "Room options" }).should("be.visible");
-                cy.findByRole("button", { name: "Video rooms are a beta feature Click for more info" }).should(
-                    "be.visible",
-                ); // Beta pill
-                cy.findByRole("button", { name: "Invite" }).should("be.visible");
-                cy.findByRole("button", { name: "Chat" }).should("be.visible");
-                cy.findByRole("button", { name: "Room info" }).should("be.visible");
+                // Names (aria-label) of the buttons on the video room header
+                const expectedButtonNames = [
+                    "Room options",
+                    "Video rooms are a beta feature Click for more info", // Beta pill
+                    "Invite",
+                    "Chat",
+                    "Room info",
+                ];
+
+                // Assert they are found and visible
+                for (const name of expectedButtonNames) {
+                    cy.findByRole("button", { name }).should("be.visible");
+                }
 
                 // Assert that there is not a button except those buttons
                 cy.findAllByRole("button").should("have.length", 5);
