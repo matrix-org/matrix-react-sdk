@@ -126,16 +126,16 @@ export function processSelectionChange(
     }
 
     // else we do have something, so get the constituent parts
-    const suggestionParts = getMentionOrCommandParts(mentionOrCommand.text);
+    const mappedSuggestionParts = getMappedSuggestion(mentionOrCommand.text);
 
     // if we have a command at the beginning of a node, but that node isn't the first text node, return
-    if (suggestionParts.type === "command" && currentNode !== firstTextNode) {
+    if (mappedSuggestionParts.type === "command" && currentNode !== firstTextNode) {
         setSuggestion(null);
         return;
     } else {
         // else, we have found a mention or a command
         setSuggestion({
-            ...suggestionParts,
+            ...mappedSuggestionParts,
             node: selection.anchorNode,
             startOffset: mentionOrCommand.startOffset,
             endOffset: mentionOrCommand.startOffset + mentionOrCommand.text.length,
@@ -257,18 +257,18 @@ export function findMentionOrCommand(text: string, offset: number): { text: stri
     // - the start or ending indices are outside the string
     if (startCharIndex < 0 || endCharIndex > text.length) return null;
 
-    const mentionOrCommandSlice = text.slice(startCharIndex, endCharIndex);
-    const mentionOrCommandParts = getMentionOrCommandParts(mentionOrCommandSlice);
+    const suggestionText = text.slice(startCharIndex, endCharIndex);
+    const mappedSuggestion = getMappedSuggestion(suggestionText);
 
     // We do not have a command if:
     // - the starting index is anything other than 0 (they can only appear at the start of a message)
     // - there is more text following the command (eg `/spo asdf|` should not be interpreted as
     //   something requiring autocomplete)
-    if (mentionOrCommandParts.type === "command" && (startCharIndex !== 0 || endCharIndex !== text.length)) {
+    if (mappedSuggestion.type === "command" && (startCharIndex !== 0 || endCharIndex !== text.length)) {
         return null;
     }
 
-    return { text: mentionOrCommandSlice, startOffset: startCharIndex };
+    return { text: suggestionText, startOffset: startCharIndex };
 }
 
 /**
@@ -325,7 +325,7 @@ function keepMovingRight(text: string, index: number): boolean {
  * @param suggestionText - string that could be a mention of a command type suggestion
  * @returns an object representing the `MappedSuggestion` from that string
  */
-export function getMentionOrCommandParts(suggestionText: string): MappedSuggestion {
+export function getMappedSuggestion(suggestionText: string): MappedSuggestion {
     const firstChar = suggestionText.charAt(0);
     const restOfString = suggestionText.slice(1);
 

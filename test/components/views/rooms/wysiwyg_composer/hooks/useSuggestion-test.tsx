@@ -18,7 +18,7 @@ import React from "react";
 import {
     Suggestion,
     findMentionOrCommand,
-    getMentionOrCommandParts,
+    getMappedSuggestion,
     processCommand,
     processMention,
     processSelectionChange,
@@ -306,16 +306,16 @@ describe("findMentionOrCommand", () => {
 
 describe("getMentionOrCommandParts", () => {
     it("returns an empty mapped suggestion when first character is not / # @", () => {
-        expect(getMentionOrCommandParts("Zzz")).toEqual({ type: "unknown", keyChar: "", text: "" });
+        expect(getMappedSuggestion("Zzz")).toEqual({ type: "unknown", keyChar: "", text: "" });
     });
 
     it("returns the expected mapped suggestion when first character is # or @", () => {
-        expect(getMentionOrCommandParts("@user-mention")).toEqual({
+        expect(getMappedSuggestion("@user-mention")).toEqual({
             type: "mention",
             keyChar: "@",
             text: "user-mention",
         });
-        expect(getMentionOrCommandParts("#room-mention")).toEqual({
+        expect(getMappedSuggestion("#room-mention")).toEqual({
             type: "mention",
             keyChar: "#",
             text: "room-mention",
@@ -323,7 +323,7 @@ describe("getMentionOrCommandParts", () => {
     });
 
     it("returns the expected mapped suggestion when first character is /", () => {
-        expect(getMentionOrCommandParts("/command")).toEqual({
+        expect(getMappedSuggestion("/command")).toEqual({
             type: "command",
             keyChar: "/",
             text: "command",
