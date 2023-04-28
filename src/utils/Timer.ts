@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { defer, IDeferred } from "matrix-js-sdk/src/utils";
-
 /**
 A countdown timer, exposing a promise api.
 A timer starts in a non-started state,
@@ -30,7 +28,9 @@ a new one through `clone()` or `cloneIfRun()`.
 export default class Timer {
     private timerHandle?: number;
     private startTs?: number;
-    private deferred!: IDeferred<void>;
+    private promise: Promise<void>;
+    private resolve: () => void;
+    private reject: (err: Error) => void;
 
     public constructor(private timeout: number) {
         this.setNotStarted();
@@ -39,8 +39,10 @@ export default class Timer {
     private setNotStarted(): void {
         this.timerHandle = undefined;
         this.startTs = undefined;
-        this.deferred = defer();
-        this.deferred.promise.finally(() => {
+        this.promise = new Promise<void>((resolve, reject) => {
+            this.resolve = resolve;
+            this.reject = reject;
+        }).finally(() => {
             this.timerHandle = undefined;
         });
     }
@@ -49,7 +51,7 @@ export default class Timer {
         const now = Date.now();
         const elapsed = now - this.startTs!;
         if (elapsed >= this.timeout) {
-            this.deferred.resolve();
+            this.resolve();
             this.setNotStarted();
         } else {
             const delta = this.timeout - elapsed;
@@ -106,7 +108,7 @@ export default class Timer {
     public abort(): Timer {
         if (this.isRunning()) {
             clearTimeout(this.timerHandle);
-            this.deferred.reject(new Error("Timer was aborted."));
+            this.reject(new Error("Timer was aborted."));
             this.setNotStarted();
         }
         return this;
@@ -118,7 +120,7 @@ export default class Timer {
      *@return {Promise}
      */
     public finished(): Promise<void> {
-        return this.deferred.promise;
+        return this.promise;
     }
 
     public isRunning(): boolean {
