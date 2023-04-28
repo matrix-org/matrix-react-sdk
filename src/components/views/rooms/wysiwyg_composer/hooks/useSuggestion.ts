@@ -172,28 +172,44 @@ export function findMentionOrCommand(text: string, offset: number): { text: stri
         return null;
     }
 
-    let startCharIndex = offset - 1; // due to us searching left from here
-    let endCharIndex = offset; // due to us searching right from here
+    // A cursor offset lies between two characters, so make a cursor offset correspond to
+    // an index in the text
+    let startCharIndex = offset - 1;
+    let endCharIndex = offset;
 
-    const keepMovingLeft = (): boolean => {
-        const specialStartChars = /[@#/]/;
+    function keepMovingLeft(): boolean {
+        // If the index is outside the string, return false
+        if (startCharIndex === -1) return false;
+
+        // We are inside the string so can guarantee that there is a character at the index.
+        // The preceding character could be undefined if index === 1
+        const mentionOrCommandChar = /[@#/]/;
+        const mentionChar = /[@#]/;
         const currentChar = text[startCharIndex];
         const precedingChar = text[startCharIndex - 1] ?? "";
 
-        const currentCharIsSpecial = specialStartChars.test(currentChar);
+        const currentCharIsMentionOrCommand = mentionOrCommandChar.test(currentChar);
 
-        const shouldIgnoreMentionChar = (currentChar === "@" || currentChar === "#") && /\S/.test(precedingChar);
+        // We want to ignore @ or # if they are preceded by anything that is not a whitespace
+        // to allow us to handle cases like email addesses
+        const shouldIgnoreCurrentMentionChar = mentionChar.test(currentChar) && /\S/.test(precedingChar);
 
-        return startCharIndex >= 0 && (!currentCharIsSpecial || shouldIgnoreMentionChar);
-    };
+        // Keep moving left if the current character is not a relevant character, or if
+        // we have a relevant character preceded by something other than whitespace
+        return !currentCharIsMentionOrCommand || shouldIgnoreCurrentMentionChar;
+    }
 
-    const keepMovingRight = (): boolean => {
-        const specialEndChars = /\s/;
-        return !specialEndChars.test(text[endCharIndex]) && endCharIndex < text.length;
-    };
+    function keepMovingRight(): boolean {
+        // If the index is outside the string, return false
+        if (endCharIndex === text.length) return false;
+
+        // We are inside the string so can guarantee that there is a character at the index.
+        // Keep moving right if the current character is not a space
+        return /\S/.test(text[endCharIndex]);
+    }
 
     while (keepMovingLeft()) {
-        // special case - if we hit some whitespace, just return null, this is to catch cases
+        // Special case - if we hit some whitespace, return null. This is to catch cases
         // where user types a special character then whitespace
         if (/\s/.test(text[startCharIndex])) {
             return null;
@@ -205,20 +221,24 @@ export function findMentionOrCommand(text: string, offset: number): { text: stri
         endCharIndex++;
     }
 
-    // we have looped through the first part of the string => if we get a minus one
-    // as the index, we haven't found a start point, so return
-    // alternatively if we have found command (/) and the startCharIndex isn't 0, return ""
-    // or also if we hav found a command and the end index isn't the end of the content
-    const startCharIsCommand = text[startCharIndex] === "/";
-    if (
-        startCharIndex < 0 ||
-        (startCharIsCommand && startCharIndex !== 0) ||
-        (startCharIsCommand && endCharIndex !== text.length)
-    ) {
+    // We have looped throught the text in both directions from the current cursor position
+    // whilst looking for special characters.
+    // We do not have a command or mention if:
+    // - the start or ending indices are outside the string
+    if (startCharIndex < 0 || endCharIndex > text.length) return null;
+
+    const mentionOrCommandSlice = text.slice(startCharIndex, endCharIndex);
+    const mentionOrCommandParts = getMentionOrCommandParts(mentionOrCommandSlice);
+
+    // We do not have a command if:
+    // - the starting index is anything other than 0 (they can only appear at the start of a message)
+    // - there is more text following the command (eg `/spo asdf|` should not be interpreted as
+    //   something requiring autocomplete)
+    if (mentionOrCommandParts.type === "command" && (startCharIndex !== 0 || endCharIndex !== text.length)) {
         return null;
-    } else {
-        return { text: text.slice(startCharIndex, endCharIndex), startOffset: startCharIndex };
     }
+
+    return { text: mentionOrCommandSlice, startOffset: startCharIndex };
 }
 
 /**
