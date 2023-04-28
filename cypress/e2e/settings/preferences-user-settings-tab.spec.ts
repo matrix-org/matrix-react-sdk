@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2023 Suguru Hirahara
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,32 +18,36 @@ limitations under the License.
 
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 
-describe("User Onboarding (old user)", () => {
+describe("Preferences user settings tab", () => {
     let homeserver: HomeserverInstance;
 
     beforeEach(() => {
         cy.startHomeserver("default").then((data) => {
             homeserver = data;
-            cy.initTestUser(homeserver, "Jane Doe");
-            cy.window({ log: false }).then((win) => {
-                win.localStorage.setItem("mx_registration_time", "2");
-            });
-            cy.reload().then(() => {
-                // wait for the app to load
-                return cy.get(".mx_MatrixChat", { timeout: 15000 });
-            });
+            cy.initTestUser(homeserver, "Bob");
         });
     });
 
     afterEach(() => {
-        cy.visit("/#/home");
         cy.stopHomeserver(homeserver);
     });
 
-    it("page and preference are hidden", () => {
-        cy.get(".mx_UserOnboardingPage").should("not.exist");
-        cy.get(".mx_UserOnboardingButton").should("not.exist");
+    it("should be rendered properly", () => {
         cy.openUserSettings("Preferences");
-        cy.findByText(/Show shortcut to welcome page above the room list/).should("not.exist");
+
+        cy.get(".mx_SettingsTab.mx_PreferencesUserSettingsTab").within(() => {
+            // Assert that the top heading is rendered
+            cy.findByTestId("preferences").should("have.text", "Preferences").should("be.visible");
+        });
+
+        cy.get(".mx_SettingsTab.mx_PreferencesUserSettingsTab").percySnapshotElement(
+            "User settings tab - Preferences",
+            {
+                // Emulate TabbedView's actual min and max widths
+                // 580: '.mx_UserSettingsDialog .mx_TabbedView' min-width
+                // 796: 1036 (mx_TabbedView_tabsOnLeft actual width) - 240 (mx_TabbedView_tabPanel margin-right)
+                widths: [580, 796],
+            },
+        );
     });
 });
