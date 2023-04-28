@@ -83,6 +83,67 @@ export function useSuggestion(
 }
 
 /**
+ * When the selection changes inside the current editor, check to see if the cursor is inside
+ * something that could be a command or a mention and update the suggestion state if so
+ *
+ * @param editorRef - ref to the composer
+ * @param setSuggestion - the setter for the suggestion state
+ */
+export function processSelectionChange(
+    editorRef: React.RefObject<HTMLDivElement>,
+    setSuggestion: React.Dispatch<React.SetStateAction<SuggestionState>>,
+): void {
+    const selection = document.getSelection();
+
+    // return early if we do not have a current editor ref with a cursor selection inside a text node
+    if (
+        editorRef.current === null ||
+        selection === null ||
+        !selection.isCollapsed ||
+        selection.anchorNode?.nodeName !== "#text"
+    ) {
+        setSuggestion(null);
+        return;
+    }
+
+    // here we have established that we have a cursor and both anchor and focus nodes in the selection
+    // are the same node, so rename to `currentNode` and `currentOffset` for subsequent use
+    const { anchorNode: currentNode, anchorOffset: currentOffset } = selection;
+
+    // first check is that the text node is the first text node of the editor, as adding paragraphs can result
+    // in nested <p> tags inside the editor <div>
+    const firstTextNode = document.createNodeIterator(editorRef.current, NodeFilter.SHOW_TEXT).nextNode();
+
+    // if we have no text content, return
+    if (currentNode.textContent === null) return;
+
+    const mentionOrCommand = findMentionOrCommand(currentNode.textContent, currentOffset);
+
+    // if we don't have any mentionsOrCommands, return, clearing the suggestion state
+    if (mentionOrCommand === null) {
+        setSuggestion(null);
+        return;
+    }
+
+    // else we do have something, so get the constituent parts
+    const suggestionParts = getMentionOrCommandParts(mentionOrCommand.text);
+
+    // if we have a command at the beginning of a node, but that node isn't the first text node, return
+    if (suggestionParts.type === "command" && currentNode !== firstTextNode) {
+        setSuggestion(null);
+        return;
+    } else {
+        // else, we have found a mention or a command
+        setSuggestion({
+            ...suggestionParts,
+            node: selection.anchorNode,
+            startOffset: mentionOrCommand.startOffset,
+            endOffset: mentionOrCommand.startOffset + mentionOrCommand.text.length,
+        });
+    }
+}
+
+/**
  * Replaces the relevant part of the editor text with a link representing a mention after it
  * is selected from the autocomplete.
  *
@@ -177,38 +238,7 @@ export function findMentionOrCommand(text: string, offset: number): { text: stri
     let startCharIndex = offset - 1;
     let endCharIndex = offset;
 
-    function keepMovingLeft(): boolean {
-        // If the index is outside the string, return false
-        if (startCharIndex === -1) return false;
-
-        // We are inside the string so can guarantee that there is a character at the index.
-        // The preceding character could be undefined if index === 1
-        const mentionOrCommandChar = /[@#/]/;
-        const mentionChar = /[@#]/;
-        const currentChar = text[startCharIndex];
-        const precedingChar = text[startCharIndex - 1] ?? "";
-
-        const currentCharIsMentionOrCommand = mentionOrCommandChar.test(currentChar);
-
-        // We want to ignore @ or # if they are preceded by anything that is not a whitespace
-        // to allow us to handle cases like email addesses
-        const shouldIgnoreCurrentMentionChar = mentionChar.test(currentChar) && /\S/.test(precedingChar);
-
-        // Keep moving left if the current character is not a relevant character, or if
-        // we have a relevant character preceded by something other than whitespace
-        return !currentCharIsMentionOrCommand || shouldIgnoreCurrentMentionChar;
-    }
-
-    function keepMovingRight(): boolean {
-        // If the index is outside the string, return false
-        if (endCharIndex === text.length) return false;
-
-        // We are inside the string so can guarantee that there is a character at the index.
-        // Keep moving right if the current character is not a space
-        return /\S/.test(text[endCharIndex]);
-    }
-
-    while (keepMovingLeft()) {
+    while (keepMovingLeft(text, startCharIndex)) {
         // Special case - if we hit some whitespace, return null. This is to catch cases
         // where user types a special character then whitespace
         if (/\s/.test(text[startCharIndex])) {
@@ -217,7 +247,7 @@ export function findMentionOrCommand(text: string, offset: number): { text: stri
         startCharIndex--;
     }
 
-    while (keepMovingRight()) {
+    while (keepMovingRight(text, endCharIndex)) {
         endCharIndex++;
     }
 
@@ -242,64 +272,50 @@ export function findMentionOrCommand(text: string, offset: number): { text: stri
 }
 
 /**
- * When the selection changes inside the current editor, check to see if the cursor is inside
- * something that could be a command or a mention and update the suggestion state if so
+ * Associated function for findMentionOrCommand. Checks the character at the current location
+ * to determine if search should continue.
  *
- * @param editorRef - ref to the composer
- * @param setSuggestion - the setter for the suggestion state
+ * @param text - text content to check for mentions or commands
+ * @param index - the current index to check
+ * @returns true if check should keep moving left, false otherwise
  */
-export function processSelectionChange(
-    editorRef: React.RefObject<HTMLDivElement>,
-    setSuggestion: React.Dispatch<React.SetStateAction<SuggestionState>>,
-): void {
-    const selection = document.getSelection();
+function keepMovingLeft(text: string, index: number): boolean {
+    // If the index is outside the string, return false
+    if (index === -1) return false;
 
-    // return early if we do not have a current editor ref with a cursor selection inside a text node
-    if (
-        editorRef.current === null ||
-        selection === null ||
-        !selection.isCollapsed ||
-        selection.anchorNode?.nodeName !== "#text"
-    ) {
-        setSuggestion(null);
-        return;
-    }
+    // We are inside the string so can guarantee that there is a character at the index.
+    // The preceding character could be undefined if index === 1
+    const mentionOrCommandChar = /[@#/]/;
+    const mentionChar = /[@#]/;
+    const currentChar = text[index];
+    const precedingChar = text[index - 1] ?? "";
 
-    // here we have established that we have a cursor and both anchor and focus nodes in the selection
-    // are the same node, so rename to `currentNode` and `currentOffset` for subsequent use
-    const { anchorNode: currentNode, anchorOffset: currentOffset } = selection;
+    const currentCharIsMentionOrCommand = mentionOrCommandChar.test(currentChar);
 
-    // first check is that the text node is the first text node of the editor, as adding paragraphs can result
-    // in nested <p> tags inside the editor <div>
-    const firstTextNode = document.createNodeIterator(editorRef.current, NodeFilter.SHOW_TEXT).nextNode();
+    // We want to ignore @ or # if they are preceded by anything that is not a whitespace
+    // to allow us to handle cases like email addesses
+    const shouldIgnoreCurrentMentionChar = mentionChar.test(currentChar) && /\S/.test(precedingChar);
 
-    // if we have no text content, return
-    if (currentNode.textContent === null) return;
+    // Keep moving left if the current character is not a relevant character, or if
+    // we have a relevant character preceded by something other than whitespace
+    return !currentCharIsMentionOrCommand || shouldIgnoreCurrentMentionChar;
+}
 
-    const mentionOrCommand = findMentionOrCommand(currentNode.textContent, currentOffset);
+/**
+ * Associated function for findMentionOrCommand. Checks the character at the current location
+ * to determine if search should continue.
+ *
+ * @param text - text content to check for mentions or commands
+ * @param index - the current index to check
+ * @returns true if check should keep moving right, false otherwise
+ */
+function keepMovingRight(text: string, index: number): boolean {
+    // If the index is outside the string, return false
+    if (index === text.length) return false;
 
-    // if we don't have any mentionsOrCommands, return, clearing the suggestion state
-    if (mentionOrCommand === null) {
-        setSuggestion(null);
-        return;
-    }
-
-    // else we do have something, so get the constituent parts
-    const suggestionParts = getMentionOrCommandParts(mentionOrCommand.text);
-
-    // if we have a command at the beginning of a node, but that node isn't the first text node, return
-    if (suggestionParts.type === "command" && currentNode !== firstTextNode) {
-        setSuggestion(null);
-        return;
-    } else {
-        // else, we have found a mention or a command
-        setSuggestion({
-            ...suggestionParts,
-            node: selection.anchorNode,
-            startOffset: mentionOrCommand.startOffset,
-            endOffset: mentionOrCommand.startOffset + mentionOrCommand.text.length,
-        });
-    }
+    // We are inside the string so can guarantee that there is a character at the index.
+    // Keep moving right if the current character is not a space
+    return /\S/.test(text[index]);
 }
 
 /**
