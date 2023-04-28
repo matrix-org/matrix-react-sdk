@@ -162,7 +162,7 @@ describe("Room Header", () => {
 
             cy.get(".mx_RoomHeader").findByRole("button", { name: "Chat" }).click();
 
-            // Assert that the video is rnedered
+            // Assert that the video is rendered
             cy.get(".mx_CallView video").should("exist");
 
             cy.get(".mx_RightPanel .mx_TimelineCard")
