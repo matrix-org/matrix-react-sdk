@@ -502,7 +502,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             // algorithms which depend on its position on the screen aren't
             // confused.
             if (visible) {
-                hr = <hr className="mx_RoomView_myReadMarker hr" style={{ opacity: 1, width: "99%" }} />;
+                hr = <hr style={{ opacity: 1, width: "99%" }} />;
             }
 
             return (
@@ -528,7 +528,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             // and TransitionGroup requires that all its children are Transitions.
             const hr = (
                 <hr
-                    className="mx_RoomView_myReadMarker hr"
                     ref={this.collectGhostReadMarker}
                     onTransitionEnd={this.onGhostTransitionEnd}
                     data-eventid={eventId}
