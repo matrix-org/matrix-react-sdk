@@ -99,11 +99,11 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
     private async checkKeyBackupStatus(): Promise<void> {
         this.getUpdatedDiagnostics();
         try {
-            const { backupInfo, trustInfo } = await MatrixClientPeg.get().checkKeyBackup();
+            const { backupInfo, trustInfo } = (await MatrixClientPeg.get().checkKeyBackup())!;
             this.setState({
                 loading: false,
                 error: null,
-                backupInfo,
+                backupInfo: backupInfo ?? null,
                 backupSigStatus: trustInfo,
             });
         } catch (e) {

@@ -316,7 +316,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             // noinspection JSUnfilteredForInLoop
             const kind = k as PushRuleKind;
 
-            for (const r of ruleSets.global[kind]) {
+            for (const r of ruleSets.global[kind]!) {
                 const rule: IAnnotatedPushRule = Object.assign(r, { kind });
                 const category = categories[rule.rule_id] ?? RuleClass.Other;
 
@@ -539,7 +539,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         }
     };
 
-    private async setKeywords(keywords: string[], originalRules: IAnnotatedPushRule[]): Promise<void> {
+    private async setKeywords(keywords: Array<string | undefined>, originalRules: IAnnotatedPushRule[]): Promise<void> {
         try {
             // De-duplicate and remove empties
             keywords = filterBoolean(Array.from(new Set(keywords)));
@@ -549,7 +549,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             // will only ever be +/-1 so we don't really have to worry about efficiently handling
             // tons of keyword changes.
 
-            const diff = arrayDiff(oldKeywords, keywords);
+            const diff = arrayDiff(oldKeywords, keywords as string[]);
 
             for (const word of diff.removed) {
                 for (const rule of originalRules.filter((r) => r.pattern === word)) {
@@ -588,7 +588,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
     }
 
     private onKeywordAdd = (keyword: string): void => {
-        const originalRules = objectClone(this.state.vectorKeywordRuleInfo.rules);
+        const originalRules = objectClone(this.state.vectorKeywordRuleInfo?.rules ?? []);
 
         // We add the keyword immediately as a sort of local echo effect
         this.setState(
@@ -597,7 +597,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 vectorKeywordRuleInfo: {
                     ...this.state.vectorKeywordRuleInfo,
                     rules: [
-                        ...this.state.vectorKeywordRuleInfo.rules,
+                        ...(this.state.vectorKeywordRuleInfo?.rules ?? []),
 
                         // XXX: Horrible assumption that we don't need the remaining fields
                         { pattern: keyword } as IAnnotatedPushRule,
@@ -606,7 +606,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             },
             async (): Promise<void> => {
                 await this.setKeywords(
-                    this.state.vectorKeywordRuleInfo.rules.map((r) => r.pattern),
+                    this.state.vectorKeywordRuleInfo?.rules.map((r) => r.pattern) ?? [],
                     originalRules,
                 );
             },
@@ -614,7 +614,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
     };
 
     private onKeywordRemove = (keyword: string): void => {
-        const originalRules = objectClone(this.state.vectorKeywordRuleInfo.rules);
+        const originalRules = objectClone(this.state.vectorKeywordRuleInfo?.rules ?? []);
 
         // We remove the keyword immediately as a sort of local echo effect
         this.setState(
@@ -622,12 +622,12 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 phase: Phase.Persisting,
                 vectorKeywordRuleInfo: {
                     ...this.state.vectorKeywordRuleInfo,
-                    rules: this.state.vectorKeywordRuleInfo.rules.filter((r) => r.pattern !== keyword),
+                    rules: this.state.vectorKeywordRuleInfo?.rules.filter((r) => r.pattern !== keyword) ?? [],
                 },
             },
             async (): Promise<void> => {
                 await this.setKeywords(
-                    this.state.vectorKeywordRuleInfo.rules.map((r) => r.pattern),
+                    this.state.vectorKeywordRuleInfo?.rules.map((r) => r.pattern) ?? [],
                     originalRules,
                 );
             },
@@ -751,7 +751,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         if (category === RuleClass.VectorMentions) {
             keywordComposer = (
                 <TagComposer
-                    tags={this.state.vectorKeywordRuleInfo?.rules.map((r) => r.pattern)}
+                    tags={filterBoolean(this.state.vectorKeywordRuleInfo?.rules.map((r) => r.pattern) ?? [])}
                     onAdd={this.onKeywordAdd}
                     onRemove={this.onKeywordRemove}
                     disabled={this.state.phase === Phase.Persisting}

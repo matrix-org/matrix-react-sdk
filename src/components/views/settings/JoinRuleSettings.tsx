@@ -287,7 +287,7 @@ const JoinRuleSettings: React.FC<IProps> = ({
                                     fn(_t("Upgrading room"), 0, total);
                                 } else if (!progress.roomSynced) {
                                     fn(_t("Loading new room"), 1, total);
-                                } else if (progress.inviteUsersProgress < progress.inviteUsersTotal) {
+                                } else if (progress.inviteUsersProgress !== undefined && progress.inviteUsersProgress < progress.inviteUsersTotal) {
                                     fn(
                                         _t("Sending invites... (%(progress)s out of %(count)s)", {
                                             progress: progress.inviteUsersProgress,
@@ -296,13 +296,13 @@ const JoinRuleSettings: React.FC<IProps> = ({
                                         2 + progress.inviteUsersProgress,
                                         total,
                                     );
-                                } else if (progress.updateSpacesProgress < progress.updateSpacesTotal) {
+                                } else if (progress.updateSpacesProgress !== undefined && progress.updateSpacesProgress < progress.updateSpacesTotal) {
                                     fn(
                                         _t("Updating spaces... (%(progress)s out of %(count)s)", {
                                             progress: progress.updateSpacesProgress,
                                             count: progress.updateSpacesTotal,
                                         }),
-                                        2 + progress.inviteUsersProgress + progress.updateSpacesProgress,
+                                        2 + (progress.inviteUsersProgress ?? 0) + progress.updateSpacesProgress,
                                         total,
                                     );
                                 }

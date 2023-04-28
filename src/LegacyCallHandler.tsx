@@ -730,7 +730,7 @@ export default class LegacyCallHandler extends EventEmitter {
         }
     };
 
-    private async logCallStats(call: MatrixCall, mappedRoomId: string): Promise<void> {
+    private async logCallStats(call: MatrixCall, mappedRoomId: string | null): Promise<void> {
         const stats = await call.getCurrentCallStats();
         logger.debug(
             `Call completed. Call ID: ${call.callId}, virtual room ID: ${call.roomId}, ` +
@@ -803,7 +803,8 @@ export default class LegacyCallHandler extends EventEmitter {
         this.emit(LegacyCallHandlerEvent.CallState, mappedRoomId, status);
     }
 
-    private removeCallForRoom(roomId: string): void {
+    private removeCallForRoom(roomId: string | null): void {
+        if (!roomId) return;
         logger.log("Removing call for room ", roomId);
         this.calls.delete(roomId);
         this.emit(LegacyCallHandlerEvent.CallsChanged, this.calls);
@@ -1080,6 +1081,9 @@ export default class LegacyCallHandler extends EventEmitter {
         }
 
         const roomId = await ensureDMExists(MatrixClientPeg.get(), nativeUserId);
+        if (!roomId) {
+            throw new Error("Failed to ensure DM exists for dialing number");
+        }
 
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
