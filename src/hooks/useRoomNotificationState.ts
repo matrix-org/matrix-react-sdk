@@ -25,7 +25,9 @@ import { useEventEmitter } from "./useEventEmitter";
 
 export const useNotificationState = (room: Room): [RoomNotifState | undefined, (state: RoomNotifState) => void] => {
     const echoChamber = useMemo(() => EchoChamber.forRoom(room), [room]);
-    const [notificationState, setNotificationState] = useState<RoomNotifState | undefined>(echoChamber.notificationVolume);
+    const [notificationState, setNotificationState] = useState<RoomNotifState | undefined>(
+        echoChamber.notificationVolume,
+    );
     useEventEmitter(echoChamber, PROPERTY_UPDATED, (key: CachedRoomKey) => {
         if (key === CachedRoomKey.NotificationVolume && echoChamber.notificationVolume !== undefined) {
             setNotificationState(echoChamber.notificationVolume);
