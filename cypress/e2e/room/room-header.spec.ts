@@ -112,20 +112,27 @@ describe("Room Header", () => {
         });
     });
 
-    it("should have a button highlighted by being clicked", () => {
+    it("should have buttons highlighted by being clicked", () => {
         cy.createRoom({ name: "Test Room" }).viewRoomByName("Test Room");
 
-        cy.findByRole("button", { name: "Room info" })
-            .click() // Highlight the button
-            .then(($btn) => {
-                // Note it is not possible to get CSS values of a pseudo class with "have.css".
-                const color = $btn[0].ownerDocument.defaultView // get window reference from element
-                    .getComputedStyle($btn[0], "before") // get the pseudo selector
-                    .getPropertyValue("background-color"); // get "background-color" value
+        cy.get(".mx_RoomHeader").within(() => {
+            // Check these buttons
+            const buttonsHighlighted = ["Threads", "Notifications", "Room info"];
 
-                // Assert the value is equal to $accent == hex #0dbd8b == rgba(13, 189, 139)
-                expect(color).to.eq("rgb(13, 189, 139)");
-            });
+            for (const name of buttonsHighlighted) {
+                cy.findByRole("button", { name: name })
+                    .click() // Highlight the button
+                    .then(($btn) => {
+                        // Note it is not possible to get CSS values of a pseudo class with "have.css".
+                        const color = $btn[0].ownerDocument.defaultView // get window reference from element
+                            .getComputedStyle($btn[0], "before") // get the pseudo selector
+                            .getPropertyValue("background-color"); // get "background-color" value
+
+                        // Assert the value is equal to $accent == hex #0dbd8b == rgba(13, 189, 139)
+                        expect(color).to.eq("rgb(13, 189, 139)");
+                    });
+            }
+        });
 
         cy.get(".mx_RoomHeader").percySnapshotElement("Room header - with a highlighted button");
     });
