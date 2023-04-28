@@ -26,7 +26,7 @@ import {
     ClientEvent,
     RoomMember,
 } from "matrix-js-sdk/src/matrix";
-import { logger } from "matrix-js-sdk/src/logger";
+import { defer, IDeferred } from "matrix-js-sdk/src/utils";
 
 import {
     clearAllModals,
@@ -38,14 +38,12 @@ import { filterBoolean } from "../../../../src/utils/arrays";
 import JoinRuleSettings, { JoinRuleSettingsProps } from "../../../../src/components/views/settings/JoinRuleSettings";
 import { PreferredRoomVersions } from "../../../../src/utils/PreferredRoomVersions";
 import SpaceStore from "../../../../src/stores/spaces/SpaceStore";
-import { defer, IDeferred } from "matrix-js-sdk/src/utils";
 
 describe("<JoinRuleSettings />", () => {
     const userId = "@alice:server.org";
     const client = getMockClientWithEventEmitter({
         ...mockClientMethodsUser(userId),
         getRoom: jest.fn(),
-        isRoomEncrypted: jest.fn(),
         getLocalAliases: jest.fn().mockReturnValue([]),
         sendStateEvent: jest.fn(),
         upgradeRoom: jest.fn(),
@@ -142,7 +140,7 @@ describe("<JoinRuleSettings />", () => {
             });
 
             it("upgrades room when changing join rule to restricted", async () => {
-                let deferredInvites: IDeferred<any>[] = [];
+                const deferredInvites: IDeferred<any>[] = [];
                 // room that doesnt support restricted rooms
                 const v8Room = new Room(roomId, client, userId);
                 const parentSpace = new Room("!parentSpace:server.org", client, userId);
