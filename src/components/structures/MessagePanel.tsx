@@ -502,14 +502,14 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             // algorithms which depend on its position on the screen aren't
             // confused.
             if (visible) {
-                hr = <hr className="mx_RoomView_myReadMarker" style={{ opacity: 1, width: "99%" }} />;
+                hr = <hr className="mx_RoomView_myReadMarker hr" style={{ opacity: 1, width: "99%" }} />;
             }
 
             return (
                 <li
                     key={"readMarker_" + eventId}
                     ref={this.readMarkerNode}
-                    className="mx_RoomView_myReadMarker_container"
+                    className="mx_RoomView_myReadMarker"
                     data-scroll-tokens={eventId}
                 >
                     {hr}
@@ -528,7 +528,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             // and TransitionGroup requires that all its children are Transitions.
             const hr = (
                 <hr
-                    className="mx_RoomView_myReadMarker"
+                    className="mx_RoomView_myReadMarker hr"
                     ref={this.collectGhostReadMarker}
                     onTransitionEnd={this.onGhostTransitionEnd}
                     data-eventid={eventId}
@@ -539,7 +539,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             // we get a new DOM node (restarting the animation) when the ghost
             // moves to a different event.
             return (
-                <li key={"_readuptoghost_" + eventId} className="mx_RoomView_myReadMarker_container">
+                <li key={"_readuptoghost_" + eventId} className="mx_RoomView_myReadMarker">
                     {hr}
                 </li>
             );
