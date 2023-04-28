@@ -509,7 +509,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                 <li
                     key={"readMarker_" + eventId}
                     ref={this.readMarkerNode}
-                    className="mx_RoomView_myReadMarker"
+                    className="mx_MessagePanel_myReadMarker"
                     data-scroll-tokens={eventId}
                 >
                     {hr}
@@ -538,7 +538,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             // we get a new DOM node (restarting the animation) when the ghost
             // moves to a different event.
             return (
-                <li key={"_readuptoghost_" + eventId} className="mx_RoomView_myReadMarker">
+                <li key={"_readuptoghost_" + eventId} className="mx_MessagePanel_myReadMarker">
                     {hr}
                 </li>
             );
