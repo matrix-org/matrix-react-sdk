@@ -48,9 +48,7 @@ describe("Room Header", () => {
             cy.findByRole("button", { name: "Room info" }).should("be.visible");
         });
 
-        cy.get(".mx_RoomHeader").percySnapshotElement("Room header", {
-            widths: [300, 600], // Magic numbers
-        });
+        cy.get(".mx_RoomHeader").percySnapshotElement("Room header");
     });
 
     it("should render the pin button for pinned messages card", () => {
@@ -100,7 +98,7 @@ describe("Room Header", () => {
         });
 
         cy.get(".mx_RoomHeader").percySnapshotElement("Room header - with a long room name", {
-            widths: [300, 600], // Magic numbers
+            widths: [300, 600], // Magic numbers to emulate the narrow RoomHeader on the actual UI
         });
     });
 
@@ -119,9 +117,7 @@ describe("Room Header", () => {
                 expect(color).to.eq("rgb(13, 189, 139)");
             });
 
-        cy.get(".mx_RoomHeader").percySnapshotElement("Room header - with a highlighted button", {
-            widths: [300, 600], // Magic numbers
-        });
+        cy.get(".mx_RoomHeader").percySnapshotElement("Room header - with a highlighted button");
     });
 
     describe("with a video room", () => {
@@ -158,9 +154,7 @@ describe("Room Header", () => {
                 cy.findAllByRole("button").should("have.length", 5);
             });
 
-            cy.get(".mx_RoomHeader").percySnapshotElement("Room header - with a video room", {
-                widths: [300, 600], // Magic numbers
-            });
+            cy.get(".mx_RoomHeader").percySnapshotElement("Room header - with a video room");
         });
 
         it("should render a working chat button which opens the timeline on a right panel", () => {
