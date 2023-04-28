@@ -33,19 +33,28 @@ describe("Room Header", () => {
         cy.stopHomeserver(homeserver);
     });
 
-    it("should render seven buttons by default", () => {
+    it("should render default buttons properly", () => {
         cy.createRoom({ name: "Test Room" }).viewRoomByName("Test Room");
 
         cy.get(".mx_RoomHeader").within(() => {
-            cy.findAllByRole("button").should("have.length", 7).should("be.visible");
+            // Names (aria-label) of every button rendered on mx_RoomHeader by default
+            const expectedButtonNames = [
+                "Room options", // The room name button next to the room avatar, which renders dropdown menu on click
+                "Voice call",
+                "Video call",
+                "Search",
+                "Threads",
+                "Notifications",
+                "Room info",
+            ];
 
-            cy.findByRole("button", { name: "Room options" }).should("be.visible");
-            cy.findByRole("button", { name: "Voice call" }).should("be.visible");
-            cy.findByRole("button", { name: "Video call" }).should("be.visible");
-            cy.findByRole("button", { name: "Search" }).should("be.visible");
-            cy.findByRole("button", { name: "Threads" }).should("be.visible");
-            cy.findByRole("button", { name: "Notifications" }).should("be.visible");
-            cy.findByRole("button", { name: "Room info" }).should("be.visible");
+            // Assert they are found and visible
+            for (const name of expectedButtonNames) {
+                cy.findByRole("button", { name }).should("be.visible");
+            }
+
+            // Assert that just those seven buttons exist on mx_RoomHeader by default
+            cy.findAllByRole("button").should("have.length", 7);
         });
 
         cy.get(".mx_RoomHeader").percySnapshotElement("Room header");
