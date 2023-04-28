@@ -36,6 +36,7 @@ const TooltipTarget = forwardRef<HTMLDivElement, IProps>(
             tooltipTargetClassName,
             // tooltip pass through props
             className,
+            id,
             label,
             alignment,
             tooltipClassName,
@@ -52,6 +53,7 @@ const TooltipTarget = forwardRef<HTMLDivElement, IProps>(
         // tooltip when we're hovering over the item (performance)
         const tooltip = (isFocused || isHovering) && (
             <Tooltip
+                id={id}
                 className={className}
                 tooltipClassName={tooltipClassName}
                 label={label}
@@ -62,7 +64,15 @@ const TooltipTarget = forwardRef<HTMLDivElement, IProps>(
         );
 
         return (
-            <div {...hoverProps} {...focusProps} tabIndex={0} className={tooltipTargetClassName} {...rest} ref={ref}>
+            <div
+                {...hoverProps}
+                {...focusProps}
+                tabIndex={0}
+                aria-describedby={id}
+                className={tooltipTargetClassName}
+                {...rest}
+                ref={ref}
+            >
                 {children}
                 {tooltip}
             </div>
