@@ -462,7 +462,10 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         if (!room) return null;
 
         return (
-            <div className={classNames("mx_EditMessageComposer", this.props.className)} onKeyDown={this.onKeyDown}>
+            <div
+                className={classNames("mx_EditComposer mx_EditMessageComposer", this.props.className)}
+                onKeyDown={this.onKeyDown}
+            >
                 <BasicMessageComposer
                     ref={this.editorRef}
                     model={this.model}

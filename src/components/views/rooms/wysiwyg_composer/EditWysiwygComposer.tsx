@@ -65,7 +65,7 @@ export default function EditWysiwygComposer({
     return (
         <ComposerContext.Provider value={defaultContextValue.current}>
             <WysiwygComposer
-                className={classNames("mx_EditWysiwygComposer", className)}
+                className={classNames("mx_EditComposer mx_EditWysiwygComposer", className)}
                 initialContent={initialContent}
                 onChange={onChange}
                 onSend={editMessage}
