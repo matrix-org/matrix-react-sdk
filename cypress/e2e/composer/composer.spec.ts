@@ -18,9 +18,30 @@ limitations under the License.
 
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
+import { Layout } from "../../../src/settings/enums/Layout";
 
 describe("Composer", () => {
     let homeserver: HomeserverInstance;
+
+    const checkEditComposerIRC = () => {
+        // Enable IRC layout
+        cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
+
+        // Assert the IRC layout is enabled
+        cy.get(".mx_EventTile_isEditing[data-layout=irc]").within(() => {
+            cy.get(".mx_EditComposer")
+                // Assert there is space for the vertical stroke on IRC layout
+                // $selected-message-border-width + var(--EditComposer-padding-inline) = 4 + 3 = 7px
+                .should("have.css", "padding-inline-start", "7px")
+                .within(() => {
+                    // Assert that the textbox is rendered
+                    cy.findByRole("textbox").should("exist");
+                });
+        });
+    };
+
+    // Hide message timestamp on Percy snapshots
+    const percyCSS = ".mx_MessageTimestamp { visibility: hidden !important; }";
 
     beforeEach(() => {
         cy.startHomeserver("default").then((data) => {
@@ -103,6 +124,24 @@ describe("Composer", () => {
                 // It was sent
                 cy.get(".mx_EventTile_last .mx_EventTile_body").within(() => {
                     cy.findByText("my message 3").should("exist");
+                });
+            });
+        });
+
+        describe("EditComposer", () => {
+            beforeEach(() => {
+                // Send a message and click "Edit" button to display EditComposer
+                cy.findByRole("textbox").type("Message{enter}");
+                cy.get(".mx_EventTile_last").realHover().findByRole("button", { name: "Edit" }).click();
+                cy.get(".mx_EventTile_last").findByRole("textbox").should("exist");
+            });
+
+            it("should be rendered properly on IRC layout", () => {
+                checkEditComposerIRC();
+
+                cy.get(".mx_EventTile_isEditing").percySnapshotElement("EditComposer on EventTile - CIDER", {
+                    percyCSS,
+                    widths: [400, 800], // magic numbers to emulate the actual UI
                 });
             });
         });
@@ -269,6 +308,24 @@ describe("Composer", () => {
                     cy.findByText("my message 0").should("exist");
                 });
                 cy.get(".mx_EventTile_body a").should("have.attr", "href").and("include", "https://matrix.org/");
+            });
+        });
+
+        describe("EditComposer", () => {
+            beforeEach(() => {
+                // Send a message and click "Edit" button to display EditComposer
+                cy.findByRole("textbox").type("Message{enter}");
+                cy.get(".mx_EventTile_last").realHover().findByRole("button", { name: "Edit" }).click();
+                cy.get(".mx_EventTile_last").findByRole("textbox").should("exist");
+            });
+
+            it("should be rendered properly on IRC layout", () => {
+                checkEditComposerIRC();
+
+                cy.get(".mx_EventTile_isEditing").percySnapshotElement("EditComposer on EventTile - Rich Text Editor", {
+                    percyCSS,
+                    widths: [400, 800], // magic numbers to emulate the actual UI
+                });
             });
         });
     });
