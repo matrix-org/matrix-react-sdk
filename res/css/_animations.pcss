@@ -25,19 +25,22 @@ limitations under the License.
  * know they should not be used anywhere outside of React Transition Groups.
 */
 
+.mx_rtg--fade-enter-active,
+.mx_rtg--fade-exit-active {
+    transition: opacity 300ms ease;
+}
+
 .mx_rtg--fade-enter {
     opacity: 0;
 }
 .mx_rtg--fade-enter-active {
     opacity: 1;
-    transition: opacity 300ms ease;
 }
 .mx_rtg--fade-exit {
     opacity: 1;
 }
 .mx_rtg--fade-exit-active {
     opacity: 0;
-    transition: opacity 300ms ease;
 }
 
 @keyframes mx_fadein {
@@ -102,9 +105,7 @@ limitations under the License.
 }
 
 @media (prefers-reduced-motion) {
-    .mx_rtg--fade-enter-active {
-        transition: none;
-    }
+    .mx_rtg--fade-enter-active,
     .mx_rtg--fade-exit-active {
         transition: none;
     }
