@@ -102,6 +102,13 @@ limitations under the License.
 }
 
 @media (prefers-reduced-motion) {
+    .mx_rtg--fade-enter-active {
+        transition: none;
+    }
+    .mx_rtg--fade-exit-active {
+        transition: none;
+    }
+
     @keyframes mx--anim-pulse {
         /* Override all keyframes in reduced-motion */
     }
@@ -112,12 +119,5 @@ limitations under the License.
 
     @keyframes mx_fadein {
         /* Override all keyframes in reduced-motion */
-    }
-
-    .mx_rtg--fade-enter-active {
-        transition: none;
-    }
-    .mx_rtg--fade-exit-active {
-        transition: none;
     }
 }
