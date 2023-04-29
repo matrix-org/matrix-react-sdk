@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+:root {
+    --hover-transition: 0.08s cubic-bezier(0.46, 0.03, 0.52, 0.96); /* quadratic */
+}
+
 /**
  * React Transition Group animations are prefixed with 'mx_rtg--' so that we
  * know they should not be used anywhere outside of React Transition Groups.
@@ -34,8 +38,24 @@ limitations under the License.
     transition: opacity 300ms ease;
 }
 
-:root {
-    --hover-transition: 0.08s cubic-bezier(0.46, 0.03, 0.52, 0.96); /* quadratic */
+@keyframes mx_fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes mx_fadeout {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
 }
 
 @keyframes mx--anim-pulse {
