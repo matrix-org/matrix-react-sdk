@@ -502,6 +502,18 @@ describe("Spotlight", () => {
                             cy.spotlightResults().eq(0).should("have.attr", "aria-selected", "true");
                             cy.spotlightResults().eq(1).should("have.attr", "aria-selected", "false");
                         });
+                    cy.spotlightSearch()
+                        .type("{pageDown}")
+                        .then(() => {
+                            cy.spotlightResults().eq(0).should("have.attr", "aria-selected", "false");
+                            cy.spotlightResults().eq(1).should("have.attr", "aria-selected", "false");
+                        });
+                    cy.spotlightSearch()
+                        .type("{pageUp}")
+                        .then(() => {
+                            cy.spotlightResults().eq(0).should("have.attr", "aria-selected", "true");
+                            cy.spotlightResults().eq(1).should("have.attr", "aria-selected", "false");
+                        });
                 });
         });
     });
