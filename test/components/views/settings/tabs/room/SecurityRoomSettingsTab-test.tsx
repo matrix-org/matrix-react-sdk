@@ -22,7 +22,12 @@ import { logger } from "matrix-js-sdk/src/logger";
 import SecurityRoomSettingsTab from "../../../../../../src/components/views/settings/tabs/room/SecurityRoomSettingsTab";
 import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
 import SettingsStore from "../../../../../../src/settings/SettingsStore";
-import { clearAllModals, flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../../../test-utils";
+import {
+    clearAllModals,
+    flushPromises,
+    getMockClientWithEventEmitter,
+    mockClientMethodsUser,
+} from "../../../../../test-utils";
 import { filterBoolean } from "../../../../../../src/utils/arrays";
 
 describe("<SecurityRoomSettingsTab />", () => {
