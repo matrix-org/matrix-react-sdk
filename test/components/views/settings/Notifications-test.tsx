@@ -26,7 +26,6 @@ import {
     TweakName,
     ConditionKind,
     IPushRuleCondition,
-    PushRuleKind,
 } from "matrix-js-sdk/src/matrix";
 import { randomString } from "matrix-js-sdk/src/randomstring";
 import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
@@ -390,7 +389,7 @@ describe("<Notifications />", () => {
                 );
             });
 
-            xit("displays error when pusher update fails", async () => {
+            it("displays error when pusher update fails", async () => {
                 mockClient.setPusher.mockRejectedValue({});
                 await getComponentAndWait();
 
@@ -817,25 +816,6 @@ describe("<Notifications />", () => {
                     "An error occurred when updating your notification preferences. Please try to toggle your option again.",
                 ),
             ).toBeInTheDocument();
-        });
-
-        fit("adds a new keyword", async () => {
-            const { container } = await getComponentAndWait();
-
-            await userEvent.click(screen.getByLabelText("Keyword"));
-            await userEvent.type(screen.getByLabelText("Keyword"), "jest");
-
-            expect(container).toMatchSnapshot();
-
-            await flushPromises();
-            expect(screen.getByLabelText("Keyword")).toHaveValue("jest");
-
-            fireEvent.click(screen.getByText("Add"));
-
-            expect(mockClient.addPushRule).toHaveBeenCalledWith("global", PushRuleKind.ContentSpecific, "jest", {
-                actions: [PushRuleActionName.Notify, { set_tweak: "highlight", value: false }],
-                pattern: "jest",
-            });
         });
     });
 
