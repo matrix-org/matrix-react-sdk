@@ -15,9 +15,13 @@ exports[`<SettingsSubsection /> renders with plain text description 1`] = `
       </h3>
     </div>
     <div
-      class="mx_SettingsSubsection_text"
+      class="mx_SettingsSubsection_description"
     >
-      This describes the subsection
+      <div
+        class="mx_SettingsSubsection_text"
+      >
+        This describes the subsection
+      </div>
     </div>
     <div
       class="mx_SettingsSubsection_content"
@@ -70,16 +74,20 @@ exports[`<SettingsSubsection /> renders with react element description 1`] = `
       </h3>
     </div>
     <div
-      class="mx_SettingsSubsection_text"
+      class="mx_SettingsSubsection_description"
     >
-      <p>
-        This describes the section 
-        <a
-          href="/#"
-        >
-          link
-        </a>
-      </p>
+      <div
+        class="mx_SettingsSubsection_text"
+      >
+        <p>
+          This describes the section 
+          <a
+            href="/#"
+          >
+            link
+          </a>
+        </p>
+      </div>
     </div>
     <div
       class="mx_SettingsSubsection_content"
