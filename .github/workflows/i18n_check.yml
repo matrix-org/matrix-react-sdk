@@ -12,7 +12,7 @@ jobs:
             - name: "Get modified files"
               id: changed_files
               if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'RiotTranslateBot'
-              uses: tj-actions/changed-files@84ed30e2f4daf616144de7e0c1db59d5b33025e3 # v35
+              uses: tj-actions/changed-files@7ecfc6730dff8072d1cc5215a24cc9478f55264d # v35
               with:
                   files: |
                       src/i18n/strings/*
@@ -34,7 +34,7 @@ jobs:
 
             # Does not need branch matching as only analyses this layer
             - name: Install Deps
-              run: "yarn install --pure-lockfile"
+              run: "yarn install --frozen-lockfile"
 
             - name: i18n Check
               run: "yarn run diff-i18n"

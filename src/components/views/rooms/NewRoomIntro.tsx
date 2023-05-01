@@ -33,7 +33,7 @@ import { Action } from "../../../dispatcher/actions";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { showSpaceInvite } from "../../../utils/space";
 import EventTileBubble from "../messages/EventTileBubble";
-import { ROOM_SECURITY_TAB } from "../dialogs/RoomSettingsDialog";
+import { RoomSettingsTab } from "../dialogs/RoomSettingsDialog";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
@@ -141,7 +141,7 @@ const NewRoomIntro: React.FC = () => {
                 { topic },
                 {
                     a: (sub) => (
-                        <AccessibleButton kind="link_inline" onClick={onTopicClick}>
+                        <AccessibleButton element="a" kind="link_inline" onClick={onTopicClick}>
                             {sub}
                         </AccessibleButton>
                     ),
@@ -155,7 +155,7 @@ const NewRoomIntro: React.FC = () => {
                 {},
                 {
                     a: (sub) => (
-                        <AccessibleButton kind="link_inline" onClick={onTopicClick}>
+                        <AccessibleButton element="a" kind="link_inline" onClick={onTopicClick}>
                             {sub}
                         </AccessibleButton>
                     ),
@@ -164,7 +164,7 @@ const NewRoomIntro: React.FC = () => {
         }
 
         const creator = room.currentState.getStateEvents(EventType.RoomCreate, "")?.getSender();
-        const creatorName = room?.getMember(creator)?.rawDisplayName || creator;
+        const creatorName = (creator && room?.getMember(creator)?.rawDisplayName) || creator;
 
         let createdText: string;
         if (creator === cli.getUserId()) {
@@ -178,7 +178,7 @@ const NewRoomIntro: React.FC = () => {
         let parentSpace: Room | undefined;
         if (
             SpaceStore.instance.activeSpaceRoom?.canInvite(cli.getSafeUserId()) &&
-            SpaceStore.instance.isRoomInSpace(SpaceStore.instance.activeSpace, room.roomId)
+            SpaceStore.instance.isRoomInSpace(SpaceStore.instance.activeSpace!, room.roomId)
         ) {
             parentSpace = SpaceStore.instance.activeSpaceRoom;
         }
@@ -268,7 +268,7 @@ const NewRoomIntro: React.FC = () => {
         event.preventDefault();
         defaultDispatcher.dispatch({
             action: "open_room_settings",
-            initial_tab_id: ROOM_SECURITY_TAB,
+            initial_tab_id: RoomSettingsTab.Security,
         });
     }
 

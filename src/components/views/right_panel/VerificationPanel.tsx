@@ -41,7 +41,7 @@ interface IProps {
     layout: string;
     request: VerificationRequest;
     member: RoomMember | User;
-    phase: Phase;
+    phase?: Phase;
     onClose: () => void;
     isRoomEncrypted: boolean;
     inDialog: boolean;
@@ -69,7 +69,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         const showQR: boolean = request.otherPartySupportsMethod(SCAN_QR_CODE_METHOD);
         const brand = SdkConfig.get().brand;
 
-        const noCommonMethodError: JSX.Element =
+        const noCommonMethodError: JSX.Element | null =
             !showSAS && !showQR ? (
                 <p>
                     {_t(
@@ -83,9 +83,9 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
 
         if (this.props.layout === "dialog") {
             // HACK: This is a terrible idea.
-            let qrBlockDialog: JSX.Element;
-            let sasBlockDialog: JSX.Element;
-            if (showQR) {
+            let qrBlockDialog: JSX.Element | undefined;
+            let sasBlockDialog: JSX.Element | undefined;
+            if (showQR && request.qrCodeData) {
                 qrBlockDialog = (
                     <div className="mx_VerificationPanel_QRPhase_startOption">
                         <p>{_t("Scan this unique code")}</p>
@@ -132,8 +132,8 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             );
         }
 
-        let qrBlock: JSX.Element;
-        if (showQR) {
+        let qrBlock: JSX.Element | undefined;
+        if (showQR && request.qrCodeData) {
             qrBlock = (
                 <div className="mx_UserInfo_container">
                     <h3>{_t("Verify by scanning")}</h3>
@@ -150,7 +150,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             );
         }
 
-        let sasBlock: JSX.Element;
+        let sasBlock: JSX.Element | undefined;
         if (showSAS) {
             const disabled = this.state.emojiButtonClicked;
             const sasLabel = showQR
@@ -189,18 +189,25 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
     }
 
     private onReciprocateYesClick = (): void => {
+        if (!this.state.reciprocateQREvent) return;
         this.setState({ reciprocateButtonClicked: true });
-        this.state.reciprocateQREvent.confirm();
+        this.state.reciprocateQREvent?.confirm();
     };
 
     private onReciprocateNoClick = (): void => {
+        if (!this.state.reciprocateQREvent) return;
         this.setState({ reciprocateButtonClicked: true });
-        this.state.reciprocateQREvent.cancel();
+        this.state.reciprocateQREvent?.cancel();
     };
 
-    private getDevice(): DeviceInfo {
+    private getDevice(): DeviceInfo | null {
         const deviceId = this.props.request && this.props.request.channel.deviceId;
-        return MatrixClientPeg.get().getStoredDevice(MatrixClientPeg.get().getUserId(), deviceId);
+        const userId = MatrixClientPeg.get().getUserId();
+        if (deviceId && userId) {
+            return MatrixClientPeg.get().getStoredDevice(userId, deviceId);
+        } else {
+            return null;
+        }
     }
 
     private renderQRReciprocatePhase(): JSX.Element {
@@ -253,7 +260,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
     private renderVerifiedPhase(): JSX.Element {
         const { member, request } = this.props;
 
-        let text: string;
+        let text: string | undefined;
         if (!request.isSelfVerification) {
             if (this.props.isRoomEncrypted) {
                 text = _t("Verify all users in a room to ensure it's secure.");
@@ -348,7 +355,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                         const emojis = this.state.sasEvent ? (
                             <VerificationShowSas
                                 displayName={displayName}
-                                device={this.getDevice()}
+                                device={this.getDevice() ?? undefined}
                                 sas={this.state.sasEvent.sas}
                                 onCancel={this.onSasMismatchesClick}
                                 onDone={this.onSasMatchesClick}
@@ -383,19 +390,19 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
     };
 
     private onSasMatchesClick = (): void => {
-        this.state.sasEvent.confirm();
+        this.state.sasEvent?.confirm();
     };
 
     private onSasMismatchesClick = (): void => {
-        this.state.sasEvent.mismatch();
+        this.state.sasEvent?.mismatch();
     };
 
     private updateVerifierState = (): void => {
         const { request } = this.props;
         const sasEvent = (request.verifier as SAS).sasEvent;
         const reciprocateQREvent = (request.verifier as ReciprocateQRCode).reciprocateQREvent;
-        request.verifier.off(SasEvent.ShowSas, this.updateVerifierState);
-        request.verifier.off(QrCodeEvent.ShowReciprocateQr, this.updateVerifierState);
+        request.verifier?.off(SasEvent.ShowSas, this.updateVerifierState);
+        request.verifier?.off(QrCodeEvent.ShowReciprocateQr, this.updateVerifierState);
         this.setState({ sasEvent, reciprocateQREvent });
     };
 
@@ -404,12 +411,12 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         const hadVerifier = this.hasVerifier;
         this.hasVerifier = !!request.verifier;
         if (!hadVerifier && this.hasVerifier) {
-            request.verifier.on(SasEvent.ShowSas, this.updateVerifierState);
-            request.verifier.on(QrCodeEvent.ShowReciprocateQr, this.updateVerifierState);
+            request.verifier?.on(SasEvent.ShowSas, this.updateVerifierState);
+            request.verifier?.on(QrCodeEvent.ShowReciprocateQr, this.updateVerifierState);
             try {
                 // on the requester side, this is also awaited in startSAS,
                 // but that's ok as verify should return the same promise.
-                await request.verifier.verify();
+                await request.verifier?.verify();
             } catch (err) {
                 logger.error("error verify", err);
             }

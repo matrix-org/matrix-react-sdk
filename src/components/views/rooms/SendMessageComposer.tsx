@@ -16,9 +16,9 @@ limitations under the License.
 
 import React, { ClipboardEvent, createRef, KeyboardEvent } from "react";
 import EMOJI_REGEX from "emojibase-regex";
-import { IContent, MatrixEvent, IEventRelation } from "matrix-js-sdk/src/models/event";
+import { IContent, MatrixEvent, IEventRelation, IMentions } from "matrix-js-sdk/src/models/event";
 import { DebouncedFunc, throttle } from "lodash";
-import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
@@ -36,7 +36,7 @@ import {
     unescapeMessage,
 } from "../../../editor/serialize";
 import BasicMessageComposer, { REGEX_EMOTICON } from "./BasicMessageComposer";
-import { CommandPartCreator, Part, PartCreator, SerializedPart } from "../../../editor/parts";
+import { CommandPartCreator, Part, PartCreator, SerializedPart, Type } from "../../../editor/parts";
 import { findEditableEvent } from "../../../utils/EventUtils";
 import SendHistoryManager from "../../../SendHistoryManager";
 import { CommandCategories } from "../../../SlashCommands";
@@ -60,6 +60,102 @@ import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { addReplyToMessageContent } from "../../../utils/Reply";
 import { doMaybeLocalRoomAction } from "../../../utils/local-room";
 
+/**
+ * Build the mentions information based on the editor model (and any related events):
+ *
+ * 1. Search the model parts for room or user pills and fill in the mentions object.
+ * 2. If this is a reply to another event, include any user mentions from that
+ *    (but do not include a room mention).
+ *
+ * @param sender - The Matrix ID of the user sending the event.
+ * @param content - The event content.
+ * @param model - The editor model to search for mentions, null if there is no editor.
+ * @param replyToEvent - The event being replied to or undefined if it is not a reply.
+ * @param editedContent - The content of the parent event being edited.
+ */
+export function attachMentions(
+    sender: string,
+    content: IContent,
+    model: EditorModel | null,
+    replyToEvent: MatrixEvent | undefined,
+    editedContent: IContent | null = null,
+): void {
+    // If this feature is disabled, do nothing.
+    if (!SettingsStore.getValue("feature_intentional_mentions")) {
+        return;
+    }
+
+    // The mentions property *always* gets included to disable legacy push rules.
+    const mentions: IMentions = (content["org.matrix.msc3952.mentions"] = {});
+
+    const userMentions = new Set<string>();
+    let roomMention = false;
+
+    // If there's a reply, initialize the mentioned users as the sender of that
+    // event + any mentioned users in that event.
+    if (replyToEvent) {
+        userMentions.add(replyToEvent.sender!.userId);
+        // TODO What do we do if the reply event *doeesn't* have this property?
+        // Try to fish out replies from the contents?
+        const userIds = replyToEvent.getContent()["org.matrix.msc3952.mentions"]?.user_ids;
+        if (Array.isArray(userIds)) {
+            userIds.forEach((userId) => userMentions.add(userId));
+        }
+    }
+
+    // If user provided content is available, check to see if any users are mentioned.
+    if (model) {
+        // Add any mentioned users in the current content.
+        for (const part of model.parts) {
+            if (part.type === Type.UserPill) {
+                userMentions.add(part.resourceId);
+            } else if (part.type === Type.AtRoomPill) {
+                roomMention = true;
+            }
+        }
+    }
+
+    // Ensure the *current* user isn't listed in the mentioned users.
+    userMentions.delete(sender);
+
+    // Finally, if this event is editing a previous event, only include users who
+    // were not previously mentioned and a room mention if the previous event was
+    // not a room mention.
+    if (editedContent) {
+        // First, the new event content gets the *full* set of users.
+        const newContent = content["m.new_content"];
+        const newMentions: IMentions = (newContent["org.matrix.msc3952.mentions"] = {});
+
+        // Only include the users/room if there is any content.
+        if (userMentions.size) {
+            newMentions.user_ids = [...userMentions];
+        }
+        if (roomMention) {
+            newMentions.room = true;
+        }
+
+        // Fetch the mentions from the original event and remove any previously
+        // mentioned users.
+        const prevMentions = editedContent["org.matrix.msc3952.mentions"];
+        if (Array.isArray(prevMentions?.user_ids)) {
+            prevMentions!.user_ids.forEach((userId) => userMentions.delete(userId));
+        }
+
+        // If the original event mentioned the room, nothing to do here.
+        if (prevMentions?.room) {
+            roomMention = false;
+        }
+    }
+
+    // Only include the users/room if there is any content.
+    if (userMentions.size) {
+        mentions.user_ids = [...userMentions];
+    }
+    if (roomMention) {
+        mentions.room = true;
+    }
+}
+
 // Merges favouring the given relation
 export function attachRelation(content: IContent, relation?: IEventRelation): void {
     if (relation) {
@@ -72,10 +168,11 @@ export function attachRelation(content: IContent, relation?: IEventRelation): vo
 
 // exported for tests
 export function createMessageContent(
+    sender: string,
     model: EditorModel,
     replyToEvent: MatrixEvent | undefined,
     relation: IEventRelation | undefined,
-    permalinkCreator: RoomPermalinkCreator,
+    permalinkCreator?: RoomPermalinkCreator,
     includeReplyLegacyFallback = true,
 ): IContent {
     const isEmote = containsEmote(model);
@@ -90,7 +187,7 @@ export function createMessageContent(
     const body = textSerialize(model);
 
     const content: IContent = {
-        msgtype: isEmote ? "m.emote" : "m.text",
+        msgtype: isEmote ? MsgType.Emote : MsgType.Text,
         body: body,
     };
     const formattedBody = htmlSerializeIfNeeded(model, {
@@ -101,6 +198,9 @@ export function createMessageContent(
         content.format = "org.matrix.custom.html";
         content.formatted_body = formattedBody;
     }
+
+    // Build the mentions property and add it to the event content.
+    attachMentions(sender, content, model, replyToEvent);
 
     attachRelation(content, relation);
     if (replyToEvent) {
@@ -133,7 +233,7 @@ export function isQuickReaction(model: EditorModel): boolean {
 interface ISendMessageComposerProps extends MatrixClientProps {
     room: Room;
     placeholder?: string;
-    permalinkCreator: RoomPermalinkCreator;
+    permalinkCreator?: RoomPermalinkCreator;
     relation?: IEventRelation;
     replyToEvent?: MatrixEvent;
     disabled?: boolean;
@@ -227,12 +327,14 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 // selection must be collapsed and caret at start
                 if (this.editorRef.current?.isSelectionCollapsed() && this.editorRef.current?.isCaretAtStart()) {
                     const events = this.context.liveTimeline
-                        .getEvents()
+                        ?.getEvents()
                         .concat(replyingToThread ? [] : this.props.room.getPendingEvents());
-                    const editEvent = findEditableEvent({
-                        events,
-                        isForward: false,
-                    });
+                    const editEvent = events
+                        ? findEditableEvent({
+                              events,
+                              isForward: false,
+                          })
+                        : undefined;
                     if (editEvent) {
                         // We're selecting history, so prevent the key event from doing anything else
                         event.preventDefault();
@@ -270,7 +372,10 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 return false;
             }
             this.currentlyComposedEditorState = this.model.serializeParts();
-        } else if (this.sendHistoryManager.currentIndex + delta === this.sendHistoryManager.history.length) {
+        } else if (
+            this.currentlyComposedEditorState &&
+            this.sendHistoryManager.currentIndex + delta === this.sendHistoryManager.history.length
+        ) {
             // True when we return to the message being composed currently
             this.model.reset(this.currentlyComposedEditorState);
             this.sendHistoryManager.currentIndex = this.sendHistoryManager.history.length;
@@ -291,13 +396,14 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
     private sendQuickReaction(): void {
         const timeline = this.context.liveTimeline;
+        if (!timeline) return;
         const events = timeline.getEvents();
         const reaction = this.model.parts[1].text;
         for (let i = events.length - 1; i >= 0; i--) {
             if (events[i].getType() === EventType.RoomMessage) {
                 let shouldReact = true;
                 const lastMessage = events[i];
-                const userId = MatrixClientPeg.get().getUserId();
+                const userId = MatrixClientPeg.get().getSafeUserId();
                 const messageReactions = this.props.room.relations.getChildEventsForEvent(
                     lastMessage.getId()!,
                     RelationType.Annotation,
@@ -307,10 +413,10 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 // if we have already sent this reaction, don't redact but don't re-send
                 if (messageReactions) {
                     const myReactionEvents =
-                        messageReactions.getAnnotationsBySender()[userId] || new Set<MatrixEvent>();
+                        messageReactions.getAnnotationsBySender()?.[userId] || new Set<MatrixEvent>();
                     const myReactionKeys = [...myReactionEvents]
                         .filter((event) => !event.isRedacted())
-                        .map((event) => event.getRelation().key);
+                        .map((event) => event.getRelation()?.key);
                     shouldReact = !myReactionKeys.includes(reaction);
                 }
                 if (shouldReact) {
@@ -341,8 +447,8 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             isReply: !!this.props.replyToEvent,
             inThread: this.props.relation?.rel_type === THREAD_RELATION_TYPE.name,
         };
-        if (posthogEvent.inThread) {
-            const threadRoot = this.props.room.findEventById(this.props.relation.event_id);
+        if (posthogEvent.inThread && this.props.relation!.event_id) {
+            const threadRoot = this.props.room.findEventById(this.props.relation!.event_id);
             posthogEvent.startsThread = threadRoot?.getThread()?.events.length === 1;
         }
         PosthogAnalytics.instance.trackEvent<ComposerEvent>(posthogEvent);
@@ -378,7 +484,9 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     return; // errored
                 }
 
-                if (cmd.category === CommandCategories.messages || cmd.category === CommandCategories.effects) {
+                if (content && [CommandCategories.messages, CommandCategories.effects].includes(cmd.category)) {
+                    // Attach any mentions which might be contained in the command content.
+                    attachMentions(this.props.mxClient.getSafeUserId(), content, model, replyToEvent);
                     attachRelation(content, this.props.relation);
                     if (replyToEvent) {
                         addReplyToMessageContent(content, replyToEvent, {
@@ -411,6 +519,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             const { roomId } = this.props.room;
             if (!content) {
                 content = createMessageContent(
+                    this.props.mxClient.getSafeUserId(),
                     model,
                     replyToEvent,
                     this.props.relation,

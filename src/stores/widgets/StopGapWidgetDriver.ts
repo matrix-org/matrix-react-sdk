@@ -31,6 +31,7 @@ import {
     WidgetDriver,
     WidgetEventCapability,
     WidgetKind,
+    ISearchUserDirectoryResult,
 } from "matrix-widget-api";
 import { ClientEvent, ITurnServer as IClientTurnServer } from "matrix-js-sdk/src/client";
 import { EventType } from "matrix-js-sdk/src/@types/event";
@@ -273,19 +274,22 @@ export class StopGapWidgetDriver extends WidgetDriver {
             await Promise.all(
                 Object.entries(contentMap).flatMap(([userId, userContentMap]) =>
                     Object.entries(userContentMap).map(async ([deviceId, content]): Promise<void> => {
+                        const devices = deviceInfoMap.get(userId);
+                        if (!devices) return;
+
                         if (deviceId === "*") {
                             // Send the message to all devices we have keys for
                             await client.encryptAndSendToDevices(
-                                Object.values(deviceInfoMap[userId]).map((deviceInfo) => ({
+                                Array.from(devices.values()).map((deviceInfo) => ({
                                     userId,
                                     deviceInfo,
                                 })),
                                 content,
                             );
-                        } else {
+                        } else if (devices.has(deviceId)) {
                             // Send the message to a specific device
                             await client.encryptAndSendToDevices(
-                                [{ userId, deviceInfo: deviceInfoMap[userId][deviceId] }],
+                                [{ userId, deviceInfo: devices.get(deviceId)! }],
                                 content,
                             );
                         }
@@ -484,6 +488,21 @@ export class StopGapWidgetDriver extends WidgetDriver {
             chunk: events.map((e) => e.getEffectiveEvent() as IRoomEvent),
             nextBatch: nextBatch ?? undefined,
             prevBatch: prevBatch ?? undefined,
+        };
+    }
+
+    public async searchUserDirectory(searchTerm: string, limit?: number): Promise<ISearchUserDirectoryResult> {
+        const client = MatrixClientPeg.get();
+
+        const { limited, results } = await client.searchUserDirectory({ term: searchTerm, limit });
+
+        return {
+            limited,
+            results: results.map((r) => ({
+                userId: r.user_id,
+                displayName: r.display_name,
+                avatarUrl: r.avatar_url,
+            })),
         };
     }
 }

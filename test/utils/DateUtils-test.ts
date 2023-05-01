@@ -19,6 +19,7 @@ import {
     formatRelativeTime,
     formatDuration,
     formatFullDateNoDayISO,
+    formatDateForInput,
     formatTimeLeft,
     formatPreciseDuration,
     formatLocalDateShort,
@@ -54,9 +55,16 @@ describe("formatRelativeTime", () => {
         dateSpy.mockRestore();
     });
 
-    it("returns hour format for events created less than 24 hours ago", () => {
+    it("returns hour format for events created in the same day", () => {
+        // Tuesday, 2 November 2021 11:01:00 UTC
         const date = new Date(2021, 10, 2, 11, 1, 23, 0);
         expect(formatRelativeTime(date)).toBe("11:01");
+    });
+
+    it("returns month and day for events created less than 24h ago but on a different day", () => {
+        // Monday, 1 November 2021 23:01:00 UTC
+        const date = new Date(2021, 10, 1, 23, 1, 23, 0);
+        expect(formatRelativeTime(date)).toBe("Nov 1");
     });
 
     it("honours the hour format setting", () => {
@@ -124,6 +132,15 @@ describe("formatFullDateNoDayISO", () => {
     it("should return ISO format", () => {
         expect(formatFullDateNoDayISO(REPEATABLE_DATE)).toEqual("2022-11-17T16:58:32.517Z");
     });
+});
+
+describe("formatDateForInput", () => {
+    it.each([["1993-11-01"], ["1066-10-14"], ["0571-04-22"], ["0062-02-05"]])(
+        "should format %s",
+        (dateString: string) => {
+            expect(formatDateForInput(new Date(dateString))).toBe(dateString);
+        },
+    );
 });
 
 describe("formatTimeLeft", () => {

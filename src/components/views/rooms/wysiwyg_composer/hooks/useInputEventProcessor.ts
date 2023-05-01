@@ -32,9 +32,12 @@ import { useMatrixClientContext } from "../../../../../contexts/MatrixClientCont
 import { isCaretAtEnd, isCaretAtStart } from "../utils/selection";
 import { getEventsFromEditorStateTransfer, getEventsFromRoom } from "../utils/event";
 import { endEditing } from "../utils/editing";
+import Autocomplete from "../../Autocomplete";
+import { handleEventWithAutocomplete } from "./utils";
 
 export function useInputEventProcessor(
     onSend: () => void,
+    autocompleteRef: React.RefObject<Autocomplete>,
     initialContent?: string,
 ): (event: WysiwygEvent, composer: Wysiwyg, editor: HTMLElement) => WysiwygEvent | null {
     const roomContext = useRoomContext();
@@ -51,6 +54,10 @@ export function useInputEventProcessor(
             const send = (): void => {
                 event.stopPropagation?.();
                 event.preventDefault?.();
+                // do not send the message if we have the autocomplete open, regardless of settings
+                if (autocompleteRef?.current && !autocompleteRef.current.state.hide) {
+                    return;
+                }
                 onSend();
             };
 
@@ -65,12 +72,13 @@ export function useInputEventProcessor(
                     roomContext,
                     composerContext,
                     mxClient,
+                    autocompleteRef,
                 );
             } else {
                 return handleInputEvent(event, send, isCtrlEnterToSend);
             }
         },
-        [isCtrlEnterToSend, onSend, initialContent, roomContext, composerContext, mxClient],
+        [isCtrlEnterToSend, onSend, initialContent, roomContext, composerContext, mxClient, autocompleteRef],
     );
 }
 
@@ -84,12 +92,24 @@ function handleKeyboardEvent(
     editor: HTMLElement,
     roomContext: IRoomState,
     composerContext: ComposerContextState,
-    mxClient: MatrixClient,
+    mxClient: MatrixClient | undefined,
+    autocompleteRef: React.RefObject<Autocomplete>,
 ): KeyboardEvent | null {
     const { editorStateTransfer } = composerContext;
     const isEditing = Boolean(editorStateTransfer);
     const isEditorModified = isEditing ? initialContent !== composer.content() : composer.content().length !== 0;
     const action = getKeyBindingsManager().getMessageComposerAction(event);
+
+    // we need autocomplete to take priority when it is open for using enter to select
+    const isHandledByAutocomplete = handleEventWithAutocomplete(autocompleteRef, event);
+    if (isHandledByAutocomplete) {
+        return event;
+    }
+
+    // taking the client from context gives us an client | undefined type, narrow it down
+    if (mxClient === undefined) {
+        return null;
+    }
 
     switch (action) {
         case KeyBindingAction.SendMessage:

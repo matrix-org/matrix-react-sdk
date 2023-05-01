@@ -134,18 +134,16 @@ describe("<RoomSummaryCard />", () => {
     });
 
     describe("poll history", () => {
-        it("renders poll history option when feature is enabled", () => {
-            featureEnabledSpy.mockImplementation((feature) => feature === "feature_poll_history");
+        it("renders poll history option", () => {
             const { getByText } = getComponent();
 
-            expect(getByText("Polls history")).toBeInTheDocument();
+            expect(getByText("Poll history")).toBeInTheDocument();
         });
 
         it("opens poll history dialog on button click", () => {
-            featureEnabledSpy.mockImplementation((feature) => feature === "feature_poll_history");
             const { getByText } = getComponent();
 
-            fireEvent.click(getByText("Polls history"));
+            fireEvent.click(getByText("Poll history"));
 
             expect(modalSpy).toHaveBeenCalledWith(PollHistoryDialog, {
                 room,

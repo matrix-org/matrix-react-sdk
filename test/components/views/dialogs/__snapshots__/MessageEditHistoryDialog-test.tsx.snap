@@ -48,16 +48,20 @@ exports[`<MessageEditHistory /> should match the snapshot 1`] = `
                 aria-label="Thu, Jan 1 1970"
                 class="mx_DateSeparator"
                 role="separator"
-                tabindex="-1"
               >
                 <hr
                   role="none"
                 />
-                <h2
-                  aria-hidden="true"
+                <div
+                  class="mx_DateSeparator_dateContent"
                 >
-                  Thu, Jan 1 1970
-                </h2>
+                  <h2
+                    aria-hidden="true"
+                    class="mx_DateSeparator_dateHeading"
+                  >
+                    Thu, Jan 1 1970
+                  </h2>
+                </div>
                 <hr
                   role="none"
                 />
@@ -160,16 +164,20 @@ exports[`<MessageEditHistory /> should support events with 1`] = `
                 aria-label=",  NaN NaN"
                 class="mx_DateSeparator"
                 role="separator"
-                tabindex="-1"
               >
                 <hr
                   role="none"
                 />
-                <h2
-                  aria-hidden="true"
+                <div
+                  class="mx_DateSeparator_dateContent"
                 >
-                  ,  NaN NaN
-                </h2>
+                  <h2
+                    aria-hidden="true"
+                    class="mx_DateSeparator_dateHeading"
+                  >
+                    ,  NaN NaN
+                  </h2>
+                </div>
                 <hr
                   role="none"
                 />

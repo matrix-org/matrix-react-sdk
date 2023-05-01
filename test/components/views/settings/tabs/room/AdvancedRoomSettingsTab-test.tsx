@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, RenderResult } from "@testing-library/react";
+import { fireEvent, render, RenderResult, screen } from "@testing-library/react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { mocked } from "jest-mock";
@@ -36,7 +36,7 @@ describe("AdvancedRoomSettingsTab", () => {
     let room: Room;
 
     const renderTab = (): RenderResult => {
-        return render(<AdvancedRoomSettingsTab roomId={roomId} closeSettingsFn={jest.fn()} />);
+        return render(<AdvancedRoomSettingsTab room={room} closeSettingsFn={jest.fn()} />);
     };
 
     beforeEach(() => {
@@ -47,7 +47,7 @@ describe("AdvancedRoomSettingsTab", () => {
         mocked(dis.dispatch).mockReset();
         mocked(room.findPredecessor).mockImplementation((msc3946: boolean) =>
             msc3946
-                ? { roomId: "old_room_id_via_predecessor" }
+                ? { roomId: "old_room_id_via_predecessor", viaServers: ["one.example.com", "two.example.com"] }
                 : { roomId: "old_room_id", eventId: "tombstone_event_id" },
         );
     });
@@ -67,6 +67,22 @@ describe("AdvancedRoomSettingsTab", () => {
 
         const tab = renderTab();
         tab.getByText("custom_room_version_1");
+    });
+
+    it("displays message when room cannot federate", () => {
+        const createEvent = new MatrixEvent({
+            sender: "@a:b.com",
+            type: EventType.RoomCreate,
+            content: { "m.federate": false },
+            room_id: room.roomId,
+            state_key: "",
+        });
+        jest.spyOn(room.currentState, "getStateEvents").mockImplementation((type) =>
+            type === EventType.RoomCreate ? createEvent : null,
+        );
+
+        renderTab();
+        expect(screen.getByText("This room is not accessible by remote Matrix servers")).toBeInTheDocument();
     });
 
     function mockStateEvents(room: Room) {
@@ -138,9 +154,21 @@ describe("AdvancedRoomSettingsTab", () => {
                 action: Action.ViewRoom,
                 event_id: undefined,
                 room_id: "old_room_id_via_predecessor",
+                via_servers: ["one.example.com", "two.example.com"],
                 metricsTrigger: "WebPredecessorSettings",
                 metricsViaKeyboard: false,
             });
+        });
+
+        it("handles when room is a space", async () => {
+            mockStateEvents(room);
+            jest.spyOn(room, "isSpaceRoom").mockReturnValue(true);
+
+            mockStateEvents(room);
+            const tab = renderTab();
+            const link = await tab.findByText("View older version of test room.");
+            expect(link).toBeInTheDocument();
+            expect(screen.getByText("Space information")).toBeInTheDocument();
         });
     });
 });

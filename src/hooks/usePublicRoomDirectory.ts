@@ -103,11 +103,11 @@ export const usePublicRoomDirectory = (): {
             if (query || roomTypes) {
                 opts.filter = {
                     generic_search_term: query,
-                    room_types: (await MatrixClientPeg.get().doesServerSupportUnstableFeature(
-                        "org.matrix.msc3827.stable",
-                    ))
-                        ? Array.from<RoomType | null>(roomTypes)
-                        : undefined,
+                    room_types:
+                        roomTypes &&
+                        (await MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3827.stable"))
+                            ? Array.from<RoomType | null>(roomTypes)
+                            : undefined,
                 };
             }
 
@@ -166,9 +166,10 @@ export const usePublicRoomDirectory = (): {
     }, [protocols]);
 
     useEffect(() => {
-        localStorage.setItem(LAST_SERVER_KEY, config?.roomServer);
-        if (config?.instanceId) {
-            localStorage.setItem(LAST_INSTANCE_KEY, config?.instanceId);
+        if (!config) return;
+        localStorage.setItem(LAST_SERVER_KEY, config.roomServer);
+        if (config.instanceId) {
+            localStorage.setItem(LAST_INSTANCE_KEY, config.instanceId);
         } else {
             localStorage.removeItem(LAST_INSTANCE_KEY);
         }

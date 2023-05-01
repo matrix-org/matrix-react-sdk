@@ -18,6 +18,7 @@ limitations under the License.
 
 import "@percy/cypress";
 import "cypress-real-events";
+import "@testing-library/cypress/add-commands";
 
 import "./homeserver";
 import "./login";

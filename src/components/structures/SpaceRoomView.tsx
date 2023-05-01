@@ -71,17 +71,18 @@ import RoomTopic from "../views/elements/RoomTopic";
 import withValidation from "../views/elements/Validation";
 import RoomInfoLine from "../views/rooms/RoomInfoLine";
 import RoomPreviewCard from "../views/rooms/RoomPreviewCard";
-import { SpaceFeedbackPrompt } from "../views/spaces/SpaceCreateMenu";
 import SpacePublicShare from "../views/spaces/SpacePublicShare";
 import { ChevronFace, ContextMenuButton, useContextMenu } from "./ContextMenu";
 import MainSplit from "./MainSplit";
 import RightPanel from "./RightPanel";
 import SpaceHierarchy, { showRoom } from "./SpaceHierarchy";
+import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 
 interface IProps {
     space: Room;
     justCreatedOpts?: IOpts;
     resizeNotifier: ResizeNotifier;
+    permalinkCreator: RoomPermalinkCreator;
     onJoinButtonClicked(): void;
     onRejectButtonClicked(): void;
 }
@@ -112,7 +113,7 @@ const SpaceLandingAddButton: React.FC<{ space: Room }> = ({ space }) => {
 
     let contextMenu: JSX.Element | null = null;
     if (menuDisplayed) {
-        const rect = handle.current.getBoundingClientRect();
+        const rect = handle.current!.getBoundingClientRect();
         contextMenu = (
             <IconizedContextMenu
                 left={rect.left + window.scrollX + 0}
@@ -213,7 +214,7 @@ const SpaceLandingAddButton: React.FC<{ space: Room }> = ({ space }) => {
 const SpaceLanding: React.FC<{ space: Room }> = ({ space }) => {
     const cli = useContext(MatrixClientContext);
     const myMembership = useMyRoomMembership(space);
-    const userId = cli.getUserId();
+    const userId = cli.getSafeUserId();
 
     const storeIsShowingSpaceMembers = useCallback(
         () =>
@@ -267,7 +268,6 @@ const SpaceLanding: React.FC<{ space: Room }> = ({ space }) => {
         <div className="mx_SpaceRoomView_landing">
             <div className="mx_SpaceRoomView_landing_header">
                 <RoomAvatar room={space} height={80} width={80} viewAvatarOnClick={true} />
-                <SpaceFeedbackPrompt />
             </div>
             <div className="mx_SpaceRoomView_landing_name">
                 <RoomName room={space}>
@@ -351,7 +351,7 @@ const SpaceSetupFirstRooms: React.FC<{
                     });
                 }),
             );
-            onFinished(roomIds[0]);
+            onFinished(roomIds[0] ?? undefined);
         } catch (e) {
             logger.error("Failed to create initial space rooms", e);
             setError(_t("Failed to create initial space rooms"));
@@ -458,7 +458,7 @@ const SpaceSetupPublicShare: React.FC<ISpaceSetupPublicShareProps> = ({
 
 const SpaceSetupPrivateScope: React.FC<{
     space: Room;
-    justCreatedOpts: IOpts;
+    justCreatedOpts?: IOpts;
     onFinished(createRooms: boolean): void;
 }> = ({ space, justCreatedOpts, onFinished }) => {
     return (
@@ -476,7 +476,7 @@ const SpaceSetupPrivateScope: React.FC<{
                     onFinished(false);
                 }}
             >
-                <h3>{_t("Just me")}</h3>
+                {_t("Just me")}
                 <div>{_t("A private space to organise your rooms")}</div>
             </AccessibleButton>
             <AccessibleButton
@@ -485,7 +485,7 @@ const SpaceSetupPrivateScope: React.FC<{
                     onFinished(true);
                 }}
             >
-                <h3>{_t("Me and my teammates")}</h3>
+                {_t("Me and my teammates")}
                 <div>{_t("A private space for you and your teammates")}</div>
             </AccessibleButton>
         </div>
@@ -509,7 +509,7 @@ const SpaceSetupPrivateInvite: React.FC<{
     const [busy, setBusy] = useState(false);
     const [error, setError] = useState("");
     const numFields = 3;
-    const fieldRefs: RefObject<Field>[] = [useRef(), useRef(), useRef()];
+    const fieldRefs = [useRef(), useRef(), useRef()] as RefObject<Field>[];
     const [emailAddresses, setEmailAddress] = useStateArray(numFields, "");
     const fields = new Array(numFields).fill(0).map((x, i) => {
         const name = "emailAddress" + i;
@@ -535,12 +535,12 @@ const SpaceSetupPrivateInvite: React.FC<{
         if (busy) return;
         setError("");
         for (const fieldRef of fieldRefs) {
-            const valid = await fieldRef.current.validate({ allowEmpty: true });
+            const valid = await fieldRef.current?.validate({ allowEmpty: true });
 
             if (valid === false) {
                 // true/null are allowed
-                fieldRef.current.focus();
-                fieldRef.current.validate({ allowEmpty: true, focused: true });
+                fieldRef.current!.focus();
+                fieldRef.current!.validate({ allowEmpty: true, focused: true });
                 return;
             }
         }
@@ -634,7 +634,6 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
 
-    private readonly creator: string;
     private readonly dispatcherRef: string;
 
     public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
@@ -642,12 +641,12 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
 
         let phase = Phase.Landing;
 
-        this.creator = this.props.space.currentState.getStateEvents(EventType.RoomCreate, "")?.getSender();
-        const showSetup = this.props.justCreatedOpts && context.getUserId() === this.creator;
+        const creator = this.props.space.currentState.getStateEvents(EventType.RoomCreate, "")?.getSender();
+        const showSetup = this.props.justCreatedOpts && context.getSafeUserId() === creator;
 
         if (showSetup) {
             phase =
-                this.props.justCreatedOpts.createOpts.preset === Preset.PublicChat
+                this.props.justCreatedOpts!.createOpts?.preset === Preset.PublicChat
                     ? Phase.PublicCreateRooms
                     : Phase.PrivateScope;
         }
@@ -817,8 +816,12 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
     public render(): React.ReactNode {
         const rightPanel =
             this.state.showRightPanel && this.state.phase === Phase.Landing ? (
-                <RightPanel room={this.props.space} resizeNotifier={this.props.resizeNotifier} />
-            ) : null;
+                <RightPanel
+                    room={this.props.space}
+                    resizeNotifier={this.props.resizeNotifier}
+                    permalinkCreator={this.props.permalinkCreator}
+                />
+            ) : undefined;
 
         return (
             <main className="mx_SpaceRoomView">

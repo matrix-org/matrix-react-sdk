@@ -14,28 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_UserOnboardingFeedback {
-    display: flex;
-    flex-direction: row;
-    padding: $spacing-32;
-    border-radius: 8px;
-    background: $system;
-    gap: $spacing-64;
-
-    .mx_UserOnboardingFeedback_content {
-        display: flex;
-        flex-direction: column;
-        margin-right: auto;
-        gap: 6px;
-
-        .mx_UserOnboardingFeedback_text {
-            color: $secondary-content;
-        }
-    }
-
-    .mx_UserOnboardingFeedback_action.mx_AccessibleButton {
-        background: transparent;
-        min-width: 180px;
-        align-self: center;
-    }
+export interface WorkerPayload {
+    seq: number;
 }

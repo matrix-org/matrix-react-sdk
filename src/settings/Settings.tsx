@@ -215,7 +215,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
                 ),
             feedbackLabel: "video-room-feedback",
             feedbackSubheading: _td(
-                "Thank you for trying the beta, " + "please go into as much detail as you can so we can improve it.",
+                "Thank you for trying the beta, please go into as much detail as you can so we can improve it.",
             ),
             image: require("../../res/img/betas/video_rooms.png"),
             requiresRefresh: true,
@@ -227,9 +227,13 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("Explore public spaces in the new search dialog"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
-        controller: new ServerSupportUnstableFeatureController("feature_exploring_public_spaces", defaultWatchManager, [
-            "org.matrix.msc3827.stable",
-        ]),
+        controller: new ServerSupportUnstableFeatureController(
+            "feature_exploring_public_spaces",
+            defaultWatchManager,
+            [["org.matrix.msc3827.stable"]],
+            undefined,
+            _td("Requires your server to support the stable version of MSC3827"),
+        ),
     },
     "feature_msc3531_hide_messages_pending_moderation": {
         isFeature: true,
@@ -359,23 +363,19 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         description: _td("Defaults to room member list."),
         default: false,
     },
-    "feature_poll_history": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Polls history"),
-        description: _td("View a list of polls in a room. (Under active development)"),
-        default: false,
-    },
     "feature_jump_to_date": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
         displayName: _td("Jump to date (adds /jumptodate and jump to date headers)"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
-        controller: new ServerSupportUnstableFeatureController("feature_jump_to_date", defaultWatchManager, [
-            "org.matrix.msc3030",
-        ]),
+        controller: new ServerSupportUnstableFeatureController(
+            "feature_jump_to_date",
+            defaultWatchManager,
+            [["org.matrix.msc3030"], ["org.matrix.msc3030.stable"]],
+            "v1.6",
+            _td("Requires your server to support MSC3030"),
+        ),
     },
     "RoomList.backgroundImage": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -385,6 +385,14 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Send read receipts"),
         default: true,
+        controller: new ServerSupportUnstableFeatureController(
+            "sendReadReceipts",
+            defaultWatchManager,
+            [["org.matrix.msc2285.stable"]],
+            "v1.4",
+            _td("Your server doesn't support disabling sending read receipts."),
+            true,
+        ),
     },
     "feature_sliding_sync": {
         isFeature: true,
@@ -482,7 +490,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Developer,
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("Rust cryptography implementation"),
-        description: _td("Under active development. Can currently only be enabled via config.json"),
+        description: _td("Under active development."),
         // shouldWarn: true,
         default: false,
         controller: new RustCryptoSdkController(),
@@ -531,6 +539,17 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("Hide notification dot (only display counters badges)"),
         labsGroup: LabGroup.Rooms,
         default: false,
+    },
+    // MSC3952 intentional mentions support.
+    "feature_intentional_mentions": {
+        isFeature: true,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        displayName: _td("Enable intentional mentions"),
+        labsGroup: LabGroup.Rooms,
+        default: false,
+        controller: new ServerSupportUnstableFeatureController("feature_intentional_mentions", defaultWatchManager, [
+            ["org.matrix.msc3952_intentional_mentions"],
+        ]),
     },
     "useCompactLayout": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
@@ -610,7 +629,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "Pill.shouldShowPillAvatar": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Show avatars in user and room mentions"),
+        displayName: _td("Show avatars in user, room and event mentions"),
         default: true,
         invertedSettingName: "Pill.shouldHidePillAvatar",
     },
@@ -664,7 +683,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("Enable Markdown"),
         description: () =>
             _t(
-                "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.",
+                "Start messages with <code>/plain</code> to send without markdown.",
                 {},
                 { code: (sub) => <code>{sub}</code> },
             ),
@@ -1067,6 +1086,10 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         default: true,
     },
     [UIFeature.Widgets]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.LocationSharing]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
     },

@@ -26,7 +26,7 @@ import { isLocalRoom } from "./utils/localRoom/isLocalRoom";
 
 // Not to be used for BaseAvatar urls as that has similar default avatar fallback already
 export function avatarUrlForMember(
-    member: RoomMember,
+    member: RoomMember | undefined,
     width: number,
     height: number,
     resizeMethod: ResizeMethod,
@@ -96,7 +96,7 @@ export function defaultAvatarUrlForString(s: string): string {
     const colorIndex = total % defaultColors.length;
     // overwritten color value in custom themes
     const cssVariable = `--avatar-background-colors_${colorIndex}`;
-    const cssValue = document.body.style.getPropertyValue(cssVariable);
+    const cssValue = getComputedStyle(document.body).getPropertyValue(cssVariable);
     const color = cssValue || defaultColors[colorIndex];
     let dataUrl = colorToDataURLCache.get(color);
     if (!dataUrl) {

@@ -119,6 +119,7 @@ export default class WidgetUtils {
                 if (
                     testUrl.protocol === scalarUrl.protocol &&
                     testUrl.host === scalarUrl.host &&
+                    scalarUrl.pathname &&
                     testUrl.pathname?.startsWith(scalarUrl.pathname)
                 ) {
                     return true;
@@ -236,13 +237,6 @@ export default class WidgetUtils {
         widgetName: string,
         widgetData: IWidgetData,
     ): Promise<void> {
-        const content = {
-            type: widgetType.preferred,
-            url: widgetUrl,
-            name: widgetName,
-            data: widgetData,
-        };
-
         const client = MatrixClientPeg.get();
         // Get the current widgets and clone them before we modify them, otherwise
         // we'll modify the content of the old event.
@@ -257,11 +251,21 @@ export default class WidgetUtils {
 
         const addingWidget = Boolean(widgetUrl);
 
+        const userId = client.getSafeUserId();
+
+        const content = {
+            type: widgetType.preferred,
+            url: widgetUrl,
+            name: widgetName,
+            data: widgetData,
+            creatorUserId: userId,
+        };
+
         // Add new widget / update
         if (addingWidget) {
             userWidgets[widgetId] = {
                 content: content,
-                sender: client.getUserId()!,
+                sender: userId,
                 state_key: widgetId,
                 type: "m.widget",
                 id: widgetId,
@@ -450,7 +454,7 @@ export default class WidgetUtils {
         oobRoomName?: string,
     ): Promise<void> {
         const domain = Jitsi.getInstance().preferredDomain;
-        const auth = await Jitsi.getInstance().getJitsiAuth();
+        const auth = (await Jitsi.getInstance().getJitsiAuth()) ?? undefined;
         const widgetId = randomString(24); // Must be globally unique
 
         let confId;
@@ -506,6 +510,8 @@ export default class WidgetUtils {
             "conferenceDomain=$domain",
             "conferenceId=$conferenceId",
             "isAudioOnly=$isAudioOnly",
+            "startWithAudioMuted=$startWithAudioMuted",
+            "startWithVideoMuted=$startWithVideoMuted",
             "isVideoChannel=$isVideoChannel",
             "displayName=$matrix_display_name",
             "avatarUrl=$matrix_avatar_url",

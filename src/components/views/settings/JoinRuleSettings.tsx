@@ -31,7 +31,7 @@ import { upgradeRoom } from "../../../utils/RoomUpgrade";
 import { arrayHasDiff } from "../../../utils/arrays";
 import { useLocalEcho } from "../../../hooks/useLocalEcho";
 import dis from "../../../dispatcher/dispatcher";
-import { ROOM_SECURITY_TAB } from "../dialogs/RoomSettingsDialog";
+import { RoomSettingsTab } from "../dialogs/RoomSettingsDialog";
 import { Action } from "../../../dispatcher/actions";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { doesRoomVersionSupport, PreferredRoomVersions } from "../../../utils/PreferredRoomVersions";
@@ -61,7 +61,7 @@ const JoinRuleSettings: React.FC<IProps> = ({
 
     const disabled = !room.currentState.mayClientSendStateEvent(EventType.RoomJoinRules, cli);
 
-    const [content, setContent] = useLocalEcho<IJoinRuleEventContent>(
+    const [content, setContent] = useLocalEcho<IJoinRuleEventContent | undefined>(
         () => room.currentState.getStateEvents(EventType.RoomJoinRules, "")?.getContent(),
         (content) => cli.sendStateEvent(room.roomId, EventType.RoomJoinRules, content, ""),
         onError,
@@ -70,10 +70,10 @@ const JoinRuleSettings: React.FC<IProps> = ({
     const { join_rule: joinRule = JoinRule.Invite } = content || {};
     const restrictedAllowRoomIds =
         joinRule === JoinRule.Restricted
-            ? content.allow?.filter((o) => o.type === RestrictedAllowType.RoomMembership).map((o) => o.room_id)
+            ? content?.allow?.filter((o) => o.type === RestrictedAllowType.RoomMembership).map((o) => o.room_id)
             : undefined;
 
-    const editRestrictedRoomIds = async (): Promise<string[]> => {
+    const editRestrictedRoomIds = async (): Promise<string[] | undefined> => {
         let selected = restrictedAllowRoomIds;
         if (!selected?.length && SpaceStore.instance.activeSpaceRoom) {
             selected = [SpaceStore.instance.activeSpaceRoom.roomId];
@@ -207,7 +207,7 @@ const JoinRuleSettings: React.FC<IProps> = ({
                 "Anyone in <spaceName/> can find and join. You can select other spaces too.",
                 {},
                 {
-                    spaceName: () => <b>{SpaceStore.instance.activeSpaceRoom.name}</b>,
+                    spaceName: () => <b>{SpaceStore.instance.activeSpaceRoom!.name}</b>,
                 },
             );
         } else {
@@ -229,7 +229,7 @@ const JoinRuleSettings: React.FC<IProps> = ({
     }
 
     const onChange = async (joinRule: JoinRule): Promise<void> => {
-        const beforeJoinRule = content.join_rule;
+        const beforeJoinRule = content?.join_rule;
 
         let restrictedAllowRoomIds: string[] | undefined;
         if (joinRule === JoinRule.Restricted) {
@@ -320,7 +320,7 @@ const JoinRuleSettings: React.FC<IProps> = ({
                         // open new settings on this tab
                         dis.dispatch({
                             action: "open_room_settings",
-                            initial_tab_id: ROOM_SECURITY_TAB,
+                            initial_tab_id: RoomSettingsTab.Security,
                         });
                     },
                 });

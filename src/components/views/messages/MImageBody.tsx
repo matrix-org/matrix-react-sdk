@@ -104,9 +104,10 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
             const content = this.props.mxEvent.getContent<IMediaEventContent>();
             const httpUrl = this.state.contentUrl;
+            if (!httpUrl) return;
             const params: Omit<ComponentProps<typeof ImageView>, "onFinished"> = {
                 src: httpUrl,
-                name: content.body?.length > 0 ? content.body : _t("Attachment"),
+                name: content.body && content.body.length > 0 ? content.body : _t("Attachment"),
                 mxEvent: this.props.mxEvent,
                 permalinkCreator: this.props.permalinkCreator,
             };
@@ -135,7 +136,12 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     protected onImageEnter = (e: React.MouseEvent<HTMLImageElement>): void => {
         this.setState({ hover: true });
 
-        if (!this.state.showImage || !this.state.isAnimated || SettingsStore.getValue("autoplayGifs")) {
+        if (
+            !this.state.contentUrl ||
+            !this.state.showImage ||
+            !this.state.isAnimated ||
+            SettingsStore.getValue("autoplayGifs")
+        ) {
             return;
         }
         const imgElement = e.currentTarget;
@@ -145,11 +151,12 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     protected onImageLeave = (e: React.MouseEvent<HTMLImageElement>): void => {
         this.setState({ hover: false });
 
-        if (!this.state.showImage || !this.state.isAnimated || SettingsStore.getValue("autoplayGifs")) {
+        const url = this.state.thumbUrl ?? this.state.contentUrl;
+        if (!url || !this.state.showImage || !this.state.isAnimated || SettingsStore.getValue("autoplayGifs")) {
             return;
         }
         const imgElement = e.currentTarget;
-        imgElement.src = this.state.thumbUrl ?? this.state.contentUrl;
+        imgElement.src = url;
     };
 
     private clearError = (): void => {
@@ -285,7 +292,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                     img.onerror = reject;
                 });
                 img.crossOrigin = "Anonymous"; // CORS allow canvas access
-                img.src = contentUrl;
+                img.src = contentUrl ?? "";
 
                 try {
                     await loadPromise;
@@ -378,22 +385,24 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     }
 
     protected messageContent(
-        contentUrl: string,
-        thumbUrl: string,
+        contentUrl: string | null,
+        thumbUrl: string | null,
         content: IMediaEventContent,
         forcedHeight?: number,
     ): JSX.Element {
         if (!thumbUrl) thumbUrl = contentUrl; // fallback
 
-        let infoWidth: number;
-        let infoHeight: number;
+        // magic number
+        // edge case for this not to be set by conditions below
+        let infoWidth = 500;
+        let infoHeight = 500;
         let infoSvg = false;
 
         if (content.info?.w && content.info?.h) {
             infoWidth = content.info.w;
             infoHeight = content.info.h;
             infoSvg = content.info.mimetype === "image/svg+xml";
-        } else {
+        } else if (thumbUrl && contentUrl) {
             // Whilst the image loads, display nothing. We also don't display a blurhash image
             // because we don't really know what size of image we'll end up with.
             //
@@ -515,7 +524,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             </div>
         );
 
-        return this.wrapImage(contentUrl, thumbnail);
+        return contentUrl ? this.wrapImage(contentUrl, thumbnail) : thumbnail;
     }
 
     // Overridden by MStickerBody
@@ -579,7 +588,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         }
 
         let contentUrl = this.state.contentUrl;
-        let thumbUrl: string | undefined;
+        let thumbUrl: string | null;
         if (this.props.forExport) {
             contentUrl = this.props.mxEvent.getContent().url ?? this.props.mxEvent.getContent().file?.url;
             thumbUrl = contentUrl;

@@ -51,6 +51,7 @@ import { ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePaylo
 import { Icon as LiveIcon } from "../../../res/img/compound/live-8px.svg";
 import { VoiceBroadcastRecording, VoiceBroadcastRecordingsStoreEvent } from "../../voice-broadcast";
 import { SDKContext } from "../../contexts/SDKContext";
+import { shouldShowFeedback } from "../../utils/Feedback";
 
 interface IProps {
     isPanelCollapsed: boolean;
@@ -289,7 +290,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
     private renderContextMenu = (): React.ReactNode => {
         if (!this.state.contextMenuPosition) return null;
 
-        let topSection;
+        let topSection: JSX.Element | undefined;
         if (MatrixClientPeg.get().isGuest()) {
             topSection = (
                 <div className="mx_UserMenu_contextMenu_header mx_UserMenu_contextMenu_guestPrompts">
@@ -304,17 +305,19 @@ export default class UserMenu extends React.Component<IProps, IState> {
                             ),
                         },
                     )}
-                    {_t(
-                        "New here? <a>Create an account</a>",
-                        {},
-                        {
-                            a: (sub) => (
-                                <AccessibleButton kind="link_inline" onClick={this.onRegisterClick}>
-                                    {sub}
-                                </AccessibleButton>
-                            ),
-                        },
-                    )}
+                    {SettingsStore.getValue(UIFeature.Registration)
+                        ? _t(
+                              "New here? <a>Create an account</a>",
+                              {},
+                              {
+                                  a: (sub) => (
+                                      <AccessibleButton kind="link_inline" onClick={this.onRegisterClick}>
+                                          {sub}
+                                      </AccessibleButton>
+                                  ),
+                              },
+                          )
+                        : null}
                 </div>
             );
         }
@@ -331,7 +334,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         }
 
         let feedbackButton: JSX.Element | undefined;
-        if (SettingsStore.getValue(UIFeature.Feedback)) {
+        if (shouldShowFeedback()) {
             feedbackButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconMessage"

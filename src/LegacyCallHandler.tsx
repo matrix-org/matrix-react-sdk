@@ -272,7 +272,8 @@ export default class LegacyCallHandler extends EventEmitter {
         return localNotificationsAreSilenced(cli);
     }
 
-    public silenceCall(callId: string): void {
+    public silenceCall(callId?: string): void {
+        if (!callId) return;
         this.silencedCalls.add(callId);
         this.emit(LegacyCallHandlerEvent.SilencedCallsChanged, this.silencedCalls);
 
@@ -281,15 +282,15 @@ export default class LegacyCallHandler extends EventEmitter {
         this.pause(AudioID.Ring);
     }
 
-    public unSilenceCall(callId: string): void {
-        if (this.isForcedSilent()) return;
+    public unSilenceCall(callId?: string): void {
+        if (!callId || this.isForcedSilent()) return;
         this.silencedCalls.delete(callId);
         this.emit(LegacyCallHandlerEvent.SilencedCallsChanged, this.silencedCalls);
         this.play(AudioID.Ring);
     }
 
-    public isCallSilenced(callId: string): boolean {
-        return this.isForcedSilent() || this.silencedCalls.has(callId);
+    public isCallSilenced(callId?: string): boolean {
+        return this.isForcedSilent() || (!!callId && this.silencedCalls.has(callId));
     }
 
     /**
@@ -395,6 +396,7 @@ export default class LegacyCallHandler extends EventEmitter {
         }
 
         const mappedRoomId = LegacyCallHandler.instance.roomIdForCall(call);
+        if (!mappedRoomId) return;
         if (this.getCallForRoom(mappedRoomId)) {
             logger.log(
                 "Got incoming call for room " + mappedRoomId + " but there's already a call for this room: ignoring",
@@ -411,7 +413,8 @@ export default class LegacyCallHandler extends EventEmitter {
         // the call, we'll be ready to send. NB. This is the protocol-level room ID not
         // the mapped one: that's where we'll send the events.
         const cli = MatrixClientPeg.get();
-        cli.prepareToEncrypt(cli.getRoom(call.roomId));
+        const room = cli.getRoom(call.roomId);
+        if (room) cli.prepareToEncrypt(room);
     };
 
     public getCallById(callId: string): MatrixCall | null {
@@ -505,7 +508,7 @@ export default class LegacyCallHandler extends EventEmitter {
             if (this.audioPromises.has(audioId)) {
                 this.audioPromises.set(
                     audioId,
-                    this.audioPromises.get(audioId).then(() => {
+                    this.audioPromises.get(audioId)!.then(() => {
                         audio.load();
                         return playAudio();
                     }),
@@ -531,7 +534,7 @@ export default class LegacyCallHandler extends EventEmitter {
         };
         if (audio) {
             if (this.audioPromises.has(audioId)) {
-                this.audioPromises.set(audioId, this.audioPromises.get(audioId).then(pauseAudio));
+                this.audioPromises.set(audioId, this.audioPromises.get(audioId)!.then(pauseAudio));
             } else {
                 pauseAudio();
             }
@@ -546,7 +549,7 @@ export default class LegacyCallHandler extends EventEmitter {
         // is the call we consider 'the' call for its room.
         const mappedRoomId = this.roomIdForCall(call);
 
-        const callForThisRoom = this.getCallForRoom(mappedRoomId);
+        const callForThisRoom = mappedRoomId ? this.getCallForRoom(mappedRoomId) : null;
         return !!callForThisRoom && call.callId === callForThisRoom.callId;
     }
 
@@ -577,7 +580,7 @@ export default class LegacyCallHandler extends EventEmitter {
             });
         });
         call.on(CallEvent.Hangup, () => {
-            if (!this.matchesCallForThisRoom(call)) return;
+            if (!mappedRoomId || !this.matchesCallForThisRoom(call)) return;
 
             this.removeCallForRoom(mappedRoomId);
         });
@@ -585,7 +588,7 @@ export default class LegacyCallHandler extends EventEmitter {
             this.onCallStateChanged(newState, oldState, call);
         });
         call.on(CallEvent.Replaced, (newCall: MatrixCall) => {
-            if (!this.matchesCallForThisRoom(call)) return;
+            if (!mappedRoomId || !this.matchesCallForThisRoom(call)) return;
 
             logger.log(`Call ID ${call.callId} is being replaced by call ID ${newCall.callId}`);
 
@@ -601,7 +604,7 @@ export default class LegacyCallHandler extends EventEmitter {
             this.setCallState(newCall, newCall.state);
         });
         call.on(CallEvent.AssertedIdentityChanged, async (): Promise<void> => {
-            if (!this.matchesCallForThisRoom(call)) return;
+            if (!mappedRoomId || !this.matchesCallForThisRoom(call)) return;
 
             logger.log(`Call ID ${call.callId} got new asserted identity:`, call.getRemoteAssertedIdentity());
 
@@ -632,7 +635,7 @@ export default class LegacyCallHandler extends EventEmitter {
 
                 const newMappedRoomId = this.roomIdForCall(call);
                 logger.log(`Old room ID: ${mappedRoomId}, new room ID: ${newMappedRoomId}`);
-                if (newMappedRoomId !== mappedRoomId) {
+                if (newMappedRoomId && newMappedRoomId !== mappedRoomId) {
                     this.removeCallForRoom(mappedRoomId);
                     mappedRoomId = newMappedRoomId;
                     logger.log("Moving call to room " + mappedRoomId);
@@ -840,7 +843,7 @@ export default class LegacyCallHandler extends EventEmitter {
                 cancelButton: _t("OK"),
                 onFinished: (allow) => {
                     SettingsStore.setValue("fallbackICEServerAllowed", null, SettingLevel.DEVICE, allow);
-                    cli.setFallbackICEServerAllowed(allow);
+                    cli.setFallbackICEServerAllowed(!!allow);
                 },
             },
             undefined,
@@ -898,14 +901,14 @@ export default class LegacyCallHandler extends EventEmitter {
         // previous calls that are probably stale by now, so just cancel them.
         if (mappedRoomId !== roomId) {
             const mappedRoom = MatrixClientPeg.get().getRoom(mappedRoomId);
-            if (mappedRoom.getPendingEvents().length > 0) {
+            if (mappedRoom?.getPendingEvents().length) {
                 Resend.cancelUnsentEvents(mappedRoom);
             }
         }
 
         const timeUntilTurnCresExpire = MatrixClientPeg.get().getTurnServersExpiry() - Date.now();
         logger.log("Current turn creds expire in " + timeUntilTurnCresExpire + " ms");
-        const call = MatrixClientPeg.get().createCall(mappedRoomId);
+        const call = MatrixClientPeg.get().createCall(mappedRoomId)!;
 
         try {
             this.addCallForRoom(roomId, call);
@@ -933,7 +936,7 @@ export default class LegacyCallHandler extends EventEmitter {
         }
     }
 
-    public async placeCall(roomId: string, type?: CallType, transferee?: MatrixCall): Promise<void> {
+    public async placeCall(roomId: string, type: CallType, transferee?: MatrixCall): Promise<void> {
         // Pause current broadcast, if any
         SdkContextClass.instance.voiceBroadcastPlaybacksStore.getCurrent()?.pause();
 
@@ -1114,6 +1117,14 @@ export default class LegacyCallHandler extends EventEmitter {
     public async startTransferToMatrixID(call: MatrixCall, destination: string, consultFirst: boolean): Promise<void> {
         if (consultFirst) {
             const dmRoomId = await ensureDMExists(MatrixClientPeg.get(), destination);
+            if (!dmRoomId) {
+                logger.log("Failed to transfer call, could not ensure dm exists");
+                Modal.createDialog(ErrorDialog, {
+                    title: _t("Transfer Failed"),
+                    description: _t("Failed to transfer call"),
+                });
+                return;
+            }
 
             this.placeCall(dmRoomId, call.type, call);
             dis.dispatch<ViewRoomPayload>({
@@ -1172,8 +1183,9 @@ export default class LegacyCallHandler extends EventEmitter {
         // Prevent double clicking the call button
         const widget = WidgetStore.instance.getApps(roomId).find((app) => WidgetType.JITSI.matches(app.type));
         if (widget) {
+            const room = client.getRoom(roomId);
             // If there already is a Jitsi widget, pin it
-            WidgetLayoutStore.instance.moveToContainer(client.getRoom(roomId), widget, Container.Top);
+            if (room) WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Top);
             return;
         }
 

@@ -60,6 +60,7 @@ import { setUpVoiceBroadcastPreRecording } from "../../../voice-broadcast/utils/
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { VoiceBroadcastInfoState } from "../../../voice-broadcast";
 import { createCantStartVoiceMessageBroadcastDialog } from "../dialogs/CantStartVoiceMessageBroadcastDialog";
+import { UIFeature } from "../../../settings/UIFeature";
 
 let instanceCount = 0;
 
@@ -82,7 +83,7 @@ function SendButton(props: ISendButtonProps): JSX.Element {
 interface IProps extends MatrixClientProps {
     room: Room;
     resizeNotifier: ResizeNotifier;
-    permalinkCreator: RoomPermalinkCreator;
+    permalinkCreator?: RoomPermalinkCreator;
     replyToEvent?: MatrixEvent;
     relation?: IEventRelation;
     e2eStatus?: E2EStatus;
@@ -250,7 +251,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
         // The members should already be loading, and loadMembersIfNeeded
         // will return the promise for the existing operation
         this.props.room.loadMembersIfNeeded().then(() => {
-            const me = this.props.room.getMember(MatrixClientPeg.get().getUserId()!);
+            const me = this.props.room.getMember(MatrixClientPeg.get().getSafeUserId()) ?? undefined;
             this.setState({ me });
         });
     }
@@ -276,7 +277,8 @@ export class MessageComposer extends React.Component<IProps, IState> {
             if (createEvent?.getId()) createEventId = createEvent.getId();
         }
 
-        const viaServers = [this.context.tombstone.getSender().split(":").slice(1).join(":")];
+        const sender = this.context.tombstone?.getSender();
+        const viaServers = sender ? [sender.split(":").slice(1).join(":")] : undefined;
 
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
@@ -613,7 +615,9 @@ export class MessageComposer extends React.Component<IProps, IState> {
                                     relation={this.props.relation}
                                     onRecordStartEndClick={this.onRecordStartEndClick}
                                     setStickerPickerOpen={this.setStickerPickerOpen}
-                                    showLocationButton={!window.electron}
+                                    showLocationButton={
+                                        !window.electron && SettingsStore.getValue(UIFeature.LocationSharing)
+                                    }
                                     showPollsButton={this.state.showPollsButton}
                                     showStickersButton={this.showStickersButton}
                                     isRichTextEnabled={this.state.isRichTextEnabled}
