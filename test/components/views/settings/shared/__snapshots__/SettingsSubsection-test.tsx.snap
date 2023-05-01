@@ -15,7 +15,7 @@ exports[`<SettingsSubsection /> renders with plain text description 1`] = `
       </h3>
     </div>
     <div
-      class="mx_SettingsSubsection_description"
+      class="mx_SettingsSubsection_text"
     >
       This describes the subsection
     </div>
@@ -70,7 +70,7 @@ exports[`<SettingsSubsection /> renders with react element description 1`] = `
       </h3>
     </div>
     <div
-      class="mx_SettingsSubsection_description"
+      class="mx_SettingsSubsection_text"
     >
       <p>
         This describes the section 
