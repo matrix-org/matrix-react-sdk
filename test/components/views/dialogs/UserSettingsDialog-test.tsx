@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ReactElement } from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { mocked } from "jest-mock";
 
 import SettingsStore, { CallbackFn } from "../../../../src/settings/SettingsStore";

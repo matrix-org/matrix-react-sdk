@@ -16,7 +16,7 @@ exports[`<SecurityRecommendations /> renders both cards when user has both unver
       </h3>
     </div>
     <div
-      class="mx_SettingsSubsection_text"
+      class="mx_SettingsSubsection_description"
     >
       <div
         class="mx_SettingsSubsection_text"
@@ -141,7 +141,7 @@ exports[`<SecurityRecommendations /> renders inactive devices section when user 
       </h3>
     </div>
     <div
-      class="mx_SettingsSubsection_text"
+      class="mx_SettingsSubsection_description"
     >
       <div
         class="mx_SettingsSubsection_text"
@@ -266,7 +266,7 @@ exports[`<SecurityRecommendations /> renders unverified devices section when use
       </h3>
     </div>
     <div
-      class="mx_SettingsSubsection_text"
+      class="mx_SettingsSubsection_description"
     >
       <div
         class="mx_SettingsSubsection_text"
