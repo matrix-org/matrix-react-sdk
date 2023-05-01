@@ -86,6 +86,6 @@ describe("<SecureBackupPanel />", () => {
         // flush checkKeyBackup promise
         await flushPromises();
 
-        expect(screen.getByText("✅ This session is backing up your keys."));
+        expect(screen.getByText("✅ This session is backing up your keys.")).toBeInTheDocument();
     });
 });
