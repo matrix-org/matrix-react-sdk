@@ -37,7 +37,7 @@ import userEvent from "@testing-library/user-event";
 import Notifications from "../../../../src/components/views/settings/Notifications";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { StandardActions } from "../../../../src/notifications/StandardActions";
-import { getMockClientWithEventEmitter, mkMessage, mockClientMethodsUser } from "../../../test-utils";
+import { clearAllModals, getMockClientWithEventEmitter, mkMessage, mockClientMethodsUser } from "../../../test-utils";
 
 // don't pollute test output with error logs from mock rejections
 jest.mock("matrix-js-sdk/src/logger");
@@ -278,10 +278,11 @@ describe("<Notifications />", () => {
         supportsThreads: jest.fn().mockReturnValue(true),
         isInitialSyncComplete: jest.fn().mockReturnValue(false),
         addPushRule: jest.fn().mockResolvedValue({}),
+        deletePushRule: jest.fn().mockResolvedValue({}),
     });
     mockClient.getPushRules.mockResolvedValue(pushRules);
 
-    beforeEach(() => {
+    beforeEach(async () => {
         let i = 0;
         mocked(randomString).mockImplementation(() => {
             return "testid_" + i++;
@@ -295,8 +296,12 @@ describe("<Notifications />", () => {
         mockClient.setPushRuleActions.mockReset().mockResolvedValue({});
         mockClient.pushRules = pushRules;
         mockClient.getPushRules.mockClear().mockResolvedValue(pushRules);
+        mockClient.addPushRule.mockClear();
+        mockClient.deletePushRule.mockClear();
 
         userEvent.setup();
+
+        await clearAllModals();
     });
 
     it("renders spinner while loading", async () => {
@@ -390,7 +395,7 @@ describe("<Notifications />", () => {
                 );
             });
 
-            xit("displays error when pusher update fails", async () => {
+            it("displays error when pusher update fails", async () => {
                 mockClient.setPusher.mockRejectedValue({});
                 await getComponentAndWait();
 
@@ -400,6 +405,14 @@ describe("<Notifications />", () => {
                 // force render
                 await flushPromises();
 
+                const dialog = await screen.findByRole("dialog");
+
+                expect(
+                    within(dialog).getByText("An error occurred whilst saving your notification preferences."),
+                ).toBeInTheDocument();
+
+                // dismiss the dialog
+                fireEvent.click(within(dialog).getByText("OK"));
                 expect(screen.getByTestId("error-message")).toBeInTheDocument();
             });
 
@@ -819,15 +832,10 @@ describe("<Notifications />", () => {
             ).toBeInTheDocument();
         });
 
-        fit("adds a new keyword", async () => {
-            const { container } = await getComponentAndWait();
+        it("adds a new keyword", async () => {
+            await getComponentAndWait();
 
-            await userEvent.click(screen.getByLabelText("Keyword"));
             await userEvent.type(screen.getByLabelText("Keyword"), "jest");
-
-            expect(container).toMatchSnapshot();
-
-            await flushPromises();
             expect(screen.getByLabelText("Keyword")).toHaveValue("jest");
 
             fireEvent.click(screen.getByText("Add"));
@@ -836,6 +844,18 @@ describe("<Notifications />", () => {
                 actions: [PushRuleActionName.Notify, { set_tweak: "highlight", value: false }],
                 pattern: "jest",
             });
+        });
+
+        it("removes keyword", async () => {
+            await getComponentAndWait();
+
+            await userEvent.type(screen.getByLabelText("Keyword"), "jest");
+
+            const keyword = screen.getByText("banana");
+
+            fireEvent.click(within(keyword.parentElement).getByLabelText("Remove"));
+
+            expect(mockClient.deletePushRule).toHaveBeenCalledWith("global", PushRuleKind.ContentSpecific, "banana");
         });
     });
 
