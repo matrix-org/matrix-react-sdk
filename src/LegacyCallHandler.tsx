@@ -272,7 +272,8 @@ export default class LegacyCallHandler extends EventEmitter {
         return localNotificationsAreSilenced(cli);
     }
 
-    public silenceCall(callId: string): void {
+    public silenceCall(callId?: string): void {
+        if (!callId) return;
         this.silencedCalls.add(callId);
         this.emit(LegacyCallHandlerEvent.SilencedCallsChanged, this.silencedCalls);
 
@@ -281,8 +282,8 @@ export default class LegacyCallHandler extends EventEmitter {
         this.pause(AudioID.Ring);
     }
 
-    public unSilenceCall(callId: string): void {
-        if (this.isForcedSilent()) return;
+    public unSilenceCall(callId?: string): void {
+        if (!callId || this.isForcedSilent()) return;
         this.silencedCalls.delete(callId);
         this.emit(LegacyCallHandlerEvent.SilencedCallsChanged, this.silencedCalls);
         this.play(AudioID.Ring);
@@ -579,7 +580,7 @@ export default class LegacyCallHandler extends EventEmitter {
             });
         });
         call.on(CallEvent.Hangup, () => {
-            if (!this.matchesCallForThisRoom(call)) return;
+            if (!mappedRoomId || !this.matchesCallForThisRoom(call)) return;
 
             this.removeCallForRoom(mappedRoomId);
         });
@@ -587,7 +588,7 @@ export default class LegacyCallHandler extends EventEmitter {
             this.onCallStateChanged(newState, oldState, call);
         });
         call.on(CallEvent.Replaced, (newCall: MatrixCall) => {
-            if (!this.matchesCallForThisRoom(call)) return;
+            if (!mappedRoomId || !this.matchesCallForThisRoom(call)) return;
 
             logger.log(`Call ID ${call.callId} is being replaced by call ID ${newCall.callId}`);
 
@@ -603,7 +604,7 @@ export default class LegacyCallHandler extends EventEmitter {
             this.setCallState(newCall, newCall.state);
         });
         call.on(CallEvent.AssertedIdentityChanged, async (): Promise<void> => {
-            if (!this.matchesCallForThisRoom(call)) return;
+            if (!mappedRoomId || !this.matchesCallForThisRoom(call)) return;
 
             logger.log(`Call ID ${call.callId} got new asserted identity:`, call.getRemoteAssertedIdentity());
 
@@ -634,7 +635,7 @@ export default class LegacyCallHandler extends EventEmitter {
 
                 const newMappedRoomId = this.roomIdForCall(call);
                 logger.log(`Old room ID: ${mappedRoomId}, new room ID: ${newMappedRoomId}`);
-                if (newMappedRoomId !== mappedRoomId) {
+                if (newMappedRoomId && newMappedRoomId !== mappedRoomId) {
                     this.removeCallForRoom(mappedRoomId);
                     mappedRoomId = newMappedRoomId;
                     logger.log("Moving call to room " + mappedRoomId);
@@ -1116,6 +1117,14 @@ export default class LegacyCallHandler extends EventEmitter {
     public async startTransferToMatrixID(call: MatrixCall, destination: string, consultFirst: boolean): Promise<void> {
         if (consultFirst) {
             const dmRoomId = await ensureDMExists(MatrixClientPeg.get(), destination);
+            if (!dmRoomId) {
+                logger.log("Failed to transfer call, could not ensure dm exists");
+                Modal.createDialog(ErrorDialog, {
+                    title: _t("Transfer Failed"),
+                    description: _t("Failed to transfer call"),
+                });
+                return;
+            }
 
             this.placeCall(dmRoomId, call.type, call);
             dis.dispatch<ViewRoomPayload>({
@@ -1174,8 +1183,9 @@ export default class LegacyCallHandler extends EventEmitter {
         // Prevent double clicking the call button
         const widget = WidgetStore.instance.getApps(roomId).find((app) => WidgetType.JITSI.matches(app.type));
         if (widget) {
+            const room = client.getRoom(roomId);
             // If there already is a Jitsi widget, pin it
-            WidgetLayoutStore.instance.moveToContainer(client.getRoom(roomId), widget, Container.Top);
+            if (room) WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Top);
             return;
         }
 

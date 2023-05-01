@@ -49,7 +49,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
         super(props);
 
         const config = SdkConfig.get();
-        this.defaultServer = config["validated_server_config"];
+        this.defaultServer = config["validated_server_config"]!;
         const { serverConfig } = this.props;
 
         let otherHomeserver = "";
@@ -120,7 +120,11 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
 
                 // try to carry on anyway
                 try {
-                    this.validatedConf = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(hsUrl, null, true);
+                    this.validatedConf = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(
+                        hsUrl,
+                        undefined,
+                        true,
+                    );
                     return {};
                 } catch (e) {
                     logger.error(e);
@@ -152,11 +156,11 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
     private onSubmit = async (ev: SyntheticEvent): Promise<void> => {
         ev.preventDefault();
 
-        const valid = await this.fieldRef.current.validate({ allowEmpty: false });
+        const valid = await this.fieldRef.current?.validate({ allowEmpty: false });
 
         if (!valid && !this.state.defaultChosen) {
-            this.fieldRef.current.focus();
-            this.fieldRef.current.validate({ allowEmpty: false, focused: true });
+            this.fieldRef.current?.focus();
+            this.fieldRef.current?.validate({ allowEmpty: false, focused: true });
             return;
         }
 

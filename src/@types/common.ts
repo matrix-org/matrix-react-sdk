@@ -54,3 +54,27 @@ export type KeysStartingWith<Input extends object, Str extends string> = {
 }[keyof Input];
 
 export type NonEmptyArray<T> = [T, ...T[]];
+
+export type Defaultize<P, D> = P extends any
+    ? string extends keyof P
+        ? P
+        : Pick<P, Exclude<keyof P, keyof D>> &
+              Partial<Pick<P, Extract<keyof P, keyof D>>> &
+              Partial<Pick<D, Exclude<keyof D, keyof P>>>
+    : never;
+
+export type DeepReadonly<T> = T extends (infer R)[]
+    ? DeepReadonlyArray<R>
+    : T extends Function
+    ? T
+    : T extends object
+    ? DeepReadonlyObject<T>
+    : T;
+
+interface DeepReadonlyArray<T> extends ReadonlyArray<DeepReadonly<T>> {}
+
+type DeepReadonlyObject<T> = {
+    readonly [P in keyof T]: DeepReadonly<T[P]>;
+};
+
+export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> & U[keyof U];
