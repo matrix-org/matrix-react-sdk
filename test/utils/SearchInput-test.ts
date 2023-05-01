@@ -22,16 +22,14 @@ jest.mock("../../src/utils/permalinks/Permalinks");
 
 const searchTerm = "search term";
 const roomLink = "https://matrix.to/#/#element-dev:matrix.org";
-const userLink = "https://matrix.to/#/@element-dev:matrix.org";
 
 const parserLink = {
     roomLink: "#element-dev:matrix.org",
-    userLink: "@element-dev:matrix.org",
     searchTerm: null,
 };
 
 describe("transforming search term", () => {
-    it("should return the roomIdOrAlias if the search term was a room permalink", () => {
+    it("should return the primaryEntityId if the search term was a permalink", () => {
         mocked(parsePermalink).mockReturnValue({
             primaryEntityId: parserLink.roomLink,
             roomIdOrAlias: parserLink.roomLink,
@@ -41,18 +39,6 @@ describe("transforming search term", () => {
             sigil: "",
         });
         expect(transformSearchTerm(roomLink)).toBe(parserLink.roomLink);
-    });
-
-    it("should return the userId if the search term was a userId permalink", () => {
-        mocked(parsePermalink).mockReturnValue({
-            primaryEntityId: parserLink.userLink,
-            roomIdOrAlias: "",
-            eventId: "",
-            userId: parserLink.userLink,
-            viaServers: [],
-            sigil: "",
-        });
-        expect(transformSearchTerm(userLink)).toBe(parserLink.userLink);
     });
 
     it("should return the original search term if the search term was not a permalink", () => {
