@@ -1656,7 +1656,6 @@
     "United States": "アメリカ",
     "United Kingdom": "イギリス",
     "%(name)s is requesting verification": "%(name)sは認証を要求しています",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "ホームサーバーにアクセスできませんでした。もう一度やり直してください。これが続く場合は、あなたのホームサーバー管理者に連絡してください。",
     "Try again": "もう一度試す",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "残念ながら、ブラウザーはサインインするホームサーバーを忘れてしまいました。サインインページに移動して再試行してください。",
     "We couldn't log you in": "ログインできませんでした",

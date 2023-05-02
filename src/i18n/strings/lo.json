@@ -192,7 +192,6 @@
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s ບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ສົ່ງການແຈ້ງເຕືອນ - ກະລຸນາລອງໃໝ່ອີກຄັ້ງ",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s ບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ສົ່ງການແຈ້ງເຕືອນໃຫ້ທ່ານ - ກະລຸນາກວດສອບການຕັ້ງຄ່າຂອງບຣາວເຊີຂອງທ່ານ",
     "%(name)s is requesting verification": "%(name)s ກຳລັງຮ້ອງຂໍການຢັ້ງຢືນ",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "homeserver ຂອງທ່ານບໍ່ສາມາດຕິດຕໍ່ໄດ້ ແລະ ບໍ່ສາມາດເຂົ້າສູ່ລະບົບໄດ້. ກະລຸນາລອງໃໝ່ອີກຄັ້ງ. ຖ້າຈະສືບຕໍ່, ກະລຸນາຕິດຕໍ່ຜູ້ຄຸ້ມຄອງ homeserver ຂອງທ່ານ.",
     "Try again": "ລອງໃໝ່ອີກຄັ້ງ",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "ພວກເຮົາໃຫ້ບຣາວເຊີຈື່ homeserver ທີ່ທ່ານໃຊ້ ເຂົ້າສູ່ລະບົບ, ແຕ່ເສຍດາຍບຣາວເຊີຂອງທ່ານລືມມັນ. ກັບໄປທີ່ໜ້າເຂົ້າສູ່ລະບົບແລ້ວ ລອງໃໝ່ອີກຄັ້ງ.",
     "We couldn't log you in": "ພວກເຮົາບໍ່ສາມາດເຂົ້າສູ່ລະບົບທ່ານໄດ້",

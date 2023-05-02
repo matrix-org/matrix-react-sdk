@@ -2141,7 +2141,6 @@
     "Use app for a better experience": "A jobb élmény érdekében használjon alkalmazást",
     "Converts the DM to a room": "Szobává alakítja a közvetlen beszélgetést",
     "Converts the room to a DM": "Közvetlen beszélgetéssé alakítja a szobát",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "A Matrix-kiszolgáló elérhetetlen, és nem tudta bejelentkeztetni. Próbálja újra. Ha továbbra is fennáll a probléma, vegye fel a kapcsolatot a Matrix-kiszolgáló rendszergazdájával.",
     "Try again": "Újrapróbálkozás",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "A böngészőt arra kértük, hogy jegyezze meg, melyik Matrix-kiszolgálót használta a bejelentkezéshez, de sajnos a böngészője elfelejtette. Navigáljon a bejelentkezési oldalra, és próbálja újra.",
     "We couldn't log you in": "Sajnos nem tudtuk bejelentkeztetni",

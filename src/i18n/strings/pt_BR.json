@@ -2155,7 +2155,6 @@
     "Level": "Nível",
     "Setting definition:": "Definição da configuração:",
     "Setting ID": "ID da configuração",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "O seu servidor local está inacessível e não foi possível fazer o seu login. Tente novamente. Se o problema continuar, entre em contato com o administrador do seu servidor local.",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Anteriormente, pedimos ao seu navegador para lembrar qual servidor local você usa para fazer login, mas infelizmente o navegador se esqueceu disso. Vá para a página de login e tente novamente.",
     "Values at explicit levels in this room:": "Valores em níveis explícitos nessa sala:",
     "Values at explicit levels:": "Valores em níveis explícitos:",

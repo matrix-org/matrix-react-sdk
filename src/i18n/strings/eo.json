@@ -2127,7 +2127,6 @@
     "Change which room, message, or user you're viewing": "Ŝanĝu, kiun ĉambron, mesaĝon, aŭ uzanton vi rigardas",
     "Converts the DM to a room": "Malindividuigas la ĉambron",
     "Converts the room to a DM": "Individuigas la ĉambron",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "Via hejmservilo estis neatingebla kaj ne povis vin salutigi. Bonvolu reprovi. Se tio daŭros, bonvolu kontakti la administranton de via hejmservilo.",
     "Try again": "Reprovu",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Ni petis la foliumilon memori, kiun hejmservilon vi uzas por saluti, sed domaĝe, via foliumilo forgesis. Iru al la saluta paĝo kaj reprovu.",
     "We couldn't log you in": "Ni ne povis salutigi vin",

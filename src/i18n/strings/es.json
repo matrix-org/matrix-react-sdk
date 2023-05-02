@@ -2093,7 +2093,6 @@
     "Afghanistan": "Afganistán",
     "United States": "Estados Unidos",
     "United Kingdom": "Reino Unido",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "No se ha podido establecer la conexión con tu servidor base, por lo que no se ha podido iniciar tu sesión. Por favor, inténtalo de nuevo. Si sigue ocurriendo, contacta con la administración de tu servidor base.",
     "Try again": "Intentarlo de nuevo",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Le hemos preguntado a tu navegador qué servidor base usar para iniciar tu sesión, pero parece que no lo recuerda. Vuelve a la página de inicio de sesión e inténtalo de nuevo.",
     "We couldn't log you in": "No hemos podido iniciar tu sesión",

@@ -699,7 +699,6 @@
     "Algeria": "Algeriet",
     "Åland Islands": "Ålandsøerne",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Vi spurgte din browser om at huske hvilken homeserver du bruger for at logge på, men din browser har desværre glemt det. Gå til log ind siden og prøv igen.",
-    "Your homeserver rejected your log in attempt. This could be due to things just taking too long. Please try again. If this continues, please contact your homeserver administrator.": "Din homeserver afviste dit log på forsøg. Det kan bare være fordi at ting tager for langt tid. Prøv venligst igen. Hvis det fortsætter skal du kontakte din homeserver administrator.",
     "%(date)s at %(time)s": "%(date)s om %(time)s",
     "Failed to transfer call": "Kunne ikke omstille opkald",
     "Transfer Failed": "Omstilling fejlede",

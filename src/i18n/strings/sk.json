@@ -1452,7 +1452,6 @@
     "Afghanistan": "Afganistan",
     "United States": "Spojené Štáty",
     "United Kingdom": "Spojené Kráľovstvo",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "Váš domovský server bol nedosiahnuteľný a nemohol vás prihlásiť. Skúste to znova. Ak to bude pokračovať, kontaktujte svojho správcu domovského servera.",
     "Try again": "Skúste to znova",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Požiadali sme prehliadač, aby si pamätal, aký domovský server používate na prihlásenie, ale váš prehliadač ho, bohužiaľ, zabudol. Prejdite na prihlasovaciu stránku a skúste to znova.",
     "We couldn't log you in": "Nemohli sme vás prihlásiť",

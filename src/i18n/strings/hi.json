@@ -576,7 +576,6 @@
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s को सूचनाएं भेजने की अनुमति नहीं दी गई थी - कृपया पुनः प्रयास करें",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s को आपको सूचनाएं भेजने की अनुमति नहीं है - कृपया अपनी ब्राउज़र सेटिंग जांचें",
     "%(name)s is requesting verification": "%(name)s सत्यापन का अनुरोध कर रहा है",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "आपका होमसर्वर पहुंच से बाहर था और आपको लॉग इन करने में सक्षम नहीं था। कृपया पुन: प्रयास करें। यदि यह जारी रहता है, तो कृपया अपने होमसर्वर व्यवस्थापक से संपर्क करें।",
     "Try again": "पुनः प्रयास करे",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "हमने ब्राउज़र से यह याद रखने के लिए कहा कि आप किस होमसर्वर का उपयोग आपको साइन इन करने के लिए करते हैं, लेकिन दुर्भाग्य से आपका ब्राउज़र इसे भूल गया है। साइन इन पेज पर जाएं और फिर से कोशिश करें.",
     "We couldn't log you in": "हम आपको लॉग इन नहीं कर सके",

@@ -1876,7 +1876,6 @@
     "Use app": "Uygulamayı kullan",
     "Use app for a better experience": "Daha iyi bir deneyim için uygulamayı kullanın",
     "Remain on your screen while running": "Uygulama çalışırken lütfen başka uygulamaya geçmeyin",
-    "Your homeserver rejected your log in attempt. This could be due to things just taking too long. Please try again. If this continues, please contact your homeserver administrator.": "Ana sunucunuz oturum açma isteğinizi reddetti. Bunun nedeni bağlantı yavaşlığı olabilir. Lütfen yeniden deneyin. Eğer hata devam ederse ana sunucunuzun yöneticisine bildirin.",
     "Try again": "Yeniden deneyin",
     "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)s odadaki <a>ileti sabitlemelerini</a> değiştirdi.",
     "%(senderName)s withdrew %(targetName)s's invitation": "%(senderName)s, %(targetName)s kullanıcısının davetini geri çekti",

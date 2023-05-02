@@ -2036,7 +2036,6 @@
     "Share your public space": "Споделете публичното си място",
     "Invite to %(spaceName)s": "Покани в %(spaceName)s",
     "Sends the given message as a spoiler": "Изпраща даденото съобщение като спойлер",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "Вашият Home сървър беше недостижим и не можа да ви впише. Моля, опитайте отново. Ако това продължи, моля, свържете се със админитратора на вашия Home сървър.",
     "Try again": "Опитайте отново",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Помолихме браузъра да запомни кой Home сървър използвате за влизане, но за съжаление браузърът ви го е забравил. Отидете на страницата за влизане и опитайте отново.",
     "Already in call": "Вече в разговор",

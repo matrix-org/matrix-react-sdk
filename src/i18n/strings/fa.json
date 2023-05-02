@@ -499,7 +499,6 @@
     "%(brand)s was not given permission to send notifications - please try again": "به %(brand)s اجازه ارسال اعلان داده نشده است - لطفاً دوباره امتحان کنید",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s اجازه ارسال اعلان به شما را ندارد - لطفاً تنظیمات مرورگر خود را بررسی کنید",
     "%(name)s is requesting verification": "%(name)s درخواست تائید دارد",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "سرور شما در دسترس نبود و امکان ورود شما میسر نیست. لطفا دوباره امتحان کنید. اگر مشکل ادامه داشت، لطفا با مدیر سرور تماس بگیرید.",
     "Try again": "دوباره امتحان کنید",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "ما از مرورگر خواستیم تا سروری را که شما برای ورود استفاده می‌کنید به خاطر بسپارد، اما متاسفانه مرورگر شما آن را فراموش کرده‌است. به صفحه‌ی ورود بروید و دوباره امتحان کنید.",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "این اقدام نیاز به دسترسی به سرور هویت‌سنجی پیش‌فرض <server /> برای تایید آدرس ایمیل یا شماره تماس دارد، اما کارگزار هیچ گونه شرایط خدماتی (terms of service) ندارد.",

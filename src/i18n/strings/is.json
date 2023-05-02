@@ -2822,7 +2822,6 @@
     "Sign in and regain access to your account.": "Skráðu þig inn og fáðu aftur aðgang að notandaaðgangnum þínum.",
     "Enter your password to sign in and regain access to your account.": "Settu inn lykilorðið þitt til að skrá þig inn og fáðu aftur aðgang að notandaaðgangnum þínum.",
     "Verifies a user, session, and pubkey tuple": "Sannreynir auðkenni notanda, setu og dreifilykils",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "Heimaþjónninn þinn er ekki til taks og var því ekki hægt að skrá þig inn. Prófaðu aftur. Ef þetta vandamál er viðvarandi, ættirðu að hafa samband við kerfisstjóra heimaþjónsins þíns.",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Við báðum vafrann þinn að muna hvaða heimaþjón þú notar til að skrá þig inn, en því miður virðist það hafa gleymst. Farðu á innskráningarsíðuna og reyndu aftur.",
     "We recommend that you remove your email addresses and phone numbers from the identity server before disconnecting.": "Við mælum með því að þú fjarlægir tölvupóstföngin þín og símanúmer af auðkennisþjóninum áður en þú aftengist.",
     "This bridge is managed by <user />.": "Þessari brú er stýrt af <user />.",

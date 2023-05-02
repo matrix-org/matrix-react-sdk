@@ -1773,7 +1773,6 @@
     "Mozambique": "Mozambikas",
     "[number]": "[skaičius]",
     "Bahamas": "Bahamų salos",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "Jūsų namų serveris buvo nepasiekiamas ir negalėjo jūsų prijungti. Bandykite dar kartą. Jei tai tęsiasi, kreipkitės į namų serverio administratorių.",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Paprašėme naršyklės įsiminti, kurį namų serverį naudojate prisijungimui, bet, deja, naršyklė tai pamiršo. Eikite į prisijungimo puslapį ir bandykite dar kartą.",
     "%(date)s at %(time)s": "%(date)s %(time)s",
     "Transfer Failed": "Perdavimas Nepavyko",

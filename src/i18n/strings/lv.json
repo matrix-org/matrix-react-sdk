@@ -1440,7 +1440,6 @@
     "Angola": "Angola",
     "Andorra": "Andora",
     "Åland Islands": "Ālandu salas",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "Jūsu bāzes serveris nebija sasniedzams un jums nebija iespējams pierakstīties. Lūdzu, mēģiniet vēlreiz. Ja situācija nemainās, lūdzu, sazinieties ar bāzes servera administratoru.",
     "Try again": "Mēģiniet vēlreiz",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Mēs lūdzām tīmekļa pārlūkprogrammai atcerēties, kuru bāzes serveri izmantojat, lai ļautu jums pierakstīties, bet diemžēl jūsu pārlūkprogramma to ir aizmirsusi. Dodieties uz pierakstīšanās lapu un mēģiniet vēlreiz.",
     "We couldn't log you in": "Neizdevās jūs ierakstīt sistēmā",

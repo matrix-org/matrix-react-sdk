@@ -540,7 +540,6 @@
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s tidak memiliki izin untuk mengirim Anda notifikasi — silakan coba lagi",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s tidak memiliki izin untuk mengirim Anda notifikasi — mohon periksa pengaturan browser Anda",
     "%(name)s is requesting verification": "%(name)s meminta verifikasi",
-    "Your homeserver rejected your log in attempt. This could be due to things just taking too long. Please try again. If this continues, please contact your homeserver administrator.": "Homeserver Anda menolak upaya masuk Anda. Ini bisa jadi karena hal-hal yang terlalu lama. Silakan coba lagi. Jika ini berlanjut, hubungi administrator homeserver Anda.",
     "Try again": "Coba lagi",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Kami menanyakan browser ini untuk mengingat homeserver apa yang Anda gunakan untuk membantu Anda masuk, tetapi sayangnya browser ini melupakannya. Pergi ke halaman masuk dan coba lagi.",
     "We couldn't log you in": "Kami tidak dapat memasukkan Anda",

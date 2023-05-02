@@ -1320,7 +1320,6 @@
     "Denmark": "الدنمارك",
     "Czech Republic": "جمهورية التشيك",
     "Cyprus": "قبرص",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "تعذر الوصول إلى الخادوم المنزل الذي تستعمله، وفشل الولوج. من فضلك أعِد المحاولة. إن تواصل هذا فراجِع مسؤول الخادوم المنزل.",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "طلبنا من المتصفّح تذكّر الخادوم المنزل الذي تستعمله لتتمكن من الولوج، ولكن للأسف نسيه. انتقل إلى صفحة الولوج وأعِد المحاولة.",
     "Failed to transfer call": "فشل تحويل المكالمة",
     "Transfer Failed": "فشل التحويل",

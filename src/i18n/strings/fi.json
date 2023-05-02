@@ -2035,7 +2035,6 @@
     "Change which room, message, or user you're viewing": "Vaihda näytettävää huonetta, viestiä tai käyttäjää",
     "Converts the DM to a room": "Muuntaa yksityisviestin huoneeksi",
     "Converts the room to a DM": "Muuntaa huoneen yksityisviestiksi",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "Kotipalvelintasi ei tavoitettu eikä sinua siksi kirjattu sisään. Yritä uudelleen. Mikäli ongelma jatkuu, ota yhteyttä kotipalvelimesi ylläpitäjään.",
     "Try again": "Yritä uudelleen",
     "Add users and servers you want to ignore here. Use asterisks to have %(brand)s match any characters. For example, <code>@bot:*</code> would ignore all users that have the name 'bot' on any server.": "Lisää tähän käyttäjät ja palvelimet, jotka haluat sivuuttaa. Asteriski täsmää mihin tahansa merkkiin. Esimerkiksi <code>@bot:*</code> sivuuttaa kaikki käyttäjät, joiden nimessä on \"bot\".",
     "Show stickers button": "Näytä tarrapainike",

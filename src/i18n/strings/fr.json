@@ -2150,7 +2150,6 @@
     "Remain on your screen while running": "Reste sur votre écran pendant l’appel",
     "Converts the DM to a room": "Transforme la conversation privée en salon",
     "Converts the room to a DM": "Transforme le salon en conversation privée",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "Votre serveur d’accueil n’est pas accessible, nous n’avons pas pu vous connecter. Merci de réessayer. Si cela persiste, merci de contacter l’administrateur de votre serveur d’accueil.",
     "Try again": "Réessayez",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Nous avons demandé à votre navigateur de mémoriser votre serveur d’accueil, mais il semble l’avoir oublié. Rendez-vous à la page de connexion et réessayez.",
     "We couldn't log you in": "Nous n’avons pas pu vous connecter",

@@ -665,7 +665,6 @@
     "Afghanistan": "Αφγανιστάν",
     "United States": "Ηνωμένες Πολιτείες",
     "United Kingdom": "Ηνωμένο Βασίλειο",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "Δεν μπορέσαμε να επικοινωνήσουμε με τον διακομιστή και δεν σας έχει συνδέσει. Παρακαλώ προσπαθήστε ξανά. Αν αυτό συνεχιστεί, παρακαλώ επικοινωνήστε με τον διαχειριστή του διακομιστή σας.",
     "Try again": "Προσπαθήστε ξανά",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Ζητήσαμε από το πρόγραμμα περιήγησης να θυμάται τον διακομιστή που χρησιμοποιείτε για να συνδέεστε, αλλά το πρόγραμμα περιήγησης δεν το έχει αποθηκεύσει. Πηγαίνετε στην σελίδα σύνδεσεις για να προσπαθήσετε ξανά.",
     "We couldn't log you in": "Δεν μπορέσαμε να σας συνδέσουμε",

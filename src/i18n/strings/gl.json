@@ -2146,7 +2146,6 @@
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Este widget vai verificar o ID do teu usuario, pero non poderá realizar accións no teu nome:",
     "Remember this": "Lembrar isto",
     "Something went wrong in confirming your identity. Cancel and try again.": "Algo fallou ao intentar confirma a túa identidade. Cancela e inténtao outra vez.",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "Non temos acceso ao teu servidor de inicio e non puidemos conectarte. Inténtao outra vez. Se persiste o problema, contacta coa administración do servidor.",
     "Try again": "Intentar outra vez",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Pedíramoslle ao teu navegador que lembrase o teu servidor de inicio para acceder, pero o navegador esqueceuno. Vaite á páxina de conexión e inténtao outra vez.",
     "We couldn't log you in": "Non puidemos conectarte",

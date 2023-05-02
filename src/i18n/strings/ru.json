@@ -2149,7 +2149,6 @@
     "Use app for a better experience": "Используйте приложение для лучшего опыта",
     "Converts the DM to a room": "Преобразовать ЛС в комнату",
     "Converts the room to a DM": "Преобразовывает комнату в ЛС",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "Ваш домашний сервер был недоступен, и мы не смогли войти в систему. Пожалуйста, попробуйте снова через пару минут. Если ситуация по-прежнему не меняется, обратитесь к администратору домашнего сервера за дополнительной информацией.",
     "Try again": "Попробовать ещё раз",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Мы попросили браузер запомнить, какой домашний сервер вы используете для входа в систему, но, к сожалению, ваш браузер забыл об этом. Перейдите на страницу входа и попробуйте ещё раз.",
     "We couldn't log you in": "Нам не удалось войти в систему",
