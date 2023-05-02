@@ -150,13 +150,14 @@ limitations under the License.
     animation: 0.2s visualbell;
 }
 
-.mx_MessageComposer_input pre {
+.mx_MessageComposer_input {
+pre {
     background-color: $rte-code-bg-color;
     border-radius: 3px;
     padding: 10px;
 }
 
-.mx_MessageComposer_input textarea {
+textarea {
     display: block;
     width: 100%;
     padding: 0px;
@@ -174,13 +175,15 @@ limitations under the License.
 }
 
 /* hack for FF as vertical alignment of custom placeholder text is broken */
-.mx_MessageComposer_input textarea::-moz-placeholder {
+textarea::-moz-placeholder {
     line-height: 100%;
     color: $accent;
     opacity: 1;
 }
-.mx_MessageComposer_input textarea::-webkit-input-placeholder {
+
+textarea::-webkit-input-placeholder {
     color: $accent;
+}
 }
 
 .mx_MessageComposer_button_highlight {
