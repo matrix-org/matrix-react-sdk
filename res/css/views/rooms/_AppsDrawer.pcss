@@ -277,6 +277,12 @@ $MinWidth: 240px;
     width: 100%;
     overflow: hidden;
     border-radius: 8px;
+
+    iframe {
+        border: none;
+        width: 100%;
+        height: 100%;
+    }
 }
 
 .mx_AppTileBody {
@@ -284,10 +290,7 @@ $MinWidth: 240px;
     background-color: $widget-body-bg-color;
 
     iframe {
-        width: 100%;
-        height: 100%;
         overflow: hidden;
-        border: none;
         padding: 0;
         margin: 0;
         display: block;
@@ -296,12 +299,6 @@ $MinWidth: 240px;
 
 .mx_AppTileBody_mini {
     height: $MiniAppTileHeight;
-
-    iframe {
-        border: none;
-        width: 100%;
-        height: 100%;
-    }
 }
 
 .mx_AppTile .mx_AppTileBody,
