@@ -19,24 +19,24 @@ limitations under the License.
     flex: 0 0 auto;
     z-index: 100;
 
-&.mx_ResizeHandle_horizontal {
-    margin: 0 -5px;
-    padding: 0 5px;
-    cursor: col-resize;
+    &.mx_ResizeHandle_horizontal {
+        margin: 0 -5px;
+        padding: 0 5px;
+        cursor: col-resize;
 
-    > div {
-       width: 1px;
-       height: 100%;
-   }
-}
-
-&.mx_ResizeHandle_vertical {
-    margin: -5px 0;
-    padding: 5px 0;
-    cursor: row-resize;
-
-    > div {
-        height: 1px;
+        > div {
+            width: 1px;
+            height: 100%;
+        }
     }
-}
+
+    &.mx_ResizeHandle_vertical {
+        margin: -5px 0;
+        padding: 5px 0;
+        cursor: row-resize;
+
+        > div {
+            height: 1px;
+        }
+    }
 }
