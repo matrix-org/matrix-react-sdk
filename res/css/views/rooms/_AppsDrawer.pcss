@@ -210,10 +210,10 @@ $MinWidth: 240px;
     .mx_WidgetAvatar {
         margin-right: 12px;
     }
-}
 
-.mx_AppTileMenuBarTitle > :last-child {
+> :last-child {
     margin-left: 9px;
+}
 }
 
 .mx_AppTileMenuBarWidgets {
@@ -278,6 +278,16 @@ $MinWidth: 240px;
     overflow: hidden;
     border-radius: 8px;
     background-color: $widget-body-bg-color;
+
+    iframe {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border: none;
+        padding: 0;
+        margin: 0;
+        display: block;
+    }
 }
 
 .mx_AppTileBody_mini {
@@ -285,6 +295,12 @@ $MinWidth: 240px;
     width: 100%;
     overflow: hidden;
     border-radius: 8px;
+
+    iframe {
+        border: none;
+        width: 100%;
+        height: 100%;
+    }
 }
 
 .mx_AppTile .mx_AppTileBody,
@@ -292,22 +308,6 @@ $MinWidth: 240px;
 .mx_AppTile_mini .mx_AppTileBody_mini {
     height: inherit;
     flex: 1;
-}
-
-.mx_AppTileBody_mini iframe {
-    border: none;
-    width: 100%;
-    height: 100%;
-}
-
-.mx_AppTileBody iframe {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    border: none;
-    padding: 0;
-    margin: 0;
-    display: block;
 }
 
 .mx_AppPermissionWarning {
@@ -318,6 +318,11 @@ $MinWidth: 240px;
     justify-content: center;
     align-items: center;
     font-size: $font-16px;
+
+    h4 {
+        margin: 0;
+        padding: 0;
+    }
 }
 
 .mx_AppPermissionWarning_row {
@@ -332,20 +337,14 @@ $MinWidth: 240px;
     font-weight: var(--font-semi-bold);
 }
 
-.mx_AppPermissionWarning h4 {
-    margin: 0;
-    padding: 0;
-}
-
 .mx_AppPermissionWarning_helpIcon {
     margin-top: 1px;
     margin-right: 2px;
     width: 10px;
     height: 10px;
     display: inline-block;
-}
 
-.mx_AppPermissionWarning_helpIcon::before {
+&::before {
     display: inline-block;
     background-color: $accent;
     mask-repeat: no-repeat;
@@ -356,6 +355,7 @@ $MinWidth: 240px;
     content: "";
     vertical-align: middle;
     mask-image: url("$(res)/img/feather-customised/help-circle.svg");
+}
 }
 
 .mx_AppPermissionWarning_tooltip {
@@ -380,14 +380,18 @@ $MinWidth: 240px;
     /* match bg of border so that the cut corners have the right fill */
     background-color: $widget-body-bg-color !important;
     border-radius: 8px;
+
+iframe {
+    display: none;
 }
 
-.mx_AppLoading .mx_Spinner {
+.mx_Spinner {
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
+}
 }
 
 .mx_AppLoading_spinner_fadeIn {
@@ -404,10 +408,6 @@ $MinWidth: 240px;
     to {
         opacity: 1;
     }
-}
-
-.mx_AppLoading iframe {
-    display: none;
 }
 
 .mx_AppsDrawer_resizing .mx_AppTile_persistedWrapper {
