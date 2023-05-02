@@ -15,13 +15,15 @@ limitations under the License.
 */
 
 .mx_ResizeHandle {
+    --size: 5px;
+
     cursor: row-resize;
     flex: 0 0 auto;
     z-index: 100;
 
     &.mx_ResizeHandle_horizontal {
-        margin: 0 -5px;
-        padding: 0 5px;
+        margin: 0 calc(-1 * var(--size));
+        padding: 0 var(--size);
         cursor: col-resize;
 
         > div {
@@ -31,8 +33,8 @@ limitations under the License.
     }
 
     &.mx_ResizeHandle_vertical {
-        margin: -5px 0;
-        padding: 5px 0;
+        margin: calc(-1 * var(--size)) 0;
+        padding: var(--size) 0;
         cursor: row-resize;
 
         > div {
