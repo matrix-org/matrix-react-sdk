@@ -309,12 +309,12 @@ describe("Notifier", () => {
         });
     });
 
-    describe("getSoundForRoom", () => {
+    describe("getNotificationSound", () => {
         it("should not explode if given invalid url", () => {
-            jest.spyOn(SettingsStore, "getValue").mockImplementation((name: string) => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation(() => {
                 return { url: { content_uri: "foobar" } };
             });
-            expect(Notifier.getSoundForRoom("!roomId:server")).toBeNull();
+            expect(Notifier.getNotificationSound("!roomId:server")).toBeNull();
         });
     });
 
@@ -327,11 +327,11 @@ describe("Notifier", () => {
         it.each(testCases)("does not dispatch when notifications are silenced", ({ event, count }) => {
             // It's not ideal to only look at whether this function has been called
             // but avoids starting to look into DOM stuff
-            Notifier.getSoundForRoom = jest.fn();
+            Notifier.getNotificationSound = jest.fn();
 
             mockClient.setAccountData(accountDataEventKey, event!);
             Notifier.playAudioNotification(testEvent, testRoom);
-            expect(Notifier.getSoundForRoom).toHaveBeenCalledTimes(count);
+            expect(Notifier.getNotificationSound).toHaveBeenCalledTimes(count);
         });
     });
 
