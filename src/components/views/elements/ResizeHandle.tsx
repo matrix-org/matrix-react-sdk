@@ -27,9 +27,9 @@ interface IResizeHandleProps {
 const ResizeHandle: React.FC<IResizeHandleProps> = ({ vertical, reverse, id, passRef }) => {
     const classNames = ["mx_ResizeHandle"];
     if (vertical) {
-        classNames.push("mx_ResizeHandle_vertical");
+        classNames.push("mx_ResizeHandle--vertical");
     } else {
-        classNames.push("mx_ResizeHandle_horizontal");
+        classNames.push("mx_ResizeHandle--horizontal");
     }
     if (reverse) {
         classNames.push("mx_ResizeHandle_reverse");
