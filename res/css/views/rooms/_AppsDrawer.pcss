@@ -272,11 +272,15 @@ $MinWidth: 240px;
     }
 }
 
-.mx_AppTileBody {
-    height: 100%;
+.mx_AppTileBody,
+.mx_AppTileBody_mini {
     width: 100%;
     overflow: hidden;
     border-radius: 8px;
+}
+
+.mx_AppTileBody {
+    height: 100%;
     background-color: $widget-body-bg-color;
 
     iframe {
@@ -292,9 +296,6 @@ $MinWidth: 240px;
 
 .mx_AppTileBody_mini {
     height: $MiniAppTileHeight;
-    width: 100%;
-    overflow: hidden;
-    border-radius: 8px;
 
     iframe {
         border: none;
