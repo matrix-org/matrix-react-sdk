@@ -2144,7 +2144,6 @@
     "Use app for a better experience": "Pro lepší zážitek použijte aplikaci",
     "Use app": "Použijte aplikaci",
     "Something went wrong in confirming your identity. Cancel and try again.": "Při ověřování vaší identity se něco pokazilo. Zrušte to a zkuste to znovu.",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "Váš domovský server nebyl dosažitelný a nemohl vás přihlásit. Zkuste to prosím znovu. Pokud to bude pokračovat, obraťte se na správce domovského serveru.",
     "Try again": "Zkuste to znovu",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Požádali jsme prohlížeč, aby si zapamatoval, který domovský server používáte k přihlášení, ale váš prohlížeč to bohužel zapomněl. Přejděte na přihlašovací stránku a zkuste to znovu.",
     "We couldn't log you in": "Nemohli jsme vás přihlásit",
@@ -3764,5 +3763,10 @@
     "The add / bind with MSISDN flow is misconfigured": "Přidání/připojení s MSISDN je nesprávně nakonfigurováno",
     "No identity access token found": "Nebyl nalezen žádný přístupový token identity",
     "Identity server not set": "Server identit není nastaven",
-    "WebGL is required to display maps, please enable it in your browser settings.": "Pro zobrazení map je vyžadována technologie WebGL, povolte ji v nastavení prohlížeče."
+    "WebGL is required to display maps, please enable it in your browser settings.": "Pro zobrazení map je vyžadována technologie WebGL, povolte ji v nastavení prohlížeče.",
+    "Upload custom sound": "Nahrát vlastní zvuk",
+    "Error changing password": "Chyba při změně hesla",
+    "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP stav %(httpStatus)s)",
+    "Unknown password change error (%(stringifiedError)s)": "Neznámá chyba při změně hesla (%(stringifiedError)s)",
+    "Error while changing password: %(error)s": "Chyba při změně hesla: %(error)s"
 }
