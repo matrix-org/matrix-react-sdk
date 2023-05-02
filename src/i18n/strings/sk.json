@@ -3765,5 +3765,14 @@
     "Identity server not set": "Server totožnosti nie je nastavený",
     "WebGL is required to display maps, please enable it in your browser settings.": "Na zobrazenie máp je potrebná technológia WebGL, povoľte ju prosím v nastaveniach prehliadača.",
     "Image view": "Prehľad obrázkov",
-    "Upload custom sound": "Nahrať vlastný zvuk"
+    "Upload custom sound": "Nahrať vlastný zvuk",
+    "Search all rooms": "Vyhľadávať vo všetkých miestnostiach",
+    "Search this room": "Vyhľadávať v tejto miestnosti",
+    "The <twemoji>Twemoji</twemoji> emoji art is © <author>Twitter, Inc and other contributors</author> used under the terms of <terms>CC-BY 4.0</terms>.": "<twemoji>Twemoji</twemoji> emoji grafika je © <author>Twitter, Inc a ďalší prispievatelia</author> používaná podľa podmienok <terms>CC-BY 4.0</terms>.",
+    "The <colr>twemoji-colr</colr> font is © <author>Mozilla Foundation</author> used under the terms of <terms>Apache 2.0</terms>.": "Písmo <colr>twemoji-colr</colr> je © <author>Mozilla Foundation</author> používané podľa podmienok <terms>Apache 2.0</terms>.",
+    "The <photo>default cover photo</photo> is © <author>Jesús Roncero</author> used under the terms of <terms>CC-BY-SA 4.0</terms>.": "<photo>Predvolená titulná fotografia</photo> je © <author>Jesús Roncero</author> používaná podľa podmienok <terms>CC-BY-SA 4.0</terms>.",
+    "Error changing password": "Chyba pri zmene hesla",
+    "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP stav %(httpStatus)s)",
+    "Unknown password change error (%(stringifiedError)s)": "Neznáma chyba pri zmene hesla (%(stringifiedError)s)",
+    "Error while changing password: %(error)s": "Chyba pri zmene hesla: %(error)s"
 }
