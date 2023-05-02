@@ -16,6 +16,20 @@ limitations under the License.
 
 @charset "utf-8";
 
+.mx_TopUnreadMessagesBar_scrollUp,
+.mx_TopUnreadMessagesBar_markAsRead {
+    border: 1.3px solid $muted-fg-color;
+    background: $background;
+
+    &::before {
+        content: "";
+        position: absolute;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        background: $muted-fg-color;
+    }
+}
+
 .mx_TopUnreadMessagesBar {
     z-index: 1000;
     position: absolute;
@@ -41,20 +55,13 @@ limitations under the License.
     height: 38px;
     border-radius: 19px;
     box-sizing: border-box;
-    background: $background;
-    border: 1.3px solid $muted-fg-color;
     cursor: pointer;
 
     &::before {
-        content: "";
-        position: absolute;
         width: 36px;
         height: 36px;
         mask-image: url("$(res)/img/element-icons/message/chevron-up.svg");
-        mask-repeat: no-repeat;
         mask-size: 20px;
-        mask-position: center;
-        background: $muted-fg-color;
     }
 }
 
@@ -62,20 +69,13 @@ limitations under the License.
     display: block;
     width: 18px;
     height: 18px;
-    background: $background;
-    border: 1.3px solid $muted-fg-color;
     border-radius: 10px;
     margin: 5px auto;
 
     &::before {
-        content: "";
-        position: absolute;
         width: 18px;
         height: 18px;
         mask-image: url("$(res)/img/cancel.svg");
-        mask-repeat: no-repeat;
         mask-size: 10px;
-        mask-position: 4px 4px;
-        background: $muted-fg-color;
     }
 }
