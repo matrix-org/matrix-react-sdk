@@ -116,41 +116,7 @@ limitations under the License.
     align-items: flex-start;
     font-size: $font-14px;
     margin-right: 6px;
-}
 
-.mx_MessageComposer_editor {
-    width: 100%;
-    max-height: 120px;
-    min-height: 19px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    word-break: break-word;
-
-    /* FIXME: rather unpleasant hack to get rid of <p/> margins. */
-    /* really we should be mixing in markdown-body from gfm.css instead */
-    > :first-child {
-        margin-top: 0 !important;
-    }
-
-    > :last-child {
-        margin-bottom: 0 !important;
-    }
-}
-
-@keyframes visualbell {
-    from {
-        background-color: $visual-bell-bg-color;
-    }
-    to {
-        background-color: $background;
-    }
-}
-
-.mx_MessageComposer_input_error {
-    animation: 0.2s visualbell;
-}
-
-.mx_MessageComposer_input {
     pre {
         background-color: $rte-code-bg-color;
         border-radius: 3px;
@@ -184,6 +150,38 @@ limitations under the License.
             color: $accent;
         }
     }
+}
+
+.mx_MessageComposer_editor {
+    width: 100%;
+    max-height: 120px;
+    min-height: 19px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    word-break: break-word;
+
+    /* FIXME: rather unpleasant hack to get rid of <p/> margins. */
+    /* really we should be mixing in markdown-body from gfm.css instead */
+    > :first-child {
+        margin-top: 0 !important;
+    }
+
+    > :last-child {
+        margin-bottom: 0 !important;
+    }
+}
+
+@keyframes visualbell {
+    from {
+        background-color: $visual-bell-bg-color;
+    }
+    to {
+        background-color: $background;
+    }
+}
+
+.mx_MessageComposer_input_error {
+    animation: 0.2s visualbell;
 }
 
 .mx_MessageComposer_button_highlight {
