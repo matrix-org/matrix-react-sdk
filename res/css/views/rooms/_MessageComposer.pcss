@@ -172,17 +172,17 @@ textarea {
     font-size: $font-14px;
     max-height: 120px;
     overflow: auto;
-}
 
 /* hack for FF as vertical alignment of custom placeholder text is broken */
-textarea::-moz-placeholder {
+&::-moz-placeholder {
     line-height: 100%;
     color: $accent;
     opacity: 1;
 }
 
-textarea::-webkit-input-placeholder {
+&::-webkit-input-placeholder {
     color: $accent;
+}
 }
 }
 
