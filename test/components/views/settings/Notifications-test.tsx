@@ -853,7 +853,7 @@ describe("<Notifications />", () => {
 
             const keyword = screen.getByText("banana");
 
-            fireEvent.click(within(keyword.parentElement).getByLabelText("Remove"));
+            fireEvent.click(within(keyword.parentElement!).getByLabelText("Remove"));
 
             expect(mockClient.deletePushRule).toHaveBeenCalledWith("global", PushRuleKind.ContentSpecific, "banana");
         });
