@@ -214,7 +214,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                 {},
                 {
                     consentLink: (sub) => (
-                        <ExternalLink href={consentError!.data?.consent_uri} target="_blank" rel="noreferrer noopener">
+                        <ExternalLink href={consentError.data?.consent_uri} target="_blank" rel="noreferrer noopener">
                             {sub}
                         </ExternalLink>
                     ),
