@@ -38,7 +38,7 @@ export interface SettingsTabProps extends Omit<HTMLAttributes<HTMLDivElement>, "
  * ```
  */
 const SettingsTab: React.FC<SettingsTabProps> = ({ children, ...rest }) => (
-    <div { ...rest } className="mx_SettingsTab">
+    <div {...rest} className="mx_SettingsTab">
         <div className="mx_SettingsTab_sections">{children}</div>
     </div>
 );
