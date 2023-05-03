@@ -62,11 +62,9 @@ const KeyboardShortcutSection: React.FC<IKeyboardShortcutSectionProps> = ({ cate
     return (
         <SettingsSubsection heading={_t(category.categoryLabel)} key={categoryName}>
             <ul className="mx_KeyboardShortcut_shortcutList">
-                {/* {" "} */}
                 {category.settingNames.map((shortcutName) => {
                     return <KeyboardShortcutRow key={shortcutName} name={shortcutName} />;
                 })}
-                {/* {" "} */}
             </ul>
         </SettingsSubsection>
     );
@@ -83,9 +81,6 @@ const KeyboardUserSettingsTab: React.FC = () => {
                 })}
             </SettingsSection>
         </SettingsTab>
-        // <div className="mx_SettingsTab mx_KeyboardUserSettingsTab">
-        //     <div className="mx_SettingsTab_heading">{_t("Keyboard")}</div>
-        // </div>
     );
 };
 

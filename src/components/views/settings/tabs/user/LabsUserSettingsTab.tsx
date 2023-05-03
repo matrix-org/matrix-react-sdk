@@ -25,9 +25,9 @@ import BetaCard from "../../../beta/BetaCard";
 import SettingsFlag from "../../../elements/SettingsFlag";
 import { LabGroup, labGroupNames } from "../../../../../settings/Settings";
 import { EnhancedMap } from "../../../../../utils/maps";
-import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
 import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
+import SettingsTab from "../SettingsTab";
 
 export default class LabsUserSettingsTab extends React.Component<{}> {
     private readonly labs: string[];
