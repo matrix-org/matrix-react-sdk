@@ -644,7 +644,7 @@
     "FAQ": "常見問答集",
     "Versions": "版本",
     "Preferences": "偏好設定",
-    "Composer": "Composer",
+    "Composer": "編輯器",
     "Room list": "聊天室清單",
     "Timeline": "時間軸",
     "Autocomplete delay (ms)": "自動完成延遲（毫秒）",
@@ -3765,5 +3765,14 @@
     "Identity server not set": "身分伺服器未設定",
     "WebGL is required to display maps, please enable it in your browser settings.": "需要開啟 WebGL 功能才可以顯示地圖，請到瀏覽器設定中開啟。",
     "Image view": "影像檢視",
-    "Upload custom sound": "上傳自訂音效"
+    "Upload custom sound": "上傳自訂音效",
+    "Search all rooms": "搜尋所有聊天室",
+    "Search this room": "搜尋此聊天室",
+    "The <twemoji>Twemoji</twemoji> emoji art is © <author>Twitter, Inc and other contributors</author> used under the terms of <terms>CC-BY 4.0</terms>.": "<twemoji>Twemoji</twemoji> 表情符號藝術作者為 © <author>Twitter 公司與其他貢獻者</author>，以 <terms>CC-BY 4.0</terms> 授權使用。",
+    "The <photo>default cover photo</photo> is © <author>Jesús Roncero</author> used under the terms of <terms>CC-BY-SA 4.0</terms>.": "<photo>預設封面照片</photo>作者為 © <author>Jesús Roncero</author>，以 <terms>CC-BY-SA 4.0</terms> 授權使用。",
+    "The <colr>twemoji-colr</colr> font is © <author>Mozilla Foundation</author> used under the terms of <terms>Apache 2.0</terms>.": "<colr>twemoji-colr</colr> 字型作者為 © <author>Mozilla 基金會</author>，以 <terms>Apache 2.0</terms> 授權使用。",
+    "Error changing password": "變更密碼錯誤",
+    "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s（HTTP 狀態 %(httpStatus)s）",
+    "Unknown password change error (%(stringifiedError)s)": "未知密碼變更錯誤（%(stringifiedError)s）",
+    "Error while changing password: %(error)s": "變更密碼時發生錯誤：%(error)s"
 }
