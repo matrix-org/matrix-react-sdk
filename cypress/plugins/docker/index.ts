@@ -40,6 +40,7 @@ export async function dockerRun(opts: {
             // In podman, run as root in the container, so we're the current
             // user on the host
             params.push("-u", "0:0");
+            # Tell the Synapse container not to switch UID
             params.push("-e", "UID=0");
             params.push("-e", "GID=0");
         } else {
