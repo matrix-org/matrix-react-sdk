@@ -3768,5 +3768,11 @@
     "Error changing password": "Chyba při změně hesla",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP stav %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Neznámá chyba při změně hesla (%(stringifiedError)s)",
-    "Error while changing password: %(error)s": "Chyba při změně hesla: %(error)s"
+    "Error while changing password: %(error)s": "Chyba při změně hesla: %(error)s",
+    "Image view": "Zobrazení obrázku",
+    "Search all rooms": "Vyhledávat ve všech místnostech",
+    "Search this room": "Vyhledávat v této místnosti",
+    "The <twemoji>Twemoji</twemoji> emoji art is © <author>Twitter, Inc and other contributors</author> used under the terms of <terms>CC-BY 4.0</terms>.": "<twemoji>Twemoji</twemoji> emoji grafika je © <author>Twitter, Inc a další přispěvatelé</author> používána za podmínek <terms>CC-BY 4.0</terms>.",
+    "The <colr>twemoji-colr</colr> font is © <author>Mozilla Foundation</author> used under the terms of <terms>Apache 2.0</terms>.": "Písmo <colr>twemoji-colr</colr> je © <author>Mozilla Foundation</author> používané za podmínek <terms>Apache 2.0</terms>.",
+    "The <photo>default cover photo</photo> is © <author>Jesús Roncero</author> used under the terms of <terms>CC-BY-SA 4.0</terms>.": "<photo>Výchozí titulní fotografie</photo> je © <author>Jesús Roncero</author> používaná za podmínek <terms>CC-BY-SA 4.0</terms>."
 }
