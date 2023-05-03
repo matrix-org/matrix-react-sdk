@@ -225,17 +225,17 @@ limitations under the License.
 .mx_AppTileMenuBar_iconButton {
     --size: 24px; /* Size of the button. Its height and width values should be same */
 
-    height: var(--size);
     margin: 0 4px;
     position: relative;
+    height: var(--size);
     width: var(--size);
 
     &::before,
     &:hover::after {
         content: "";
+        position: absolute;
         height: var(--size);
         width: var(--size);
-        position: absolute;
     }
 
     &::before {
