@@ -132,11 +132,11 @@ $MinWidth: 240px;
     min-height: 0;
 
     .mx_AppTile:first-of-type {
-        border-left-width: $container-border-width;
+        border-left-width: var(--container-border-width);
         border-radius: 10px 0 0 10px;
     }
     .mx_AppTile:last-of-type {
-        border-right-width: $container-border-width;
+        border-right-width: var(--container-border-width);
         border-radius: 0 10px 10px 0;
     }
 
@@ -150,7 +150,7 @@ $MinWidth: 240px;
 }
 
 .mx_AppTile {
-    border: $container-border-width solid $widget-menu-bar-bg-color;
+    border: var(--container-border-width) solid $widget-menu-bar-bg-color;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -161,7 +161,7 @@ $MinWidth: 240px;
     width: 100% !important; /* to override the inline style set by the resizer */
     margin: 0;
     padding: 0;
-    border: $container-border-width solid $widget-menu-bar-bg-color;
+    border: var(--container-border-width) solid $widget-menu-bar-bg-color;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
