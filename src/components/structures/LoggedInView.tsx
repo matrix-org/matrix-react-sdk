@@ -99,7 +99,7 @@ interface IProps {
     currentRoomId: string;
     collapseLhs: boolean;
     config: ConfigOptions;
-    currentUserId?: string;
+    currentUserId: string;
     justRegistered?: boolean;
     roomJustCreatedOpts?: IOpts;
     forceTimeline?: boolean; // see props on MatrixChat
@@ -265,7 +265,6 @@ class LoggedInView extends React.Component<IProps, IState> {
         resizer.setClassNames({
             handle: "mx_ResizeHandle",
             vertical: "mx_ResizeHandle_vertical",
-            reverse: "mx_ResizeHandle_reverse",
         });
         return resizer;
     }
@@ -360,7 +359,7 @@ class LoggedInView extends React.Component<IProps, IState> {
             }
         }
 
-        if (pinnedEventTs && this.state.usageLimitEventTs > pinnedEventTs) {
+        if (pinnedEventTs && this.state.usageLimitEventTs && this.state.usageLimitEventTs > pinnedEventTs) {
             // We've processed a newer event than this one, so ignore it.
             return;
         }
