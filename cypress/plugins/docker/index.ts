@@ -36,6 +36,7 @@ export async function dockerRun(opts: {
     const params = opts.params ?? [];
 
     if (params?.includes("-v") && userInfo.uid >= 0) {
+        // Run the docker container as our uid:gid to prevent problems with permissions.
         if (await isPodman()) {
             // Note: this setup is for podman rootless containers.
 
@@ -49,8 +50,6 @@ export async function dockerRun(opts: {
             params.push("-e", "UID=0");
             params.push("-e", "GID=0");
         } else {
-            // On *nix we run the docker container as our uid:gid - otherwise,
-            // cleaning it up its media_store can be difficult
             params.push("-u", `${userInfo.uid}:${userInfo.gid}`);
         }
     }
