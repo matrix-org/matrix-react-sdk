@@ -40,7 +40,9 @@ export async function dockerRun(opts: {
             // Note: this setup is for podman rootless containers.
 
             // In podman, run as root in the container, so we're the current
-            // user on the host
+            // user on the host. This is probably the default since Synapse's
+            // Dockerfile doesn't specify, but we're being explicit here
+            // because it's important for the permissions to work.
             params.push("-u", "0:0");
 
             // Tell Synapse not to switch UID
