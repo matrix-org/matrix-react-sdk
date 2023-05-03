@@ -20,9 +20,9 @@ $MiniAppTileHeight: 220px;
 $MinWidth: 240px;
 
 .mx_AppsDrawer {
-    margin: $container-gap-width;
+    margin: var(--container-gap-width);
     /* The left side gap is fully handled by this margin. To prohibit bleeding on webkit browser. */
-    margin-right: calc($container-gap-width / 2);
+    margin-right: calc(var(--container-gap-width) / 2);
     margin-bottom: 0; /* No bottom margin for the correct gap to the CallView below. */
     position: relative;
     display: flex;
@@ -31,7 +31,7 @@ $MinWidth: 240px;
     flex-grow: 1;
 
     &.mx_AppsDrawer_maximise {
-        margin-bottom: $container-gap-width;
+        margin-bottom: var(--container-gap-width);
     }
 
     .mx_AppsContainer_resizerHandleContainer {
@@ -118,7 +118,7 @@ $MinWidth: 240px;
 }
 
 .mx_AppsContainer_resizer {
-    margin-bottom: $container-gap-width;
+    margin-bottom: var(--container-gap-width);
 }
 
 .mx_AppsContainer {
