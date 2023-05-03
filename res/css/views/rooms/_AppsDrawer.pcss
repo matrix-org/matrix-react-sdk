@@ -223,31 +223,33 @@ limitations under the License.
 }
 
 .mx_AppTileMenuBar_iconButton {
-    height: 24px;
+    --size: 24px; /* Size of the button. Its height and width values should be same */
+
+    height: var(--size);
     margin: 0 4px;
     position: relative;
-    width: 24px;
+    width: var(--size);
+
+    &::before,
+    &:hover::after {
+        content: "";
+        height: var(--size);
+        width: var(--size);
+        position: absolute;
+    }
 
     &::before {
         background-color: $muted-fg-color;
-        content: "";
-        height: 24px;
         mask-position: center;
         mask-repeat: no-repeat;
         mask-size: 12px;
-        position: absolute;
-        width: 24px;
     }
 
     &:hover::after {
         background-color: $panel-actions;
         border-radius: 50%;
-        content: "";
-        height: 24px;
         left: 0;
-        position: absolute;
         top: 0;
-        width: 24px;
     }
 
     &.mx_AppTileMenuBar_iconButton--collapse::before {
