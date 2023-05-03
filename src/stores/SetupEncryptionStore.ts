@@ -113,7 +113,7 @@ export class SetupEncryptionStore extends EventEmitter {
             if (!device.getIdentityKey() || (dehydratedDevice && device.deviceId == dehydratedDevice?.device_id)) {
                 return false;
             }
-            const verificationStatus = await cli.getCrypto().getDeviceVerificationStatus(ownUserId, device.deviceId);
+            const verificationStatus = await cli.getCrypto()?.getDeviceVerificationStatus(ownUserId, device.deviceId);
             return !!verificationStatus?.signedByOwner;
         });
 
