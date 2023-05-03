@@ -45,6 +45,10 @@ describe("General user settings tab", () => {
 
         cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab").percySnapshotElement("User settings tab - General", {
             percyCSS,
+            // Emulate TabbedView's actual min and max widths
+            // 580: '.mx_UserSettingsDialog .mx_TabbedView' min-width
+            // 796: 1036 (mx_TabbedView_tabsOnLeft actual width) - 240 (mx_TabbedView_tabPanel margin-right)
+            widths: [580, 796],
         });
 
         cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab").within(() => {
@@ -151,6 +155,17 @@ describe("General user settings tab", () => {
 
                     // Make sure integration manager's toggle switch is enabled
                     cy.get(".mx_ToggleSwitch_enabled").should("be.visible");
+
+                    // Assert space between "Manage integrations" and the integration server address is set to 4px;
+                    cy.get(".mx_SetIntegrationManager_heading_manager").should("have.css", "column-gap", "4px");
+
+                    cy.get(".mx_SetIntegrationManager_heading_manager").within(() => {
+                        cy.get(".mx_SettingsTab_heading").should("have.text", "Manage integrations");
+
+                        // Assert the headings' inline end margin values are set to zero in favor of the column-gap declaration
+                        cy.get(".mx_SettingsTab_heading").should("have.css", "margin-inline-end", "0px");
+                        cy.get(".mx_SettingsTab_subheading").should("have.css", "margin-inline-end", "0px");
+                    });
                 });
 
             // Assert the account deactivation button is displayed

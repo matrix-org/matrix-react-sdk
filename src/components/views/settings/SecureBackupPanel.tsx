@@ -123,7 +123,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
         this.getUpdatedDiagnostics();
         try {
             const backupInfo = await MatrixClientPeg.get().getKeyBackupVersion();
-            const backupSigStatus = await MatrixClientPeg.get().isKeyBackupTrusted(backupInfo);
+            const backupSigStatus = await MatrixClientPeg.get().isKeyBackupTrusted(backupInfo!);
             if (this.unmounted) return;
             this.setState({
                 loading: false,
@@ -285,7 +285,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                 );
             }
 
-            let backupSigStatuses: React.ReactNode = backupSigStatus.sigs.map((sig, i) => {
+            let backupSigStatuses: React.ReactNode = backupSigStatus?.sigs.map((sig, i) => {
                 const deviceName = sig.device ? sig.device.getDisplayName() || sig.device.deviceId : null;
                 const validity = (sub: string): JSX.Element => (
                     <span className={sig.valid ? "mx_SecureBackupPanel_sigValid" : "mx_SecureBackupPanel_sigInvalid"}>
@@ -295,7 +295,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                 const verify = (sub: string): JSX.Element => (
                     <span
                         className={
-                            sig.device && sig.deviceTrust.isVerified()
+                            sig.device && sig.deviceTrust?.isVerified()
                                 ? "mx_SecureBackupPanel_deviceVerified"
                                 : "mx_SecureBackupPanel_deviceNotVerified"
                         }
@@ -347,7 +347,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                         {},
                         { validity },
                     );
-                } else if (sig.valid && sig.deviceTrust.isVerified()) {
+                } else if (sig.valid && sig.deviceTrust?.isVerified()) {
                     sigStatus = _t(
                         "Backup has a <validity>valid</validity> signature from " +
                             "<verify>verified</verify> session <device></device>",
@@ -361,7 +361,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                         {},
                         { validity, verify, device },
                     );
-                } else if (!sig.valid && sig.deviceTrust.isVerified()) {
+                } else if (!sig.valid && sig.deviceTrust?.isVerified()) {
                     sigStatus = _t(
                         "Backup has an <validity>invalid</validity> signature from " +
                             "<verify>verified</verify> session <device></device>",

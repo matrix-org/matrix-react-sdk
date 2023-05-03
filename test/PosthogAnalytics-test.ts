@@ -33,6 +33,10 @@ const getFakePosthog = (): PostHog =>
         identify: jest.fn(),
         reset: jest.fn(),
         register: jest.fn(),
+        get_distinct_id: jest.fn(),
+        persistence: {
+            get_user_state: jest.fn(),
+        },
     } as unknown as PostHog);
 
 interface ITestEvent extends IPosthogEvent {
@@ -73,7 +77,7 @@ describe("PosthogAnalytics", () => {
         Object.defineProperty(window, "crypto", {
             value: null,
         });
-        SdkConfig.unset(); // we touch the config, so clean up
+        SdkConfig.reset(); // we touch the config, so clean up
     });
 
     describe("Initialisation", () => {
