@@ -23,8 +23,8 @@ import { parsePermalink } from "./permalinks/Permalinks";
  * @param {string} searchTerm The search term.
  * @returns {string} The room ID or alias, or the original search term if it doesn't look like a permalink.
  */
-export function transformSearchTerm(searchTerm: string): string | null  {
+export function transformSearchTerm(searchTerm: string): string {
     const parseLink = parsePermalink(searchTerm);
-    if (parseLink) return parseLink.primaryEntityId;
+    if (parseLink) return parseLink.primaryEntityId ?? "";
     return searchTerm;
 }
