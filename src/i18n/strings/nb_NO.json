@@ -1071,7 +1071,6 @@
     "Åland Islands": "Åland",
     "Afghanistan": "Afghanistan",
     "United Kingdom": "Storbritannia",
-    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "Din hjemmeserver kunne ikke nås, og kan derfor ikke logge deg inn. Vennligst prøv igjen. Hvis dette fortsetter, kontakt administratoren til din hjemmeserver.",
     "Only continue if you trust the owner of the server.": "Fortsett kun om du stoler på eieren av serveren.",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Denne handlingen krever tilgang til standard identitetsserver <server /> for å kunne validere en epostaddresse eller telefonnummer, men serveren har ikke bruksvilkår.",
     "Too Many Calls": "For mange samtaler",
