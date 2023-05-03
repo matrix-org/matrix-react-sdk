@@ -20,28 +20,25 @@ import { transformSearchTerm } from "../../src/utils/SearchInput";
 
 jest.mock("../../src/utils/permalinks/Permalinks");
 
-const searchTerm = "search term";
-const roomLink = "https://matrix.to/#/#element-dev:matrix.org";
-
-const parserLink = {
-    roomLink: "#element-dev:matrix.org",
-    searchTerm: null,
-};
-
 describe("transforming search term", () => {
     it("should return the primaryEntityId if the search term was a permalink", () => {
+        const roomLink = "https://matrix.to/#/#element-dev:matrix.org";
+        const parsedPermalink = "#element-dev:matrix.org"
+
         mocked(parsePermalink).mockReturnValue({
-            primaryEntityId: parserLink.roomLink,
-            roomIdOrAlias: parserLink.roomLink,
+            primaryEntityId: parsedPermalink,
+            roomIdOrAlias: parsedPermalink,
             eventId: "",
             userId: "",
             viaServers: [],
             sigil: "",
         });
-        expect(transformSearchTerm(roomLink)).toBe(parserLink.roomLink);
+        
+        expect(transformSearchTerm(roomLink)).toBe(parsedPermalink);
     });
 
     it("should return the original search term if the search term was not a permalink", () => {
+        const searchTerm = "search term";
         mocked(parsePermalink).mockReturnValue(null);
         expect(transformSearchTerm(searchTerm)).toBe(searchTerm);
     });
