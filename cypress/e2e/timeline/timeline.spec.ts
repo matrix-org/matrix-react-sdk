@@ -171,7 +171,7 @@ describe("Timeline", () => {
                 // Check the profile resizer's place
                 // See: _IRCLayout
                 // --RoomView_MessageList-padding = 18px (See: _RoomView.pcss)
-                // --MessageTimestamp-width = var(--MessageTimestamp-width) = 46px (See: _common.pcss)
+                // --MessageTimestamp-width = 46px (See: _MessageTimestamp.pcss)
                 // --icon-width = 14px
                 // --right-padding = 5px
                 // --name-width = 80px
