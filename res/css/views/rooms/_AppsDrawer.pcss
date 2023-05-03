@@ -15,11 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/* TODO this should be 300px but that's too large */
-$MinWidth: 240px;
-
 .mx_AppsDrawer {
     --AppTile_mini-height: 220px;
+    --minWidth: 240px; /* TODO this should be 300px but that's too large */
 
     margin: var(--container-gap-width);
     /* The left side gap is fully handled by this margin. To prohibit bleeding on webkit browser. */
@@ -95,7 +93,7 @@ $MinWidth: 240px;
 
     .mx_AppTile {
         width: 50%;
-        min-width: $MinWidth;
+        min-width: var(--minWidth);
     }
 
     &.mx_AppsDrawer_2apps .mx_AppTile {
@@ -104,7 +102,7 @@ $MinWidth: 240px;
         &:nth-child(3) {
             flex-grow: 1;
             width: 0 !important;
-            min-width: $MinWidth !important;
+            min-width: var(--minWidth) !important;
         }
     }
     &.mx_AppsDrawer_3apps .mx_AppTile {
@@ -113,7 +111,7 @@ $MinWidth: 240px;
         &:nth-child(3) {
             flex-grow: 1;
             width: 0 !important;
-            min-width: $MinWidth !important;
+            min-width: var(--minWidth) !important;
         }
     }
 }
