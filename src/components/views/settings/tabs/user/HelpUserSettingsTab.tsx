@@ -260,7 +260,11 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                             brand,
                         },
                         {
-                            a: (sub) => <a href="https://element.io/help">{sub}</a>,
+                            a: (sub) => (
+                                <ExternalLink href="https://element.io/help" rel="noreferrer noopener" target="_blank">
+                                    {sub}
+                                </ExternalLink>
+                            ),
                         },
                     )}
                     <div>
