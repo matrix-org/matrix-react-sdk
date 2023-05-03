@@ -15,11 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-$MiniAppTileHeight: 220px;
 /* TODO this should be 300px but that's too large */
 $MinWidth: 240px;
 
 .mx_AppsDrawer {
+    --AppTile_mini-height: 220px;
+
     margin: var(--container-gap-width);
     /* The left side gap is fully handled by this margin. To prohibit bleeding on webkit browser. */
     margin-right: calc(var(--container-gap-width) / 2);
@@ -174,7 +175,7 @@ $MinWidth: 240px;
     padding: 0;
     display: flex;
     flex-direction: column;
-    height: $MiniAppTileHeight;
+    height: var(--AppTile_mini-height);
 }
 
 .mx_AppTile .mx_AppTile_persistedWrapper,
@@ -300,7 +301,7 @@ $MinWidth: 240px;
 }
 
 .mx_AppTileBody_mini {
-    --AppTileBody-height: $MiniAppTileHeight;
+    --AppTileBody-height: var(--AppTile_mini-height);
 }
 
 .mx_AppTile .mx_AppTileBody,
