@@ -385,17 +385,18 @@ $MinWidth: 240px;
         display: none;
     }
 
-    .mx_Spinner {
-        position: absolute;
-        inset: 0;
-    }
-}
+    /* const loadingElement */
+    .mx_AppLoading_fadeInSpinner {
+        animation-fill-mode: backwards;
+        animation-duration: 200ms;
+        animation-delay: 500ms;
+        animation-name: mx_AppLoading_fadeInSpinnerAnimation;
 
-.mx_AppLoading_fadeInSpinner {
-    animation-fill-mode: backwards;
-    animation-duration: 200ms;
-    animation-delay: 500ms;
-    animation-name: mx_AppLoading_fadeInSpinnerAnimation;
+        .mx_Spinner {
+            position: absolute;
+            inset: 0;
+        }
+    }
 }
 
 @keyframes mx_AppLoading_fadeInSpinnerAnimation {
