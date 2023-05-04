@@ -57,6 +57,11 @@ const SidebarUserSettingsTab: React.FC = () => {
     } = useSettingValue<Record<MetaSpace, boolean>>("Spaces.enabledMetaSpaces");
     const allRoomsInHome = useSettingValue<boolean>("Spaces.allRoomsInHome");
 
+    const onAllRoomsInHomeToggle = async (event: ChangeEvent<HTMLInputElement>): Promise<void> => {
+        await SettingsStore.setValue("Spaces.allRoomsInHome", null, SettingLevel.ACCOUNT, event.target.checked);
+        PosthogTrackers.trackInteraction("WebSettingsSidebarTabSpacesCheckbox", event, 1);
+    };
+
     return (
         <SettingsTab>
             <SettingsSection heading={_t("Sidebar")}>
@@ -85,16 +90,9 @@ const SidebarUserSettingsTab: React.FC = () => {
                     <StyledCheckbox
                         checked={allRoomsInHome}
                         disabled={!homeEnabled}
-                        onChange={(e) => {
-                            SettingsStore.setValue(
-                                "Spaces.allRoomsInHome",
-                                null,
-                                SettingLevel.ACCOUNT,
-                                e.target.checked,
-                            );
-                            PosthogTrackers.trackInteraction("WebSettingsSidebarTabSpacesCheckbox", e, 1);
-                        }}
+                        onChange={onAllRoomsInHomeToggle}
                         className="mx_SidebarUserSettingsTab_checkbox mx_SidebarUserSettingsTab_homeAllRoomsCheckbox"
+                        data-testid="mx_SidebarUserSettingsTab_homeAllRoomsCheckbox"
                     >
                         <SettingsSubsectionText>{_t("Show all rooms")}</SettingsSubsectionText>
                         <SettingsSubsectionText>
