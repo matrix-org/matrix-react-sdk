@@ -28,6 +28,7 @@ import ConfirmDestroyCrossSigningDialog from "../dialogs/security/ConfirmDestroy
 import SetupEncryptionDialog from "../dialogs/security/SetupEncryptionDialog";
 import { accessSecretStorage } from "../../../SecurityManager";
 import AccessibleButton from "../elements/AccessibleButton";
+import { SettingsSubsectionText } from "./shared/SettingsSubsection";
 
 interface IState {
     error?: Error;
@@ -178,22 +179,30 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
         if (homeserverSupportsCrossSigning === undefined) {
             summarisedStatus = <Spinner />;
         } else if (!homeserverSupportsCrossSigning) {
-            summarisedStatus = <p>{_t("Your homeserver does not support cross-signing.")}</p>;
+            summarisedStatus = (
+                <SettingsSubsectionText>{_t("Your homeserver does not support cross-signing.")}</SettingsSubsectionText>
+            );
         } else if (crossSigningReady && crossSigningPrivateKeysInStorage) {
-            summarisedStatus = <p>✅ {_t("Cross-signing is ready for use.")}</p>;
+            summarisedStatus = (
+                <SettingsSubsectionText>✅ {_t("Cross-signing is ready for use.")}</SettingsSubsectionText>
+            );
         } else if (crossSigningReady && !crossSigningPrivateKeysInStorage) {
-            summarisedStatus = <p>⚠️ {_t("Cross-signing is ready but keys are not backed up.")}</p>;
+            summarisedStatus = (
+                <SettingsSubsectionText>
+                    ⚠️ {_t("Cross-signing is ready but keys are not backed up.")}
+                </SettingsSubsectionText>
+            );
         } else if (crossSigningPrivateKeysInStorage) {
             summarisedStatus = (
-                <p>
+                <SettingsSubsectionText>
                     {_t(
                         "Your account has a cross-signing identity in secret storage, " +
                             "but it is not yet trusted by this session.",
                     )}
-                </p>
+                </SettingsSubsectionText>
             );
         } else {
-            summarisedStatus = <p>{_t("Cross-signing is not set up.")}</p>;
+            summarisedStatus = <SettingsSubsectionText>{_t("Cross-signing is not set up.")}</SettingsSubsectionText>;
         }
 
         const keysExistAnywhere =
@@ -238,7 +247,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
         }
 
         return (
-            <div>
+            <>
                 {summarisedStatus}
                 <details>
                     <summary>{_t("Advanced")}</summary>
@@ -275,7 +284,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
                 </details>
                 {errorSection}
                 {actionRow}
-            </div>
+            </>
         );
     }
 }
