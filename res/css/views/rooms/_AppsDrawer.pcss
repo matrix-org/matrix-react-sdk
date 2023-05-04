@@ -368,7 +368,7 @@ $MinWidth: 240px;
     }
 }
 
-.mx_AppLoading {
+.mx_AppTile_loading {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -386,11 +386,11 @@ $MinWidth: 240px;
     }
 
     /* const loadingElement */
-    .mx_AppLoading_fadeInSpinner {
+    .mx_AppTile_loading_fadeInSpinner {
         animation-fill-mode: backwards;
         animation-duration: 200ms;
         animation-delay: 500ms;
-        animation-name: mx_AppLoading_fadeInSpinnerAnimation;
+        animation-name: mx_AppTile_loading_fadeInSpinnerAnimation;
 
         .mx_Spinner {
             position: absolute;
@@ -399,7 +399,7 @@ $MinWidth: 240px;
     }
 }
 
-@keyframes mx_AppLoading_fadeInSpinnerAnimation {
+@keyframes mx_AppTile_loading_fadeInSpinnerAnimation {
     from {
         opacity: 0;
     }
