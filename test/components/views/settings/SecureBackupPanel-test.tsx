@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 
 import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../test-utils";
 import SecureBackupPanel from "../../../../src/components/views/settings/SecureBackupPanel";
@@ -29,6 +29,7 @@ describe("<SecureBackupPanel />", () => {
         isSecretStorageReady: jest.fn(),
         getKeyBackupEnabled: jest.fn(),
         getClientWellKnown: jest.fn(),
+        deleteKeyBackupVersion: jest.fn(),
     });
     // @ts-ignore allow it
     client.crypto = {
@@ -52,6 +53,8 @@ describe("<SecureBackupPanel />", () => {
                 sigs: [],
             },
         });
+
+        client.deleteKeyBackupVersion.mockClear().mockResolvedValue();
     });
 
     it("displays a loader while checking keybackup", async () => {
@@ -87,5 +90,67 @@ describe("<SecureBackupPanel />", () => {
         await flushPromises();
 
         expect(screen.getByText("✅ This session is backing up your keys.")).toBeInTheDocument();
+    });
+
+    it("asks for confirmation before deleting a backup", async () => {
+        getComponent();
+        // flush checkKeyBackup promise
+        await flushPromises();
+
+        fireEvent.click(screen.getByText("Delete Backup"));
+
+        const dialog = await screen.findByRole("dialog");
+
+        expect(
+            within(dialog).getByText(
+                "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.",
+            ),
+        ).toBeInTheDocument();
+
+        fireEvent.click(within(dialog).getByText("Cancel"));
+
+        expect(client.deleteKeyBackupVersion).not.toHaveBeenCalled();
+    });
+
+    it("deletes backup after confirmation", async () => {
+        client.checkKeyBackup
+            .mockResolvedValueOnce({
+                backupInfo: {
+                    version: "1",
+                    algorithm: "test",
+                    auth_data: {
+                        public_key: "1234",
+                    },
+                },
+                trustInfo: {
+                    usable: false,
+                    sigs: [],
+                },
+            })
+            .mockResolvedValue(null);
+        getComponent();
+        // flush checkKeyBackup promise
+        await flushPromises();
+
+        fireEvent.click(screen.getByText("Delete Backup"));
+
+        const dialog = await screen.findByRole("dialog");
+
+        expect(
+            within(dialog).getByText(
+                "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.",
+            ),
+        ).toBeInTheDocument();
+
+        fireEvent.click(within(dialog).getByTestId("dialog-primary-button"));
+
+        expect(client.deleteKeyBackupVersion).toHaveBeenCalledWith("1");
+
+        // delete request
+        await flushPromises();
+        // refresh backup info
+        await flushPromises();
+
+        expect(screen.queryByText("✅ This session is backing up your keys.")).not.toBeInTheDocument();
     });
 });
