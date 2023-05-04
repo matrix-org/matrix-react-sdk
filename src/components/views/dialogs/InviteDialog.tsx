@@ -1337,7 +1337,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 <div className="mx_InviteDialog_content_footer">
                     <h3>{_t("Or send invite link")}</h3>
                     <CopyableText getTextToCopy={() => makeUserPermalink(MatrixClientPeg.get().getUserId()!)}>
-                        <a className="mx_InviteDialog_footer_link" href={link} onClick={this.onLinkClick}>
+                        <a className="mx_InviteDialog_content_footer_link" href={link} onClick={this.onLinkClick}>
                             {link}
                         </a>
                     </CopyableText>

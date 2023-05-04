@@ -129,7 +129,8 @@ describe("Invite dialog", function () {
 
         // TODO: unhide userId and invite link
         const percyCSS =
-            ".mx_InviteDialog_footer_link, .mx_InviteDialog_content_helpText_userId { visibility: hidden !important; }";
+            ".mx_InviteDialog_content_footer_link, " +
+            ".mx_InviteDialog_content_helpText_userId { visibility: hidden !important; }";
 
         // Take a snapshot of the invite dialog including its wrapper
         cy.get(".mx_Dialog_wrapper").percySnapshotElement("Invite Dialog - Direct Messages (without a user)", {
