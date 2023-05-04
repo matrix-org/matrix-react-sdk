@@ -477,7 +477,6 @@
     "We encountered an error trying to restore your previous session.": "이전 활동을 복구하는 중 에러가 발생했습니다.",
     "Link to most recent message": "가장 최근 메시지로 연결",
     "This homeserver has hit its Monthly Active User limit.": "이 홈서버가 월 간 활성 사용자 수 한도를 초과했습니다.",
-    "Please <a>contact your service administrator</a> to continue using the service.": "서비스를 계속 사용하려면 <a>서비스 관리자에게 연락</a>해주세요.",
     "Please contact your homeserver administrator.": "홈서버 관리자에게 연락하세요.",
     "This room has been replaced and is no longer active.": "이 방은 대체되어서 더 이상 활동하지 않습니다.",
     "The conversation continues here.": "이 대화는 여기서 이어집니다.",
