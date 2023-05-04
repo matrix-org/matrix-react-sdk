@@ -310,6 +310,9 @@ describe("InviteDialog", () => {
 
         await enterIntoSearchField(bobEmail);
         expectPill(bobEmail);
+
+        // Take a snapshot of the input area inside address bar where those two pills are rendered
+        expect(document.querySelector(".mx_InviteDialog_editor")).toMatchSnapshot();
     });
 
     describe("when encryption by default is disabled", () => {

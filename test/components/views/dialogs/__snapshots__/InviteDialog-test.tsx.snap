@@ -1,5 +1,82 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`InviteDialog should allow to invite multiple emails to a room 1`] = `
+<div
+  class="mx_InviteDialog_editor"
+>
+  <span
+    class="mx_InviteDialog_userTile"
+  >
+    <span
+      class="mx_InviteDialog_userTile_pill"
+    >
+      <img
+        alt=""
+        class="mx_SearchResultAvatar mx_SearchResultAvatar_threepidAvatar"
+        height="20"
+        src="image-file-stub"
+        width="20"
+      />
+      <span
+        class="mx_InviteDialog_userTile_name"
+      >
+        foobar@email.com
+      </span>
+    </span>
+    <div
+      class="mx_AccessibleButton mx_InviteDialog_userTile_remove"
+      role="button"
+      tabindex="0"
+    >
+      <img
+        alt="Remove"
+        height="8"
+        src="image-file-stub"
+        width="8"
+      />
+    </div>
+  </span>
+  <span
+    class="mx_InviteDialog_userTile"
+  >
+    <span
+      class="mx_InviteDialog_userTile_pill"
+    >
+      <img
+        alt=""
+        class="mx_SearchResultAvatar mx_SearchResultAvatar_threepidAvatar"
+        height="20"
+        src="image-file-stub"
+        width="20"
+      />
+      <span
+        class="mx_InviteDialog_userTile_name"
+      >
+        bobbob@example.com
+      </span>
+    </span>
+    <div
+      class="mx_AccessibleButton mx_InviteDialog_userTile_remove"
+      role="button"
+      tabindex="0"
+    >
+      <img
+        alt="Remove"
+        height="8"
+        src="image-file-stub"
+        width="8"
+      />
+    </div>
+  </span>
+  <input
+    autocomplete="off"
+    data-testid="invite-dialog-input"
+    type="text"
+    value=""
+  />
+</div>
+`;
+
 exports[`InviteDialog should lookup inputs which look like email addresses (dm) 1`] = `
 <div
   aria-labelledby="mx_BaseDialog_title"
