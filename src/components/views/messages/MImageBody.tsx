@@ -528,7 +528,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     }
 
     // Overridden by MStickerBody
-    protected wrapImage(contentUrl: string | undefined, children: JSX.Element): ReactNode {
+    protected wrapImage(contentUrl: string | null | undefined, children: JSX.Element): ReactNode {
         if (contentUrl) {
             return (
                 <a href={contentUrl} target={this.props.forExport ? "_blank" : undefined} onClick={this.onClick}>
