@@ -380,14 +380,15 @@ $MinWidth: 240px;
     /* match bg of border so that the cut corners have the right fill */
     background-color: $widget-body-bg-color !important;
     border-radius: 8px;
-}
 
-.mx_AppLoading .mx_Spinner {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    iframe {
+        display: none;
+    }
+
+    .mx_Spinner {
+        position: absolute;
+        inset: 0;
+    }
 }
 
 .mx_AppLoading_spinner_fadeIn {
@@ -404,10 +405,6 @@ $MinWidth: 240px;
     to {
         opacity: 1;
     }
-}
-
-.mx_AppLoading iframe {
-    display: none;
 }
 
 .mx_AppsDrawer_resizing .mx_AppTile_persistedWrapper {
