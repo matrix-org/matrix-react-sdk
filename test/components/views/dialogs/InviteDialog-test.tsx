@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, RenderResult } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 import { MatrixClient, MatrixError, Room } from "matrix-js-sdk/src/matrix";
@@ -186,17 +186,26 @@ describe("InviteDialog", () => {
         jest.restoreAllMocks();
     });
 
+    const renderDialog = (): RenderResult => {
+        return render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+    };
+
+    it("should render", () => {
+        const { asFragment } = renderDialog();
+        expect(asFragment()).toMatchSnapshot();
+    });
+
     it("should label with space name", () => {
         room.isSpaceRoom = jest.fn().mockReturnValue(true);
         room.getType = jest.fn().mockReturnValue(RoomType.Space);
         room.name = "Space";
-        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+        renderDialog();
 
         expect(screen.queryByText("Invite to Space")).toBeTruthy();
     });
 
     it("should label with room name", () => {
-        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+        renderDialog();
         expect(screen.getByText(`Invite to ${roomId}`)).toBeInTheDocument();
     });
 
@@ -279,7 +288,7 @@ describe("InviteDialog", () => {
         mockClient.getIdentityServerUrl.mockReturnValue("https://identity-server");
         mockClient.lookupThreePid.mockResolvedValue({});
 
-        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+        renderDialog();
 
         const input = screen.getByTestId("invite-dialog-input");
         input.focus();
@@ -291,7 +300,7 @@ describe("InviteDialog", () => {
     });
 
     it("should allow to invite multiple emails to a room", async () => {
-        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+        renderDialog();
 
         await enterIntoSearchField(aliceEmail);
         expectPill(aliceEmail);
