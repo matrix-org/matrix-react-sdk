@@ -1,5 +1,379 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`InviteDialog should lookup inputs which look like email addresses (dm) 1`] = `
+<div
+  aria-labelledby="mx_BaseDialog_title"
+  class="mx_InviteDialog_other mx_InviteDialog_hasFooter mx_Dialog_fixedWidth"
+  data-focus-lock-disabled="false"
+  role="dialog"
+>
+  <div
+    class="mx_Dialog_header mx_Dialog_headerWithCancel"
+  >
+    <h2
+      class="mx_Heading_h2 mx_Dialog_title"
+      id="mx_BaseDialog_title"
+    >
+      Direct Messages
+    </h2>
+    <div
+      aria-label="Close dialog"
+      class="mx_AccessibleButton mx_Dialog_cancelButton"
+      role="button"
+      tabindex="0"
+    />
+  </div>
+  <div
+    class="mx_InviteDialog_content"
+  >
+    <p
+      class="mx_InviteDialog_helpText"
+    >
+      <span>
+        Start a conversation with someone using their name, email address or username (like 
+        <a
+          href="https://matrix.to/#/@bob:example.org"
+          rel="noreferrer noopener"
+          target="_blank"
+        >
+          @bob:example.org
+        </a>
+        ).
+      </span>
+    </p>
+    <div
+      class="mx_InviteDialog_addressBar"
+    >
+      <div
+        class="mx_InviteDialog_editor"
+      >
+        <input
+          autocomplete="off"
+          data-testid="invite-dialog-input"
+          type="text"
+          value="foobar@email.com"
+        />
+      </div>
+      <div
+        class="mx_InviteDialog_buttonAndSpinner"
+      >
+        <div
+          class="mx_AccessibleButton mx_InviteDialog_goButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+          role="button"
+          tabindex="0"
+        >
+          Go
+        </div>
+      </div>
+    </div>
+    <span />
+    <div
+      class="error"
+    />
+    <div
+      class="mx_InviteDialog_userSections"
+    >
+      <div
+        class="mx_InviteDialog_section"
+      >
+        <h3>
+          Recent Conversations
+        </h3>
+        <p>
+          No results
+        </p>
+      </div>
+      <div
+        class="mx_InviteDialog_section"
+      >
+        <h3>
+          Suggestions
+        </h3>
+        <div
+          class="mx_InviteDialog_tile mx_InviteDialog_tile--room"
+        >
+          <span
+            class="mx_InviteDialog_tile_avatarStack"
+          >
+            <div
+              height="36"
+              width="36"
+            />
+          </span>
+          <span
+            class="mx_InviteDialog_tile_nameStack"
+          >
+            <div
+              class="mx_InviteDialog_tile_nameStack_name"
+            >
+              <span
+                class="mx_InviteDialog_tile--room_highlight"
+              >
+                foobar@email.com
+              </span>
+            </div>
+            <div
+              class="mx_InviteDialog_tile_nameStack_userId"
+            >
+              Invite by email
+            </div>
+          </span>
+        </div>
+        <div
+          class="mx_InviteDialog_tile mx_InviteDialog_tile--room"
+        >
+          <span
+            class="mx_InviteDialog_tile_avatarStack"
+          >
+            <span
+              class="mx_BaseAvatar"
+              role="presentation"
+            >
+              <span
+                aria-hidden="true"
+                class="mx_BaseAvatar_initial"
+                style="font-size: 23.400000000000002px; width: 36px; line-height: 36px;"
+              >
+                M
+              </span>
+              <img
+                alt=""
+                aria-hidden="true"
+                class="mx_BaseAvatar_image"
+                data-testid="avatar-img"
+                src="data:image/png;base64,00"
+                style="width: 36px; height: 36px;"
+              />
+            </span>
+          </span>
+          <span
+            class="mx_InviteDialog_tile_nameStack"
+          >
+            <div
+              class="mx_InviteDialog_tile_nameStack_name"
+            >
+              <span>
+                Mrs Alice
+              </span>
+            </div>
+            <div
+              class="mx_InviteDialog_tile_nameStack_userId"
+            >
+              <span>
+                @alice:example.org
+              </span>
+            </div>
+          </span>
+        </div>
+      </div>
+      <div
+        class="mx_InviteDialog_section_hidden_suggestions_disclaimer"
+      >
+        <span>
+          Some suggestions may be hidden for privacy.
+        </span>
+        <p>
+          If you can't see who you're looking for, send them your invite link below.
+        </p>
+      </div>
+    </div>
+    <div
+      class="mx_InviteDialog_footer"
+    >
+      <h3>
+        Or send invite link
+      </h3>
+      <div
+        class="mx_CopyableText mx_CopyableText_border"
+      >
+        <a
+          class="mx_InviteDialog_footer_link"
+          href="https://matrix.to/#/@bob:example.org"
+        >
+          https://matrix.to/#/@bob:example.org
+        </a>
+        <div
+          aria-label="Copy"
+          class="mx_AccessibleButton mx_CopyableText_copyButton"
+          role="button"
+          tabindex="0"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`InviteDialog should lookup inputs which look like email addresses (invite) 1`] = `
+<div
+  aria-labelledby="mx_BaseDialog_title"
+  class="mx_InviteDialog_other mx_Dialog_fixedWidth"
+  data-focus-lock-disabled="false"
+  role="dialog"
+>
+  <div
+    class="mx_Dialog_header mx_Dialog_headerWithCancel"
+  >
+    <h2
+      class="mx_Heading_h2 mx_Dialog_title"
+      id="mx_BaseDialog_title"
+    >
+      Invite to !111111111111111111:example.org
+    </h2>
+    <div
+      aria-label="Close dialog"
+      class="mx_AccessibleButton mx_Dialog_cancelButton"
+      role="button"
+      tabindex="0"
+    />
+  </div>
+  <div
+    class="mx_InviteDialog_content"
+  >
+    <p
+      class="mx_InviteDialog_helpText"
+    >
+      <span>
+        Invite someone using their name, email address, username (like 
+        <a
+          class="mx_InviteDialog_helpText_userId"
+          href="https://matrix.to/#/@bob:example.org"
+          rel="noreferrer noopener"
+          target="_blank"
+        >
+          @bob:example.org
+        </a>
+        ) or 
+        <a
+          href="https://matrix.to/#/!111111111111111111:example.org?via=example.org"
+          rel="noreferrer noopener"
+          target="_blank"
+        >
+          share this room
+        </a>
+        .
+      </span>
+    </p>
+    <div
+      class="mx_InviteDialog_addressBar"
+    >
+      <div
+        class="mx_InviteDialog_editor"
+      >
+        <input
+          autocomplete="off"
+          data-testid="invite-dialog-input"
+          type="text"
+          value="foobar@email.com"
+        />
+      </div>
+      <div
+        class="mx_InviteDialog_buttonAndSpinner"
+      >
+        <div
+          class="mx_AccessibleButton mx_InviteDialog_goButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+          role="button"
+          tabindex="0"
+        >
+          Invite
+        </div>
+      </div>
+    </div>
+    <span />
+    <div
+      class="error"
+    />
+    <div
+      class="mx_InviteDialog_userSections"
+    >
+      <div
+        class="mx_InviteDialog_section"
+      >
+        <h3>
+          Suggestions
+        </h3>
+        <div
+          class="mx_InviteDialog_tile mx_InviteDialog_tile--room"
+        >
+          <span
+            class="mx_InviteDialog_tile_avatarStack"
+          >
+            <div
+              height="36"
+              width="36"
+            />
+          </span>
+          <span
+            class="mx_InviteDialog_tile_nameStack"
+          >
+            <div
+              class="mx_InviteDialog_tile_nameStack_name"
+            >
+              <span
+                class="mx_InviteDialog_tile--room_highlight"
+              >
+                foobar@email.com
+              </span>
+            </div>
+            <div
+              class="mx_InviteDialog_tile_nameStack_userId"
+            >
+              Invite by email
+            </div>
+          </span>
+        </div>
+        <div
+          class="mx_InviteDialog_tile mx_InviteDialog_tile--room"
+        >
+          <span
+            class="mx_InviteDialog_tile_avatarStack"
+          >
+            <span
+              class="mx_BaseAvatar"
+              role="presentation"
+            >
+              <span
+                aria-hidden="true"
+                class="mx_BaseAvatar_initial"
+                style="font-size: 23.400000000000002px; width: 36px; line-height: 36px;"
+              >
+                M
+              </span>
+              <img
+                alt=""
+                aria-hidden="true"
+                class="mx_BaseAvatar_image"
+                data-testid="avatar-img"
+                src="data:image/png;base64,00"
+                style="width: 36px; height: 36px;"
+              />
+            </span>
+          </span>
+          <span
+            class="mx_InviteDialog_tile_nameStack"
+          >
+            <div
+              class="mx_InviteDialog_tile_nameStack_name"
+            >
+              <span>
+                Mrs Alice
+              </span>
+            </div>
+            <div
+              class="mx_InviteDialog_tile_nameStack_userId"
+            >
+              <span>
+                @alice:example.org
+              </span>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`InviteDialog should render 1`] = `
 <DocumentFragment>
   <div

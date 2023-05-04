@@ -264,6 +264,9 @@ describe("InviteDialog", () => {
             await screen.findByText(aliceEmail);
             expect(mockClient.lookupThreePid).toHaveBeenCalledWith("email", aliceEmail, expect.anything());
             expect(mockClient.getProfileInfo).toHaveBeenCalledWith(aliceId);
+
+            // Take snapshots of the dialog for DM and a room
+            expect(document.querySelector(".mx_InviteDialog_other")).toMatchSnapshot();
         },
     );
 
