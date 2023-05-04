@@ -226,16 +226,9 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
             </AccessibleButton>
         );
     } else {
-        className = "mx_DecryptionFailureBar";
-        headline = <React.Fragment>{_t("Some messages could not be decrypted")}</React.Fragment>;
-        message = (
-            <React.Fragment>
-                {_t(
-                    "Unfortunately, there are no other verified devices to request decryption keys from. " +
-                        "Signing in and verifying other devices may help avoid this situation in the future.",
-                )}
-            </React.Fragment>
-        );
+        // In case where no other devices are available, the bar is hided
+        // See https://github.com/vector-im/element-meta/issues/1358
+        return null;
     }
 
     let keyRequestButton = <React.Fragment />;
