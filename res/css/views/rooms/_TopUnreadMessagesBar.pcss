@@ -16,27 +16,6 @@ limitations under the License.
 
 @charset "utf-8";
 
-/* Define common declarations. Their values are specified below. */
-.mx_TopUnreadMessagesBar_scrollUp,
-.mx_TopUnreadMessagesBar_markAsRead {
-    background: var(--background);
-    height: var(--height);
-    border: var(--border);
-    border-radius: var(--borderRadius);
-
-    &::before {
-        content: "";
-        position: absolute;
-        background: var(--background);
-        width: var(--width);
-        height: var(--height);
-        mask-repeat: no-repeat;
-        mask-position: center;
-        mask-image: var(--maskImage);
-        mask-size: var(--maskSize);
-    }
-}
-
 .mx_TopUnreadMessagesBar {
     z-index: 1000;
     position: absolute;
@@ -55,6 +34,26 @@ limitations under the License.
         background-color: $secondary-accent-color;
         border: 6px solid $accent;
         pointer-events: none;
+    }
+
+/* Define common declarations. Their values are specified below. */
+.mx_TopUnreadMessagesBar_scrollUp,
+.mx_TopUnreadMessagesBar_markAsRead {
+    background: var(--background);
+    height: var(--height);
+    border: var(--border);
+    border-radius: var(--borderRadius);
+
+    &::before {
+        content: "";
+        position: absolute;
+        background: var(--background);
+        width: var(--width);
+        height: var(--height);
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-image: var(--maskImage);
+        mask-size: var(--maskSize);
     }
 }
 
@@ -93,4 +92,5 @@ limitations under the License.
         --maskImage: url("$(res)/img/cancel.svg");
         --maskSize: 10px;
     }
+}
 }
