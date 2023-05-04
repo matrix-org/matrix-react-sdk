@@ -68,7 +68,7 @@ describe("Invite dialog", function () {
         });
 
         // TODO: unhide userId
-        const percyCSS = ".mx_InviteDialog_helpText_userId { visibility: hidden !important; }";
+        const percyCSS = ".mx_InviteDialog_content_helpText_userId { visibility: hidden !important; }";
 
         // Take a snapshot of the invite dialog including its wrapper
         cy.get(".mx_Dialog_wrapper").percySnapshotElement("Invite Dialog - Room (without a user)", { percyCSS });
@@ -129,7 +129,7 @@ describe("Invite dialog", function () {
 
         // TODO: unhide userId and invite link
         const percyCSS =
-            ".mx_InviteDialog_footer_link, .mx_InviteDialog_helpText_userId { visibility: hidden !important; }";
+            ".mx_InviteDialog_footer_link, .mx_InviteDialog_content_helpText_userId { visibility: hidden !important; }";
 
         // Take a snapshot of the invite dialog including its wrapper
         cy.get(".mx_Dialog_wrapper").percySnapshotElement("Invite Dialog - Direct Messages (without a user)", {
