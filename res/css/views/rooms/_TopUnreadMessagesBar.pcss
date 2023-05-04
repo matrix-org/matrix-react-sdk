@@ -16,17 +16,24 @@ limitations under the License.
 
 @charset "utf-8";
 
+/* Define common declarations. Their values are specified below. */
 .mx_TopUnreadMessagesBar_scrollUp,
 .mx_TopUnreadMessagesBar_markAsRead {
-    border: 1.3px solid $muted-fg-color;
-    background: $background;
+    background: var(--background);
+    height: var(--height);
+    border: var(--border);
+    border-radius: var(--borderRadius);
 
     &::before {
         content: "";
         position: absolute;
+        background: var(--background);
+        width: var(--width);
+        height: var(--height);
         mask-repeat: no-repeat;
         mask-position: center;
-        background: $muted-fg-color;
+        mask-image: var(--maskImage);
+        mask-size: var(--maskSize);
     }
 }
 
@@ -52,30 +59,38 @@ limitations under the License.
 }
 
 .mx_TopUnreadMessagesBar_scrollUp {
-    height: 38px;
-    border-radius: 19px;
+    --background: $background;
+    --height: 38px;
+    --border: 1.3px solid $muted-fg-color;
+    --borderRadius: 19px;
+
     box-sizing: border-box;
     cursor: pointer;
 
     &::before {
-        width: 36px;
-        height: 36px;
-        mask-image: url("$(res)/img/element-icons/message/chevron-up.svg");
-        mask-size: 20px;
+        --background: $muted-fg-color;
+        --width: 36px;
+        --height: 36px;
+        --maskImage: url("$(res)/img/element-icons/message/chevron-up.svg");
+        --maskSize: 20px;
     }
 }
 
 .mx_TopUnreadMessagesBar_markAsRead {
+    --background: $background;
+    --height: 18px;
+    --border: 1.3px solid $muted-fg-color;
+    --borderRadius: 10px;
+
     display: block;
     width: 18px;
-    height: 18px;
-    border-radius: 10px;
     margin: 5px auto;
 
     &::before {
-        width: 18px;
-        height: 18px;
-        mask-image: url("$(res)/img/cancel.svg");
-        mask-size: 10px;
+        --background: $muted-fg-color;
+        --width: 18px;
+        --height: 18px;
+        --maskImage: url("$(res)/img/cancel.svg");
+        --maskSize: 10px;
     }
 }
