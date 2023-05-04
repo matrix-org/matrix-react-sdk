@@ -35,12 +35,12 @@ describe("Preferences user settings tab", () => {
     it("should be rendered properly", () => {
         cy.openUserSettings("Preferences");
 
-        cy.get("[data-testid='mx_PreferencesUserSettingsTab']").within(() => {
+        cy.findByTestId("mx_PreferencesUserSettingsTab").within(() => {
             // Assert that the top heading is rendered
             cy.contains("Preferences").should("be.visible");
         });
 
-        cy.get("[data-testid='mx_PreferencesUserSettingsTab']").percySnapshotElement(
+        cy.findByTestId("mx_PreferencesUserSettingsTab").percySnapshotElement(
             "User settings tab - Preferences",
             {
                 // Emulate TabbedView's actual min and max widths
