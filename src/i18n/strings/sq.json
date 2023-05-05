@@ -3755,5 +3755,7 @@
     "Start messages with <code>/plain</code> to send without markdown.": "Për t’i dërguar pa elementë Markdown, fillojini mesazhet me <code>/plain</code>.",
     "WebGL is required to display maps, please enable it in your browser settings.": "WebGL është i domosdoshëm për shfaqje hartash, ju lutemi, aktivizojeni te rregullimet e shfletuesit tuaj.",
     "No identity access token found": "S’u gjet token hyrjeje identiteti",
-    "Identity server not set": "Shërbyes identitetesh i paujdisur"
+    "Identity server not set": "Shërbyes identitetesh i paujdisur",
+    "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s reagoi me %(reaction)s ndaj %(message)s",
+    "You reacted %(reaction)s to %(message)s": "Reaguat me %(reaction)s ndaj %(message)s"
 }
