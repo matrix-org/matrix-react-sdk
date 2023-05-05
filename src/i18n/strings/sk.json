@@ -3770,5 +3770,8 @@
     "Error changing password": "Chyba pri zmene hesla",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP stav %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Neznáma chyba pri zmene hesla (%(stringifiedError)s)",
-    "Error while changing password: %(error)s": "Chyba pri zmene hesla: %(error)s"
+    "Error while changing password: %(error)s": "Chyba pri zmene hesla: %(error)s",
+    "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s reagoval/a %(reaction)s na %(message)s",
+    "You reacted %(reaction)s to %(message)s": "Reagovali ste %(reaction)s na %(message)s",
+    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Nie je možné pozvať používateľa e-mailom bez servera totožnosti. Môžete sa k nemu pripojiť v časti \"Nastavenia\"."
 }
