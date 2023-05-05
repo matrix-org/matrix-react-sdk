@@ -15,14 +15,19 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { EventType, GuestAccess, HistoryVisibility, JoinRule, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import SecurityRoomSettingsTab from "../../../../../../src/components/views/settings/tabs/room/SecurityRoomSettingsTab";
 import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
 import SettingsStore from "../../../../../../src/settings/SettingsStore";
-import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../../../test-utils";
+import {
+    clearAllModals,
+    flushPromises,
+    getMockClientWithEventEmitter,
+    mockClientMethodsUser,
+} from "../../../../../test-utils";
 import { filterBoolean } from "../../../../../../src/utils/arrays";
 
 describe("<SecurityRoomSettingsTab />", () => {
@@ -86,10 +91,12 @@ describe("<SecurityRoomSettingsTab />", () => {
         room.currentState.setStateEvents(events);
     };
 
-    beforeEach(() => {
+    beforeEach(async () => {
         client.sendStateEvent.mockReset().mockResolvedValue({ event_id: "test" });
         client.isRoomEncrypted.mockReturnValue(false);
         jest.spyOn(SettingsStore, "getValue").mockRestore();
+
+        await clearAllModals();
     });
 
     describe("join rule", () => {
@@ -343,11 +350,14 @@ describe("<SecurityRoomSettingsTab />", () => {
 
             const dialog = await screen.findByRole("dialog");
 
+            expect(within(dialog).getByText("Enable encryption?")).toBeInTheDocument();
             fireEvent.click(within(dialog).getByText("OK"));
 
-            expect(client.sendStateEvent).toHaveBeenCalledWith(room.roomId, EventType.RoomEncryption, {
-                algorithm: "m.megolm.v1.aes-sha2",
-            });
+            await waitFor(() =>
+                expect(client.sendStateEvent).toHaveBeenCalledWith(room.roomId, EventType.RoomEncryption, {
+                    algorithm: "m.megolm.v1.aes-sha2",
+                }),
+            );
         });
 
         it("renders world readable option when room is encrypted and history is already set to world readable", () => {
