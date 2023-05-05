@@ -159,7 +159,7 @@ describe("InteractiveAuthDialog", function () {
             expect(onWindowReceiveMessageCall).toBeTruthy();
             // get the handle from SSO auth component
             // so we can pretend sso auth was completed
-            const onWindowReceiveMessage = onWindowReceiveMessageCall[1];
+            const onWindowReceiveMessage = onWindowReceiveMessageCall![1];
 
             // complete sso successfully
             act(() => {
