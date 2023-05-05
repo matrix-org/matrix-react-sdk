@@ -110,25 +110,22 @@ export function processSelectionChange(
     // are the same node, so rename to `currentNode` and `currentOffset` for subsequent use
     const { anchorNode: currentNode, anchorOffset: currentOffset } = selection;
 
-    // first check is that the text node is the first text node of the editor, as adding paragraphs can result
-    // in nested <p> tags inside the editor <div>
-    const firstTextNode = document.createNodeIterator(editorRef.current, NodeFilter.SHOW_TEXT).nextNode();
-
     // if we have no text content, return
     if (currentNode.textContent === null) return;
 
-    const mentionOrCommand = findMentionOrCommand(currentNode.textContent, currentOffset);
+    const foundSuggestion = findSuggestionInText(currentNode.textContent, currentOffset);
 
-    // if we don't have any mentionsOrCommands, return, clearing the suggestion state
-    if (mentionOrCommand === null) {
+    // if we have not found a suggestion, return, clearing the suggestion state
+    if (foundSuggestion === null) {
         setSuggestion(null);
         return;
     }
 
     // else we do have something, so get the constituent parts
-    const mappedSuggestionParts = getMappedSuggestion(mentionOrCommand.text);
+    const mappedSuggestionParts = getMappedSuggestion(foundSuggestion.text);
 
     // if we have a command at the beginning of a node, but that node isn't the first text node, return
+    const firstTextNode = document.createNodeIterator(editorRef.current, NodeFilter.SHOW_TEXT).nextNode();
     if (mappedSuggestionParts.type === "command" && currentNode !== firstTextNode) {
         setSuggestion(null);
         return;
@@ -136,9 +133,9 @@ export function processSelectionChange(
         // else, we have found a mention or a command
         setSuggestion({
             ...mappedSuggestionParts,
-            node: selection.anchorNode,
-            startOffset: mentionOrCommand.startOffset,
-            endOffset: mentionOrCommand.endOffset,
+            node: currentNode,
+            startOffset: foundSuggestion.startOffset,
+            endOffset: foundSuggestion.endOffset,
         });
     }
 }
@@ -162,7 +159,7 @@ export function processMention(
     setSuggestion: React.Dispatch<React.SetStateAction<SuggestionState>>,
     setText: (text: string) => void,
 ): void {
-    // if we do not have any of the values we need to do the work, do nothing
+    // if we do not have a suggestion, return early
     if (suggestion === null) {
         return;
     }
@@ -227,21 +224,21 @@ export function processCommand(
  * @param offset - the current cursor offset position
  * @returns an empty string if no mention or command is found, otherwise the mention/command substring with it's start offset
  */
-export function findMentionOrCommand(
+export function findSuggestionInText(
     text: string,
     offset: number,
 ): { text: string; startOffset: number; endOffset: number } | null {
-    // return early if the offset is outside the content
+    // Return null early if the offset is outside the content
     if (offset < 0 || offset > text.length) {
         return null;
     }
 
     // A cursor offset lies between two characters, so make a cursor offset correspond to
-    // an index in the text
+    // a character index in the text string
     let startCharIndex = offset - 1;
     let endCharIndex = offset;
 
-    while (keepMovingLeft(text, startCharIndex)) {
+    while (shouldDecrementStartIndex(text, startCharIndex)) {
         // Special case - if we hit some whitespace, return null. This is to catch cases
         // where user types a special character then whitespace
         if (/\s/.test(text[startCharIndex])) {
@@ -250,7 +247,7 @@ export function findMentionOrCommand(
         startCharIndex--;
     }
 
-    while (keepMovingRight(text, endCharIndex)) {
+    while (shouldIncrementEndIndex(text, endCharIndex)) {
         endCharIndex++;
     }
 
@@ -275,19 +272,19 @@ export function findMentionOrCommand(
 }
 
 /**
- * Associated function for findMentionOrCommand. Checks the character at the current location
- * to determine if search should continue.
+ * Associated function for findSuggestionInText. Checks the character at the current location
+ * to determine if the current index should be changed.
  *
  * @param text - text content to check for mentions or commands
  * @param index - the current index to check
  * @returns true if check should keep moving left, false otherwise
  */
-function keepMovingLeft(text: string, index: number): boolean {
+function shouldDecrementStartIndex(text: string, index: number): boolean {
     // If the index is outside the string, return false
     if (index === -1) return false;
 
-    // We are inside the string so can guarantee that there is a character at the index.
-    // The preceding character could be undefined if index === 1
+    // We are inside the string so can guarantee that there is a character at the index
+    // The preceding character could be undefined if index === 0
     const mentionOrCommandChar = /[@#/]/;
     const mentionChar = /[@#]/;
     const currentChar = text[index];
@@ -305,18 +302,18 @@ function keepMovingLeft(text: string, index: number): boolean {
 }
 
 /**
- * Associated function for findMentionOrCommand. Checks the character at the current location
- * to determine if search should continue.
+ * Associated function for findSuggestionInText. Checks the character at the current location
+ * to determine if the current index should be changed.
  *
  * @param text - text content to check for mentions or commands
  * @param index - the current index to check
  * @returns true if check should keep moving right, false otherwise
  */
-function keepMovingRight(text: string, index: number): boolean {
+function shouldIncrementEndIndex(text: string, index: number): boolean {
     // If the index is outside the string, return false
     if (index === text.length) return false;
 
-    // We are inside the string so can guarantee that there is a character at the index.
+    // We are inside the string so can guarantee that there is a character at the index
     // Keep moving right if the current character is not a space
     return /\S/.test(text[index]);
 }

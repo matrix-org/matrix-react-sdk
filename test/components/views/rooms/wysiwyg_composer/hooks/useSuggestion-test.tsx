@@ -17,7 +17,7 @@ import React from "react";
 
 import {
     Suggestion,
-    findMentionOrCommand,
+    findSuggestionInText,
     getMappedSuggestion,
     processCommand,
     processMention,
@@ -218,7 +218,7 @@ describe("processSelectionChange", () => {
     });
 });
 
-describe("findMentionOrCommand", () => {
+describe("findSuggestionInText", () => {
     const command = "/someCommand";
     const userMention = "@userMention";
     const roomMention = "#roomMention";
@@ -227,12 +227,12 @@ describe("findMentionOrCommand", () => {
     const allTestCases = [command, userMention, roomMention];
 
     it("returns null if content does not contain any mention or command characters", () => {
-        expect(findMentionOrCommand("hello", 1)).toBeNull();
+        expect(findSuggestionInText("hello", 1)).toBeNull();
     });
 
     it("returns null if the offset is outside the content length", () => {
-        expect(findMentionOrCommand("hi", 30)).toBeNull();
-        expect(findMentionOrCommand("hi", -10)).toBeNull();
+        expect(findSuggestionInText("hi", 30)).toBeNull();
+        expect(findSuggestionInText("hi", -10)).toBeNull();
     });
 
     it.each(allTestCases)("returns an object when the whole input is special case: %s", (text) => {
@@ -242,22 +242,22 @@ describe("findMentionOrCommand", () => {
             endOffset: text.length,
         };
         // test for cursor at after special character, before end, end
-        expect(findMentionOrCommand(text, 1)).toEqual(expected);
-        expect(findMentionOrCommand(text, text.length - 2)).toEqual(expected);
-        expect(findMentionOrCommand(text, text.length)).toEqual(expected);
+        expect(findSuggestionInText(text, 1)).toEqual(expected);
+        expect(findSuggestionInText(text, text.length - 2)).toEqual(expected);
+        expect(findSuggestionInText(text, text.length)).toEqual(expected);
     });
 
     it("returns null when a command is followed by other text", () => {
         const followingText = " followed by something";
 
         // check for cursor inside and outside the command
-        expect(findMentionOrCommand(command + followingText, command.length - 2)).toBeNull();
-        expect(findMentionOrCommand(command + followingText, command.length + 2)).toBeNull();
+        expect(findSuggestionInText(command + followingText, command.length - 2)).toBeNull();
+        expect(findSuggestionInText(command + followingText, command.length + 2)).toBeNull();
     });
 
     it.each(mentionTestCases)("returns an object when a %s is followed by other text", (mention) => {
         const followingText = " followed by something else";
-        expect(findMentionOrCommand(mention + followingText, mention.length - 2)).toEqual({
+        expect(findSuggestionInText(mention + followingText, mention.length - 2)).toEqual({
             text: mention,
             startOffset: 0,
             endOffset: mention.length,
@@ -267,13 +267,13 @@ describe("findMentionOrCommand", () => {
     it("returns null if there is a command surrounded by text", () => {
         const precedingText = "text before the command ";
         const followingText = " text after the command";
-        expect(findMentionOrCommand(precedingText + command + followingText, precedingText.length + 4)).toBeNull();
+        expect(findSuggestionInText(precedingText + command + followingText, precedingText.length + 4)).toBeNull();
     });
 
     it.each(mentionTestCases)("returns an object if %s is surrounded by text", (mention) => {
         const precedingText = "I want to mention ";
         const followingText = " in my message";
-        expect(findMentionOrCommand(precedingText + mention + followingText, precedingText.length + 3)).toEqual({
+        expect(findSuggestionInText(precedingText + mention + followingText, precedingText.length + 3)).toEqual({
             text: mention,
             startOffset: precedingText.length,
             endOffset: precedingText.length + mention.length,
@@ -282,24 +282,24 @@ describe("findMentionOrCommand", () => {
 
     it("returns null for text content with an email address", () => {
         const emailInput = "send to user@test.com";
-        expect(findMentionOrCommand(emailInput, 15)).toBeNull();
+        expect(findSuggestionInText(emailInput, 15)).toBeNull();
     });
 
     it("returns null for double slashed command", () => {
         const doubleSlashCommand = "//not a command";
-        expect(findMentionOrCommand(doubleSlashCommand, 4)).toBeNull();
+        expect(findSuggestionInText(doubleSlashCommand, 4)).toBeNull();
     });
 
     it("returns null for slash separated text", () => {
         const slashSeparatedInput = "please to this/that/the other";
-        expect(findMentionOrCommand(slashSeparatedInput, 21)).toBeNull();
+        expect(findSuggestionInText(slashSeparatedInput, 21)).toBeNull();
     });
 
     it("returns an object for a mention that contains punctuation", () => {
         const mentionWithPunctuation = "@userX14#5a_-";
         const precedingText = "mention ";
         const mentionInput = precedingText + mentionWithPunctuation;
-        expect(findMentionOrCommand(mentionInput, 12)).toEqual({
+        expect(findSuggestionInText(mentionInput, 12)).toEqual({
             text: mentionWithPunctuation,
             startOffset: precedingText.length,
             endOffset: precedingText.length + mentionWithPunctuation.length,
@@ -308,7 +308,7 @@ describe("findMentionOrCommand", () => {
 
     it("returns null when user inputs any whitespace after the special character", () => {
         const mentionWithSpaceAfter = "@ somebody";
-        expect(findMentionOrCommand(mentionWithSpaceAfter, 2)).toBeNull();
+        expect(findSuggestionInText(mentionWithSpaceAfter, 2)).toBeNull();
     });
 });
 
