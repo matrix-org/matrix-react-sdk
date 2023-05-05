@@ -236,10 +236,15 @@ describe("findMentionOrCommand", () => {
     });
 
     it.each(allTestCases)("returns an object when the whole input is special case: %s", (text) => {
+        const expected = {
+            text,
+            startOffset: 0,
+            endOffset: text.length,
+        };
         // test for cursor at after special character, before end, end
-        expect(findMentionOrCommand(text, 1)).toEqual({ text, startOffset: 0 });
-        expect(findMentionOrCommand(text, text.length - 2)).toEqual({ text, startOffset: 0 });
-        expect(findMentionOrCommand(text, text.length)).toEqual({ text, startOffset: 0 });
+        expect(findMentionOrCommand(text, 1)).toEqual(expected);
+        expect(findMentionOrCommand(text, text.length - 2)).toEqual(expected);
+        expect(findMentionOrCommand(text, text.length)).toEqual(expected);
     });
 
     it("returns null when a command is followed by other text", () => {
@@ -255,6 +260,7 @@ describe("findMentionOrCommand", () => {
         expect(findMentionOrCommand(mention + followingText, mention.length - 2)).toEqual({
             text: mention,
             startOffset: 0,
+            endOffset: mention.length,
         });
     });
 
@@ -270,6 +276,7 @@ describe("findMentionOrCommand", () => {
         expect(findMentionOrCommand(precedingText + mention + followingText, precedingText.length + 3)).toEqual({
             text: mention,
             startOffset: precedingText.length,
+            endOffset: precedingText.length + mention.length,
         });
     });
 
@@ -295,6 +302,7 @@ describe("findMentionOrCommand", () => {
         expect(findMentionOrCommand(mentionInput, 12)).toEqual({
             text: mentionWithPunctuation,
             startOffset: precedingText.length,
+            endOffset: precedingText.length + mentionWithPunctuation.length,
         });
     });
 
