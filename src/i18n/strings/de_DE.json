@@ -3772,5 +3772,6 @@
     "Unknown password change error (%(stringifiedError)s)": "Unbekannter Fehler während der Passwortänderung (%(stringifiedError)s)",
     "Error while changing password: %(error)s": "Fehler während der Passwortänderung: %(error)s",
     "You reacted %(reaction)s to %(message)s": "Du hast mit %(reaction)s auf %(message)s reagiert",
-    "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s reagierten mit %(reaction)s auf %(message)s"
+    "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s reagierten mit %(reaction)s auf %(message)s",
+    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Einladen per E-Mail-Adresse ist nicht ohne Identitäts-Server möglich. Du kannst einen unter „Einstellungen“ einrichten."
 }
