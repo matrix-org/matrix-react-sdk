@@ -40,6 +40,7 @@ limitations under the License.
     .mx_TopUnreadMessagesBar_scrollUp,
     .mx_TopUnreadMessagesBar_markAsRead {
         background: var(--background);
+        width: var(--width);
         height: var(--height);
         border: var(--border);
         border-radius: var(--borderRadius);
@@ -77,17 +78,16 @@ limitations under the License.
 
     .mx_TopUnreadMessagesBar_markAsRead {
         --background: $background;
+        --width: 18px;
         --height: 18px;
         --border: 1.3px solid $muted-fg-color;
         --borderRadius: 10px;
 
         display: block;
-        width: 18px;
         margin: 5px auto;
 
         &::before {
             --background: $muted-fg-color;
-            --width: 18px;
             --maskImage: url("$(res)/img/cancel.svg");
             --maskSize: 10px;
         }
