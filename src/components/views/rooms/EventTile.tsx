@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, forwardRef, MouseEvent, ReactNode, RefObject } from "react";
+import React, { createRef, forwardRef, MouseEvent, ReactNode, RefObject, useRef } from "react";
 import classNames from "classnames";
 import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
@@ -1519,7 +1519,12 @@ class E2ePadlock extends React.Component<IE2ePadlockProps, IE2ePadlockState> {
 
         const classes = `mx_EventTile_e2eIcon mx_EventTile_e2eIcon_${this.props.icon}`;
         return (
-            <div className={classes} onMouseEnter={this.onHoverStart} onMouseLeave={this.onHoverEnd}>
+            <div
+                className={classes}
+                onMouseEnter={this.onHoverStart}
+                onMouseLeave={this.onHoverEnd}
+                aria-label={this.props.title}
+            >
                 {tooltip}
             </div>
         );
@@ -1531,6 +1536,7 @@ interface ISentReceiptProps {
 }
 
 function SentReceipt({ messageState }: ISentReceiptProps): JSX.Element {
+    const tooltipId = useRef(`mx_SentReceipt_${Math.random()}`).current;
     const isSent = !messageState || messageState === "sent";
     const isFailed = messageState === "not_sent";
     const receiptClasses = classNames({
@@ -1552,6 +1558,7 @@ function SentReceipt({ messageState }: ISentReceiptProps): JSX.Element {
         label = _t("Failed to send");
     }
     const [{ showTooltip, hideTooltip }, tooltip] = useTooltip({
+        id: tooltipId,
         label: label,
         alignment: Alignment.TopRight,
     });
@@ -1565,6 +1572,7 @@ function SentReceipt({ messageState }: ISentReceiptProps): JSX.Element {
                     onMouseLeave={hideTooltip}
                     onFocus={showTooltip}
                     onBlur={hideTooltip}
+                    aria-describedby={tooltipId}
                 >
                     <span className="mx_ReadReceiptGroup_container">
                         <span className={receiptClasses}>{nonCssBadge}</span>

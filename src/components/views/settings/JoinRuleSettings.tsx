@@ -36,7 +36,7 @@ import { Action } from "../../../dispatcher/actions";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { doesRoomVersionSupport, PreferredRoomVersions } from "../../../utils/PreferredRoomVersions";
 
-interface IProps {
+export interface JoinRuleSettingsProps {
     room: Room;
     promptUpgrade?: boolean;
     closeSettingsFn(): void;
@@ -45,7 +45,7 @@ interface IProps {
     aliasWarning?: ReactNode;
 }
 
-const JoinRuleSettings: React.FC<IProps> = ({
+const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
     room,
     promptUpgrade,
     aliasWarning,
