@@ -366,6 +366,12 @@ $MinWidth: 240px;
     border-radius: 3px;
     padding: 6px 8px;
 
+    &.mx_AppPermissionWarning_tooltip--dark {
+        .mx_Tooltip_chevron::after {
+            border-right-color: $tooltip-timeline-bg-color;
+        }
+    }
+
     ul {
         list-style-position: inside;
         padding-left: 2px;
