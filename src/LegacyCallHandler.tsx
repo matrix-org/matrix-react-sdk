@@ -636,7 +636,7 @@ export default class LegacyCallHandler extends EventEmitter {
                 const newMappedRoomId = this.roomIdForCall(call);
                 logger.log(`Old room ID: ${mappedRoomId}, new room ID: ${newMappedRoomId}`);
                 if (newMappedRoomId && newMappedRoomId !== mappedRoomId) {
-                    this.removeCallForRoom(mappedRoomId);
+                    if (mappedRoomId) this.removeCallForRoom(mappedRoomId);
                     mappedRoomId = newMappedRoomId;
                     logger.log("Moving call to room " + mappedRoomId);
                     this.addCallForRoom(mappedRoomId, call, true);
@@ -646,9 +646,9 @@ export default class LegacyCallHandler extends EventEmitter {
     }
 
     private onCallStateChanged = (newState: CallState, oldState: CallState | null, call: MatrixCall): void => {
-        if (!this.matchesCallForThisRoom(call)) return;
-
         const mappedRoomId = this.roomIdForCall(call);
+        if (!mappedRoomId || !this.matchesCallForThisRoom(call)) return;
+
         this.setCallState(call, newState);
         dis.dispatch({
             action: "call_state",
@@ -699,8 +699,8 @@ export default class LegacyCallHandler extends EventEmitter {
                     // Don't show a modal when we got rejected/the call was hung up
                     if (!hangupReason || [CallErrorCode.UserHangup, "user hangup"].includes(hangupReason)) break;
 
-                    let title;
-                    let description;
+                    let title: string;
+                    let description: string;
                     // TODO: We should either do away with these or figure out a copy for each code (expect user_hangup...)
                     if (call.hangupReason === CallErrorCode.UserBusy) {
                         title = _t("User Busy");
@@ -730,7 +730,7 @@ export default class LegacyCallHandler extends EventEmitter {
         }
     };
 
-    private async logCallStats(call: MatrixCall, mappedRoomId: string | null): Promise<void> {
+    private async logCallStats(call: MatrixCall, mappedRoomId: string): Promise<void> {
         const stats = await call.getCurrentCallStats();
         logger.debug(
             `Call completed. Call ID: ${call.callId}, virtual room ID: ${call.roomId}, ` +
@@ -803,8 +803,7 @@ export default class LegacyCallHandler extends EventEmitter {
         this.emit(LegacyCallHandlerEvent.CallState, mappedRoomId, status);
     }
 
-    private removeCallForRoom(roomId: string | null): void {
-        if (!roomId) return;
+    private removeCallForRoom(roomId: string): void {
         logger.log("Removing call for room ", roomId);
         this.calls.delete(roomId);
         this.emit(LegacyCallHandlerEvent.CallsChanged, this.calls);
