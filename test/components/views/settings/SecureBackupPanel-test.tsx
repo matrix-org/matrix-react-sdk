@@ -62,7 +62,7 @@ describe("<SecureBackupPanel />", () => {
             },
         });
 
-        client.crypto.secretStorage.hasKey.mockClear().mockResolvedValue(false);
+        mocked(client.crypto!.secretStorage.hasKey).mockClear().mockResolvedValue(false);
         client.deleteKeyBackupVersion.mockClear().mockResolvedValue();
         client.getKeyBackupVersion.mockClear();
         client.isKeyBackupTrusted.mockClear();
@@ -166,7 +166,7 @@ describe("<SecureBackupPanel />", () => {
     });
 
     it("resets secret storage", async () => {
-        client.crypto.secretStorage.hasKey.mockClear().mockResolvedValue(true);
+        mocked(client.crypto!.secretStorage.hasKey).mockClear().mockResolvedValue(true);
         getComponent();
         // flush checkKeyBackup promise
         await flushPromises();
