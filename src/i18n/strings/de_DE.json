@@ -3770,5 +3770,7 @@
     "Error changing password": "Fehler während der Passwortänderung",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP-Status %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Unbekannter Fehler während der Passwortänderung (%(stringifiedError)s)",
-    "Error while changing password: %(error)s": "Fehler während der Passwortänderung: %(error)s"
+    "Error while changing password: %(error)s": "Fehler während der Passwortänderung: %(error)s",
+    "You reacted %(reaction)s to %(message)s": "Du hast mit %(reaction)s auf %(message)s reagiert",
+    "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s reagierten mit %(reaction)s auf %(message)s"
 }
