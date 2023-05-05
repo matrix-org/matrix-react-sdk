@@ -18,6 +18,7 @@ import React, { useCallback, useMemo, useState } from "react";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { RoomState } from "matrix-js-sdk/src/models/room-state";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
@@ -27,16 +28,16 @@ import SettingsTab from "../SettingsTab";
 import { ElementCall } from "../../../../../models/Call";
 import { useRoomState } from "../../../../../hooks/useRoomState";
 import SdkConfig, { DEFAULTS } from "../../../../../SdkConfig";
+import { SettingsSection } from "../../shared/SettingsSection";
 
 interface ElementCallSwitchProps {
-    roomId: string;
+    room: Room;
 }
 
-const ElementCallSwitch: React.FC<ElementCallSwitchProps> = ({ roomId }) => {
-    const room = useMemo(() => MatrixClientPeg.get().getRoom(roomId), [roomId]);
-    const isPublic = useMemo(() => room?.getJoinRule() === JoinRule.Public, [room]);
+const ElementCallSwitch: React.FC<ElementCallSwitchProps> = ({ room }) => {
+    const isPublic = useMemo(() => room.getJoinRule() === JoinRule.Public, [room]);
     const [content, events, maySend] = useRoomState(
-        room ?? undefined,
+        room,
         useCallback((state: RoomState) => {
             const content = state?.getStateEvents(EventType.RoomPowerLevels, "")?.getContent();
             return [
@@ -68,12 +69,12 @@ const ElementCallSwitch: React.FC<ElementCallSwitchProps> = ({ roomId }) => {
                 events[ElementCall.MEMBER_EVENT_TYPE.name] = adminLevel;
             }
 
-            MatrixClientPeg.get().sendStateEvent(roomId, EventType.RoomPowerLevels, {
+            MatrixClientPeg.get().sendStateEvent(room.roomId, EventType.RoomPowerLevels, {
                 events: events,
                 ...content,
             });
         },
-        [roomId, content, events, isPublic],
+        [room.roomId, content, events, isPublic],
     );
 
     const brand = SdkConfig.get("element_call").brand ?? DEFAULTS.element_call.brand;
@@ -95,15 +96,17 @@ const ElementCallSwitch: React.FC<ElementCallSwitchProps> = ({ roomId }) => {
 };
 
 interface Props {
-    roomId: string;
+    room: Room;
 }
 
-export const VoipRoomSettingsTab: React.FC<Props> = ({ roomId }) => {
+export const VoipRoomSettingsTab: React.FC<Props> = ({ room }) => {
     return (
-        <SettingsTab heading={_t("Voice & Video")}>
-            <SettingsSubsection heading={_t("Call type")}>
-                <ElementCallSwitch roomId={roomId} />
-            </SettingsSubsection>
+        <SettingsTab>
+            <SettingsSection heading={_t("Voice & Video")}>
+                <SettingsSubsection heading={_t("Call type")}>
+                    <ElementCallSwitch room={room} />
+                </SettingsSubsection>
+            </SettingsSection>
         </SettingsTab>
     );
 };

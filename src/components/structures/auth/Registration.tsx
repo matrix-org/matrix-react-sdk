@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { AuthType, createClient, IAuthData, IInputs, MatrixError } from "matrix-js-sdk/src/matrix";
+import { AuthType, createClient, IAuthDict, IAuthData, IInputs, MatrixError } from "matrix-js-sdk/src/matrix";
 import React, { Fragment, ReactNode } from "react";
 import { IRegisterRequestParams, IRequestTokenResponse, MatrixClient } from "matrix-js-sdk/src/client";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ISSOFlow, SSOAction } from "matrix-js-sdk/src/@types/auth";
 
-import { _t, _td } from "../../../languageHandler";
-import { messageForResourceLimitError } from "../../../utils/ErrorUtils";
+import { _t } from "../../../languageHandler";
+import { adminContactStrings, messageForResourceLimitError, resourceLimitStrings } from "../../../utils/ErrorUtils";
 import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 import * as Lifecycle from "../../../Lifecycle";
 import { IMatrixClientCreds, MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -313,17 +313,15 @@ export default class Registration extends React.Component<IProps, IState> {
             let errorText: ReactNode = (response as Error).message || (response as Error).toString();
             // can we give a better error message?
             if (response instanceof MatrixError && response.errcode === "M_RESOURCE_LIMIT_EXCEEDED") {
-                const errorTop = messageForResourceLimitError(response.data.limit_type, response.data.admin_contact, {
-                    "monthly_active_user": _td("This homeserver has hit its Monthly Active User limit."),
-                    "hs_blocked": _td("This homeserver has been blocked by its administrator."),
-                    "": _td("This homeserver has exceeded one of its resource limits."),
-                });
+                const errorTop = messageForResourceLimitError(
+                    response.data.limit_type,
+                    response.data.admin_contact,
+                    resourceLimitStrings,
+                );
                 const errorDetail = messageForResourceLimitError(
                     response.data.limit_type,
                     response.data.admin_contact,
-                    {
-                        "": _td("Please <a>contact your service administrator</a> to continue using this service."),
-                    },
+                    adminContactStrings,
                 );
                 errorText = (
                     <div>
@@ -463,7 +461,7 @@ export default class Registration extends React.Component<IProps, IState> {
         });
     };
 
-    private makeRegisterRequest = (auth: IAuthData | null): Promise<IAuthData> => {
+    private makeRegisterRequest = (auth: IAuthDict | null): Promise<IAuthData> => {
         if (!this.state.matrixClient) throw new Error("Matrix client has not yet been loaded");
 
         const registerParams: IRegisterRequestParams = {

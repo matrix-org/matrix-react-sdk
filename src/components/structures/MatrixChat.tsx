@@ -143,7 +143,7 @@ import { findDMForUser } from "../../utils/dm/findDMForUser";
 import { Linkify } from "../../HtmlUtils";
 import { NotificationColor } from "../../stores/notifications/NotificationColor";
 import { UserTab } from "../views/dialogs/UserTab";
-import { Icon as EncryptionIcon } from "../../../res/img/compound/encryption-24px.svg";
+
 // legacy export
 export { default as Views } from "../../Views";
 
@@ -161,7 +161,6 @@ interface IScreen {
 
 interface IProps {
     config: IConfigOptions;
-    serverConfig?: ValidatedServerConfig;
     onNewScreen: (screen: string, replaceLast: boolean) => void;
     enableGuest?: boolean;
     // the queryParams extracted from the [real] query-string of the URI
@@ -422,7 +421,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     public componentDidUpdate(prevProps: IProps, prevState: IState): void {
         if (this.shouldTrackPageChange(prevState, this.state)) {
             const durationMs = this.stopPageChangeTimer();
-            PosthogTrackers.instance.trackPageChange(this.state.view, this.state.page_type, durationMs);
+            if (durationMs != null) {
+                PosthogTrackers.instance.trackPageChange(this.state.view, this.state.page_type, durationMs);
+            }
         }
         if (this.focusComposer) {
             dis.fire(Action.FocusSendMessageComposer);
@@ -472,15 +473,13 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }, 1000);
 
     private getFallbackHsUrl(): string | undefined {
-        if (this.props.serverConfig?.isDefault) {
+        if (this.getServerProperties().serverConfig?.isDefault) {
             return this.props.config.fallback_hs_url;
         }
     }
 
     private getServerProperties(): { serverConfig: ValidatedServerConfig } {
-        let props = this.state.serverConfig;
-        if (!props) props = this.props.serverConfig; // for unit tests
-        if (!props) props = SdkConfig.get("validated_server_config")!;
+        const props = this.state.serverConfig || SdkConfig.get("validated_server_config")!;
         return { serverConfig: props };
     }
 
@@ -935,7 +934,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             await this.firstSyncPromise.promise;
         }
 
-        let presentedId = roomInfo.room_alias || roomInfo.room_id;
+        let presentedId = roomInfo.room_alias || roomInfo.room_id!;
         const room = MatrixClientPeg.get().getRoom(roomInfo.room_id);
         if (room) {
             // Not all timeline events are decrypted ahead of time anymore
@@ -1669,9 +1668,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 ToastStore.sharedInstance().addOrReplaceToast({
                     key: "verifreq_" + request.channel.transactionId,
                     title: _t("Verification requested"),
-                    iconElement: (
-                        <EncryptionIcon className="mx_Icon mx_Icon_24 mx_Icon_secondary-content mx_Toast_icon" />
-                    ),
+                    icon: "verification",
                     props: { request },
                     component: VerificationRequestToast,
                     priority: 90,
@@ -1774,7 +1771,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         } else if (screen === "start_sso" || screen === "start_cas") {
             let cli = MatrixClientPeg.get();
             if (!cli) {
-                const { hsUrl, isUrl } = this.props.serverConfig;
+                const { hsUrl, isUrl } = this.getServerProperties().serverConfig;
                 cli = createClient({
                     baseUrl: hsUrl,
                     idBaseUrl: isUrl,
