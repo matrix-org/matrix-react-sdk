@@ -846,6 +846,38 @@ describe("<Notifications />", () => {
             });
         });
 
+        it("adds a new keyword with same actions as existing rules when keywords rule is off", async () => {
+            const offContentRule = {
+                ...bananaRule,
+                enabled: false,
+                actions: [PushRuleActionName.Notify],
+            };
+            const pushRulesWithContentOff = {
+                global: {
+                    ...pushRules.global,
+                    content: [offContentRule],
+                },
+            };
+            mockClient.pushRules = pushRulesWithContentOff;
+            mockClient.getPushRules.mockClear().mockResolvedValue(pushRulesWithContentOff);
+
+            await getComponentAndWait();
+
+            const keywords = screen.getByTestId("vector_mentions_keywords");
+
+            expect(within(keywords).getByLabelText("Off")).toBeChecked();
+
+            await userEvent.type(screen.getByLabelText("Keyword"), "jest");
+            expect(screen.getByLabelText("Keyword")).toHaveValue("jest");
+
+            fireEvent.click(screen.getByText("Add"));
+
+            expect(mockClient.addPushRule).toHaveBeenCalledWith("global", PushRuleKind.ContentSpecific, "jest", {
+                actions: [PushRuleActionName.Notify, { set_tweak: TweakName.Highlight, value: false }],
+                pattern: "jest",
+            });
+        });
+
         it("removes keyword", async () => {
             await getComponentAndWait();
 
