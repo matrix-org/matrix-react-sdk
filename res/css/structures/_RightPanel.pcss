@@ -135,35 +135,6 @@ $pulse-color: $alert;
     }
 }
 
-@keyframes mx_RightPanel_indicator_pulse {
-    0% {
-        transform: scale(0.95);
-    }
-
-    70% {
-        transform: scale(1);
-    }
-
-    100% {
-        transform: scale(0.95);
-    }
-}
-
-@keyframes mx_RightPanel_indicator_pulse_shadow {
-    0% {
-        opacity: 0.7;
-    }
-
-    70% {
-        transform: scale(2.2);
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
-
 .mx_RightPanel_headerButton_unread {
     &::before {
         background-color: $room-icon-unread-color !important;
