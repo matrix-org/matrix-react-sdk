@@ -17,11 +17,12 @@ limitations under the License.
 import { parsePermalink } from "./permalinks/Permalinks";
 
 /**
- * Parse a search string and return either a room ID/alias/userId or the original search term if it does
- * not look like a permalink.
+ * Returns the primaryEntityId(roomIdOrAlias or userId) if the search term 
+ * is a permalink and the primaryEntityId is not null. Otherwise, it returns
+ * the original search term.
  * E.g https://matrix.to/#/#element-dev:matrix.org returns #element-dev:matrix.org
  * @param {string} searchTerm The search term.
- * @returns {string} The room ID or alias, or the original search term if it doesn't look like a permalink.
+ * @returns {string} The roomId, alias, userId, or the original search term
  */
 export function transformSearchTerm(searchTerm: string): string {
     const parseLink = parsePermalink(searchTerm);
