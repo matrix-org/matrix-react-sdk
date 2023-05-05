@@ -305,7 +305,6 @@
     "Waiting for answer": ".i ca'o denpa lo nu spuda",
     "%(senderName)s is calling": ".i la'o zoi. %(senderName)s .zoi co'a fonjo'e",
     "%(senderName)s: %(message)s": "%(senderName)s: %(message)s",
-    "%(senderName)s: %(reaction)s": "%(senderName)s: %(reaction)s",
     "%(senderName)s: %(stickerName)s": "%(senderName)s: %(stickerName)s",
     "%(senderName)s invited %(targetName)s": ".i la'o zoi. %(senderName)s .zoi friti le ka ziljmina kei la'o zoi. %(targetName)s .zoi",
     "Use a system font": "nu da pe le vanbi cu ci'artai",

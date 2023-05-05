@@ -381,7 +381,6 @@
     "Matrix": "Matrix",
     "Change notification settings": "Skift notifikations indstillinger",
     "%(senderName)s: %(stickerName)s": "%(senderName)s: %(stickerName)s",
-    "%(senderName)s: %(reaction)s": "%(senderName)s: %(reaction)s",
     "%(senderName)s: %(message)s": "%(senderName)s: %(message)s",
     "* %(senderName)s %(emote)s": "* %(senderName)s %(emote)s",
     "%(senderName)s is calling": "%(senderName)s ringer",

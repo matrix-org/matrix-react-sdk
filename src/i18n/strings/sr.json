@@ -525,7 +525,6 @@
     "%(senderName)s placed a video call. (not supported by this browser)": "%(senderName)s је започео видео позив. (није подржано од стране овог прегледача)",
     "You do not have permission to invite people to this room.": "Немате дозволу за позивање људи у ову собу.",
     "Encryption upgrade available": "Надоградња шифровања је доступна",
-    "%(senderName)s: %(reaction)s": "%(senderName)s: %(reaction)s",
     "Show info about bridges in room settings": "Прикажи податке о мостовима у подешавањима собе",
     "Enable Emoji suggestions while typing": "Омогући предлоге емоџија приликом куцања",
     "Upload": "Отпреми",

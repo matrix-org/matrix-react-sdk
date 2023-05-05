@@ -534,7 +534,6 @@
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "Saziņa ar šo lietotāju ir nodrošināta ar pilnīgu šifrēšanu un nav nolasāma trešajām pusēm.",
     "Encrypted by a deleted session": "Šifrēts ar dzēstu sesiju",
     "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>reaģēja ar %(shortName)s</reactedWith>",
-    "%(senderName)s: %(reaction)s": "%(senderName)s: %(reaction)s",
     "Reactions": "Reaģēšana",
     "Quick Reactions": "Ātra reaģēšana",
     "React": "Reaģēt",
