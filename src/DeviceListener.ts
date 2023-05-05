@@ -51,7 +51,7 @@ import { isBulkUnverifiedDeviceReminderSnoozed } from "./utils/device/snoozeBulk
 const KEY_BACKUP_POLL_INTERVAL = 5 * 60 * 1000;
 
 export default class DeviceListener {
-    private dispatcherRef: string | null;
+    private dispatcherRef?: string;
     // device IDs for which the user has dismissed the verify toast ('Later')
     private dismissed = new Set<string>();
     // has the user dismissed any of the various nag toasts to setup encryption on this device?
@@ -119,7 +119,7 @@ export default class DeviceListener {
         }
         if (this.dispatcherRef) {
             dis.unregister(this.dispatcherRef);
-            this.dispatcherRef = null;
+            this.dispatcherRef = undefined;
         }
         this.dismissed.clear();
         this.dismissedThisDeviceToast = false;
@@ -310,7 +310,11 @@ export default class DeviceListener {
         const newUnverifiedDeviceIds = new Set<string>();
 
         const isCurrentDeviceTrusted =
-            crossSigningReady && (await cli.checkDeviceTrust(cli.getUserId()!, cli.deviceId!).isCrossSigningVerified());
+            crossSigningReady &&
+            Boolean(
+                (await cli.getCrypto()?.getDeviceVerificationStatus(cli.getUserId()!, cli.deviceId!))
+                    ?.crossSigningVerified,
+            );
 
         // as long as cross-signing isn't ready,
         // you can't see or dismiss any device toasts
@@ -319,8 +323,10 @@ export default class DeviceListener {
             for (const device of devices) {
                 if (device.deviceId === cli.deviceId) continue;
 
-                const deviceTrust = await cli.checkDeviceTrust(cli.getUserId()!, device.deviceId!);
-                if (!deviceTrust.isCrossSigningVerified() && !this.dismissed.has(device.deviceId)) {
+                const deviceTrust = await cli
+                    .getCrypto()!
+                    .getDeviceVerificationStatus(cli.getUserId()!, device.deviceId!);
+                if (!deviceTrust?.crossSigningVerified && !this.dismissed.has(device.deviceId)) {
                     if (this.ourDeviceIdsAtStart?.has(device.deviceId)) {
                         oldUnverifiedDeviceIds.add(device.deviceId);
                     } else {

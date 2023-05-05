@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, forwardRef, MouseEvent, ReactNode, RefObject } from "react";
+import React, { createRef, forwardRef, MouseEvent, ReactNode, RefObject, useRef } from "react";
 import classNames from "classnames";
 import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
@@ -265,6 +265,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
     public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
 
+    private unmounted = false;
+
     public constructor(props: EventTileProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);
 
@@ -420,6 +422,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             this.props.mxEvent.removeListener(MatrixEventEvent.RelationsCreated, this.onReactionsCreated);
         }
         this.props.mxEvent.off(ThreadEvent.Update, this.updateThread);
+        this.unmounted = false;
     }
 
     public componentDidUpdate(prevProps: Readonly<EventTileProps>, prevState: Readonly<IState>): void {
@@ -561,7 +564,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         this.verifyEvent();
     };
 
-    private verifyEvent(): void {
+    private async verifyEvent(): Promise<void> {
         // if the event was edited, show the verification info for the edit, not
         // the original
         const mxEvent = this.props.mxEvent.replacingEvent() ?? this.props.mxEvent;
@@ -590,7 +593,14 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         }
 
         const eventSenderTrust =
-            encryptionInfo.sender && MatrixClientPeg.get().checkDeviceTrust(senderId, encryptionInfo.sender.deviceId);
+            senderId &&
+            encryptionInfo.sender &&
+            (await MatrixClientPeg.get()
+                .getCrypto()
+                ?.getDeviceVerificationStatus(senderId, encryptionInfo.sender.deviceId));
+
+        if (this.unmounted) return;
+
         if (!eventSenderTrust) {
             this.setState({ verified: E2EState.Unknown });
             return;
@@ -738,7 +748,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             }
         }
 
-        if (MatrixClientPeg.get().isRoomEncrypted(ev.getRoomId())) {
+        if (MatrixClientPeg.get().isRoomEncrypted(ev.getRoomId()!)) {
             // else if room is encrypted
             // and event is being encrypted or is not_sent (Unknown Devices/Network Error)
             if (ev.status === EventStatus.ENCRYPTING) {
@@ -773,7 +783,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         if (!this.props.showReactions || !this.props.getRelationsForEvent) {
             return null;
         }
-        const eventId = this.props.mxEvent.getId();
+        const eventId = this.props.mxEvent.getId()!;
         return this.props.getRelationsForEvent(eventId, "m.annotation", "m.reaction") ?? null;
     };
 
@@ -791,7 +801,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
     };
 
     private onTimestampContextMenu = (ev: React.MouseEvent): void => {
-        this.showContextMenu(ev, this.props.permalinkCreator?.forEvent(this.props.mxEvent.getId()));
+        this.showContextMenu(ev, this.props.permalinkCreator?.forEvent(this.props.mxEvent.getId()!));
     };
 
     private showContextMenu(ev: React.MouseEvent, permalink?: string): void {
@@ -964,7 +974,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
         let permalink = "#";
         if (this.props.permalinkCreator) {
-            permalink = this.props.permalinkCreator.forEvent(this.props.mxEvent.getId());
+            permalink = this.props.permalinkCreator.forEvent(this.props.mxEvent.getId()!);
         }
 
         // we can't use local echoes as scroll tokens, because their event IDs change.
@@ -1503,7 +1513,12 @@ class E2ePadlock extends React.Component<IE2ePadlockProps, IE2ePadlockState> {
 
         const classes = `mx_EventTile_e2eIcon mx_EventTile_e2eIcon_${this.props.icon}`;
         return (
-            <div className={classes} onMouseEnter={this.onHoverStart} onMouseLeave={this.onHoverEnd}>
+            <div
+                className={classes}
+                onMouseEnter={this.onHoverStart}
+                onMouseLeave={this.onHoverEnd}
+                aria-label={this.props.title}
+            >
                 {tooltip}
             </div>
         );
@@ -1515,6 +1530,7 @@ interface ISentReceiptProps {
 }
 
 function SentReceipt({ messageState }: ISentReceiptProps): JSX.Element {
+    const tooltipId = useRef(`mx_SentReceipt_${Math.random()}`).current;
     const isSent = !messageState || messageState === "sent";
     const isFailed = messageState === "not_sent";
     const receiptClasses = classNames({
@@ -1536,6 +1552,7 @@ function SentReceipt({ messageState }: ISentReceiptProps): JSX.Element {
         label = _t("Failed to send");
     }
     const [{ showTooltip, hideTooltip }, tooltip] = useTooltip({
+        id: tooltipId,
         label: label,
         alignment: Alignment.TopRight,
     });
@@ -1549,6 +1566,7 @@ function SentReceipt({ messageState }: ISentReceiptProps): JSX.Element {
                     onMouseLeave={hideTooltip}
                     onFocus={showTooltip}
                     onBlur={hideTooltip}
+                    aria-describedby={tooltipId}
                 >
                     <span className="mx_ReadReceiptGroup_container">
                         <span className={receiptClasses}>{nonCssBadge}</span>
