@@ -43,10 +43,10 @@ describe("transforming search term", () => {
         mocked(parsePermalink).mockReturnValue({
             primaryEntityId: null,
             roomIdOrAlias: null,
-            eventId: "",
-            userId: "",
-            viaServers: [],
-            sigil: "",
+            eventId: null,
+            userId: null,
+            viaServers: null,
+            sigil: "?",
         });
         
         expect(transformSearchTerm(searchTerm)).toBe(searchTerm);
