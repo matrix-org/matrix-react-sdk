@@ -3770,5 +3770,8 @@
     "Error changing password": "Помилка зміни пароля",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP-статус %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Невідома помилка зміни пароля (%(stringifiedError)s)",
-    "Error while changing password: %(error)s": "Помилка зміни пароля: %(error)s"
+    "Error while changing password: %(error)s": "Помилка зміни пароля: %(error)s",
+    "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s реагує з %(reaction)s на %(message)s",
+    "You reacted %(reaction)s to %(message)s": "Ви зреагували %(reaction)s на %(message)s",
+    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Неможливо запросити користувача електронною поштою без сервера ідентифікації. Ви можете під'єднатися до нього в розділі «Налаштування»."
 }
