@@ -1951,7 +1951,6 @@
     "Send text messages as you in this room": "Lähetä tähän huoneeseen tekstiviestejä itsenäsi",
     "Send messages as you in your active room": "Lähetä aktiiviseen huoneeseesi viestejä itsenäsi",
     "Send messages as you in this room": "Lähetä tähän huoneeseen viestejä itsenäsi",
-    "Show message previews for reactions in all rooms": "Näytä reaktioille esikatselu kaikissa huoneissa",
     "Render LaTeX maths in messages": "Piirrä LaTeX-matematiikka viesteissä",
     "* %(senderName)s %(emote)s": "* %(senderName)s %(emote)s",
     "Downloading logs": "Ladataan lokeja",

@@ -1188,7 +1188,6 @@
     "Show Widgets": "Rodyti Valdiklius",
     "Always show the window menu bar": "Visada rodyti lango meniu juostą",
     "Show less": "Rodyti mažiau",
-    "Show message previews for reactions in DMs": "Rodyti žinučių peržiūras reakcijoms tiesioginėse žinutėse",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Neleisti vartotojams kalbėti senoje kambario versijoje ir paskelbti pranešimą, kuriame vartotojams patariama persikelti į naują kambarį",
     "Update any local room aliases to point to the new room": "Atnaujinkite vietinių kambarių slapyvardžius, kad nurodytumėte į naująjį kambarį",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Norint atnaujinti šį kambarį, reikia uždaryti esamą kambario instanciją ir vietoje jo sukurti naują kambarį. Norėdami suteikti kambario nariams kuo geresnę patirtį, mes:",

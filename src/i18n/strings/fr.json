@@ -1604,7 +1604,6 @@
     "Error leaving room": "Erreur en essayant de quitter le salon",
     "* %(senderName)s %(emote)s": "* %(senderName)s %(emote)s",
     "Change notification settings": "Modifier les paramètres de notification",
-    "Show message previews for reactions in all rooms": "Afficher la prévisualisation des messages pour les réactions dans tous les salons",
     "Uploading logs": "Envoi des journaux",
     "Downloading logs": "Téléchargement des journaux",
     "Your server isn't responding to some <a>requests</a>.": "Votre serveur ne répond pas à certaines <a>requêtes</a>.",

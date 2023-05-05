@@ -1589,7 +1589,6 @@
     "When rooms are upgraded": "当房间升级时",
     "Unexpected server error trying to leave the room": "试图离开房间时发生意外服务器错误",
     "Error leaving room": "离开房间时出错",
-    "Show message previews for reactions in all rooms": "为所有房间的反应显示消息预览",
     "Uploading logs": "正在上传日志",
     "Downloading logs": "正在下载日志",
     "This bridge was provisioned by <user />.": "此桥曾由<user />提供。",

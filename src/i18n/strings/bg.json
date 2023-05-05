@@ -1586,7 +1586,6 @@
     "Downloading logs": "Изтегляне на логове",
     "Uploading logs": "Качване на логове",
     "Offline encrypted messaging using dehydrated devices": "Офлайн шифровани съобщения чрез използването на дехидратирани устройства",
-    "Show message previews for reactions in DMs": "Показвай преглед на реакциите за директни съобщения",
     "Change notification settings": "Промяна на настройките за уведомление",
     "%(senderName)s: %(stickerName)s": "%(senderName)s: %(stickerName)s",
     "Unexpected server error trying to leave the room": "Възникна неочаквана сървърна грешка при опит за напускане на стаята",

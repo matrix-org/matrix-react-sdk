@@ -2059,7 +2059,6 @@
     "See <b>%(msgtype)s</b> messages posted to this room": "Prohlédnout zprávy <b>%(msgtype)s</b> zveřejněné v této místnosti",
     "See <b>%(msgtype)s</b> messages posted to your active room": "Prohlédnout zprávy <b>%(msgtype)s</b> zveřejněné ve vaší aktivní místnosti",
     "Render LaTeX maths in messages": "Ve zprávách vykreslit matematické výrazy LaTeXu",
-    "Show message previews for reactions in all rooms": "Zobrazit náhledy zpráv pro reakce ve všech místnostech",
     "Sends the given message with confetti": "Pošle zprávu s konfetami",
     "sends confetti": "pošle konfety",
     "Sends the given message with fireworks": "Pošle zprávu s ohňostrojem",

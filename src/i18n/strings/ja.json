@@ -1703,7 +1703,6 @@
     "Show stickers button": "ステッカーボタンを表示",
     "Show info about bridges in room settings": "ルームの設定にブリッジの情報を表示",
     "Offline encrypted messaging using dehydrated devices": "乾燥した（dehydrated）端末を使用したオフラインの暗号化メッセージング",
-    "Show message previews for reactions in DMs": "ダイレクトメッセージ中のリアクションにメッセージプレビューを表示",
     "Support adding custom themes": "ユーザー定義のテーマの追加をサポート",
     "Render LaTeX maths in messages": "メッセージ中のLaTeX数式を描画",
     "Change notification settings": "通知設定を変更",

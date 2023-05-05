@@ -1786,7 +1786,6 @@
     "%(targetName)s left the room: %(reason)s": "%(targetName)s opuścił(-a) pokój: %(reason)s",
     "%(targetName)s left the room": "%(targetName)s opuścił(-a) pokój",
     "%(senderName)s unbanned %(targetName)s": "%(senderName)s odbanował(-a) %(targetName)s",
-    "Show message previews for reactions in DMs": "Pokazuj poglądy wiadomości dla reakcji w wiadomościach bezpośrednich",
     "Developer": "Developer",
     "Experimental": "Eksperymentalne",
     "Themes": "Motywy",

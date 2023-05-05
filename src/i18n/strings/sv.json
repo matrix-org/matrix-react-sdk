@@ -1130,7 +1130,6 @@
     "%(senderName)s: %(stickerName)s": "%(senderName)s: %(stickerName)s",
     "Change notification settings": "Ändra aviseringsinställningar",
     "Support adding custom themes": "Stöd tilläggning av anpassade teman",
-    "Show message previews for reactions in all rooms": "Visa meddelandeförhandsgranskningar för reaktioner i alla rum",
     "Show info about bridges in room settings": "Visa info om bryggor i rumsinställningar",
     "Font size": "Teckenstorlek",
     "Use custom size": "Använd anpassad storlek",

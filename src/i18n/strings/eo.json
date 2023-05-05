@@ -1606,7 +1606,6 @@
     "* %(senderName)s %(emote)s": "* %(senderName)s %(emote)s",
     "Feedback": "Prikomenti",
     "Change notification settings": "Ŝanĝi agordojn pri sciigoj",
-    "Show message previews for reactions in all rooms": "Montri antaŭrigardojn al mesaĝoj ĉe reagoj en ĉiuj ĉambroj",
     "Your server isn't responding to some <a>requests</a>.": "Via servilo ne respondas al iuj <a>petoj</a>.",
     "Server isn't responding": "Servilo ne respondas",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Via servilo ne respondas al iuj el viaj petoj. Vidu sube kelkon de la plej verŝajnaj kialoj.",
