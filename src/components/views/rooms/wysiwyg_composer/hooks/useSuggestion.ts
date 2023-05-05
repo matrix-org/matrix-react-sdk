@@ -138,7 +138,7 @@ export function processSelectionChange(
             ...mappedSuggestionParts,
             node: selection.anchorNode,
             startOffset: mentionOrCommand.startOffset,
-            endOffset: mentionOrCommand.startOffset + mentionOrCommand.text.length,
+            endOffset: mentionOrCommand.endOffset,
         });
     }
 }
@@ -225,9 +225,12 @@ export function processCommand(
  *
  * @param text - the text content of a node
  * @param offset - the current cursor offset position
- * @returns an empty string if no mention or command is found, otherwise the mention/command substring
+ * @returns an empty string if no mention or command is found, otherwise the mention/command substring with it's start offset
  */
-export function findMentionOrCommand(text: string, offset: number): { text: string; startOffset: number } | null {
+export function findMentionOrCommand(
+    text: string,
+    offset: number,
+): { text: string; startOffset: number; endOffset: number } | null {
     // return early if the offset is outside the content
     if (offset < 0 || offset > text.length) {
         return null;
@@ -268,7 +271,7 @@ export function findMentionOrCommand(text: string, offset: number): { text: stri
         return null;
     }
 
-    return { text: suggestionText, startOffset: startCharIndex };
+    return { text: suggestionText, startOffset: startCharIndex, endOffset: startCharIndex + suggestionText.length };
 }
 
 /**
