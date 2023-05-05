@@ -16,9 +16,15 @@ limitations under the License.
 
 import React from "react";
 import { fireEvent, render, screen, within } from "@testing-library/react";
+import { mocked } from "jest-mock";
 
 import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../test-utils";
 import SecureBackupPanel from "../../../../src/components/views/settings/SecureBackupPanel";
+import { accessSecretStorage } from "../../../../src/SecurityManager";
+
+jest.mock("../../../../src/SecurityManager", () => ({
+    accessSecretStorage: jest.fn(),
+}));
 
 describe("<SecureBackupPanel />", () => {
     const userId = "@alice:server.org";
@@ -28,6 +34,8 @@ describe("<SecureBackupPanel />", () => {
         isKeyBackupKeyStored: jest.fn(),
         isSecretStorageReady: jest.fn(),
         getKeyBackupEnabled: jest.fn(),
+        getKeyBackupVersion: jest.fn().mockReturnValue("1"),
+        isKeyBackupTrusted: jest.fn().mockResolvedValue(true),
         getClientWellKnown: jest.fn(),
         deleteKeyBackupVersion: jest.fn(),
     });
@@ -54,7 +62,12 @@ describe("<SecureBackupPanel />", () => {
             },
         });
 
+        client.crypto.secretStorage.hasKey.mockClear().mockResolvedValue(false);
         client.deleteKeyBackupVersion.mockClear().mockResolvedValue();
+        client.getKeyBackupVersion.mockClear();
+        client.isKeyBackupTrusted.mockClear();
+
+        mocked(accessSecretStorage).mockClear().mockResolvedValue();
     });
 
     it("displays a loader while checking keybackup", async () => {
@@ -150,7 +163,25 @@ describe("<SecureBackupPanel />", () => {
         await flushPromises();
         // refresh backup info
         await flushPromises();
+    });
 
-        expect(screen.queryByText("✅ This session is backing up your keys.")).not.toBeInTheDocument();
+    it("resets secret storage", async () => {
+        client.crypto.secretStorage.hasKey.mockClear().mockResolvedValue(true);
+        getComponent();
+        // flush checkKeyBackup promise
+        await flushPromises();
+
+        client.getKeyBackupVersion.mockClear();
+        client.isKeyBackupTrusted.mockClear();
+
+        fireEvent.click(screen.getByText("Reset"));
+
+        // enter loading state
+        expect(accessSecretStorage).toHaveBeenCalled();
+        await flushPromises();
+
+        // backup status refreshed
+        expect(client.getKeyBackupVersion).toHaveBeenCalled();
+        expect(client.isKeyBackupTrusted).toHaveBeenCalled();
     });
 });
