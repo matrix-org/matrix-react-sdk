@@ -1337,7 +1337,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 <div className="mx_InviteDialog_footer">
                     <h3>{_t("Or send invite link")}</h3>
                     <CopyableText getTextToCopy={() => makeUserPermalink(MatrixClientPeg.get().getUserId()!)}>
-                        <a href={link} onClick={this.onLinkClick}>
+                        <a className="mx_InviteDialog_footer_link" href={link} onClick={this.onLinkClick}>
                             {link}
                         </a>
                     </CopyableText>
@@ -1385,7 +1385,12 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 {},
                 {
                     userId: () => (
-                        <a href={makeUserPermalink(userId)} rel="noreferrer noopener" target="_blank">
+                        <a
+                            className="mx_InviteDialog_helpText_userId"
+                            href={makeUserPermalink(userId)}
+                            rel="noreferrer noopener"
+                            target="_blank"
+                        >
                             {userId}
                         </a>
                     ),
@@ -1494,7 +1499,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
 
         let dialogContent;
         if (this.props.kind === InviteKind.CallTransfer) {
-            const tabs: NonEmptyArray<Tab> = [
+            const tabs: NonEmptyArray<Tab<TabId>> = [
                 new Tab(TabId.UserDirectory, _td("User Directory"), "mx_InviteDialog_userDirectoryIcon", usersSection),
             ];
 
