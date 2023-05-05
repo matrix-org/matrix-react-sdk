@@ -1129,7 +1129,7 @@
     "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?",
     "Hint: Begin your message with <code>//</code> to start it with a slash.": "Hint: Begin your message with <code>//</code> to start it with a slash.",
     "Send as message": "Send as message",
-    "Failed to downloadSource, no srcHttp": "Failed to downloadSource, no srcHttp",
+    "Failed to download source media, no source url was found": "Failed to download source media, no source url was found",
     "Audio devices": "Audio devices",
     "Mute microphone": "Mute microphone",
     "Unmute microphone": "Unmute microphone",

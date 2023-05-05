@@ -144,7 +144,7 @@ export class Media {
     public downloadSource(): Promise<Response> {
         const src = this.srcHttp;
         if (!src) {
-            throw new UserFriendlyError("Failed to downloadSource, no srcHttp");
+            throw new UserFriendlyError("Failed to download source media, no source url was found");
         }
         return fetch(src);
     }
