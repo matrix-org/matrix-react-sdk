@@ -3770,5 +3770,8 @@
     "Error changing password": "Viga salasõna muutmisel",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP olekukood %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Tundmatu viga salasõna muutmisel (%(stringifiedError)s)",
-    "Error while changing password: %(error)s": "Salasõna muutmisel tekkis viga: %(error)s"
+    "Error while changing password: %(error)s": "Salasõna muutmisel tekkis viga: %(error)s",
+    "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s reageeris %(message)s sõnumile %(reaction)s'ga",
+    "You reacted %(reaction)s to %(message)s": "Sa reageerisid %(message)s sõnumile %(reaction)s'ga",
+    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Kui isikutuvastusserver on seadistamata, siis e-posti teel kutset saata ei saa. Soovi korral saad seda muuta Seadistuste vaatest."
 }
