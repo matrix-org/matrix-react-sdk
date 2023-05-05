@@ -384,7 +384,7 @@
     "Unknown for %(duration)s": "%(duration)s óta az állapota ismeretlen",
     "This homeserver doesn't offer any login flows which are supported by this client.": "Ez a Matrix szerver egyetlen bejelentkezési metódust sem támogat amit ez a kliens ismer.",
     "collapse": "becsukás",
-    "expand": "kinásyit",
+    "expand": "kinyitás",
     "Call Failed": "Sikertelen hívás",
     "Send": "Elküldés",
     "Old cryptography data detected": "Régi titkosítási adatot találhatók",
@@ -1566,7 +1566,7 @@
     "You joined the call": "Csatlakozott a hívásba",
     "%(senderName)s joined the call": "%(senderName)s csatlakozott a híváshoz",
     "Call in progress": "Hívás folyamatban van",
-    "Call ended": "Hívás befejeződött",
+    "Call ended": "A hívás befejeződött",
     "You started a call": "Hívást kezdeményezett",
     "%(senderName)s started a call": "%(senderName)s hívást kezdeményezett",
     "Waiting for answer": "Válaszra várakozás",
@@ -1619,7 +1619,6 @@
     "A connection error occurred while trying to contact the server.": "Kapcsolati hiba lépett fel miközben a szervert próbáltad elérni.",
     "The server is not configured to indicate what the problem is (CORS).": "A szerver nincs beállítva, hogy megmutassa mi okozhatta a hibát (CORS).",
     "Recent changes that have not yet been received": "Legutóbbi változások amik még nem érkeztek meg",
-    "Show message previews for reactions in all rooms": "Üzenet előnézet megjelenítése a reakciókhoz az összes szobában",
     "Master private key:": "Privát elsődleges kulcs:",
     "No files visible in this room": "Ebben a szobában nincsenek fájlok",
     "Attach files from chat or just drag and drop them anywhere in a room.": "Csatolj fájlt a csevegésből vagy húzd és ejtsd bárhova a szobában.",
@@ -3759,5 +3758,6 @@
     "Start messages with <code>/plain</code> to send without markdown.": "Kezdje az üzenetet a <code>/plain</code> paranccsal, hogy markdown formázás nélkül küldje el.",
     "The add / bind with MSISDN flow is misconfigured": "Az MSISDN folyamattal történő hozzáadás / kötés hibásan van beállítva",
     "No identity access token found": "Nem található személyazonosság-hozzáférési kulcs",
-    "Identity server not set": "Az azonosítási kiszolgáló nincs megadva"
+    "Identity server not set": "Az azonosítási kiszolgáló nincs megadva",
+    "WebGL is required to display maps, please enable it in your browser settings.": "A WebGL szükséges a térképek megjelenítéséhez, engedélyezze a böngészőbeállításokban."
 }
