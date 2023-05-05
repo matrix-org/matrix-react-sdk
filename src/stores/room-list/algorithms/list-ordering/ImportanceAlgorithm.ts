@@ -96,7 +96,6 @@ export class ImportanceAlgorithm extends OrderingAlgorithm {
         // It's fine for us to call this a lot because it's cached, and we shouldn't be
         // wasting anything by doing so as the store holds single references
         const state = RoomNotificationStateStore.instance.getRoomState(room);
-        console.log(room.roomId, state.muted, state.color);
         return this.isMutedToBottom && state.muted ? NotificationColor.Muted : state.color;
     }
 
