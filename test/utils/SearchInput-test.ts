@@ -23,7 +23,7 @@ jest.mock("../../src/utils/permalinks/Permalinks");
 describe("transforming search term", () => {
     it("should return the primaryEntityId if the search term was a permalink", () => {
         const roomLink = "https://matrix.to/#/#element-dev:matrix.org";
-        const parsedPermalink = "#element-dev:matrix.org"
+        const parsedPermalink = "#element-dev:matrix.org";
 
         mocked(parsePermalink).mockReturnValue({
             primaryEntityId: parsedPermalink,
@@ -33,7 +33,7 @@ describe("transforming search term", () => {
             viaServers: [],
             sigil: "",
         });
-        
+
         expect(transformSearchTerm(roomLink)).toBe(parsedPermalink);
     });
 
@@ -48,7 +48,7 @@ describe("transforming search term", () => {
             viaServers: null,
             sigil: "?",
         });
-        
+
         expect(transformSearchTerm(searchTerm)).toBe(searchTerm);
     });
 

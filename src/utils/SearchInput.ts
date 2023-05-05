@@ -17,7 +17,7 @@ limitations under the License.
 import { parsePermalink } from "./permalinks/Permalinks";
 
 /**
- * Returns the primaryEntityId(roomIdOrAlias or userId) if the search term 
+ * Returns the primaryEntityId(roomIdOrAlias or userId) if the search term
  * is a permalink and the primaryEntityId is not null. Otherwise, it returns
  * the original search term.
  * E.g https://matrix.to/#/#element-dev:matrix.org returns #element-dev:matrix.org
