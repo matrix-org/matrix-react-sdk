@@ -37,6 +37,21 @@ describe("transforming search term", () => {
         expect(transformSearchTerm(roomLink)).toBe(parsedPermalink);
     });
 
+    it("should return the original search term if the search term is a permalink and the primaryEntityId is null", () => {
+        const searchTerm = "https://matrix.to/#/#random-link:matrix.org";
+
+        mocked(parsePermalink).mockReturnValue({
+            primaryEntityId: null,
+            roomIdOrAlias: null,
+            eventId: "",
+            userId: "",
+            viaServers: [],
+            sigil: "",
+        });
+        
+        expect(transformSearchTerm(searchTerm)).toBe(searchTerm);
+    });
+
     it("should return the original search term if the search term was not a permalink", () => {
         const searchTerm = "search term";
         mocked(parsePermalink).mockReturnValue(null);

@@ -25,6 +25,5 @@ import { parsePermalink } from "./permalinks/Permalinks";
  */
 export function transformSearchTerm(searchTerm: string): string {
     const parseLink = parsePermalink(searchTerm);
-    if (parseLink) return parseLink?.primaryEntityId ?? searchTerm;
-    return searchTerm;
+    return parseLink?.primaryEntityId ?? searchTerm;
 }
