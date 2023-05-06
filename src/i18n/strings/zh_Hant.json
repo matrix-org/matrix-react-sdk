@@ -3770,5 +3770,8 @@
     "Error changing password": "變更密碼錯誤",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s（HTTP 狀態 %(httpStatus)s）",
     "Unknown password change error (%(stringifiedError)s)": "未知密碼變更錯誤（%(stringifiedError)s）",
-    "Error while changing password: %(error)s": "變更密碼時發生錯誤：%(error)s"
+    "Error while changing password: %(error)s": "變更密碼時發生錯誤：%(error)s",
+    "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s 已對「%(message)s」回應「%(reaction)s」",
+    "You reacted %(reaction)s to %(message)s": "您已對「%(message)s」回應「%(reaction)s」",
+    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "無法在未設定身分伺服器時，邀請使用者。您可以到「設定」畫面中連線到一組伺服器。"
 }
