@@ -89,7 +89,7 @@ describe("SearchBar", () => {
     it("cancel button and esc key should trigger onCancelClick", async () => {
         mockCurrentEvent = KeyBindingAction.Escape;
         const { container } = render(<SearchBar {...searchProps} />);
-        const cancelButton = container.querySelector(".mx_SearchBar_cancel");
+        const cancelButton = container.querySelector(".mx_SearchBar_cancelButton");
         const input = container.querySelector(".mx_SearchBar_input input");
         fireEvent.click(cancelButton!);
         expect(searchProps.onCancelClick).toHaveBeenCalledTimes(1);

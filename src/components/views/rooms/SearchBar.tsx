@@ -133,7 +133,7 @@ export default class SearchBar extends React.Component<IProps, IState> {
                         </AccessibleButton>
                     </div>
                     <AccessibleButton
-                        className="mx_SearchBar_cancel"
+                        className="mx_SearchBar_cancelButton"
                         onClick={this.props.onCancelClick}
                         aria-label={_t("Cancel")}
                     />
