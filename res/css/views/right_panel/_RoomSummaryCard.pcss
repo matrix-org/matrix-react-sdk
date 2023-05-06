@@ -48,10 +48,12 @@ limitations under the License.
                 width: 54px;
                 height: 54px;
                 border-radius: 50%;
-                background-color: #737d8c;
+                background-color: var(--backgroundColor);
                 margin-top: -3px; /* alignment */
                 margin-left: -10px; /* overlap */
                 border: 3px solid $dark-panel-bg-color;
+
+                --backgroundColor: #737d8c;
 
                 &::before {
                     content: "";
@@ -63,28 +65,30 @@ limitations under the License.
                     mask-size: cover;
                     mask-repeat: no-repeat;
                     mask-position: center;
-                    mask-image: url("$(res)/img/e2e/disabled.svg");
+                    mask-image: var(--maskImage);
                     background-color: #ffffff;
+
+                    --maskImage: url("$(res)/img/e2e/disabled.svg");
                 }
 
                 &.mx_RoomSummaryCard_avatar_e2ee--normal {
-                    background-color: #424446;
+                    --backgroundColor: #424446;
                     &::before {
-                        mask-image: url("$(res)/img/e2e/normal.svg");
+                        --maskImage: url("$(res)/img/e2e/normal.svg");
                     }
                 }
 
                 &.mx_RoomSummaryCard_avatar_e2ee--verified {
-                    background-color: $e2e-verified-color;
+                    --backgroundColor: $e2e-verified-color;
                     &::before {
-                        mask-image: url("$(res)/img/e2e/verified.svg");
+                        --maskImage: url("$(res)/img/e2e/verified.svg");
                     }
                 }
 
                 &.mx_RoomSummaryCard_avatar_e2ee--warning {
-                    background-color: $e2e-warning-color;
+                    --backgroundColor: $e2e-warning-color;
                     &::before {
-                        mask-image: url("$(res)/img/e2e/warning.svg");
+                        --maskImage: url("$(res)/img/e2e/warning.svg");
                     }
                 }
             }
