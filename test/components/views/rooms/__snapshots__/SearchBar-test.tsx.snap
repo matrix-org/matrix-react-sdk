@@ -19,7 +19,7 @@ exports[`SearchBar should render 1`] = `
       </div>
       <div
         aria-checked="false"
-        class="mx_AccessibleButton mx_SearchBar_radiogroup_button mx_SearchBar_unselected"
+        class="mx_AccessibleButton mx_SearchBar_radiogroup_button mx_SearchBar_radiogroup_button--unselected"
         role="radio"
         tabindex="0"
       >

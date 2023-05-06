@@ -85,10 +85,10 @@ export default class SearchBar extends React.Component<IProps, IState> {
 
     public render(): React.ReactNode {
         const thisRoomClasses = classNames("mx_SearchBar_radiogroup_button", {
-            mx_SearchBar_unselected: this.state.scope !== SearchScope.Room,
+            "mx_SearchBar_radiogroup_button--unselected": this.state.scope !== SearchScope.Room,
         });
         const allRoomsClasses = classNames("mx_SearchBar_radiogroup_button", {
-            mx_SearchBar_unselected: this.state.scope !== SearchScope.All,
+            "mx_SearchBar_radiogroup_button--unselected": this.state.scope !== SearchScope.All,
         });
 
         return (
