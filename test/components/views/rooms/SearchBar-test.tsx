@@ -47,8 +47,8 @@ describe("SearchBar", () => {
 
     it("must not search when input value is empty", () => {
         const { container } = render(<SearchBar {...searchProps} />);
-        const roomButtons = container.querySelectorAll(".mx_SearchBar_button");
-        const searchButton = container.querySelectorAll(".mx_SearchBar_searchButton");
+        const roomButtons = container.querySelectorAll(".mx_SearchBar_buttons_button");
+        const searchButton = container.querySelectorAll(".mx_SearchBar_input_searchButton");
 
         expect(roomButtons.length).toEqual(2);
 
@@ -63,8 +63,8 @@ describe("SearchBar", () => {
         const { container } = render(<SearchBar {...searchProps} />);
         const searchValue = "abcd";
 
-        const roomButtons = container.querySelectorAll(".mx_SearchBar_button");
-        const searchButton = container.querySelectorAll(".mx_SearchBar_searchButton");
+        const roomButtons = container.querySelectorAll(".mx_SearchBar_buttons_button");
+        const searchButton = container.querySelectorAll(".mx_SearchBar_input_searchButton");
         const input = container.querySelector<HTMLInputElement>(".mx_SearchBar_input input");
         input!.value = searchValue;
 

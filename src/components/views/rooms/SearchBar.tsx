@@ -84,10 +84,10 @@ export default class SearchBar extends React.Component<IProps, IState> {
     };
 
     public render(): React.ReactNode {
-        const thisRoomClasses = classNames("mx_SearchBar_button", {
+        const thisRoomClasses = classNames("mx_SearchBar_buttons_button", {
             mx_SearchBar_unselected: this.state.scope !== SearchScope.Room,
         });
-        const allRoomsClasses = classNames("mx_SearchBar_button", {
+        const allRoomsClasses = classNames("mx_SearchBar_buttons_button", {
             mx_SearchBar_unselected: this.state.scope !== SearchScope.All,
         });
 
@@ -125,7 +125,7 @@ export default class SearchBar extends React.Component<IProps, IState> {
                             onKeyDown={this.onSearchChange}
                         />
                         <AccessibleButton
-                            className="mx_SearchBar_searchButton"
+                            className="mx_SearchBar_input_searchButton"
                             onClick={this.onSearch}
                             aria-label={_t("Search")}
                         >
