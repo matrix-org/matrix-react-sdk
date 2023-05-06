@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_SearchBar {
-    height: 56px;
+    min-height: 56px; /* for wrapped mx_SearchBar_button making the area tall */
     display: flex;
     align-items: center;
     border-bottom: 1px solid $primary-hairline-color;
@@ -44,7 +44,8 @@ limitations under the License.
     }
 
     .mx_SearchBar_buttons {
-        display: inherit;
+        display: inherit; /* flex */
+        min-width: 0;
     }
 
     .mx_SearchBar_button {
@@ -56,6 +57,7 @@ limitations under the License.
         color: $primary-content;
         border-bottom: 2px solid $accent;
         font-weight: var(--font-semi-bold);
+        word-break: break-all; /* prevent the input area and cancel button from being overlapped by BaseCard */
     }
 
     .mx_SearchBar_unselected {
