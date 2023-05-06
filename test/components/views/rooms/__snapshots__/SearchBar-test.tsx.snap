@@ -39,7 +39,11 @@ exports[`SearchBar should render 1`] = `
         class="mx_AccessibleButton mx_SearchBar_searchButton"
         role="button"
         tabindex="0"
-      />
+      >
+        <div
+          class="mx_Icon mx_Icon_16"
+        />
+      </div>
     </div>
     <div
       aria-label="Cancel"

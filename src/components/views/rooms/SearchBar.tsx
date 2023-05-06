@@ -24,6 +24,7 @@ import { PosthogScreenTracker } from "../../../PosthogTrackers";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import SearchWarning, { WarningKind } from "../elements/SearchWarning";
+import { Icon as SearchInputIcon } from "../../../../res/img/feather-customised/search-input.svg";
 
 interface IProps {
     onCancelClick: () => void;
@@ -127,7 +128,9 @@ export default class SearchBar extends React.Component<IProps, IState> {
                             className="mx_SearchBar_searchButton"
                             onClick={this.onSearch}
                             aria-label={_t("Search")}
-                        />
+                        >
+                            <SearchInputIcon className="mx_Icon mx_Icon_16" />
+                        </AccessibleButton>
                     </div>
                     <AccessibleButton
                         className="mx_SearchBar_cancel"

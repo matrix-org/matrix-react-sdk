@@ -36,16 +36,18 @@ limitations under the License.
         input {
             box-sizing: border-box; /* include padding value into width calculation */
         }
-    }
 
-    .mx_SearchBar_searchButton {
-        cursor: pointer;
-        width: var(--size-button-search);
-        height: var(--size-button-search);
-        background-color: $accent;
-        mask: url("$(res)/img/feather-customised/search-input.svg");
-        mask-repeat: no-repeat;
-        mask-position: center;
+        .mx_SearchBar_searchButton {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: var(--size-button-search);
+            height: var(--size-button-search);
+
+            .mx_Icon {
+                color: $accent;
+            }
+        }
     }
 
     .mx_SearchBar_buttons {
