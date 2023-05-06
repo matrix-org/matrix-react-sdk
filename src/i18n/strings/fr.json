@@ -3770,5 +3770,8 @@
     "Error changing password": "Erreur lors du changement de mot de passe",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (statut HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Erreur inconnue du changement de mot de passe (%(stringifiedError)s)",
-    "Error while changing password: %(error)s": "Erreur lors du changement de mot de passe : %(error)s"
+    "Error while changing password: %(error)s": "Erreur lors du changement de mot de passe : %(error)s",
+    "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s a réagi avec %(reaction)s à %(message)s",
+    "You reacted %(reaction)s to %(message)s": "Vous avez réagi avec %(reaction)s à %(message)s",
+    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Impossible d’inviter un utilisateur par e-mail sans un serveur d’identité. Vous pouvez vous connecter à un serveur dans les « Paramètres »."
 }
