@@ -21,11 +21,15 @@ limitations under the License.
     border-bottom: 1px solid $primary-hairline-color;
 
     .mx_SearchBar_input {
+        --size-button-search: 37px;
+
         /* border: 1px solid $input-border-color; */
         /* font-size: $font-15px; */
         flex: 1 1 0;
         margin-left: 22px;
-        min-width: calc(7em + 37px); /* retain space for the input bar */
+
+        /* retain space for the input bar. 7em is a magic number to retain space for the placeholder 'Search…' */
+        min-width: calc(7em + var(--size-button-search));
 
         input {
             box-sizing: border-box; /* include padding value into width calculation */
@@ -33,10 +37,12 @@ limitations under the License.
     }
 
     .mx_SearchBar_searchButton {
+        --size: var(--size-button-search); /* square */
+
         cursor: pointer;
-        width: 37px;
-        min-width: 37px;
-        height: 37px;
+        width: var(--size);
+        min-width: var(--size);
+        height: var(--size);
         background-color: $accent;
         mask: url("$(res)/img/feather-customised/search-input.svg");
         mask-repeat: no-repeat;
