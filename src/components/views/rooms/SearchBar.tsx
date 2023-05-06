@@ -84,10 +84,10 @@ export default class SearchBar extends React.Component<IProps, IState> {
     };
 
     public render(): React.ReactNode {
-        const thisRoomClasses = classNames("mx_SearchBar_buttons_button", {
+        const thisRoomClasses = classNames("mx_SearchBar_radiogroup_button", {
             mx_SearchBar_unselected: this.state.scope !== SearchScope.Room,
         });
-        const allRoomsClasses = classNames("mx_SearchBar_buttons_button", {
+        const allRoomsClasses = classNames("mx_SearchBar_radiogroup_button", {
             mx_SearchBar_unselected: this.state.scope !== SearchScope.All,
         });
 
@@ -95,7 +95,7 @@ export default class SearchBar extends React.Component<IProps, IState> {
             <>
                 <PosthogScreenTracker screenName="RoomSearch" />
                 <div className="mx_SearchBar">
-                    <div className="mx_SearchBar_buttons" role="radiogroup">
+                    <div className="mx_SearchBar_radiogroup" role="radiogroup">
                         <AccessibleButton
                             className={thisRoomClasses}
                             onClick={this.onThisRoomClick}
