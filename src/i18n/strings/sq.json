@@ -3757,5 +3757,6 @@
     "No identity access token found": "S’u gjet token hyrjeje identiteti",
     "Identity server not set": "Shërbyes identitetesh i paujdisur",
     "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s reagoi me %(reaction)s ndaj %(message)s",
-    "You reacted %(reaction)s to %(message)s": "Reaguat me %(reaction)s ndaj %(message)s"
+    "You reacted %(reaction)s to %(message)s": "Reaguat me %(reaction)s ndaj %(message)s",
+    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Pa një shërbyes identitetesh, s’mund të ftohet përdorues përmes email-i. Me një të tillë mund të lidheni që prej “Rregullimeve”."
 }
