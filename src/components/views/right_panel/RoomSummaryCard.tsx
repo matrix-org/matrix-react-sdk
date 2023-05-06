@@ -310,10 +310,10 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) 
                 <RoomAvatar room={room} height={54} width={54} viewAvatarOnClick />
                 <TextWithTooltip
                     tooltip={isRoomEncrypted ? _t("Encrypted") : _t("Not encrypted")}
-                    class={classNames("mx_RoomSummaryCard_e2ee", {
-                        mx_RoomSummaryCard_e2ee_normal: isRoomEncrypted,
-                        mx_RoomSummaryCard_e2ee_warning: isRoomEncrypted && e2eStatus === E2EStatus.Warning,
-                        mx_RoomSummaryCard_e2ee_verified: isRoomEncrypted && e2eStatus === E2EStatus.Verified,
+                    class={classNames("mx_RoomSummaryCard_avatar_e2ee", {
+                        mx_RoomSummaryCard_avatar_e2ee_normal: isRoomEncrypted,
+                        mx_RoomSummaryCard_avatar_e2ee_warning: isRoomEncrypted && e2eStatus === E2EStatus.Warning,
+                        mx_RoomSummaryCard_avatar_e2ee_verified: isRoomEncrypted && e2eStatus === E2EStatus.Verified,
                     })}
                 />
             </div>

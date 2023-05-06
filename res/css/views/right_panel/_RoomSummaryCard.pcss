@@ -42,7 +42,7 @@ limitations under the License.
         .mx_RoomSummaryCard_avatar {
             display: inline-flex;
 
-            .mx_RoomSummaryCard_e2ee {
+            .mx_RoomSummaryCard_avatar_e2ee {
                 display: inline-block;
                 position: relative;
                 width: 54px;
@@ -68,21 +68,21 @@ limitations under the License.
                 }
             }
 
-            .mx_RoomSummaryCard_e2ee_normal {
+            .mx_RoomSummaryCard_avatar_e2ee_normal {
                 background-color: #424446;
                 &::before {
                     mask-image: url("$(res)/img/e2e/normal.svg");
                 }
             }
 
-            .mx_RoomSummaryCard_e2ee_verified {
+            .mx_RoomSummaryCard_avatar_e2ee_verified {
                 background-color: $e2e-verified-color;
                 &::before {
                     mask-image: url("$(res)/img/e2e/verified.svg");
                 }
             }
 
-            .mx_RoomSummaryCard_e2ee_warning {
+            .mx_RoomSummaryCard_avatar_e2ee_warning {
                 background-color: $e2e-warning-color;
                 &::before {
                     mask-image: url("$(res)/img/e2e/warning.svg");

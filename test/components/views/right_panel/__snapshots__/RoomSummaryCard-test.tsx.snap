@@ -41,7 +41,7 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
         </span>
         <div
           aria-label="Not encrypted"
-          class="mx_TextWithTooltip_target mx_RoomSummaryCard_e2ee"
+          class="mx_TextWithTooltip_target mx_RoomSummaryCard_avatar_e2ee"
           tabindex="0"
         />
       </div>
