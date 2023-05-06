@@ -66,26 +66,26 @@ limitations under the License.
                     mask-image: url("$(res)/img/e2e/disabled.svg");
                     background-color: #ffffff;
                 }
-            }
 
-            .mx_RoomSummaryCard_avatar_e2ee_normal {
-                background-color: #424446;
-                &::before {
-                    mask-image: url("$(res)/img/e2e/normal.svg");
+                &.mx_RoomSummaryCard_avatar_e2ee--normal {
+                    background-color: #424446;
+                    &::before {
+                        mask-image: url("$(res)/img/e2e/normal.svg");
+                    }
                 }
-            }
 
-            .mx_RoomSummaryCard_avatar_e2ee_verified {
-                background-color: $e2e-verified-color;
-                &::before {
-                    mask-image: url("$(res)/img/e2e/verified.svg");
+                &.mx_RoomSummaryCard_avatar_e2ee--verified {
+                    background-color: $e2e-verified-color;
+                    &::before {
+                        mask-image: url("$(res)/img/e2e/verified.svg");
+                    }
                 }
-            }
 
-            .mx_RoomSummaryCard_avatar_e2ee_warning {
-                background-color: $e2e-warning-color;
-                &::before {
-                    mask-image: url("$(res)/img/e2e/warning.svg");
+                &.mx_RoomSummaryCard_avatar_e2ee--warning {
+                    background-color: $e2e-warning-color;
+                    &::before {
+                        mask-image: url("$(res)/img/e2e/warning.svg");
+                    }
                 }
             }
         }
