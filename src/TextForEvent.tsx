@@ -352,7 +352,11 @@ function textForMessageEvent(ev: MatrixEvent): (() => string) | null {
             message = _t("%(senderDisplayName)s sent a sticker.", { senderDisplayName });
         } else {
             // in this case, parse it as a plain text message
-            message = senderDisplayName + ": " + message;
+            if(ev.exportPlainText){
+                message = `<${senderDisplayName}>` + ": " + message;
+            }else{
+                message = senderDisplayName + ": " + message;
+            }
         }
         return message;
     };

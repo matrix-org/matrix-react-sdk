@@ -82,6 +82,7 @@ export default class PlainTextExporter extends Exporter {
     protected plainTextForEvent = async (mxEv: MatrixEvent): Promise<string> => {
         const senderDisplayName = mxEv.sender && mxEv.sender.name ? mxEv.sender.name : mxEv.getSender();
         let mediaText = "";
+        mxEv.exportPlainText=true;
         if (this.isAttachment(mxEv)) {
             if (this.exportOptions.attachmentsIncluded) {
                 try {
@@ -103,7 +104,7 @@ export default class PlainTextExporter extends Exporter {
                 }
             } else mediaText = ` (${this.mediaOmitText})`;
         }
-        if (this.isReply(mxEv)) return senderDisplayName + ": " + this.textForReplyEvent(mxEv.getContent()) + mediaText;
+        if (this.isReply(mxEv)) return `<${senderDisplayName}>` + ": " + this.textForReplyEvent(mxEv.getContent()) + mediaText;
         else return textForEvent(mxEv) + mediaText;
     };
 
