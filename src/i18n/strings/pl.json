@@ -2353,5 +2353,6 @@
     "Reload": "Przeładuj",
     "Database unexpectedly closed": "Baza danych została nieoczekiwanie zamknięta",
     "No identity access token found": "Nie znaleziono tokena dostępu tożsamości",
-    "Identity server not set": "Serwer tożsamości nie jest ustawiony"
+    "Identity server not set": "Serwer tożsamości nie jest ustawiony",
+    "You held the call <a>Resume</a>": "Zawieszono rozmowę <a>Wznów</a>"
 }
