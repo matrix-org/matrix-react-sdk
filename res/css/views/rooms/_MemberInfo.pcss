@@ -25,10 +25,16 @@ limitations under the License.
 .mx_MemberInfo_name {
     align-items: center;
     display: flex;
+
+> .mx_E2EIcon {
+    margin-right: 0;
 }
 
-.mx_MemberInfo_name > .mx_E2EIcon {
-    margin-right: 0;
+h2 {
+    flex: 1;
+    overflow-x: auto;
+    max-height: 50px;
+}
 }
 
 .mx_MemberInfo_cancel {
@@ -40,12 +46,6 @@ limitations under the License.
     mask-repeat: no-repeat;
     mask-position: 16px center;
     background-color: $header-panel-text-primary-color;
-}
-
-.mx_MemberInfo_name h2 {
-    flex: 1;
-    overflow-x: auto;
-    max-height: 50px;
 }
 
 .mx_MemberInfo h2 {
