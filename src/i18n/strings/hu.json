@@ -3772,5 +3772,6 @@
     "Unknown password change error (%(stringifiedError)s)": "Ismeretlen jelszómódosítási hiba (%(stringifiedError)s)",
     "Error while changing password: %(error)s": "Hiba a jelszó módosítása során: %(error)s",
     "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s ezzel a reagált: %(reaction)s, a következőre: %(message)s",
-    "You reacted %(reaction)s to %(message)s": "Ezzel a reagált: %(reaction)s, a következőre: %(message)s"
+    "You reacted %(reaction)s to %(message)s": "Ezzel a reagált: %(reaction)s, a következőre: %(message)s",
+    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Matrix-kiszolgáló nélkül nem lehet felhasználókat meghívni e-mailben. Kapcsolódjon egyhez a „Beállítások” alatt."
 }
