@@ -71,7 +71,7 @@ describe("<LabsUserSettingsTab />", () => {
         // non-beta labs section
         expect(screen.getByText("Early previews")).toBeInTheDocument();
         const labsSections = container.getElementsByClassName("mx_SettingsSubsection");
-        expect(labsSections).toHaveLength(11);
+        expect(labsSections).toHaveLength(10);
     });
 
     it("allow setting a labs flag which requires unstable support once support is confirmed", async () => {
