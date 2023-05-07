@@ -2444,5 +2444,6 @@
     "You don't have the required permissions to start a voice broadcast in this room. Contact a room administrator to upgrade your permissions.": "Nie posiadasz wymaganych uprawnień, aby rozpocząć transmisję głosową w tym pokoju. Skontaktuj się z administratorem pokoju, aby zwiększyć swoje uprawnienia.",
     "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "Już nagrywasz transmisję głosową. Zakończ bieżącą transmisję głosową, aby rozpocząć nową.",
     "Can't start a new voice broadcast": "Nie można rozpocząć nowej transmisji głosowej",
-    "Video call started in %(roomName)s. (not supported by this browser)": "Rozmowa wideo rozpoczęła się w %(roomName)s. (brak wsparcia w tej przeglądarce)"
+    "Video call started in %(roomName)s. (not supported by this browser)": "Rozmowa wideo rozpoczęła się w %(roomName)s. (brak wsparcia w tej przeglądarce)",
+    "Consulting with %(transferTarget)s. <a>Transfer to %(transferee)s</a>": "Konsultowanie z %(transferTarget)s. <a>Przekaż do %(transferee)s</a>"
 }
