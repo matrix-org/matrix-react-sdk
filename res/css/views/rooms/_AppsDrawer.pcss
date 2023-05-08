@@ -325,6 +325,10 @@ $MinWidth: 240px;
     > div {
         margin-bottom: 12px;
     }
+
+h4 {
+    margin: 0;
+    padding: 0;
 }
 
 .mx_AppPermission_smallText {
@@ -335,20 +339,14 @@ $MinWidth: 240px;
     font-weight: var(--font-semi-bold);
 }
 
-.mx_AppPermission h4 {
-    margin: 0;
-    padding: 0;
-}
-
 .mx_AppPermission_helpIcon {
     margin-top: 1px;
     margin-right: 2px;
     width: 10px;
     height: 10px;
     display: inline-block;
-}
 
-.mx_AppPermission_helpIcon::before {
+&::before {
     display: inline-block;
     background-color: $accent;
     mask-repeat: no-repeat;
@@ -359,6 +357,7 @@ $MinWidth: 240px;
     content: "";
     vertical-align: middle;
     mask-image: url("$(res)/img/feather-customised/help-circle.svg");
+}
 }
 
 .mx_AppPermission_tooltip {
@@ -380,6 +379,7 @@ $MinWidth: 240px;
         padding-left: 2px;
         margin-left: 0;
     }
+}
 }
 
 .mx_AppTile_loading {
