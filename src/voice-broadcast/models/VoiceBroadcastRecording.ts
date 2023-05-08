@@ -339,7 +339,7 @@ export class VoiceBroadcastRecording
         this.setState("connection_error");
     }
 
-    private playConnectionErrorAudioNotification(): void {
+    private async playConnectionErrorAudioNotification(): Promise<void> {
         if (localNotificationsAreSilenced(this.client)) {
             return;
         }
@@ -347,7 +347,7 @@ export class VoiceBroadcastRecording
         const audioElement = document.querySelector<HTMLAudioElement>("audio#errorAudio");
 
         try {
-            audioElement?.play();
+            await audioElement?.play();
         } catch (e) {
             logger.warn("error playing 'errorAudio'", e);
         }
