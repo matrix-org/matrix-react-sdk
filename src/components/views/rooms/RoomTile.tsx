@@ -208,7 +208,7 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
         }
 
         const messagePreview =
-            (await MessagePreviewStore.instance.getPreviewForRoom(this.props.room, this.props.tag)) ?? undefined;
+            (await MessagePreviewStore.instance.getPreviewForRoom(this.props.room, this.props.tag)) ?? null;
         this.setState({ messagePreview });
     }
 
