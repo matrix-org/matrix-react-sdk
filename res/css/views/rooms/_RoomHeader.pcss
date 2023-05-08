@@ -74,6 +74,7 @@ limitations under the License.
     padding: 1px 4px;
     display: flex;
     user-select: none;
+    cursor: pointer;
 
     &:hover {
         background-color: $quinary-content;
@@ -96,6 +97,10 @@ limitations under the License.
         background-color: $tertiary-content;
     }
 
+    &.mx_RoomHeader_name--textonly {
+        cursor: unset;
+    }
+
     &[aria-expanded="true"] {
         background-color: $quinary-content;
 
@@ -112,11 +117,6 @@ limitations under the License.
 .mx_RoomHeader_searchStatus {
     font-weight: normal;
     opacity: 0.6;
-}
-
-.mx_RoomHeader_name:not(.mx_RoomHeader_name--textonly),
-.mx_RoomHeader_avatar {
-    cursor: pointer;
 }
 
 .mx_RoomTopic {
@@ -151,6 +151,7 @@ limitations under the License.
     flex: 0;
     margin: 0 7px;
     position: relative;
+    cursor: pointer;
 }
 
 .mx_RoomHeader_avatar .mx_BaseAvatar_image {
