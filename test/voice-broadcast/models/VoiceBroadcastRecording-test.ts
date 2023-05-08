@@ -259,7 +259,7 @@ describe("VoiceBroadcastRecording", () => {
         } as any as HTMLAudioElement;
 
         jest.spyOn(document, "querySelector").mockImplementation((selector: string) => {
-            if (selector === "audio#messageAudio") {
+            if (selector === "audio#errorAudio") {
                 return audioElement;
             }
 

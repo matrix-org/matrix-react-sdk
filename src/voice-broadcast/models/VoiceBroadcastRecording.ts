@@ -344,7 +344,7 @@ export class VoiceBroadcastRecording
             return;
         }
 
-        const audioElement = document.querySelector<HTMLAudioElement>("audio#messageAudio");
+        const audioElement = document.querySelector<HTMLAudioElement>("audio#errorAudio");
         audioElement?.play();
     }
 
