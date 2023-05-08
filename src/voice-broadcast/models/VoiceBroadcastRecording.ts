@@ -345,7 +345,12 @@ export class VoiceBroadcastRecording
         }
 
         const audioElement = document.querySelector<HTMLAudioElement>("audio#errorAudio");
-        audioElement?.play();
+
+        try {
+            audioElement?.play();
+        } catch (e) {
+            logger.warn("error playing 'errorAudio'", e);
+        }
     }
 
     private async uploadFile(chunk: ChunkRecordedPayload): ReturnType<typeof uploadFile> {
