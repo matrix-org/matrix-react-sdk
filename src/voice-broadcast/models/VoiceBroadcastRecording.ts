@@ -334,7 +334,9 @@ export class VoiceBroadcastRecording
      * It sets the connection error state and stops the recorder.
      */
     private async onConnectionError(): Promise<void> {
-        this.playConnectionErrorAudioNotification();
+        this.playConnectionErrorAudioNotification().catch(() => {
+            // Error logged in playConnectionErrorAudioNotification().
+        });
         await this.stopRecorder(false);
         this.setState("connection_error");
     }
