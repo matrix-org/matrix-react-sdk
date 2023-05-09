@@ -83,11 +83,18 @@ export function usePlainTextListeners(
     }, [ref, onSend]);
 
     const setText = useCallback(
-        (text: string) => {
-            setContent(text);
-            onChange?.(text);
+        (text?: string) => {
+            if (text !== undefined) {
+                setContent(text);
+                onChange?.(text);
+            } else if (ref && ref.current) {
+                // if called with no argument, read the current innerHTML from the ref if it is non-null
+                const currentRefContent = ref.current.innerHTML;
+                setContent(currentRefContent);
+                onChange?.(currentRefContent);
+            }
         },
-        [onChange],
+        [onChange, ref],
     );
 
     // For separation of concerns, the suggestion handling is kept in a separate hook but is

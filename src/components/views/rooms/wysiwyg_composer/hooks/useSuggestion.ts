@@ -49,7 +49,7 @@ type SuggestionState = Suggestion | null;
  */
 export function useSuggestion(
     editorRef: React.RefObject<HTMLDivElement>,
-    setText: (text: string) => void,
+    setText: (text?: string) => void,
 ): {
     handleMention: (link: string, text: string, attributes: Attributes) => void;
     handleCommand: (text: string) => void;
@@ -157,7 +157,7 @@ export function processMention(
     attributes: Attributes, // these will be used when formatting the link as a pill
     suggestion: SuggestionState,
     setSuggestion: React.Dispatch<React.SetStateAction<SuggestionState>>,
-    setText: (text: string) => void,
+    setText: (text?: string) => void,
 ): void {
     // if we do not have a suggestion, return early
     if (suggestion === null) {
@@ -166,18 +166,27 @@ export function processMention(
 
     const { node } = suggestion;
 
-    const textBeforeReplacement = node.textContent?.slice(0, suggestion.startOffset) ?? "";
-    const textAfterReplacement = node.textContent?.slice(suggestion.endOffset) ?? "";
+    // create an <a> element with the required attributes to allow us to display the mention as a pill
+    const link = document.createElement("a");
+    link.setAttribute("href", href);
+    link.setAttribute("contenteditable", "false");
+    Object.entries(attributes).forEach(([attr, value]) => link.setAttribute(attr, value ?? ""));
+    link.innerText = displayName;
 
-    // TODO replace this markdown style text insertion with a pill representation
-    const newText = `[${displayName}](<${href}>) `;
-    const newCursorOffset = textBeforeReplacement.length + newText.length;
-    const newContent = textBeforeReplacement + newText + textAfterReplacement;
+    // create a text node that will follow the inserted link (we may be inserting into the middle of a node)
+    const endNode = document.createTextNode(` ${node.textContent?.slice(suggestion.endOffset) ?? ""}`);
 
-    // insert the new text, move the cursor, set the text state, clear the suggestion state
-    node.textContent = newContent;
-    document.getSelection()?.setBaseAndExtent(node, newCursorOffset, node, newCursorOffset);
-    setText(newContent);
+    // take the starting node, truncate the content from start to the startOffset of the suggestion
+    // and then append the link element followed by the text node
+    node.textContent = node.textContent?.slice(0, suggestion.startOffset) ?? "";
+    node.parentNode?.appendChild(link);
+    node.parentNode?.appendChild(endNode);
+
+    // move the selection to after the leading space in the text node following the link
+    document.getSelection()?.setBaseAndExtent(endNode, 1, endNode, 1);
+
+    // set the text content to be the innerHTML of the current editor ref and clear the suggestion state
+    setText();
     setSuggestion(null);
 }
 
@@ -194,7 +203,7 @@ export function processCommand(
     replacementText: string,
     suggestion: SuggestionState,
     setSuggestion: React.Dispatch<React.SetStateAction<SuggestionState>>,
-    setText: (text: string) => void,
+    setText: (text?: string) => void,
 ): void {
     // if we do not have a suggestion, return early
     if (suggestion === null) {
