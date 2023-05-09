@@ -21,7 +21,13 @@ import { _t } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
 import AccessibleButton from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import { AddExistingToSpace, defaultSpacesRenderer, SubspaceSelector } from "./AddExistingToSpaceDialog";
+import { AddExistingToSpace, defaultSpacesRenderer } from "./AddExistingToSpaceDialog";
+import Modal from "../../../Modal";
+import { SdkContextClass } from "../../../contexts/SDKContext";
+import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
+import { showCreateNewSubspace } from "./CreateSubspaceDialog";
+import SpaceSelectDropdown from "./SpaceSelectDropdown";
 
 interface IProps {
     space: Room;
@@ -35,7 +41,7 @@ const AddExistingSubspaceDialog: React.FC<IProps> = ({ space, onCreateSubspaceCl
     return (
         <BaseDialog
             title={
-                <SubspaceSelector
+                <SpaceSelectDropdown
                     title={_t("Add existing space")}
                     space={space}
                     value={selectedSpace}
@@ -68,3 +74,19 @@ const AddExistingSubspaceDialog: React.FC<IProps> = ({ space, onCreateSubspaceCl
 };
 
 export default AddExistingSubspaceDialog;
+
+export const showAddExistingSubspace = (space: Room): void => {
+    Modal.createDialog(
+        AddExistingSubspaceDialog,
+        {
+            space,
+            onCreateSubspaceClick: () => showCreateNewSubspace(space),
+            onFinished: (added: boolean) => {
+                if (added && SdkContextClass.instance.roomViewStore.getRoomId() === space.roomId) {
+                    defaultDispatcher.fire(Action.UpdateSpaceHierarchy);
+                }
+            },
+        },
+        "mx_AddExistingToSpaceDialog_wrapper",
+    );
+};

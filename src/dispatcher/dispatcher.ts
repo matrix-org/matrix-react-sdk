@@ -16,8 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Action } from "./actions";
-import { ActionPayload, AsyncActionPayload } from "./payloads";
+import type { Action } from "./actions";
+import type { ActionPayload, AsyncActionPayload } from "./payloads";
 
 type DispatchToken = string;
 

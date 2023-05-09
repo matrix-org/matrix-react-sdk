@@ -22,7 +22,6 @@ import { ClientEvent } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
 import defaultDispatcher from "../../dispatcher/dispatcher";
@@ -336,18 +335,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         }
         return [];
     };
-
-    public addRoomToSpace(space: Room, roomId: string, via: string[], suggested = false): Promise<ISendEventResponse> {
-        return this.matrixClient!.sendStateEvent(
-            space.roomId,
-            EventType.SpaceChild,
-            {
-                via,
-                suggested,
-            },
-            roomId,
-        );
-    }
 
     public getChildren(spaceId: string): Room[] {
         const room = this.matrixClient?.getRoom(spaceId);

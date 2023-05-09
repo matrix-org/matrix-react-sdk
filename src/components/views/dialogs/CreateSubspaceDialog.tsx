@@ -27,8 +27,13 @@ import { BetaPill } from "../beta/BetaCard";
 import Field from "../elements/Field";
 import RoomAliasField from "../elements/RoomAliasField";
 import { createSpace, SpaceCreateForm } from "../spaces/SpaceCreateMenu";
-import { SubspaceSelector } from "./AddExistingToSpaceDialog";
+import SpaceSelectDropdown from "./SpaceSelectDropdown";
 import JoinRuleDropdown from "../elements/JoinRuleDropdown";
+import Modal from "../../../Modal";
+import { SdkContextClass } from "../../../contexts/SDKContext";
+import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
+import { showAddExistingSubspace } from "../../../utils/space";
 
 interface IProps {
     space: Room;
@@ -119,7 +124,7 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
     return (
         <BaseDialog
             title={
-                <SubspaceSelector
+                <SpaceSelectDropdown
                     title={_t("Create a space")}
                     space={space}
                     value={parentSpace}
@@ -192,3 +197,19 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
 };
 
 export default CreateSubspaceDialog;
+
+export const showCreateNewSubspace = (space: Room): void => {
+    Modal.createDialog(
+        CreateSubspaceDialog,
+        {
+            space,
+            onAddExistingSpaceClick: () => showAddExistingSubspace(space),
+            onFinished: (added: boolean) => {
+                if (added && SdkContextClass.instance.roomViewStore.getRoomId() === space.roomId) {
+                    defaultDispatcher.fire(Action.UpdateSpaceHierarchy);
+                }
+            },
+        },
+        "mx_CreateSubspaceDialog_wrapper",
+    );
+};

@@ -14,20 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactElement, ReactNode, RefObject, useContext, useMemo, useRef, useState } from "react";
-import classNames from "classnames";
+import React, { ReactNode, RefObject, useContext, useMemo, useRef, useState } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { sleep } from "matrix-js-sdk/src/utils";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, _td } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
-import Dropdown from "../elements/Dropdown";
 import SearchBox from "../../structures/SearchBox";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import RoomAvatar from "../avatars/RoomAvatar";
-import { getDisplayAliasForRoom } from "../../../Rooms";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import DMRoomMap from "../../../utils/DMRoomMap";
@@ -41,7 +37,8 @@ import QueryMatcher from "../../../autocomplete/QueryMatcher";
 import LazyRenderList from "../elements/LazyRenderList";
 import { useSettingValue } from "../../../hooks/useSettings";
 import { filterBoolean } from "../../../utils/arrays";
-import { NonEmptyArray } from "../../../@types/common";
+import { addRoomToSpace } from "../../../utils/space";
+import SpaceSelectDropdown from "./SpaceSelectDropdown";
 
 // These values match CSS
 const ROW_HEIGHT = 32 + 12;
@@ -204,10 +201,10 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
         for (const room of selectedToAdd) {
             const via = calculateRoomVia(room);
             try {
-                await SpaceStore.instance.addRoomToSpace(space, room.roomId, via).catch(async (e): Promise<void> => {
+                await addRoomToSpace(space, room.roomId, via).catch(async (e): Promise<void> => {
                     if (e.errcode === "M_LIMIT_EXCEEDED") {
                         await sleep(e.data.retry_after_ms);
-                        await SpaceStore.instance.addRoomToSpace(space, room.roomId, via); // retry
+                        await addRoomToSpace(space, room.roomId, via); // retry
                         return;
                     }
 
@@ -390,76 +387,13 @@ export const defaultRoomsRenderer = defaultRendererFactory(_td("Rooms"));
 export const defaultSpacesRenderer = defaultRendererFactory(_td("Spaces"));
 export const defaultDmsRenderer = defaultRendererFactory(_td("Direct Messages"));
 
-interface ISubspaceSelectorProps {
-    title: string;
-    space: Room;
-    value: Room;
-    onChange(space: Room): void;
-}
-
-export const SubspaceSelector: React.FC<ISubspaceSelectorProps> = ({ title, space, value, onChange }) => {
-    const options = useMemo(() => {
-        return [
-            space,
-            ...SpaceStore.instance.getChildSpaces(space.roomId).filter((space) => {
-                return space.currentState.maySendStateEvent(EventType.SpaceChild, space.client.getSafeUserId());
-            }),
-        ];
-    }, [space]);
-
-    let body;
-    if (options.length > 1) {
-        body = (
-            <Dropdown
-                id="mx_SpaceSelectDropdown"
-                className="mx_SpaceSelectDropdown"
-                onOptionChange={(key: string) => {
-                    onChange(options.find((space) => space.roomId === key) || space);
-                }}
-                value={value.roomId}
-                label={_t("Space selection")}
-            >
-                {
-                    options.map((space) => {
-                        const classes = classNames({
-                            mx_SubspaceSelector_dropdownOptionActive: space === value,
-                        });
-                        return (
-                            <div key={space.roomId} className={classes}>
-                                <RoomAvatar room={space} width={24} height={24} />
-                                {space.name || getDisplayAliasForRoom(space) || space.roomId}
-                            </div>
-                        );
-                    }) as NonEmptyArray<ReactElement & { key: string }>
-                }
-            </Dropdown>
-        );
-    } else {
-        body = (
-            <div className="mx_SubspaceSelector_onlySpace">
-                {space.name || getDisplayAliasForRoom(space) || space.roomId}
-            </div>
-        );
-    }
-
-    return (
-        <div className="mx_SubspaceSelector">
-            <RoomAvatar room={value} height={40} width={40} />
-            <div>
-                <h1>{title}</h1>
-                {body}
-            </div>
-        </div>
-    );
-};
-
 const AddExistingToSpaceDialog: React.FC<IProps> = ({ space, onCreateRoomClick, onAddSubspaceClick, onFinished }) => {
     const [selectedSpace, setSelectedSpace] = useState(space);
 
     return (
         <BaseDialog
             title={
-                <SubspaceSelector
+                <SpaceSelectDropdown
                     title={_t("Add existing rooms")}
                     space={space}
                     value={selectedSpace}

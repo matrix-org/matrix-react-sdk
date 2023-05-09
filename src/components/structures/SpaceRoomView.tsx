@@ -46,7 +46,6 @@ import {
     shouldShowSpaceSettings,
     showAddExistingRooms,
     showCreateNewRoom,
-    showCreateNewSubspace,
     showSpaceInvite,
     showSpaceSettings,
 } from "../../utils/space";
@@ -78,6 +77,7 @@ import RightPanel from "./RightPanel";
 import SpaceHierarchy, { showRoom } from "./SpaceHierarchy";
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import ExternalLink from "../views/elements/ExternalLink";
+import { showCreateNewSubspace } from "../views/dialogs/CreateSubspaceDialog";
 
 interface IProps {
     space: Room;

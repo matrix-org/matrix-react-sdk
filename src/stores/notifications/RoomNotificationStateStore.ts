@@ -18,9 +18,9 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { SyncState } from "matrix-js-sdk/src/sync";
 import { ClientEvent } from "matrix-js-sdk/src/client";
 
+import defaultDispatcher, { MatrixDispatcher } from "../../dispatcher/dispatcher";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
-import { defaultDispatcher, MatrixDispatcher } from "../../dispatcher/dispatcher";
 import { DefaultTagID, TagID } from "../room-list/models";
 import { FetchRoomFn, ListNotificationState } from "./ListNotificationState";
 import { RoomNotificationState } from "./RoomNotificationState";
@@ -35,14 +35,14 @@ export const UPDATE_STATUS_INDICATOR = Symbol("update-status-indicator");
 
 export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
     private static readonly internalInstance = (() => {
-        const instance = new RoomNotificationStateStore();
+        const instance = new RoomNotificationStateStore(defaultDispatcher);
         instance.start();
         return instance;
     })();
     private roomMap = new Map<Room, RoomNotificationState>();
 
     private listMap = new Map<TagID, ListNotificationState>();
-    private _globalState: SummarizedNotificationState;
+    private _globalState = new SummarizedNotificationState();
 
     private constructor(dispatcher = defaultDispatcher) {
         super(dispatcher, {});
@@ -143,7 +143,6 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
     };
 
     protected async onReady(): Promise<void> {
-        this._globalState = new SummarizedNotificationState();
         this.matrixClient?.on(ClientEvent.Sync, this.onSync);
         SettingsStore.watchSetting("feature_dynamic_room_predecessors", null, () => {
             // We pass SyncState.Syncing here to "simulate" a sync happening.
