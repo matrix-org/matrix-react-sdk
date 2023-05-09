@@ -26,13 +26,13 @@ import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import {
     shouldShowSpaceSettings,
     showCreateNewRoom,
-    showCreateNewSubspace,
     showSpaceInvite,
     showSpaceSettings,
 } from "../../../../src/utils/space";
 import { leaveSpace } from "../../../../src/utils/leave-behaviour";
 import { shouldShowComponent } from "../../../../src/customisations/helpers/UIComponents";
 import { UIComponent } from "../../../../src/settings/UIFeature";
+import { showCreateNewSubspace } from "../../../../src/components/views/dialogs/CreateSubspaceDialog";
 
 jest.mock("../../../../src/customisations/helpers/UIComponents", () => ({
     shouldShowComponent: jest.fn(),

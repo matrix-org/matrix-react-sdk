@@ -33,7 +33,7 @@ import Modal from "../../../Modal";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
-import { showAddExistingSubspace } from "../../../utils/space";
+import { showAddExistingSubspace } from "./AddExistingSubspaceDialog";
 
 interface IProps {
     space: Room;
