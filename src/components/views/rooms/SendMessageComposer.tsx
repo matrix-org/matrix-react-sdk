@@ -353,11 +353,6 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     context: this.context.timelineRenderingType,
                 });
                 break;
-            default:
-                if (this.prepareToEncrypt) {
-                    // This needs to be last!
-                    this.prepareToEncrypt();
-                }
         }
     };
 
@@ -690,7 +685,10 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     };
 
     private onChange = (): void => {
-        if (this.props.onChange) this.props.onChange(this.model);
+        // We call this in here rather than onKeyDown as that would trip it on global shortcuts e.g. Ctrl-k also
+        this.prepareToEncrypt?.();
+
+        this.props.onChange?.(this.model);
     };
 
     private focusComposer = (): void => {
