@@ -29,7 +29,7 @@ limitations under the License.
     overflow: hidden;
     flex-grow: 1;
 
-    &.mx_AppsDrawer_maximise {
+    &.mx_AppsDrawer--maximise {
         margin-bottom: var(--container-gap-width);
     }
 
@@ -96,7 +96,7 @@ limitations under the License.
         min-width: var(--minWidth);
     }
 
-    &.mx_AppsDrawer_2apps .mx_AppTile {
+    &.mx_AppsDrawer--2apps .mx_AppTile {
         width: 50%;
 
         &:nth-child(3) {
@@ -105,7 +105,7 @@ limitations under the License.
             min-width: var(--minWidth) !important;
         }
     }
-    &.mx_AppsDrawer_3apps .mx_AppTile {
+    &.mx_AppsDrawer--3apps .mx_AppTile {
         width: 33%;
 
         &:nth-child(3) {
@@ -420,6 +420,6 @@ limitations under the License.
     }
 }
 
-.mx_AppsDrawer_resizing .mx_AppTile_persistedWrapper {
+.mx_AppsDrawer--resizing .mx_AppTile_persistedWrapper {
     z-index: 1;
 }
