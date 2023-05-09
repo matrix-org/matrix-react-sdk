@@ -83,13 +83,13 @@ describe("<EditMessageComposer/>", () => {
     const defaultRoomContext = getRoomContext(room, {});
 
     const getComponent = (editState: EditorStateTransfer, roomContext: IRoomState = defaultRoomContext) =>
-        render(<EditMessageComposerWithMatrixClient editState={editState} />, {
-            wrapper: ({ children }) => (
-                <MatrixClientContext.Provider value={mockClient}>
-                    <RoomContext.Provider value={roomContext}>{children}</RoomContext.Provider>
-                </MatrixClientContext.Provider>
-            ),
-        });
+        render(
+            <MatrixClientContext.Provider value={mockClient}>
+                <RoomContext.Provider value={roomContext}>
+                    <EditMessageComposerWithMatrixClient editState={editState} />
+                </RoomContext.Provider>
+            </MatrixClientContext.Provider>,
+        );
 
     beforeEach(() => {
         mockClient.getRoom.mockReturnValue(room);

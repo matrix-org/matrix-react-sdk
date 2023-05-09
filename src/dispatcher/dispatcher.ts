@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import type { Action } from "./actions";
-import type { ActionPayload, AsyncActionPayload } from "./payloads";
+import { ActionPayload, AsyncActionPayload } from "./payloads";
 
 type DispatchToken = string;
 
