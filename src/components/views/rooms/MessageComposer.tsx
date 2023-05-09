@@ -61,6 +61,7 @@ import { SdkContextClass } from "../../../contexts/SDKContext";
 import { VoiceBroadcastInfoState } from "../../../voice-broadcast";
 import { createCantStartVoiceMessageBroadcastDialog } from "../dialogs/CantStartVoiceMessageBroadcastDialog";
 import { UIFeature } from "../../../settings/UIFeature";
+import { parsePermalink } from "../../../utils/permalinks/Permalinks";
 
 let instanceCount = 0;
 
@@ -374,10 +375,37 @@ export class MessageComposer extends React.Component<IProps, IState> {
             ? await richToPlain(composerContent)
             : await plainToRich(composerContent);
 
+        const richTextLinkRegex = /(<a.*<\/a>)/g;
+        const mdLinkRegex = /\[.*\]\(<(.*>)\)/g;
+
+        function fudgeMentions(plainText: string): string {
+            // to avoid lookup, we use the existing rich text information
+            const richTextLinkMatches = composerContent.match(richTextLinkRegex);
+            if (richTextLinkMatches === null) {
+                // we have no links, so no processing required
+                return plainText;
+            }
+
+            // allows us to keep track of which link we're looking at in the replacer
+            let count = 0;
+
+            // now go through the plain text and, if the href can be interpreted as a permalink, replace
+            // it with the corresponding "rich match"
+            const fudgedString = plainText.replace(mdLinkRegex, (match, href) => {
+                // permalink returns null if we can't interpret it that way
+                const permalink = parsePermalink(href);
+                const toReturn = permalink === null ? plainText : richTextLinkMatches[count];
+                count++;
+                return toReturn;
+            });
+            return fudgedString;
+        }
+        const patchedContent = isRichTextEnabled ? fudgeMentions(convertedContent) : convertedContent;
+
         this.setState({
             isRichTextEnabled: !isRichTextEnabled,
             composerContent: convertedContent,
-            initialComposerContent: convertedContent,
+            initialComposerContent: patchedContent,
         });
     };
 
