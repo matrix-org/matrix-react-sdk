@@ -50,6 +50,7 @@ interface IProps {
 }
 
 interface IState {
+    displayPassword: boolean;
     fieldValid: Partial<Record<LoginField, boolean>>;
     loginType: LoginField.Email | LoginField.MatrixId | LoginField.Phone;
     password: string;
@@ -83,12 +84,17 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
     public constructor(props: IProps) {
         super(props);
         this.state = {
+            displayPassword: false,
             // Field error codes by field ID
             fieldValid: {},
             loginType: LoginField.MatrixId,
             password: "",
         };
     }
+
+    private setDisplayPassword = (value: boolean): void => {
+        this.setState({ displayPassword: value });
+    };
 
     private onForgotPasswordClick = (ev: ButtonEvent): void => {
         ev.preventDefault();
@@ -426,7 +432,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
                         id="mx_LoginForm_password"
                         className={pwFieldClass}
                         autoComplete="current-password"
-                        type="password"
+                        type={this.state.displayPassword ? "text": "password"}
                         name="password"
                         label={_t("Password")}
                         value={this.state.password}
@@ -435,6 +441,20 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
                         autoFocus={autoFocusPassword}
                         onValidate={this.onPasswordValidate}
                         ref={(field) => (this[LoginField.Password] = field)}
+                        postfixComponent={(
+                            <div
+                                className="mx_textInput_postfixComponent"
+                                onMouseDown={() => this.setDisplayPassword(true)}
+                                onMouseUp={() => this.setDisplayPassword(false)}
+                            >
+                                <img
+                                    src={require("../../../../res/img/feather-customised/grey-eye.svg").default}
+                                    width="24"
+                                    height="24"
+                                    alt={_t("Eye")}
+                                />
+                            </div>
+                        )}
                     />
                     {forgotPasswordJsx}
                     {!this.props.busy && (

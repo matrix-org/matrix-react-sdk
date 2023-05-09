@@ -48,6 +48,7 @@ interface IProps {
 }
 
 interface IState {
+    displayPassword: boolean;
     recoveryKey: string;
     recoveryKeyValid: boolean | null;
     recoveryKeyCorrect: boolean | null;
@@ -69,6 +70,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         super(props);
 
         this.state = {
+            displayPassword: false,
             recoveryKey: "",
             recoveryKeyValid: null,
             recoveryKeyCorrect: null,
@@ -79,6 +81,10 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
             resetting: false,
         };
     }
+
+    private setDisplayPassword = (value: boolean): void => {
+        this.setState({ displayPassword: value });
+    };
 
     private onCancel = (): void => {
         if (this.state.resetting) {
@@ -403,7 +409,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                         <div className="mx_AccessSecretStorageDialog_recoveryKeyEntry">
                             <div className="mx_AccessSecretStorageDialog_recoveryKeyEntry_textInput">
                                 <Field
-                                    type="password"
+                                    type={this.state.displayPassword ? "text": "password"}
                                     id="mx_securityKey"
                                     label={_t("Security Key")}
                                     value={this.state.recoveryKey}
@@ -411,6 +417,20 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                                     autoFocus={true}
                                     forceValidity={this.state.recoveryKeyCorrect ?? undefined}
                                     autoComplete="off"
+                                    postfixComponent={(
+                                        <div
+                                            className="mx_textInput_postfixComponent"
+                                            onMouseDown={() => this.setDisplayPassword(true)}
+                                            onMouseUp={() => this.setDisplayPassword(false)}
+                                        >
+                                            <img
+                                                src={require("../../../../../res/img/feather-customised/grey-eye.svg").default}
+                                                width="24"
+                                                height="24"
+                                                alt={_t("Eye")}
+                                            />
+                                        </div>
+                                    )}
                                 />
                             </div>
                             <span className="mx_AccessSecretStorageDialog_recoveryKeyEntry_entryControlSeparatorText">
