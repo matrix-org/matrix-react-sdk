@@ -29,10 +29,6 @@ limitations under the License.
     overflow: hidden;
     flex-grow: 1;
 
-    &.mx_AppsDrawer--maximise {
-        margin-bottom: var(--container-gap-width);
-    }
-
     .mx_AppsContainer_resizerHandleContainer {
         width: 100%;
         height: 10px;
@@ -94,6 +90,14 @@ limitations under the License.
     .mx_AppTile {
         width: 50%;
         min-width: var(--minWidth);
+    }
+
+    &.mx_AppsDrawer--maximise {
+        margin-bottom: var(--container-gap-width);
+    }
+
+    &.mx_AppsDrawer--resizing .mx_AppTile_persistedWrapper {
+        z-index: 1;
     }
 
     &.mx_AppsDrawer--2apps .mx_AppTile {
@@ -418,8 +422,4 @@ limitations under the License.
     to {
         opacity: 1;
     }
-}
-
-.mx_AppsDrawer--resizing .mx_AppTile_persistedWrapper {
-    z-index: 1;
 }
