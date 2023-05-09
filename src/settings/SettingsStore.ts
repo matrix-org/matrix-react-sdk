@@ -325,13 +325,27 @@ export default class SettingsStore {
 
     /**
      * Determines if a setting is enabled.
-     * If a setting is disabled then it should be hidden from the user.
+     * If a setting is disabled then it should normally be hidden from the user to de-clutter the user interface.
+     * This rule is intentionally ignored for labs flags to unveil what features are available with
+     * the right server support.
      * @param {string} settingName The setting to look up.
      * @return {boolean} True if the setting is enabled.
      */
     public static isEnabled(settingName: string): boolean {
         if (!SETTINGS[settingName]) return false;
         return !SETTINGS[settingName].controller?.settingDisabled ?? true;
+    }
+
+    /**
+     * Retrieves the reason a setting is disabled if one is assigned.
+     * If a setting is not disabled, or no reason is given by the `SettingController`,
+     * this will return undefined.
+     * @param {string} settingName The setting to look up.
+     * @return {string} The reason the setting is disabled.
+     */
+    public static disabledMessage(settingName: string): string | undefined {
+        const disabled = SETTINGS[settingName].controller?.settingDisabled;
+        return typeof disabled === "string" ? disabled : undefined;
     }
 
     /**
@@ -511,7 +525,7 @@ export default class SettingsStore {
      * check at.
      * @return {boolean} True if the user may set the setting, false otherwise.
      */
-    public static canSetValue(settingName: string, roomId: string, level: SettingLevel): boolean {
+    public static canSetValue(settingName: string, roomId: string | null, level: SettingLevel): boolean {
         // Verify that the setting is actually a setting
         if (!SETTINGS[settingName]) {
             throw new Error("Setting '" + settingName + "' does not appear to be a setting.");

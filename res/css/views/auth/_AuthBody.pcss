@@ -25,7 +25,7 @@ limitations under the License.
     box-sizing: border-box;
 
     b {
-        font-weight: 600;
+        font-weight: var(--font-semi-bold);
     }
 
     &.mx_AuthBody_flex {
@@ -35,14 +35,14 @@ limitations under the License.
 
     h1 {
         font-size: $font-24px;
-        font-weight: $font-semi-bold;
+        font-weight: var(--font-semi-bold);
         margin-top: $spacing-8;
         color: $authpage-primary-color;
     }
 
     h2 {
         font-size: $font-14px;
-        font-weight: $font-semi-bold;
+        font-weight: var(--font-semi-bold);
         color: $authpage-secondary-color;
     }
 
@@ -53,7 +53,8 @@ limitations under the License.
     a:link,
     a:hover,
     a:visited {
-        @mixin mx_Dialog_link;
+        color: $accent;
+        text-decoration: none;
     }
 
     fieldset {
@@ -65,7 +66,9 @@ limitations under the License.
     }
 
     .mx_AuthBody_lockIcon {
-        height: 29px;
+        color: $secondary-content;
+        height: 32px;
+        margin-bottom: -3px; // tweak to align all icons on different forgot password steps
     }
 
     .mx_AuthBody_text {
@@ -153,7 +156,7 @@ limitations under the License.
     }
 
     .mx_Login_submit {
-        font-weight: $font-semi-bold;
+        font-weight: var(--font-semi-bold);
         margin: 0 0 $spacing-16;
     }
 
@@ -166,7 +169,7 @@ limitations under the License.
     }
 
     .mx_AuthBody_sign-in-instead-button {
-        font-weight: $font-semi-bold;
+        font-weight: var(--font-semi-bold);
         padding: $spacing-4;
     }
 
@@ -260,7 +263,7 @@ limitations under the License.
     text-align: center;
 
     > a {
-        font-weight: $font-semi-bold;
+        font-weight: var(--font-semi-bold);
     }
 }
 

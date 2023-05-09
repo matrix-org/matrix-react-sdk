@@ -18,7 +18,6 @@ limitations under the License.
 
 import { Room } from "matrix-js-sdk/src/models/room";
 import classNames from "classnames";
-import { Dispatcher } from "flux";
 import { Enable, Resizable } from "re-resizable";
 import { Direction } from "re-resizable/lib/resizer";
 import * as React from "react";
@@ -28,7 +27,7 @@ import { polyfillTouchEvent } from "../../../@types/polyfill";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { RovingAccessibleButton, RovingTabIndexWrapper } from "../../../accessibility/RovingTabIndex";
 import { Action } from "../../../dispatcher/actions";
-import defaultDispatcher from "../../../dispatcher/dispatcher";
+import defaultDispatcher, { MatrixDispatcher } from "../../../dispatcher/dispatcher";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
@@ -68,7 +67,7 @@ polyfillTouchEvent();
 
 export interface IAuxButtonProps {
     tabIndex: number;
-    dispatcher?: Dispatcher<ActionPayload>;
+    dispatcher?: MatrixDispatcher;
 }
 
 interface IProps {
@@ -84,6 +83,10 @@ interface IProps {
     resizeNotifier: ResizeNotifier;
     extraTiles?: ReactComponentElement<typeof ExtraTile>[] | null;
     onListCollapse?: (isExpanded: boolean) => void;
+}
+
+function getLabelId(tagId: TagID): string {
+    return `mx_RoomSublist_label_${tagId}`;
 }
 
 // TODO: Use re-resizer's NumberSize when it is exposed as the type
@@ -434,9 +437,11 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     };
 
     private onHeaderClick = (): void => {
-        const possibleSticky = this.headerButton.current.parentElement;
-        const sublist = possibleSticky.parentElement.parentElement;
-        const list = sublist.parentElement.parentElement;
+        const possibleSticky = this.headerButton.current?.parentElement;
+        const sublist = possibleSticky?.parentElement?.parentElement;
+        const list = sublist?.parentElement?.parentElement;
+        if (!possibleSticky || !list) return;
+
         // the scrollTop is capped at the height of the header in LeftPanel, the top header is always sticky
         const listScrollTop = Math.round(list.scrollTop);
         const isAtTop = listScrollTop <= Math.round(HEADER_HEIGHT);
@@ -711,7 +716,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                                         title={this.props.isMinimized ? this.props.label : undefined}
                                     >
                                         <span className={collapseClasses} />
-                                        <span>{this.props.label}</span>
+                                        <span id={getLabelId(this.props.tagId)}>{this.props.label}</span>
                                     </Button>
                                     {this.renderMenu()}
                                     {this.props.isMinimized ? null : badgeContainer}
@@ -879,7 +884,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                 className={classes}
                 role="group"
                 aria-hidden={hidden}
-                aria-label={this.props.label}
+                aria-labelledby={getLabelId(this.props.tagId)}
                 onKeyDown={this.onKeyDown}
             >
                 {this.renderHeader()}

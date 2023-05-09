@@ -32,7 +32,13 @@ import {
     VoiceBroadcastPlaybackState,
     VoiceBroadcastRecording,
 } from "../../../src/voice-broadcast";
-import { filterConsole, flushPromises, flushPromisesWithFakeTimers, stubClient } from "../../test-utils";
+import {
+    filterConsole,
+    flushPromises,
+    flushPromisesWithFakeTimers,
+    stubClient,
+    waitEnoughCyclesForModal,
+} from "../../test-utils";
 import { createTestPlayback } from "../../test-utils/audio";
 import { mkVoiceBroadcastChunkEvent, mkVoiceBroadcastInfoStateEvent } from "../utils/test-utils";
 import { LazyValue } from "../../../src/utils/LazyValue";
@@ -75,11 +81,6 @@ describe("VoiceBroadcastPlayback", () => {
         return screen.queryByText(
             "If you start listening to this live broadcast, your current live broadcast recording will be ended.",
         );
-    };
-
-    const waitForDialog = async () => {
-        await flushPromises();
-        await flushPromises();
     };
 
     const itShouldSetTheStateTo = (state: VoiceBroadcastPlaybackState) => {
@@ -219,7 +220,6 @@ describe("VoiceBroadcastPlayback", () => {
     };
 
     filterConsole(
-        "Starting load of AsyncWrapper for modal",
         // expected for some tests
         "Unable to load broadcast playback",
     );
@@ -480,7 +480,7 @@ describe("VoiceBroadcastPlayback", () => {
                 jest.spyOn(recording, "stop");
                 SdkContextClass.instance.voiceBroadcastRecordingsStore.setCurrent(recording);
                 playback.start();
-                await waitForDialog();
+                await waitEnoughCyclesForModal();
             });
 
             it("should display a confirm modal", () => {

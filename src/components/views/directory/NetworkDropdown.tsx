@@ -44,7 +44,7 @@ const validServer = withValidation<undefined, { error?: MatrixError }>({
             // check if we can successfully load this server's room directory
             await MatrixClientPeg.get().publicRooms({
                 limit: 1,
-                server: value,
+                server: value ?? undefined,
             });
             return {};
         } catch (error) {
@@ -68,6 +68,7 @@ const validServer = withValidation<undefined, { error?: MatrixError }>({
                     : _t("Can't find this server or its room list"),
         },
     ],
+    memoize: true,
 });
 
 function useSettingsValueWithSetter<T>(
@@ -148,7 +149,7 @@ export const NetworkDropdown: React.FC<IProps> = ({ protocols, config, setConfig
     const { allServers, homeServer, userDefinedServers, setUserDefinedServers } = useServers();
 
     const options: GenericDropdownMenuItem<IPublicRoomDirectoryConfig | null>[] = allServers.map((roomServer) => ({
-        key: { roomServer, instanceId: null },
+        key: { roomServer, instanceId: undefined },
         label: roomServer,
         description: roomServer === homeServer ? _t("Your server") : null,
         options: [

@@ -23,7 +23,7 @@ import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
 import * as Lifecycle from "../../../Lifecycle";
 import Modal from "../../../Modal";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { IMatrixClientCreds, MatrixClientPeg } from "../../../MatrixClientPeg";
 import { sendLoginRequest } from "../../../Login";
 import AuthPage from "../../views/auth/AuthPage";
 import { SSO_HOMESERVER_URL_KEY, SSO_ID_SERVER_URL_KEY } from "../../../BasePlatform";
@@ -114,7 +114,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
 
     private async initLogin(): Promise<void> {
         const queryParams = this.props.realQueryParams;
-        const hasAllParams = queryParams && queryParams["loginToken"];
+        const hasAllParams = queryParams?.["loginToken"];
         if (hasAllParams) {
             this.setState({ loginView: LoginView.Loading });
             this.trySsoLogin();
@@ -156,10 +156,10 @@ export default class SoftLogout extends React.Component<IProps, IState> {
                 user: MatrixClientPeg.get().getUserId(),
             },
             password: this.state.password,
-            device_id: MatrixClientPeg.get().getDeviceId(),
+            device_id: MatrixClientPeg.get().getDeviceId() ?? undefined,
         };
 
-        let credentials = null;
+        let credentials: IMatrixClientCreds;
         try {
             credentials = await sendLoginRequest(hsUrl, isUrl, loginType, loginParams);
         } catch (e) {
@@ -185,14 +185,20 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         this.setState({ busy: true });
 
         const hsUrl = localStorage.getItem(SSO_HOMESERVER_URL_KEY);
+        if (!hsUrl) {
+            logger.error("Homeserver URL unknown for SSO login callback");
+            this.setState({ busy: false, loginView: LoginView.Unsupported });
+            return;
+        }
+
         const isUrl = localStorage.getItem(SSO_ID_SERVER_URL_KEY) || MatrixClientPeg.get().getIdentityServerUrl();
         const loginType = "m.login.token";
         const loginParams = {
             token: this.props.realQueryParams["loginToken"],
-            device_id: MatrixClientPeg.get().getDeviceId(),
+            device_id: MatrixClientPeg.get().getDeviceId() ?? undefined,
         };
 
-        let credentials = null;
+        let credentials: IMatrixClientCreds;
         try {
             credentials = await sendLoginRequest(hsUrl, isUrl, loginType, loginParams);
         } catch (e) {
@@ -212,7 +218,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
     }
 
     private renderPasswordForm(introText: Optional<string>): JSX.Element {
-        let error: JSX.Element = null;
+        let error: JSX.Element | undefined;
         if (this.state.errorText) {
             error = <span className="mx_Login_error">{this.state.errorText}</span>;
         }
@@ -267,7 +273,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
             return <Spinner />;
         }
 
-        let introText = null; // null is translated to something area specific in this function
+        let introText: string | null = null; // null is translated to something area specific in this function
         if (this.state.keyBackupNeeded) {
             introText = _t(
                 "Regain access to your account and recover encryption keys stored in this session. " +

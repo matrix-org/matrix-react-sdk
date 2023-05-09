@@ -151,7 +151,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 const result = await MatrixClientPeg.get().lookupThreePid(
                     "email",
                     this.props.invitedEmail,
-                    identityAccessToken,
+                    identityAccessToken!,
                 );
                 this.setState({ invitedEmailMxid: result.mxid });
             } catch (err) {
@@ -215,9 +215,9 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
         if (!myMember) {
             return {};
         }
-        const kickerMember = this.props.room.currentState.getMember(myMember.events.member.getSender());
-        const memberName = kickerMember ? kickerMember.name : myMember.events.member.getSender();
-        const reason = myMember.events.member.getContent().reason;
+        const kickerMember = this.props.room?.currentState.getMember(myMember.events.member.getSender());
+        const memberName = kickerMember?.name ?? myMember.events.member?.getSender();
+        const reason = myMember.events.member?.getContent().reason;
         return { memberName, reason };
     }
 
@@ -243,8 +243,8 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
         if (!inviteEvent) {
             return null;
         }
-        const inviterUserId = inviteEvent.events.member.getSender();
-        return room.currentState.getMember(inviterUserId);
+        const inviterUserId = inviteEvent.events.member?.getSender();
+        return inviterUserId ? room.currentState.getMember(inviterUserId) : null;
     }
 
     private isDMInvite(): boolean {
@@ -252,9 +252,8 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
         if (!myMember) {
             return false;
         }
-        const memberEvent = myMember.events.member;
-        const memberContent = memberEvent.getContent();
-        return memberContent.membership === "invite" && memberContent.is_direct;
+        const memberContent = myMember.events.member?.getContent();
+        return memberContent?.membership === "invite" && memberContent.is_direct;
     }
 
     private makeScreenAfterLogin(): { screen: string; params: Record<string, any> } {
@@ -397,7 +396,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 const errCodeMessage = _t(
                     "An error (%(errcode)s) was returned while trying to validate your " +
                         "invite. You could try to pass this information on to the person who invited you.",
-                    { errcode: this.state.threePidFetchError.errcode || _t("unknown error code") },
+                    { errcode: this.state.threePidFetchError?.errcode || _t("unknown error code") },
                 );
                 switch (joinRule) {
                     case "invite":

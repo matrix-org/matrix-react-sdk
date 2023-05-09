@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps, createRef } from "react";
+import React, { ComponentProps, createRef, ReactNode } from "react";
 import { Blurhash } from "react-blurhash";
 import classNames from "classnames";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
@@ -47,8 +47,8 @@ enum Placeholder {
 }
 
 interface IState {
-    contentUrl?: string;
-    thumbUrl?: string;
+    contentUrl: string | null;
+    thumbUrl: string | null;
     isAnimated?: boolean;
     error?: Error;
     imgError: boolean;
@@ -78,6 +78,8 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         this.reconnectedListener = createReconnectedListener(this.clearError);
 
         this.state = {
+            contentUrl: null,
+            thumbUrl: null,
             imgError: false,
             imgLoaded: false,
             hover: false,
@@ -102,9 +104,10 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
             const content = this.props.mxEvent.getContent<IMediaEventContent>();
             const httpUrl = this.state.contentUrl;
+            if (!httpUrl) return;
             const params: Omit<ComponentProps<typeof ImageView>, "onFinished"> = {
                 src: httpUrl,
-                name: content.body?.length > 0 ? content.body : _t("Attachment"),
+                name: content.body && content.body.length > 0 ? content.body : _t("Attachment"),
                 mxEvent: this.props.mxEvent,
                 permalinkCreator: this.props.permalinkCreator,
             };
@@ -126,14 +129,19 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                 };
             }
 
-            Modal.createDialog(ImageView, params, "mx_Dialog_lightbox", null, true);
+            Modal.createDialog(ImageView, params, "mx_Dialog_lightbox", undefined, true);
         }
     };
 
     protected onImageEnter = (e: React.MouseEvent<HTMLImageElement>): void => {
         this.setState({ hover: true });
 
-        if (!this.state.showImage || !this.state.isAnimated || SettingsStore.getValue("autoplayGifs")) {
+        if (
+            !this.state.contentUrl ||
+            !this.state.showImage ||
+            !this.state.isAnimated ||
+            SettingsStore.getValue("autoplayGifs")
+        ) {
             return;
         }
         const imgElement = e.currentTarget;
@@ -143,11 +151,12 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     protected onImageLeave = (e: React.MouseEvent<HTMLImageElement>): void => {
         this.setState({ hover: false });
 
-        if (!this.state.showImage || !this.state.isAnimated || SettingsStore.getValue("autoplayGifs")) {
+        const url = this.state.thumbUrl ?? this.state.contentUrl;
+        if (!url || !this.state.showImage || !this.state.isAnimated || SettingsStore.getValue("autoplayGifs")) {
             return;
         }
         const imgElement = e.currentTarget;
-        imgElement.src = this.state.thumbUrl ?? this.state.contentUrl;
+        imgElement.src = url;
     };
 
     private clearError = (): void => {
@@ -177,7 +186,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         this.setState({ imgLoaded: true, loadedImageDimensions });
     };
 
-    private getContentUrl(): string {
+    private getContentUrl(): string | null {
         // During export, the content url will point to the MSC, which will later point to a local url
         if (this.props.forExport) return this.media.srcMxc;
         return this.media.srcHttp;
@@ -187,7 +196,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         return mediaFromContent(this.props.mxEvent.getContent());
     }
 
-    private getThumbUrl(): string {
+    private getThumbUrl(): string | null {
         // FIXME: we let images grow as wide as you like, rather than capped to 800x600.
         // So either we need to support custom timeline widths here, or reimpose the cap, otherwise the
         // thumbnail resolution will be unnecessarily reduced.
@@ -242,8 +251,8 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     private async downloadImage(): Promise<void> {
         if (this.state.contentUrl) return; // already downloaded
 
-        let thumbUrl: string;
-        let contentUrl: string;
+        let thumbUrl: string | null;
+        let contentUrl: string | null;
         if (this.props.mediaEventHelper.media.isEncrypted) {
             try {
                 [contentUrl, thumbUrl] = await Promise.all([
@@ -276,14 +285,14 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         // If there is no included non-animated thumbnail then we will generate our own, we can't depend on the server
         // because 1. encryption and 2. we can't ask the server specifically for a non-animated thumbnail.
         if (isAnimated && !SettingsStore.getValue("autoplayGifs")) {
-            if (!thumbUrl || !content?.info.thumbnail_info || mayBeAnimated(content.info.thumbnail_info.mimetype)) {
+            if (!thumbUrl || !content?.info?.thumbnail_info || mayBeAnimated(content.info.thumbnail_info.mimetype)) {
                 const img = document.createElement("img");
                 const loadPromise = new Promise((resolve, reject) => {
                     img.onload = resolve;
                     img.onerror = reject;
                 });
                 img.crossOrigin = "Anonymous"; // CORS allow canvas access
-                img.src = contentUrl;
+                img.src = contentUrl ?? "";
 
                 try {
                     await loadPromise;
@@ -364,7 +373,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         }
     }
 
-    protected getBanner(content: IMediaEventContent): JSX.Element {
+    protected getBanner(content: IMediaEventContent): ReactNode {
         // Hide it for the threads list & the file panel where we show it as text anyway.
         if (
             [TimelineRenderingType.ThreadsList, TimelineRenderingType.File].includes(this.context.timelineRenderingType)
@@ -376,22 +385,24 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     }
 
     protected messageContent(
-        contentUrl: string,
-        thumbUrl: string,
+        contentUrl: string | null,
+        thumbUrl: string | null,
         content: IMediaEventContent,
         forcedHeight?: number,
-    ): JSX.Element {
+    ): ReactNode {
         if (!thumbUrl) thumbUrl = contentUrl; // fallback
 
-        let infoWidth: number;
-        let infoHeight: number;
+        // magic number
+        // edge case for this not to be set by conditions below
+        let infoWidth = 500;
+        let infoHeight = 500;
         let infoSvg = false;
 
         if (content.info?.w && content.info?.h) {
             infoWidth = content.info.w;
             infoHeight = content.info.h;
             infoSvg = content.info.mimetype === "image/svg+xml";
-        } else {
+        } else if (thumbUrl && contentUrl) {
             // Whilst the image loads, display nothing. We also don't display a blurhash image
             // because we don't really know what size of image we'll end up with.
             //
@@ -429,9 +440,9 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             forcedHeight ?? this.props.maxImageHeight,
         );
 
-        let img: JSX.Element;
-        let placeholder: JSX.Element;
-        let gifLabel: JSX.Element;
+        let img: JSX.Element | undefined;
+        let placeholder: JSX.Element | undefined;
+        let gifLabel: JSX.Element | undefined;
 
         if (!this.props.forExport && !this.state.imgLoaded) {
             const classes = classNames("mx_MImageBody_placeholder", {
@@ -471,7 +482,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             gifLabel = <p className="mx_MImageBody_gifLabel">GIF</p>;
         }
 
-        let banner: JSX.Element;
+        let banner: ReactNode | undefined;
         if (this.state.showImage && this.state.hover) {
             banner = this.getBanner(content);
         }
@@ -517,16 +528,25 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     }
 
     // Overridden by MStickerBody
-    protected wrapImage(contentUrl: string, children: JSX.Element): JSX.Element {
-        return (
-            <a href={contentUrl} target={this.props.forExport ? "_blank" : undefined} onClick={this.onClick}>
-                {children}
-            </a>
-        );
+    protected wrapImage(contentUrl: string | null | undefined, children: JSX.Element): ReactNode {
+        if (contentUrl) {
+            return (
+                <a href={contentUrl} target={this.props.forExport ? "_blank" : undefined} onClick={this.onClick}>
+                    {children}
+                </a>
+            );
+        } else if (!this.state.showImage) {
+            return (
+                <div role="button" onClick={this.onClick}>
+                    {children}
+                </div>
+            );
+        }
+        return children;
     }
 
     // Overridden by MStickerBody
-    protected getPlaceholder(width: number, height: number): JSX.Element {
+    protected getPlaceholder(width: number, height: number): ReactNode {
         const blurhash = this.props.mxEvent.getContent().info?.[BLURHASH_FIELD];
 
         if (blurhash) {
@@ -540,12 +560,12 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     }
 
     // Overridden by MStickerBody
-    protected getTooltip(): JSX.Element {
+    protected getTooltip(): ReactNode {
         return null;
     }
 
     // Overridden by MStickerBody
-    protected getFileBody(): string | JSX.Element {
+    protected getFileBody(): ReactNode {
         if (this.props.forExport) return null;
         /*
          * In the room timeline or the thread context we don't need the download
@@ -577,7 +597,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         }
 
         let contentUrl = this.state.contentUrl;
-        let thumbUrl: string;
+        let thumbUrl: string | null;
         if (this.props.forExport) {
             contentUrl = this.props.mxEvent.getContent().url ?? this.props.mxEvent.getContent().file?.url;
             thumbUrl = contentUrl;

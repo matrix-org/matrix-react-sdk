@@ -21,6 +21,8 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { _t } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import BridgeTile from "../../BridgeTile";
+import SettingsTab from "../SettingsTab";
+import { SettingsSection } from "../../shared/SettingsSection";
 
 const BRIDGE_EVENT_TYPES = [
     "uk.half-shot.bridge",
@@ -30,7 +32,7 @@ const BRIDGE_EVENT_TYPES = [
 const BRIDGES_LINK = "https://matrix.org/bridges/";
 
 interface IProps {
-    roomId: string;
+    room: Room;
 }
 
 export default class BridgeSettingsTab extends React.Component<IProps> {
@@ -51,9 +53,8 @@ export default class BridgeSettingsTab extends React.Component<IProps> {
     public render(): React.ReactNode {
         // This settings tab will only be invoked if the following function returns more
         // than 0 events, so no validation is needed at this stage.
-        const bridgeEvents = BridgeSettingsTab.getBridgeStateEvents(this.props.roomId);
-        const client = MatrixClientPeg.get();
-        const room = client.getRoom(this.props.roomId);
+        const bridgeEvents = BridgeSettingsTab.getBridgeStateEvents(this.props.room.roomId);
+        const room = this.props.room;
 
         let content: JSX.Element;
         if (bridgeEvents.length > 0) {
@@ -100,10 +101,9 @@ export default class BridgeSettingsTab extends React.Component<IProps> {
         }
 
         return (
-            <div className="mx_SettingsTab">
-                <div className="mx_SettingsTab_heading">{_t("Bridges")}</div>
-                <div className="mx_SettingsTab_section mx_SettingsTab_subsectionText">{content}</div>
-            </div>
+            <SettingsTab>
+                <SettingsSection heading={_t("Bridges")}>{content}</SettingsSection>
+            </SettingsTab>
         );
     }
 }

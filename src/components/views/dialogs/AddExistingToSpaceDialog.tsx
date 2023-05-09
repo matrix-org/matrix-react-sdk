@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode, useContext, useMemo, useRef, useState } from "react";
+import React, { ReactElement, ReactNode, RefObject, useContext, useMemo, useRef, useState } from "react";
 import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { sleep } from "matrix-js-sdk/src/utils";
@@ -39,6 +39,9 @@ import ProgressBar from "../elements/ProgressBar";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import QueryMatcher from "../../../autocomplete/QueryMatcher";
 import LazyRenderList from "../elements/LazyRenderList";
+import { useSettingValue } from "../../../hooks/useSettings";
+import { filterBoolean } from "../../../utils/arrays";
+import { NonEmptyArray } from "../../../@types/common";
 
 // These values match CSS
 const ROW_HEIGHT = 32 + 12;
@@ -55,7 +58,7 @@ interface IProps {
 export const Entry: React.FC<{
     room: Room;
     checked: boolean;
-    onChange(value: boolean): void;
+    onChange?(value: boolean): void;
 }> = ({ room, checked, onChange }) => {
     return (
         <label className="mx_AddExistingToSpace_entry">
@@ -66,7 +69,7 @@ export const Entry: React.FC<{
             )}
             <span className="mx_AddExistingToSpace_entry_name">{room.name}</span>
             <StyledCheckbox
-                onChange={onChange ? (e) => onChange(e.currentTarget.checked) : null}
+                onChange={onChange ? (e) => onChange(e.currentTarget.checked) : undefined}
                 checked={checked}
                 disabled={!onChange}
             />
@@ -135,9 +138,14 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
     onFinished,
 }) => {
     const cli = useContext(MatrixClientContext);
-    const visibleRooms = useMemo(() => cli.getVisibleRooms().filter((r) => r.getMyMembership() === "join"), [cli]);
+    const msc3946ProcessDynamicPredecessor = useSettingValue<boolean>("feature_dynamic_room_predecessors");
+    const visibleRooms = useMemo(
+        () =>
+            cli?.getVisibleRooms(msc3946ProcessDynamicPredecessor).filter((r) => r.getMyMembership() === "join") ?? [],
+        [cli, msc3946ProcessDynamicPredecessor],
+    );
 
-    const scrollRef = useRef<AutoHideScrollbar<"div">>();
+    const scrollRef = useRef() as RefObject<AutoHideScrollbar<"div">>;
     const [scrollState, setScrollState] = useState<IScrollState>({
         // these are estimates which update as soon as it mounts
         scrollTop: 0,
@@ -145,8 +153,8 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
     });
 
     const [selectedToAdd, setSelectedToAdd] = useState(new Set<Room>());
-    const [progress, setProgress] = useState<number>(null);
-    const [error, setError] = useState<Error>(null);
+    const [progress, setProgress] = useState<number | null>(null);
+    const [error, setError] = useState<Error | null>(null);
     const [query, setQuery] = useState("");
     const lcQuery = query.toLowerCase().trim();
 
@@ -159,7 +167,7 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
         if (lcQuery) {
             const matcher = new QueryMatcher<Room>(visibleRooms, {
                 keys: ["name"],
-                funcs: [(r) => [r.getCanonicalAlias(), ...r.getAltAliases()].filter(Boolean)],
+                funcs: [(r) => filterBoolean([r.getCanonicalAlias(), ...r.getAltAliases()])],
                 shouldMatchWordsOnly: false,
             });
 
@@ -167,7 +175,7 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
         }
 
         const joinRule = space.getJoinRule();
-        return sortRooms(rooms).reduce(
+        return sortRooms(rooms).reduce<[spaces: Room[], rooms: Room[], dms: Room[]]>(
             (arr, room) => {
                 if (room.isSpaceRoom()) {
                     if (room !== space && !existingSubspacesSet.has(room)) {
@@ -205,7 +213,7 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
 
                     throw e;
                 });
-                setProgress((i) => i + 1);
+                setProgress((i) => (i ?? 0) + 1);
             } catch (e) {
                 logger.error("Failed to add rooms to space", e);
                 error = e;
@@ -284,7 +292,7 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
                   }
                   setSelectedToAdd(new Set(selectedToAdd));
               }
-            : null;
+            : undefined;
 
     // only count spaces when alone as they're shown on a separate modal all on their own
     const numSpaces = spacesRenderer && !dmsRenderer && !roomsRenderer ? spaces.length : 0;
@@ -298,13 +306,15 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
 
     const onScroll = (): void => {
         const body = scrollRef.current?.containerRef.current;
+        if (!body) return;
         setScrollState({
             scrollTop: body.scrollTop,
             height: body.clientHeight,
         });
     };
 
-    const wrappedRef = (body: HTMLDivElement): void => {
+    const wrappedRef = (body: HTMLDivElement | null): void => {
+        if (!body) return;
         setScrollState({
             scrollTop: body.scrollTop,
             height: body.clientHeight,
@@ -368,7 +378,7 @@ const defaultRendererFactory =
                                     ? (checked: boolean) => {
                                           onChange(checked, room);
                                       }
-                                    : null
+                                    : undefined
                             }
                         />
                     )}
@@ -392,7 +402,7 @@ export const SubspaceSelector: React.FC<ISubspaceSelectorProps> = ({ title, spac
         return [
             space,
             ...SpaceStore.instance.getChildSpaces(space.roomId).filter((space) => {
-                return space.currentState.maySendStateEvent(EventType.SpaceChild, space.client.credentials.userId);
+                return space.currentState.maySendStateEvent(EventType.SpaceChild, space.client.getSafeUserId());
             }),
         ];
     }, [space]);
@@ -409,17 +419,19 @@ export const SubspaceSelector: React.FC<ISubspaceSelectorProps> = ({ title, spac
                 value={value.roomId}
                 label={_t("Space selection")}
             >
-                {options.map((space) => {
-                    const classes = classNames({
-                        mx_SubspaceSelector_dropdownOptionActive: space === value,
-                    });
-                    return (
-                        <div key={space.roomId} className={classes}>
-                            <RoomAvatar room={space} width={24} height={24} />
-                            {space.name || getDisplayAliasForRoom(space) || space.roomId}
-                        </div>
-                    );
-                })}
+                {
+                    options.map((space) => {
+                        const classes = classNames({
+                            mx_SubspaceSelector_dropdownOptionActive: space === value,
+                        });
+                        return (
+                            <div key={space.roomId} className={classes}>
+                                <RoomAvatar room={space} width={24} height={24} />
+                                {space.name || getDisplayAliasForRoom(space) || space.roomId}
+                            </div>
+                        );
+                    }) as NonEmptyArray<ReactElement & { key: string }>
+                }
             </Dropdown>
         );
     } else {

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from "react";
+import React, { createRef, ReactNode } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -48,12 +48,14 @@ import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import UserIdentifierCustomisations from "../../customisations/UserIdentifier";
 import PosthogTrackers from "../../PosthogTrackers";
 import { ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePayload";
-import { Icon as LiveIcon } from "../../../res/img/element-icons/live.svg";
+import { Icon as LiveIcon } from "../../../res/img/compound/live-8px.svg";
 import { VoiceBroadcastRecording, VoiceBroadcastRecordingsStoreEvent } from "../../voice-broadcast";
 import { SDKContext } from "../../contexts/SDKContext";
+import { shouldShowFeedback } from "../../utils/Feedback";
 
 interface IProps {
     isPanelCollapsed: boolean;
+    children?: ReactNode;
 }
 
 type PartialDOMRect = Pick<DOMRect, "width" | "left" | "top" | "height">;
@@ -143,7 +145,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         } else {
             const theme = SettingsStore.getValue("theme");
             if (theme.startsWith("custom-")) {
-                return getCustomTheme(theme.substring("custom-".length)).is_dark;
+                return !!getCustomTheme(theme.substring("custom-".length)).is_dark;
             }
             return theme === "dark";
         }
@@ -234,7 +236,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         SettingsStore.setValue("theme", null, SettingLevel.DEVICE, newTheme); // set at same level as Appearance tab
     };
 
-    private onSettingsOpen = (ev: ButtonEvent, tabId: string): void => {
+    private onSettingsOpen = (ev: ButtonEvent, tabId?: string): void => {
         ev.preventDefault();
         ev.stopPropagation();
 
@@ -287,7 +289,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
     private renderContextMenu = (): React.ReactNode => {
         if (!this.state.contextMenuPosition) return null;
 
-        let topSection;
+        let topSection: JSX.Element | undefined;
         if (MatrixClientPeg.get().isGuest()) {
             topSection = (
                 <div className="mx_UserMenu_contextMenu_header mx_UserMenu_contextMenu_guestPrompts">
@@ -302,22 +304,24 @@ export default class UserMenu extends React.Component<IProps, IState> {
                             ),
                         },
                     )}
-                    {_t(
-                        "New here? <a>Create an account</a>",
-                        {},
-                        {
-                            a: (sub) => (
-                                <AccessibleButton kind="link_inline" onClick={this.onRegisterClick}>
-                                    {sub}
-                                </AccessibleButton>
-                            ),
-                        },
-                    )}
+                    {SettingsStore.getValue(UIFeature.Registration)
+                        ? _t(
+                              "New here? <a>Create an account</a>",
+                              {},
+                              {
+                                  a: (sub) => (
+                                      <AccessibleButton kind="link_inline" onClick={this.onRegisterClick}>
+                                          {sub}
+                                      </AccessibleButton>
+                                  ),
+                              },
+                          )
+                        : null}
                 </div>
             );
         }
 
-        let homeButton = null;
+        let homeButton: JSX.Element | undefined;
         if (this.hasHomePage) {
             homeButton = (
                 <IconizedContextMenuOption
@@ -328,8 +332,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
             );
         }
 
-        let feedbackButton;
-        if (SettingsStore.getValue(UIFeature.Feedback)) {
+        let feedbackButton: JSX.Element | undefined;
+        if (shouldShowFeedback()) {
             feedbackButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconMessage"
@@ -355,7 +359,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconSettings"
                     label={_t("All settings")}
-                    onClick={(e) => this.onSettingsOpen(e, null)}
+                    onClick={(e) => this.onSettingsOpen(e)}
                 />
                 {feedbackButton}
                 <IconizedContextMenuOption
@@ -374,7 +378,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     <IconizedContextMenuOption
                         iconClassName="mx_UserMenu_iconSettings"
                         label={_t("Settings")}
-                        onClick={(e) => this.onSettingsOpen(e, null)}
+                        onClick={(e) => this.onSettingsOpen(e)}
                     />
                     {feedbackButton}
                 </IconizedContextMenuOptionList>
@@ -393,9 +397,12 @@ export default class UserMenu extends React.Component<IProps, IState> {
                             {OwnProfileStore.instance.displayName}
                         </span>
                         <span className="mx_UserMenu_contextMenu_userId">
-                            {UserIdentifierCustomisations.getDisplayUserIdentifier(MatrixClientPeg.get().getUserId(), {
-                                withDisplayName: true,
-                            })}
+                            {UserIdentifierCustomisations.getDisplayUserIdentifier(
+                                MatrixClientPeg.get().getSafeUserId(),
+                                {
+                                    withDisplayName: true,
+                                },
+                            )}
                         </span>
                     </div>
 
@@ -424,7 +431,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         const displayName = OwnProfileStore.instance.displayName || userId;
         const avatarUrl = OwnProfileStore.instance.getHttpAvatarUrl(avatarSize);
 
-        let name: JSX.Element;
+        let name: JSX.Element | undefined;
         if (!this.props.isPanelCollapsed) {
             name = <div className="mx_UserMenu_name">{displayName}</div>;
         }

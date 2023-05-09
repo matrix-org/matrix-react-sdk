@@ -100,7 +100,7 @@ class FilePanel extends React.Component<IProps, IState> {
 
         const timeline = this.state.timelineSet.getLiveTimeline();
         if (ev.getType() !== "m.room.message") return;
-        if (["m.file", "m.image", "m.video", "m.audio"].indexOf(ev.getContent().msgtype) == -1) {
+        if (!["m.file", "m.image", "m.video", "m.audio"].includes(ev.getContent().msgtype!)) {
             return;
         }
 
@@ -155,11 +155,8 @@ class FilePanel extends React.Component<IProps, IState> {
             },
         });
 
-        const filterId = await client.getOrCreateFilter("FILTER_FILES_" + client.credentials.userId, filter);
-        filter.filterId = filterId;
-        const timelineSet = room.getOrCreateFilteredTimelineSet(filter);
-
-        return timelineSet;
+        filter.filterId = await client.getOrCreateFilter("FILTER_FILES_" + client.credentials.userId, filter);
+        return room.getOrCreateFilteredTimelineSet(filter);
     }
 
     private onPaginationRequest = (
@@ -177,7 +174,7 @@ class FilePanel extends React.Component<IProps, IState> {
         // the event index to fulfill the pagination request. Asking the server
         // to paginate won't ever work since the server can't correctly filter
         // out events containing URLs
-        if (client.isRoomEncrypted(roomId) && eventIndex !== null) {
+        if (room && client.isRoomEncrypted(roomId) && eventIndex !== null) {
             return eventIndex.paginateTimelineWindow(room, timelineWindow, direction, limit);
         } else {
             return timelineWindow.paginate(direction, limit);
@@ -277,7 +274,9 @@ class FilePanel extends React.Component<IProps, IState> {
                         withoutScrollContainer
                         ref={this.card}
                     >
-                        <Measured sensor={this.card.current} onMeasurement={this.onMeasurement} />
+                        {this.card.current && (
+                            <Measured sensor={this.card.current} onMeasurement={this.onMeasurement} />
+                        )}
                         <SearchWarning isRoomEncrypted={isRoomEncrypted} kind={WarningKind.Files} />
                         <TimelinePanel
                             manageReadReceipts={false}

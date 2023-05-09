@@ -305,7 +305,7 @@ describe("LegacyCallHandler", () => {
         MatrixClientPeg.unset();
 
         document.body.removeChild(audioElement);
-        SdkConfig.unset();
+        SdkConfig.reset();
     });
 
     it("should look up the correct user and start a call in the room when a phone number is dialled", async () => {
@@ -365,7 +365,7 @@ describe("LegacyCallHandler", () => {
         fakeCall!.getRemoteAssertedIdentity = jest.fn().mockReturnValue({
             id: NATIVE_BOB,
         });
-        fakeCall!.emit(CallEvent.AssertedIdentityChanged);
+        fakeCall!.emit(CallEvent.AssertedIdentityChanged, fakeCall!);
 
         // Now set the config option
         SdkConfig.add({
@@ -378,7 +378,7 @@ describe("LegacyCallHandler", () => {
         fakeCall!.getRemoteAssertedIdentity = jest.fn().mockReturnValue({
             id: NATIVE_CHARLIE,
         });
-        fakeCall!.emit(CallEvent.AssertedIdentityChanged);
+        fakeCall!.emit(CallEvent.AssertedIdentityChanged, fakeCall!);
 
         await roomChangePromise;
         callHandler.removeAllListeners();
@@ -516,7 +516,7 @@ describe("LegacyCallHandler without third party protocols", () => {
         MatrixClientPeg.unset();
 
         document.body.removeChild(audioElement);
-        SdkConfig.unset();
+        SdkConfig.reset();
     });
 
     it("should still start a native call", async () => {
@@ -624,7 +624,7 @@ describe("LegacyCallHandler without third party protocols", () => {
 
             // call added to call map
             expect(callHandler.getCallForRoom(roomId)).toEqual(call);
-            call.emit(CallEvent.State, CallState.Ringing, CallState.Connected);
+            call.emit(CallEvent.State, CallState.Ringing, CallState.Connected, fakeCall!);
 
             // ringer audio element started
             expect(mockAudioElement.play).toHaveBeenCalled();
@@ -641,7 +641,7 @@ describe("LegacyCallHandler without third party protocols", () => {
 
             // call added to call map
             expect(callHandler.getCallForRoom(roomId)).toEqual(call);
-            call.emit(CallEvent.State, CallState.Ringing, CallState.Connected);
+            call.emit(CallEvent.State, CallState.Ringing, CallState.Connected, fakeCall!);
 
             // ringer audio element started
             expect(mockAudioElement.play).not.toHaveBeenCalled();

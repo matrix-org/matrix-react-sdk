@@ -64,9 +64,9 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
 
     public static currentWidget?: IWidgetEvent;
 
-    private dispatcherRef: string;
+    private dispatcherRef?: string;
 
-    private prevSentVisibility: boolean;
+    private prevSentVisibility?: boolean;
 
     private popoverWidth = 300;
     private popoverHeight = 300;
@@ -273,7 +273,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
                 roomId: stickerpickerWidget.content.roomId,
                 eventId: stickerpickerWidget.content.eventId,
                 avatar_url: stickerpickerWidget.content.avatar_url,
-                creatorUserId: stickerpickerWidget.content.creatorUserId,
+                creatorUserId: stickerpickerWidget.content.creatorUserId || stickerpickerWidget.sender,
             };
 
             stickersContent = (

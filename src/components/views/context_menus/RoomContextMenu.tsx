@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ import ExportDialog from "../dialogs/ExportDialog";
 import { useFeatureEnabled } from "../../../hooks/useSettings";
 import { usePinnedEvents } from "../right_panel/PinnedMessagesCard";
 import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
-import { ROOM_NOTIFICATIONS_TAB } from "../dialogs/RoomSettingsDialog";
+import { RoomSettingsTab } from "../dialogs/RoomSettingsDialog";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import DMRoomMap from "../../../utils/DMRoomMap";
@@ -48,20 +48,25 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import SettingsStore from "../../../settings/SettingsStore";
-import DevtoolsDialog from "../dialogs/DevtoolsDialog";
 import { SdkContextClass } from "../../../contexts/SDKContext";
+import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../../settings/UIFeature";
+import { DeveloperToolsOption } from "./DeveloperToolsOption";
 
 interface IProps extends IContextMenuProps {
     room: Room;
 }
 
+/**
+ * Room context menu accessible via the room header.
+ */
 const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
     const cli = useContext(MatrixClientContext);
     const roomTags = useEventEmitterState(RoomListStore.instance, LISTS_UPDATE_EVENT, () =>
         RoomListStore.instance.getTagsForRoom(room),
     );
 
-    let leaveOption: JSX.Element;
+    let leaveOption: JSX.Element | undefined;
     if (roomTags.includes(DefaultTagID.Archived)) {
         const onForgetRoomClick = (ev: ButtonEvent): void => {
             ev.preventDefault();
@@ -112,8 +117,8 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
     const isVideoRoom =
         videoRoomsEnabled && (room.isElementVideoRoom() || (elementCallVideoRoomsEnabled && room.isCallRoom()));
 
-    let inviteOption: JSX.Element;
-    if (room.canInvite(cli.getUserId()!) && !isDm) {
+    let inviteOption: JSX.Element | undefined;
+    if (room.canInvite(cli.getUserId()!) && !isDm && shouldShowComponent(UIComponent.InviteUsers)) {
         const onInviteClick = (ev: ButtonEvent): void => {
             ev.preventDefault();
             ev.stopPropagation();
@@ -136,9 +141,9 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
         );
     }
 
-    let favouriteOption: JSX.Element;
-    let lowPriorityOption: JSX.Element;
-    let notificationOption: JSX.Element;
+    let favouriteOption: JSX.Element | undefined;
+    let lowPriorityOption: JSX.Element | undefined;
+    let notificationOption: JSX.Element | undefined;
     if (room.getMyMembership() === "join") {
         const isFavorite = roomTags.includes(DefaultTagID.Favourite);
         favouriteOption = (
@@ -164,8 +169,8 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
         );
 
         const echoChamber = EchoChamber.forRoom(room);
-        let notificationLabel: string;
-        let iconClassName: string;
+        let notificationLabel: string | undefined;
+        let iconClassName: string | undefined;
         switch (echoChamber.notificationVolume) {
             case RoomNotifState.AllMessages:
                 notificationLabel = _t("Default");
@@ -194,7 +199,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
                     dis.dispatch({
                         action: "open_room_settings",
                         room_id: room.roomId,
-                        initial_tab_id: ROOM_NOTIFICATIONS_TAB,
+                        initial_tab_id: RoomSettingsTab.Notifications,
                     });
                     onFinished();
 
@@ -208,8 +213,8 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
         );
     }
 
-    let peopleOption: JSX.Element;
-    let copyLinkOption: JSX.Element;
+    let peopleOption: JSX.Element | undefined;
+    let copyLinkOption: JSX.Element | undefined;
     if (!isDm) {
         peopleOption = (
             <IconizedContextMenuOption
@@ -247,7 +252,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
         );
     }
 
-    let filesOption: JSX.Element;
+    let filesOption: JSX.Element | undefined;
     if (!isVideoRoom) {
         filesOption = (
             <IconizedContextMenuOption
@@ -266,9 +271,9 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
     }
 
     const pinningEnabled = useFeatureEnabled("feature_pinning");
-    const pinCount = usePinnedEvents(pinningEnabled && room)?.length;
+    const pinCount = usePinnedEvents(pinningEnabled ? room : undefined)?.length;
 
-    let pinsOption: JSX.Element;
+    let pinsOption: JSX.Element | undefined;
     if (pinningEnabled && !isVideoRoom) {
         pinsOption = (
             <IconizedContextMenuOption
@@ -288,7 +293,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
         );
     }
 
-    let widgetsOption: JSX.Element;
+    let widgetsOption: JSX.Element | undefined;
     if (!isVideoRoom) {
         widgetsOption = (
             <IconizedContextMenuOption
@@ -306,7 +311,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
         );
     }
 
-    let exportChatOption: JSX.Element;
+    let exportChatOption: JSX.Element | undefined;
     if (!isVideoRoom) {
         exportChatOption = (
             <IconizedContextMenuOption
@@ -332,7 +337,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
             const isApplied = RoomListStore.instance.getTagsForRoom(room).includes(tagId);
             const removeTag = isApplied ? tagId : inverseTag;
             const addTag = isApplied ? null : tagId;
-            dis.dispatch(RoomListActions.tagRoom(cli, room, removeTag, addTag, undefined, 0));
+            dis.dispatch(RoomListActions.tagRoom(cli, room, removeTag, addTag, 0));
         } else {
             logger.warn(`Unexpected tag ${tagId} applied to ${room.roomId}`);
         }
@@ -391,23 +396,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
                 {exportChatOption}
 
                 {SettingsStore.getValue("developerMode") && (
-                    <IconizedContextMenuOption
-                        onClick={(ev: ButtonEvent) => {
-                            ev.preventDefault();
-                            ev.stopPropagation();
-
-                            Modal.createDialog(
-                                DevtoolsDialog,
-                                {
-                                    roomId: SdkContextClass.instance.roomViewStore.getRoomId(),
-                                },
-                                "mx_DevtoolsDialog_wrapper",
-                            );
-                            onFinished();
-                        }}
-                        label={_t("Developer tools")}
-                        iconClassName="mx_RoomTile_iconDeveloperTools"
-                    />
+                    <DeveloperToolsOption onFinished={onFinished} roomId={room.roomId} />
                 )}
 
                 {leaveOption}

@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { NumberSize, Resizable } from "re-resizable";
 import { Direction } from "re-resizable/lib/resizer";
 
@@ -25,6 +25,7 @@ interface IProps {
     resizeNotifier: ResizeNotifier;
     collapsedRhs?: boolean;
     panel?: JSX.Element;
+    children: ReactNode;
 }
 
 export default class MainSplit extends React.Component<IProps> {
@@ -86,7 +87,7 @@ export default class MainSplit extends React.Component<IProps> {
                     onResize={this.onResize}
                     onResizeStop={this.onResizeStop}
                     className="mx_RightPanel_ResizeWrapper"
-                    handleClasses={{ left: "mx_ResizeHandle_horizontal" }}
+                    handleClasses={{ left: "mx_ResizeHandle--horizontal" }}
                 >
                     {panelView}
                 </Resizable>

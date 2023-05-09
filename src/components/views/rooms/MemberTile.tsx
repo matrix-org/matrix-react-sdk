@@ -33,6 +33,7 @@ import MemberAvatar from "./../avatars/MemberAvatar";
 import DisambiguatedProfile from "../messages/DisambiguatedProfile";
 import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
 import { E2EState } from "./E2EIcon";
+import { asyncSome } from "../../../utils/arrays";
 
 interface IProps {
     member: RoomMember;
@@ -41,7 +42,7 @@ interface IProps {
 
 interface IState {
     isRoomEncrypted: boolean;
-    e2eStatus: E2EState;
+    e2eStatus?: E2EState;
 }
 
 export default class MemberTile extends React.Component<IProps, IState> {
@@ -57,7 +58,6 @@ export default class MemberTile extends React.Component<IProps, IState> {
 
         this.state = {
             isRoomEncrypted: false,
-            e2eStatus: null,
         };
     }
 
@@ -128,15 +128,15 @@ export default class MemberTile extends React.Component<IProps, IState> {
         }
 
         const devices = cli.getStoredDevicesForUser(userId);
-        const anyDeviceUnverified = devices.some((device) => {
+        const anyDeviceUnverified = await asyncSome(devices, async (device) => {
             const { deviceId } = device;
             // For your own devices, we use the stricter check of cross-signing
             // verification to encourage everyone to trust their own devices via
             // cross-signing so that other users can then safely trust you.
             // For other people's devices, the more general verified check that
             // includes locally verified devices can be used.
-            const deviceTrust = cli.checkDeviceTrust(userId, deviceId);
-            return isMe ? !deviceTrust.isCrossSigningVerified() : !deviceTrust.isVerified();
+            const deviceTrust = await cli.getCrypto()?.getDeviceVerificationStatus(userId, deviceId);
+            return !deviceTrust || (isMe ? !deviceTrust.crossSigningVerified : !deviceTrust.isVerified());
         });
         this.setState({
             e2eStatus: anyDeviceUnverified ? E2EState.Warning : E2EState.Verified,
@@ -187,7 +187,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
     public render(): React.ReactNode {
         const member = this.props.member;
         const name = this.getDisplayName();
-        const presenceState = member.user?.presence ?? null;
+        const presenceState = member.user?.presence as PresenceState | undefined;
 
         const av = <MemberAvatar member={member} width={36} height={36} aria-hidden="true" />;
 
@@ -222,7 +222,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
         return (
             <EntityTile
                 {...this.props}
-                presenceState={presenceState as PresenceState | null}
+                presenceState={presenceState}
                 presenceLastActiveAgo={member.user ? member.user.lastActiveAgo : 0}
                 presenceLastTs={member.user ? member.user.lastPresenceTs : 0}
                 presenceCurrentlyActive={member.user ? member.user.currentlyActive : false}

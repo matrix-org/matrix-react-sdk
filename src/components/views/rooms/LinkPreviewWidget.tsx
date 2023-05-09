@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps, createRef } from "react";
+import React, { ComponentProps, createRef, ReactNode } from "react";
 import { decode } from "html-entities";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { IPreviewUrlResponse } from "matrix-js-sdk/src/client";
@@ -32,6 +32,7 @@ interface IProps {
     link: string;
     preview: IPreviewUrlResponse;
     mxEvent: MatrixEvent; // the Event associated with the preview
+    children?: ReactNode;
 }
 
 export default class LinkPreviewWidget extends React.Component<IProps> {
@@ -42,10 +43,12 @@ export default class LinkPreviewWidget extends React.Component<IProps> {
         if (ev.button != 0 || ev.metaKey) return;
         ev.preventDefault();
 
-        let src = p["og:image"];
-        if (src && src.startsWith("mxc://")) {
+        let src: string | null | undefined = p["og:image"];
+        if (src?.startsWith("mxc://")) {
             src = mediaFromMxc(src).srcHttp;
         }
+
+        if (!src) return;
 
         const params: Omit<ComponentProps<typeof ImageView>, "onFinished"> = {
             src: src,
@@ -67,7 +70,7 @@ export default class LinkPreviewWidget extends React.Component<IProps> {
             };
         }
 
-        Modal.createDialog(ImageView, params, "mx_Dialog_lightbox", null, true);
+        Modal.createDialog(ImageView, params, "mx_Dialog_lightbox", undefined, true);
     };
 
     public render(): React.ReactNode {
@@ -77,7 +80,7 @@ export default class LinkPreviewWidget extends React.Component<IProps> {
         }
 
         // FIXME: do we want to factor out all image displaying between this and MImageBody - especially for lightboxing?
-        let image = p["og:image"];
+        let image: string | null = p["og:image"] ?? null;
         if (!SettingsStore.getValue("showImages")) {
             image = null; // Don't render a button to show the image, just hide it outright
         }
@@ -88,17 +91,11 @@ export default class LinkPreviewWidget extends React.Component<IProps> {
             image = mediaFromMxc(image).getThumbnailOfSourceHttp(imageMaxWidth, imageMaxHeight, "scale");
         }
 
-        let thumbHeight = imageMaxHeight;
-        if (p["og:image:width"] && p["og:image:height"]) {
-            thumbHeight = ImageUtils.thumbHeight(
-                p["og:image:width"],
-                p["og:image:height"],
-                imageMaxWidth,
-                imageMaxHeight,
-            );
-        }
+        const thumbHeight =
+            ImageUtils.thumbHeight(p["og:image:width"], p["og:image:height"], imageMaxWidth, imageMaxHeight) ??
+            imageMaxHeight;
 
-        let img;
+        let img: JSX.Element | undefined;
         if (image) {
             img = (
                 <div className="mx_LinkPreviewWidget_image" style={{ height: thumbHeight }}>

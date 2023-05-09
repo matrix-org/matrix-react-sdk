@@ -31,6 +31,7 @@ import CopyableText from "../views/elements/CopyableText";
 
 interface IProps {
     mxEvent: MatrixEvent; // the MatrixEvent associated with the context menu
+    ignoreEdits?: boolean;
     onFinished(): void;
 }
 
@@ -58,7 +59,11 @@ export default class ViewSource extends React.Component<IProps, IState> {
 
     // returns the dialog body for viewing the event source
     private viewSourceContent(): JSX.Element {
-        const mxEvent = this.props.mxEvent.replacingEvent() || this.props.mxEvent; // show the replacing event, not the original, if it is an edit
+        let mxEvent = this.props.mxEvent.replacingEvent() || this.props.mxEvent; // show the replacing event, not the original, if it is an edit
+        if (this.props.ignoreEdits) {
+            mxEvent = this.props.mxEvent;
+        }
+
         const isEncrypted = mxEvent.isEncrypted();
         // @ts-ignore
         const decryptedEventSource = mxEvent.clearEvent; // FIXME: clearEvent is private
@@ -68,7 +73,7 @@ export default class ViewSource extends React.Component<IProps, IState> {
         };
         if (isEncrypted) {
             const copyDecryptedFunc = (): string => {
-                return stringify(decryptedEventSource);
+                return stringify(decryptedEventSource || {});
             };
             return (
                 <>
@@ -117,7 +122,7 @@ export default class ViewSource extends React.Component<IProps, IState> {
             return (
                 <MatrixClientContext.Consumer>
                     {(cli) => (
-                        <DevtoolsContext.Provider value={{ room: cli.getRoom(roomId) }}>
+                        <DevtoolsContext.Provider value={{ room: cli.getRoom(roomId)! }}>
                             <StateEventEditor onBack={this.onBack} mxEvent={mxEvent} />
                         </DevtoolsContext.Provider>
                     )}
@@ -128,7 +133,7 @@ export default class ViewSource extends React.Component<IProps, IState> {
         return (
             <MatrixClientContext.Consumer>
                 {(cli) => (
-                    <DevtoolsContext.Provider value={{ room: cli.getRoom(roomId) }}>
+                    <DevtoolsContext.Provider value={{ room: cli.getRoom(roomId)! }}>
                         <TimelineEventEditor onBack={this.onBack} mxEvent={mxEvent} />
                     </DevtoolsContext.Provider>
                 )}

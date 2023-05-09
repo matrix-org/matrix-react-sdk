@@ -386,20 +386,20 @@ export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITerms
 
         let submitButton: JSX.Element | undefined;
         if (this.props.showContinue !== false) {
-            // XXX: button classes
             submitButton = (
-                <button
-                    className="mx_InteractiveAuthEntryComponents_termsSubmit mx_GeneralButton"
+                <AccessibleButton
+                    kind="primary"
+                    className="mx_InteractiveAuthEntryComponents_termsSubmit"
                     onClick={this.trySubmit}
                     disabled={!allChecked}
                 >
                     {_t("Accept")}
-                </button>
+                </AccessibleButton>
             );
         }
 
         return (
-            <div>
+            <div className="mx_InteractiveAuthEntryComponents">
                 <p>{_t("Please review and accept the policies of this homeserver:")}</p>
                 {checkboxes}
                 {errorSection}
@@ -861,6 +861,7 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
 
     public render(): React.ReactNode {
         let continueButton: JSX.Element;
+
         const cancelButton = (
             <AccessibleButton
                 onClick={this.props.onCancel ?? null}
@@ -902,8 +903,14 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
             <Fragment>
                 {errorSection}
                 <div className="mx_InteractiveAuthEntryComponents_sso_buttons">
-                    {cancelButton}
-                    {continueButton}
+                    {this.props.busy ? (
+                        <Spinner w={24} h={24} />
+                    ) : (
+                        <>
+                            {cancelButton}
+                            {continueButton}
+                        </>
+                    )}
                 </div>
             </Fragment>
         );

@@ -66,13 +66,14 @@ interface IProps<T> {
     // should typically be less than `overflowItems` unless applying
     // margins in the parent component when using multiple LazyRenderList in one viewport.
     // use 0 to only rerender when items will come into view.
-    overflowMargin?: number;
+    overflowMargin: number;
     // the amount of items to add at the top and bottom to render,
     // so not every scroll of causes a rerender.
-    overflowItems?: number;
+    overflowItems: number;
 
     element?: string;
     className?: string;
+    role?: string;
 }
 
 interface IState {
@@ -88,12 +89,10 @@ export default class LazyRenderList<T = any> extends React.Component<IProps<T>, 
     public constructor(props: IProps<T>) {
         super(props);
 
-        this.state = {
-            renderRange: null,
-        };
+        this.state = LazyRenderList.getDerivedStateFromProps(props, {} as IState) as IState;
     }
 
-    public static getDerivedStateFromProps(props: IProps<unknown>, state: IState): Partial<IState> {
+    public static getDerivedStateFromProps(props: IProps<unknown>, state: IState): Partial<IState> | null {
         const range = LazyRenderList.getVisibleRangeFromProps(props);
         const intersectRange = range.expand(props.overflowMargin);
         const renderRange = range.expand(props.overflowItems);
@@ -130,6 +129,7 @@ export default class LazyRenderList<T = any> extends React.Component<IProps<T>, 
         const elementProps = {
             style: { paddingTop: `${paddingTop}px`, paddingBottom: `${paddingBottom}px` },
             className: this.props.className,
+            role: this.props.role,
         };
         return React.createElement(element, elementProps, renderedItems.map(renderItem));
     }

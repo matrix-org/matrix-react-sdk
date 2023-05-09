@@ -214,7 +214,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
         this.connectionState = ConnectionState.Connecting;
 
         const { [MediaDeviceKindEnum.AudioInput]: audioInputs, [MediaDeviceKindEnum.VideoInput]: videoInputs } =
-            await MediaDeviceHandler.getDevices();
+            (await MediaDeviceHandler.getDevices())!;
 
         let audioInput: MediaDeviceInfo | null = null;
         if (!MediaDeviceHandler.startWithAudioMuted) {
@@ -228,7 +228,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
         }
 
         const messagingStore = WidgetMessagingStore.instance;
-        this.messaging = messagingStore.getMessagingForUid(this.widgetUid);
+        this.messaging = messagingStore.getMessagingForUid(this.widgetUid) ?? null;
         if (!this.messaging) {
             // The widget might still be initializing, so wait for it
             try {
@@ -774,6 +774,7 @@ export class ElementCall extends Call {
     }
 
     public destroy(): void {
+        ActiveWidgetStore.instance.destroyPersistentWidget(this.widget.id, this.groupCall.room.roomId);
         WidgetStore.instance.removeVirtualWidget(this.widget.id, this.groupCall.room.roomId);
         this.off(CallEvent.Participants, this.onParticipants);
         this.groupCall.off(GroupCallEvent.ParticipantsChanged, this.onGroupCallParticipants);

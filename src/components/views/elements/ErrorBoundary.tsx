@@ -25,21 +25,23 @@ import SdkConfig from "../../../SdkConfig";
 import BugReportDialog from "../dialogs/BugReportDialog";
 import AccessibleButton from "./AccessibleButton";
 
+interface Props {
+    children: ReactNode;
+}
+
 interface IState {
-    error: Error;
+    error?: Error;
 }
 
 /**
  * This error boundary component can be used to wrap large content areas and
  * catch exceptions during rendering in the component tree below them.
  */
-export default class ErrorBoundary extends React.PureComponent<{}, IState> {
-    public constructor(props: {}) {
+export default class ErrorBoundary extends React.PureComponent<Props, IState> {
+    public constructor(props: Props) {
         super(props);
 
-        this.state = {
-            error: null,
-        };
+        this.state = {};
     }
 
     public static getDerivedStateFromError(error: Error): Partial<IState> {
@@ -62,7 +64,7 @@ export default class ErrorBoundary extends React.PureComponent<{}, IState> {
         MatrixClientPeg.get()
             .store.deleteAllData()
             .then(() => {
-                PlatformPeg.get().reload();
+                PlatformPeg.get()?.reload();
             });
     };
 
@@ -117,7 +119,7 @@ export default class ErrorBoundary extends React.PureComponent<{}, IState> {
                 );
             }
 
-            let clearCacheButton: JSX.Element;
+            let clearCacheButton: JSX.Element | undefined;
             // we only show this button if there is an initialised MatrixClient otherwise we can't clear the cache
             if (MatrixClientPeg.get()) {
                 clearCacheButton = (

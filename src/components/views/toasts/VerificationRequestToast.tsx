@@ -47,7 +47,7 @@ interface IState {
 }
 
 export default class VerificationRequestToast extends React.PureComponent<IProps, IState> {
-    private intervalHandle: number;
+    private intervalHandle?: number;
 
     public constructor(props: IProps) {
         super(props);
@@ -74,10 +74,12 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
 
         if (request.isSelfVerification) {
             const cli = MatrixClientPeg.get();
-            const device = await cli.getDevice(request.channel.deviceId);
-            const ip = device.last_seen_ip;
+            const device = request.channel.deviceId ? await cli.getDevice(request.channel.deviceId) : null;
+            const ip = device?.last_seen_ip;
             this.setState({
-                device: cli.getStoredDevice(cli.getUserId()!, request.channel.deviceId),
+                device:
+                    (request.channel.deviceId && cli.getStoredDevice(cli.getSafeUserId(), request.channel.deviceId)) ||
+                    undefined,
                 ip,
             });
         }
@@ -118,7 +120,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
                     should_peek: false,
                     metricsTrigger: "VerificationRequest",
                 });
-                const member = cli.getUser(request.otherUserId);
+                const member = cli.getUser(request.otherUserId) ?? undefined;
                 RightPanelStore.instance.setCards(
                     [
                         { phase: RightPanelPhases.RoomSummary },

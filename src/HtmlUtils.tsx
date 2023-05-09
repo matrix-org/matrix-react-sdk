@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactElement, ReactNode } from "react";
+import React, { LegacyRef, ReactElement, ReactNode } from "react";
 import sanitizeHtml from "sanitize-html";
 import cheerio from "cheerio";
 import classNames from "classnames";
@@ -28,6 +28,7 @@ import { decode } from "html-entities";
 import { IContent } from "matrix-js-sdk/src/models/event";
 import { Optional } from "matrix-events-sdk";
 import _Linkify from "linkify-react";
+import escapeHtml from "escape-html";
 
 import {
     _linkifyElement,
@@ -93,8 +94,8 @@ const MEDIA_API_MXC_REGEX = /\/_matrix\/media\/r0\/(?:download|thumbnail)\/(.+?)
  * positives, but useful for fast-path testing strings to see if they
  * need emojification.
  */
-function mightContainEmoji(str: string): boolean {
-    return SURROGATE_PAIR_PATTERN.test(str) || SYMBOL_PATTERN.test(str);
+function mightContainEmoji(str?: string): boolean {
+    return !!str && (SURROGATE_PAIR_PATTERN.test(str) || SYMBOL_PATTERN.test(str));
 }
 
 /**
@@ -355,10 +356,10 @@ abstract class BaseHighlighter<T extends React.ReactNode> {
     public constructor(public highlightClass: string, public highlightLink?: string) {}
 
     /**
-     * apply the highlights to a section of text
+     * Apply the highlights to a section of text
      *
      * @param {string} safeSnippet The snippet of text to apply the highlights
-     *     to.
+     *     to. This input must be sanitised as it will be treated as HTML.
      * @param {string[]} safeHighlights A list of substrings to highlight,
      *     sorted by descending length.
      *
@@ -367,7 +368,7 @@ abstract class BaseHighlighter<T extends React.ReactNode> {
      */
     public applyHighlights(safeSnippet: string, safeHighlights: string[]): T[] {
         let lastOffset = 0;
-        let offset;
+        let offset: number;
         let nodes: T[] = [];
 
         const safeHighlight = safeHighlights[0];
@@ -440,7 +441,7 @@ interface IOpts {
 }
 
 export interface IOptsReturnNode extends IOpts {
-    returnString: false | undefined;
+    returnString?: false | undefined;
 }
 
 export interface IOptsReturnString extends IOpts {
@@ -463,7 +464,7 @@ const emojiToJsxSpan = (emoji: string, key: number): JSX.Element => (
  * @returns if isHtmlMessage is true, returns an array of strings, otherwise return an array of React Elements for emojis
  * and plain text for everything else
  */
-function formatEmojis(message: string, isHtmlMessage: boolean): (JSX.Element | string)[] {
+function formatEmojis(message: string | undefined, isHtmlMessage: boolean): (JSX.Element | string)[] {
     const emojiToSpan = isHtmlMessage ? emojiToHtmlSpan : emojiToJsxSpan;
     const result: (JSX.Element | string)[] = [];
     let text = "";
@@ -574,7 +575,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
                 safeBody = formatEmojis(safeBody, true).join("");
             }
         } else if (highlighter) {
-            safeBody = highlighter.applyHighlights(plainBody, safeHighlights!).join("");
+            safeBody = highlighter.applyHighlights(escapeHtml(plainBody), safeHighlights!).join("");
         }
     } finally {
         delete sanitizeParams.textFilter;
@@ -641,9 +642,9 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
  * @return The HTML-ified node.
  */
 export function topicToHtml(
-    topic: string,
+    topic?: string,
     htmlTopic?: string,
-    ref?: React.Ref<HTMLSpanElement>,
+    ref?: LegacyRef<HTMLSpanElement>,
     allowExtendedHtml = false,
 ): ReactNode {
     if (!SettingsStore.getValue("feature_html_topic")) {

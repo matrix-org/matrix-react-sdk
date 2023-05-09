@@ -87,7 +87,7 @@ export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): 
     const validProxy = withValidation<undefined, { error?: Error }>({
         async deriveData({ value }): Promise<{ error?: Error }> {
             try {
-                await proxyHealthCheck(value, MatrixClientPeg.get().baseUrl);
+                await proxyHealthCheck(value!, MatrixClientPeg.get().baseUrl);
                 return {};
             } catch (error) {
                 return { error };
@@ -96,7 +96,7 @@ export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): 
         rules: [
             {
                 key: "required",
-                test: async ({ value }) => !!value || hasNativeSupport,
+                test: async ({ value }) => !!value || !!hasNativeSupport,
                 invalid: () => _t("Your server lacks native support, you must specify a proxy"),
             },
             {
@@ -104,7 +104,7 @@ export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): 
                 final: true,
                 test: async (_, { error }) => !error,
                 valid: () => _t("Looks good"),
-                invalid: ({ error }) => error?.message,
+                invalid: ({ error }) => error?.message ?? null,
             },
         ],
     });
@@ -124,7 +124,7 @@ export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): 
             value={currentProxy}
             button={_t("Enable")}
             validator={validProxy}
-            onFinished={(enable: boolean, proxyUrl: string) => {
+            onFinished={(enable, proxyUrl) => {
                 if (enable) {
                     SettingsStore.setValue("feature_sliding_sync_proxy_url", null, SettingLevel.DEVICE, proxyUrl);
                     onFinished(true);

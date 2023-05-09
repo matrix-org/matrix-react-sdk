@@ -18,9 +18,8 @@ import React from "react";
 import { render, RenderResult, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mocked, Mocked } from "jest-mock";
-import { IMyDevice, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { CryptoApi, DeviceVerificationStatus, IMyDevice, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
-import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
 
 import dis from "../../src/dispatcher/dispatcher";
 import { showToast } from "../../src/toasts/UnverifiedSessionToast";
@@ -37,7 +36,7 @@ describe("UnverifiedSessionToast", () => {
     let client: Mocked<MatrixClient>;
     let renderResult: RenderResult;
 
-    filterConsole("Starting load of AsyncWrapper for modal", "Dismissing unverified sessions: ABC123");
+    filterConsole("Dismissing unverified sessions: ABC123");
 
     beforeAll(() => {
         client = mocked(stubClient());
@@ -55,11 +54,11 @@ describe("UnverifiedSessionToast", () => {
 
             return null;
         });
-        client.getStoredCrossSigningForUser.mockReturnValue({
-            checkDeviceTrust: jest.fn().mockReturnValue({
-                isCrossSigningVerified: jest.fn().mockReturnValue(true),
-            }),
-        } as unknown as CrossSigningInfo);
+        client.getCrypto.mockReturnValue({
+            getDeviceVerificationStatus: jest
+                .fn()
+                .mockResolvedValue(new DeviceVerificationStatus({ crossSigningVerified: true })),
+        } as unknown as CryptoApi);
         jest.spyOn(dis, "dispatch");
         jest.spyOn(DeviceListener.sharedInstance(), "dismissUnverifiedSessions");
     });

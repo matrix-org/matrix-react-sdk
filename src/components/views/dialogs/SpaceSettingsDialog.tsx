@@ -30,6 +30,7 @@ import { UIFeature } from "../../../settings/UIFeature";
 import AdvancedRoomSettingsTab from "../settings/tabs/room/AdvancedRoomSettingsTab";
 import RolesRoomSettingsTab from "../settings/tabs/room/RolesRoomSettingsTab";
 import { Action } from "../../../dispatcher/actions";
+import { NonEmptyArray } from "../../../@types/common";
 
 export enum SpaceSettingsTab {
     General = "SPACE_GENERAL_TAB",
@@ -69,17 +70,17 @@ const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFin
                 SpaceSettingsTab.Roles,
                 _td("Roles & Permissions"),
                 "mx_RoomSettingsDialog_rolesIcon",
-                <RolesRoomSettingsTab roomId={space.roomId} />,
+                <RolesRoomSettingsTab room={space} />,
             ),
             SettingsStore.getValue(UIFeature.AdvancedSettings)
                 ? new Tab(
                       SpaceSettingsTab.Advanced,
                       _td("Advanced"),
                       "mx_RoomSettingsDialog_warningIcon",
-                      <AdvancedRoomSettingsTab roomId={space.roomId} closeSettingsFn={onFinished} />,
+                      <AdvancedRoomSettingsTab room={space} closeSettingsFn={onFinished} />,
                   )
                 : null,
-        ].filter(Boolean);
+        ].filter(Boolean) as NonEmptyArray<Tab<SpaceSettingsTab>>;
     }, [cli, space, onFinished]);
 
     return (

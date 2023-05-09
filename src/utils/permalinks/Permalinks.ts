@@ -84,9 +84,9 @@ const ANY_REGEX = /.*/;
 export class RoomPermalinkCreator {
     private roomId: string;
     private highestPlUserId: string | null = null;
-    private populationMap: { [serverName: string]: number } | null = null;
-    private bannedHostsRegexps: RegExp[] | null = null;
-    private allowedHostsRegexps: RegExp[] | null = null;
+    private populationMap: { [serverName: string]: number } = {};
+    private bannedHostsRegexps: RegExp[] = [];
+    private allowedHostsRegexps: RegExp[] = [];
     private _serverCandidates?: string[];
     private started = false;
 
@@ -96,7 +96,7 @@ export class RoomPermalinkCreator {
     // Some of the tests done by this class are relatively expensive, so normally
     // throttled to not happen on every update. Pass false as the shouldThrottle
     // param to disable this behaviour, eg. for tests.
-    public constructor(private room: Room, roomId: string | null = null, shouldThrottle = true) {
+    public constructor(private room: Room | null, roomId: string | null = null, shouldThrottle = true) {
         this.roomId = room ? room.roomId : roomId!;
 
         if (!this.roomId) {
@@ -118,12 +118,12 @@ export class RoomPermalinkCreator {
 
     public start(): void {
         this.load();
-        this.room.currentState.on(RoomStateEvent.Update, this.onRoomStateUpdate);
+        this.room?.currentState.on(RoomStateEvent.Update, this.onRoomStateUpdate);
         this.started = true;
     }
 
     public stop(): void {
-        this.room.currentState.removeListener(RoomStateEvent.Update, this.onRoomStateUpdate);
+        this.room?.currentState.removeListener(RoomStateEvent.Update, this.onRoomStateUpdate);
         this.started = false;
     }
 
@@ -171,7 +171,7 @@ export class RoomPermalinkCreator {
     }
 
     private updateHighestPlUser(): void {
-        const plEvent = this.room.currentState.getStateEvents("m.room.power_levels", "");
+        const plEvent = this.room?.currentState.getStateEvents("m.room.power_levels", "");
         if (plEvent) {
             const content = plEvent.getContent();
             if (content) {
@@ -179,7 +179,7 @@ export class RoomPermalinkCreator {
                 if (users) {
                     const entries = Object.entries(users);
                     const allowedEntries = entries.filter(([userId]) => {
-                        const member = this.room.getMember(userId);
+                        const member = this.room?.getMember(userId);
                         if (!member || member.membership !== "join") {
                             return false;
                         }
@@ -192,7 +192,7 @@ export class RoomPermalinkCreator {
                             isHostInRegex(domain, this.allowedHostsRegexps)
                         );
                     });
-                    const maxEntry = allowedEntries.reduce(
+                    const maxEntry = allowedEntries.reduce<[string | null, number]>(
                         (max, entry) => {
                             return entry[1] > max[1] ? entry : max;
                         },
@@ -213,18 +213,22 @@ export class RoomPermalinkCreator {
     private updateAllowedServers(): void {
         const bannedHostsRegexps: RegExp[] = [];
         let allowedHostsRegexps = [ANY_REGEX]; // default allow everyone
-        if (this.room.currentState) {
-            const aclEvent = this.room.currentState.getStateEvents(EventType.RoomServerAcl, "");
+        if (this.room?.currentState) {
+            const aclEvent = this.room?.currentState.getStateEvents(EventType.RoomServerAcl, "");
             if (aclEvent && aclEvent.getContent()) {
                 const getRegex = (hostname: string): RegExp =>
                     new RegExp("^" + utils.globToRegexp(hostname, false) + "$");
 
-                const denied = aclEvent.getContent<{ deny: string[] }>().deny || [];
-                denied.forEach((h) => bannedHostsRegexps.push(getRegex(h)));
+                const denied = aclEvent.getContent<{ deny: string[] }>().deny;
+                if (Array.isArray(denied)) {
+                    denied.forEach((h) => bannedHostsRegexps.push(getRegex(h)));
+                }
 
-                const allowed = aclEvent.getContent<{ allow: string[] }>().allow || [];
+                const allowed = aclEvent.getContent<{ allow: string[] }>().allow;
                 allowedHostsRegexps = []; // we don't want to use the default rule here
-                allowed.forEach((h) => allowedHostsRegexps.push(getRegex(h)));
+                if (Array.isArray(denied)) {
+                    allowed.forEach((h) => allowedHostsRegexps.push(getRegex(h)));
+                }
             }
         }
         this.bannedHostsRegexps = bannedHostsRegexps;
@@ -233,12 +237,14 @@ export class RoomPermalinkCreator {
 
     private updatePopulationMap(): void {
         const populationMap: { [server: string]: number } = {};
-        for (const member of this.room.getJoinedMembers()) {
-            const serverName = getServerName(member.userId);
-            if (!populationMap[serverName]) {
-                populationMap[serverName] = 0;
+        if (this.room) {
+            for (const member of this.room.getJoinedMembers()) {
+                const serverName = getServerName(member.userId);
+                if (!populationMap[serverName]) {
+                    populationMap[serverName] = 0;
+                }
+                populationMap[serverName]++;
             }
-            populationMap[serverName]++;
         }
         this.populationMap = populationMap;
     }
@@ -325,7 +331,7 @@ export function tryTransformEntityToPermalink(entity: string): string | null {
                 if (permalinkParts.roomIdOrAlias) {
                     const eventIdPart = permalinkParts.eventId ? `/${permalinkParts.eventId}` : "";
                     let pl = matrixtoBaseUrl + `/#/${permalinkParts.roomIdOrAlias}${eventIdPart}`;
-                    if (permalinkParts.viaServers.length > 0) {
+                    if (permalinkParts.viaServers?.length) {
                         pl += new MatrixToPermalinkConstructor().encodeServerCandidates(permalinkParts.viaServers);
                     }
                     return pl;
@@ -372,7 +378,7 @@ export function tryTransformPermalinkToLocalHref(permalink: string): string {
             if (permalinkParts.roomIdOrAlias) {
                 const eventIdPart = permalinkParts.eventId ? `/${permalinkParts.eventId}` : "";
                 permalink = `#/room/${permalinkParts.roomIdOrAlias}${eventIdPart}`;
-                if (permalinkParts.viaServers.length > 0) {
+                if (permalinkParts.viaServers?.length) {
                     permalink += new MatrixToPermalinkConstructor().encodeServerCandidates(permalinkParts.viaServers);
                 }
             } else if (permalinkParts.userId) {
@@ -474,5 +480,5 @@ function isHostnameIpAddress(hostname: string): boolean {
 export const calculateRoomVia = (room: Room): string[] => {
     const permalinkCreator = new RoomPermalinkCreator(room);
     permalinkCreator.load();
-    return permalinkCreator.serverCandidates;
+    return permalinkCreator.serverCandidates ?? [];
 };

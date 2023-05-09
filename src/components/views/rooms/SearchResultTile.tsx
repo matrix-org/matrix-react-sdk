@@ -64,14 +64,14 @@ export default class SearchResultTile extends React.Component<IProps> {
         const eventId = resultEvent.getId();
 
         const ts1 = resultEvent.getTs();
-        const ret = [<DateSeparator key={ts1 + "-search"} roomId={resultEvent.getRoomId()} ts={ts1} />];
+        const ret = [<DateSeparator key={ts1 + "-search"} roomId={resultEvent.getRoomId()!} ts={ts1} />];
         const layout = SettingsStore.getValue("layout");
         const isTwelveHour = SettingsStore.getValue("showTwelveHourTimestamps");
         const alwaysShowTimestamps = SettingsStore.getValue("alwaysShowTimestamps");
 
         for (let j = 0; j < timeline.length; j++) {
             const mxEv = timeline[j];
-            let highlights;
+            let highlights: string[] | undefined;
             const contextual = !this.props.ourEventsIndexes.includes(j);
             if (!contextual) {
                 highlights = this.props.searchHighlights;

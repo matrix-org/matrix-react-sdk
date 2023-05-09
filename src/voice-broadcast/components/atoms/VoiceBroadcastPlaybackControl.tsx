@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022-2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactElement } from "react";
 
-import { Icon as PlayIcon } from "../../../../res/img/element-icons/play.svg";
-import { Icon as PauseIcon } from "../../../../res/img/element-icons/pause.svg";
+import { Icon as PlayIcon } from "../../../../res/img/compound/play-16.svg";
+import { Icon as PauseIcon } from "../../../../res/img/compound/pause-12.svg";
 import { _t } from "../../../languageHandler";
 import { VoiceBroadcastControl, VoiceBroadcastPlaybackState } from "../..";
 
@@ -27,27 +27,33 @@ interface Props {
 }
 
 export const VoiceBroadcastPlaybackControl: React.FC<Props> = ({ onClick, state }) => {
-    let controlIcon: React.FC<React.SVGProps<SVGSVGElement>>;
-    let controlLabel: string;
+    let controlIcon: ReactElement | null = null;
+    let controlLabel: string | null = null;
     let className = "";
 
     switch (state) {
         case VoiceBroadcastPlaybackState.Stopped:
-            controlIcon = PlayIcon;
+            controlIcon = <PlayIcon className="mx_Icon mx_Icon_16" />;
             className = "mx_VoiceBroadcastControl-play";
             controlLabel = _t("play voice broadcast");
             break;
         case VoiceBroadcastPlaybackState.Paused:
-            controlIcon = PlayIcon;
+            controlIcon = <PlayIcon className="mx_Icon mx_Icon_16" />;
             className = "mx_VoiceBroadcastControl-play";
             controlLabel = _t("resume voice broadcast");
             break;
         case VoiceBroadcastPlaybackState.Buffering:
         case VoiceBroadcastPlaybackState.Playing:
-            controlIcon = PauseIcon;
+            controlIcon = <PauseIcon className="mx_Icon mx_Icon_12" />;
             controlLabel = _t("pause voice broadcast");
             break;
     }
 
-    return <VoiceBroadcastControl className={className} label={controlLabel} icon={controlIcon} onClick={onClick} />;
+    if (controlIcon && controlLabel) {
+        return (
+            <VoiceBroadcastControl className={className} label={controlLabel} icon={controlIcon} onClick={onClick} />
+        );
+    }
+
+    return null;
 };

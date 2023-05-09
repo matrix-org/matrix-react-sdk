@@ -24,7 +24,7 @@ interface IProps extends HTMLAttributes<HTMLSpanElement> {
     tooltipClass?: string;
     tooltip: React.ReactNode;
     tooltipProps?: Omit<React.ComponentProps<typeof TooltipTarget>, "label" | "tooltipClassName" | "className">;
-    onClick?: (ev?: React.MouseEvent) => void;
+    onClick?: (ev: React.MouseEvent) => void;
 }
 
 export default class TextWithTooltip extends React.Component<IProps> {
@@ -34,6 +34,10 @@ export default class TextWithTooltip extends React.Component<IProps> {
 
     public render(): React.ReactNode {
         const { class: className, children, tooltip, tooltipClass, tooltipProps, ...props } = this.props;
+
+        if (typeof tooltip === "string") {
+            props["aria-label"] = tooltip;
+        }
 
         return (
             <TooltipTarget
