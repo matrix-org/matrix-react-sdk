@@ -346,6 +346,8 @@ export class VoiceBroadcastRecording
             return;
         }
 
+        // Audio files are added to the document in Element Web.
+        // See <audio> elements in https://github.com/vector-im/element-web/blob/develop/src/vector/index.html
         const audioElement = document.querySelector<HTMLAudioElement>("audio#errorAudio");
 
         try {
