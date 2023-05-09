@@ -81,8 +81,8 @@ interface IProps {
 }
 
 interface IState {
-    syncState: SyncState;
-    syncStateData: ISyncStateData;
+    syncState: SyncState | null;
+    syncStateData: ISyncStateData | null;
     unsentMessages: MatrixEvent[];
     isResending: boolean;
 }
@@ -125,14 +125,14 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         }
     }
 
-    private onSyncStateChange = (state: SyncState, prevState: SyncState, data: ISyncStateData): void => {
+    private onSyncStateChange = (state: SyncState, prevState: SyncState | null, data?: ISyncStateData): void => {
         if (state === "SYNCING" && prevState === "SYNCING") {
             return;
         }
         if (this.unmounted) return;
         this.setState({
             syncState: state,
-            syncStateData: data,
+            syncStateData: data ?? null,
         });
     };
 

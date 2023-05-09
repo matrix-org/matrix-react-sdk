@@ -112,7 +112,7 @@ interface CallEventHandlerMap {
  * A group call accessed through a widget.
  */
 export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandlerMap> {
-    protected readonly widgetUid = WidgetUtils.getWidgetUid(this.widget);
+    protected readonly widgetUid;
     protected readonly room: Room;
 
     /**
@@ -171,6 +171,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
     ) {
         super();
         this.room = this.client.getRoom(this.roomId)!;
+        this.widgetUid = WidgetUtils.getWidgetUid(this.widget);
     }
 
     /**
