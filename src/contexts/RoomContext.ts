@@ -16,7 +16,7 @@ limitations under the License.
 
 import { createContext, useContext } from "react";
 
-import { IRoomState } from "../components/structures/RoomView";
+import type { IRoomState } from "../components/structures/RoomView";
 import { Layout } from "../settings/enums/Layout";
 
 export enum TimelineRenderingType {

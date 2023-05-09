@@ -20,8 +20,8 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import classNames from "classnames";
 
 import { _t } from "../../../../languageHandler";
-import { XOR } from "../../../../@types/common";
-import { Tool } from "../DevtoolsDialog";
+import type { XOR } from "../../../../@types/common";
+import type { Tool } from "../DevtoolsDialog";
 
 export interface IDevtoolsProps {
     onBack(): void;

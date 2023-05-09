@@ -18,8 +18,8 @@ limitations under the License.
 import { KeyboardEvent } from "react";
 
 import { Part, CommandPartCreator, PartCreator } from "./parts";
-import DocumentPosition from "./position";
-import { ICompletion } from "../autocomplete/Autocompleter";
+import type DocumentPosition from "./position";
+import type { ICompletion } from "../autocomplete/Autocompleter";
 import Autocomplete from "../components/views/rooms/Autocomplete";
 
 export interface ICallback {

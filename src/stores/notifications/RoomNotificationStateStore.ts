@@ -20,7 +20,7 @@ import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import { ActionPayload } from "../../dispatcher/payloads";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
-import defaultDispatcher, { MatrixDispatcher } from "../../dispatcher/dispatcher";
+import { defaultDispatcher, MatrixDispatcher } from "../../dispatcher/dispatcher";
 import { DefaultTagID, TagID } from "../room-list/models";
 import { FetchRoomFn, ListNotificationState } from "./ListNotificationState";
 import { RoomNotificationState } from "./RoomNotificationState";
@@ -42,17 +42,10 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
     private roomMap = new Map<Room, RoomNotificationState>();
 
     private listMap = new Map<TagID, ListNotificationState>();
-    private _globalState = new SummarizedNotificationState();
+    private _globalState?: SummarizedNotificationState;
 
     private constructor(dispatcher = defaultDispatcher) {
         super(dispatcher, {});
-        SettingsStore.watchSetting("feature_dynamic_room_predecessors", null, () => {
-            // We pass SyncState.Syncing here to "simulate" a sync happening.
-            // The code that receives these events actually doesn't care
-            // what state we pass, except that it behaves differently if we
-            // pass SyncState.Error.
-            this.emitUpdateIfStateChanged(SyncState.Syncing, false);
-        });
     }
 
     /**
@@ -66,7 +59,7 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
      * Gets a snapshot of notification state for all visible rooms. The number of states recorded
      * on the SummarizedNotificationState is equivalent to rooms.
      */
-    public get globalState(): SummarizedNotificationState {
+    public get globalState(): SummarizedNotificationState | undefined {
         return this._globalState;
     }
 
@@ -150,7 +143,15 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
     };
 
     protected async onReady(): Promise<void> {
+        this._globalState = new SummarizedNotificationState();
         this.matrixClient?.on(ClientEvent.Sync, this.onSync);
+        SettingsStore.watchSetting("feature_dynamic_room_predecessors", null, () => {
+            // We pass SyncState.Syncing here to "simulate" a sync happening.
+            // The code that receives these events actually doesn't care
+            // what state we pass, except that it behaves differently if we
+            // pass SyncState.Error.
+            this.emitUpdateIfStateChanged(SyncState.Syncing, false);
+        });
     }
 
     protected async onNotReady(): Promise<any> {

@@ -14,10 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DecryptionError } from "matrix-js-sdk/src/crypto/algorithms";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Error as ErrorEvent } from "@matrix-org/analytics-events/types/typescript/Error";
-
+import type { DecryptionError } from "matrix-js-sdk/src/crypto/algorithms";
+import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import type { Error as ErrorEvent } from "@matrix-org/analytics-events/types/typescript/Error";
 import { PosthogAnalytics } from "./PosthogAnalytics";
 
 export class DecryptionFailure {

@@ -48,9 +48,9 @@ import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import UploadFailureDialog from "./components/views/dialogs/UploadFailureDialog";
 import UploadConfirmDialog from "./components/views/dialogs/UploadConfirmDialog";
 import { createThumbnail } from "./utils/image-media";
-import { attachMentions, attachRelation } from "./components/views/rooms/SendMessageComposer";
 import { doMaybeLocalRoomAction } from "./utils/local-room";
 import { SdkContextClass } from "./contexts/SDKContext";
+import { attachMentions, attachRelation } from "./components/views/rooms/SendMessageComposer";
 
 // scraped out of a macOS hidpi (5660ppm) screenshot png
 //                  5669 px (x-axis)      , 5669 px (y-axis)      , per metre

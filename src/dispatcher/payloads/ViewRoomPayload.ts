@@ -14,15 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { ViewRoom as ViewRoomEvent } from "@matrix-org/analytics-events/types/typescript/ViewRoom";
-
-import { ActionPayload } from "../payloads";
-import { Action } from "../actions";
-import { IOOBData, IThreepidInvite } from "../../stores/ThreepidInviteStore";
-import { IOpts } from "../../createRoom";
-import { JoinRoomPayload } from "./JoinRoomPayload";
-import { AtLeastOne } from "../../@types/common";
+import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import type { ViewRoom as ViewRoomEvent } from "@matrix-org/analytics-events/types/typescript/ViewRoom";
+import type { ActionPayload } from "../payloads";
+import type { Action } from "../actions";
+import type { IOOBData, IThreepidInvite } from "../../stores/ThreepidInviteStore";
+import type { IOpts } from "../../createRoom";
+import type { JoinRoomPayload } from "./JoinRoomPayload";
+import type { AtLeastOne } from "../../@types/common";
 
 /* eslint-disable camelcase */
 interface BaseViewRoomPayload extends Pick<ActionPayload, "action"> {

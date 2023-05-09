@@ -25,7 +25,7 @@ import { haveRendererForEvent, JitsiEventFactory, JSONEventFactory, pickFactory 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { getMessageModerationState, isLocationEvent, MessageModerationState } from "./EventUtils";
 import { ElementCall } from "../models/Call";
-import { VoiceBroadcastInfoEventType, VoiceBroadcastInfoState } from "../voice-broadcast";
+import { VoiceBroadcastInfoEventType, VoiceBroadcastInfoState } from "../voice-broadcast/types";
 
 const calcIsInfoMessage = (
     eventType: EventType | string,

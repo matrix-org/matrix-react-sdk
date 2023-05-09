@@ -21,13 +21,13 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import SyntaxHighlight from "../views/elements/SyntaxHighlight";
 import { _t } from "../../languageHandler";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
-import { canEditContent } from "../../utils/EventUtils";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import BaseDialog from "../views/dialogs/BaseDialog";
 import { DevtoolsContext } from "../views/dialogs/devtools/BaseTool";
 import { StateEventEditor } from "../views/dialogs/devtools/RoomState";
 import { stringify, TimelineEventEditor } from "../views/dialogs/devtools/Event";
 import CopyableText from "../views/elements/CopyableText";
+import { canEditContent } from "../../utils/EventUtils";
 
 interface IProps {
     mxEvent: MatrixEvent; // the MatrixEvent associated with the context menu

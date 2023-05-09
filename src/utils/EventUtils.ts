@@ -25,7 +25,7 @@ import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import shouldHideEvent from "../shouldHideEvent";
-import { GetRelationsForEvent } from "../components/views/rooms/EventTile";
+import type { GetRelationsForEvent } from "../components/views/rooms/EventTile";
 import SettingsStore from "../settings/SettingsStore";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { TimelineRenderingType } from "../contexts/RoomContext";

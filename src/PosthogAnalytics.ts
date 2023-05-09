@@ -17,17 +17,17 @@ limitations under the License.
 import posthog, { PostHog, Properties } from "posthog-js";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
-import { UserProperties } from "@matrix-org/analytics-events/types/typescript/UserProperties";
-import { Signup } from "@matrix-org/analytics-events/types/typescript/Signup";
 
+import type { UserProperties } from "@matrix-org/analytics-events/types/typescript/UserProperties";
+import type { Signup } from "@matrix-org/analytics-events/types/typescript/Signup";
 import PlatformPeg from "./PlatformPeg";
 import SdkConfig from "./SdkConfig";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import SettingsStore from "./settings/SettingsStore";
-import { ScreenName } from "./PosthogTrackers";
-import { ActionPayload } from "./dispatcher/payloads";
+import type { ScreenName } from "./PosthogTrackers";
+import type { ActionPayload } from "./dispatcher/payloads";
 import { Action } from "./dispatcher/actions";
-import { SettingUpdatedPayload } from "./dispatcher/payloads/SettingUpdatedPayload";
+import type { SettingUpdatedPayload } from "./dispatcher/payloads/SettingUpdatedPayload";
 import dis from "./dispatcher/dispatcher";
 import { Layout } from "./settings/enums/Layout";
 

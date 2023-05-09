@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import DocumentOffset from "./offset";
-import EditorModel from "./model";
-import { Part } from "./parts";
+import type EditorModel from "./model";
+import type { Part } from "./parts";
 
 export interface IPosition {
     index: number;

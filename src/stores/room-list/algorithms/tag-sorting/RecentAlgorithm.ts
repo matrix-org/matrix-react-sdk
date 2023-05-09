@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
 import { EventType } from "matrix-js-sdk/src/@types/event";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
-import { TagID } from "../../models";
-import { IAlgorithm } from "./IAlgorithm";
+import type { Room } from "matrix-js-sdk/src/models/room";
+import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import type { TagID } from "../../models";
+import type { IAlgorithm } from "./IAlgorithm";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import * as Unread from "../../../../Unread";
 import { EffectiveMembership, getEffectiveMembership } from "../../../../utils/membership";

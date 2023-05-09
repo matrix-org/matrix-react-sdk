@@ -18,7 +18,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 
 import { NotificationColor } from "./NotificationColor";
 import { arrayDiff } from "../../utils/arrays";
-import { RoomNotificationState } from "./RoomNotificationState";
+import type { RoomNotificationState } from "./RoomNotificationState";
 import { NotificationState, NotificationStateEvents } from "./NotificationState";
 
 export type FetchRoomFn = (room: Room) => RoomNotificationState;

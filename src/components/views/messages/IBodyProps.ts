@@ -20,7 +20,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import EditorStateTransfer from "../../../utils/EditorStateTransfer";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
-import { GetRelationsForEvent } from "../rooms/EventTile";
+import type { GetRelationsForEvent } from "../rooms/EventTile";
 
 export interface IBodyProps {
     mxEvent: MatrixEvent;

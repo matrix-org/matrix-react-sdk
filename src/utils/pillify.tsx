@@ -19,8 +19,8 @@ import ReactDOM from "react-dom";
 import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
-import { MatrixClientPeg } from "../MatrixClientPeg";
 import SettingsStore from "../settings/SettingsStore";
+import { MatrixClientPeg } from "../MatrixClientPeg";
 import { Pill, PillType, pillRoomNotifLen, pillRoomNotifPos } from "../components/views/elements/Pill";
 import { parsePermalink } from "./permalinks/Permalinks";
 import { PermalinkParts } from "./permalinks/PermalinkConstructor";

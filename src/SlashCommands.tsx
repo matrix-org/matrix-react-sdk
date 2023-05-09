@@ -18,7 +18,6 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { User } from "matrix-js-sdk/src/models/user";
 import { Direction } from "matrix-js-sdk/src/models/event-timeline";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import * as ContentHelpers from "matrix-js-sdk/src/content-helpers";
@@ -26,8 +25,9 @@ import { Element as ChildElement, parseFragment as parseHtml } from "parse5";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IContent } from "matrix-js-sdk/src/models/event";
 import { MRoomTopicEventContent } from "matrix-js-sdk/src/@types/topic";
-import { SlashCommand as SlashCommandEvent } from "@matrix-org/analytics-events/types/typescript/SlashCommand";
 
+import type { User } from "matrix-js-sdk/src/models/user";
+import type { SlashCommand as SlashCommandEvent } from "@matrix-org/analytics-events/types/typescript/SlashCommand";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import dis from "./dispatcher/dispatcher";
 import { _t, _td, UserFriendlyError } from "./languageHandler";
