@@ -59,6 +59,8 @@ import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { addReplyToMessageContent } from "../../../utils/Reply";
 import { doMaybeLocalRoomAction } from "../../../utils/local-room";
+import { Caret } from "../../../editor/caret";
+import { IDiff } from "../../../editor/diff";
 
 /**
  * Build the mentions information based on the editor model (and any related events):
@@ -684,9 +686,11 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         return false;
     };
 
-    private onChange = (): void => {
+    private onChange = (selection: Caret, inputType?: string, diff?: IDiff): void => {
         // We call this in here rather than onKeyDown as that would trip it on global shortcuts e.g. Ctrl-k also
-        this.prepareToEncrypt?.();
+        if (!!diff) {
+            this.prepareToEncrypt?.();
+        }
 
         this.props.onChange?.(this.model);
     };
