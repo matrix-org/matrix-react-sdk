@@ -42,7 +42,7 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
     private roomMap = new Map<Room, RoomNotificationState>();
 
     private listMap = new Map<TagID, ListNotificationState>();
-    private _globalState?: SummarizedNotificationState;
+    private _globalState: SummarizedNotificationState;
 
     private constructor(dispatcher = defaultDispatcher) {
         super(dispatcher, {});
@@ -59,7 +59,7 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
      * Gets a snapshot of notification state for all visible rooms. The number of states recorded
      * on the SummarizedNotificationState is equivalent to rooms.
      */
-    public get globalState(): SummarizedNotificationState | undefined {
+    public get globalState(): SummarizedNotificationState {
         return this._globalState;
     }
 
