@@ -27,9 +27,6 @@ $hover-transition: 0.08s cubic-bezier(0.46, 0.03, 0.52, 0.96); /* quadratic */
 
 $selected-message-border-width: 4px;
 
-$slider-dot-size: 1em;
-$slider-selection-dot-size: 2.4em;
-
 :root {
     font-size: 10px;
 
@@ -693,22 +690,6 @@ legend {
 
 .mx_Username_color8 {
     color: $username-variant8-color;
-}
-
-@define-mixin mx_Tooltip_dark {
-    box-shadow: none;
-    background-color: $tooltip-timeline-bg-color;
-    color: $tooltip-timeline-fg-color;
-    border: none;
-    border-radius: 3px;
-    padding: 6px 8px;
-}
-
-/* This is a workaround for our mixins not supporting child selectors */
-.mx_Tooltip_dark {
-    .mx_Tooltip_chevron::after {
-        border-right-color: $tooltip-timeline-bg-color;
-    }
 }
 
 @define-mixin ProgressBarColour $colour {
