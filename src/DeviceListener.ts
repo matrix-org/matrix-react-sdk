@@ -176,7 +176,7 @@ export default class DeviceListener {
         if (initialFetch) return;
 
         const myUserId = MatrixClientPeg.get().getUserId()!;
-        if (users.includes(myUserId)) this.ensureDeviceIdsAtStartPopulated();
+        if (users.includes(myUserId)) await this.ensureDeviceIdsAtStartPopulated();
 
         // No need to do a recheck here: we just need to get a snapshot of our devices
         // before we download any new ones.
