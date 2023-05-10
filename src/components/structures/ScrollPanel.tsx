@@ -179,7 +179,7 @@ export default class ScrollPanel extends React.Component<IProps> {
     };
     private readonly itemlist = createRef<HTMLOListElement>();
     private unmounted = false;
-    private scrollTimeout: Timer;
+    private scrollTimeout?: Timer;
     // Are we currently trying to backfill?
     private isFilling: boolean;
     // Is the current fill request caused by a props update?
@@ -189,12 +189,12 @@ export default class ScrollPanel extends React.Component<IProps> {
     // Is that next fill request scheduled because of a props update?
     private pendingFillDueToPropsUpdate: boolean;
     private scrollState: IScrollState;
-    private preventShrinkingState: IPreventShrinkingState | null;
-    private unfillDebouncer: number | null;
+    private preventShrinkingState: IPreventShrinkingState | null = null;
+    private unfillDebouncer: number | null = null;
     private bottomGrowth: number;
     private minListHeight: number;
     private heightUpdateInProgress: boolean;
-    private divScroll: HTMLDivElement;
+    private divScroll: HTMLDivElement | null = null;
 
     public constructor(props: IProps) {
         super(props);
@@ -226,13 +226,15 @@ export default class ScrollPanel extends React.Component<IProps> {
         this.unmounted = true;
 
         this.props.resizeNotifier?.removeListener("middlePanelResizedNoisy", this.onResize);
+
+        this.divScroll = null;
     }
 
     private onScroll = (ev: Event): void => {
         // skip scroll events caused by resizing
         if (this.props.resizeNotifier && this.props.resizeNotifier.isResizing) return;
         debuglog("onScroll called past resize gate; scroll node top:", this.getScrollNode().scrollTop);
-        this.scrollTimeout.restart();
+        this.scrollTimeout?.restart();
         this.saveScrollState();
         this.updatePreventShrinking();
         this.props.onScroll?.(ev);
@@ -723,7 +725,7 @@ export default class ScrollPanel extends React.Component<IProps> {
     // need a better name that also indicates this will change scrollTop? Rebalance height? Reveal content?
     private async updateHeight(): Promise<void> {
         // wait until user has stopped scrolling
-        if (this.scrollTimeout.isRunning()) {
+        if (this.scrollTimeout?.isRunning()) {
             debuglog("updateHeight waiting for scrolling to end ... ");
             await this.scrollTimeout.finished();
             debuglog("updateHeight actually running now");
