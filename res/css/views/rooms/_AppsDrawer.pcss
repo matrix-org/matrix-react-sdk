@@ -200,7 +200,7 @@ limitations under the License.
     padding-bottom: 6px;
 }
 
-.mx_AppTileMenuBarTitle {
+.mx_AppTileMenuBar_title {
     line-height: 20px;
     white-space: nowrap;
     overflow: hidden;
@@ -215,7 +215,7 @@ limitations under the License.
     }
 }
 
-.mx_AppTileMenuBarWidgets {
+.mx_AppTileMenuBar_widgets {
     float: right;
     display: flex;
     flex-direction: row;
@@ -360,7 +360,18 @@ limitations under the License.
 }
 
 .mx_AppPermissionWarning_tooltip {
-    @mixin mx_Tooltip_dark;
+    box-shadow: none;
+    background-color: $tooltip-timeline-bg-color;
+    color: $tooltip-timeline-fg-color;
+    border: none;
+    border-radius: 3px;
+    padding: 6px 8px;
+
+    &.mx_AppPermissionWarning_tooltip--dark {
+        .mx_Tooltip_chevron::after {
+            border-right-color: $tooltip-timeline-bg-color;
+        }
+    }
 
     ul {
         list-style-position: inside;
@@ -369,7 +380,7 @@ limitations under the License.
     }
 }
 
-.mx_AppLoading {
+.mx_AppTile_loading {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -386,23 +397,21 @@ limitations under the License.
         display: none;
     }
 
-    .mx_Spinner {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
+    /* const loadingElement */
+    .mx_AppTile_loading_fadeInSpinner {
+        animation-fill-mode: backwards;
+        animation-duration: 200ms;
+        animation-delay: 500ms;
+        animation-name: mx_AppTile_loading_fadeInSpinnerAnimation;
+
+        .mx_Spinner {
+            position: absolute;
+            inset: 0;
+        }
     }
 }
 
-.mx_AppLoading_spinner_fadeIn {
-    animation-fill-mode: backwards;
-    animation-duration: 200ms;
-    animation-delay: 500ms;
-    animation-name: mx_AppLoading_spinner_fadeIn_animation;
-}
-
-@keyframes mx_AppLoading_spinner_fadeIn_animation {
+@keyframes mx_AppTile_loading_fadeInSpinnerAnimation {
     from {
         opacity: 0;
     }

@@ -164,7 +164,7 @@ interface IProps {
     onNewScreen: (screen: string, replaceLast: boolean) => void;
     enableGuest?: boolean;
     // the queryParams extracted from the [real] query-string of the URI
-    realQueryParams?: QueryDict;
+    realQueryParams: QueryDict;
     // the initial queryParams extracted from the hash-fragment of the URI
     startingFragmentQueryParams?: QueryDict;
     // called when we have completed a token login
@@ -231,7 +231,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private focusComposer: boolean;
     private subTitleStatus: string;
     private prevWindowWidth: number;
-    private voiceBroadcastResumer: VoiceBroadcastResumer;
+    private voiceBroadcastResumer?: VoiceBroadcastResumer;
 
     private readonly loggedInView: React.RefObject<LoggedInViewType>;
     private readonly dispatcherRef: string;
@@ -441,7 +441,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         window.removeEventListener("resize", this.onWindowResized);
 
         this.stores.accountPasswordStore.clearPassword();
-        if (this.voiceBroadcastResumer) this.voiceBroadcastResumer.destroy();
+        this.voiceBroadcastResumer?.destroy();
     }
 
     private onWindowResized = (): void => {
@@ -1935,7 +1935,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private setPageSubtitle(subtitle = ""): void {
         if (this.state.currentRoomId) {
             const client = MatrixClientPeg.get();
-            const room = client && client.getRoom(this.state.currentRoomId);
+            const room = client?.getRoom(this.state.currentRoomId);
             if (room) {
                 subtitle = `${this.subTitleStatus} | ${room.name} ${subtitle}`;
             }
