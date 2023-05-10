@@ -47,13 +47,15 @@ export const SettingsSubsection: React.FC<SettingsSubsectionProps> = ({
                 <SettingsSubsectionText>{description}</SettingsSubsectionText>
             </div>
         )}
-        <div
-            className={classNames("mx_SettingsSubsection_content", {
-                mx_SettingsSubsection_contentStretch: stretchContent,
-            })}
-        >
-            {children}
-        </div>
+        {!!children && (
+            <div
+                className={classNames("mx_SettingsSubsection_content", {
+                    mx_SettingsSubsection_contentStretch: stretchContent,
+                })}
+            >
+                {children}
+            </div>
+        )}
     </div>
 );
 

@@ -23,6 +23,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { IDelegatedAuthConfig, M_AUTHENTICATION } from "matrix-js-sdk/src/matrix";
 import { HTTPError } from "matrix-js-sdk/src/matrix";
 
+import { Icon as WarningIcon } from "../../../../../../res/img/feather-customised/warning-triangle.svg";
 import { UserFriendlyError, _t } from "../../../../../languageHandler";
 import ProfileSettings from "../../ProfileSettings";
 import * as languageHandler from "../../../../../languageHandler";
@@ -56,7 +57,8 @@ import ToggleSwitch from "../../../elements/ToggleSwitch";
 import { IS_MAC } from "../../../../../Keyboard";
 import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
-import SettingsSubsection from "../../shared/SettingsSubsection";
+import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
+import Heading from "../../../typography/Heading";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -448,16 +450,16 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private renderDiscoverySection(): JSX.Element {
         if (this.state.requiredPolicyInfo.hasTerms) {
             const intro = (
-                <span className="mx_SettingsTab_subsectionText">
+                <SettingsSubsectionText>
                     {_t(
                         "Agree to the identity server (%(serverName)s) Terms of Service to " +
                             "allow yourself to be discoverable by email address or phone number.",
                         { serverName: this.state.idServerName },
                     )}
-                </span>
+                </SettingsSubsectionText>
             );
             return (
-                <div>
+                <>
                     <InlineTermsAgreement
                         policiesAndServicePairs={this.state.requiredPolicyInfo.policiesAndServices}
                         agreedUrls={this.state.requiredPolicyInfo.agreedUrls}
@@ -466,29 +468,23 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                     />
                     {/* has its own heading as it includes the current identity server */}
                     <SetIdServer missingTerms={true} />
-                </div>
+                </>
             );
         }
 
-        const emails = this.state.loading3pids ? <Spinner /> : <DiscoveryEmailAddresses emails={this.state.emails} />;
-        const msisdns = this.state.loading3pids ? <Spinner /> : <DiscoveryPhoneNumbers msisdns={this.state.msisdns} />;
-
         const threepidSection = this.state.haveIdServer ? (
-            <div className="mx_GeneralUserSettingsTab_discovery">
-                <span className="mx_SettingsTab_subheading">{_t("Email addresses")}</span>
-                {emails}
-
-                <span className="mx_SettingsTab_subheading">{_t("Phone numbers")}</span>
-                {msisdns}
-            </div>
+            <>
+                <DiscoveryEmailAddresses emails={this.state.emails} isLoading={this.state.loading3pids} />
+                <DiscoveryPhoneNumbers msisdns={this.state.msisdns} isLoading={this.state.loading3pids} />
+            </>
         ) : null;
 
         return (
-            <div className="mx_SettingsTab_section">
+            <>
                 {threepidSection}
                 {/* has its own heading as it includes the current identity server */}
                 <SetIdServer missingTerms={false} />
-            </div>
+            </>
         );
     }
 
@@ -519,16 +515,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         const plaf = PlatformPeg.get();
         const supportsMultiLanguageSpellCheck = plaf?.supportsSpellCheckSettings();
 
-        const discoWarning = this.state.requiredPolicyInfo.hasTerms ? (
-            <img
-                className="mx_GeneralUserSettingsTab_warningIcon"
-                src={require("../../../../../../res/img/feather-customised/warning-triangle.svg").default}
-                width="18"
-                height="18"
-                alt={_t("Warning")}
-            />
-        ) : null;
-
         let accountManagementSection: JSX.Element | undefined;
         if (SettingsStore.getValue(UIFeature.Deactivate)) {
             accountManagementSection = this.renderManagementSection();
@@ -536,14 +522,23 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
         let discoverySection;
         if (SettingsStore.getValue(UIFeature.IdentityServer)) {
-            discoverySection = (
-                <>
-                    <div className="mx_SettingsTab_heading">
-                        {discoWarning} {_t("Discovery")}
-                    </div>
-                    {this.renderDiscoverySection()}
-                </>
+            const discoWarning = this.state.requiredPolicyInfo.hasTerms ? (
+                <WarningIcon
+                    className="mx_GeneralUserSettingsTab_warningIcon"
+                    width="18"
+                    height="18"
+                    // override icon default values
+                    aria-hidden={false}
+                    aria-label={_t("Warning")}
+                />
+            ) : null;
+            const heading = (
+                <Heading size="h2">
+                    {discoWarning}
+                    {_t("Discovery")}
+                </Heading>
             );
+            discoverySection = <SettingsSection heading={heading}>{this.renderDiscoverySection()}</SettingsSection>;
         }
 
         return (

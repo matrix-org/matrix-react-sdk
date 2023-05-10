@@ -27,6 +27,8 @@ import AddThreepid, { Binding } from "../../../../AddThreepid";
 import ErrorDialog, { extractErrorMessageFromError } from "../../dialogs/ErrorDialog";
 import Field from "../../elements/Field";
 import AccessibleButton from "../../elements/AccessibleButton";
+import SettingsSubsection from "../shared/SettingsSubsection";
+import InlineSpinner from "../../elements/InlineSpinner";
 
 /*
 TODO: Improve the UX for everything in here.
@@ -273,23 +275,27 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
 
 interface IProps {
     msisdns: IThreepid[];
+    isLoading?: boolean;
 }
 
 export default class PhoneNumbers extends React.Component<IProps> {
     public render(): React.ReactNode {
         let content;
-        if (this.props.msisdns.length > 0) {
+        if (this.props.isLoading) {
+            content = <InlineSpinner />;
+        } else if (this.props.msisdns.length > 0) {
             content = this.props.msisdns.map((e) => {
                 return <PhoneNumber msisdn={e} key={e.address} />;
             });
-        } else {
-            content = (
-                <span className="mx_SettingsTab_subsectionText">
-                    {_t("Discovery options will appear once you have added a phone number above.")}
-                </span>
-            );
         }
 
-        return <div className="mx_PhoneNumbers">{content}</div>;
+        const description =
+            (!content && _t("Discovery options will appear once you have added a phone number above.")) || undefined;
+
+        return (
+            <SettingsSubsection data-testid="mx_PhoneNumbers" heading={_t("Phone numbers")} description={description}>
+                {content}
+            </SettingsSubsection>
+        );
     }
 }

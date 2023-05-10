@@ -26,6 +26,8 @@ import Modal from "../../../../Modal";
 import AddThreepid, { Binding } from "../../../../AddThreepid";
 import ErrorDialog, { extractErrorMessageFromError } from "../../dialogs/ErrorDialog";
 import AccessibleButton from "../../elements/AccessibleButton";
+import SettingsSubsection from "../shared/SettingsSubsection";
+import InlineSpinner from "../../elements/InlineSpinner";
 
 /*
 TODO: Improve the UX for everything in here.
@@ -258,23 +260,31 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
 }
 interface IProps {
     emails: IThreepid[];
+    isLoading?: boolean;
 }
 
 export default class EmailAddresses extends React.Component<IProps> {
     public render(): React.ReactNode {
         let content;
-        if (this.props.emails.length > 0) {
+        if (this.props.isLoading) {
+            content = <InlineSpinner />;
+        } else if (this.props.emails.length > 0) {
             content = this.props.emails.map((e) => {
                 return <EmailAddress email={e} key={e.address} />;
             });
-        } else {
-            content = (
-                <span className="mx_SettingsTab_subsectionText">
-                    {_t("Discovery options will appear once you have added an email above.")}
-                </span>
-            );
         }
 
-        return <div className="mx_EmailAddresses">{content}</div>;
+        const hasEmails = !!this.props.emails.length;
+
+        return (
+            <SettingsSubsection
+                heading={_t("Email addresses")}
+                description={
+                    (!hasEmails && _t("Discovery options will appear once you have added an email above.")) || undefined
+                }
+            >
+                {content}
+            </SettingsSubsection>
+        );
     }
 }
