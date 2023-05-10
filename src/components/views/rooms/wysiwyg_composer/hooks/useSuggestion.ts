@@ -230,13 +230,13 @@ export function findSuggestionInText(
     let endSliceIndex = offset;
 
     // Search backwards from the current cursor position to find the start index of the word
-    // that the cursor is inside
+    // containing the cursor
     while (shouldDecrementStartIndex(text, startSliceIndex)) {
         startSliceIndex--;
     }
 
     // Search fowards from the current cursor position to find the end index of the word
-    // that the cursor is inside
+    // containing the cursor
     while (shouldIncrementEndIndex(text, endSliceIndex)) {
         endSliceIndex++;
     }
