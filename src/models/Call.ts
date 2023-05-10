@@ -720,13 +720,13 @@ export class ElementCall extends Call {
             SettingsStore.getValue("feature_element_call_video_rooms") &&
             room.isCallRoom();
 
-        const groupCall = new GroupCall(
-            room.client,
+        const groupCall = new GroupCall({
+            client: room.client,
             room,
-            GroupCallType.Video,
-            false,
-            isVideoRoom ? GroupCallIntent.Room : GroupCallIntent.Prompt,
-        );
+            type: GroupCallType.Video,
+            isPtt: false,
+            intent: isVideoRoom ? GroupCallIntent.Room : GroupCallIntent.Prompt,
+        });
 
         await groupCall.create();
     }
