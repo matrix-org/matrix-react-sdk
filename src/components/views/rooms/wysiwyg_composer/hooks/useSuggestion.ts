@@ -144,7 +144,7 @@ export function processMention(
     attributes: Attributes, // these will be used when formatting the link as a pill
     suggestionData: SuggestionState,
     setSuggestionData: React.Dispatch<React.SetStateAction<SuggestionState>>,
-    setText: (text: string) => void,
+    setText: (text?: string) => void,
 ): void {
     // if we do not have a suggestion, return early
     if (suggestionData === null) {
@@ -157,15 +157,17 @@ export function processMention(
     const link = document.createElement("a");
     link.setAttribute("href", href);
     link.setAttribute("contenteditable", "false");
-    Object.entries(attributes).forEach(([attr, value]) => link.setAttribute(attr, value ?? ""));
+    Object.entries(attributes).forEach(([attr, value]) => value && link.setAttribute(attr, value));
     link.innerText = displayName;
 
     // create a text node that will follow the inserted link (we may be inserting into the middle of a node)
-    const endNode = document.createTextNode(` ${node.textContent?.slice(suggestion.endOffset) ?? ""}`);
+    const endNode = document.createTextNode(` ${node.textContent?.slice(suggestionData.endOffset) ?? ""}`);
 
     // take the starting node, truncate the content from start to the startOffset of the suggestion
     // and then append the link element followed by the text node
-    node.textContent = node.textContent?.slice(0, suggestion.startOffset) ?? "";
+
+    // default to a zwsp if we'd have no preceding text
+    node.textContent = node.textContent?.slice(0, suggestionData.startOffset) || "\u200b";
     node.parentNode?.appendChild(link);
     node.parentNode?.appendChild(endNode);
 
@@ -174,7 +176,7 @@ export function processMention(
 
     // set the text content to be the innerHTML of the current editor ref and clear the suggestion state
     setText();
-    setSuggestion(null);
+    setSuggestionData(null);
 }
 
 /**
@@ -188,8 +190,8 @@ export function processMention(
  */
 export function processCommand(
     replacementText: string,
-    suggestion: SuggestionState,
-    setSuggestion: React.Dispatch<React.SetStateAction<SuggestionState>>,
+    suggestionData: SuggestionState,
+    setSuggestionData: React.Dispatch<React.SetStateAction<SuggestionState>>,
     setText: (text?: string) => void,
 ): void {
     // if we do not have a suggestion, return early
