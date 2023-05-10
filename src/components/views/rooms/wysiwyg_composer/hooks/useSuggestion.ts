@@ -212,7 +212,7 @@ export function processCommand(
  * @param offset - the current cursor offset position within the node
  * @param isFirstTextNode - whether or not the node is the first text node in the editor, used to determine
  * if a command suggestion is found or not
- * @returns null if no mention or command is found, otherwise the `MappedSuggestion` along with it's start and end offsets
+ * @returns the `MappedSuggestion` along with it's start and end offsets if found, otherwise null
  */
 export function findSuggestionInText(
     text: string,
