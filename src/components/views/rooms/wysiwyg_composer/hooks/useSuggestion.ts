@@ -57,20 +57,20 @@ export function useSuggestion(
     onSelect: (event: SyntheticEvent<HTMLDivElement>) => void;
     suggestion: MappedSuggestion | null;
 } {
-    const [suggestion, setSuggestion] = useState<SuggestionState>(null);
+    const [suggestionData, setSuggestionData] = useState<SuggestionState>(null);
 
     // We create a `selectionchange` handler here because we need to know when the user has moved the cursor,
     // we can not depend on input events only
-    const onSelect = (): void => processSelectionChange(editorRef, setSuggestion);
+    const onSelect = (): void => processSelectionChange(editorRef, setSuggestionData);
 
     const handleMention = (href: string, displayName: string, attributes: Attributes): void =>
-        processMention(href, displayName, attributes, suggestion, setSuggestion, setText);
+        processMention(href, displayName, attributes, suggestionData, setSuggestionData, setText);
 
     const handleCommand = (replacementText: string): void =>
-        processCommand(replacementText, suggestion, setSuggestion, setText);
+        processCommand(replacementText, suggestionData, setSuggestionData, setText);
 
     return {
-        suggestion: suggestion?.mappedSuggestion ?? null,
+        suggestion: suggestionData?.mappedSuggestion ?? null,
         handleCommand,
         handleMention,
         onSelect,
@@ -82,11 +82,11 @@ export function useSuggestion(
  * something that could be a command or a mention and update the suggestion state if so
  *
  * @param editorRef - ref to the composer
- * @param setSuggestion - the setter for the suggestion state
+ * @param setSuggestionData - the setter for the suggestion state
  */
 export function processSelectionChange(
     editorRef: React.RefObject<HTMLDivElement>,
-    setSuggestion: React.Dispatch<React.SetStateAction<SuggestionState>>,
+    setSuggestionData: React.Dispatch<React.SetStateAction<SuggestionState>>,
 ): void {
     const selection = document.getSelection();
 
@@ -97,7 +97,7 @@ export function processSelectionChange(
         !selection.isCollapsed ||
         selection.anchorNode?.nodeName !== "#text"
     ) {
-        setSuggestion(null);
+        setSuggestionData(null);
         return;
     }
 
@@ -106,7 +106,7 @@ export function processSelectionChange(
 
     // if we have no text content, return, clearing the suggestion state
     if (currentNode.textContent === null) {
-        setSuggestion(null);
+        setSuggestionData(null);
         return;
     }
 
@@ -114,7 +114,7 @@ export function processSelectionChange(
 
     // if we have not found a suggestion, return, clearing the suggestion state
     if (foundSuggestion === null) {
-        setSuggestion(null);
+        setSuggestionData(null);
         return;
     }
 
@@ -124,11 +124,11 @@ export function processSelectionChange(
     // if we have a command at the beginning of a node, but that node isn't the first text node, return
     const firstTextNode = document.createNodeIterator(editorRef.current, NodeFilter.SHOW_TEXT).nextNode();
     if (mappedSuggestion.type === "command" && currentNode !== firstTextNode) {
-        setSuggestion(null);
+        setSuggestionData(null);
         return;
     } else {
         // else, we have found a mention or a command
-        setSuggestion({
+        setSuggestionData({
             mappedSuggestion,
             node: currentNode,
             startOffset: foundSuggestion.startOffset,
@@ -144,27 +144,27 @@ export function processSelectionChange(
  * @param href - the href that the inserted link will use
  * @param displayName - the text content of the link
  * @param attributes - additional attributes to add to the link, can include data-* attributes
- * @param suggestion - representation of the part of the DOM that will be replaced
- * @param setSuggestion - setter function to set the suggestion state
+ * @param suggestionData - representation of the part of the DOM that will be replaced
+ * @param setSuggestionData - setter function to set the suggestion state
  * @param setText - setter function to set the content of the composer
  */
 export function processMention(
     href: string,
     displayName: string,
     attributes: Attributes, // these will be used when formatting the link as a pill
-    suggestion: SuggestionState,
-    setSuggestion: React.Dispatch<React.SetStateAction<SuggestionState>>,
+    suggestionData: SuggestionState,
+    setSuggestionData: React.Dispatch<React.SetStateAction<SuggestionState>>,
     setText: (text: string) => void,
 ): void {
     // if we do not have a suggestion, return early
-    if (suggestion === null) {
+    if (suggestionData === null) {
         return;
     }
 
-    const { node } = suggestion;
+    const { node } = suggestionData;
 
-    const textBeforeReplacement = node.textContent?.slice(0, suggestion.startOffset) ?? "";
-    const textAfterReplacement = node.textContent?.slice(suggestion.endOffset) ?? "";
+    const textBeforeReplacement = node.textContent?.slice(0, suggestionData.startOffset) ?? "";
+    const textAfterReplacement = node.textContent?.slice(suggestionData.endOffset) ?? "";
 
     // TODO replace this markdown style text insertion with a pill representation
     const newText = `[${displayName}](<${href}>) `;
@@ -175,7 +175,7 @@ export function processMention(
     node.textContent = newContent;
     document.getSelection()?.setBaseAndExtent(node, newCursorOffset, node, newCursorOffset);
     setText(newContent);
-    setSuggestion(null);
+    setSuggestionData(null);
 }
 
 /**
@@ -183,22 +183,22 @@ export function processMention(
  * from the autocomplete.
  *
  * @param replacementText - the text that we will insert into the DOM
- * @param suggestion - representation of the part of the DOM that will be replaced
- * @param setSuggestion - setter function to set the suggestion state
+ * @param suggestionData - representation of the part of the DOM that will be replaced
+ * @param setSuggestionData - setter function to set the suggestion state
  * @param setText - setter function to set the content of the composer
  */
 export function processCommand(
     replacementText: string,
-    suggestion: SuggestionState,
-    setSuggestion: React.Dispatch<React.SetStateAction<SuggestionState>>,
+    suggestionData: SuggestionState,
+    setSuggestionData: React.Dispatch<React.SetStateAction<SuggestionState>>,
     setText: (text: string) => void,
 ): void {
     // if we do not have a suggestion, return early
-    if (suggestion === null) {
+    if (suggestionData === null) {
         return;
     }
 
-    const { node } = suggestion;
+    const { node } = suggestionData;
 
     // for a command, we know we start at the beginning of the text node, so build the replacement
     // string (note trailing space) and manually adjust the node's textcontent
@@ -209,7 +209,7 @@ export function processCommand(
     // hook and clear the suggestion from state
     document.getSelection()?.setBaseAndExtent(node, newContent.length, node, newContent.length);
     setText(newContent);
-    setSuggestion(null);
+    setSuggestionData(null);
 }
 
 /**
