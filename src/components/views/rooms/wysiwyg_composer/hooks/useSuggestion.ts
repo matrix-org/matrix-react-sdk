@@ -109,8 +109,9 @@ export function processSelectionChange(
         setSuggestionData(null);
         return;
     }
-
-    const foundSuggestion = findSuggestionInText(currentNode.textContent, currentOffset);
+    const firstTextNode = document.createNodeIterator(editorRef.current, NodeFilter.SHOW_TEXT).nextNode();
+    const isFirstTextNode = currentNode === firstTextNode;
+    const foundSuggestion = findSuggestionInText(currentNode.textContent, currentOffset, isFirstTextNode);
 
     // if we have not found a suggestion, return, clearing the suggestion state
     if (foundSuggestion === null) {
@@ -118,23 +119,13 @@ export function processSelectionChange(
         return;
     }
 
-    // else we do have something, so get the mapped suggestion from the text
     const mappedSuggestion = getMappedSuggestion(foundSuggestion.text);
-
-    // if we have a command at the beginning of a node, but that node isn't the first text node, return
-    const firstTextNode = document.createNodeIterator(editorRef.current, NodeFilter.SHOW_TEXT).nextNode();
-    if (mappedSuggestion.type === "command" && currentNode !== firstTextNode) {
-        setSuggestionData(null);
-        return;
-    } else {
-        // else, we have found a mention or a command
-        setSuggestionData({
-            mappedSuggestion,
-            node: currentNode,
-            startOffset: foundSuggestion.startOffset,
-            endOffset: foundSuggestion.endOffset,
-        });
-    }
+    setSuggestionData({
+        mappedSuggestion,
+        node: currentNode,
+        startOffset: foundSuggestion.startOffset,
+        endOffset: foundSuggestion.endOffset,
+    });
 }
 
 /**
@@ -219,11 +210,14 @@ export function processCommand(
  *
  * @param text - the text content of a node
  * @param offset - the current cursor offset position
+ * @param isFirstTextNode - whether or not the node is the first text node in the editor, used to determine
+ * if a command suggestion is found or not
  * @returns an empty string if no mention or command is found, otherwise the mention/command substring with it's start offset
  */
 export function findSuggestionInText(
     text: string,
     offset: number,
+    isFirstTextNode: boolean,
 ): { text: string; startOffset: number; endOffset: number } | null {
     // Return null early if the offset is outside the content
     if (offset < 0 || offset > text.length) {
@@ -261,7 +255,10 @@ export function findSuggestionInText(
     // - the starting index is anything other than 0 (they can only appear at the start of a message)
     // - there is more text following the command (eg `/spo asdf|` should not be interpreted as
     //   something requiring autocomplete)
-    if (mappedSuggestion.type === "command" && (startCharIndex !== 0 || endCharIndex !== text.length)) {
+    if (
+        mappedSuggestion.type === "command" &&
+        (!isFirstTextNode || startCharIndex !== 0 || endCharIndex !== text.length)
+    ) {
         return null;
     }
 
