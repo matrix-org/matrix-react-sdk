@@ -101,6 +101,14 @@ declare global {
     }
 }
 
+/** Initialise a MatrixClient using the given credentials object
+ *
+ * Helper function for `getBot` and `loginBot`
+ *
+ * @param homeserver - The homeserver to connect to
+ * @param credentials - The credentials (including an access token, user id and password) for the client.
+ * @param opts - options from the test
+ */
 function setupBotClient(
     homeserver: HomeserverInstance,
     credentials: Credentials,
@@ -137,36 +145,43 @@ function setupBotClient(
             });
         }
 
-        if (!opts.startClient) {
-            return cy.wrap(cli);
+        if (opts.startClient) {
+            // extra timeout, as this sometimes takes a while
+            cy.wrap(startClient(cli, credentials, opts), { timeout: 30_000, log: false });
         }
 
-        return cy.wrap(
-            cli
-                .initCrypto()
-                .then(() => cli.setGlobalErrorOnUnknownDevices(false))
-                .then(() => cli.startClient())
-                .then(async () => {
-                    if (opts.bootstrapCrossSigning) {
-                        await cli.bootstrapCrossSigning({
-                            authUploadDeviceSigningKeys: async (func) => {
-                                await func({
-                                    type: "m.login.password",
-                                    identifier: {
-                                        type: "m.id.user",
-                                        user: credentials.userId,
-                                    },
-                                    password: credentials.password,
-                                });
-                            },
-                        });
-                    }
-                })
-                .then(() => cli),
-            // extra timeout, as this sometimes takes a while
-            { timeout: 30_000 },
-        );
+        return cy.wrap(cli, { log: false });
     });
+}
+
+/**
+ * Helper for `setupBotClient`: starts the recently-created client
+ *
+ * This is a regular async method without any cypress fanciness.
+ *
+ * @param cli  - client to be initialised
+ * @param credentials - credentials returned by /login or /register
+ * @param bootstrapCrossSigning - true if we should generate and upload cross-signing keys
+ */
+async function startClient(cli: MatrixClient, credentials: Credentials, { bootstrapCrossSigning = false }) {
+    await cli.initCrypto();
+    cli.setGlobalErrorOnUnknownDevices(false);
+    await cli.startClient();
+
+    if (bootstrapCrossSigning) {
+        await cli.bootstrapCrossSigning({
+            authUploadDeviceSigningKeys: async (func) => {
+                await func({
+                    type: "m.login.password",
+                    identifier: {
+                        type: "m.id.user",
+                        user: credentials.userId,
+                    },
+                    password: credentials.password,
+                });
+            },
+        });
+    }
 }
 
 Cypress.Commands.add("getBot", (homeserver: HomeserverInstance, opts: CreateBotOpts): Chainable<CypressBot> => {
