@@ -26,9 +26,7 @@ import {
 
 function createMockPlainTextSuggestionPattern(props: Partial<Suggestion> = {}): Suggestion {
     return {
-        keyChar: "/",
-        type: "command",
-        text: "some text",
+        mappedSuggestion: { keyChar: "/", type: "command", text: "some text", ...props.mappedSuggestion },
         node: document.createTextNode(""),
         startOffset: 0,
         endOffset: 0,
