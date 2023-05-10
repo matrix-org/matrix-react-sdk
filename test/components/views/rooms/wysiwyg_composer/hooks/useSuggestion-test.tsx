@@ -243,7 +243,7 @@ describe("findSuggestionInText", () => {
 
     it.each(allTestCases)("returns an object when the whole input is special case: %s", (text) => {
         const expected = {
-            text,
+            mappedSuggestion: getMappedSuggestion(text),
             startOffset: 0,
             endOffset: text.length,
         };
@@ -264,7 +264,7 @@ describe("findSuggestionInText", () => {
     it.each(mentionTestCases)("returns an object when a %s is followed by other text", (mention) => {
         const followingText = " followed by something else";
         expect(findSuggestionInText(mention + followingText, mention.length - 2, true)).toEqual({
-            text: mention,
+            mappedSuggestion: getMappedSuggestion(mention),
             startOffset: 0,
             endOffset: mention.length,
         });
@@ -282,7 +282,7 @@ describe("findSuggestionInText", () => {
         const precedingText = "I want to mention ";
         const followingText = " in my message";
         expect(findSuggestionInText(precedingText + mention + followingText, precedingText.length + 3, true)).toEqual({
-            text: mention,
+            mappedSuggestion: getMappedSuggestion(mention),
             startOffset: precedingText.length,
             endOffset: precedingText.length + mention.length,
         });
@@ -308,7 +308,7 @@ describe("findSuggestionInText", () => {
         const precedingText = "mention ";
         const mentionInput = precedingText + mentionWithPunctuation;
         expect(findSuggestionInText(mentionInput, 12, true)).toEqual({
-            text: mentionWithPunctuation,
+            mappedSuggestion: getMappedSuggestion(mentionWithPunctuation),
             startOffset: precedingText.length,
             endOffset: precedingText.length + mentionWithPunctuation.length,
         });
@@ -320,7 +320,7 @@ describe("findSuggestionInText", () => {
     });
 });
 
-describe("getMentionOrCommandParts", () => {
+describe("getMappedSuggestion", () => {
     it("returns an empty mapped suggestion when first character is not / # @", () => {
         expect(getMappedSuggestion("Zzz")).toEqual({ type: "unknown", keyChar: "", text: "" });
     });

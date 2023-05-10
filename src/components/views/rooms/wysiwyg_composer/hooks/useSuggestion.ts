@@ -109,6 +109,7 @@ export function processSelectionChange(
         setSuggestionData(null);
         return;
     }
+
     const firstTextNode = document.createNodeIterator(editorRef.current, NodeFilter.SHOW_TEXT).nextNode();
     const isFirstTextNode = currentNode === firstTextNode;
     const foundSuggestion = findSuggestionInText(currentNode.textContent, currentOffset, isFirstTextNode);
@@ -119,9 +120,8 @@ export function processSelectionChange(
         return;
     }
 
-    const mappedSuggestion = getMappedSuggestion(foundSuggestion.text);
     setSuggestionData({
-        mappedSuggestion,
+        mappedSuggestion: foundSuggestion.mappedSuggestion,
         node: currentNode,
         startOffset: foundSuggestion.startOffset,
         endOffset: foundSuggestion.endOffset,
@@ -212,13 +212,13 @@ export function processCommand(
  * @param offset - the current cursor offset position
  * @param isFirstTextNode - whether or not the node is the first text node in the editor, used to determine
  * if a command suggestion is found or not
- * @returns an empty string if no mention or command is found, otherwise the mention/command substring with it's start offset
+ * @returns null if no mention or command is found, otherwise the `MappedSuggestion` along with it's start and end offsets
  */
 export function findSuggestionInText(
     text: string,
     offset: number,
     isFirstTextNode: boolean,
-): { text: string; startOffset: number; endOffset: number } | null {
+): { mappedSuggestion: MappedSuggestion; startOffset: number; endOffset: number } | null {
     // Return null early if the offset is outside the content
     if (offset < 0 || offset > text.length) {
         return null;
@@ -262,7 +262,7 @@ export function findSuggestionInText(
         return null;
     }
 
-    return { text: suggestionText, startOffset: startCharIndex, endOffset: startCharIndex + suggestionText.length };
+    return { mappedSuggestion, startOffset: startCharIndex, endOffset: startCharIndex + suggestionText.length };
 }
 
 /**
