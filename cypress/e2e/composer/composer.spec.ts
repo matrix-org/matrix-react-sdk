@@ -196,7 +196,7 @@ describe("Composer", () => {
                     }).then((bob) => {
                         bobClient = bob;
                     });
-                    // create dms with bob
+                    // create DM with bob
                     cy.getClient().then(async (cli) => {
                         const bobRoom = await cli.createRoom({ is_direct: true });
                         await cli.invite(bobRoom.room_id, bobClient.getUserId());
@@ -205,7 +205,6 @@ describe("Composer", () => {
                         });
                     });
 
-                    cy.wait(250); // let the room list settle
                     cy.viewRoomByName("Bob");
 
                     // Select plain text mode after composer is ready
