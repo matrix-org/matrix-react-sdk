@@ -37,7 +37,7 @@ interface IProps {
 }
 
 interface IState {
-    callState: CallState;
+    callState?: CallState;
     silenced: boolean;
     narrow: boolean;
     length: number;
