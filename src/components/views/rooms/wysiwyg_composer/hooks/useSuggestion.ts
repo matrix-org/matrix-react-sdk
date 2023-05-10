@@ -209,7 +209,7 @@ export function processCommand(
  * from the special character to the end of the input
  *
  * @param text - the text content of a node
- * @param offset - the current cursor offset position
+ * @param offset - the current cursor offset position within the node
  * @param isFirstTextNode - whether or not the node is the first text node in the editor, used to determine
  * if a command suggestion is found or not
  * @returns null if no mention or command is found, otherwise the `MappedSuggestion` along with it's start and end offsets
@@ -224,8 +224,8 @@ export function findSuggestionInText(
         return null;
     }
 
-    // A cursor offset lies between two characters, so make a cursor offset correspond to
-    // a character index in the text string
+    // As we will be searching in both directions from the cursor, set the starting indices
+    // based on the current cursor offset
     let startCharIndex = offset - 1;
     let endCharIndex = offset;
 
@@ -267,7 +267,7 @@ export function findSuggestionInText(
 
 /**
  * Associated function for findSuggestionInText. Checks the character at the current location
- * to determine if the current index should be changed.
+ * to determine if the search loop should continue.
  *
  * @param text - text content to check for mentions or commands
  * @param index - the current index to check
@@ -275,7 +275,7 @@ export function findSuggestionInText(
  */
 function shouldDecrementStartIndex(text: string, index: number): boolean {
     // If the index is outside the string, return false
-    if (index === -1) return false;
+    if (index < 0) return false;
 
     // We are inside the string so can guarantee that there is a character at the index
     // The preceding character could be undefined if index === 0
@@ -297,7 +297,7 @@ function shouldDecrementStartIndex(text: string, index: number): boolean {
 
 /**
  * Associated function for findSuggestionInText. Checks the character at the current location
- * to determine if the current index should be changed.
+ * to determine if the search loop should continue.
  *
  * @param text - text content to check for mentions or commands
  * @param index - the current index to check
