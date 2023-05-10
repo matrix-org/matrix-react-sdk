@@ -20,6 +20,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { RoomState } from "matrix-js-sdk/src/matrix";
 
+import { SdkContextClass } from "../../contexts/SDKContext";
 import SettingsStore from "../../settings/SettingsStore";
 import { DefaultTagID, OrderedDefaultTagIDs, RoomUpdateCause, TagID } from "./models";
 import { IListOrderingMap, ITagMap, ITagSortingMap, ListAlgorithm, SortAlgorithm } from "./algorithms/models";
@@ -39,15 +40,11 @@ import { IRoomTimelineActionPayload } from "../../actions/MatrixActionCreators";
 import { RoomListStore as Interface, RoomListStoreEvent } from "./Interface";
 import { SlidingRoomListStoreClass } from "./SlidingRoomListStore";
 import { UPDATE_EVENT } from "../AsyncStore";
-import { SdkContextClass } from "../../contexts/SDKContext";
 import { getChangedOverrideRoomMutePushRules } from "./utils/roomMute";
 
 interface IState {
     // state is tracked in underlying classes
 }
-
-export const LISTS_UPDATE_EVENT = RoomListStoreEvent.ListsUpdate;
-export const LISTS_LOADING_EVENT = RoomListStoreEvent.ListsLoading; // unused; used by SlidingRoomListStore
 
 export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements Interface {
     /**
@@ -65,7 +62,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
         for (const tagId of Object.keys(this.orderedLists)) {
             RoomNotificationStateStore.instance.getListState(tagId).setRooms(this.orderedLists[tagId]);
         }
-        this.emit(LISTS_UPDATE_EVENT);
+        this.emit(RoomListStoreEvent.ListsUpdate);
     });
 
     public constructor(dis: MatrixDispatcher) {
@@ -646,9 +643,9 @@ export default class RoomListStore {
 
     public static get instance(): Interface {
         if (!RoomListStore.internalInstance) {
-            if (SettingsStore.getValue("feature_sliding_sync")) {
+            if (1 || SettingsStore.getValue("feature_sliding_sync")) {
                 logger.info("using SlidingRoomListStoreClass");
-                const instance = new SlidingRoomListStoreClass(defaultDispatcher, SdkContextClass.instance);
+                const instance = new SlidingRoomListStoreClass(defaultDispatcher);
                 instance.start();
                 RoomListStore.internalInstance = instance;
             } else {

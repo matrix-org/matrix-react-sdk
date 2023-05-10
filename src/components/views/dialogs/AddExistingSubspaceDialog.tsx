@@ -73,8 +73,6 @@ const AddExistingSubspaceDialog: React.FC<IProps> = ({ space, onCreateSubspaceCl
     );
 };
 
-export default AddExistingSubspaceDialog;
-
 export const showAddExistingSubspace = (space: Room): void => {
     Modal.createDialog(
         AddExistingSubspaceDialog,

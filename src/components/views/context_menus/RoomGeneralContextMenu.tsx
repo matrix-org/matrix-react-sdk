@@ -28,7 +28,7 @@ import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { _t } from "../../../languageHandler";
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
-import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
+import RoomListStore from "../../../stores/room-list/RoomListStore";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import { clearRoomNotification } from "../../../utils/notifications";
 import { IProps as IContextMenuProps } from "../../structures/ContextMenu";
@@ -42,6 +42,7 @@ import { shouldShowComponent } from "../../../customisations/helpers/UIComponent
 import { UIComponent } from "../../../settings/UIFeature";
 import { DeveloperToolsOption } from "./DeveloperToolsOption";
 import { useSettingValue } from "../../../hooks/useSettings";
+import { RoomListStoreEvent } from "../../../stores/room-list/Interface";
 
 export interface RoomGeneralContextMenuProps extends IContextMenuProps {
     room: Room;
@@ -70,7 +71,7 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
     ...props
 }) => {
     const cli = useContext(MatrixClientContext);
-    const roomTags = useEventEmitterState(RoomListStore.instance, LISTS_UPDATE_EVENT, () =>
+    const roomTags = useEventEmitterState(RoomListStore.instance, RoomListStoreEvent.ListsUpdate, () =>
         RoomListStore.instance.getTagsForRoom(room),
     );
     const isDm = DMRoomMap.shared().getUserIdForRoomId(room.roomId);

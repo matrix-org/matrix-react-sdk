@@ -41,12 +41,13 @@ jest.mock("../../../../src/customisations/helpers/UIComponents", () => ({
 jest.mock("../../../../src/utils/space", () => ({
     shouldShowSpaceSettings: jest.fn(),
     showCreateNewRoom: jest.fn(),
-    showCreateNewSubspace: jest.fn(),
     showSpaceInvite: jest.fn(),
     showSpacePreferences: jest.fn(),
     showSpaceSettings: jest.fn(),
 }));
-
+jest.mock("../../../../src/components/views/dialogs/CreateSubspaceDialog", () => ({
+    showCreateNewSubspace: jest.fn(),
+}));
 jest.mock("../../../../src/utils/leave-behaviour", () => ({
     leaveSpace: jest.fn(),
 }));

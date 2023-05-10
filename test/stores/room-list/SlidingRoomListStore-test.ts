@@ -17,11 +17,7 @@ import { mocked } from "jest-mock";
 import { SlidingSync, SlidingSyncEvent } from "matrix-js-sdk/src/sliding-sync";
 import { Room } from "matrix-js-sdk/src/matrix";
 
-import {
-    LISTS_UPDATE_EVENT,
-    SlidingRoomListStoreClass,
-    SlidingSyncSortToFilter,
-} from "../../../src/stores/room-list/SlidingRoomListStore";
+import { SlidingRoomListStoreClass, SlidingSyncSortToFilter } from "../../../src/stores/room-list/SlidingRoomListStore";
 import { SpaceStoreClass } from "../../../src/stores/spaces/SpaceStore";
 import { MockEventEmitter, stubClient, untilEmission } from "../../test-utils";
 import { TestSdkContext } from "../../TestSdkContext";
@@ -31,8 +27,8 @@ import { MatrixDispatcher } from "../../../src/dispatcher/dispatcher";
 import { SortAlgorithm } from "../../../src/stores/room-list/algorithms/models";
 import { DefaultTagID, TagID } from "../../../src/stores/room-list/models";
 import { MetaSpace, UPDATE_SELECTED_SPACE } from "../../../src/stores/spaces";
-import { LISTS_LOADING_EVENT } from "../../../src/stores/room-list/RoomListStore";
 import { UPDATE_EVENT } from "../../../src/stores/AsyncStore";
+import { RoomListStoreEvent } from "../../../src/stores/room-list/Interface";
 
 jest.mock("../../../src/SlidingSyncManager");
 const MockSlidingSyncManager = <jest.Mock<SlidingSyncManager>>(<unknown>SlidingSyncManager);
@@ -68,7 +64,7 @@ describe("SlidingRoomListStore", () => {
         });
 
         dis = new MatrixDispatcher();
-        store = new SlidingRoomListStoreClass(dis, context);
+        store = new SlidingRoomListStoreClass(dis);
     });
 
     describe("spaces", () => {
@@ -76,7 +72,7 @@ describe("SlidingRoomListStore", () => {
             await store.start(); // call onReady
             const spaceRoomId = "!foo:bar";
 
-            const p = untilEmission(store, LISTS_LOADING_EVENT, (listName, isLoading) => {
+            const p = untilEmission(store, RoomListStoreEvent.ListsLoading, (listName, isLoading) => {
                 return listName === DefaultTagID.Untagged && !isLoading;
             });
 
@@ -113,7 +109,7 @@ describe("SlidingRoomListStore", () => {
             // change the active space before we are ready
             const spaceRoomId = "!foo2:bar";
             activeSpace = spaceRoomId;
-            const p = untilEmission(store, LISTS_LOADING_EVENT, (listName, isLoading) => {
+            const p = untilEmission(store, RoomListStoreEvent.ListsLoading, (listName, isLoading) => {
                 return listName === DefaultTagID.Untagged && !isLoading;
             });
             await store.start(); // call onReady
@@ -134,7 +130,7 @@ describe("SlidingRoomListStore", () => {
             const subSpace1 = "!ss1:bar";
             const subSpace2 = "!ss2:bar";
 
-            const p = untilEmission(store, LISTS_LOADING_EVENT, (listName, isLoading) => {
+            const p = untilEmission(store, RoomListStoreEvent.ListsLoading, (listName, isLoading) => {
                 return listName === DefaultTagID.Untagged && !isLoading;
             });
 
@@ -207,7 +203,7 @@ describe("SlidingRoomListStore", () => {
         ]);
     });
 
-    it("emits LISTS_UPDATE_EVENT when slidingSync lists update", async () => {
+    it("emits RoomListStoreEvent.ListsUpdate when slidingSync lists update", async () => {
         await store.start();
         const roomA = "!a:localhost";
         const roomB = "!b:localhost";
@@ -236,7 +232,7 @@ describe("SlidingRoomListStore", () => {
             }
             return null;
         });
-        const p = untilEmission(store, LISTS_UPDATE_EVENT);
+        const p = untilEmission(store, RoomListStoreEvent.ListsUpdate);
         context.slidingSyncManager.slidingSync.emit(SlidingSyncEvent.List, tagId, joinCount, roomIndexToRoomId);
         await p;
         expect(store.getCount(tagId)).toEqual(joinCount);
@@ -280,7 +276,7 @@ describe("SlidingRoomListStore", () => {
                 joinedCount: joinCount,
             };
         });
-        let p = untilEmission(store, LISTS_UPDATE_EVENT);
+        let p = untilEmission(store, RoomListStoreEvent.ListsUpdate);
         context.slidingSyncManager.slidingSync.emit(SlidingSyncEvent.List, tagId, joinCount, roomIndexToRoomId);
         await p;
         expect(store.orderedLists[tagId]).toEqual([roomA, roomB, roomC]);
@@ -293,7 +289,7 @@ describe("SlidingRoomListStore", () => {
         roomIndexToRoomId[0] = roomIdC;
         roomIndexToRoomId[1] = roomIdA;
         roomIndexToRoomId[2] = roomIdB;
-        p = untilEmission(store, LISTS_UPDATE_EVENT);
+        p = untilEmission(store, RoomListStoreEvent.ListsUpdate);
         context.slidingSyncManager.slidingSync.emit(SlidingSyncEvent.List, tagId, joinCount, roomIndexToRoomId);
         await p;
 
@@ -302,7 +298,7 @@ describe("SlidingRoomListStore", () => {
 
         // make room C sticky: rooms should move as a result, without needing an additional list update
         mocked(context.roomViewStore.getRoomId).mockReturnValue(roomIdC);
-        p = untilEmission(store, LISTS_UPDATE_EVENT);
+        p = untilEmission(store, RoomListStoreEvent.ListsUpdate);
         context.roomViewStore.emit(UPDATE_EVENT);
         await p;
         expect(store.orderedLists[tagId].map((r) => r.roomId)).toEqual([roomC, roomA, roomB].map((r) => r.roomId));
@@ -341,7 +337,7 @@ describe("SlidingRoomListStore", () => {
                 joinedCount: joinCount,
             };
         });
-        const p = untilEmission(store, LISTS_UPDATE_EVENT);
+        const p = untilEmission(store, RoomListStoreEvent.ListsUpdate);
         context.slidingSyncManager.slidingSync.emit(SlidingSyncEvent.List, tagId, joinCount, roomIndexToRoomId);
         await p;
         expect(store.orderedLists[tagId]).toEqual([roomA, roomC]);

@@ -35,7 +35,7 @@ import { IState as IRovingTabIndexState } from "../../accessibility/RovingTabInd
 import RoomListHeader from "../views/rooms/RoomListHeader";
 import RecentlyViewedButton from "../views/rooms/RecentlyViewedButton";
 import { BreadcrumbsStore } from "../../stores/BreadcrumbsStore";
-import RoomListStore, { LISTS_UPDATE_EVENT } from "../../stores/room-list/RoomListStore";
+import RoomListStore from "../../stores/room-list/RoomListStore";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import IndicatorScrollbar from "./IndicatorScrollbar";
 import RoomBreadcrumbs from "../views/rooms/RoomBreadcrumbs";
@@ -47,6 +47,7 @@ import { ButtonEvent } from "../views/elements/AccessibleButton";
 import PosthogTrackers from "../../PosthogTrackers";
 import PageType from "../../PageTypes";
 import { UserOnboardingButton } from "../views/user-onboarding/UserOnboardingButton";
+import { RoomListStoreEvent } from "../../stores/room-list/Interface";
 
 interface IProps {
     isMinimized: boolean;
@@ -80,7 +81,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         };
 
         BreadcrumbsStore.instance.on(UPDATE_EVENT, this.onBreadcrumbsUpdate);
-        RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.onBreadcrumbsUpdate);
+        RoomListStore.instance.on(RoomListStoreEvent.ListsUpdate, this.onBreadcrumbsUpdate);
         SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.updateActiveSpace);
     }
 
@@ -101,7 +102,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
 
     public componentWillUnmount(): void {
         BreadcrumbsStore.instance.off(UPDATE_EVENT, this.onBreadcrumbsUpdate);
-        RoomListStore.instance.off(LISTS_UPDATE_EVENT, this.onBreadcrumbsUpdate);
+        RoomListStore.instance.off(RoomListStoreEvent.ListsUpdate, this.onBreadcrumbsUpdate);
         SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.updateActiveSpace);
         UIStore.instance.stopTrackingElementDimensions("ListContainer");
         UIStore.instance.removeListener("ListContainer", this.refreshStickyHeaders);

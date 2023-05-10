@@ -38,7 +38,7 @@ import { ListAlgorithm, SortAlgorithm } from "../../../stores/room-list/algorith
 import { ListLayout } from "../../../stores/room-list/ListLayout";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import RoomListLayoutStore from "../../../stores/room-list/RoomListLayoutStore";
-import RoomListStore, { LISTS_UPDATE_EVENT, LISTS_LOADING_EVENT } from "../../../stores/room-list/RoomListStore";
+import RoomListStore from "../../../stores/room-list/RoomListStore";
 import { arrayFastClone, arrayHasOrderChange } from "../../../utils/arrays";
 import { objectExcluding, objectHasDiff } from "../../../utils/objects";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
@@ -55,6 +55,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { SlidingSyncManager } from "../../../SlidingSyncManager";
 import NotificationBadge from "./NotificationBadge";
 import RoomTile from "./RoomTile";
+import { RoomListStoreEvent } from "../../../stores/room-list/Interface";
 
 const SHOW_N_BUTTON_HEIGHT = 28; // As defined by CSS
 const RESIZE_HANDLE_HEIGHT = 4; // As defined by CSS
@@ -248,8 +249,8 @@ export default class RoomSublist extends React.Component<IProps, IState> {
 
     public componentDidMount(): void {
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
-        RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.onListsUpdated);
-        RoomListStore.instance.on(LISTS_LOADING_EVENT, this.onListsLoading);
+        RoomListStore.instance.on(RoomListStoreEvent.ListsUpdate, this.onListsUpdated);
+        RoomListStore.instance.on(RoomListStoreEvent.ListsLoading, this.onListsLoading);
 
         // Using the passive option to not block the main thread
         // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#improving_scrolling_performance_with_passive_listeners
@@ -258,8 +259,8 @@ export default class RoomSublist extends React.Component<IProps, IState> {
 
     public componentWillUnmount(): void {
         defaultDispatcher.unregister(this.dispatcherRef);
-        RoomListStore.instance.off(LISTS_UPDATE_EVENT, this.onListsUpdated);
-        RoomListStore.instance.off(LISTS_LOADING_EVENT, this.onListsLoading);
+        RoomListStore.instance.off(RoomListStoreEvent.ListsUpdate, this.onListsUpdated);
+        RoomListStore.instance.off(RoomListStoreEvent.ListsLoading, this.onListsLoading);
         this.tilesRef.current?.removeEventListener("scroll", this.onScrollPrevent);
     }
 

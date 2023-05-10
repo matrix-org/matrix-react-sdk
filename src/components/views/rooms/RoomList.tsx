@@ -37,7 +37,7 @@ import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNo
 import { ITagMap } from "../../../stores/room-list/algorithms/models";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
-import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
+import RoomListStore from "../../../stores/room-list/RoomListStore";
 import {
     isMetaSpace,
     ISuggestedRoom,
@@ -62,6 +62,7 @@ import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import ExtraTile from "./ExtraTile";
 import RoomSublist, { IAuxButtonProps } from "./RoomSublist";
 import { SdkContextClass } from "../../../contexts/SDKContext";
+import { RoomListStoreEvent } from "../../../stores/room-list/Interface";
 
 interface IProps {
     onKeyDown: (ev: React.KeyboardEvent, state: IRovingTabIndexState) => void;
@@ -462,7 +463,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         SdkContextClass.instance.roomViewStore.on(UPDATE_EVENT, this.onRoomViewStoreUpdate);
         SpaceStore.instance.on(UPDATE_SUGGESTED_ROOMS, this.updateSuggestedRooms);
-        RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.updateLists);
+        RoomListStore.instance.on(RoomListStoreEvent.ListsUpdate, this.updateLists);
         this.favouriteMessageWatcher = SettingsStore.watchSetting(
             "feature_favourite_messages",
             null,
@@ -475,7 +476,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
 
     public componentWillUnmount(): void {
         SpaceStore.instance.off(UPDATE_SUGGESTED_ROOMS, this.updateSuggestedRooms);
-        RoomListStore.instance.off(LISTS_UPDATE_EVENT, this.updateLists);
+        RoomListStore.instance.off(RoomListStoreEvent.ListsUpdate, this.updateLists);
         SettingsStore.unwatchSetting(this.favouriteMessageWatcher);
         if (this.dispatcherRef) defaultDispatcher.unregister(this.dispatcherRef);
         SdkContextClass.instance.roomViewStore.off(UPDATE_EVENT, this.onRoomViewStoreUpdate);
