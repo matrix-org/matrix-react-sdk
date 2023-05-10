@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 .mx_SearchBar {
-    min-height: 56px; /* for wrapped mx_SearchBar_button making the area tall */
+    /* use `min-height` rather than height, to allow room for the text to wrap if the window is narrow */
+    min-height: 56px;
     display: flex;
     align-items: center;
     border-bottom: 1px solid $primary-hairline-color;
@@ -28,7 +29,7 @@ limitations under the License.
         flex: 1 1 0;
         margin-left: 22px;
 
-        /* retain space for the input bar. 7em is a magic number to retain space for the placeholder 'Search…' */
+        /* do not allow the input element to shrink below the width needed for the placeholder 'Search...' and the  search button */
         min-width: calc(7em + var(--size-button-search));
 
         input {
