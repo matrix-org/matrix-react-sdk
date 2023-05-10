@@ -22,7 +22,7 @@ limitations under the License.
     border-bottom: 1px solid $primary-hairline-color;
 
     .mx_SearchBar_input {
-        --size-button-search: 37px;
+        --size-button-search: 37px; /* size of the search button inside `input` element */
 
         /* border: 1px solid $input-border-color; */
         /* font-size: $font-15px; */
@@ -39,12 +39,9 @@ limitations under the License.
     }
 
     .mx_SearchBar_searchButton {
-        --size: var(--size-button-search); /* square */
-
         cursor: pointer;
-        width: var(--size);
-        min-width: var(--size);
-        height: var(--size);
+        width: var(--size-button-search);
+        height: var(--size-button-search);
         background-color: $accent;
         mask: url("$(res)/img/feather-customised/search-input.svg");
         mask-repeat: no-repeat;
@@ -53,7 +50,7 @@ limitations under the License.
 
     .mx_SearchBar_buttons {
         display: inherit; /* flex */
-        min-width: 0;
+        min-width: 0; /* have the close button displayed even on a very narrow timeline */
     }
 
     .mx_SearchBar_button {
