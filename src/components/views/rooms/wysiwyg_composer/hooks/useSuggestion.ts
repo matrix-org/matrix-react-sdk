@@ -39,8 +39,8 @@ type SuggestionState = Suggestion | null;
  * @param editorRef - a ref to the div that is the composer textbox
  * @param setText - setter function to set the content of the composer
  * @returns
- * - `handleMention`: TODO a function that will insert @ or # mentions which are selected from
- * the autocomplete into the composer
+ * - `handleMention`: a function that will insert @ or # mentions which are selected from
+ * the autocomplete into the composer, given an href, the text to display, and any additional attributes
  * - `handleCommand`: a function that will replace the content of the composer with the given replacement text.
  * Can be used to process autocomplete of slash commands
  * - `onSelect`: a selection change listener to be attached to the plain text composer
@@ -51,7 +51,7 @@ export function useSuggestion(
     editorRef: React.RefObject<HTMLDivElement>,
     setText: (text: string) => void,
 ): {
-    handleMention: (link: string, text: string, attributes: Attributes) => void;
+    handleMention: (href: string, displayName: string, attributes: Attributes) => void;
     handleCommand: (text: string) => void;
     onSelect: (event: SyntheticEvent<HTMLDivElement>) => void;
     suggestion: MappedSuggestion | null;
@@ -106,12 +106,14 @@ export function processSelectionChange(
         return;
     }
 
-    // here we have established that we have a cursor and both anchor and focus nodes in the selection
-    // are the same node, so rename to `currentNode` and `currentOffset` for subsequent use
+    // from here onwards we have a cursor inside a text node
     const { anchorNode: currentNode, anchorOffset: currentOffset } = selection;
 
-    // if we have no text content, return
-    if (currentNode.textContent === null) return;
+    // if we have no text content, return, clearing the suggestion state
+    if (currentNode.textContent === null) {
+        setSuggestion(null);
+        return;
+    }
 
     const foundSuggestion = findSuggestionInText(currentNode.textContent, currentOffset);
 
