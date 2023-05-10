@@ -226,29 +226,29 @@ export function findSuggestionInText(
 
     // As we will be searching in both directions from the cursor, set the starting indices
     // based on the current cursor offset
-    let startCharIndex = offset - 1;
-    let endCharIndex = offset;
+    let startSliceIndex = offset - 1;
+    let endSliceIndex = offset;
 
-    while (shouldDecrementStartIndex(text, startCharIndex)) {
+    while (shouldDecrementStartIndex(text, startSliceIndex)) {
         // Special case - if we hit some whitespace, return null. This is to catch cases
         // where user types a special character then whitespace
-        if (/\s/.test(text[startCharIndex])) {
+        if (/\s/.test(text[startSliceIndex])) {
             return null;
         }
-        startCharIndex--;
+        startSliceIndex--;
     }
 
-    while (shouldIncrementEndIndex(text, endCharIndex)) {
-        endCharIndex++;
+    while (shouldIncrementEndIndex(text, endSliceIndex)) {
+        endSliceIndex++;
     }
 
     // We have looped throught the text in both directions from the current cursor position
     // whilst looking for special characters.
     // We do not have a command or mention if:
     // - the start or ending indices are outside the string
-    if (startCharIndex < 0 || endCharIndex > text.length) return null;
+    if (startSliceIndex < 0 || endSliceIndex > text.length) return null;
 
-    const suggestionText = text.slice(startCharIndex, endCharIndex);
+    const suggestionText = text.slice(startSliceIndex, endSliceIndex);
     const mappedSuggestion = getMappedSuggestion(suggestionText);
 
     // We do not have a command if:
@@ -257,12 +257,12 @@ export function findSuggestionInText(
     //   something requiring autocomplete)
     if (
         mappedSuggestion.type === "command" &&
-        (!isFirstTextNode || startCharIndex !== 0 || endCharIndex !== text.length)
+        (!isFirstTextNode || startSliceIndex !== 0 || endSliceIndex !== text.length)
     ) {
         return null;
     }
 
-    return { mappedSuggestion, startOffset: startCharIndex, endOffset: startCharIndex + suggestionText.length };
+    return { mappedSuggestion, startOffset: startSliceIndex, endOffset: startSliceIndex + suggestionText.length };
 }
 
 /**
