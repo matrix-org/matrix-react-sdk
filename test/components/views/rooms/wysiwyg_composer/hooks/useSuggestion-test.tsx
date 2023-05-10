@@ -245,7 +245,8 @@ describe("findSuggestionInText", () => {
             startOffset: 0,
             endOffset: text.length,
         };
-        // test for cursor at after special character, before end, end
+        // test for cursor immediately before and after special character, before end, at end
+        expect(findSuggestionInText(text, 0, true)).toEqual(expected);
         expect(findSuggestionInText(text, 1, true)).toEqual(expected);
         expect(findSuggestionInText(text, text.length - 2, true)).toEqual(expected);
         expect(findSuggestionInText(text, text.length, true)).toEqual(expected);
@@ -279,11 +280,20 @@ describe("findSuggestionInText", () => {
     it.each(mentionTestCases)("returns an object if %s is surrounded by text", (mention) => {
         const precedingText = "I want to mention ";
         const followingText = " in my message";
-        expect(findSuggestionInText(precedingText + mention + followingText, precedingText.length + 3, true)).toEqual({
+
+        const textInput = precedingText + mention + followingText;
+        const expected = {
             mappedSuggestion: getMappedSuggestion(mention),
             startOffset: precedingText.length,
             endOffset: precedingText.length + mention.length,
-        });
+        };
+
+        // when the cursor is immediately before the special character
+        expect(findSuggestionInText(textInput, precedingText.length, true)).toEqual(expected);
+        // when the cursor is inside the mention
+        expect(findSuggestionInText(textInput, precedingText.length + 3, true)).toEqual(expected);
+        // when the cursor is right at the end of the mention
+        expect(findSuggestionInText(textInput, precedingText.length + mention.length, true)).toEqual(expected);
     });
 
     it("returns null for text content with an email address", () => {
@@ -319,8 +329,8 @@ describe("findSuggestionInText", () => {
 });
 
 describe("getMappedSuggestion", () => {
-    it("returns an empty mapped suggestion when first character is not / # @", () => {
-        expect(getMappedSuggestion("Zzz")).toEqual({ type: "unknown", keyChar: "", text: "" });
+    it("returns null when the first character is not / # @", () => {
+        expect(getMappedSuggestion("Zzz")).toBe(null);
     });
 
     it("returns the expected mapped suggestion when first character is # or @", () => {

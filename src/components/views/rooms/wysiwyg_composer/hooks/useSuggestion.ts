@@ -204,9 +204,9 @@ export function processCommand(
 }
 
 /**
- * Given some text content from a node and the cursor position, search through the content
- * to find a mention or a command. If there is one present, return a slice of the content
- * from the special character to the end of the input
+ * Given some text content from a node and the cursor position, find the word that the cursor is currently inside
+ * and then test that word to see if it is a suggestion. Return the `MappedSuggestion` with start and end offsets if
+ * the cursor is inside a valid suggestion, null otherwise.
  *
  * @param text - the text content of a node
  * @param offset - the current cursor offset position within the node
@@ -224,17 +224,12 @@ export function findSuggestionInText(
         return null;
     }
 
-    // As we will be searching in both directions from the cursor, set the starting indices
-    // based on the current cursor offset
-    let startSliceIndex = offset - 1;
+    // Variables to keep track of the indices we will be slicing from and to in order to create
+    // a substring of the word that the cursor is currently inside
+    let startSliceIndex = offset;
     let endSliceIndex = offset;
 
     while (shouldDecrementStartIndex(text, startSliceIndex)) {
-        // Special case - if we hit some whitespace, return null. This is to catch cases
-        // where user types a special character then whitespace
-        if (/\s/.test(text[startSliceIndex])) {
-            return null;
-        }
         startSliceIndex--;
     }
 
@@ -242,16 +237,12 @@ export function findSuggestionInText(
         endSliceIndex++;
     }
 
-    // We have looped throught the text in both directions from the current cursor position
-    // whilst looking for special characters.
-    // We do not have a command or mention if:
-    // - the start or ending indices are outside the string
-    if (startSliceIndex < 0 || endSliceIndex > text.length) return null;
+    const wordAtCursor = text.slice(startSliceIndex, endSliceIndex);
+    const mappedSuggestion = getMappedSuggestion(wordAtCursor);
 
-    const suggestionText = text.slice(startSliceIndex, endSliceIndex);
-    const mappedSuggestion = getMappedSuggestion(suggestionText);
+    if (mappedSuggestion === null) return null;
 
-    // We do not have a command if:
+    // If we have a word that could be a command, it is not valid if:
     // - the starting index is anything other than 0 (they can only appear at the start of a message)
     // - there is more text following the command (eg `/spo asdf|` should not be interpreted as
     //   something requiring autocomplete)
@@ -262,52 +253,42 @@ export function findSuggestionInText(
         return null;
     }
 
-    return { mappedSuggestion, startOffset: startSliceIndex, endOffset: startSliceIndex + suggestionText.length };
+    return { mappedSuggestion, startOffset: startSliceIndex, endOffset: startSliceIndex + wordAtCursor.length };
 }
 
 /**
- * Associated function for findSuggestionInText. Checks the character at the current location
+ * Associated function for findSuggestionInText. Checks the character at the preceding index
  * to determine if the search loop should continue.
  *
  * @param text - text content to check for mentions or commands
  * @param index - the current index to check
- * @returns true if check should keep moving left, false otherwise
+ * @returns true if check should keep moving backwards, false otherwise
  */
 function shouldDecrementStartIndex(text: string, index: number): boolean {
-    // If the index is outside the string, return false
-    if (index < 0) return false;
+    // If the index is at or outside the beginning of the string, return false
+    if (index <= 0) return false;
 
-    // We are inside the string so can guarantee that there is a character at the index
-    // The preceding character could be undefined if index === 0
-    const mentionOrCommandChar = /[@#/]/;
-    const currentChar = text[index];
-    const precedingChar = text[index - 1] ?? "";
+    // We are inside the string so can guarantee that there is a preceding character
+    const precedingChar = text[index - 1];
 
-    const currentCharIsMentionOrCommand = mentionOrCommandChar.test(currentChar);
-
-    // If we have not found a special character, continue searching
-    if (!currentCharIsMentionOrCommand) return true;
-
-    // If we have found a special character, continue searching if the preceding character is not whitespace
-    // This enables us to handle any strings containing the special characters, such as email addresses
-    return /\S/.test(precedingChar);
+    // Keep searching backwards if the preceding character is not a space
+    return !/\s/.test(precedingChar);
 }
 
 /**
- * Associated function for findSuggestionInText. Checks the character at the current location
+ * Associated function for findSuggestionInText. Checks the character at the current index
  * to determine if the search loop should continue.
  *
  * @param text - text content to check for mentions or commands
  * @param index - the current index to check
- * @returns true if check should keep moving right, false otherwise
+ * @returns true if check should keep moving forwards, false otherwise
  */
 function shouldIncrementEndIndex(text: string, index: number): boolean {
-    // If the index is outside the string, return false
+    // If the index is at or outside the end of the string, return false
     if (index >= text.length) return false;
 
-    // We are inside the string so can guarantee that there is a character at the index
-    // Keep moving right if the current character is not a space
-    return /\S/.test(text[index]);
+    // Keep searching forwards if the current character is not a space
+    return !/\s/.test(text[index]);
 }
 
 /**
@@ -317,7 +298,7 @@ function shouldIncrementEndIndex(text: string, index: number): boolean {
  * @param suggestionText - string that could be a mention of a command type suggestion
  * @returns an object representing the `MappedSuggestion` from that string
  */
-export function getMappedSuggestion(suggestionText: string): MappedSuggestion {
+export function getMappedSuggestion(suggestionText: string): MappedSuggestion | null {
     const firstChar = suggestionText.charAt(0);
     const restOfString = suggestionText.slice(1);
 
@@ -328,6 +309,6 @@ export function getMappedSuggestion(suggestionText: string): MappedSuggestion {
         case "@":
             return { keyChar: firstChar, text: restOfString, type: "mention" };
         default:
-            return { keyChar: "", text: "", type: "unknown" };
+            return null;
     }
 }
