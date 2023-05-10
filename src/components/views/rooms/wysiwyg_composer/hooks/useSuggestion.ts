@@ -277,10 +277,8 @@ function shouldDecrementStartIndex(text: string, index: number): boolean {
     if (index <= 0) return false;
 
     // We are inside the string so can guarantee that there is a preceding character
-    const precedingChar = text[index - 1];
-
     // Keep searching backwards if the preceding character is not a space
-    return !/\s/.test(precedingChar);
+    return !/\s/.test(text[index - 1]);
 }
 
 /**
