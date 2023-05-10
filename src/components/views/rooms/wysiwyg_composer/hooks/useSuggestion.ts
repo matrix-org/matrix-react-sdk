@@ -15,18 +15,19 @@ limitations under the License.
 */
 
 import { Attributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
-import { SyntheticEvent, useMemo, useState } from "react";
+import { SyntheticEvent, useState } from "react";
 
 /**
  * Information about the current state of the `useSuggestion` hook.
  */
-export type Suggestion = MappedSuggestion & {
+export type Suggestion = {
     /**
      * The information in a `MappedSuggestion` is sufficient to generate a query for the autocomplete
      * component but more information is required to allow manipulation of the correct part of the DOM
      * when selecting an option from the autocomplete. These three pieces of information allow us to
      * do that.
      */
+    mappedSuggestion: MappedSuggestion;
     node: Node;
     startOffset: number;
     endOffset: number;
@@ -68,14 +69,8 @@ export function useSuggestion(
     const handleCommand = (replacementText: string): void =>
         processCommand(replacementText, suggestion, setSuggestion, setText);
 
-    const memoizedMappedSuggestion: MappedSuggestion | null = useMemo(() => {
-        return suggestion !== null
-            ? { keyChar: suggestion.keyChar, type: suggestion.type, text: suggestion.text }
-            : null;
-    }, [suggestion]);
-
     return {
-        suggestion: memoizedMappedSuggestion,
+        suggestion: suggestion?.mappedSuggestion ?? null,
         handleCommand,
         handleMention,
         onSelect,
@@ -124,17 +119,17 @@ export function processSelectionChange(
     }
 
     // else we do have something, so get the constituent parts
-    const mappedSuggestionParts = getMappedSuggestion(foundSuggestion.text);
+    const mappedSuggestion = getMappedSuggestion(foundSuggestion.text);
 
     // if we have a command at the beginning of a node, but that node isn't the first text node, return
     const firstTextNode = document.createNodeIterator(editorRef.current, NodeFilter.SHOW_TEXT).nextNode();
-    if (mappedSuggestionParts.type === "command" && currentNode !== firstTextNode) {
+    if (mappedSuggestion.type === "command" && currentNode !== firstTextNode) {
         setSuggestion(null);
         return;
     } else {
         // else, we have found a mention or a command
         setSuggestion({
-            ...mappedSuggestionParts,
+            mappedSuggestion,
             node: currentNode,
             startOffset: foundSuggestion.startOffset,
             endOffset: foundSuggestion.endOffset,

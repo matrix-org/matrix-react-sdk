@@ -194,9 +194,11 @@ describe("processSelectionChange", () => {
         // process the change and check the suggestion that is set looks as we expect it to
         processSelectionChange(mockEditorRef, mockSetSuggestion);
         expect(mockSetSuggestion).toHaveBeenCalledWith({
-            keyChar: "/",
-            type: "command",
-            text: "potentialCommand",
+            mappedSuggestion: {
+                keyChar: "/",
+                type: "command",
+                text: "potentialCommand",
+            },
             node: textNode,
             startOffset: 0,
             endOffset: commandText.length,
