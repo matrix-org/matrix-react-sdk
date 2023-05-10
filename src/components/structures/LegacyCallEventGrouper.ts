@@ -69,7 +69,7 @@ export function buildLegacyCallEventGroupers(
 export default class LegacyCallEventGrouper extends EventEmitter {
     private events: Set<MatrixEvent> = new Set<MatrixEvent>();
     private call: MatrixCall | null = null;
-    public state: CallState;
+    public state?: CallState;
 
     public constructor() {
         super();

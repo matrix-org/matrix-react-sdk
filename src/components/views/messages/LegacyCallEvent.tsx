@@ -45,7 +45,7 @@ interface IState {
 
 export default class LegacyCallEvent extends React.PureComponent<IProps, IState> {
     private wrapperElement = createRef<HTMLDivElement>();
-    private resizeObserver: ResizeObserver;
+    private resizeObserver?: ResizeObserver;
 
     public constructor(props: IProps) {
         super(props);
@@ -72,7 +72,7 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
         this.props.callEventGrouper.removeListener(LegacyCallEventGrouperEvent.SilencedChanged, this.onSilencedChanged);
         this.props.callEventGrouper.removeListener(LegacyCallEventGrouperEvent.LengthChanged, this.onLengthChanged);
 
-        this.resizeObserver.disconnect();
+        this.resizeObserver?.disconnect();
     }
 
     private onLengthChanged = (length: number): void => {
