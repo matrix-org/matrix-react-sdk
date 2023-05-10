@@ -573,7 +573,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
 
         const loadingElement = (
-            <div className="mx_AppLoading_spinner_fadeIn">
+            <div className="mx_AppTile_loading_fadeInSpinner">
                 <Spinner message={_t("Loading…")} />
             </div>
         );
@@ -603,7 +603,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         } else if (this.state.initialising || !this.state.isUserProfileReady) {
             appTileBody = (
                 <div
-                    className={appTileBodyClass + (this.state.loading ? "mx_AppLoading" : "")}
+                    className={appTileBodyClass + (this.state.loading ? "mx_AppTile_loading" : "")}
                     style={appTileBodyStyles}
                 >
                     {loadingElement}
@@ -619,7 +619,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             } else {
                 appTileBody = (
                     <div
-                        className={appTileBodyClass + (this.state.loading ? "mx_AppLoading" : "")}
+                        className={appTileBodyClass + (this.state.loading ? "mx_AppTile_loading" : "")}
                         style={appTileBodyStyles}
                     >
                         {this.state.loading && loadingElement}
@@ -722,12 +722,12 @@ export default class AppTile extends React.Component<IProps, IState> {
                     {this.props.showMenubar && (
                         <div className="mx_AppTileMenuBar">
                             <span
-                                className="mx_AppTileMenuBarTitle"
+                                className="mx_AppTileMenuBar_title"
                                 style={{ pointerEvents: this.props.handleMinimisePointerEvents ? "all" : "none" }}
                             >
                                 {this.props.showTitle && this.getTileTitle()}
                             </span>
-                            <span className="mx_AppTileMenuBarWidgets">
+                            <span className="mx_AppTileMenuBar_widgets">
                                 {layoutButtons}
                                 {this.props.showPopout && !this.state.requiresClient && (
                                     <AccessibleButton
