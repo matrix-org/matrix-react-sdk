@@ -39,6 +39,9 @@ describe("LegacyCallEventGrouper", () => {
     it("detects a missed call", () => {
         const grouper = new LegacyCallEventGrouper();
 
+        // This assumes that the other party aborted the call by sending a hangup,
+        // which is the usual case. Another possible test would be for the edge
+        // case where there is only an expired invite event.
         grouper.add({
             getContent: () => {
                 return {
@@ -47,6 +50,19 @@ describe("LegacyCallEventGrouper", () => {
             },
             getType: () => {
                 return EventType.CallInvite;
+            },
+            sender: {
+                userId: THEIR_USER_ID,
+            },
+        } as unknown as MatrixEvent);
+        grouper.add({
+            getContent: () => {
+                return {
+                    call_id: "callId",
+                };
+            },
+            getType: () => {
+                return EventType.CallHangup;
             },
             sender: {
                 userId: THEIR_USER_ID,
