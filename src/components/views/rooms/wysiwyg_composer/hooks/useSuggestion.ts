@@ -247,10 +247,14 @@ export function findSuggestionInText(
 
     if (mappedSuggestion === null) return null;
 
-    // If we have a word that could be a command, it is not valid if:
-    // - the starting index is anything other than 0 (they can only appear at the start of a message)
-    // - there is more text following the command (eg `/spo asdf|` should not be interpreted as
-    //   something requiring autocomplete)
+    /**
+     * If we have a word that could be a command, it is not a valid command if:
+     * - the node we're looking at isn't the first text node in the editor (adding paragraphs can
+     *   result in nested <p> tags inside the editor <div>)
+     * - the starting index is anything other than 0 (they can only appear at the start of a message)
+     * - there is more text following the command (eg `/spo asdf|` should not be interpreted as
+     *   something requiring autocomplete)
+     */
     if (
         mappedSuggestion.type === "command" &&
         (!isFirstTextNode || startSliceIndex !== 0 || endSliceIndex !== text.length)
