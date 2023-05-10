@@ -43,7 +43,7 @@ describe("General user settings tab", () => {
         // Exclude userId from snapshots
         const percyCSS = ".mx_ProfileSettings_profile_controls_userId { visibility: hidden !important; }";
 
-        cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab").percySnapshotElement("User settings tab - General", {
+        cy.findByTestId("mx_GeneralUserSettingsTab").percySnapshotElement("User settings tab - General", {
             percyCSS,
             // Emulate TabbedView's actual min and max widths
             // 580: '.mx_UserSettingsDialog .mx_TabbedView' min-width
@@ -51,7 +51,7 @@ describe("General user settings tab", () => {
             widths: [580, 796],
         });
 
-        cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab").within(() => {
+        cy.findByTestId("mx_GeneralUserSettingsTab").within(() => {
             // Assert that the top heading is rendered
             cy.findByTestId("general").should("have.text", "General").should("be.visible");
 
@@ -178,7 +178,7 @@ describe("General user settings tab", () => {
     });
 
     it("should support adding and removing a profile picture", () => {
-        cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab .mx_ProfileSettings").within(() => {
+        cy.get(".mx_SettingsTab .mx_ProfileSettings").within(() => {
             // Upload a picture
             cy.get(".mx_ProfileSettings_avatarUpload").selectFile("cypress/fixtures/riot.png", { force: true });
 
@@ -225,7 +225,7 @@ describe("General user settings tab", () => {
     });
 
     it("should support changing a display name", () => {
-        cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab .mx_ProfileSettings").within(() => {
+        cy.get(".mx_SettingsTab .mx_ProfileSettings").within(() => {
             // Change the diaplay name to USER_NAME_NEW
             cy.findByRole("textbox", { name: "Display Name" }).type(`{selectAll}{del}${USER_NAME_NEW}{enter}`);
         });

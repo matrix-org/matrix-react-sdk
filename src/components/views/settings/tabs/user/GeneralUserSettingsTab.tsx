@@ -54,6 +54,7 @@ import SetIdServer from "../../SetIdServer";
 import SetIntegrationManager from "../../SetIntegrationManager";
 import ToggleSwitch from "../../../elements/ToggleSwitch";
 import { IS_MAC } from "../../../../../Keyboard";
+import SettingsTab from "../SettingsTab";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -552,7 +553,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         }
 
         return (
-            <div className="mx_SettingsTab mx_GeneralUserSettingsTab">
+            <SettingsTab data-testid="mx_GeneralUserSettingsTab">
                 <div className="mx_SettingsTab_heading" data-testid="general">
                     {_t("General")}
                 </div>
@@ -563,7 +564,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                 {discoverySection}
                 {this.renderIntegrationManagerSection() /* Has its own title */}
                 {accountManagementSection}
-            </div>
+            </SettingsTab>
         );
     }
 }
