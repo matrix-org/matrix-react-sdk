@@ -118,7 +118,7 @@ export function processSelectionChange(
         return;
     }
 
-    // else we do have something, so get the constituent parts
+    // else we do have something, so get the mapped suggestion from the text
     const mappedSuggestion = getMappedSuggestion(foundSuggestion.text);
 
     // if we have a command at the beginning of a node, but that node isn't the first text node, return
