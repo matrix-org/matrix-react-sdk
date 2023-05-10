@@ -682,6 +682,35 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             return true; // to skip internal onPaste handler
         }
 
+        // Safari `Insert from iPhone or iPad`
+        // data.getData("text/html") returns a string like: <img src="blob:https://...">
+        if (data.types.includes("text/html")) {
+            const img_element_str=data.getData("text/html");
+            const img_element = document.createElement("div");
+            img_element.innerHTML = img_element_str;
+            const img_src = img_element.querySelector("img")?.src;
+
+            fetch(img_src).then((response) => {
+                response.blob().then((img_blob) => {
+                    const file = new File([img_blob],"safari_pasted_image.png",{type:"image/png"});
+                    // ContentMessages.sharedInstance().sendContentListToRoom(
+                    //     [file],
+                    //     this.props.room.roomId,
+                    //     this.props.relation,
+                    //     this.props.mxClient,
+                    //     this.context.timelineRenderingType,
+                    // );
+                    ContentMessages.sharedInstance().sendContentToRoom(
+                        file,
+                        this.props.room.roomId,
+                        this.props.relation,
+                        this.props.mxClient,
+                        null,
+                    );
+                }
+            });
+        }
+
         return false;
     };
 
