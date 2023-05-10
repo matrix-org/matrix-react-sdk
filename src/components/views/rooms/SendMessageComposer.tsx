@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ClipboardEvent, createRef, KeyboardEvent } from "react";
+import React, { createRef, KeyboardEvent, SyntheticEvent } from "react";
 import EMOJI_REGEX from "emojibase-regex";
 import { IContent, MatrixEvent, IEventRelation, IMentions } from "matrix-js-sdk/src/models/event";
 import { DebouncedFunc, throttle } from "lodash";
@@ -666,15 +666,14 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         }
     };
 
-    private onPaste = (event: ClipboardEvent<HTMLDivElement>): boolean => {
-        const { clipboardData } = event;
+    private onPaste = (event: Event | SyntheticEvent, data: DataTransfer): boolean => {
         // Prioritize text on the clipboard over files if RTF is present as Office on macOS puts a bitmap
         // in the clipboard as well as the content being copied. Modern versions of Office seem to not do this anymore.
         // We check text/rtf instead of text/plain as when copy+pasting a file from Finder or Gnome Image Viewer
         // it puts the filename in as text/plain which we want to ignore.
-        if (clipboardData.files.length && !clipboardData.types.includes("text/rtf")) {
+        if (data.files.length && !data.types.includes("text/rtf")) {
             ContentMessages.sharedInstance().sendContentListToRoom(
-                Array.from(clipboardData.files),
+                Array.from(data.files),
                 this.props.room.roomId,
                 this.props.relation,
                 this.props.mxClient,
