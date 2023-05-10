@@ -3773,5 +3773,7 @@
     "The <photo>default cover photo</photo> is © <author>Jesús Roncero</author> used under the terms of <terms>CC-BY-SA 4.0</terms>.": "<photo>Výchozí titulní fotografie</photo> je © <author>Jesús Roncero</author> používaná za podmínek <terms>CC-BY-SA 4.0</terms>.",
     "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s reagoval(a) %(reaction)s na %(message)s",
     "You reacted %(reaction)s to %(message)s": "Reagovali jste %(reaction)s na %(message)s",
-    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Bez serveru identit nelze uživatele pozvat e-mailem. K nějakému se můžete připojit v \"Nastavení\"."
+    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Bez serveru identit nelze uživatele pozvat e-mailem. K nějakému se můžete připojit v \"Nastavení\".",
+    "Unable to create room with moderation bot": "Nelze vytvořit místnost s moderačním botem",
+    "Failed to download source media, no source url was found": "Nepodařilo se stáhnout zdrojové médium, nebyla nalezena žádná zdrojová url adresa"
 }
