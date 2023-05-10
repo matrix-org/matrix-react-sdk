@@ -512,12 +512,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private renderIntegrationManagerSection(): ReactNode {
         if (!SettingsStore.getValue(UIFeature.Widgets)) return null;
 
-        return (
-            <div className="mx_SettingsTab_section">
-                {/* has its own heading as it includes the current integration manager */}
-                <SetIntegrationManager />
-            </div>
-        );
+        return <SetIntegrationManager />;
     }
 
     public render(): React.ReactNode {
@@ -561,7 +556,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                 {this.renderLanguageSection()}
                 {supportsMultiLanguageSpellCheck ? this.renderSpellCheckSection() : null}
                 {discoverySection}
-                {this.renderIntegrationManagerSection() /* Has its own title */}
+                {this.renderIntegrationManagerSection()}
                 {accountManagementSection}
             </SettingsTab>
         );
