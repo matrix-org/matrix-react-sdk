@@ -229,14 +229,19 @@ export function findSuggestionInText(
     let startSliceIndex = offset;
     let endSliceIndex = offset;
 
+    // Search backwards from the current cursor position to find the start index of the word
+    // that the cursor is inside
     while (shouldDecrementStartIndex(text, startSliceIndex)) {
         startSliceIndex--;
     }
 
+    // Search fowards from the current cursor position to find the end index of the word
+    // that the cursor is inside
     while (shouldIncrementEndIndex(text, endSliceIndex)) {
         endSliceIndex++;
     }
 
+    // Get the word at the cursor then check if it contains a suggestion or not
     const wordAtCursor = text.slice(startSliceIndex, endSliceIndex);
     const mappedSuggestion = getMappedSuggestion(wordAtCursor);
 
@@ -292,15 +297,14 @@ function shouldIncrementEndIndex(text: string, index: number): boolean {
 }
 
 /**
- * Given a string that represents a suggestion in the composer, return an object that represents
- * that text as a `MappedSuggestion`.
+ * Given a string, return a `MappedSuggestion` if the string contains a suggestion. Otherwise return null.
  *
- * @param suggestionText - string that could be a mention of a command type suggestion
- * @returns an object representing the `MappedSuggestion` from that string
+ * @param text - string to check for a suggestion
+ * @returns a `MappedSuggestion` if a suggestion is present, null otherwise
  */
-export function getMappedSuggestion(suggestionText: string): MappedSuggestion | null {
-    const firstChar = suggestionText.charAt(0);
-    const restOfString = suggestionText.slice(1);
+export function getMappedSuggestion(text: string): MappedSuggestion | null {
+    const firstChar = text.charAt(0);
+    const restOfString = text.slice(1);
 
     switch (firstChar) {
         case "/":
