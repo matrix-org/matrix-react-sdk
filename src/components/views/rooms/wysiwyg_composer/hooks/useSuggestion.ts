@@ -245,8 +245,6 @@ export function findSuggestionInText(
     const wordAtCursor = text.slice(startSliceIndex, endSliceIndex);
     const mappedSuggestion = getMappedSuggestion(wordAtCursor);
 
-    if (mappedSuggestion === null) return null;
-
     /**
      * If we have a word that could be a command, it is not a valid command if:
      * - the node we're looking at isn't the first text node in the editor (adding paragraphs can
@@ -256,8 +254,9 @@ export function findSuggestionInText(
      *   something requiring autocomplete)
      */
     if (
-        mappedSuggestion.type === "command" &&
-        (!isFirstTextNode || startSliceIndex !== 0 || endSliceIndex !== text.length)
+        mappedSuggestion === null ||
+        (mappedSuggestion.type === "command" &&
+            (!isFirstTextNode || startSliceIndex !== 0 || endSliceIndex !== text.length))
     ) {
         return null;
     }
