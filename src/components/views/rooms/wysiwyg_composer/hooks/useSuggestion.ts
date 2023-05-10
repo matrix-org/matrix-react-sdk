@@ -280,19 +280,17 @@ function shouldDecrementStartIndex(text: string, index: number): boolean {
     // We are inside the string so can guarantee that there is a character at the index
     // The preceding character could be undefined if index === 0
     const mentionOrCommandChar = /[@#/]/;
-    const mentionChar = /[@#]/;
     const currentChar = text[index];
     const precedingChar = text[index - 1] ?? "";
 
     const currentCharIsMentionOrCommand = mentionOrCommandChar.test(currentChar);
 
-    // We want to ignore @ or # if they are preceded by anything that is not a whitespace
-    // to allow us to handle cases like email addesses
-    const shouldIgnoreCurrentMentionChar = mentionChar.test(currentChar) && /\S/.test(precedingChar);
+    // If we have not found a special character, continue searching
+    if (!currentCharIsMentionOrCommand) return true;
 
-    // Keep moving left if the current character is not a relevant character, or if
-    // we have a relevant character preceded by something other than whitespace
-    return !currentCharIsMentionOrCommand || shouldIgnoreCurrentMentionChar;
+    // If we have found a special character, continue searching if the preceding character is not whitespace
+    // This enables us to handle any strings containing the special characters, such as email addresses
+    return /\S/.test(precedingChar);
 }
 
 /**
@@ -305,7 +303,7 @@ function shouldDecrementStartIndex(text: string, index: number): boolean {
  */
 function shouldIncrementEndIndex(text: string, index: number): boolean {
     // If the index is outside the string, return false
-    if (index === text.length) return false;
+    if (index >= text.length) return false;
 
     // We are inside the string so can guarantee that there is a character at the index
     // Keep moving right if the current character is not a space
