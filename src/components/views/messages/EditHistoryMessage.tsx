@@ -127,7 +127,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
         this.tooltipifyLinks();
     }
 
-    private renderActionBar(): JSX.Element {
+    private renderActionBar(): React.ReactNode {
         // hide the button when already redacted
         let redactButton: JSX.Element | undefined;
         if (!this.props.mxEvent.isRedacted() && !this.props.isBaseEvent && this.state.canRedact) {
