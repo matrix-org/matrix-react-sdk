@@ -250,8 +250,8 @@ interface IState {
 export class UnwrappedEventTile extends React.Component<EventTileProps, IState> {
     private suppressReadReceiptAnimation: boolean;
     private isListeningForReceipts: boolean;
-    private tile = React.createRef<IEventTileType>();
-    private replyChain = React.createRef<ReplyChain>();
+    private tile = createRef<IEventTileType>();
+    private replyChain = createRef<ReplyChain>();
 
     public readonly ref = createRef<HTMLElement>();
 
@@ -513,6 +513,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         evt.preventDefault();
         evt.stopPropagation();
         const { permalinkCreator, mxEvent } = this.props;
+        if (!permalinkCreator) return;
         const matrixToUrl = permalinkCreator.forEvent(mxEvent.getId()!);
         await copyPlaintext(matrixToUrl);
     };
@@ -576,6 +577,12 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
         const encryptionInfo = MatrixClientPeg.get().getEventEncryptionInfo(mxEvent);
         const senderId = mxEvent.getSender();
+        if (!senderId) {
+            // something definitely wrong is going on here
+            this.setState({ verified: E2EState.Warning });
+            return;
+        }
+
         const userTrust = MatrixClientPeg.get().checkUserTrust(senderId);
 
         if (encryptionInfo.mismatchedSender) {
@@ -1433,7 +1440,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 const SafeEventTile = forwardRef((props: EventTileProps, ref: RefObject<UnwrappedEventTile>) => {
     return (
         <>
-            <TileErrorBoundary mxEvent={props.mxEvent} layout={props.layout}>
+            <TileErrorBoundary mxEvent={props.mxEvent} layout={props.layout ?? Layout.Group}>
                 <UnwrappedEventTile ref={ref} {...props} />
             </TileErrorBoundary>
         </>
