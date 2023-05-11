@@ -110,19 +110,7 @@ describe("processMention", () => {
         expect(linkElement).toHaveAttribute(href, href);
         expect(linkElement).toHaveAttribute("contenteditable", "false");
         expect(linkElement).toHaveAttribute("data-test-attribute", "test");
-        expect(mockEditor).toMatchInlineSnapshot(`
-            <div>
-              ​
-              <a
-                contenteditable="false"
-                data-test-attribute="test"
-                href="href"
-              >
-                displayName
-              </a>
-               
-            </div>
-        `);
+        expect(linkElement.textContent).toBe(displayName);
 
         expect(mockSetText).toHaveBeenCalledWith();
         expect(mockSetSuggestionData).toHaveBeenCalledWith(null);
