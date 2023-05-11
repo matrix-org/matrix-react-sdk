@@ -31,6 +31,7 @@ import Modal from "../Modal";
 import InteractiveAuthDialog from "../components/views/dialogs/InteractiveAuthDialog";
 import { _t } from "../languageHandler";
 import { SdkContextClass } from "../contexts/SDKContext";
+import { asyncSome } from "../utils/arrays";
 
 export enum Phase {
     Loading = 0,
@@ -43,7 +44,7 @@ export enum Phase {
 }
 
 export class SetupEncryptionStore extends EventEmitter {
-    private started: boolean;
+    private started?: boolean;
     public phase: Phase;
     public verificationRequest: VerificationRequest | null = null;
     public backupInfo: IKeyBackupInfo | null = null;
@@ -51,7 +52,7 @@ export class SetupEncryptionStore extends EventEmitter {
     public keyId: string | null = null;
     // Descriptor of the key that the secrets we want are encrypted with
     public keyInfo: ISecretStorageKeyInfo | null = null;
-    public hasDevicesToVerifyAgainst: boolean;
+    public hasDevicesToVerifyAgainst?: boolean;
 
     public static sharedInstance(): SetupEncryptionStore {
         if (!window.mxSetupEncryptionStore) window.mxSetupEncryptionStore = new SetupEncryptionStore();
@@ -108,15 +109,13 @@ export class SetupEncryptionStore extends EventEmitter {
         // do we have any other verified devices which are E2EE which we can verify against?
         const dehydratedDevice = await cli.getDehydratedDevice();
         const ownUserId = cli.getUserId()!;
-        const crossSigningInfo = cli.getStoredCrossSigningForUser(ownUserId);
-        this.hasDevicesToVerifyAgainst = cli
-            .getStoredDevicesForUser(ownUserId)
-            .some(
-                (device) =>
-                    device.getIdentityKey() &&
-                    (!dehydratedDevice || device.deviceId != dehydratedDevice.device_id) &&
-                    crossSigningInfo?.checkDeviceTrust(crossSigningInfo, device, false, true).isCrossSigningVerified(),
-            );
+        this.hasDevicesToVerifyAgainst = await asyncSome(cli.getStoredDevicesForUser(ownUserId), async (device) => {
+            if (!device.getIdentityKey() || (dehydratedDevice && device.deviceId == dehydratedDevice?.device_id)) {
+                return false;
+            }
+            const verificationStatus = await cli.getCrypto()?.getDeviceVerificationStatus(ownUserId, device.deviceId);
+            return !!verificationStatus?.signedByOwner;
+        });
 
         this.phase = Phase.Intro;
         this.emit("update");

@@ -70,16 +70,13 @@ describe("<ForgotPassword>", () => {
     filterConsole(
         // not implemented by js-dom https://github.com/jsdom/jsdom/issues/1937
         "Not implemented: HTMLFormElement.prototype.requestSubmit",
-        // not of interested for this test
-        "Starting load of AsyncWrapper for modal",
     );
 
     beforeEach(() => {
         client = stubClient();
         mocked(createClient).mockReturnValue(client);
 
-        serverConfig = new ValidatedServerConfig();
-        serverConfig.hsName = "example.com";
+        serverConfig = { hsName: "example.com" } as ValidatedServerConfig;
 
         onComplete = jest.fn();
         onLoginClick = jest.fn();

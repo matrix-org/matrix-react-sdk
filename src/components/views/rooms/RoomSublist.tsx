@@ -85,6 +85,10 @@ interface IProps {
     onListCollapse?: (isExpanded: boolean) => void;
 }
 
+function getLabelId(tagId: TagID): string {
+    return `mx_RoomSublist_label_${tagId}`;
+}
+
 // TODO: Use re-resizer's NumberSize when it is exposed as the type
 interface ResizeDelta {
     width: number;
@@ -106,7 +110,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     private headerButton = createRef<HTMLDivElement>();
     private sublistRef = createRef<HTMLDivElement>();
     private tilesRef = createRef<HTMLDivElement>();
-    private dispatcherRef: string;
+    private dispatcherRef?: string;
     private layout: ListLayout;
     private heightAtStart: number;
     private notificationState: ListNotificationState;
@@ -253,7 +257,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     }
 
     public componentWillUnmount(): void {
-        defaultDispatcher.unregister(this.dispatcherRef);
+        if (this.dispatcherRef) defaultDispatcher.unregister(this.dispatcherRef);
         RoomListStore.instance.off(LISTS_UPDATE_EVENT, this.onListsUpdated);
         RoomListStore.instance.off(LISTS_LOADING_EVENT, this.onListsLoading);
         this.tilesRef.current?.removeEventListener("scroll", this.onScrollPrevent);
@@ -433,9 +437,11 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     };
 
     private onHeaderClick = (): void => {
-        const possibleSticky = this.headerButton.current.parentElement;
-        const sublist = possibleSticky.parentElement.parentElement;
-        const list = sublist.parentElement.parentElement;
+        const possibleSticky = this.headerButton.current?.parentElement;
+        const sublist = possibleSticky?.parentElement?.parentElement;
+        const list = sublist?.parentElement?.parentElement;
+        if (!possibleSticky || !list) return;
+
         // the scrollTop is capped at the height of the header in LeftPanel, the top header is always sticky
         const listScrollTop = Math.round(list.scrollTop);
         const isAtTop = listScrollTop <= Math.round(HEADER_HEIGHT);
@@ -571,8 +577,8 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                 otherSections = (
                     <React.Fragment>
                         <hr />
-                        <div>
-                            <div className="mx_RoomSublist_contextMenu_title">{_t("Appearance")}</div>
+                        <fieldset>
+                            <legend className="mx_RoomSublist_contextMenu_title">{_t("Appearance")}</legend>
                             <StyledMenuItemCheckbox
                                 onClose={this.onCloseMenu}
                                 onChange={this.onUnreadFirstChanged}
@@ -587,7 +593,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                             >
                                 {_t("Show previews of messages")}
                             </StyledMenuItemCheckbox>
-                        </div>
+                        </fieldset>
                     </React.Fragment>
                 );
             }
@@ -600,8 +606,8 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                     onFinished={this.onCloseMenu}
                 >
                     <div className="mx_RoomSublist_contextMenu">
-                        <div>
-                            <div className="mx_RoomSublist_contextMenu_title">{_t("Sort by")}</div>
+                        <fieldset>
+                            <legend className="mx_RoomSublist_contextMenu_title">{_t("Sort by")}</legend>
                             <StyledMenuItemRadio
                                 onClose={this.onCloseMenu}
                                 onChange={() => this.onTagSortChanged(SortAlgorithm.Recent)}
@@ -618,7 +624,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                             >
                                 {_t("A-Z")}
                             </StyledMenuItemRadio>
-                        </div>
+                        </fieldset>
                         {otherSections}
                     </div>
                 </ContextMenu>
@@ -710,7 +716,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                                         title={this.props.isMinimized ? this.props.label : undefined}
                                     >
                                         <span className={collapseClasses} />
-                                        <span>{this.props.label}</span>
+                                        <span id={getLabelId(this.props.tagId)}>{this.props.label}</span>
                                     </Button>
                                     {this.renderMenu()}
                                     {this.props.isMinimized ? null : badgeContainer}
@@ -878,7 +884,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                 className={classes}
                 role="group"
                 aria-hidden={hidden}
-                aria-label={this.props.label}
+                aria-labelledby={getLabelId(this.props.tagId)}
                 onKeyDown={this.onKeyDown}
             >
                 {this.renderHeader()}

@@ -64,12 +64,12 @@ type OverflowMenuCloser = () => void;
 export const OverflowMenuContext = createContext<OverflowMenuCloser | null>(null);
 
 const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
-    const matrixClient: MatrixClient = useContext(MatrixClientContext);
-    const { room, roomId, narrow } = useContext(RoomContext);
+    const matrixClient = useContext(MatrixClientContext);
+    const { room, narrow } = useContext(RoomContext);
 
     const isWysiwygLabEnabled = useSettingValue<boolean>("feature_wysiwyg_composer");
 
-    if (props.haveRecording) {
+    if (!matrixClient || !room || props.haveRecording) {
         return null;
     }
 
@@ -93,7 +93,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             voiceRecordingButton(props, narrow),
             startVoiceBroadcastButton(props),
             props.showPollsButton ? pollButton(room, props.relation) : null,
-            showLocationButton(props, room, roomId, matrixClient),
+            showLocationButton(props, room, matrixClient),
         ];
     } else {
         mainButtons = [
@@ -113,7 +113,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             voiceRecordingButton(props, narrow),
             startVoiceBroadcastButton(props),
             props.showPollsButton ? pollButton(room, props.relation) : null,
-            showLocationButton(props, room, roomId, matrixClient),
+            showLocationButton(props, room, matrixClient),
         ];
     }
 
@@ -127,7 +127,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     });
 
     return (
-        <UploadButtonContextProvider roomId={roomId} relation={props.relation}>
+        <UploadButtonContextProvider roomId={room.roomId} relation={props.relation}>
             {mainButtons}
             {moreButtons.length > 0 && (
                 <AccessibleTooltipButton
@@ -180,10 +180,10 @@ interface IUploadButtonProps {
 const UploadButtonContextProvider: React.FC<IUploadButtonProps> = ({ roomId, relation, children }) => {
     const cli = useContext(MatrixClientContext);
     const roomContext = useContext(RoomContext);
-    const uploadInput = useRef<HTMLInputElement>();
+    const uploadInput = useRef<HTMLInputElement>(null);
 
     const onUploadClick = (): void => {
-        if (cli.isGuest()) {
+        if (cli?.isGuest()) {
             dis.dispatch({ action: "require_registration" });
             return;
         }
@@ -346,18 +346,13 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
     }
 }
 
-function showLocationButton(
-    props: IProps,
-    room: Room,
-    roomId: string,
-    matrixClient: MatrixClient,
-): ReactElement | null {
-    const sender = room.getMember(matrixClient.getUserId()!);
+function showLocationButton(props: IProps, room: Room, matrixClient: MatrixClient): ReactElement | null {
+    const sender = room.getMember(matrixClient.getSafeUserId());
 
     return props.showLocationButton && sender ? (
         <LocationButton
             key="location"
-            roomId={roomId}
+            roomId={room.roomId}
             relation={props.relation}
             sender={sender}
             menuPosition={props.menuPosition}

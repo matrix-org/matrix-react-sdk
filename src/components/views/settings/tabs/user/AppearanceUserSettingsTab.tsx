@@ -88,7 +88,11 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
 
         const brand = SdkConfig.get().brand;
         const toggle = (
-            <AccessibleButton kind="link" onClick={() => this.setState({ showAdvanced: !this.state.showAdvanced })}>
+            <AccessibleButton
+                kind="link"
+                onClick={() => this.setState({ showAdvanced: !this.state.showAdvanced })}
+                aria-expanded={this.state.showAdvanced}
+            >
                 {this.state.showAdvanced ? _t("Hide advanced") : _t("Show advanced")}
             </AccessibleButton>
         );
@@ -141,7 +145,9 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
 
         return (
             <div className="mx_SettingsTab mx_AppearanceUserSettingsTab">
-                <div className="mx_SettingsTab_heading">{_t("Customise your appearance")}</div>
+                <div className="mx_SettingsTab_heading" data-testid="appearance">
+                    {_t("Customise your appearance")}
+                </div>
                 <div className="mx_SettingsTab_subsectionText">
                     {_t("Appearance Settings only affect this %(brand)s session.", { brand })}
                 </div>

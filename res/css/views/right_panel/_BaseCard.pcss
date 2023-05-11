@@ -34,7 +34,7 @@ limitations under the License.
         > h2 {
             margin: 0 44px; /* TODO: Use a spacing variable */
             font-size: $font-18px;
-            font-weight: $font-semi-bold;
+            font-weight: var(--font-semi-bold);
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -151,10 +151,11 @@ limitations under the License.
             margin-right: $spacing-12;
         }
 
-        > h1 {
+        > h2 {
             color: $tertiary-content;
             font-size: $font-12px;
             font-weight: 500;
+            margin: $spacing-12;
         }
 
         .mx_BaseCard_Button {
@@ -198,7 +199,7 @@ limitations under the License.
         .mx_AccessibleButton_kind_secondary {
             color: $secondary-content;
             background-color: rgba(141, 151, 165, 0.2);
-            font-weight: $font-semi-bold;
+            font-weight: var(--font-semi-bold);
             font-size: $font-14px;
         }
 
@@ -226,7 +227,7 @@ limitations under the License.
         position: initial;
 
         span:first-of-type {
-            font-weight: $font-semi-bold;
+            font-weight: var(--font-semi-bold);
             font-size: inherit;
             color: $primary-content;
         }

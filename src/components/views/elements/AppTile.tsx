@@ -121,11 +121,11 @@ export default class AppTile extends React.Component<IProps, IState> {
     };
 
     private contextMenuButton = createRef<any>();
-    private iframe: HTMLIFrameElement; // ref to the iframe (callback style)
-    private allowedWidgetsWatchRef: string;
+    private iframe?: HTMLIFrameElement; // ref to the iframe (callback style)
+    private allowedWidgetsWatchRef?: string;
     private persistKey: string;
     private sgWidget: StopGapWidget | null;
-    private dispatcherRef: string;
+    private dispatcherRef?: string;
     private unmounted: boolean;
 
     public constructor(props: IProps) {
@@ -305,7 +305,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             this.context.off(RoomEvent.MyMembership, this.onMyMembership);
         }
 
-        SettingsStore.unwatchSetting(this.allowedWidgetsWatchRef);
+        if (this.allowedWidgetsWatchRef) SettingsStore.unwatchSetting(this.allowedWidgetsWatchRef);
         OwnProfileStore.instance.removeListener(UPDATE_EVENT, this.onUserReady);
     }
 
@@ -344,7 +344,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private startMessaging(): void {
         try {
-            this.sgWidget?.startMessaging(this.iframe);
+            this.sgWidget?.startMessaging(this.iframe!);
         } catch (e) {
             logger.error("Failed to start widget", e);
         }
@@ -573,7 +573,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
 
         const loadingElement = (
-            <div className="mx_AppLoading_spinner_fadeIn">
+            <div className="mx_AppTile_loading_fadeInSpinner">
                 <Spinner message={_t("Loading…")} />
             </div>
         );
@@ -586,7 +586,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                     <AppWarning errorMsg={_t("Error loading Widget")} />
                 </div>
             );
-        } else if (!this.state.hasPermissionToLoad) {
+        } else if (!this.state.hasPermissionToLoad && this.props.room) {
             // only possible for room widgets, can assert this.props.room here
             const isEncrypted = this.context.isRoomEncrypted(this.props.room.roomId);
             appTileBody = (
@@ -603,7 +603,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         } else if (this.state.initialising || !this.state.isUserProfileReady) {
             appTileBody = (
                 <div
-                    className={appTileBodyClass + (this.state.loading ? "mx_AppLoading" : "")}
+                    className={appTileBodyClass + (this.state.loading ? "mx_AppTile_loading" : "")}
                     style={appTileBodyStyles}
                 >
                     {loadingElement}
@@ -619,7 +619,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             } else {
                 appTileBody = (
                     <div
-                        className={appTileBodyClass + (this.state.loading ? "mx_AppLoading" : "")}
+                        className={appTileBodyClass + (this.state.loading ? "mx_AppTile_loading" : "")}
                         style={appTileBodyStyles}
                     >
                         {this.state.loading && loadingElement}
@@ -689,15 +689,13 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         const layoutButtons: ReactNode[] = [];
         if (this.props.showLayoutButtons) {
-            const isMaximised = WidgetLayoutStore.instance.isInContainer(
-                this.props.room,
-                this.props.app,
-                Container.Center,
-            );
+            const isMaximised =
+                this.props.room &&
+                WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Center);
             const maximisedClasses = classNames({
-                mx_AppTileMenuBar_iconButton: true,
-                mx_AppTileMenuBar_iconButton_collapse: isMaximised,
-                mx_AppTileMenuBar_iconButton_maximise: !isMaximised,
+                "mx_AppTileMenuBar_iconButton": true,
+                "mx_AppTileMenuBar_iconButton--collapse": isMaximised,
+                "mx_AppTileMenuBar_iconButton--maximise": !isMaximised,
             });
             layoutButtons.push(
                 <AccessibleButton
@@ -711,7 +709,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             layoutButtons.push(
                 <AccessibleButton
                     key="minimise"
-                    className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_minimise"
+                    className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton--minimise"
                     title={_t("Minimise")}
                     onClick={this.onMinimiseClicked}
                 />,
@@ -724,22 +722,22 @@ export default class AppTile extends React.Component<IProps, IState> {
                     {this.props.showMenubar && (
                         <div className="mx_AppTileMenuBar">
                             <span
-                                className="mx_AppTileMenuBarTitle"
+                                className="mx_AppTileMenuBar_title"
                                 style={{ pointerEvents: this.props.handleMinimisePointerEvents ? "all" : "none" }}
                             >
                                 {this.props.showTitle && this.getTileTitle()}
                             </span>
-                            <span className="mx_AppTileMenuBarWidgets">
+                            <span className="mx_AppTileMenuBar_widgets">
                                 {layoutButtons}
                                 {this.props.showPopout && !this.state.requiresClient && (
                                     <AccessibleButton
-                                        className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_popout"
+                                        className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton--popout"
                                         title={_t("Popout widget")}
                                         onClick={this.onPopoutWidgetClick}
                                     />
                                 )}
                                 <ContextMenuButton
-                                    className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_menu"
+                                    className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton--menu"
                                     label={_t("Options")}
                                     isExpanded={this.state.menuDisplayed}
                                     inputRef={this.contextMenuButton}

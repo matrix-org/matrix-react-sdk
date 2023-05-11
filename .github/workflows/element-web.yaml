@@ -4,12 +4,17 @@
 name: Element Web - Build
 on:
     schedule:
-        - cron: "17 4 * * *" # every day at 04:17 UTC
+        - cron: "17 4 * * 1-5" # every weekday at 04:17 UTC
     pull_request: {}
+    merge_group:
+        types: [checks_requested]
     push:
         branches: [develop, master]
     repository_dispatch:
         types: [upstream-sdk-notify]
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
+    cancel-in-progress: true
 env:
     # These must be set for fetchdep.sh to get the right branch
     REPOSITORY: ${{ github.repository }}
@@ -32,12 +37,13 @@ jobs:
                   JSSDK_SHA=$(git -C matrix-js-sdk rev-parse --short=12 HEAD)
                   REACT_SHA=$(git rev-parse --short=12 HEAD)
                   VECTOR_SHA=$(git -C element-web rev-parse --short=12 HEAD)
-                  echo "::set-output name=VERSION::$VECTOR_SHA-react-$REACT_SHA-js-$JSSDK_SHA"
+                  echo "VERSION=$VECTOR_SHA-react-$REACT_SHA-js-$JSSDK_SHA" >> $GITHUB_OUTPUT
 
             - name: Copy config
               run: cp element.io/develop/config.json config.json
               working-directory: ./element-web
 
+            # After building we write the version file and the react-sdk sha so our cypress tests are from the same sha
             - name: Build
               env:
                   CI_PACKAGE: true
@@ -45,6 +51,7 @@ jobs:
               run: |
                   yarn build
                   echo $VERSION > webapp/version
+                  echo $GITHUB_SHA > webapp/sha
               working-directory: ./element-web
 
             - name: Upload Artifact

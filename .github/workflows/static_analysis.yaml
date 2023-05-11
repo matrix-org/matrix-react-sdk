@@ -1,10 +1,15 @@
 name: Static Analysis
 on:
     pull_request: {}
+    merge_group:
+        types: [checks_requested]
     push:
         branches: [develop, master]
     repository_dispatch:
         types: [upstream-sdk-notify]
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
+    cancel-in-progress: true
 env:
     # These must be set for fetchdep.sh to get the right branch
     REPOSITORY: ${{ github.repository }}
@@ -44,12 +49,6 @@ jobs:
         permissions:
             pull-requests: read
             checks: write
-        strategy:
-            fail-fast: false
-            matrix:
-                args:
-                    - "--strict --noImplicitAny"
-                    - "--noImplicitAny"
         steps:
             - uses: actions/checkout@v3
               with:
@@ -66,7 +65,7 @@ jobs:
 
             - name: Detecting files changed
               id: files
-              uses: futuratrepadeira/changed-files@96d5fd702a6479d573287ef07381ad59acc390ed # v4.0.0
+              uses: futuratrepadeira/changed-files@0239328a3a6268aad16af7c3e4efc78e32d6c0f0 # v4.0.1
               with:
                   repo-token: ${{ secrets.GITHUB_TOKEN }}
                   pattern: '^.*\.tsx?$'
@@ -77,7 +76,7 @@ jobs:
                   use-check: false
                   check-fail-mode: added
                   output-behaviour: annotate
-                  ts-extra-args: ${{ matrix.args }}
+                  ts-extra-args: "--strict --noImplicitAny"
                   files-changed: ${{ steps.files.outputs.files_updated }}
                   files-added: ${{ steps.files.outputs.files_created }}
                   files-deleted: ${{ steps.files.outputs.files_deleted }}

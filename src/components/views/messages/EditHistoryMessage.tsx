@@ -17,6 +17,7 @@ limitations under the License.
 import React, { createRef } from "react";
 import { EventStatus, IContent, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import classNames from "classnames";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
 
 import * as HtmlUtils from "../../../HtmlUtils";
 import { editBodyDiffToHtml } from "../../../utils/MessageDiffUtils";
@@ -79,7 +80,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
             ConfirmAndWaitRedactDialog,
             {
                 redact: async () => {
-                    await cli.redactEvent(event.getRoomId(), event.getId());
+                    await cli.redactEvent(event.getRoomId()!, event.getId()!);
                 },
             },
             "mx_Dialog_confirmredact",
@@ -91,6 +92,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
             ViewSource,
             {
                 mxEvent: this.props.mxEvent,
+                ignoreEdits: true,
             },
             "mx_Dialog_viewsource",
         );
@@ -171,7 +173,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
                     returnString: false,
                 });
             }
-            if (mxEvent.getContent().msgtype === "m.emote") {
+            if (mxEvent.getContent().msgtype === MsgType.Emote) {
                 const name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
                 contentContainer = (
                     <div className="mx_EventTile_content" ref={this.content}>
