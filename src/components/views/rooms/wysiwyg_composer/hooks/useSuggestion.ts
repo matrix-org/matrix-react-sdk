@@ -156,26 +156,28 @@ export function processMention(
     const { node } = suggestionData;
 
     // create an <a> element with the required attributes to allow us to interpret the mention as being a pill
-    const link = document.createElement("a");
-    const linkText = document.createTextNode(displayName);
-    link.setAttribute("href", href);
-    link.setAttribute("contenteditable", "false");
-    Object.entries(attributes).forEach(([attr, value]) => isNotUndefined(value) && link.setAttribute(attr, value));
-    link.appendChild(linkText);
+    const linkElement = document.createElement("a");
+    const linkTextNode = document.createTextNode(displayName);
+    linkElement.setAttribute("href", href);
+    linkElement.setAttribute("contenteditable", "false");
+    Object.entries(attributes).forEach(
+        ([attr, value]) => isNotUndefined(value) && linkElement.setAttribute(attr, value),
+    );
+    linkElement.appendChild(linkTextNode);
 
-    // create a text node that will follow the inserted link (as we may be inserting into the middle of a node)
-    const endNode = document.createTextNode(` ${node.textContent?.slice(suggestionData.endOffset) ?? ""}`);
+    // create text nodes to go before and after the link
+    const leadingTextNode = document.createTextNode(node.textContent?.slice(0, suggestionData.startOffset) || "\u200b");
+    const trailingTextNode = document.createTextNode(` ${node.textContent?.slice(suggestionData.endOffset) ?? ""}`);
 
-    // now amend the current node text content to be only the text from start up to the suggestion startOffset
-    // (default to a zwsp if we'd have no preceding text to allow cursor positioning before a lone pill)
-    node.textContent = node.textContent?.slice(0, suggestionData.startOffset) || "\u200b";
+    // now add the leading node, link element and trailing node before removing the node we are replacing
+    const parentNode = node.parentNode;
+    parentNode.insertBefore(leadingTextNode, node);
+    parentNode.insertBefore(linkElement, node);
+    parentNode.insertBefore(trailingTextNode, node);
+    parentNode.removeChild(node);
 
-    // then append the newly created link and the ending text node containing the space that follows the link
-    node.parentNode?.appendChild(link);
-    node.parentNode?.appendChild(endNode);
-
-    // move the selection to after the space that follows the link
-    document.getSelection()?.setBaseAndExtent(endNode, 1, endNode, 1);
+    // move the selection to the trailing text node
+    document.getSelection()?.setBaseAndExtent(trailingTextNode, 1, trailingTextNode, 1);
 
     // set the text content to be the innerHTML of the current editor ref and clear the suggestion state
     setText();
