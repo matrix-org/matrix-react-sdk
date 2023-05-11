@@ -17,6 +17,8 @@ limitations under the License.
 import { Attributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 import { SyntheticEvent, useState } from "react";
 
+import { isNotUndefined } from "../../../../../Typeguards";
+
 /**
  * Information about the current state of the `useSuggestion` hook.
  */
@@ -153,25 +155,25 @@ export function processMention(
 
     const { node } = suggestionData;
 
-    // create an <a> element with the required attributes to allow us to display the mention as a pill
+    // create an <a> element with the required attributes to allow us to interpret the mention as being a pill
     const link = document.createElement("a");
     link.setAttribute("href", href);
     link.setAttribute("contenteditable", "false");
-    Object.entries(attributes).forEach(([attr, value]) => value && link.setAttribute(attr, value));
+    Object.entries(attributes).forEach(([attr, value]) => isNotUndefined(value) && link.setAttribute(attr, value));
     link.innerText = displayName;
 
-    // create a text node that will follow the inserted link (we may be inserting into the middle of a node)
+    // create a text node that will follow the inserted link (as we may be inserting into the middle of a node)
     const endNode = document.createTextNode(` ${node.textContent?.slice(suggestionData.endOffset) ?? ""}`);
 
-    // take the starting node, truncate the content from start to the startOffset of the suggestion
-    // and then append the link element followed by the text node
-
-    // default to a zwsp if we'd have no preceding text
+    // now amend the current node text content to be only the text from start up to the suggestion startOffset
+    // (default to a zwsp if we'd have no preceding text to allow cursor positioning before a lone pill)
     node.textContent = node.textContent?.slice(0, suggestionData.startOffset) || "\u200b";
+
+    // then append the newly created link and the ending text node containing the space that follows the link
     node.parentNode?.appendChild(link);
     node.parentNode?.appendChild(endNode);
 
-    // move the selection to after the leading space in the text node following the link
+    // move the selection to after the space that follows the link
     document.getSelection()?.setBaseAndExtent(endNode, 1, endNode, 1);
 
     // set the text content to be the innerHTML of the current editor ref and clear the suggestion state
