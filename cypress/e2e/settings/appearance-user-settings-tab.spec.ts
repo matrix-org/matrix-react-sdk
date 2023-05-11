@@ -292,18 +292,22 @@ describe("Appearance user settings tab", () => {
             },
         );
 
-        it("should not render the checkbox and the label for the high contrast theme if the dark theme is selected", () => {
-            cy.openUserSettings("Appearance");
+        it(
+            "should not render the checkbox and the label for the high contrast theme " +
+                "if the dark theme is selected",
+            () => {
+                cy.openUserSettings("Appearance");
 
-            // Assert that the checkbox and the label to enable the high contrast theme should exist
-            cy.findByLabelText("Use high contrast").should("exist");
+                // Assert that the checkbox and the label to enable the high contrast theme should exist
+                cy.findByLabelText("Use high contrast").should("exist");
 
-            // Enable the dark theme
-            cy.get(".mx_ThemeSelector_dark").click();
+                // Enable the dark theme
+                cy.get(".mx_ThemeSelector_dark").click();
 
-            // Assert that the checkbox and the label should not exist
-            cy.findByLabelText("Use high contrast").should("not.exist");
-        });
+                // Assert that the checkbox and the label should not exist
+                cy.findByLabelText("Use high contrast").should("not.exist");
+            },
+        );
 
         it("should support enabling the high contast theme", () => {
             cy.createRoom({ name: "Test Room" }).viewRoomByName("Test Room");
