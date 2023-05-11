@@ -21,13 +21,12 @@ import { SyntheticEvent, useState } from "react";
  * Information about the current state of the `useSuggestion` hook.
  */
 export type Suggestion = {
-    /**
-     * The information in a `MappedSuggestion` is sufficient to generate a query for the autocomplete
-     * component but more information is required to allow manipulation of the correct part of the DOM
-     * when selecting an option from the autocomplete. These three pieces of information allow us to
-     * do that.
-     */
     mappedSuggestion: MappedSuggestion;
+    /* The information in a `MappedSuggestion` is sufficient to generate a query for the autocomplete
+    component but more information is required to allow manipulation of the correct part of the DOM
+    when selecting an option from the autocomplete. These three pieces of information allow us to
+    do that.
+    */
     node: Node;
     startOffset: number;
     endOffset: number;
@@ -210,9 +209,9 @@ export function processCommand(
  *
  * @param text - the text content of a node
  * @param offset - the current cursor offset position within the node
- * @param isFirstTextNode - whether or not the node is the first text node in the editor, used to determine
+ * @param isFirstTextNode - whether or not the node is the first text node in the editor. Used to determine
  * if a command suggestion is found or not
- * @returns the `MappedSuggestion` along with it's start and end offsets if found, otherwise null
+ * @returns the `MappedSuggestion` along with its start and end offsets if found, otherwise null
  */
 export function findSuggestionInText(
     text: string,
@@ -235,7 +234,7 @@ export function findSuggestionInText(
         startSliceIndex--;
     }
 
-    // Search fowards from the current cursor position to find the end index of the word
+    // Search forwards from the current cursor position to find the end index of the word
     // containing the cursor
     while (shouldIncrementEndIndex(text, endSliceIndex)) {
         endSliceIndex++;
