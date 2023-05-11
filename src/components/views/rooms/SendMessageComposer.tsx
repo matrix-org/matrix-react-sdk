@@ -61,8 +61,7 @@ import { addReplyToMessageContent } from "../../../utils/Reply";
 import { doMaybeLocalRoomAction } from "../../../utils/local-room";
 import { Caret } from "../../../editor/caret";
 import { IDiff } from "../../../editor/diff";
-import { MIMEType } from "util";
-import { getFileInfo } from "prettier";
+import { getBlobSafeMimeType } from "../../../utils/blobs";
 
 /**
  * Build the mentions information based on the editor model (and any related events):
@@ -695,8 +694,10 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
             fetch(imgSrc).then((response) => {
                 response.blob().then((imgBlob) => {
-                    const ext=imgBlob.type.split("/")[1];
-                    const file = new File([imgBlob],"safari_inserted_image."+ext,{type:imgBlob.type});
+                    const type = imgBlob.type;
+                    const safetype = getBlobSafeMimeType(type);
+                    const ext=type.split("/")[1];
+                    const file = new File([imgBlob],"safari_inserted_content."+ext,{type:safetype});
                     ContentMessages.sharedInstance().sendContentToRoom(
                         file,
                         this.props.room.roomId,
