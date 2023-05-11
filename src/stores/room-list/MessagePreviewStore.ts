@@ -155,7 +155,7 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
             if (previousEvent !== undefined) {
                 // Ignore edits if they don't apply to the latest event in the room to keep the preview on the latest event
                 const room = this.matrixClient?.getRoom(event.getRoomId()!);
-                const relatedEvent = room?.findEventById(event.relationEventId);
+                const relatedEvent = room?.findEventById(event.relationEventId!);
                 if (relatedEvent !== previousEvent) {
                     return true;
                 }
@@ -216,7 +216,7 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
                     map.delete(genTagId);
                 } else {
                     changed = changed || preview !== map.get(genTagId)?.[1];
-                    map.set(genTagId, [event, preview]);
+                    map.set(genTagId, preview ? [event, preview] : null);
                 }
             }
 
