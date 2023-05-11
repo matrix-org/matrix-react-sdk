@@ -979,7 +979,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
      * Whether to send public or private receipts.
      */
     private async determineReceiptType(client: MatrixClient): Promise<ReceiptType> {
-        const roomId = this.props.timelineSet.room.roomId;
+        const roomId = this.props.timelineSet.room?.roomId ?? null;
         const shouldSendPublicReadReceipts = SettingsStore.getValue("sendReadReceipts", roomId);
 
         if (shouldSendPublicReadReceipts) {
@@ -1000,7 +1000,12 @@ class TimelinePanel extends React.Component<IProps, IState> {
     /**
      * Whether a fully_read marker should be send.
      */
-    private shouldSendRM(): boolean {
+    private shouldSendRM(readMarkerEventId: string | null): readMarkerEventId is string {
+        if (!this.state.readMarkerEventId) {
+            // Nothing that can be send.
+            return false;
+        }
+
         if (this.lastRRSentEventId && this.lastRMSentEventId === this.state.readMarkerEventId) {
             // Prevent sending the same receipt twice.
             return false;
@@ -1082,9 +1087,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
             lastReadEvent,
             lastReadEventIndex,
         );
-        const shouldSendRM = this.shouldSendRM();
+        const readMarkerEventId = this.state.readMarkerEventId;
+        const shouldSendRM = this.shouldSendRM(readMarkerEventId);
 
-        debuglog(`Sending Read Markers for ${this.props.timelineSet.room.roomId}: `, {
+        debuglog(`Sending Read Markers for ${this.props.timelineSet.room?.roomId}: `, {
             shouldSendRR,
             shouldSendRM,
             currentRREventId,
@@ -1101,7 +1107,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
 
         if (shouldSendRM) {
-            const readMarkerEvent = this.props.timelineSet.findEventById(this.state.readMarkerEventId);
+            const readMarkerEvent = this.props.timelineSet.findEventById(readMarkerEventId);
 
             if (readMarkerEvent) {
                 proms.push(await this.sendReadMarker(client, readMarkerEvent));
@@ -1126,7 +1132,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             this.lastRRSentEventId = undefined;
 
             logger.error("Error sending receipt", {
-                room: this.props.timelineSet.room.roomId,
+                room: this.props.timelineSet.room?.roomId,
                 error: err,
             });
         }
@@ -1146,7 +1152,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             this.lastRMSentEventId = undefined;
 
             logger.error("Error sending fully_read", {
-                room: this.props.timelineSet.room.roomId,
+                room: this.props.timelineSet.room?.roomId,
                 error: err,
             });
         }

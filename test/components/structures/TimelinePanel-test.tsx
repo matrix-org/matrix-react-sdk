@@ -144,14 +144,14 @@ describe("TimelinePanel", () => {
                 />,
             );
             await flushPromises();
-            timelinePanel = ref.current;
+            timelinePanel = ref.current!;
         };
 
         const setUpTimelineSet = (threadRoot?: MatrixEvent) => {
             let thread: Thread | undefined = undefined;
 
             if (threadRoot) {
-                thread = new Thread(threadRoot.getId(), threadRoot, {
+                thread = new Thread(threadRoot.getId()!, threadRoot, {
                     client: client,
                     room,
                 });
@@ -211,7 +211,7 @@ describe("TimelinePanel", () => {
 
                     it("and forgetting the read markers, should send the stored marker again", async () => {
                         timelineSet.addLiveEvent(ev2, {});
-                        room.addEphemeralEvents([newReceipt(ev2.getId(), userId, 222, 200)]);
+                        room.addEphemeralEvents([newReceipt(ev2.getId()!, userId, 222, 200)]);
                         timelinePanel.forgetReadMarker();
                         await flushPromises();
                         expect(client.sendReadReceipt).toHaveBeenCalledWith(ev2, ReceiptType.FullyRead, true);
