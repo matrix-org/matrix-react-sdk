@@ -105,12 +105,24 @@ describe("processMention", () => {
         expect(mockEditor.children).toHaveLength(1);
         const linkElement = mockEditor.firstElementChild as HTMLElement;
 
-        // and that the child is an <a> tag with the expected attributes
+        // and that the child is an <a> tag with the expected attributes and content
         expect(linkElement).toBeInstanceOf(HTMLAnchorElement);
         expect(linkElement).toHaveAttribute(href, href);
         expect(linkElement).toHaveAttribute("contenteditable", "false");
         expect(linkElement).toHaveAttribute("data-test-attribute", "test");
-        expect(linkElement.innerText).toBe(displayName);
+        expect(mockEditor).toMatchInlineSnapshot(`
+            <div>
+              ​
+              <a
+                contenteditable="false"
+                data-test-attribute="test"
+                href="href"
+              >
+                displayName
+              </a>
+               
+            </div>
+        `);
 
         expect(mockSetText).toHaveBeenCalledWith();
         expect(mockSetSuggestionData).toHaveBeenCalledWith(null);
