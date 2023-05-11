@@ -39,7 +39,7 @@ exports[`AppTile destroys non-persisted right panel widget on room change 1`] = 
         </div>
       </div>
       <div
-        class="mx_AppTileFullWidth"
+        class="mx_AppTile mx_AppTileFullWidth"
         id="1"
       >
         <div
@@ -76,7 +76,7 @@ exports[`AppTile destroys non-persisted right panel widget on room change 1`] = 
 exports[`AppTile for a persistent app should render 1`] = `
 <DocumentFragment>
   <div
-    class="mx_AppTile_mini"
+    class="mx_AppTile mx_AppTile_mini"
     id="1"
   >
     <div
@@ -319,7 +319,7 @@ exports[`AppTile preserves non-persisted widget on container move 1`] = `
         class="mx_AppsContainer"
       >
         <div
-          class="mx_AppTileFullWidth"
+          class="mx_AppTile mx_AppTileFullWidth"
           id="1"
         >
           <div

@@ -690,15 +690,11 @@ export default class AppTile extends React.Component<IProps, IState> {
             }
         }
 
-        let appTileClasses;
-        if (this.props.miniMode) {
-            appTileClasses = { mx_AppTile_mini: true };
-        } else if (this.props.fullWidth) {
-            appTileClasses = { mx_AppTileFullWidth: true };
-        } else {
-            appTileClasses = { mx_AppTile: true };
-        }
-        appTileClasses = classNames(appTileClasses);
+        const appTileClasses = classNames({
+            mx_AppTile: true,
+            mx_AppTile_mini: this.props.miniMode,
+            mx_AppTileFullWidth: this.props.fullWidth && !this.props.miniMode,
+        });
 
         let contextMenu;
         if (this.state.menuDisplayed) {
