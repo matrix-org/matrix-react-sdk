@@ -18,15 +18,26 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import { IPreview } from "./IPreview";
 import { TagID } from "../models";
-import { getSenderName, isSelf } from "./utils";
+import { getSenderName, isSelf, shouldPrefixMessagesIn } from "./utils";
 import { _t } from "../../../languageHandler";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { MessagePreviewStore } from "../MessagePreviewStore";
+import SettingsStore from "../../../settings/SettingsStore";
+import DMRoomMap from "../../../utils/DMRoomMap";
 
 export class ReactionEventPreview implements IPreview {
     public getTextFor(event: MatrixEvent, tagId?: TagID, isThread?: boolean): string | null {
+        const showDms = SettingsStore.getValue("feature_roomlist_preview_reactions_dms");
+        const showAll = SettingsStore.getValue("feature_roomlist_preview_reactions_all");
+
         const roomId = event.getRoomId();
         if (!roomId) return null; // not a room event
+
+        // If we're not showing all reactions, see if we're showing DMs instead
+        if (!showAll) {
+            // If we're not showing reactions on DMs, or we are and the room isn't a DM, skip
+            if (!(showDms && DMRoomMap.shared().getUserIdForRoomId(roomId))) {
+                return null;
+            }
+        }
 
         const relation = event.getRelation();
         if (!relation) return null; // invalid reaction (probably redacted)
@@ -34,23 +45,10 @@ export class ReactionEventPreview implements IPreview {
         const reaction = relation.key;
         if (!reaction) return null; // invalid reaction (unknown format)
 
-        const cli = MatrixClientPeg.get();
-        const room = cli?.getRoom(roomId);
-        const relatedEvent = relation.event_id ? room?.findEventById(relation.event_id) : null;
-        if (!relatedEvent) return null;
-
-        const message = MessagePreviewStore.instance.generatePreviewForEvent(relatedEvent);
-        if (isSelf(event)) {
-            return _t("You reacted %(reaction)s to %(message)s", {
-                reaction,
-                message,
-            });
+        if (isThread || isSelf(event) || !shouldPrefixMessagesIn(roomId, tagId)) {
+            return reaction;
+        } else {
+            return _t("%(senderName)s: %(reaction)s", { senderName: getSenderName(event), reaction });
         }
-
-        return _t("%(sender)s reacted %(reaction)s to %(message)s", {
-            sender: getSenderName(event),
-            reaction,
-            message,
-        });
     }
 }
