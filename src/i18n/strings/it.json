@@ -3773,5 +3773,7 @@
     "Error while changing password: %(error)s": "Errore nella modifica della password: %(error)s",
     "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s ha reagito con %(reaction)s a %(message)s",
     "You reacted %(reaction)s to %(message)s": "Hai reagito con %(reaction)s a %(message)s",
-    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Impossibile invitare l'utente per email senza un server d'identità. Puoi connetterti a uno in \"Impostazioni\"."
+    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Impossibile invitare l'utente per email senza un server d'identità. Puoi connetterti a uno in \"Impostazioni\".",
+    "Unable to create room with moderation bot": "Impossibile creare la stanza con il bot di moderazione",
+    "Failed to download source media, no source url was found": "Scaricamento della fonte fallito, nessun url trovato"
 }
