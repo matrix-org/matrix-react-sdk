@@ -113,7 +113,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         return !!getHomePageUrl(SdkConfig.get());
     }
 
-    private onCurrentVoiceBroadcastRecordingChanged = (recording: VoiceBroadcastRecording): void => {
+    private onCurrentVoiceBroadcastRecordingChanged = (recording: VoiceBroadcastRecording | null): void => {
         this.setState({
             showLiveAvatarAddon: recording !== null,
         });
