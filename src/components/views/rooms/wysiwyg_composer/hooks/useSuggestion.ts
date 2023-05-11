@@ -157,10 +157,11 @@ export function processMention(
 
     // create an <a> element with the required attributes to allow us to interpret the mention as being a pill
     const link = document.createElement("a");
+    const linkText = document.createTextNode(displayName);
     link.setAttribute("href", href);
     link.setAttribute("contenteditable", "false");
     Object.entries(attributes).forEach(([attr, value]) => isNotUndefined(value) && link.setAttribute(attr, value));
-    link.innerText = displayName;
+    link.appendChild(linkText);
 
     // create a text node that will follow the inserted link (as we may be inserting into the middle of a node)
     const endNode = document.createTextNode(` ${node.textContent?.slice(suggestionData.endOffset) ?? ""}`);
