@@ -376,7 +376,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
             : await plainToRich(composerContent);
 
         const richTextLinkRegex = /(<a.*<\/a>)/g;
-        const mdLinkRegex = /\[.*\]\(<(.*>)\)/g;
+        const mdLinkRegex = /(\[.*\]\(<(.*>)\))/g;
 
         function fudgeMentions(plainText: string): string {
             // to avoid lookup, we use the existing rich text information
@@ -391,10 +391,10 @@ export class MessageComposer extends React.Component<IProps, IState> {
 
             // now go through the plain text and, if the href can be interpreted as a permalink, replace
             // it with the corresponding "rich match"
-            const fudgedString = plainText.replace(mdLinkRegex, (match, href) => {
+            const fudgedString = plainText.replace(mdLinkRegex, (_, match, href) => {
                 // permalink returns null if we can't interpret it that way
                 const permalink = parsePermalink(href);
-                const toReturn = permalink === null ? plainText : richTextLinkMatches[count];
+                const toReturn = permalink === null ? match : richTextLinkMatches[count];
                 count++;
                 return toReturn;
             });
