@@ -1002,8 +1002,6 @@ export const Commands = [
 
             // Try and parse out a widget URL from iframes
             if (widgetUrl.toLowerCase().startsWith("<iframe ")) {
-                // We use parse5, which doesn't render/create a DOM node. It instead runs
-                // some superfast regex over the text so we don't have to.
                 const embed = new DOMParser().parseFromString(widgetUrl, "text/html").body;
                 if (embed?.childNodes?.length === 1) {
                     const iframe = embed.firstElementChild;
