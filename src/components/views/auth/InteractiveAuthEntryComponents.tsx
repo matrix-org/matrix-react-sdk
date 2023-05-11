@@ -556,8 +556,8 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
     public static LOGIN_TYPE = AuthType.Msisdn;
 
     private submitUrl?: string;
-    private sid: string;
-    private msisdn: string;
+    private sid?: string;
+    private msisdn?: string;
 
     public constructor(props: IMsisdnAuthEntryProps) {
         super(props);
@@ -615,8 +615,8 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
         });
 
         try {
-            let result;
-            if (this.submitUrl) {
+            let result: { success: boolean };
+            if (this.submitUrl && this.sid) {
                 result = await this.props.matrixClient.submitMsisdnTokenOtherUrl(
                     this.submitUrl,
                     this.sid,
@@ -861,6 +861,7 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
 
     public render(): React.ReactNode {
         let continueButton: JSX.Element;
+
         const cancelButton = (
             <AccessibleButton
                 onClick={this.props.onCancel ?? null}
@@ -902,8 +903,14 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
             <Fragment>
                 {errorSection}
                 <div className="mx_InteractiveAuthEntryComponents_sso_buttons">
-                    {cancelButton}
-                    {continueButton}
+                    {this.props.busy ? (
+                        <Spinner w={24} h={24} />
+                    ) : (
+                        <>
+                            {cancelButton}
+                            {continueButton}
+                        </>
+                    )}
                 </div>
             </Fragment>
         );
