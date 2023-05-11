@@ -115,8 +115,9 @@ describe("Appearance user settings tab", () => {
                 cy.get("output .mx_Slider_selection_label").findByText("13");
             });
 
-            cy.get(".mx_FontScalingPanel_fontSlider").percySnapshotElement("Font size slider - smallest (13)", {
-                widths: [486], // actual size (content-box, including inline padding)
+            // Take a snapshot of FontScalingPanel
+            cy.get(".mx_FontScalingPanel").percySnapshotElement("Font scaling panel - smallest (13) font", {
+                widths: [592], // actual size (content-box, including inline padding)
             });
 
             cy.get(".mx_FontScalingPanel_fontSlider").within(() => {
@@ -128,8 +129,9 @@ describe("Appearance user settings tab", () => {
                 cy.get("output .mx_Slider_selection_label").findByText("18");
             });
 
-            cy.get(".mx_FontScalingPanel_fontSlider").percySnapshotElement("Font size slider - largest (18)", {
-                widths: [486],
+            // Take a snapshot of FontScalingPanel
+            cy.get(".mx_FontScalingPanel").percySnapshotElement("Font scaling panel - largest (18) font", {
+                widths: [592], // actual size (content-box, including inline padding)
             });
         });
     });
