@@ -3773,5 +3773,7 @@
     "Error while changing password: %(error)s": "變更密碼時發生錯誤：%(error)s",
     "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s 已對「%(message)s」回應「%(reaction)s」",
     "You reacted %(reaction)s to %(message)s": "您已對「%(message)s」回應「%(reaction)s」",
-    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "無法在未設定身分伺服器時，邀請使用者。您可以到「設定」畫面中連線到一組伺服器。"
+    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "無法在未設定身分伺服器時，邀請使用者。您可以到「設定」畫面中連線到一組伺服器。",
+    "Unable to create room with moderation bot": "無法使用審核機器人建立聊天室",
+    "Failed to download source media, no source url was found": "下載來源媒體失敗，找不到來源 URL"
 }
