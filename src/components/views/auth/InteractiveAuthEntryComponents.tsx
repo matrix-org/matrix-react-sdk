@@ -25,7 +25,7 @@ import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import { LocalisedPolicy, Policies } from "../../../Terms";
 import { AuthHeaderModifier } from "../../structures/auth/header/AuthHeaderModifier";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import Field from "../elements/Field";
 import Spinner from "../elements/Spinner";
@@ -943,7 +943,7 @@ export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
         this.fallbackButton.current?.focus();
     };
 
-    private onShowFallbackClick = (e: MouseEvent): void => {
+    private onShowFallbackClick = (e: ButtonEvent): void => {
         if (!this.props.authSessionId) return;
 
         e.preventDefault();

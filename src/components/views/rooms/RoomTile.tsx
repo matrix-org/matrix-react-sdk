@@ -220,7 +220,7 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
         });
     };
 
-    private onTileClick = async (ev: React.KeyboardEvent): Promise<void> => {
+    private onTileClick = async (ev: ButtonEvent): Promise<void> => {
         ev.preventDefault();
         ev.stopPropagation();
 
