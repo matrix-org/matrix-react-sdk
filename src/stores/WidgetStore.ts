@@ -39,7 +39,7 @@ export interface IApp extends IWidget {
 }
 
 export function isAppWidget(widget: IWidget | IApp): widget is IApp {
-    return typeof widget["roomId"] === "string";
+    return "roomId" in widget && typeof widget.roomId === "string";
 }
 
 interface IRoomWidgets {
