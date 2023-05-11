@@ -235,20 +235,9 @@ describe("Appearance user settings tab", () => {
     });
 
     describe("Theme Choice Panel", () => {
-        let homeserver: HomeserverInstance;
-
         beforeEach(() => {
-            cy.startHomeserver("default").then((data) => {
-                homeserver = data;
-                cy.initTestUser(homeserver, USER_NAME);
-            });
-
             // Disable the default theme for consistency in case ThemeWatcher automatically chooses it
             cy.setSettingValue("use_system_theme", null, SettingLevel.DEVICE, false);
-        });
-
-        afterEach(() => {
-            cy.stopHomeserver(homeserver);
         });
 
         it("should be rendered with the light theme selected", () => {
