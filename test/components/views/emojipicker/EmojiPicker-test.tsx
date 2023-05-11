@@ -30,10 +30,15 @@ describe("EmojiPicker", function () {
             <EmojiPicker ref={ref} onChoose={(str: string) => false} onFinished={jest.fn()} />,
         );
 
+        // Record the HTML before filtering
         const beforeHtml = container.innerHTML;
+
+        // Apply a filter and assert that the HTML has changed
         //@ts-ignore private access
         ref.current!.onChangeFilter("test");
         expect(beforeHtml).not.toEqual(container.innerHTML);
+
+        // Clear the filter and assert that the HTML matches what it was before filtering
         //@ts-ignore private access
         ref.current!.onChangeFilter("");
         expect(beforeHtml).toEqual(container.innerHTML);

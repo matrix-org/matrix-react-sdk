@@ -269,7 +269,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
                 emojis = cat.id === "recent" ? this.recentlyUsed : DATA_BY_CATEGORY[cat.id];
             }
 
-            if (lcFilter) {
+            if (!!lcFilter) {
                 emojis = emojis.filter((emoji) => this.emojiMatchesFilter(emoji, lcFilter));
                 // Copy the array to not clobber the original unfiltered sorting
                 emojis = [...emojis].sort((a, b) => {
