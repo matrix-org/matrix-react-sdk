@@ -165,9 +165,8 @@ limitations under the License.
     flex-direction: column;
     box-sizing: border-box;
     background-color: $widget-menu-bar-bg-color;
-}
 
-.mx_AppTileFullWidth {
+&.mx_AppTileFullWidth {
     width: 100% !important; /* to override the inline style set by the resizer */
     margin: 0;
     padding: 0;
@@ -177,7 +176,7 @@ limitations under the License.
     box-sizing: unset;
 }
 
-.mx_AppTile_mini {
+&.mx_AppTile_mini {
     width: 100%;
     margin: 0;
     padding: 0;
@@ -187,6 +186,7 @@ limitations under the License.
     border: unset;
     box-sizing: unset;
     background-color: unset;
+}
 }
 
 .mx_AppTile .mx_AppTile_persistedWrapper,
