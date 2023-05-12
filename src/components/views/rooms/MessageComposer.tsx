@@ -392,6 +392,12 @@ export class MessageComposer extends React.Component<IProps, IState> {
             // now go through the plain text and, if the href can be interpreted as a permalink, replace
             // it with the corresponding "rich match"
             const fudgedString = plainText.replace(mdLinkRegex, (match, linkText, href) => {
+                // special case for @room
+                if (linkText === "@room") {
+                    const toReturn = richTextLinkMatches[count];
+                    count++;
+                    return toReturn;
+                }
                 // permalink returns null if we can't interpret it that way
                 const permalink = parsePermalink(href);
                 const toReturn = permalink === null ? `[${linkText}](${href})` : richTextLinkMatches[count];
