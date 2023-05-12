@@ -140,6 +140,13 @@ export function messageForLoginError(
     }
 }
 
+export function isMixedContent(serverConfig: Pick<ValidatedServerConfig, "hsUrl">): boolean {
+    return (
+        window.location.protocol === "https:" &&
+        (serverConfig.hsUrl.startsWith("http:") || !serverConfig.hsUrl.startsWith("http"))
+    );
+}
+
 export function messageForConnectionError(
     err: Error,
     serverConfig: Pick<ValidatedServerConfig, "hsName" | "hsUrl">,
@@ -147,10 +154,7 @@ export function messageForConnectionError(
     let errorText = _t("There was a problem communicating with the homeserver, please try again later.");
 
     if (err instanceof ConnectionError) {
-        if (
-            window.location.protocol === "https:" &&
-            (serverConfig.hsUrl.startsWith("http:") || !serverConfig.hsUrl.startsWith("http"))
-        ) {
+        if (isMixedContent(serverConfig)) {
             return (
                 <span>
                     {_t(

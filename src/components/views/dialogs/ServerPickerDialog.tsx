@@ -17,10 +17,11 @@ limitations under the License.
 import React, { ChangeEvent, createRef, SyntheticEvent } from "react";
 import { AutoDiscovery } from "matrix-js-sdk/src/autodiscovery";
 import { logger } from "matrix-js-sdk/src/logger";
+import { HTTPError, IClientWellKnown } from "matrix-js-sdk/src/matrix";
 
 import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 import BaseDialog from "./BaseDialog";
-import { _t } from "../../../languageHandler";
+import { _t, UserFriendlyError } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import SdkConfig from "../../../SdkConfig";
 import Field from "../elements/Field";
@@ -29,6 +30,7 @@ import TextWithTooltip from "../elements/TextWithTooltip";
 import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
 import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 import ExternalLink from "../elements/ExternalLink";
+import { isMixedContent } from "../../../utils/ErrorUtils";
 
 interface IProps {
     title?: string;
@@ -105,10 +107,46 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
             }
 
             try {
-                this.validatedConf = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(hsUrl);
+                if (!hsUrl) {
+                    throw new UserFriendlyError("No homeserver URL provided");
+                }
+
+                const wellknownConfig: IClientWellKnown = {
+                    "m.homeserver": {
+                        base_url: hsUrl,
+                    },
+                };
+
+                const result = await AutoDiscovery.fromDiscoveryConfig(wellknownConfig);
+                if (result["m.homeserver"].error instanceof Error) throw result["m.homeserver"].error;
+
+                const url = new URL(hsUrl);
+                const serverName = url.hostname;
+
+                this.validatedConf = AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(
+                    serverName,
+                    result,
+                    false,
+                    true,
+                );
                 return {};
             } catch (e) {
                 logger.error(e);
+
+                if (e instanceof HTTPError) {
+                    let error = _t(
+                        "Can't connect to homeserver - please check your connectivity, " +
+                            "ensure your homeserver's SSL certificate is trusted, " +
+                            "and that a browser extension is not blocking requests.",
+                    );
+                    if (isMixedContent({ hsUrl })) {
+                        error = _t(
+                            "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. " +
+                                "Either use HTTPS or enable unsafe scripts.",
+                        );
+                    }
+                    return { error };
+                }
 
                 const stateForError = AutoDiscoveryUtils.authComponentStateForError(e);
                 if (stateForError.serverErrorIsFatal) {
