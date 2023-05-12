@@ -22,6 +22,7 @@ import { IS_MAC, Key } from "../../../../../Keyboard";
 import Autocomplete from "../../Autocomplete";
 import { handleEventWithAutocomplete } from "./utils";
 import { useSuggestion } from "./useSuggestion";
+import { isNotUndefined } from "../../../../../Typeguards";
 
 function isDivElement(target: EventTarget): target is HTMLDivElement {
     return target instanceof HTMLDivElement;
@@ -84,7 +85,7 @@ export function usePlainTextListeners(
 
     const setText = useCallback(
         (text?: string) => {
-            if (text !== undefined) {
+            if (isNotUndefined(text)) {
                 setContent(text);
                 onChange?.(text);
             } else if (ref && ref.current) {
