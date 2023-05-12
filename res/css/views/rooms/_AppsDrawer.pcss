@@ -205,9 +205,14 @@ limitations under the License.
         overflow: hidden;
         text-overflow: ellipsis;
         margin-left: 9px;
+        pointer-events: none;
 
         .mx_WidgetAvatar {
             margin-right: 12px;
+        }
+
+        &.mx_AppTileMenuBar_title--pointer {
+            pointer-events: all;
         }
     }
 
