@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import { compare } from "matrix-js-sdk/src/utils";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "./languageHandler";
 import SettingsStore from "./settings/SettingsStore";
@@ -79,11 +80,20 @@ export function enumerateThemes(): { [key: string]: string } {
         "light-high-contrast": _t("Light high contrast"),
         "dark": _t("Dark"),
     };
-    const customThemes = SettingsStore.getValue("custom_themes") || {};
+    const customThemes = SettingsStore.getValue("custom_themes") || [];
     const customThemeNames: Record<string, string> = {};
-    for (const { name } of customThemes) {
-        customThemeNames[`custom-${name}`] = name;
+
+    try {
+        for (const { name } of customThemes) {
+            customThemeNames[`custom-${name}`] = name;
+        }
+    } catch (err) {
+        logger.warn("Error loading custom themes", {
+            err,
+            customThemes,
+        });
     }
+
     return Object.assign({}, customThemeNames, BUILTIN_THEMES);
 }
 

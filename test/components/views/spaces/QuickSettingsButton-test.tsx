@@ -17,6 +17,7 @@ limitations under the License.
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { mocked } from "jest-mock";
 
 import QuickSettingsButton from "../../../../src/components/views/spaces/QuickSettingsButton";
 import SettingsStore from "../../../../src/settings/SettingsStore";
@@ -61,6 +62,10 @@ describe("QuickSettingsButton", () => {
             renderQuickSettingsButton();
         });
 
+        afterEach(() => {
+            mocked(SettingsStore.getValue).mockRestore();
+        });
+
         describe("and no room is viewed", () => {
             it("should not render the »Developer tools« button", () => {
                 renderQuickSettingsButton();
@@ -71,6 +76,10 @@ describe("QuickSettingsButton", () => {
         describe("and a room is viewed", () => {
             beforeEach(() => {
                 jest.spyOn(SdkContextClass.instance.roomViewStore, "getRoomId").mockReturnValue(roomId);
+            });
+
+            afterEach(() => {
+                mocked(SdkContextClass.instance.roomViewStore.getRoomId).mockRestore();
             });
 
             describe("and the quick settings are open", () => {
