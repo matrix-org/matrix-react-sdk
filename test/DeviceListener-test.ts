@@ -81,6 +81,8 @@ describe("DeviceListener", () => {
                 crossSigningVerified: false,
             }),
             getUserDeviceInfo: jest.fn().mockResolvedValue(new Map()),
+            isCrossSigningReady: jest.fn().mockResolvedValue(true),
+            isSecretStorageReady: jest.fn().mockResolvedValue(true),
         } as unknown as Mocked<CryptoApi>;
         mockClient = getMockClientWithEventEmitter({
             isGuest: jest.fn(),
@@ -89,15 +91,11 @@ describe("DeviceListener", () => {
             getKeyBackupVersion: jest.fn().mockResolvedValue(undefined),
             getRooms: jest.fn().mockReturnValue([]),
             isVersionSupported: jest.fn().mockResolvedValue(true),
-            isCrossSigningReady: jest.fn().mockResolvedValue(true),
-            isSecretStorageReady: jest.fn().mockResolvedValue(true),
-            isCryptoEnabled: jest.fn().mockReturnValue(true),
             isInitialSyncComplete: jest.fn().mockReturnValue(true),
             getKeyBackupEnabled: jest.fn(),
             getCrossSigningId: jest.fn(),
             getStoredCrossSigningForUser: jest.fn(),
             waitForClientWellKnown: jest.fn(),
-            downloadKeys: jest.fn(),
             isRoomEncrypted: jest.fn(),
             getClientWellKnown: jest.fn(),
             getDeviceId: jest.fn().mockReturnValue(deviceId),
@@ -288,7 +286,7 @@ describe("DeviceListener", () => {
                 mocked(isSecretStorageBeingAccessed).mockReturnValue(true);
                 await createAndStart();
 
-                expect(mockClient!.downloadKeys).not.toHaveBeenCalled();
+                expect(mockCrypto!.getUserDeviceInfo).not.toHaveBeenCalled();
                 expect(SetupEncryptionToast.showToast).not.toHaveBeenCalled();
             });
 
@@ -296,7 +294,7 @@ describe("DeviceListener", () => {
                 mockClient!.isRoomEncrypted.mockReturnValue(false);
                 await createAndStart();
 
-                expect(mockClient!.downloadKeys).not.toHaveBeenCalled();
+                expect(mockCrypto!.getUserDeviceInfo).not.toHaveBeenCalled();
                 expect(SetupEncryptionToast.showToast).not.toHaveBeenCalled();
             });
 
@@ -309,7 +307,7 @@ describe("DeviceListener", () => {
                     mockClient!.getStoredCrossSigningForUser.mockReturnValue(new CrossSigningInfo(userId));
                     await createAndStart();
 
-                    expect(mockClient!.downloadKeys).toHaveBeenCalled();
+                    expect(mockCrypto!.getUserDeviceInfo).toHaveBeenCalled();
                     expect(SetupEncryptionToast.showToast).toHaveBeenCalledWith(
                         SetupEncryptionToast.Kind.VERIFY_THIS_SESSION,
                     );
