@@ -311,6 +311,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     };
 
     private onDeactivateClicked = (): void => {
+        console.log("huh");
         Modal.createDialog(DeactivateAccountDialog, {
             onFinished: (success) => {
                 if (success) this.props.closeSettingsFn();
