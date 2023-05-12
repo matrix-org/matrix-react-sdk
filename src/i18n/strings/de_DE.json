@@ -3773,5 +3773,9 @@
     "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s reagierten mit %(reaction)s auf %(message)s",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Einladen per E-Mail-Adresse ist nicht ohne Identitäts-Server möglich. Du kannst einen unter „Einstellungen“ einrichten.",
     "Unable to create room with moderation bot": "Erstellen eines Raumes mit Moderations-Bot nicht möglich",
-    "Failed to download source media, no source url was found": "Herunterladen der Quellmedien fehlgeschlagen, da keine Quell-URL gefunden wurde"
+    "Failed to download source media, no source url was found": "Herunterladen der Quellmedien fehlgeschlagen, da keine Quell-URL gefunden wurde",
+    "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Sobald eingeladene Benutzer %(brand)s beigetreten sind, werdet ihr euch unterhalten können und der Raum wird Ende-zu-Ende-verschlüsselt sein",
+    "Waiting for users to join %(brand)s": "Warte darauf, dass Benutzer %(brand)s beitreten",
+    "You do not have permission to invite users": "Du bist nicht berechtigt, Benutzer einzuladen",
+    "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s hat den Anzeigenamen und das Profilbild geändert"
 }
