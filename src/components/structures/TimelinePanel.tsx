@@ -956,7 +956,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 continue; /* aborted */
             }
             // outside of try/catch to not swallow errors
-            this.updateReadMarker();
+            await this.updateReadMarker();
         }
     }
 
@@ -971,7 +971,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 continue; /* aborted */
             }
             // outside of try/catch to not swallow errors
-            this.sendReadReceipts();
+            await this.sendReadReceipts();
         }
     }
 
