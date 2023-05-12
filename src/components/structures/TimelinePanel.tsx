@@ -1004,7 +1004,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
     /**
      * Whether a fully_read marker should be send.
      */
-    private shouldSendRM(readMarkerEventId: string | null): readMarkerEventId is string {
+    private shouldSendFullyReadMarker(fullyReadMarkerEventId: string | null): fullyReadMarkerEventId is string {
         if (!this.state.readMarkerEventId) {
             // Nothing that can be send.
             return false;
@@ -1033,9 +1033,9 @@ class TimelinePanel extends React.Component<IProps, IState> {
     /**
      * Whether a read receipt should be send.
      */
-    private shouldSendRR(
-        currentRREventId: string | null,
-        currentRREventIndex: number | null,
+    private shouldSendReadReceipt(
+        currentReadReceiptEventId: string | null,
+        currentReadReceiptEventIndex: number | null,
         lastReadEvent: MatrixEvent | null,
         lastReadEventIndex: number | null,
     ): boolean {
@@ -1053,8 +1053,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // the user eventually hits the live timeline.
 
         if (
-            currentRREventId &&
-            currentRREventIndex === null &&
+            currentReadReceiptEventId &&
+            currentReadReceiptEventIndex === null &&
             this.timelineWindow?.canPaginate(EventTimeline.FORWARDS)
         ) {
             return false;
@@ -1062,7 +1062,9 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // Only send a RR if the last read event is ahead in the timeline relative to the current RR event.
         // Only send a RR if the last RR set != the one we would send
         return (
-            (lastReadEventIndex === null || currentRREventIndex === null || lastReadEventIndex > currentRREventIndex) &&
+            (lastReadEventIndex === null ||
+                currentReadReceiptEventIndex === null ||
+                lastReadEventIndex > currentReadReceiptEventIndex) &&
             (!this.lastRRSentEventId || this.lastRRSentEventId !== lastReadEvent?.getId())
         );
     }
@@ -1079,28 +1081,31 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // if no client or client is guest don't send RR or RM
         if (!client || client.isGuest()) return;
 
-        const currentRREventId = this.getCurrentReadReceipt(true);
-        const currentRREventIndex = this.indexForEventId(currentRREventId);
+        // "current" here means the receipts that have already been sent
+        const currentReadReceiptEventId = this.getCurrentReadReceipt(true);
+        const currentReadReceiptEventIndex = this.indexForEventId(currentReadReceiptEventId);
+
+        // "last" here means the last displayed event
         const lastReadEventIndex = this.getLastDisplayedEventIndex({
             ignoreOwn: true,
         });
         const lastReadEvent: MatrixEvent | null = this.state.events[lastReadEventIndex ?? 0];
 
-        const shouldSendRR = this.shouldSendRR(
-            currentRREventId,
-            currentRREventIndex,
+        const shouldSendReadReceipt = this.shouldSendReadReceipt(
+            currentReadReceiptEventId,
+            currentReadReceiptEventIndex,
             lastReadEvent,
             lastReadEventIndex,
         );
-        const readMarkerEventId = this.state.readMarkerEventId;
-        const shouldSendRM = this.shouldSendRM(readMarkerEventId);
+        const fullyReadMarkerEventId = this.state.readMarkerEventId;
+        const shouldSendFullyReadMarker = this.shouldSendFullyReadMarker(fullyReadMarkerEventId);
         const roomId = this.props.timelineSet.room?.roomId;
 
         debuglog(`Sending Read Markers for ${roomId}: `, {
-            shouldSendRR,
-            shouldSendRM,
-            currentRREventId,
-            currentRREventIndex,
+            shouldSendReadReceipt,
+            shouldSendFullyReadMarker,
+            currentReadReceiptEventId,
+            currentReadReceiptEventIndex,
             lastReadEventId: lastReadEvent?.getId(),
             lastReadEventIndex,
             readMarkerEventId: this.state.readMarkerEventId,
@@ -1108,17 +1113,17 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         const proms: Array<Promise<void>> = [];
 
-        if (shouldSendRR) {
+        if (shouldSendReadReceipt) {
             proms.push(this.sendReadReceipt(client, lastReadEvent));
         }
 
-        if (shouldSendRM) {
-            const readMarkerEvent = this.props.timelineSet.findEventById(readMarkerEventId);
+        if (shouldSendFullyReadMarker) {
+            const readMarkerEvent = this.props.timelineSet.findEventById(fullyReadMarkerEventId);
 
             if (readMarkerEvent) {
                 // Empty room Id should not happen here.
                 // Either way fall back to empty string and let further functions handle it.
-                proms.push(this.sendReadMarker(client, roomId ?? "", readMarkerEventId));
+                proms.push(this.sendFullyReadMarker(client, roomId ?? "", fullyReadMarkerEventId));
             }
         }
 
@@ -1150,11 +1155,15 @@ class TimelinePanel extends React.Component<IProps, IState> {
      * Sends a fully_read marker for readMarkerEvent.
      * Resets the last sent event Id in case of an error, so that it will be retried next time.
      */
-    private async sendReadMarker(client: MatrixClient, roomId: string, readMarkerEventId: string): Promise<void> {
+    private async sendFullyReadMarker(
+        client: MatrixClient,
+        roomId: string,
+        fullyReadMarkerEventId: string,
+    ): Promise<void> {
         this.lastRMSentEventId = this.state.readMarkerEventId;
 
         try {
-            await client.setRoomReadMarkers(roomId, readMarkerEventId);
+            await client.setRoomReadMarkers(roomId, fullyReadMarkerEventId);
         } catch (error) {
             // it failed, so allow retries next time the user is active
             this.lastRMSentEventId = undefined;
