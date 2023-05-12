@@ -1110,7 +1110,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             const readMarkerEvent = this.props.timelineSet.findEventById(readMarkerEventId);
 
             if (readMarkerEvent) {
-                proms.push(await this.sendReadMarker(client, readMarkerEvent));
+                proms.push(this.sendReadMarker(client, readMarkerEvent));
             }
         }
 
@@ -1160,7 +1160,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
     // if the read marker is on the screen, we can now assume we've caught up to the end
     // of the screen, so move the marker down to the bottom of the screen.
-    private updateReadMarker = (): void => {
+    private updateReadMarker = async (): Promise<void> => {
         if (!this.props.manageReadMarkers) return;
         if (this.getReadMarkerPosition() === 1) {
             // the read marker is at an event below the viewport,
@@ -1189,7 +1189,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
 
         // Send the updated read marker (along with read receipt) to the server
-        this.sendReadReceipts();
+        await this.sendReadReceipts();
     };
 
     // advance the read marker past any events we sent ourselves.
@@ -1277,7 +1277,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
     /**
      * update the read-up-to marker to match the read receipt
      */
-    public forgetReadMarker = (): void => {
+    public forgetReadMarker = async (): Promise<void> => {
         if (!this.props.manageReadMarkers) return;
 
         // Find the read receipt - we will set the read marker to this
@@ -1299,7 +1299,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         this.setReadMarker(rmId, rmTs);
 
         // Send the receipts to the server immediately (don't wait for activity)
-        this.sendReadReceipts();
+        await this.sendReadReceipts();
     };
 
     /* return true if the content is fully scrolled down and we are
@@ -1492,7 +1492,9 @@ class TimelinePanel extends React.Component<IProps, IState> {
                     }
 
                     if (this.props.sendReadReceiptOnLoad) {
-                        this.sendReadReceipts();
+                        this.sendReadReceipts().catch((err) => {
+                            logger.warn("Error sending receipts on load", err);
+                        });
                     }
                 },
             );

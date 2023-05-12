@@ -187,9 +187,7 @@ describe("TimelinePanel", () => {
                     // @ts-ignore
                     await timelinePanel.sendReadReceipts();
                     // @ts-ignore Simulate user activity by calling updateReadMarker on the TimelinePanel.
-                    timelinePanel.updateReadMarker();
-
-                    await flushPromises();
+                    await timelinePanel.updateReadMarker();
                 });
 
                 it("should send a fully read marker and a public receipt", async () => {
@@ -202,7 +200,7 @@ describe("TimelinePanel", () => {
                         client.sendReadReceipt.mockClear();
 
                         // @ts-ignore Simulate user activity by calling updateReadMarker on the TimelinePanel.
-                        timelinePanel.updateReadMarker();
+                        await timelinePanel.updateReadMarker();
                     });
 
                     it("should not send receipts again", () => {
@@ -212,8 +210,7 @@ describe("TimelinePanel", () => {
                     it("and forgetting the read markers, should send the stored marker again", async () => {
                         timelineSet.addLiveEvent(ev2, {});
                         room.addEphemeralEvents([newReceipt(ev2.getId()!, userId, 222, 200)]);
-                        timelinePanel.forgetReadMarker();
-                        await flushPromises();
+                        await timelinePanel.forgetReadMarker();
                         expect(client.sendReadReceipt).toHaveBeenCalledWith(ev2, ReceiptType.FullyRead, true);
                     });
                 });
@@ -251,7 +248,7 @@ describe("TimelinePanel", () => {
                     client.sendReadReceipt.mockClear();
 
                     // @ts-ignore simulate user activity
-                    timelinePanel.updateReadMarker();
+                    await timelinePanel.updateReadMarker();
 
                     // It should not send the receipt again.
                     expect(client.sendReadReceipt).not.toHaveBeenCalledWith(ev1, ReceiptType.ReadPrivate);
