@@ -126,7 +126,6 @@ describe("permalinks", () => {
             getPill(danielle.getSafeUserId());
         });
 
-
         // Exclude various components from the snapshot, for consistency
         const percyCSS =
             ".mx_cryptoEvent, " +
