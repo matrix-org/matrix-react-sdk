@@ -66,7 +66,7 @@ export function usePlainTextListeners(
     onInput(event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>): void;
     onPaste(event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>): void;
     onKeyDown(event: KeyboardEvent<HTMLDivElement>): void;
-    setContent(text: string): void;
+    setContent(text?: string): void;
     handleMention: (link: string, text: string, attributes: Attributes) => void;
     handleCommand: (text: string) => void;
     onSelect: (event: SyntheticEvent<HTMLDivElement>) => void;
