@@ -32,10 +32,19 @@ function isDivElement(target: EventTarget): target is HTMLDivElement {
  * Decodes a string containing html character entities and returns the string with the entities replaced
  * with regular characters, eg "&lt;" becomes "<"
  */
-function decodeHtml(html: string): string {
+export function decodeHtml(html: string): string {
     const textArea = document.createElement("textarea");
     textArea.innerHTML = html;
     return textArea.value;
+}
+
+/**
+ * Encodes a string so that it contains html character entities where necessary, eg "<" becomes "&lt;"
+ */
+export function encodeHtml(text: string): string {
+    const textArea = document.createElement("textarea");
+    textArea.innerText = text;
+    return textArea.innerHTML;
 }
 
 // Hitting enter inside the editor inserts an editable div, initially containing a <br />
