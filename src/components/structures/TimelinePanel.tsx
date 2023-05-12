@@ -1100,7 +1100,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             readMarkerEventId: this.state.readMarkerEventId,
         });
 
-        const proms = [];
+        const proms: Array<Promise<void>> = [];
 
         if (shouldSendRR && lastReadEvent) {
             proms.push(this.sendReadReceipt(client, lastReadEvent));
