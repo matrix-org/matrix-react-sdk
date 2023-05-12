@@ -33,10 +33,9 @@ import { findDMForUser } from "./utils/dm/findDMForUser";
 
 async function enable4SIfNeeded(): Promise<boolean> {
     const cli = MatrixClientPeg.get();
-    if (!cli.isCryptoEnabled()) {
-        return false;
-    }
-    const usk = cli.getCrossSigningId("user_signing");
+    const crypto = cli.getCrypto();
+    if (!crypto) return false;
+    const usk = await crypto.getCrossSigningKeyId("user_signing");
     if (!usk) {
         await accessSecretStorage();
         return false;
