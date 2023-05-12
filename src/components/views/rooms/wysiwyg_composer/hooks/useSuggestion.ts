@@ -17,7 +17,7 @@ limitations under the License.
 import { Attributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 import { SyntheticEvent, useState } from "react";
 
-import { isNotUndefined } from "../../../../../Typeguards";
+import { isNotNull, isNotUndefined } from "../../../../../Typeguards";
 
 /**
  * Information about the current state of the `useSuggestion` hook.
@@ -171,10 +171,12 @@ export function processMention(
 
     // now add the leading text node, link element and trailing text node before removing the node we are replacing
     const parentNode = node.parentNode;
-    parentNode.insertBefore(leadingTextNode, node);
-    parentNode.insertBefore(linkElement, node);
-    parentNode.insertBefore(trailingTextNode, node);
-    parentNode.removeChild(node);
+    if (isNotNull(parentNode)) {
+        parentNode.insertBefore(leadingTextNode, node);
+        parentNode.insertBefore(linkElement, node);
+        parentNode.insertBefore(trailingTextNode, node);
+        parentNode.removeChild(node);
+    }
 
     // move the selection to the trailing text node
     document.getSelection()?.setBaseAndExtent(trailingTextNode, 1, trailingTextNode, 1);
