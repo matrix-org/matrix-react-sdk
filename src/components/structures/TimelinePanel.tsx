@@ -1006,7 +1006,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             return false;
         }
 
-        if (this.lastRRSentEventId && this.lastRMSentEventId === this.state.readMarkerEventId) {
+        if (this.lastRMSentEventId && this.lastRMSentEventId === this.state.readMarkerEventId) {
             // Prevent sending the same receipt twice.
             return false;
         }
