@@ -709,7 +709,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
     private onRoomTimeline = (
         ev: MatrixEvent,
         room: Room | undefined,
-        toStartOfTimeline: boolean,
+        toStartOfTimeline: boolean | undefined,
         removed: boolean,
         data: IRoomTimelineData,
     ): void => {
@@ -819,7 +819,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         );
     }
 
-    private onRoomTimelineReset = (room: Room, timelineSet: EventTimelineSet): void => {
+    private onRoomTimelineReset = (room: Room | undefined, timelineSet: EventTimelineSet): void => {
         if (timelineSet !== this.props.timelineSet && timelineSet !== this.props.overlayTimelineSet) return;
 
         if (this.canResetTimeline()) {
@@ -917,7 +917,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         this.forceUpdate();
     };
 
-    private onLocalEchoUpdated = (ev: MatrixEvent, room: Room, oldEventId: string): void => {
+    private onLocalEchoUpdated = (ev: MatrixEvent, room: Room, oldEventId?: string): void => {
         if (this.unmounted) return;
 
         // ignore events for other rooms
@@ -965,7 +965,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         this.forceUpdate();
     };
 
-    private onSync = (clientSyncState: SyncState, prevState: SyncState, data: object): void => {
+    private onSync = (clientSyncState: SyncState, prevState: SyncState | null, data?: object): void => {
         if (this.unmounted) return;
         this.setState({ clientSyncState });
     };
@@ -1067,7 +1067,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             shouldSendRR &&
             // Only send a RR if the last read event is ahead in the timeline relative to
             // the current RR event.
-            lastReadEventIndex > currentRREventIndex &&
+            lastReadEventIndex! > currentRREventIndex! &&
             // Only send a RR if the last RR set != the one we would send
             this.lastRRSentEventId !== lastReadEvent?.getId();
 
@@ -1351,7 +1351,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const pos = this.getReadMarkerPosition();
         const ret =
             this.state.readMarkerEventId !== null && // 1.
-            (pos < 0 || pos === null); // 3., 4.
+            (pos === null || pos < 0); // 3., 4.
         return ret;
     };
 
@@ -1395,7 +1395,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                     "TimelinePanel scrolling to eventId " +
                         eventId +
                         " at position " +
-                        offsetBase * 100 +
+                        offsetBase! * 100 +
                         "% + " +
                         pixelOffset,
                 );

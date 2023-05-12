@@ -35,7 +35,7 @@ import { WidgetType } from "../widgets/WidgetType";
 import { Jitsi } from "../widgets/Jitsi";
 import { objectClone } from "./objects";
 import { _t } from "../languageHandler";
-import { IApp } from "../stores/WidgetStore";
+import { IApp, isAppWidget } from "../stores/WidgetStore";
 
 // How long we wait for the state event echo to come back from the server
 // before waitFor[Room/User]Widget rejects its promise
@@ -47,7 +47,11 @@ export interface IWidgetEvent {
     sender: string;
     // eslint-disable-next-line camelcase
     state_key: string;
-    content: Partial<IApp>;
+    content: IApp;
+}
+
+export interface UserWidget extends Omit<IWidgetEvent, "content"> {
+    content: IWidget & Partial<IApp>;
 }
 
 export default class WidgetUtils {
@@ -254,6 +258,7 @@ export default class WidgetUtils {
         const userId = client.getSafeUserId();
 
         const content = {
+            id: widgetId,
             type: widgetType.preferred,
             url: widgetUrl,
             name: widgetName,
@@ -354,7 +359,7 @@ export default class WidgetUtils {
      * Get user specific widgets (not linked to a specific room)
      * @return {object} Event content object containing current / active user widgets
      */
-    public static getUserWidgets(): Record<string, IWidgetEvent> {
+    public static getUserWidgets(): Record<string, UserWidget> {
         const client = MatrixClientPeg.get();
         if (!client) {
             throw new Error("User not logged in");
@@ -370,7 +375,7 @@ export default class WidgetUtils {
      * Get user specific widgets (not linked to a specific room) as an array
      * @return {[object]} Array containing current / active user widgets
      */
-    public static getUserWidgetsArray(): IWidgetEvent[] {
+    public static getUserWidgetsArray(): UserWidget[] {
         return Object.values(WidgetUtils.getUserWidgets());
     }
 
@@ -378,18 +383,18 @@ export default class WidgetUtils {
      * Get active stickerpicker widgets (stickerpickers are user widgets by nature)
      * @return {[object]} Array containing current / active stickerpicker widgets
      */
-    public static getStickerpickerWidgets(): IWidgetEvent[] {
+    public static getStickerpickerWidgets(): UserWidget[] {
         const widgets = WidgetUtils.getUserWidgetsArray();
-        return widgets.filter((widget) => widget.content && widget.content.type === "m.stickerpicker");
+        return widgets.filter((widget) => widget.content?.type === "m.stickerpicker");
     }
 
     /**
      * Get all integration manager widgets for this user.
      * @returns {Object[]} An array of integration manager user widgets.
      */
-    public static getIntegrationManagerWidgets(): IWidgetEvent[] {
+    public static getIntegrationManagerWidgets(): UserWidget[] {
         const widgets = WidgetUtils.getUserWidgetsArray();
-        return widgets.filter((w) => w.content && w.content.type === "m.integration_manager");
+        return widgets.filter((w) => w.content?.type === "m.integration_manager");
     }
 
     public static getRoomWidgetsOfType(room: Room, type: WidgetType): MatrixEvent[] {
@@ -540,30 +545,30 @@ export default class WidgetUtils {
         return url.href;
     }
 
-    public static getWidgetName(app?: IApp): string {
+    public static getWidgetName(app?: IWidget): string {
         return app?.name?.trim() || _t("Unknown App");
     }
 
-    public static getWidgetDataTitle(app?: IApp): string {
+    public static getWidgetDataTitle(app?: IWidget): string {
         return app?.data?.title?.trim() || "";
     }
 
-    public static getWidgetUid(app?: IApp): string {
-        return app ? WidgetUtils.calcWidgetUid(app.id, app.roomId) : "";
+    public static getWidgetUid(app?: IApp | IWidget): string {
+        return app ? WidgetUtils.calcWidgetUid(app.id, isAppWidget(app) ? app.roomId : undefined) : "";
     }
 
     public static calcWidgetUid(widgetId: string, roomId?: string): string {
         return roomId ? `room_${roomId}_${widgetId}` : `user_${widgetId}`;
     }
 
-    public static editWidget(room: Room, app: IApp): void {
+    public static editWidget(room: Room, app: IWidget): void {
         // noinspection JSIgnoredPromiseFromCall
         IntegrationManagers.sharedInstance()
             .getPrimaryManager()
             ?.open(room, "type_" + app.type, app.id);
     }
 
-    public static isManagedByManager(app: IApp): boolean {
+    public static isManagedByManager(app: IWidget): boolean {
         if (WidgetUtils.isScalarUrl(app.url)) {
             const managers = IntegrationManagers.sharedInstance();
             if (managers.hasManager()) {
