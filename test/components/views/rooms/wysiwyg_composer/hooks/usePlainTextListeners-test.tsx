@@ -54,7 +54,7 @@ describe("setContent", () => {
 
         const { result } = renderHook(() => usePlainTextListeners("initialContent", mockOnChange));
 
-        // @ts-ignore
+        // @ts-ignore in order to allow us to reassign the ref without complaint
         result.current.ref.current = mockEditor;
 
         act(() => {
