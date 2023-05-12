@@ -110,8 +110,10 @@ export function usePlainTextListeners(
             } else if (isNotNull(ref) && isNotNull(ref.current)) {
                 // if called with no argument, read the current innerHTML from the ref
                 const currentRefContent = ref.current.innerHTML;
-                setContent(currentRefContent);
-                onChange?.(currentRefContent);
+                // then amend the content, as would have happened after an input event
+                const amendedContent = amendInnerHtml(currentRefContent);
+                setContent(amendedContent);
+                onChange?.(amendedContent);
             }
         },
         [onChange, ref],
