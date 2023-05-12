@@ -31,17 +31,17 @@ export function amendLinksInPlainText(richText: string, plainText: string): stri
     }
 
     // we have found all of the <a> type links in the rich text, now search through the plain text and:
-    // if the href can not be interpreted as a permalink, render it in the markdown style
-    // otherwise, replace the permalink with the html containing all the attributes
-
+    // - if the href can not be interpreted as a permalink, render it in the markdown style
+    // - otherwise, replace the permalink with the html containing all the attributes to display as a pill
     let count = 0;
     const plainTextWithReplacedLinks = plainText.replace(mdLinkRegex, (match, linkText, href) => {
-        // special case for @room, as this has a href of "#" so will
+        // special case for @room, as this has a href of "#"
         if (linkText === "@room") {
             const toReturn = richTextLinkMatches[count];
             count++;
             return toReturn;
         }
+
         // permalink returns null if we can't interpret it that way
         const permalink = parsePermalink(href);
         const toReturn = permalink === null ? `[${linkText}](${href})` : richTextLinkMatches[count];
