@@ -22,6 +22,7 @@ import { RoomPermalinkCreator } from "../../../../../utils/permalinks/Permalinks
 import { addReplyToMessageContent } from "../../../../../utils/Reply";
 
 export const EMOTE_PREFIX = "/me ";
+const atRoomRegex = /(<a[^>]*>@room<\/a>)/g;
 
 // Merges favouring the given relation
 function attachRelation(content: IContent, relation?: IEventRelation): void {
@@ -91,6 +92,11 @@ export async function createMessageContent(
         // is how they have to do it (due to it clashing with commands), so here we
         // remove the first character to make sure //word displays as /word
         message = message.slice(1);
+    }
+    if (atRoomRegex.test(message)) {
+        // if the message contains any @room type mentions, replace the html with
+        // a plain text representation for timeline compatibility
+        message = message.replace(atRoomRegex, () => "@room");
     }
 
     // if we're editing rich text, the message content is pure html
