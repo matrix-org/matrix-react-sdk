@@ -48,6 +48,7 @@ import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { editorRoomKey, editorStateKey } from "../../../Editing";
 import DocumentOffset from "../../../editor/offset";
+import { attachMentions, attachRelation } from "./SendMessageComposer";
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
     const html = mxEvent.getContent().formatted_body;
@@ -69,7 +70,7 @@ function getTextReplyFallback(mxEvent: MatrixEvent): string {
 }
 
 // exported for tests
-export function createEditContent(model: EditorModel, editedEvent: MatrixEvent): IContent {
+export function createEditContent(model: EditorModel, editedEvent: MatrixEvent, replyToEvent?: MatrixEvent): IContent {
     const isEmote = containsEmote(model);
     if (isEmote) {
         model = stripEmoteCommand(model);
@@ -90,8 +91,9 @@ export function createEditContent(model: EditorModel, editedEvent: MatrixEvent):
         body: body,
     };
     const contentBody: IContent = {
-        msgtype: newContent.msgtype,
-        body: `${plainPrefix} * ${body}`,
+        "msgtype": newContent.msgtype,
+        "body": `${plainPrefix} * ${body}`,
+        "m.new_content": newContent,
     };
 
     const formattedBody = htmlSerializeIfNeeded(model, {
@@ -105,16 +107,11 @@ export function createEditContent(model: EditorModel, editedEvent: MatrixEvent):
         contentBody.formatted_body = `${htmlPrefix} * ${formattedBody}`;
     }
 
-    return Object.assign(
-        {
-            "m.new_content": newContent,
-            "m.relates_to": {
-                rel_type: "m.replace",
-                event_id: editedEvent.getId(),
-            },
-        },
-        contentBody,
-    );
+    // Build the mentions properties for both the content and new_content.
+    attachMentions(editedEvent.sender!.userId, contentBody, model, replyToEvent, editedEvent.getContent());
+    attachRelation(contentBody, { rel_type: "m.replace", event_id: editedEvent.getId() });
+
+    return contentBody;
 }
 
 interface IEditMessageComposerProps extends MatrixClientProps {
@@ -131,7 +128,8 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
 
     private readonly editorRef = createRef<BasicMessageComposer>();
     private readonly dispatcherRef: string;
-    private model: EditorModel;
+    private readonly replyToEvent?: MatrixEvent;
+    private model!: EditorModel;
 
     public constructor(props: IEditMessageComposerProps, context: React.ContextType<typeof RoomContext>) {
         super(props);
@@ -140,7 +138,9 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         const isRestored = this.createEditorModel();
         const ev = this.props.editState.getEvent();
 
-        const editContent = createEditContent(this.model, ev);
+        this.replyToEvent = ev.replyEventId ? this.context.room?.findEventById(ev.replyEventId) : undefined;
+
+        const editContent = createEditContent(this.model, ev, this.replyToEvent);
         this.state = {
             saveDisabled: !isRestored || !this.isContentModified(editContent["m.new_content"]),
         };
@@ -229,18 +229,20 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     }
 
     private get editorRoomKey(): string {
-        return editorRoomKey(this.props.editState.getEvent().getRoomId(), this.context.timelineRenderingType);
+        return editorRoomKey(this.props.editState.getEvent().getRoomId()!, this.context.timelineRenderingType);
     }
 
     private get editorStateKey(): string {
-        return editorStateKey(this.props.editState.getEvent().getId());
+        return editorStateKey(this.props.editState.getEvent().getId()!);
     }
 
     private get events(): MatrixEvent[] {
         const liveTimelineEvents = this.context.liveTimeline?.getEvents();
-        const pendingEvents = this.getRoom()?.getPendingEvents();
+        const room = this.getRoom();
+        if (!liveTimelineEvents || !room) return [];
+        const pendingEvents = room.getPendingEvents();
         const isInThread = Boolean(this.props.editState.getEvent().getThread());
-        return liveTimelineEvents?.concat(isInThread ? [] : pendingEvents) ?? [];
+        return liveTimelineEvents.concat(isInThread ? [] : pendingEvents);
     }
 
     private cancelEdit = (): void => {
@@ -273,7 +275,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     private saveStoredEditorState = (): void => {
         const item = SendHistoryManager.createItem(this.model);
         this.clearPreviousEdit();
-        localStorage.setItem(this.editorRoomKey, this.props.editState.getEvent().getId());
+        localStorage.setItem(this.editorRoomKey, this.props.editState.getEvent().getId()!);
         localStorage.setItem(this.editorStateKey, JSON.stringify(item));
     };
 
@@ -309,7 +311,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
             const position = this.model.positionForOffset(caret.offset, caret.atNodeEnd);
             this.editorRef.current.replaceEmoticon(position, REGEX_EMOTICON);
         }
-        const editContent = createEditContent(this.model, editedEvent);
+        const editContent = createEditContent(this.model, editedEvent, this.replyToEvent);
         const newContent = editContent["m.new_content"];
 
         let shouldSend = true;
@@ -327,7 +329,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
 
         // If content is modified then send an updated event into the room
         if (this.isContentModified(newContent)) {
-            const roomId = editedEvent.getRoomId();
+            const roomId = editedEvent.getRoomId()!;
             if (!containsEmote(this.model) && isSlashCommand(this.model)) {
                 const [cmd, args, commandText] = getSlashCommand(this.model);
                 if (cmd) {
@@ -384,8 +386,8 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         // in case we're currently editing a pending event
         const sel = document.getSelection()!;
         let caret: DocumentOffset | undefined;
-        if (sel.focusNode) {
-            caret = getCaretOffsetAndText(this.editorRef.current?.editorRef.current, sel).caret;
+        if (sel.focusNode && this.editorRef.current?.editorRef.current) {
+            caret = getCaretOffsetAndText(this.editorRef.current.editorRef.current, sel).caret;
         }
         const parts = this.model.serializeParts();
         // if caret is undefined because for some reason there isn't a valid selection,
@@ -456,12 +458,15 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     };
 
     public render(): React.ReactNode {
+        const room = this.getRoom();
+        if (!room) return null;
+
         return (
             <div className={classNames("mx_EditMessageComposer", this.props.className)} onKeyDown={this.onKeyDown}>
                 <BasicMessageComposer
                     ref={this.editorRef}
                     model={this.model}
-                    room={this.getRoom()}
+                    room={room}
                     threadId={this.props.editState?.getEvent()?.getThread()?.id}
                     initialCaret={this.props.editState.getCaret() ?? undefined}
                     label={_t("Edit message")}

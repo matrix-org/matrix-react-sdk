@@ -19,6 +19,7 @@ import React from "react";
 import classNames from "classnames";
 import { Resizable } from "re-resizable";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { IWidget } from "matrix-widget-api";
 
 import AppTile from "../elements/AppTile";
 import dis from "../../../dispatcher/dispatcher";
@@ -32,7 +33,6 @@ import PercentageDistributor from "../../../resizer/distributors/percentage";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { clamp, percentageOf, percentageWithin } from "../../../utils/numbers";
 import UIStore from "../../../stores/UIStore";
-import { IApp } from "../../../stores/WidgetStore";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import Spinner from "../elements/Spinner";
 
@@ -45,7 +45,11 @@ interface IProps {
 }
 
 interface IState {
-    apps: Partial<{ [id in Container]: IApp[] }>;
+    apps: {
+        [Container.Top]: IWidget[];
+        [Container.Center]: IWidget[];
+        [Container.Right]?: IWidget[];
+    };
     resizingVertical: boolean; // true when changing the height of the apps drawer
     resizingHorizontal: boolean; // true when changing the distribution of the width between widgets
     resizing: boolean;
@@ -53,9 +57,9 @@ interface IState {
 
 export default class AppsDrawer extends React.Component<IProps, IState> {
     private unmounted = false;
-    private resizeContainer: HTMLDivElement;
+    private resizeContainer?: HTMLDivElement;
     private resizer: Resizer;
-    private dispatcherRef: string;
+    private dispatcherRef?: string;
     public static defaultProps: Partial<IProps> = {
         showApps: true,
     };
@@ -105,16 +109,15 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
         // (ie. a vertical resize handle because, the handle itself is vertical...)
         const classNames = {
             handle: "mx_ResizeHandle",
-            vertical: "mx_ResizeHandle_vertical",
-            reverse: "mx_ResizeHandle_reverse",
+            vertical: "mx_ResizeHandle--vertical",
         };
         const collapseConfig = {
             onResizeStart: () => {
-                this.resizeContainer.classList.add("mx_AppsDrawer_resizing");
+                this.resizeContainer?.classList.add("mx_AppsDrawer_resizing");
                 this.setState({ resizingHorizontal: true });
             },
             onResizeStop: () => {
-                this.resizeContainer.classList.remove("mx_AppsDrawer_resizing");
+                this.resizeContainer?.classList.remove("mx_AppsDrawer_resizing");
                 WidgetLayoutStore.instance.setResizerDistributions(
                     this.props.room,
                     Container.Top,
@@ -144,7 +147,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
         this.loadResizerPreferences();
     };
 
-    private getAppsHash = (apps: IApp[]): string => apps.map((app) => app.id).join("~");
+    private getAppsHash = (apps: IWidget[]): string => apps.map((app) => app.id).join("~");
 
     public componentDidUpdate(prevProps: IProps, prevState: IState): void {
         if (prevProps.userId !== this.props.userId || prevProps.room !== this.props.room) {
@@ -203,14 +206,12 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
         }
     };
 
-    private getApps = (): Partial<{ [id in Container]: IApp[] }> => {
-        const appsDict: Partial<{ [id in Container]: IApp[] }> = {};
-        appsDict[Container.Top] = WidgetLayoutStore.instance.getContainerWidgets(this.props.room, Container.Top);
-        appsDict[Container.Center] = WidgetLayoutStore.instance.getContainerWidgets(this.props.room, Container.Center);
-        return appsDict;
-    };
-    private topApps = (): IApp[] => this.state.apps[Container.Top];
-    private centerApps = (): IApp[] => this.state.apps[Container.Center];
+    private getApps = (): IState["apps"] => ({
+        [Container.Top]: WidgetLayoutStore.instance.getContainerWidgets(this.props.room, Container.Top),
+        [Container.Center]: WidgetLayoutStore.instance.getContainerWidgets(this.props.room, Container.Center),
+    });
+    private topApps = (): IWidget[] => this.state.apps[Container.Top];
+    private centerApps = (): IWidget[] => this.state.apps[Container.Center];
 
     private updateApps = (): void => {
         if (this.unmounted) return;
@@ -254,7 +255,6 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
         const classes = classNames({
             mx_AppsDrawer: true,
             mx_AppsDrawer_maximise: widgetIsMaxmised,
-            mx_AppsDrawer_fullWidth: apps.length < 2,
             mx_AppsDrawer_resizing: this.state.resizing,
             mx_AppsDrawer_2apps: apps.length === 2,
             mx_AppsDrawer_3apps: apps.length === 3,
@@ -265,7 +265,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
                     if (i < 1) return app;
                     return (
                         <React.Fragment key={app.key}>
-                            <ResizeHandle reverse={i > apps.length / 2} />
+                            <ResizeHandle />
                             {app}
                         </React.Fragment>
                     );
@@ -348,7 +348,7 @@ const PersistentVResizer: React.FC<IPersistentResizerProps> = ({
                 resizeNotifier.notifyTimelineHeightChanged();
             }}
             onResizeStop={(e, dir, ref, d) => {
-                let newHeight = defaultHeight + d.height;
+                let newHeight = defaultHeight! + d.height;
                 newHeight = percentageOf(newHeight, minHeight, maxHeight) * 100;
 
                 WidgetLayoutStore.instance.setContainerHeight(room, Container.Top, newHeight);

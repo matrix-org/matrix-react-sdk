@@ -90,11 +90,13 @@ export default class LeftPanel extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
-        UIStore.instance.trackElementDimensions("ListContainer", this.listContainerRef.current);
+        if (this.listContainerRef.current) {
+            UIStore.instance.trackElementDimensions("ListContainer", this.listContainerRef.current);
+            // Using the passive option to not block the main thread
+            // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#improving_scrolling_performance_with_passive_listeners
+            this.listContainerRef.current.addEventListener("scroll", this.onScroll, { passive: true });
+        }
         UIStore.instance.on("ListContainer", this.refreshStickyHeaders);
-        // Using the passive option to not block the main thread
-        // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#improving_scrolling_performance_with_passive_listeners
-        this.listContainerRef.current?.addEventListener("scroll", this.onScroll, { passive: true });
     }
 
     public componentWillUnmount(): void {
@@ -151,6 +153,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
     }
 
     private doStickyHeaders(list: HTMLDivElement): void {
+        if (!list.parentElement) return;
         const topEdge = list.scrollTop;
         const bottomEdge = list.offsetHeight + list.scrollTop;
         const sublists = list.querySelectorAll<HTMLDivElement>(".mx_RoomSublist:not(.mx_RoomSublist_hidden)");

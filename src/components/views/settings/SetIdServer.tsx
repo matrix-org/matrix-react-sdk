@@ -73,7 +73,7 @@ interface IProps {
 interface IState {
     defaultIdServer?: string;
     currentClientIdServer?: string;
-    idServer?: string;
+    idServer: string;
     error?: string;
     busy: boolean;
     disconnectBusy: boolean;
@@ -81,7 +81,7 @@ interface IState {
 }
 
 export default class SetIdServer extends React.Component<IProps, IState> {
-    private dispatcherRef: string;
+    private dispatcherRef?: string;
 
     public constructor(props: IProps) {
         super(props);
@@ -108,7 +108,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
     }
 
     public componentWillUnmount(): void {
-        dis.unregister(this.dispatcherRef);
+        if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
     }
 
     private onAction = (payload: ActionPayload): void => {

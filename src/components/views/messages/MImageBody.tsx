@@ -69,7 +69,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     private unmounted = true;
     private image = createRef<HTMLImageElement>();
     private timeout?: number;
-    private sizeWatcher: string;
+    private sizeWatcher?: string;
     private reconnectedListener: ClientEventHandlerMap[ClientEvent.Sync];
 
     public constructor(props: IBodyProps) {
@@ -104,9 +104,10 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
             const content = this.props.mxEvent.getContent<IMediaEventContent>();
             const httpUrl = this.state.contentUrl;
+            if (!httpUrl) return;
             const params: Omit<ComponentProps<typeof ImageView>, "onFinished"> = {
                 src: httpUrl,
-                name: content.body?.length > 0 ? content.body : _t("Attachment"),
+                name: content.body && content.body.length > 0 ? content.body : _t("Attachment"),
                 mxEvent: this.props.mxEvent,
                 permalinkCreator: this.props.permalinkCreator,
             };
@@ -135,7 +136,12 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     protected onImageEnter = (e: React.MouseEvent<HTMLImageElement>): void => {
         this.setState({ hover: true });
 
-        if (!this.state.showImage || !this.state.isAnimated || SettingsStore.getValue("autoplayGifs")) {
+        if (
+            !this.state.contentUrl ||
+            !this.state.showImage ||
+            !this.state.isAnimated ||
+            SettingsStore.getValue("autoplayGifs")
+        ) {
             return;
         }
         const imgElement = e.currentTarget;
@@ -145,11 +151,12 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     protected onImageLeave = (e: React.MouseEvent<HTMLImageElement>): void => {
         this.setState({ hover: false });
 
-        if (!this.state.showImage || !this.state.isAnimated || SettingsStore.getValue("autoplayGifs")) {
+        const url = this.state.thumbUrl ?? this.state.contentUrl;
+        if (!url || !this.state.showImage || !this.state.isAnimated || SettingsStore.getValue("autoplayGifs")) {
             return;
         }
         const imgElement = e.currentTarget;
-        imgElement.src = this.state.thumbUrl ?? this.state.contentUrl;
+        imgElement.src = url;
     };
 
     private clearError = (): void => {
@@ -158,6 +165,14 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     };
 
     private onImageError = (): void => {
+        // If the thumbnail failed to load then try again using the contentUrl
+        if (this.state.thumbUrl) {
+            this.setState({
+                thumbUrl: null,
+            });
+            return;
+        }
+
         this.clearBlurhashTimeout();
         this.setState({
             imgError: true,
@@ -167,7 +182,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
     private onImageLoad = (): void => {
         this.clearBlurhashTimeout();
-        this.props.onHeightChanged();
+        this.props.onHeightChanged?.();
 
         let loadedImageDimensions: IState["loadedImageDimensions"];
 
@@ -285,7 +300,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                     img.onerror = reject;
                 });
                 img.crossOrigin = "Anonymous"; // CORS allow canvas access
-                img.src = contentUrl;
+                img.src = contentUrl ?? "";
 
                 try {
                     await loadPromise;
@@ -360,7 +375,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         this.unmounted = true;
         MatrixClientPeg.get().off(ClientEvent.Sync, this.reconnectedListener);
         this.clearBlurhashTimeout();
-        SettingsStore.unwatchSetting(this.sizeWatcher);
+        if (this.sizeWatcher) SettingsStore.unwatchSetting(this.sizeWatcher);
         if (this.state.isAnimated && this.state.thumbUrl) {
             URL.revokeObjectURL(this.state.thumbUrl);
         }
@@ -378,22 +393,24 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     }
 
     protected messageContent(
-        contentUrl: string,
-        thumbUrl: string,
+        contentUrl: string | null,
+        thumbUrl: string | null,
         content: IMediaEventContent,
         forcedHeight?: number,
-    ): JSX.Element {
+    ): ReactNode {
         if (!thumbUrl) thumbUrl = contentUrl; // fallback
 
-        let infoWidth: number;
-        let infoHeight: number;
+        // magic number
+        // edge case for this not to be set by conditions below
+        let infoWidth = 500;
+        let infoHeight = 500;
         let infoSvg = false;
 
         if (content.info?.w && content.info?.h) {
             infoWidth = content.info.w;
             infoHeight = content.info.h;
             infoSvg = content.info.mimetype === "image/svg+xml";
-        } else {
+        } else if (thumbUrl && contentUrl) {
             // Whilst the image loads, display nothing. We also don't display a blurhash image
             // because we don't really know what size of image we'll end up with.
             //
@@ -519,12 +536,21 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     }
 
     // Overridden by MStickerBody
-    protected wrapImage(contentUrl: string, children: JSX.Element): JSX.Element {
-        return (
-            <a href={contentUrl} target={this.props.forExport ? "_blank" : undefined} onClick={this.onClick}>
-                {children}
-            </a>
-        );
+    protected wrapImage(contentUrl: string | null | undefined, children: JSX.Element): ReactNode {
+        if (contentUrl) {
+            return (
+                <a href={contentUrl} target={this.props.forExport ? "_blank" : undefined} onClick={this.onClick}>
+                    {children}
+                </a>
+            );
+        } else if (!this.state.showImage) {
+            return (
+                <div role="button" onClick={this.onClick}>
+                    {children}
+                </div>
+            );
+        }
+        return children;
     }
 
     // Overridden by MStickerBody
@@ -579,7 +605,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         }
 
         let contentUrl = this.state.contentUrl;
-        let thumbUrl: string | undefined;
+        let thumbUrl: string | null;
         if (this.props.forExport) {
             contentUrl = this.props.mxEvent.getContent().url ?? this.props.mxEvent.getContent().file?.url;
             thumbUrl = contentUrl;

@@ -64,7 +64,7 @@ interface IOptionsButtonProps {
     // TODO: Types
     getTile: () => any | null;
     getReplyChain: () => ReplyChain | null;
-    permalinkCreator: RoomPermalinkCreator;
+    permalinkCreator?: RoomPermalinkCreator;
     onFocusChange: (menuDisplayed: boolean) => void;
     getRelationsForEvent?: GetRelationsForEvent;
 }
@@ -208,10 +208,11 @@ const ReplyInThreadButton: React.FC<IReplyInThreadButton> = ({ mxEvent }) => {
         e.preventDefault();
         e.stopPropagation();
 
-        if (mxEvent.getThread() && !mxEvent.isThreadRoot) {
+        const thread = mxEvent.getThread();
+        if (thread?.rootEvent && !mxEvent.isThreadRoot) {
             defaultDispatcher.dispatch<ShowThreadPayload>({
                 action: Action.ShowThread,
-                rootEvent: mxEvent.getThread()!.rootEvent,
+                rootEvent: thread.rootEvent,
                 initialEvent: mxEvent,
                 scroll_into_view: true,
                 highlighted: true,
@@ -259,7 +260,7 @@ interface IFavouriteButtonProp {
 const FavouriteButton: React.FC<IFavouriteButtonProp> = ({ mxEvent }) => {
     const { isFavourite, toggleFavourite } = useFavouriteMessages();
 
-    const eventId = mxEvent.getId();
+    const eventId = mxEvent.getId()!;
     const classes = classNames("mx_MessageActionBar_iconButton mx_MessageActionBar_favouriteButton", {
         mx_MessageActionBar_favouriteButton_fillstar: isFavourite(eventId),
     });

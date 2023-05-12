@@ -56,6 +56,7 @@ describe("<LoggedInView />", () => {
             element_call: {},
         },
         currentRoomId: "",
+        currentUserId: "@bob:server",
     };
 
     const getComponent = (props = {}): RenderResult =>

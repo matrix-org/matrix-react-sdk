@@ -16,7 +16,7 @@ limitations under the License.
 
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { Room } from "matrix-js-sdk/src/models/room";
-import React, { ComponentType, createRef, ReactComponentElement, RefObject, SyntheticEvent } from "react";
+import React, { ComponentType, createRef, ReactComponentElement, SyntheticEvent } from "react";
 
 import { IState as IRovingTabIndexState, RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -106,8 +106,8 @@ type TagAestheticsMap = Partial<{
     [tagId in TagID]: ITagAesthetics;
 }>;
 
-const auxButtonContextMenuPosition = (handle: RefObject<HTMLDivElement>): MenuProps => {
-    const rect = handle.current.getBoundingClientRect();
+const auxButtonContextMenuPosition = (handle: HTMLDivElement): MenuProps => {
+    const rect = handle.getBoundingClientRect();
     return {
         chevronFace: ChevronFace.None,
         left: rect.left - 7,
@@ -126,11 +126,11 @@ const DmAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex, dispatcher = default
 
     if (activeSpace && (showCreateRooms || showInviteUsers)) {
         let contextMenu: JSX.Element | undefined;
-        if (menuDisplayed) {
+        if (menuDisplayed && handle.current) {
             const canInvite = shouldShowSpaceInvite(activeSpace);
 
             contextMenu = (
-                <IconizedContextMenu {...auxButtonContextMenuPosition(handle)} onFinished={closeMenu} compact>
+                <IconizedContextMenu {...auxButtonContextMenuPosition(handle.current)} onFinished={closeMenu} compact>
                     <IconizedContextMenuOptionList first>
                         {showCreateRooms && (
                             <IconizedContextMenuOption
@@ -213,6 +213,8 @@ const UntaggedAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex }) => {
     });
 
     const showCreateRoom = shouldShowComponent(UIComponent.CreateRooms);
+    const showExploreRooms = shouldShowComponent(UIComponent.ExploreRooms);
+
     const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
     const elementCallVideoRoomsEnabled = useFeatureEnabled("feature_element_call_video_rooms");
 
@@ -337,46 +339,52 @@ const UntaggedAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex }) => {
                         )}
                     </>
                 )}
-                <IconizedContextMenuOption
-                    label={_t("Explore public rooms")}
-                    iconClassName="mx_RoomList_iconExplore"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        closeMenu();
-                        PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuExploreRoomsItem", e);
-                        defaultDispatcher.fire(Action.ViewRoomDirectory);
-                    }}
-                />
+                {showExploreRooms ? (
+                    <IconizedContextMenuOption
+                        label={_t("Explore public rooms")}
+                        iconClassName="mx_RoomList_iconExplore"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            closeMenu();
+                            PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuExploreRoomsItem", e);
+                            defaultDispatcher.fire(Action.ViewRoomDirectory);
+                        }}
+                    />
+                ) : null}
             </IconizedContextMenuOptionList>
         );
     }
 
     let contextMenu: JSX.Element | null = null;
-    if (menuDisplayed) {
+    if (menuDisplayed && handle.current) {
         contextMenu = (
-            <IconizedContextMenu {...auxButtonContextMenuPosition(handle)} onFinished={closeMenu} compact>
+            <IconizedContextMenu {...auxButtonContextMenuPosition(handle.current)} onFinished={closeMenu} compact>
                 {contextMenuContent}
             </IconizedContextMenu>
         );
     }
 
-    return (
-        <>
-            <ContextMenuTooltipButton
-                tabIndex={tabIndex}
-                onClick={openMenu}
-                className="mx_RoomSublist_auxButton"
-                tooltipClassName="mx_RoomSublist_addRoomTooltip"
-                aria-label={_t("Add room")}
-                title={_t("Add room")}
-                isExpanded={menuDisplayed}
-                inputRef={handle}
-            />
+    if (showCreateRoom || showExploreRooms) {
+        return (
+            <>
+                <ContextMenuTooltipButton
+                    tabIndex={tabIndex}
+                    onClick={openMenu}
+                    className="mx_RoomSublist_auxButton"
+                    tooltipClassName="mx_RoomSublist_addRoomTooltip"
+                    aria-label={_t("Add room")}
+                    title={_t("Add room")}
+                    isExpanded={menuDisplayed}
+                    inputRef={handle}
+                />
 
-            {contextMenu}
-        </>
-    );
+                {contextMenu}
+            </>
+        );
+    }
+
+    return null;
 };
 
 const TAG_AESTHETICS: TagAestheticsMap = {
@@ -435,7 +443,7 @@ const TAG_AESTHETICS: TagAestheticsMap = {
 export default class RoomList extends React.PureComponent<IProps, IState> {
     private dispatcherRef?: string;
     private treeRef = createRef<HTMLDivElement>();
-    private favouriteMessageWatcher: string;
+    private favouriteMessageWatcher?: string;
 
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
@@ -468,7 +476,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
     public componentWillUnmount(): void {
         SpaceStore.instance.off(UPDATE_SUGGESTED_ROOMS, this.updateSuggestedRooms);
         RoomListStore.instance.off(LISTS_UPDATE_EVENT, this.updateLists);
-        SettingsStore.unwatchSetting(this.favouriteMessageWatcher);
+        if (this.favouriteMessageWatcher) SettingsStore.unwatchSetting(this.favouriteMessageWatcher);
         if (this.dispatcherRef) defaultDispatcher.unregister(this.dispatcherRef);
         SdkContextClass.instance.roomViewStore.off(UPDATE_EVENT, this.onRoomViewStoreUpdate);
     }
@@ -483,6 +491,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         if (payload.action === Action.ViewRoomDelta) {
             const viewRoomDeltaPayload = payload as ViewRoomDeltaPayload;
             const currentRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
+            if (!currentRoomId) return;
             const room = this.getRoomDelta(currentRoomId, viewRoomDeltaPayload.delta, viewRoomDeltaPayload.unread);
             if (room) {
                 defaultDispatcher.dispatch<ViewRoomPayload>({

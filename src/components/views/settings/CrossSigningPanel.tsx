@@ -94,9 +94,9 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
         const secretStorage = cli.crypto!.secretStorage;
         const crossSigningPublicKeysOnDevice = Boolean(crossSigning.getId());
         const crossSigningPrivateKeysInStorage = Boolean(await crossSigning.isStoredInSecretStorage(secretStorage));
-        const masterPrivateKeyCached = !!(pkCache && (await pkCache.getCrossSigningKeyCache("master")));
-        const selfSigningPrivateKeyCached = !!(pkCache && (await pkCache.getCrossSigningKeyCache("self_signing")));
-        const userSigningPrivateKeyCached = !!(pkCache && (await pkCache.getCrossSigningKeyCache("user_signing")));
+        const masterPrivateKeyCached = !!(await pkCache?.getCrossSigningKeyCache?.("master"));
+        const selfSigningPrivateKeyCached = !!(await pkCache?.getCrossSigningKeyCache?.("self_signing"));
+        const userSigningPrivateKeyCached = !!(await pkCache?.getCrossSigningKeyCache?.("user_signing"));
         const homeserverSupportsCrossSigning = await cli.doesServerSupportUnstableFeature(
             "org.matrix.e2e_cross_signing",
         );
@@ -243,36 +243,34 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
                 <details>
                     <summary>{_t("Advanced")}</summary>
                     <table className="mx_CrossSigningPanel_statusList">
-                        <tbody>
-                            <tr>
-                                <td>{_t("Cross-signing public keys:")}</td>
-                                <td>{crossSigningPublicKeysOnDevice ? _t("in memory") : _t("not found")}</td>
-                            </tr>
-                            <tr>
-                                <td>{_t("Cross-signing private keys:")}</td>
-                                <td>
-                                    {crossSigningPrivateKeysInStorage
-                                        ? _t("in secret storage")
-                                        : _t("not found in storage")}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>{_t("Master private key:")}</td>
-                                <td>{masterPrivateKeyCached ? _t("cached locally") : _t("not found locally")}</td>
-                            </tr>
-                            <tr>
-                                <td>{_t("Self signing private key:")}</td>
-                                <td>{selfSigningPrivateKeyCached ? _t("cached locally") : _t("not found locally")}</td>
-                            </tr>
-                            <tr>
-                                <td>{_t("User signing private key:")}</td>
-                                <td>{userSigningPrivateKeyCached ? _t("cached locally") : _t("not found locally")}</td>
-                            </tr>
-                            <tr>
-                                <td>{_t("Homeserver feature support:")}</td>
-                                <td>{homeserverSupportsCrossSigning ? _t("exists") : _t("not found")}</td>
-                            </tr>
-                        </tbody>
+                        <tr>
+                            <th scope="row">{_t("Cross-signing public keys:")}</th>
+                            <td>{crossSigningPublicKeysOnDevice ? _t("in memory") : _t("not found")}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">{_t("Cross-signing private keys:")}</th>
+                            <td>
+                                {crossSigningPrivateKeysInStorage
+                                    ? _t("in secret storage")
+                                    : _t("not found in storage")}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">{_t("Master private key:")}</th>
+                            <td>{masterPrivateKeyCached ? _t("cached locally") : _t("not found locally")}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">{_t("Self signing private key:")}</th>
+                            <td>{selfSigningPrivateKeyCached ? _t("cached locally") : _t("not found locally")}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">{_t("User signing private key:")}</th>
+                            <td>{userSigningPrivateKeyCached ? _t("cached locally") : _t("not found locally")}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">{_t("Homeserver feature support:")}</th>
+                            <td>{homeserverSupportsCrossSigning ? _t("exists") : _t("not found")}</td>
+                        </tr>
                     </table>
                 </details>
                 {errorSection}

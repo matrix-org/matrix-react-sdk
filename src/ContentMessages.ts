@@ -22,7 +22,14 @@ import encrypt from "matrix-encrypt-attachment";
 import extractPngChunks from "png-chunks-extract";
 import { IImageInfo } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IEventRelation, ISendEventResponse, MatrixEvent, UploadOpts, UploadProgress } from "matrix-js-sdk/src/matrix";
+import {
+    HTTPError,
+    IEventRelation,
+    ISendEventResponse,
+    MatrixEvent,
+    UploadOpts,
+    UploadProgress,
+} from "matrix-js-sdk/src/matrix";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 import { removeElement } from "matrix-js-sdk/src/utils";
 
@@ -48,7 +55,7 @@ import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import UploadFailureDialog from "./components/views/dialogs/UploadFailureDialog";
 import UploadConfirmDialog from "./components/views/dialogs/UploadConfirmDialog";
 import { createThumbnail } from "./utils/image-media";
-import { attachRelation } from "./components/views/rooms/SendMessageComposer";
+import { attachMentions, attachRelation } from "./components/views/rooms/SendMessageComposer";
 import { doMaybeLocalRoomAction } from "./utils/local-room";
 import { SdkContextClass } from "./contexts/SDKContext";
 
@@ -492,6 +499,8 @@ export default class ContentMessages {
             msgtype: MsgType.File, // set more specifically later
         };
 
+        // Attach mentions, which really only applies if there's a replyToEvent.
+        attachMentions(matrixClient.getSafeUserId(), content, null, replyToEvent);
         attachRelation(content, relation);
         if (replyToEvent) {
             addReplyToMessageContent(content, replyToEvent, {
@@ -524,7 +533,11 @@ export default class ContentMessages {
                     const imageInfo = await infoForImageFile(matrixClient, roomId, file);
                     Object.assign(content.info, imageInfo);
                 } catch (e) {
-                    // Failed to thumbnail, fall back to uploading an m.file
+                    if (e instanceof HTTPError) {
+                        // re-throw to main upload error handler
+                        throw e;
+                    }
+                    // Otherwise we failed to thumbnail, fall back to uploading an m.file
                     logger.error(e);
                     content.msgtype = MsgType.File;
                 }

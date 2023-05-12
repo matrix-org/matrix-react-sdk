@@ -18,12 +18,13 @@ limitations under the License.
 import React from "react";
 import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixError } from "matrix-js-sdk/src/matrix";
 
-import { _t } from "../../../../languageHandler";
+import { _t, UserFriendlyError } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Modal from "../../../../Modal";
 import AddThreepid, { Binding } from "../../../../AddThreepid";
-import ErrorDialog from "../../dialogs/ErrorDialog";
+import ErrorDialog, { extractErrorMessageFromError } from "../../dialogs/ErrorDialog";
 import AccessibleButton from "../../elements/AccessibleButton";
 
 /*
@@ -98,7 +99,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             }
             this.setState({ bound: bind });
         } catch (err) {
-            logger.error(`Unable to ${label} email address ${address} ${err}`);
+            logger.error(`changeBinding: Unable to ${label} email address ${address}`, err);
             this.setState({
                 verifying: false,
                 continueDisabled: false,
@@ -106,7 +107,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description: err && err.message ? err.message : _t("Operation failed"),
+                description: extractErrorMessageFromError(err, _t("Operation failed")),
             });
         }
     }
@@ -133,7 +134,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                 bound: bind,
             });
         } catch (err) {
-            logger.error(`Unable to ${label} email address ${address} ${err}`);
+            logger.error(`changeBindingTangledAddBind: Unable to ${label} email address ${address}`, err);
             this.setState({
                 verifying: false,
                 continueDisabled: false,
@@ -141,7 +142,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description: err && err.message ? err.message : _t("Operation failed"),
+                description: extractErrorMessageFromError(err, _t("Operation failed")),
             });
         }
     }
@@ -170,17 +171,23 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         e.stopPropagation();
         e.preventDefault();
 
+        // Prevent the continue button from being pressed multiple times while we're working
         this.setState({ continueDisabled: true });
         try {
             await this.state.addTask?.checkEmailLinkClicked();
             this.setState({
                 addTask: null,
-                continueDisabled: false,
                 verifying: false,
             });
         } catch (err) {
-            this.setState({ continueDisabled: false });
-            if (err.errcode === "M_THREEPID_AUTH_FAILED") {
+            logger.error(`Unable to verify email address:`, err);
+
+            let underlyingError = err;
+            if (err instanceof UserFriendlyError) {
+                underlyingError = err.cause;
+            }
+
+            if (underlyingError instanceof MatrixError && underlyingError.errcode === "M_THREEPID_AUTH_FAILED") {
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Your email address hasn't been verified yet"),
                     description: _t(
@@ -191,9 +198,12 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                 logger.error("Unable to verify email address: " + err);
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Unable to verify email address."),
-                    description: err && err.message ? err.message : _t("Operation failed"),
+                    description: extractErrorMessageFromError(err, _t("Operation failed")),
                 });
             }
+        } finally {
+            // Re-enable the continue button so the user can retry
+            this.setState({ continueDisabled: false });
         }
     };
 
@@ -207,7 +217,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                 <span>
                     {_t("Verify the link in your inbox")}
                     <AccessibleButton
-                        className="mx_ExistingEmailAddress_confirmBtn"
+                        className="mx_GeneralUserSettingsTab_discovery_existing_button"
                         kind="primary_sm"
                         onClick={this.onContinueClick}
                         disabled={this.state.continueDisabled}
@@ -219,7 +229,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         } else if (bound) {
             status = (
                 <AccessibleButton
-                    className="mx_ExistingEmailAddress_confirmBtn"
+                    className="mx_GeneralUserSettingsTab_discovery_existing_button"
                     kind="danger_sm"
                     onClick={this.onRevokeClick}
                 >
@@ -229,7 +239,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         } else {
             status = (
                 <AccessibleButton
-                    className="mx_ExistingEmailAddress_confirmBtn"
+                    className="mx_GeneralUserSettingsTab_discovery_existing_button"
                     kind="primary_sm"
                     onClick={this.onShareClick}
                 >
@@ -239,8 +249,8 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         }
 
         return (
-            <div className="mx_ExistingEmailAddress">
-                <span className="mx_ExistingEmailAddress_email">{address}</span>
+            <div className="mx_GeneralUserSettingsTab_discovery_existing">
+                <span className="mx_GeneralUserSettingsTab_discovery_existing_address">{address}</span>
                 {status}
             </div>
         );

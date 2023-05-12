@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import React, { createRef } from "react";
 import {
     AuthType,
     IAuthData,
@@ -23,8 +24,8 @@ import {
     IStageStatus,
 } from "matrix-js-sdk/src/interactive-auth";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import React, { createRef } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
+import { UIAResponse } from "matrix-js-sdk/src/@types/uia";
 
 import getEntryComponentForLoginType, { IStageComponent } from "../views/auth/InteractiveAuthEntryComponents";
 import Spinner from "../views/elements/Spinner";
@@ -39,7 +40,7 @@ type InteractiveAuthCallbackSuccess = (
 type InteractiveAuthCallbackFailure = (success: false, response: IAuthData | Error) => void;
 export type InteractiveAuthCallback = InteractiveAuthCallbackSuccess & InteractiveAuthCallbackFailure;
 
-interface IProps {
+export interface InteractiveAuthProps<T> {
     // matrix client to use for UI auth requests
     matrixClient: MatrixClient;
     // response from initial request. If not supplied, will do a request on mount.
@@ -61,7 +62,7 @@ interface IProps {
     continueText?: string;
     continueKind?: string;
     // callback
-    makeRequest(auth: IAuthData | null): Promise<IAuthData>;
+    makeRequest(auth: IAuthDict | null): Promise<UIAResponse<T>>;
     // callback called when the auth process has finished,
     // successfully or unsuccessfully.
     // @param {boolean} status True if the operation requiring
@@ -92,14 +93,14 @@ interface IState {
     submitButtonEnabled: boolean;
 }
 
-export default class InteractiveAuthComponent extends React.Component<IProps, IState> {
+export default class InteractiveAuthComponent<T> extends React.Component<InteractiveAuthProps<T>, IState> {
     private readonly authLogic: InteractiveAuth;
     private readonly intervalId: number | null = null;
     private readonly stageComponent = createRef<IStageComponent>();
 
     private unmounted = false;
 
-    public constructor(props: IProps) {
+    public constructor(props: InteractiveAuthProps<T>) {
         super(props);
 
         this.state = {
@@ -199,7 +200,7 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
         );
     };
 
-    private requestCallback = (auth: IAuthData | null, background: boolean): Promise<IAuthData> => {
+    private requestCallback = (auth: IAuthDict | null, background: boolean): Promise<UIAResponse<T>> => {
         // This wrapper just exists because the js-sdk passes a second
         // 'busy' param for backwards compat. This throws the tests off
         // so discard it here.
@@ -208,6 +209,12 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
 
     private onBusyChanged = (busy: boolean): void => {
         // if we've started doing stuff, reset the error messages
+        // The JS SDK eagerly reports itself as "not busy" right after any
+        // immediate work has completed, but that's not really what we want at
+        // the UI layer, so we ignore this signal and show a spinner until
+        // there's a new screen to show the user. This is implemented by setting
+        // `busy: false` in `authStateUpdated`.
+        // See also https://github.com/vector-im/element-web/issues/12546
         if (busy) {
             this.setState({
                 busy: true,
@@ -215,12 +222,11 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
                 errorCode: undefined,
             });
         }
-        // The JS SDK eagerly reports itself as "not busy" right after any
-        // immediate work has completed, but that's not really what we want at
-        // the UI layer, so we ignore this signal and show a spinner until
-        // there's a new screen to show the user. This is implemented by setting
-        // `busy: false` in `authStateUpdated`.
-        // See also https://github.com/vector-im/element-web/issues/12546
+
+        // authStateUpdated is not called during sso flows
+        if (!busy && (this.state.authStage === AuthType.Sso || this.state.authStage === AuthType.SsoUnstable)) {
+            this.setState({ busy });
+        }
     };
 
     private setFocus(): void {

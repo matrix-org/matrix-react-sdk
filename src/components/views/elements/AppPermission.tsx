@@ -40,7 +40,7 @@ interface IProps {
 interface IState {
     roomMember: RoomMember;
     isWrapped: boolean;
-    widgetDomain: string;
+    widgetDomain: string | null;
 }
 
 export default class AppPermission extends React.Component<IProps, IState> {
@@ -66,14 +66,14 @@ export default class AppPermission extends React.Component<IProps, IState> {
         };
     }
 
-    private parseWidgetUrl(): { isWrapped: boolean; widgetDomain: string } {
+    private parseWidgetUrl(): { isWrapped: boolean; widgetDomain: string | null } {
         const widgetUrl = url.parse(this.props.url);
-        const params = new URLSearchParams(widgetUrl.search);
+        const params = new URLSearchParams(widgetUrl.search ?? undefined);
 
         // HACK: We're relying on the query params when we should be relying on the widget's `data`.
         // This is a workaround for Scalar.
-        if (WidgetUtils.isScalarUrl(this.props.url) && params && params.get("url")) {
-            const unwrappedUrl = url.parse(params.get("url"));
+        if (WidgetUtils.isScalarUrl(this.props.url) && params?.get("url")) {
+            const unwrappedUrl = url.parse(params.get("url")!);
             return {
                 widgetDomain: unwrappedUrl.host || unwrappedUrl.hostname,
                 isWrapped: true,
@@ -115,7 +115,7 @@ export default class AppPermission extends React.Component<IProps, IState> {
         const warningTooltip = (
             <TextWithTooltip
                 tooltip={warningTooltipText}
-                tooltipClass="mx_AppPermissionWarning_tooltip mx_Tooltip_dark"
+                tooltipClass="mx_AppPermissionWarning_tooltip mx_AppPermissionWarning_tooltip--dark"
             >
                 <span className="mx_AppPermissionWarning_helpIcon" />
             </TextWithTooltip>

@@ -71,7 +71,7 @@ export const usePinnedEvents = (room?: Room): string[] => {
 };
 
 function getReadPinnedEventIds(room?: Room): Set<string> {
-    return new Set(room.getAccountData(ReadPinsEventId)?.getContent()?.event_ids ?? []);
+    return new Set(room?.getAccountData(ReadPinsEventId)?.getContent()?.event_ids ?? []);
 }
 
 export const useReadPinnedEvents = (room?: Room): Set<string> => {
@@ -106,7 +106,7 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
         const newlyRead = pinnedEventIds.filter((id) => !readPinnedEvents.has(id));
         if (newlyRead.length > 0) {
             // clear out any read pinned events which no longer are pinned
-            cli.setRoomAccountData(room.roomId, ReadPinsEventId, {
+            cli?.setRoomAccountData(room.roomId, ReadPinsEventId, {
                 event_ids: pinnedEventIds,
             });
         }
@@ -139,9 +139,10 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
                     }
                     await room.processPollEvents([event]);
 
-                    if (event && PinningUtils.isPinnable(event)) {
+                    const senderUserId = event.getSender();
+                    if (senderUserId && PinningUtils.isPinnable(event)) {
                         // Inject sender information
-                        event.sender = room.getMember(event.getSender());
+                        event.sender = room.getMember(senderUserId);
                         // Also inject any edits we've found
                         if (edit) event.makeReplaced(edit);
 

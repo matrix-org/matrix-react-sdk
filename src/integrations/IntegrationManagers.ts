@@ -39,8 +39,8 @@ export class IntegrationManagers {
     private static instance?: IntegrationManagers;
 
     private managers: IntegrationManagerInstance[] = [];
-    private client: MatrixClient;
-    private primaryManager: IntegrationManagerInstance | null;
+    private client?: MatrixClient;
+    private primaryManager: IntegrationManagerInstance | null = null;
 
     public static sharedInstance(): IntegrationManagers {
         if (!IntegrationManagers.instance) {
@@ -153,7 +153,7 @@ export class IntegrationManagers {
 
             if (kind === Kind.Account) {
                 // Order by state_keys (IDs)
-                managers.sort((a, b) => compare(a.id, b.id));
+                managers.sort((a, b) => compare(a.id ?? "", b.id ?? ""));
             }
 
             ordered.push(...managers);
@@ -199,7 +199,7 @@ export class IntegrationManagers {
         logger.log("Looking up integration manager via .well-known");
         if (domainName.startsWith("http:") || domainName.startsWith("https:")) {
             // trim off the scheme and just use the domain
-            domainName = url.parse(domainName).host;
+            domainName = url.parse(domainName).host!;
         }
 
         let wkConfig: IClientWellKnown;

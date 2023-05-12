@@ -90,7 +90,7 @@ limitations under the License.
     &.mx_AccessibleButton_kind_primary,
     &.mx_AccessibleButton_kind_primary_outline,
     &.mx_AccessibleButton_kind_secondary {
-        font-weight: 600;
+        font-weight: var(--font-semi-bold);
     }
 
     &.mx_AccessibleButton_kind_primary,
@@ -186,10 +186,7 @@ limitations under the License.
             content: "";
             display: block;
             position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            inset: 0;
             background-color: #ffffff;
             mask-repeat: no-repeat;
             mask-position: center;

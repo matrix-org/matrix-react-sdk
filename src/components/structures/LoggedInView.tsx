@@ -67,11 +67,11 @@ import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload";
-import { IConfigOptions } from "../../IConfigOptions";
 import LeftPanelLiveShareWarning from "../views/beacon/LeftPanelLiveShareWarning";
 import { UserOnboardingPage } from "../views/user-onboarding/UserOnboardingPage";
 import { PipContainer } from "./PipContainer";
 import { monitorSyncedPushRules } from "../../utils/pushRules/monitorSyncedPushRules";
+import { ConfigOptions } from "../../SdkConfig";
 import { ModuleRunner } from "../../modules/ModuleRunner";
 
 // We need to fetch each pinned message individually (if we don't already have it)
@@ -98,10 +98,10 @@ interface IProps {
     autoJoin?: boolean;
     threepidInvite?: IThreepidInvite;
     roomOobData?: IOOBData;
-    currentRoomId: string;
+    currentRoomId: string | null;
     collapseLhs: boolean;
-    config: IConfigOptions;
-    currentUserId?: string;
+    config: ConfigOptions;
+    currentUserId: string | null;
     justRegistered?: boolean;
     roomJustCreatedOpts?: IOpts;
     forceTimeline?: boolean; // see props on MatrixChat
@@ -133,10 +133,10 @@ class LoggedInView extends React.Component<IProps, IState> {
     protected readonly _roomView: React.RefObject<RoomViewType>;
     protected readonly _resizeContainer: React.RefObject<HTMLDivElement>;
     protected readonly resizeHandler: React.RefObject<HTMLDivElement>;
-    protected layoutWatcherRef: string;
-    protected compactLayoutWatcherRef: string;
-    protected backgroundImageWatcherRef: string;
-    protected resizer: Resizer;
+    protected layoutWatcherRef?: string;
+    protected compactLayoutWatcherRef?: string;
+    protected backgroundImageWatcherRef?: string;
+    protected resizer?: Resizer;
 
     public constructor(props: IProps) {
         super(props);
@@ -202,10 +202,10 @@ class LoggedInView extends React.Component<IProps, IState> {
         this._matrixClient.removeListener(ClientEvent.Sync, this.onSync);
         this._matrixClient.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
         OwnProfileStore.instance.off(UPDATE_EVENT, this.refreshBackgroundImage);
-        SettingsStore.unwatchSetting(this.layoutWatcherRef);
-        SettingsStore.unwatchSetting(this.compactLayoutWatcherRef);
-        SettingsStore.unwatchSetting(this.backgroundImageWatcherRef);
-        this.resizer.detach();
+        if (this.layoutWatcherRef) SettingsStore.unwatchSetting(this.layoutWatcherRef);
+        if (this.compactLayoutWatcherRef) SettingsStore.unwatchSetting(this.compactLayoutWatcherRef);
+        if (this.backgroundImageWatcherRef) SettingsStore.unwatchSetting(this.backgroundImageWatcherRef);
+        this.resizer?.detach();
     }
 
     private onCallState = (): void => {
@@ -233,7 +233,7 @@ class LoggedInView extends React.Component<IProps, IState> {
     };
 
     private createResizer(): Resizer {
-        let panelSize: number;
+        let panelSize: number | null;
         let panelCollapsed: boolean;
         const collapseConfig: ICollapseConfig = {
             // TODO decrease this once Spaces launches as it'll no longer need to include the 56px Community Panel
@@ -266,8 +266,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         const resizer = new Resizer(this._resizeContainer.current, CollapseDistributor, collapseConfig);
         resizer.setClassNames({
             handle: "mx_ResizeHandle",
-            vertical: "mx_ResizeHandle_vertical",
-            reverse: "mx_ResizeHandle_reverse",
+            vertical: "mx_ResizeHandle--vertical",
         });
         return resizer;
     }
@@ -277,7 +276,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         if (isNaN(lhsSize)) {
             lhsSize = 350;
         }
-        this.resizer.forHandleWithId("lp-resizer")?.resize(lhsSize);
+        this.resizer?.forHandleWithId("lp-resizer")?.resize(lhsSize);
     }
 
     private onAccountData = (event: MatrixEvent): void => {
@@ -362,7 +361,7 @@ class LoggedInView extends React.Component<IProps, IState> {
             }
         }
 
-        if (pinnedEventTs && this.state.usageLimitEventTs > pinnedEventTs) {
+        if (pinnedEventTs && this.state.usageLimitEventTs && this.state.usageLimitEventTs > pinnedEventTs) {
             // We've processed a newer event than this one, so ignore it.
             return;
         }
@@ -648,7 +647,11 @@ class LoggedInView extends React.Component<IProps, IState> {
                 break;
 
             case PageTypes.UserView:
-                pageElement = <UserView userId={this.props.currentUserId} resizeNotifier={this.props.resizeNotifier} />;
+                if (!!this.props.currentUserId) {
+                    pageElement = (
+                        <UserView userId={this.props.currentUserId} resizeNotifier={this.props.resizeNotifier} />
+                    );
+                }
                 break;
         }
 

@@ -41,6 +41,8 @@ import CryptoStoreTooNewDialog from "./components/views/dialogs/CryptoStoreTooNe
 import { _t } from "./languageHandler";
 import { SettingLevel } from "./settings/SettingLevel";
 import MatrixClientBackedController from "./settings/controllers/MatrixClientBackedController";
+import ErrorDialog from "./components/views/dialogs/ErrorDialog";
+import PlatformPeg from "./PlatformPeg";
 
 export interface IMatrixClientCreds {
     homeserverUrl: string;
@@ -137,7 +139,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
 
     // the credentials used to init the current client object.
     // used if we tear it down & recreate it with a different store
-    private currentClientCreds: IMatrixClientCreds;
+    private currentClientCreds: IMatrixClientCreds | null = null;
 
     public get(): MatrixClient {
         return this.matrixClient;
@@ -158,7 +160,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     }
 
     public currentUserIsJustRegistered(): boolean {
-        return this.matrixClient && this.matrixClient.credentials.userId === this.justRegisteredUserId;
+        return !!this.matrixClient && this.matrixClient.credentials.userId === this.justRegisteredUserId;
     }
 
     public userRegisteredWithinLastHours(hours: number): boolean {
@@ -189,6 +191,28 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         this.createClient(creds);
     }
 
+    private onUnexpectedStoreClose = async (): Promise<void> => {
+        if (!this.matrixClient) return;
+        this.matrixClient.stopClient(); // stop the client as the database has failed
+
+        if (!this.matrixClient.isGuest()) {
+            // If the user is not a guest then prompt them to reload rather than doing it for them
+            // For guests this is likely to happen during e-mail verification as part of registration
+
+            const { finished } = Modal.createDialog(ErrorDialog, {
+                title: _t("Database unexpectedly closed"),
+                description: _t(
+                    "This may be caused by having the app open in multiple tabs or due to clearing browser data.",
+                ),
+                button: _t("Reload"),
+            });
+            const [reload] = await finished;
+            if (!reload) return;
+        }
+
+        PlatformPeg.get()?.reload();
+    };
+
     public async assign(): Promise<any> {
         for (const dbType of ["indexeddb", "memory"]) {
             try {
@@ -208,6 +232,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
                 }
             }
         }
+        this.matrixClient.store.on?.("closed", this.onUnexpectedStoreClose);
 
         // try to initialise e2e on the new client
         if (!SettingsStore.getValue("lowBandwidth")) {
@@ -234,6 +259,8 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             );
             SlidingSyncManager.instance.startSpidering(100, 50); // 100 rooms at a time, 50ms apart
         }
+
+        opts.intentionalMentions = SettingsStore.getValue("feature_intentional_mentions");
 
         // Connect the matrix client to the dispatcher and setting handlers
         MatrixActionCreators.start(this.matrixClient);
@@ -305,7 +332,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
 
             homeserverUrl: this.matrixClient.baseUrl,
             identityServerUrl: this.matrixClient.idBaseUrl,
-            userId: this.matrixClient.credentials.userId,
+            userId: this.matrixClient.getSafeUserId(),
             deviceId: this.matrixClient.getDeviceId() ?? undefined,
             accessToken: this.matrixClient.getAccessToken(),
             guest: this.matrixClient.isGuest(),
@@ -313,7 +340,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     }
 
     public getHomeserverName(): string {
-        const matches = /^@[^:]+:(.+)$/.exec(this.matrixClient.credentials.userId);
+        const matches = /^@[^:]+:(.+)$/.exec(this.matrixClient.getSafeUserId());
         if (matches === null || matches.length < 1) {
             throw new Error("Failed to derive homeserver name from user ID!");
         }

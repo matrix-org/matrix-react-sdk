@@ -30,7 +30,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import Modal, { IHandle } from "./Modal";
-import { _t } from "./languageHandler";
+import { _t, UserFriendlyError } from "./languageHandler";
 import dis from "./dispatcher/dispatcher";
 import * as Rooms from "./Rooms";
 import { getAddressType } from "./UserAddress";
@@ -121,14 +121,23 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
             case "mx-user-id":
                 createOpts.invite = [opts.dmUserId];
                 break;
-            case "email":
+            case "email": {
+                const isUrl = MatrixClientPeg.get().getIdentityServerUrl(true);
+                if (!isUrl) {
+                    throw new UserFriendlyError(
+                        "Cannot invite user by email without an identity server. " +
+                            'You can connect to one under "Settings".',
+                    );
+                }
                 createOpts.invite_3pid = [
                     {
-                        id_server: MatrixClientPeg.get().getIdentityServerUrl(true),
+                        id_server: isUrl,
                         medium: "email",
                         address: opts.dmUserId,
                     },
                 ];
+                break;
+            }
         }
     }
     if (opts.dmUserId && createOpts.is_direct === undefined) {
@@ -320,7 +329,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
                 return SpaceStore.instance.addRoomToSpace(
                     opts.parentSpace,
                     roomId,
-                    [client.getDomain()],
+                    [client.getDomain()!],
                     opts.suggested,
                 );
             }
@@ -397,17 +406,23 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
  */
 export async function canEncryptToAllUsers(client: MatrixClient, userIds: string[]): Promise<boolean> {
     try {
-        const usersDeviceMap = await client.downloadKeys(userIds);
-        // { "@user:host": { "DEVICE": {...}, ... }, ... }
-        return Object.values(usersDeviceMap).every(
-            (userDevices) =>
-                // { "DEVICE": {...}, ... }
-                Object.keys(userDevices).length > 0,
-        );
+        const usersDeviceMap = await client.getCrypto()?.getUserDeviceInfo(userIds, true);
+        if (!usersDeviceMap) {
+            return false;
+        }
+
+        for (const devices of usersDeviceMap.values()) {
+            if (devices.size === 0) {
+                // This user does not have any encryption-capable devices.
+                return false;
+            }
+        }
     } catch (e) {
         logger.error("Error determining if it's possible to encrypt to all users: ", e);
         return false; // assume not
     }
+
+    return true;
 }
 
 // Similar to ensureDMExists but also adds creation content

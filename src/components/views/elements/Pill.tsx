@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useRef, useState } from "react";
 import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/matrix";
@@ -37,13 +37,15 @@ export enum PillType {
     EventInOtherRoom = "TYPE_EVENT_IN_OTHER_ROOM",
 }
 
-export const pillRoomNotifPos = (text: string): number => {
-    return text.indexOf("@room");
+export const pillRoomNotifPos = (text: string | null): number => {
+    return text?.indexOf("@room") ?? -1;
 };
 
 export const pillRoomNotifLen = (): number => {
     return "@room".length;
 };
+
+const linkIcon = <LinkIcon className="mx_Pill_LinkIcon mx_BaseAvatar mx_BaseAvatar_image" />;
 
 const PillRoomAvatar: React.FC<{
     shouldShowPillAvatar: boolean;
@@ -56,7 +58,7 @@ const PillRoomAvatar: React.FC<{
     if (room) {
         return <RoomAvatar room={room} width={16} height={16} aria-hidden="true" />;
     }
-    return <LinkIcon className="mx_Pill_LinkIcon mx_BaseAvatar mx_BaseAvatar_image" />;
+    return linkIcon;
 };
 
 const PillMemberAvatar: React.FC<{
@@ -87,8 +89,9 @@ export interface PillProps {
 }
 
 export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room, shouldShowPillAvatar = true }) => {
+    const tooltipId = useRef(`mx_Pill_${Math.random()}`).current;
     const [hover, setHover] = useState(false);
-    const { member, onClick, resourceId, targetRoom, text, type } = usePermalink({
+    const { event, member, onClick, resourceId, targetRoom, text, type } = usePermalink({
         room,
         type: propType,
         url,
@@ -115,36 +118,39 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
         setHover(false);
     };
 
-    const tip = hover && resourceId ? <Tooltip label={resourceId} alignment={Alignment.Right} /> : null;
-    let content: (ReactElement | string)[] = [];
-    const textElement = <span className="mx_Pill_text">{text}</span>;
+    const tip = hover && resourceId ? <Tooltip id={tooltipId} label={resourceId} alignment={Alignment.Right} /> : null;
+    let avatar: ReactElement | null = null;
+    let pillText: string | null = text;
 
     switch (type) {
         case PillType.EventInOtherRoom:
             {
-                const avatar = <PillRoomAvatar shouldShowPillAvatar={shouldShowPillAvatar} room={targetRoom} />;
-                content = [_t("Message in"), avatar || " ", textElement];
+                avatar = <PillRoomAvatar shouldShowPillAvatar={shouldShowPillAvatar} room={targetRoom} />;
+                pillText = _t("Message in %(room)s", {
+                    room: text,
+                });
             }
             break;
         case PillType.EventInSameRoom:
             {
-                const avatar = <PillMemberAvatar shouldShowPillAvatar={shouldShowPillAvatar} member={member} />;
-                content = [_t("Message from"), avatar || " ", textElement];
+                if (event) {
+                    avatar = <PillMemberAvatar shouldShowPillAvatar={shouldShowPillAvatar} member={member} />;
+                    pillText = _t("Message from %(user)s", {
+                        user: text,
+                    });
+                } else {
+                    avatar = linkIcon;
+                    pillText = _t("Message");
+                }
             }
             break;
         case PillType.AtRoomMention:
         case PillType.RoomMention:
         case "space":
-            {
-                const avatar = <PillRoomAvatar shouldShowPillAvatar={shouldShowPillAvatar} room={targetRoom} />;
-                content = [avatar, textElement];
-            }
+            avatar = <PillRoomAvatar shouldShowPillAvatar={shouldShowPillAvatar} room={targetRoom} />;
             break;
         case PillType.UserMention:
-            {
-                const avatar = <PillMemberAvatar shouldShowPillAvatar={shouldShowPillAvatar} member={member} />;
-                content = [avatar, textElement];
-            }
+            avatar = <PillMemberAvatar shouldShowPillAvatar={shouldShowPillAvatar} member={member} />;
             break;
         default:
             return null;
@@ -160,13 +166,21 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
                         onClick={onClick}
                         onMouseOver={onMouseOver}
                         onMouseLeave={onMouseLeave}
+                        aria-describedby={tooltipId}
                     >
-                        {content}
+                        {avatar}
+                        <span className="mx_Pill_text">{pillText}</span>
                         {tip}
                     </a>
                 ) : (
-                    <span className={classes} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
-                        {content}
+                    <span
+                        className={classes}
+                        onMouseOver={onMouseOver}
+                        onMouseLeave={onMouseLeave}
+                        aria-describedby={tooltipId}
+                    >
+                        {avatar}
+                        <span className="mx_Pill_text">{pillText}</span>
                         {tip}
                     </span>
                 )}

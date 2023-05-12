@@ -71,8 +71,8 @@ interface IState {
     secondaryCall: MatrixCall;
 
     // widget candidate to be displayed in the pip view.
-    persistentWidgetId: string;
-    persistentRoomId: string;
+    persistentWidgetId: string | null;
+    persistentRoomId: string | null;
     showWidgetInPip: boolean;
 }
 
@@ -225,7 +225,7 @@ class PipContainerInner extends React.Component<IProps, IState> {
         if (callRoomId ?? this.state.persistentRoomId) {
             dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
-                room_id: callRoomId ?? this.state.persistentRoomId,
+                room_id: callRoomId ?? this.state.persistentRoomId ?? undefined,
                 metricsTrigger: "WebFloatingCallWindow",
             });
         }
@@ -239,7 +239,7 @@ class PipContainerInner extends React.Component<IProps, IState> {
         let notDocked = false;
         // Sanity check the room - the widget may have been destroyed between render cycles, and
         // thus no room is associated anymore.
-        if (persistentWidgetId && MatrixClientPeg.get().getRoom(persistentRoomId)) {
+        if (persistentWidgetId && persistentRoomId && MatrixClientPeg.get().getRoom(persistentRoomId)) {
             notDocked = !ActiveWidgetStore.instance.isDocked(persistentWidgetId, persistentRoomId);
             fromAnotherRoom = this.state.viewedRoomId !== persistentRoomId;
         }
@@ -262,7 +262,7 @@ class PipContainerInner extends React.Component<IProps, IState> {
             );
 
         return ({ onStartMoving }) => (
-            <div key={voiceBroadcastPlayback.infoEvent.getId()} onMouseDown={onStartMoving}>
+            <div key={`vb-playback-${voiceBroadcastPlayback.infoEvent.getId()}`} onMouseDown={onStartMoving}>
                 {content}
             </div>
         );
@@ -272,7 +272,7 @@ class PipContainerInner extends React.Component<IProps, IState> {
         voiceBroadcastPreRecording: VoiceBroadcastPreRecording,
     ): CreatePipChildren {
         return ({ onStartMoving }) => (
-            <div onMouseDown={onStartMoving}>
+            <div key="vb-pre-recording" onMouseDown={onStartMoving}>
                 <VoiceBroadcastPreRecordingPip voiceBroadcastPreRecording={voiceBroadcastPreRecording} />
             </div>
         );
@@ -282,7 +282,7 @@ class PipContainerInner extends React.Component<IProps, IState> {
         voiceBroadcastRecording: VoiceBroadcastRecording,
     ): CreatePipChildren {
         return ({ onStartMoving }) => (
-            <div onMouseDown={onStartMoving}>
+            <div key={`vb-recording-${voiceBroadcastRecording.infoEvent.getId()}`} onMouseDown={onStartMoving}>
                 <VoiceBroadcastRecordingPip recording={voiceBroadcastRecording} />
             </div>
         );
@@ -314,11 +314,11 @@ class PipContainerInner extends React.Component<IProps, IState> {
             ));
         }
 
-        if (this.state.showWidgetInPip) {
+        if (this.state.showWidgetInPip && this.state.persistentWidgetId) {
             pipContent.push(({ onStartMoving }) => (
                 <WidgetPip
-                    widgetId={this.state.persistentWidgetId}
-                    room={MatrixClientPeg.get().getRoom(this.state.persistentRoomId)!}
+                    widgetId={this.state.persistentWidgetId!}
+                    room={MatrixClientPeg.get().getRoom(this.state.persistentRoomId ?? undefined)!}
                     viewingRoom={this.state.viewedRoomId === this.state.persistentRoomId}
                     onStartMoving={onStartMoving}
                     movePersistedElement={this.props.movePersistedElement}

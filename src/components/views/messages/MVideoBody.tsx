@@ -45,7 +45,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
     public context!: React.ContextType<typeof RoomContext>;
 
     private videoRef = React.createRef<HTMLVideoElement>();
-    private sizeWatcher: string;
+    private sizeWatcher?: string;
 
     public constructor(props: IBodyProps) {
         super(props);
@@ -111,7 +111,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         canvas.height = height;
 
         const pixels = decode(info[BLURHASH_FIELD], width, height);
-        const ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext("2d")!;
         const imgData = ctx.createImageData(width, height);
         imgData.data.set(pixels);
         ctx.putImageData(imgData, 0, 0);
@@ -128,7 +128,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
             image.onload = () => {
                 this.setState({ posterLoading: false });
             };
-            image.src = media.thumbnailHttp;
+            image.src = media.thumbnailHttp!;
         }
     }
 
@@ -154,7 +154,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                         decryptedThumbnailUrl: thumbnailUrl,
                         decryptedBlob: await this.props.mediaEventHelper.sourceBlob.value,
                     });
-                    this.props.onHeightChanged();
+                    this.props.onHeightChanged?.();
                 } else {
                     logger.log("NOT preloading video");
                     const content = this.props.mxEvent.getContent<IMediaEventContent>();
@@ -187,7 +187,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
     }
 
     public componentWillUnmount(): void {
-        SettingsStore.unwatchSetting(this.sizeWatcher);
+        if (this.sizeWatcher) SettingsStore.unwatchSetting(this.sizeWatcher);
     }
 
     private videoOnPlay = async (): Promise<void> => {
@@ -216,7 +216,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                 this.videoRef.current.play();
             },
         );
-        this.props.onHeightChanged();
+        this.props.onHeightChanged?.();
     };
 
     protected get showFileBody(): boolean {

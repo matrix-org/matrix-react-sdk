@@ -6,7 +6,7 @@ on:
         types:
             - completed
 concurrency:
-    group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch || github.ref }}
+    group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch || github.run_id }}
     cancel-in-progress: ${{ github.event.workflow_run.event == 'pull_request' }}
 jobs:
     prepare:
@@ -24,8 +24,8 @@ jobs:
             commit_message: ${{ steps.commit.outputs.message }}
             commit_author: ${{ steps.commit.outputs.author }}
             commit_email: ${{ steps.commit.outputs.email }}
-            percy_enable: ${{ steps.percy.outputs.value || '1' }}
-            testrail_enable: ${{ steps.testrail.outputs.value || '1' }}
+            percy_enable: ${{ steps.percy.outputs.value || '0' }}
+            kiwi_enable: ${{ steps.kiwi.outputs.value || '1' }}
         steps:
             # We create the status here and then update it to success/failure in the `report` stage
             # This provides an easy link to this workflow_run from the PR before Cypress is done.
@@ -33,20 +33,20 @@ jobs:
               with:
                   authToken: ${{ secrets.GITHUB_TOKEN }}
                   state: pending
-                  context: ${{ github.workflow }} / cypress (${{ github.event.workflow_run.event }} => ${{ github.event_name }})
+                  context: ${{ github.workflow }} / cypress
                   sha: ${{ github.event.workflow_run.head_sha }}
                   target_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
             - id: prdetails
-              if: github.event.workflow_run.event == 'pull_request'
-              uses: matrix-org/pr-details-action@v1.2
+              if: github.event.workflow_run.event == 'pull_request' || github.event.workflow_run.event == 'merge_group'
+              uses: matrix-org/pr-details-action@v1.3
               with:
                   owner: ${{ github.event.workflow_run.head_repository.owner.login }}
                   branch: ${{ github.event.workflow_run.head_branch }}
 
             - name: Get commit details
               id: commit
-              if: github.event.workflow_run.event == 'pull_request'
+              if: github.event.workflow_run.event == 'pull_request' || github.event.workflow_run.event == 'merge_group'
               uses: actions/github-script@v6
               with:
                   script: |
@@ -59,25 +59,28 @@ jobs:
                       core.setOutput("author", response.data.author.name);
                       core.setOutput("email", response.data.author.email);
 
-            # Only run Percy when it is demanded or on develop
-            - name: Disable Percy if not needed
+            # Only run Percy when it is demanded or we are running the daily build
+            - name: Enable Percy if X-Needs-Percy
               id: percy
               if: |
-                  github.event.workflow_run.event == 'pull_request' &&
-                  !contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy')
-              run: echo "::set-output name=value::0"
+                  github.event.workflow_run.event == 'schedule' ||
+                  (
+                    github.event.workflow_run.event == 'merge_group' &&
+                    contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy')
+                  )
+              run: echo "value=1" >> $GITHUB_OUTPUT
 
-            # Only run Testrail when it is demanded or on develop
-            - name: Disable Testrail if not needed
-              id: testrail
+            # Only export to kiwi when it is demanded or on develop
+            - name: Disable Kiwi if not needed
+              id: kiwi
               if: |
                   github.event.workflow_run.event == 'pull_request' &&
-                  !contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Send-Testrail')
-              run: echo "::set-output name=value::0"
+                  !contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Send-Kiwi')
+              run: echo "value=0" >> $GITHUB_OUTPUT
 
             - name: Generate unique ID 💎
               id: uuid
-              run: echo "::set-output name=value::sha-$GITHUB_SHA-time-$(date +"%s")"
+              run: echo "value=sha-$GITHUB_SHA-time-$(date +"%s")" >> $GITHUB_OUTPUT
 
     tests:
         name: "Run Tests"
@@ -94,7 +97,7 @@ jobs:
                 # Run 4 instances in Parallel
                 runner: [1, 2, 3, 4]
         steps:
-            - uses: browser-actions/setup-chrome@latest
+            - uses: browser-actions/setup-chrome@c485fa3bab6be59dce18dbc18ef6ab7cbc8ff5f1
             - run: echo "BROWSER_PATH=$(which chrome)" >> $GITHUB_ENV
 
             - uses: tecolicom/actions-use-apt-tools@ceaf289fdbc6169fd2406a0f0365a584ffba003b # v1
@@ -102,15 +105,6 @@ jobs:
                   # Our test suite includes some screenshot tests with unusual diacritics, which are
                   # supposed to be covered by STIXGeneral.
                   tools: fonts-stix
-
-            - uses: actions/checkout@v3
-              with:
-                  # XXX: We're checking out untrusted code in a secure context
-                  # We need to be careful to not trust anything this code outputs/may do
-                  # We need to check this out to access the cypress tests which are on the head branch
-                  repository: ${{ github.event.workflow_run.head_repository.full_name }}
-                  ref: ${{ github.event.workflow_run.head_sha }}
-                  persist-credentials: false
 
             # There's a 'download artifact' action, but it hasn't been updated for the workflow_run action
             # (https://github.com/actions/download-artifact/issues/60) so instead we get this mess:
@@ -121,13 +115,34 @@ jobs:
                   name: previewbuild
                   path: webapp
 
-            - name: Run Cypress tests
-              uses: cypress-io/github-action@v5.5.0
+            # The workflow_run.head_sha is the sha of the head commit but the element-web was built using a simulated
+            # merge commit - https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
+            # so use the sha from the tarball for the checkout of the cypress tests
+            # to make sure we get a matching set of code and tests.
+            - name: Grab sha from webapp
+              id: sha
+              run: |
+                  echo "sha=$(cat webapp/sha)" >> $GITHUB_OUTPUT
+
+            - uses: actions/checkout@v3
               with:
+                  # XXX: We're checking out untrusted code in a secure context
+                  # We need to be careful to not trust anything this code outputs/may do
+                  #
+                  # Note that we check out from the default repository, which is (for this workflow) the
+                  # *target* repository for the pull request.
+                  ref: ${{ steps.sha.outputs.sha }}
+                  persist-credentials: false
+                  path: matrix-react-sdk
+
+            - name: Run Cypress tests
+              uses: cypress-io/github-action@59c3b9b4a1a6e623c29806797d849845443487d1
+              with:
+                  working-directory: matrix-react-sdk
                   # The built-in Electron runner seems to grind to a halt trying
                   # to run the tests, so use chrome.
                   browser: "${{ env.BROWSER_PATH }}"
-                  start: npx serve -p 8080 webapp
+                  start: npx serve -p 8080 ../webapp
                   wait-on: "http://localhost:8080"
                   record: true
                   parallel: true
@@ -175,16 +190,16 @@ jobs:
               with:
                   name: cypress-results
                   path: |
-                      cypress/screenshots
-                      cypress/videos
-                      cypress/synapselogs
+                      matrix-react-sdk/cypress/screenshots
+                      matrix-react-sdk/cypress/videos
+                      matrix-react-sdk/cypress/synapselogs
 
             - name: Upload reports
               if: always()
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v3
               with:
                   name: cypress-junit
-                  path: cypress/results
+                  path: matrix-react-sdk/cypress/results
 
     report:
         name: Report results
@@ -218,73 +233,31 @@ jobs:
               with:
                   authToken: ${{ secrets.GITHUB_TOKEN }}
                   state: ${{ needs.tests.result == 'success' && 'success' || 'failure' }}
-                  context: ${{ github.workflow }} / cypress (${{ github.event.workflow_run.event }} => ${{ github.event_name }})
+                  context: ${{ github.workflow }} / cypress
                   sha: ${{ github.event.workflow_run.head_sha }}
                   target_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-    testrail:
-        name: Report results to testrail
+    kiwi:
+        name: Report results to kiwi
         needs:
             - prepare
             - tests
-        environment: Testrail
+        environment: Kiwi
         runs-on: ubuntu-latest
-        if: ${{ needs.prepare.outputs.testrail_enable }}
+        if: ${{ needs.prepare.outputs.kiwi_enable == '1' }}
         steps:
-            - uses: actions/download-artifact@v3
+            - name: Download all zip files
+              uses: actions/download-artifact@v3
               with:
                   name: cypress-junit
-            - name: Prepare testrail upload config
-              id: testrailprep
-              env:
-                  TESTRAIL_PROJECT_ID: ${{ secrets.TESTRAIL_PROJECT_ID }}
-                  TESTRAIL_SUITE_ID: ${{ secrets.TESTRAIL_SUITE_ID }}
-                  TEST_ID: ${{ github.run_id }}
-                  TESTRAIL_URL: https://elementqa.testrail.io
-                  TESTRAIL_USER: ${{ secrets.TESTRAIL_USER }}
-                  TESTRAIL_API_KEY: ${{ secrets.TESTRAIL_API_KEY }}
-              run: |
-                  echo '{"name": "element-web cypress '$TEST_ID'", "suite_id": '$TESTRAIL_SUITE_ID' }' > body.json # TODO add description with more context?
-                  RUN_ID=`curl -X POST -d @body.json -u "$TESTRAIL_USER:$TESTRAIL_API_KEY" -H "Content-Type: application/json" "$TESTRAIL_URL/index.php?/api/v2/add_run/$TESTRAIL_PROJECT_ID" | jq '.id'`
-                  PROJECT_NAME=`curl -X GET -u "$TESTRAIL_USER:$TESTRAIL_API_KEY" -H "Content-Type: application/json" "$TESTRAIL_URL/index.php?/api/v2/get_project/$TESTRAIL_PROJECT_ID" | jq '.name'`
-                  echo "run_id=$RUN_ID" >> $GITHUB_OUTPUT
-                  echo "project_name=$PROJECT_NAME" >> $GITHUB_OUTPUT
-            - name: setup python
-              uses: actions/setup-python@v4
+            - name: Upload to kiwi
+              uses: vector-im/kiwitcms-upload-action@main
               with:
-                  python-version: "3.11"
-            - run: pip install trcli
-            - name: Upload junit files
-              env:
-                  TESTRAIL_PROJECT_ID: ${{ secrets.TESTRAIL_PROJECT_ID }}
-                  TESTRAIL_SUITE_ID: ${{ secrets.TESTRAIL_SUITE_ID }}
-                  TESTRAIL_URL: https://elementqa.testrail.io
-                  TESTRAIL_USER: ${{ secrets.TESTRAIL_USER }}
-                  TESTRAIL_API_KEY: ${{ secrets.TESTRAIL_API_KEY }}
-                  TESTRAIL_RUN_ID: ${{ steps.testrailprep.outputs.run_id }}
-              run: |
-                  for file in results-*.xml; do
-                      echo "Handling $file"
-                      trcli -y -h $TESTRAIL_URL \
-                                  --project-id $TESTRAIL_PROJECT_ID \
-                                  --project ${{ steps.testrailprep.outputs.project_name }} \
-                                  --username $TESTRAIL_USER \
-                                  --password $TESTRAIL_API_KEY \
-                                  parse_junit \
-                                  --run-id $TESTRAIL_RUN_ID \
-                                  --suite-id $TESTRAIL_SUITE_ID \
-                                  --title "if you see this please check cypress build for run id not being provisioned" \
-                                  -f $file || true
-                      #  We want to keep uploading what we can; but don't want the failures/red marks when it fails, so we add || true above.
-                  done
-            - name: Close test run
-              id: testrailpost
-              if: always()
-              env:
-                  TESTRAIL_URL: https://elementqa.testrail.io
-                  TESTRAIL_USER: ${{ secrets.TESTRAIL_USER }}
-                  TESTRAIL_API_KEY: ${{ secrets.TESTRAIL_API_KEY }}
-                  TESTRAIL_RUN_ID: ${{ steps.testrailprep.outputs.run_id }}
-              run: |
-                  CLOSE_RESPONSE=`curl -X POST -d '{}' -u "$TESTRAIL_USER:$TESTRAIL_API_KEY" -H "Content-Type: application/json" "$TESTRAIL_URL/index.php?/api/v2/close_run/$TESTRAIL_RUN_ID"`
-                  if [ ! "0" == "`echo $CLOSE_RESPONSE | jq .untested_count`" ] ; then echo "::warning title=Missing Tests::Testrail reported some cypress tests were not run. $CLOSE_RESPONSE"; fi
+                  file-pattern: results-*.xml
+                  kiwi-username: ${{ secrets.TCMS_USERNAME }}
+                  kiwi-password: ${{ secrets.TCMS_PASSWORD }}
+                  product: "Element Web"
+                  product-version: ${{ github.event.workflow_run.head_branch }}
+                  build-id: ${{ github.event.workflow_run.head_sha }}
+                  suite-name: "Cypress E2E"
+                  summary-template: "$name"

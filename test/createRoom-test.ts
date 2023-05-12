@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import { mocked, Mocked } from "jest-mock";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
-import { IDevice } from "matrix-js-sdk/src/crypto/deviceinfo";
+import { CryptoApi, MatrixClient, Device } from "matrix-js-sdk/src/matrix";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 
 import { stubClient, setupAsyncStoreWithClient, mockPlatformPeg } from "./test-utils";
@@ -147,31 +146,64 @@ describe("createRoom", () => {
 });
 
 describe("canEncryptToAllUsers", () => {
-    const trueUser = {
-        "@goodUser:localhost": {
-            DEV1: {} as unknown as IDevice,
-            DEV2: {} as unknown as IDevice,
-        },
-    };
-    const falseUser = {
-        "@badUser:localhost": {},
-    };
+    const user1Id = "@user1:example.com";
+    const user2Id = "@user2:example.com";
+
+    const devices = new Map([
+        ["DEV1", {} as unknown as Device],
+        ["DEV2", {} as unknown as Device],
+    ]);
 
     let client: Mocked<MatrixClient>;
-    beforeEach(() => {
-        stubClient();
-        client = mocked(MatrixClientPeg.get());
+    let cryptoApi: Mocked<CryptoApi>;
+
+    beforeAll(() => {
+        client = mocked(stubClient());
+        cryptoApi = mocked(client.getCrypto()!);
     });
 
-    it("returns true if all devices have crypto", async () => {
-        client.downloadKeys.mockResolvedValue(trueUser);
-        const response = await canEncryptToAllUsers(client, ["@goodUser:localhost"]);
-        expect(response).toBe(true);
+    it("should return true if userIds is empty", async () => {
+        cryptoApi.getUserDeviceInfo.mockResolvedValue(new Map());
+        const result = await canEncryptToAllUsers(client, []);
+        expect(result).toBe(true);
     });
 
-    it("returns false if not all users have crypto", async () => {
-        client.downloadKeys.mockResolvedValue({ ...trueUser, ...falseUser });
-        const response = await canEncryptToAllUsers(client, ["@goodUser:localhost", "@badUser:localhost"]);
-        expect(response).toBe(false);
+    it("should return true if download keys does not return any user", async () => {
+        cryptoApi.getUserDeviceInfo.mockResolvedValue(new Map());
+        const result = await canEncryptToAllUsers(client, [user1Id, user2Id]);
+        expect(result).toBe(true);
+    });
+
+    it("should return false if none of the users has a device", async () => {
+        cryptoApi.getUserDeviceInfo.mockResolvedValue(
+            new Map([
+                [user1Id, new Map()],
+                [user2Id, new Map()],
+            ]),
+        );
+        const result = await canEncryptToAllUsers(client, [user1Id, user2Id]);
+        expect(result).toBe(false);
+    });
+
+    it("should return false if some of the users don't have a device", async () => {
+        cryptoApi.getUserDeviceInfo.mockResolvedValue(
+            new Map([
+                [user1Id, new Map()],
+                [user2Id, devices],
+            ]),
+        );
+        const result = await canEncryptToAllUsers(client, [user1Id, user2Id]);
+        expect(result).toBe(false);
+    });
+
+    it("should return true if all users have a device", async () => {
+        cryptoApi.getUserDeviceInfo.mockResolvedValue(
+            new Map([
+                [user1Id, devices],
+                [user2Id, devices],
+            ]),
+        );
+        const result = await canEncryptToAllUsers(client, [user1Id, user2Id]);
+        expect(result).toBe(true);
     });
 });

@@ -61,44 +61,11 @@ limitations under the License.
     }
 }
 
-.mx_RoomHeader_spinner {
-    flex: 1;
-    height: 36px;
-    padding-left: 12px;
-    padding-right: 12px;
-}
-
-.mx_RoomHeader_textButton {
-    @mixin mx_DialogButton;
-    margin-right: 8px;
-    margin-top: -5px;
-}
-
-.mx_RoomHeader_textButton:hover {
-    @mixin mx_DialogButton_hover;
-}
-
-.mx_RoomHeader_textButton_danger {
-    background-color: $alert;
-}
-
-.mx_RoomHeader_cancelButton {
-    cursor: pointer;
-    padding-left: 12px;
-    padding-right: 12px;
-}
-
-.mx_RoomHeader_info {
-    display: flex;
-    flex: 1;
-    align-items: center;
-}
-
 .mx_RoomHeader_name {
     flex: 0 1 auto;
     overflow: hidden;
     color: $primary-content;
-    font-weight: $font-semi-bold;
+    font-weight: var(--font-semi-bold);
     font-size: $font-15px;
     min-height: 24px;
     align-items: center;
@@ -212,7 +179,7 @@ limitations under the License.
         mask-size: contain;
     }
 
-    &:not(.mx_RoomHeader_closeButton):hover {
+    &:hover {
         background: rgba($accent, 0.1);
 
         &::before {
@@ -265,10 +232,20 @@ limitations under the License.
     mask-image: url("$(res)/img/element-icons/call/spotlight.svg");
 }
 
-.mx_RoomHeader_closeButton::before {
-    mask-image: url("$(res)/img/cancel.svg");
-    mask-size: 20px;
-    mask-position: center;
+.mx_RoomHeader_closeButton {
+    &::before {
+        mask-image: url("$(res)/img/cancel.svg");
+        mask-size: 20px;
+        mask-position: center;
+    }
+
+    &:hover {
+        background: unset; /* remove background color on hover */
+
+        &::before {
+            background-color: $icon-button-color; /* set the default background color */
+        }
+    }
 }
 
 .mx_RoomHeader_minimiseButton::before {

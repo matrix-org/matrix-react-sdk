@@ -27,17 +27,17 @@ enum Phases {
 
 interface IProps {
     onValueChanged?: (value: string, shouldSubmit: boolean) => void;
-    initialValue?: string;
-    label?: string;
-    placeholder?: string;
-    className?: string;
+    initialValue: string;
+    label: string;
+    placeholder: string;
+    className: string;
     labelClassName?: string;
-    placeholderClassName?: string;
+    placeholderClassName: string;
     // Overrides blurToSubmit if true
     blurToCancel?: boolean;
     // Will cause onValueChanged(value, true) to fire on blur
-    blurToSubmit?: boolean;
-    editable?: boolean;
+    blurToSubmit: boolean;
+    editable: boolean;
 }
 
 interface IState {
@@ -87,6 +87,7 @@ export default class EditableText extends React.Component<IProps, IState> {
     }
 
     private showPlaceholder = (show: boolean): void => {
+        if (!this.editableDiv.current) return;
         if (show) {
             this.editableDiv.current.textContent = this.props.placeholder;
             this.editableDiv.current.setAttribute(
@@ -109,11 +110,11 @@ export default class EditableText extends React.Component<IProps, IState> {
         this.value = this.props.initialValue;
         this.showPlaceholder(!this.value);
         this.onValueChanged(false);
-        this.editableDiv.current.blur();
+        this.editableDiv.current?.blur();
     };
 
     private onValueChanged = (shouldSubmit: boolean): void => {
-        this.props.onValueChanged(this.value, shouldSubmit);
+        this.props.onValueChanged?.(this.value, shouldSubmit);
     };
 
     private onKeyDown = (ev: React.KeyboardEvent<HTMLDivElement>): void => {
@@ -134,7 +135,7 @@ export default class EditableText extends React.Component<IProps, IState> {
         if (!(ev.target as HTMLDivElement).textContent) {
             this.showPlaceholder(true);
         } else if (!this.placeholder) {
-            this.value = (ev.target as HTMLDivElement).textContent;
+            this.value = (ev.target as HTMLDivElement).textContent ?? "";
         }
 
         const action = getKeyBindingsManager().getAccessibilityAction(ev);
@@ -163,7 +164,7 @@ export default class EditableText extends React.Component<IProps, IState> {
             range.setStart(node, 0);
             range.setEnd(node, ev.target.childNodes.length);
 
-            const sel = window.getSelection();
+            const sel = window.getSelection()!;
             sel.removeAllRanges();
             sel.addRange(range);
         }
@@ -171,7 +172,7 @@ export default class EditableText extends React.Component<IProps, IState> {
 
     private onFinish = (
         ev: React.KeyboardEvent<HTMLDivElement> | React.FocusEvent<HTMLDivElement>,
-        shouldSubmit?: boolean,
+        shouldSubmit = false,
     ): void => {
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
@@ -190,7 +191,7 @@ export default class EditableText extends React.Component<IProps, IState> {
     };
 
     private onBlur = (ev: React.FocusEvent<HTMLDivElement>): void => {
-        const sel = window.getSelection();
+        const sel = window.getSelection()!;
         sel.removeAllRanges();
 
         if (this.props.blurToCancel) {

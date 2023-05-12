@@ -130,12 +130,14 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
     let contextMenu;
     if (menuDisplayed) {
-        const rect = handle.current.getBoundingClientRect();
+        const rect = handle.current?.getBoundingClientRect();
+        const rightMargin = rect?.right ?? 0;
+        const topMargin = rect?.top ?? 0;
         contextMenu = (
             <WidgetContextMenu
                 chevronFace={ChevronFace.None}
-                right={UIStore.instance.windowWidth - rect.right}
-                bottom={UIStore.instance.windowHeight - rect.top}
+                right={UIStore.instance.windowWidth - rightMargin}
+                bottom={UIStore.instance.windowHeight - topMargin}
                 onFinished={closeMenu}
                 app={app}
             />
@@ -226,7 +228,7 @@ const AppsSection: React.FC<IAppsSectionProps> = ({ room }) => {
             managers.openNoManagerDialog();
         } else {
             // noinspection JSIgnoredPromiseFromCall
-            managers.getPrimaryManager().open(room);
+            managers.getPrimaryManager()?.open(room);
         }
     };
 
@@ -316,7 +318,13 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) 
                 />
             </div>
 
-            <RoomName room={room}>{(name) => <h2 title={name}>{name}</h2>}</RoomName>
+            <RoomName room={room}>
+                {(name) => (
+                    <h1 className="mx_RoomSummaryCard_roomName" title={name}>
+                        {name}
+                    </h1>
+                )}
+            </RoomName>
             <div className="mx_RoomSummaryCard_alias" title={alias}>
                 {alias}
             </div>
@@ -341,7 +349,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) 
                 )}
                 {!isVideoRoom && (
                     <Button className="mx_RoomSummaryCard_icon_poll" onClick={onRoomPollHistoryClick}>
-                        {_t("Polls history")}
+                        {_t("Poll history")}
                     </Button>
                 )}
                 {pinningEnabled && !isVideoRoom && (

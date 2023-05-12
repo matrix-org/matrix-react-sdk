@@ -71,7 +71,7 @@ class FilePanel extends React.Component<IProps, IState> {
         removed: boolean,
         data: IRoomTimelineData,
     ): void => {
-        if (room?.roomId !== this.props?.roomId) return;
+        if (room?.roomId !== this.props.roomId) return;
         if (toStartOfTimeline || !data || !data.liveEvent || ev.isRedacted()) return;
 
         const client = MatrixClientPeg.get();
@@ -154,11 +154,8 @@ class FilePanel extends React.Component<IProps, IState> {
             },
         });
 
-        const filterId = await client.getOrCreateFilter("FILTER_FILES_" + client.credentials.userId, filter);
-        filter.filterId = filterId;
-        const timelineSet = room.getOrCreateFilteredTimelineSet(filter);
-
-        return timelineSet;
+        filter.filterId = await client.getOrCreateFilter("FILTER_FILES_" + client.credentials.userId, filter);
+        return room.getOrCreateFilteredTimelineSet(filter);
     }
 
     private onPaginationRequest = (
@@ -276,7 +273,9 @@ class FilePanel extends React.Component<IProps, IState> {
                         withoutScrollContainer
                         ref={this.card}
                     >
-                        <Measured sensor={this.card.current} onMeasurement={this.onMeasurement} />
+                        {this.card.current && (
+                            <Measured sensor={this.card.current} onMeasurement={this.onMeasurement} />
+                        )}
                         <SearchWarning isRoomEncrypted={isRoomEncrypted} kind={WarningKind.Files} />
                         <TimelinePanel
                             manageReadReceipts={false}

@@ -51,6 +51,7 @@ import { ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePaylo
 import { Icon as LiveIcon } from "../../../res/img/compound/live-8px.svg";
 import { VoiceBroadcastRecording, VoiceBroadcastRecordingsStoreEvent } from "../../voice-broadcast";
 import { SDKContext } from "../../contexts/SDKContext";
+import { shouldShowFeedback } from "../../utils/Feedback";
 
 interface IProps {
     isPanelCollapsed: boolean;
@@ -87,9 +88,9 @@ export default class UserMenu extends React.Component<IProps, IState> {
     public static contextType = SDKContext;
     public context!: React.ContextType<typeof SDKContext>;
 
-    private dispatcherRef: string;
-    private themeWatcherRef: string;
-    private readonly dndWatcherRef: string;
+    private dispatcherRef?: string;
+    private themeWatcherRef?: string;
+    private readonly dndWatcherRef?: string;
     private buttonRef: React.RefObject<HTMLButtonElement> = createRef();
 
     public constructor(props: IProps, context: React.ContextType<typeof SDKContext>) {
@@ -333,7 +334,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         }
 
         let feedbackButton: JSX.Element | undefined;
-        if (SettingsStore.getValue(UIFeature.Feedback)) {
+        if (shouldShowFeedback()) {
             feedbackButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconMessage"

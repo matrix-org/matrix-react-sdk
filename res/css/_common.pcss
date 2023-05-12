@@ -27,22 +27,24 @@ $hover-transition: 0.08s cubic-bezier(0.46, 0.03, 0.52, 0.96); /* quadratic */
 
 $selected-message-border-width: 4px;
 
-$MessageTimestamp_width: 46px; /* 8 + 30 (avatar) + 8 */
-$MessageTimestamp_width_hover: calc($MessageTimestamp_width - 2 * $selected-message-border-width);
-
-$slider-dot-size: 1em;
-$slider-selection-dot-size: 2.4em;
-
-$container-border-width: 8px;
-$container-gap-width: 8px; /* only even numbers should be used because otherwise we get 0.5px margin values. */
-
-$timeline-image-border-radius: 8px;
 :root {
     font-size: 10px;
 
+    --container-border-width: 8px;
+    --container-gap-width: 8px; /* only even numbers should be used because otherwise we get 0.5px margin values. */
     --transition-short: 0.1s;
     --transition-standard: 0.3s;
-    --MessageTimestamp-width: $MessageTimestamp_width;
+    --buttons-dialog-gap-row: $spacing-8;
+    --buttons-dialog-gap-column: $spacing-8;
+    --MBody-border-radius: 8px;
+}
+
+@media only percy {
+    :root {
+        --percy-color-avatar: $username-variant2-color;
+        --percy-color-displayName: $username-variant1-color;
+        --percy-color-replyChain-border: $username-variant1-color;
+    }
 }
 
 @media (prefers-reduced-motion) {
@@ -122,7 +124,7 @@ input[type="password"] {
     font-family: inherit;
     padding: 9px;
     font-size: $font-14px;
-    font-weight: 600;
+    font-weight: var(--font-semi-bold);
     min-width: 0;
 }
 
@@ -517,11 +519,32 @@ legend {
     margin-inline-start: auto;
 
     /* default gap among elements */
-    column-gap: $spacing-8; /* See margin-right below inside the button style */
-    row-gap: 5px; /* See margin-bottom below inside the button style */
+    column-gap: var(--buttons-dialog-gap-column);
+    row-gap: var(--buttons-dialog-gap-row);
 
     button {
         margin: 0 !important; /* override the margin settings */
+    }
+}
+
+@define-mixin mx_DialogButton {
+    /* align images in buttons (eg spinners) */
+    vertical-align: middle;
+    border: 0px;
+    border-radius: 8px;
+    font-family: $font-family;
+    font-size: $font-14px;
+    color: $button-fg-color;
+    background-color: $accent;
+    width: auto;
+    padding: 7px;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    cursor: pointer;
+    display: inline-block;
+
+    &:not(.focus-visible) {
+        outline: none;
     }
 }
 
@@ -540,11 +563,11 @@ legend {
 .mx_Dialog_buttons input[type="submit"] {
     @mixin mx_DialogButton;
     margin-left: 0px;
-    margin-right: 8px;
+    margin-right: var(--buttons-dialog-gap-column);
     margin-bottom: 5px;
 
     /* flip colours for the secondary ones */
-    font-weight: 600;
+    font-weight: var(--font-semi-bold);
     border: 1px solid $accent;
     color: $accent;
     background-color: $button-secondary-bg-color;
@@ -553,13 +576,6 @@ legend {
 
 .mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|="maplibregl"]):not(.mx_AccessibleButton):last-child {
     margin-right: 0px;
-}
-
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|="maplibregl"]):not(.mx_AccessibleButton):hover,
-.mx_Dialog input[type="submit"]:hover,
-.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton):hover,
-.mx_Dialog_buttons input[type="submit"]:hover {
-    @mixin mx_DialogButton_hover;
 }
 
 .mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|="maplibregl"]):not(.mx_AccessibleButton):focus,
@@ -614,15 +630,6 @@ legend {
     overflow-y: hidden;
 }
 
-.mx_DialogDesignChanges_wrapper .mx_Dialog_fixedWidth {
-    max-width: 636px; /* match splash image width */
-
-    .mx_AccessibleButton_kind_link {
-        font-size: inherit;
-        padding: 0;
-    }
-}
-
 /* TODO: Review mx_GeneralButton usage to see if it can use a different class */
 /* These classes were brought in from the old UserSettings and are included here to avoid */
 /* breaking the app. */
@@ -631,15 +638,6 @@ legend {
     @mixin mx_DialogButton;
     display: inline;
     margin: auto;
-}
-
-.mx_GeneralButton:hover {
-    @mixin mx_DialogButton_hover;
-}
-
-.mx_linkButton {
-    cursor: pointer;
-    color: $accent;
 }
 
 .mx_TextInputDialog_label {
@@ -654,14 +652,6 @@ legend {
     padding: 9px;
     color: $primary-content;
     background-color: $background;
-}
-
-.mx_textButton {
-    @mixin mx_DialogButton_small;
-}
-
-.mx_textButton:hover {
-    @mixin mx_DialogButton_hover;
 }
 
 .mx_button_row {
@@ -700,22 +690,6 @@ legend {
 
 .mx_Username_color8 {
     color: $username-variant8-color;
-}
-
-@define-mixin mx_Tooltip_dark {
-    box-shadow: none;
-    background-color: $tooltip-timeline-bg-color;
-    color: $tooltip-timeline-fg-color;
-    border: none;
-    border-radius: 3px;
-    padding: 6px 8px;
-}
-
-/* This is a workaround for our mixins not supporting child selectors */
-.mx_Tooltip_dark {
-    .mx_Tooltip_chevron::after {
-        border-right-color: $tooltip-timeline-bg-color;
-    }
 }
 
 @define-mixin ProgressBarColour $colour {
@@ -772,7 +746,7 @@ legend {
 
 @define-mixin LegacyCallButton {
     box-sizing: border-box;
-    font-weight: 600;
+    font-weight: var(--font-semi-bold);
     height: $font-24px;
     line-height: $font-24px;
     margin-right: 0;
@@ -794,7 +768,7 @@ legend {
 
 @define-mixin ThreadRepliesAmount {
     color: $secondary-content;
-    font-weight: $font-semi-bold;
+    font-weight: var(--font-semi-bold);
     white-space: nowrap;
     position: relative;
     padding: 0 $spacing-12 0 $spacing-8;

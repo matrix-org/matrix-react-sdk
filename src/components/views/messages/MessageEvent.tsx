@@ -82,7 +82,7 @@ const baseEvTypes = new Map<string, React.ComponentType<Partial<IBodyProps>>>([
 
 export default class MessageEvent extends React.Component<IProps> implements IMediaBody, IOperableEventTile {
     private body: React.RefObject<React.Component | IOperableEventTile> = createRef();
-    private mediaHelper: MediaEventHelper;
+    private mediaHelper?: MediaEventHelper;
     private bodyTypes = new Map<string, typeof React.Component>(baseBodyTypes.entries());
     private evTypes = new Map<string, React.ComponentType<Partial<IBodyProps>>>(baseEvTypes.entries());
 
@@ -133,7 +133,7 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
         return (this.body.current as IOperableEventTile)?.getEventTileOps?.() || null;
     };
 
-    public getMediaHelper(): MediaEventHelper {
+    public getMediaHelper(): MediaEventHelper | undefined {
         return this.mediaHelper;
     }
 
@@ -185,9 +185,9 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
             const allowRender = localStorage.getItem(key) === "true";
 
             if (!allowRender) {
-                const userDomain = this.props.mxEvent.getSender().split(":").slice(1).join(":");
-                const userBanned = Mjolnir.sharedInstance().isUserBanned(this.props.mxEvent.getSender());
-                const serverBanned = Mjolnir.sharedInstance().isServerBanned(userDomain);
+                const userDomain = this.props.mxEvent.getSender()?.split(":").slice(1).join(":");
+                const userBanned = Mjolnir.sharedInstance().isUserBanned(this.props.mxEvent.getSender()!);
+                const serverBanned = userDomain && Mjolnir.sharedInstance().isServerBanned(userDomain);
 
                 if (userBanned || serverBanned) {
                     BodyType = MjolnirBody;
