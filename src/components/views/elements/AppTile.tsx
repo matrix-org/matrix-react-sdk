@@ -508,14 +508,17 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
 
         return (
-            <span>
+            <div
+                className="mx_AppTileMenuBar_title"
+                style={{ pointerEvents: this.props.handleMinimisePointerEvents ? "all" : "none" }}
+            >
                 <WidgetAvatar app={this.props.app} />
                 <b>{name}</b>
                 <span>
                     {title ? titleSpacer : ""}
                     {title}
                 </span>
-            </span>
+            </div>
         );
     }
 
@@ -745,12 +748,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                 <div className={appTileClasses} id={this.props.app.id}>
                     {this.props.showMenubar && (
                         <div className="mx_AppTileMenuBar">
-                            <span
-                                className="mx_AppTileMenuBar_title"
-                                style={{ pointerEvents: this.props.handleMinimisePointerEvents ? "all" : "none" }}
-                            >
-                                {this.props.showTitle && this.getTileTitle()}
-                            </span>
+                            {this.props.showTitle && this.getTileTitle()}
                             <span className="mx_AppTileMenuBar_widgets">
                                 {layoutButtons}
                                 {this.props.showPopout && !this.state.requiresClient && (
