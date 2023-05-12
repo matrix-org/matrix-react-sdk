@@ -130,6 +130,8 @@ describe("permalinks", () => {
         const percyCSS =
             ".mx_cryptoEvent, " +
             ".mx_NewRoomIntro, " +
+            ".mx_MessageTimestamp, " +
+            ".mx_RoomView_myReadMarker, " +
             ".mx_GenericEventListSummary { visibility: hidden !important; }";
 
         cy.get(".mx_RoomView_timeline").percySnapshotElement("Permalink rendering", { percyCSS });
