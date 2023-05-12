@@ -61,7 +61,7 @@ import { SdkContextClass } from "../../../contexts/SDKContext";
 import { VoiceBroadcastInfoState } from "../../../voice-broadcast";
 import { createCantStartVoiceMessageBroadcastDialog } from "../dialogs/CantStartVoiceMessageBroadcastDialog";
 import { UIFeature } from "../../../settings/UIFeature";
-import { fudgeMentions } from "./wysiwyg_composer/utils/mentions";
+import { amendLinksInPlainText } from "./wysiwyg_composer/utils/mentions";
 
 let instanceCount = 0;
 
@@ -377,7 +377,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
 
         // when going from rich to plain, there are some amendments that have to be made
         if (isRichTextEnabled) {
-            convertedContent = fudgeMentions(composerContent, convertedContent);
+            convertedContent = amendLinksInPlainText(composerContent, convertedContent);
         }
 
         this.setState({

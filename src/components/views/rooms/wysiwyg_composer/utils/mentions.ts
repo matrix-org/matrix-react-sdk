@@ -16,24 +16,27 @@ limitations under the License.
 
 import { parsePermalink } from "../../../../../utils/permalinks/Permalinks";
 
+// a rich text link looks like <a href="href"...>link text</a>
 const richTextLinkRegex = /(<a.*?<\/a>)/g;
+
+// a markdown link looks like [link text](<href>)
 const mdLinkRegex = /\[(.*?)\]\(<(.*?)>\)/g;
 
-export function fudgeMentions(richText: string, plainText: string): string {
-    // to avoid lookup, we use the existing rich text information
+export function amendLinksInPlainText(richText: string, plainText: string): string {
+    // find all of the links in the rich text first as these will contain all the required attributes
     const richTextLinkMatches = richText.match(richTextLinkRegex);
     if (richTextLinkMatches === null) {
         // we have no links, so no processing required
         return plainText;
     }
 
-    // allows us to keep track of which link we're looking at in the replacer
-    let count = 0;
+    // we have found all of the <a> type links in the rich text, now search through the plain text and:
+    // if the href can not be interpreted as a permalink, render it in the markdown style
+    // otherwise, replace the permalink with the html containing all the attributes
 
-    // now go through the plain text and, if the href can be interpreted as a permalink, replace
-    // it with the corresponding "rich match"
-    const fudgedString = plainText.replace(mdLinkRegex, (match, linkText, href) => {
-        // special case for @room
+    let count = 0;
+    const plainTextWithReplacedLinks = plainText.replace(mdLinkRegex, (match, linkText, href) => {
+        // special case for @room, as this has a href of "#" so will
         if (linkText === "@room") {
             const toReturn = richTextLinkMatches[count];
             count++;
@@ -45,5 +48,6 @@ export function fudgeMentions(richText: string, plainText: string): string {
         count++;
         return toReturn;
     });
-    return fudgedString;
+
+    return plainTextWithReplacedLinks;
 }
