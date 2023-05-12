@@ -1034,10 +1034,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         currentRREventIndex: number | null,
         lastReadEvent: MatrixEvent | null,
         lastReadEventIndex: number | null,
-    ): lastReadEvent is MatrixEvent {
-        // no last read event → no receipt to send
-        if (!lastReadEvent) return false;
-
+    ): boolean {
         // We want to avoid sending out read receipts when we are looking at
         // events in the past which are before the latest RR.
         //
@@ -1093,8 +1090,9 @@ class TimelinePanel extends React.Component<IProps, IState> {
         );
         const readMarkerEventId = this.state.readMarkerEventId;
         const shouldSendRM = this.shouldSendRM(readMarkerEventId);
+        const roomId = this.props.timelineSet.room?.roomId;
 
-        debuglog(`Sending Read Markers for ${this.props.timelineSet.room?.roomId}: `, {
+        debuglog(`Sending Read Markers for ${roomId}: `, {
             shouldSendRR,
             shouldSendRM,
             currentRREventId,
@@ -1114,7 +1112,9 @@ class TimelinePanel extends React.Component<IProps, IState> {
             const readMarkerEvent = this.props.timelineSet.findEventById(readMarkerEventId);
 
             if (readMarkerEvent) {
-                proms.push(this.sendReadMarker(client, readMarkerEvent));
+                // Empty room Id should not happen here.
+                // Either way fall back to empty string and let further functions handle it.
+                proms.push(this.sendReadMarker(client, roomId ?? "", readMarkerEventId));
             }
         }
 
@@ -1146,18 +1146,18 @@ class TimelinePanel extends React.Component<IProps, IState> {
      * Sends a fully_read marker for readMarkerEvent.
      * Resets the last sent event Id in case of an error, so that it will be retried next time.
      */
-    private async sendReadMarker(client: MatrixClient, readMarkerEvent: MatrixEvent): Promise<void> {
+    private async sendReadMarker(client: MatrixClient, roomId: string, readMarkerEventId: string): Promise<void> {
         this.lastRMSentEventId = this.state.readMarkerEventId;
 
         try {
-            await client.sendReadReceipt(readMarkerEvent, ReceiptType.FullyRead, true);
-        } catch (err) {
+            await client.setRoomReadMarkers(roomId, readMarkerEventId);
+        } catch (error) {
             // it failed, so allow retries next time the user is active
             this.lastRMSentEventId = undefined;
 
             logger.error("Error sending fully_read", {
-                room: this.props.timelineSet.room?.roomId,
-                error: err,
+                roomId,
+                error,
             });
         }
     }

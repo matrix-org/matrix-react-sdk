@@ -191,13 +191,14 @@ describe("TimelinePanel", () => {
                 });
 
                 it("should send a fully read marker and a public receipt", async () => {
-                    expect(client.sendReadReceipt).toHaveBeenCalledWith(ev1, ReceiptType.FullyRead, true);
+                    expect(client.setRoomReadMarkers).toHaveBeenCalledWith(roomId, ev1.getId());
                     expect(client.sendReadReceipt).toHaveBeenCalledWith(ev1, ReceiptType.Read);
                 });
 
                 describe("and reading the timeline again", () => {
                     beforeEach(async () => {
                         client.sendReadReceipt.mockClear();
+                        client.setRoomReadMarkers.mockClear();
 
                         // @ts-ignore Simulate user activity by calling updateReadMarker on the TimelinePanel.
                         await timelinePanel.updateReadMarker();
@@ -205,13 +206,14 @@ describe("TimelinePanel", () => {
 
                     it("should not send receipts again", () => {
                         expect(client.sendReadReceipt).not.toHaveBeenCalled();
+                        expect(client.setRoomReadMarkers).not.toHaveBeenCalled();
                     });
 
                     it("and forgetting the read markers, should send the stored marker again", async () => {
                         timelineSet.addLiveEvent(ev2, {});
                         room.addEphemeralEvents([newReceipt(ev2.getId()!, userId, 222, 200)]);
                         await timelinePanel.forgetReadMarker();
-                        expect(client.sendReadReceipt).toHaveBeenCalledWith(ev2, ReceiptType.FullyRead, true);
+                        expect(client.setRoomReadMarkers).toHaveBeenCalledWith(roomId, ev2.getId());
                     });
                 });
             });
@@ -243,7 +245,7 @@ describe("TimelinePanel", () => {
                     // Expect the private reception to be sent directly
                     expect(client.sendReadReceipt).toHaveBeenCalledWith(ev1, ReceiptType.ReadPrivate);
                     // Expect the fully_read marker not to be send yet
-                    expect(client.sendReadReceipt).not.toHaveBeenCalledWith(ev1, ReceiptType.FullyRead, true);
+                    expect(client.setRoomReadMarkers).not.toHaveBeenCalled();
 
                     client.sendReadReceipt.mockClear();
 
@@ -253,7 +255,7 @@ describe("TimelinePanel", () => {
                     // It should not send the receipt again.
                     expect(client.sendReadReceipt).not.toHaveBeenCalledWith(ev1, ReceiptType.ReadPrivate);
                     // Expect the fully_read marker to be sent after user activity.
-                    expect(client.sendReadReceipt).toHaveBeenCalledWith(ev1, ReceiptType.FullyRead, true);
+                    expect(client.setRoomReadMarkers).toHaveBeenCalledWith(roomId, ev1.getId());
                 });
             });
         });
@@ -287,7 +289,7 @@ describe("TimelinePanel", () => {
                 await timelinePanel.sendReadReceipts();
 
                 // fully_read is not supported for threads per spec
-                expect(client.sendReadReceipt).not.toHaveBeenCalledWith(threadEv1, ReceiptType.FullyRead, true);
+                expect(client.setRoomReadMarkers).not.toHaveBeenCalled();
                 expect(client.sendReadReceipt).toHaveBeenCalledWith(threadEv1, ReceiptType.Read);
             });
         });
