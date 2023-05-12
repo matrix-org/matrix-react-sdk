@@ -990,6 +990,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
             !(await client.doesServerSupportUnstableFeature("org.matrix.msc2285.stable")) ||
             !(await client.isVersionSupported("v1.4"))
         ) {
+            logger.warn(
+                "Falling back to public instead of private receipts because the homeserver does not support them",
+            );
+
             // The server does not support private read receipt. Fall back to public ones.
             return ReceiptType.Read;
         }
