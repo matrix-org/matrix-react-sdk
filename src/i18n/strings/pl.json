@@ -2766,7 +2766,7 @@
     "To join, please enable video rooms in Labs first": "Aby dołączyć, włącz najpierw pokoje wideo w laboratoriach",
     "To view, please enable video rooms in Labs first": "Aby wyświetlić, włącz najpierw pokoje wideo w laboratoriach",
     "To view %(roomName)s, you need an invite": "Aby wyświetlić %(roomName)s, potrzebujesz zaproszenia",
-    "<inviter/> invites you": "<inviter/> zaprasza cie",
+    "<inviter/> invites you": "<inviter/> zaprasza cię",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "Wystąpił błąd %(errcode)s podczas próby dostępu do pokoju lub przestrzeni. Jeśli widzisz tą wiadomość w błędzie, <issueLink>zgłoś ten błąd</issueLink>.",
     "Try again later, or ask a room or space admin to check if you have access.": "Spróbuj ponownie później lub spytaj się administratora przestrzeni, aby sprawdził czy masz dostęp.",
     "This room or space does not exist.": "Ten pokój lub przestrzeń nie istnieje.",
@@ -2876,5 +2876,15 @@
     "Open thread": "Otwórz wątek",
     "%(count)s reply|one": "%(count)s odpowiedź",
     "%(count)s reply|other": "%(count)s odpowiedzi",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Ten pokój działa na wersji <roomVersion />, którą serwer domowy oznaczył jako <i>niestabilną</i>."
+    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Ten pokój działa na wersji <roomVersion />, którą serwer domowy oznaczył jako <i>niestabilną</i>.",
+    "You can only pin up to %(count)s widgets|other": "Możesz przypiąć do %(count)s widżetów",
+    "Room info": "Informacje o pokoju",
+    "Chat": "Czat",
+    "We were unable to start a chat with the other user.": "Nie byliśmy w stanie rozpocząć czatu z innym użytkownikiem.",
+    "Error starting verification": "Wystąpił błąd w trakcie weryfikacji",
+    "Yours, or the other users' session": "Sesja Twoja lub innych użytkowników",
+    "Yours, or the other users' internet connection": "Połączenie internetowe Twoje lub innych użytkowników",
+    "The homeserver the user you're verifying is connected to": "Użytkownik, którego weryfikujesz jest połączony z serwerem domowym",
+    "Message didn't send. Click for info.": "Nie wysłano wiadomości. Kliknij po więcej informacji.",
+    "You do not have permission to invite users": "Nie posiadasz uprawnień, aby zapraszać użytkowników"
 }
