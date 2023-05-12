@@ -169,7 +169,7 @@ export function processMention(
     const leadingTextNode = document.createTextNode(node.textContent?.slice(0, suggestionData.startOffset) || "\u200b");
     const trailingTextNode = document.createTextNode(` ${node.textContent?.slice(suggestionData.endOffset) ?? ""}`);
 
-    // now add the leading node, link element and trailing node before removing the node we are replacing
+    // now add the leading text node, link element and trailing text node before removing the node we are replacing
     const parentNode = node.parentNode;
     parentNode.insertBefore(leadingTextNode, node);
     parentNode.insertBefore(linkElement, node);
