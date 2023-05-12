@@ -3773,5 +3773,7 @@
     "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s bereaksi %(reaction)s ke %(message)s",
     "You reacted %(reaction)s to %(message)s": "Anda bereaksi %(reaction)s ke %(message)s",
     "WebGL is required to display maps, please enable it in your browser settings.": "WebGL diperlukam untuk menampilkan peta, silakan aktifkan di pengaturan peramban.",
-    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Tidak dapat mengundang pengguna dengan surel tanpa server identitas. Anda dapat menghubungkan di \"Pengaturan\"."
+    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Tidak dapat mengundang pengguna dengan surel tanpa server identitas. Anda dapat menghubungkan di \"Pengaturan\".",
+    "Unable to create room with moderation bot": "Tidak dapat membuat ruangan dengan bot moderasi",
+    "Failed to download source media, no source url was found": "Gagal mengunduh media sumber, tidak ada URL sumber yang ditemukan"
 }
