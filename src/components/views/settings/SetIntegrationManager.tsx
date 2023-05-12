@@ -72,7 +72,11 @@ export default class SetIntegrationManager extends React.Component<IProps, IStat
         }
 
         return (
-            <label className="mx_SetIntegrationManager" htmlFor="toggle_integration">
+            <label
+                className="mx_SetIntegrationManager"
+                data-testid="mx_SetIntegrationManager"
+                htmlFor="toggle_integration"
+            >
                 <div className="mx_SettingsFlag">
                     <div className="mx_SetIntegrationManager_heading_manager">
                         <Heading size="h2">{_t("Manage integrations")}</Heading>
