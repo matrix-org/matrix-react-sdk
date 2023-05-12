@@ -28,11 +28,21 @@ function isDivElement(target: EventTarget): target is HTMLDivElement {
     return target instanceof HTMLDivElement;
 }
 
+/**
+ * Decodes a string containing html character entities and returns the string with the entities replaced
+ * with regular characters, eg "&lt;" becomes "<"
+ */
+function decodeHtml(html: string): string {
+    const textArea = document.createElement("textarea");
+    textArea.innerHTML = html;
+    return textArea.value;
+}
+
 // Hitting enter inside the editor inserts an editable div, initially containing a <br />
 // For correct display, first replace this pattern with a newline character and then remove divs
 // noting that they are used to delimit paragraphs
 function amendInnerHtml(text: string): string {
-    return text
+    return decodeHtml(text)
         .replace(/<div><br><\/div>/g, "\n") // this is pressing enter then not typing
         .replace(/<div>/g, "\n") // this is from pressing enter, then typing inside the div
         .replace(/<\/div>/g, "");
