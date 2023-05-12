@@ -1012,8 +1012,9 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
 
         if (this.state.readMarkerEventId && this.state.readMarkerEventId === this.initialReadMarkerId) {
-            // The initial read marker is a historical one.
-            // Prevent sending it again.
+            // The initial read marker is the one stored in the room account data.
+            // It makes no sense to send a read marker for it,
+            // because if it is in the room account data, a read marker must have been sent before.
             return false;
         }
 
