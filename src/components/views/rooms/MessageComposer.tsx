@@ -61,7 +61,7 @@ import { SdkContextClass } from "../../../contexts/SDKContext";
 import { VoiceBroadcastInfoState } from "../../../voice-broadcast";
 import { createCantStartVoiceMessageBroadcastDialog } from "../dialogs/CantStartVoiceMessageBroadcastDialog";
 import { UIFeature } from "../../../settings/UIFeature";
-import { parsePermalink } from "../../../utils/permalinks/Permalinks";
+import { fudgeMentions } from "./wysiwyg_composer/utils/mentions";
 
 let instanceCount = 0;
 
@@ -371,47 +371,19 @@ export class MessageComposer extends React.Component<IProps, IState> {
         const { richToPlain, plainToRich } = await getConversionFunctions();
 
         const { isRichTextEnabled, composerContent } = this.state;
-        const convertedContent = isRichTextEnabled
+        let convertedContent = isRichTextEnabled
             ? await richToPlain(composerContent)
             : await plainToRich(composerContent);
 
-        const richTextLinkRegex = /(<a.*?<\/a>)/g;
-        const mdLinkRegex = /\[(.*?)\]\(<(.*?)>\)/g;
-
-        function fudgeMentions(plainText: string): string {
-            // to avoid lookup, we use the existing rich text information
-            const richTextLinkMatches = composerContent.match(richTextLinkRegex);
-            if (richTextLinkMatches === null) {
-                // we have no links, so no processing required
-                return plainText;
-            }
-
-            // allows us to keep track of which link we're looking at in the replacer
-            let count = 0;
-
-            // now go through the plain text and, if the href can be interpreted as a permalink, replace
-            // it with the corresponding "rich match"
-            const fudgedString = plainText.replace(mdLinkRegex, (match, linkText, href) => {
-                // special case for @room
-                if (linkText === "@room") {
-                    const toReturn = richTextLinkMatches[count];
-                    count++;
-                    return toReturn;
-                }
-                // permalink returns null if we can't interpret it that way
-                const permalink = parsePermalink(href);
-                const toReturn = permalink === null ? `[${linkText}](${href})` : richTextLinkMatches[count];
-                count++;
-                return toReturn;
-            });
-            return fudgedString;
+        // when going from rich to plain, there are some amendments that have to be made
+        if (isRichTextEnabled) {
+            convertedContent = fudgeMentions(composerContent, convertedContent);
         }
-        const patchedContent = isRichTextEnabled ? fudgeMentions(convertedContent) : convertedContent;
 
         this.setState({
             isRichTextEnabled: !isRichTextEnabled,
-            composerContent: patchedContent,
-            initialComposerContent: patchedContent,
+            composerContent: convertedContent,
+            initialComposerContent: convertedContent,
         });
     };
 
