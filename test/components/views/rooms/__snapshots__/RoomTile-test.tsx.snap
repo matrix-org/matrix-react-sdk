@@ -29,6 +29,7 @@ exports[`RoomTile when message previews are enabled and there is a message in a 
           aria-hidden="true"
           class="mx_BaseAvatar_image"
           data-testid="avatar-img"
+          loading="lazy"
           src="data:image/png;base64,00"
           style="width: 32px; height: 32px;"
         />
@@ -113,6 +114,7 @@ exports[`RoomTile when message previews are enabled and there is a message in th
           aria-hidden="true"
           class="mx_BaseAvatar_image"
           data-testid="avatar-img"
+          loading="lazy"
           src="data:image/png;base64,00"
           style="width: 32px; height: 32px;"
         />
@@ -197,6 +199,7 @@ exports[`RoomTile when message previews are enabled should render a room without
           aria-hidden="true"
           class="mx_BaseAvatar_image"
           data-testid="avatar-img"
+          loading="lazy"
           src="data:image/png;base64,00"
           style="width: 32px; height: 32px;"
         />
