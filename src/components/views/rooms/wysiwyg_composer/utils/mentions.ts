@@ -19,8 +19,8 @@ import { parsePermalink } from "../../../../../utils/permalinks/Permalinks";
 // a rich text link looks like <a href="href"...>link text</a>
 const richTextLinkRegex = /(<a.*?<\/a>)/g;
 
-// a markdown link looks like [link text](<href>)
-const mdLinkRegex = /\[(.*?)\]\(<(.*?)>\)/g;
+// a markdown link looks like [link text](<href>), regex uses negation to avoid super-linear performance
+const mdLinkRegex = /\[([^\]]*)\]\(<([^>]*)>\)/g;
 
 export function amendLinksInPlainText(richText: string, plainText: string): string {
     // find all of the links in the rich text first as these will contain all the required attributes
