@@ -514,7 +514,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         return (
             <div className={classnamesTitle}>
-                <WidgetAvatar app={this.props.app} />
+                <WidgetAvatar app={this.props.app} className="mx_AppTileMenuBar_title_widgetAvatar" />
                 <b>{name}</b>
                 <span>
                     {title ? titleSpacer : ""}
