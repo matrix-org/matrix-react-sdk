@@ -72,12 +72,10 @@ const WysiwygAutocomplete = forwardRef(
                     return;
                 }
                 case "at-room": {
-                    // TODO improve handling of at-room to either become a span or use a placeholder href
-                    // We have an issue in that we can't use a placeholder because the rust model is always
-                    // applying a prefix to the href, so an href of "#" becomes https://# and also we can not
-                    // represent a plain span in rust
+                    // we treat the at-room as a link, then replace the link with a plain text representation prior
+                    // to sending the message for compatibility with the timeline
                     handleMention(
-                        window.location.href,
+                        "#",
                         getMentionDisplayText(completion, client),
                         getMentionAttributes(completion, client, room),
                     );
