@@ -3773,5 +3773,8 @@
     "You reacted %(reaction)s to %(message)s": "Ви зреагували %(reaction)s на %(message)s",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Неможливо запросити користувача електронною поштою без сервера ідентифікації. Ви можете під'єднатися до нього в розділі «Налаштування».",
     "Failed to download source media, no source url was found": "Не вдалося завантажити початковий медіафайл, не знайдено url джерела",
-    "Unable to create room with moderation bot": "Не вдалося створити кімнату за допомогою бота-модератора"
+    "Unable to create room with moderation bot": "Не вдалося створити кімнату за допомогою бота-модератора",
+    "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Після того, як запрошені користувачі приєднаються до %(brand)s, ви зможете спілкуватися в бесіді, а кімната буде наскрізно зашифрована",
+    "Waiting for users to join %(brand)s": "Очікування приєднання користувача до %(brand)s",
+    "You do not have permission to invite users": "У вас немає дозволу запрошувати користувачів"
 }
