@@ -54,3 +54,53 @@ exports[`<GeneralUserSettingsTab /> Manage integrations should render manage int
   </div>
 </label>
 `;
+
+exports[`<GeneralUserSettingsTab /> deactive account should render section when account deactivation feature is enabled 1`] = `
+<div
+  class="mx_SettingsSection"
+>
+  <h2
+    class="mx_Heading_h2"
+  >
+    Deactivate account
+  </h2>
+  <div
+    class="mx_SettingsSection_subSections"
+  >
+    <div
+      class="mx_SettingsSubsection"
+      data-testid="account-management-section"
+    >
+      <div
+        class="mx_SettingsSubsectionHeading"
+      >
+        <h3
+          class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+        >
+          Account management
+        </h3>
+      </div>
+      <div
+        class="mx_SettingsSubsection_description"
+      >
+        <div
+          class="mx_SettingsSubsection_text"
+        >
+          Deactivating your account is a permanent action — be careful!
+        </div>
+      </div>
+      <div
+        class="mx_SettingsSubsection_content"
+      >
+        <div
+          class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_danger"
+          role="button"
+          tabindex="0"
+        >
+          Deactivate Account
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

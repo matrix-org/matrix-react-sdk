@@ -139,4 +139,24 @@ describe("<GeneralUserSettingsTab />", () => {
             expect(within(integrationSection).getByRole("switch")).not.toBeChecked();
         });
     });
+
+    describe("deactive account", () => {
+        it("should not render section when account deactivation feature is disabled", () => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                (settingName) => settingName !== UIFeature.Deactivate,
+            );
+            render(getComponent());
+
+            expect(screen.queryByText("Deactivate account")).not.toBeInTheDocument();
+            expect(SettingsStore.getValue).toHaveBeenCalledWith(UIFeature.Deactivate);
+        });
+        it("should render section when account deactivation feature is enabled", () => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                (settingName) => settingName === UIFeature.Deactivate,
+            );
+            render(getComponent());
+
+            expect(screen.getByText("Deactivate account").parentElement!).toMatchSnapshot();
+        });
+    });
 });
