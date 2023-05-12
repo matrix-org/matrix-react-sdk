@@ -3714,7 +3714,6 @@
     "If you know a room address, try joining through that instead.": "Ha ismeri a szoba címét próbáljon inkább azzal belépni.",
     "Could not find room": "A szoba nem található",
     "iframe has no src attribute": "az iframe-nek nincs src attribútuma",
-    "Waiting for users to join Element": "Elementhez csatlakozó felhasználókra várakozás",
     "View poll": "Szavazás megtekintése",
     "There are no past polls for the past %(count)s days. Load more polls to view polls for previous months|one": "Nincs aktív szavazás az elmúlt napokból. További szavazások betöltése az előző havi szavazások megjelenítéséhez",
     "There are no past polls for the past %(count)s days. Load more polls to view polls for previous months|other": "%(count)s napja nincs aktív szavazás. További szavazások betöltése az előző havi szavazások megjelenítéséhez",

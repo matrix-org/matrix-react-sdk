@@ -3702,7 +3702,6 @@
     "View poll in timeline": "Shiheni pyetësorin në rrjedhë kohore",
     "Verify Session": "Verifiko Sesion",
     "Ignore (%(counter)s)": "Shpërfill (%(counter)s)",
-    "Waiting for users to join Element": "Po pritet që përdoruesit të bëhen pjesë e Element-ti",
     "Once everyone has joined, you’ll be able to chat": "Pasi të ketë ardhur gjithkush, do të jeni në gjendje të fjaloseni",
     "Invites by email can only be sent one at a time": "Ftesat me email mund të dërgohen vetëm një në herë",
     "Could not find room": "S’u gjet dot dhomë",
