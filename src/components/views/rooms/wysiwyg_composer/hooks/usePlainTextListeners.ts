@@ -22,7 +22,7 @@ import { IS_MAC, Key } from "../../../../../Keyboard";
 import Autocomplete from "../../Autocomplete";
 import { handleEventWithAutocomplete } from "./utils";
 import { useSuggestion } from "./useSuggestion";
-import { isNotUndefined } from "../../../../../Typeguards";
+import { isNotNull, isNotUndefined } from "../../../../../Typeguards";
 
 function isDivElement(target: EventTarget): target is HTMLDivElement {
     return target instanceof HTMLDivElement;
@@ -88,8 +88,8 @@ export function usePlainTextListeners(
             if (isNotUndefined(text)) {
                 setContent(text);
                 onChange?.(text);
-            } else if (ref && ref.current) {
-                // if called with no argument, read the current innerHTML from the ref if it is non-null
+            } else if (isNotNull(ref) && isNotNull(ref.current)) {
+                // if called with no argument, read the current innerHTML from the ref
                 const currentRefContent = ref.current.innerHTML;
                 setContent(currentRefContent);
                 onChange?.(currentRefContent);
