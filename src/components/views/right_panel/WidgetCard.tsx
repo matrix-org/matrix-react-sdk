@@ -88,7 +88,7 @@ const WidgetCard: React.FC<IProps> = ({ room, widgetId, onClose }) => {
     );
 
     return (
-        <BaseCard header={header} className="mx_WidgetCard" onClose={onClose} withoutScrollContainer>
+        <BaseCard header={header} className="mx_BaseCard--widget" onClose={onClose} withoutScrollContainer>
             <AppTile
                 app={app}
                 fullWidth

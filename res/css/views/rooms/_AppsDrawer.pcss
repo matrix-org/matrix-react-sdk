@@ -165,6 +165,13 @@ limitations under the License.
     display: flex;
     flex-direction: column;
     background-color: $widget-menu-bar-bg-color;
+
+    .mx_BaseCard--widget & {
+        max-width: unset;
+        width: auto !important; /* Override the value above */
+        height: 100%;
+        border: none; /* Cancel border as mx_BaseCard has inline padding which creates spacing as border */
+    }
 }
 
 .mx_AppTile_mini {
