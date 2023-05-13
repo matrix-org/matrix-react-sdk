@@ -178,6 +178,14 @@ limitations under the License.
     display: flex;
     flex-direction: column;
     background-color: $widget-menu-bar-bg-color;
+
+    #mx_persistedElement_stickerPicker & {
+        height: unset;
+        box-sizing: border-box;
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+    }
 }
 
 .mx_AppTile_mini {
@@ -283,6 +291,10 @@ limitations under the License.
         &.mx_AppTileMenuBar_iconButton--menu::before {
             mask-image: url("$(res)/img/element-icons/room/ellipsis.svg");
         }
+    }
+
+    #mx_persistedElement_stickerPicker & {
+        padding: 0;
     }
 }
 
