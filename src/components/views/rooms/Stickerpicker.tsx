@@ -17,13 +17,14 @@ limitations under the License.
 import React from "react";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
+import { IWidget } from "matrix-widget-api";
 
 import { _t, _td } from "../../../languageHandler";
 import AppTile from "../elements/AppTile";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import dis from "../../../dispatcher/dispatcher";
 import AccessibleButton from "../elements/AccessibleButton";
-import WidgetUtils, { IWidgetEvent } from "../../../utils/WidgetUtils";
+import WidgetUtils, { UserWidget } from "../../../utils/WidgetUtils";
 import PersistedElement from "../elements/PersistedElement";
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
 import ContextMenu, { ChevronFace } from "../../structures/ContextMenu";
@@ -32,7 +33,6 @@ import { WidgetMessagingStore } from "../../../stores/widgets/WidgetMessagingSto
 import { ActionPayload } from "../../../dispatcher/payloads";
 import ScalarAuthClient from "../../../ScalarAuthClient";
 import GenericElementContextMenu from "../context_menus/GenericElementContextMenu";
-import { IApp } from "../../../stores/WidgetStore";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 
@@ -53,7 +53,7 @@ interface IProps {
 
 interface IState {
     imError: string | null;
-    stickerpickerWidget: IWidgetEvent | null;
+    stickerpickerWidget: UserWidget | null;
     widgetId: string | null;
 }
 
@@ -62,11 +62,11 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
         threadId: null,
     };
 
-    public static currentWidget?: IWidgetEvent;
+    public static currentWidget?: UserWidget;
 
-    private dispatcherRef: string;
+    private dispatcherRef?: string;
 
-    private prevSentVisibility: boolean;
+    private prevSentVisibility?: boolean;
 
     private popoverWidth = 300;
     private popoverHeight = 300;
@@ -252,27 +252,24 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
         // Render content from multiple stickerpack sources, each within their
         // own iframe, within the stickerpicker UI element.
         const stickerpickerWidget = this.state.stickerpickerWidget;
-        let stickersContent;
+        let stickersContent: JSX.Element | undefined;
 
         // Use a separate ReactDOM tree to render the AppTile separately so that it persists and does
         // not unmount when we (a) close the sticker picker (b) switch rooms. It's properties are still
         // updated.
 
         // Load stickerpack content
-        if (stickerpickerWidget && stickerpickerWidget.content && stickerpickerWidget.content.url) {
+        if (!!stickerpickerWidget?.content?.url) {
             // Set default name
             stickerpickerWidget.content.name = stickerpickerWidget.content.name || _t("Stickerpack");
 
             // FIXME: could this use the same code as other apps?
-            const stickerApp: IApp = {
+            const stickerApp: IWidget = {
                 id: stickerpickerWidget.id,
                 url: stickerpickerWidget.content.url,
                 name: stickerpickerWidget.content.name,
                 type: stickerpickerWidget.content.type,
                 data: stickerpickerWidget.content.data,
-                roomId: stickerpickerWidget.content.roomId,
-                eventId: stickerpickerWidget.content.eventId,
-                avatar_url: stickerpickerWidget.content.avatar_url,
                 creatorUserId: stickerpickerWidget.content.creatorUserId || stickerpickerWidget.sender,
             };
 

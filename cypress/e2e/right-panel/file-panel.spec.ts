@@ -70,6 +70,16 @@ describe("FilePanel", () => {
     });
 
     describe("render", () => {
+        it("should render empty state", () => {
+            // Wait until the information about the empty state is rendered
+            cy.get(".mx_FilePanel_empty").should("exist");
+
+            // Take a snapshot of RightPanel - fix https://github.com/vector-im/element-web/issues/25332
+            cy.get(".mx_RightPanel").percySnapshotElement("File Panel - empty", {
+                widths: [264], // Emulate the UI. The value is based on minWidth specified on MainSplit.tsx
+            });
+        });
+
         it("should list tiles on the panel", () => {
             // Upload multiple files
             uploadFile("cypress/fixtures/riot.png"); // Image

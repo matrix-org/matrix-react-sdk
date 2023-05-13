@@ -15,11 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-$MiniAppTileHeight: 220px;
-/* TODO this should be 300px but that's too large */
-$MinWidth: 240px;
-
 .mx_AppsDrawer {
+    --AppTile_mini-height: 220px;
+    --minWidth: 240px; /* TODO this should be 300px but that's too large */
+
     margin: var(--container-gap-width);
     /* The left side gap is fully handled by this margin. To prohibit bleeding on webkit browser. */
     margin-right: calc(var(--container-gap-width) / 2);
@@ -94,7 +93,7 @@ $MinWidth: 240px;
 
     .mx_AppTile {
         width: 50%;
-        min-width: $MinWidth;
+        min-width: var(--minWidth);
     }
 
     &.mx_AppsDrawer_2apps .mx_AppTile {
@@ -103,7 +102,7 @@ $MinWidth: 240px;
         &:nth-child(3) {
             flex-grow: 1;
             width: 0 !important;
-            min-width: $MinWidth !important;
+            min-width: var(--minWidth) !important;
         }
     }
     &.mx_AppsDrawer_3apps .mx_AppTile {
@@ -112,7 +111,7 @@ $MinWidth: 240px;
         &:nth-child(3) {
             flex-grow: 1;
             width: 0 !important;
-            min-width: $MinWidth !important;
+            min-width: var(--minWidth) !important;
         }
     }
 }
@@ -174,7 +173,7 @@ $MinWidth: 240px;
     padding: 0;
     display: flex;
     flex-direction: column;
-    height: $MiniAppTileHeight;
+    height: var(--AppTile_mini-height);
 }
 
 .mx_AppTile .mx_AppTile_persistedWrapper,
@@ -199,92 +198,110 @@ $MinWidth: 240px;
     width: 100%;
     padding-top: 3px;
     padding-bottom: 6px;
+
+    .mx_AppTileMenuBar_title {
+        line-height: 20px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        .mx_WidgetAvatar {
+            margin-right: 12px;
+        }
+
+        > :last-child {
+            margin-left: 9px;
+        }
+    }
+
+    .mx_AppTileMenuBar_widgets {
+        float: right;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .mx_AppTileMenuBar_iconButton {
+        --size: 24px; /* Size of the button. Its height and width values should be same */
+
+        margin: 0 4px;
+        position: relative;
+        height: var(--size);
+        width: var(--size);
+
+        &::before,
+        &:hover::after {
+            content: "";
+            position: absolute;
+            height: var(--size);
+            width: var(--size);
+        }
+
+        &::before {
+            background-color: $muted-fg-color;
+            mask-position: center;
+            mask-repeat: no-repeat;
+            mask-size: 12px;
+        }
+
+        &:hover::after {
+            background-color: $panel-actions;
+            border-radius: 50%;
+            left: 0;
+            top: 0;
+        }
+
+        &.mx_AppTileMenuBar_iconButton--collapse::before {
+            mask-image: url("$(res)/img/element-icons/minimise-collapse.svg");
+        }
+
+        &.mx_AppTileMenuBar_iconButton--maximise::before {
+            mask-image: url("$(res)/img/element-icons/maximise-expand.svg");
+        }
+
+        &.mx_AppTileMenuBar_iconButton--minimise::before {
+            mask-image: url("$(res)/img/element-icons/minus-button.svg");
+        }
+
+        &.mx_AppTileMenuBar_iconButton--popout::before {
+            mask-image: url("$(res)/img/feather-customised/widget/external-link.svg");
+        }
+
+        &.mx_AppTileMenuBar_iconButton--menu::before {
+            mask-image: url("$(res)/img/element-icons/room/ellipsis.svg");
+        }
+    }
 }
 
-.mx_AppTileMenuBarTitle {
-    line-height: 20px;
-    white-space: nowrap;
+.mx_AppTileBody,
+.mx_AppTileBody_mini {
+    width: 100%;
     overflow: hidden;
-    text-overflow: ellipsis;
+    border-radius: 8px;
+    height: var(--AppTileBody-height);
 
-    .mx_WidgetAvatar {
-        margin-right: 12px;
-    }
-}
-
-.mx_AppTileMenuBarTitle > :last-child {
-    margin-left: 9px;
-}
-
-.mx_AppTileMenuBarWidgets {
-    float: right;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.mx_AppTileMenuBar_iconButton {
-    height: 24px;
-    margin: 0 4px;
-    position: relative;
-    width: 24px;
-
-    &::before {
-        background-color: $muted-fg-color;
-        content: "";
-        height: 24px;
-        mask-position: center;
-        mask-repeat: no-repeat;
-        mask-size: 12px;
-        position: absolute;
-        width: 24px;
-    }
-
-    &:hover::after {
-        background-color: $panel-actions;
-        border-radius: 50%;
-        content: "";
-        height: 24px;
-        left: 0;
-        position: absolute;
-        top: 0;
-        width: 24px;
-    }
-
-    &.mx_AppTileMenuBar_iconButton--collapse::before {
-        mask-image: url("$(res)/img/element-icons/minimise-collapse.svg");
-    }
-
-    &.mx_AppTileMenuBar_iconButton--maximise::before {
-        mask-image: url("$(res)/img/element-icons/maximise-expand.svg");
-    }
-
-    &.mx_AppTileMenuBar_iconButton--minimise::before {
-        mask-image: url("$(res)/img/element-icons/minus-button.svg");
-    }
-
-    &.mx_AppTileMenuBar_iconButton--popout::before {
-        mask-image: url("$(res)/img/feather-customised/widget/external-link.svg");
-    }
-
-    &.mx_AppTileMenuBar_iconButton--menu::before {
-        mask-image: url("$(res)/img/element-icons/room/ellipsis.svg");
+    iframe {
+        border: none;
+        width: 100%;
+        height: 100%;
     }
 }
 
 .mx_AppTileBody {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    border-radius: 8px;
+    --AppTileBody-height: 100%;
+
     background-color: $widget-body-bg-color;
+
+    iframe {
+        overflow: hidden;
+        padding: 0;
+        margin: 0;
+        display: block;
+    }
 }
 
 .mx_AppTileBody_mini {
-    height: $MiniAppTileHeight;
-    width: 100%;
-    overflow: hidden;
-    border-radius: 8px;
+    --AppTileBody-height: var(--AppTile_mini-height);
 }
 
 .mx_AppTile .mx_AppTileBody,
@@ -292,22 +309,6 @@ $MinWidth: 240px;
 .mx_AppTile_mini .mx_AppTileBody_mini {
     height: inherit;
     flex: 1;
-}
-
-.mx_AppTileBody_mini iframe {
-    border: none;
-    width: 100%;
-    height: 100%;
-}
-
-.mx_AppTileBody iframe {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    border: none;
-    padding: 0;
-    margin: 0;
-    display: block;
 }
 
 .mx_AppPermissionWarning {
@@ -318,6 +319,11 @@ $MinWidth: 240px;
     justify-content: center;
     align-items: center;
     font-size: $font-16px;
+
+    h4 {
+        margin: 0;
+        padding: 0;
+    }
 }
 
 .mx_AppPermissionWarning_row {
@@ -332,34 +338,40 @@ $MinWidth: 240px;
     font-weight: var(--font-semi-bold);
 }
 
-.mx_AppPermissionWarning h4 {
-    margin: 0;
-    padding: 0;
-}
-
 .mx_AppPermissionWarning_helpIcon {
     margin-top: 1px;
     margin-right: 2px;
     width: 10px;
     height: 10px;
     display: inline-block;
-}
 
-.mx_AppPermissionWarning_helpIcon::before {
-    display: inline-block;
-    background-color: $accent;
-    mask-repeat: no-repeat;
-    mask-size: 12px;
-    width: 12px;
-    height: 12px;
-    mask-position: center;
-    content: "";
-    vertical-align: middle;
-    mask-image: url("$(res)/img/feather-customised/help-circle.svg");
+    &::before {
+        display: inline-block;
+        background-color: $accent;
+        mask-repeat: no-repeat;
+        mask-size: 12px;
+        width: 12px;
+        height: 12px;
+        mask-position: center;
+        content: "";
+        vertical-align: middle;
+        mask-image: url("$(res)/img/feather-customised/help-circle.svg");
+    }
 }
 
 .mx_AppPermissionWarning_tooltip {
-    @mixin mx_Tooltip_dark;
+    box-shadow: none;
+    background-color: $tooltip-timeline-bg-color;
+    color: $tooltip-timeline-fg-color;
+    border: none;
+    border-radius: 3px;
+    padding: 6px 8px;
+
+    &.mx_AppPermissionWarning_tooltip--dark {
+        .mx_Tooltip_chevron::after {
+            border-right-color: $tooltip-timeline-bg-color;
+        }
+    }
 
     ul {
         list-style-position: inside;
@@ -368,7 +380,7 @@ $MinWidth: 240px;
     }
 }
 
-.mx_AppLoading {
+.mx_AppTile_loading {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -380,34 +392,32 @@ $MinWidth: 240px;
     /* match bg of border so that the cut corners have the right fill */
     background-color: $widget-body-bg-color !important;
     border-radius: 8px;
+
+    iframe {
+        display: none;
+    }
+
+    /* const loadingElement */
+    .mx_AppTile_loading_fadeInSpinner {
+        animation-fill-mode: backwards;
+        animation-duration: 200ms;
+        animation-delay: 500ms;
+        animation-name: mx_AppTile_loading_fadeInSpinnerAnimation;
+
+        .mx_Spinner {
+            position: absolute;
+            inset: 0;
+        }
+    }
 }
 
-.mx_AppLoading .mx_Spinner {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
-.mx_AppLoading_spinner_fadeIn {
-    animation-fill-mode: backwards;
-    animation-duration: 200ms;
-    animation-delay: 500ms;
-    animation-name: mx_AppLoading_spinner_fadeIn_animation;
-}
-
-@keyframes mx_AppLoading_spinner_fadeIn_animation {
+@keyframes mx_AppTile_loading_fadeInSpinnerAnimation {
     from {
         opacity: 0;
     }
     to {
         opacity: 1;
     }
-}
-
-.mx_AppLoading iframe {
-    display: none;
 }
 
 .mx_AppsDrawer_resizing .mx_AppTile_persistedWrapper {
