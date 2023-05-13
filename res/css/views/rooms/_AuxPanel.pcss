@@ -27,28 +27,30 @@ limitations under the License.
     border-bottom: 1px solid $primary-hairline-color;
 }
 
-.mx_AuxPanel_stateViews_span a {
+.mx_AuxPanel_stateViews_span {
+a {
     text-decoration: none;
     color: inherit;
 }
 
-.mx_AuxPanel_stateViews_span[data-severity="warning"] {
+&[data-severity="warning"] {
     font-weight: bold;
     color: orange;
 }
 
-.mx_AuxPanel_stateViews_span[data-severity="alert"] {
+&[data-severity="alert"] {
     font-weight: bold;
     color: red;
 }
 
-.mx_AuxPanel_stateViews_span[data-severity="normal"] {
+&[data-severity="normal"] {
     font-weight: normal;
 }
 
-.mx_AuxPanel_stateViews_span[data-severity="notice"] {
+&[data-severity="notice"] {
     font-weight: normal;
     color: $settings-grey-fg-color;
+}
 }
 
 .mx_AuxPanel_stateViews_delim {
