@@ -174,7 +174,7 @@ export default class AuxPanel extends React.Component<IProps, IState> {
 
                 span = (
                     <span
-                        className="mx_RoomView_auxPanel_stateViews_span"
+                        className="mx_AuxPanel_stateViews_span"
                         data-severity={severity}
                         key={"x-" + stateKey}
                     >
@@ -184,7 +184,7 @@ export default class AuxPanel extends React.Component<IProps, IState> {
 
                 counters.push(span);
                 counters.push(
-                    <span className="mx_RoomView_auxPanel_stateViews_delim" key={"delim" + idx}>
+                    <span className="mx_AuxPanel_stateViews_delim" key={"delim" + idx}>
                         {" "}
                         ─{" "}
                     </span>,
@@ -193,12 +193,12 @@ export default class AuxPanel extends React.Component<IProps, IState> {
 
             if (counters.length > 0) {
                 counters.pop(); // remove last deliminator
-                stateViews = <div className="mx_RoomView_auxPanel_stateViews">{counters}</div>;
+                stateViews = <div className="mx_AuxPanel_stateViews">{counters}</div>;
             }
         }
 
         return (
-            <AutoHideScrollbar className="mx_RoomView_auxPanel">
+            <AutoHideScrollbar className="mx_AuxPanel">
                 {stateViews}
                 {this.props.children}
                 {appsDrawer}
