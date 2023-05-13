@@ -154,6 +154,19 @@ limitations under the License.
     flex-direction: column;
     box-sizing: border-box;
     background-color: $widget-menu-bar-bg-color;
+
+    .mx_CallView & {
+        width: auto;
+        height: 100%;
+        border: none;
+        border-radius: inherit;
+        background-color: $call-background;
+    }
+
+    /* While the lobby is shown, the widget needs to stay loaded but hidden in the background */
+    .mx_CallView .mx_CallView_lobby ~ & {
+        display: none;
+    }
 }
 
 .mx_AppTileFullWidth {

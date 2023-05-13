@@ -27,19 +27,6 @@ limitations under the License.
     padding: 8px;
     border-radius: 8px;
 
-    .mx_AppTile {
-        width: auto;
-        height: 100%;
-        border: none;
-        border-radius: inherit;
-        background-color: $call-background;
-    }
-
-    /* While the lobby is shown, the widget needs to stay loaded but hidden in the background */
-    .mx_CallView_lobby ~ .mx_AppTile {
-        display: none;
-    }
-
     .mx_CallView_lobby {
         min-height: 0;
         flex-grow: 1;
