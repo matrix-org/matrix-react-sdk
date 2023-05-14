@@ -267,10 +267,10 @@ exports[`AppTile preserves non-persisted widget on container move 1`] = `
         </div>
       </div>
       <div
-        class="mx_AppsContainer_resizerHandleContainer"
+        class="mx_AppsContainer_resizer_container"
       >
         <div
-          class="mx_AppsContainer_resizerHandle"
+          class="mx_AppsContainer_resizer_container_handle"
           style="position: absolute; user-select: none; width: 100%; height: 10px; left: 0px; cursor: row-resize; bottom: -5px;"
         />
       </div>

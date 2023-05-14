@@ -32,14 +32,14 @@ limitations under the License.
     overflow: hidden;
     flex-grow: 1;
 
-    .mx_AppsContainer_resizerHandleContainer {
+    .mx_AppsContainer_resizer_container {
         width: 100%;
         height: 10px;
         display: block;
         position: relative;
     }
 
-    .mx_AppsContainer_resizerHandle {
+    .mx_AppsContainer_resizer_container_handle {
         cursor: ns-resize;
 
         /* Override styles from library, making the whole area the target area */
@@ -68,7 +68,7 @@ limitations under the License.
     }
 
     &:hover {
-        .mx_AppsContainer_resizerHandle::after {
+        .mx_AppsContainer_resizer_container_handle::after {
             opacity: 0.8;
             background: $primary-content;
         }
