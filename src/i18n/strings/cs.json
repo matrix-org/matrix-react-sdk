@@ -3776,5 +3776,6 @@
     "Failed to download source media, no source url was found": "Nepodařilo se stáhnout zdrojové médium, nebyla nalezena žádná zdrojová url adresa",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Jakmile se pozvaní uživatelé připojí k %(brand)s, budete moci chatovat a místnost bude koncově šifrovaná",
     "Waiting for users to join %(brand)s": "Čekání na připojení uživatelů k %(brand)s",
-    "You do not have permission to invite users": "Nemáte oprávnění zvát uživatele"
+    "You do not have permission to invite users": "Nemáte oprávnění zvát uživatele",
+    "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s změnil(a) své zobrazované jméno a profilový obrázek"
 }
