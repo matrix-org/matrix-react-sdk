@@ -2454,7 +2454,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             inRoom={myMembership === "join"}
                             onSearchClick={onSearchClick}
                             onInviteClick={onInviteClick}
-                            onForgetClick={myMembership === "leave" ? onForgetClick : null}
+                            onForgetClick={myMembership === "leave" && !this.context.client.isGuest() ? onForgetClick : null}
                             e2eStatus={this.state.e2eStatus}
                             onAppsClick={this.state.hasPinnedWidgets ? onAppsClick : null}
                             appsShown={this.state.showApps}
