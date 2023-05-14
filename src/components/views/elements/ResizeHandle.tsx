@@ -32,7 +32,7 @@ const ResizeHandle: React.FC<IResizeHandleProps> = ({ vertical, reverse, id, pas
         classNames.push("mx_ResizeHandle--horizontal");
     }
     if (reverse) {
-        classNames.push("mx_ResizeHandle_reverse");
+        classNames.push("mx_ResizeHandle_reverse"); // required for the resizer of the third pinned widget to work
     }
     return (
         <div ref={passRef} className={classNames.join(" ")} data-id={id}>
