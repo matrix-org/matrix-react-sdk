@@ -223,7 +223,7 @@ export const Commands = [
         command: "spoiler",
         args: "<message>",
         description: _td("Sends the given message as a spoiler"),
-        runFn: function (roomId, message = "") {
+        runFn: function (cli, roomId, message = "") {
             return successSync(ContentHelpers.makeHtmlMessage(message, `<span data-mx-spoiler>${message}</span>`));
         },
         category: CommandCategories.messages,
@@ -284,7 +284,7 @@ export const Commands = [
         command: "plain",
         args: "<message>",
         description: _td("Sends a message as plain text, without interpreting it as markdown"),
-        runFn: function (roomId, messages = "") {
+        runFn: function (cli, roomId, messages = "") {
             return successSync(ContentHelpers.makeTextMessage(messages));
         },
         category: CommandCategories.messages,
@@ -293,7 +293,7 @@ export const Commands = [
         command: "html",
         args: "<message>",
         description: _td("Sends a message as html, without interpreting it as markdown"),
-        runFn: function (roomId, messages = "") {
+        runFn: function (cli, roomId, messages = "") {
             return successSync(ContentHelpers.makeHtmlMessage(messages, messages));
         },
         category: CommandCategories.messages,
@@ -880,7 +880,7 @@ export const Commands = [
             if (!roomId) return false;
             const room = cli?.getRoom(roomId);
             return (
-                cli &&
+                !!cli &&
                 !!room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getSafeUserId()) &&
                 !isLocalRoom(room)
             );
@@ -930,7 +930,7 @@ export const Commands = [
             if (!roomId) return false;
             const room = cli?.getRoom(roomId);
             return (
-                cli &&
+                !!cli &&
                 !!room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getSafeUserId()) &&
                 !isLocalRoom(room)
             );
