@@ -126,13 +126,13 @@ export const IconizedContextMenuOption: React.FC<IOptionProps> = ({
 }) => {
     return (
         <MenuItem
+            element="li"
             {...props}
             className={classNames(className, {
                 mx_IconizedContextMenu_item: true,
                 mx_IconizedContextMenu_itemDestructive: isDestructive,
             })}
             label={label}
-            element="li"
         >
             {iconClassName && <span className={classNames("mx_IconizedContextMenu_icon", iconClassName)} />}
             <span className="mx_IconizedContextMenu_label">{label}</span>
