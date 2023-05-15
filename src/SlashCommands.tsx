@@ -880,6 +880,7 @@ export const Commands = [
             if (!roomId) return false;
             const room = cli?.getRoom(roomId);
             return (
+                cli &&
                 !!room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getSafeUserId()) &&
                 !isLocalRoom(room)
             );
@@ -929,6 +930,7 @@ export const Commands = [
             if (!roomId) return false;
             const room = cli?.getRoom(roomId);
             return (
+                cli &&
                 !!room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getSafeUserId()) &&
                 !isLocalRoom(room)
             );
@@ -986,12 +988,12 @@ export const Commands = [
                 const embed = new DOMParser().parseFromString(widgetUrl, "text/html").body;
                 if (embed?.childNodes?.length === 1) {
                     const iframe = embed.firstElementChild;
-                    if (iframe.tagName.toLowerCase() === "iframe") {
+                    if (iframe?.tagName.toLowerCase() === "iframe") {
                         logger.log("Pulling URL out of iframe (embed code)");
                         if (!iframe.hasAttribute("src")) {
                             return reject(new UserFriendlyError("iframe has no src attribute"));
                         }
-                        widgetUrl = iframe.getAttribute("src");
+                        widgetUrl = iframe.getAttribute("src")!;
                     }
                 }
             }
