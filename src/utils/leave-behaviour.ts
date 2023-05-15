@@ -19,11 +19,10 @@ import React, { ReactNode } from "react";
 import { EventStatus } from "matrix-js-sdk/src/models/event-status";
 import { MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixError } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
 
 import Modal, { IHandle } from "../Modal";
 import Spinner from "../components/views/elements/Spinner";
-import { MatrixClientPeg } from "../MatrixClientPeg";
 import { _t } from "../languageHandler";
 import ErrorDialog from "../components/views/dialogs/ErrorDialog";
 import { isMetaSpace } from "../stores/spaces";
@@ -38,13 +37,17 @@ import { bulkSpaceBehaviour } from "./space";
 import { SdkContextClass } from "../contexts/SDKContext";
 import SettingsStore from "../settings/SettingsStore";
 
-export async function leaveRoomBehaviour(roomId: string, retry = true, spinner = true): Promise<void> {
+export async function leaveRoomBehaviour(
+    cli: MatrixClient,
+    roomId: string,
+    retry = true,
+    spinner = true,
+): Promise<void> {
     let spinnerModal: IHandle<any> | undefined;
     if (spinner) {
         spinnerModal = Modal.createDialog(Spinner, undefined, "mx_Dialog_spinner");
     }
 
-    const cli = MatrixClientPeg.get();
     let leavingAllVersions = true;
     const history = cli.getRoomUpgradeHistory(
         roomId,
@@ -116,7 +119,7 @@ export async function leaveRoomBehaviour(roomId: string, retry = true, spinner =
         ) as MatrixError;
         if (limitExceededError) {
             await sleep(limitExceededError.data.retry_after_ms ?? 100);
-            return leaveRoomBehaviour(roomId, false, false);
+            return leaveRoomBehaviour(cli, roomId, false, false);
         }
     }
 
@@ -186,7 +189,7 @@ export const leaveSpace = (space: Room): void => {
             space,
             onFinished: async (leave: boolean, rooms: Room[]): Promise<void> => {
                 if (!leave) return;
-                await bulkSpaceBehaviour(space, rooms, (room) => leaveRoomBehaviour(room.roomId));
+                await bulkSpaceBehaviour(space, rooms, (room) => leaveRoomBehaviour(space.client, room.roomId));
 
                 dis.dispatch<AfterLeaveRoomPayload>({
                     action: Action.AfterLeaveRoom,

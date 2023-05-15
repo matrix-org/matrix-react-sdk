@@ -302,7 +302,7 @@ export const Commands = [
         command: "upgraderoom",
         args: "<new_version>",
         description: _td("Upgrades a room to a new version"),
-        isEnabled: () => !isCurrentLocalRoom(),
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, args) {
             if (args) {
                 const room = cli.getRoom(roomId);
@@ -392,7 +392,7 @@ export const Commands = [
         aliases: ["roomnick"],
         args: "<display_name>",
         description: _td("Changes your display nickname in the current room only"),
-        isEnabled: () => !isCurrentLocalRoom(),
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, args) {
             if (args) {
                 const ev = cli.getRoom(roomId)?.currentState.getStateEvents("m.room.member", cli.getSafeUserId());
@@ -411,7 +411,7 @@ export const Commands = [
         command: "roomavatar",
         args: "[<mxc_url>]",
         description: _td("Changes the avatar of the current room"),
-        isEnabled: () => !isCurrentLocalRoom(),
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, args) {
             let promise = Promise.resolve(args ?? null);
             if (!args) {
@@ -432,7 +432,7 @@ export const Commands = [
         command: "myroomavatar",
         args: "[<mxc_url>]",
         description: _td("Changes your avatar in this current room only"),
-        isEnabled: () => !isCurrentLocalRoom(),
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, args) {
             const room = cli.getRoom(roomId);
             const userId = cli.getSafeUserId();
@@ -481,7 +481,7 @@ export const Commands = [
         command: "topic",
         args: "[<topic>]",
         description: _td("Gets or sets the room topic"),
-        isEnabled: () => !isCurrentLocalRoom(),
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, args) {
             if (args) {
                 const html = htmlSerializeFromMdIfNeeded(args, { forceHTML: false });
@@ -519,7 +519,7 @@ export const Commands = [
         command: "roomname",
         args: "<name>",
         description: _td("Sets the room name"),
-        isEnabled: () => !isCurrentLocalRoom(),
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, args) {
             if (args) {
                 return success(cli.setRoomName(roomId, args));
@@ -534,7 +534,7 @@ export const Commands = [
         args: "<user-id> [<reason>]",
         description: _td("Invites user with given id to current room"),
         analyticsName: "Invite",
-        isEnabled: () => !isCurrentLocalRoom() && shouldShowComponent(UIComponent.InviteUsers),
+        isEnabled: (cli) => !isCurrentLocalRoom(cli) && shouldShowComponent(UIComponent.InviteUsers),
         runFn: function (cli, roomId, args) {
             if (args) {
                 const [address, reason] = args.split(/\s+(.+)/);
@@ -724,7 +724,7 @@ export const Commands = [
         args: "[<room-address>]",
         description: _td("Leave room"),
         analyticsName: "Part",
-        isEnabled: () => !isCurrentLocalRoom(),
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, args) {
             let targetRoomId: string | undefined;
             if (args) {
@@ -754,7 +754,7 @@ export const Commands = [
             }
 
             if (!targetRoomId) targetRoomId = roomId;
-            return success(leaveRoomBehaviour(targetRoomId));
+            return success(leaveRoomBehaviour(cli, targetRoomId));
         },
         category: CommandCategories.actions,
         renderingTypes: [TimelineRenderingType.Room],
@@ -764,7 +764,7 @@ export const Commands = [
         aliases: ["kick"],
         args: "<user-id> [reason]",
         description: _td("Removes user with given id from this room"),
-        isEnabled: () => !isCurrentLocalRoom(),
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, args) {
             if (args) {
                 const matches = args.match(/^(\S+?)( +(.*))?$/);
@@ -781,7 +781,7 @@ export const Commands = [
         command: "ban",
         args: "<user-id> [reason]",
         description: _td("Bans user with given id"),
-        isEnabled: () => !isCurrentLocalRoom(),
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, args) {
             if (args) {
                 const matches = args.match(/^(\S+?)( +(.*))?$/);
@@ -798,7 +798,7 @@ export const Commands = [
         command: "unban",
         args: "<user-id>",
         description: _td("Unbans user with given ID"),
-        isEnabled: () => !isCurrentLocalRoom(),
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, args) {
             if (args) {
                 const matches = args.match(/^(\S+)$/);
@@ -974,10 +974,10 @@ export const Commands = [
         command: "addwidget",
         args: "<url | embed code | Jitsi url>",
         description: _td("Adds a custom widget by URL to the room"),
-        isEnabled: () =>
+        isEnabled: (cli) =>
             SettingsStore.getValue(UIFeature.Widgets) &&
             shouldShowComponent(UIComponent.AddIntegrations) &&
-            !isCurrentLocalRoom(),
+            !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, widgetUrl) {
             if (!widgetUrl) {
                 return reject(new UserFriendlyError("Please supply a widget URL or embed code"));
@@ -1109,7 +1109,7 @@ export const Commands = [
     new Command({
         command: "discardsession",
         description: _td("Forces the current outbound group session in an encrypted room to be discarded"),
-        isEnabled: () => !isCurrentLocalRoom(),
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId) {
             try {
                 cli.forceDiscardSession(roomId);
@@ -1124,8 +1124,8 @@ export const Commands = [
     new Command({
         command: "remakeolm",
         description: _td("Developer command: Discards the current outbound group session and sets up new Olm sessions"),
-        isEnabled: () => {
-            return SettingsStore.getValue("developerMode") && !isCurrentLocalRoom();
+        isEnabled: (cli) => {
+            return SettingsStore.getValue("developerMode") && !isCurrentLocalRoom(cli);
         },
         runFn: (cli, roomId) => {
             try {
@@ -1182,7 +1182,7 @@ export const Commands = [
         command: "whois",
         description: _td("Displays information about a user"),
         args: "<user-id>",
-        isEnabled: () => !isCurrentLocalRoom(),
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, userId) {
             if (!userId || !userId.startsWith("@") || !userId.includes(":")) {
                 return reject(this.getUsage());
@@ -1217,8 +1217,8 @@ export const Commands = [
         command: "tovirtual",
         description: _td("Switches to this room's virtual room, if it has one"),
         category: CommandCategories.advanced,
-        isEnabled(): boolean {
-            return !!LegacyCallHandler.instance.getSupportsVirtualRooms() && !isCurrentLocalRoom();
+        isEnabled(cli): boolean {
+            return !!LegacyCallHandler.instance.getSupportsVirtualRooms() && !isCurrentLocalRoom(cli);
         },
         runFn: (cli, roomId) => {
             return success(
@@ -1310,7 +1310,7 @@ export const Commands = [
         command: "holdcall",
         description: _td("Places the call in the current room on hold"),
         category: CommandCategories.other,
-        isEnabled: () => !isCurrentLocalRoom(),
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, args) {
             const call = LegacyCallHandler.instance.getCallForRoom(roomId);
             if (!call) {
@@ -1325,7 +1325,7 @@ export const Commands = [
         command: "unholdcall",
         description: _td("Takes the call in the current room off hold"),
         category: CommandCategories.other,
-        isEnabled: () => !isCurrentLocalRoom(),
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, args) {
             const call = LegacyCallHandler.instance.getCallForRoom(roomId);
             if (!call) {
@@ -1340,7 +1340,7 @@ export const Commands = [
         command: "converttodm",
         description: _td("Converts the room to a DM"),
         category: CommandCategories.other,
-        isEnabled: () => !isCurrentLocalRoom(),
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, args) {
             const room = cli.getRoom(roomId);
             if (!room) return reject(new UserFriendlyError("Could not find room"));
@@ -1352,7 +1352,7 @@ export const Commands = [
         command: "converttoroom",
         description: _td("Converts the DM to a room"),
         category: CommandCategories.other,
-        isEnabled: () => !isCurrentLocalRoom(),
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, args) {
             const room = cli.getRoom(roomId);
             if (!room) return reject(new UserFriendlyError("Could not find room"));

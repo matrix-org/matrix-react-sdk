@@ -102,12 +102,12 @@ describe("SlashCommands", () => {
         describe("isEnabled", () => {
             it("should return true for Room", () => {
                 setCurrentRoom();
-                expect(command.isEnabled()).toBe(true);
+                expect(command.isEnabled(client)).toBe(true);
             });
 
             it("should return false for LocalRoom", () => {
                 setCurrentLocalRoon();
-                expect(command.isEnabled()).toBe(false);
+                expect(command.isEnabled(client)).toBe(false);
             });
         });
     });
@@ -125,12 +125,12 @@ describe("SlashCommands", () => {
 
                 it("should return true for Room", () => {
                     setCurrentRoom();
-                    expect(command.isEnabled()).toBe(true);
+                    expect(command.isEnabled(client)).toBe(true);
                 });
 
                 it("should return false for LocalRoom", () => {
                     setCurrentLocalRoon();
-                    expect(command.isEnabled()).toBe(false);
+                    expect(command.isEnabled(client)).toBe(false);
                 });
             });
 
@@ -141,12 +141,12 @@ describe("SlashCommands", () => {
 
                 it("should return false for Room", () => {
                     setCurrentRoom();
-                    expect(command.isEnabled()).toBe(false);
+                    expect(command.isEnabled(client)).toBe(false);
                 });
 
                 it("should return false for LocalRoom", () => {
                     setCurrentLocalRoon();
-                    expect(command.isEnabled()).toBe(false);
+                    expect(command.isEnabled(client)).toBe(false);
                 });
             });
         });
@@ -167,12 +167,12 @@ describe("SlashCommands", () => {
 
                 it("should return true for Room", () => {
                     setCurrentRoom();
-                    expect(command.isEnabled()).toBe(true);
+                    expect(command.isEnabled(client)).toBe(true);
                 });
 
                 it("should return false for LocalRoom", () => {
                     setCurrentLocalRoon();
-                    expect(command.isEnabled()).toBe(false);
+                    expect(command.isEnabled(client)).toBe(false);
                 });
             });
 
@@ -185,12 +185,12 @@ describe("SlashCommands", () => {
 
                 it("should return false for Room", () => {
                     setCurrentRoom();
-                    expect(command.isEnabled()).toBe(false);
+                    expect(command.isEnabled(client)).toBe(false);
                 });
 
                 it("should return false for LocalRoom", () => {
                     setCurrentLocalRoon();
-                    expect(command.isEnabled()).toBe(false);
+                    expect(command.isEnabled(client)).toBe(false);
                 });
             });
         });
