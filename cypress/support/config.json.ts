@@ -31,6 +31,9 @@ const CONFIG_JSON = {
             base_url: "https://server.invalid",
         },
     },
+
+    // the location tests want a map style url.
+    map_style_url: "https://api.maptiler.com/maps/streets/style.json?key=fU3vlMsMn4Jb6dnEIFsx",
 };
 
 beforeEach(() => {
