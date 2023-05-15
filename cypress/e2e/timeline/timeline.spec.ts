@@ -715,7 +715,7 @@ describe("Timeline", () => {
             cy.get(".mx_RoomHeader").findByRole("button", { name: "Search" }).click();
 
             cy.get(".mx_SearchBar").percySnapshotElement("Search bar on the timeline", {
-                // Emulate narrow timeline (apply the same values used on decryption-failure.spec.ts)
+                // Emulate narrow timeline
                 widths: [320, 640],
             });
 
