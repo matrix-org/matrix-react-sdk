@@ -15,8 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_AppsDrawer {
+:root {
     --AppTile_mini-height: 220px;
+}
+
+.mx_AppsDrawer {
     --minWidth: 240px; /* TODO this should be 300px but that's too large */
 
     margin: var(--container-gap-width);
@@ -28,10 +31,6 @@ limitations under the License.
     flex-direction: column;
     overflow: hidden;
     flex-grow: 1;
-
-    &.mx_AppsDrawer_maximise {
-        margin-bottom: var(--container-gap-width);
-    }
 
     .mx_AppsContainer_resizerHandleContainer {
         width: 100%;
@@ -96,7 +95,15 @@ limitations under the License.
         min-width: var(--minWidth);
     }
 
-    &.mx_AppsDrawer_2apps .mx_AppTile {
+    &.mx_AppsDrawer--maximised {
+        margin-bottom: var(--container-gap-width);
+    }
+
+    &.mx_AppsDrawer--resizing .mx_AppTile_persistedWrapper {
+        z-index: 1;
+    }
+
+    &.mx_AppsDrawer--2apps .mx_AppTile {
         width: 50%;
 
         &:nth-child(3) {
@@ -105,7 +112,7 @@ limitations under the License.
             min-width: var(--minWidth) !important;
         }
     }
-    &.mx_AppsDrawer_3apps .mx_AppTile {
+    &.mx_AppsDrawer--3apps .mx_AppTile {
         width: 33%;
 
         &:nth-child(3) {
@@ -418,8 +425,4 @@ limitations under the License.
     to {
         opacity: 1;
     }
-}
-
-.mx_AppsDrawer_resizing .mx_AppTile_persistedWrapper {
-    z-index: 1;
 }
