@@ -96,6 +96,74 @@ describe("MessagePreviewStore", () => {
         await expect(store.getPreviewForRoom(room, DefaultTagID.Untagged)).resolves.toMatchInlineSnapshot(
             `"@sender:server: Second message"`,
         );
+
+        const secondMessageEdit = mkEvent({
+            event: true,
+            type: EventType.RoomMessage,
+            user: "@sender:server",
+            room: room.roomId,
+            content: {
+                "body": "* Second Message Edit",
+                "m.new_content": {
+                    body: "Second Message Edit",
+                },
+                "m.relates_to": {
+                    rel_type: RelationType.Replace,
+                    event_id: secondMessage.getId()!,
+                },
+            },
+        });
+        await addEvent(store, room, secondMessageEdit);
+
+        await expect(store.getPreviewForRoom(room, DefaultTagID.Untagged)).resolves.toMatchInlineSnapshot(
+            `"@sender:server: Second Message Edit"`,
+        );
+    });
+
+    it("should ignore edits to unknown events", async () => {
+        const client = stubClient();
+        const room = mkStubRoom("!roomId:server", "Room", client);
+        mocked(client.getRoom).mockReturnValue(room);
+
+        const store = MessagePreviewStore.testInstance();
+        await store.start();
+        await setupAsyncStoreWithClient(store, client);
+
+        await expect(store.getPreviewForRoom(room, DefaultTagID.DM)).resolves.toMatchInlineSnapshot(`null`);
+
+        const firstMessage = mkMessage({
+            user: "@sender:server",
+            event: true,
+            room: room.roomId,
+            msg: "First message",
+        });
+        await addEvent(store, room, firstMessage, true);
+
+        await expect(store.getPreviewForRoom(room, DefaultTagID.DM)).resolves.toMatchInlineSnapshot(
+            `"@sender:server: First message"`,
+        );
+
+        const randomEdit = mkEvent({
+            event: true,
+            type: EventType.RoomMessage,
+            user: "@sender:server",
+            room: room.roomId,
+            content: {
+                "body": "* Second Message Edit",
+                "m.new_content": {
+                    body: "Second Message Edit",
+                },
+                "m.relates_to": {
+                    rel_type: RelationType.Replace,
+                    event_id: "!other-event:server",
+                },
+            },
+        });
+        await addEvent(store, room, randomEdit);
+
+        await expect(store.getPreviewForRoom(room, DefaultTagID.Untagged)).resolves.toMatchInlineSnapshot(
+            `"@sender:server: First message"`,
+        );
     });
 
     it("should generate correct preview for message events in DMs", async () => {
