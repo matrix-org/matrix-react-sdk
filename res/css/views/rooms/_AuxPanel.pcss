@@ -28,26 +28,23 @@ limitations under the License.
     }
 
     .mx_AuxPanel_stateViews_span {
-        font-weight: var(--fontWeight);
-        color: var(--color);
-
         &[data-severity="warning"] {
-            --fontWeight: bold;
-            --color: orange;
+            font-weight: bold;
+            color: orange;
         }
 
         &[data-severity="alert"] {
-            --fontWeight: bold;
-            --color: red;
+            font-weight: bold;
+            color: red;
         }
 
         &[data-severity="normal"] {
-            --fontWeight: normal;
+            font-weight: normal;
         }
 
         &[data-severity="notice"] {
-            --fontWeight: normal;
-            --color: $settings-grey-fg-color;
+            font-weight: normal;
+            color: $settings-grey-fg-color;
         }
 
         a {
