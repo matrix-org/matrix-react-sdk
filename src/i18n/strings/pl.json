@@ -3357,5 +3357,6 @@
     "Unable to create room with moderation bot": "Nie można utworzyć pokoju z botem moderatorem",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Mała uwaga, jeśli nie dodasz adresu e-mail i stracisz swoje hasło, możesz <b>permanentnie stracić dostęp do swojego konta</b>.",
     "Continuing without email": "Kontynuowanie bez adresu e-mail",
-    "Data on this screen is shared with %(widgetDomain)s": "Dane na tym ekranie są współdzielone z %(widgetDomain)s"
+    "Data on this screen is shared with %(widgetDomain)s": "Dane na tym ekranie są współdzielone z %(widgetDomain)s",
+    "You're all caught up.": "Jesteś na bieżąco."
 }
