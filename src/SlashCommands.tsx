@@ -214,6 +214,13 @@ const isCurrentLocalRoom = (cli?: MatrixClient): boolean => {
     return isLocalRoom(room);
 };
 
+const canAffectPowerlevels = (cli?: MatrixClient): boolean => {
+    const roomId = SdkContextClass.instance.roomViewStore.getRoomId();
+    if (!cli || !roomId) return false;
+    const room = cli?.getRoom(roomId);
+    return !!room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getSafeUserId()) && !isLocalRoom(room);
+};
+
 /* Disable the "unexpected this" error for these commands - all of the run
  * functions are called with `this` bound to the Command instance.
  */
@@ -875,16 +882,7 @@ export const Commands = [
         command: "op",
         args: "<user-id> [<power-level>]",
         description: _td("Define the power level of a user"),
-        isEnabled(cli): boolean {
-            const roomId = SdkContextClass.instance.roomViewStore.getRoomId();
-            if (!roomId) return false;
-            const room = cli?.getRoom(roomId);
-            return (
-                !!cli &&
-                !!room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getSafeUserId()) &&
-                !isLocalRoom(room)
-            );
-        },
+        isEnabled: canAffectPowerlevels,
         runFn: function (cli, roomId, args) {
             if (args) {
                 const matches = args.match(/^(\S+?)( +(-?\d+))?$/);
@@ -925,16 +923,7 @@ export const Commands = [
         command: "deop",
         args: "<user-id>",
         description: _td("Deops user with given id"),
-        isEnabled(cli): boolean {
-            const roomId = SdkContextClass.instance.roomViewStore.getRoomId();
-            if (!roomId) return false;
-            const room = cli?.getRoom(roomId);
-            return (
-                !!cli &&
-                !!room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getSafeUserId()) &&
-                !isLocalRoom(room)
-            );
-        },
+        isEnabled: canAffectPowerlevels,
         runFn: function (cli, roomId, args) {
             if (args) {
                 const matches = args.match(/^(\S+)$/);
