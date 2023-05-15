@@ -97,4 +97,41 @@ describe("MessagePreviewStore", () => {
             `"@sender:server: Second message"`,
         );
     });
+
+    it("should generate correct preview for message events in DMs", async () => {
+        const client = stubClient();
+        const room = mkStubRoom("!roomId:server", "Room", client);
+        mocked(client.getRoom).mockReturnValue(room);
+        room.currentState.getJoinedMemberCount = jest.fn().mockReturnValue(2);
+
+        const store = MessagePreviewStore.testInstance();
+        await store.start();
+        await setupAsyncStoreWithClient(store, client);
+
+        await expect(store.getPreviewForRoom(room, DefaultTagID.DM)).resolves.toMatchInlineSnapshot(`null`);
+
+        const firstMessage = mkMessage({
+            user: "@sender:server",
+            event: true,
+            room: room.roomId,
+            msg: "First message",
+        });
+        await addEvent(store, room, firstMessage);
+
+        await expect(store.getPreviewForRoom(room, DefaultTagID.DM)).resolves.toMatchInlineSnapshot(
+            `"@sender:server: First message"`,
+        );
+
+        const secondMessage = mkMessage({
+            user: "@sender:server",
+            event: true,
+            room: room.roomId,
+            msg: "Second message",
+        });
+        await addEvent(store, room, secondMessage);
+
+        await expect(store.getPreviewForRoom(room, DefaultTagID.DM)).resolves.toMatchInlineSnapshot(
+            `"@sender:server: Second message"`,
+        );
+    });
 });
