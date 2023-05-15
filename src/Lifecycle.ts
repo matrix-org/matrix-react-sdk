@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { createClient } from "matrix-js-sdk/src/matrix";
+import { createClient, IndexedDBStore } from "matrix-js-sdk/src/matrix";
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { decryptAES, encryptAES, IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
@@ -940,6 +940,9 @@ export function stopMatrixClient(unsetClient = true): void {
         if (unsetClient) {
             MatrixClientPeg.unset();
             EventIndexPeg.unset();
+            if (cli.store instanceof IndexedDBStore) {
+                cli.store.destroy();
+            }
         }
     }
 }
