@@ -18,6 +18,7 @@ import { User } from "matrix-js-sdk/src/models/user";
 import { verificationMethods as VerificationMethods } from "matrix-js-sdk/src/crypto";
 import { RoomMember } from "matrix-js-sdk/src/matrix";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { CrossSigningKey } from "matrix-js-sdk/src/crypto-api";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import dis from "./dispatcher/dispatcher";
@@ -35,7 +36,7 @@ async function enable4SIfNeeded(): Promise<boolean> {
     const cli = MatrixClientPeg.get();
     const crypto = cli.getCrypto();
     if (!crypto) return false;
-    const usk = await crypto.getCrossSigningKeyId("user_signing");
+    const usk = await crypto.getCrossSigningKeyId(CrossSigningKey.UserSigning);
     if (!usk) {
         await accessSecretStorage();
         return false;
