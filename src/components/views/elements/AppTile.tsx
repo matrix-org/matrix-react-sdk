@@ -500,11 +500,6 @@ export default class AppTile extends React.Component<IProps, IState> {
     }
 
     private getTileTitle(): JSX.Element {
-        const classnamesTitle = classNames({
-            "mx_AppTileMenuBar_title": true,
-            "mx_AppTileMenuBar_title--pointer": this.props.handleMinimisePointerEvents,
-        });
-
         const name = this.formatAppTileName();
         const titleSpacer = <span>&nbsp;-&nbsp;</span>;
         let title = "";
@@ -513,7 +508,10 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
 
         return (
-            <div className={classnamesTitle}>
+            <div
+                className="mx_AppTileMenuBar_title"
+                style={{ pointerEvents: this.props.handleMinimisePointerEvents ? "all" : "none" }}
+            >
                 <WidgetAvatar app={this.props.app} className="mx_AppTileMenuBar_title_widgetAvatar" />
                 <b>{name}</b>
                 <span>
