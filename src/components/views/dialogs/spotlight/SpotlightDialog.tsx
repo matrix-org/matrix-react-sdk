@@ -342,7 +342,9 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
     const possibleResults = useMemo<Result[]>(() => {
         const userResults: IMemberResult[] = [];
-        const roomResults = findVisibleRooms(cli, msc3946ProcessDynamicPredecessor).map(toRoomResult.bind(null, cli));
+        const roomResults = findVisibleRooms(cli, msc3946ProcessDynamicPredecessor).map((result) =>
+            toRoomResult(cli, result),
+        );
         // If we already have a DM with the user we're looking for, we will
         // show that DM instead of the user themselves
         const alreadyAddedUserIds = roomResults.reduce((userIds, result) => {
