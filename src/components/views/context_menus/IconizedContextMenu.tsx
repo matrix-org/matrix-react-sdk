@@ -132,6 +132,7 @@ export const IconizedContextMenuOption: React.FC<IOptionProps> = ({
                 mx_IconizedContextMenu_itemDestructive: isDestructive,
             })}
             label={label}
+            element="li"
         >
             {iconClassName && <span className={classNames("mx_IconizedContextMenu_icon", iconClassName)} />}
             <span className="mx_IconizedContextMenu_label">{label}</span>
@@ -171,7 +172,9 @@ const IconizedContextMenu: React.FC<React.PropsWithChildren<IProps>> = ({ classN
 
     return (
         <ContextMenu chevronFace={ChevronFace.None} {...props}>
-            <div className={classes}>{children}</div>
+            <ul role="none" className={classes}>
+                {children}
+            </ul>
         </ContextMenu>
     );
 };
