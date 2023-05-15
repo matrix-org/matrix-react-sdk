@@ -30,6 +30,7 @@ import SettingsStore from "../../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../../src/settings/SettingLevel";
 import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
 import SdkConfig from "../../../../src/SdkConfig";
+import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 
 jest.useFakeTimers();
 
@@ -156,14 +157,22 @@ describe("Spotlight Dialog", () => {
 
     describe("should apply filters supplied via props", () => {
         it("without filter", async () => {
-            render(<SpotlightDialog onFinished={() => null} />);
+            render(<SpotlightDialog onFinished={() => null} />, {
+                wrapper: ({ children }) => (
+                    <MatrixClientContext.Provider value={mockedClient}>{children}</MatrixClientContext.Provider>
+                ),
+            });
 
             const filterChip = document.querySelector("div.mx_SpotlightDialog_filter");
             expect(filterChip).not.toBeInTheDocument();
         });
 
         it("with public room filter", async () => {
-            render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />);
+            render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />, {
+                wrapper: ({ children }) => (
+                    <MatrixClientContext.Provider value={mockedClient}>{children}</MatrixClientContext.Provider>
+                ),
+            });
 
             // search is debounced
             jest.advanceTimersByTime(200);
@@ -186,6 +195,11 @@ describe("Spotlight Dialog", () => {
                     initialText={testPerson.display_name}
                     onFinished={() => null}
                 />,
+                {
+                    wrapper: ({ children }) => (
+                        <MatrixClientContext.Provider value={mockedClient}>{children}</MatrixClientContext.Provider>
+                    ),
+                },
             );
             // search is debounced
             jest.advanceTimersByTime(200);
@@ -218,7 +232,11 @@ describe("Spotlight Dialog", () => {
         });
 
         it("should call getVisibleRooms with MSC3946 dynamic room predecessors", async () => {
-            render(<SpotlightDialog onFinished={() => null} />);
+            render(<SpotlightDialog onFinished={() => null} />, {
+                wrapper: ({ children }) => (
+                    <MatrixClientContext.Provider value={mockedClient}>{children}</MatrixClientContext.Provider>
+                ),
+            });
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
             expect(mockedClient.getVisibleRooms).toHaveBeenCalledWith(true);
@@ -227,7 +245,11 @@ describe("Spotlight Dialog", () => {
 
     describe("should apply manually selected filter", () => {
         it("with public rooms", async () => {
-            render(<SpotlightDialog onFinished={() => null} />);
+            render(<SpotlightDialog onFinished={() => null} />, {
+                wrapper: ({ children }) => (
+                    <MatrixClientContext.Provider value={mockedClient}>{children}</MatrixClientContext.Provider>
+                ),
+            });
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
 
@@ -250,7 +272,11 @@ describe("Spotlight Dialog", () => {
             expect(mockedClient.getVisibleRooms).toHaveBeenCalledWith(false);
         });
         it("with people", async () => {
-            render(<SpotlightDialog initialText={testPerson.display_name} onFinished={() => null} />);
+            render(<SpotlightDialog initialText={testPerson.display_name} onFinished={() => null} />, {
+                wrapper: ({ children }) => (
+                    <MatrixClientContext.Provider value={mockedClient}>{children}</MatrixClientContext.Provider>
+                ),
+            });
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
 
@@ -273,7 +299,11 @@ describe("Spotlight Dialog", () => {
 
     describe("should allow clearing filter manually", () => {
         it("with public room filter", async () => {
-            render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />);
+            render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />, {
+                wrapper: ({ children }) => (
+                    <MatrixClientContext.Provider value={mockedClient}>{children}</MatrixClientContext.Provider>
+                ),
+            });
             // search is debounced
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
@@ -296,6 +326,11 @@ describe("Spotlight Dialog", () => {
                     initialText={testPerson.display_name}
                     onFinished={() => null}
                 />,
+                {
+                    wrapper: ({ children }) => (
+                        <MatrixClientContext.Provider value={mockedClient}>{children}</MatrixClientContext.Provider>
+                    ),
+                },
             );
             // search is debounced
             jest.advanceTimersByTime(200);
@@ -318,7 +353,11 @@ describe("Spotlight Dialog", () => {
         let options: NodeListOf<Element>;
 
         beforeAll(async () => {
-            render(<SpotlightDialog initialText="test23" onFinished={() => null} />);
+            render(<SpotlightDialog initialText="test23" onFinished={() => null} />, {
+                wrapper: ({ children }) => (
+                    <MatrixClientContext.Provider value={mockedClient}>{children}</MatrixClientContext.Provider>
+                ),
+            });
             // search is debounced
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
@@ -345,6 +384,11 @@ describe("Spotlight Dialog", () => {
                 initialText={testPerson.display_name}
                 onFinished={() => null}
             />,
+            {
+                wrapper: ({ children }) => (
+                    <MatrixClientContext.Provider value={mockedClient}>{children}</MatrixClientContext.Provider>
+                ),
+            },
         );
 
         jest.advanceTimersByTime(200);
@@ -366,7 +410,11 @@ describe("Spotlight Dialog", () => {
         });
         localStorage.setItem("mx_last_room_directory_server", "example.tld");
 
-        render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />);
+        render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />, {
+            wrapper: ({ children }) => (
+                <MatrixClientContext.Provider value={mockedClient}>{children}</MatrixClientContext.Provider>
+            ),
+        });
 
         jest.advanceTimersByTime(200);
         await flushPromisesWithFakeTimers();
@@ -425,7 +473,11 @@ describe("Spotlight Dialog", () => {
         });
 
         it("does not display rooms with nsfw keywords in results when showNsfwPublicRooms is falsy", async () => {
-            render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />);
+            render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />, {
+                wrapper: ({ children }) => (
+                    <MatrixClientContext.Provider value={mockedClient}>{children}</MatrixClientContext.Provider>
+                ),
+            });
 
             // search is debounced
             jest.advanceTimersByTime(200);
@@ -438,7 +490,11 @@ describe("Spotlight Dialog", () => {
 
         it("displays rooms with nsfw keywords in results when showNsfwPublicRooms is truthy", async () => {
             SettingsStore.setValue("SpotlightSearch.showNsfwPublicRooms", null, SettingLevel.DEVICE, true);
-            render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />);
+            render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />, {
+                wrapper: ({ children }) => (
+                    <MatrixClientContext.Provider value={mockedClient}>{children}</MatrixClientContext.Provider>
+                ),
+            });
 
             // search is debounced
             jest.advanceTimersByTime(200);

@@ -37,6 +37,7 @@ import {
 } from "../../../test-utils";
 import { TILE_SERVER_WK_KEY } from "../../../../src/utils/WellKnownUtils";
 import SettingsStore from "../../../../src/settings/SettingsStore";
+import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 
 describe("ForwardDialog", () => {
     const sourceRoom = "!111111111111111111:example.org";
@@ -83,6 +84,11 @@ describe("ForwardDialog", () => {
                 permalinkCreator={new RoomPermalinkCreator(undefined!, sourceRoom)}
                 onFinished={jest.fn()}
             />,
+            {
+                wrapper: ({ children }) => (
+                    <MatrixClientContext.Provider value={mockClient}>{children}</MatrixClientContext.Provider>
+                ),
+            },
         );
 
         return wrapper;

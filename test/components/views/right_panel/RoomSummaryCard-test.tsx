@@ -147,7 +147,6 @@ describe("<RoomSummaryCard />", () => {
 
             expect(modalSpy).toHaveBeenCalledWith(PollHistoryDialog, {
                 room,
-                matrixClient: mockClient,
                 permalinkCreator: defaultProps.permalinkCreator,
             });
         });

@@ -23,6 +23,7 @@ import { Mocked } from "jest-mock";
 
 import { getMockClientWithEventEmitter, mockPlatformPeg } from "../../../test-utils";
 import AccessSecretStorageDialog from "../../../../src/components/views/dialogs/security/AccessSecretStorageDialog";
+import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 
 const securityKey = "EsTc WKmb ivvk jLS7 Y1NH 5CcQ mP1E JJwj B3Fd pFWm t4Dp dbyu";
 
@@ -36,7 +37,11 @@ describe("AccessSecretStorageDialog", () => {
     };
 
     const renderComponent = (props = {}): void => {
-        render(<AccessSecretStorageDialog {...defaultProps} {...props} />);
+        render(<AccessSecretStorageDialog {...defaultProps} {...props} />, {
+            wrapper: ({ children }) => (
+                <MatrixClientContext.Provider value={mockClient}>{children}</MatrixClientContext.Provider>
+            ),
+        });
     };
 
     const enterSecurityKey = (placeholder = "Security Key"): void => {

@@ -21,6 +21,7 @@ import { EventType, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { flushPromises, mkMessage, stubClient } from "../../../test-utils";
 import MessageEditHistoryDialog from "../../../../src/components/views/dialogs/MessageEditHistoryDialog";
+import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 
 describe("<MessageEditHistory />", () => {
     const roomId = "!aroom:example.com";
@@ -38,7 +39,11 @@ describe("<MessageEditHistory />", () => {
     });
 
     async function renderComponent(): Promise<RenderResult> {
-        const result = render(<MessageEditHistoryDialog mxEvent={event} onFinished={jest.fn()} />);
+        const result = render(<MessageEditHistoryDialog mxEvent={event} onFinished={jest.fn()} />, {
+            wrapper: ({ children }) => (
+                <MatrixClientContext.Provider value={client}>{children}</MatrixClientContext.Provider>
+            ),
+        });
         await flushPromises();
         return result;
     }
