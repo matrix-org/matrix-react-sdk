@@ -309,7 +309,8 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
                             <SpaceItem
                                 {...provided.draggableProps}
                                 dragHandleProps={provided.dragHandleProps}
-                                key={s.roomId}
+                                // The key cannot be the roomId as we need to re-register roving tab indexes around dragging
+                                key={i}
                                 innerRef={provided.innerRef}
                                 className={snapshot.isDragging ? "mx_SpaceItem_dragging" : undefined}
                                 space={s}
@@ -330,6 +331,7 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
 );
 
 const SpacePanel: React.FC = () => {
+    const [invites, metaSpaces] = useSpaces();
     const [isPanelCollapsed, setPanelCollapsed] = useState(true);
     const ref = useRef<HTMLDivElement>(null);
     useLayoutEffect(() => {
@@ -344,14 +346,18 @@ const SpacePanel: React.FC = () => {
     });
 
     return (
-        <DragDropContext
-            onDragEnd={(result) => {
-                if (!result.destination) return; // dropped outside the list
-                SpaceStore.instance.moveRootSpace(result.source.index, result.destination.index);
-            }}
-        >
-            <RovingTabIndexProvider handleHomeEnd handleUpDown>
-                {({ onKeyDownHandler }) => (
+        <RovingTabIndexProvider handleHomeEnd handleUpDown>
+            {({ onKeyDownHandler, onDragEndHandler }) => (
+                <DragDropContext
+                    onDragEnd={(result) => {
+                        if (!result.destination) return; // dropped outside the list
+                        SpaceStore.instance.moveRootSpace(result.source.index, result.destination.index);
+                        // The roving tab index tracks all space buttons in the panel
+                        // but dnd only the draggable real spaces, so we need to match them up
+                        const offset = invites.length + metaSpaces.length;
+                        onDragEndHandler(result.source.index + offset, result.destination.index + offset);
+                    }}
+                >
                     <div
                         className={classNames("mx_SpacePanel", { collapsed: isPanelCollapsed })}
                         onKeyDown={onKeyDownHandler}
@@ -395,9 +401,9 @@ const SpacePanel: React.FC = () => {
 
                         <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} />
                     </div>
-                )}
-            </RovingTabIndexProvider>
-        </DragDropContext>
+                </DragDropContext>
+            )}
+        </RovingTabIndexProvider>
     );
 };
 

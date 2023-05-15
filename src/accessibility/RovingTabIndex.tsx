@@ -31,6 +31,7 @@ import React, {
 import { getKeyBindingsManager } from "../KeyBindingsManager";
 import { KeyBindingAction } from "./KeyboardShortcuts";
 import { FocusHandler, Ref } from "./roving/types";
+import { moveElement } from "../utils/arrays";
 
 /**
  * Module to simplify implementing the Roving TabIndex accessibility technique
@@ -78,16 +79,27 @@ export enum Type {
     Register = "REGISTER",
     Unregister = "UNREGISTER",
     SetFocus = "SET_FOCUS",
+    Move = "MOVE",
 }
 
 export interface IAction {
-    type: Type;
+    type: Exclude<Type, Type.Move>;
     payload: {
         ref: Ref;
     };
 }
 
-export const reducer: Reducer<IState, IAction> = (state: IState, action: IAction) => {
+interface MoveAction {
+    type: Type.Move;
+    payload: {
+        sourceIndex: number;
+        destinationIndex: number;
+    };
+}
+
+type Action = IAction | MoveAction;
+
+export const reducer: Reducer<IState, Action> = (state: IState, action: Action) => {
     switch (action.type) {
         case Type.Register: {
             if (!state.activeRef) {
@@ -150,6 +162,16 @@ export const reducer: Reducer<IState, IAction> = (state: IState, action: IAction
             return { ...state };
         }
 
+        case Type.Move: {
+            if (action.payload.sourceIndex === action.payload.destinationIndex) return state;
+            // Perform the swap
+            moveElement(state.refs, action.payload.sourceIndex, action.payload.destinationIndex);
+            // Some callers, e.g. react-beautiful-dnd do wacky things with swapping refs around
+            // so we have to ensure we update our activeRef to point at the right thing
+            state.activeRef = state.refs[action.payload.destinationIndex];
+            return { ...state };
+        }
+
         default:
             return state;
     }
@@ -160,7 +182,10 @@ interface IProps {
     handleHomeEnd?: boolean;
     handleUpDown?: boolean;
     handleLeftRight?: boolean;
-    children(renderProps: { onKeyDownHandler(ev: React.KeyboardEvent): void }): ReactNode;
+    children(renderProps: {
+        onKeyDownHandler(ev: React.KeyboardEvent): void;
+        onDragEndHandler(sourceIndex: number, destinationIndex: number): void;
+    }): ReactNode;
     onKeyDown?(ev: React.KeyboardEvent, state: IState, dispatch: Dispatch<IAction>): void;
 }
 
@@ -199,7 +224,7 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
     handleLoop,
     onKeyDown,
 }) => {
-    const [state, dispatch] = useReducer<Reducer<IState, IAction>>(reducer, {
+    const [state, dispatch] = useReducer<Reducer<IState, Action>>(reducer, {
         refs: [],
     });
 
@@ -301,9 +326,16 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
         [context, onKeyDown, handleHomeEnd, handleUpDown, handleLeftRight, handleLoop],
     );
 
+    const onDragEndHandler = useCallback((sourceIndex: number, destinationIndex: number) => {
+        dispatch({
+            type: Type.Move,
+            payload: { sourceIndex, destinationIndex },
+        });
+    }, []);
+
     return (
         <RovingTabIndexContext.Provider value={context}>
-            {children({ onKeyDownHandler })}
+            {children({ onKeyDownHandler, onDragEndHandler })}
         </RovingTabIndexContext.Provider>
     );
 };
