@@ -22,7 +22,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
 import { wantsDateSeparator } from "../../../DateUtils";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -31,6 +30,7 @@ import ScrollPanel from "../../structures/ScrollPanel";
 import Spinner from "../elements/Spinner";
 import EditHistoryMessage from "../messages/EditHistoryMessage";
 import DateSeparator from "../messages/DateSeparator";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -47,6 +47,9 @@ interface IState {
 }
 
 export default class MessageEditHistoryDialog extends React.PureComponent<IProps, IState> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
     public constructor(props: IProps) {
         super(props);
         this.state = {
@@ -67,13 +70,12 @@ export default class MessageEditHistoryDialog extends React.PureComponent<IProps
         const opts = { from: this.state.nextBatch ?? undefined };
         const roomId = this.props.mxEvent.getRoomId()!;
         const eventId = this.props.mxEvent.getId()!;
-        const client = MatrixClientPeg.get();
 
         const { resolve, reject, promise } = defer<boolean>();
         let result: Awaited<ReturnType<MatrixClient["relations"]>>;
 
         try {
-            result = await client.relations(roomId, eventId, RelationType.Replace, EventType.RoomMessage, opts);
+            result = await this.context.relations(roomId, eventId, RelationType.Replace, EventType.RoomMessage, opts);
         } catch (error) {
             // log if the server returned an error
             if (error.errcode) {
@@ -102,8 +104,7 @@ export default class MessageEditHistoryDialog extends React.PureComponent<IProps
 
     private locallyRedactEventsIfNeeded(newEvents: MatrixEvent[]): void {
         const roomId = this.props.mxEvent.getRoomId();
-        const client = MatrixClientPeg.get();
-        const room = client.getRoom(roomId);
+        const room = this.context.getRoom(roomId);
         if (!room) return;
         const pendingEvents = room.getPendingEvents();
         for (const e of newEvents) {

@@ -218,6 +218,7 @@ export async function editMessage(
     if (newContent?.body === "") {
         cancelPreviousPendingEdit(mxClient, editorStateTransfer);
         createRedactEventDialog({
+            matrixClient: mxClient,
             mxEvent: editedEvent,
             onCloseDialog: () => {
                 endEditing(roomContext);

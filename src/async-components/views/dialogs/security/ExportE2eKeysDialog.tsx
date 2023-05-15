@@ -17,7 +17,6 @@ limitations under the License.
 
 import FileSaver from "file-saver";
 import React, { ChangeEvent } from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../languageHandler";
@@ -25,6 +24,7 @@ import * as MegolmExportEncryption from "../../../../utils/MegolmExportEncryptio
 import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
 import Field from "../../../../components/views/elements/Field";
 import { KeysStartingWith } from "../../../../@types/common";
+import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 
 enum Phase {
     Edit = "edit",
@@ -32,7 +32,6 @@ enum Phase {
 }
 
 interface IProps {
-    matrixClient: MatrixClient;
     onFinished(doExport?: boolean): void;
 }
 
@@ -46,6 +45,9 @@ interface IState {
 type AnyPassphrase = KeysStartingWith<IState, "passphrase">;
 
 export default class ExportE2eKeysDialog extends React.Component<IProps, IState> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
     private unmounted = false;
 
     public constructor(props: IProps) {
@@ -85,7 +87,7 @@ export default class ExportE2eKeysDialog extends React.Component<IProps, IState>
         // asynchronous ones.
         Promise.resolve()
             .then(() => {
-                return this.props.matrixClient.exportRoomKeys();
+                return this.context.exportRoomKeys();
             })
             .then((k) => {
                 return MegolmExportEncryption.encryptMegolmKeyFile(JSON.stringify(k), passphrase);

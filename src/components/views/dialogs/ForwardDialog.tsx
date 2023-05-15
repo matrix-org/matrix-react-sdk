@@ -18,7 +18,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import classnames from "classnames";
 import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient } from "matrix-js-sdk/src/client";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { ILocationContent, LocationAssetType, M_TIMESTAMP } from "matrix-js-sdk/src/@types/location";
@@ -52,11 +51,11 @@ import { isLocationEvent } from "../../../utils/EventUtils";
 import { isSelfLocation, locationEventGeoUri } from "../../../utils/location";
 import { RoomContextDetails } from "../rooms/RoomContextDetails";
 import { filterBoolean } from "../../../utils/arrays";
+import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 
 const AVATAR_SIZE = 30;
 
 interface IProps {
-    matrixClient: MatrixClient;
     // The event to forward
     event: MatrixEvent;
     // We need a permalink creator for the source room to pass through to EventTile
@@ -69,7 +68,6 @@ interface IEntryProps {
     room: Room;
     type: EventType | string;
     content: IContent;
-    matrixClient: MatrixClient;
     onFinished(success: boolean): void;
 }
 
@@ -80,7 +78,8 @@ enum SendState {
     Failed,
 }
 
-const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, onFinished }) => {
+const Entry: React.FC<IEntryProps> = ({ room, type, content, onFinished }) => {
+    const cli = useMatrixClientContext();
     const [sendState, setSendState] = useState<SendState>(SendState.CanSend);
 
     const jumpToRoom = (ev: ButtonEvent): void => {
@@ -194,7 +193,8 @@ const transformEvent = (event: MatrixEvent): { type: string; content: IContent }
     return { type, content };
 };
 
-const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCreator, onFinished }) => {
+const ForwardDialog: React.FC<IProps> = ({ event, permalinkCreator, onFinished }) => {
+    const cli = useMatrixClientContext();
     const userId = cli.getSafeUserId();
     const [profileInfo, setProfileInfo] = useState<any>({});
     useEffect(() => {
@@ -310,7 +310,6 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
                                                 room={room}
                                                 type={type}
                                                 content={content}
-                                                matrixClient={cli}
                                                 onFinished={onFinished}
                                             />
                                         ))

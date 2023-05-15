@@ -15,11 +15,10 @@ limitations under the License.
 */
 
 import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
-import { MatrixEvent, RelationType } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, MatrixEvent, RelationType } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
 import { _t } from "../../../languageHandler";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Modal from "../../../Modal";
 import { isVoiceBroadcastStartedEvent } from "../../../voice-broadcast/utils/isVoiceBroadcastStartedEvent";
 import ErrorDialog from "./ErrorDialog";
@@ -52,9 +51,11 @@ export default class ConfirmRedactDialog extends React.Component<IProps> {
 }
 
 export function createRedactEventDialog({
+    matrixClient,
     mxEvent,
     onCloseDialog = () => {},
 }: {
+    matrixClient: MatrixClient;
     mxEvent: MatrixEvent;
     onCloseDialog?: () => void;
 }): void {
@@ -71,13 +72,12 @@ export function createRedactEventDialog({
             onFinished: async (proceed, reason): Promise<void> => {
                 if (!proceed) return;
 
-                const cli = MatrixClientPeg.get();
                 const withRelations: { with_relations?: RelationType[] } = {};
 
                 // redact related events if this is a voice broadcast started event and
                 // server has support for relation based redactions
                 if (isVoiceBroadcastStartedEvent(mxEvent)) {
-                    const relationBasedRedactionsSupport = cli.canSupport.get(Feature.RelationBasedRedactions);
+                    const relationBasedRedactionsSupport = matrixClient.canSupport.get(Feature.RelationBasedRedactions);
                     if (
                         relationBasedRedactionsSupport &&
                         relationBasedRedactionsSupport !== ServerSupport.Unsupported
@@ -88,7 +88,7 @@ export function createRedactEventDialog({
 
                 try {
                     onCloseDialog?.();
-                    await cli.redactEvent(roomId, eventId, undefined, {
+                    await matrixClient.redactEvent(roomId, eventId, undefined, {
                         ...(reason ? { reason } : {}),
                         ...withRelations,
                     });

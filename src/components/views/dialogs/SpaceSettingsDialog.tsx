@@ -16,7 +16,6 @@ limitations under the License.
 
 import React, { useMemo } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { _t, _td } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
@@ -31,6 +30,7 @@ import AdvancedRoomSettingsTab from "../settings/tabs/room/AdvancedRoomSettingsT
 import RolesRoomSettingsTab from "../settings/tabs/room/RolesRoomSettingsTab";
 import { Action } from "../../../dispatcher/actions";
 import { NonEmptyArray } from "../../../@types/common";
+import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 
 export enum SpaceSettingsTab {
     General = "SPACE_GENERAL_TAB",
@@ -40,12 +40,12 @@ export enum SpaceSettingsTab {
 }
 
 interface IProps {
-    matrixClient: MatrixClient;
     space: Room;
     onFinished(): void;
 }
 
-const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFinished }) => {
+const SpaceSettingsDialog: React.FC<IProps> = ({ space, onFinished }) => {
+    const cli = useMatrixClientContext();
     useDispatcher(defaultDispatcher, (payload) => {
         if (payload.action === Action.AfterLeaveRoom && payload.room_id === space.roomId) {
             onFinished();

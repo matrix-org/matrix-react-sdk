@@ -21,13 +21,13 @@ import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Modal from "../../../Modal";
 import BugReportDialog from "./BugReportDialog";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import ProgressBar from "../elements/ProgressBar";
 import AccessibleButton from "../elements/AccessibleButton";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 export interface IFinishedOpts {
     continue: boolean;
@@ -54,13 +54,16 @@ interface IState {
 }
 
 export default class RoomUpgradeWarningDialog extends React.Component<IProps, IState> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
     private readonly isPrivate: boolean;
     private readonly currentVersion?: string;
 
-    public constructor(props: IProps) {
+    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props);
 
-        const room = MatrixClientPeg.get().getRoom(this.props.roomId);
+        const room = context.getRoom(this.props.roomId);
         const joinRules = room?.currentState.getStateEvents(EventType.RoomJoinRules, "");
         this.isPrivate = joinRules?.getContent()["join_rule"] !== JoinRule.Public ?? true;
         this.currentVersion = room?.getVersion();

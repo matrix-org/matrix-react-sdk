@@ -15,26 +15,22 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/matrix";
 
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import { PollHistory } from "../polls/pollHistory/PollHistory";
 import BaseDialog from "./BaseDialog";
+import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 
 type PollHistoryDialogProps = {
     room: Room;
-    matrixClient: MatrixClient;
     permalinkCreator: RoomPermalinkCreator;
     onFinished(): void;
 };
 
-export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({
-    room,
-    matrixClient,
-    permalinkCreator,
-    onFinished,
-}) => {
+export const PollHistoryDialog: React.FC<PollHistoryDialogProps> = ({ room, permalinkCreator, onFinished }) => {
+    const matrixClient = useMatrixClientContext();
+
     // @TODO hide dialog title somehow
     return (
         <BaseDialog onFinished={onFinished}>

@@ -716,7 +716,6 @@ const RedactMessagesButton: React.FC<IBaseProps> = ({ member }) => {
         if (!room) return;
 
         Modal.createDialog(BulkRedactDialog, {
-            matrixClient: cli,
             room,
             member,
         });

@@ -231,6 +231,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     private onRedactClick = (): void => {
         const { mxEvent, onCloseDialog } = this.props;
         createRedactEventDialog({
+            matrixClient: MatrixClientPeg.get(),
             mxEvent,
             onCloseDialog,
         });
@@ -334,11 +335,9 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     private onEndPollClick = (): void => {
-        const matrixClient = MatrixClientPeg.get();
         Modal.createDialog(
             EndPollDialog,
             {
-                matrixClient,
                 event: this.props.mxEvent,
                 getRelationsForEvent: this.props.getRelationsForEvent,
             },

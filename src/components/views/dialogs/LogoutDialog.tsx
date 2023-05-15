@@ -24,12 +24,12 @@ import type ExportE2eKeysDialog from "../../../async-components/views/dialogs/se
 import Modal from "../../../Modal";
 import dis from "../../../dispatcher/dispatcher";
 import { _t } from "../../../languageHandler";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import RestoreKeyBackupDialog from "./security/RestoreKeyBackupDialog";
 import QuestionDialog from "./QuestionDialog";
 import BaseDialog from "./BaseDialog";
 import Spinner from "../elements/Spinner";
 import DialogButtons from "../elements/DialogButtons";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps {
     onFinished: (success: boolean) => void;
@@ -43,15 +43,18 @@ interface IState {
 }
 
 export default class LogoutDialog extends React.Component<IProps, IState> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
     public static defaultProps = {
         onFinished: function () {},
     };
 
-    public constructor(props: IProps) {
+    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props);
+        this.context = context;
 
-        const cli = MatrixClientPeg.get();
-        const shouldLoadBackupStatus = cli.isCryptoEnabled() && !cli.getKeyBackupEnabled();
+        const shouldLoadBackupStatus = context.isCryptoEnabled() && !context.getKeyBackupEnabled();
 
         this.state = {
             shouldLoadBackupStatus: shouldLoadBackupStatus,
@@ -66,7 +69,7 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
 
     private async loadBackupStatus(): Promise<void> {
         try {
-            const backupInfo = await MatrixClientPeg.get().getKeyBackupVersion();
+            const backupInfo = await this.context.getKeyBackupVersion();
             this.setState({
                 loading: false,
                 backupInfo,
@@ -85,9 +88,6 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
             import("../../../async-components/views/dialogs/security/ExportE2eKeysDialog") as unknown as Promise<
                 typeof ExportE2eKeysDialog
             >,
-            {
-                matrixClient: MatrixClientPeg.get(),
-            },
         );
     };
 

@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { MatrixClient } from "matrix-js-sdk/src/client";
 import { PollEndEvent } from "matrix-js-sdk/src/extensible_events_v1/PollEndEvent";
 
 import { _t } from "../../../languageHandler";
@@ -25,18 +24,21 @@ import { findTopAnswer } from "../messages/MPollBody";
 import Modal from "../../../Modal";
 import ErrorDialog from "./ErrorDialog";
 import { GetRelationsForEvent } from "../rooms/EventTile";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps {
-    matrixClient: MatrixClient;
     event: MatrixEvent;
     onFinished: (success?: boolean) => void;
     getRelationsForEvent?: GetRelationsForEvent;
 }
 
 export default class EndPollDialog extends React.Component<IProps> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
     private onFinished = async (endPoll: boolean): Promise<void> => {
         if (endPoll) {
-            const room = this.props.matrixClient.getRoom(this.props.event.getRoomId());
+            const room = this.context.getRoom(this.props.event.getRoomId());
             const poll = room?.polls.get(this.props.event.getId()!);
 
             if (!poll) {
@@ -54,7 +56,7 @@ export default class EndPollDialog extends React.Component<IProps> {
 
                 const endEvent = PollEndEvent.from(this.props.event.getId()!, message).serialize();
 
-                await this.props.matrixClient.sendEvent(this.props.event.getRoomId()!, endEvent.type, endEvent.content);
+                await this.context.sendEvent(this.props.event.getRoomId()!, endEvent.type, endEvent.content);
             } catch (e) {
                 console.error("Failed to submit poll response event:", e);
                 Modal.createDialog(ErrorDialog, {

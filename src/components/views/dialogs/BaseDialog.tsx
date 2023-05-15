@@ -19,12 +19,9 @@ limitations under the License.
 import React from "react";
 import FocusLock from "react-focus-lock";
 import classNames from "classnames";
-import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import AccessibleButton from "../elements/AccessibleButton";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import Heading from "../typography/Heading";
 import { PosthogScreenTracker, ScreenName } from "../../../PosthogTrackers";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
@@ -84,18 +81,10 @@ interface IProps {
  * dialog on escape.
  */
 export default class BaseDialog extends React.Component<IProps> {
-    private matrixClient: MatrixClient;
-
     public static defaultProps: Partial<IProps> = {
         hasCancel: true,
         fixedWidth: true,
     };
-
-    public constructor(props: IProps) {
-        super(props);
-
-        this.matrixClient = MatrixClientPeg.get();
-    }
 
     private onKeyDown = (e: KeyboardEvent | React.KeyboardEvent): void => {
         this.props.onKeyDown?.(e);
@@ -155,39 +144,37 @@ export default class BaseDialog extends React.Component<IProps> {
             !!cancelButton && !this.props.title && !this.props.headerButton && !this.props.headerImage;
 
         return (
-            <MatrixClientContext.Provider value={this.matrixClient}>
+            <FocusLock
+                returnFocus={true}
+                lockProps={lockProps}
+                className={classNames(this.props.className, {
+                    mx_Dialog_fixedWidth: this.props.fixedWidth,
+                })}
+            >
                 {this.props.screenName && <PosthogScreenTracker screenName={this.props.screenName} />}
-                <FocusLock
-                    returnFocus={true}
-                    lockProps={lockProps}
-                    className={classNames(this.props.className, {
-                        mx_Dialog_fixedWidth: this.props.fixedWidth,
+                {this.props.top}
+                <div
+                    className={classNames("mx_Dialog_header", {
+                        mx_Dialog_headerWithButton: !!this.props.headerButton,
+                        mx_Dialog_headerWithCancel: !!cancelButton,
+                        mx_Dialog_headerWithCancelOnly: isHeaderWithCancelOnly,
                     })}
                 >
-                    {this.props.top}
-                    <div
-                        className={classNames("mx_Dialog_header", {
-                            mx_Dialog_headerWithButton: !!this.props.headerButton,
-                            mx_Dialog_headerWithCancel: !!cancelButton,
-                            mx_Dialog_headerWithCancelOnly: isHeaderWithCancelOnly,
-                        })}
-                    >
-                        {!!(this.props.title || headerImage) && (
-                            <Heading
-                                size="h2"
-                                className={classNames("mx_Dialog_title", this.props.titleClass)}
-                                id="mx_BaseDialog_title"
-                            >
-                                {headerImage}
-                                {this.props.title}
-                            </Heading>
-                        )}
-                        {this.props.headerButton}
-                        {cancelButton}
-                    </div>
-                    {this.props.children}
-                </FocusLock>
-            </MatrixClientContext.Provider>
+                    {!!(this.props.title || headerImage) && (
+                        <Heading
+                            size="h2"
+                            className={classNames("mx_Dialog_title", this.props.titleClass)}
+                            id="mx_BaseDialog_title"
+                        >
+                            {headerImage}
+                            {this.props.title}
+                        </Heading>
+                    )}
+                    {this.props.headerButton}
+                    {cancelButton}
+                </div>
+                {this.props.children}
+            </FocusLock>
         );
     }
 }

@@ -21,13 +21,13 @@ import { IKeyBackupInfo, IKeyBackupRestoreResult } from "matrix-js-sdk/src/crypt
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t } from "../../../../languageHandler";
 import { accessSecretStorage } from "../../../../SecurityManager";
 import Spinner from "../../elements/Spinner";
 import DialogButtons from "../../elements/DialogButtons";
 import AccessibleButton from "../../elements/AccessibleButton";
 import BaseDialog from "../BaseDialog";
+import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 
 enum RestoreType {
     Passphrase = "passphrase",
@@ -77,6 +77,9 @@ interface IState {
  * Dialog for restoring e2e keys from a backup and the user's recovery key
  */
 export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, IState> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
     public static defaultProps: Partial<IProps> = {
         showSummary: true,
     };
@@ -131,7 +134,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
     private onRecoveryKeyChange = (e: ChangeEvent<HTMLInputElement>): void => {
         this.setState({
             recoveryKey: e.target.value,
-            recoveryKeyValid: MatrixClientPeg.get().isValidRecoveryKey(e.target.value),
+            recoveryKeyValid: this.context.isValidRecoveryKey(e.target.value),
         });
     };
 
@@ -145,7 +148,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
         try {
             // We do still restore the key backup: we must ensure that the key backup key
             // is the right one and restoring it is currently the only way we can do this.
-            const recoverInfo = await MatrixClientPeg.get().restoreKeyBackupWithPassword(
+            const recoverInfo = await this.context.restoreKeyBackupWithPassword(
                 this.state.passPhrase,
                 undefined,
                 undefined,
@@ -153,10 +156,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                 { progressCallback: this.progressCallback },
             );
             if (this.props.keyCallback) {
-                const key = await MatrixClientPeg.get().keyBackupKeyFromPassword(
-                    this.state.passPhrase,
-                    this.state.backupInfo,
-                );
+                const key = await this.context.keyBackupKeyFromPassword(this.state.passPhrase, this.state.backupInfo);
                 this.props.keyCallback(key);
             }
 
@@ -186,7 +186,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
             restoreType: RestoreType.RecoveryKey,
         });
         try {
-            const recoverInfo = await MatrixClientPeg.get().restoreKeyBackupWithRecoveryKey(
+            const recoverInfo = await this.context.restoreKeyBackupWithRecoveryKey(
                 this.state.recoveryKey,
                 undefined,
                 undefined,
@@ -194,7 +194,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                 { progressCallback: this.progressCallback },
             );
             if (this.props.keyCallback) {
-                const key = MatrixClientPeg.get().keyBackupKeyFromRecoveryKey(this.state.recoveryKey);
+                const key = this.context.keyBackupKeyFromRecoveryKey(this.state.recoveryKey);
                 this.props.keyCallback(key);
             }
             if (!this.props.showSummary) {
@@ -230,12 +230,9 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
             // `accessSecretStorage` may prompt for storage access as needed.
             await accessSecretStorage(async (): Promise<void> => {
                 if (!this.state.backupInfo) return;
-                await MatrixClientPeg.get().restoreKeyBackupWithSecretStorage(
-                    this.state.backupInfo,
-                    undefined,
-                    undefined,
-                    { progressCallback: this.progressCallback },
-                );
+                await this.context.restoreKeyBackupWithSecretStorage(this.state.backupInfo, undefined, undefined, {
+                    progressCallback: this.progressCallback,
+                });
             });
             this.setState({
                 loading: false,
@@ -252,7 +249,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
     private async restoreWithCachedKey(backupInfo: IKeyBackupInfo | null): Promise<boolean> {
         if (!backupInfo) return false;
         try {
-            const recoverInfo = await MatrixClientPeg.get().restoreKeyBackupWithCache(
+            const recoverInfo = await this.context.restoreKeyBackupWithCache(
                 undefined /* targetRoomId */,
                 undefined /* targetSessionId */,
                 backupInfo,
@@ -274,7 +271,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
             loadError: null,
         });
         try {
-            const cli = MatrixClientPeg.get();
+            const cli = this.context;
             const backupInfo = await cli.getKeyBackupVersion();
             const has4S = await cli.hasSecretStorageKey();
             const backupKeyStored = has4S ? await cli.isKeyBackupKeyStored() : null;

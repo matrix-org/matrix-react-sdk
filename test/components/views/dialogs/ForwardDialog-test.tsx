@@ -79,7 +79,6 @@ describe("ForwardDialog", () => {
 
         const wrapper: RenderResult = render(
             <ForwardDialog
-                matrixClient={mockClient}
                 event={message}
                 permalinkCreator={new RoomPermalinkCreator(undefined!, sourceRoom)}
                 onFinished={jest.fn()}

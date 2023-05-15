@@ -34,6 +34,7 @@ import JoinRuleDropdown from "../elements/JoinRuleDropdown";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { privateShouldBeEncrypted } from "../../../utils/rooms";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps {
     type?: RoomType;
@@ -59,6 +60,9 @@ interface IState {
 }
 
 export default class CreateRoomDialog extends React.Component<IProps, IState> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
     private readonly supportsRestricted: boolean;
     private nameField = createRef<Field>();
     private aliasField = createRef<RoomAliasField>();
@@ -88,7 +92,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             canChangeEncryption: true,
         };
 
-        MatrixClientPeg.get()
+        this.context
             .doesServerForceEncryptionForPreset(Preset.PrivateChat)
             .then((isForced) => this.setState({ canChangeEncryption: !isForced }));
     }
@@ -221,7 +225,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
 
         let aliasField: JSX.Element | undefined;
         if (this.state.joinRule === JoinRule.Public) {
-            const domain = MatrixClientPeg.get().getDomain()!;
+            const domain = this.context.getDomain()!;
             aliasField = (
                 <div className="mx_CreateRoomDialog_aliasContainer">
                     <RoomAliasField

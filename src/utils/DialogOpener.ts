@@ -22,7 +22,6 @@ import { ActionPayload } from "../dispatcher/payloads";
 import Modal from "../Modal";
 import RoomSettingsDialog from "../components/views/dialogs/RoomSettingsDialog";
 import ForwardDialog from "../components/views/dialogs/ForwardDialog";
-import { MatrixClientPeg } from "../MatrixClientPeg";
 import { Action } from "../dispatcher/actions";
 import ReportEventDialog from "../components/views/dialogs/ReportEventDialog";
 import SpacePreferencesDialog from "../components/views/dialogs/SpacePreferencesDialog";
@@ -70,7 +69,6 @@ export class DialogOpener {
                 break;
             case Action.OpenForwardDialog:
                 Modal.createDialog(ForwardDialog, {
-                    matrixClient: MatrixClientPeg.get(),
                     event: payload.event,
                     permalinkCreator: payload.permalinkCreator,
                 });
@@ -100,7 +98,6 @@ export class DialogOpener {
                 Modal.createDialog(
                     SpaceSettingsDialog,
                     {
-                        matrixClient: payload.space.client,
                         space: payload.space,
                     },
                     /*className=*/ undefined,

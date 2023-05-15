@@ -16,7 +16,6 @@ limitations under the License.
 
 import React, { useState } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient } from "matrix-js-sdk/src/client";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
@@ -30,16 +29,17 @@ import BaseDialog from "../dialogs/BaseDialog";
 import InfoDialog from "../dialogs/InfoDialog";
 import DialogButtons from "../elements/DialogButtons";
 import StyledCheckbox from "../elements/StyledCheckbox";
+import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 
 interface Props {
-    matrixClient: MatrixClient;
     room: Room;
     member: RoomMember;
     onFinished(redact?: boolean): void;
 }
 
 const BulkRedactDialog: React.FC<Props> = (props) => {
-    const { matrixClient: cli, room, member, onFinished } = props;
+    const cli = useMatrixClientContext();
+    const { room, member, onFinished } = props;
     const [keepStateEvents, setKeepStateEvents] = useState(true);
 
     let timeline: EventTimeline | null = room.getLiveTimeline();

@@ -49,6 +49,7 @@ import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { editorRoomKey, editorStateKey } from "../../../Editing";
 import DocumentOffset from "../../../editor/offset";
 import { attachMentions, attachRelation } from "./SendMessageComposer";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
     const html = mxEvent.getContent().formatted_body;
@@ -319,6 +320,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         if (newContent?.body === "") {
             this.cancelPreviousPendingEdit();
             createRedactEventDialog({
+                matrixClient: MatrixClientPeg.get(),
                 mxEvent: editedEvent,
                 onCloseDialog: () => {
                     this.cancelEdit();

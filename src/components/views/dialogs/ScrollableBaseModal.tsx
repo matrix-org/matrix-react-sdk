@@ -18,7 +18,6 @@ import React, { FormEvent } from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import FocusLock from "react-focus-lock";
 
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -38,12 +37,11 @@ export default abstract class ScrollableBaseModal<
     TProps extends { onFinished?: (...args: any[]) => void },
     TState extends IScrollableBaseState,
 > extends React.PureComponent<TProps, TState> {
-    protected constructor(props: TProps) {
-        super(props);
-    }
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
 
     protected get matrixClient(): MatrixClient {
-        return MatrixClientPeg.get();
+        return this.context;
     }
 
     private onKeyDown = (e: KeyboardEvent | React.KeyboardEvent): void => {

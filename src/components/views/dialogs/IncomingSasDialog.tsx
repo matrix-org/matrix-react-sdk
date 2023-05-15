@@ -19,7 +19,6 @@ import { IGeneratedSas, ISasEvent, SasEvent } from "matrix-js-sdk/src/crypto/ver
 import { VerificationBase, VerificationEvent } from "matrix-js-sdk/src/crypto/verification/Base";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
 import { mediaFromMxc } from "../../../customisations/Media";
 import VerificationComplete from "../verification/VerificationComplete";
@@ -29,6 +28,7 @@ import Spinner from "../elements/Spinner";
 import VerificationShowSas from "../verification/VerificationShowSas";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 const PHASE_START = 0;
 const PHASE_SHOW_SAS = 1;
@@ -54,6 +54,9 @@ interface IState {
 }
 
 export default class IncomingSasDialog extends React.Component<IProps, IState> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
     private showSasEvent: ISasEvent | null;
 
     public constructor(props: IProps) {
@@ -87,7 +90,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
 
     private async fetchOpponentProfile(): Promise<void> {
         try {
-            const prof = await MatrixClientPeg.get().getProfileInfo(this.props.verifier.userId);
+            const prof = await this.context.getProfileInfo(this.props.verifier.userId);
             this.setState({
                 opponentProfile: prof,
             });
@@ -144,7 +147,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
     };
 
     private renderPhaseStart(): ReactNode {
-        const isSelf = this.props.verifier.userId === MatrixClientPeg.get().getUserId();
+        const isSelf = this.props.verifier.userId === this.context.getUserId();
 
         let profile;
         const oppProfile = this.state.opponentProfile;
@@ -234,7 +237,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
                 sas={this.showSasEvent.sas}
                 onCancel={this.onCancelClick}
                 onDone={this.onSasMatchesClick}
-                isSelf={this.props.verifier.userId === MatrixClientPeg.get().getUserId()}
+                isSelf={this.props.verifier.userId === this.context.getSafeUserId()}
                 inDialog={true}
             />
         );

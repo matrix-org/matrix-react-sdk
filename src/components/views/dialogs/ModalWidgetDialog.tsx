@@ -35,12 +35,12 @@ import BaseDialog from "./BaseDialog";
 import { _t, getUserLanguage } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import { StopGapWidgetDriver } from "../../../stores/widgets/StopGapWidgetDriver";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { OwnProfileStore } from "../../../stores/OwnProfileStore";
 import { arrayFastClone } from "../../../utils/arrays";
 import { ElementWidget } from "../../../stores/widgets/StopGapWidget";
 import { ELEMENT_CLIENT_ID } from "../../../identifiers";
 import SettingsStore from "../../../settings/SettingsStore";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps {
     widgetDefinition: IModalWidgetOpenRequestData;
@@ -58,6 +58,9 @@ interface IState {
 const MAX_BUTTONS = 3;
 
 export default class ModalWidgetDialog extends React.PureComponent<IProps, IState> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
     private readonly widget: Widget;
     private readonly possibleButtons: ModalButtonID[];
     private appFrame: React.RefObject<HTMLIFrameElement> = React.createRef();
@@ -66,12 +69,12 @@ export default class ModalWidgetDialog extends React.PureComponent<IProps, IStat
         disabledButtonIds: (this.props.widgetDefinition.buttons || []).filter((b) => b.disabled).map((b) => b.id),
     };
 
-    public constructor(props: IProps) {
+    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props);
 
         this.widget = new ElementWidget({
             ...this.props.widgetDefinition,
-            creatorUserId: MatrixClientPeg.get().getSafeUserId(),
+            creatorUserId: context.getSafeUserId(),
             id: `modal_${this.props.sourceWidgetId}`,
         });
         this.possibleButtons = (this.props.widgetDefinition.buttons || []).map((b) => b.id);
@@ -130,7 +133,7 @@ export default class ModalWidgetDialog extends React.PureComponent<IProps, IStat
     public render(): React.ReactNode {
         const templated = this.widget.getCompleteUrl({
             widgetRoomId: this.props.widgetRoomId,
-            currentUserId: MatrixClientPeg.get().getSafeUserId(),
+            currentUserId: this.context.getSafeUserId(),
             userDisplayName: OwnProfileStore.instance.displayName ?? undefined,
             userHttpAvatarUrl: OwnProfileStore.instance.getHttpAvatarUrl() ?? undefined,
             clientId: ELEMENT_CLIENT_ID,

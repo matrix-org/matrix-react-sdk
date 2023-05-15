@@ -39,7 +39,7 @@ describe("ConfirmRedactDialog", () => {
     };
 
     const confirmDeleteVoiceBroadcastStartedEvent = async () => {
-        createRedactEventDialog({ mxEvent });
+        createRedactEventDialog({ matrixClient: client, mxEvent });
         // double-flush promises required for the dialog to show up
         await flushPromises();
         await flushPromises();

@@ -21,7 +21,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, UserFriendlyError } from "../../../languageHandler";
 import { ensureDMExists } from "../../../createRoom";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import SdkConfig from "../../../SdkConfig";
 import Markdown from "../../../Markdown";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -31,6 +30,7 @@ import DialogButtons from "../elements/DialogButtons";
 import Field from "../elements/Field";
 import Spinner from "../elements/Spinner";
 import LabelledCheckbox from "../elements/LabelledCheckbox";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -93,10 +93,13 @@ type Moderation = {
  *    /`org.matrix.msc3215.room.moderation.moderated_by`?
  */
 export default class ReportEventDialog extends React.Component<IProps, IState> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
     // If the room supports moderation, the moderation information.
     private moderation?: Moderation;
 
-    public constructor(props: IProps) {
+    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props);
 
         let moderatedByRoomId: string | null = null;
@@ -107,8 +110,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
             // Does the room support it, too?
 
             // Extract state events to determine whether we should display
-            const client = MatrixClientPeg.get();
-            const room = client.getRoom(props.mxEvent.getRoomId());
+            const room = context.getRoom(props.mxEvent.getRoomId());
 
             for (const stateEventType of MODERATED_BY_STATE_EVENT_TYPE) {
                 const stateEvent = room?.currentState.getStateEvents(stateEventType, stateEventType);
@@ -237,7 +239,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
         });
 
         try {
-            const client = MatrixClientPeg.get();
+            const client = this.context;
             const ev = this.props.mxEvent;
             if (this.moderation && this.state.nature !== NonStandardValue.Admin) {
                 const nature = this.state.nature;
@@ -312,7 +314,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
         if (this.moderation) {
             // Display report-to-moderator dialog.
             // We let the user pick a nature.
-            const client = MatrixClientPeg.get();
+            const client = this.context;
             const homeServerName = SdkConfig.get("validated_server_config")!.hsName;
             let subtitle: string;
             switch (this.state.nature) {

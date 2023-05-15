@@ -101,7 +101,6 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
             import("../../../async-components/views/dialogs/security/ExportE2eKeysDialog") as unknown as Promise<
                 typeof ExportE2eKeysDialog
             >,
-            { matrixClient: MatrixClientPeg.get() },
         );
     };
 

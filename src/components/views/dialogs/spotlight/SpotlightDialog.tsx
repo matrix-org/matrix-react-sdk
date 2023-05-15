@@ -53,7 +53,6 @@ import { useSpaceResults } from "../../../../hooks/useSpaceResults";
 import { useUserDirectory } from "../../../../hooks/useUserDirectory";
 import { getKeyBindingsManager } from "../../../../KeyBindingsManager";
 import { _t } from "../../../../languageHandler";
-import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { PosthogAnalytics } from "../../../../PosthogAnalytics";
 import { getCachedRoomIDForAlias } from "../../../../RoomAliasCache";
 import { showStartChatInviteDialog } from "../../../../RoomInvite";
@@ -90,6 +89,7 @@ import RoomAvatar from "../../avatars/RoomAvatar";
 import { useFeatureEnabled } from "../../../../hooks/useSettings";
 import { filterBoolean } from "../../../../utils/arrays";
 import { transformSearchTerm } from "../../../../utils/SearchInput";
+import { useMatrixClientContext } from "../../../../contexts/MatrixClientContext";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -180,8 +180,8 @@ const toPublicRoomResult = (publicRoom: IPublicRoomsChunkRoom): IPublicRoomResul
     ]),
 });
 
-const toRoomResult = (room: Room): IRoomResult => {
-    const myUserId = MatrixClientPeg.get().getUserId();
+const toRoomResult = (matrixClient: MatrixClient, room: Room): IRoomResult => {
+    const myUserId = matrixClient.getUserId();
     const otherUserId = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
 
     if (otherUserId) {
@@ -291,7 +291,7 @@ interface IDirectoryOpts {
 const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = null, onFinished }) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
-    const cli = MatrixClientPeg.get();
+    const cli = useMatrixClientContext();
     const rovingContext = useContext(RovingTabIndexContext);
     const [query, _setQuery] = useState(initialText);
     const [recentSearches, clearRecentSearches] = useRecentSearches();
@@ -342,7 +342,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
     const possibleResults = useMemo<Result[]>(() => {
         const userResults: IMemberResult[] = [];
-        const roomResults = findVisibleRooms(cli, msc3946ProcessDynamicPredecessor).map(toRoomResult);
+        const roomResults = findVisibleRooms(cli, msc3946ProcessDynamicPredecessor).map(toRoomResult.bind(null, cli));
         // If we already have a DM with the user we're looking for, we will
         // show that DM instead of the user themselves
         const alreadyAddedUserIds = roomResults.reduce((userIds, result) => {

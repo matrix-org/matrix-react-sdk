@@ -18,11 +18,11 @@ import React from "react";
 import { User } from "matrix-js-sdk/src/models/user";
 
 import { _t } from "../../../languageHandler";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import E2EIcon, { E2EState } from "../rooms/E2EIcon";
 import AccessibleButton from "../elements/AccessibleButton";
 import BaseDialog from "./BaseDialog";
 import { IDevice } from "../right_panel/UserInfo";
+import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 
 interface IProps {
     user: User;
@@ -31,10 +31,12 @@ interface IProps {
 }
 
 const UntrustedDeviceDialog: React.FC<IProps> = ({ device, user, onFinished }) => {
+    const cli = useMatrixClientContext();
+
     let askToVerifyText: string;
     let newSessionText: string;
 
-    if (MatrixClientPeg.get().getUserId() === user.userId) {
+    if (cli.getUserId() === user.userId) {
         newSessionText = _t("You signed in to a new session without verifying it:");
         askToVerifyText = _t("Verify your other session using one of the options below.");
     } else {

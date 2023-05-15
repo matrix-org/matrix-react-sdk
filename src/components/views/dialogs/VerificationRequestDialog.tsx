@@ -18,10 +18,10 @@ import React from "react";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { User } from "matrix-js-sdk/src/models/user";
 
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
 import EncryptionPanel from "../right_panel/EncryptionPanel";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps {
     verificationRequest?: VerificationRequest;
@@ -35,6 +35,9 @@ interface IState {
 }
 
 export default class VerificationRequestDialog extends React.Component<IProps, IState> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
     public constructor(props: IProps) {
         super(props);
         this.state = {
@@ -48,7 +51,7 @@ export default class VerificationRequestDialog extends React.Component<IProps, I
     public render(): React.ReactNode {
         const request = this.state.verificationRequest;
         const otherUserId = request?.otherUserId;
-        const member = this.props.member || (otherUserId ? MatrixClientPeg.get().getUser(otherUserId) : null);
+        const member = this.props.member || (otherUserId ? this.context.getUser(otherUserId) : null);
         const title = request?.isSelfVerification ? _t("Verify other device") : _t("Verification Request");
 
         return (
