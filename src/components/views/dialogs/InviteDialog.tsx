@@ -20,11 +20,12 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
+import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { Icon as InfoIcon } from "../../../../res/img/element-icons/info.svg";
 import { Icon as EmailPillAvatarIcon } from "../../../../res/img/icon-email-pill-avatar.svg";
 import { _t, _td } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import {
     getHostnameFromMatrixServerName,
     getServerName,
@@ -79,7 +80,6 @@ import { UNKNOWN_PROFILE_ERRORS } from "../../../utils/MultiInviter";
 import AskInviteAnywayDialog, { UnknownProfiles } from "./AskInviteAnywayDialog";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { UserProfilesStore } from "../../../stores/UserProfilesStore";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -350,9 +350,6 @@ interface IInviteDialogState {
 }
 
 export default class InviteDialog extends React.PureComponent<Props, IInviteDialogState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
     public static defaultProps: Partial<Props> = {
         kind: InviteKind.Dm,
         initialText: "",
@@ -376,12 +373,12 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
 
         this.profilesStore = SdkContextClass.instance.userProfilesStore;
 
-        const alreadyInvited = new Set([this.context.getSafeUserId()]);
+        const alreadyInvited = new Set([MatrixClientPeg.get().getUserId()!]);
         const welcomeUserId = SdkConfig.get("welcome_user_id");
         if (welcomeUserId) alreadyInvited.add(welcomeUserId);
 
         if (isRoomInvite(props)) {
-            const room = this.context.getRoom(props.roomId);
+            const room = MatrixClientPeg.get().getRoom(props.roomId);
             if (!room) throw new Error("Room ID given to InviteDialog does not look like a room");
             room.getMembersWithMembership("invite").forEach((m) => alreadyInvited.add(m.userId));
             room.getMembersWithMembership("join").forEach((m) => alreadyInvited.add(m.userId));
@@ -392,13 +389,13 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         this.state = {
             targets: [], // array of Member objects (see interface above)
             filterText: this.props.initialText || "",
-            recents: InviteDialog.buildRecents(this.context, alreadyInvited),
+            recents: InviteDialog.buildRecents(alreadyInvited),
             numRecentsShown: INITIAL_ROOMS_SHOWN,
             suggestions: this.buildSuggestions(alreadyInvited),
             numSuggestionsShown: INITIAL_ROOMS_SHOWN,
             serverResultsMixin: [],
             threepidResultsMixin: [],
-            canUseIdentityServer: !!this.context.getIdentityServerUrl(),
+            canUseIdentityServer: !!MatrixClientPeg.get().getIdentityServerUrl(),
             tryingIdentityServer: false,
             consultFirst: false,
             dialPadValue: "",
@@ -425,13 +422,13 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         this.setState({ consultFirst: ev.target.checked });
     };
 
-    public static buildRecents(matrixClient: MatrixClient, excludedTargetIds: Set<string>): Result[] {
+    public static buildRecents(excludedTargetIds: Set<string>): Result[] {
         const rooms = DMRoomMap.shared().getUniqueRoomsWithIndividuals(); // map of userId => js-sdk Room
 
         // Also pull in all the rooms tagged as DefaultTagID.DM so we don't miss anything. Sometimes the
         // room list doesn't tag the room for the DMRoomMap, but does for the room list.
         const dmTaggedRooms = RoomListStore.instance.orderedLists[DefaultTagID.DM] || [];
-        const myUserId = matrixClient.getSafeUserId();
+        const myUserId = MatrixClientPeg.get().getUserId();
         for (const dmRoom of dmTaggedRooms) {
             const otherMembers = dmRoom.getJoinedMembers().filter((u) => u.userId !== myUserId);
             for (const member of otherMembers) {
@@ -494,7 +491,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
     }
 
     private buildSuggestions(excludedTargetIds: Set<string>): { userId: string; user: Member }[] {
-        const cli = this.context;
+        const cli = MatrixClientPeg.get();
         const activityScores = buildActivityScores(cli);
         const memberScores = buildMemberScores(cli);
 
@@ -563,7 +560,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         this.setBusy(true);
 
         try {
-            const cli = this.context;
+            const cli = MatrixClientPeg.get();
             const targets = this.convertFilter();
             await startDmOnFirstMessage(cli, targets);
             this.props.onFinished(true);
@@ -604,7 +601,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         const targets = this.convertFilter();
         const targetIds = targets.map((t) => t.userId);
 
-        const cli = this.context;
+        const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.roomId);
         if (!room) {
             logger.error("Failed to find the room to invite users to");
@@ -697,7 +694,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
     };
 
     private updateSuggestions = async (term: string): Promise<void> => {
-        this.context
+        MatrixClientPeg.get()
             .searchUserDirectory({ term })
             .then(async (r): Promise<void> => {
                 if (term !== this.state.filterText) {
@@ -777,7 +774,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
 
                 if (term !== this.state.filterText) return; // abandon hope
 
-                const lookup = await this.context.lookupThreePid("email", term, token);
+                const lookup = await MatrixClientPeg.get().lookupThreePid("email", term, token);
                 if (term !== this.state.filterText) return; // abandon hope
 
                 if (!lookup || !lookup.mxid) {
@@ -1292,8 +1289,8 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         const hasSelection =
             this.state.targets.length > 0 || (this.state.filterText && this.state.filterText.includes("@"));
 
-        const cli = this.context;
-        const userId = cli.getSafeUserId();
+        const cli = MatrixClientPeg.get();
+        const userId = cli.getUserId()!;
         if (this.props.kind === InviteKind.Dm) {
             title = _t("Direct Messages");
 
@@ -1335,11 +1332,11 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                     <p>{_t("If you can't see who you're looking for, send them your invite link below.")}</p>
                 </div>
             );
-            const link = makeUserPermalink(this.context.getSafeUserId());
+            const link = makeUserPermalink(MatrixClientPeg.get().getUserId()!);
             footer = (
                 <div className="mx_InviteDialog_footer">
                     <h3>{_t("Or send invite link")}</h3>
-                    <CopyableText getTextToCopy={() => makeUserPermalink(this.context.getSafeUserId())}>
+                    <CopyableText getTextToCopy={() => makeUserPermalink(MatrixClientPeg.get().getUserId()!)}>
                         <a className="mx_InviteDialog_footer_link" href={link} onClick={this.onLinkClick}>
                             {link}
                         </a>
@@ -1348,7 +1345,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             );
         } else if (this.props.kind === InviteKind.Invite) {
             const roomId = this.props.roomId;
-            const room = this.context?.getRoom(roomId);
+            const room = MatrixClientPeg.get()?.getRoom(roomId);
             const isSpace = room?.isSpaceRoom();
             title = isSpace
                 ? _t("Invite to %(spaceName)s", {
