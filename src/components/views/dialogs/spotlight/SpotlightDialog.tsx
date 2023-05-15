@@ -1131,7 +1131,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         }
     };
 
-    const onKeyDown = (ev: KeyboardEvent): void => {
+    const onKeyDown = (ev: React.KeyboardEvent | KeyboardEvent): void => {
         const action = getKeyBindingsManager().getAccessibilityAction(ev);
 
         switch (action) {
