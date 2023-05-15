@@ -565,7 +565,7 @@ export default class EventIndex extends EventEmitter {
                 return object;
             });
 
-            let newCheckpoint;
+            let newCheckpoint: ICrawlerCheckpoint | null = null;
 
             // The token can be null for some reason. Don't create a checkpoint
             // in that case since adding it to the db will fail.

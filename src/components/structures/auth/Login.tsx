@@ -110,7 +110,7 @@ type OnPasswordLogin = {
  */
 export default class LoginComponent extends React.PureComponent<IProps, IState> {
     private unmounted = false;
-    private loginLogic: Login;
+    private loginLogic!: Login;
 
     private readonly stepRendererMap: Record<string, () => ReactNode>;
 

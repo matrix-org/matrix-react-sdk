@@ -103,7 +103,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         forceReset: false,
     };
     private recoveryKey: IRecoveryKey;
-    private backupKey: Uint8Array;
+    private backupKey?: Uint8Array;
     private recoveryKeyNode = createRef<HTMLElement>();
     private passphraseField = createRef<Field>();
 
