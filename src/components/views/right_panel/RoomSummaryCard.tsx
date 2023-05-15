@@ -108,7 +108,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
     const [canModifyWidget, setCanModifyWidget] = useState<boolean>();
 
     useEffect(() => {
-        setCanModifyWidget(WidgetUtils.canUserModifyWidgets(room.roomId));
+        setCanModifyWidget(WidgetUtils.canUserModifyWidgets(room.client, room.roomId));
     }, [room.roomId]);
 
     const onOpenWidgetClick = (): void => {

@@ -21,11 +21,10 @@ import { IWidget, IWidgetData } from "matrix-widget-api";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent, RoomStateEvent } from "matrix-js-sdk/src/matrix";
+import { ClientEvent, MatrixClient, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { randomString, randomLowercaseString, randomUppercaseString } from "matrix-js-sdk/src/randomstring";
 
-import { MatrixClientPeg } from "../MatrixClientPeg";
 import PlatformPeg from "../PlatformPeg";
 import SdkConfig from "../SdkConfig";
 import dis from "../dispatcher/dispatcher";
@@ -55,31 +54,32 @@ export interface UserWidget extends Omit<IWidgetEvent, "content"> {
 }
 
 export default class WidgetUtils {
-    /* Returns true if user is able to send state events to modify widgets in this room
+    /**
+     * Returns true if user is able to send state events to modify widgets in this room
      * (Does not apply to non-room-based / user widgets)
+     * @param matrixClient The matrix client of the logged-in user
      * @param roomId -- The ID of the room to check
      * @return Boolean -- true if the user can modify widgets in this room
      * @throws Error -- specifies the error reason
      */
-    public static canUserModifyWidgets(roomId?: string): boolean {
+    public static canUserModifyWidgets(matrixClient: MatrixClient, roomId?: string): boolean {
         if (!roomId) {
             logger.warn("No room ID specified");
             return false;
         }
 
-        const client = MatrixClientPeg.get();
-        if (!client) {
+        if (!matrixClient) {
             logger.warn("User must be be logged in");
             return false;
         }
 
-        const room = client.getRoom(roomId);
+        const room = matrixClient.getRoom(roomId);
         if (!room) {
             logger.warn(`Room ID ${roomId} is not recognised`);
             return false;
         }
 
-        const me = client.credentials.userId;
+        const me = matrixClient.getUserId();
         if (!me) {
             logger.warn("Failed to get user ID");
             return false;
@@ -97,6 +97,7 @@ export default class WidgetUtils {
     // TODO: Generify the name of this function. It's not just scalar.
     /**
      * Returns true if specified url is a scalar URL, typically https://scalar.vector.im/api
+     * @param matrixClient The matrix client of the logged-in user
      * @param  {[type]}  testUrlString URL to check
      * @return {Boolean} True if specified URL is a scalar URL
      */
@@ -138,13 +139,14 @@ export default class WidgetUtils {
      * ID has been added as a user widget (ie. the accountData event
      * arrives) or rejects after a timeout
      *
-     * @param {string} widgetId The ID of the widget to wait for
-     * @param {boolean} add True to wait for the widget to be added,
+     * @param matrixClient The matrix client of the logged-in user
+     * @param widgetId The ID of the widget to wait for
+     * @param add True to wait for the widget to be added,
      *     false to wait for it to be deleted.
      * @returns {Promise} that resolves when the widget is in the
      *     requested state according to the `add` param
      */
-    public static waitForUserWidget(widgetId: string, add: boolean): Promise<void> {
+    public static waitForUserWidget(matrixClient: MatrixClient, widgetId: string, add: boolean): Promise<void> {
         return new Promise((resolve, reject) => {
             // Tests an account data event, returning true if it's in the state
             // we're waiting for it to be in
@@ -157,25 +159,25 @@ export default class WidgetUtils {
                 }
             }
 
-            const startingAccountDataEvent = MatrixClientPeg.get().getAccountData("m.widgets");
+            const startingAccountDataEvent = matrixClient.getAccountData("m.widgets");
             if (eventInIntendedState(startingAccountDataEvent)) {
                 resolve();
                 return;
             }
 
             function onAccountData(ev: MatrixEvent): void {
-                const currentAccountDataEvent = MatrixClientPeg.get().getAccountData("m.widgets");
+                const currentAccountDataEvent = matrixClient.getAccountData("m.widgets");
                 if (eventInIntendedState(currentAccountDataEvent)) {
-                    MatrixClientPeg.get().removeListener(ClientEvent.AccountData, onAccountData);
+                    matrixClient.removeListener(ClientEvent.AccountData, onAccountData);
                     clearTimeout(timerId);
                     resolve();
                 }
             }
             const timerId = window.setTimeout(() => {
-                MatrixClientPeg.get().removeListener(ClientEvent.AccountData, onAccountData);
+                matrixClient.removeListener(ClientEvent.AccountData, onAccountData);
                 reject(new Error("Timed out waiting for widget ID " + widgetId + " to appear"));
             }, WIDGET_WAIT_TIME);
-            MatrixClientPeg.get().on(ClientEvent.AccountData, onAccountData);
+            matrixClient.on(ClientEvent.AccountData, onAccountData);
         });
     }
 
@@ -184,6 +186,7 @@ export default class WidgetUtils {
      * ID has been added as a room widget in the given room (ie. the
      * room state event arrives) or rejects after a timeout
      *
+     * @param matrixClient The matrix client of the logged-in user
      * @param {string} widgetId The ID of the widget to wait for
      * @param {string} roomId The ID of the room to wait for the widget in
      * @param {boolean} add True to wait for the widget to be added,
@@ -191,7 +194,12 @@ export default class WidgetUtils {
      * @returns {Promise} that resolves when the widget is in the
      *     requested state according to the `add` param
      */
-    public static waitForRoomWidget(widgetId: string, roomId: string, add: boolean): Promise<void> {
+    public static waitForRoomWidget(
+        matrixClient: MatrixClient,
+        widgetId: string,
+        roomId: string,
+        add: boolean,
+    ): Promise<void> {
         return new Promise((resolve, reject) => {
             // Tests a list of state events, returning true if it's in the state
             // we're waiting for it to be in
@@ -206,7 +214,7 @@ export default class WidgetUtils {
                 }
             }
 
-            const room = MatrixClientPeg.get().getRoom(roomId);
+            const room = matrixClient.getRoom(roomId);
             // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
             const startingWidgetEvents = room?.currentState.getStateEvents("im.vector.modular.widgets");
             if (eventsInIntendedState(startingWidgetEvents)) {
@@ -221,30 +229,30 @@ export default class WidgetUtils {
                 const currentWidgetEvents = room?.currentState.getStateEvents("im.vector.modular.widgets");
 
                 if (eventsInIntendedState(currentWidgetEvents)) {
-                    MatrixClientPeg.get().removeListener(RoomStateEvent.Events, onRoomStateEvents);
+                    matrixClient.removeListener(RoomStateEvent.Events, onRoomStateEvents);
                     clearTimeout(timerId);
                     resolve();
                 }
             }
             const timerId = window.setTimeout(() => {
-                MatrixClientPeg.get().removeListener(RoomStateEvent.Events, onRoomStateEvents);
+                matrixClient.removeListener(RoomStateEvent.Events, onRoomStateEvents);
                 reject(new Error("Timed out waiting for widget ID " + widgetId + " to appear"));
             }, WIDGET_WAIT_TIME);
-            MatrixClientPeg.get().on(RoomStateEvent.Events, onRoomStateEvents);
+            matrixClient.on(RoomStateEvent.Events, onRoomStateEvents);
         });
     }
 
     public static setUserWidget(
+        matrixClient: MatrixClient,
         widgetId: string,
         widgetType: WidgetType,
         widgetUrl: string,
         widgetName: string,
         widgetData: IWidgetData,
     ): Promise<void> {
-        const client = MatrixClientPeg.get();
         // Get the current widgets and clone them before we modify them, otherwise
         // we'll modify the content of the old event.
-        const userWidgets = objectClone(WidgetUtils.getUserWidgets());
+        const userWidgets = objectClone(WidgetUtils.getUserWidgets(matrixClient));
 
         // Delete existing widget with ID
         try {
@@ -255,7 +263,7 @@ export default class WidgetUtils {
 
         const addingWidget = Boolean(widgetUrl);
 
-        const userId = client.getSafeUserId();
+        const userId = matrixClient.getSafeUserId();
 
         const content = {
             id: widgetId,
@@ -281,10 +289,10 @@ export default class WidgetUtils {
         // since the widget won't appear added until this happens. If we don't
         // wait for this, the action will complete but if the user is fast enough,
         // the widget still won't actually be there.
-        return client
+        return matrixClient
             .setAccountData("m.widgets", userWidgets)
             .then(() => {
-                return WidgetUtils.waitForUserWidget(widgetId, addingWidget);
+                return WidgetUtils.waitForUserWidget(matrixClient, widgetId, addingWidget);
             })
             .then(() => {
                 dis.dispatch({ action: "user_widget_updated" });
@@ -292,6 +300,7 @@ export default class WidgetUtils {
     }
 
     public static setRoomWidget(
+        matrixClient: MatrixClient,
         roomId: string,
         widgetId: string,
         widgetType?: WidgetType,
@@ -318,20 +327,24 @@ export default class WidgetUtils {
             content = {};
         }
 
-        return WidgetUtils.setRoomWidgetContent(roomId, widgetId, content as IWidget);
+        return WidgetUtils.setRoomWidgetContent(matrixClient, roomId, widgetId, content as IWidget);
     }
 
-    public static setRoomWidgetContent(roomId: string, widgetId: string, content: IWidget): Promise<void> {
+    public static setRoomWidgetContent(
+        matrixClient: MatrixClient,
+        roomId: string,
+        widgetId: string,
+        content: IWidget,
+    ): Promise<void> {
         const addingWidget = !!content.url;
 
         WidgetEchoStore.setRoomWidgetEcho(roomId, widgetId, content);
 
-        const client = MatrixClientPeg.get();
         // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
-        return client
+        return matrixClient
             .sendStateEvent(roomId, "im.vector.modular.widgets", content, widgetId)
             .then(() => {
-                return WidgetUtils.waitForRoomWidget(widgetId, roomId, addingWidget);
+                return WidgetUtils.waitForRoomWidget(matrixClient, widgetId, roomId, addingWidget);
             })
             .finally(() => {
                 WidgetEchoStore.removeRoomWidgetEcho(roomId, widgetId);
@@ -357,14 +370,14 @@ export default class WidgetUtils {
 
     /**
      * Get user specific widgets (not linked to a specific room)
+     * @param matrixClient The matrix client of the logged-in user
      * @return {object} Event content object containing current / active user widgets
      */
-    public static getUserWidgets(): Record<string, UserWidget> {
-        const client = MatrixClientPeg.get();
-        if (!client) {
+    public static getUserWidgets(matrixClient: MatrixClient | undefined): Record<string, UserWidget> {
+        if (!matrixClient) {
             throw new Error("User not logged in");
         }
-        const userWidgets = client.getAccountData("m.widgets");
+        const userWidgets = matrixClient.getAccountData("m.widgets");
         if (userWidgets && userWidgets.getContent()) {
             return userWidgets.getContent();
         }
@@ -373,27 +386,30 @@ export default class WidgetUtils {
 
     /**
      * Get user specific widgets (not linked to a specific room) as an array
+     * @param matrixClient The matrix client of the logged-in user
      * @return {[object]} Array containing current / active user widgets
      */
-    public static getUserWidgetsArray(): UserWidget[] {
-        return Object.values(WidgetUtils.getUserWidgets());
+    public static getUserWidgetsArray(matrixClient: MatrixClient | undefined): UserWidget[] {
+        return Object.values(WidgetUtils.getUserWidgets(matrixClient));
     }
 
     /**
      * Get active stickerpicker widgets (stickerpickers are user widgets by nature)
+     * @param matrixClient The matrix client of the logged-in user
      * @return {[object]} Array containing current / active stickerpicker widgets
      */
-    public static getStickerpickerWidgets(): UserWidget[] {
-        const widgets = WidgetUtils.getUserWidgetsArray();
+    public static getStickerpickerWidgets(matrixClient: MatrixClient | undefined): UserWidget[] {
+        const widgets = WidgetUtils.getUserWidgetsArray(matrixClient);
         return widgets.filter((widget) => widget.content?.type === "m.stickerpicker");
     }
 
     /**
      * Get all integration manager widgets for this user.
+     * @param matrixClient The matrix client of the logged-in user
      * @returns {Object[]} An array of integration manager user widgets.
      */
-    public static getIntegrationManagerWidgets(): UserWidget[] {
-        const widgets = WidgetUtils.getUserWidgetsArray();
+    public static getIntegrationManagerWidgets(matrixClient: MatrixClient | undefined): UserWidget[] {
+        const widgets = WidgetUtils.getUserWidgetsArray(matrixClient);
         return widgets.filter((w) => w.content?.type === "m.integration_manager");
     }
 
@@ -405,12 +421,11 @@ export default class WidgetUtils {
         });
     }
 
-    public static async removeIntegrationManagerWidgets(): Promise<void> {
-        const client = MatrixClientPeg.get();
-        if (!client) {
+    public static async removeIntegrationManagerWidgets(matrixClient: MatrixClient | undefined): Promise<void> {
+        if (!matrixClient) {
             throw new Error("User not logged in");
         }
-        const widgets = client.getAccountData("m.widgets");
+        const widgets = matrixClient.getAccountData("m.widgets");
         if (!widgets) return;
         const userWidgets: Record<string, IWidgetEvent> = widgets.getContent() || {};
         Object.entries(userWidgets).forEach(([key, widget]) => {
@@ -418,11 +433,17 @@ export default class WidgetUtils {
                 delete userWidgets[key];
             }
         });
-        await client.setAccountData("m.widgets", userWidgets);
+        await matrixClient.setAccountData("m.widgets", userWidgets);
     }
 
-    public static addIntegrationManagerWidget(name: string, uiUrl: string, apiUrl: string): Promise<void> {
+    public static addIntegrationManagerWidget(
+        matrixClient: MatrixClient,
+        name: string,
+        uiUrl: string,
+        apiUrl: string,
+    ): Promise<void> {
         return WidgetUtils.setUserWidget(
+            matrixClient,
             "integration_manager_" + new Date().getTime(),
             WidgetType.INTEGRATION_MANAGER,
             uiUrl,
@@ -433,14 +454,14 @@ export default class WidgetUtils {
 
     /**
      * Remove all stickerpicker widgets (stickerpickers are user widgets by nature)
+     * @param matrixClient The matrix client of the logged-in user
      * @return {Promise} Resolves on account data updated
      */
-    public static async removeStickerpickerWidgets(): Promise<void> {
-        const client = MatrixClientPeg.get();
-        if (!client) {
+    public static async removeStickerpickerWidgets(matrixClient: MatrixClient | undefined): Promise<void> {
+        if (!matrixClient) {
             throw new Error("User not logged in");
         }
-        const widgets = client.getAccountData("m.widgets");
+        const widgets = matrixClient.getAccountData("m.widgets");
         if (!widgets) return;
         const userWidgets: Record<string, IWidgetEvent> = widgets.getContent() || {};
         Object.entries(userWidgets).forEach(([key, widget]) => {
@@ -448,10 +469,11 @@ export default class WidgetUtils {
                 delete userWidgets[key];
             }
         });
-        await client.setAccountData("m.widgets", userWidgets);
+        await matrixClient.setAccountData("m.widgets", userWidgets);
     }
 
     public static async addJitsiWidget(
+        matrixClient: MatrixClient,
         roomId: string,
         type: CallType,
         name: string,
@@ -479,9 +501,9 @@ export default class WidgetUtils {
         widgetUrl.search = ""; // Causes the URL class use searchParams instead
         widgetUrl.searchParams.set("confId", confId);
 
-        await WidgetUtils.setRoomWidget(roomId, widgetId, WidgetType.JITSI, widgetUrl.toString(), name, {
+        await WidgetUtils.setRoomWidget(matrixClient, roomId, widgetId, WidgetType.JITSI, widgetUrl.toString(), name, {
             conferenceId: confId,
-            roomName: oobRoomName ?? MatrixClientPeg.get().getRoom(roomId)?.name,
+            roomName: oobRoomName ?? matrixClient.getRoom(roomId)?.name,
             isAudioOnly: type === CallType.Voice,
             isVideoChannel,
             domain,

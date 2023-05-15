@@ -990,7 +990,7 @@ export const Commands = [
             if (!widgetUrl.startsWith("https://") && !widgetUrl.startsWith("http://")) {
                 return reject(new UserFriendlyError("Please supply a https:// or http:// widget URL"));
             }
-            if (WidgetUtils.canUserModifyWidgets(roomId)) {
+            if (WidgetUtils.canUserModifyWidgets(cli, roomId)) {
                 const userId = cli.getUserId();
                 const nowMs = new Date().getTime();
                 const widgetId = encodeURIComponent(`${roomId}_${userId}_${nowMs}`);
@@ -1008,7 +1008,7 @@ export const Commands = [
                     widgetUrl = WidgetUtils.getLocalJitsiWrapperUrl();
                 }
 
-                return success(WidgetUtils.setRoomWidget(roomId, widgetId, type, widgetUrl, name, data));
+                return success(WidgetUtils.setRoomWidget(cli, roomId, widgetId, type, widgetUrl, name, data));
             } else {
                 return reject(new UserFriendlyError("You cannot modify widgets in this room."));
             }

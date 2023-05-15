@@ -457,8 +457,9 @@ function setWidget(event: MessageEvent<any>, roomId: string | null): void {
     // convert the widget type to a known widget type
     widgetType = WidgetType.fromString(widgetType);
 
+    const cli = MatrixClientPeg.get();
     if (userWidget) {
-        WidgetUtils.setUserWidget(widgetId, widgetType, widgetUrl, widgetName, widgetData)
+        WidgetUtils.setUserWidget(cli, widgetId, widgetType, widgetUrl, widgetName, widgetData)
             .then(() => {
                 sendResponse(event, {
                     success: true,
@@ -476,6 +477,7 @@ function setWidget(event: MessageEvent<any>, roomId: string | null): void {
             return;
         }
         WidgetUtils.setRoomWidget(
+            cli,
             roomId,
             widgetId,
             widgetType,
@@ -516,7 +518,7 @@ function getWidgets(event: MessageEvent<any>, roomId: string | null): void {
     }
 
     // Add user widgets (not linked to a specific room)
-    const userWidgets = WidgetUtils.getUserWidgetsArray();
+    const userWidgets = WidgetUtils.getUserWidgetsArray(client);
     widgetStateEvents = widgetStateEvents.concat(userWidgets);
 
     sendResponse(event, widgetStateEvents);

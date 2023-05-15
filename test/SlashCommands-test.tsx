@@ -23,6 +23,9 @@ import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../src/models/LocalRoom";
 import SettingsStore from "../src/settings/SettingsStore";
 import LegacyCallHandler from "../src/LegacyCallHandler";
 import { SdkContextClass } from "../src/contexts/SDKContext";
+import Modal from "../src/Modal";
+import WidgetUtils from "../src/utils/WidgetUtils";
+import { WidgetType } from "../src/widgets/WidgetType";
 
 describe("SlashCommands", () => {
     let client: MatrixClient;
@@ -70,6 +73,13 @@ describe("SlashCommands", () => {
             expect(command.args).toBeDefined();
             await command.cmd!.run(client, "room-id", null, command.args);
             expect(client.setRoomTopic).toHaveBeenCalledWith("room-id", "pizza", undefined);
+        });
+
+        it("should show topic modal if no args passed", async () => {
+            const spy = jest.spyOn(Modal, "createDialog");
+            const command = getCommand("/topic")!;
+            await command.cmd!.run(client, roomId, null);
+            expect(spy).toHaveBeenCalled();
         });
     });
 
@@ -237,6 +247,38 @@ describe("SlashCommands", () => {
             return expect(
                 command.run(client, roomId, null, "this is a test message").promise,
             ).resolves.toMatchSnapshot();
+        });
+    });
+
+    describe.each(["shrug", "tableflip", "unflip", "lenny"])("/%s", (commandName: string) => {
+        const command = findCommand(commandName)!;
+
+        it("should match snapshot with no args", () => {
+            return expect(command.run(client, roomId, null).promise).resolves.toMatchSnapshot();
+        });
+
+        it("should match snapshot with args", () => {
+            return expect(
+                command.run(client, roomId, null, "this is a test message").promise,
+            ).resolves.toMatchSnapshot();
+        });
+    });
+
+    describe("/addwidget", () => {
+        it("should parse html iframe snippets", async () => {
+            jest.spyOn(WidgetUtils, "canUserModifyWidgets").mockReturnValue(true);
+            const spy = jest.spyOn(WidgetUtils, "setRoomWidget");
+            const command = findCommand("addwidget")!;
+            await command.run(client, roomId, null, '<iframe src="https://element.io"></iframe>');
+            expect(spy).toHaveBeenCalledWith(
+                client,
+                roomId,
+                expect.any(String),
+                WidgetType.CUSTOM,
+                "https://element.io",
+                "Custom",
+                {},
+            );
         });
     });
 });
