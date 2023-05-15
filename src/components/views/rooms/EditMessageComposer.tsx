@@ -49,6 +49,7 @@ import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { editorRoomKey, editorStateKey } from "../../../Editing";
 import DocumentOffset from "../../../editor/offset";
 import { attachMentions, attachRelation } from "./SendMessageComposer";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
     const html = mxEvent.getContent().formatted_body;
@@ -334,7 +335,13 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                 const [cmd, args, commandText] = getSlashCommand(this.model);
                 if (cmd) {
                     const threadId = editedEvent?.getThread()?.id || null;
-                    const [content, commandSuccessful] = await runSlashCommand(cmd, args, roomId, threadId);
+                    const [content, commandSuccessful] = await runSlashCommand(
+                        MatrixClientPeg.get(),
+                        cmd,
+                        args,
+                        roomId,
+                        threadId,
+                    );
                     if (!commandSuccessful) {
                         return; // errored
                     }

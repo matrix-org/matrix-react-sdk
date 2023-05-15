@@ -19,7 +19,6 @@ import { mocked } from "jest-mock";
 
 import { Command, Commands, getCommand } from "../src/SlashCommands";
 import { createTestClient } from "./test-utils";
-import { MatrixClientPeg } from "../src/MatrixClientPeg";
 import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../src/models/LocalRoom";
 import SettingsStore from "../src/settings/SettingsStore";
 import LegacyCallHandler from "../src/LegacyCallHandler";
@@ -57,7 +56,6 @@ describe("SlashCommands", () => {
         jest.clearAllMocks();
 
         client = createTestClient();
-        jest.spyOn(MatrixClientPeg, "get").mockReturnValue(client);
 
         room = new Room(roomId, client, client.getUserId()!);
         localRoom = new LocalRoom(localRoomId, client, client.getUserId()!);
@@ -70,7 +68,7 @@ describe("SlashCommands", () => {
             const command = getCommand("/topic pizza");
             expect(command.cmd).toBeDefined();
             expect(command.args).toBeDefined();
-            await command.cmd!.run("room-id", null, command.args);
+            await command.cmd!.run(client, "room-id", null, command.args);
             expect(client.setRoomTopic).toHaveBeenCalledWith("room-id", "pizza", undefined);
         });
     });
@@ -209,7 +207,7 @@ describe("SlashCommands", () => {
             const command = getCommand("/part #foo:bar");
             expect(command.cmd).toBeDefined();
             expect(command.args).toBeDefined();
-            await command.cmd!.run("room-id", null, command.args);
+            await command.cmd!.run(client, "room-id", null, command.args);
             expect(client.leaveRoomChain).toHaveBeenCalledWith("room-id", expect.anything());
         });
 
@@ -223,7 +221,7 @@ describe("SlashCommands", () => {
             const command = getCommand("/part #foo:bar");
             expect(command.cmd).toBeDefined();
             expect(command.args).toBeDefined();
-            await command.cmd!.run("room-id", null, command.args!);
+            await command.cmd!.run(client, "room-id", null, command.args!);
             expect(client.leaveRoomChain).toHaveBeenCalledWith("room-id", expect.anything());
         });
     });
@@ -232,11 +230,13 @@ describe("SlashCommands", () => {
         const command = findCommand(commandName)!;
 
         it("should return usage if no args", () => {
-            expect(command.run(roomId, null, undefined).error).toBe(command.getUsage());
+            expect(command.run(client, roomId, null, undefined).error).toBe(command.getUsage());
         });
 
         it("should make things rainbowy", () => {
-            return expect(command.run(roomId, null, "this is a test message").promise).resolves.toMatchSnapshot();
+            return expect(
+                command.run(client, roomId, null, "this is a test message").promise,
+            ).resolves.toMatchSnapshot();
         });
     });
 });
