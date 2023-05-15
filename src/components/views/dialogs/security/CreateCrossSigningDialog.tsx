@@ -20,6 +20,7 @@ import { CrossSigningKeys } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { UIAFlow } from "matrix-js-sdk/src/matrix";
 
+import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t } from "../../../../languageHandler";
 import Modal from "../../../../Modal";
 import { SSOAuthEntry } from "../../auth/InteractiveAuthEntryComponents";
@@ -27,7 +28,6 @@ import DialogButtons from "../../elements/DialogButtons";
 import BaseDialog from "../BaseDialog";
 import Spinner from "../../elements/Spinner";
 import InteractiveAuthDialog from "../InteractiveAuthDialog";
-import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 
 interface IProps {
     accountPassword?: string;
@@ -47,12 +47,8 @@ interface IState {
  * may need to complete some steps to proceed.
  */
 export default class CreateCrossSigningDialog extends React.PureComponent<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
-    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
+    public constructor(props: IProps) {
         super(props);
-        this.context = context;
 
         this.state = {
             error: null,
@@ -77,7 +73,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
 
     private async queryKeyUploadAuth(): Promise<void> {
         try {
-            await this.context.uploadDeviceSigningKeys(undefined, {} as CrossSigningKeys);
+            await MatrixClientPeg.get().uploadDeviceSigningKeys(undefined, {} as CrossSigningKeys);
             // We should never get here: the server should always require
             // UI auth to upload device signing keys. If we do, we upload
             // no keys which would be a no-op.
@@ -102,11 +98,11 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
                 type: "m.login.password",
                 identifier: {
                     type: "m.id.user",
-                    user: this.context.getUserId(),
+                    user: MatrixClientPeg.get().getUserId(),
                 },
                 // TODO: Remove `user` once servers support proper UIA
                 // See https://github.com/matrix-org/synapse/issues/5665
-                user: this.context.getUserId(),
+                user: MatrixClientPeg.get().getUserId(),
                 password: this.state.accountPassword,
             });
         } else if (this.props.tokenLogin) {
@@ -130,7 +126,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
 
             const { finished } = Modal.createDialog(InteractiveAuthDialog, {
                 title: _t("Setting up keys"),
-                matrixClient: this.context,
+                matrixClient: MatrixClientPeg.get(),
                 makeRequest,
                 aestheticsForStagePhases: {
                     [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
@@ -149,7 +145,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
             error: null,
         });
 
-        const cli = this.context;
+        const cli = MatrixClientPeg.get();
 
         try {
             await cli.bootstrapCrossSigning({

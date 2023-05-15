@@ -170,7 +170,11 @@ describe("PollCreateDialog", () => {
     });
 
     it("sends a poll create event when submitted", () => {
-        const dialog = render(<PollCreateDialog room={createRoom()} onFinished={jest.fn()} />);
+        const dialog = render(<PollCreateDialog room={createRoom()} onFinished={jest.fn()} />, {
+            wrapper: ({ children }) => (
+                <MatrixClientContext.Provider value={mockClient}>{children}</MatrixClientContext.Provider>
+            ),
+        });
         changeValue(dialog, "Question or topic", "Q");
         changeValue(dialog, "Option 1", "A1");
         changeValue(dialog, "Option 2", "A2");
@@ -212,6 +216,11 @@ describe("PollCreateDialog", () => {
 
         const dialog = render(
             <PollCreateDialog room={createRoom()} onFinished={jest.fn()} editingMxEvent={previousEvent} />,
+            {
+                wrapper: ({ children }) => (
+                    <MatrixClientContext.Provider value={mockClient}>{children}</MatrixClientContext.Provider>
+                ),
+            },
         );
 
         changeValue(dialog, "Question or topic", "Poll Q updated");
@@ -261,6 +270,11 @@ describe("PollCreateDialog", () => {
 
         const dialog = render(
             <PollCreateDialog room={createRoom()} onFinished={jest.fn()} editingMxEvent={previousEvent} />,
+            {
+                wrapper: ({ children }) => (
+                    <MatrixClientContext.Provider value={mockClient}>{children}</MatrixClientContext.Provider>
+                ),
+            },
         );
 
         changeValue(dialog, "Question or topic", "Poll Q updated");
