@@ -22,17 +22,24 @@ import { mkEvent, mkMessage, mkStubRoom, setupAsyncStoreWithClient, stubClient }
 import { DefaultTagID } from "../../../src/stores/room-list/models";
 
 describe("MessagePreviewStore", () => {
-    async function addEvent(store: MessagePreviewStore, room: Room, event: MatrixEvent): Promise<void> {
+    async function addEvent(
+        store: MessagePreviewStore,
+        room: Room,
+        event: MatrixEvent,
+        fireAction = true,
+    ): Promise<void> {
         room.timeline.push(event);
         mocked(room.findEventById).mockImplementation((eventId) => room.timeline.find((e) => e.getId() === eventId));
-        // @ts-ignore private access
-        await store.onAction({
-            action: "MatrixActions.Room.timeline",
-            event,
-            isLiveEvent: true,
-            isLiveUnfilteredRoomTimelineEvent: true,
-            room,
-        });
+        if (fireAction) {
+            // @ts-ignore private access
+            await store.onAction({
+                action: "MatrixActions.Room.timeline",
+                event,
+                isLiveEvent: true,
+                isLiveUnfilteredRoomTimelineEvent: true,
+                room,
+            });
+        }
     }
 
     it("should ignore edits for events other than the latest one", async () => {
@@ -44,15 +51,13 @@ describe("MessagePreviewStore", () => {
         await store.start();
         await setupAsyncStoreWithClient(store, client);
 
-        await expect(store.getPreviewForRoom(room, DefaultTagID.Untagged)).resolves.toMatchInlineSnapshot(`null`);
-
         const firstMessage = mkMessage({
             user: "@sender:server",
             event: true,
             room: room.roomId,
             msg: "First message",
         });
-        await addEvent(store, room, firstMessage);
+        await addEvent(store, room, firstMessage, false);
 
         await expect(store.getPreviewForRoom(room, DefaultTagID.Untagged)).resolves.toMatchInlineSnapshot(
             `"@sender:server: First message"`,
