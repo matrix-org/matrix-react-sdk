@@ -1174,9 +1174,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 </span>
             ),
             button: _t("Leave"),
-            onFinished: (shouldLeave) => {
+            onFinished: async (shouldLeave) => {
                 if (shouldLeave) {
-                    leaveRoomBehaviour(cli, roomId);
+                    await leaveRoomBehaviour(cli, roomId);
 
                     dis.dispatch<AfterLeaveRoomPayload>({
                         action: Action.AfterLeaveRoom,
