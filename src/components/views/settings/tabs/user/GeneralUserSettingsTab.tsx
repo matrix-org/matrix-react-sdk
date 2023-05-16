@@ -328,7 +328,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private renderAccountSection(): JSX.Element {
         let passwordChangeForm: ReactNode = (
             <ChangePassword
-                className="mx_GeneralUserSettingsTab_changePassword"
+                className="mx_GeneralUserSettingsTab_section--account_changePassword"
                 rowClassName=""
                 buttonKind="primary"
                 onError={this.onPasswordChangeError}
@@ -405,7 +405,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             );
         }
         return (
-            <div className="mx_SettingsTab_section mx_GeneralUserSettingsTab_accountSection">
+            <div className="mx_SettingsTab_section mx_GeneralUserSettingsTab_section--account">
                 <span className="mx_SettingsTab_subheading">{_t("Account")}</span>
                 {externalAccountManagement}
                 <p className="mx_SettingsTab_subsectionText">{passwordChangeText}</p>
@@ -421,7 +421,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             <div className="mx_SettingsTab_section">
                 <span className="mx_SettingsTab_subheading">{_t("Language and region")}</span>
                 <LanguageDropdown
-                    className="mx_GeneralUserSettingsTab_languageInput"
+                    className="mx_GeneralUserSettingsTab_section_languageInput"
                     onOptionChange={this.onLanguageChange}
                     value={this.state.language}
                 />
@@ -431,7 +431,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
     private renderSpellCheckSection(): JSX.Element {
         return (
-            <div className="mx_SettingsTab_section mx_SettingsTab_section_spellcheck">
+            <div className="mx_SettingsTab_section mx_GeneralUserSettingsTab_section--spellcheck">
                 <span className="mx_SettingsTab_subheading">
                     {_t("Spell check")}
                     <ToggleSwitch checked={!!this.state.spellCheckEnabled} onChange={this.onSpellCheckEnabledChange} />
@@ -475,17 +475,17 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         const msisdns = this.state.loading3pids ? <Spinner /> : <DiscoveryPhoneNumbers msisdns={this.state.msisdns} />;
 
         const threepidSection = this.state.haveIdServer ? (
-            <div className="mx_GeneralUserSettingsTab_discovery">
+            <>
                 <span className="mx_SettingsTab_subheading">{_t("Email addresses")}</span>
                 {emails}
 
                 <span className="mx_SettingsTab_subheading">{_t("Phone numbers")}</span>
                 {msisdns}
-            </div>
+            </>
         ) : null;
 
         return (
-            <div className="mx_SettingsTab_section">
+            <div className="mx_SettingsTab_section mx_GeneralUserSettingsTab_section--discovery">
                 {threepidSection}
                 {/* has its own heading as it includes the current identity server */}
                 <SetIdServer missingTerms={false} />
@@ -522,7 +522,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
         const discoWarning = this.state.requiredPolicyInfo.hasTerms ? (
             <img
-                className="mx_GeneralUserSettingsTab_warningIcon"
+                className="mx_GeneralUserSettingsTab_heading_warningIcon"
                 src={require("../../../../../../res/img/feather-customised/warning-triangle.svg").default}
                 width="18"
                 height="18"
