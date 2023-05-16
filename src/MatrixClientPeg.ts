@@ -200,9 +200,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     private onUnexpectedStoreClose = async (): Promise<void> => {
         if (!this.matrixClient) return;
         this.matrixClient.stopClient(); // stop the client as the database has failed
-        if (this.matrixClient.store instanceof IndexedDBStore) {
-            await this.matrixClient.store.destroy();
-        }
+        await this.matrixClient.store.destroy();
 
         if (!this.matrixClient.isGuest()) {
             // If the user is not a guest then prompt them to reload rather than doing it for them

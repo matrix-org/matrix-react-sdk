@@ -940,9 +940,7 @@ export function stopMatrixClient(unsetClient = true): void {
         if (unsetClient) {
             MatrixClientPeg.unset();
             EventIndexPeg.unset();
-            if (cli.store instanceof IndexedDBStore) {
-                cli.store.destroy();
-            }
+            cli.store.destroy();
         }
     }
 }
