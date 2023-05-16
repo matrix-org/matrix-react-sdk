@@ -40,7 +40,7 @@ describe("setContent", () => {
             result.current.setContent();
         });
 
-        expect(mockOnChange).toHaveBeenCalledTimes(0);
+        expect(mockOnChange).not.toHaveBeenCalled();
     });
 
     it("calling with no argument and a valid editor ref calls onChange with the editorRef innerHTML", () => {
