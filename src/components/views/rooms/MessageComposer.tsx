@@ -375,7 +375,8 @@ export class MessageComposer extends React.Component<IProps, IState> {
             ? await richToPlain(composerContent)
             : await plainToRich(composerContent);
 
-        // when going from rich to plain, there are some amendments that have to be made
+        // when we toggle from rich to plain, we may need to amend some of the links in the
+        // markdown for the plain text composer to ensure mention pill display is consistent
         if (isRichTextEnabled) {
             convertedContent = amendLinksInPlainText(composerContent, convertedContent);
         }
