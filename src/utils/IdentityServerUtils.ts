@@ -16,6 +16,7 @@ limitations under the License.
 
 import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
 import { logger } from "matrix-js-sdk/src/logger";
+import { HTTPError } from "matrix-js-sdk/src/http-api";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import SdkConfig from "../SdkConfig";
@@ -39,7 +40,7 @@ export async function doesIdentityServerHaveTerms(matrixClient: MatrixClient, fu
         terms = await matrixClient.getTerms(SERVICE_TYPES.IS, fullUrl);
     } catch (e) {
         logger.error(e);
-        if (e.cors === "rejected" || e.httpStatus === 404) {
+        if (e.cors === "rejected" || (e instanceof HTTPError && e.httpStatus === 404)) {
             terms = null;
         } else {
             throw e;
