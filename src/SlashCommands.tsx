@@ -574,7 +574,7 @@ export const Commands = [
 
                             prom = finished.then(([useDefault]) => {
                                 if (useDefault) {
-                                    setToDefaultIdentityServer(MatrixClientPeg.get());
+                                    setToDefaultIdentityServer(cli);
                                     return;
                                 }
                                 throw new UserFriendlyError(
@@ -587,7 +587,7 @@ export const Commands = [
                             );
                         }
                     }
-                    const inviter = new MultiInviter(MatrixClientPeg.get(), roomId);
+                    const inviter = new MultiInviter(cli, roomId);
                     return success(
                         prom
                             .then(() => {
