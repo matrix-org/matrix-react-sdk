@@ -311,7 +311,12 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     private onEditClick = (): void => {
-        editEvent(this.props.mxEvent, this.context.timelineRenderingType, this.props.getRelationsForEvent);
+        editEvent(
+            MatrixClientPeg.get(),
+            this.props.mxEvent,
+            this.context.timelineRenderingType,
+            this.props.getRelationsForEvent,
+        );
         this.closeMenu();
     };
 
@@ -611,7 +616,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         }
 
         let editButton: JSX.Element | undefined;
-        if (rightClick && canEditContent(mxEvent)) {
+        if (rightClick && canEditContent(cli, mxEvent)) {
             editButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconEdit"

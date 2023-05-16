@@ -41,7 +41,7 @@ describe("leaveRoomBehaviour", () => {
     beforeEach(async () => {
         stubClient();
         client = mocked(MatrixClientPeg.get());
-        DMRoomMap.makeShared();
+        DMRoomMap.makeShared(client);
 
         room = mkRoom(client, "!1:example.org");
         space = mkRoom(client, "!2:example.org");

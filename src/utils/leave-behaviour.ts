@@ -38,7 +38,7 @@ import { SdkContextClass } from "../contexts/SDKContext";
 import SettingsStore from "../settings/SettingsStore";
 
 export async function leaveRoomBehaviour(
-    cli: MatrixClient,
+    matrixClient: MatrixClient,
     roomId: string,
     retry = true,
     spinner = true,
@@ -49,7 +49,7 @@ export async function leaveRoomBehaviour(
     }
 
     let leavingAllVersions = true;
-    const history = cli.getRoomUpgradeHistory(
+    const history = matrixClient.getRoomUpgradeHistory(
         roomId,
         false,
         SettingsStore.getValue("feature_dynamic_room_predecessors"),
@@ -63,7 +63,7 @@ export async function leaveRoomBehaviour(
         }
     }
 
-    const room = cli.getRoom(roomId);
+    const room = matrixClient.getRoom(roomId);
 
     // should not encounter this
     if (!room) {
@@ -100,9 +100,9 @@ export async function leaveRoomBehaviour(
     let results: { [roomId: string]: Error | MatrixError | null } = {};
     if (!leavingAllVersions) {
         try {
-            await cli.leave(roomId);
+            await matrixClient.leave(roomId);
         } catch (e) {
-            if (e?.data?.errcode) {
+            if (e instanceof MatrixError) {
                 const message = e.data.error || _t("Unexpected server error trying to leave the room");
                 results[roomId] = Object.assign(new Error(message), { errcode: e.data.errcode, data: e.data });
             } else {
@@ -110,7 +110,7 @@ export async function leaveRoomBehaviour(
             }
         }
     } else {
-        results = await cli.leaveRoomChain(roomId, retry);
+        results = await matrixClient.leaveRoomChain(roomId, retry);
     }
 
     if (retry) {
@@ -119,7 +119,7 @@ export async function leaveRoomBehaviour(
         ) as MatrixError;
         if (limitExceededError) {
             await sleep(limitExceededError.data.retry_after_ms ?? 100);
-            return leaveRoomBehaviour(cli, roomId, false, false);
+            return leaveRoomBehaviour(matrixClient, roomId, false, false);
         }
     }
 

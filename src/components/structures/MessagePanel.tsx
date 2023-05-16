@@ -743,7 +743,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             lastInSection =
                 willWantDateSeparator ||
                 mxEv.getSender() !== nextEv.getSender() ||
-                getEventDisplayInfo(nextEv, this.showHiddenEvents).isInfoMessage ||
+                getEventDisplayInfo(nextEv, MatrixClientPeg.get(), this.showHiddenEvents).isInfoMessage ||
                 !shouldFormContinuation(mxEv, nextEv, this.showHiddenEvents, this.context.timelineRenderingType);
         }
 

@@ -57,29 +57,29 @@ export default class WidgetUtils {
     /**
      * Returns true if user is able to send state events to modify widgets in this room
      * (Does not apply to non-room-based / user widgets)
-     * @param matrixClient The matrix client of the logged-in user
+     * @param client The matrix client of the logged-in user
      * @param roomId -- The ID of the room to check
      * @return Boolean -- true if the user can modify widgets in this room
      * @throws Error -- specifies the error reason
      */
-    public static canUserModifyWidgets(matrixClient: MatrixClient, roomId?: string): boolean {
+    public static canUserModifyWidgets(client: MatrixClient, roomId?: string): boolean {
         if (!roomId) {
             logger.warn("No room ID specified");
             return false;
         }
 
-        if (!matrixClient) {
+        if (!client) {
             logger.warn("User must be be logged in");
             return false;
         }
 
-        const room = matrixClient.getRoom(roomId);
+        const room = client.getRoom(roomId);
         if (!room) {
             logger.warn(`Room ID ${roomId} is not recognised`);
             return false;
         }
 
-        const me = matrixClient.getUserId();
+        const me = client.getUserId();
         if (!me) {
             logger.warn("Failed to get user ID");
             return false;
@@ -139,14 +139,14 @@ export default class WidgetUtils {
      * ID has been added as a user widget (ie. the accountData event
      * arrives) or rejects after a timeout
      *
-     * @param matrixClient The matrix client of the logged-in user
+     * @param client The matrix client of the logged-in user
      * @param widgetId The ID of the widget to wait for
      * @param add True to wait for the widget to be added,
      *     false to wait for it to be deleted.
      * @returns {Promise} that resolves when the widget is in the
      *     requested state according to the `add` param
      */
-    public static waitForUserWidget(matrixClient: MatrixClient, widgetId: string, add: boolean): Promise<void> {
+    public static waitForUserWidget(client: MatrixClient, widgetId: string, add: boolean): Promise<void> {
         return new Promise((resolve, reject) => {
             // Tests an account data event, returning true if it's in the state
             // we're waiting for it to be in
@@ -159,25 +159,25 @@ export default class WidgetUtils {
                 }
             }
 
-            const startingAccountDataEvent = matrixClient.getAccountData("m.widgets");
+            const startingAccountDataEvent = client.getAccountData("m.widgets");
             if (eventInIntendedState(startingAccountDataEvent)) {
                 resolve();
                 return;
             }
 
             function onAccountData(ev: MatrixEvent): void {
-                const currentAccountDataEvent = matrixClient.getAccountData("m.widgets");
+                const currentAccountDataEvent = client.getAccountData("m.widgets");
                 if (eventInIntendedState(currentAccountDataEvent)) {
-                    matrixClient.removeListener(ClientEvent.AccountData, onAccountData);
+                    client.removeListener(ClientEvent.AccountData, onAccountData);
                     clearTimeout(timerId);
                     resolve();
                 }
             }
             const timerId = window.setTimeout(() => {
-                matrixClient.removeListener(ClientEvent.AccountData, onAccountData);
+                client.removeListener(ClientEvent.AccountData, onAccountData);
                 reject(new Error("Timed out waiting for widget ID " + widgetId + " to appear"));
             }, WIDGET_WAIT_TIME);
-            matrixClient.on(ClientEvent.AccountData, onAccountData);
+            client.on(ClientEvent.AccountData, onAccountData);
         });
     }
 
@@ -186,7 +186,7 @@ export default class WidgetUtils {
      * ID has been added as a room widget in the given room (ie. the
      * room state event arrives) or rejects after a timeout
      *
-     * @param matrixClient The matrix client of the logged-in user
+     * @param client The matrix client of the logged-in user
      * @param {string} widgetId The ID of the widget to wait for
      * @param {string} roomId The ID of the room to wait for the widget in
      * @param {boolean} add True to wait for the widget to be added,
@@ -195,7 +195,7 @@ export default class WidgetUtils {
      *     requested state according to the `add` param
      */
     public static waitForRoomWidget(
-        matrixClient: MatrixClient,
+        client: MatrixClient,
         widgetId: string,
         roomId: string,
         add: boolean,
@@ -214,7 +214,7 @@ export default class WidgetUtils {
                 }
             }
 
-            const room = matrixClient.getRoom(roomId);
+            const room = client.getRoom(roomId);
             // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
             const startingWidgetEvents = room?.currentState.getStateEvents("im.vector.modular.widgets");
             if (eventsInIntendedState(startingWidgetEvents)) {
@@ -229,21 +229,21 @@ export default class WidgetUtils {
                 const currentWidgetEvents = room?.currentState.getStateEvents("im.vector.modular.widgets");
 
                 if (eventsInIntendedState(currentWidgetEvents)) {
-                    matrixClient.removeListener(RoomStateEvent.Events, onRoomStateEvents);
+                    client.removeListener(RoomStateEvent.Events, onRoomStateEvents);
                     clearTimeout(timerId);
                     resolve();
                 }
             }
             const timerId = window.setTimeout(() => {
-                matrixClient.removeListener(RoomStateEvent.Events, onRoomStateEvents);
+                client.removeListener(RoomStateEvent.Events, onRoomStateEvents);
                 reject(new Error("Timed out waiting for widget ID " + widgetId + " to appear"));
             }, WIDGET_WAIT_TIME);
-            matrixClient.on(RoomStateEvent.Events, onRoomStateEvents);
+            client.on(RoomStateEvent.Events, onRoomStateEvents);
         });
     }
 
     public static setUserWidget(
-        matrixClient: MatrixClient,
+        client: MatrixClient,
         widgetId: string,
         widgetType: WidgetType,
         widgetUrl: string,
@@ -252,7 +252,7 @@ export default class WidgetUtils {
     ): Promise<void> {
         // Get the current widgets and clone them before we modify them, otherwise
         // we'll modify the content of the old event.
-        const userWidgets = objectClone(WidgetUtils.getUserWidgets(matrixClient));
+        const userWidgets = objectClone(WidgetUtils.getUserWidgets(client));
 
         // Delete existing widget with ID
         try {
@@ -263,7 +263,7 @@ export default class WidgetUtils {
 
         const addingWidget = Boolean(widgetUrl);
 
-        const userId = matrixClient.getSafeUserId();
+        const userId = client.getSafeUserId();
 
         const content = {
             id: widgetId,
@@ -289,10 +289,10 @@ export default class WidgetUtils {
         // since the widget won't appear added until this happens. If we don't
         // wait for this, the action will complete but if the user is fast enough,
         // the widget still won't actually be there.
-        return matrixClient
+        return client
             .setAccountData("m.widgets", userWidgets)
             .then(() => {
-                return WidgetUtils.waitForUserWidget(matrixClient, widgetId, addingWidget);
+                return WidgetUtils.waitForUserWidget(client, widgetId, addingWidget);
             })
             .then(() => {
                 dis.dispatch({ action: "user_widget_updated" });
@@ -300,7 +300,7 @@ export default class WidgetUtils {
     }
 
     public static setRoomWidget(
-        matrixClient: MatrixClient,
+        client: MatrixClient,
         roomId: string,
         widgetId: string,
         widgetType?: WidgetType,
@@ -327,11 +327,11 @@ export default class WidgetUtils {
             content = {};
         }
 
-        return WidgetUtils.setRoomWidgetContent(matrixClient, roomId, widgetId, content as IWidget);
+        return WidgetUtils.setRoomWidgetContent(client, roomId, widgetId, content as IWidget);
     }
 
     public static setRoomWidgetContent(
-        matrixClient: MatrixClient,
+        client: MatrixClient,
         roomId: string,
         widgetId: string,
         content: IWidget,
@@ -341,10 +341,10 @@ export default class WidgetUtils {
         WidgetEchoStore.setRoomWidgetEcho(roomId, widgetId, content);
 
         // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
-        return matrixClient
+        return client
             .sendStateEvent(roomId, "im.vector.modular.widgets", content, widgetId)
             .then(() => {
-                return WidgetUtils.waitForRoomWidget(matrixClient, widgetId, roomId, addingWidget);
+                return WidgetUtils.waitForRoomWidget(client, widgetId, roomId, addingWidget);
             })
             .finally(() => {
                 WidgetEchoStore.removeRoomWidgetEcho(roomId, widgetId);
@@ -370,14 +370,14 @@ export default class WidgetUtils {
 
     /**
      * Get user specific widgets (not linked to a specific room)
-     * @param matrixClient The matrix client of the logged-in user
+     * @param client The matrix client of the logged-in user
      * @return {object} Event content object containing current / active user widgets
      */
-    public static getUserWidgets(matrixClient: MatrixClient | undefined): Record<string, UserWidget> {
-        if (!matrixClient) {
+    public static getUserWidgets(client: MatrixClient | undefined): Record<string, UserWidget> {
+        if (!client) {
             throw new Error("User not logged in");
         }
-        const userWidgets = matrixClient.getAccountData("m.widgets");
+        const userWidgets = client.getAccountData("m.widgets");
         if (userWidgets && userWidgets.getContent()) {
             return userWidgets.getContent();
         }
@@ -386,30 +386,30 @@ export default class WidgetUtils {
 
     /**
      * Get user specific widgets (not linked to a specific room) as an array
-     * @param matrixClient The matrix client of the logged-in user
+     * @param client The matrix client of the logged-in user
      * @return {[object]} Array containing current / active user widgets
      */
-    public static getUserWidgetsArray(matrixClient: MatrixClient | undefined): UserWidget[] {
-        return Object.values(WidgetUtils.getUserWidgets(matrixClient));
+    public static getUserWidgetsArray(client: MatrixClient | undefined): UserWidget[] {
+        return Object.values(WidgetUtils.getUserWidgets(client));
     }
 
     /**
      * Get active stickerpicker widgets (stickerpickers are user widgets by nature)
-     * @param matrixClient The matrix client of the logged-in user
+     * @param client The matrix client of the logged-in user
      * @return {[object]} Array containing current / active stickerpicker widgets
      */
-    public static getStickerpickerWidgets(matrixClient: MatrixClient | undefined): UserWidget[] {
-        const widgets = WidgetUtils.getUserWidgetsArray(matrixClient);
+    public static getStickerpickerWidgets(client: MatrixClient | undefined): UserWidget[] {
+        const widgets = WidgetUtils.getUserWidgetsArray(client);
         return widgets.filter((widget) => widget.content?.type === "m.stickerpicker");
     }
 
     /**
      * Get all integration manager widgets for this user.
-     * @param matrixClient The matrix client of the logged-in user
+     * @param client The matrix client of the logged-in user
      * @returns {Object[]} An array of integration manager user widgets.
      */
-    public static getIntegrationManagerWidgets(matrixClient: MatrixClient | undefined): UserWidget[] {
-        const widgets = WidgetUtils.getUserWidgetsArray(matrixClient);
+    public static getIntegrationManagerWidgets(client: MatrixClient | undefined): UserWidget[] {
+        const widgets = WidgetUtils.getUserWidgetsArray(client);
         return widgets.filter((w) => w.content?.type === "m.integration_manager");
     }
 
@@ -421,11 +421,11 @@ export default class WidgetUtils {
         });
     }
 
-    public static async removeIntegrationManagerWidgets(matrixClient: MatrixClient | undefined): Promise<void> {
-        if (!matrixClient) {
+    public static async removeIntegrationManagerWidgets(client: MatrixClient | undefined): Promise<void> {
+        if (!client) {
             throw new Error("User not logged in");
         }
-        const widgets = matrixClient.getAccountData("m.widgets");
+        const widgets = client.getAccountData("m.widgets");
         if (!widgets) return;
         const userWidgets: Record<string, IWidgetEvent> = widgets.getContent() || {};
         Object.entries(userWidgets).forEach(([key, widget]) => {
@@ -433,17 +433,17 @@ export default class WidgetUtils {
                 delete userWidgets[key];
             }
         });
-        await matrixClient.setAccountData("m.widgets", userWidgets);
+        await client.setAccountData("m.widgets", userWidgets);
     }
 
     public static addIntegrationManagerWidget(
-        matrixClient: MatrixClient,
+        client: MatrixClient,
         name: string,
         uiUrl: string,
         apiUrl: string,
     ): Promise<void> {
         return WidgetUtils.setUserWidget(
-            matrixClient,
+            client,
             "integration_manager_" + new Date().getTime(),
             WidgetType.INTEGRATION_MANAGER,
             uiUrl,
@@ -454,14 +454,14 @@ export default class WidgetUtils {
 
     /**
      * Remove all stickerpicker widgets (stickerpickers are user widgets by nature)
-     * @param matrixClient The matrix client of the logged-in user
+     * @param client The matrix client of the logged-in user
      * @return {Promise} Resolves on account data updated
      */
-    public static async removeStickerpickerWidgets(matrixClient: MatrixClient | undefined): Promise<void> {
-        if (!matrixClient) {
+    public static async removeStickerpickerWidgets(client: MatrixClient | undefined): Promise<void> {
+        if (!client) {
             throw new Error("User not logged in");
         }
-        const widgets = matrixClient.getAccountData("m.widgets");
+        const widgets = client.getAccountData("m.widgets");
         if (!widgets) return;
         const userWidgets: Record<string, IWidgetEvent> = widgets.getContent() || {};
         Object.entries(userWidgets).forEach(([key, widget]) => {
@@ -469,11 +469,11 @@ export default class WidgetUtils {
                 delete userWidgets[key];
             }
         });
-        await matrixClient.setAccountData("m.widgets", userWidgets);
+        await client.setAccountData("m.widgets", userWidgets);
     }
 
     public static async addJitsiWidget(
-        matrixClient: MatrixClient,
+        client: MatrixClient,
         roomId: string,
         type: CallType,
         name: string,
@@ -484,7 +484,7 @@ export default class WidgetUtils {
         const auth = (await Jitsi.getInstance().getJitsiAuth()) ?? undefined;
         const widgetId = randomString(24); // Must be globally unique
 
-        let confId;
+        let confId: string;
         if (auth === "openidtoken-jwt") {
             // Create conference ID from room ID
             // For compatibility with Jitsi, use base32 without padding.
@@ -501,9 +501,9 @@ export default class WidgetUtils {
         widgetUrl.search = ""; // Causes the URL class use searchParams instead
         widgetUrl.searchParams.set("confId", confId);
 
-        await WidgetUtils.setRoomWidget(matrixClient, roomId, widgetId, WidgetType.JITSI, widgetUrl.toString(), name, {
+        await WidgetUtils.setRoomWidget(client, roomId, widgetId, WidgetType.JITSI, widgetUrl.toString(), name, {
             conferenceId: confId,
-            roomName: oobRoomName ?? matrixClient.getRoom(roomId)?.name,
+            roomName: oobRoomName ?? client.getRoom(roomId)?.name,
             isAudioOnly: type === CallType.Voice,
             isVideoChannel,
             domain,

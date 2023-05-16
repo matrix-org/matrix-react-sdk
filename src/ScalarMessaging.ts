@@ -411,6 +411,7 @@ function kickUser(event: MessageEvent<any>, roomId: string, userId: string): voi
 }
 
 function setWidget(event: MessageEvent<any>, roomId: string | null): void {
+    const client = MatrixClientPeg.get();
     const widgetId = event.data.widget_id;
     let widgetType = event.data.type;
     const widgetUrl = event.data.url;
@@ -457,9 +458,8 @@ function setWidget(event: MessageEvent<any>, roomId: string | null): void {
     // convert the widget type to a known widget type
     widgetType = WidgetType.fromString(widgetType);
 
-    const cli = MatrixClientPeg.get();
     if (userWidget) {
-        WidgetUtils.setUserWidget(cli, widgetId, widgetType, widgetUrl, widgetName, widgetData)
+        WidgetUtils.setUserWidget(client, widgetId, widgetType, widgetUrl, widgetName, widgetData)
             .then(() => {
                 sendResponse(event, {
                     success: true,
@@ -477,7 +477,7 @@ function setWidget(event: MessageEvent<any>, roomId: string | null): void {
             return;
         }
         WidgetUtils.setRoomWidget(
-            cli,
+            client,
             roomId,
             widgetId,
             widgetType,
