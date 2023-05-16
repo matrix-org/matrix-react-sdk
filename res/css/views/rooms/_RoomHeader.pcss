@@ -14,6 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+:root {
+    --RoomHeader-indicator-dot-size: 8px;
+    --RoomHeader-indicator-dot-offset: -3px;
+    --RoomHeader-indicator-pulseColor: $alert;
+}
+
 .mx_RoomHeader {
     flex: 0 0 50px;
     border-bottom: 1px solid $primary-hairline-color;
@@ -188,15 +194,13 @@ limitations under the License.
     }
 }
 
-$dot-offset: -3px;
-
 .mx_RoomHeader_button_unreadIndicator_bg {
     position: absolute;
-    right: $dot-offset;
-    top: $dot-offset;
+    right: var(--RoomHeader-indicator-dot-offset);
+    top: var(--RoomHeader-indicator-dot-offset);
     margin: 4px;
-    width: $dot-size;
-    height: $dot-size;
+    width: var(--RoomHeader-indicator-dot-size);
+    height: var(--RoomHeader-indicator-dot-size);
     border-radius: 50%;
     transform: scale(1.6);
     transform-origin: center center;
@@ -205,8 +209,8 @@ $dot-offset: -3px;
 
 .mx_RoomHeader_button_unreadIndicator {
     position: absolute;
-    right: $dot-offset;
-    top: $dot-offset;
+    right: var(--RoomHeader-indicator-dot-offset);
+    top: var(--RoomHeader-indicator-dot-offset);
     margin: 4px;
 
     &.mx_Indicator_red {
