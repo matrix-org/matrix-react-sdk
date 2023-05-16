@@ -1,6 +1,5 @@
 /*
-Copyright 2019 New Vector Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,24 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_GeneralUserSettingsTab_section--discovery_existing_verification {
-    display: inline-flex;
-    align-items: center;
+.mx_MessagePanel_myReadMarker {
+    height: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
 
-    .mx_Field {
-        margin: 0 0 0 1em;
+    hr {
+        border-top: solid 1px $accent;
+        border-bottom: solid 1px $accent;
+        margin-top: 0;
+        position: relative;
+        top: -1px;
+        z-index: 1;
+        will-change: width;
+        transition: width 400ms easeinsine 1s, opacity 400ms easeinsine 1s;
+        width: 99%;
+        opacity: 1;
     }
-}
-
-.mx_PhoneNumbers_input {
-    display: flex;
-    align-items: center;
-}
-
-.mx_PhoneNumbers_input > .mx_Field {
-    flex-grow: 1;
-}
-
-.mx_PhoneNumbers_country {
-    width: 80px;
 }

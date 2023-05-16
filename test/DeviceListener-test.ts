@@ -80,7 +80,10 @@ describe("DeviceListener", () => {
             getDeviceVerificationStatus: jest.fn().mockResolvedValue({
                 crossSigningVerified: false,
             }),
+            getCrossSigningKeyId: jest.fn(),
             getUserDeviceInfo: jest.fn().mockResolvedValue(new Map()),
+            isCrossSigningReady: jest.fn().mockResolvedValue(true),
+            isSecretStorageReady: jest.fn().mockResolvedValue(true),
         } as unknown as Mocked<CryptoApi>;
         mockClient = getMockClientWithEventEmitter({
             isGuest: jest.fn(),
@@ -89,15 +92,10 @@ describe("DeviceListener", () => {
             getKeyBackupVersion: jest.fn().mockResolvedValue(undefined),
             getRooms: jest.fn().mockReturnValue([]),
             isVersionSupported: jest.fn().mockResolvedValue(true),
-            isCrossSigningReady: jest.fn().mockResolvedValue(true),
-            isSecretStorageReady: jest.fn().mockResolvedValue(true),
-            isCryptoEnabled: jest.fn().mockReturnValue(true),
             isInitialSyncComplete: jest.fn().mockReturnValue(true),
             getKeyBackupEnabled: jest.fn(),
-            getCrossSigningId: jest.fn(),
             getStoredCrossSigningForUser: jest.fn(),
             waitForClientWellKnown: jest.fn(),
-            downloadKeys: jest.fn(),
             isRoomEncrypted: jest.fn(),
             getClientWellKnown: jest.fn(),
             getDeviceId: jest.fn().mockReturnValue(deviceId),
@@ -245,34 +243,34 @@ describe("DeviceListener", () => {
             await createAndStart();
 
             expect(mockClient!.isVersionSupported).toHaveBeenCalledWith("v1.1");
-            expect(mockClient!.isCrossSigningReady).not.toHaveBeenCalled();
+            expect(mockCrypto!.isCrossSigningReady).not.toHaveBeenCalled();
         });
         it("does nothing when crypto is not enabled", async () => {
-            mockClient!.isCryptoEnabled.mockReturnValue(false);
+            mockClient!.getCrypto.mockReturnValue(undefined);
             await createAndStart();
 
-            expect(mockClient!.isCrossSigningReady).not.toHaveBeenCalled();
+            expect(mockCrypto!.isCrossSigningReady).not.toHaveBeenCalled();
         });
         it("does nothing when initial sync is not complete", async () => {
             mockClient!.isInitialSyncComplete.mockReturnValue(false);
             await createAndStart();
 
-            expect(mockClient!.isCrossSigningReady).not.toHaveBeenCalled();
+            expect(mockCrypto!.isCrossSigningReady).not.toHaveBeenCalled();
         });
 
         describe("set up encryption", () => {
             const rooms = [{ roomId: "!room1" }, { roomId: "!room2" }] as unknown as Room[];
 
             beforeEach(() => {
-                mockClient!.isCrossSigningReady.mockResolvedValue(false);
-                mockClient!.isSecretStorageReady.mockResolvedValue(false);
+                mockCrypto!.isCrossSigningReady.mockResolvedValue(false);
+                mockCrypto!.isSecretStorageReady.mockResolvedValue(false);
                 mockClient!.getRooms.mockReturnValue(rooms);
                 mockClient!.isRoomEncrypted.mockReturnValue(true);
             });
 
             it("hides setup encryption toast when cross signing and secret storage are ready", async () => {
-                mockClient!.isCrossSigningReady.mockResolvedValue(true);
-                mockClient!.isSecretStorageReady.mockResolvedValue(true);
+                mockCrypto!.isCrossSigningReady.mockResolvedValue(true);
+                mockCrypto!.isSecretStorageReady.mockResolvedValue(true);
                 await createAndStart();
                 expect(SetupEncryptionToast.hideToast).toHaveBeenCalled();
             });
@@ -284,39 +282,37 @@ describe("DeviceListener", () => {
                 expect(SetupEncryptionToast.hideToast).toHaveBeenCalled();
             });
 
-            it("does not do any checks or show any toasts when secret storage is being accessed", async () => {
+            it("does not show any toasts when secret storage is being accessed", async () => {
                 mocked(isSecretStorageBeingAccessed).mockReturnValue(true);
                 await createAndStart();
 
-                expect(mockClient!.downloadKeys).not.toHaveBeenCalled();
                 expect(SetupEncryptionToast.showToast).not.toHaveBeenCalled();
             });
 
-            it("does not do any checks or show any toasts when no rooms are encrypted", async () => {
+            it("does not show any toasts when no rooms are encrypted", async () => {
                 mockClient!.isRoomEncrypted.mockReturnValue(false);
                 await createAndStart();
 
-                expect(mockClient!.downloadKeys).not.toHaveBeenCalled();
                 expect(SetupEncryptionToast.showToast).not.toHaveBeenCalled();
             });
 
             describe("when user does not have a cross signing id on this device", () => {
                 beforeEach(() => {
-                    mockClient!.getCrossSigningId.mockReturnValue(null);
+                    mockCrypto!.getCrossSigningKeyId.mockResolvedValue(null);
                 });
 
                 it("shows verify session toast when account has cross signing", async () => {
                     mockClient!.getStoredCrossSigningForUser.mockReturnValue(new CrossSigningInfo(userId));
                     await createAndStart();
 
-                    expect(mockClient!.downloadKeys).toHaveBeenCalled();
+                    expect(mockCrypto!.getUserDeviceInfo).toHaveBeenCalled();
                     expect(SetupEncryptionToast.showToast).toHaveBeenCalledWith(
                         SetupEncryptionToast.Kind.VERIFY_THIS_SESSION,
                     );
                 });
 
                 it("checks key backup status when when account has cross signing", async () => {
-                    mockClient!.getCrossSigningId.mockReturnValue(null);
+                    mockCrypto!.getCrossSigningKeyId.mockResolvedValue(null);
                     mockClient!.getStoredCrossSigningForUser.mockReturnValue(new CrossSigningInfo(userId));
                     await createAndStart();
 
@@ -326,7 +322,7 @@ describe("DeviceListener", () => {
 
             describe("when user does have a cross signing id on this device", () => {
                 beforeEach(() => {
-                    mockClient!.getCrossSigningId.mockReturnValue("abc");
+                    mockCrypto!.getCrossSigningKeyId.mockResolvedValue("abc");
                 });
 
                 it("shows upgrade encryption toast when user has a key backup available", async () => {
@@ -350,7 +346,7 @@ describe("DeviceListener", () => {
             });
 
             it("checks keybackup status when setup encryption toast has been dismissed", async () => {
-                mockClient!.isCrossSigningReady.mockResolvedValue(false);
+                mockCrypto!.isCrossSigningReady.mockResolvedValue(false);
                 const instance = await createAndStart();
 
                 instance.dismissEncryptionSetup();
@@ -402,7 +398,7 @@ describe("DeviceListener", () => {
             const deviceTrustUnverified = new DeviceVerificationStatus({});
 
             beforeEach(() => {
-                mockClient!.isCrossSigningReady.mockResolvedValue(true);
+                mockCrypto!.isCrossSigningReady.mockResolvedValue(true);
                 mockCrypto!.getUserDeviceInfo.mockResolvedValue(
                     new Map([[userId, new Map([currentDevice, device2, device3].map((d) => [d.deviceId, d]))]]),
                 );
@@ -415,7 +411,7 @@ describe("DeviceListener", () => {
             });
             describe("bulk unverified sessions toasts", () => {
                 it("hides toast when cross signing is not ready", async () => {
-                    mockClient!.isCrossSigningReady.mockResolvedValue(false);
+                    mockCrypto!.isCrossSigningReady.mockResolvedValue(false);
                     await createAndStart();
                     expect(BulkUnverifiedSessionsToast.hideToast).toHaveBeenCalled();
                     expect(BulkUnverifiedSessionsToast.showToast).not.toHaveBeenCalled();
