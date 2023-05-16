@@ -36,7 +36,7 @@ module.exports = {
         "declaration-block-no-duplicate-properties": [
             true,
             // useful for fallbacks
-            {ignore: ["consecutive-duplicates-with-different-values"]}
+            { ignore: ["consecutive-duplicates-with-different-values"] },
         ],
         "shorthand-property-no-redundant-values": null,
         "property-no-vendor-prefix": null,
