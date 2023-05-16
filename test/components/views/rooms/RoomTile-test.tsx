@@ -315,7 +315,7 @@ describe("RoomTile", () => {
             });
         });
 
-        describe("and there is a mesage and a thread without a reply", () => {
+        describe("and there is a message and a thread without a reply", () => {
             beforeEach(() => {
                 addMessageToRoom(23);
 
