@@ -104,7 +104,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
 
     private onStartBotChat = (): void => {
         this.props.closeSettingsFn();
-        createRoom({
+        createRoom(MatrixClientPeg.get(), {
             dmUserId: SdkConfig.get("welcome_user_id"),
             andView: true,
         });

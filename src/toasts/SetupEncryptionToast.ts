@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
+
 import Modal from "../Modal";
 import { _t } from "../languageHandler";
 import DeviceListener from "../DeviceListener";
@@ -78,7 +80,7 @@ const onReject = (): void => {
     DeviceListener.sharedInstance().dismissEncryptionSetup();
 };
 
-export const showToast = (kind: Kind): void => {
+export const showToast = (client: MatrixClient, kind: Kind): void => {
     if (SecurityCustomisations.setupEncryptionNeeded?.(kind)) {
         return;
     }
@@ -95,7 +97,7 @@ export const showToast = (kind: Kind): void => {
                 /* static */ true,
             );
             try {
-                await accessSecretStorage();
+                await accessSecretStorage(client);
             } finally {
                 modal.close();
             }

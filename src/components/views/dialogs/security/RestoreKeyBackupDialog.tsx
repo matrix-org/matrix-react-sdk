@@ -125,7 +125,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
 
     private onResetRecoveryClick = (): void => {
         this.props.onFinished(false);
-        accessSecretStorage(async (): Promise<void> => {}, /* forceReset = */ true);
+        accessSecretStorage(MatrixClientPeg.get(), async (): Promise<void> => {}, /* forceReset = */ true);
     };
 
     private onRecoveryKeyChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -228,7 +228,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
         });
         try {
             // `accessSecretStorage` may prompt for storage access as needed.
-            await accessSecretStorage(async (): Promise<void> => {
+            await accessSecretStorage(MatrixClientPeg.get(), async (): Promise<void> => {
                 if (!this.state.backupInfo) return;
                 await MatrixClientPeg.get().restoreKeyBackupWithSecretStorage(
                     this.state.backupInfo,

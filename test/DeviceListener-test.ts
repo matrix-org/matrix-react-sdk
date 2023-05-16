@@ -111,7 +111,7 @@ describe("DeviceListener", () => {
 
     const createAndStart = async (): Promise<DeviceListener> => {
         const instance = new DeviceListener();
-        instance.start();
+        instance.start(mockClient);
         await flushPromises();
         return instance;
     };

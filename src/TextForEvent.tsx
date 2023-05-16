@@ -22,6 +22,7 @@ import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@typ
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { M_POLL_START, M_POLL_END } from "matrix-js-sdk/src/@types/polls";
 import { PollStartEvent } from "matrix-js-sdk/src/extensible_events_v1/PollStartEvent";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "./languageHandler";
 import * as Roles from "./Roles";
@@ -40,16 +41,16 @@ import { ElementCall } from "./models/Call";
 import { textForVoiceBroadcastStoppedEvent, VoiceBroadcastInfoEventType } from "./voice-broadcast";
 import { getSenderName } from "./utils/event/getSenderName";
 
-function getRoomMemberDisplayname(event: MatrixEvent, userId = event.getSender()): string {
-    const client = MatrixClientPeg.get();
+function getRoomMemberDisplayname(client: MatrixClient, event: MatrixEvent, userId = event.getSender()): string {
     const roomId = event.getRoomId();
     const member = client.getRoom(roomId)?.getMember(userId!);
     return member?.name || member?.rawDisplayName || userId || _t("Someone");
 }
 
 function textForCallEvent(event: MatrixEvent): () => string {
-    const roomName = MatrixClientPeg.get().getRoom(event.getRoomId()!)?.name;
-    const isSupported = MatrixClientPeg.get().supportsVoip();
+    const cli = MatrixClientPeg.get();
+    const roomName = cli.getRoom(event.getRoomId()!)?.name;
+    const isSupported = cli.supportsVoip();
 
     return isSupported
         ? () => _t("Video call started in %(roomName)s.", { roomName })
@@ -105,8 +106,8 @@ function getModification(prev?: string, value?: string): Modification {
 
 function textForMemberEvent(ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean): (() => string) | null {
     // XXX: SYJS-16 "sender is sometimes null for join messages"
-    const senderName = ev.sender?.name || getRoomMemberDisplayname(ev);
-    const targetName = ev.target?.name || getRoomMemberDisplayname(ev, ev.getStateKey());
+    const senderName = ev.sender?.name || getRoomMemberDisplayname(MatrixClientPeg.get(), ev);
+    const targetName = ev.target?.name || getRoomMemberDisplayname(MatrixClientPeg.get(), ev, ev.getStateKey());
     const prevContent = ev.getPrevContent();
     const content = ev.getContent();
     const reason = content.reason;
@@ -370,7 +371,7 @@ function textForMessageEvent(ev: MatrixEvent): (() => string) | null {
         const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
         let message = ev.getContent().body;
         if (ev.isRedacted()) {
-            message = textForRedactedPollAndMessageEvent(ev);
+            message = textForRedactedPollAndMessageEvent(MatrixClientPeg.get(), ev);
         }
 
         if (ev.getContent().msgtype === MsgType.Emote) {
@@ -533,7 +534,7 @@ function textForPowerEvent(event: MatrixEvent): (() => string) | null {
             return;
         }
         if (to !== from) {
-            const name = getRoomMemberDisplayname(event, userId);
+            const name = getRoomMemberDisplayname(MatrixClientPeg.get(), event, userId);
             diffs.push({ userId, name, from, to });
         }
     });
@@ -835,12 +836,12 @@ export function textForLocationEvent(event: MatrixEvent): () => string {
         });
 }
 
-function textForRedactedPollAndMessageEvent(ev: MatrixEvent): string {
+function textForRedactedPollAndMessageEvent(client: MatrixClient, ev: MatrixEvent): string {
     let message = _t("Message deleted");
     const unsigned = ev.getUnsigned();
     const redactedBecauseUserId = unsigned?.redacted_because?.sender;
     if (redactedBecauseUserId && redactedBecauseUserId !== ev.getSender()) {
-        const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
+        const room = client.getRoom(ev.getRoomId());
         const sender = room?.getMember(redactedBecauseUserId);
         message = _t("Message deleted by %(name)s", {
             name: sender?.name || redactedBecauseUserId,
@@ -855,7 +856,7 @@ function textForPollStartEvent(event: MatrixEvent): (() => string) | null {
         let message = "";
 
         if (event.isRedacted()) {
-            message = textForRedactedPollAndMessageEvent(event);
+            message = textForRedactedPollAndMessageEvent(MatrixClientPeg.get(), event);
             const senderDisplayName = event.sender?.name ?? event.getSender();
             message = senderDisplayName + ": " + message;
         } else {

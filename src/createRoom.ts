@@ -82,6 +82,7 @@ const DEFAULT_EVENT_POWER_LEVELS = {
 /**
  * Create a new room, and switch to it.
  *
+ * @param client the Matrix client to create the room with
  * @param {object=} opts parameters for creating the room
  * @param {string=} opts.dmUserId If specified, make this a DM room for this user and invite them
  * @param {object=} opts.createOpts set of options to pass to createRoom call.
@@ -98,13 +99,12 @@ const DEFAULT_EVENT_POWER_LEVELS = {
  * @returns {Promise} which resolves to the room id, or null if the
  * action was aborted or failed.
  */
-export default async function createRoom(opts: IOpts): Promise<string | null> {
+export default async function createRoom(client: MatrixClient, opts: IOpts): Promise<string | null> {
     opts = opts || {};
     if (opts.spinner === undefined) opts.spinner = true;
     if (opts.guestAccess === undefined) opts.guestAccess = true;
     if (opts.encryption === undefined) opts.encryption = false;
 
-    const client = MatrixClientPeg.get();
     if (client.isGuest()) {
         dis.dispatch({ action: "require_registration" });
         return null;
@@ -322,7 +322,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
                 }
             });
 
-            if (opts.dmUserId) await Rooms.setDMRoom(roomId, opts.dmUserId);
+            if (opts.dmUserId) await Rooms.setDMRoom(client, roomId, opts.dmUserId);
         })
         .then(() => {
             if (opts.parentSpace) {
@@ -438,7 +438,7 @@ export async function ensureVirtualRoomExists(
     if (existingDMRoom) {
         roomId = existingDMRoom.roomId;
     } else {
-        roomId = await createRoom({
+        roomId = await createRoom(client, {
             dmUserId: userId,
             spinner: false,
             andView: false,
@@ -466,7 +466,7 @@ export async function ensureDMExists(client: MatrixClient, userId: string): Prom
             encryption = await canEncryptToAllUsers(client, [userId]);
         }
 
-        roomId = await createRoom({ encryption, dmUserId: userId, spinner: false, andView: false });
+        roomId = await createRoom(client, { encryption, dmUserId: userId, spinner: false, andView: false });
         if (!roomId) return null;
         await waitForMember(client, roomId, userId);
     }

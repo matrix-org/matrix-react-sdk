@@ -233,28 +233,32 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
 
         try {
             // Force reset secret storage (which resets the key backup)
-            await accessSecretStorage(async (): Promise<void> => {
-                // Now reset cross-signing so everything Just Works™ again.
-                const cli = MatrixClientPeg.get();
-                await cli.bootstrapCrossSigning({
-                    authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
-                        const { finished } = Modal.createDialog(InteractiveAuthDialog, {
-                            title: _t("Setting up keys"),
-                            matrixClient: cli,
-                            makeRequest,
-                        });
-                        const [confirmed] = await finished;
-                        if (!confirmed) {
-                            throw new Error("Cross-signing key upload auth canceled");
-                        }
-                    },
-                    setupNewCrossSigning: true,
-                });
+            await accessSecretStorage(
+                MatrixClientPeg.get(),
+                async (): Promise<void> => {
+                    // Now reset cross-signing so everything Just Works™ again.
+                    const cli = MatrixClientPeg.get();
+                    await cli.bootstrapCrossSigning({
+                        authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
+                            const { finished } = Modal.createDialog(InteractiveAuthDialog, {
+                                title: _t("Setting up keys"),
+                                matrixClient: cli,
+                                makeRequest,
+                            });
+                            const [confirmed] = await finished;
+                            if (!confirmed) {
+                                throw new Error("Cross-signing key upload auth canceled");
+                            }
+                        },
+                        setupNewCrossSigning: true,
+                    });
 
-                // Now we can indicate that the user is done pressing buttons, finally.
-                // Upstream flows will detect the new secret storage, key backup, etc and use it.
-                this.props.onFinished({});
-            }, true);
+                    // Now we can indicate that the user is done pressing buttons, finally.
+                    // Upstream flows will detect the new secret storage, key backup, etc and use it.
+                    this.props.onFinished({});
+                },
+                true,
+            );
         } catch (e) {
             logger.error(e);
             this.props.onFinished(false);

@@ -164,8 +164,7 @@ function getDeviceContext(client: MatrixClient): DeviceContext {
     return result;
 }
 
-async function getContexts(): Promise<Contexts> {
-    const client = MatrixClientPeg.get();
+async function getContexts(client: MatrixClient): Promise<Contexts> {
     return {
         user: getUserContext(client),
         crypto: await getCryptoContext(client),
@@ -179,7 +178,7 @@ export async function sendSentryReport(userText: string, issueUrl: string, error
     if (!sentryConfig) return;
 
     const captureContext = {
-        contexts: await getContexts(),
+        contexts: await getContexts(MatrixClientPeg.get()),
         extra: {
             user_text: userText,
             issue_url: issueUrl,

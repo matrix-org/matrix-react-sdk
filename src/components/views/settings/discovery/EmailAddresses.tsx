@@ -84,7 +84,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
 
         try {
             if (bind) {
-                const task = new AddThreepid();
+                const task = new AddThreepid(MatrixClientPeg.get());
                 this.setState({
                     verifying: true,
                     continueDisabled: true,
@@ -115,7 +115,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
     private async changeBindingTangledAddBind({ bind, label, errorTitle }: Binding): Promise<void> {
         const { medium, address } = this.props.email;
 
-        const task = new AddThreepid();
+        const task = new AddThreepid(MatrixClientPeg.get());
         this.setState({
             verifying: true,
             continueDisabled: true,

@@ -780,7 +780,7 @@ export function isLoggingOut(): boolean {
 /**
  * Starts the matrix client and all other react-sdk services that
  * listen for events while a session is logged in.
- * @param client the matrix client to start
+ * @param client the Matrix client instance to start
  * @param {boolean} startSyncing True (default) to actually start
  * syncing the client.
  */
@@ -825,7 +825,7 @@ async function startMatrixClient(client: MatrixClient, startSyncing = true): Pro
     SettingsStore.runMigrations();
 
     // This needs to be started after crypto is set up
-    DeviceListener.sharedInstance().start();
+    DeviceListener.sharedInstance().start(client);
     // Similarly, don't start sending presence updates until we've started
     // the client
     if (!SettingsStore.getValue("lowBandwidth")) {

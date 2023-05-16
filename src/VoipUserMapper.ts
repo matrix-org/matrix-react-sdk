@@ -25,7 +25,7 @@ import LegacyCallHandler from "./LegacyCallHandler";
 import { VIRTUAL_ROOM_EVENT_TYPE } from "./call-types";
 import { findDMForUser } from "./utils/dm/findDMForUser";
 
-// Functions for mapping virtual users & rooms. Currently the only lookup
+// Functions for mapping virtual users & rooms. Currently, the only lookup
 // is sip virtual: there could be others in the future.
 
 export default class VoipUserMapper {

@@ -20,7 +20,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import React, { RefObject, useCallback, useContext, useRef, useState } from "react";
 
-import MatrixClientContext from "../../contexts/MatrixClientContext";
+import MatrixClientContext, { useMatrixClientContext } from "../../contexts/MatrixClientContext";
 import createRoom, { IOpts } from "../../createRoom";
 import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
 import { Action } from "../../dispatcher/actions";
@@ -304,6 +304,7 @@ const SpaceSetupFirstRooms: React.FC<{
     description: JSX.Element;
     onFinished(firstRoomId?: string): void;
 }> = ({ space, title, description, onFinished }) => {
+    const cli = useMatrixClientContext();
     const [busy, setBusy] = useState(false);
     const [error, setError] = useState("");
     const numFields = 3;
@@ -337,7 +338,7 @@ const SpaceSetupFirstRooms: React.FC<{
             const filteredRoomNames = roomNames.map((name) => name.trim()).filter(Boolean);
             const roomIds = await Promise.all(
                 filteredRoomNames.map((name) => {
-                    return createRoom({
+                    return createRoom(cli, {
                         createOpts: {
                             preset: isPublic ? Preset.PublicChat : Preset.PrivateChat,
                             name,

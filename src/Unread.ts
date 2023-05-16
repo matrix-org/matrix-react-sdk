@@ -20,8 +20,8 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
 import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import { MatrixClientPeg } from "./MatrixClientPeg";
 import shouldHideEvent from "./shouldHideEvent";
 import { haveRendererForEvent } from "./events/EventTileFactory";
 import SettingsStore from "./settings/SettingsStore";
@@ -30,11 +30,12 @@ import SettingsStore from "./settings/SettingsStore";
  * Returns true if this event arriving in a room should affect the room's
  * count of unread messages
  *
+ * @param cli the client of the logged-in user
  * @param {Object} ev The event
  * @returns {boolean} True if the given event should affect the unread message count
  */
-export function eventTriggersUnreadCount(ev: MatrixEvent): boolean {
-    if (ev.getSender() === MatrixClientPeg.get().credentials.userId) {
+export function eventTriggersUnreadCount(cli: MatrixClient, ev: MatrixEvent): boolean {
+    if (ev.getSender() === cli.getUserId()) {
         return false;
     }
 
@@ -78,7 +79,7 @@ export function doesRoomOrThreadHaveUnreadMessages(roomOrThread: Room | Thread):
         return false;
     }
 
-    const myUserId = MatrixClientPeg.get().getUserId();
+    const myUserId = roomOrThread.client.getUserId();
 
     // as we don't send RRs for our own messages, make sure we special case that
     // if *we* sent the last message into the room, we consider it not unread!
@@ -110,7 +111,7 @@ export function doesRoomOrThreadHaveUnreadMessages(roomOrThread: Room | Thread):
             // that counts and we can stop looking because the user's read
             // this and everything before.
             return false;
-        } else if (!shouldHideEvent(ev) && eventTriggersUnreadCount(ev)) {
+        } else if (!shouldHideEvent(ev) && eventTriggersUnreadCount(roomOrThread.client, ev)) {
             // We've found a message that counts before we hit
             // the user's read receipt, so this room is definitely unread.
             return true;

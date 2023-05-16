@@ -95,11 +95,12 @@ function makeInputToKey(keyInfo: ISecretStorageKeyInfo): (keyParams: KeyParams) 
 }
 
 async function getSecretStorageKey({
+    matrixClient: cli,
     keys: keyInfos,
 }: {
+    matrixClient: MatrixClient;
     keys: Record<string, ISecretStorageKeyInfo>;
 }): Promise<[string, Uint8Array]> {
-    const cli = MatrixClientPeg.get();
     let keyId = await cli.getDefaultSecretStorageKeyId();
     let keyInfo!: ISecretStorageKeyInfo;
     if (keyId) {
@@ -127,7 +128,7 @@ async function getSecretStorageKey({
     }
 
     if (dehydrationCache.key) {
-        if (await MatrixClientPeg.get().checkSecretStorageKey(dehydrationCache.key, keyInfo)) {
+        if (await cli.checkSecretStorageKey(dehydrationCache.key, keyInfo)) {
             cacheSecretStorageKey(keyId, keyInfo, dehydrationCache.key);
             return [keyId, dehydrationCache.key];
         }
@@ -152,7 +153,7 @@ async function getSecretStorageKey({
             keyInfo,
             checkPrivateKey: async (input: KeyParams): Promise<boolean> => {
                 const key = await inputToKey(input);
-                return MatrixClientPeg.get().checkSecretStorageKey(key, keyInfo);
+                return cli.checkSecretStorageKey(key, keyInfo);
             },
         },
         /* className= */ undefined,
@@ -323,8 +324,11 @@ export async function promptForBackupPassphrase(): Promise<Uint8Array> {
  * bootstrapped. Optional.
  * @param {bool} [forceReset] Reset secret storage even if it's already set up
  */
-export async function accessSecretStorage(func = async (): Promise<void> => {}, forceReset = false): Promise<void> {
-    const cli = MatrixClientPeg.get();
+export async function accessSecretStorage(
+    cli: MatrixClient,
+    func = async (): Promise<void> => {},
+    forceReset = false,
+): Promise<void> {
     secretStorageBeingAccessed = true;
     try {
         if (!(await cli.hasSecretStorageKey()) || forceReset) {

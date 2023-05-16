@@ -126,7 +126,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         let info;
         try {
             if (secureSecretStorage) {
-                await accessSecretStorage(async (): Promise<void> => {
+                await accessSecretStorage(MatrixClientPeg.get(), async (): Promise<void> => {
                     info = await MatrixClientPeg.get().prepareKeyBackupVersion(null /* random key */, {
                         secureSecretStorage: true,
                     });

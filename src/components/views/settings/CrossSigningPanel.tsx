@@ -79,7 +79,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
         } else {
             // Trigger the flow to set up secure backup, which is what this will do when in
             // the appropriate state.
-            accessSecretStorage();
+            accessSecretStorage(MatrixClientPeg.get());
         }
     };
 

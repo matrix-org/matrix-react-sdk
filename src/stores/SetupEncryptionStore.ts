@@ -138,7 +138,7 @@ export class SetupEncryptionStore extends EventEmitter {
             // on the first trust check, and the key backup restore will happen
             // in the background.
             await new Promise((resolve: (value?: unknown) => void, reject: (reason?: any) => void) => {
-                accessSecretStorage(async (): Promise<void> => {
+                accessSecretStorage(MatrixClientPeg.get(), async (): Promise<void> => {
                     await cli.checkOwnCrossSigningTrust();
                     resolve();
                     if (backupInfo) {
@@ -220,39 +220,43 @@ export class SetupEncryptionStore extends EventEmitter {
             // secret storage key if they had one. Start by resetting
             // secret storage and setting up a new recovery key, then
             // create new cross-signing keys once that succeeds.
-            await accessSecretStorage(async (): Promise<void> => {
-                const cli = MatrixClientPeg.get();
-                await cli.bootstrapCrossSigning({
-                    authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
-                        const cachedPassword = SdkContextClass.instance.accountPasswordStore.getPassword();
+            await accessSecretStorage(
+                MatrixClientPeg.get(),
+                async (): Promise<void> => {
+                    const cli = MatrixClientPeg.get();
+                    await cli.bootstrapCrossSigning({
+                        authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
+                            const cachedPassword = SdkContextClass.instance.accountPasswordStore.getPassword();
 
-                        if (cachedPassword) {
-                            await makeRequest({
-                                type: "m.login.password",
-                                identifier: {
-                                    type: "m.id.user",
+                            if (cachedPassword) {
+                                await makeRequest({
+                                    type: "m.login.password",
+                                    identifier: {
+                                        type: "m.id.user",
+                                        user: cli.getUserId(),
+                                    },
                                     user: cli.getUserId(),
-                                },
-                                user: cli.getUserId(),
-                                password: cachedPassword,
-                            });
-                            return;
-                        }
+                                    password: cachedPassword,
+                                });
+                                return;
+                            }
 
-                        const { finished } = Modal.createDialog(InteractiveAuthDialog, {
-                            title: _t("Setting up keys"),
-                            matrixClient: cli,
-                            makeRequest,
-                        });
-                        const [confirmed] = await finished;
-                        if (!confirmed) {
-                            throw new Error("Cross-signing key upload auth canceled");
-                        }
-                    },
-                    setupNewCrossSigning: true,
-                });
-                this.phase = Phase.Finished;
-            }, true);
+                            const { finished } = Modal.createDialog(InteractiveAuthDialog, {
+                                title: _t("Setting up keys"),
+                                matrixClient: cli,
+                                makeRequest,
+                            });
+                            const [confirmed] = await finished;
+                            if (!confirmed) {
+                                throw new Error("Cross-signing key upload auth canceled");
+                            }
+                        },
+                        setupNewCrossSigning: true,
+                    });
+                    this.phase = Phase.Finished;
+                },
+                true,
+            );
         } catch (e) {
             logger.error("Error resetting cross-signing", e);
             this.phase = Phase.Intro;
