@@ -113,6 +113,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         const { hasRenderer, isInfoMessage, isSeeingThroughMessageHiddenForModeration } = getEventDisplayInfo(
             MatrixClientPeg.get(),
             mxEvent,
+            MatrixClientPeg.get(),
             false /* Replies are never hidden, so this should be fine */,
         );
         // This shouldn't happen: the caller should check we support this type
