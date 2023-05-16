@@ -146,7 +146,7 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
      * @param inTagId The tag ID in which the room resides
      * @returns The preview, or null if none present.
      */
-    public async getPreviewForRoom(room: Room, inTagId: TagID): Promise<string | null> {
+    public async getPreviewForRoom(room: Room, inTagId: TagID): Promise<MessagePreview | null> {
         if (!room) return null; // invalid room, just return nothing
 
         if (!this.previews.has(room.roomId)) await this.generatePreview(room, inTagId);
@@ -155,9 +155,9 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
         if (!previews) return null;
 
         if (previews.has(inTagId)) {
-            return previews.get(inTagId)!.text;
+            return previews.get(inTagId)!;
         }
-        return previews.get(TAG_ANY)?.text ?? null;
+        return previews.get(TAG_ANY) ?? null;
     }
 
     public generatePreviewForEvent(event: MatrixEvent): string {

@@ -58,7 +58,7 @@ describe("MessagePreviewStore", () => {
         });
         await addEvent(store, room, firstMessage, false);
 
-        await expect(store.getPreviewForRoom(room, DefaultTagID.Untagged)).resolves.toMatchInlineSnapshot(
+        expect((await store.getPreviewForRoom(room, DefaultTagID.Untagged)).text).toMatchInlineSnapshot(
             `"@sender:server: First message"`,
         );
 
@@ -70,7 +70,7 @@ describe("MessagePreviewStore", () => {
         });
         await addEvent(store, room, secondMessage);
 
-        await expect(store.getPreviewForRoom(room, DefaultTagID.Untagged)).resolves.toMatchInlineSnapshot(
+        expect((await store.getPreviewForRoom(room, DefaultTagID.Untagged)).text).toMatchInlineSnapshot(
             `"@sender:server: Second message"`,
         );
 
@@ -92,7 +92,7 @@ describe("MessagePreviewStore", () => {
         });
         await addEvent(store, room, firstMessageEdit);
 
-        await expect(store.getPreviewForRoom(room, DefaultTagID.Untagged)).resolves.toMatchInlineSnapshot(
+        expect((await store.getPreviewForRoom(room, DefaultTagID.Untagged)).text).toMatchInlineSnapshot(
             `"@sender:server: Second message"`,
         );
 
@@ -114,7 +114,7 @@ describe("MessagePreviewStore", () => {
         });
         await addEvent(store, room, secondMessageEdit);
 
-        await expect(store.getPreviewForRoom(room, DefaultTagID.Untagged)).resolves.toMatchInlineSnapshot(
+        expect((await store.getPreviewForRoom(room, DefaultTagID.Untagged)).text).toMatchInlineSnapshot(
             `"@sender:server: Second Message Edit"`,
         );
     });
@@ -128,7 +128,7 @@ describe("MessagePreviewStore", () => {
         await store.start();
         await setupAsyncStoreWithClient(store, client);
 
-        await expect(store.getPreviewForRoom(room, DefaultTagID.DM)).resolves.toMatchInlineSnapshot(`null`);
+        await expect(store.getPreviewForRoom(room, DefaultTagID.DM)).resolves.toBeNull();
 
         const firstMessage = mkMessage({
             user: "@sender:server",
@@ -138,7 +138,7 @@ describe("MessagePreviewStore", () => {
         });
         await addEvent(store, room, firstMessage, true);
 
-        await expect(store.getPreviewForRoom(room, DefaultTagID.DM)).resolves.toMatchInlineSnapshot(
+        expect((await store.getPreviewForRoom(room, DefaultTagID.DM)).text).toMatchInlineSnapshot(
             `"@sender:server: First message"`,
         );
 
@@ -160,7 +160,7 @@ describe("MessagePreviewStore", () => {
         });
         await addEvent(store, room, randomEdit);
 
-        await expect(store.getPreviewForRoom(room, DefaultTagID.Untagged)).resolves.toMatchInlineSnapshot(
+        expect((await store.getPreviewForRoom(room, DefaultTagID.Untagged)).text).toMatchInlineSnapshot(
             `"@sender:server: First message"`,
         );
     });
@@ -175,7 +175,7 @@ describe("MessagePreviewStore", () => {
         await store.start();
         await setupAsyncStoreWithClient(store, client);
 
-        await expect(store.getPreviewForRoom(room, DefaultTagID.DM)).resolves.toMatchInlineSnapshot(`null`);
+        await expect(store.getPreviewForRoom(room, DefaultTagID.DM)).resolves.toBeNull();
 
         const firstMessage = mkMessage({
             user: "@sender:server",
@@ -185,7 +185,7 @@ describe("MessagePreviewStore", () => {
         });
         await addEvent(store, room, firstMessage);
 
-        await expect(store.getPreviewForRoom(room, DefaultTagID.DM)).resolves.toMatchInlineSnapshot(
+        expect((await store.getPreviewForRoom(room, DefaultTagID.DM)).text).toMatchInlineSnapshot(
             `"@sender:server: First message"`,
         );
 
@@ -197,7 +197,7 @@ describe("MessagePreviewStore", () => {
         });
         await addEvent(store, room, secondMessage);
 
-        await expect(store.getPreviewForRoom(room, DefaultTagID.DM)).resolves.toMatchInlineSnapshot(
+        expect((await store.getPreviewForRoom(room, DefaultTagID.DM)).text).toMatchInlineSnapshot(
             `"@sender:server: Second message"`,
         );
     });
