@@ -180,14 +180,6 @@ export class IntegrationManagers {
         Modal.createDialog(IntegrationsDisabledDialog);
     }
 
-    public async overwriteManagerOnAccount(manager: IntegrationManagerInstance): Promise<void> {
-        // TODO: TravisR - We should be logging out of scalar clients.
-        await WidgetUtils.removeIntegrationManagerWidgets(this.client);
-
-        // TODO: TravisR - We should actually be carrying over the discovery response verbatim.
-        await WidgetUtils.addIntegrationManagerWidget(this.client, manager.name, manager.uiUrl, manager.apiUrl);
-    }
-
     /**
      * Attempts to discover an integration manager using only its name. This will not validate that
      * the integration manager is functional - that is the caller's responsibility.

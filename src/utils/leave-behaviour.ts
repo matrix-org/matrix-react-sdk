@@ -102,7 +102,7 @@ export async function leaveRoomBehaviour(
         try {
             await matrixClient.leave(roomId);
         } catch (e) {
-            if (e?.data?.errcode) {
+            if (e instanceof MatrixError) {
                 const message = e.data.error || _t("Unexpected server error trying to leave the room");
                 results[roomId] = Object.assign(new Error(message), { errcode: e.data.errcode, data: e.data });
             } else {

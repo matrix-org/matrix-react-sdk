@@ -457,7 +457,7 @@ describe("RoomView", () => {
                 });
 
                 it("the last Jitsi widget should be removed", () => {
-                    expect(WidgetUtils.setRoomWidget).toHaveBeenCalledWith(room.roomId, widget2Id);
+                    expect(WidgetUtils.setRoomWidget).toHaveBeenCalledWith(cli, room.roomId, widget2Id);
                 });
             });
 

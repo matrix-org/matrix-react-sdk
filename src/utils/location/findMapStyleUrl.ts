@@ -26,7 +26,7 @@ import { LocationShareError } from "./LocationShareErrors";
  * .well-known location, or, failing that, in our local config, or, failing
  * that, defaults to the same tile server listed by matrix.org.
  */
-export function findMapStyleUrl(matrixClient: MatrixClient | undefined): string {
+export function findMapStyleUrl(matrixClient: MatrixClient): string {
     const mapStyleUrl = getTileServerWellKnown(matrixClient)?.map_style_url ?? SdkConfig.get().map_style_url;
 
     if (!mapStyleUrl) {
