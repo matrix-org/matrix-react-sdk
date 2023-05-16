@@ -173,7 +173,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
             // By expanding/collapsing we changed
             // the height, therefore we call this
-            this.props.onHeightChanged();
+            this.props.onHeightChanged?.();
         };
 
         div.appendChild(button);
@@ -294,6 +294,9 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         this.unmounted = true;
         unmountPills(this.pills);
         unmountTooltips(this.tooltips);
+
+        this.pills = [];
+        this.tooltips = [];
     }
 
     public shouldComponentUpdate(nextProps: Readonly<IBodyProps>, nextState: Readonly<IState>): boolean {

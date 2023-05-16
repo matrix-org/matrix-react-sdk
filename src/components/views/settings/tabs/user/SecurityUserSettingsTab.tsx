@@ -90,7 +90,7 @@ interface IState {
 }
 
 export default class SecurityUserSettingsTab extends React.Component<IProps, IState> {
-    private dispatcherRef: string;
+    private dispatcherRef?: string;
 
     public constructor(props: IProps) {
         super(props);
@@ -127,7 +127,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
     }
 
     public componentWillUnmount(): void {
-        dis.unregister(this.dispatcherRef);
+        if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
         MatrixClientPeg.get().removeListener(RoomEvent.MyMembership, this.onMyMembership);
     }
 

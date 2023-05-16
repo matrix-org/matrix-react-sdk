@@ -69,7 +69,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     private unmounted = true;
     private image = createRef<HTMLImageElement>();
     private timeout?: number;
-    private sizeWatcher: string;
+    private sizeWatcher?: string;
     private reconnectedListener: ClientEventHandlerMap[ClientEvent.Sync];
 
     public constructor(props: IBodyProps) {
@@ -165,6 +165,14 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     };
 
     private onImageError = (): void => {
+        // If the thumbnail failed to load then try again using the contentUrl
+        if (this.state.thumbUrl) {
+            this.setState({
+                thumbUrl: null,
+            });
+            return;
+        }
+
         this.clearBlurhashTimeout();
         this.setState({
             imgError: true,
@@ -174,7 +182,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
     private onImageLoad = (): void => {
         this.clearBlurhashTimeout();
-        this.props.onHeightChanged();
+        this.props.onHeightChanged?.();
 
         let loadedImageDimensions: IState["loadedImageDimensions"];
 
@@ -367,7 +375,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         this.unmounted = true;
         MatrixClientPeg.get().off(ClientEvent.Sync, this.reconnectedListener);
         this.clearBlurhashTimeout();
-        SettingsStore.unwatchSetting(this.sizeWatcher);
+        if (this.sizeWatcher) SettingsStore.unwatchSetting(this.sizeWatcher);
         if (this.state.isAnimated && this.state.thumbUrl) {
             URL.revokeObjectURL(this.state.thumbUrl);
         }
@@ -389,7 +397,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         thumbUrl: string | null,
         content: IMediaEventContent,
         forcedHeight?: number,
-    ): JSX.Element {
+    ): ReactNode {
         if (!thumbUrl) thumbUrl = contentUrl; // fallback
 
         // magic number
@@ -524,16 +532,25 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             </div>
         );
 
-        return contentUrl ? this.wrapImage(contentUrl, thumbnail) : thumbnail;
+        return this.wrapImage(contentUrl, thumbnail);
     }
 
     // Overridden by MStickerBody
-    protected wrapImage(contentUrl: string, children: JSX.Element): JSX.Element {
-        return (
-            <a href={contentUrl} target={this.props.forExport ? "_blank" : undefined} onClick={this.onClick}>
-                {children}
-            </a>
-        );
+    protected wrapImage(contentUrl: string | null | undefined, children: JSX.Element): ReactNode {
+        if (contentUrl) {
+            return (
+                <a href={contentUrl} target={this.props.forExport ? "_blank" : undefined} onClick={this.onClick}>
+                    {children}
+                </a>
+            );
+        } else if (!this.state.showImage) {
+            return (
+                <div role="button" onClick={this.onClick}>
+                    {children}
+                </div>
+            );
+        }
+        return children;
     }
 
     // Overridden by MStickerBody
