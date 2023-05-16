@@ -3078,5 +3078,7 @@
     "Open user settings": "Mở cài đặt người dùng",
     "Video call started in %(roomName)s.": "Cuộc gọi truyền hình đã bắt đầu trong %(roomName)s.",
     "Could not find room": "Không tìm thấy phòng",
-    "WARNING: session already verified, but keys do NOT MATCH!": "CẢNH BÁO: phiên đã được xác thực, nhưng các khóa KHÔNG KHỚP!"
+    "WARNING: session already verified, but keys do NOT MATCH!": "CẢNH BÁO: phiên đã được xác thực, nhưng các khóa KHÔNG KHỚP!",
+    "30s forward": "30 giây kế tiếp",
+    "30s backward": "30 giây trước"
 }
