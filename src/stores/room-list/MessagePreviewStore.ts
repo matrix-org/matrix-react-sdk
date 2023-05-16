@@ -98,7 +98,7 @@ interface IState {
 }
 
 export interface MessagePreview {
-    event;
+    event: MatrixEvent;
     isThreadReply: boolean;
     text: string;
 }
