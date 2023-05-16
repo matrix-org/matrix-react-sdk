@@ -72,7 +72,7 @@ describe("<CrossSigningPanel />", () => {
         });
 
         it("should render when keys are backed up", async () => {
-            mockClient.crypto!.crossSigningInfo.isStoredInSecretStorage.mockResolvedValue({ test: {} });
+            mocked(mockClient.crypto!.crossSigningInfo).isStoredInSecretStorage.mockResolvedValue({ test: {} });
             getComponent();
             await flushPromises();
 
