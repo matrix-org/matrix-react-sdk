@@ -23,6 +23,15 @@ import { LocalRoom, LocalRoomState } from "../models/LocalRoom";
 import { isLocalRoom } from "./localRoom/isLocalRoom";
 import { isRoomReady } from "./localRoom/isRoomReady";
 
+const isActualRoomIdDefined = (actualRoomId: string | undefined): actualRoomId is string => {
+    if (actualRoomId === undefined) {
+        // should not happen
+        throw new Error("Local room in CREATED state without actual room Id occurred");
+    }
+
+    return true;
+};
+
 /**
  * Does a room action:
  * For non-local rooms it calls fn directly.
@@ -45,7 +54,7 @@ export async function doMaybeLocalRoomAction<T>(
         client = client ?? MatrixClientPeg.get();
         const room = client.getRoom(roomId) as LocalRoom;
 
-        if (room.isCreated) {
+        if (room.isCreated && isActualRoomIdDefined(room.actualRoomId)) {
             return fn(room.actualRoomId);
         }
 
@@ -71,17 +80,19 @@ export async function doMaybeLocalRoomAction<T>(
  * @async
  * @param {MatrixClient} client
  * @param {LocalRoom} localRoom
+ * @param actualRoomId Id of the actual room
  * @returns {Promise<string>} Resolved to the actual room id
  */
 export async function waitForRoomReadyAndApplyAfterCreateCallbacks(
     client: MatrixClient,
     localRoom: LocalRoom,
+    actualRoomId: string,
 ): Promise<string> {
     if (isRoomReady(client, localRoom)) {
-        return applyAfterCreateCallbacks(localRoom, localRoom.actualRoomId).then(() => {
+        return applyAfterCreateCallbacks(localRoom, actualRoomId).then(() => {
             localRoom.state = LocalRoomState.CREATED;
             client.emit(ClientEvent.Room, localRoom);
-            return Promise.resolve(localRoom.actualRoomId);
+            return Promise.resolve(actualRoomId);
         });
     }
 
@@ -90,10 +101,10 @@ export async function waitForRoomReadyAndApplyAfterCreateCallbacks(
             if (checkRoomStateIntervalHandle) clearInterval(checkRoomStateIntervalHandle);
             if (stopgapTimeoutHandle) clearTimeout(stopgapTimeoutHandle);
 
-            applyAfterCreateCallbacks(localRoom, localRoom.actualRoomId).then(() => {
+            applyAfterCreateCallbacks(localRoom, actualRoomId).then(() => {
                 localRoom.state = LocalRoomState.CREATED;
                 client.emit(ClientEvent.Room, localRoom);
-                resolve(localRoom.actualRoomId);
+                resolve(actualRoomId);
             });
         };
 
