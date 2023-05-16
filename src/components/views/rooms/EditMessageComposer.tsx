@@ -49,6 +49,7 @@ import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { editorRoomKey, editorStateKey } from "../../../Editing";
 import DocumentOffset from "../../../editor/offset";
 import { attachMentions, attachRelation } from "./SendMessageComposer";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
     const html = mxEvent.getContent().formatted_body;
@@ -177,6 +178,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                     events: this.events,
                     isForward: false,
                     fromEventId: this.props.editState.getEvent().getId(),
+                    matrixClient: MatrixClientPeg.get(),
                 });
                 if (previousEvent) {
                     dis.dispatch({
@@ -196,6 +198,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                     events: this.events,
                     isForward: true,
                     fromEventId: this.props.editState.getEvent().getId(),
+                    matrixClient: MatrixClientPeg.get(),
                 });
                 if (nextEvent) {
                     dis.dispatch({

@@ -34,6 +34,7 @@ import MVoiceMessageBody from "../messages/MVoiceMessageBody";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { renderReplyTile } from "../../../events/EventTileFactory";
 import { GetRelationsForEvent } from "../rooms/EventTile";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -111,6 +112,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
 
         const { hasRenderer, isInfoMessage, isSeeingThroughMessageHiddenForModeration } = getEventDisplayInfo(
             mxEvent,
+            MatrixClientPeg.get(),
             false /* Replies are never hidden, so this should be fine */,
         );
         // This shouldn't happen: the caller should check we support this type
