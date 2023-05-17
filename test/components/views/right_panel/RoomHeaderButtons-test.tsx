@@ -74,15 +74,19 @@ describe("RoomHeaderButtons-test.tsx", function () {
     });
 
     it("thread notification does change the thread button", () => {
-        const { container } = getComponent(room);
+        const { container, asFragment } = getComponent(room);
         expect(getThreadButton(container)!.className.includes("mx_RoomHeader_button--unread")).toBeFalsy();
 
         room.setThreadUnreadNotificationCount("$123", NotificationCountType.Total, 1);
         expect(getThreadButton(container)!.className.includes("mx_RoomHeader_button--unread")).toBeTruthy();
         expect(isIndicatorOfType(container, "gray")).toBe(true);
 
+        expect(asFragment()).toMatchSnapshot();
+
         room.setThreadUnreadNotificationCount("$123", NotificationCountType.Highlight, 1);
         expect(isIndicatorOfType(container, "red")).toBe(true);
+
+        expect(asFragment()).toMatchSnapshot();
 
         room.setThreadUnreadNotificationCount("$123", NotificationCountType.Total, 0);
         room.setThreadUnreadNotificationCount("$123", NotificationCountType.Highlight, 0);
@@ -91,7 +95,7 @@ describe("RoomHeaderButtons-test.tsx", function () {
     });
 
     it("thread activity does change the thread button", async () => {
-        const { container } = getComponent(room);
+        const { container, asFragment } = getComponent(room);
 
         // Thread activity should appear on the icon.
         const { rootEvent, events } = mkThread({
@@ -137,6 +141,8 @@ describe("RoomHeaderButtons-test.tsx", function () {
         });
         room.addLiveEvents([event]);
         expect(isIndicatorOfType(container, "bold")).toBe(true);
+
+        expect(asFragment()).toMatchSnapshot();
 
         // Sending a read receipt on an earlier event shouldn't do anything.
         let receipt = new MatrixEvent({
