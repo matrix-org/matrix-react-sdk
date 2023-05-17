@@ -578,10 +578,9 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         delete sanitizeParams.textFilter;
     }
 
-    const contentBody = safeBody ?? strippedBody;
-
     let emojiBody = false;
     if (!opts.disableBigEmoji && bodyHasEmoji) {
+        const contentBody = safeBody ?? strippedBody;
         let contentBodyTrimmed = contentBody !== undefined ? contentBody.trim() : "";
 
         // Remove zero width joiner, zero width spaces and other spaces in body
@@ -601,13 +600,13 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
                 (!content.formatted_body.includes("http:") && !content.formatted_body.includes("https:")));
     }
 
-    if (isFormattedBody && bodyHasEmoji) {
+    if (isFormattedBody && bodyHasEmoji && safeBody) {
         // This has to be done after the emojiBody check above as to not break big emoji on replies
         safeBody = formatEmojis(safeBody, true).join("");
     }
 
     if (opts.returnString) {
-        return contentBody;
+        return safeBody ?? strippedBody;
     }
 
     const className = classNames({
