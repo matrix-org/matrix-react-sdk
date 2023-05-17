@@ -23,8 +23,8 @@ import { addReplyToMessageContent } from "../../../../../utils/Reply";
 
 export const EMOTE_PREFIX = "/me ";
 
-// TODO if at-room mentions change to become spans in the rust model we will have to
-// amend at-room handling
+// TODO if at-room mentions change to become spans or plain text in the rust model
+// html output then we will have to amend at-room handling
 const atRoomRegex = /(<a[^>]*data-mention-type="at-room"[^>]*>@room<\/a>)/g;
 
 // Merges favouring the given relation
