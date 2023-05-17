@@ -697,13 +697,13 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     const type = imgBlob.type;
                     const safetype = getBlobSafeMimeType(type);
                     const ext=type.split("/")[1];
-                    const file = new File([imgBlob],"safari_inserted_content."+ext,{type:safetype});
+                    const file = new File([imgBlob],"file."+ext,{type:safetype});
                     ContentMessages.sharedInstance().sendContentToRoom(
                         file,
                         this.props.room.roomId,
                         this.props.relation,
                         this.props.mxClient,
-                        null,
+                        this.context.replyToEvent,
                     );
                 },
                 (error) => {
