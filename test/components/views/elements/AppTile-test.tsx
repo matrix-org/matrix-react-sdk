@@ -362,7 +362,7 @@ describe("AppTile", () => {
         it("should render", () => {
             const { asFragment } = renderResult;
 
-            expect(asFragment().querySelector(".mx_Spinner")).toBeFalsy(); // Assert that the spinner is gone
+            expect(container.querySelector(".mx_Spinner")).toBeFalsy(); // Assert that the spinner is gone
             expect(asFragment()).toMatchSnapshot(); // Take a snapshot of the pinned widget
         });
 
