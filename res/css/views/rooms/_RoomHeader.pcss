@@ -194,7 +194,7 @@ limitations under the License.
     }
 }
 
-.mx_RoomHeader_button_unreadIndicator_bg {
+.mx_RoomHeader_button_indicator_bg {
     position: absolute;
     right: var(--RoomHeader-indicator-dot-offset);
     top: var(--RoomHeader-indicator-dot-offset);
@@ -239,6 +239,11 @@ limitations under the License.
 
 .mx_RoomHeader_button_indicator {
     position: absolute;
+    right: var(--RoomHeader-indicator-dot-offset);
+    top: var(--RoomHeader-indicator-dot-offset);
+    margin: 4px;
+
+    position: absolute;
     right: -3px;
     top: -3px;
     width: var(--RoomHeader-indicator-dot-size);
@@ -265,13 +270,6 @@ limitations under the License.
         border-radius: 50%;
         background: inherit;
     }
-}
-
-.mx_RoomHeader_button_unreadIndicator {
-    position: absolute;
-    right: var(--RoomHeader-indicator-dot-offset);
-    top: var(--RoomHeader-indicator-dot-offset);
-    margin: 4px;
 
     &.mx_RoomHeader_button_indicator_red {
         background: rgba($alert, 1);

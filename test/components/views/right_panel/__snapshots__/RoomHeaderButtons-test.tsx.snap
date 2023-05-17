@@ -44,10 +44,10 @@ exports[`RoomHeaderButtons-test.tsx thread activity does change the thread butto
     tabindex="0"
   >
     <div
-      class="mx_RoomHeader_button_unreadIndicator_bg"
+      class="mx_RoomHeader_button_indicator_bg"
     />
     <div
-      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_unreadIndicator mx_RoomHeader_button_indicator_bold"
+      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator_bold"
     />
   </div>
   <div
@@ -59,10 +59,10 @@ exports[`RoomHeaderButtons-test.tsx thread activity does change the thread butto
     tabindex="0"
   >
     <div
-      class="mx_RoomHeader_button_unreadIndicator_bg"
+      class="mx_RoomHeader_button_indicator_bg"
     />
     <div
-      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_unreadIndicator mx_RoomHeader_button_indicator_bold"
+      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator_bold"
     />
   </div>
   <div
@@ -92,10 +92,10 @@ exports[`RoomHeaderButtons-test.tsx thread notification does change the thread b
     tabindex="0"
   >
     <div
-      class="mx_RoomHeader_button_unreadIndicator_bg"
+      class="mx_RoomHeader_button_indicator_bg"
     />
     <div
-      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_unreadIndicator mx_RoomHeader_button_indicator_gray"
+      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator_gray"
     />
   </div>
   <div
@@ -107,10 +107,10 @@ exports[`RoomHeaderButtons-test.tsx thread notification does change the thread b
     tabindex="0"
   >
     <div
-      class="mx_RoomHeader_button_unreadIndicator_bg"
+      class="mx_RoomHeader_button_indicator_bg"
     />
     <div
-      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_unreadIndicator mx_RoomHeader_button_indicator_gray"
+      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator_gray"
     />
   </div>
   <div
@@ -140,10 +140,10 @@ exports[`RoomHeaderButtons-test.tsx thread notification does change the thread b
     tabindex="0"
   >
     <div
-      class="mx_RoomHeader_button_unreadIndicator_bg"
+      class="mx_RoomHeader_button_indicator_bg"
     />
     <div
-      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_unreadIndicator mx_RoomHeader_button_indicator_red"
+      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator_red"
     />
   </div>
   <div
@@ -155,10 +155,10 @@ exports[`RoomHeaderButtons-test.tsx thread notification does change the thread b
     tabindex="0"
   >
     <div
-      class="mx_RoomHeader_button_unreadIndicator_bg"
+      class="mx_RoomHeader_button_indicator_bg"
     />
     <div
-      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_unreadIndicator mx_RoomHeader_button_indicator_red"
+      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator_red"
     />
   </div>
   <div

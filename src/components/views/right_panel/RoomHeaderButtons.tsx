@@ -64,14 +64,13 @@ const UnreadIndicator: React.FC<IUnreadIndicatorProps> = ({ color }) => {
 
     const classes = classNames({
         mx_RoomHeader_button_indicator: true,
-        mx_RoomHeader_button_unreadIndicator: true,
         mx_RoomHeader_button_indicator_bold: color === NotificationColor.Bold,
         mx_RoomHeader_button_indicator_gray: color === NotificationColor.Grey,
         mx_RoomHeader_button_indicator_red: color === NotificationColor.Red,
     });
     return (
         <>
-            <div className="mx_RoomHeader_button_unreadIndicator_bg" />
+            <div className="mx_RoomHeader_button_indicator_bg" />
             <div className={classes} />
         </>
     );
