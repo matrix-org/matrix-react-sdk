@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, forwardRef, MouseEvent, ReactNode, RefObject, useRef } from "react";
+import React, { createRef, forwardRef, MouseEvent, ReactNode, useRef } from "react";
 import classNames from "classnames";
 import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
@@ -513,6 +513,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         evt.preventDefault();
         evt.stopPropagation();
         const { permalinkCreator, mxEvent } = this.props;
+        if (!permalinkCreator) return;
         const matrixToUrl = permalinkCreator.forEvent(mxEvent.getId()!);
         await copyPlaintext(matrixToUrl);
     };
@@ -1436,10 +1437,10 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 }
 
 // Wrap all event tiles with the tile error boundary so that any throws even during construction are captured
-const SafeEventTile = forwardRef((props: EventTileProps, ref: RefObject<UnwrappedEventTile>) => {
+const SafeEventTile = forwardRef<UnwrappedEventTile, EventTileProps>((props, ref) => {
     return (
         <>
-            <TileErrorBoundary mxEvent={props.mxEvent} layout={props.layout}>
+            <TileErrorBoundary mxEvent={props.mxEvent} layout={props.layout ?? Layout.Group}>
                 <UnwrappedEventTile ref={ref} {...props} />
             </TileErrorBoundary>
         </>
