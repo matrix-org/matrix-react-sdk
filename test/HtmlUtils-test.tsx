@@ -106,4 +106,40 @@ describe("bodyToHtml", () => {
 
         expect(html).toMatchInlineSnapshot(`"<span class="mx_EventTile_searchHighlight">test</span> foo &lt;b&gt;bar"`);
     });
+
+    describe("feature_latex_maths", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((feature) => feature === "feature_latex_maths");
+        });
+
+        it("should render inline katex", () => {
+            const html = getHtml({
+                body: "hello \\xi world",
+                msgtype: "m.text",
+                formatted_body: 'hello <span data-mx-maths="\\xi"><code>\\xi</code></span> world',
+                format: "org.matrix.custom.html",
+            });
+            expect(html).toMatchSnapshot();
+        });
+
+        it("should render block katex", () => {
+            const html = getHtml({
+                body: "hello \\xi world",
+                msgtype: "m.text",
+                formatted_body: '<p>hello</p><div data-mx-maths="\\xi"><code>\\xi</code></div><p>world</p>',
+                format: "org.matrix.custom.html",
+            });
+            expect(html).toMatchSnapshot();
+        });
+
+        it("should not mangle code blocks", () => {
+            const html = getHtml({
+                body: "hello \\xi world",
+                msgtype: "m.text",
+                formatted_body: "<p>hello</p><pre><code>$\\xi$</code></pre><p>world</p>",
+                format: "org.matrix.custom.html",
+            });
+            expect(html).toMatchSnapshot();
+        });
+    });
 });
