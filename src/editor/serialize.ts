@@ -152,7 +152,7 @@ export function htmlSerializeFromMdIfNeeded(md: string, { forceHTML = false } = 
             // code blocks could contain mangled content.
             // replace code blocks with original content
             [...phtmlOrig.getElementsByTagName("code")].forEach((e, i) => {
-                phtml.getElementsByTagName("code").item(i)!.innerHTML = e.innerHTML;
+                phtml.getElementsByTagName("code").item(i)!.textContent = e.textContent;
             });
 
             // add fallback output for latex math, which should not be interpreted as markdown

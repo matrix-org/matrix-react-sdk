@@ -549,7 +549,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
 
             safeBody = sanitizeHtml(formattedBody!, sanitizeParams);
             const phtml = new DOMParser().parseFromString(safeBody, "text/html");
-            const isPlainText = phtml.body.innerHTML === phtml.body.innerText;
+            const isPlainText = phtml.body.innerHTML === phtml.body.textContent;
             isHtmlMessage = !isPlainText;
 
             if (isHtmlMessage && SettingsStore.getValue("feature_latex_maths")) {
