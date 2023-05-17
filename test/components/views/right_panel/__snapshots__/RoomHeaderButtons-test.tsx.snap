@@ -47,7 +47,7 @@ exports[`RoomHeaderButtons-test.tsx thread activity does change the thread butto
       class="mx_RoomHeader_button_indicator_bg"
     />
     <div
-      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator_bold"
+      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator--bold"
     />
   </div>
   <div
@@ -62,7 +62,7 @@ exports[`RoomHeaderButtons-test.tsx thread activity does change the thread butto
       class="mx_RoomHeader_button_indicator_bg"
     />
     <div
-      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator_bold"
+      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator--bold"
     />
   </div>
   <div
@@ -95,7 +95,7 @@ exports[`RoomHeaderButtons-test.tsx thread notification does change the thread b
       class="mx_RoomHeader_button_indicator_bg"
     />
     <div
-      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator_gray"
+      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator--gray"
     />
   </div>
   <div
@@ -110,7 +110,7 @@ exports[`RoomHeaderButtons-test.tsx thread notification does change the thread b
       class="mx_RoomHeader_button_indicator_bg"
     />
     <div
-      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator_gray"
+      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator--gray"
     />
   </div>
   <div
@@ -143,7 +143,7 @@ exports[`RoomHeaderButtons-test.tsx thread notification does change the thread b
       class="mx_RoomHeader_button_indicator_bg"
     />
     <div
-      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator_red"
+      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator--red"
     />
   </div>
   <div
@@ -158,7 +158,7 @@ exports[`RoomHeaderButtons-test.tsx thread notification does change the thread b
       class="mx_RoomHeader_button_indicator_bg"
     />
     <div
-      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator_red"
+      class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator--red"
     />
   </div>
   <div
