@@ -134,8 +134,16 @@ describe("Room Header", () => {
     });
 
     describe("with a video room", () => {
-        const createVideoRoom = () => {
-            // Enable video rooms. This command reloads the app
+        /**
+         * Create a video room.
+         * @param elementCall Enable feature_element_call_video_rooms. This is set to false by default.
+         */
+        const createVideoRoom = (elementCall = false) => {
+            if (elementCall) {
+                cy.setSettingValue("feature_element_call_video_rooms", null, SettingLevel.DEVICE, true);
+            }
+
+            // Enable video rooms. This reloads the app
             cy.setSettingValue("feature_video_rooms", null, SettingLevel.DEVICE, true);
 
             cy.get(".mx_LeftPanel_roomListContainer", { timeout: 20000 })
@@ -146,7 +154,11 @@ describe("Room Header", () => {
 
             cy.findByRole("textbox", { name: "Name" }).type("Test video room");
 
-            cy.findByRole("button", { name: "Create video room" }).click();
+            if (elementCall) {
+                cy.findByRole("button", { name: "Create room" }).click();
+            } else {
+                cy.findByRole("button", { name: "Create video room" }).click();
+            }
 
             cy.viewRoomByName("Test video room");
         };
@@ -174,6 +186,56 @@ describe("Room Header", () => {
             });
 
             cy.get(".mx_RoomHeader").percySnapshotElement("Room header - with a video room");
+        });
+
+        it("should render buttons for Element Call", () => {
+            // Names (aria-label) of the buttons on the room header
+            const expectedButtonNames = [
+                "Room options",
+                "Video rooms are a beta feature Click for more info", // Beta pill
+                "Invite",
+                "Change layout", // Freedom or Spotlight
+                "Chat",
+                "Room info",
+            ];
+
+            createVideoRoom(true); // Create Element Call video room
+
+            cy.get(".mx_CallView").within(() => {
+                // Click "Join" button
+                cy.findByRole("button", { name: "Join" }).click();
+            });
+
+            // Wait until the user joined the room
+            cy.get("iframe[title='Element Call']", { timeout: 30000 }).should("exist");
+
+            // Assert that the freedom layout button is rendered
+            cy.get(".mx_RoomHeader_layoutButton--freedom").should("exist");
+
+            cy.get(".mx_RoomHeader").within(() => {
+                // Assert the buttons are found and visible
+                for (const name of expectedButtonNames) {
+                    cy.findByRole("button", { name }).should("be.visible");
+                }
+            });
+
+            cy.get(".mx_RoomHeader").within(() => {
+                // Click "Change layout" button
+                cy.findByRole("button", { name: "Change layout" }).should("exist").click();
+            });
+
+            // Select "Spotlight" layout from the contextual menu
+            cy.findByRole("menuitemradio", { name: "Spotlight" }).should("exist").click();
+
+            // Assert that the spotlight layout button is rendered
+            cy.get("mx_RoomHeader_layoutButton--spotlight").should("exist");
+
+            cy.get(".mx_RoomHeader").within(() => {
+                // Assert the buttons are found and visible
+                for (const name of expectedButtonNames) {
+                    cy.findByRole("button", { name }).should("be.visible");
+                }
+            });
         });
 
         it("should render a working chat button which opens the timeline on a right panel", () => {
