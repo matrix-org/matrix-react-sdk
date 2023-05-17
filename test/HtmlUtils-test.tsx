@@ -108,35 +108,27 @@ describe("bodyToHtml", () => {
     });
 
     it("should generate big emoji for an emoji-only reply to a message", () => {
-        const html = bodyToHtml(
-            {
-                "body": "> <@sender1:server> Test\n\n🥰",
-                "format": "org.matrix.custom.html",
-                "formatted_body":
-                    '<mx-reply><blockquote><a href="https://matrix.to/#/!roomId:server/$eventId">In reply to</a> <a href="https://matrix.to/#/@sender1:server">@sender1:server</a><br>Test</blockquote></mx-reply>🥰',
-                "m.relates_to": {
-                    "m.in_reply_to": {
-                        event_id: "$eventId",
+        const { asFragment } = render(
+            bodyToHtml(
+                {
+                    "body": "> <@sender1:server> Test\n\n🥰",
+                    "format": "org.matrix.custom.html",
+                    "formatted_body":
+                        '<mx-reply><blockquote><a href="https://matrix.to/#/!roomId:server/$eventId">In reply to</a> <a href="https://matrix.to/#/@sender1:server">@sender1:server</a><br>Test</blockquote></mx-reply>🥰',
+                    "m.relates_to": {
+                        "m.in_reply_to": {
+                            event_id: "$eventId",
+                        },
                     },
+                    "msgtype": "m.text",
                 },
-                "msgtype": "m.text",
-            },
-            [],
-            {
-                stripReplyFallback: true,
-            },
+                [],
+                {
+                    stripReplyFallback: true,
+                },
+            ) as ReactElement,
         );
 
-        expect(html).toMatchInlineSnapshot(`
-            <span
-              className="mx_EventTile_body mx_EventTile_bigEmoji"
-              dangerouslySetInnerHTML={
-                {
-                  "__html": "<span class='mx_Emoji' title=':smiling_face_with_3_hearts:'>🥰</span>",
-                }
-              }
-              dir="auto"
-            />
-        `);
+        expect(asFragment()).toMatchSnapshot();
     });
 });
