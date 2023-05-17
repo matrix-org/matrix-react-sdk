@@ -61,7 +61,6 @@ import { SdkContextClass } from "../../../contexts/SDKContext";
 import { VoiceBroadcastInfoState } from "../../../voice-broadcast";
 import { createCantStartVoiceMessageBroadcastDialog } from "../dialogs/CantStartVoiceMessageBroadcastDialog";
 import { UIFeature } from "../../../settings/UIFeature";
-import { amendLinksInPlainText } from "./wysiwyg_composer/utils/mentions";
 
 let instanceCount = 0;
 
@@ -371,15 +370,9 @@ export class MessageComposer extends React.Component<IProps, IState> {
         const { richToPlain, plainToRich } = await getConversionFunctions();
 
         const { isRichTextEnabled, composerContent } = this.state;
-        let convertedContent: string;
-        if (isRichTextEnabled) {
-            convertedContent = await richToPlain(composerContent);
-            // when we toggle from rich to plain, we may need to amend some of the links in the
-            // markdown for the plain text composer to ensure mention pill display is consistent
-            convertedContent = amendLinksInPlainText(composerContent, convertedContent);
-        } else {
-            convertedContent = await plainToRich(composerContent);
-        }
+        const convertedContent = isRichTextEnabled
+            ? await richToPlain(composerContent)
+            : await plainToRich(composerContent);
 
         this.setState({
             isRichTextEnabled: !isRichTextEnabled,
@@ -500,6 +493,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
                         menuPosition={menuPosition}
                         placeholder={this.renderPlaceholderText()}
                         eventRelation={this.props.relation}
+                        room={this.props.room}
                     />
                 );
             } else {
