@@ -22,6 +22,14 @@ const richTextLinkRegex = /(<a.*?<\/a>)/g;
 // a markdown link looks like [link text](<href>), regex uses lookahead and negation to avoid super-linear performance
 const mdLinkRegex = /\[(?=([^\]]*))\1\]\(<(?=([^>]*))\2>\)/g;
 
+/**
+ * Takes the rich text and plain text representations from the rust model and uses them to return a string
+ * of HTML that can be used to set the PlainTextComposer when toggling from rich to plain mode.
+ *
+ * @param richText - the rich text output from the rust model
+ * @param plainText - the plain text output from the rust model
+ * @returns - string of HTML for setting the innerHTML of the PlainTextComposer
+ */
 export function amendLinksInPlainText(richText: string, plainText: string): string {
     // find all of the links in the rich text first as these will contain all the required attributes
     const richTextLinkMatches = richText.match(richTextLinkRegex);
