@@ -31,7 +31,6 @@ import React, {
 import { getKeyBindingsManager } from "../KeyBindingsManager";
 import { KeyBindingAction } from "./KeyboardShortcuts";
 import { FocusHandler, Ref } from "./roving/types";
-import { moveElement } from "../utils/arrays";
 
 /**
  * Module to simplify implementing the Roving TabIndex accessibility technique
