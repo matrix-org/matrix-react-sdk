@@ -85,7 +85,7 @@ const drop = async (element: HTMLElement) => {
     fireEvent.keyDown(element, {
         keyCode: Keys.SPACE,
     });
-    fireEvent(element.parentElement, createTransitionEndEvent());
+    fireEvent(element.parentElement!, createTransitionEndEvent());
 
     await screen.findByText(/You have dropped the item/i);
 };
