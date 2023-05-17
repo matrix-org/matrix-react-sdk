@@ -16,6 +16,8 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
+import { IWidget } from "matrix-widget-api";
+
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 
@@ -188,6 +190,105 @@ describe("Room Header", () => {
                     // Assert that GELS is visible
                     cy.findByText("Sakura created and configured the room.").should("exist");
                 });
+        });
+    });
+
+    describe("with a widget", () => {
+        const ROOM_NAME = "Test Room with a widget";
+        const WIDGET_ID = "fake-widget";
+        const WIDGET_HTML = `
+            <html lang="en">
+                <head>
+                    <title>Fake Widget</title>
+                </head>
+                <body>
+                    Hello World
+                </body>
+            </html>
+        `;
+
+        let widgetUrl: string;
+        let roomId: string;
+
+        beforeEach(() => {
+            cy.serveHtmlFile(WIDGET_HTML).then((url) => {
+                widgetUrl = url;
+            });
+
+            cy.createRoom({ name: ROOM_NAME }).then((id) => {
+                roomId = id;
+
+                // setup widget via state event
+                cy.getClient()
+                    .then(async (matrixClient) => {
+                        const content: IWidget = {
+                            id: WIDGET_ID,
+                            creatorUserId: "somebody",
+                            type: "widget",
+                            name: "widget",
+                            url: widgetUrl,
+                        };
+                        await matrixClient.sendStateEvent(roomId, "im.vector.modular.widgets", content, WIDGET_ID);
+                    })
+                    .as("widgetEventSent");
+
+                // set initial layout
+                cy.getClient()
+                    .then(async (matrixClient) => {
+                        const content = {
+                            widgets: {
+                                [WIDGET_ID]: {
+                                    container: "top",
+                                    index: 1,
+                                    width: 100,
+                                    height: 0,
+                                },
+                            },
+                        };
+                        await matrixClient.sendStateEvent(roomId, "io.element.widgets.layout", content, "");
+                    })
+                    .as("layoutEventSent");
+            });
+
+            cy.all([cy.get<string>("@widgetEventSent"), cy.get<string>("@layoutEventSent")]).then(() => {
+                // open the room
+                cy.viewRoomByName(ROOM_NAME);
+            });
+        });
+
+        it("should highlight the apps button", () => {
+            // Assert that AppsDrawer is rendered
+            cy.get(".mx_AppsDrawer").should("exist");
+
+            cy.get(".mx_RoomHeader").within(() => {
+                cy.findByRole("button", { name: "Hide Widgets" })
+                    .should("exist") // Assert that the apps button is rendered
+                    .then(($btn) => {
+                        // Note it is not possible to get CSS values of a pseudo class with "have.css".
+                        const color = $btn[0].ownerDocument.defaultView // get window reference from element
+                            .getComputedStyle($btn[0], "before") // get the pseudo selector
+                            .getPropertyValue("background-color"); // get "background-color" value
+
+                        // Assert the value is equal to $accent == hex #0dbd8b == rgba(13, 189, 139)
+                        expect(color).to.eq("rgb(13, 189, 139)");
+                    });
+            });
+
+            cy.get(".mx_RoomHeader").percySnapshotElement("Room header - with apps button (highlighted)");
+        });
+
+        it("should support hiding a widget", () => {
+            cy.get(".mx_AppsDrawer").should("exist");
+
+            cy.get(".mx_RoomHeader").within(() => {
+                // Click the apps button to hide AppsDrawer
+                cy.findByRole("button", { name: "Hide Widgets" }).should("exist").click();
+            });
+
+            // Assert that AppsDrawer is not rendered
+            cy.get(".mx_AppsDrawer").should("not.exist");
+
+            cy.get(".mx_RoomHeader").percySnapshotElement("Room header - with apps button (not highlighted)");
         });
     });
 });
