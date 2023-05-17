@@ -16,6 +16,7 @@ limitations under the License.
 
 import classNames from "classnames";
 import React, { MutableRefObject, ReactNode } from "react";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { useComposerFunctions } from "../hooks/useComposerFunctions";
 import { useIsFocused } from "../hooks/useIsFocused";
@@ -25,6 +26,7 @@ import { useSetCursorPosition } from "../hooks/useSetCursorPosition";
 import { ComposerFunctions } from "../types";
 import { Editor } from "./Editor";
 import { WysiwygAutocomplete } from "./WysiwygAutocomplete";
+import { useMatrixClientContext } from "../../../../../contexts/MatrixClientContext";
 
 interface PlainTextComposerProps {
     disabled?: boolean;
@@ -35,6 +37,7 @@ interface PlainTextComposerProps {
     className?: string;
     leftComponent?: ReactNode;
     rightComponent?: ReactNode;
+    room: Room;
     children?: (ref: MutableRefObject<HTMLDivElement | null>, composerFunctions: ComposerFunctions) => ReactNode;
 }
 
@@ -48,6 +51,7 @@ export function PlainTextComposer({
     initialContent,
     leftComponent,
     rightComponent,
+    room,
 }: PlainTextComposerProps): JSX.Element {
     const {
         ref: editorRef,
@@ -63,8 +67,9 @@ export function PlainTextComposer({
         handleMention,
     } = usePlainTextListeners(initialContent, onChange, onSend);
 
+    const client = useMatrixClientContext();
     const composerFunctions = useComposerFunctions(editorRef, setContent);
-    usePlainTextInitialization(initialContent, editorRef);
+    usePlainTextInitialization(initialContent, editorRef, room, client, onChange);
     useSetCursorPosition(disabled, editorRef);
     const { isFocused, onFocus } = useIsFocused();
     const computedPlaceholder = (!content && placeholder) || undefined;

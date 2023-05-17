@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { ForwardedRef, forwardRef, MutableRefObject, useRef } from "react";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { IEventRelation } from "matrix-js-sdk/src/models/event";
 
 import { useWysiwygSendActionHandler } from "./hooks/useWysiwygSendActionHandler";
@@ -50,6 +51,7 @@ interface SendWysiwygComposerProps {
     onSend: () => void;
     menuPosition: MenuProps;
     eventRelation?: IEventRelation;
+    room: Room;
 }
 
 // Default needed for React.lazy
