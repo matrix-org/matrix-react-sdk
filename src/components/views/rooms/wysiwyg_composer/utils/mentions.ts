@@ -14,7 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+
 import { parsePermalink } from "../../../../../utils/permalinks/Permalinks";
+import { getMentionAttributes } from "./autocomplete";
+import { ICompletion } from "../../../../../autocomplete/Autocompleter";
 
 // A rich text link looks like <a href="href"...>link text</a>
 const richTextLinkRegex = /(<a.*?<\/a>)/g;
@@ -25,45 +29,57 @@ const richTextLinkRegex = /(<a.*?<\/a>)/g;
 // with a backreference \1. Since the backreference matches something that has already matched, it will not backtrack.
 const mdLinkRegex = /\[(?=([^\]]*))\1\]\(<(?=([^>]*))\2>\)/g;
 
-/**
- * Takes the rich text and plain text representations from the rust model and uses them to return a string
- * of HTML that can be used to set the PlainTextComposer when toggling from rich to plain mode.
- * Regular markdown links will be transformed from [text](<href>) to [text](href) to allow us to display
- * them properly without interpreting the <> as html.
- * Mentions will be transformed from [mentionText](<mentionHref>) to their html equivalent ie
- * <a href="mentionHref" ...other attributes>mentionText</a> to allow them to be displayed as pills.
- *
- * @param richText - the rich text output from the rust model
- * @param plainText - the plain text output from the rust model
- * @returns - string of HTML for setting the innerHTML of the PlainTextComposera
- */
-export function amendLinksInPlainText(richText: string, plainText: string): string {
-    // find all of the links in the rich text first as these will contain all the required attributes
-    const richTextLinkMatches = richText.match(richTextLinkRegex);
-    if (richTextLinkMatches === null) {
-        // we have no links, so no processing required
-        return plainText;
+export function wipFormatter(text: string, room: Room, client: MatrixClient): string {
+    return text.replace(mdLinkRegex, (match, linkText, href) => {
+        const stuff = getMentionStuff(href, linkText, room, client);
+        if (stuff === null) {
+            return `[${linkText}](${href})`;
+        }
+        return stuff;
+    });
+}
+
+function getMentionStuff(url: string, displayText: string, room: Room, client: MatrixClient): string | null {
+    const parseResult = parsePermalink(url);
+    // expand this to check href later when it's changed to "#"
+    if (parseResult === null && displayText === "@room") {
+        // at-room special case
+        return `<a data-mention-type="at-room" contenteditable="false" href="#">${displayText}</a>`;
+    }
+    console.log("<<< parseResult", parseResult);
+
+    if (parseResult === null || parseResult.primaryEntityId === null) return null;
+    const resourceId = parseResult.primaryEntityId;
+    if (resourceId.startsWith("@")) {
+        const attributes = getMentionAttributes(
+            { type: "user", completionId: resourceId, completion: displayText } as ICompletion,
+            client,
+            room,
+        );
+        const attributeString = Object.entries(attributes)
+            .map(([k, v]) => `${k}="${v}"`)
+            .join(" ");
+        console.log("<<< attrstring", attributeString);
+        return `<a ${attributeString} contenteditable="false" href="${url}">${displayText}</a>`;
+    }
+    if (resourceId.startsWith("#")) {
+        const displayRoom = client.getVisibleRooms().find((r) => r.name === displayText);
+
+        console.log("<<< room", displayRoom);
+        const attributes = getMentionAttributes(
+            { type: "room", completionId: displayRoom?.roomId ?? resourceId, completion: resourceId } as ICompletion,
+            client,
+            room,
+        );
+        const attributeString = Object.entries(attributes)
+            .map(([k, v]) => `${k}="${v}"`)
+            .join(" ");
+        console.log("<<< attrstring", attributeString);
+
+        return `<a ${attributeString} contenteditable="false" href="${url}">${displayText}</a>`;
     }
 
-    // we have found all of the <a> type links in the rich text, now search through the plain text and:
-    // - if the href can not be interpreted as a permalink, render it in the markdown style
-    // - otherwise, replace the permalink with the html containing all the attributes to display as a pill
-    let count = 0;
-    const plainTextWithReplacedLinks = plainText.replace(mdLinkRegex, (match, linkText, href) => {
-        // special case for @room, as this has a href of "#"
-        if (linkText === "@room") {
-            const toReturn = richTextLinkMatches[count];
-            count++;
-            return toReturn;
-        }
+    console.log("<<< resourceId", resourceId);
 
-        // if parsePermalink returns null, return the link in the markdown style [linktext](href), ie this
-        // removes the enclosing <> from around the href that we have output from the rust model markdown
-        const permalink = parsePermalink(href);
-        const toReturn = permalink === null ? `[${linkText}](${href})` : richTextLinkMatches[count];
-        count++;
-        return toReturn;
-    });
-
-    return plainTextWithReplacedLinks;
+    return `missed all cases for ${displayText}`;
 }
