@@ -42,7 +42,8 @@ export function amendLinksInPlainText(richText: string, plainText: string): stri
             return toReturn;
         }
 
-        // permalink returns null if we can't interpret it that way
+        // if parsePermalink returns null, return the link in the markdown style [linktext](href), ie this
+        // removes the enclosing <> from around the href that we have output from the rust model markdown
         const permalink = parsePermalink(href);
         const toReturn = permalink === null ? `[${linkText}](${href})` : richTextLinkMatches[count];
         count++;
