@@ -16,10 +16,13 @@ limitations under the License.
 
 import { parsePermalink } from "../../../../../utils/permalinks/Permalinks";
 
-// a rich text link looks like <a href="href"...>link text</a>
+// A rich text link looks like <a href="href"...>link text</a>
 const richTextLinkRegex = /(<a.*?<\/a>)/g;
 
-// a markdown link looks like [link text](<href>), regex uses lookahead and negation to avoid super-linear performance
+// A markdown link looks like [link text](<href>)
+// We need to stop the regex backtracking to avoid super-linear performance. To do this, we use a lookahead
+// assertion (?=...), which greedily matches up to the closing "]" and then match the contents of that assertion
+// with a backreference \1. Since the backreference matches something that has already matched, it will not backtrack.
 const mdLinkRegex = /\[(?=([^\]]*))\1\]\(<(?=([^>]*))\2>\)/g;
 
 /**
