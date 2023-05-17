@@ -23,9 +23,14 @@ limitations under the License.
 export function abbreviateUrl(u?: string): string {
     if (!u) return "";
 
-    const parsedUrl = parseUrl(u);
-    // if it's something we can't parse as a url then just return it
-    if (!parsedUrl) return u;
+    let parsedUrl: URL;
+    try {
+        parsedUrl = parseUrl(u);
+    } catch (e) {
+        console.error(e);
+        // if it's something we can't parse as a url then just return it
+        return u;
+    }
 
     if (parsedUrl.pathname === "/") {
         // we ignore query / hash parts: these aren't relevant for IS server URLs
