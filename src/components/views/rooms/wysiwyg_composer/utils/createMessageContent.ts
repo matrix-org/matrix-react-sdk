@@ -96,7 +96,6 @@ export async function createMessageContent(
         // remove the first character to make sure //word displays as /word
         message = message.slice(1);
     }
-    console.log("<<< message", message);
     if (atRoomRegex.test(message)) {
         // if the message contains any @room type mentions, replace the html with
         // a plain text representation for timeline compatibility
