@@ -79,25 +79,38 @@ export enum Type {
     Register = "REGISTER",
     Unregister = "UNREGISTER",
     SetFocus = "SET_FOCUS",
-    Move = "MOVE",
+    Update = "UPDATE",
 }
 
 export interface IAction {
-    type: Exclude<Type, Type.Move>;
+    type: Exclude<Type, Type.Update>;
     payload: {
         ref: Ref;
     };
 }
 
-interface MoveAction {
-    type: Type.Move;
-    payload: {
-        sourceIndex: number;
-        destinationIndex: number;
-    };
+interface UpdateAction {
+    type: Type.Update;
+    payload?: undefined;
 }
 
-type Action = IAction | MoveAction;
+type Action = IAction | UpdateAction;
+
+const refSorter = (a: Ref, b: Ref): number => {
+    if (a === b) {
+        return 0;
+    }
+
+    const position = a.current!.compareDocumentPosition(b.current!);
+
+    if (position & Node.DOCUMENT_POSITION_FOLLOWING || position & Node.DOCUMENT_POSITION_CONTAINED_BY) {
+        return -1;
+    } else if (position & Node.DOCUMENT_POSITION_PRECEDING || position & Node.DOCUMENT_POSITION_CONTAINS) {
+        return 1;
+    } else {
+        return 0;
+    }
+};
 
 export const reducer: Reducer<IState, Action> = (state: IState, action: Action) => {
     switch (action.type) {
@@ -109,21 +122,7 @@ export const reducer: Reducer<IState, Action> = (state: IState, action: Action) 
 
             // Sadly due to the potential of DOM elements swapping order we can't do anything fancy like a binary insert
             state.refs.push(action.payload.ref);
-            state.refs.sort((a, b) => {
-                if (a === b) {
-                    return 0;
-                }
-
-                const position = a.current!.compareDocumentPosition(b.current!);
-
-                if (position & Node.DOCUMENT_POSITION_FOLLOWING || position & Node.DOCUMENT_POSITION_CONTAINED_BY) {
-                    return -1;
-                } else if (position & Node.DOCUMENT_POSITION_PRECEDING || position & Node.DOCUMENT_POSITION_CONTAINS) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            });
+            state.refs.sort(refSorter);
 
             return { ...state };
         }
@@ -162,13 +161,8 @@ export const reducer: Reducer<IState, Action> = (state: IState, action: Action) 
             return { ...state };
         }
 
-        case Type.Move: {
-            if (action.payload.sourceIndex === action.payload.destinationIndex) return state;
-            // Perform the swap
-            moveElement(state.refs, action.payload.sourceIndex, action.payload.destinationIndex);
-            // Some callers, e.g. react-beautiful-dnd do wacky things with swapping refs around
-            // so we have to ensure we update our activeRef to point at the right thing
-            state.activeRef = state.refs[action.payload.destinationIndex];
+        case Type.Update: {
+            state.refs.sort(refSorter);
             return { ...state };
         }
 
@@ -182,10 +176,7 @@ interface IProps {
     handleHomeEnd?: boolean;
     handleUpDown?: boolean;
     handleLeftRight?: boolean;
-    children(renderProps: {
-        onKeyDownHandler(ev: React.KeyboardEvent): void;
-        onDragEndHandler(sourceIndex: number, destinationIndex: number): void;
-    }): ReactNode;
+    children(renderProps: { onKeyDownHandler(ev: React.KeyboardEvent): void; onDragEndHandler(): void }): ReactNode;
     onKeyDown?(ev: React.KeyboardEvent, state: IState, dispatch: Dispatch<IAction>): void;
 }
 
@@ -326,10 +317,9 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
         [context, onKeyDown, handleHomeEnd, handleUpDown, handleLeftRight, handleLoop],
     );
 
-    const onDragEndHandler = useCallback((sourceIndex: number, destinationIndex: number) => {
+    const onDragEndHandler = useCallback(() => {
         dispatch({
-            type: Type.Move,
-            payload: { sourceIndex, destinationIndex },
+            type: Type.Update,
         });
     }, []);
 

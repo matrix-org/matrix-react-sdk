@@ -309,8 +309,7 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
                             <SpaceItem
                                 {...provided.draggableProps}
                                 dragHandleProps={provided.dragHandleProps}
-                                // The key cannot be the roomId as we need to re-register roving tab indexes around dragging
-                                key={i}
+                                key={s.roomId}
                                 innerRef={provided.innerRef}
                                 className={snapshot.isDragging ? "mx_SpaceItem_dragging" : undefined}
                                 space={s}
@@ -331,7 +330,7 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
 );
 
 const SpacePanel: React.FC = () => {
-    const [invites, metaSpaces] = useSpaces();
+    const [dragging, setDragging] = useState(false);
     const [isPanelCollapsed, setPanelCollapsed] = useState(true);
     const ref = useRef<HTMLDivElement>(null);
     useLayoutEffect(() => {
@@ -346,16 +345,17 @@ const SpacePanel: React.FC = () => {
     });
 
     return (
-        <RovingTabIndexProvider handleHomeEnd handleUpDown>
+        <RovingTabIndexProvider handleHomeEnd handleUpDown={!dragging}>
             {({ onKeyDownHandler, onDragEndHandler }) => (
                 <DragDropContext
+                    onDragStart={() => {
+                        setDragging(true);
+                    }}
                     onDragEnd={(result) => {
+                        setDragging(false);
                         if (!result.destination) return; // dropped outside the list
                         SpaceStore.instance.moveRootSpace(result.source.index, result.destination.index);
-                        // The roving tab index tracks all space buttons in the panel
-                        // but dnd only the draggable real spaces, so we need to match them up
-                        const offset = invites.length + metaSpaces.length;
-                        onDragEndHandler(result.source.index + offset, result.destination.index + offset);
+                        onDragEndHandler();
                     }}
                 >
                     <div
