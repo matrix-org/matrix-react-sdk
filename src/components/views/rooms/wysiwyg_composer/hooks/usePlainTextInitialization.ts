@@ -15,11 +15,22 @@ limitations under the License.
 */
 
 import { RefObject, useEffect } from "react";
+import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 
-export function usePlainTextInitialization(initialContent = "", ref: RefObject<HTMLElement>): void {
+import { wipFormatter } from "../utils/mentions";
+
+export function usePlainTextInitialization(
+    initialContent = "",
+    ref: RefObject<HTMLElement>,
+    room: Room,
+    client: MatrixClient,
+    onChange?: (content: string) => void,
+): void {
     useEffect(() => {
         if (ref.current) {
-            ref.current.innerHTML = initialContent;
+            const content = wipFormatter(initialContent, room, client);
+            ref.current.innerHTML = content;
+            onChange?.(content);
         }
-    }, [ref, initialContent]);
+    }, [ref, initialContent, room, onChange, client]);
 }
