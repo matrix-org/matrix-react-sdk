@@ -25,10 +25,14 @@ const mdLinkRegex = /\[(?=([^\]]*))\1\]\(<(?=([^>]*))\2>\)/g;
 /**
  * Takes the rich text and plain text representations from the rust model and uses them to return a string
  * of HTML that can be used to set the PlainTextComposer when toggling from rich to plain mode.
+ * Regular markdown links will be transformed from [text](<href>) to [text](href) to allow us to display
+ * them properly without interpreting the <> as html.
+ * Mentions will be transformed from [mentionText](<mentionHref>) to their html equivalent ie
+ * <a href="mentionHref" ...other attributes>mentionText</a> to allow them to be displayed as pills.
  *
  * @param richText - the rich text output from the rust model
  * @param plainText - the plain text output from the rust model
- * @returns - string of HTML for setting the innerHTML of the PlainTextComposer
+ * @returns - string of HTML for setting the innerHTML of the PlainTextComposera
  */
 export function amendLinksInPlainText(richText: string, plainText: string): string {
     // find all of the links in the rich text first as these will contain all the required attributes
