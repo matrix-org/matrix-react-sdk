@@ -70,7 +70,7 @@ const UnreadIndicator: React.FC<IUnreadIndicatorProps> = ({ color }) => {
     });
     return (
         <>
-            <div className="mx_RoomHeader_button_indicator_bg" />
+            <div className="mx_RoomHeader_button_indicatorBg" />
             <div className={classes} />
         </>
     );

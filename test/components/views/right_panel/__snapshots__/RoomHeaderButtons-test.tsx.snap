@@ -44,7 +44,7 @@ exports[`RoomHeaderButtons-test.tsx thread activity does change the thread butto
     tabindex="0"
   >
     <div
-      class="mx_RoomHeader_button_indicator_bg"
+      class="mx_RoomHeader_button_indicatorBg"
     />
     <div
       class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator--bold"
@@ -59,7 +59,7 @@ exports[`RoomHeaderButtons-test.tsx thread activity does change the thread butto
     tabindex="0"
   >
     <div
-      class="mx_RoomHeader_button_indicator_bg"
+      class="mx_RoomHeader_button_indicatorBg"
     />
     <div
       class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator--bold"
@@ -92,7 +92,7 @@ exports[`RoomHeaderButtons-test.tsx thread notification does change the thread b
     tabindex="0"
   >
     <div
-      class="mx_RoomHeader_button_indicator_bg"
+      class="mx_RoomHeader_button_indicatorBg"
     />
     <div
       class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator--gray"
@@ -107,7 +107,7 @@ exports[`RoomHeaderButtons-test.tsx thread notification does change the thread b
     tabindex="0"
   >
     <div
-      class="mx_RoomHeader_button_indicator_bg"
+      class="mx_RoomHeader_button_indicatorBg"
     />
     <div
       class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator--gray"
@@ -140,7 +140,7 @@ exports[`RoomHeaderButtons-test.tsx thread notification does change the thread b
     tabindex="0"
   >
     <div
-      class="mx_RoomHeader_button_indicator_bg"
+      class="mx_RoomHeader_button_indicatorBg"
     />
     <div
       class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator--red"
@@ -155,7 +155,7 @@ exports[`RoomHeaderButtons-test.tsx thread notification does change the thread b
     tabindex="0"
   >
     <div
-      class="mx_RoomHeader_button_indicator_bg"
+      class="mx_RoomHeader_button_indicatorBg"
     />
     <div
       class="mx_RoomHeader_button_indicator mx_RoomHeader_button_indicator--red"
