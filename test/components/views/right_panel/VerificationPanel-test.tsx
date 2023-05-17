@@ -109,6 +109,7 @@ function makeMockVerificationRequest(props: Partial<VerificationRequest> = {}): 
         channel: {} as IVerificationChannel,
         cancel: jest.fn(),
         otherPartySupportsMethod: jest.fn().mockReturnValue(true),
+        getQRCodeBytes: jest.fn(),
         ...props,
     });
     return request as unknown as Mocked<VerificationRequest>;

@@ -68,6 +68,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         const { member, request } = this.props;
         const showSAS: boolean = request.otherPartySupportsMethod(verificationMethods.SAS);
         const showQR: boolean = request.otherPartySupportsMethod(SCAN_QR_CODE_METHOD);
+        const qrCodeBytes = showQR ? request.getQRCodeBytes() : null;
         const brand = SdkConfig.get().brand;
 
         const noCommonMethodError: JSX.Element | null =
@@ -86,11 +87,11 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             // HACK: This is a terrible idea.
             let qrBlockDialog: JSX.Element | undefined;
             let sasBlockDialog: JSX.Element | undefined;
-            if (showQR && request.qrCodeData) {
+            if (!!qrCodeBytes) {
                 qrBlockDialog = (
                     <div className="mx_VerificationPanel_QRPhase_startOption">
                         <p>{_t("Scan this unique code")}</p>
-                        <VerificationQRCode qrCodeData={request.qrCodeData} />
+                        <VerificationQRCode qrCodeBytes={qrCodeBytes} />
                     </div>
                 );
             }
@@ -134,7 +135,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         }
 
         let qrBlock: JSX.Element | undefined;
-        if (showQR && request.qrCodeData) {
+        if (!!qrCodeBytes) {
             qrBlock = (
                 <div className="mx_UserInfo_container">
                     <h3>{_t("Verify by scanning")}</h3>
@@ -145,7 +146,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                     </p>
 
                     <div className="mx_VerificationPanel_qrCode">
-                        <VerificationQRCode qrCodeData={request.qrCodeData} />
+                        <VerificationQRCode qrCodeBytes={qrCodeBytes} />
                     </div>
                 </div>
             );
