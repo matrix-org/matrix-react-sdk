@@ -38,7 +38,7 @@ interface IProps {
 }
 
 interface IState {
-    roomMember: RoomMember;
+    roomMember: RoomMember | null;
     isWrapped: boolean;
     widgetDomain: string | null;
 }
@@ -56,7 +56,7 @@ export default class AppPermission extends React.Component<IProps, IState> {
 
         // The second step is to find the user's profile so we can show it on the prompt
         const room = MatrixClientPeg.get().getRoom(this.props.roomId);
-        let roomMember;
+        let roomMember: RoomMember | null = null;
         if (room) roomMember = room.getMember(this.props.creatorUserId);
 
         // Set all this into the initial state
@@ -115,9 +115,9 @@ export default class AppPermission extends React.Component<IProps, IState> {
         const warningTooltip = (
             <TextWithTooltip
                 tooltip={warningTooltipText}
-                tooltipClass="mx_AppPermissionWarning_tooltip mx_Tooltip_dark"
+                tooltipClass="mx_AppPermission_tooltip mx_AppPermission_tooltip--dark"
             >
-                <span className="mx_AppPermissionWarning_helpIcon" />
+                <span className="mx_AppPermission_helpIcon" />
             </TextWithTooltip>
         );
 
@@ -137,20 +137,18 @@ export default class AppPermission extends React.Component<IProps, IState> {
         const encryptionWarning = this.props.isRoomEncrypted ? _t("Widgets do not use message encryption.") : null;
 
         return (
-            <div className="mx_AppPermissionWarning">
-                <div className="mx_AppPermissionWarning_row mx_AppPermissionWarning_bolder mx_AppPermissionWarning_smallText">
-                    {_t("Widget added by")}
-                </div>
-                <div className="mx_AppPermissionWarning_row">
+            <div className="mx_AppPermission">
+                <div className="mx_AppPermission_bolder mx_AppPermission_smallText">{_t("Widget added by")}</div>
+                <div>
                     {avatar}
-                    <h4 className="mx_AppPermissionWarning_bolder">{displayName}</h4>
-                    <div className="mx_AppPermissionWarning_smallText">{userId}</div>
+                    <h4 className="mx_AppPermission_bolder">{displayName}</h4>
+                    <div className="mx_AppPermission_smallText">{userId}</div>
                 </div>
-                <div className="mx_AppPermissionWarning_row mx_AppPermissionWarning_smallText">{warning}</div>
-                <div className="mx_AppPermissionWarning_row mx_AppPermissionWarning_smallText">
+                <div className="mx_AppPermission_smallText">{warning}</div>
+                <div className="mx_AppPermission_smallText">
                     {_t("This widget may use cookies.")}&nbsp;{encryptionWarning}
                 </div>
-                <div className="mx_AppPermissionWarning_row">
+                <div>
                     <AccessibleButton kind="primary_sm" onClick={this.props.onPermissionGranted}>
                         {_t("Continue")}
                     </AccessibleButton>

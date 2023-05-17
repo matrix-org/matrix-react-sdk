@@ -181,30 +181,20 @@ limitations under the License.
     li {
         clear: both;
     }
-}
 
-.mx_RoomView--local .mx_ScrollPanel .mx_RoomView_MessageList {
-    justify-content: center;
-}
+    .mx_ScrollPanel & {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
 
-li.mx_RoomView_myReadMarker_container {
-    height: 0px;
-    margin: 0px;
-    padding: 0px;
-    border: 0px;
-}
+        content-visibility: auto;
+        contain-intrinsic-size: 50px;
+    }
 
-hr.mx_RoomView_myReadMarker {
-    border-top: solid 1px $accent;
-    border-bottom: solid 1px $accent;
-    margin-top: 0px;
-    position: relative;
-    top: -1px;
-    z-index: 1;
-    will-change: width;
-    transition: width 400ms easeinsine 1s, opacity 400ms easeinsine 1s;
-    width: 99%;
-    opacity: 1;
+    .mx_RoomView--local .mx_ScrollPanel & {
+        justify-content: center;
+    }
 }
 
 /* Rooms with immersive content */
@@ -272,12 +262,12 @@ hr.mx_RoomView_myReadMarker {
     position: absolute;
     right: -3px;
     top: -3px;
-    width: $dot-size;
-    height: $dot-size;
+    width: var(--RoomHeader-indicator-dot-size);
+    height: var(--RoomHeader-indicator-dot-size);
     border-radius: 50%;
     transform: scale(1);
-    background: rgba($pulse-color, 1);
-    box-shadow: 0 0 0 0 rgba($pulse-color, 1);
+    background: rgba(var(--RoomHeader-indicator-pulseColor), 1);
+    box-shadow: 0 0 0 0 rgba(var(--RoomHeader-indicator-pulseColor), 1);
     animation: mx_Indicator_pulse 2s infinite;
     animation-iteration-count: 1;
 
