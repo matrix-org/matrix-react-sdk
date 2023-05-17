@@ -340,7 +340,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     <SettingsSubsection
                         heading={_t("Analytics")}
                         description={_t(
-                            "Share anonymous data to help us identify issues. Nothing personal. " + "No third parties.",
+                            "Share anonymous data to help us identify issues. Nothing personal. No third parties.",
                         )}
                     >
                         <AccessibleButton kind="link" onClick={onClickAnalyticsLearnMore}>
@@ -407,7 +407,6 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         }
 
         return (
-            //mx_SecurityUserSettingsTab
             <SettingsTab>
                 {warning}
                 {devicesSection}
