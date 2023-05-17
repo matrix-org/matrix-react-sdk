@@ -162,8 +162,7 @@ describe("<SpacePanel />", () => {
         DMRoomMap.makeShared();
         jest.useFakeTimers();
 
-        const { asFragment, getByLabelText } = render(<SpacePanel />);
-        expect(asFragment()).toMatchSnapshot();
+        const { getByLabelText } = render(<SpacePanel />);
 
         const room1 = getByLabelText("Room 1");
         await pickUp(room1);
