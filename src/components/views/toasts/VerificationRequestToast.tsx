@@ -74,11 +74,11 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
 
         if (request.isSelfVerification) {
             const cli = MatrixClientPeg.get();
-            const device = request.channel.deviceId ? await cli.getDevice(request.channel.deviceId) : null;
+            const device = request.otherDeviceId ? await cli.getDevice(request.otherDeviceId) : null;
             const ip = device?.last_seen_ip;
             this.setState({
                 device:
-                    (request.channel.deviceId && cli.getStoredDevice(cli.getSafeUserId(), request.channel.deviceId)) ||
+                    (request.otherDeviceId && cli.getStoredDevice(cli.getSafeUserId(), request.otherDeviceId)) ||
                     undefined,
                 ip,
             });

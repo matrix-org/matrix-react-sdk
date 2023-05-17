@@ -203,7 +203,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
     };
 
     private getDevice(): DeviceInfo | null {
-        const deviceId = this.props.request && this.props.request.channel.deviceId;
+        const deviceId = this.props.request && this.props.request.otherDeviceId;
         const userId = MatrixClientPeg.get().getUserId();
         if (deviceId && userId) {
             return MatrixClientPeg.get().getStoredDevice(userId, deviceId);
@@ -277,12 +277,12 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             if (!device) {
                 // This can happen if the device is logged out while we're still showing verification
                 // UI for it.
-                logger.warn("Verified device we don't know about: " + this.props.request.channel.deviceId);
+                logger.warn("Verified device we don't know about: " + this.props.request.otherDeviceId);
                 description = _t("You've successfully verified your device!");
             } else {
                 description = _t("You've successfully verified %(deviceName)s (%(deviceId)s)!", {
                     deviceName: device ? device.getDisplayName() : "",
-                    deviceId: this.props.request.channel.deviceId,
+                    deviceId: this.props.request.otherDeviceId,
                 });
             }
         } else {
