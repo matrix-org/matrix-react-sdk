@@ -686,33 +686,46 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         // Safari `Insert from iPhone or iPad`
         // data.getData("text/html") returns a string like: <img src="blob:https://...">
         if (data.types.includes("text/html")) {
-            const imgElementStr=data.getData("text/html");
+            const imgElementStr = data.getData("text/html");
             const parser = new DOMParser();
-            const imgDoc=parser.parseFromString(imgElementStr,"text/html");
+            const imgDoc = parser.parseFromString(imgElementStr, "text/html");
 
-            const imgSrc = imgDoc.querySelector("img").src;
+            if (imgDoc == null || imgDoc.querySelector("img") == null || imgDoc.querySelector("img").src == null) {
+                console.log("Failed to handle pasted content as Safari inserted content");
 
-            fetch(imgSrc).then((response) => {
-                response.blob().then((imgBlob) => {
-                    const type = imgBlob.type;
-                    const safetype = getBlobSafeMimeType(type);
-                    const ext=type.split("/")[1];
-                    const file = new File([imgBlob],"file."+ext,{type:safetype});
-                    ContentMessages.sharedInstance().sendContentToRoom(
-                        file,
-                        this.props.room.roomId,
-                        this.props.relation,
-                        this.props.mxClient,
-                        this.context.replyToEvent,
+                // Fallback to internal onPaste handler
+                return false;
+            }
+            const imgSrc = imgDoc!.querySelector("img")!.src!;
+
+            fetch(imgSrc).then(
+                (response) => {
+                    response.blob().then(
+                        (imgBlob) => {
+                            const type = imgBlob.type;
+                            const safetype = getBlobSafeMimeType(type);
+                            const ext = type.split("/")[1];
+                            const file = new File([imgBlob], "file." + ext, { type: safetype });
+                            ContentMessages.sharedInstance().sendContentToRoom(
+                                file,
+                                this.props.room.roomId,
+                                this.props.relation,
+                                this.props.mxClient,
+                                this.context.replyToEvent,
+                            );
+                        },
+                        (error) => {
+                            console.log(error);
+                        },
                     );
                 },
                 (error) => {
                     console.log(error);
-                }
-                );
-            }, (error) => {
-                console.log(error);
-            });
+                },
+            );
+
+            // Skip internal onPaste handler
+            return true;
         }
 
         return false;
