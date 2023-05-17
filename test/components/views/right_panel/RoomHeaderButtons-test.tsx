@@ -51,7 +51,9 @@ describe("RoomHeaderButtons-test.tsx", function () {
     }
 
     function isIndicatorOfType(container: HTMLElement, type: "red" | "gray" | "bold") {
-        return container.querySelector(".mx_RightPanel_threadsButton .mx_Indicator")!.className.includes(type);
+        return container
+            .querySelector(".mx_RightPanel_threadsButton .mx_RoomHeader_button_indicator")!
+            .className.includes(type);
     }
 
     it("should render", () => {
@@ -70,7 +72,7 @@ describe("RoomHeaderButtons-test.tsx", function () {
 
         const { container } = getComponent(room);
 
-        expect(container.querySelector(".mx_RightPanel_threadsButton .mx_Indicator")).toBeNull();
+        expect(container.querySelector(".mx_RightPanel_threadsButton .mx_RoomHeader_button_indicator")).toBeNull();
     });
 
     it("thread notification does change the thread button", () => {
@@ -91,7 +93,7 @@ describe("RoomHeaderButtons-test.tsx", function () {
         room.setThreadUnreadNotificationCount("$123", NotificationCountType.Total, 0);
         room.setThreadUnreadNotificationCount("$123", NotificationCountType.Highlight, 0);
 
-        expect(container.querySelector(".mx_RightPanel_threadsButton .mx_Indicator")).toBeNull();
+        expect(container.querySelector(".mx_RightPanel_threadsButton .mx_RoomHeader_button_indicator")).toBeNull();
     });
 
     it("thread activity does change the thread button", async () => {
@@ -122,7 +124,9 @@ describe("RoomHeaderButtons-test.tsx", function () {
             },
         });
         room.addLiveEvents([event]);
-        await expect(container.querySelector(".mx_RightPanel_threadsButton .mx_Indicator")).toBeNull();
+        await expect(
+            container.querySelector(".mx_RightPanel_threadsButton .mx_RoomHeader_button_indicator"),
+        ).toBeNull();
 
         // Mark it as unread again.
         event = mkEvent({
@@ -172,6 +176,6 @@ describe("RoomHeaderButtons-test.tsx", function () {
             },
         });
         room.addReceipt(receipt);
-        expect(container.querySelector(".mx_RightPanel_threadsButton .mx_Indicator")).toBeNull();
+        expect(container.querySelector(".mx_RightPanel_threadsButton .mx_RoomHeader_button_indicator")).toBeNull();
     });
 });

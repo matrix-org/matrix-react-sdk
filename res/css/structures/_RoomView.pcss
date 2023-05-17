@@ -229,7 +229,7 @@ limitations under the License.
     }
 }
 
-@keyframes mx_Indicator_pulse {
+@keyframes mx_RoomHeader_button_indicator_pulse {
     0% {
         transform: scale(0.95);
     }
@@ -243,7 +243,7 @@ limitations under the License.
     }
 }
 
-@keyframes mx_Indicator_pulse_shadow {
+@keyframes mx_RoomHeader_button_indicator_pulse_shadow {
     0% {
         opacity: 0.7;
     }
@@ -258,7 +258,7 @@ limitations under the License.
     }
 }
 
-.mx_Indicator {
+.mx_RoomHeader_button_indicator {
     position: absolute;
     right: -3px;
     top: -3px;
@@ -268,7 +268,7 @@ limitations under the License.
     transform: scale(1);
     background: rgba(var(--RoomHeader-indicator-pulseColor), 1);
     box-shadow: 0 0 0 0 rgba(var(--RoomHeader-indicator-pulseColor), 1);
-    animation: mx_Indicator_pulse 2s infinite;
+    animation: mx_RoomHeader_button_indicator_pulse 2s infinite;
     animation-iteration-count: 1;
 
     &::after {
@@ -280,7 +280,7 @@ limitations under the License.
         left: 0;
         transform: scale(1);
         transform-origin: center center;
-        animation-name: mx_Indicator_pulse_shadow;
+        animation-name: mx_RoomHeader_button_indicator_pulse_shadow;
         animation-duration: inherit;
         animation-iteration-count: inherit;
         border-radius: 50%;
