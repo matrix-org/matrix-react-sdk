@@ -203,6 +203,10 @@ describe("Spotlight", () => {
                     cy.get(".mx_RoomSublist_skeletonUI").should("not.exist");
                 });
         });
+        // wait for the room to have the right name
+        cy.get(".mx_RoomHeader").within(() => {
+            cy.findByText(room1Name);
+        });
     });
 
     afterEach(() => {
