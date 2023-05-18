@@ -119,6 +119,13 @@ describe("getAttributesForMention", () => {
     const mockClient = stubClient();
     const mockRoom = mkRoom(mockClient, "test-room-id");
 
+    it("returns null if room is undefined", () => {
+        const url = "https://www.testurl.com";
+        const displayText = "displayText";
+
+        expect(getAttributesForMention(url, displayText, undefined, mockClient)).toBeNull();
+    });
+
     it("returns null if client is undefined", () => {
         const url = "https://www.testurl.com";
         const displayText = "displayText";

@@ -27,6 +27,7 @@ import { ComposerFunctions } from "../types";
 import { Editor } from "./Editor";
 import { WysiwygAutocomplete } from "./WysiwygAutocomplete";
 import { useMatrixClientContext } from "../../../../../contexts/MatrixClientContext";
+import { useRoomContext } from "../../../../../contexts/RoomContext";
 
 interface PlainTextComposerProps {
     disabled?: boolean;
@@ -37,7 +38,6 @@ interface PlainTextComposerProps {
     className?: string;
     leftComponent?: ReactNode;
     rightComponent?: ReactNode;
-    room: Room;
     children?: (ref: MutableRefObject<HTMLDivElement | null>, composerFunctions: ComposerFunctions) => ReactNode;
 }
 
@@ -51,7 +51,6 @@ export function PlainTextComposer({
     initialContent,
     leftComponent,
     rightComponent,
-    room,
 }: PlainTextComposerProps): JSX.Element {
     const {
         ref: editorRef,
@@ -67,7 +66,9 @@ export function PlainTextComposer({
         handleMention,
     } = usePlainTextListeners(initialContent, onChange, onSend);
 
+    const { room } = useRoomContext();
     const client = useMatrixClientContext();
+
     const composerFunctions = useComposerFunctions(editorRef, setContent);
     usePlainTextInitialization(initialContent, editorRef, room, client, setContent);
     useSetCursorPosition(disabled, editorRef);

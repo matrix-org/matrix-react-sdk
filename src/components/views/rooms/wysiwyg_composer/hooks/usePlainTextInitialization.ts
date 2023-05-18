@@ -25,7 +25,7 @@ import { ICompletion } from "../../../../../autocomplete/Autocompleter";
 export function usePlainTextInitialization(
     initialContent = "",
     ref: RefObject<HTMLElement>,
-    room: Room,
+    room?: Room,
     client?: MatrixClient,
     setContent?: (content?: string) => void,
 ): void {
@@ -71,7 +71,7 @@ export function encodeHtml(text: string): string {
  * @returns - the original string with links either encoded for display as html or replaced with
  * the html that represents a pill
  */
-export function formatPlainTextLinks(text: string, room: Room, client?: MatrixClient): string {
+export function formatPlainTextLinks(text: string, room?: Room, client?: MatrixClient): string {
     return text.replace(mdLinkRegex, (match, linkText, href) => {
         const mentionAttributes = getAttributesForMention(href, linkText, room, client);
         if (mentionAttributes === null) {
@@ -105,7 +105,7 @@ export function formatPlainTextLinks(text: string, room: Room, client?: MatrixCl
 export function getAttributesForMention(
     url: string,
     displayText: string,
-    room: Room,
+    room?: Room,
     client?: MatrixClient,
 ): {
     "data-mention-type": string; // TODO these types need to be extracted from ICompletion for use here
@@ -113,7 +113,7 @@ export function getAttributesForMention(
     "href": string;
     "style": string;
 } | null {
-    if (client === undefined) return null;
+    if (client === undefined || room === undefined) return null;
 
     const parseResult = parsePermalink(url);
     // expand this to check href later when it's changed to "#"
