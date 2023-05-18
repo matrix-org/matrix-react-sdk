@@ -25,6 +25,7 @@ import {
 } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/usePlainTextInitialization";
 import { mkRoom, stubClient } from "../../../../../test-utils";
 import * as mockPermalink from "../../../../../../src/utils/permalinks/Permalinks";
+import * as mockAutocomplete from "../../../../../../src/components/views/rooms/wysiwyg_composer/utils/autocomplete";
 
 describe("encodeHtml", () => {
     it("converts markdown links in text to html encoded equivalent", () => {
@@ -132,7 +133,7 @@ describe("getAttributesForMention", () => {
         beforeEach(() => {
             mockParsePermalink.mockReturnValue(null);
         });
-        afterEach(() => {
+        afterAll(() => {
             mockParsePermalink.mockRestore();
         });
 
@@ -148,6 +149,65 @@ describe("getAttributesForMention", () => {
                 "href": "#", // TODO should this be https://#
                 "style": "",
             });
+        });
+
+        it("returns null for any other case", () => {
+            const mockClient = stubClient();
+            const mockRoom = mkRoom(mockClient, "test-room-id");
+            const url = "https://matrix.to/#/@valid:test:io";
+            const displayText = "test user";
+
+            expect(getAttributesForMention(url, displayText, mockRoom, mockClient)).toBeNull();
+        });
+    });
+
+    it("returns null if we can not find data-mention-type or style attributes for a user", () => {
+        const mockGetMentionAttributes = jest.spyOn(mockAutocomplete, "getMentionAttributes").mockReturnValue({});
+        const mockClient = stubClient();
+        const mockRoom = mkRoom(mockClient, "test-room-id");
+
+        const displayText = "test user";
+        const url = "https://matrix.to/#/@test:user.io";
+        expect(getAttributesForMention(url, displayText, mockRoom, mockClient)).toBeNull();
+        mockGetMentionAttributes.mockRestore();
+    });
+
+    it("returns null if we can not find data-mention-type or style attributes for a room", () => {
+        const mockGetMentionAttributes = jest.spyOn(mockAutocomplete, "getMentionAttributes").mockReturnValue({});
+        const mockClient = stubClient();
+        const mockRoom = mkRoom(mockClient, "test-room-id");
+
+        const displayText = "test room";
+        const url = "https://matrix.to/#/#test:room.io";
+        expect(getAttributesForMention(url, displayText, mockRoom, mockClient)).toBeNull();
+        mockGetMentionAttributes.mockRestore();
+    });
+
+    it("returns the expected attributes for a user mention", () => {
+        const mockClient = stubClient();
+        const mockRoom = mkRoom(mockClient, "test-room-id");
+
+        const displayText = "test user";
+        const url = "https://matrix.to/#/@test:user.io";
+        expect(getAttributesForMention(url, displayText, mockRoom, mockClient)).toEqual({
+            "contenteditable": "false",
+            "href": url,
+            "data-mention-type": "user",
+            "style": expect.any(String),
+        });
+    });
+
+    it("returns the expected attributes for a room mention", () => {
+        const mockClient = stubClient();
+        const mockRoom = mkRoom(mockClient, "test-room-id");
+
+        const displayText = "test room";
+        const url = "https://matrix.to/#/#test:room.io";
+        expect(getAttributesForMention(url, displayText, mockRoom, mockClient)).toEqual({
+            "contenteditable": "false",
+            "href": url,
+            "data-mention-type": "room",
+            "style": expect.any(String),
         });
     });
 });
