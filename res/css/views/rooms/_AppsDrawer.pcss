@@ -137,17 +137,20 @@ limitations under the License.
     flex: 1;
     min-height: 0;
 
-    .mx_AppTile:first-of-type {
-        border-left-width: var(--container-border-width);
-        border-radius: 10px 0 0 10px;
-    }
-    .mx_AppTile:last-of-type {
-        border-right-width: var(--container-border-width);
-        border-radius: 0 10px 10px 0;
-    }
+    .mx_AppTile {
+        &:first-of-type {
+            border-left-width: var(--container-border-width);
+            border-radius: 10px 0 0 10px;
+        }
 
-    .mx_AppTile.mx_AppTile--fullWidth {
-        border-radius: 8px; /* override the border radius values above */
+        &:last-of-type {
+            border-right-width: var(--container-border-width);
+            border-radius: 0 10px 10px 0;
+        }
+
+        &.mx_AppTile--fullWidth {
+            border-radius: 8px; /* override the border radius values above */
+        }
     }
 
     .mx_ResizeHandle--horizontal {
