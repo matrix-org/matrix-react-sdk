@@ -80,11 +80,13 @@ describe("PinnedMessagesCard", () => {
             cy.get(".mx_PinnedEventTile").should("have.length", 2);
         });
 
+        // Skip taking the snapshot to save quota usage
+        //
         // Take a snapshot of RightPanel
-        cy.get(".mx_RightPanel").percySnapshotElement("Pinned messages card - pinned messages", {
-            percyCSS,
-            widths: [264], // Emulate the UI. The value is based on minWidth specified on MainSplit.tsx
-        });
+        // cy.get(".mx_RightPanel").percySnapshotElement("Pinned messages card - pinned messages", {
+        //     percyCSS,
+        //     widths: [264], // Emulate the UI. The value is based on minWidth specified on MainSplit.tsx
+        // });
     });
 
     it("should update when messages are unpinned", () => {
@@ -109,11 +111,13 @@ describe("PinnedMessagesCard", () => {
             cy.get(".mx_PinnedMessagesCard_empty").should("exist");
         });
 
+        // Skip taking the snapshot to save quota usage
+        //
         // Take a snapshot of RightPanel
-        cy.get(".mx_RightPanel").percySnapshotElement("Pinned messages card - empty", {
-            percyCSS,
-            widths: [264], // Emulate the UI. The value is based on minWidth specified on MainSplit.tsx
-        });
+        // cy.get(".mx_RightPanel").percySnapshotElement("Pinned messages card - empty", {
+        //     percyCSS,
+        //     widths: [264], // Emulate the UI. The value is based on minWidth specified on MainSplit.tsx
+        // });
     });
 
     it("should account for edits", () => {
@@ -142,8 +146,11 @@ describe("PinnedMessagesCard", () => {
             cy.findByRole("button", { name: /Edited/ }).should("exist");
         });
 
-        // Take a snapshot of RightPanel
-        cy.get(".mx_RightPanel").percySnapshotElement("Pinned messages card - an edited message", {
+        // Send a second message for taking a snapshot of the card with both edited and not edited messages
+        sendAndPin("The second one");
+
+        // Take a snapshot of RightPanel for the pinned messages card
+        cy.get(".mx_RightPanel").percySnapshotElement("Pinned messages card - with two messages", {
             percyCSS,
             widths: [264], // Emulate the UI. The value is based on minWidth specified on MainSplit.tsx
         });
