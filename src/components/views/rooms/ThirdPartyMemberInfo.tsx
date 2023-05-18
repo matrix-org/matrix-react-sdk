@@ -57,7 +57,8 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
         let kickLevel = powerLevels ? powerLevels.getContent().kick : 50;
         if (typeof kickLevel !== "number") kickLevel = 50;
 
-        const sender = this.room?.getMember(this.props.event.getSender());
+        const senderId = this.props.event.getSender()!;
+        const sender = this.props.event.sender ?? this.room?.getMember(senderId);
 
         this.state = {
             stateKey: this.props.event.getStateKey()!,
@@ -65,7 +66,7 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
             displayName: this.props.event.getContent().display_name,
             invited: true,
             canKick: me ? me.powerLevel > kickLevel : false,
-            senderName: sender?.name ?? this.props.event.getSender(),
+            senderName: sender?.name ?? senderId,
         };
     }
 
