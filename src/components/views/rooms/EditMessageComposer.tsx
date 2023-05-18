@@ -49,6 +49,7 @@ import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { editorRoomKey, editorStateKey } from "../../../Editing";
 import DocumentOffset from "../../../editor/offset";
 import { attachMentions, attachRelation } from "./SendMessageComposer";
+import { filterBoolean } from "../../../utils/arrays";
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
     const html = mxEvent.getContent().formatted_body;
@@ -150,7 +151,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     }
 
     private getRoom(): Room | null {
-        return this.props.mxClient.getRoom(this.props.editState.getEvent().getRoomId());
+        return this.context.room ?? null;
     }
 
     private onKeyDown = (event: KeyboardEvent): void => {
@@ -409,9 +410,8 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         let parts: Part[];
         let isRestored = false;
         if (editState.hasEditorState()) {
-            // if restoring state from a previous editor,
-            // restore serialized parts from the state
-            parts = editState.getSerializedParts().map((p) => partCreator.deserializePart(p));
+            // if restoring state from a previous editor, restore serialized parts from the state
+            parts = filterBoolean(editState.getSerializedParts()?.map((p) => partCreator.deserializePart(p)) ?? []);
         } else {
             // otherwise, either restore serialized parts from localStorage or parse the body of the event
             const restoredParts = this.restoreStoredEditorState(partCreator);
