@@ -26,15 +26,15 @@ export function usePlainTextInitialization(
     ref: RefObject<HTMLElement>,
     room: Room,
     client: MatrixClient,
-    onChange?: (content: string) => void,
+    setContent?: (content?: string) => void,
 ): void {
     useEffect(() => {
         if (ref.current) {
             const content = wipFormatter(initialContent, room, client);
             ref.current.innerHTML = content;
-            onChange?.(content);
+            setContent?.();
         }
-    }, [ref, initialContent, room, onChange, client]);
+    }, [ref, initialContent, room, setContent, client]);
 }
 
 // A markdown link looks like [link text](<href>)
@@ -43,17 +43,28 @@ export function usePlainTextInitialization(
 // with a backreference \1. Since the backreference matches something that has already matched, it will not backtrack.
 const mdLinkRegex = /\[(?=([^\]]*))\1\]\(<(?=([^>]*))\2>\)/g;
 
+export function encodeHtml(text: string): string {
+    const textArea = document.createElement("textarea");
+    textArea.innerText = text;
+    return textArea.innerHTML;
+}
+
 export function wipFormatter(text: string, room: Room, client: MatrixClient): string {
     return text.replace(mdLinkRegex, (match, linkText, href) => {
-        const stuff = getMentionStuff(href, linkText, room, client);
+        const stuff = getMentionAttributesFromMarkdown(href, linkText, room, client);
         if (stuff === null) {
-            return `[${linkText}](${href})`;
+            return encodeHtml(match);
         }
         return stuff;
     });
 }
 
-function getMentionStuff(url: string, displayText: string, room: Room, client: MatrixClient): string | null {
+export function getMentionAttributesFromMarkdown(
+    url: string,
+    displayText: string,
+    room: Room,
+    client: MatrixClient,
+): string | null {
     const parseResult = parsePermalink(url);
     // expand this to check href later when it's changed to "#"
     if (parseResult === null && displayText === "@room") {
