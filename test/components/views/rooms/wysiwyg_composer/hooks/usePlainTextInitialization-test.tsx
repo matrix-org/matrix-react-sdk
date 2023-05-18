@@ -18,43 +18,100 @@ import { renderHook } from "@testing-library/react-hooks";
 import { act } from "@testing-library/react";
 
 import {
+    encodeHtml,
     usePlainTextInitialization,
     wipFormatter,
     getMentionAttributesFromMarkdown,
 } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/usePlainTextInitialization";
+import { mkRoom, stubClient } from "../../../../../test-utils";
 
-it("does something", () => {});
-// TODO port to the new function
-// describe("amendLinksInPlainText", () => {
-//     it("returns the plain text if the rich text contains no links", () => {
-//         const richText = "does not contain a link";
-//         const plainText = "plain Text";
-//         const output = wipFormatter(richText, plainText);
+describe("encodeHtml", () => {
+    it("converts markdown links in text to html encoded equivalent", () => {
+        const input = "[example](<https://www.markdownlink.com>)";
+        const expected = "[example](&lt;https://www.markdownlink.com&gt;)";
 
-//         expect(output).toBe(plainText);
-//     });
+        expect(encodeHtml(input)).toBe(expected);
+    });
+});
 
-//     it("removes the angle brackets from a regular plain text link", () => {
-//         const richText = '<a href="www.link.com">regular link</a>';
-//         const plainText = "[regular link](<https://www.link.com>)";
-//         const output = wipFormatter(richText, plainText);
+describe("wipFormatter", () => {
+    it("returns text unchanged if it contains no links", () => {
+        const mockClient = stubClient();
+        const mockRoom = mkRoom(mockClient, "test-room-id");
 
-//         expect(output).toBe("[regular link](https://www.link.com)");
-//     });
+        const input = "plain text containing no links";
 
-//     it("replaces at at-room mention with it's rich text equivalent", () => {
-//         const richText = '<a href="#">@room</a> something';
-//         const plainText = "[@room](<https://#>) something";
-//         const output = wipFormatter(richText, plainText);
+        expect(wipFormatter(input, mockRoom, mockClient)).toBe(input);
+    });
 
-//         expect(output).toBe(richText);
-//     });
+    it("replaces regular links with their html encoded equivalents", () => {
+        const mockClient = stubClient();
+        const mockRoom = mkRoom(mockClient, "test-room-id");
 
-//     it("replaces a user mention with it's rich text equivalent", () => {
-//         const richText = '<a href="matrix.to/#/@test:user.io">testuser</a>';
-//         const plainText = "[testuser](<https://matrix.to/#/@test:user.io>)";
-//         const output = wipFormatter(richText, plainText);
+        const input = "[example](<https://www.markdownlink.com>)";
+        const expected = "[example](&lt;https://www.markdownlink.com&gt;)";
 
-//         expect(output).toBe(richText);
-//     });
-// });
+        expect(wipFormatter(input, mockRoom, mockClient)).toBe(expected);
+    });
+
+    it("replaces at-room mentions with the expected html", () => {
+        const mockClient = stubClient();
+        const mockRoom = mkRoom(mockClient, "test-room-id");
+
+        const input = "[@room](<https://#>)";
+
+        // check the attributes by parsing the document html instead of checking the string directly
+        // so that we are checking the html is also valid
+        const mockEditor = document.createElement("div");
+        mockEditor.innerHTML = wipFormatter(input, mockRoom, mockClient);
+
+        const outputAsElement = mockEditor.querySelector("a");
+        expect(outputAsElement).toHaveAttribute("data-mention-type", "at-room");
+        expect(outputAsElement).toHaveAttribute("contenteditable", "false");
+        expect(outputAsElement).toHaveAttribute("href", "#"); // TODO should this be https://#
+        expect(outputAsElement).toHaveAttribute("style");
+        expect(outputAsElement).toHaveTextContent("@room");
+    });
+
+    it("replaces user mentions with the expected html", () => {
+        const mockClient = stubClient();
+        const mockRoom = mkRoom(mockClient, "test-room-id");
+
+        const displayText = "test user";
+        const url = "https://matrix.to/#/@test:user.io";
+        const input = `[${displayText}](<${url}>)`;
+
+        // check the attributes by parsing the document html instead of checking the string directly
+        // so that we are checking the html is also valid
+        const mockEditor = document.createElement("div");
+        mockEditor.innerHTML = wipFormatter(input, mockRoom, mockClient);
+
+        const outputAsElement = mockEditor.querySelector("a");
+        expect(outputAsElement).toHaveAttribute("data-mention-type", "user");
+        expect(outputAsElement).toHaveAttribute("contenteditable", "false");
+        expect(outputAsElement).toHaveAttribute("href", url);
+        expect(outputAsElement).toHaveAttribute("style");
+        expect(outputAsElement).toHaveTextContent(displayText);
+    });
+
+    it("replaces room mentions with the expected html", () => {
+        const mockClient = stubClient();
+        const mockRoom = mkRoom(mockClient, "test-room-id");
+
+        const displayText = "test user";
+        const url = "https://matrix.to/#/#test:room.io";
+        const input = `[${displayText}](<${url}>)`;
+
+        // check the attributes by parsing the document html instead of checking the string directly
+        // so that we are checking the html is also valid
+        const mockEditor = document.createElement("div");
+        mockEditor.innerHTML = wipFormatter(input, mockRoom, mockClient);
+
+        const outputAsElement = mockEditor.querySelector("a");
+        expect(outputAsElement).toHaveAttribute("data-mention-type", "room");
+        expect(outputAsElement).toHaveAttribute("contenteditable", "false");
+        expect(outputAsElement).toHaveAttribute("href", url);
+        expect(outputAsElement).toHaveAttribute("style");
+        expect(outputAsElement).toHaveTextContent(displayText);
+    });
+});
