@@ -261,17 +261,10 @@ describe("Room Header", () => {
             cy.get(".mx_AppsDrawer").should("exist");
 
             cy.get(".mx_RoomHeader").within(() => {
+                // Assert that "Hide Widgets" button is rendered  and aria-checked is set to true
                 cy.findByRole("button", { name: "Hide Widgets" })
-                    .should("exist") // Assert that the apps button is rendered
-                    .then(($btn) => {
-                        // Note it is not possible to get CSS values of a pseudo class with "have.css".
-                        const color = $btn[0].ownerDocument.defaultView // get window reference from element
-                            .getComputedStyle($btn[0], "before") // get the pseudo selector
-                            .getPropertyValue("background-color"); // get "background-color" value
-
-                        // Assert the value is equal to $accent == hex #0dbd8b == rgba(13, 189, 139)
-                        expect(color).to.eq("rgb(13, 189, 139)");
-                    });
+                    .should("exist")
+                    .should("have.attr", "aria-checked", "true");
             });
 
             cy.get(".mx_RoomHeader").percySnapshotElement("Room header - with apps button (highlighted)");
@@ -283,6 +276,11 @@ describe("Room Header", () => {
             cy.get(".mx_RoomHeader").within(() => {
                 // Click the apps button to hide AppsDrawer
                 cy.findByRole("button", { name: "Hide Widgets" }).should("exist").click();
+
+                // Assert that "Show widgets" button is rendered and aria-checked is set to false
+                cy.findByRole("button", { name: "Show Widgets" })
+                    .should("exist")
+                    .should("have.attr", "aria-checked", "false");
             });
 
             // Assert that AppsDrawer is not rendered
