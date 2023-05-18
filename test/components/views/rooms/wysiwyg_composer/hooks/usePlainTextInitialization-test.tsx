@@ -14,12 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { renderHook } from "@testing-library/react-hooks";
-import { act } from "@testing-library/react";
-
 import {
     encodeHtml,
-    usePlainTextInitialization,
     wipFormatter,
     getAttributesForMention,
 } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/usePlainTextInitialization";
