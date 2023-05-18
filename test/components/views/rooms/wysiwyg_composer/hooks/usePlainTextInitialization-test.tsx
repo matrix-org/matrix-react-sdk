@@ -20,7 +20,7 @@ import { act } from "@testing-library/react";
 import {
     usePlainTextInitialization,
     wipFormatter,
-    getMentionStuff,
+    getMentionAttributesFromMarkdown,
 } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/usePlainTextInitialization";
 
 it("does something", () => {});
