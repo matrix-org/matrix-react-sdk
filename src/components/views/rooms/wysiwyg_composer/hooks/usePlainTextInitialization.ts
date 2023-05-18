@@ -44,9 +44,18 @@ export function usePlainTextInitialization(
 // with a backreference \1. Since the backreference matches something that has already matched, it will not backtrack.
 const mdLinkRegex = /\[(?=([^\]]*))\1\]\(<(?=([^>]*))\2>\)/g;
 
+/**
+ * Encodes a string so that characters are replaced with their corresponding html entities
+ * eg "<" becomes "&lt;".
+ *
+ * We need to do this to prevent misinterpreting angle brackets in markdown as badly formed
+ * html tags when using that string to set the innerHTML property.
+ */
 export function encodeHtml(text: string): string {
     const textArea = document.createElement("textarea");
-    textArea.innerText = text;
+    // textArea.innerText = text;
+    const textNode = document.createTextNode(text);
+    textArea.appendChild(textNode);
     return textArea.innerHTML;
 }
 
@@ -55,8 +64,8 @@ export function wipFormatter(text: string, room: Room, client?: MatrixClient): s
         const mentionAttributes = getMentionAttributesFromMarkdown(href, linkText, room, client);
         if (mentionAttributes === null) {
             // if we get null back, we either can't handle getting the attributes or we have a
-            // regular link, not a mention - encode the text (to avoid misinterpreting <>) and
-            // replace with the encoded text
+            // regular link, not a mention - encode the text (to avoid misinterpreting <> around the
+            // link address) and replace with the encoded text
             return encodeHtml(match);
         }
 
@@ -88,7 +97,7 @@ export function getMentionAttributesFromMarkdown(
         return {
             "data-mention-type": "at-room",
             "contenteditable": "false",
-            "href": "#",
+            "href": "#", // TODO should this be https://#
             "style": "",
         };
     }
