@@ -52,6 +52,16 @@ import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessa
 import { ModuleRunner } from "../../../../src/modules/ModuleRunner";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 
+jest.mock("../../../../src/stores/OwnProfileStore", () => ({
+    OwnProfileStore: {
+        instance: {
+            isProfileInfoFetched: true,
+            removeListener: jest.fn(),
+            getHttpAvatarUrl: jest.fn().mockReturnValue("http://avatar_url"),
+        },
+    },
+}));
+
 describe("AppTile", () => {
     let cli: MatrixClient;
     let r1: Room;
@@ -347,6 +357,13 @@ describe("AppTile", () => {
             );
 
             moveToContainerSpy = jest.spyOn(WidgetLayoutStore.instance, "moveToContainer");
+        });
+
+        it("should render", () => {
+            const { container, asFragment } = renderResult;
+
+            expect(container.querySelector(".mx_Spinner")).toBeFalsy(); // Assert that the spinner is gone
+            expect(asFragment()).toMatchSnapshot(); // Take a snapshot of the pinned widget
         });
 
         it("should not display the »Popout widget« button", () => {
