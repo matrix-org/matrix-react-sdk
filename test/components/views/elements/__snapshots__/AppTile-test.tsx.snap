@@ -39,7 +39,7 @@ exports[`AppTile destroys non-persisted right panel widget on room change 1`] = 
         </div>
       </div>
       <div
-        class="mx_AppTile mx_AppTileFullWidth"
+        class="mx_AppTile mx_AppTile--fullWidth"
         id="1"
       >
         <div
@@ -319,7 +319,7 @@ exports[`AppTile preserves non-persisted widget on container move 1`] = `
         class="mx_AppsContainer"
       >
         <div
-          class="mx_AppTile mx_AppTileFullWidth"
+          class="mx_AppTile mx_AppTile--fullWidth"
           id="1"
         >
           <div

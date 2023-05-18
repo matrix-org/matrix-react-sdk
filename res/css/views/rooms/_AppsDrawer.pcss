@@ -146,7 +146,7 @@ limitations under the License.
         border-radius: 0 10px 10px 0;
     }
 
-    .mx_AppTile.mx_AppTileFullWidth {
+    .mx_AppTile.mx_AppTile--fullWidth {
         border-radius: 8px; /* override the border radius values above */
     }
 
@@ -166,7 +166,7 @@ limitations under the License.
     box-sizing: border-box;
     background-color: $widget-menu-bar-bg-color;
 
-    &.mx_AppTileFullWidth,
+    &.mx_AppTile--fullWidth,
     &.mx_AppTile--mini {
         margin: 0;
         padding: 0;
@@ -175,7 +175,7 @@ limitations under the License.
         box-sizing: unset;
     }
 
-    &.mx_AppTileFullWidth {
+    &.mx_AppTile--fullWidth {
         width: 100% !important; /* to override the inline style set by the resizer */
         border-radius: 8px;
     }
@@ -191,7 +191,7 @@ limitations under the License.
 }
 
 .mx_AppTile .mx_AppTile_persistedWrapper,
-.mx_AppTileFullWidth .mx_AppTile_persistedWrapper,
+.mx_AppTile--fullWidth .mx_AppTile_persistedWrapper,
 .mx_AppTile_mini .mx_AppTile_persistedWrapper {
     flex: 1;
 }
@@ -330,7 +330,7 @@ limitations under the License.
 /* appTileBody is embedded to PersistedElement outside of mx_AppTile,
    so rules to style appTileBody generally should not be included here. */
 .mx_AppTile .mx_AppTileBody--large,
-.mx_AppTileFullWidth .mx_AppTileBody--large,
+.mx_AppTile--fullWidth .mx_AppTileBody--large,
 .mx_AppTile--mini .mx_AppTileBody--mini {
     height: inherit;
     flex: 1;

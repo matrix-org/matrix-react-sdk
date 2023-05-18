@@ -79,7 +79,7 @@ function sendStickerFromPicker() {
     });
 
     // Sticker picker should close itself after sending.
-    cy.get(".mx_AppTileFullWidth#stickers").should("not.exist");
+    cy.get(".mx_AppTile--fullWidth#stickers").should("not.exist");
 }
 
 function expectTimelineSticker(roomId: string) {
