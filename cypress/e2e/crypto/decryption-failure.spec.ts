@@ -15,11 +15,9 @@ limitations under the License.
 */
 
 import type { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import type { ISasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
 import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { UserCredentials } from "../../support/login";
-import Chainable = Cypress.Chainable;
 import { handleVerificationRequest } from "./utils";
 
 const ROOM_NAME = "Test room";
