@@ -31,7 +31,7 @@ export function usePlainTextInitialization(
 ): void {
     useEffect(() => {
         if (ref.current) {
-            const content = wipFormatter(initialContent, room, client);
+            const content = formatPlainTextLinks(initialContent, room, client);
             ref.current.innerHTML = content;
             setContent?.();
         }
@@ -53,30 +53,55 @@ const mdLinkRegex = /\[(?=([^\]]*))\1\]\(<(?=([^>]*))\2>\)/g;
  */
 export function encodeHtml(text: string): string {
     const textArea = document.createElement("textarea");
-    // textArea.innerText = text;
     const textNode = document.createTextNode(text);
     textArea.appendChild(textNode);
     return textArea.innerHTML;
 }
 
-export function wipFormatter(text: string, room: Room, client?: MatrixClient): string {
+/**
+ * Takes a plain text string and returns that string with the markdown style links formatted as follows:
+ * For a regular markdown link, the input is encoded to ensure that angle
+ * brackets are not interpreted as html.
+ * For a mention, the markdown link is replaced with an html representation of that mention as
+ * a link to allow it to be displayed as a pill in the composer.
+ *
+ * @param text - the plain text output from the rust model
+ * @param room - the current room the composer is being used in
+ * @param client - the current client
+ * @returns - the original string with links either encoded for display as html or replaced with
+ * the html that represents a pill
+ */
+export function formatPlainTextLinks(text: string, room: Room, client?: MatrixClient): string {
     return text.replace(mdLinkRegex, (match, linkText, href) => {
         const mentionAttributes = getAttributesForMention(href, linkText, room, client);
         if (mentionAttributes === null) {
-            // if we get null back, we either can't handle getting the attributes or we have a
-            // regular link, not a mention - encode the text (to avoid misinterpreting <> around the
-            // link address) and replace with the encoded text
+            // If we get null back, we either can't find the required attributes or we have a
+            // regular link, not a mention.
+            // Encode the text (to avoid misinterpreting <> around the link address)
             return encodeHtml(match);
         }
 
-        // we have attributes so we are dealing with a mention - insert it as a link
-        const attributeString = Object.entries(mentionAttributes)
+        // We have attributes so we are dealing with a mention. Use the attributes to build
+        // the html that we use to represent a mention as per the rich text mode
+        const attributesAsString = Object.entries(mentionAttributes)
             .map(([k, v]) => `${k}="${v}"`)
             .join(" ");
-        return `<a ${attributeString}>${linkText}</a>`;
+        return `<a ${attributesAsString}>${linkText}</a>`;
     });
 }
 
+/**
+ * Given a url and display text from a link, determine if it is a mention. If it is
+ * a mention, return the attributes required to display that mention as per the rich
+ * text mode of the rich text editor. If it is not a mention or we can not find those
+ * attributes, return null
+ *
+ * @param url - the url of the link
+ * @param displayText - the text being displayed by the link
+ * @param room - the current room the composer is used in
+ * @param client - the current client
+ * @returns - attributes to use to construct a mention if the possible, null otherwise
+ */
 export function getAttributesForMention(
     url: string,
     displayText: string,

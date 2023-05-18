@@ -16,7 +16,7 @@ limitations under the License.
 
 import {
     encodeHtml,
-    wipFormatter,
+    formatPlainTextLinks,
     getAttributesForMention,
 } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/usePlainTextInitialization";
 import { mkRoom, stubClient } from "../../../../../test-utils";
@@ -33,14 +33,14 @@ describe("encodeHtml", () => {
     });
 });
 
-describe("wipFormatter", () => {
+describe("formatPlainTextLinks", () => {
     it("returns text unchanged if it contains no links", () => {
         const mockClient = stubClient();
         const mockRoom = mkRoom(mockClient, "test-room-id");
 
         const input = "plain text containing no links";
 
-        expect(wipFormatter(input, mockRoom, mockClient)).toBe(input);
+        expect(formatPlainTextLinks(input, mockRoom, mockClient)).toBe(input);
     });
 
     it("replaces regular links with their html encoded equivalents", () => {
@@ -50,7 +50,7 @@ describe("wipFormatter", () => {
         const input = "[example](<https://www.markdownlink.com>)";
         const expected = "[example](&lt;https://www.markdownlink.com&gt;)";
 
-        expect(wipFormatter(input, mockRoom, mockClient)).toBe(expected);
+        expect(formatPlainTextLinks(input, mockRoom, mockClient)).toBe(expected);
     });
 
     it("replaces at-room mentions with the expected html", () => {
@@ -62,7 +62,7 @@ describe("wipFormatter", () => {
         // check the attributes by parsing the document html instead of checking the string directly
         // so that we are checking the html is also valid
         const mockEditor = document.createElement("div");
-        mockEditor.innerHTML = wipFormatter(input, mockRoom, mockClient);
+        mockEditor.innerHTML = formatPlainTextLinks(input, mockRoom, mockClient);
 
         const outputAsElement = mockEditor.querySelector("a");
         expect(outputAsElement).toHaveAttribute("data-mention-type", "at-room");
@@ -83,7 +83,7 @@ describe("wipFormatter", () => {
         // check the attributes by parsing the document html instead of checking the string directly
         // so that we are checking the html is also valid
         const mockEditor = document.createElement("div");
-        mockEditor.innerHTML = wipFormatter(input, mockRoom, mockClient);
+        mockEditor.innerHTML = formatPlainTextLinks(input, mockRoom, mockClient);
 
         const outputAsElement = mockEditor.querySelector("a");
         expect(outputAsElement).toHaveAttribute("data-mention-type", "user");
@@ -104,7 +104,7 @@ describe("wipFormatter", () => {
         // check the attributes by parsing the document html instead of checking the string directly
         // so that we are checking the html is also valid
         const mockEditor = document.createElement("div");
-        mockEditor.innerHTML = wipFormatter(input, mockRoom, mockClient);
+        mockEditor.innerHTML = formatPlainTextLinks(input, mockRoom, mockClient);
 
         const outputAsElement = mockEditor.querySelector("a");
         expect(outputAsElement).toHaveAttribute("data-mention-type", "room");
