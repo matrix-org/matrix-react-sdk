@@ -61,7 +61,7 @@ export function encodeHtml(text: string): string {
 
 export function wipFormatter(text: string, room: Room, client?: MatrixClient): string {
     return text.replace(mdLinkRegex, (match, linkText, href) => {
-        const mentionAttributes = getMentionAttributesFromMarkdown(href, linkText, room, client);
+        const mentionAttributes = getAttributesForMention(href, linkText, room, client);
         if (mentionAttributes === null) {
             // if we get null back, we either can't handle getting the attributes or we have a
             // regular link, not a mention - encode the text (to avoid misinterpreting <> around the
@@ -77,7 +77,7 @@ export function wipFormatter(text: string, room: Room, client?: MatrixClient): s
     });
 }
 
-export function getMentionAttributesFromMarkdown(
+export function getAttributesForMention(
     url: string,
     displayText: string,
     room: Room,
