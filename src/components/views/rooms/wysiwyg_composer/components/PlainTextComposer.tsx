@@ -69,7 +69,7 @@ export function PlainTextComposer({
 
     const client = useMatrixClientContext();
     const composerFunctions = useComposerFunctions(editorRef, setContent);
-    usePlainTextInitialization(initialContent, editorRef, room, client, onChange);
+    usePlainTextInitialization(initialContent, editorRef, room, client, setContent);
     useSetCursorPosition(disabled, editorRef);
     const { isFocused, onFocus } = useIsFocused();
     const computedPlaceholder = (!content && placeholder) || undefined;
