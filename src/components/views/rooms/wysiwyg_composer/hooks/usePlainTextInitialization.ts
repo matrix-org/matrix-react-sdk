@@ -51,11 +51,19 @@ export function encodeHtml(text: string): string {
 
 export function wipFormatter(text: string, room: Room, client: MatrixClient): string {
     return text.replace(mdLinkRegex, (match, linkText, href) => {
-        const stuff = getMentionAttributesFromMarkdown(href, linkText, room, client);
-        if (stuff === null) {
+        const mentionAttributes = getMentionAttributesFromMarkdown(href, linkText, room, client);
+        if (mentionAttributes === null) {
+            // if we get null back, we either can't handle getting the attributes or we have a
+            // regular link, not a mention - encode the text (to avoid misinterpreting <>) and
+            // replace with the encoded text
             return encodeHtml(match);
         }
-        return stuff;
+
+        // we have attributes so we are dealing with a mention - insert it as a link
+        const attributeString = Object.entries(mentionAttributes)
+            .map(([k, v]) => `${k}="${v}"`)
+            .join(" ");
+        return `<a ${attributeString}>${linkText}</a>`;
     });
 }
 
@@ -64,47 +72,41 @@ export function getMentionAttributesFromMarkdown(
     displayText: string,
     room: Room,
     client: MatrixClient,
-): string | null {
+): { "data-mention-type": ICompletion["type"]; "contenteditable": "false"; "href": string; "style": string } | null {
     const parseResult = parsePermalink(url);
     // expand this to check href later when it's changed to "#"
     if (parseResult === null && displayText === "@room") {
         // at-room special case
-        return `<a data-mention-type="at-room" contenteditable="false" href="#">${displayText}</a>`;
+        return {
+            "data-mention-type": "at-room",
+            "contenteditable": "false",
+            "href": "#",
+            "style": "",
+        };
     }
-    console.log("<<< parseResult", parseResult);
 
     if (parseResult === null || parseResult.primaryEntityId === null) return null;
+
     const resourceId = parseResult.primaryEntityId;
     if (resourceId.startsWith("@")) {
-        const attributes = getMentionAttributes(
+        const customAttributes = getMentionAttributes(
             { type: "user", completionId: resourceId, completion: displayText } as ICompletion,
             client,
             room,
         );
-        const attributeString = Object.entries(attributes)
-            .map(([k, v]) => `${k}="${v}"`)
-            .join(" ");
-        console.log("<<< attrstring", attributeString);
-        return `<a ${attributeString} contenteditable="false" href="${url}">${displayText}</a>`;
+        return { contenteditable: "false", href: url, ...customAttributes };
     }
     if (resourceId.startsWith("#")) {
         const displayRoom = client.getVisibleRooms().find((r) => r.name === displayText);
 
-        console.log("<<< room", displayRoom);
-        const attributes = getMentionAttributes(
+        const customAttributes = getMentionAttributes(
             { type: "room", completionId: displayRoom?.roomId ?? resourceId, completion: resourceId } as ICompletion,
             client,
             room,
         );
-        const attributeString = Object.entries(attributes)
-            .map(([k, v]) => `${k}="${v}"`)
-            .join(" ");
-        console.log("<<< attrstring", attributeString);
 
-        return `<a ${attributeString} contenteditable="false" href="${url}">${displayText}</a>`;
+        return { contenteditable: "false", href: url, ...customAttributes };
     }
 
-    console.log("<<< resourceId", resourceId);
-
-    return `missed all cases for ${displayText}`;
+    return null;
 }
