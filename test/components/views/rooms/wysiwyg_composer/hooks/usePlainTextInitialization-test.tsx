@@ -21,9 +21,10 @@ import {
     encodeHtml,
     usePlainTextInitialization,
     wipFormatter,
-    getMentionAttributesFromMarkdown,
+    getAttributesForMention,
 } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/usePlainTextInitialization";
 import { mkRoom, stubClient } from "../../../../../test-utils";
+import * as mockPermalink from "../../../../../../src/utils/permalinks/Permalinks";
 
 describe("encodeHtml", () => {
     it("converts markdown links in text to html encoded equivalent", () => {
@@ -113,5 +114,40 @@ describe("wipFormatter", () => {
         expect(outputAsElement).toHaveAttribute("href", url);
         expect(outputAsElement).toHaveAttribute("style");
         expect(outputAsElement).toHaveTextContent(displayText);
+    });
+});
+
+describe("getAttributesForMention", () => {
+    it("returns null if client is undefined", () => {
+        const mockClient = stubClient();
+        const mockRoom = mkRoom(mockClient, "test-room-id");
+        const url = "https://www.testurl.com";
+        const displayText = "displayText";
+
+        expect(getAttributesForMention(url, displayText, mockRoom, undefined)).toBeNull();
+    });
+
+    describe("when parsePermalink returns null", () => {
+        const mockParsePermalink = jest.spyOn(mockPermalink, "parsePermalink");
+        beforeEach(() => {
+            mockParsePermalink.mockReturnValue(null);
+        });
+        afterEach(() => {
+            mockParsePermalink.mockRestore();
+        });
+
+        it("does not return null for @room special case", () => {
+            const mockClient = stubClient();
+            const mockRoom = mkRoom(mockClient, "test-room-id");
+            const url = "https://#";
+            const displayText = "@room";
+
+            expect(getAttributesForMention(url, displayText, mockRoom, mockClient)).toEqual({
+                "data-mention-type": "at-room",
+                "contenteditable": "false",
+                "href": "#", // TODO should this be https://#
+                "style": "",
+            });
+        });
     });
 });
