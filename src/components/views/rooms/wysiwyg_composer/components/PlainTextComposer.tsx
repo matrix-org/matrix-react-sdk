@@ -16,7 +16,6 @@ limitations under the License.
 
 import classNames from "classnames";
 import React, { MutableRefObject, ReactNode } from "react";
-import { Room } from "matrix-js-sdk/src/matrix";
 
 import { useComposerFunctions } from "../hooks/useComposerFunctions";
 import { useIsFocused } from "../hooks/useIsFocused";
