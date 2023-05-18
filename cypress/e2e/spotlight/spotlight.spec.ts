@@ -212,8 +212,12 @@ describe("Spotlight", () => {
 
     it("should be able to add and remove filters via keyboard", () => {
         cy.openSpotlightDialog().within(() => {
-            cy.spotlightSearch().type("{downArrow}");
+            cy.wait(1000); // wait for the dialog to settle, otherwise our keypresses might race with an update
+
+            // initially, publicrooms should be highlighted (because there are no other suggestions)
             cy.get("#mx_SpotlightDialog_button_explorePublicRooms").should("have.attr", "aria-selected", "true");
+
+            // hitting enter should enable the publicrooms filter
             cy.spotlightSearch().type("{enter}");
             cy.get(".mx_SpotlightDialog_filter").should("contain", "Public rooms");
             cy.spotlightSearch().type("{backspace}");
