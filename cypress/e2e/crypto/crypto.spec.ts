@@ -103,6 +103,23 @@ function autoJoin(client: MatrixClient) {
     });
 }
 
+function acceptVerificationRequest(promise: Promise<VerificationRequest>) {
+    return cy.wrap(promise).then((verificationRequest: VerificationRequest) => {
+        verificationRequest.accept();
+        return verificationRequest;
+    });
+}
+
+function verifyEmojiSas(promise: Promise<EmojiMapping[]>) {
+    return cy.wrap(promise).then((emojis: EmojiMapping[]) => {
+        cy.get(".mx_VerificationShowSas_emojiSas_block").then((emojiBlocks) => {
+            emojis.forEach((emoji: EmojiMapping, index: number) => {
+                expect(emojiBlocks[index].textContent.toLowerCase()).to.eq(emoji[0] + emoji[1]);
+            });
+        });
+    });
+}
+
 const verify = function (this: CryptoTestContext) {
     const bobsVerificationRequestPromise = waitForVerificationRequest(this.bob);
 
@@ -111,21 +128,10 @@ const verify = function (this: CryptoTestContext) {
         cy.findByText("Bob").click();
         cy.findByRole("button", { name: "Verify" }).click();
         cy.findByRole("button", { name: "Start Verification" }).click();
-        cy.wrap(bobsVerificationRequestPromise)
-            .then((verificationRequest: VerificationRequest) => {
-                verificationRequest.accept();
-                return verificationRequest;
-            })
-            .as("bobsVerificationRequest");
+        acceptVerificationRequest(bobsVerificationRequestPromise).as("bobsVerificationRequest");
         cy.findByRole("button", { name: "Verify by emoji" }).click();
         cy.get<VerificationRequest>("@bobsVerificationRequest").then((request: VerificationRequest) => {
-            return cy.wrap(handleVerificationRequest(request)).then((emojis: EmojiMapping[]) => {
-                cy.get(".mx_VerificationShowSas_emojiSas_block").then((emojiBlocks) => {
-                    emojis.forEach((emoji: EmojiMapping, index: number) => {
-                        expect(emojiBlocks[index].textContent.toLowerCase()).to.eq(emoji[0] + emoji[1]);
-                    });
-                });
-            });
+            return verifyEmojiSas(handleVerificationRequest(request));
         });
         cy.findByRole("button", { name: "They match" }).click();
         cy.findByText("You've successfully verified Bob!").should("exist");
@@ -297,6 +303,112 @@ describe("Cryptography", function () {
                 .closest(".mx_EventTile")
                 .should("have.class", "mx_EventTile_verified")
                 .should("not.have.descendants", ".mx_EventTile_e2eIcon_warning");
+        });
+    });
+
+    describe("verify own device", () => {
+        function logoutAlice() {
+            // Click on user menu icon at the top left
+            cy.get(`[title="User menu"`).click();
+            // Click on Sign out element on the dropdown
+            cy.findByRole("menuitem", { name: "Sign out" }).click();
+        }
+
+        function loginAlice(homeserver: HomeserverInstance) {
+            // Change homeserver
+            cy.findByRole("button", { name: "Edit" }).click();
+            // Select homeserver modal
+            cy.get(`[aria-labelledby="mx_BaseDialog_title"`).within(() => {
+                cy.findByRole("textbox").type(homeserver.baseUrl);
+                cy.findByRole("button", { name: "Continue" }).click();
+            });
+            // Fill credentials
+            cy.findByRole("textbox", { name: "Username" }).type(aliceCredentials.userId);
+            cy.findByLabelText("Password").type(aliceCredentials.password);
+            // Sign in
+            cy.findByRole("button", { name: "Sign in" }).click();
+        }
+
+        function doAliceVerificationRequest() {
+            cy.get<MatrixClient>("@aliceSecondDevice").then((aliceBotClient) => {
+                console.log("########### aliceBotClient", aliceBotClient.getDeviceId());
+
+                // alice bot waits for verification request
+                const promiseVerificationRequest = waitForVerificationRequest(aliceBotClient);
+
+                // Click on "Verify with another device"
+                cy.get(".mx_AuthPage").within(() => {
+                    cy.findByRole("button", { name: "Verify with another device" }).click();
+                });
+
+                // alice bot responds yes to verification request from alice
+                acceptVerificationRequest(promiseVerificationRequest).as("verificationRequest");
+            });
+        }
+
+        function checkAliceDeviceIsCrossSigned(homeserver: HomeserverInstance) {
+            let myDeviceId: string;
+            cy.window({ log: false })
+                .then((win) => {
+                    const cli = win.mxMatrixClientPeg.get();
+                    const accessToken = cli.getAccessToken()!;
+                    myDeviceId = cli.getDeviceId();
+                    return cy.request({
+                        method: "POST",
+                        url: `${homeserver.baseUrl}/_matrix/client/v3/keys/query`,
+                        headers: { Authorization: `Bearer ${accessToken}` },
+                        body: { device_keys: { [aliceCredentials.userId]: [] } },
+                    });
+                })
+                .then((res) => {
+                    // there should be three cross-signing keys
+                    expect(res.body.master_keys[aliceCredentials.userId]).to.have.property("keys");
+                    expect(res.body.self_signing_keys[aliceCredentials.userId]).to.have.property("keys");
+                    expect(res.body.user_signing_keys[aliceCredentials.userId]).to.have.property("keys");
+
+                    // and the device should be signed by the self-signing key
+                    const selfSigningKeyId = Object.keys(res.body.self_signing_keys[aliceCredentials.userId].keys)[0];
+
+                    expect(res.body.device_keys[aliceCredentials.userId][myDeviceId]).to.exist;
+
+                    const myDeviceSignatures =
+                        res.body.device_keys[aliceCredentials.userId][myDeviceId].signatures[aliceCredentials.userId];
+                    expect(myDeviceSignatures[selfSigningKeyId]).to.exist;
+                });
+        }
+
+        it("with SAS", function (this: CryptoTestContext) {
+            // Add a second verified device to Alice
+            cy.loginBot(this.homeserver, aliceCredentials.userId, aliceCredentials.password, {
+                startClient: true,
+                bootstrapCrossSigning: true,
+            }).as("aliceSecondDevice");
+
+            // TODO wait for alice ready to be logout
+            cy.wait(2000);
+
+            // Logout alice and then login to create a new unverified device
+            logoutAlice();
+            loginAlice(this.homeserver);
+
+            // Launch and do the verification request between alice and the bot
+            doAliceVerificationRequest();
+
+            // Handle emoji SAS verification
+            cy.get(".mx_InfoDialog").within(() => {
+                cy.get<VerificationRequest>("@verificationRequest").then((request: VerificationRequest) => {
+                    // Handle emoji request and check that emojis are matching
+                    return verifyEmojiSas(handleVerificationRequest(request));
+                });
+
+                cy.findByRole("button", { name: "They match" }).click();
+                cy.findByRole("button", { name: "Got it" }).click();
+            });
+
+            cy.wait(5000);
+
+            // Check that the alice device is cross-signed
+            checkAliceDeviceIsCrossSigned(this.homeserver);
         });
     });
 });
