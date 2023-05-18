@@ -148,7 +148,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
 
     public componentWillUnmount(): void {
         const client = MatrixClientPeg.get();
-        if (client) client.removeListener(RoomEvent.AccountData, this.updateWidget);
+        if (client) client.removeListener(ClientEvent.AccountData, this.updateWidget);
         RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         window.removeEventListener("resize", this.onResize);
         if (this.dispatcherRef) {
