@@ -7,6 +7,7 @@ exports[`AppearanceUserSettingsTab should render 1`] = `
   >
     <div
       class="mx_SettingsTab_heading"
+      data-testid="appearance"
     >
       Customise your appearance
     </div>
@@ -25,7 +26,6 @@ exports[`AppearanceUserSettingsTab should render 1`] = `
       </span>
       <div
         class="mx_ThemeSelectors"
-        data-testid="theme-choice-panel-selectors"
       >
         <label
           class="mx_StyledRadioButton mx_ThemeSelector_light mx_StyledRadioButton_disabled mx_StyledRadioButton_outlined"

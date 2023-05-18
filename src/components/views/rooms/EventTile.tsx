@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, forwardRef, MouseEvent, ReactNode, RefObject } from "react";
+import React, { createRef, forwardRef, MouseEvent, ReactNode, useRef } from "react";
 import classNames from "classnames";
 import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
@@ -250,8 +250,8 @@ interface IState {
 export class UnwrappedEventTile extends React.Component<EventTileProps, IState> {
     private suppressReadReceiptAnimation: boolean;
     private isListeningForReceipts: boolean;
-    private tile = React.createRef<IEventTileType>();
-    private replyChain = React.createRef<ReplyChain>();
+    private tile = createRef<IEventTileType>();
+    private replyChain = createRef<ReplyChain>();
 
     public readonly ref = createRef<HTMLElement>();
 
@@ -513,6 +513,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         evt.preventDefault();
         evt.stopPropagation();
         const { permalinkCreator, mxEvent } = this.props;
+        if (!permalinkCreator) return;
         const matrixToUrl = permalinkCreator.forEvent(mxEvent.getId()!);
         await copyPlaintext(matrixToUrl);
     };
@@ -576,6 +577,12 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
         const encryptionInfo = MatrixClientPeg.get().getEventEncryptionInfo(mxEvent);
         const senderId = mxEvent.getSender();
+        if (!senderId) {
+            // something definitely wrong is going on here
+            this.setState({ verified: E2EState.Warning });
+            return;
+        }
+
         const userTrust = MatrixClientPeg.get().checkUserTrust(senderId);
 
         if (encryptionInfo.mismatchedSender) {
@@ -1430,10 +1437,10 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 }
 
 // Wrap all event tiles with the tile error boundary so that any throws even during construction are captured
-const SafeEventTile = forwardRef((props: EventTileProps, ref: RefObject<UnwrappedEventTile>) => {
+const SafeEventTile = forwardRef<UnwrappedEventTile, EventTileProps>((props, ref) => {
     return (
         <>
-            <TileErrorBoundary mxEvent={props.mxEvent} layout={props.layout}>
+            <TileErrorBoundary mxEvent={props.mxEvent} layout={props.layout ?? Layout.Group}>
                 <UnwrappedEventTile ref={ref} {...props} />
             </TileErrorBoundary>
         </>
@@ -1513,7 +1520,12 @@ class E2ePadlock extends React.Component<IE2ePadlockProps, IE2ePadlockState> {
 
         const classes = `mx_EventTile_e2eIcon mx_EventTile_e2eIcon_${this.props.icon}`;
         return (
-            <div className={classes} onMouseEnter={this.onHoverStart} onMouseLeave={this.onHoverEnd}>
+            <div
+                className={classes}
+                onMouseEnter={this.onHoverStart}
+                onMouseLeave={this.onHoverEnd}
+                aria-label={this.props.title}
+            >
                 {tooltip}
             </div>
         );
@@ -1525,6 +1537,7 @@ interface ISentReceiptProps {
 }
 
 function SentReceipt({ messageState }: ISentReceiptProps): JSX.Element {
+    const tooltipId = useRef(`mx_SentReceipt_${Math.random()}`).current;
     const isSent = !messageState || messageState === "sent";
     const isFailed = messageState === "not_sent";
     const receiptClasses = classNames({
@@ -1546,6 +1559,7 @@ function SentReceipt({ messageState }: ISentReceiptProps): JSX.Element {
         label = _t("Failed to send");
     }
     const [{ showTooltip, hideTooltip }, tooltip] = useTooltip({
+        id: tooltipId,
         label: label,
         alignment: Alignment.TopRight,
     });
@@ -1559,6 +1573,7 @@ function SentReceipt({ messageState }: ISentReceiptProps): JSX.Element {
                     onMouseLeave={hideTooltip}
                     onFocus={showTooltip}
                     onBlur={hideTooltip}
+                    aria-describedby={tooltipId}
                 >
                     <span className="mx_ReadReceiptGroup_container">
                         <span className={receiptClasses}>{nonCssBadge}</span>

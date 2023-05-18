@@ -17,10 +17,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import url from "url";
 import React, { ContextType, createRef, CSSProperties, MutableRefObject, ReactNode } from "react";
 import classNames from "classnames";
-import { MatrixCapabilities } from "matrix-widget-api";
+import { IWidget, MatrixCapabilities } from "matrix-widget-api";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ApprovalOpts, WidgetLifecycle } from "@matrix-org/react-sdk-module-api/lib/lifecycles/WidgetLifecycle";
@@ -40,7 +39,7 @@ import { ElementWidget, StopGapWidget } from "../../../stores/widgets/StopGapWid
 import { WidgetContextMenu } from "../context_menus/WidgetContextMenu";
 import WidgetAvatar from "../avatars/WidgetAvatar";
 import LegacyCallHandler from "../../../LegacyCallHandler";
-import { IApp } from "../../../stores/WidgetStore";
+import { IApp, isAppWidget } from "../../../stores/WidgetStore";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { OwnProfileStore } from "../../../stores/OwnProfileStore";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
@@ -52,9 +51,10 @@ import { ElementWidgetCapabilities } from "../../../stores/widgets/ElementWidget
 import { WidgetMessagingStore } from "../../../stores/widgets/WidgetMessagingStore";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { ModuleRunner } from "../../../modules/ModuleRunner";
+import { parseUrl } from "../../../utils/UrlUtils";
 
 interface IProps {
-    app: IApp;
+    app: IWidget | IApp;
     // If room is not specified then it is an account level widget
     // which bypasses permission prompts as it was added explicitly by that user
     room?: Room;
@@ -106,7 +106,7 @@ interface IState {
 
 export default class AppTile extends React.Component<IProps, IState> {
     public static contextType = MatrixClientContext;
-    public context: ContextType<typeof MatrixClientContext>;
+    public context!: ContextType<typeof MatrixClientContext>;
 
     public static defaultProps: Partial<IProps> = {
         waitForIframeLoad: true,
@@ -121,19 +121,22 @@ export default class AppTile extends React.Component<IProps, IState> {
     };
 
     private contextMenuButton = createRef<any>();
-    private iframe: HTMLIFrameElement; // ref to the iframe (callback style)
-    private allowedWidgetsWatchRef: string;
+    private iframe?: HTMLIFrameElement; // ref to the iframe (callback style)
+    private allowedWidgetsWatchRef?: string;
     private persistKey: string;
     private sgWidget: StopGapWidget | null;
-    private dispatcherRef: string;
-    private unmounted: boolean;
+    private dispatcherRef?: string;
+    private unmounted = false;
 
     public constructor(props: IProps) {
         super(props);
 
         // Tiles in miniMode are floating, and therefore not docked
         if (!this.props.miniMode) {
-            ActiveWidgetStore.instance.dockWidget(this.props.app.id, this.props.app.roomId);
+            ActiveWidgetStore.instance.dockWidget(
+                this.props.app.id,
+                isAppWidget(this.props.app) ? this.props.app.roomId : null,
+            );
         }
 
         // The key used for PersistedElement
@@ -169,14 +172,17 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (opts.approved) return true;
 
         const currentlyAllowedWidgets = SettingsStore.getValue("allowedWidgets", props.room.roomId);
-        const allowed = props.app.eventId !== undefined && (currentlyAllowedWidgets[props.app.eventId] ?? false);
+        const allowed =
+            isAppWidget(props.app) &&
+            props.app.eventId !== undefined &&
+            (currentlyAllowedWidgets[props.app.eventId] ?? false);
         return allowed || props.userId === props.creatorUserId;
     };
 
     private onUserLeftRoom(): void {
         const isActiveWidget = ActiveWidgetStore.instance.getWidgetPersistence(
             this.props.app.id,
-            this.props.app.roomId,
+            isAppWidget(this.props.app) ? this.props.app.roomId : null,
         );
         if (isActiveWidget) {
             // We just left the room that the active widget was from.
@@ -188,7 +194,10 @@ export default class AppTile extends React.Component<IProps, IState> {
                 this.reload();
             } else {
                 // Otherwise just cancel its persistence.
-                ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id, this.props.app.roomId);
+                ActiveWidgetStore.instance.destroyPersistentWidget(
+                    this.props.app.id,
+                    isAppWidget(this.props.app) ? this.props.app.roomId : null,
+                );
             }
         }
     }
@@ -243,7 +252,10 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         if (this.state.hasPermissionToLoad && !hasPermissionToLoad) {
             // Force the widget to be non-persistent (able to be deleted/forgotten)
-            ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id, this.props.app.roomId);
+            ActiveWidgetStore.instance.destroyPersistentWidget(
+                this.props.app.id,
+                isAppWidget(this.props.app) ? this.props.app.roomId : null,
+            );
             PersistedElement.destroyElement(this.persistKey);
             this.sgWidget?.stopMessaging();
         }
@@ -253,7 +265,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private isMixedContent(): boolean {
         const parentContentProtocol = window.location.protocol;
-        const u = url.parse(this.props.app.url);
+        const u = parseUrl(this.props.app.url);
         const childContentProtocol = u.protocol;
         if (parentContentProtocol === "https:" && childContentProtocol !== "https:") {
             logger.warn(
@@ -288,13 +300,21 @@ export default class AppTile extends React.Component<IProps, IState> {
         this.unmounted = true;
 
         if (!this.props.miniMode) {
-            ActiveWidgetStore.instance.undockWidget(this.props.app.id, this.props.app.roomId);
+            ActiveWidgetStore.instance.undockWidget(
+                this.props.app.id,
+                isAppWidget(this.props.app) ? this.props.app.roomId : null,
+            );
         }
 
         // Only tear down the widget if no other component is keeping it alive,
         // because we support moving widgets between containers, in which case
         // another component will keep it loaded throughout the transition
-        if (!ActiveWidgetStore.instance.isLive(this.props.app.id, this.props.app.roomId)) {
+        if (
+            !ActiveWidgetStore.instance.isLive(
+                this.props.app.id,
+                isAppWidget(this.props.app) ? this.props.app.roomId : null,
+            )
+        ) {
             this.endWidgetActions();
         }
 
@@ -305,7 +325,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             this.context.off(RoomEvent.MyMembership, this.onMyMembership);
         }
 
-        SettingsStore.unwatchSetting(this.allowedWidgetsWatchRef);
+        if (this.allowedWidgetsWatchRef) SettingsStore.unwatchSetting(this.allowedWidgetsWatchRef);
         OwnProfileStore.instance.removeListener(UPDATE_EVENT, this.onUserReady);
     }
 
@@ -344,7 +364,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private startMessaging(): void {
         try {
-            this.sgWidget?.startMessaging(this.iframe);
+            this.sgWidget?.startMessaging(this.iframe!);
         } catch (e) {
             logger.error("Failed to start widget", e);
         }
@@ -395,7 +415,10 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         // Delete the widget from the persisted store for good measure.
         PersistedElement.destroyElement(this.persistKey);
-        ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id, this.props.app.roomId);
+        ActiveWidgetStore.instance.destroyPersistentWidget(
+            this.props.app.id,
+            isAppWidget(this.props.app) ? this.props.app.roomId : null,
+        );
 
         this.sgWidget?.stopMessaging({ forceDestroy: true });
     }
@@ -441,9 +464,10 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private grantWidgetPermission = (): void => {
         const roomId = this.props.room?.roomId;
-        logger.info("Granting permission for widget to load: " + this.props.app.eventId);
+        const eventId = isAppWidget(this.props.app) ? this.props.app.eventId : undefined;
+        logger.info("Granting permission for widget to load: " + eventId);
         const current = SettingsStore.getValue("allowedWidgets", roomId);
-        if (this.props.app.eventId !== undefined) current[this.props.app.eventId] = true;
+        if (eventId !== undefined) current[eventId] = true;
         const level = SettingsStore.firstSupportedLevel("allowedWidgets")!;
         SettingsStore.setValue("allowedWidgets", roomId ?? null, level, current)
             .then(() => {
@@ -550,7 +574,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     };
 
     public render(): React.ReactNode {
-        let appTileBody;
+        let appTileBody: JSX.Element;
 
         // Note that there is advice saying allow-scripts shouldn't be used with allow-same-origin
         // because that would allow the iframe to programmatically remove the sandbox attribute, but
@@ -573,7 +597,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
 
         const loadingElement = (
-            <div className="mx_AppLoading_spinner_fadeIn">
+            <div className="mx_AppTile_loading_fadeInSpinner">
                 <Spinner message={_t("Loading…")} />
             </div>
         );
@@ -603,7 +627,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         } else if (this.state.initialising || !this.state.isUserProfileReady) {
             appTileBody = (
                 <div
-                    className={appTileBodyClass + (this.state.loading ? "mx_AppLoading" : "")}
+                    className={appTileBodyClass + (this.state.loading ? "mx_AppTile_loading" : "")}
                     style={appTileBodyStyles}
                 >
                     {loadingElement}
@@ -619,7 +643,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             } else {
                 appTileBody = (
                     <div
-                        className={appTileBodyClass + (this.state.loading ? "mx_AppLoading" : "")}
+                        className={appTileBodyClass + (this.state.loading ? "mx_AppTile_loading" : "")}
                         style={appTileBodyStyles}
                     >
                         {this.state.loading && loadingElement}
@@ -722,12 +746,12 @@ export default class AppTile extends React.Component<IProps, IState> {
                     {this.props.showMenubar && (
                         <div className="mx_AppTileMenuBar">
                             <span
-                                className="mx_AppTileMenuBarTitle"
+                                className="mx_AppTileMenuBar_title"
                                 style={{ pointerEvents: this.props.handleMinimisePointerEvents ? "all" : "none" }}
                             >
                                 {this.props.showTitle && this.getTileTitle()}
                             </span>
-                            <span className="mx_AppTileMenuBarWidgets">
+                            <span className="mx_AppTileMenuBar_widgets">
                                 {layoutButtons}
                                 {this.props.showPopout && !this.state.requiresClient && (
                                     <AccessibleButton

@@ -180,21 +180,25 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
             summarisedStatus = <Spinner />;
         } else if (!homeserverSupportsCrossSigning) {
             summarisedStatus = (
-                <SettingsSubsectionText>{_t("Your homeserver does not support cross-signing.")}</SettingsSubsectionText>
+                <SettingsSubsectionText data-testid="summarised-status">
+                    {_t("Your homeserver does not support cross-signing.")}
+                </SettingsSubsectionText>
             );
         } else if (crossSigningReady && crossSigningPrivateKeysInStorage) {
             summarisedStatus = (
-                <SettingsSubsectionText>✅ {_t("Cross-signing is ready for use.")}</SettingsSubsectionText>
+                <SettingsSubsectionText data-testid="summarised-status">
+                    ✅ {_t("Cross-signing is ready for use.")}
+                </SettingsSubsectionText>
             );
         } else if (crossSigningReady && !crossSigningPrivateKeysInStorage) {
             summarisedStatus = (
-                <SettingsSubsectionText>
+                <SettingsSubsectionText data-testid="summarised-status">
                     ⚠️ {_t("Cross-signing is ready but keys are not backed up.")}
                 </SettingsSubsectionText>
             );
         } else if (crossSigningPrivateKeysInStorage) {
             summarisedStatus = (
-                <SettingsSubsectionText>
+                <SettingsSubsectionText data-testid="summarised-status">
                     {_t(
                         "Your account has a cross-signing identity in secret storage, " +
                             "but it is not yet trusted by this session.",
@@ -202,7 +206,11 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
                 </SettingsSubsectionText>
             );
         } else {
-            summarisedStatus = <SettingsSubsectionText>{_t("Cross-signing is not set up.")}</SettingsSubsectionText>;
+            summarisedStatus = (
+                <SettingsSubsectionText data-testid="summarised-status">
+                    {_t("Cross-signing is not set up.")}
+                </SettingsSubsectionText>
+            );
         }
 
         const keysExistAnywhere =

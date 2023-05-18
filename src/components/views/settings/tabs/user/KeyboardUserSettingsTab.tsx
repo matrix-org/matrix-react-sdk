@@ -34,7 +34,7 @@ interface IKeyboardShortcutRowProps {
 }
 
 // Filter out the labs section if labs aren't enabled.
-const visibleCategories = Object.entries(CATEGORIES).filter(
+const visibleCategories = (Object.entries(CATEGORIES) as [CategoryName, ICategory][]).filter(
     ([categoryName]) => categoryName !== CategoryName.LABS || SdkConfig.get("show_labs_settings"),
 );
 
