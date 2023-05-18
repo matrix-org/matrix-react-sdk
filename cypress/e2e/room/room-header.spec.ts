@@ -261,7 +261,7 @@ describe("Room Header", () => {
             cy.get(".mx_AppsDrawer").should("exist");
 
             cy.get(".mx_RoomHeader").within(() => {
-                // Assert that "Hide Widgets" button is rendered  and aria-checked is set to true
+                // Assert that "Hide Widgets" button is rendered and aria-checked is set to true
                 cy.findByRole("button", { name: "Hide Widgets" })
                     .should("exist")
                     .should("have.attr", "aria-checked", "true");
