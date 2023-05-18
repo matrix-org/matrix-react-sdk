@@ -417,3 +417,21 @@ describe("<RoomPreviewBar />", () => {
         });
     });
 });
+
+describe("prepareRenderInvite", () => {
+    it("Sets the title of a DM to 'Do you want to chat with...'", () => {
+        // Given a RoomPreviewBar set up to be a DM
+        const bar = new RoomPreviewBar({});
+        // @ts-ignore overriding private method
+        bar.isDMInvite = jest.fn().mockReturnValue(true);
+        // @ts-ignore overriding private method
+        bar.getInviteMember = jest.fn().mockReturnValue(new RoomMember("room1", "user1"));
+
+        // When I prepare to render it
+        const extraComponents = [];
+        const { title } = bar.prepareRenderInvite("", extraComponents);
+
+        // Then the title asks whether you want to chat with that user
+        expect(title).toEqual("Do you want to chat with user1?");
+    });
+});

@@ -476,56 +476,15 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 break;
             }
             case MessageCase.Invite: {
-                const avatar = <RoomAvatar room={this.props.room} oobData={this.props.oobData} />;
-
-                const inviteMember = this.getInviteMember();
-                let inviterElement: JSX.Element;
-                if (inviteMember) {
-                    inviterElement = (
-                        <span>
-                            <span className="mx_RoomPreviewBar_inviter">{inviteMember.rawDisplayName}</span> (
-                            {inviteMember.userId})
-                        </span>
-                    );
-                } else {
-                    inviterElement = <span className="mx_RoomPreviewBar_inviter">{this.props.inviterName}</span>;
-                }
-
-                const isDM = this.isDMInvite();
-                if (isDM) {
-                    title = _t("Do you want to chat with %(user)s?", { user: inviteMember.name });
-                    subTitle = [avatar, _t("<userName/> wants to chat", {}, { userName: () => inviterElement })];
-                    primaryActionLabel = _t("Start chatting");
-                } else {
-                    title = _t("Do you want to join %(roomName)s?", { roomName });
-                    subTitle = [avatar, _t("<userName/> invited you", {}, { userName: () => inviterElement })];
-                    primaryActionLabel = _t("Accept");
-                }
-
-                const myUserId = MatrixClientPeg.get().getUserId()!;
-                const member = this.props.room?.currentState.getMember(myUserId);
-                const memberEventContent = member?.events.member?.getContent();
-
-                if (memberEventContent?.reason) {
-                    reasonElement = (
-                        <InviteReason
-                            reason={memberEventContent.reason}
-                            htmlReason={memberEventContent[MemberEventHtmlReasonField]}
-                        />
-                    );
-                }
-
-                primaryActionHandler = this.props.onJoinClick;
-                secondaryActionLabel = _t("Reject");
-                secondaryActionHandler = this.props.onRejectClick;
-
-                if (this.props.onRejectAndIgnoreClick) {
-                    extraComponents.push(
-                        <AccessibleButton kind="secondary" onClick={this.props.onRejectAndIgnoreClick} key="ignore">
-                            {_t("Reject & Ignore user")}
-                        </AccessibleButton>,
-                    );
-                }
+                ({
+                    title,
+                    subTitle,
+                    reasonElement,
+                    primaryActionLabel,
+                    primaryActionHandler,
+                    secondaryActionLabel,
+                    secondaryActionHandler,
+                } = this.prepareRenderInvite(roomName, extraComponents));
                 break;
             }
             case MessageCase.ViewingRoom: {
@@ -650,5 +609,85 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 <div className="mx_RoomPreviewBar_footer">{footer}</div>
             </div>
         );
+    }
+
+    // Public for test only
+    public prepareRenderInvite(
+        roomName: string,
+        extraComponents: JSX.Element[],
+    ): {
+        title: string;
+        subTitle: ReactNode[];
+        reasonElement: JSX.Element;
+        primaryActionLabel: string;
+        primaryActionHandler: () => void;
+        secondaryActionLabel: string;
+        secondaryActionHandler: () => void;
+    } {
+        let title: string;
+        let subTitle: ReactNode[];
+        let reasonElement: JSX.Element;
+        let primaryActionLabel: string;
+
+        const avatar = <RoomAvatar room={this.props.room} oobData={this.props.oobData} />;
+
+        const inviteMember = this.getInviteMember();
+        let inviterElement: JSX.Element;
+        if (inviteMember) {
+            inviterElement = (
+                <span>
+                    <span className="mx_RoomPreviewBar_inviter">{inviteMember.rawDisplayName}</span> (
+                    {inviteMember.userId})
+                </span>
+            );
+        } else {
+            inviterElement = <span className="mx_RoomPreviewBar_inviter">{this.props.inviterName}</span>;
+        }
+
+        const isDM = this.isDMInvite();
+        if (isDM) {
+            title = _t("Do you want to chat with %(user)s?", { user: inviteMember.name });
+            subTitle = [avatar, _t("<userName/> wants to chat", {}, { userName: () => inviterElement })];
+            primaryActionLabel = _t("Start chatting");
+        } else {
+            title = _t("Do you want to join %(roomName)s?", { roomName });
+            subTitle = [avatar, _t("<userName/> invited you", {}, { userName: () => inviterElement })];
+            primaryActionLabel = _t("Accept");
+        }
+
+        const myUserId = MatrixClientPeg.get().getUserId()!;
+        const member = this.props.room?.currentState.getMember(myUserId);
+        const memberEventContent = member?.events.member?.getContent();
+
+        if (memberEventContent?.reason) {
+            reasonElement = (
+                <InviteReason
+                    reason={memberEventContent.reason}
+                    htmlReason={memberEventContent[MemberEventHtmlReasonField]}
+                />
+            );
+        }
+
+        const primaryActionHandler = this.props.onJoinClick;
+        const secondaryActionLabel = _t("Reject");
+        const secondaryActionHandler = this.props.onRejectClick;
+
+        if (this.props.onRejectAndIgnoreClick) {
+            extraComponents.push(
+                <AccessibleButton kind="secondary" onClick={this.props.onRejectAndIgnoreClick} key="ignore">
+                    {_t("Reject & Ignore user")}
+                </AccessibleButton>,
+            );
+        }
+
+        return {
+            title,
+            subTitle,
+            reasonElement,
+            primaryActionLabel,
+            primaryActionHandler,
+            secondaryActionLabel,
+            secondaryActionHandler,
+        };
     }
 }
