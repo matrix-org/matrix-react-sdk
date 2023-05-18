@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 :root {
-    --AppTile_mini-height: 220px;
+    --AppTile--mini-height: 220px;
 }
 
 .mx_AppsDrawer {
@@ -167,7 +167,7 @@ limitations under the License.
     background-color: $widget-menu-bar-bg-color;
 
     &.mx_AppTileFullWidth,
-    &.mx_AppTile_mini {
+    &.mx_AppTile--mini {
         margin: 0;
         padding: 0;
 
@@ -180,9 +180,9 @@ limitations under the License.
         border-radius: 8px;
     }
 
-    &.mx_AppTile_mini {
+    &.mx_AppTile--mini {
         width: 100%;
-        height: var(--AppTile_mini-height);
+        height: var(--AppTile--mini-height);
 
         /* Cancel the values inherited from mx_AppTile */
         border: unset;
@@ -307,7 +307,7 @@ limitations under the License.
     }
 
     &.mx_AppTileBody--mini {
-        --AppTileBody-height: var(--AppTile_mini-height);
+        --AppTileBody-height: var(--AppTile--mini-height);
     }
 
     &.mx_AppTileBody--loading {
@@ -331,7 +331,7 @@ limitations under the License.
    so rules to style appTileBody generally should not be included here. */
 .mx_AppTile .mx_AppTileBody--large,
 .mx_AppTileFullWidth .mx_AppTileBody--large,
-.mx_AppTile_mini .mx_AppTileBody--mini {
+.mx_AppTile--mini .mx_AppTileBody--mini {
     height: inherit;
     flex: 1;
 }
