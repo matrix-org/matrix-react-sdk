@@ -36,7 +36,7 @@ describe("<EventIndexPanel />", () => {
         jest.spyOn(EventIndexPeg, "get").mockRestore();
         jest.spyOn(EventIndexPeg, "platformHasSupport").mockReturnValue(false);
         jest.spyOn(EventIndexPeg, "supportIsInstalled").mockReturnValue(false);
-        jest.spyOn(EventIndexPeg, "initEventIndex").mockClear().mockResolvedValue(undefined);
+        jest.spyOn(EventIndexPeg, "initEventIndex").mockClear().mockResolvedValue(true);
         jest.spyOn(EventIndexPeg, "deleteEventIndex").mockClear();
         jest.spyOn(SettingsStore, "getValueAt").mockReturnValue(false);
         jest.spyOn(SettingsStore, "setValue").mockClear();
@@ -164,9 +164,9 @@ describe("<EventIndexPanel />", () => {
 
             // add an event indx to the peg and resolve the init promise
             jest.spyOn(EventIndexPeg, "get").mockReturnValue(new EventIndex());
-            deferredInitEventIndex.resolve(true);
-            await flushPromises();
             expect(EventIndexPeg.initEventIndex).toHaveBeenCalled();
+            deferredInitEventIndex!.resolve(true);
+            await flushPromises();
             expect(SettingsStore.setValue).toHaveBeenCalledWith("enableEventIndexing", null, SettingLevel.DEVICE, true);
 
             // message for enabled event index
