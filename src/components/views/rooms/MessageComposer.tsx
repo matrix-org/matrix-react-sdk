@@ -61,6 +61,11 @@ import { SdkContextClass } from "../../../contexts/SDKContext";
 import { VoiceBroadcastInfoState } from "../../../voice-broadcast";
 import { createCantStartVoiceMessageBroadcastDialog } from "../dialogs/CantStartVoiceMessageBroadcastDialog";
 import { UIFeature } from "../../../settings/UIFeature";
+import {
+    convertLinksForParser,
+    decodeHtmlEntities,
+    encodeHtmlEntities,
+} from "./wysiwyg_composer/hooks/usePlainTextInitialization";
 
 let instanceCount = 0;
 
@@ -370,9 +375,20 @@ export class MessageComposer extends React.Component<IProps, IState> {
         const { richToPlain, plainToRich } = await getConversionFunctions();
 
         const { isRichTextEnabled, composerContent } = this.state;
-        const convertedContent = isRichTextEnabled
-            ? await richToPlain(composerContent)
-            : await plainToRich(composerContent);
+
+        let convertedContent: string;
+        if (isRichTextEnabled) {
+            convertedContent = await richToPlain(composerContent);
+            // when going from rich to plain, the converted content needs to have any
+            // html entities encoded to allow us to set .innerHtml without causing any
+            // issues
+            convertedContent = encodeHtmlEntities(convertedContent);
+        } else {
+            // when going from plain to rich, we have to ensure that markdown links are
+            // decoded appropriately to avoid issues with reencoding &lt;
+            const withLinksChanged = convertLinksForParser(composerContent);
+            convertedContent = await plainToRich(withLinksChanged);
+        }
 
         this.setState({
             isRichTextEnabled: !isRichTextEnabled,
