@@ -322,6 +322,8 @@ describe("Cryptography", function () {
                     // Populate `win.matrixcs`
                     cy.visit("/#/login");
 
+                    cy.wait(5000);
+
                     // Create a new device for alice
                     cy.getBot(homeserver, { bootstrapCrossSigning: true }).then((bot) => {
                         aliceBotClient = bot;
