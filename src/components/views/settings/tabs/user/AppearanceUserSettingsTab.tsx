@@ -147,7 +147,6 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
         const brand = SdkConfig.get().brand;
 
         return (
-            //
             <SettingsTab data-testid="mx_AppearanceUserSettingsTab">
                 <SettingsSection heading={_t("Customise your appearance")}>
                     <SettingsSubsectionText>
