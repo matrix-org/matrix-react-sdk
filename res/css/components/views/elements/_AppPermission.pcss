@@ -27,40 +27,40 @@ limitations under the License.
             margin-block: 12px;
         }
 
-    h4 {
-        margin: 0;
-        padding: 0;
-    }
+        h4 {
+            margin: 0;
+            padding: 0;
+        }
 
-    .mx_AppPermission_content_largeText {
-        font-size: $font-16px;
-    }
+        .mx_AppPermission_content_largeText {
+            font-size: $font-16px;
+        }
 
-    .mx_AppPermission_content_bolder {
-        font-weight: var(--font-semi-bold);
-    }
+        .mx_AppPermission_content_bolder {
+            font-weight: var(--font-semi-bold);
+        }
 
-    .mx_AppPermission_content_helpIcon {
-        margin-top: 1px;
-        margin-right: 2px;
-        width: 10px;
-        height: 10px;
-        display: inline-block;
-
-        &::before {
+        .mx_AppPermission_content_helpIcon {
+            margin-top: 1px;
+            margin-right: 2px;
+            width: 10px;
+            height: 10px;
             display: inline-block;
-            background-color: $accent;
-            mask-repeat: no-repeat;
-            mask-size: 12px;
-            width: 12px;
-            height: 12px;
-            mask-position: center;
-            content: "";
-            vertical-align: middle;
-            mask-image: url("$(res)/img/feather-customised/help-circle.svg");
+
+            &::before {
+                display: inline-block;
+                background-color: $accent;
+                mask-repeat: no-repeat;
+                mask-size: 12px;
+                width: 12px;
+                height: 12px;
+                mask-position: center;
+                content: "";
+                vertical-align: middle;
+                mask-image: url("$(res)/img/feather-customised/help-circle.svg");
+            }
         }
     }
-}
 }
 
 .mx_Tooltip.mx_Tooltip--appPermission {
