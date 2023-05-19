@@ -1,5 +1,5 @@
 /*
-Copyright 2019 New Vector Ltd
+Copyright 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_VoiceUserSettingsTab .mx_Field {
-    margin-inline-end: var(--SettingsTab_fullWidthField-margin-inline-end);
+export function isNotNull<T>(arg: T): arg is Exclude<T, null> {
+    return arg !== null;
 }
 
-.mx_VoiceUserSettingsTab_missingMediaPermissions {
-    margin-bottom: 15px;
+export function isNotUndefined<T>(arg: T): arg is Exclude<T, undefined> {
+    return arg !== undefined;
 }

@@ -50,7 +50,7 @@ interface IState extends IThemeState {
 }
 
 export default class ThemeChoicePanel extends React.Component<IProps, IState> {
-    private themeTimer: number;
+    private themeTimer?: number;
 
     public constructor(props: IProps) {
         super(props);
@@ -169,7 +169,7 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
             (findHighContrastTheme(this.state.theme) || isHighContrastTheme(this.state.theme))
         ) {
             return (
-                <div data-testid="theme-choice-panel-highcontrast">
+                <div>
                     <StyledCheckbox
                         checked={isHighContrastTheme(this.state.theme)}
                         onChange={(e) => this.highContrastThemeChanged(e.target.checked)}
@@ -198,7 +198,7 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
         let systemThemeSection: JSX.Element | undefined;
         if (themeWatcher.isSystemThemeSupported()) {
             systemThemeSection = (
-                <div>
+                <div data-testid="checkbox-use-system-theme">
                     <StyledCheckbox
                         checked={this.state.useSystemTheme}
                         onChange={(e) => this.onUseSystemThemeChanged(e.target.checked)}

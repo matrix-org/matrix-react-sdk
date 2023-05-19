@@ -18,14 +18,14 @@ import classNames from "classnames";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { AuthType, IAuthDict, IInputs, IStageStatus } from "matrix-js-sdk/src/interactive-auth";
 import { logger } from "matrix-js-sdk/src/logger";
-import React, { ChangeEvent, createRef, FormEvent, Fragment, MouseEvent } from "react";
+import React, { ChangeEvent, createRef, FormEvent, Fragment } from "react";
 
 import EmailPromptIcon from "../../../../res/img/element-icons/email-prompt.svg";
 import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import { LocalisedPolicy, Policies } from "../../../Terms";
 import { AuthHeaderModifier } from "../../structures/auth/header/AuthHeaderModifier";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import Field from "../elements/Field";
 import Spinner from "../elements/Spinner";
@@ -214,7 +214,7 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
 
         let errorText = this.props.errorText;
 
-        let sitePublicKey;
+        let sitePublicKey: string | undefined;
         if (!this.props.stageParams || !this.props.stageParams.public_key) {
             errorText = _t(
                 "Missing captcha public key in homeserver configuration. Please report " +
@@ -224,7 +224,7 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
             sitePublicKey = this.props.stageParams.public_key;
         }
 
-        let errorSection;
+        let errorSection: JSX.Element | undefined;
         if (errorText) {
             errorSection = (
                 <div className="error" role="alert">
@@ -235,7 +235,9 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
 
         return (
             <div>
-                <CaptchaForm sitePublicKey={sitePublicKey} onCaptchaResponse={this.onCaptchaResponse} />
+                {sitePublicKey && (
+                    <CaptchaForm sitePublicKey={sitePublicKey} onCaptchaResponse={this.onCaptchaResponse} />
+                )}
                 {errorSection}
             </div>
         );
@@ -556,8 +558,8 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
     public static LOGIN_TYPE = AuthType.Msisdn;
 
     private submitUrl?: string;
-    private sid: string;
-    private msisdn: string;
+    private sid?: string;
+    private msisdn?: string;
 
     public constructor(props: IMsisdnAuthEntryProps) {
         super(props);
@@ -615,8 +617,8 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
         });
 
         try {
-            let result;
-            if (this.submitUrl) {
+            let result: { success: boolean };
+            if (this.submitUrl && this.sid) {
                 result = await this.props.matrixClient.submitMsisdnTokenOtherUrl(
                     this.submitUrl,
                     this.sid,
@@ -861,6 +863,7 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
 
     public render(): React.ReactNode {
         let continueButton: JSX.Element;
+
         const cancelButton = (
             <AccessibleButton
                 onClick={this.props.onCancel ?? null}
@@ -902,8 +905,14 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
             <Fragment>
                 {errorSection}
                 <div className="mx_InteractiveAuthEntryComponents_sso_buttons">
-                    {cancelButton}
-                    {continueButton}
+                    {this.props.busy ? (
+                        <Spinner w={24} h={24} />
+                    ) : (
+                        <>
+                            {cancelButton}
+                            {continueButton}
+                        </>
+                    )}
                 </div>
             </Fragment>
         );
@@ -936,7 +945,7 @@ export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
         this.fallbackButton.current?.focus();
     };
 
-    private onShowFallbackClick = (e: MouseEvent): void => {
+    private onShowFallbackClick = (e: ButtonEvent): void => {
         if (!this.props.authSessionId) return;
 
         e.preventDefault();
