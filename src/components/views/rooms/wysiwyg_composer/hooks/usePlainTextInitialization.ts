@@ -23,27 +23,3 @@ export function usePlainTextInitialization(initialContent = "", ref: RefObject<H
         }
     }, [ref, initialContent]);
 }
-
-/**
- * Encodes a string so that characters are replaced with their corresponding html entities
- * eg "<" becomes "&lt;".
- *
- */
-export function encodeHtmlEntities(text = ""): string {
-    const textArea = document.createElement("textarea");
-    const textNode = document.createTextNode(text);
-    textArea.appendChild(textNode);
-    return textArea.innerHTML;
-}
-
-// A markdown link looks like [link text](<href>)
-// We need to stop the regex backtracking to avoid super-linear performance. To do this, we use a lookahead
-// assertion (?=...), which greedily matches up to the closing "]" and then match the contents of that assertion
-// with a backreference \1. Since the backreference matches something that has already matched, it will not backtrack.
-const escapedMdLinkRegex = /\[(?=([^\]]*))\1\]\(&lt;(.*)&gt;\)/g;
-
-export function convertLinksForParser(text: string): string {
-    return text.replace(escapedMdLinkRegex, (match, linkText, href) => {
-        return `[${linkText}](<${href}>)`;
-    });
-}
