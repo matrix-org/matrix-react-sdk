@@ -17,25 +17,30 @@ limitations under the License.
 
 .mx_AppPermission {
     font-size: $font-12px;
+    width: 100%; /* make mx_AppPermission fill width of mx_AppTileBody so that scroll bar appears on the edge */
+    overflow-y: scroll;
 
-    > div {
-        margin-bottom: 12px;
-    }
+    .mx_AppPermission_content {
+        margin-block: auto; /* place at the center */
+
+        > div {
+            margin-block: 12px;
+        }
 
     h4 {
         margin: 0;
         padding: 0;
     }
 
-    .mx_AppPermission_largeText {
+    .mx_AppPermission_content_largeText {
         font-size: $font-16px;
     }
 
-    .mx_AppPermission_bolder {
+    .mx_AppPermission_content_bolder {
         font-weight: var(--font-semi-bold);
     }
 
-    .mx_AppPermission_helpIcon {
+    .mx_AppPermission_content_helpIcon {
         margin-top: 1px;
         margin-right: 2px;
         width: 10px;
@@ -55,6 +60,7 @@ limitations under the License.
             mask-image: url("$(res)/img/feather-customised/help-circle.svg");
         }
     }
+}
 }
 
 .mx_Tooltip.mx_Tooltip--appPermission {

@@ -161,64 +161,68 @@ exports[`AppTile for a pinned widget should not display 'Continue' button on per
         class="mx_AppPermission"
       >
         <div
-          class="mx_AppPermission_bolder"
+          class="mx_AppPermission_content"
         >
-          Widget added by
-        </div>
-        <div>
-          <span
-            class="mx_BaseAvatar"
-            role="presentation"
+          <div
+            class="mx_AppPermission_content_bolder"
           >
+            Widget added by
+          </div>
+          <div>
             <span
-              aria-hidden="true"
-              class="mx_BaseAvatar_initial"
-              style="font-size: 24.7px; width: 38px; line-height: 38px;"
-            >
-              U
-            </span>
-            <img
-              alt=""
-              aria-hidden="true"
-              class="mx_BaseAvatar_image"
-              data-testid="avatar-img"
-              loading="lazy"
-              src="data:image/png;base64,00"
-              style="width: 38px; height: 38px;"
-            />
-          </span>
-          <h4
-            class="mx_AppPermission_bolder mx_AppPermission_largeText"
-          >
-            @userAnother
-          </h4>
-          <div />
-        </div>
-        <div>
-          <span>
-            Using this widget may share data 
-            <div
-              aria-describedby="mx_TooltipTarget_abdefghi"
-              class="mx_TextWithTooltip_target"
-              tabindex="0"
+              class="mx_BaseAvatar"
+              role="presentation"
             >
               <span
-                class="mx_AppPermission_helpIcon"
+                aria-hidden="true"
+                class="mx_BaseAvatar_initial"
+                style="font-size: 24.7px; width: 38px; line-height: 38px;"
+              >
+                U
+              </span>
+              <img
+                alt=""
+                aria-hidden="true"
+                class="mx_BaseAvatar_image"
+                data-testid="avatar-img"
+                loading="lazy"
+                src="data:image/png;base64,00"
+                style="width: 38px; height: 38px;"
               />
+            </span>
+            <h4
+              class="mx_AppPermission_content_bolder mx_AppPermission_content_largeText"
+            >
+              @userAnother
+            </h4>
+            <div />
+          </div>
+          <div>
+            <span>
+              Using this widget may share data 
+              <div
+                aria-describedby="mx_TooltipTarget_abdefghi"
+                class="mx_TextWithTooltip_target"
+                tabindex="0"
+              >
+                <span
+                  class="mx_AppPermission_content_helpIcon"
+                />
+              </div>
+               with example.com.
+            </span>
+          </div>
+          <div>
+            This widget may use cookies. 
+          </div>
+          <div>
+            <div
+              class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_sm"
+              role="button"
+              tabindex="0"
+            >
+              Continue
             </div>
-             with example.com.
-          </span>
-        </div>
-        <div>
-          This widget may use cookies. 
-        </div>
-        <div>
-          <div
-            class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_sm"
-            role="button"
-            tabindex="0"
-          >
-            Continue
           </div>
         </div>
       </div>

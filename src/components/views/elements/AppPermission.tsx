@@ -118,7 +118,7 @@ export default class AppPermission extends React.Component<IProps, IState> {
                 tooltip={warningTooltipText}
                 tooltipClass="mx_Tooltip--appPermission mx_Tooltip--appPermission--dark"
             >
-                <span className="mx_AppPermission_helpIcon" />
+                <span className="mx_AppPermission_content_helpIcon" />
             </TextWithTooltip>
         );
 
@@ -139,10 +139,11 @@ export default class AppPermission extends React.Component<IProps, IState> {
 
         return (
             <div className="mx_AppPermission">
-                <div className="mx_AppPermission_bolder">{_t("Widget added by")}</div>
+            <div className="mx_AppPermission_content">
+                <div className="mx_AppPermission_content_bolder">{_t("Widget added by")}</div>
                 <div>
                     {avatar}
-                    <h4 className="mx_AppPermission_bolder mx_AppPermission_largeText">{displayName}</h4>
+                    <h4 className="mx_AppPermission_content_bolder mx_AppPermission_content_largeText">{displayName}</h4>
                     <div>{userId}</div>
                 </div>
                 <div>{warning}</div>
@@ -153,6 +154,7 @@ export default class AppPermission extends React.Component<IProps, IState> {
                     <AccessibleButton kind="primary_sm" onClick={this.props.onPermissionGranted}>
                         {_t("Continue")}
                     </AccessibleButton>
+                </div>
                 </div>
             </div>
         );
