@@ -170,6 +170,7 @@ describe("getAttributesForLink", () => {
         const displayText = "test user";
 
         expect(getAttributesForLink(url, displayText, mockRoom, mockClient)).toBeNull();
+        jest.restoreAllMocks();
     });
 
     describe("when getMentionAttributes returns no attributes", () => {
