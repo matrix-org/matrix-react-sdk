@@ -50,7 +50,7 @@ export const SettingsSubsection: React.FC<SettingsSubsectionProps> = ({
         <div
             className={classNames("mx_SettingsSubsection_content", {
                 mx_SettingsSubsection_contentStretch: !!stretchContent,
-                // mx_SettingsSubsection_hasHeading: !!heading || !!description,
+                mx_SettingsSubsection_noHeading: !heading && !description,
             })}
         >
             {children}
