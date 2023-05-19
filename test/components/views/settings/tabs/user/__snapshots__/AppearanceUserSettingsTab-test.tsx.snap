@@ -4,6 +4,7 @@ exports[`AppearanceUserSettingsTab should render 1`] = `
 <DocumentFragment>
   <div
     class="mx_SettingsTab"
+    data-testid="mx_AppearanceUserSettingsTab"
   >
     <div
       class="mx_SettingsTab_sections"
@@ -26,6 +27,7 @@ exports[`AppearanceUserSettingsTab should render 1`] = `
           </div>
           <div
             class="mx_SettingsSubsection"
+            data-testid="mx_ThemeChoicePanel"
           >
             <div
               class="mx_SettingsSubsectionHeading"
@@ -231,6 +233,7 @@ exports[`AppearanceUserSettingsTab should render 1`] = `
           </div>
           <div
             class="mx_SettingsSubsection"
+            data-testid="mx_FontScalingPanel"
           >
             <div
               class="mx_SettingsSubsectionHeading"

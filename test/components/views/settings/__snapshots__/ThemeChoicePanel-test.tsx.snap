@@ -4,6 +4,7 @@ exports[`ThemeChoicePanel renders the theme choice UI 1`] = `
 <DocumentFragment>
   <div
     class="mx_SettingsSubsection"
+    data-testid="mx_ThemeChoicePanel"
   >
     <div
       class="mx_SettingsSubsectionHeading"

@@ -109,7 +109,7 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
         const max = 18;
 
         return (
-            <SettingsSubsection heading={_t("Font size")} stretchContent>
+            <SettingsSubsection heading={_t("Font size")} stretchContent data-testid="mx_FontScalingPanel">
                 <EventTilePreview
                     className="mx_FontScalingPanel_preview"
                     message={this.MESSAGE_PREVIEW_TEXT}
