@@ -320,9 +320,9 @@ describe("Cryptography", function () {
                 .as("homeserver")
                 .then((homeserver: HomeserverInstance) => {
                     // Populate `win.matrixcs`
+                    cy.intercept("GET", "**/r0/login").as("login");
                     cy.visit("/#/login");
-
-                    cy.wait(5000);
+                    cy.wait("@login");
 
                     // Create a new device for alice
                     cy.getBot(homeserver, { bootstrapCrossSigning: true }).then((bot) => {
