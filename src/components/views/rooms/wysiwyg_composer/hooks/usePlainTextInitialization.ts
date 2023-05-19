@@ -25,16 +25,6 @@ export function usePlainTextInitialization(initialContent = "", ref: RefObject<H
 }
 
 /**
- * Decodes a string containing html character entities and returns the string with the entities replaced
- * with regular characters, eg "&lt;" becomes "<"
- */
-export function decodeHtmlEntities(html = ""): string {
-    const textArea = document.createElement("textarea");
-    textArea.innerHTML = html;
-    return textArea.value;
-}
-
-/**
  * Encodes a string so that characters are replaced with their corresponding html entities
  * eg "<" becomes "&lt;".
  *
