@@ -61,11 +61,7 @@ import { SdkContextClass } from "../../../contexts/SDKContext";
 import { VoiceBroadcastInfoState } from "../../../voice-broadcast";
 import { createCantStartVoiceMessageBroadcastDialog } from "../dialogs/CantStartVoiceMessageBroadcastDialog";
 import { UIFeature } from "../../../settings/UIFeature";
-import {
-    convertLinksForParser,
-    decodeHtmlEntities,
-    encodeHtmlEntities,
-} from "./wysiwyg_composer/hooks/usePlainTextInitialization";
+import { convertLinksForParser, encodeHtmlEntities } from "./wysiwyg_composer/hooks/usePlainTextInitialization";
 
 let instanceCount = 0;
 
