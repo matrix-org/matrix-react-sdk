@@ -73,8 +73,8 @@ export function encodeHtmlEntities(text: string): string {
  */
 export function formatPlainTextLinks(text: string, room?: Room, client?: MatrixClient): string {
     return text.replace(mdLinkRegex, (match, linkText, href) => {
-        const mentionAttributes = getAttributesForMention(href, linkText, room, client);
-        if (mentionAttributes === null) {
+        const linkAttributes = getAttributesForLink(href, linkText, room, client);
+        if (linkAttributes === null) {
             // If we get null back, we either can't find the required attributes or we have a
             // regular link, not a mention.
             // Encode the text (to avoid misinterpreting <> around the link address)
@@ -83,7 +83,7 @@ export function formatPlainTextLinks(text: string, room?: Room, client?: MatrixC
 
         // We have attributes so we are dealing with a mention. Use the attributes to build
         // the html that we use to represent a mention as per the rich text mode
-        const attributesAsString = Object.entries(mentionAttributes)
+        const attributesAsString = Object.entries(linkAttributes)
             .map(([k, v]) => `${k}="${v}"`)
             .join(" ");
         return `<a ${attributesAsString}>${linkText}</a>`;
@@ -102,7 +102,7 @@ export function formatPlainTextLinks(text: string, room?: Room, client?: MatrixC
  * @param client - the current client
  * @returns - attributes to use to construct a mention if the possible, null otherwise
  */
-export function getAttributesForMention(
+export function getAttributesForLink(
     url: string,
     displayText: string,
     room?: Room,

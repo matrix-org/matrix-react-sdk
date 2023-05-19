@@ -17,7 +17,7 @@ limitations under the License.
 import {
     encodeHtmlEntities,
     formatPlainTextLinks,
-    getAttributesForMention,
+    getAttributesForLink,
 } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/usePlainTextInitialization";
 import { mkRoom, stubClient } from "../../../../../test-utils";
 import * as mockPermalink from "../../../../../../src/utils/permalinks/Permalinks";
@@ -115,7 +115,7 @@ describe("formatPlainTextLinks", () => {
     });
 });
 
-describe("getAttributesForMention", () => {
+describe("getAttributesForLink", () => {
     const mockClient = stubClient();
     const mockRoom = mkRoom(mockClient, "test-room-id");
 
@@ -123,14 +123,14 @@ describe("getAttributesForMention", () => {
         const url = "https://www.testurl.com";
         const displayText = "displayText";
 
-        expect(getAttributesForMention(url, displayText, undefined, mockClient)).toBeNull();
+        expect(getAttributesForLink(url, displayText, undefined, mockClient)).toBeNull();
     });
 
     it("returns null if client is undefined", () => {
         const url = "https://www.testurl.com";
         const displayText = "displayText";
 
-        expect(getAttributesForMention(url, displayText, mockRoom, undefined)).toBeNull();
+        expect(getAttributesForLink(url, displayText, mockRoom, undefined)).toBeNull();
     });
 
     describe("when parsePermalink returns null", () => {
@@ -145,7 +145,7 @@ describe("getAttributesForMention", () => {
             const url = "https://#";
             const displayText = "@room";
 
-            expect(getAttributesForMention(url, displayText, mockRoom, mockClient)).toEqual({
+            expect(getAttributesForLink(url, displayText, mockRoom, mockClient)).toEqual({
                 "data-mention-type": "at-room",
                 "contenteditable": "false",
                 "href": "#", // TODO should this be https://#
@@ -157,7 +157,7 @@ describe("getAttributesForMention", () => {
             const url = "https://matrix.to/#/@valid:test:io";
             const displayText = "test user";
 
-            expect(getAttributesForMention(url, displayText, mockRoom, mockClient)).toBeNull();
+            expect(getAttributesForLink(url, displayText, mockRoom, mockClient)).toBeNull();
         });
     });
 
@@ -169,7 +169,7 @@ describe("getAttributesForMention", () => {
         const url = "https://matrix.to/#/@valid:test:io";
         const displayText = "test user";
 
-        expect(getAttributesForMention(url, displayText, mockRoom, mockClient)).toBeNull();
+        expect(getAttributesForLink(url, displayText, mockRoom, mockClient)).toBeNull();
     });
 
     describe("when getMentionAttributes returns no attributes", () => {
@@ -183,20 +183,20 @@ describe("getAttributesForMention", () => {
         it("returns null for a user", () => {
             const displayText = "test user";
             const url = "https://matrix.to/#/@test:user.io";
-            expect(getAttributesForMention(url, displayText, mockRoom, mockClient)).toBeNull();
+            expect(getAttributesForLink(url, displayText, mockRoom, mockClient)).toBeNull();
         });
 
         it("returns null for a room", () => {
             const displayText = "test room";
             const url = "https://matrix.to/#/#test:room.io";
-            expect(getAttributesForMention(url, displayText, mockRoom, mockClient)).toBeNull();
+            expect(getAttributesForLink(url, displayText, mockRoom, mockClient)).toBeNull();
         });
     });
 
     it("returns the expected attributes for a user mention", () => {
         const displayText = "test user";
         const url = "https://matrix.to/#/@test:user.io";
-        expect(getAttributesForMention(url, displayText, mockRoom, mockClient)).toEqual({
+        expect(getAttributesForLink(url, displayText, mockRoom, mockClient)).toEqual({
             "contenteditable": "false",
             "href": url,
             "data-mention-type": "user",
@@ -207,7 +207,7 @@ describe("getAttributesForMention", () => {
     it("returns the expected attributes for a room mention", () => {
         const displayText = "test room";
         const url = "https://matrix.to/#/#test:room.io";
-        expect(getAttributesForMention(url, displayText, mockRoom, mockClient)).toEqual({
+        expect(getAttributesForLink(url, displayText, mockRoom, mockClient)).toEqual({
             "contenteditable": "false",
             "href": url,
             "data-mention-type": "room",
