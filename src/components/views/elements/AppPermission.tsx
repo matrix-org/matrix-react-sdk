@@ -139,14 +139,14 @@ export default class AppPermission extends React.Component<IProps, IState> {
 
         return (
             <div className="mx_AppPermission">
-                <div className="mx_AppPermission_bolder mx_AppPermission_smallText">{_t("Widget added by")}</div>
+                <div className="mx_AppPermission_bolder">{_t("Widget added by")}</div>
                 <div>
                     {avatar}
-                    <h4 className="mx_AppPermission_bolder">{displayName}</h4>
-                    <div className="mx_AppPermission_smallText">{userId}</div>
+                    <h4 className="mx_AppPermission_bolder mx_AppPermission_largeText">{displayName}</h4>
+                    <div>{userId}</div>
                 </div>
-                <div className="mx_AppPermission_smallText">{warning}</div>
-                <div className="mx_AppPermission_smallText">
+                <div>{warning}</div>
+                <div>
                     {_t("This widget may use cookies.")}&nbsp;{encryptionWarning}
                 </div>
                 <div>

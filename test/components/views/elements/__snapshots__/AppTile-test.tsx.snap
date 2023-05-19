@@ -161,7 +161,7 @@ exports[`AppTile for a pinned widget should not display 'Continue' button on per
         class="mx_AppPermission"
       >
         <div
-          class="mx_AppPermission_bolder mx_AppPermission_smallText"
+          class="mx_AppPermission_bolder"
         >
           Widget added by
         </div>
@@ -188,17 +188,13 @@ exports[`AppTile for a pinned widget should not display 'Continue' button on per
             />
           </span>
           <h4
-            class="mx_AppPermission_bolder"
+            class="mx_AppPermission_bolder mx_AppPermission_largeText"
           >
             @userAnother
           </h4>
-          <div
-            class="mx_AppPermission_smallText"
-          />
+          <div />
         </div>
-        <div
-          class="mx_AppPermission_smallText"
-        >
+        <div>
           <span>
             Using this widget may share data 
             <div
@@ -213,9 +209,7 @@ exports[`AppTile for a pinned widget should not display 'Continue' button on per
              with example.com.
           </span>
         </div>
-        <div
-          class="mx_AppPermission_smallText"
-        >
+        <div>
           This widget may use cookies. 
         </div>
         <div>
