@@ -48,7 +48,7 @@ import ContextMenu, {
     StyledMenuItemCheckbox,
     StyledMenuItemRadio,
 } from "../../structures/ContextMenu";
-import AccessibleButton from "../../views/elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleButton";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import ExtraTile from "./ExtraTile";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -313,7 +313,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     private onResize = (
         e: MouseEvent | TouchEvent,
         travelDirection: Direction,
-        refToElement: HTMLDivElement,
+        refToElement: HTMLElement,
         delta: ResizeDelta,
     ): void => {
         const newHeight = this.heightAtStart + delta.height;
@@ -329,7 +329,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     private onResizeStop = (
         e: MouseEvent | TouchEvent,
         travelDirection: Direction,
-        refToElement: HTMLDivElement,
+        refToElement: HTMLElement,
         delta: ResizeDelta,
     ): void => {
         const newHeight = this.heightAtStart + delta.height;
@@ -369,7 +369,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         }
     };
 
-    private onOpenMenuClick = (ev: React.MouseEvent): void => {
+    private onOpenMenuClick = (ev: ButtonEvent): void => {
         ev.preventDefault();
         ev.stopPropagation();
         const target = ev.target as HTMLButtonElement;
@@ -700,6 +700,10 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                             onKeyDown={this.onHeaderKeyDown}
                             onFocus={onFocus}
                             aria-label={this.props.label}
+                            role="treeitem"
+                            aria-expanded={this.state.isExpanded}
+                            aria-level={1}
+                            aria-selected="false"
                         >
                             <div className="mx_RoomSublist_stickableContainer">
                                 <div className="mx_RoomSublist_stickable">
@@ -708,9 +712,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                                         inputRef={ref}
                                         tabIndex={tabIndex}
                                         className="mx_RoomSublist_headerText"
-                                        role="treeitem"
                                         aria-expanded={this.state.isExpanded}
-                                        aria-level={1}
                                         onClick={this.onHeaderClick}
                                         onContextMenu={this.onContextMenu}
                                         title={this.props.isMinimized ? this.props.label : undefined}

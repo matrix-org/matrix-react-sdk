@@ -15,7 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as url from "url";
 import { base32 } from "rfc4648";
 import { IWidget, IWidgetData } from "matrix-widget-api";
 import { Room } from "matrix-js-sdk/src/models/room";
@@ -35,7 +34,8 @@ import { WidgetType } from "../widgets/WidgetType";
 import { Jitsi } from "../widgets/Jitsi";
 import { objectClone } from "./objects";
 import { _t } from "../languageHandler";
-import { IApp } from "../stores/WidgetStore";
+import { IApp, isAppWidget } from "../stores/WidgetStore";
+import { parseUrl } from "./UrlUtils";
 
 // How long we wait for the state event echo to come back from the server
 // before waitFor[Room/User]Widget rejects its promise
@@ -106,7 +106,7 @@ export default class WidgetUtils {
             return false;
         }
 
-        const testUrl = url.parse(testUrlString);
+        const testUrl = parseUrl(testUrlString);
         let scalarUrls = SdkConfig.get().integrations_widgets_urls;
         if (!scalarUrls || scalarUrls.length === 0) {
             const defaultManager = IntegrationManagers.sharedInstance().getPrimaryManager();
@@ -118,7 +118,7 @@ export default class WidgetUtils {
         }
 
         for (let i = 0; i < scalarUrls.length; i++) {
-            const scalarUrl = url.parse(scalarUrls[i]);
+            const scalarUrl = parseUrl(scalarUrls[i]);
             if (testUrl && scalarUrl) {
                 if (
                     testUrl.protocol === scalarUrl.protocol &&
@@ -545,30 +545,30 @@ export default class WidgetUtils {
         return url.href;
     }
 
-    public static getWidgetName(app?: IApp): string {
+    public static getWidgetName(app?: IWidget): string {
         return app?.name?.trim() || _t("Unknown App");
     }
 
-    public static getWidgetDataTitle(app?: IApp): string {
+    public static getWidgetDataTitle(app?: IWidget): string {
         return app?.data?.title?.trim() || "";
     }
 
-    public static getWidgetUid(app?: IApp): string {
-        return app ? WidgetUtils.calcWidgetUid(app.id, app.roomId) : "";
+    public static getWidgetUid(app?: IApp | IWidget): string {
+        return app ? WidgetUtils.calcWidgetUid(app.id, isAppWidget(app) ? app.roomId : undefined) : "";
     }
 
     public static calcWidgetUid(widgetId: string, roomId?: string): string {
         return roomId ? `room_${roomId}_${widgetId}` : `user_${widgetId}`;
     }
 
-    public static editWidget(room: Room, app: IApp): void {
+    public static editWidget(room: Room, app: IWidget): void {
         // noinspection JSIgnoredPromiseFromCall
         IntegrationManagers.sharedInstance()
             .getPrimaryManager()
             ?.open(room, "type_" + app.type, app.id);
     }
 
-    public static isManagedByManager(app: IApp): boolean {
+    public static isManagedByManager(app: IWidget): boolean {
         if (WidgetUtils.isScalarUrl(app.url)) {
             const managers = IntegrationManagers.sharedInstance();
             if (managers.hasManager()) {
