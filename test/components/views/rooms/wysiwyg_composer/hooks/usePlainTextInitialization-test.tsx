@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import {
-    encodeHtml,
+    encodeHtmlEntities,
     formatPlainTextLinks,
     getAttributesForMention,
 } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/usePlainTextInitialization";
@@ -24,12 +24,12 @@ import * as mockPermalink from "../../../../../../src/utils/permalinks/Permalink
 import * as mockAutocomplete from "../../../../../../src/components/views/rooms/wysiwyg_composer/utils/autocomplete";
 import { PermalinkParts } from "../../../../../../src/utils/permalinks/PermalinkConstructor";
 
-describe("encodeHtml", () => {
+describe("encodeHtmlEntities", () => {
     it("converts markdown links in text to html encoded equivalent", () => {
         const input = "[example](<https://www.markdownlink.com>)";
         const expected = "[example](&lt;https://www.markdownlink.com&gt;)";
 
-        expect(encodeHtml(input)).toBe(expected);
+        expect(encodeHtmlEntities(input)).toBe(expected);
     });
 });
 

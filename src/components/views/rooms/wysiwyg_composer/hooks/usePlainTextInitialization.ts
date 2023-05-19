@@ -51,7 +51,7 @@ const mdLinkRegex = /\[(?=([^\]]*))\1\]\(<(?=([^>]*))\2>\)/g;
  * We need to do this to prevent misinterpreting angle brackets in markdown as badly formed
  * html tags when using that string to set the innerHTML property.
  */
-export function encodeHtml(text: string): string {
+export function encodeHtmlEntities(text: string): string {
     const textArea = document.createElement("textarea");
     const textNode = document.createTextNode(text);
     textArea.appendChild(textNode);
@@ -78,7 +78,7 @@ export function formatPlainTextLinks(text: string, room?: Room, client?: MatrixC
             // If we get null back, we either can't find the required attributes or we have a
             // regular link, not a mention.
             // Encode the text (to avoid misinterpreting <> around the link address)
-            return encodeHtml(match);
+            return encodeHtmlEntities(match);
         }
 
         // We have attributes so we are dealing with a mention. Use the attributes to build
