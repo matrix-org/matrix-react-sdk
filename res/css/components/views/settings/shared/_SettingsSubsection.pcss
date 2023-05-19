@@ -36,7 +36,6 @@ limitations under the License.
     grid-gap: $spacing-8;
     grid-template-columns: 1fr;
     justify-items: flex-start;
-    margin-top: $spacing-24;
 
     summary {
         color: $accent;
@@ -49,5 +48,9 @@ limitations under the License.
 
     &.mx_SettingsSubsection_contentStretch {
         justify-items: stretch;
+    }
+
+    &.mx_SettingsSubsection_hasHeading {
+        margin-top: $spacing-24;
     }
 }
