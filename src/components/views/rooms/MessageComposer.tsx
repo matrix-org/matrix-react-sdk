@@ -61,7 +61,7 @@ import { SdkContextClass } from "../../../contexts/SDKContext";
 import { VoiceBroadcastInfoState } from "../../../voice-broadcast";
 import { createCantStartVoiceMessageBroadcastDialog } from "../dialogs/CantStartVoiceMessageBroadcastDialog";
 import { UIFeature } from "../../../settings/UIFeature";
-import { convertLinksForParser, encodeHtmlEntities } from "./wysiwyg_composer/hooks/usePlainTextInitialization";
+import { amendMarkdownLinks, encodeHtmlEntities } from "./wysiwyg_composer/utils/encoding";
 
 let instanceCount = 0;
 
@@ -372,18 +372,19 @@ export class MessageComposer extends React.Component<IProps, IState> {
 
         const { isRichTextEnabled, composerContent } = this.state;
 
+        // when setting state, we must ensure that convertedContent is html encoded for consistency
+        // and to allow us to set .innerHTML without causing issues
         let convertedContent: string;
         if (isRichTextEnabled) {
-            convertedContent = await richToPlain(composerContent);
-            // when going from rich to plain, the converted content needs to have any
-            // html entities encoded to allow us to set .innerHtml without causing any
-            // issues
-            convertedContent = encodeHtmlEntities(convertedContent);
+            // when going from rich to plain text, we must encode html entities in the output from the
+            // rust model
+            const rustModelOutput = await richToPlain(composerContent);
+            convertedContent = encodeHtmlEntities(rustModelOutput);
         } else {
-            // when going from plain to rich, we have to ensure that markdown links are
-            // decoded appropriately to avoid issues with reencoding &lt;
-            const withLinksChanged = convertLinksForParser(composerContent);
-            convertedContent = await plainToRich(withLinksChanged);
+            // when going from plain to rich, we must amend the html encoded text to prevent issues
+            // with the markdown parser misinterpreting the angle brackets surrounding link hrefs
+            const rustModelInput = amendMarkdownLinks(composerContent);
+            convertedContent = await plainToRich(rustModelInput);
         }
 
         this.setState({
