@@ -17,6 +17,7 @@ limitations under the License.
 import type { ISasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
 import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import type { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 
 export type EmojiMapping = [emoji: string, name: string];
 
@@ -58,4 +59,41 @@ export function handleVerificationRequest(request: VerificationRequest): Promise
         verifier.on("show_sas", onShowSas);
         verifier.verify();
     });
+}
+
+/**
+ * Check that the user's device is cross-signed
+ * @param homeserver the instance where they keys are stored
+ */
+export function deviceIsCrossSigned(homeserver: HomeserverInstance) {
+    let userId: string;
+    let myDeviceId: string;
+    cy.window({ log: false })
+        .then((win) => {
+            // Get the userId and deviceId of the current user
+            const cli = win.mxMatrixClientPeg.get();
+            const accessToken = cli.getAccessToken()!;
+            myDeviceId = cli.getDeviceId();
+            userId = cli.getUserId();
+            return cy.request({
+                method: "POST",
+                url: `${homeserver.baseUrl}/_matrix/client/v3/keys/query`,
+                headers: { Authorization: `Bearer ${accessToken}` },
+                body: { device_keys: { [userId]: [] } },
+            });
+        })
+        .then((res) => {
+            // there should be three cross-signing keys
+            expect(res.body.master_keys[userId]).to.have.property("keys");
+            expect(res.body.self_signing_keys[userId]).to.have.property("keys");
+            expect(res.body.user_signing_keys[userId]).to.have.property("keys");
+
+            // and the device should be signed by the self-signing key
+            const selfSigningKeyId = Object.keys(res.body.self_signing_keys[userId].keys)[0];
+
+            expect(res.body.device_keys[userId][myDeviceId]).to.exist;
+
+            const myDeviceSignatures = res.body.device_keys[userId][myDeviceId].signatures[userId];
+            expect(myDeviceSignatures[selfSigningKeyId]).to.exist;
+        });
 }
