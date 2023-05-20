@@ -202,11 +202,11 @@ exports[`AppTile for a pinned widget should not display 'Continue' button on per
               Using this widget may share data 
               <div
                 aria-describedby="mx_TooltipTarget_abdefghi"
-                class="mx_TextWithTooltip_target"
+                class="mx_TextWithTooltip_target mx_TextWithTooltip_target--helpIcon"
                 tabindex="0"
               >
-                <span
-                  class="mx_AppPermission_content_helpIcon"
+                <div
+                  class="mx_Icon mx_Icon_12"
                 />
               </div>
                with example.com.

@@ -29,6 +29,7 @@ import Heading from "../typography/Heading";
 import AccessibleButton from "./AccessibleButton";
 import TextWithTooltip from "./TextWithTooltip";
 import { parseUrl } from "../../../utils/UrlUtils";
+import { Icon as HelpIcon } from "../../../../res/img/feather-customised/help-circle.svg";
 
 interface IProps {
     url: string;
@@ -118,8 +119,9 @@ export default class AppPermission extends React.Component<IProps, IState> {
             <TextWithTooltip
                 tooltip={warningTooltipText}
                 tooltipClass="mx_Tooltip--appPermission mx_Tooltip--appPermission--dark"
+                class="mx_TextWithTooltip_target--helpIcon"
             >
-                <span className="mx_AppPermission_content_helpIcon" />
+                <HelpIcon className="mx_Icon mx_Icon_12" />
             </TextWithTooltip>
         );
 
