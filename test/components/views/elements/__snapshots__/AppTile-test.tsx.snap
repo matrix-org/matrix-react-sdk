@@ -191,7 +191,7 @@ exports[`AppTile for a pinned widget should not display 'Continue' button on per
               />
             </span>
             <h4
-              class="mx_AppPermission_content_bolder mx_AppPermission_content_largeText"
+              class="mx_Heading_h4"
             >
               @userAnother
             </h4>

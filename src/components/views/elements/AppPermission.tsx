@@ -25,6 +25,7 @@ import WidgetUtils from "../../../utils/WidgetUtils";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import MemberAvatar from "../avatars/MemberAvatar";
 import BaseAvatar from "../avatars/BaseAvatar";
+import Heading from "../typography/Heading";
 import AccessibleButton from "./AccessibleButton";
 import TextWithTooltip from "./TextWithTooltip";
 import { parseUrl } from "../../../utils/UrlUtils";
@@ -143,9 +144,7 @@ export default class AppPermission extends React.Component<IProps, IState> {
                     <div className="mx_AppPermission_content_bolder">{_t("Widget added by")}</div>
                     <div>
                         {avatar}
-                        <h4 className="mx_AppPermission_content_bolder mx_AppPermission_content_largeText">
-                            {displayName}
-                        </h4>
+                        <Heading size="h4">{displayName}</Heading>
                         <div>{userId}</div>
                     </div>
                     <div>{warning}</div>
