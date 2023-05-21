@@ -69,6 +69,7 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { GroupCallDuration } from "../voip/CallDuration";
 import { Alignment } from "../elements/Tooltip";
 import RoomCallBanner from "../beacon/RoomCallBanner";
+import { Icon as AppsIcon } from "../../../../res/img/element-icons/room/apps.svg";
 
 class DisabledWithReason {
     public constructor(public readonly reason: string) {}
@@ -586,15 +587,21 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (!this.props.viewingCall && this.props.onAppsClick) {
             startButtons.push(
                 <AccessibleTooltipButton
-                    className={classNames("mx_RoomHeader_button mx_RoomHeader_appsButton", {
-                        mx_RoomHeader_appsButton_highlight: this.props.appsShown,
-                    })}
+                    className="mx_RoomHeader_iconButton"
                     onClick={this.props.onAppsClick}
                     title={this.props.appsShown ? _t("Hide Widgets") : _t("Show Widgets")}
                     aria-checked={this.props.appsShown}
                     alignment={Alignment.Bottom}
                     key="apps"
-                />,
+                >
+                    <AppsIcon
+                        className={classNames({
+                            "mx_Icon": true,
+                            "mx_Icon_24": true,
+                            "mx_Icon--enabled": this.props.appsShown,
+                        })}
+                    />
+                </AccessibleTooltipButton>,
             );
         }
 

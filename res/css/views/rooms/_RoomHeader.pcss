@@ -163,6 +163,35 @@ limitations under the License.
     object-fit: cover;
 }
 
+.mx_RoomHeader_iconButton {
+    flex: 0 0 auto;
+    margin-inline: 1px;
+    height: 32px;
+    width: 32px;
+    position: relative;
+    border-radius: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .mx_Icon {
+        color: $icon-button-color;
+
+        &.mx_Icon--enabled {
+            color: $accent;
+        }
+    }
+
+    &:hover {
+        background: rgba($accent, 0.1);
+
+        .mx_Icon {
+            color: $accent;
+        }
+    }
+}
+
 .mx_RoomHeader_button {
     cursor: pointer;
     flex: 0 0 auto;
@@ -245,14 +274,6 @@ limitations under the License.
 .mx_RoomHeader_forgetButton::before {
     mask-image: url("$(res)/img/element-icons/leave.svg");
     width: 26px;
-}
-
-.mx_RoomHeader_appsButton::before {
-    mask-image: url("$(res)/img/element-icons/room/apps.svg");
-}
-
-.mx_RoomHeader_appsButton_highlight::before {
-    background-color: $accent;
 }
 
 .mx_RoomHeader_searchButton::before {
