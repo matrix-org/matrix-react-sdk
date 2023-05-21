@@ -181,6 +181,13 @@ limitations under the License.
         &.mx_Icon--enabled {
             color: $accent;
         }
+
+        &.mx_Icon--voiceCall {
+            /* The call button SVG is padded slightly differently, so match it up to the size */
+            /* of the other icons */
+            height: 20px;
+            width: 20px;
+        }
     }
 
     &:hover {
@@ -274,15 +281,6 @@ limitations under the License.
 .mx_RoomHeader_forgetButton::before {
     mask-image: url("$(res)/img/element-icons/leave.svg");
     width: 26px;
-}
-
-.mx_RoomHeader_voiceCallButton::before {
-    mask-image: url("$(res)/img/element-icons/call/voice-call.svg");
-
-    /* The call button SVG is padded slightly differently, so match it up to the size */
-    /* of the other icons */
-    mask-size: 20px;
-    mask-position: center;
 }
 
 .mx_RoomHeader_videoCallButton::before {

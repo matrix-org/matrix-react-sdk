@@ -69,6 +69,7 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { GroupCallDuration } from "../voip/CallDuration";
 import { Alignment } from "../elements/Tooltip";
 import RoomCallBanner from "../beacon/RoomCallBanner";
+import { Icon as VoiceCallIcon } from "../../../../res/img/element-icons/call/voice-call.svg";
 import { Icon as AppsIcon } from "../../../../res/img/element-icons/room/apps.svg";
 import { Icon as SearchIcon } from "../../../../res/img/element-icons/room/search-inset.svg";
 import { Icon as InviteIcon } from "../../../../res/img/element-icons/room/invite.svg";
@@ -112,13 +113,15 @@ const VoiceCallButton: FC<VoiceCallButtonProps> = ({ room, busy, setBusy, behavi
 
     return (
         <AccessibleTooltipButton
-            className="mx_RoomHeader_button mx_RoomHeader_voiceCallButton"
+            className="mx_RoomHeader_iconButton"
             onClick={onClick}
             title={_t("Voice call")}
             tooltip={tooltip ?? _t("Voice call")}
             alignment={Alignment.Bottom}
             disabled={disabled || busy}
-        />
+        >
+            <VoiceCallIcon className="mx_Icon mx_Icon--voiceCall" />
+        </AccessibleTooltipButton>
     );
 };
 
