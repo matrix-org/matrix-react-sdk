@@ -73,6 +73,7 @@ import { Icon as VoiceCallIcon } from "../../../../res/img/element-icons/call/vo
 import { Icon as VideoCallIcon } from "../../../../res/img/element-icons/call/video-call.svg";
 import { Icon as LayoutFreedomIcon } from "../../../../res/img/element-icons/call/freedom.svg";
 import { Icon as LayoutSpotlightIcon } from "../../../../res/img/element-icons/call/spotlight.svg";
+import { Icon as ForgetIcon } from "../../../../res/img/element-icons/leave.svg";
 import { Icon as AppsIcon } from "../../../../res/img/element-icons/room/apps.svg";
 import { Icon as SearchIcon } from "../../../../res/img/element-icons/room/search-inset.svg";
 import { Icon as InviteIcon } from "../../../../res/img/element-icons/room/invite.svg";
@@ -593,12 +594,14 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (!this.props.viewingCall && this.props.onForgetClick) {
             startButtons.push(
                 <AccessibleTooltipButton
-                    className="mx_RoomHeader_button mx_RoomHeader_forgetButton"
+                    className="mx_RoomHeader_iconButton"
                     onClick={this.props.onForgetClick}
                     title={_t("Forget room")}
                     alignment={Alignment.Bottom}
                     key="forget"
-                />,
+                >
+                    <ForgetIcon className="mx_Icon mx_Icon--forget" />
+                </AccessibleTooltipButton>,
             );
         }
 
