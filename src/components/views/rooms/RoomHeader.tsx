@@ -70,6 +70,7 @@ import { GroupCallDuration } from "../voip/CallDuration";
 import { Alignment } from "../elements/Tooltip";
 import RoomCallBanner from "../beacon/RoomCallBanner";
 import { Icon as AppsIcon } from "../../../../res/img/element-icons/room/apps.svg";
+import { Icon as SearchIcon } from "../../../../res/img/element-icons/room/search-inset.svg";
 
 class DisabledWithReason {
     public constructor(public readonly reason: string) {}
@@ -608,12 +609,14 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (!this.props.viewingCall && this.props.onSearchClick && this.props.inRoom) {
             startButtons.push(
                 <AccessibleTooltipButton
-                    className="mx_RoomHeader_button mx_RoomHeader_searchButton"
+                    className="mx_RoomHeader_iconButton"
                     onClick={this.props.onSearchClick}
                     title={_t("Search")}
                     alignment={Alignment.Bottom}
                     key="search"
-                />,
+                >
+                    <SearchIcon className="mx_Icon mx_Icon_24" />
+                </AccessibleTooltipButton>,
             );
         }
 
