@@ -76,6 +76,7 @@ import { Icon as LayoutSpotlightIcon } from "../../../../res/img/element-icons/c
 import { Icon as AppsIcon } from "../../../../res/img/element-icons/room/apps.svg";
 import { Icon as SearchIcon } from "../../../../res/img/element-icons/room/search-inset.svg";
 import { Icon as InviteIcon } from "../../../../res/img/element-icons/room/invite.svg";
+import { Icon as CloseIcon } from "../../../../res/img/cancel.svg";
 
 class DisabledWithReason {
     public constructor(public readonly reason: string) {}
@@ -655,11 +656,13 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             if (this.props.activeCall === null) {
                 endButtons.push(
                     <AccessibleButton
-                        className="mx_RoomHeader_button mx_RoomHeader_closeButton"
+                        className="mx_RoomHeader_iconButton mx_RoomHeader_iconButton--close"
                         onClick={this.onHideCallClick}
                         title={_t("Close call")}
                         key="close"
-                    />,
+                    >
+                        <CloseIcon className="mx_Icon mx_Icon--close" />
+                    </AccessibleButton>,
                 );
             } else {
                 endButtons.push(

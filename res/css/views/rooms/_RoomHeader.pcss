@@ -182,8 +182,9 @@ limitations under the License.
             color: $accent;
         }
 
-        &.mx_Icon--voiceCall {
-            /* The call button SVG is padded slightly differently, so match it up to the size */
+        &.mx_Icon--voiceCall,
+        &.mx_Icon--close {
+            /* The SVGs are padded slightly differently, so match it up to the size */
             /* of the other icons */
             height: 20px;
             width: 20px;
@@ -195,6 +196,14 @@ limitations under the License.
 
         .mx_Icon {
             color: $accent;
+        }
+    }
+
+    &.mx_RoomHeader_iconButton--close:hover {
+        background: unset; /* remove background color on hover */
+
+        .mx_Icon--close {
+            color: $icon-button-color;
         }
     }
 }
@@ -289,22 +298,6 @@ limitations under the License.
 
 .mx_RoomHeader_spotlightIcon::before {
     mask-image: url("$(res)/img/element-icons/call/spotlight.svg");
-}
-
-.mx_RoomHeader_closeButton {
-    &::before {
-        mask-image: url("$(res)/img/cancel.svg");
-        mask-size: 20px;
-        mask-position: center;
-    }
-
-    &:hover {
-        background: unset; /* remove background color on hover */
-
-        &::before {
-            background-color: $icon-button-color; /* set the default background color */
-        }
-    }
 }
 
 .mx_RoomHeader_minimiseButton::before {
