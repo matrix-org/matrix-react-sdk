@@ -70,6 +70,7 @@ import { GroupCallDuration } from "../voip/CallDuration";
 import { Alignment } from "../elements/Tooltip";
 import RoomCallBanner from "../beacon/RoomCallBanner";
 import { Icon as VoiceCallIcon } from "../../../../res/img/element-icons/call/voice-call.svg";
+import { Icon as VideoCallIcon } from "../../../../res/img/element-icons/call/video-call.svg";
 import { Icon as AppsIcon } from "../../../../res/img/element-icons/room/apps.svg";
 import { Icon as SearchIcon } from "../../../../res/img/element-icons/room/search-inset.svg";
 import { Icon as InviteIcon } from "../../../../res/img/element-icons/room/invite.svg";
@@ -231,13 +232,15 @@ const VideoCallButton: FC<VideoCallButtonProps> = ({ room, busy, setBusy, behavi
         <>
             <AccessibleTooltipButton
                 inputRef={buttonRef}
-                className="mx_RoomHeader_button mx_RoomHeader_videoCallButton"
+                className="mx_RoomHeader_iconButton"
                 onClick={onClick}
                 title={_t("Video call")}
                 tooltip={tooltip ?? _t("Video call")}
                 alignment={Alignment.Bottom}
                 disabled={disabled || busy}
-            />
+            >
+                <VideoCallIcon className="mx_Icon mx_Icon_24" />
+            </AccessibleTooltipButton>
             {menu}
         </>
     );
