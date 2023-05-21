@@ -71,6 +71,8 @@ import { Alignment } from "../elements/Tooltip";
 import RoomCallBanner from "../beacon/RoomCallBanner";
 import { Icon as VoiceCallIcon } from "../../../../res/img/element-icons/call/voice-call.svg";
 import { Icon as VideoCallIcon } from "../../../../res/img/element-icons/call/video-call.svg";
+import { Icon as LayoutFreedomIcon } from "../../../../res/img/element-icons/call/freedom.svg";
+import { Icon as LayoutSpotlightIcon } from "../../../../res/img/element-icons/call/spotlight.svg";
 import { Icon as AppsIcon } from "../../../../res/img/element-icons/room/apps.svg";
 import { Icon as SearchIcon } from "../../../../res/img/element-icons/room/search-inset.svg";
 import { Icon as InviteIcon } from "../../../../res/img/element-icons/room/invite.svg";
@@ -437,19 +439,25 @@ const CallLayoutSelector: FC<CallLayoutSelectorProps> = ({ call }) => {
         );
     }
 
+    let iconButton;
+    if (layout === Layout.Tile) {
+        iconButton = <LayoutFreedomIcon className="mx_Icon mx_Icon_24" />;
+    } else if (layout === Layout.Spotlight) {
+        iconButton = <LayoutSpotlightIcon className="mx_Icon mx_Icon_24" />;
+    }
+
     return (
         <>
             <AccessibleTooltipButton
                 inputRef={buttonRef}
-                className={classNames("mx_RoomHeader_button", {
-                    "mx_RoomHeader_layoutButton--freedom": layout === Layout.Tile,
-                    "mx_RoomHeader_layoutButton--spotlight": layout === Layout.Spotlight,
-                })}
+                className="mx_RoomHeader_iconButton"
                 onClick={onClick}
                 title={_t("Change layout")}
                 alignment={Alignment.Bottom}
                 key="layout"
-            />
+            >
+                {iconButton}
+            </AccessibleTooltipButton>
             {menu}
         </>
     );
