@@ -71,6 +71,7 @@ import { Alignment } from "../elements/Tooltip";
 import RoomCallBanner from "../beacon/RoomCallBanner";
 import { Icon as AppsIcon } from "../../../../res/img/element-icons/room/apps.svg";
 import { Icon as SearchIcon } from "../../../../res/img/element-icons/room/search-inset.svg";
+import { Icon as InviteIcon } from "../../../../res/img/element-icons/room/invite.svg";
 
 class DisabledWithReason {
     public constructor(public readonly reason: string) {}
@@ -623,12 +624,14 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (this.props.onInviteClick && (!this.props.viewingCall || isVideoRoom) && this.props.inRoom) {
             startButtons.push(
                 <AccessibleTooltipButton
-                    className="mx_RoomHeader_button mx_RoomHeader_inviteButton"
+                    className="mx_RoomHeader_iconButton"
                     onClick={this.props.onInviteClick}
                     title={_t("Invite")}
                     alignment={Alignment.Bottom}
                     key="invite"
-                />,
+                >
+                    <InviteIcon className="mx_Icon mx_Icon_24" />
+                </AccessibleTooltipButton>,
             );
         }
 
