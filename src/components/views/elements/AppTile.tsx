@@ -17,7 +17,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import url from "url";
 import React, { ContextType, createRef, CSSProperties, MutableRefObject, ReactNode } from "react";
 import classNames from "classnames";
 import { IWidget, MatrixCapabilities } from "matrix-widget-api";
@@ -52,6 +51,7 @@ import { ElementWidgetCapabilities } from "../../../stores/widgets/ElementWidget
 import { WidgetMessagingStore } from "../../../stores/widgets/WidgetMessagingStore";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { ModuleRunner } from "../../../modules/ModuleRunner";
+import { parseUrl } from "../../../utils/UrlUtils";
 
 interface IProps {
     app: IWidget | IApp;
@@ -106,7 +106,7 @@ interface IState {
 
 export default class AppTile extends React.Component<IProps, IState> {
     public static contextType = MatrixClientContext;
-    public context: ContextType<typeof MatrixClientContext>;
+    public context!: ContextType<typeof MatrixClientContext>;
 
     public static defaultProps: Partial<IProps> = {
         waitForIframeLoad: true,
@@ -126,7 +126,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     private persistKey: string;
     private sgWidget: StopGapWidget | null;
     private dispatcherRef?: string;
-    private unmounted: boolean;
+    private unmounted = false;
 
     public constructor(props: IProps) {
         super(props);
@@ -265,7 +265,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private isMixedContent(): boolean {
         const parentContentProtocol = window.location.protocol;
-        const u = url.parse(this.props.app.url);
+        const u = parseUrl(this.props.app.url);
         const childContentProtocol = u.protocol;
         if (parentContentProtocol === "https:" && childContentProtocol !== "https:") {
             logger.warn(
@@ -590,7 +590,11 @@ export default class AppTile extends React.Component<IProps, IState> {
         const iframeFeatures =
             "microphone; camera; encrypted-media; autoplay; display-capture; clipboard-write; " + "clipboard-read;";
 
-        const appTileBodyClass = "mx_AppTileBody" + (this.props.miniMode ? "_mini  " : " ");
+        const appTileBodyClass = classNames({
+            mx_AppTileBody: !this.props.miniMode,
+            mx_AppTileBody_mini: this.props.miniMode,
+            mx_AppTile_loading: this.state.loading,
+        });
         const appTileBodyStyles: CSSProperties = {};
         if (this.props.pointerEvents) {
             appTileBodyStyles.pointerEvents = this.props.pointerEvents;
@@ -626,10 +630,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             );
         } else if (this.state.initialising || !this.state.isUserProfileReady) {
             appTileBody = (
-                <div
-                    className={appTileBodyClass + (this.state.loading ? "mx_AppTile_loading" : "")}
-                    style={appTileBodyStyles}
-                >
+                <div className={appTileBodyClass} style={appTileBodyStyles}>
                     {loadingElement}
                 </div>
             );
@@ -642,10 +643,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                 );
             } else {
                 appTileBody = (
-                    <div
-                        className={appTileBodyClass + (this.state.loading ? "mx_AppTile_loading" : "")}
-                        style={appTileBodyStyles}
-                    >
+                    <div className={appTileBodyClass} style={appTileBodyStyles}>
                         {this.state.loading && loadingElement}
                         <iframe
                             title={widgetTitle}
