@@ -77,6 +77,7 @@ import { Icon as AppsIcon } from "../../../../res/img/element-icons/room/apps.sv
 import { Icon as SearchIcon } from "../../../../res/img/element-icons/room/search-inset.svg";
 import { Icon as InviteIcon } from "../../../../res/img/element-icons/room/invite.svg";
 import { Icon as CloseIcon } from "../../../../res/img/cancel.svg";
+import { Icon as MinimiseIcon } from "../../../../res/img/element-icons/reduce.svg";
 
 class DisabledWithReason {
     public constructor(public readonly reason: string) {}
@@ -667,12 +668,14 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             } else {
                 endButtons.push(
                     <AccessibleTooltipButton
-                        className="mx_RoomHeader_button mx_RoomHeader_minimiseButton"
+                        className="mx_RoomHeader_iconButton"
                         onClick={this.onHideCallClick}
                         title={_t("View chat timeline")}
                         alignment={Alignment.Bottom}
                         key="minimise"
-                    />,
+                    >
+                        <MinimiseIcon className="mx_Icon mx_Icon_24" />
+                    </AccessibleTooltipButton>,
                 );
             }
         }
