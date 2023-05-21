@@ -111,6 +111,7 @@ export const CommandCategories = {
 
 export type RunResult = XOR<{ error: Error }, { promise: Promise<IContent | undefined> }>;
 
+type RunInThreadFn = (this: Command, roomId: string, threadRootId?: string, args?: string) => RunResult;
 type RunFn = (this: Command, roomId: string, args?: string) => RunResult;
 
 interface ICommandOpts {
@@ -119,11 +120,18 @@ interface ICommandOpts {
     args?: string;
     description: string;
     analyticsName?: SlashCommandEvent["command"];
-    runFn?: RunFn;
+    runFn?: RunFn | RunInThreadFn;
     category: string;
     hideCompletionAfterSpace?: boolean;
     isEnabled?(): boolean;
     renderingTypes?: TimelineRenderingType[];
+
+    /**
+     * When true, runFn should be a `RunInThreadFn` to receive the actual thread
+     * ID. If the command is called without the context of a thread, the supplied
+     * thread ID will be undefined/falsy.
+     */
+    canReceiveThreadId?: boolean;
 }
 
 export class Command {
@@ -131,11 +139,12 @@ export class Command {
     public readonly aliases: string[];
     public readonly args?: string;
     public readonly description: string;
-    public readonly runFn?: RunFn;
+    public readonly runFn?: RunFn | RunInThreadFn;
     public readonly category: string;
     public readonly hideCompletionAfterSpace: boolean;
     public readonly renderingTypes?: TimelineRenderingType[];
     public readonly analyticsName?: SlashCommandEvent["command"];
+    public readonly canReceiveThreadId?: boolean;
     private readonly _isEnabled?: () => boolean;
 
     public constructor(opts: ICommandOpts) {
@@ -149,6 +158,7 @@ export class Command {
         this._isEnabled = opts.isEnabled;
         this.renderingTypes = opts.renderingTypes;
         this.analyticsName = opts.analyticsName;
+        this.canReceiveThreadId = opts.canReceiveThreadId;
     }
 
     public getCommand(): string {
@@ -182,7 +192,11 @@ export class Command {
             });
         }
 
-        return this.runFn(roomId, args);
+        if (this.canReceiveThreadId) {
+            return this.runFn(roomId, threadId, args);
+        } else {
+            return this.runFn(roomId, args);
+        }
     }
 
     public getUsage(): string {
@@ -981,8 +995,9 @@ export const Commands = [
     new Command({
         command: "devtools",
         description: _td("Opens the Developer Tools dialog"),
-        runFn: function (roomId) {
-            Modal.createDialog(DevtoolsDialog, { roomId }, "mx_DevtoolsDialog_wrapper");
+        canReceiveThreadId: true,
+        runFn: function (roomId, threadRootId) {
+            Modal.createDialog(DevtoolsDialog, { roomId, threadRootId }, "mx_DevtoolsDialog_wrapper");
             return success();
         },
         category: CommandCategories.advanced,

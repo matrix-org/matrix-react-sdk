@@ -79,6 +79,7 @@ export default BaseTool;
 
 interface IContext {
     room: Room;
+    threadRootId?: string;
 }
 
 export const DevtoolsContext = createContext<IContext>({} as IContext);
