@@ -79,6 +79,7 @@ import { Icon as SearchIcon } from "../../../../res/img/element-icons/room/searc
 import { Icon as InviteIcon } from "../../../../res/img/element-icons/room/invite.svg";
 import { Icon as CloseIcon } from "../../../../res/img/cancel.svg";
 import { Icon as MinimiseIcon } from "../../../../res/img/element-icons/reduce.svg";
+import { Icon as ChevronIcon } from "../../../../res/img/feather-customised/chevron-down.svg";
 
 class DisabledWithReason {
     public constructor(public readonly reason: string) {}
@@ -743,7 +744,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     alignment={Alignment.Bottom}
                 >
                     {roomName}
-                    {this.props.room && <div className="mx_RoomHeader_chevron" />}
+                    {this.props.room && <ChevronIcon className="mx_Icon mx_Icon--chevron" />}
                     {contextMenu}
                 </ContextMenuTooltipButton>
             );

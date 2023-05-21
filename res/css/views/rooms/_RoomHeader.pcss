@@ -91,21 +91,17 @@ limitations under the License.
         overflow: hidden;
     }
 
-    .mx_RoomHeader_chevron {
+    .mx_Icon--chevron {
         align-self: center;
         width: 20px;
         height: 20px;
-        mask-position: center;
-        mask-size: 20px;
-        mask-repeat: no-repeat;
-        mask-image: url("$(res)/img/feather-customised/chevron-down.svg");
-        background-color: $tertiary-content;
+        color: $tertiary-content;
     }
 
     &[aria-expanded="true"] {
         background-color: $quinary-content;
 
-        .mx_RoomHeader_chevron {
+        .mx_Icon--chevron {
             transform: rotate(180deg);
         }
     }
