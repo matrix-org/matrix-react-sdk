@@ -769,7 +769,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         }
 
         const icon = this.props.viewingCall ? (
-            <div className="mx_RoomHeader_icon mx_RoomHeader_icon_video" />
+            <VideoCallIcon className="mx_Icon mx_Icon--videoCall" />
         ) : this.props.e2eStatus ? (
             <E2EIcon className="mx_RoomHeader_icon" status={this.props.e2eStatus} tooltipAlignment={Alignment.Bottom} />
         ) : // If we're expecting an E2EE status to come in, but it hasn't
