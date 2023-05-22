@@ -293,7 +293,12 @@ export default class PhoneNumbers extends React.Component<IProps> {
             (!content && _t("Discovery options will appear once you have added a phone number above.")) || undefined;
 
         return (
-            <SettingsSubsection data-testid="mx_PhoneNumbers" heading={_t("Phone numbers")} description={description}>
+            <SettingsSubsection
+                data-testid="mx_PhoneNumbers"
+                heading={_t("Phone numbers")}
+                description={description}
+                stretchContent
+            >
                 {content}
             </SettingsSubsection>
         );
