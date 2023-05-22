@@ -25,15 +25,6 @@ describe("Security user settings tab", () => {
         cy.stopHomeserver(homeserver);
     });
 
-    it("should be rendered properly", () => {
-        cy.startHomeserver("default").then((data) => {
-            homeserver = data;
-            cy.initTestUser(homeserver, "Hanako");
-        });
-
-        cy.openUserSettings("Security");
-    });
-
     describe("with posthog enabled", () => {
         beforeEach(() => {
             // Enable posthog
@@ -60,7 +51,7 @@ describe("Security user settings tab", () => {
                 .should("exist")
                 .closest(".mx_Toast_toast")
                 .within(() => {
-                    cy.get(".mx_Toast_buttons .mx_AccessibleButton_kind_danger_outline").click(); // Click "Dismiss"
+                    cy.findByRole("button", { name: "Dismiss" }).click();
                 });
 
             cy.get(".mx_Toast_buttons").within(() => {
