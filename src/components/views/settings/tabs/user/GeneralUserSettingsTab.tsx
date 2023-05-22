@@ -330,7 +330,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private renderAccountSection(): JSX.Element {
         let passwordChangeForm: ReactNode = (
             <ChangePassword
-                className="mx_GeneralUserSettingsTab_changePassword"
+                className="mx_GeneralUserSettingsTab_section--account_changePassword"
                 rowClassName=""
                 buttonKind="primary"
                 onError={this.onPasswordChangeError}
@@ -407,7 +407,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             );
         }
         return (
-            <div className="mx_SettingsTab_section mx_GeneralUserSettingsTab_accountSection">
+            <div className="mx_SettingsTab_section mx_GeneralUserSettingsTab_section--account">
                 <span className="mx_SettingsTab_subheading">{_t("Account")}</span>
                 {externalAccountManagement}
                 <p className="mx_SettingsTab_subsectionText">{passwordChangeText}</p>
@@ -423,7 +423,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             <div className="mx_SettingsTab_section">
                 <span className="mx_SettingsTab_subheading">{_t("Language and region")}</span>
                 <LanguageDropdown
-                    className="mx_GeneralUserSettingsTab_languageInput"
+                    className="mx_GeneralUserSettingsTab_section_languageInput"
                     onOptionChange={this.onLanguageChange}
                     value={this.state.language}
                 />
@@ -433,7 +433,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
     private renderSpellCheckSection(): JSX.Element {
         return (
-            <div className="mx_SettingsTab_section mx_SettingsTab_section_spellcheck">
+            <div className="mx_SettingsTab_section mx_GeneralUserSettingsTab_section--spellcheck">
                 <span className="mx_SettingsTab_subheading">
                     {_t("Spell check")}
                     <ToggleSwitch checked={!!this.state.spellCheckEnabled} onChange={this.onSpellCheckEnabledChange} />

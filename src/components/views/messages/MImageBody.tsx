@@ -69,7 +69,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     private unmounted = true;
     private image = createRef<HTMLImageElement>();
     private timeout?: number;
-    private sizeWatcher: string;
+    private sizeWatcher?: string;
     private reconnectedListener: ClientEventHandlerMap[ClientEvent.Sync];
 
     public constructor(props: IBodyProps) {
@@ -165,6 +165,14 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     };
 
     private onImageError = (): void => {
+        // If the thumbnail failed to load then try again using the contentUrl
+        if (this.state.thumbUrl) {
+            this.setState({
+                thumbUrl: null,
+            });
+            return;
+        }
+
         this.clearBlurhashTimeout();
         this.setState({
             imgError: true,
@@ -174,7 +182,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
     private onImageLoad = (): void => {
         this.clearBlurhashTimeout();
-        this.props.onHeightChanged();
+        this.props.onHeightChanged?.();
 
         let loadedImageDimensions: IState["loadedImageDimensions"];
 
@@ -367,7 +375,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         this.unmounted = true;
         MatrixClientPeg.get().off(ClientEvent.Sync, this.reconnectedListener);
         this.clearBlurhashTimeout();
-        SettingsStore.unwatchSetting(this.sizeWatcher);
+        if (this.sizeWatcher) SettingsStore.unwatchSetting(this.sizeWatcher);
         if (this.state.isAnimated && this.state.thumbUrl) {
             URL.revokeObjectURL(this.state.thumbUrl);
         }

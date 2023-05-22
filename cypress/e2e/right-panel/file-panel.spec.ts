@@ -74,8 +74,8 @@ describe("FilePanel", () => {
             // Wait until the information about the empty state is rendered
             cy.get(".mx_FilePanel_empty").should("exist");
 
-            // Take a snapshot of empty FilePanel
-            cy.get(".mx_FilePanel").percySnapshotElement("File Panel - empty", {
+            // Take a snapshot of RightPanel - fix https://github.com/vector-im/element-web/issues/25332
+            cy.get(".mx_RightPanel").percySnapshotElement("File Panel - empty", {
                 widths: [264], // Emulate the UI. The value is based on minWidth specified on MainSplit.tsx
             });
         });
@@ -174,7 +174,7 @@ describe("FilePanel", () => {
             // FIXME: hide mx_SeekBar because flaky - see https://github.com/vector-im/element-web/issues/24897
             //   Remove this once https://github.com/vector-im/element-web/issues/24898 is fixed.
             const percyCSS =
-                ".mx_MessageTimestamp, .mx_RoomView_myReadMarker, .mx_SeekBar { visibility: hidden !important; }";
+                ".mx_MessageTimestamp, .mx_MessagePanel_myReadMarker, .mx_SeekBar { visibility: hidden !important; }";
 
             // Take a snapshot of file tiles list on FilePanel
             cy.get(".mx_FilePanel .mx_RoomView_MessageList").percySnapshotElement("File tiles list on FilePanel", {

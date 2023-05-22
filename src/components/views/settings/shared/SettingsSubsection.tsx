@@ -23,7 +23,7 @@ export interface SettingsSubsectionProps extends HTMLAttributes<HTMLDivElement> 
     heading: string | React.ReactNode;
     description?: string | React.ReactNode;
     children?: React.ReactNode;
-    // when true content will be justify-items: stretch
+    // when true content will be justify-items: stretch, which will make items within the section stretch to full width.
     stretchContent?: boolean;
 }
 
@@ -50,7 +50,7 @@ export const SettingsSubsection: React.FC<SettingsSubsectionProps> = ({
         {!!children && (
             <div
                 className={classNames("mx_SettingsSubsection_content", {
-                    mx_SettingsSubsection_contentStretch: stretchContent,
+                    mx_SettingsSubsection_contentStretch: !!stretchContent,
                 })}
             >
                 {children}

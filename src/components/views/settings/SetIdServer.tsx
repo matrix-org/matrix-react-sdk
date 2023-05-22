@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import url from "url";
 import React, { ReactNode } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
@@ -25,7 +24,7 @@ import Modal from "../../../Modal";
 import dis from "../../../dispatcher/dispatcher";
 import { getThreepidsWithBindStatus } from "../../../boundThreepids";
 import IdentityAuthClient from "../../../IdentityAuthClient";
-import { abbreviateUrl, unabbreviateUrl } from "../../../utils/UrlUtils";
+import { abbreviateUrl, parseUrl, unabbreviateUrl } from "../../../utils/UrlUtils";
 import { getDefaultIdentityServerUrl, doesIdentityServerHaveTerms } from "../../../utils/IdentityServerUtils";
 import { timeout } from "../../../utils/promise";
 import { ActionPayload } from "../../../dispatcher/payloads";
@@ -46,7 +45,7 @@ const REACHABILITY_TIMEOUT = 10000; // ms
  * @returns {string} null if url passes all checks, otherwise i18ned error string
  */
 async function checkIdentityServerUrl(u: string): Promise<string | null> {
-    const parsedUrl = url.parse(u);
+    const parsedUrl = parseUrl(u);
 
     if (parsedUrl.protocol !== "https:") return _t("Identity server URL must be HTTPS");
 
@@ -83,7 +82,7 @@ interface IState {
 }
 
 export default class SetIdServer extends React.Component<IProps, IState> {
-    private dispatcherRef: string;
+    private dispatcherRef?: string;
 
     public constructor(props: IProps) {
         super(props);
@@ -110,7 +109,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
     }
 
     public componentWillUnmount(): void {
-        dis.unregister(this.dispatcherRef);
+        if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
     }
 
     private onAction = (payload: ActionPayload): void => {

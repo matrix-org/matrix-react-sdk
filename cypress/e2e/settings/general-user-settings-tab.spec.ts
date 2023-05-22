@@ -83,12 +83,12 @@ describe("General user settings tab", () => {
                 });
 
             // Wait until spinners disappear
-            cy.get(".mx_GeneralUserSettingsTab_accountSection .mx_Spinner").should("not.exist");
-            cy.get(".mx_GeneralUserSettingsTab_discovery .mx_Spinner").should("not.exist");
+            cy.get(".mx_GeneralUserSettingsTab_section--account .mx_Spinner").should("not.exist");
+            cy.get(".mx_GeneralUserSettingsTab_section--discovery .mx_Spinner").should("not.exist");
 
-            cy.get(".mx_GeneralUserSettingsTab_accountSection").within(() => {
+            cy.get(".mx_GeneralUserSettingsTab_section--account").within(() => {
                 // Assert that input areas for changing a password exists
-                cy.get("form.mx_GeneralUserSettingsTab_changePassword")
+                cy.get("form.mx_GeneralUserSettingsTab_section--account_changePassword")
                     .scrollIntoView()
                     .within(() => {
                         cy.findByLabelText("Current password").should("be.visible");
@@ -120,7 +120,7 @@ describe("General user settings tab", () => {
             });
 
             // Check language and region setting dropdown
-            cy.get(".mx_GeneralUserSettingsTab_languageInput")
+            cy.get(".mx_GeneralUserSettingsTab_section_languageInput")
                 .scrollIntoView()
                 .within(() => {
                     // Check the default value
@@ -156,16 +156,10 @@ describe("General user settings tab", () => {
                     // Make sure integration manager's toggle switch is enabled
                     cy.get(".mx_ToggleSwitch_enabled").should("be.visible");
 
-                    // Assert space between "Manage integrations" and the integration server address is set to 4px;
-                    cy.get(".mx_SetIntegrationManager_heading_manager").should("have.css", "column-gap", "4px");
-
-                    cy.get(".mx_SetIntegrationManager_heading_manager").within(() => {
-                        cy.get(".mx_SettingsTab_heading").should("have.text", "Manage integrations");
-
-                        // Assert the headings' inline end margin values are set to zero in favor of the column-gap declaration
-                        cy.get(".mx_SettingsTab_heading").should("have.css", "margin-inline-end", "0px");
-                        cy.get(".mx_SettingsTab_subheading").should("have.css", "margin-inline-end", "0px");
-                    });
+                    cy.get(".mx_SetIntegrationManager_heading_manager").should(
+                        "have.text",
+                        "Manage integrations(scalar.vector.im)",
+                    );
                 });
 
             // Assert the account deactivation button is displayed
