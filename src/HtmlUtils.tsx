@@ -19,7 +19,7 @@ limitations under the License.
 
 import React, { LegacyRef, ReactElement, ReactNode } from "react";
 import sanitizeHtml from "sanitize-html";
-import cheerio from "cheerio";
+import { load as cheerio } from "cheerio";
 import classNames from "classnames";
 import EMOJIBASE_REGEX from "emojibase-regex";
 import { merge, split } from "lodash";
@@ -549,7 +549,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
             }
 
             safeBody = sanitizeHtml(formattedBody!, sanitizeParams);
-            const phtml = cheerio.load(safeBody, {
+            const phtml = cheerio(safeBody, {
                 // @ts-ignore: The `_useHtmlParser2` internal option is the
                 // simplest way to both parse and render using `htmlparser2`.
                 _useHtmlParser2: true,
@@ -571,9 +571,6 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
                 });
                 safeBody = phtml.html();
             }
-            if (bodyHasEmoji) {
-                safeBody = formatEmojis(safeBody, true).join("");
-            }
         } else if (highlighter) {
             safeBody = highlighter.applyHighlights(escapeHtml(plainBody), safeHighlights!).join("");
         }
@@ -581,13 +578,9 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         delete sanitizeParams.textFilter;
     }
 
-    const contentBody = safeBody ?? strippedBody;
-    if (opts.returnString) {
-        return contentBody;
-    }
-
     let emojiBody = false;
     if (!opts.disableBigEmoji && bodyHasEmoji) {
+        const contentBody = safeBody ?? strippedBody;
         let contentBodyTrimmed = contentBody !== undefined ? contentBody.trim() : "";
 
         // Remove zero width joiner, zero width spaces and other spaces in body
@@ -605,6 +598,15 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
             (strippedBody === safeBody || // replies have the html fallbacks, account for that here
                 content.formatted_body === undefined ||
                 (!content.formatted_body.includes("http:") && !content.formatted_body.includes("https:")));
+    }
+
+    if (isFormattedBody && bodyHasEmoji && safeBody) {
+        // This has to be done after the emojiBody check above as to not break big emoji on replies
+        safeBody = formatEmojis(safeBody, true).join("");
+    }
+
+    if (opts.returnString) {
+        return safeBody ?? strippedBody;
     }
 
     const className = classNames({

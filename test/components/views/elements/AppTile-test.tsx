@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 import { jest } from "@jest/globals";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { ClientWidgetApi, MatrixWidgetType } from "matrix-widget-api";
+import { ClientWidgetApi, IWidget, MatrixWidgetType } from "matrix-widget-api";
 import { Optional } from "matrix-events-sdk";
 import { act, render, RenderResult } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -51,6 +51,16 @@ import { ElementWidget } from "../../../../src/stores/widgets/StopGapWidget";
 import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessagingStore";
 import { ModuleRunner } from "../../../../src/modules/ModuleRunner";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
+
+jest.mock("../../../../src/stores/OwnProfileStore", () => ({
+    OwnProfileStore: {
+        instance: {
+            isProfileInfoFetched: true,
+            removeListener: jest.fn(),
+            getHttpAvatarUrl: jest.fn().mockReturnValue("http://avatar_url"),
+        },
+    },
+}));
 
 describe("AppTile", () => {
     let cli: MatrixClient;
@@ -171,6 +181,10 @@ describe("AppTile", () => {
 
         expect(renderResult.getByText("Example 1")).toBeInTheDocument();
         expect(ActiveWidgetStore.instance.isLive("1", "r1")).toBe(true);
+
+        const { container, asFragment } = renderResult;
+        expect(container.getElementsByClassName("mx_Spinner").length).toBeTruthy();
+        expect(asFragment()).toMatchSnapshot();
 
         // We want to verify that as we change to room 2, we should close the
         // right panel and destroy the widget.
@@ -349,6 +363,13 @@ describe("AppTile", () => {
             moveToContainerSpy = jest.spyOn(WidgetLayoutStore.instance, "moveToContainer");
         });
 
+        it("should render", () => {
+            const { container, asFragment } = renderResult;
+
+            expect(container.querySelector(".mx_Spinner")).toBeFalsy(); // Assert that the spinner is gone
+            expect(asFragment()).toMatchSnapshot(); // Take a snapshot of the pinned widget
+        });
+
         it("should not display the »Popout widget« button", () => {
             expect(renderResult.queryByLabelText("Popout widget")).not.toBeInTheDocument();
         });
@@ -366,7 +387,7 @@ describe("AppTile", () => {
         describe("for a maximised (centered) widget", () => {
             beforeEach(() => {
                 jest.spyOn(WidgetLayoutStore.instance, "isInContainer").mockImplementation(
-                    (room: Optional<Room>, widget: IApp, container: Container) => {
+                    (room: Optional<Room>, widget: IWidget, container: Container) => {
                         return room === r1 && widget === app1 && container === Container.Center;
                     },
                 );
@@ -401,6 +422,25 @@ describe("AppTile", () => {
             it("should display the »Popout widget« button", () => {
                 expect(renderResult.getByTitle("Popout widget")).toBeInTheDocument();
             });
+        });
+    });
+
+    describe("for a persistent app", () => {
+        let renderResult: RenderResult;
+
+        beforeEach(() => {
+            renderResult = render(
+                <MatrixClientContext.Provider value={cli}>
+                    <AppTile key={app1.id} app={app1} fullWidth={true} room={r1} miniMode={true} showMenubar={false} />
+                </MatrixClientContext.Provider>,
+            );
+        });
+
+        it("should render", () => {
+            const { container, asFragment } = renderResult;
+
+            expect(container.querySelector(".mx_Spinner")).toBeFalsy();
+            expect(asFragment()).toMatchSnapshot();
         });
     });
 

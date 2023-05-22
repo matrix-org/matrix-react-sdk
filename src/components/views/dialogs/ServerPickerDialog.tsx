@@ -20,7 +20,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 import BaseDialog from "./BaseDialog";
-import { _t } from "../../../languageHandler";
+import { _t, UserFriendlyError } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import SdkConfig from "../../../SdkConfig";
 import Field from "../elements/Field";
@@ -44,7 +44,7 @@ interface IState {
 export default class ServerPickerDialog extends React.PureComponent<IProps, IState> {
     private readonly defaultServer: ValidatedServerConfig;
     private readonly fieldRef = createRef<Field>();
-    private validatedConf: ValidatedServerConfig;
+    private validatedConf?: ValidatedServerConfig;
 
     public constructor(props: IProps) {
         super(props);
@@ -85,7 +85,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
     // find their homeserver without demanding they use "https://matrix.org"
     private validate = withValidation<this, { error?: string }>({
         deriveData: async ({ value }): Promise<{ error?: string }> => {
-            let hsUrl = value.trim(); // trim to account for random whitespace
+            let hsUrl = (value ?? "").trim(); // trim to account for random whitespace
 
             // if the URL has no protocol, try validate it as a serverName via well-known
             if (!hsUrl.includes("://")) {
@@ -113,7 +113,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                 const stateForError = AutoDiscoveryUtils.authComponentStateForError(e);
                 if (stateForError.serverErrorIsFatal) {
                     let error = _t("Unable to validate homeserver");
-                    if (e.translatedMessage) {
+                    if (e instanceof UserFriendlyError && e.translatedMessage) {
                         error = e.translatedMessage;
                     }
                     return { error };
