@@ -56,5 +56,18 @@ cy.all = function all(commands): Cypress.Chainable {
     return cy.wrap(resultArray, { log: false });
 };
 
-// Needed to make this file a module
-export {};
+/**
+ * Check if the current application is using rust crypto, and bail out if so.
+ *
+ * Element must have been loaded in the window (ie, there must have been a 'cy.visit') before calling this.
+ */
+export function skipIfRustCrypto() {
+    cy.window().then((win) => {
+        const isRustCrypto = win.mxSettingsStore.getValue("feature_rust_crypto");
+        if (isRustCrypto) {
+            cy.log("Skipping due to rust crypto");
+            //@ts-ignore: 'state' is a secret internal command
+            cy.state("runnable").skip();
+        }
+    });
+}

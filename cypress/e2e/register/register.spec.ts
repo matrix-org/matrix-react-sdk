@@ -17,6 +17,7 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
+import { skipIfRustCrypto } from "../../support/util";
 
 describe("Registration", () => {
     let homeserver: HomeserverInstance;

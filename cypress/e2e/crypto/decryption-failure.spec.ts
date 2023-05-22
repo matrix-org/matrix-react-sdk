@@ -19,6 +19,7 @@ import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { UserCredentials } from "../../support/login";
 import { handleVerificationRequest } from "./utils";
+import { skipIfRustCrypto } from "../../support/util";
 
 const ROOM_NAME = "Test room";
 const TEST_USER = "Alia";
@@ -71,6 +72,7 @@ describe("Decryption Failure Bar", () => {
             homeserver = hs;
             cy.initTestUser(homeserver, TEST_USER)
                 .then((creds: UserCredentials) => {
+                    skipIfRustCrypto();
                     testUser = creds;
                 })
                 .then(() => {
