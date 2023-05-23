@@ -47,8 +47,8 @@ const calcIsInfoMessage = (
 };
 
 export function getEventDisplayInfo(
-    mxEvent: MatrixEvent,
     matrixClient: MatrixClient,
+    mxEvent: MatrixEvent,
     showHiddenEvents: boolean,
     hideEvent?: boolean,
 ): {

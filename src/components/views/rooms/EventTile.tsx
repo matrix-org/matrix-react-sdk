@@ -904,8 +904,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             noBubbleEvent,
             isSeeingThroughMessageHiddenForModeration,
         } = getEventDisplayInfo(
-            this.props.mxEvent,
             MatrixClientPeg.get(),
+            this.props.mxEvent,
             this.context.showHiddenEvents,
             this.shouldHideEvent(),
         );
