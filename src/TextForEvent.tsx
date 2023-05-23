@@ -361,7 +361,7 @@ function textForServerACLEvent(ev: MatrixEvent): (() => string) | null {
     return getText;
 }
 
-function textForMessageEvent(ev: MatrixEvent): (() => string) | null {
+function textForMessageEvent(ev: MatrixEvent,enclosedSender?:boolean): (() => string) | null {
     if (isLocationEvent(ev)) {
         return textForLocationEvent(ev);
     }
@@ -381,7 +381,7 @@ function textForMessageEvent(ev: MatrixEvent): (() => string) | null {
             message = _t("%(senderDisplayName)s sent a sticker.", { senderDisplayName });
         } else {
             // in this case, parse it as a plain text message
-            if(ev.exportPlainText){
+            if(enclosedSender){
                 message = `<${senderDisplayName}>` + ": " + message;
             }else{
                 message = senderDisplayName + ": " + message;
@@ -883,7 +883,7 @@ function textForPollEndEvent(event: MatrixEvent): (() => string) | null {
 type Renderable = string | React.ReactNode | null;
 
 interface IHandlers {
-    [type: string]: (ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean) => (() => Renderable) | null;
+    [type: string]: (ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean,enclosedSender?:boolean) => (() => Renderable) | null;
 }
 
 const handlers: IHandlers = {
@@ -946,8 +946,8 @@ export function hasText(ev: MatrixEvent, showHiddenEvents?: boolean): boolean {
  *     to avoid hitting the settings store
  */
 export function textForEvent(ev: MatrixEvent): string;
-export function textForEvent(ev: MatrixEvent, allowJSX: true, showHiddenEvents?: boolean): string | React.ReactNode;
-export function textForEvent(ev: MatrixEvent, allowJSX = false, showHiddenEvents?: boolean): string | React.ReactNode {
-    const handler = (ev.isState() ? stateHandlers : handlers)[ev.getType()];
-    return handler?.(ev, allowJSX, showHiddenEvents)?.() || "";
+export function textForEvent(ev: MatrixEvent, allowJSX: true, showHiddenEvents?: boolean,enclosedSender?:boolean): string | React.ReactNode;
+export function textForEvent(ev: MatrixEvent, allowJSX = false, showHiddenEvents?: boolean,enclosedSender?:boolean): string | React.ReactNode {
+    const handler = (ev.isState() ? stateHandlers : handlers)[ev.getType()];    
+    return handler?.(ev, allowJSX, showHiddenEvents,enclosedSender)?.() || "";
 }
