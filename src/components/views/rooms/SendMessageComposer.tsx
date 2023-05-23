@@ -692,7 +692,8 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
             if (
                 imgDoc.getElementsByTagName("img").length !== 1 ||
-                !imgDoc.querySelector("img")?.src.startsWith("blob:")
+                !imgDoc.querySelector("img")?.src.startsWith("blob:") ||
+                imgDoc.childNodes.length !== 1
             ) {
                 console.log("Failed to handle pasted content as Safari inserted content");
 
