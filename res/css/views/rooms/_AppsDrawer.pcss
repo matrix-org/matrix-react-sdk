@@ -254,19 +254,7 @@ limitations under the License.
     }
 }
 
-.mx_AppTileBody,
-.mx_AppTileBody_mini {
-    width: 100%;
-    overflow: hidden;
-    border-radius: 8px;
-    height: var(--AppTileBody-height);
-
-    iframe {
-        border: none;
-        width: 100%;
-        height: 100%;
-    }
-
+.mx_AppTileBody {
     /* const loadingElement */
     .mx_AppTileBody_fadeInSpinner {
         /* place spinner and the message at the center of mx_AppTileBody */
@@ -281,7 +269,21 @@ limitations under the License.
     }
 }
 
-.mx_AppTileBody {
+.mx_AppTileBody--normal,
+.mx_AppTileBody--mini {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    height: var(--AppTileBody-height);
+
+    iframe {
+        border: none;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.mx_AppTileBody--normal {
     --AppTileBody-height: 100%;
 
     background-color: $widget-body-bg-color;
@@ -294,13 +296,13 @@ limitations under the License.
     }
 }
 
-.mx_AppTileBody_mini {
+.mx_AppTileBody--mini {
     --AppTileBody-height: var(--AppTile_mini-height);
 }
 
-.mx_AppTile .mx_AppTileBody,
-.mx_AppTileFullWidth .mx_AppTileBody,
-.mx_AppTile_mini .mx_AppTileBody_mini {
+.mx_AppTile .mx_AppTileBody--normal,
+.mx_AppTileFullWidth .mx_AppTileBody--normal,
+.mx_AppTile_mini .mx_AppTileBody--mini {
     height: inherit;
     flex: 1;
 }
@@ -321,7 +323,7 @@ limitations under the License.
     }
 }
 
-.mx_AppTile_loading {
+.mx_AppTileBody--loading {
     display: flex;
     flex-direction: column;
     justify-content: center;
