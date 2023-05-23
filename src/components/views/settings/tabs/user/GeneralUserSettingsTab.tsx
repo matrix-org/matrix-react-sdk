@@ -56,7 +56,7 @@ import ToggleSwitch from "../../../elements/ToggleSwitch";
 import { IS_MAC } from "../../../../../Keyboard";
 import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
-import SettingsSubsection from "../../shared/SettingsSubsection";
+import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -325,15 +325,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     }
 
     private renderAccountSection(): JSX.Element {
-        let passwordChangeForm: ReactNode = (
-            <ChangePassword
-                className="mx_GeneralUserSettingsTab_section--account_changePassword"
-                rowClassName=""
-                buttonKind="primary"
-                onError={this.onPasswordChangeError}
-                onFinished={this.onPasswordChanged}
-            />
-        );
+        
 
         let threepidSection: ReactNode = null;
 
@@ -369,11 +361,18 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             threepidSection = <Spinner />;
         }
 
-        let passwordChangeText: ReactNode = _t("Set a new account password…");
-        if (!this.state.canChangePassword) {
-            // Just don't show anything if you can't do anything.
-            passwordChangeText = null;
-            passwordChangeForm = null;
+        let passwordChangeSection: ReactNode = null;
+        if (this.state.canChangePassword) {
+            passwordChangeSection = <>
+                <SettingsSubsectionText>{_t("Set a new account password…")}</SettingsSubsectionText>
+                <ChangePassword
+                    className="mx_GeneralUserSettingsTab_section--account_changePassword"
+                    rowClassName=""
+                    buttonKind="primary"
+                    onError={this.onPasswordChangeError}
+                    onFinished={this.onPasswordChanged}
+                />
+            </>
         }
 
         let externalAccountManagement: JSX.Element | undefined;
@@ -404,13 +403,13 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             );
         }
         return (
-            <div className="mx_SettingsTab_section mx_GeneralUserSettingsTab_section--account">
-                <span className="mx_SettingsTab_subheading">{_t("Account")}</span>
-                {externalAccountManagement}
-                <p className="mx_SettingsTab_subsectionText">{passwordChangeText}</p>
-                {passwordChangeForm}
+            <>
+                <SettingsSubsection heading={_t("Account")} stretchContent>
+                    {externalAccountManagement}
+                    {passwordChangeSection}
+                </SettingsSubsection>
                 {threepidSection}
-            </div>
+            </>
         );
     }
 
