@@ -16,14 +16,14 @@ limitations under the License.
 
 import React, { ComponentProps } from "react";
 import { render, screen } from "@testing-library/react";
-
-import MatrixChat from "../../../src/components/structures/MatrixChat";
-import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../test-utils";
-import * as StorageManager from "../../../src/utils/StorageManager";
 import fetchMockJest from "fetch-mock-jest";
 import { ClientEvent } from "matrix-js-sdk/src/client";
 import { SyncState } from "matrix-js-sdk/src/sync";
 import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
+
+import MatrixChat from "../../../src/components/structures/MatrixChat";
+import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../test-utils";
+import * as StorageManager from "../../../src/utils/StorageManager";
 
 describe("<MatrixChat />", () => {
     const userId = "@alice:server.org";
