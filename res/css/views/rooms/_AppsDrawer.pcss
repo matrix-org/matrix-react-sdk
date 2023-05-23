@@ -15,8 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_AppsDrawer {
+:root {
     --AppTile_mini-height: 220px;
+}
+
+.mx_AppsDrawer {
     --minWidth: 240px; /* TODO this should be 300px but that's too large */
 
     margin: var(--container-gap-width);
@@ -28,10 +31,6 @@ limitations under the License.
     flex-direction: column;
     overflow: hidden;
     flex-grow: 1;
-
-    &.mx_AppsDrawer_maximise {
-        margin-bottom: var(--container-gap-width);
-    }
 
     .mx_AppsContainer_resizerHandleContainer {
         width: 100%;
@@ -96,7 +95,15 @@ limitations under the License.
         min-width: var(--minWidth);
     }
 
-    &.mx_AppsDrawer_2apps .mx_AppTile {
+    &.mx_AppsDrawer--maximised {
+        margin-bottom: var(--container-gap-width);
+    }
+
+    &.mx_AppsDrawer--resizing .mx_AppTile_persistedWrapper {
+        z-index: 1;
+    }
+
+    &.mx_AppsDrawer--2apps .mx_AppTile {
         width: 50%;
 
         &:nth-child(3) {
@@ -105,7 +112,7 @@ limitations under the License.
             min-width: var(--minWidth) !important;
         }
     }
-    &.mx_AppsDrawer_3apps .mx_AppTile {
+    &.mx_AppsDrawer--3apps .mx_AppTile {
         width: 33%;
 
         &:nth-child(3) {
@@ -215,60 +222,34 @@ limitations under the License.
     }
 
     .mx_AppTileMenuBar_widgets {
-        float: right;
         display: flex;
-        flex-direction: row;
         align-items: center;
-    }
 
-    .mx_AppTileMenuBar_iconButton {
-        --size: 24px; /* Size of the button. Its height and width values should be same */
+        .mx_AppTileMenuBar_widgets_button {
+            --size: 24px; /* Size of the button. Its height and width values should be same */
 
-        margin: 0 4px;
-        position: relative;
-        height: var(--size);
-        width: var(--size);
-
-        &::before,
-        &:hover::after {
-            content: "";
-            position: absolute;
+            margin: 0 4px;
+            position: relative;
             height: var(--size);
             width: var(--size);
-        }
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-        &::before {
-            background-color: $muted-fg-color;
-            mask-position: center;
-            mask-repeat: no-repeat;
-            mask-size: 12px;
-        }
+            &:hover::after {
+                content: "";
+                position: absolute;
+                height: var(--size);
+                width: var(--size);
+                background-color: $panel-actions;
+                border-radius: 50%;
+                left: 0;
+                top: 0;
+            }
 
-        &:hover::after {
-            background-color: $panel-actions;
-            border-radius: 50%;
-            left: 0;
-            top: 0;
-        }
-
-        &.mx_AppTileMenuBar_iconButton--collapse::before {
-            mask-image: url("$(res)/img/element-icons/minimise-collapse.svg");
-        }
-
-        &.mx_AppTileMenuBar_iconButton--maximise::before {
-            mask-image: url("$(res)/img/element-icons/maximise-expand.svg");
-        }
-
-        &.mx_AppTileMenuBar_iconButton--minimise::before {
-            mask-image: url("$(res)/img/element-icons/minus-button.svg");
-        }
-
-        &.mx_AppTileMenuBar_iconButton--popout::before {
-            mask-image: url("$(res)/img/feather-customised/widget/external-link.svg");
-        }
-
-        &.mx_AppTileMenuBar_iconButton--menu::before {
-            mask-image: url("$(res)/img/element-icons/room/ellipsis.svg");
+            .mx_Icon {
+                color: $muted-fg-color;
+            }
         }
     }
 }
@@ -311,7 +292,8 @@ limitations under the License.
     flex: 1;
 }
 
-.mx_AppPermissionWarning {
+.mx_AppWarning,
+.mx_AppPermission {
     text-align: center;
     display: flex;
     height: 100%;
@@ -323,60 +305,6 @@ limitations under the License.
     h4 {
         margin: 0;
         padding: 0;
-    }
-}
-
-.mx_AppPermissionWarning_row {
-    margin-bottom: 12px;
-}
-
-.mx_AppPermissionWarning_smallText {
-    font-size: $font-12px;
-}
-
-.mx_AppPermissionWarning_bolder {
-    font-weight: var(--font-semi-bold);
-}
-
-.mx_AppPermissionWarning_helpIcon {
-    margin-top: 1px;
-    margin-right: 2px;
-    width: 10px;
-    height: 10px;
-    display: inline-block;
-
-    &::before {
-        display: inline-block;
-        background-color: $accent;
-        mask-repeat: no-repeat;
-        mask-size: 12px;
-        width: 12px;
-        height: 12px;
-        mask-position: center;
-        content: "";
-        vertical-align: middle;
-        mask-image: url("$(res)/img/feather-customised/help-circle.svg");
-    }
-}
-
-.mx_AppPermissionWarning_tooltip {
-    box-shadow: none;
-    background-color: $tooltip-timeline-bg-color;
-    color: $tooltip-timeline-fg-color;
-    border: none;
-    border-radius: 3px;
-    padding: 6px 8px;
-
-    &.mx_AppPermissionWarning_tooltip--dark {
-        .mx_Tooltip_chevron::after {
-            border-right-color: $tooltip-timeline-bg-color;
-        }
-    }
-
-    ul {
-        list-style-position: inside;
-        padding-left: 2px;
-        margin-left: 0;
     }
 }
 
@@ -418,8 +346,4 @@ limitations under the License.
     to {
         opacity: 1;
     }
-}
-
-.mx_AppsDrawer_resizing .mx_AppTile_persistedWrapper {
-    z-index: 1;
 }

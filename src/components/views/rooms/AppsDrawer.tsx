@@ -17,7 +17,7 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { Resizable } from "re-resizable";
+import { Resizable, Size } from "re-resizable";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { IWidget } from "matrix-widget-api";
 
@@ -110,20 +110,21 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
         const classNames = {
             handle: "mx_ResizeHandle",
             vertical: "mx_ResizeHandle--vertical",
+            reverse: "mx_ResizeHandle_reverse",
         };
         const collapseConfig = {
             onResizeStart: () => {
-                this.resizeContainer?.classList.add("mx_AppsDrawer_resizing");
+                this.resizeContainer?.classList.add("mx_AppsDrawer--resizing");
                 this.setState({ resizingHorizontal: true });
             },
             onResizeStop: () => {
-                this.resizeContainer?.classList.remove("mx_AppsDrawer_resizing");
+                this.resizeContainer?.classList.remove("mx_AppsDrawer--resizing");
                 WidgetLayoutStore.instance.setResizerDistributions(
                     this.props.room,
                     Container.Top,
                     this.topApps()
                         .slice(1)
-                        .map((_, i) => this.resizer.forHandleAt(i).size),
+                        .map((_, i) => this.resizer.forHandleAt(i)!.size),
                 );
                 this.setState({ resizingHorizontal: false });
             },
@@ -253,11 +254,11 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
         }
 
         const classes = classNames({
-            mx_AppsDrawer: true,
-            mx_AppsDrawer_maximise: widgetIsMaxmised,
-            mx_AppsDrawer_resizing: this.state.resizing,
-            mx_AppsDrawer_2apps: apps.length === 2,
-            mx_AppsDrawer_3apps: apps.length === 3,
+            "mx_AppsDrawer": true,
+            "mx_AppsDrawer--maximised": widgetIsMaxmised,
+            "mx_AppsDrawer--resizing": this.state.resizing,
+            "mx_AppsDrawer--2apps": apps.length === 2,
+            "mx_AppsDrawer--3apps": apps.length === 3,
         });
         const appContainers = (
             <div className="mx_AppsContainer" ref={this.collectResizer}>
@@ -265,7 +266,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
                     if (i < 1) return app;
                     return (
                         <React.Fragment key={app.key}>
-                            <ResizeHandle />
+                            <ResizeHandle reverse={i > apps.length / 2} />
                             {app}
                         </React.Fragment>
                     );
@@ -338,7 +339,9 @@ const PersistentVResizer: React.FC<IPersistentResizerProps> = ({
 
     return (
         <Resizable
-            size={{ height: Math.min(defaultHeight, maxHeight), width: undefined }}
+            // types do not support undefined height/width
+            // but resizable code checks specifically for undefined on Size prop
+            size={{ height: Math.min(defaultHeight, maxHeight), width: undefined } as unknown as Size}
             minHeight={minHeight}
             maxHeight={maxHeight}
             onResizeStart={() => {
