@@ -298,7 +298,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         );
 
         let warning;
-        if (!privateShouldBeEncrypted()) {
+        if (!privateShouldBeEncrypted(MatrixClientPeg.get())) {
             warning = (
                 <div className="mx_SecurityUserSettingsTab_warning">
                     {_t(
