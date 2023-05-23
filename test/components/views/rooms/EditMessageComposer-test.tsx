@@ -97,7 +97,7 @@ describe("<EditMessageComposer/>", () => {
 
         userEvent.setup();
 
-        DMRoomMap.makeShared();
+        DMRoomMap.makeShared(mockClient);
 
         jest.spyOn(Autocompleter.prototype, "getCompletions").mockResolvedValue([
             {
@@ -146,6 +146,12 @@ describe("<EditMessageComposer/>", () => {
             },
         };
         expect(mockClient.sendMessage).toHaveBeenCalledWith(editedEvent.getRoomId()!, null, expectedBody);
+    });
+
+    it("should throw when room for message is not found", () => {
+        mockClient.getRoom.mockReturnValue(null);
+        const editState = new EditorStateTransfer(editedEvent);
+        expect(() => getComponent(editState)).toThrow("Cannot find room for event !abc:test");
     });
 
     describe("createEditContent", () => {
