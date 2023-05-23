@@ -18,11 +18,12 @@ limitations under the License.
 
 import React, { ReactNode } from "react";
 import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
-import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
+import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IDelegatedAuthConfig, M_AUTHENTICATION } from "matrix-js-sdk/src/matrix";
 import { HTTPError } from "matrix-js-sdk/src/matrix";
 
+import { Icon as WarningIcon } from "../../../../../../res/img/feather-customised/warning-triangle.svg";
 import { UserFriendlyError, _t } from "../../../../../languageHandler";
 import ProfileSettings from "../../ProfileSettings";
 import * as languageHandler from "../../../../../languageHandler";
@@ -54,6 +55,11 @@ import SetIdServer from "../../SetIdServer";
 import SetIntegrationManager from "../../SetIntegrationManager";
 import ToggleSwitch from "../../../elements/ToggleSwitch";
 import { IS_MAC } from "../../../../../Keyboard";
+import SettingsTab from "../SettingsTab";
+import { SettingsSection } from "../../shared/SettingsSection";
+import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
+import { SettingsSubsectionHeading } from "../../shared/SettingsSubsectionHeading";
+import Heading from "../../../typography/Heading";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -190,9 +196,10 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             );
             logger.warn(e);
         }
+
         this.setState({
-            emails: threepids.filter((a) => a.medium === "email"),
-            msisdns: threepids.filter((a) => a.medium === "msisdn"),
+            emails: threepids.filter((a) => a.medium === ThreepidMedium.Email),
+            msisdns: threepids.filter((a) => a.medium === ThreepidMedium.Phone),
             loading3pids: false,
         });
     }
@@ -324,7 +331,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private renderAccountSection(): JSX.Element {
         let passwordChangeForm: ReactNode = (
             <ChangePassword
-                className="mx_GeneralUserSettingsTab_changePassword"
+                className="mx_GeneralUserSettingsTab_section--account_changePassword"
                 rowClassName=""
                 buttonKind="primary"
                 onError={this.onPasswordChangeError}
@@ -401,7 +408,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             );
         }
         return (
-            <div className="mx_SettingsTab_section mx_GeneralUserSettingsTab_accountSection">
+            <div className="mx_SettingsTab_section mx_GeneralUserSettingsTab_section--account">
                 <span className="mx_SettingsTab_subheading">{_t("Account")}</span>
                 {externalAccountManagement}
                 <p className="mx_SettingsTab_subsectionText">{passwordChangeText}</p>
@@ -414,47 +421,47 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private renderLanguageSection(): JSX.Element {
         // TODO: Convert to new-styled Field
         return (
-            <div className="mx_SettingsTab_section">
-                <span className="mx_SettingsTab_subheading">{_t("Language and region")}</span>
+            <SettingsSubsection heading={_t("Language and region")} stretchContent>
                 <LanguageDropdown
-                    className="mx_GeneralUserSettingsTab_languageInput"
+                    className="mx_GeneralUserSettingsTab_section_languageInput"
                     onOptionChange={this.onLanguageChange}
                     value={this.state.language}
                 />
-            </div>
+            </SettingsSubsection>
         );
     }
 
     private renderSpellCheckSection(): JSX.Element {
+        const heading = (
+            <SettingsSubsectionHeading heading={_t("Spell check")}>
+                <ToggleSwitch checked={!!this.state.spellCheckEnabled} onChange={this.onSpellCheckEnabledChange} />
+            </SettingsSubsectionHeading>
+        );
         return (
-            <div className="mx_SettingsTab_section mx_SettingsTab_section_spellcheck">
-                <span className="mx_SettingsTab_subheading">
-                    {_t("Spell check")}
-                    <ToggleSwitch checked={!!this.state.spellCheckEnabled} onChange={this.onSpellCheckEnabledChange} />
-                </span>
+            <SettingsSubsection heading={heading} stretchContent>
                 {this.state.spellCheckEnabled && !IS_MAC && (
                     <SpellCheckSettings
                         languages={this.state.spellCheckLanguages}
                         onLanguagesChange={this.onSpellCheckLanguagesChange}
                     />
                 )}
-            </div>
+            </SettingsSubsection>
         );
     }
 
     private renderDiscoverySection(): JSX.Element {
         if (this.state.requiredPolicyInfo.hasTerms) {
             const intro = (
-                <span className="mx_SettingsTab_subsectionText">
+                <SettingsSubsectionText>
                     {_t(
                         "Agree to the identity server (%(serverName)s) Terms of Service to " +
                             "allow yourself to be discoverable by email address or phone number.",
                         { serverName: this.state.idServerName },
                     )}
-                </span>
+                </SettingsSubsectionText>
             );
             return (
-                <div>
+                <>
                     <InlineTermsAgreement
                         policiesAndServicePairs={this.state.requiredPolicyInfo.policiesAndServices}
                         agreedUrls={this.state.requiredPolicyInfo.agreedUrls}
@@ -463,96 +470,81 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                     />
                     {/* has its own heading as it includes the current identity server */}
                     <SetIdServer missingTerms={true} />
-                </div>
+                </>
             );
         }
 
-        const emails = this.state.loading3pids ? <Spinner /> : <DiscoveryEmailAddresses emails={this.state.emails} />;
-        const msisdns = this.state.loading3pids ? <Spinner /> : <DiscoveryPhoneNumbers msisdns={this.state.msisdns} />;
-
         const threepidSection = this.state.haveIdServer ? (
-            <div className="mx_GeneralUserSettingsTab_discovery">
-                <span className="mx_SettingsTab_subheading">{_t("Email addresses")}</span>
-                {emails}
-
-                <span className="mx_SettingsTab_subheading">{_t("Phone numbers")}</span>
-                {msisdns}
-            </div>
+            <>
+                <DiscoveryEmailAddresses emails={this.state.emails} isLoading={this.state.loading3pids} />
+                <DiscoveryPhoneNumbers msisdns={this.state.msisdns} isLoading={this.state.loading3pids} />
+            </>
         ) : null;
 
         return (
-            <div className="mx_SettingsTab_section">
+            <>
                 {threepidSection}
                 {/* has its own heading as it includes the current identity server */}
                 <SetIdServer missingTerms={false} />
-            </div>
+            </>
         );
     }
 
     private renderManagementSection(): JSX.Element {
         // TODO: Improve warning text for account deactivation
         return (
-            <div className="mx_SettingsTab_section" data-testid="account-management-section">
-                <span className="mx_SettingsTab_subheading">{_t("Account management")}</span>
-                <span className="mx_SettingsTab_subsectionText">
-                    {_t("Deactivating your account is a permanent action — be careful!")}
-                </span>
-                <AccessibleButton onClick={this.onDeactivateClicked} kind="danger">
-                    {_t("Deactivate Account")}
-                </AccessibleButton>
-            </div>
+            <SettingsSection heading={_t("Deactivate account")}>
+                <SettingsSubsection
+                    heading={_t("Account management")}
+                    data-testid="account-management-section"
+                    description={_t("Deactivating your account is a permanent action — be careful!")}
+                >
+                    <AccessibleButton onClick={this.onDeactivateClicked} kind="danger">
+                        {_t("Deactivate Account")}
+                    </AccessibleButton>
+                </SettingsSubsection>
+            </SettingsSection>
         );
     }
 
     private renderIntegrationManagerSection(): ReactNode {
         if (!SettingsStore.getValue(UIFeature.Widgets)) return null;
 
-        return (
-            <div className="mx_SettingsTab_section">
-                {/* has its own heading as it includes the current integration manager */}
-                <SetIntegrationManager />
-            </div>
-        );
+        return <SetIntegrationManager />;
     }
 
     public render(): React.ReactNode {
         const plaf = PlatformPeg.get();
         const supportsMultiLanguageSpellCheck = plaf?.supportsSpellCheckSettings();
 
-        const discoWarning = this.state.requiredPolicyInfo.hasTerms ? (
-            <img
-                className="mx_GeneralUserSettingsTab_warningIcon"
-                src={require("../../../../../../res/img/feather-customised/warning-triangle.svg").default}
-                width="18"
-                height="18"
-                alt={_t("Warning")}
-            />
-        ) : null;
-
         let accountManagementSection: JSX.Element | undefined;
         if (SettingsStore.getValue(UIFeature.Deactivate)) {
-            accountManagementSection = (
-                <>
-                    <div className="mx_SettingsTab_heading">{_t("Deactivate account")}</div>
-                    {this.renderManagementSection()}
-                </>
-            );
+            accountManagementSection = this.renderManagementSection();
         }
 
         let discoverySection;
         if (SettingsStore.getValue(UIFeature.IdentityServer)) {
-            discoverySection = (
-                <>
-                    <div className="mx_SettingsTab_heading">
-                        {discoWarning} {_t("Discovery")}
-                    </div>
-                    {this.renderDiscoverySection()}
-                </>
+            const discoWarning = this.state.requiredPolicyInfo.hasTerms ? (
+                <WarningIcon
+                    className="mx_GeneralUserSettingsTab_warningIcon"
+                    width="18"
+                    height="18"
+                    // override icon default values
+                    aria-hidden={false}
+                    aria-label={_t("Warning")}
+                />
+            ) : null;
+            const heading = (
+                <Heading size="h2">
+                    {discoWarning}
+                    {_t("Discovery")}
+                </Heading>
             );
+            discoverySection = <SettingsSection heading={heading}>{this.renderDiscoverySection()}</SettingsSection>;
         }
 
         return (
-            <div className="mx_SettingsTab mx_GeneralUserSettingsTab">
+            <SettingsTab data-testid="mx_GeneralUserSettingsTab">
                 <div className="mx_SettingsTab_heading" data-testid="general">
                     {_t("General")}
                 </div>
@@ -561,9 +553,9 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                 {this.renderLanguageSection()}
                 {supportsMultiLanguageSpellCheck ? this.renderSpellCheckSection() : null}
                 {discoverySection}
-                {this.renderIntegrationManagerSection() /* Has its own title */}
+                {this.renderIntegrationManagerSection()}
                 {accountManagementSection}
-            </div>
+            </SettingsTab>
         );
     }
 }

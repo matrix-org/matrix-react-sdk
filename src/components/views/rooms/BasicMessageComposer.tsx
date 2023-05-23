@@ -107,7 +107,7 @@ interface IProps {
     initialCaret?: DocumentOffset;
     disabled?: boolean;
 
-    onChange?(): void;
+    onChange?(selection?: Caret, inputType?: string, diff?: IDiff): void;
     onPaste?(event: ClipboardEvent<HTMLDivElement>, model: EditorModel): boolean;
 }
 
@@ -130,9 +130,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     private isIMEComposing = false;
     private hasTextSelected = false;
 
-    private _isCaretAtEnd: boolean;
+    private _isCaretAtEnd = false;
     private lastCaret: DocumentOffset;
-    private lastSelection: ReturnType<typeof cloneSelection> | null;
+    private lastSelection: ReturnType<typeof cloneSelection> | null = null;
 
     private readonly useMarkdownHandle: string;
     private readonly emoticonSettingHandle: string;
@@ -230,7 +230,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         }
     }
 
-    private updateEditorState = (selection: Caret, inputType?: string, diff?: IDiff): void => {
+    private updateEditorState = (selection?: Caret, inputType?: string, diff?: IDiff): void => {
         if (!this.editorRef.current) return;
         renderModel(this.editorRef.current, this.props.model);
         if (selection) {
@@ -278,9 +278,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             isTyping,
         );
 
-        if (this.props.onChange) {
-            this.props.onChange();
-        }
+        this.props.onChange?.(selection, inputType, diff);
     };
 
     private showPlaceholder(): void {

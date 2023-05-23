@@ -22,7 +22,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Field from "../../elements/Field";
-import AccessibleButton from "../../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../elements/AccessibleButton";
 import { _t } from "../../../../languageHandler";
 import { accessSecretStorage } from "../../../../SecurityManager";
 import Modal from "../../../../Modal";
@@ -42,7 +42,7 @@ const VALIDATION_THROTTLE_MS = 200;
 export type KeyParams = { passphrase?: string; recoveryKey?: string };
 
 interface IProps {
-    keyInfo?: ISecretStorageKeyInfo;
+    keyInfo: ISecretStorageKeyInfo;
     checkPrivateKey: (k: KeyParams) => Promise<boolean>;
     onFinished(result?: false | KeyParams): void;
 }
@@ -217,7 +217,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         });
     };
 
-    private onResetAllClick = (ev: React.MouseEvent<HTMLAnchorElement>): void => {
+    private onResetAllClick = (ev: ButtonEvent): void => {
         ev.preventDefault();
         this.setState({ resetting: true });
     };

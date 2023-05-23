@@ -106,4 +106,65 @@ describe("bodyToHtml", () => {
 
         expect(html).toMatchInlineSnapshot(`"<span class="mx_EventTile_searchHighlight">test</span> foo &lt;b&gt;bar"`);
     });
+
+    it("should generate big emoji for an emoji-only reply to a message", () => {
+        const { asFragment } = render(
+            bodyToHtml(
+                {
+                    "body": "> <@sender1:server> Test\n\n🥰",
+                    "format": "org.matrix.custom.html",
+                    "formatted_body":
+                        '<mx-reply><blockquote><a href="https://matrix.to/#/!roomId:server/$eventId">In reply to</a> <a href="https://matrix.to/#/@sender1:server">@sender1:server</a><br>Test</blockquote></mx-reply>🥰',
+                    "m.relates_to": {
+                        "m.in_reply_to": {
+                            event_id: "$eventId",
+                        },
+                    },
+                    "msgtype": "m.text",
+                },
+                [],
+                {
+                    stripReplyFallback: true,
+                },
+            ) as ReactElement,
+        );
+
+        expect(asFragment()).toMatchSnapshot();
+    });
+
+    describe("feature_latex_maths", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((feature) => feature === "feature_latex_maths");
+        });
+
+        it("should render inline katex", () => {
+            const html = getHtml({
+                body: "hello \\xi world",
+                msgtype: "m.text",
+                formatted_body: 'hello <span data-mx-maths="\\xi"><code>\\xi</code></span> world',
+                format: "org.matrix.custom.html",
+            });
+            expect(html).toMatchSnapshot();
+        });
+
+        it("should render block katex", () => {
+            const html = getHtml({
+                body: "hello \\xi world",
+                msgtype: "m.text",
+                formatted_body: '<p>hello</p><div data-mx-maths="\\xi"><code>\\xi</code></div><p>world</p>',
+                format: "org.matrix.custom.html",
+            });
+            expect(html).toMatchSnapshot();
+        });
+
+        it("should not mangle code blocks", () => {
+            const html = getHtml({
+                body: "hello \\xi world",
+                msgtype: "m.text",
+                formatted_body: "<p>hello</p><pre><code>$\\xi$</code></pre><p>world</p>",
+                format: "org.matrix.custom.html",
+            });
+            expect(html).toMatchSnapshot();
+        });
+    });
 });

@@ -77,6 +77,7 @@ import MainSplit from "./MainSplit";
 import RightPanel from "./RightPanel";
 import SpaceHierarchy, { showRoom } from "./SpaceHierarchy";
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
+import ExternalLink from "../views/elements/ExternalLink";
 
 interface IProps {
     space: Room;
@@ -548,7 +549,7 @@ const SpaceSetupPrivateInvite: React.FC<{
         setBusy(true);
         const targetIds = emailAddresses.map((name) => name.trim()).filter(Boolean);
         try {
-            const result = await inviteMultipleToRoom(space.roomId, targetIds);
+            const result = await inviteMultipleToRoom(space.client, space.roomId, targetIds);
 
             const failedUsers = Object.keys(result.states).filter((a) => result.states[a] === "error");
             if (failedUsers.length > 0) {
@@ -593,9 +594,9 @@ const SpaceSetupPrivateInvite: React.FC<{
                     {
                         b: (sub) => <b>{sub}</b>,
                         link: () => (
-                            <a href="https://app.element.io/" rel="noreferrer noopener" target="_blank">
+                            <ExternalLink href="https://app.element.io/" rel="noreferrer noopener" target="_blank">
                                 app.element.io
-                            </a>
+                            </ExternalLink>
                         ),
                     },
                 )}

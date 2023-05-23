@@ -33,7 +33,7 @@ import { Action } from "../../../dispatcher/actions";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { showSpaceInvite } from "../../../utils/space";
 import EventTileBubble from "../messages/EventTileBubble";
-import { ROOM_SECURITY_TAB } from "../dialogs/RoomSettingsDialog";
+import { RoomSettingsTab } from "../dialogs/RoomSettingsDialog";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
@@ -44,7 +44,7 @@ import { shouldEncryptRoomWithSingle3rdPartyInvite } from "../../../utils/room/s
 function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): boolean {
     const isEncrypted: boolean = matrixClient.isRoomEncrypted(room.roomId);
     const isPublic: boolean = room.getJoinRule() === "public";
-    return isPublic || !privateShouldBeEncrypted() || isEncrypted;
+    return isPublic || !privateShouldBeEncrypted(matrixClient) || isEncrypted;
 }
 
 const determineIntroMessage = (room: Room, encryptedSingle3rdPartyInvite: boolean): string => {
@@ -268,7 +268,7 @@ const NewRoomIntro: React.FC = () => {
         event.preventDefault();
         defaultDispatcher.dispatch({
             action: "open_room_settings",
-            initial_tab_id: ROOM_SECURITY_TAB,
+            initial_tab_id: RoomSettingsTab.Security,
         });
     }
 

@@ -23,28 +23,16 @@ limitations under the License.
 @import "./_spacing.pcss";
 @import url("maplibre-gl/dist/maplibre-gl.css");
 
-$hover-transition: 0.08s cubic-bezier(0.46, 0.03, 0.52, 0.96); /* quadratic */
-
-$selected-message-border-width: 4px;
-
-$MessageTimestamp_width: 46px; /* 8 + 30 (avatar) + 8 */
-$MessageTimestamp_width_hover: calc($MessageTimestamp_width - 2 * $selected-message-border-width);
-
-$slider-dot-size: 1em;
-$slider-selection-dot-size: 2.4em;
-
-$container-border-width: 8px;
-$container-gap-width: 8px; /* only even numbers should be used because otherwise we get 0.5px margin values. */
-
-$timeline-image-border-radius: 8px;
 :root {
     font-size: 10px;
 
+    --container-border-width: 8px;
+    --container-gap-width: 8px; /* only even numbers should be used because otherwise we get 0.5px margin values. */
     --transition-short: 0.1s;
     --transition-standard: 0.3s;
-    --MessageTimestamp-width: $MessageTimestamp_width;
     --buttons-dialog-gap-row: $spacing-8;
     --buttons-dialog-gap-column: $spacing-8;
+    --MBody-border-radius: 8px;
 }
 
 @media only percy {
@@ -700,22 +688,6 @@ legend {
     color: $username-variant8-color;
 }
 
-@define-mixin mx_Tooltip_dark {
-    box-shadow: none;
-    background-color: $tooltip-timeline-bg-color;
-    color: $tooltip-timeline-fg-color;
-    border: none;
-    border-radius: 3px;
-    padding: 6px 8px;
-}
-
-/* This is a workaround for our mixins not supporting child selectors */
-.mx_Tooltip_dark {
-    .mx_Tooltip_chevron::after {
-        border-right-color: $tooltip-timeline-bg-color;
-    }
-}
-
 @define-mixin ProgressBarColour $colour {
     color: $colour;
     &::-moz-progress-bar {
@@ -861,9 +833,4 @@ legend {
             background-color: $hover-color;
         }
     }
-}
-
-@define-mixin mx_Dialog_link {
-    color: $accent;
-    text-decoration: none;
 }

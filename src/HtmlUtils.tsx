@@ -19,7 +19,6 @@ limitations under the License.
 
 import React, { LegacyRef, ReactElement, ReactNode } from "react";
 import sanitizeHtml from "sanitize-html";
-import cheerio from "cheerio";
 import classNames from "classnames";
 import EMOJIBASE_REGEX from "emojibase-regex";
 import { merge, split } from "lodash";
@@ -549,30 +548,19 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
             }
 
             safeBody = sanitizeHtml(formattedBody!, sanitizeParams);
-            const phtml = cheerio.load(safeBody, {
-                // @ts-ignore: The `_useHtmlParser2` internal option is the
-                // simplest way to both parse and render using `htmlparser2`.
-                _useHtmlParser2: true,
-                decodeEntities: false,
-            });
-            const isPlainText = phtml.html() === phtml.root().text();
+            const phtml = new DOMParser().parseFromString(safeBody, "text/html");
+            const isPlainText = phtml.body.innerHTML === phtml.body.textContent;
             isHtmlMessage = !isPlainText;
 
             if (isHtmlMessage && SettingsStore.getValue("feature_latex_maths")) {
-                // @ts-ignore - The types for `replaceWith` wrongly expect
-                // Cheerio instance to be returned.
-                phtml('div, span[data-mx-maths!=""]').replaceWith(function (i, e) {
-                    return katex.renderToString(decode(phtml(e).attr("data-mx-maths")), {
+                [...phtml.querySelectorAll<HTMLElement>("div, span[data-mx-maths]")].forEach((e) => {
+                    e.outerHTML = katex.renderToString(decode(e.getAttribute("data-mx-maths")), {
                         throwOnError: false,
-                        // @ts-ignore - `e` can be an Element, not just a Node
-                        displayMode: e.name == "div",
+                        displayMode: e.tagName == "DIV",
                         output: "htmlAndMathml",
                     });
                 });
-                safeBody = phtml.html();
-            }
-            if (bodyHasEmoji) {
-                safeBody = formatEmojis(safeBody, true).join("");
+                safeBody = phtml.body.innerHTML;
             }
         } else if (highlighter) {
             safeBody = highlighter.applyHighlights(escapeHtml(plainBody), safeHighlights!).join("");
@@ -581,13 +569,9 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         delete sanitizeParams.textFilter;
     }
 
-    const contentBody = safeBody ?? strippedBody;
-    if (opts.returnString) {
-        return contentBody;
-    }
-
     let emojiBody = false;
     if (!opts.disableBigEmoji && bodyHasEmoji) {
+        const contentBody = safeBody ?? strippedBody;
         let contentBodyTrimmed = contentBody !== undefined ? contentBody.trim() : "";
 
         // Remove zero width joiner, zero width spaces and other spaces in body
@@ -605,6 +589,15 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
             (strippedBody === safeBody || // replies have the html fallbacks, account for that here
                 content.formatted_body === undefined ||
                 (!content.formatted_body.includes("http:") && !content.formatted_body.includes("https:")));
+    }
+
+    if (isFormattedBody && bodyHasEmoji && safeBody) {
+        // This has to be done after the emojiBody check above as to not break big emoji on replies
+        safeBody = formatEmojis(safeBody, true).join("");
+    }
+
+    if (opts.returnString) {
+        return safeBody ?? strippedBody;
     }
 
     const className = classNames({
