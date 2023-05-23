@@ -56,7 +56,6 @@ describe("<MatrixChat />", () => {
             destroy: jest.fn(),
         },
     });
-
     const serverConfig = {
         hsUrl: "https://test.com",
         hsName: "Test Server",
@@ -81,7 +80,6 @@ describe("<MatrixChat />", () => {
         makeRegistrationUrl: jest.fn(),
         realQueryParams: {},
     };
-
     const getComponent = (props: Partial<ComponentProps<typeof MatrixChat>> = {}) =>
         render(<MatrixChat {...defaultProps} {...props} />);
     const localStorageSpy = jest.spyOn(localStorage.__proto__, "getItem").mockReturnValue(undefined);
@@ -94,7 +92,6 @@ describe("<MatrixChat />", () => {
         localStorageSpy.mockClear();
         jest.spyOn(StorageManager, "idbLoad").mockRestore();
         jest.spyOn(StorageManager, "idbSave").mockResolvedValue(undefined);
-
         jest.spyOn(defaultDispatcher, "dispatch").mockClear();
     });
 
