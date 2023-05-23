@@ -336,6 +336,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                         ? findEditableEvent({
                               events,
                               isForward: false,
+                              matrixClient: MatrixClientPeg.get(),
                           })
                         : undefined;
                     if (editEvent) {
