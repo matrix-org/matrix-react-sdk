@@ -1,5 +1,5 @@
 /*
-Copyright 2019 New Vector Ltd
+Copyright 2015, 2016 OpenMarket Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,10 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_VoiceUserSettingsTab .mx_Field {
-    margin-inline-end: var(--SettingsTab_fullWidthField-margin-inline-end);
-}
-
-.mx_VoiceUserSettingsTab_missingMediaPermissions {
-    margin-bottom: 15px;
+.mx_NotificationPanel_empty::before {
+    --maskImage: url("$(res)/img/element-icons/notifications.svg"); /* See: _RightPanel.pcss */
 }

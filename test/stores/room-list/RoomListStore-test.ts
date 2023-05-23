@@ -101,7 +101,7 @@ describe("RoomListStore", () => {
     });
 
     it.each(OrderedDefaultTagIDs)("defaults to activity ordering for %s=", (tagId) => {
-        expect(RoomListStore.instance.getListOrder(tagId)).toBe(ListAlgorithm.Importance);
+        expect(RoomListStore.instance.getListOrder(tagId)).toBe(ListAlgorithm.Natural);
     });
 
     function createStore(): { store: RoomListStoreClass; handleRoomUpdate: jest.Mock<any, any> } {
@@ -162,7 +162,7 @@ describe("RoomListStore", () => {
         room1.updateMyMembership("join");
         room2.updateMyMembership("join");
         room3.updateMyMembership("join");
-        DMRoomMap.makeShared();
+        DMRoomMap.makeShared(client);
         const { store } = createStore();
         client.getVisibleRooms = jest.fn().mockReturnValue([room1, room2, room3]);
 
@@ -274,7 +274,7 @@ describe("RoomListStore", () => {
 
         it("Passes the feature flag on to the client when asking for visible rooms", () => {
             // Given a store that we can ask for a room list
-            DMRoomMap.makeShared();
+            DMRoomMap.makeShared(client);
             const { store } = createStore();
             client.getVisibleRooms = jest.fn().mockReturnValue([]);
 
