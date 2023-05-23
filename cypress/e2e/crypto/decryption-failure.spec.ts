@@ -68,11 +68,11 @@ describe("Decryption Failure Bar", () => {
     let roomId: string;
 
     beforeEach(function () {
+        skipIfRustCrypto();
         cy.startHomeserver("default").then((hs: HomeserverInstance) => {
             homeserver = hs;
             cy.initTestUser(homeserver, TEST_USER)
                 .then((creds: UserCredentials) => {
-                    skipIfRustCrypto();
                     testUser = creds;
                 })
                 .then(() => {
