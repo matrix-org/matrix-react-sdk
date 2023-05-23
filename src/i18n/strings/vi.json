@@ -3080,5 +3080,16 @@
     "Could not find room": "Không tìm thấy phòng",
     "WARNING: session already verified, but keys do NOT MATCH!": "CẢNH BÁO: phiên đã được xác thực, nhưng các khóa KHÔNG KHỚP!",
     "30s forward": "30 giây kế tiếp",
-    "30s backward": "30 giây trước"
+    "30s backward": "30 giây trước",
+    "You reacted %(reaction)s to %(message)s": "Bạn",
+    "If you know a room address, try joining through that instead.": "Nếu bạn biết địa chỉ phòng, hãy dùng nó để tham gia.",
+    "Video call started": "Cuộc gọi truyền hình đã bắt đầu",
+    "Unknown room": "Phòng không xác định",
+    "Starting export process…": "Bắt đầu tiến trình trích xuất",
+    "Creating HTML…": "Đang tạo HTML…",
+    "Starting export…": "Bắt đầu trích xuất…",
+    "Yes, stop broadcast": "Đúng rồi, dừng phát thanh",
+    "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "Bạn hiện đang ghi một cuộc phát thanh. Kết thúc phát thanh để thực hiện một cái mới.",
+    "Video call started in %(roomName)s. (not supported by this browser)": "Cuộc gọi truyền hình đã được bắt đầu ở %(roomName)s. (không được trình duyệt này hỗ trợ)",
+    "iframe has no src attribute": "Thẻ iframe (khung) không có thuộc tính src (nguồn)"
 }
