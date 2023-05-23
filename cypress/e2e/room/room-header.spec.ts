@@ -95,8 +95,7 @@ describe("Room Header", () => {
             });
 
             // Assert the size of buttons on RoomHeader are specified and the buttons are not compressed
-            // Note these assertions do not check the size of mx_RoomHeader_name button
-            cy.get(".mx_RoomHeader_button")
+            cy.get(".mx_AccessibleButton:not(.mx_RoomHeader_name)")
                 .should("have.length", 6)
                 .should("be.visible")
                 .should("have.css", "height", "32px")
