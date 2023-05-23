@@ -58,7 +58,7 @@ import WidgetStore from "../../../src/stores/WidgetStore";
 
 // Fake random strings to give a predictable snapshot for IDs
 jest.mock("matrix-js-sdk/src/randomstring", () => ({
-    randomString: () => "abdefghi"
+    randomString: () => "abdefghi",
 }));
 
 const RoomView = wrapInMatrixClientContext(_RoomView);
