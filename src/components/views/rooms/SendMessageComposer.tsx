@@ -88,7 +88,7 @@ export function attachMentions(
     }
 
     // The mentions property *always* gets included to disable legacy push rules.
-    const mentions: IMentions = (content["org.matrix.msc3952.mentions"] = {});
+    const mentions: IMentions = (content["m.mentions"] = {});
 
     const userMentions = new Set<string>();
     let roomMention = false;
@@ -99,7 +99,7 @@ export function attachMentions(
         userMentions.add(replyToEvent.sender!.userId);
         // TODO What do we do if the reply event *doeesn't* have this property?
         // Try to fish out replies from the contents?
-        const userIds = replyToEvent.getContent()["org.matrix.msc3952.mentions"]?.user_ids;
+        const userIds = replyToEvent.getContent()["m.mentions"]?.user_ids;
         if (Array.isArray(userIds)) {
             userIds.forEach((userId) => userMentions.add(userId));
         }
@@ -126,7 +126,7 @@ export function attachMentions(
     if (editedContent) {
         // First, the new event content gets the *full* set of users.
         const newContent = content["m.new_content"];
-        const newMentions: IMentions = (newContent["org.matrix.msc3952.mentions"] = {});
+        const newMentions: IMentions = (newContent["m.mentions"] = {});
 
         // Only include the users/room if there is any content.
         if (userMentions.size) {
@@ -138,7 +138,7 @@ export function attachMentions(
 
         // Fetch the mentions from the original event and remove any previously
         // mentioned users.
-        const prevMentions = editedContent["org.matrix.msc3952.mentions"];
+        const prevMentions = editedContent["m.mentions"];
         if (Array.isArray(prevMentions?.user_ids)) {
             prevMentions!.user_ids.forEach((userId) => userMentions.delete(userId));
         }

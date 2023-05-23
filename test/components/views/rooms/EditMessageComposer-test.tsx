@@ -69,7 +69,7 @@ describe("<EditMessageComposer/>", () => {
             "format": "org.matrix.custom.html",
             "formatted_body":
                 'hey <a href="https://matrix.to/#/@bob:server.org">Bob</a> and <a href="https://matrix.to/#/@charlie:server.org">Charlie</a>',
-            "org.matrix.msc3952.mentions": {
+            "m.mentions": {
                 user_ids: ["@bob:server.org", "@charlie:server.org"],
             },
         },
@@ -301,8 +301,8 @@ describe("<EditMessageComposer/>", () => {
                 const messageContent = mockClient.sendMessage.mock.calls[0][2];
 
                 // both content.mentions and new_content.mentions are empty
-                expect(messageContent["org.matrix.msc3952.mentions"]).toEqual({});
-                expect(messageContent["m.new_content"]["org.matrix.msc3952.mentions"]).toEqual({});
+                expect(messageContent["m.mentions"]).toEqual({});
+                expect(messageContent["m.new_content"]["m.mentions"]).toEqual({});
             });
 
             it("should retain mentions in the original message that are not removed by the edit", async () => {
@@ -317,9 +317,9 @@ describe("<EditMessageComposer/>", () => {
                 const messageContent = mockClient.sendMessage.mock.calls[0][2];
 
                 // no new mentions were added, so nothing in top level mentions
-                expect(messageContent["org.matrix.msc3952.mentions"]).toEqual({});
+                expect(messageContent["m.mentions"]).toEqual({});
                 // bob is still mentioned, charlie removed
-                expect(messageContent["m.new_content"]["org.matrix.msc3952.mentions"]).toEqual({
+                expect(messageContent["m.new_content"]["m.mentions"]).toEqual({
                     user_ids: ["@bob:server.org"],
                 });
             });
@@ -336,9 +336,9 @@ describe("<EditMessageComposer/>", () => {
                 const messageContent = mockClient.sendMessage.mock.calls[0][2];
 
                 // no new mentions were added, so nothing in top level mentions
-                expect(messageContent["org.matrix.msc3952.mentions"]).toEqual({});
+                expect(messageContent["m.mentions"]).toEqual({});
                 // bob is not longer mentioned in the edited message, so empty mentions in new_content
-                expect(messageContent["m.new_content"]["org.matrix.msc3952.mentions"]).toEqual({});
+                expect(messageContent["m.new_content"]["m.mentions"]).toEqual({});
             });
 
             it("should add mentions that were added in the edit", async () => {
@@ -355,10 +355,10 @@ describe("<EditMessageComposer/>", () => {
                 const messageContent = mockClient.sendMessage.mock.calls[0][2];
 
                 // new mention in the edit
-                expect(messageContent["org.matrix.msc3952.mentions"]).toEqual({
+                expect(messageContent["m.mentions"]).toEqual({
                     user_ids: ["@dan:server.org"],
                 });
-                expect(messageContent["m.new_content"]["org.matrix.msc3952.mentions"]).toEqual({
+                expect(messageContent["m.new_content"]["m.mentions"]).toEqual({
                     user_ids: ["@dan:server.org"],
                 });
             });
@@ -378,11 +378,11 @@ describe("<EditMessageComposer/>", () => {
                 const messageContent = mockClient.sendMessage.mock.calls[0][2];
 
                 // new mention in the edit
-                expect(messageContent["org.matrix.msc3952.mentions"]).toEqual({
+                expect(messageContent["m.mentions"]).toEqual({
                     user_ids: ["@dan:server.org"],
                 });
                 // all mentions in the edited version of the event
-                expect(messageContent["m.new_content"]["org.matrix.msc3952.mentions"]).toEqual({
+                expect(messageContent["m.new_content"]["m.mentions"]).toEqual({
                     user_ids: ["@bob:server.org", "@dan:server.org"],
                 });
             });
@@ -409,7 +409,7 @@ describe("<EditMessageComposer/>", () => {
                             event_id: originalEvent.getId(),
                         },
                     },
-                    "org.matrix.msc3952.mentions": {
+                    "m.mentions": {
                         user_ids: [originalEvent.getSender()!],
                     },
                 },
@@ -428,7 +428,7 @@ describe("<EditMessageComposer/>", () => {
                             event_id: originalEvent.getId(),
                         },
                     },
-                    "org.matrix.msc3952.mentions": {
+                    "m.mentions": {
                         user_ids: [
                             // sender of event we replied to
                             originalEvent.getSender()!,
@@ -455,9 +455,9 @@ describe("<EditMessageComposer/>", () => {
                 const messageContent = mockClient.sendMessage.mock.calls[0][2];
 
                 // no new mentions from edit
-                expect(messageContent["org.matrix.msc3952.mentions"]).toEqual({});
+                expect(messageContent["m.mentions"]).toEqual({});
                 // edited reply still mentions the parent event sender
-                expect(messageContent["m.new_content"]["org.matrix.msc3952.mentions"]).toEqual({
+                expect(messageContent["m.new_content"]["m.mentions"]).toEqual({
                     user_ids: [originalEvent.getSender()],
                 });
             });
@@ -474,12 +474,12 @@ describe("<EditMessageComposer/>", () => {
                 const messageContent = mockClient.sendMessage.mock.calls[0][2];
 
                 // new mention in edit
-                expect(messageContent["org.matrix.msc3952.mentions"]).toEqual({
+                expect(messageContent["m.mentions"]).toEqual({
                     user_ids: ["@dan:server.org"],
                 });
                 // edited reply still mentions the parent event sender
                 // plus new mention @dan
-                expect(messageContent["m.new_content"]["org.matrix.msc3952.mentions"]).toEqual({
+                expect(messageContent["m.new_content"]["m.mentions"]).toEqual({
                     user_ids: [originalEvent.getSender(), "@dan:server.org"],
                 });
             });
@@ -495,10 +495,10 @@ describe("<EditMessageComposer/>", () => {
                 const messageContent = mockClient.sendMessage.mock.calls[0][2];
 
                 // no mentions in edit
-                expect(messageContent["org.matrix.msc3952.mentions"]).toEqual({});
+                expect(messageContent["m.mentions"]).toEqual({});
                 // edited reply still mentions the parent event sender
                 // existing @bob mention removed
-                expect(messageContent["m.new_content"]["org.matrix.msc3952.mentions"]).toEqual({
+                expect(messageContent["m.new_content"]["m.mentions"]).toEqual({
                     user_ids: [originalEvent.getSender()],
                 });
             });
@@ -516,7 +516,7 @@ describe("<EditMessageComposer/>", () => {
                                 event_id: originalEvent.getId(),
                             },
                         },
-                        "org.matrix.msc3952.mentions": {
+                        "m.mentions": {
                             user_ids: [
                                 // sender of event we replied to
                                 originalEvent.getSender()!,
@@ -535,9 +535,9 @@ describe("<EditMessageComposer/>", () => {
                 const messageContent = mockClient.sendMessage.mock.calls[0][2];
 
                 // no mentions in edit
-                expect(messageContent["org.matrix.msc3952.mentions"]).toEqual({});
+                expect(messageContent["m.mentions"]).toEqual({});
                 // edited reply still mentions the parent event sender
-                expect(messageContent["m.new_content"]["org.matrix.msc3952.mentions"]).toEqual({
+                expect(messageContent["m.new_content"]["m.mentions"]).toEqual({
                     user_ids: [originalEvent.getSender()],
                 });
             });
