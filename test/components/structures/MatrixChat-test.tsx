@@ -15,15 +15,18 @@ limitations under the License.
 */
 
 import React, { ComponentProps } from "react";
-import { render, screen } from "@testing-library/react";
+import { render, RenderResult, screen } from "@testing-library/react";
 import fetchMockJest from "fetch-mock-jest";
 import { ClientEvent } from "matrix-js-sdk/src/client";
 import { SyncState } from "matrix-js-sdk/src/sync";
 import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
 
 import MatrixChat from "../../../src/components/structures/MatrixChat";
-import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../test-utils";
 import * as StorageManager from "../../../src/utils/StorageManager";
+import defaultDispatcher from "../../../src/dispatcher/dispatcher";
+import { Action } from "../../../src/dispatcher/actions";
+import { UserTab } from "../../../src/components/views/dialogs/UserTab";
+import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../test-utils";
 
 describe("<MatrixChat />", () => {
     const userId = "@alice:server.org";
@@ -91,6 +94,8 @@ describe("<MatrixChat />", () => {
         localStorageSpy.mockClear();
         jest.spyOn(StorageManager, "idbLoad").mockRestore();
         jest.spyOn(StorageManager, "idbSave").mockResolvedValue(undefined);
+
+        jest.spyOn(defaultDispatcher, "dispatch").mockClear();
     });
 
     it("should render spinner while app is loading", () => {
@@ -121,22 +126,58 @@ describe("<MatrixChat />", () => {
             });
         });
 
+        const getComponentAndWaitForReady = async (): Promise<RenderResult> => {
+            const renderResult = getComponent();
+            // we think we are logged in, but are still waiting for the /sync to complete
+            await screen.findByText("Logout");
+            // initial sync
+            mockClient.emit(ClientEvent.Sync, SyncState.Prepared, null);
+            // wait for logged in view to load
+            await screen.findByLabelText("User menu");
+            // let things settle
+            await flushPromises();
+            // and some more for good measure
+            // this proved to be a little flaky
+            await flushPromises();
+
+            return renderResult;
+        };
+
         it("should render welcome page after login", async () => {
             getComponent();
 
-            await flushPromises();
-            await flushPromises();
-            await flushPromises();
-
             // we think we are logged in, but are still waiting for the /sync to complete
-            expect(screen.getByText("Logout")).toBeInTheDocument();
+            const logoutButton = await screen.findByText("Logout");
+
+            expect(logoutButton).toBeInTheDocument();
             expect(screen.getByRole("progressbar")).toBeInTheDocument();
 
             // initial sync
             mockClient.emit(ClientEvent.Sync, SyncState.Prepared, null);
 
+            // wait for logged in view to load
+            await screen.findByLabelText("User menu");
+            // let things settle
+            await flushPromises();
             expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
             expect(screen.getByText(`Welcome ${userId}`)).toBeInTheDocument();
+        });
+
+        describe("onAction()", () => {
+            it("should open user device settings", async () => {
+                await getComponentAndWaitForReady();
+
+                defaultDispatcher.dispatch({
+                    action: Action.ViewUserDeviceSettings,
+                });
+
+                await flushPromises();
+
+                expect(defaultDispatcher.dispatch).toHaveBeenCalledWith({
+                    action: Action.ViewUserSettings,
+                    initialTabId: UserTab.Security,
+                });
+            });
         });
     });
 });
