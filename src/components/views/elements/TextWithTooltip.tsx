@@ -16,7 +16,6 @@
 
 import React, { HTMLAttributes } from "react";
 import classNames from "classnames";
-import { randomString } from "matrix-js-sdk/src/randomstring";
 
 import TooltipTarget from "./TooltipTarget";
 
@@ -29,8 +28,6 @@ interface IProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 export default class TextWithTooltip extends React.Component<IProps> {
-    private id = "mx_TextWithTooltip_" + randomString(8);
-
     public constructor(props: IProps) {
         super(props);
     }
@@ -40,7 +37,6 @@ export default class TextWithTooltip extends React.Component<IProps> {
 
         return (
             <TooltipTarget
-                id={this.id}
                 onClick={this.props.onClick}
                 tooltipTargetClassName={classNames("mx_TextWithTooltip_target", className)}
                 {...tooltipProps}
