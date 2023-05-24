@@ -60,6 +60,7 @@ import { SettingsSection } from "../../shared/SettingsSection";
 import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
 import { SettingsSubsectionHeading } from "../../shared/SettingsSubsectionHeading";
 import Heading from "../../../typography/Heading";
+import InlineSpinner from "../../../elements/InlineSpinner";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -340,22 +341,30 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             (this.state.haveIdServer || this.state.serverSupportsSeparateAddAndBind === true)
         ) {
             const emails = this.state.loading3pids ? (
-                <Spinner />
+                <InlineSpinner />
             ) : (
                 <AccountEmailAddresses emails={this.state.emails} onEmailsChange={this.onEmailsChange} />
             );
             const msisdns = this.state.loading3pids ? (
-                <Spinner />
+                <InlineSpinner />
             ) : (
                 <AccountPhoneNumbers msisdns={this.state.msisdns} onMsisdnsChange={this.onMsisdnsChange} />
             );
             threepidSection = (
                 <>
-                    <SettingsSubsection heading={_t("Email addresses")} stretchContent data-testid="mx_EmailAddresses">
+                    <SettingsSubsection
+                        heading={_t("Email addresses")}
+                        stretchContent
+                        data-testid="mx_AccountEmailAddresses"
+                    >
                         {emails}
                     </SettingsSubsection>
 
-                    <SettingsSubsection heading={_t("Phone numbers")} stretchContent data-testid="mx_PhoneNumber">
+                    <SettingsSubsection
+                        heading={_t("Phone numbers")}
+                        stretchContent
+                        data-testid="mx_AccountPhoneNumbers"
+                    >
                         {msisdns}
                     </SettingsSubsection>
                 </>
@@ -386,13 +395,13 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
             externalAccountManagement = (
                 <>
-                    <p className="mx_SettingsTab_subsectionText" data-testid="external-account-management-outer">
+                    <SettingsSubsectionText data-testid="external-account-management-outer">
                         {_t(
                             "Your account details are managed separately at <code>%(hostname)s</code>.",
                             { hostname },
                             { code: (sub) => <code>{sub}</code> },
                         )}
-                    </p>
+                    </SettingsSubsectionText>
                     <AccessibleButton
                         onClick={null}
                         element="a"
@@ -409,7 +418,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         }
         return (
             <>
-                <SettingsSubsection heading={_t("Account")} stretchContent>
+                <SettingsSubsection heading={_t("Account")} stretchContent data-testid="accountSection">
                     {externalAccountManagement}
                     {passwordChangeSection}
                 </SettingsSubsection>
@@ -540,7 +549,11 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                     {_t("Discovery")}
                 </Heading>
             );
-            discoverySection = <SettingsSection heading={heading}>{this.renderDiscoverySection()}</SettingsSection>;
+            discoverySection = (
+                <SettingsSection heading={heading} data-testid="discoverySection">
+                    {this.renderDiscoverySection()}
+                </SettingsSection>
+            );
         }
 
         return (
