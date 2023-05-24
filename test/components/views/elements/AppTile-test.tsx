@@ -392,7 +392,7 @@ describe("AppTile", () => {
             expect(moveToContainerSpy).toHaveBeenCalledWith(r1, app1, Container.Center);
         });
 
-        it("should render permission request", () => {
+        it("should not display 'Continue' button on permission load", () => {
             jest.spyOn(ModuleRunner.instance, "invoke").mockImplementation((lifecycleEvent, opts, widgetInfo) => {
                 if (lifecycleEvent === WidgetLifecycle.PreLoadRequest && (widgetInfo as WidgetInfo).id === app1.id) {
                     (opts as ApprovalOpts).approved = false;
@@ -412,6 +412,23 @@ describe("AppTile", () => {
             expect(asFragment()).toMatchSnapshot();
 
             expect(renderResult.queryByRole("button", { name: "Continue" })).toBeInTheDocument();
+        });
+
+        it("should display 'Continue' button on permission load", () => {
+            jest.spyOn(ModuleRunner.instance, "invoke").mockImplementation((lifecycleEvent, opts, widgetInfo) => {
+                if (lifecycleEvent === WidgetLifecycle.PreLoadRequest && (widgetInfo as WidgetInfo).id === app1.id) {
+                    (opts as ApprovalOpts).approved = true;
+                }
+            });
+
+            // userId and creatorUserId are different
+            const renderResult = render(
+                <MatrixClientContext.Provider value={cli}>
+                    <AppTile key={app1.id} app={app1} room={r1} userId="@user1" creatorUserId="@userAnother" />
+                </MatrixClientContext.Provider>,
+            );
+
+            expect(renderResult.queryByRole("button", { name: "Continue" })).not.toBeInTheDocument();
         });
 
         describe("for a maximised (centered) widget", () => {
@@ -472,22 +489,5 @@ describe("AppTile", () => {
             expect(container.querySelector(".mx_Spinner")).toBeFalsy();
             expect(asFragment()).toMatchSnapshot();
         });
-    });
-
-    it("for a pinned widget permission load", () => {
-        jest.spyOn(ModuleRunner.instance, "invoke").mockImplementation((lifecycleEvent, opts, widgetInfo) => {
-            if (lifecycleEvent === WidgetLifecycle.PreLoadRequest && (widgetInfo as WidgetInfo).id === app1.id) {
-                (opts as ApprovalOpts).approved = true;
-            }
-        });
-
-        // userId and creatorUserId are different
-        const renderResult = render(
-            <MatrixClientContext.Provider value={cli}>
-                <AppTile key={app1.id} app={app1} room={r1} userId="@user1" creatorUserId="@userAnother" />
-            </MatrixClientContext.Provider>,
-        );
-
-        expect(renderResult.queryByRole("button", { name: "Continue" })).not.toBeInTheDocument();
     });
 });
