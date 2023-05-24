@@ -151,7 +151,7 @@ describe("<EditMessageComposer/>", () => {
     it("should throw when room for message is not found", () => {
         mockClient.getRoom.mockReturnValue(null);
         const editState = new EditorStateTransfer(editedEvent);
-        expect(() => getComponent(editState, { ...defaultRoomContext, room: null })).toThrow(
+        expect(() => getComponent(editState, { ...defaultRoomContext, room: undefined })).toThrow(
             "Cannot render without room",
         );
     });
