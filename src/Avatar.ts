@@ -22,7 +22,7 @@ import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
 import DMRoomMap from "./utils/DMRoomMap";
 import { mediaFromMxc } from "./customisations/Media";
 import { isLocalRoom } from "./utils/localRoom/isLocalRoom";
-import { getFirstGrapheme } from "./emoji";
+import { getFirstGrapheme } from "./utils/strings";
 
 // Not to be used for BaseAvatar urls as that has similar default avatar fallback already
 export function avatarUrlForMember(

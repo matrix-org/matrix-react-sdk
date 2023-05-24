@@ -27,7 +27,7 @@ import * as Avatar from "../Avatar";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { Action } from "../dispatcher/actions";
 import SettingsStore from "../settings/SettingsStore";
-import { getFirstGrapheme } from "../emoji";
+import { getFirstGrapheme } from "../utils/strings";
 
 const REGIONAL_EMOJI_SEPARATOR = String.fromCodePoint(0x200b);
 

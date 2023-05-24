@@ -16,7 +16,6 @@ limitations under the License.
 
 import EMOJIBASE from "emojibase-data/en/compact.json";
 import SHORTCODES from "emojibase-data/en/shortcodes/iamcal.json";
-import GraphemeSplitter from "grapheme-splitter";
 
 export interface IEmoji {
     label: string;
@@ -124,16 +123,4 @@ export const EMOJI: IEmoji[] = EMOJIBASE.map((emojiData: Omit<IEmoji, "shortcode
  */
 function stripVariation(str: string): string {
     return str.replace(/[\uFE00-\uFE0F]$/, "");
-}
-
-/**
- * Returns the first grapheme in the given string,
- * especially useful for strings containing emoji, will not break compound emoji up.
- * @param str string to parse
- * @returns the first grapheme or an empty string if given an empty string
- */
-export function getFirstGrapheme(str: string): string {
-    const splitter = new GraphemeSplitter();
-    const result = splitter.iterateGraphemes(str).next();
-    return result.done ? "" : result.value;
 }
