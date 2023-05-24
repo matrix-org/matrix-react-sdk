@@ -558,13 +558,12 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
         return (
             <SettingsTab data-testid="mx_GeneralUserSettingsTab">
-                <div className="mx_SettingsTab_heading" data-testid="general">
-                    {_t("General")}
-                </div>
-                {this.renderProfileSection()}
-                {this.renderAccountSection()}
-                {this.renderLanguageSection()}
-                {supportsMultiLanguageSpellCheck ? this.renderSpellCheckSection() : null}
+                <SettingsSection heading={_t("General")}>
+                    {this.renderProfileSection()}
+                    {this.renderAccountSection()}
+                    {this.renderLanguageSection()}
+                    {supportsMultiLanguageSpellCheck ? this.renderSpellCheckSection() : null}
+                </SettingsSection>
                 {discoverySection}
                 {this.renderIntegrationManagerSection()}
                 {accountManagementSection}
