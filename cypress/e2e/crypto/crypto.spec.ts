@@ -20,6 +20,7 @@ import type { CypressBot } from "../../support/bot";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { UserCredentials } from "../../support/login";
 import { deviceIsCrossSigned, EmojiMapping, handleVerificationRequest, waitForVerificationRequest } from "./utils";
+import { skipIfRustCrypto } from "../../support/util";
 
 interface CryptoTestContext extends Mocha.Context {
     homeserver: HomeserverInstance;
@@ -163,6 +164,7 @@ describe("Cryptography", function () {
         });
 
         it("setting up secure key backup should work", () => {
+            skipIfRustCrypto();
             cy.openUserSettings("Security & Privacy");
             cy.findByRole("button", { name: "Set up Secure Backup" }).click();
             cy.get(".mx_Dialog").within(() => {
