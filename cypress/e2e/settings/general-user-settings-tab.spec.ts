@@ -97,7 +97,7 @@ describe("General user settings tab", () => {
                     });
 
                 // Check email addresses area
-                cy.get(".mx_EmailAddresses")
+                cy.findByTestId("mx_EmailAddresses")
                     .scrollIntoView()
                     .within(() => {
                         // Assert that an input area for a new email address is rendered
@@ -108,7 +108,7 @@ describe("General user settings tab", () => {
                     });
 
                 // Check phone numbers area
-                cy.get(".mx_PhoneNumbers")
+                cy.findByTestId("mx_PhoneNumbers")
                     .scrollIntoView()
                     .within(() => {
                         // Assert that an input area for a new phone number is rendered

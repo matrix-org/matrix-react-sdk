@@ -196,7 +196,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             );
             logger.warn(e);
         }
-
         this.setState({
             emails: threepids.filter((a) => a.medium === ThreepidMedium.Email),
             msisdns: threepids.filter((a) => a.medium === ThreepidMedium.Phone),
@@ -329,8 +328,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     }
 
     private renderAccountSection(): JSX.Element {
-        
-
         let threepidSection: ReactNode = null;
 
         // For older homeservers without separate 3PID add and bind methods (MSC2290),
@@ -353,13 +350,15 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                 <AccountPhoneNumbers msisdns={this.state.msisdns} onMsisdnsChange={this.onMsisdnsChange} />
             );
             threepidSection = (
-                <div>
-                    <span className="mx_SettingsTab_subheading">{_t("Email addresses")}</span>
-                    {emails}
+                <>
+                    <SettingsSubsection heading={_t("Email addresses")} stretchContent data-testid="mx_EmailAddresses">
+                        {emails}
+                    </SettingsSubsection>
 
-                    <span className="mx_SettingsTab_subheading">{_t("Phone numbers")}</span>
-                    {msisdns}
-                </div>
+                    <SettingsSubsection heading={_t("Phone numbers")} stretchContent data-testid="mx_PhoneNumber">
+                        {msisdns}
+                    </SettingsSubsection>
+                </>
             );
         } else if (this.state.serverSupportsSeparateAddAndBind === null) {
             threepidSection = <Spinner />;
@@ -367,16 +366,18 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
         let passwordChangeSection: ReactNode = null;
         if (this.state.canChangePassword) {
-            passwordChangeSection = <>
-                <SettingsSubsectionText>{_t("Set a new account password…")}</SettingsSubsectionText>
-                <ChangePassword
-                    className="mx_GeneralUserSettingsTab_section--account_changePassword"
-                    rowClassName=""
-                    buttonKind="primary"
-                    onError={this.onPasswordChangeError}
-                    onFinished={this.onPasswordChanged}
-                />
-            </>
+            passwordChangeSection = (
+                <>
+                    <SettingsSubsectionText>{_t("Set a new account password…")}</SettingsSubsectionText>
+                    <ChangePassword
+                        className="mx_GeneralUserSettingsTab_section--account_changePassword"
+                        rowClassName=""
+                        buttonKind="primary"
+                        onError={this.onPasswordChangeError}
+                        onFinished={this.onPasswordChanged}
+                    />
+                </>
+            );
         }
 
         let externalAccountManagement: JSX.Element | undefined;
