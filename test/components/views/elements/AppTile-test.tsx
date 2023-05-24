@@ -444,7 +444,7 @@ describe("AppTile", () => {
         });
     });
 
-    it("for a pinned widget permission load", () => {
+    it("should not display 'Continue' button on permission load", () => {
         jest.spyOn(ModuleRunner.instance, "invoke").mockImplementation((lifecycleEvent, opts, widgetInfo) => {
             if (lifecycleEvent === WidgetLifecycle.PreLoadRequest && (widgetInfo as WidgetInfo).id === app1.id) {
                 (opts as ApprovalOpts).approved = true;
