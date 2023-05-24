@@ -3777,5 +3777,7 @@
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Sobald eingeladene Benutzer %(brand)s beigetreten sind, werdet ihr euch unterhalten können und der Raum wird Ende-zu-Ende-verschlüsselt sein",
     "Waiting for users to join %(brand)s": "Warte darauf, dass Benutzer %(brand)s beitreten",
     "You do not have permission to invite users": "Du bist nicht berechtigt, Benutzer einzuladen",
-    "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s hat den Anzeigenamen und das Profilbild geändert"
+    "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s hat den Anzeigenamen und das Profilbild geändert",
+    "Your language": "Deine Sprache",
+    "Your device ID": "Deine Geräte-ID"
 }
