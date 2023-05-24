@@ -26,15 +26,10 @@ import { MatrixClient } from "matrix-js-sdk/src/matrix";
  *    indicating whether the device has been cross-signed by a cross-signing key we trust.
  */
 export const isDeviceVerified = async (client: MatrixClient, deviceId: string): Promise<boolean | null> => {
-    try {
-        const trustLevel = await client.getCrypto()?.getDeviceVerificationStatus(client.getSafeUserId(), deviceId);
-        if (!trustLevel) {
-            // either no crypto, or an unknown/no-e2e device
-            return null;
-        }
-        return trustLevel.crossSigningVerified;
-    } catch (e) {
-        console.error("Error getting device cross-signing info", e);
+    const trustLevel = await client.getCrypto()?.getDeviceVerificationStatus(client.getSafeUserId(), deviceId);
+    if (!trustLevel) {
+        // either no crypto, or an unknown/no-e2e device
         return null;
     }
+    return trustLevel.crossSigningVerified;
 };

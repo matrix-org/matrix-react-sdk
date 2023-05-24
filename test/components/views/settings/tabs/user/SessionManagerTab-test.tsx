@@ -227,27 +227,6 @@ describe("<SessionManagerTab />", () => {
         expect(container.getElementsByClassName("mx_Spinner").length).toBeFalsy();
     });
 
-    it("does not fail when checking device verification fails", async () => {
-        const logSpy = jest.spyOn(console, "error").mockImplementation((e) => {});
-        mockClient.getDevices.mockResolvedValue({
-            devices: [alicesDevice, alicesMobileDevice],
-        });
-        const failError = new Error("non-specific failure");
-        mockCrypto.getDeviceVerificationStatus.mockImplementation(() => {
-            throw failError;
-        });
-        render(getComponent());
-
-        await act(async () => {
-            await flushPromises();
-        });
-
-        // called for each device despite error
-        expect(mockCrypto.getDeviceVerificationStatus).toHaveBeenCalledWith(aliceId, alicesDevice.device_id);
-        expect(mockCrypto.getDeviceVerificationStatus).toHaveBeenCalledWith(aliceId, alicesMobileDevice.device_id);
-        expect(logSpy).toHaveBeenCalledWith("Error getting device cross-signing info", failError);
-    });
-
     it("sets device verification status correctly", async () => {
         mockClient.getDevices.mockResolvedValue({
             devices: [alicesDevice, alicesMobileDevice, alicesOlderMobileDevice],
