@@ -361,7 +361,7 @@ function textForServerACLEvent(ev: MatrixEvent): (() => string) | null {
     return getText;
 }
 
-function textForMessageEvent(ev: MatrixEvent,enclosedSender?:boolean): (() => string) | null {
+function textForMessageEvent(ev: MatrixEvent, enclosedSender?: boolean): (() => string) | null {
     if (isLocationEvent(ev)) {
         return textForLocationEvent(ev);
     }
@@ -944,10 +944,12 @@ export function hasText(ev: MatrixEvent, showHiddenEvents?: boolean): boolean {
  * @param allowJSX Whether to output rich JSX content
  * @param showHiddenEvents An optional cached setting value for showHiddenEventsInTimeline
  *     to avoid hitting the settings store
+ * @param enclosedSender An optional parameter to check the sender name should be enclosed within
+ *      < > brackets or not
  */
 export function textForEvent(ev: MatrixEvent): string;
 export function textForEvent(ev: MatrixEvent, allowJSX: true, showHiddenEvents?: boolean,enclosedSender?:boolean): string | React.ReactNode;
 export function textForEvent(ev: MatrixEvent, allowJSX = false, showHiddenEvents?: boolean,enclosedSender?:boolean): string | React.ReactNode {
-    const handler = (ev.isState() ? stateHandlers : handlers)[ev.getType()];    
+    const handler = (ev.isState() ? stateHandlers : handlers)[ev.getType()];
     return handler?.(ev, allowJSX, showHiddenEvents,enclosedSender)?.() || "";
 }
