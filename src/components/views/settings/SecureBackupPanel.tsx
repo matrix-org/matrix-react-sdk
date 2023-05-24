@@ -146,14 +146,17 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
 
     private async getUpdatedDiagnostics(): Promise<void> {
         const cli = MatrixClientPeg.get();
-        const secretStorage = cli.crypto!.secretStorage;
+        const crypto = cli.crypto;
+        if (!crypto) return;
+
+        const secretStorage = cli.secretStorage;
 
         const backupKeyStored = !!(await cli.isKeyBackupKeyStored());
-        const backupKeyFromCache = await cli.crypto!.getSessionBackupPrivateKey();
+        const backupKeyFromCache = await crypto.getSessionBackupPrivateKey();
         const backupKeyCached = !!backupKeyFromCache;
         const backupKeyWellFormed = backupKeyFromCache instanceof Uint8Array;
         const secretStorageKeyInAccount = await secretStorage.hasKey();
-        const secretStorageReady = await cli.isSecretStorageReady();
+        const secretStorageReady = await crypto.isSecretStorageReady();
 
         if (this.unmounted) return;
         this.setState({
@@ -416,7 +419,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                 </AccessibleButton>,
             );
 
-            if (!isSecureBackupRequired()) {
+            if (!isSecureBackupRequired(MatrixClientPeg.get())) {
                 actions.push(
                     <AccessibleButton key="delete" kind="danger" onClick={this.deleteBackup}>
                         {_t("Delete Backup")}
