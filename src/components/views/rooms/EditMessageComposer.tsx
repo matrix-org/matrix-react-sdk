@@ -50,6 +50,7 @@ import { editorRoomKey, editorStateKey } from "../../../Editing";
 import DocumentOffset from "../../../editor/offset";
 import { attachMentions, attachRelation } from "./SendMessageComposer";
 import { filterBoolean } from "../../../utils/arrays";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
     const html = mxEvent.getContent().formatted_body;
@@ -150,8 +151,11 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         this.dispatcherRef = dis.register(this.onAction);
     }
 
-    private getRoom(): Room | null {
-        return this.context.room ?? null;
+    private getRoom(): Room {
+        if (!this.context.room) {
+            throw new Error(`Cannot render without room`);
+        }
+        return this.context.room;
     }
 
     private onKeyDown = (event: KeyboardEvent): void => {
@@ -178,6 +182,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                     events: this.events,
                     isForward: false,
                     fromEventId: this.props.editState.getEvent().getId(),
+                    matrixClient: MatrixClientPeg.get(),
                 });
                 if (previousEvent) {
                     dis.dispatch({
@@ -197,6 +202,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                     events: this.events,
                     isForward: true,
                     fromEventId: this.props.editState.getEvent().getId(),
+                    matrixClient: MatrixClientPeg.get(),
                 });
                 if (nextEvent) {
                     dis.dispatch({
@@ -410,8 +416,10 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         let parts: Part[];
         let isRestored = false;
         if (editState.hasEditorState()) {
-            // if restoring state from a previous editor, restore serialized parts from the state
-            parts = filterBoolean(editState.getSerializedParts()?.map((p) => partCreator.deserializePart(p)) ?? []);
+            // if restoring state from a previous editor,
+            // restore serialized parts from the state
+            // (editState.hasEditorState() checks getSerializedParts is not null)
+            parts = filterBoolean<Part>(editState.getSerializedParts()!.map((p) => partCreator.deserializePart(p)));
         } else {
             // otherwise, either restore serialized parts from localStorage or parse the body of the event
             const restoredParts = this.restoreStoredEditorState(partCreator);

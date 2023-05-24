@@ -53,12 +53,12 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
         this.room = MatrixClientPeg.get().getRoom(this.props.event.getRoomId());
         const me = this.room?.getMember(MatrixClientPeg.get().getUserId()!);
         const powerLevels = this.room?.currentState.getStateEvents("m.room.power_levels", "");
+        const senderId = this.props.event.getSender()!;
 
         let kickLevel = powerLevels ? powerLevels.getContent().kick : 50;
         if (typeof kickLevel !== "number") kickLevel = 50;
 
-        const senderId = this.props.event.getSender()!;
-        const sender = this.props.event.sender ?? this.room?.getMember(senderId);
+        const sender = this.room?.getMember(senderId);
 
         this.state = {
             stateKey: this.props.event.getStateKey()!,
