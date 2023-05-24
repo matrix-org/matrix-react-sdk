@@ -263,7 +263,7 @@ describe("<SessionManagerTab />", () => {
                 return new DeviceVerificationStatus({});
             }
             // alicesOlderMobileDevice does not support encryption
-            throw new Error("encryption not supported");
+            return null;
         });
 
         const { getByTestId } = render(getComponent());
@@ -562,8 +562,7 @@ describe("<SessionManagerTab />", () => {
                     return new DeviceVerificationStatus({ crossSigningVerified: true, localVerified: true });
                 }
                 // but alicesMobileDevice doesn't support encryption
-                // XXX this is not what happens if a device doesn't support encryption.
-                throw new Error("encryption not supported");
+                return null;
             });
 
             const { getByTestId, queryByTestId } = render(getComponent());
