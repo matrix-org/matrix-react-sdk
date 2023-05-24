@@ -69,7 +69,6 @@ describe("Complete security", () => {
 
                 // accept the verification request on the "bot" side
                 cy.wrap(botVerificationRequestPromise).then(async (verificationRequest: VerificationRequest) => {
-                    await verificationRequest.accept();
                     await handleVerificationRequest(verificationRequest);
                 });
 

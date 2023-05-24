@@ -104,13 +104,6 @@ function autoJoin(client: MatrixClient) {
     });
 }
 
-function acceptVerificationRequest(promise: Promise<VerificationRequest>) {
-    return cy.wrap(promise).then((verificationRequest: VerificationRequest) => {
-        verificationRequest.accept();
-        return verificationRequest;
-    });
-}
-
 function verifyEmojiSas(promise: Promise<EmojiMapping[]>) {
     return cy.wrap(promise).then((emojis: EmojiMapping[]) => {
         cy.get(".mx_VerificationShowSas_emojiSas_block").then((emojiBlocks) => {
@@ -129,10 +122,10 @@ const verify = function (this: CryptoTestContext) {
         cy.findByText("Bob").click();
         cy.findByRole("button", { name: "Verify" }).click();
         cy.findByRole("button", { name: "Start Verification" }).click();
-        acceptVerificationRequest(bobsVerificationRequestPromise).as("bobsVerificationRequest");
         cy.findByRole("button", { name: "Verify by emoji" }).click();
-        cy.get<VerificationRequest>("@bobsVerificationRequest").then((request: VerificationRequest) => {
-            return verifyEmojiSas(handleVerificationRequest(request));
+        cy.wrap(bobsVerificationRequestPromise).then((request: VerificationRequest) => {
+            const emojiPromise = handleVerificationRequest(request);
+            return verifyEmojiSas(emojiPromise);
         });
         cy.findByRole("button", { name: "They match" }).click();
         cy.findByText("You've successfully verified Bob!").should("exist");
@@ -362,7 +355,7 @@ describe("Cryptography", function () {
             });
 
             // alice bot responds yes to verification request from alice
-            acceptVerificationRequest(promiseVerificationRequest).as("verificationRequest");
+            cy.wrap(promiseVerificationRequest).as("verificationRequest");
         }
 
         it("with SAS", function (this: CryptoTestContext) {
