@@ -102,12 +102,12 @@ describe("<MatrixChat />", () => {
     });
 
     describe("with an existing session", () => {
-        const mockidb = {
+        const mockidb: Record<string, Record<string, string>> = {
             acccount: {
                 mx_access_token: accessToken,
             },
         };
-        const mockLocalStorage = {
+        const mockLocalStorage: Record<string, string> = {
             mx_hs_url: serverConfig.hsUrl,
             mx_is_url: serverConfig.isUrl,
             mx_access_token: accessToken,
@@ -116,10 +116,11 @@ describe("<MatrixChat />", () => {
         };
 
         beforeEach(() => {
-            localStorageSpy.mockImplementation((key: string) => mockLocalStorage[key] || "");
+            localStorageSpy.mockImplementation((key: unknown) => mockLocalStorage[key as string] || "");
 
             jest.spyOn(StorageManager, "idbLoad").mockImplementation(async (table, key) => {
-                return mockidb[table]?.[key];
+                const safeKey = Array.isArray(key) ? key[0] : key;
+                return mockidb[table]?.[safeKey];
             });
         });
 
