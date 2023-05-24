@@ -710,7 +710,9 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                             const type = imgBlob.type;
                             const safetype = getBlobSafeMimeType(type);
                             const ext = type.split("/")[1];
-                            const file = new File([imgBlob], "file." + ext, { type: safetype });
+                            const parts = response.url.split("/");
+                            const filename = parts[parts.length - 1];
+                            const file = new File([imgBlob], filename + "." + ext, { type: safetype });
                             ContentMessages.sharedInstance().sendContentToRoom(
                                 file,
                                 this.props.room.roomId,
