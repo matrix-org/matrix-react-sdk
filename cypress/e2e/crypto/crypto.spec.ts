@@ -104,8 +104,19 @@ function autoJoin(client: MatrixClient) {
     });
 }
 
-function verifyEmojiSas(promise: Promise<EmojiMapping[]>) {
-    return cy.wrap(promise).then((emojis: EmojiMapping[]) => {
+/**
+ * Given a VerificationRequest in a bot client, add cypress commands to:
+ *   - wait for the bot to receive a 'verify by emoji' notification
+ *   - check that the bot sees the same emoji as the application
+ *
+ * @param botVerificationRequest - a verification request in a bot client
+ */
+function doTwoWaySasVerification(botVerificationRequest: VerificationRequest): void {
+    // on the bot side, wait for the emojis, confirm they match, and return them
+    const emojiPromise = handleVerificationRequest(botVerificationRequest);
+
+    // then, check that our application shows an emoji panel with the same emojis.
+    cy.wrap(emojiPromise).then((emojis: EmojiMapping[]) => {
         cy.get(".mx_VerificationShowSas_emojiSas_block").then((emojiBlocks) => {
             emojis.forEach((emoji: EmojiMapping, index: number) => {
                 expect(emojiBlocks[index].textContent.toLowerCase()).to.eq(emoji[0] + emoji[1]);
@@ -124,8 +135,7 @@ const verify = function (this: CryptoTestContext) {
         cy.findByRole("button", { name: "Start Verification" }).click();
         cy.findByRole("button", { name: "Verify by emoji" }).click();
         cy.wrap(bobsVerificationRequestPromise).then((request: VerificationRequest) => {
-            const emojiPromise = handleVerificationRequest(request);
-            return verifyEmojiSas(emojiPromise);
+            doTwoWaySasVerification(request);
         });
         cy.findByRole("button", { name: "They match" }).click();
         cy.findByText("You've successfully verified Bob!").should("exist");
@@ -368,7 +378,7 @@ describe("Cryptography", function () {
             cy.get(".mx_InfoDialog").within(() => {
                 cy.get<VerificationRequest>("@verificationRequest").then((request: VerificationRequest) => {
                     // Handle emoji request and check that emojis are matching
-                    return verifyEmojiSas(handleVerificationRequest(request));
+                    doTwoWaySasVerification(request);
                 });
 
                 cy.findByRole("button", { name: "They match" }).click();
