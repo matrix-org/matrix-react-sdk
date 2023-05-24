@@ -3744,7 +3744,7 @@
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "使用者（%(user)s）並未受邀加入 %(roomId)s，但邀請工具也未提供錯誤",
     "Reload": "重新載入",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "這個問題可能是因為在多個分頁中開啟此應用程式，或是清除瀏覽資料所導致。",
-    "Database unexpectedly closed": "資料庫未預期關閉連線",
+    "Database unexpectedly closed": "資料庫意外關閉",
     "Mute room": "聊天室靜音",
     "Match default setting": "符合預設設定值",
     "Start DM anyway": "開始直接訊息",
