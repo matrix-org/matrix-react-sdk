@@ -65,10 +65,9 @@ export function handleVerificationRequest(request: VerificationRequest): Promise
 }
 
 /**
- * Check that the user's device is cross-signed
- * @param homeserver the instance where they keys are stored
+ * Check that the user has published cross-signing keys, and that the user's device has been cross-signed.
  */
-export function deviceIsCrossSigned(homeserver: HomeserverInstance) {
+export function checkDeviceIsCrossSigned(): void {
     let userId: string;
     let myDeviceId: string;
     cy.window({ log: false })
@@ -76,11 +75,12 @@ export function deviceIsCrossSigned(homeserver: HomeserverInstance) {
             // Get the userId and deviceId of the current user
             const cli = win.mxMatrixClientPeg.get();
             const accessToken = cli.getAccessToken()!;
+            const homeserverUrl = cli.getHomeserverUrl();
             myDeviceId = cli.getDeviceId();
             userId = cli.getUserId();
             return cy.request({
                 method: "POST",
-                url: `${homeserver.baseUrl}/_matrix/client/v3/keys/query`,
+                url: `${homeserverUrl}/_matrix/client/v3/keys/query`,
                 headers: { Authorization: `Bearer ${accessToken}` },
                 body: { device_keys: { [userId]: [] } },
             });

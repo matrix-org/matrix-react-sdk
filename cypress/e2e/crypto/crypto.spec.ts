@@ -19,7 +19,7 @@ import type { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/
 import type { CypressBot } from "../../support/bot";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { UserCredentials } from "../../support/login";
-import { deviceIsCrossSigned, EmojiMapping, handleVerificationRequest, waitForVerificationRequest } from "./utils";
+import { checkDeviceIsCrossSigned, EmojiMapping, handleVerificationRequest, waitForVerificationRequest } from "./utils";
 import { skipIfRustCrypto } from "../../support/util";
 
 interface CryptoTestContext extends Mocha.Context {
@@ -375,8 +375,8 @@ describe("Cryptography", function () {
                 cy.findByRole("button", { name: "Got it" }).click();
             });
 
-            // Check that the alice device is cross-signed
-            deviceIsCrossSigned(this.homeserver);
+            // Check that our device is now cross-signed
+            checkDeviceIsCrossSigned();
         });
     });
 });

@@ -17,7 +17,7 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
-import { deviceIsCrossSigned } from "../crypto/utils";
+import { checkDeviceIsCrossSigned } from "../crypto/utils";
 
 describe("Registration", () => {
     let homeserver: HomeserverInstance;
@@ -96,7 +96,7 @@ describe("Registration", () => {
         );
 
         // check that cross-signing keys have been uploaded.
-        deviceIsCrossSigned(homeserver);
+        checkDeviceIsCrossSigned();
     });
 
     it("should require username to fulfil requirements and be available", () => {
