@@ -320,14 +320,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         });
     };
 
-    private renderProfileSection(): JSX.Element {
-        return (
-            <div className="mx_SettingsTab_section">
-                <ProfileSettings />
-            </div>
-        );
-    }
-
     private renderAccountSection(): JSX.Element {
         let threepidSection: ReactNode = null;
 
@@ -559,7 +551,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         return (
             <SettingsTab data-testid="mx_GeneralUserSettingsTab">
                 <SettingsSection heading={_t("General")}>
-                    {this.renderProfileSection()}
+                    <ProfileSettings />
                     {this.renderAccountSection()}
                     {this.renderLanguageSection()}
                     {supportsMultiLanguageSpellCheck ? this.renderSpellCheckSection() : null}
