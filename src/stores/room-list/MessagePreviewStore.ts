@@ -103,11 +103,34 @@ export interface MessagePreview {
     text: string;
 }
 
+const isThreadReply = (event: MatrixEvent): boolean => {
+    // a thread rood event cannot be a thread reply
+    if (event.isThreadRoot) return false;
+
+    const thread = event.getThread();
+
+    // it cannot be a thread reply if there is no thread
+    if (!thread) return false;
+
+    const relation = event.getRelation();
+
+    if (
+        !!relation &&
+        relation.rel_type === RelationType.Annotation &&
+        relation.event_id === thread.rootEvent?.getId()
+    ) {
+        // annotations on the thread root are not a thread reply
+        return false;
+    }
+
+    return true;
+};
+
 const mkMessagePreview = (text: string, event: MatrixEvent): MessagePreview => {
     return {
         event,
         text,
-        isThreadReply: !!event.getThread() && !event.isThreadRoot,
+        isThreadReply: isThreadReply(event),
     };
 };
 
