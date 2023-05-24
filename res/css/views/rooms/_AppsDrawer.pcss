@@ -254,6 +254,8 @@ limitations under the License.
     }
 }
 
+/* appTileBody is embedded to PersistedElement outside of mx_AppTile,
+   so the style rules for appTileBody should not be included in mx_AppTile. */
 .mx_AppTileBody {
     border-radius: 8px;
 
@@ -269,10 +271,9 @@ limitations under the License.
         animation-delay: 500ms;
         animation-name: mx_AppTileBody_fadeInSpinnerAnimation;
     }
-}
 
-.mx_AppTileBody--normal,
-.mx_AppTileBody--mini {
+&.mx_AppTileBody--normal,
+&.mx_AppTileBody--mini {
     width: 100%;
     overflow: hidden;
     height: var(--AppTileBody-height);
@@ -284,7 +285,7 @@ limitations under the License.
     }
 }
 
-.mx_AppTileBody--normal {
+&.mx_AppTileBody--normal {
     --AppTileBody-height: 100%;
 
     background-color: $widget-body-bg-color;
@@ -297,8 +298,26 @@ limitations under the License.
     }
 }
 
-.mx_AppTileBody--mini {
+&.mx_AppTileBody--mini {
     --AppTileBody-height: var(--AppTile_mini-height);
+}
+
+&.mx_AppTileBody--loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    position: relative;
+    height: 100%;
+
+    /* match bg of border so that the cut corners have the right fill */
+    background-color: $widget-body-bg-color !important;
+
+    iframe {
+        display: none;
+    }
+}
 }
 
 .mx_AppTile .mx_AppTileBody--normal,
@@ -321,23 +340,6 @@ limitations under the License.
     h4 {
         margin: 0;
         padding: 0;
-    }
-}
-
-.mx_AppTileBody--loading {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    position: relative;
-    height: 100%;
-
-    /* match bg of border so that the cut corners have the right fill */
-    background-color: $widget-body-bg-color !important;
-
-    iframe {
-        display: none;
     }
 }
 
