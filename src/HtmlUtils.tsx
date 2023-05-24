@@ -464,7 +464,9 @@ const emojiToJsxSpan = (emoji: string, key: number): JSX.Element => (
  * @returns if isHtmlMessage is true, returns an array of strings, otherwise return an array of React Elements for emojis
  * and plain text for everything else
  */
-function formatEmojis(message: string | undefined, isHtmlMessage: boolean): (JSX.Element | string)[] {
+export function formatEmojis(message: string | undefined, isHtmlMessage?: false): JSX.Element[];
+export function formatEmojis(message: string | undefined, isHtmlMessage: true): string[];
+export function formatEmojis(message: string | undefined, isHtmlMessage: boolean): (JSX.Element | string)[] {
     const emojiToSpan = isHtmlMessage ? emojiToHtmlSpan : emojiToJsxSpan;
     const result: (JSX.Element | string)[] = [];
     if (!message) return result;
@@ -664,7 +666,7 @@ export function topicToHtml(
         isFormattedTopic = false; // Fall back to plain-text topic
     }
 
-    let emojiBodyElements: ReturnType<typeof formatEmojis> | undefined;
+    let emojiBodyElements: JSX.Element[] | undefined;
     if (!isFormattedTopic && topicHasEmoji) {
         emojiBodyElements = formatEmojis(topic, false);
     }
