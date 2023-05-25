@@ -333,9 +333,10 @@ describe("Verify own device", () => {
             .as("homeserver")
             .then((homeserver: HomeserverInstance) => {
                 // Visit the login page of the app, to load the matrix sdk
-                cy.intercept("GET", "**/r0/login").as("login");
                 cy.visit("/#/login");
-                cy.wait("@login");
+
+                // wait for the page to load
+                cy.window({ log: false }).should("have.property", "matrixcs");
 
                 // Create a new device for alice
                 cy.getBot(homeserver, { bootstrapCrossSigning: true }).then((bot) => {
