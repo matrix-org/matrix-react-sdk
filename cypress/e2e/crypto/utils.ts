@@ -100,3 +100,22 @@ export function checkDeviceIsCrossSigned(): void {
             expect(myDeviceSignatures[selfSigningKeyId]).to.exist;
         });
 }
+
+/**
+ * Fill in the login form in element with the given creds
+ */
+export function logIntoElement(homeserverUrl: string, username: string, password: string) {
+    cy.visit("/#/login");
+
+    // select homeserver
+    cy.findByRole("button", { name: "Edit" }).click();
+    cy.findByRole("textbox", { name: "Other homeserver" }).type(homeserverUrl);
+    cy.findByRole("button", { name: "Continue" }).click();
+
+    // wait for the dialog to go away
+    cy.get(".mx_ServerPickerDialog").should("not.exist");
+
+    cy.findByRole("textbox", { name: "Username" }).type(username);
+    cy.findByPlaceholderText("Password").type(password);
+    cy.findByRole("button", { name: "Sign in" }).click();
+}
