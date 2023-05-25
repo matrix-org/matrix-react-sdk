@@ -220,7 +220,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     // opaque readreceipt info for each userId; used by ReadReceiptMarker
     // to manage its animations
-    private readonly readReceiptMap: { [userId: string]: IReadReceiptInfo } = {};
+    private readReceiptMap: { [userId: string]: IReadReceiptInfo } = {};
 
     // Track read receipts by event ID. For each _shown_ event ID, we store
     // the list of read receipts to display:
@@ -301,6 +301,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         this.isMounted = false;
         this.props.room?.currentState.off(RoomStateEvent.Update, this.calculateRoomMembersCount);
         SettingsStore.unwatchSetting(this.showTypingNotificationsWatcherRef);
+        this.readReceiptMap = {};
     }
 
     public componentDidUpdate(prevProps: IProps, prevState: IState): void {
@@ -502,14 +503,14 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             // algorithms which depend on its position on the screen aren't
             // confused.
             if (visible) {
-                hr = <hr className="mx_RoomView_myReadMarker" style={{ opacity: 1, width: "99%" }} />;
+                hr = <hr style={{ opacity: 1, width: "99%" }} />;
             }
 
             return (
                 <li
                     key={"readMarker_" + eventId}
                     ref={this.readMarkerNode}
-                    className="mx_RoomView_myReadMarker_container"
+                    className="mx_MessagePanel_myReadMarker"
                     data-scroll-tokens={eventId}
                 >
                     {hr}
@@ -528,7 +529,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             // and TransitionGroup requires that all its children are Transitions.
             const hr = (
                 <hr
-                    className="mx_RoomView_myReadMarker"
                     ref={this.collectGhostReadMarker}
                     onTransitionEnd={this.onGhostTransitionEnd}
                     data-eventid={eventId}
@@ -539,7 +539,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             // we get a new DOM node (restarting the animation) when the ghost
             // moves to a different event.
             return (
-                <li key={"_readuptoghost_" + eventId} className="mx_RoomView_myReadMarker_container">
+                <li key={"_readuptoghost_" + eventId} className="mx_MessagePanel_myReadMarker">
                     {hr}
                 </li>
             );
@@ -743,7 +743,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             lastInSection =
                 willWantDateSeparator ||
                 mxEv.getSender() !== nextEv.getSender() ||
-                getEventDisplayInfo(nextEv, this.showHiddenEvents).isInfoMessage ||
+                getEventDisplayInfo(MatrixClientPeg.get(), nextEv, this.showHiddenEvents).isInfoMessage ||
                 !shouldFormContinuation(mxEv, nextEv, this.showHiddenEvents, this.context.timelineRenderingType);
         }
 

@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, forwardRef, MouseEvent, ReactNode, RefObject, useRef } from "react";
+import React, { createRef, forwardRef, MouseEvent, ReactNode, useRef } from "react";
 import classNames from "classnames";
 import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
@@ -34,7 +34,6 @@ import dis from "../../../dispatcher/dispatcher";
 import { Layout } from "../../../settings/enums/Layout";
 import { formatTime } from "../../../DateUtils";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { DecryptionFailureBody } from "../messages/DecryptionFailureBody";
 import { E2EState } from "./E2EIcon";
 import RoomAvatar from "../avatars/RoomAvatar";
@@ -250,8 +249,8 @@ interface IState {
 export class UnwrappedEventTile extends React.Component<EventTileProps, IState> {
     private suppressReadReceiptAnimation: boolean;
     private isListeningForReceipts: boolean;
-    private tile = React.createRef<IEventTileType>();
-    private replyChain = React.createRef<ReplyChain>();
+    private tile = createRef<IEventTileType>();
+    private replyChain = createRef<ReplyChain>();
 
     public readonly ref = createRef<HTMLElement>();
 
@@ -267,7 +266,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
     private unmounted = false;
 
-    public constructor(props: EventTileProps, context: React.ContextType<typeof MatrixClientContext>) {
+    public constructor(props: EventTileProps, context: React.ContextType<typeof RoomContext>) {
         super(props, context);
 
         const thread = this.thread;
@@ -513,6 +512,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         evt.preventDefault();
         evt.stopPropagation();
         const { permalinkCreator, mxEvent } = this.props;
+        if (!permalinkCreator) return;
         const matrixToUrl = permalinkCreator.forEvent(mxEvent.getId()!);
         await copyPlaintext(matrixToUrl);
     };
@@ -576,6 +576,12 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
         const encryptionInfo = MatrixClientPeg.get().getEventEncryptionInfo(mxEvent);
         const senderId = mxEvent.getSender();
+        if (!senderId) {
+            // something definitely wrong is going on here
+            this.setState({ verified: E2EState.Warning });
+            return;
+        }
+
         const userTrust = MatrixClientPeg.get().checkUserTrust(senderId);
 
         if (encryptionInfo.mismatchedSender) {
@@ -897,7 +903,12 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             isLeftAlignedBubbleMessage,
             noBubbleEvent,
             isSeeingThroughMessageHiddenForModeration,
-        } = getEventDisplayInfo(this.props.mxEvent, this.context.showHiddenEvents, this.shouldHideEvent());
+        } = getEventDisplayInfo(
+            MatrixClientPeg.get(),
+            this.props.mxEvent,
+            this.context.showHiddenEvents,
+            this.shouldHideEvent(),
+        );
         const { isQuoteExpanded } = this.state;
         // This shouldn't happen: the caller should check we support this type
         // before trying to instantiate us
@@ -1430,10 +1441,10 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 }
 
 // Wrap all event tiles with the tile error boundary so that any throws even during construction are captured
-const SafeEventTile = forwardRef((props: EventTileProps, ref: RefObject<UnwrappedEventTile>) => {
+const SafeEventTile = forwardRef<UnwrappedEventTile, EventTileProps>((props, ref) => {
     return (
         <>
-            <TileErrorBoundary mxEvent={props.mxEvent} layout={props.layout}>
+            <TileErrorBoundary mxEvent={props.mxEvent} layout={props.layout ?? Layout.Group}>
                 <UnwrappedEventTile ref={ref} {...props} />
             </TileErrorBoundary>
         </>

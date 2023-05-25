@@ -45,7 +45,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
     public context!: React.ContextType<typeof RoomContext>;
 
     private videoRef = React.createRef<HTMLVideoElement>();
-    private sizeWatcher: string;
+    private sizeWatcher?: string;
 
     public constructor(props: IBodyProps) {
         super(props);
@@ -154,7 +154,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                         decryptedThumbnailUrl: thumbnailUrl,
                         decryptedBlob: await this.props.mediaEventHelper.sourceBlob.value,
                     });
-                    this.props.onHeightChanged();
+                    this.props.onHeightChanged?.();
                 } else {
                     logger.log("NOT preloading video");
                     const content = this.props.mxEvent.getContent<IMediaEventContent>();
@@ -187,7 +187,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
     }
 
     public componentWillUnmount(): void {
-        SettingsStore.unwatchSetting(this.sizeWatcher);
+        if (this.sizeWatcher) SettingsStore.unwatchSetting(this.sizeWatcher);
     }
 
     private videoOnPlay = async (): Promise<void> => {
@@ -216,7 +216,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                 this.videoRef.current.play();
             },
         );
-        this.props.onHeightChanged();
+        this.props.onHeightChanged?.();
     };
 
     protected get showFileBody(): boolean {
