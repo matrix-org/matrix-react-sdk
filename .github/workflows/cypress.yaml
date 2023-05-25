@@ -160,7 +160,7 @@ jobs:
 
             # Enable rust crypto if the calling workflow requests it
             - name: Enable rust crypto
-              if: "inputs.rust-crypto == 'true'"
+              if: inputs.rust-crypto
               run: |
                   echo "CYPRESS_RUST_CRYPTO=1" >> "$GITHUB_ENV"
 
