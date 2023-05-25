@@ -17,10 +17,10 @@ limitations under the License.
 import { BeaconLocationState } from "matrix-js-sdk/src/content-helpers";
 
 export enum BeaconDisplayStatus {
-    Loading = 'Loading',
-    Error = 'Error',
-    Stopped = 'Stopped',
-    Active = 'Active',
+    Loading = "Loading",
+    Error = "Error",
+    Stopped = "Stopped",
+    Active = "Active",
 }
 export const getBeaconDisplayStatus = (
     isLive: boolean,
@@ -40,7 +40,5 @@ export const getBeaconDisplayStatus = (
     if (!latestLocationState) {
         return BeaconDisplayStatus.Loading;
     }
-    if (latestLocationState) {
-        return BeaconDisplayStatus.Active;
-    }
+    return BeaconDisplayStatus.Active;
 };

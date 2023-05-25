@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { IInvite3PID, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import { Optional } from "matrix-events-sdk";
 
 import { Action } from "../../dispatcher/actions";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
@@ -32,14 +33,14 @@ import createRoom from "../../createRoom";
  * @returns {Promise<string | null} Resolves to the room id.
  */
 export async function startDm(client: MatrixClient, targets: Member[], showSpinner = true): Promise<string | null> {
-    const targetIds = targets.map(t => t.userId);
+    const targetIds = targets.map((t) => t.userId);
 
     // Check if there is already a DM with these people and reuse it if possible.
-    let existingRoom: Room;
+    let existingRoom: Optional<Room>;
     if (targetIds.length === 1) {
         existingRoom = findDMForUser(client, targetIds[0]);
     } else {
-        existingRoom = DMRoomMap.shared().getDMRoomForIdentifiers(targetIds);
+        existingRoom = DMRoomMap.shared().getDMRoomForIdentifiers(targetIds) ?? undefined;
     }
     if (existingRoom && !isLocalRoom(existingRoom)) {
         dis.dispatch<ViewRoomPayload>({
@@ -66,17 +67,20 @@ export async function startDm(client: MatrixClient, targets: Member[], showSpinn
     }
 
     if (targetIds.length > 1) {
-        createRoomOptions.createOpts = targetIds.reduce(
+        createRoomOptions.createOpts = targetIds.reduce<{
+            invite_3pid: IInvite3PID[];
+            invite: string[];
+        }>(
             (roomOptions, address) => {
                 const type = getAddressType(address);
-                if (type === 'email') {
+                if (type === "email") {
                     const invite: IInvite3PID = {
-                        id_server: client.getIdentityServerUrl(true),
-                        medium: 'email',
+                        id_server: client.getIdentityServerUrl(true)!,
+                        medium: "email",
                         address,
                     };
                     roomOptions.invite_3pid.push(invite);
-                } else if (type === 'mx-user-id') {
+                } else if (type === "mx-user-id") {
                     roomOptions.invite.push(address);
                 }
                 return roomOptions;

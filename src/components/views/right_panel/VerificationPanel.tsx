@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { verificationMethods } from 'matrix-js-sdk/src/crypto';
+import { verificationMethods } from "matrix-js-sdk/src/crypto";
 import { QrCodeEvent, ReciprocateQRCode, SCAN_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
 import {
     Phase,
@@ -26,6 +26,7 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { User } from "matrix-js-sdk/src/models/user";
 import { SAS, SasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
 import { logger } from "matrix-js-sdk/src/logger";
+import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import VerificationQRCode from "../elements/crypto/VerificationQRCode";
@@ -40,7 +41,7 @@ interface IProps {
     layout: string;
     request: VerificationRequest;
     member: RoomMember | User;
-    phase: Phase;
+    phase?: Phase;
     onClose: () => void;
     isRoomEncrypted: boolean;
     inDialog: boolean;
@@ -56,175 +57,210 @@ interface IState {
 export default class VerificationPanel extends React.PureComponent<IProps, IState> {
     private hasVerifier: boolean;
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
         this.state = {};
         this.hasVerifier = false;
     }
 
-    private renderQRPhase() {
+    private renderQRPhase(): JSX.Element {
         const { member, request } = this.props;
         const showSAS: boolean = request.otherPartySupportsMethod(verificationMethods.SAS);
         const showQR: boolean = request.otherPartySupportsMethod(SCAN_QR_CODE_METHOD);
         const brand = SdkConfig.get().brand;
 
-        const noCommonMethodError: JSX.Element = !showSAS && !showQR ?
-            <p>{ _t(
-                "The device you are trying to verify doesn't support scanning a " +
-                "QR code or emoji verification, which is what %(brand)s supports. Try " +
-                "with a different client.",
-                { brand },
-            ) }</p> :
-            null;
+        const noCommonMethodError: JSX.Element | null =
+            !showSAS && !showQR ? (
+                <p>
+                    {_t(
+                        "The device you are trying to verify doesn't support scanning a " +
+                            "QR code or emoji verification, which is what %(brand)s supports. Try " +
+                            "with a different client.",
+                        { brand },
+                    )}
+                </p>
+            ) : null;
 
-        if (this.props.layout === 'dialog') {
+        if (this.props.layout === "dialog") {
             // HACK: This is a terrible idea.
-            let qrBlockDialog: JSX.Element;
-            let sasBlockDialog: JSX.Element;
-            if (showQR) {
-                qrBlockDialog =
-                    <div className='mx_VerificationPanel_QRPhase_startOption'>
-                        <p>{ _t("Scan this unique code") }</p>
+            let qrBlockDialog: JSX.Element | undefined;
+            let sasBlockDialog: JSX.Element | undefined;
+            if (showQR && request.qrCodeData) {
+                qrBlockDialog = (
+                    <div className="mx_VerificationPanel_QRPhase_startOption">
+                        <p>{_t("Scan this unique code")}</p>
                         <VerificationQRCode qrCodeData={request.qrCodeData} />
-                    </div>;
+                    </div>
+                );
             }
             if (showSAS) {
-                sasBlockDialog = <div className='mx_VerificationPanel_QRPhase_startOption'>
-                    <p>{ _t("Compare unique emoji") }</p>
-                    <span className='mx_VerificationPanel_QRPhase_helpText'>
-                        { _t("Compare a unique set of emoji if you don't have a camera on either device") }
-                    </span>
-                    <AccessibleButton disabled={this.state.emojiButtonClicked} onClick={this.startSAS} kind='primary'>
-                        { _t("Start") }
-                    </AccessibleButton>
-                </div>;
+                sasBlockDialog = (
+                    <div className="mx_VerificationPanel_QRPhase_startOption">
+                        <p>{_t("Compare unique emoji")}</p>
+                        <span className="mx_VerificationPanel_QRPhase_helpText">
+                            {_t("Compare a unique set of emoji if you don't have a camera on either device")}
+                        </span>
+                        <AccessibleButton
+                            disabled={this.state.emojiButtonClicked}
+                            onClick={this.startSAS}
+                            kind="primary"
+                        >
+                            {_t("Start")}
+                        </AccessibleButton>
+                    </div>
+                );
             }
-            const or = qrBlockDialog && sasBlockDialog ?
-                <div className='mx_VerificationPanel_QRPhase_betweenText'>
-                    { _t("%(qrCode)s or %(emojiCompare)s", {
-                        emojiCompare: "",
-                        qrCode: "",
-                    }) }
-                </div> : null;
+            const or =
+                qrBlockDialog && sasBlockDialog ? (
+                    <div className="mx_VerificationPanel_QRPhase_betweenText">
+                        {_t("%(qrCode)s or %(emojiCompare)s", {
+                            emojiCompare: "",
+                            qrCode: "",
+                        })}
+                    </div>
+                ) : null;
             return (
                 <div>
-                    { _t("Verify this device by completing one of the following:") }
-                    <div className='mx_VerificationPanel_QRPhase_startOptions'>
-                        { qrBlockDialog }
-                        { or }
-                        { sasBlockDialog }
-                        { noCommonMethodError }
+                    {_t("Verify this device by completing one of the following:")}
+                    <div className="mx_VerificationPanel_QRPhase_startOptions">
+                        {qrBlockDialog}
+                        {or}
+                        {sasBlockDialog}
+                        {noCommonMethodError}
                     </div>
                 </div>
             );
         }
 
-        let qrBlock: JSX.Element;
-        if (showQR) {
-            qrBlock = <div className="mx_UserInfo_container">
-                <h3>{ _t("Verify by scanning") }</h3>
-                <p>{ _t("Ask %(displayName)s to scan your code:", {
-                    displayName: (member as User).displayName || (member as RoomMember).name || member.userId,
-                }) }</p>
+        let qrBlock: JSX.Element | undefined;
+        if (showQR && request.qrCodeData) {
+            qrBlock = (
+                <div className="mx_UserInfo_container">
+                    <h3>{_t("Verify by scanning")}</h3>
+                    <p>
+                        {_t("Ask %(displayName)s to scan your code:", {
+                            displayName: (member as User).displayName || (member as RoomMember).name || member.userId,
+                        })}
+                    </p>
 
-                <div className="mx_VerificationPanel_qrCode">
-                    <VerificationQRCode qrCodeData={request.qrCodeData} />
+                    <div className="mx_VerificationPanel_qrCode">
+                        <VerificationQRCode qrCodeData={request.qrCodeData} />
+                    </div>
                 </div>
-            </div>;
+            );
         }
 
-        let sasBlock: JSX.Element;
+        let sasBlock: JSX.Element | undefined;
         if (showSAS) {
             const disabled = this.state.emojiButtonClicked;
-            const sasLabel = showQR ?
-                _t("If you can't scan the code above, verify by comparing unique emoji.") :
-                _t("Verify by comparing unique emoji.");
+            const sasLabel = showQR
+                ? _t("If you can't scan the code above, verify by comparing unique emoji.")
+                : _t("Verify by comparing unique emoji.");
 
             // Note: mx_VerificationPanel_verifyByEmojiButton is for the end-to-end tests
-            sasBlock = <div className="mx_UserInfo_container">
-                <h3>{ _t("Verify by emoji") }</h3>
-                <p>{ sasLabel }</p>
-                <AccessibleButton
-                    disabled={disabled}
-                    kind="primary"
-                    className="mx_UserInfo_wideButton mx_VerificationPanel_verifyByEmojiButton"
-                    onClick={this.startSAS}
-                >
-                    { _t("Verify by emoji") }
-                </AccessibleButton>
-            </div>;
+            sasBlock = (
+                <div className="mx_UserInfo_container">
+                    <h3>{_t("Verify by emoji")}</h3>
+                    <p>{sasLabel}</p>
+                    <AccessibleButton
+                        disabled={disabled}
+                        kind="primary"
+                        className="mx_UserInfo_wideButton mx_VerificationPanel_verifyByEmojiButton"
+                        onClick={this.startSAS}
+                    >
+                        {_t("Verify by emoji")}
+                    </AccessibleButton>
+                </div>
+            );
         }
 
-        const noCommonMethodBlock = noCommonMethodError ?
-            <div className="mx_UserInfo_container">{ noCommonMethodError }</div> :
-            null;
+        const noCommonMethodBlock = noCommonMethodError ? (
+            <div className="mx_UserInfo_container">{noCommonMethodError}</div>
+        ) : null;
 
         // TODO: add way to open camera to scan a QR code
-        return <React.Fragment>
-            { qrBlock }
-            { sasBlock }
-            { noCommonMethodBlock }
-        </React.Fragment>;
+        return (
+            <React.Fragment>
+                {qrBlock}
+                {sasBlock}
+                {noCommonMethodBlock}
+            </React.Fragment>
+        );
     }
 
-    private onReciprocateYesClick = () => {
+    private onReciprocateYesClick = (): void => {
+        if (!this.state.reciprocateQREvent) return;
         this.setState({ reciprocateButtonClicked: true });
-        this.state.reciprocateQREvent.confirm();
+        this.state.reciprocateQREvent?.confirm();
     };
 
-    private onReciprocateNoClick = () => {
+    private onReciprocateNoClick = (): void => {
+        if (!this.state.reciprocateQREvent) return;
         this.setState({ reciprocateButtonClicked: true });
-        this.state.reciprocateQREvent.cancel();
+        this.state.reciprocateQREvent?.cancel();
     };
 
-    private getDevice() {
+    private getDevice(): DeviceInfo | null {
         const deviceId = this.props.request && this.props.request.channel.deviceId;
-        return MatrixClientPeg.get().getStoredDevice(MatrixClientPeg.get().getUserId(), deviceId);
+        const userId = MatrixClientPeg.get().getUserId();
+        if (deviceId && userId) {
+            return MatrixClientPeg.get().getStoredDevice(userId, deviceId);
+        } else {
+            return null;
+        }
     }
 
-    private renderQRReciprocatePhase() {
+    private renderQRReciprocatePhase(): JSX.Element {
         const { member, request } = this.props;
-        const description = request.isSelfVerification ?
-            _t("Almost there! Is your other device showing the same shield?") :
-            _t("Almost there! Is %(displayName)s showing the same shield?", {
-                displayName: (member as User).displayName || (member as RoomMember).name || member.userId,
-            });
+        const description = request.isSelfVerification
+            ? _t("Almost there! Is your other device showing the same shield?")
+            : _t("Almost there! Is %(displayName)s showing the same shield?", {
+                  displayName: (member as User).displayName || (member as RoomMember).name || member.userId,
+              });
         let body: JSX.Element;
         if (this.state.reciprocateQREvent) {
             // Element Web doesn't support scanning yet, so assume here we're the client being scanned.
-            body = <React.Fragment>
-                <p>{ description }</p>
-                <E2EIcon isUser={true} status={E2EState.Verified} size={128} hideTooltip={true} />
-                <div className="mx_VerificationPanel_reciprocateButtons">
-                    <AccessibleButton
-                        kind="danger"
-                        disabled={this.state.reciprocateButtonClicked}
-                        onClick={this.onReciprocateNoClick}
-                    >
-                        { _t("No") }
-                    </AccessibleButton>
-                    <AccessibleButton
-                        kind="primary"
-                        disabled={this.state.reciprocateButtonClicked}
-                        onClick={this.onReciprocateYesClick}
-                    >
-                        { _t("Yes") }
-                    </AccessibleButton>
-                </div>
-            </React.Fragment>;
+            body = (
+                <React.Fragment>
+                    <p>{description}</p>
+                    <E2EIcon isUser={true} status={E2EState.Verified} size={128} hideTooltip={true} />
+                    <div className="mx_VerificationPanel_reciprocateButtons">
+                        <AccessibleButton
+                            kind="danger"
+                            disabled={this.state.reciprocateButtonClicked}
+                            onClick={this.onReciprocateNoClick}
+                        >
+                            {_t("No")}
+                        </AccessibleButton>
+                        <AccessibleButton
+                            kind="primary"
+                            disabled={this.state.reciprocateButtonClicked}
+                            onClick={this.onReciprocateYesClick}
+                        >
+                            {_t("Yes")}
+                        </AccessibleButton>
+                    </div>
+                </React.Fragment>
+            );
         } else {
-            body = <p><Spinner /></p>;
+            body = (
+                <p>
+                    <Spinner />
+                </p>
+            );
         }
-        return <div className="mx_UserInfo_container mx_VerificationPanel_reciprocate_section">
-            <h3>{ _t("Verify by scanning") }</h3>
-            { body }
-        </div>;
+        return (
+            <div className="mx_UserInfo_container mx_VerificationPanel_reciprocate_section">
+                <h3>{_t("Verify by scanning")}</h3>
+                {body}
+            </div>
+        );
     }
 
-    private renderVerifiedPhase() {
+    private renderVerifiedPhase(): JSX.Element {
         const { member, request } = this.props;
 
-        let text: string;
+        let text: string | undefined;
         if (!request.isSelfVerification) {
             if (this.props.isRoomEncrypted) {
                 text = _t("Verify all users in a room to ensure it's secure.");
@@ -243,7 +279,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                 description = _t("You've successfully verified your device!");
             } else {
                 description = _t("You've successfully verified %(deviceName)s (%(deviceId)s)!", {
-                    deviceName: device ? device.getDisplayName() : '',
+                    deviceName: device ? device.getDisplayName() : "",
                     deviceId: this.props.request.channel.deviceId,
                 });
             }
@@ -255,17 +291,17 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
 
         return (
             <div className="mx_UserInfo_container mx_VerificationPanel_verified_section">
-                <p>{ description }</p>
+                <p>{description}</p>
                 <E2EIcon isUser={true} status={E2EState.Verified} size={128} hideTooltip={true} />
-                { text ? <p>{ text }</p> : null }
+                {text ? <p>{text}</p> : null}
                 <AccessibleButton kind="primary" className="mx_UserInfo_wideButton" onClick={this.props.onClose}>
-                    { _t("Got it") }
+                    {_t("Got it")}
                 </AccessibleButton>
             </div>
         );
     }
 
-    private renderCancelledPhase() {
+    private renderCancelledPhase(): JSX.Element {
         const { member, request } = this.props;
 
         let startAgainInstruction: string;
@@ -293,17 +329,17 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
 
         return (
             <div className="mx_UserInfo_container">
-                <h3>{ _t("Verification cancelled") }</h3>
-                <p>{ text }</p>
+                <h3>{_t("Verification cancelled")}</h3>
+                <p>{text}</p>
 
                 <AccessibleButton kind="primary" className="mx_UserInfo_wideButton" onClick={this.props.onClose}>
-                    { _t("Got it") }
+                    {_t("Got it")}
                 </AccessibleButton>
             </div>
         );
     }
 
-    public render() {
+    public render(): React.ReactNode {
         const { member, phase, request } = this.props;
 
         const displayName = (member as User).displayName || (member as RoomMember).name || member.userId;
@@ -316,19 +352,20 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                     case verificationMethods.RECIPROCATE_QR_CODE:
                         return this.renderQRReciprocatePhase();
                     case verificationMethods.SAS: {
-                        const emojis = this.state.sasEvent ?
+                        const emojis = this.state.sasEvent ? (
                             <VerificationShowSas
                                 displayName={displayName}
-                                device={this.getDevice()}
+                                device={this.getDevice() ?? undefined}
                                 sas={this.state.sasEvent.sas}
                                 onCancel={this.onSasMismatchesClick}
                                 onDone={this.onSasMatchesClick}
                                 inDialog={this.props.inDialog}
                                 isSelf={request.isSelfVerification}
-                            /> : <Spinner />;
-                        return <div className="mx_UserInfo_container">
-                            { emojis }
-                        </div>;
+                            />
+                        ) : (
+                            <Spinner />
+                        );
+                        return <div className="mx_UserInfo_container">{emojis}</div>;
                     }
                     default:
                         return null;
@@ -342,7 +379,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         return null;
     }
 
-    private startSAS = async () => {
+    private startSAS = async (): Promise<void> => {
         this.setState({ emojiButtonClicked: true });
         const verifier = this.props.request.beginKeyVerification(verificationMethods.SAS);
         try {
@@ -352,41 +389,41 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         }
     };
 
-    private onSasMatchesClick = () => {
-        this.state.sasEvent.confirm();
+    private onSasMatchesClick = (): void => {
+        this.state.sasEvent?.confirm();
     };
 
-    private onSasMismatchesClick = () => {
-        this.state.sasEvent.mismatch();
+    private onSasMismatchesClick = (): void => {
+        this.state.sasEvent?.mismatch();
     };
 
-    private updateVerifierState = () => {
+    private updateVerifierState = (): void => {
         const { request } = this.props;
         const sasEvent = (request.verifier as SAS).sasEvent;
         const reciprocateQREvent = (request.verifier as ReciprocateQRCode).reciprocateQREvent;
-        request.verifier.off(SasEvent.ShowSas, this.updateVerifierState);
-        request.verifier.off(QrCodeEvent.ShowReciprocateQr, this.updateVerifierState);
+        request.verifier?.off(SasEvent.ShowSas, this.updateVerifierState);
+        request.verifier?.off(QrCodeEvent.ShowReciprocateQr, this.updateVerifierState);
         this.setState({ sasEvent, reciprocateQREvent });
     };
 
-    private onRequestChange = async () => {
+    private onRequestChange = async (): Promise<void> => {
         const { request } = this.props;
         const hadVerifier = this.hasVerifier;
         this.hasVerifier = !!request.verifier;
         if (!hadVerifier && this.hasVerifier) {
-            request.verifier.on(SasEvent.ShowSas, this.updateVerifierState);
-            request.verifier.on(QrCodeEvent.ShowReciprocateQr, this.updateVerifierState);
+            request.verifier?.on(SasEvent.ShowSas, this.updateVerifierState);
+            request.verifier?.on(QrCodeEvent.ShowReciprocateQr, this.updateVerifierState);
             try {
                 // on the requester side, this is also awaited in startSAS,
                 // but that's ok as verify should return the same promise.
-                await request.verifier.verify();
+                await request.verifier?.verify();
             } catch (err) {
                 logger.error("error verify", err);
             }
         }
     };
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         const { request } = this.props;
         request.on(VerificationRequestEvent.Change, this.onRequestChange);
         if (request.verifier) {
@@ -397,7 +434,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         this.onRequestChange();
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         const { request } = this.props;
         if (request.verifier) {
             request.verifier.off(SasEvent.ShowSas, this.updateVerifierState);

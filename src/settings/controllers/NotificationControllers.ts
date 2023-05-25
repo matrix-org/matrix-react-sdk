@@ -21,7 +21,7 @@ import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
 import { PushRuleActionName } from "matrix-js-sdk/src/@types/PushRules";
 
 import SettingController from "./SettingController";
-import { MatrixClientPeg } from '../../MatrixClientPeg';
+import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { SettingLevel } from "../SettingLevel";
 
 // .m.rule.master being enabled means all events match that push rule
@@ -40,9 +40,10 @@ export function isPushNotifyDisabled(): boolean {
     return masterRule.enabled && !masterRule.actions.includes(PushRuleActionName.Notify);
 }
 
-function getNotifier(): any { // TODO: [TS] Formal type that doesn't cause a cyclical reference.
+function getNotifier(): any {
+    // TODO: [TS] Formal type that doesn't cause a cyclical reference.
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    let Notifier = require('../../Notifier'); // avoids cyclical references
+    let Notifier = require("../../Notifier"); // avoids cyclical references
     if (Notifier.default) Notifier = Notifier.default; // correct for webpack require() weirdness
     return Notifier;
 }
@@ -52,7 +53,7 @@ export class NotificationsEnabledController extends SettingController {
         level: SettingLevel,
         roomId: string,
         calculatedValue: any,
-        calculatedAtLevel: SettingLevel,
+        calculatedAtLevel: SettingLevel | null,
     ): any {
         if (!getNotifier().isPossible()) return false;
 
@@ -63,7 +64,7 @@ export class NotificationsEnabledController extends SettingController {
         return calculatedValue;
     }
 
-    public onChange(level: SettingLevel, roomId: string, newValue: any) {
+    public onChange(level: SettingLevel, roomId: string, newValue: any): void {
         if (getNotifier().supportsDesktopNotifications()) {
             getNotifier().setEnabled(newValue);
         }

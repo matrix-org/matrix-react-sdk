@@ -14,29 +14,31 @@
  limitations under the License.
  */
 
-import React, { HTMLAttributes, InputHTMLAttributes, ReactHTML, ReactNode } from 'react';
-import classnames from 'classnames';
+import React, { HTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
+import classnames from "classnames";
 
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 export type ButtonEvent = React.MouseEvent<Element> | React.KeyboardEvent<Element> | React.FormEvent<Element>;
 
-type AccessibleButtonKind = | 'primary'
-    | 'primary_outline'
-    | 'primary_sm'
-    | 'secondary'
-    | 'content_inline'
-    | 'danger'
-    | 'danger_outline'
-    | 'danger_sm'
-    | 'danger_inline'
-    | 'link'
-    | 'link_inline'
-    | 'link_sm'
-    | 'confirm_sm'
-    | 'cancel_sm'
-    | 'icon';
+type AccessibleButtonKind =
+    | "primary"
+    | "primary_outline"
+    | "primary_sm"
+    | "secondary"
+    | "secondary_content"
+    | "content_inline"
+    | "danger"
+    | "danger_outline"
+    | "danger_sm"
+    | "danger_inline"
+    | "link"
+    | "link_inline"
+    | "link_sm"
+    | "confirm_sm"
+    | "cancel_sm"
+    | "icon";
 
 /**
  * This type construct allows us to specifically pass those props down to the element we’re creating that the element
@@ -48,9 +50,10 @@ type AccessibleButtonKind = | 'primary'
  */
 type DynamicHtmlElementProps<T extends keyof JSX.IntrinsicElements> =
     JSX.IntrinsicElements[T] extends HTMLAttributes<{}> ? DynamicElementProps<T> : DynamicElementProps<"div">;
-type DynamicElementProps<T extends keyof JSX.IntrinsicElements> =
-    Partial<Omit<JSX.IntrinsicElements[T], 'ref' | 'onClick' | 'onMouseDown' | 'onKeyUp' | 'onKeyDown'>>
-    & Omit<InputHTMLAttributes<Element>, 'onClick'>;
+type DynamicElementProps<T extends keyof JSX.IntrinsicElements> = Partial<
+    Omit<JSX.IntrinsicElements[T], "ref" | "onClick" | "onMouseDown" | "onKeyUp" | "onKeyDown">
+> &
+    Omit<InputHTMLAttributes<Element>, "onClick">;
 
 /**
  * children: React's magic prop. Represents all children given to the element.
@@ -61,7 +64,7 @@ type DynamicElementProps<T extends keyof JSX.IntrinsicElements> =
 type IProps<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> & {
     inputRef?: React.Ref<Element>;
     element?: T;
-    children?: ReactNode | undefined;
+    children?: ReactNode;
     // The kind of button, similar to how Bootstrap works.
     // See available classes for AccessibleButton for options.
     kind?: AccessibleButtonKind | string;
@@ -75,7 +78,7 @@ type IProps<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> 
     onClick: ((e: ButtonEvent) => void | Promise<void>) | null;
 };
 
-interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
+export interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
     ref?: React.Ref<Element>;
 }
 
@@ -88,7 +91,7 @@ interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
  * @returns {Object} rendered react
  */
 export default function AccessibleButton<T extends keyof JSX.IntrinsicElements>({
-    element,
+    element = "div" as T,
     onClick,
     children,
     kind,
@@ -99,7 +102,7 @@ export default function AccessibleButton<T extends keyof JSX.IntrinsicElements>(
     onKeyUp,
     triggerOnMouseDown,
     ...restProps
-}: IProps<T>) {
+}: IProps<T>): JSX.Element {
     const newProps: IAccessibleButtonProps = restProps;
     if (disabled) {
         newProps["aria-disabled"] = true;
@@ -155,23 +158,18 @@ export default function AccessibleButton<T extends keyof JSX.IntrinsicElements>(
     // Pass through the ref - used for keyboard shortcut access to some buttons
     newProps.ref = inputRef;
 
-    newProps.className = classnames(
-        "mx_AccessibleButton",
-        className,
-        {
-            "mx_AccessibleButton_hasKind": kind,
-            [`mx_AccessibleButton_kind_${kind}`]: kind,
-            "mx_AccessibleButton_disabled": disabled,
-        },
-    );
+    newProps.className = classnames("mx_AccessibleButton", className, {
+        mx_AccessibleButton_hasKind: kind,
+        [`mx_AccessibleButton_kind_${kind}`]: kind,
+        mx_AccessibleButton_disabled: disabled,
+    });
 
     // React.createElement expects InputHTMLAttributes
     return React.createElement(element, newProps, children);
 }
 
 AccessibleButton.defaultProps = {
-    element: 'div' as keyof ReactHTML,
-    role: 'button',
+    role: "button",
     tabIndex: 0,
 };
 

@@ -22,20 +22,25 @@ import { defer, IDeferred } from "matrix-js-sdk/src/utils";
 import type { Room } from "matrix-js-sdk/src/models/room";
 import type { ConnectionState } from "../../../models/Call";
 import { Call, CallEvent, ElementCall, isConnected } from "../../../models/Call";
-import { useCall, useConnectionState, useParticipants } from "../../../hooks/useCall";
+import {
+    useCall,
+    useConnectionState,
+    useJoinCallButtonDisabledTooltip,
+    useParticipatingMembers,
+} from "../../../hooks/useCall";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AppTile from "../elements/AppTile";
 import { _t } from "../../../languageHandler";
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
-import MediaDeviceHandler, { MediaDeviceKindEnum } from "../../../MediaDeviceHandler";
+import MediaDeviceHandler from "../../../MediaDeviceHandler";
 import { CallStore } from "../../../stores/CallStore";
 import IconizedContextMenu, {
     IconizedContextMenuOption,
     IconizedContextMenuOptionList,
 } from "../context_menus/IconizedContextMenu";
-import { aboveLeftOf, ContextMenuButton, useContextMenu } from "../../structures/ContextMenu";
+import { aboveRightOf, ContextMenuButton, useContextMenu } from "../../structures/ContextMenu";
 import { Alignment } from "../elements/Tooltip";
-import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import { ButtonEvent } from "../elements/AccessibleButton";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import FacePile from "../elements/FacePile";
 import MemberAvatar from "../avatars/MemberAvatar";
@@ -53,56 +58,67 @@ interface DeviceButtonProps {
 }
 
 const DeviceButton: FC<DeviceButtonProps> = ({
-    kind, devices, setDevice, deviceListLabel, muted, disabled, toggle, unmutedTitle, mutedTitle,
+    kind,
+    devices,
+    setDevice,
+    deviceListLabel,
+    muted,
+    disabled,
+    toggle,
+    unmutedTitle,
+    mutedTitle,
 }) => {
     const [showMenu, buttonRef, openMenu, closeMenu] = useContextMenu();
-    const selectDevice = useCallback((device: MediaDeviceInfo) => {
-        setDevice(device);
-        closeMenu();
-    }, [setDevice, closeMenu]);
+    const selectDevice = useCallback(
+        (device: MediaDeviceInfo) => {
+            setDevice(device);
+            closeMenu();
+        },
+        [setDevice, closeMenu],
+    );
 
     let contextMenu: JSX.Element | null = null;
     if (showMenu) {
         const buttonRect = buttonRef.current!.getBoundingClientRect();
-        contextMenu = <IconizedContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu}>
-            <IconizedContextMenuOptionList>
-                { devices.map((d) =>
-                    <IconizedContextMenuOption
-                        key={d.deviceId}
-                        label={d.label}
-                        onClick={() => selectDevice(d)}
-                    />,
-                ) }
-            </IconizedContextMenuOptionList>
-        </IconizedContextMenu>;
+        contextMenu = (
+            <IconizedContextMenu {...aboveRightOf(buttonRect, undefined, 10)} onFinished={closeMenu}>
+                <IconizedContextMenuOptionList>
+                    {devices.map((d) => (
+                        <IconizedContextMenuOption key={d.deviceId} label={d.label} onClick={() => selectDevice(d)} />
+                    ))}
+                </IconizedContextMenuOptionList>
+            </IconizedContextMenu>
+        );
     }
 
     if (!devices.length) return null;
 
-    return <div
-        className={classNames("mx_CallView_deviceButtonWrapper", {
-            "mx_CallView_deviceButtonWrapper_muted": muted,
-        })}
-    >
-        <AccessibleTooltipButton
-            className={`mx_CallView_deviceButton mx_CallView_deviceButton_${kind}`}
-            title={muted ? mutedTitle : unmutedTitle}
-            alignment={Alignment.Top}
-            onClick={toggle}
-            disabled={disabled}
-        />
-        { devices.length > 1 ? (
-            <ContextMenuButton
-                className="mx_CallView_deviceListButton"
+    return (
+        <div
+            className={classNames("mx_CallView_deviceButtonWrapper", {
+                mx_CallView_deviceButtonWrapper_muted: muted,
+            })}
+        >
+            <AccessibleTooltipButton
+                className={`mx_CallView_deviceButton mx_CallView_deviceButton_${kind}`}
                 inputRef={buttonRef}
-                onClick={openMenu}
-                isExpanded={showMenu}
-                label={deviceListLabel}
+                title={muted ? mutedTitle : unmutedTitle}
+                alignment={Alignment.Top}
+                onClick={toggle}
                 disabled={disabled}
             />
-        ) : null }
-        { contextMenu }
-    </div>;
+            {devices.length > 1 ? (
+                <ContextMenuButton
+                    className="mx_CallView_deviceListButton"
+                    onClick={openMenu}
+                    isExpanded={showMenu}
+                    label={deviceListLabel}
+                    disabled={disabled}
+                />
+            ) : null}
+            {contextMenu}
+        </div>
+    );
 };
 
 const MAX_FACES = 8;
@@ -110,10 +126,11 @@ const MAX_FACES = 8;
 interface LobbyProps {
     room: Room;
     connect: () => Promise<void>;
+    joinCallButtonDisabledTooltip?: string;
     children?: ReactNode;
 }
 
-export const Lobby: FC<LobbyProps> = ({ room, connect, children }) => {
+export const Lobby: FC<LobbyProps> = ({ room, joinCallButtonDisabledTooltip, connect, children }) => {
     const [connecting, setConnecting] = useState(false);
     const me = useMemo(() => room.getMember(room.myUserId)!, [room]);
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -132,38 +149,44 @@ export const Lobby: FC<LobbyProps> = ({ room, connect, children }) => {
         setVideoMuted(!videoMuted);
     }, [videoMuted, setVideoMuted]);
 
-    const [videoStream, audioInputs, videoInputs] = useAsyncMemo(async () => {
-        let previewStream: MediaStream;
-        try {
+    const [videoStream, audioInputs, videoInputs] = useAsyncMemo(
+        async (): Promise<[MediaStream | null, MediaDeviceInfo[], MediaDeviceInfo[]]> => {
+            let devices = await MediaDeviceHandler.getDevices();
+
             // We get the preview stream before requesting devices: this is because
             // we need (in some browsers) an active media stream in order to get
-            // non-blank labels for the devices. According to the docs, we
-            // need a stream of each type (audio + video) if we want to enumerate
-            // audio & video devices, although this didn't seem to be the case
-            // in practice for me. We request both anyway.
-            // For similar reasons, we also request a stream even if video is muted,
-            // which could be a bit strange but allows us to get the device list
-            // reliably. One option could be to try & get devices without a stream,
-            // then try again with a stream if we get blank deviceids, but... ew.
-            previewStream = await navigator.mediaDevices.getUserMedia({
-                video: { deviceId: videoInputId },
-                audio: { deviceId: MediaDeviceHandler.getAudioInput() },
-            });
-        } catch (e) {
-            logger.error(`Failed to get stream for device ${videoInputId}`, e);
-        }
+            // non-blank labels for the devices.
+            let stream: MediaStream | null = null;
+            try {
+                if (devices!.audioinput.length > 0) {
+                    // Holding just an audio stream will be enough to get us all device labels, so
+                    // if video is muted, don't bother requesting video.
+                    stream = await navigator.mediaDevices.getUserMedia({
+                        audio: true,
+                        video: !videoMuted && devices!.videoinput.length > 0 && { deviceId: videoInputId },
+                    });
+                } else if (devices!.videoinput.length > 0) {
+                    // We have to resort to a video stream, even if video is supposed to be muted.
+                    stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: videoInputId } });
+                }
+            } catch (e) {
+                logger.error(`Failed to get stream for device ${videoInputId}`, e);
+            }
 
-        const devices = await MediaDeviceHandler.getDevices();
+            // Refresh the devices now that we hold a stream
+            if (stream !== null) devices = await MediaDeviceHandler.getDevices();
 
-        // If video is muted, we don't actually want the stream, so we can get rid of
-        // it now.
-        if (videoMuted) {
-            previewStream.getTracks().forEach(t => t.stop());
-            previewStream = undefined;
-        }
+            // If video is muted, we don't actually want the stream, so we can get rid of it now.
+            if (videoMuted) {
+                stream?.getTracks().forEach((t) => t.stop());
+                stream = null;
+            }
 
-        return [previewStream, devices[MediaDeviceKindEnum.AudioInput], devices[MediaDeviceKindEnum.VideoInput]];
-    }, [videoInputId, videoMuted], [null, [], []]);
+            return [stream, devices?.audioinput ?? [], devices?.videoinput ?? []];
+        },
+        [videoInputId, videoMuted],
+        [null, [], []],
+    );
 
     const setAudioInput = useCallback((device: MediaDeviceInfo) => {
         MediaDeviceHandler.instance.setAudioInput(device.deviceId);
@@ -180,68 +203,74 @@ export const Lobby: FC<LobbyProps> = ({ room, connect, children }) => {
             videoElement.play();
 
             return () => {
-                videoStream?.getTracks().forEach(track => track.stop());
+                videoStream.getTracks().forEach((track) => track.stop());
                 videoElement.srcObject = null;
             };
         }
     }, [videoStream]);
 
-    const onConnectClick = useCallback(async (ev: ButtonEvent) => {
-        ev.preventDefault();
-        setConnecting(true);
-        try {
-            await connect();
-        } catch (e) {
-            logger.error(e);
-            setConnecting(false);
-        }
-    }, [connect, setConnecting]);
+    const onConnectClick = useCallback(
+        async (ev: ButtonEvent): Promise<void> => {
+            ev.preventDefault();
+            setConnecting(true);
+            try {
+                await connect();
+            } catch (e) {
+                logger.error(e);
+                setConnecting(false);
+            }
+        },
+        [connect, setConnecting],
+    );
 
-    return <div className="mx_CallView_lobby">
-        { children }
-        <div className="mx_CallView_preview">
-            <MemberAvatar key={me.userId} member={me} width={200} height={200} resizeMethod="scale" />
-            <video
-                ref={videoRef}
-                style={{ visibility: videoMuted ? "hidden" : undefined }}
-                muted
-                playsInline
-                disablePictureInPicture
-            />
-            <div className="mx_CallView_controls">
-                <DeviceButton
-                    kind="audio"
-                    devices={audioInputs}
-                    setDevice={setAudioInput}
-                    deviceListLabel={_t("Audio devices")}
-                    muted={audioMuted}
-                    disabled={connecting}
-                    toggle={toggleAudio}
-                    unmutedTitle={_t("Mute microphone")}
-                    mutedTitle={_t("Unmute microphone")}
+    return (
+        <div className="mx_CallView_lobby">
+            {children}
+            <div className="mx_CallView_preview">
+                <MemberAvatar key={me.userId} member={me} width={200} height={200} resizeMethod="scale" />
+                <video
+                    ref={videoRef}
+                    style={{ visibility: videoMuted ? "hidden" : undefined }}
+                    muted
+                    playsInline
+                    disablePictureInPicture
                 />
-                <DeviceButton
-                    kind="video"
-                    devices={videoInputs}
-                    setDevice={setVideoInput}
-                    deviceListLabel={_t("Video devices")}
-                    muted={videoMuted}
-                    disabled={connecting}
-                    toggle={toggleVideo}
-                    unmutedTitle={_t("Turn off camera")}
-                    mutedTitle={_t("Turn on camera")}
-                />
+                <div className="mx_CallView_controls">
+                    <DeviceButton
+                        kind="audio"
+                        devices={audioInputs}
+                        setDevice={setAudioInput}
+                        deviceListLabel={_t("Audio devices")}
+                        muted={audioMuted}
+                        disabled={connecting}
+                        toggle={toggleAudio}
+                        unmutedTitle={_t("Mute microphone")}
+                        mutedTitle={_t("Unmute microphone")}
+                    />
+                    <DeviceButton
+                        kind="video"
+                        devices={videoInputs}
+                        setDevice={setVideoInput}
+                        deviceListLabel={_t("Video devices")}
+                        muted={videoMuted}
+                        disabled={connecting}
+                        toggle={toggleVideo}
+                        unmutedTitle={_t("Turn off camera")}
+                        mutedTitle={_t("Turn on camera")}
+                    />
+                </div>
             </div>
+            <AccessibleTooltipButton
+                className="mx_CallView_connectButton"
+                kind="primary"
+                disabled={connecting || joinCallButtonDisabledTooltip !== undefined}
+                onClick={onConnectClick}
+                label={_t("Join")}
+                tooltip={connecting ? _t("Connecting") : joinCallButtonDisabledTooltip}
+                alignment={Alignment.Bottom}
+            />
         </div>
-        <AccessibleButton
-            className="mx_CallView_connectButton"
-            kind="primary"
-            disabled={connecting}
-            onClick={onConnectClick}
-        >
-            { _t("Join") }
-        </AccessibleButton>
-    </div>;
+    );
 };
 
 interface StartCallViewProps {
@@ -269,25 +298,27 @@ const StartCallView: FC<StartCallViewProps> = ({ room, resizing, call, setStarti
     const [connected, setConnected] = useState(() => call !== null && isConnected(call.connectionState));
     useEffect(() => {
         if (call !== null) {
-            const onConnectionState = (state: ConnectionState) => setConnected(isConnected(state));
+            const onConnectionState = (state: ConnectionState): void => setConnected(isConnected(state));
             call.on(CallEvent.ConnectionState, onConnectionState);
-            return () => { call.off(CallEvent.ConnectionState, onConnectionState); };
+            return () => {
+                call.off(CallEvent.ConnectionState, onConnectionState);
+            };
         }
     }, [call]);
 
-    const connect = useCallback(async () => {
+    const connect = useCallback(async (): Promise<void> => {
         setStartingCall(true);
         await ElementCall.create(room);
         await connectDeferred.promise;
     }, [room, setStartingCall, connectDeferred]);
 
     useEffect(() => {
-        (async () => {
+        (async (): Promise<void> => {
             // If the call was successfully started, connect automatically
             if (call !== null) {
                 try {
                     // Disconnect from any other active calls first, since we don't yet support holding
-                    await Promise.all([...CallStore.instance.activeCalls].map(call => call.disconnect()));
+                    await Promise.all([...CallStore.instance.activeCalls].map((call) => call.disconnect()));
                     await call.connect();
                     connectDeferred.resolve();
                 } catch (e) {
@@ -297,18 +328,22 @@ const StartCallView: FC<StartCallViewProps> = ({ room, resizing, call, setStarti
         })();
     }, [call, connectDeferred]);
 
-    return <div className="mx_CallView">
-        { connected ? null : <Lobby room={room} connect={connect} /> }
-        { call !== null && <AppTile
-            app={call.widget}
-            room={room}
-            userId={cli.credentials.userId}
-            creatorUserId={call.widget.creatorUserId}
-            waitForIframeLoad={call.widget.waitForIframeLoad}
-            showMenubar={false}
-            pointerEvents={resizing ? "none" : undefined}
-        /> }
-    </div>;
+    return (
+        <div className="mx_CallView">
+            {connected ? null : <Lobby room={room} connect={connect} />}
+            {call !== null && (
+                <AppTile
+                    app={call.widget}
+                    room={room}
+                    userId={cli.credentials.userId!}
+                    creatorUserId={call.widget.creatorUserId}
+                    waitForIframeLoad={call.widget.waitForIframeLoad}
+                    showMenubar={false}
+                    pointerEvents={resizing ? "none" : undefined}
+                />
+            )}
+        </div>
+    );
 };
 
 interface JoinCallViewProps {
@@ -320,46 +355,61 @@ interface JoinCallViewProps {
 const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call }) => {
     const cli = useContext(MatrixClientContext);
     const connected = isConnected(useConnectionState(call));
-    const participants = useParticipants(call);
+    const members = useParticipatingMembers(call);
+    const joinCallButtonDisabledTooltip = useJoinCallButtonDisabledTooltip(call);
 
-    const connect = useCallback(async () => {
+    const connect = useCallback(async (): Promise<void> => {
         // Disconnect from any other active calls first, since we don't yet support holding
-        await Promise.all([...CallStore.instance.activeCalls].map(call => call.disconnect()));
+        await Promise.all([...CallStore.instance.activeCalls].map((call) => call.disconnect()));
         await call.connect();
     }, [call]);
 
     // We'll take this opportunity to tidy up our room state
-    useEffect(() => { call.clean(); }, [call]);
+    useEffect(() => {
+        call.clean();
+    }, [call]);
 
     let lobby: JSX.Element | null = null;
     if (!connected) {
         let facePile: JSX.Element | null = null;
-        if (participants.size) {
-            const shownMembers = [...participants].slice(0, MAX_FACES);
-            const overflow = participants.size > shownMembers.length;
+        if (members.length) {
+            const shownMembers = members.slice(0, MAX_FACES);
+            const overflow = members.length > shownMembers.length;
 
-            facePile = <div className="mx_CallView_participants">
-                { _t("%(count)s people joined", { count: participants.size }) }
-                <FacePile members={shownMembers} faceSize={24} overflow={overflow} />
-            </div>;
+            facePile = (
+                <div className="mx_CallView_participants">
+                    {_t("%(count)s people joined", { count: members.length })}
+                    <FacePile members={shownMembers} faceSize={24} overflow={overflow} />
+                </div>
+            );
         }
 
-        lobby = <Lobby room={room} connect={connect}>{ facePile }</Lobby>;
+        lobby = (
+            <Lobby
+                room={room}
+                connect={connect}
+                joinCallButtonDisabledTooltip={joinCallButtonDisabledTooltip ?? undefined}
+            >
+                {facePile}
+            </Lobby>
+        );
     }
 
-    return <div className="mx_CallView">
-        { lobby }
-        { /* We render the widget even if we're disconnected, so it stays loaded */ }
-        <AppTile
-            app={call.widget}
-            room={room}
-            userId={cli.credentials.userId}
-            creatorUserId={call.widget.creatorUserId}
-            waitForIframeLoad={call.widget.waitForIframeLoad}
-            showMenubar={false}
-            pointerEvents={resizing ? "none" : undefined}
-        />
-    </div>;
+    return (
+        <div className="mx_CallView">
+            {lobby}
+            {/* We render the widget even if we're disconnected, so it stays loaded */}
+            <AppTile
+                app={call.widget}
+                room={room}
+                userId={cli.credentials.userId!}
+                creatorUserId={call.widget.creatorUserId}
+                waitForIframeLoad={call.widget.waitForIframeLoad}
+                showMenubar={false}
+                pointerEvents={resizing ? "none" : undefined}
+            />
+        </div>
+    );
 };
 
 interface CallViewProps {

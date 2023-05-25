@@ -1,6 +1,6 @@
 /* Colors from Figma Compound https://www.figma.com/file/X4XTH9iS2KGJ2wFKDqkyed/Compound?node-id=559%3A741 */
-$system: #21262C;
-$system-transparent: rgba($system, 0.0); /* XXX: workaround for Safari 15.3 linear-gradient bug */
+$system: #21262c;
+$system-transparent: rgba($system, 0); /* XXX: workaround for Safari 15.3 linear-gradient bug */
 
 /* unified palette */
 /* try to use these colors when possible */
@@ -87,21 +87,22 @@ $roomtopic-color: $text-secondary-color;
 $room-icon-unread-color: #fff;
 
 /* Legacy theme backports */
-$accent: #0DBD8B;
-$alert: #FF5B55;
+$accent: #0dbd8b;
+$alert: #ff5b55;
 $links: #0086e6;
+$link-external: #0467dd;
 $primary-content: $primary-fg-color;
 $secondary-content: $secondary-fg-color;
 $tertiary-content: $tertiary-fg-color;
-$quaternary-content: #6F7882;
+$quaternary-content: #6f7882;
 $quinary-content: $quaternary-content;
-$system: #21262C;
-$system-transparent: rgba($system, 0.0); /* XXX: workaround for Safari 15.3 linear-gradient bug */
+$system: #21262c;
+$system-transparent: rgba($system, 0); /* XXX: workaround for Safari 15.3 linear-gradient bug */
 $background: $primary-bg-color;
 $overlay-background: rgba($background, 0.85);
 
 $panels: rgba($system, 0.9);
-$panel-base: #8D97A5; /* This color is not intended for use in the app */
+$panel-base: #8d97a5; /* This color is not intended for use in the app */
 $panel-selected: rgba($panel-base, 0.3);
 $panel-hover: rgba($panel-base, 0.1);
 $panel-actions: $roomtile-selected-bg-color;
@@ -119,9 +120,10 @@ $call-view-content-background: $quinary-content;
 
 $video-feed-secondary-background: $system;
 
-$call-lobby-system: $system;
-$call-lobby-background: $background;
-$call-lobby-primary-content: $primary-content;
+$call-system: $system;
+$call-background: $background;
+$call-primary-content: $primary-content;
+$call-light-quaternary-content: #c1c6cd;
 
 $roomlist-filter-active-bg-color: $panel-actions;
 $roomlist-bg-color: $header-panel-bg-color;
@@ -131,14 +133,14 @@ $roomsublist-skeleton-ui-bg: linear-gradient(180deg, #3e444c 0%, #3e444c00 100%)
 $spacePanel-divider-color: $tertiary-content;
 
 $roomtile-default-badge-bg-color: #61708b;
-$roomtile-selected-bg-color: #1A1D23;
+$roomtile-selected-bg-color: #1a1d23;
 
 /* ******************** */
 
 $widget-menu-bar-bg-color: $header-panel-bg-color;
-$widget-body-bg-color: #1A1D23;
+$widget-body-bg-color: #1a1d23;
 
-$event-highlight-bg-color: #25271F;
+$event-highlight-bg-color: #25271f;
 
 /* event timestamp */
 $event-timestamp-color: $text-secondary-color;
@@ -180,8 +182,8 @@ $tooltip-timeline-fg-color: #ffffff;
 $breadcrumb-placeholder-bg-color: #272c35;
 
 /* See non-legacy dark for variable information */
-$voice-record-stop-border-color: #6F7882;
-$voice-record-icon-color: #6F7882;
+$voice-record-stop-border-color: #6f7882;
+$voice-record-icon-color: #6f7882;
 
 /* Appearance tab colors */
 $appearance-tab-border-color: $room-highlight-color;
@@ -189,12 +191,14 @@ $appearance-tab-border-color: $room-highlight-color;
 $composer-shadow-color: tranparent;
 
 $codeblock-background-color: #2a3039;
+$inlinecode-border-color: #2a3039;
+$inlinecode-background-color: #2a3039;
 
 /* Bubble tiles */
-$eventbubble-self-bg: #14322E;
+$eventbubble-self-bg: #14322e;
 $eventbubble-others-bg: $event-selected-color;
-$eventbubble-bg-hover: #1C2026;
-$eventbubble-reply-color: #C1C6CD;
+$eventbubble-bg-hover: #1c2026;
+$eventbubble-reply-color: #c1c6cd;
 
 /* Location sharing */
 /* ******************** */
@@ -207,43 +211,6 @@ $location-live-secondary-color: #deddfd;
 /* ******************** */
 $live-badge-color: #ffffff;
 /* ******************** */
-
-/* ***** Mixins! ***** */
-
-@define-mixin mx_DialogButton {
-    /* align images in buttons (eg spinners) */
-    vertical-align: middle;
-    border: 0px;
-    border-radius: 8px;
-    font-family: $font-family;
-    font-size: $font-14px;
-    color: $button-fg-color;
-    background-color: $accent;
-    width: auto;
-    padding: 7px;
-    padding-left: 1.5em;
-    padding-right: 1.5em;
-    cursor: pointer;
-    display: inline-block;
-    outline: none;
-}
-
-@define-mixin mx_DialogButton_danger {
-    background-color: $accent;
-}
-
-@define-mixin mx_DialogButton_secondary {
-    /* flip colours for the secondary ones */
-    font-weight: 600;
-    border: 1px solid $accent !important;
-    color: $accent;
-    background-color: $button-secondary-bg-color;
-}
-
-@define-mixin mx_Dialog_link {
-    color: $accent;
-    text-decoration: none;
-}
 
 body {
     color-scheme: dark;

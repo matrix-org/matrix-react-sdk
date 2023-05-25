@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EMOJIBASE from 'emojibase-data/en/compact.json';
-import SHORTCODES from 'emojibase-data/en/shortcodes/iamcal.json';
+import EMOJIBASE from "emojibase-data/en/compact.json";
+import SHORTCODES from "emojibase-data/en/shortcodes/iamcal.json";
 
 export interface IEmoji {
     label: string;
-    group?: number;
+    group: number;
     hexcode: string;
-    order?: number;
+    order: number;
     shortcodes: string[];
     tags?: string[];
     unicode: string;
@@ -33,16 +33,20 @@ export interface IEmoji {
 const UNICODE_TO_EMOJI = new Map<string, IEmoji>(); // not exported as gets for it are handled by getEmojiFromUnicode
 export const EMOTICON_TO_EMOJI = new Map<string, IEmoji>();
 
-export const getEmojiFromUnicode = unicode => UNICODE_TO_EMOJI.get(stripVariation(unicode));
+export const getEmojiFromUnicode = (unicode: string): IEmoji | undefined =>
+    UNICODE_TO_EMOJI.get(stripVariation(unicode));
 
 const isRegionalIndicator = (x: string): boolean => {
     // First verify that the string is a single character. We use Array.from
     // to make sure we count by characters, not UTF-8 code units.
-    return Array.from(x).length === 1 &&
+    return (
+        Array.from(x).length === 1 &&
         // Next verify that the character is within the code point range for
         // regional indicators.
         // http://unicode.org/charts/PDF/Unicode-6.0/U60-1F100.pdf
-        x >= '\u{1f1e6}' && x <= '\u{1f1ff}';
+        x >= "\u{1f1e6}" &&
+        x <= "\u{1f1ff}"
+    );
 };
 
 const EMOJIBASE_GROUP_ID_TO_CATEGORY = [
@@ -58,23 +62,22 @@ const EMOJIBASE_GROUP_ID_TO_CATEGORY = [
     "flags",
 ];
 
-export const DATA_BY_CATEGORY = {
-    "people": [],
-    "nature": [],
-    "foods": [],
-    "places": [],
-    "activity": [],
-    "objects": [],
-    "symbols": [],
-    "flags": [],
+export const DATA_BY_CATEGORY: Record<string, IEmoji[]> = {
+    people: [],
+    nature: [],
+    foods: [],
+    places: [],
+    activity: [],
+    objects: [],
+    symbols: [],
+    flags: [],
 };
 
 // Store various mappings from unicode/emoticon/shortcode to the Emoji objects
 export const EMOJI: IEmoji[] = EMOJIBASE.map((emojiData: Omit<IEmoji, "shortcodes">) => {
     // If there's ever a gap in shortcode coverage, we fudge it by
     // filling it in with the emoji's CLDR annotation
-    const shortcodeData = SHORTCODES[emojiData.hexcode] ??
-        [emojiData.label.toLowerCase().replace(/\W+/g, "_")];
+    const shortcodeData = SHORTCODES[emojiData.hexcode] ?? [emojiData.label.toLowerCase().replace(/\W+/g, "_")];
 
     const emoji: IEmoji = {
         ...emojiData,
@@ -84,8 +87,8 @@ export const EMOJI: IEmoji[] = EMOJIBASE.map((emojiData: Omit<IEmoji, "shortcode
 
     // We manually include regional indicators in the symbols group, since
     // Emojibase intentionally leaves them uncategorized
-    const categoryId = EMOJIBASE_GROUP_ID_TO_CATEGORY[emoji.group] ??
-        (isRegionalIndicator(emoji.unicode) ? "symbols" : null);
+    const categoryId =
+        EMOJIBASE_GROUP_ID_TO_CATEGORY[emoji.group] ?? (isRegionalIndicator(emoji.unicode) ? "symbols" : null);
 
     if (DATA_BY_CATEGORY.hasOwnProperty(categoryId)) {
         DATA_BY_CATEGORY[categoryId].push(emoji);
@@ -118,6 +121,6 @@ export const EMOJI: IEmoji[] = EMOJIBASE.map((emojiData: Omit<IEmoji, "shortcode
  * @param {string} str string to strip
  * @returns {string} stripped string
  */
-function stripVariation(str) {
+function stripVariation(str: string): string {
     return str.replace(/[\uFE00-\uFE0F]$/, "");
 }

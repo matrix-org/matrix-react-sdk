@@ -166,13 +166,9 @@
     "Email": "E-poçt",
     "Profile": "Profil",
     "Account": "Hesab",
-    "Homeserver is": "Ev serveri bu",
-    "Failed to send email": "Email göndərilməsinin səhvi",
     "A new password must be entered.": "Yeni parolu daxil edin.",
     "New passwords must match each other.": "Yeni şifrələr uyğun olmalıdır.",
-    "I have verified my email address": "Mən öz email-i təsdiq etdim",
     "Return to login screen": "Girişin ekranına qayıtmaq",
-    "Send Reset Email": "Şifrənizi sıfırlamaq üçün istinadla məktubu göndərmək",
     "This server does not support authentication with a phone number.": "Bu server telefon nömrəsinin köməyi ilə müəyyənləşdirilməni dəstəkləmir.",
     "Commands": "Komandalar",
     "Emoji": "Smaylar",
@@ -195,7 +191,6 @@
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s-un sizə bildiriş göndərmək icazəsi yoxdur - brauzerinizin parametrlərini yoxlayın",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s bildiriş göndərmək üçün icazə verilmədi - lütfən yenidən cəhd edin",
     "This email address was not found": "Bu e-poçt ünvanı tapılmadı",
-    "Your email address does not appear to be associated with a Matrix ID on this Homeserver.": "E-poçt adresiniz bu Ana serverdəki Matrix ID ilə əlaqəli görünmür.",
     "Restricted": "Məhduddur",
     "Failed to invite": "Dəvət alınmadı",
     "Unable to create widget.": "Widjet yaratmaq olmur.",
@@ -260,6 +255,5 @@
     "Create Account": "Hesab Aç",
     "Explore rooms": "Otaqları kəşf edin",
     "Sign In": "Daxil ol",
-    "Identity server is": "Eyniləşdirmənin serveri bu",
     "Identity server": "Eyniləşdirmənin serveri"
 }

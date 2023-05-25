@@ -19,43 +19,27 @@ limitations under the License.
 import { createClient } from "matrix-js-sdk/src/matrix";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ILoginParams, LoginFlow } from "matrix-js-sdk/src/@types/auth";
+import { DELEGATED_OIDC_COMPATIBILITY, ILoginParams, LoginFlow } from "matrix-js-sdk/src/@types/auth";
 
 import { IMatrixClientCreds } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";
-
-export {
-    IdentityProviderBrand,
-    IIdentityProvider,
-    ISSOFlow,
-    LoginFlow,
-} from "matrix-js-sdk/src/@types/auth";
 
 interface ILoginOptions {
     defaultDeviceDisplayName?: string;
 }
 
 export default class Login {
-    private hsUrl: string;
-    private isUrl: string;
-    private fallbackHsUrl: string;
-    // TODO: Flows need a type in JS SDK
-    private flows: Array<LoginFlow>;
-    private defaultDeviceDisplayName: string;
-    private tempClient: MatrixClient;
+    private flows: Array<LoginFlow> = [];
+    private readonly defaultDeviceDisplayName?: string;
+    private tempClient: MatrixClient | null = null; // memoize
 
-    constructor(
-        hsUrl: string,
-        isUrl: string,
-        fallbackHsUrl?: string,
-        opts?: ILoginOptions,
+    public constructor(
+        private hsUrl: string,
+        private isUrl: string,
+        private fallbackHsUrl: string | null,
+        opts: ILoginOptions,
     ) {
-        this.hsUrl = hsUrl;
-        this.isUrl = isUrl;
-        this.fallbackHsUrl = fallbackHsUrl;
-        this.flows = [];
         this.defaultDeviceDisplayName = opts.defaultDeviceDisplayName;
-        this.tempClient = null; // memoize
     }
 
     public getHomeserverUrl(): string {
@@ -82,32 +66,39 @@ export default class Login {
      * @returns {MatrixClient}
      */
     public createTemporaryClient(): MatrixClient {
-        if (this.tempClient) return this.tempClient; // use memoization
-        return this.tempClient = createClient({
-            baseUrl: this.hsUrl,
-            idBaseUrl: this.isUrl,
-        });
+        if (!this.tempClient) {
+            this.tempClient = createClient({
+                baseUrl: this.hsUrl,
+                idBaseUrl: this.isUrl,
+            });
+        }
+        return this.tempClient;
     }
 
     public async getFlows(): Promise<Array<LoginFlow>> {
         const client = this.createTemporaryClient();
-        const { flows } = await client.loginFlows();
-        this.flows = flows;
+        const { flows }: { flows: LoginFlow[] } = await client.loginFlows();
+        // If an m.login.sso flow is present which is also flagged as being for MSC3824 OIDC compatibility then we only
+        // return that flow as (per MSC3824) it is the only one that the user should be offered to give the best experience
+        const oidcCompatibilityFlow = flows.find(
+            (f) => f.type === "m.login.sso" && DELEGATED_OIDC_COMPATIBILITY.findIn(f),
+        );
+        this.flows = oidcCompatibilityFlow ? [oidcCompatibilityFlow] : flows;
         return this.flows;
     }
 
     public loginViaPassword(
-        username: string,
-        phoneCountry: string,
-        phoneNumber: string,
+        username: string | undefined,
+        phoneCountry: string | undefined,
+        phoneNumber: string | undefined,
         password: string,
     ): Promise<IMatrixClientCreds> {
-        const isEmail = username.indexOf("@") > 0;
+        const isEmail = !!username && username.indexOf("@") > 0;
 
         let identifier;
         if (phoneCountry && phoneNumber) {
             identifier = {
-                type: 'm.id.phone',
+                type: "m.id.phone",
                 country: phoneCountry,
                 phone: phoneNumber,
                 // XXX: Synapse historically wanted `number` and not `phone`
@@ -115,13 +106,13 @@ export default class Login {
             };
         } else if (isEmail) {
             identifier = {
-                type: 'm.id.thirdparty',
-                medium: 'email',
+                type: "m.id.thirdparty",
+                medium: "email",
                 address: username,
             };
         } else {
             identifier = {
-                type: 'm.id.user',
+                type: "m.id.user",
                 user: username,
             };
         }
@@ -132,31 +123,31 @@ export default class Login {
             initial_device_display_name: this.defaultDeviceDisplayName,
         };
 
-        const tryFallbackHs = (originalError) => {
-            return sendLoginRequest(
-                this.fallbackHsUrl, this.isUrl, 'm.login.password', loginParams,
-            ).catch((fallbackError) => {
-                logger.log("fallback HS login failed", fallbackError);
-                // throw the original error
-                throw originalError;
-            });
+        const tryFallbackHs = (originalError: Error): Promise<IMatrixClientCreds> => {
+            return sendLoginRequest(this.fallbackHsUrl!, this.isUrl, "m.login.password", loginParams).catch(
+                (fallbackError) => {
+                    logger.log("fallback HS login failed", fallbackError);
+                    // throw the original error
+                    throw originalError;
+                },
+            );
         };
 
-        let originalLoginError = null;
-        return sendLoginRequest(
-            this.hsUrl, this.isUrl, 'm.login.password', loginParams,
-        ).catch((error) => {
-            originalLoginError = error;
-            if (error.httpStatus === 403) {
-                if (this.fallbackHsUrl) {
-                    return tryFallbackHs(originalLoginError);
+        let originalLoginError: Error | null = null;
+        return sendLoginRequest(this.hsUrl, this.isUrl, "m.login.password", loginParams)
+            .catch((error) => {
+                originalLoginError = error;
+                if (error.httpStatus === 403) {
+                    if (this.fallbackHsUrl) {
+                        return tryFallbackHs(originalLoginError!);
+                    }
                 }
-            }
-            throw originalLoginError;
-        }).catch((error) => {
-            logger.log("Login failed", error);
-            throw error;
-        });
+                throw originalLoginError;
+            })
+            .catch((error) => {
+                logger.log("Login failed", error);
+                throw error;
+            });
     }
 }
 
@@ -169,11 +160,11 @@ export default class Login {
  * @param {string} loginType the type of login to do
  * @param {ILoginParams} loginParams the parameters for the login
  *
- * @returns {MatrixClientCreds}
+ * @returns {IMatrixClientCreds}
  */
 export async function sendLoginRequest(
     hsUrl: string,
-    isUrl: string,
+    isUrl: string | undefined,
     loginType: string,
     loginParams: ILoginParams,
 ): Promise<IMatrixClientCreds> {
@@ -186,11 +177,11 @@ export async function sendLoginRequest(
 
     const wellknown = data.well_known;
     if (wellknown) {
-        if (wellknown["m.homeserver"] && wellknown["m.homeserver"]["base_url"]) {
+        if (wellknown["m.homeserver"]?.["base_url"]) {
             hsUrl = wellknown["m.homeserver"]["base_url"];
             logger.log(`Overrode homeserver setting with ${hsUrl} from login response`);
         }
-        if (wellknown["m.identity_server"] && wellknown["m.identity_server"]["base_url"]) {
+        if (wellknown["m.identity_server"]?.["base_url"]) {
             // TODO: should we prompt here?
             isUrl = wellknown["m.identity_server"]["base_url"];
             logger.log(`Overrode IS setting with ${isUrl} from login response`);

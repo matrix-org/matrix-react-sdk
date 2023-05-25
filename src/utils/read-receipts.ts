@@ -25,12 +25,13 @@ import { isSupportedReceiptType } from "matrix-js-sdk/src/utils";
  * @returns True if the read receipt update includes the client, false otherwise.
  */
 export function readReceiptChangeIsFor(event: MatrixEvent, client: MatrixClient): boolean {
-    const myUserId = client.getUserId();
+    const myUserId = client.getUserId()!;
     for (const eventId of Object.keys(event.getContent())) {
         for (const [receiptType, receipt] of Object.entries(event.getContent()[eventId])) {
             if (!isSupportedReceiptType(receiptType)) continue;
 
-            if (Object.keys((receipt || {})).includes(myUserId)) return true;
+            if (Object.keys(receipt || {}).includes(myUserId)) return true;
         }
     }
+    return false;
 }

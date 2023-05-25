@@ -18,7 +18,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import defaultDispatcher from "../dispatcher/dispatcher";
-import { MatrixClientPeg } from "../MatrixClientPeg";
 import { LocalRoom, LocalRoomState } from "../models/LocalRoom";
 import { isLocalRoom } from "./localRoom/isLocalRoom";
 import { isRoomReady } from "./localRoom/isRoomReady";
@@ -39,10 +38,9 @@ import { isRoomReady } from "./localRoom/isRoomReady";
 export async function doMaybeLocalRoomAction<T>(
     roomId: string,
     fn: (actualRoomId: string) => Promise<T>,
-    client?: MatrixClient,
+    client: MatrixClient,
 ): Promise<T> {
     if (isLocalRoom(roomId)) {
-        client = client ?? MatrixClientPeg.get();
         const room = client.getRoom(roomId) as LocalRoom;
 
         if (room.isCreated) {
@@ -86,7 +84,7 @@ export async function waitForRoomReadyAndApplyAfterCreateCallbacks(
     }
 
     return new Promise((resolve) => {
-        const finish = () => {
+        const finish = (): void => {
             if (checkRoomStateIntervalHandle) clearInterval(checkRoomStateIntervalHandle);
             if (stopgapTimeoutHandle) clearTimeout(stopgapTimeoutHandle);
 
@@ -97,15 +95,15 @@ export async function waitForRoomReadyAndApplyAfterCreateCallbacks(
             });
         };
 
-        const stopgapFinish = () => {
+        const stopgapFinish = (): void => {
             logger.warn(`Assuming local room ${localRoom.roomId} is ready after hitting timeout`);
             finish();
         };
 
-        const checkRoomStateIntervalHandle = setInterval(() => {
+        const checkRoomStateIntervalHandle = window.setInterval(() => {
             if (isRoomReady(client, localRoom)) finish();
         }, 500);
-        const stopgapTimeoutHandle = setTimeout(stopgapFinish, 5000);
+        const stopgapTimeoutHandle = window.setTimeout(stopgapFinish, 5000);
     });
 }
 

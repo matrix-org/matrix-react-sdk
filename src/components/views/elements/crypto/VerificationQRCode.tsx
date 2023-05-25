@@ -24,12 +24,13 @@ interface IProps {
 }
 
 export default class VerificationQRCode extends React.PureComponent<IProps> {
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <QRCode
-                data={[{ data: this.props.qrCodeData.getBuffer(), mode: 'byte' }]}
+                data={[{ data: this.props.qrCodeData.getBuffer(), mode: "byte" }]}
                 className="mx_VerificationQRCode"
-                width={196} />
+                width={196}
+            />
         );
     }
 }

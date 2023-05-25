@@ -21,11 +21,11 @@ import { Action } from "../../dispatcher/actions";
 import { SettingLevel } from "../SettingLevel";
 
 export default class FontSizeController extends SettingController {
-    constructor() {
+    public constructor() {
         super();
     }
 
-    public onChange(level: SettingLevel, roomId: string, newValue: any) {
+    public onChange(level: SettingLevel, roomId: string, newValue: any): void {
         // Dispatch font size change so that everything open responds to the change.
         dis.dispatch<UpdateFontSizePayload>({
             action: Action.UpdateFontSize,

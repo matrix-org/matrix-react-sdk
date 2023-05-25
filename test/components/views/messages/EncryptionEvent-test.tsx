@@ -14,22 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { mocked } from "jest-mock";
 import { MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
-import { render, screen } from '@testing-library/react';
+import { render, screen } from "@testing-library/react";
 
 import EncryptionEvent from "../../../../src/components/views/messages/EncryptionEvent";
 import { createTestClient, mkMessage } from "../../../test-utils";
-import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
-import { LocalRoom } from '../../../../src/models/LocalRoom';
-import DMRoomMap from '../../../../src/utils/DMRoomMap';
-import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
+import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
+import { LocalRoom } from "../../../../src/models/LocalRoom";
+import DMRoomMap from "../../../../src/utils/DMRoomMap";
+import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 
 const renderEncryptionEvent = (client: MatrixClient, event: MatrixEvent) => {
-    render(<MatrixClientContext.Provider value={client}>
-        <EncryptionEvent mxEvent={event} />
-    </MatrixClientContext.Provider>);
+    render(
+        <MatrixClientContext.Provider value={client}>
+            <EncryptionEvent mxEvent={event} />
+        </MatrixClientContext.Provider>,
+    );
 };
 
 const checkTexts = (title: string, subTitle: string) => {
@@ -50,7 +52,7 @@ describe("EncryptionEvent", () => {
         event = mkMessage({
             event: true,
             room: roomId,
-            user: client.getUserId(),
+            user: client.getUserId()!,
         });
         jest.spyOn(DMRoomMap, "shared").mockReturnValue({
             getUserIdForRoomId: jest.fn(),
@@ -59,9 +61,9 @@ describe("EncryptionEvent", () => {
 
     describe("for an encrypted room", () => {
         beforeEach(() => {
-            event.event.content.algorithm = algorithm;
+            event.event.content!.algorithm = algorithm;
             mocked(client.isRoomEncrypted).mockReturnValue(true);
-            const room = new Room(roomId, client, client.getUserId());
+            const room = new Room(roomId, client, client.getUserId()!);
             mocked(client.getRoom).mockReturnValue(room);
         });
 
@@ -69,8 +71,8 @@ describe("EncryptionEvent", () => {
             renderEncryptionEvent(client, event);
             checkTexts(
                 "Encryption enabled",
-                "Messages in this room are end-to-end encrypted. "
-                + "When people join, you can verify them in their profile, just tap on their avatar.",
+                "Messages in this room are end-to-end encrypted. " +
+                    "When people join, you can verify them in their profile, just tap on their avatar.",
             );
         });
 
@@ -83,16 +85,13 @@ describe("EncryptionEvent", () => {
 
             it("should show the expected texts", () => {
                 renderEncryptionEvent(client, event);
-                checkTexts(
-                    "Encryption enabled",
-                    "Some encryption parameters have been changed.",
-                );
+                checkTexts("Encryption enabled", "Some encryption parameters have been changed.");
             });
         });
 
         describe("with unknown algorithm", () => {
             beforeEach(() => {
-                event.event.content.algorithm = "unknown";
+                event.event.content!.algorithm = "unknown";
             });
 
             it("should show the expected texts", () => {
@@ -116,9 +115,9 @@ describe("EncryptionEvent", () => {
 
     describe("for an encrypted local room", () => {
         beforeEach(() => {
-            event.event.content.algorithm = algorithm;
+            event.event.content!.algorithm = algorithm;
             mocked(client.isRoomEncrypted).mockReturnValue(true);
-            const localRoom = new LocalRoom(roomId, client, client.getUserId());
+            const localRoom = new LocalRoom(roomId, client, client.getUserId()!);
             mocked(client.getRoom).mockReturnValue(localRoom);
             renderEncryptionEvent(client, event);
         });

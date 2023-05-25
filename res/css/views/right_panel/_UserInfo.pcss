@@ -34,7 +34,7 @@ limitations under the License.
             height: 16px;
             width: 16px;
             padding: 4px;
-            mask-image: url('$(res)/img/minimise.svg');
+            mask-image: url("$(res)/img/minimise.svg");
             mask-repeat: no-repeat;
             mask-position: 7px center;
             background-color: $header-panel-text-primary-color;
@@ -43,7 +43,7 @@ limitations under the License.
 
     h2 {
         font-size: $font-18px;
-        font-weight: 600;
+        font-weight: var(--font-semi-bold);
         margin: 18px 0 0 0; /* TODO: Use a variable */
     }
 
@@ -69,7 +69,7 @@ limitations under the License.
     }
 
     .mx_UserInfo_separator {
-        border-bottom: 1px solid rgba($primary-content, .1);
+        border-bottom: 1px solid rgba($primary-content, 0.1);
     }
 
     .mx_UserInfo_memberDetailsContainer {
@@ -145,7 +145,7 @@ limitations under the License.
     h3 {
         text-transform: uppercase;
         color: $tertiary-content;
-        font-weight: 600;
+        font-weight: var(--font-semi-bold);
         font-size: $font-12px;
         margin: $spacing-4 0;
     }
@@ -163,6 +163,8 @@ limitations under the License.
             line-height: $font-25px;
             flex: 1;
             justify-content: center;
+            // We reverse things here so for accessible technologies the name comes before the e2e shield
+            flex-direction: row-reverse;
 
             span {
                 /* limit to 2 lines, show an ellipsis if it overflows */

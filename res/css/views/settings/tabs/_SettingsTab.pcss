@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 .mx_SettingsTab {
-    --SettingsTab_section-margin-bottom-preferences-labs: 30px;
     --SettingsTab_heading_nth_child-margin-top: 30px; /* TODO: Use a spacing variable */
     --SettingsTab_fullWidthField-margin-inline-end: 100px;
     --SettingsTab_tooltip-max-width: 120px; /* So it fits in the space provided by the page */
@@ -33,7 +32,7 @@ limitations under the License.
 
 .mx_SettingsTab_heading {
     font-size: $font-20px;
-    font-weight: 600;
+    font-weight: var(--font-semi-bold);
     color: $primary-content;
     margin-top: 10px; /* TODO: Use a spacing variable */
     margin-bottom: 10px; /* TODO: Use a spacing variable */
@@ -47,7 +46,7 @@ limitations under the License.
 .mx_SettingsTab_subheading {
     font-size: $font-16px;
     display: block;
-    font-weight: 600;
+    font-weight: var(--font-semi-bold);
     color: $primary-content;
     margin-top: $spacing-12;
     margin-bottom: 10px; /* TODO: Use a spacing variable */
@@ -103,5 +102,5 @@ limitations under the License.
     grid-template-columns: 1fr;
     grid-gap: $spacing-32;
 
-    padding: $spacing-16 0;
+    padding-bottom: $spacing-16;
 }

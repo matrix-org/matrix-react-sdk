@@ -14,12 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { MatrixClient } from 'matrix-js-sdk/src/matrix';
-import { logger } from 'matrix-js-sdk/src/logger';
+import React from "react";
+import { MatrixClient, Method } from "matrix-js-sdk/src/matrix";
+import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../../languageHandler';
-import { IDialogProps } from "./IDialogProps";
+import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import TextInputDialog from "./TextInputDialog";
 import withValidation from "../elements/Validation";
@@ -33,17 +32,10 @@ import { SettingLevel } from "../../../settings/SettingLevel";
  * @throws if the proxy server is unreachable or not configured to the given homeserver
  */
 async function syncHealthCheck(cli: MatrixClient): Promise<void> {
-    const controller = new AbortController();
-    const id = setTimeout(() => controller.abort(), 10 * 1000); // 10s
-    const url = cli.http.getUrl("/sync", {}, "/_matrix/client/unstable/org.matrix.msc3575");
-    const res = await fetch(url, {
-        signal: controller.signal,
-        method: "POST",
+    await cli.http.authedRequest(Method.Post, "/sync", undefined, undefined, {
+        localTimeoutMs: 10 * 1000, // 10s
+        prefix: "/_matrix/client/unstable/org.matrix.msc3575",
     });
-    clearTimeout(id);
-    if (res.status != 200) {
-        throw new Error(`syncHealthCheck: server returned HTTP ${res.status}`);
-    }
     logger.info("server natively support sliding sync OK");
 }
 
@@ -55,7 +47,7 @@ async function syncHealthCheck(cli: MatrixClient): Promise<void> {
  */
 async function proxyHealthCheck(endpoint: string, hsUrl?: string): Promise<void> {
     const controller = new AbortController();
-    const id = setTimeout(() => controller.abort(), 10 * 1000); // 10s
+    const id = window.setTimeout(() => controller.abort(), 10 * 1000); // 10s
     const res = await fetch(endpoint + "/client/server.json", {
         signal: controller.signal,
     });
@@ -70,14 +62,22 @@ async function proxyHealthCheck(endpoint: string, hsUrl?: string): Promise<void>
     logger.info("sliding sync proxy is OK");
 }
 
-export const SlidingSyncOptionsDialog: React.FC<IDialogProps> = ({ onFinished }) => {
+export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): void }> = ({ onFinished }) => {
     const cli = MatrixClientPeg.get();
     const currentProxy = SettingsStore.getValue("feature_sliding_sync_proxy_url");
-    const hasNativeSupport = useAsyncMemo(() => syncHealthCheck(cli).then(() => true, () => false), [], null);
+    const hasNativeSupport = useAsyncMemo(
+        () =>
+            syncHealthCheck(cli).then(
+                () => true,
+                () => false,
+            ),
+        [],
+        null,
+    );
 
     let nativeSupport: string;
     if (hasNativeSupport === null) {
-        nativeSupport = _t("Checking...");
+        nativeSupport = _t("Checking…");
     } else {
         nativeSupport = hasNativeSupport
             ? _t("Your server has native support")
@@ -87,7 +87,7 @@ export const SlidingSyncOptionsDialog: React.FC<IDialogProps> = ({ onFinished })
     const validProxy = withValidation<undefined, { error?: Error }>({
         async deriveData({ value }): Promise<{ error?: Error }> {
             try {
-                await proxyHealthCheck(value, MatrixClientPeg.get().baseUrl);
+                await proxyHealthCheck(value!, MatrixClientPeg.get().baseUrl);
                 return {};
             } catch (error) {
                 return { error };
@@ -96,35 +96,42 @@ export const SlidingSyncOptionsDialog: React.FC<IDialogProps> = ({ onFinished })
         rules: [
             {
                 key: "required",
-                test: async ({ value }) => !!value || hasNativeSupport,
+                test: async ({ value }) => !!value || !!hasNativeSupport,
                 invalid: () => _t("Your server lacks native support, you must specify a proxy"),
-            }, {
+            },
+            {
                 key: "working",
                 final: true,
                 test: async (_, { error }) => !error,
                 valid: () => _t("Looks good"),
-                invalid: ({ error }) => error?.message,
+                invalid: ({ error }) => error?.message ?? null,
             },
         ],
     });
 
-    return <TextInputDialog
-        title={_t("Sliding Sync configuration")}
-        description={<div>
-            <div><b>{ _t("To disable you will need to log out and back in, use with caution!") }</b></div>
-            { nativeSupport }
-        </div>}
-        placeholder={hasNativeSupport ? _t('Proxy URL (optional)') : _t('Proxy URL')}
-        value={currentProxy}
-        button={_t("Enable")}
-        validator={validProxy}
-        onFinished={(enable: boolean, proxyUrl: string) => {
-            if (enable) {
-                SettingsStore.setValue("feature_sliding_sync_proxy_url", null, SettingLevel.DEVICE, proxyUrl);
-                onFinished(true);
-            } else {
-                onFinished(false);
+    return (
+        <TextInputDialog
+            title={_t("Sliding Sync configuration")}
+            description={
+                <div>
+                    <div>
+                        <b>{_t("To disable you will need to log out and back in, use with caution!")}</b>
+                    </div>
+                    {nativeSupport}
+                </div>
             }
-        }}
-    />;
+            placeholder={hasNativeSupport ? _t("Proxy URL (optional)") : _t("Proxy URL")}
+            value={currentProxy}
+            button={_t("Enable")}
+            validator={validProxy}
+            onFinished={(enable, proxyUrl) => {
+                if (enable) {
+                    SettingsStore.setValue("feature_sliding_sync_proxy_url", null, SettingLevel.DEVICE, proxyUrl);
+                    onFinished(true);
+                } else {
+                    onFinished(false);
+                }
+            }}
+        />
+    );
 };

@@ -37,18 +37,20 @@ describe("pillify", () => {
     beforeEach(() => {
         stubClient();
         const cli = MatrixClientPeg.get();
-        (cli.getRoom as jest.Mock).mockReturnValue(new Room(roomId, cli, cli.getUserId()));
-        cli.pushRules.global = {
+        (cli.getRoom as jest.Mock).mockReturnValue(new Room(roomId, cli, cli.getUserId()!));
+        cli.pushRules!.global = {
             override: [
                 {
                     rule_id: ".m.rule.roomnotif",
                     default: true,
                     enabled: true,
-                    conditions: [{
-                        kind: ConditionKind.EventMatch,
-                        key: "content.body",
-                        pattern: "@room",
-                    }],
+                    conditions: [
+                        {
+                            kind: ConditionKind.EventMatch,
+                            key: "content.body",
+                            pattern: "@room",
+                        },
+                    ],
                     actions: [
                         PushRuleActionName.Notify,
                         {
@@ -60,14 +62,14 @@ describe("pillify", () => {
             ],
         };
 
-        DMRoomMap.makeShared();
+        DMRoomMap.makeShared(cli);
     });
 
     it("should do nothing for empty element", () => {
         const { container } = render(<div />);
         const originalHtml = container.outerHTML;
         const containers: Element[] = [];
-        pillifyLinks([container], event, containers);
+        pillifyLinks(MatrixClientPeg.get(), [container], event, containers);
         expect(containers).toHaveLength(0);
         expect(container.outerHTML).toEqual(originalHtml);
     });
@@ -75,19 +77,19 @@ describe("pillify", () => {
     it("should pillify @room", () => {
         const { container } = render(<div>@room</div>);
         const containers: Element[] = [];
-        pillifyLinks([container], event, containers);
+        pillifyLinks(MatrixClientPeg.get(), [container], event, containers);
         expect(containers).toHaveLength(1);
-        expect(container.querySelector(".mx_Pill.mx_AtRoomPill").textContent).toBe("!@room");
+        expect(container.querySelector(".mx_Pill.mx_AtRoomPill")?.textContent).toBe("!@room");
     });
 
     it("should not double up pillification on repeated calls", () => {
         const { container } = render(<div>@room</div>);
         const containers: Element[] = [];
-        pillifyLinks([container], event, containers);
-        pillifyLinks([container], event, containers);
-        pillifyLinks([container], event, containers);
-        pillifyLinks([container], event, containers);
+        pillifyLinks(MatrixClientPeg.get(), [container], event, containers);
+        pillifyLinks(MatrixClientPeg.get(), [container], event, containers);
+        pillifyLinks(MatrixClientPeg.get(), [container], event, containers);
+        pillifyLinks(MatrixClientPeg.get(), [container], event, containers);
         expect(containers).toHaveLength(1);
-        expect(container.querySelector(".mx_Pill.mx_AtRoomPill").textContent).toBe("!@room");
+        expect(container.querySelector(".mx_Pill.mx_AtRoomPill")?.textContent).toBe("!@room");
     });
 });

@@ -18,30 +18,24 @@ import { mocked } from "jest-mock";
 import { MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 
 import {
-    VoiceBroadcastInfoEventType,
     VoiceBroadcastRecordingsStore,
     VoiceBroadcastRecordingsStoreEvent,
     VoiceBroadcastRecording,
+    VoiceBroadcastInfoState,
 } from "../../../src/voice-broadcast";
-import { mkEvent, mkStubRoom, stubClient } from "../../test-utils";
-
-jest.mock("../../../src/voice-broadcast/models/VoiceBroadcastRecording.ts", () => ({
-    VoiceBroadcastRecording: jest.fn().mockImplementation(
-        (
-            infoEvent: MatrixEvent,
-            client: MatrixClient,
-        ) => ({ infoEvent, client }),
-    ),
-}));
+import { mkStubRoom, stubClient } from "../../test-utils";
+import { mkVoiceBroadcastInfoStateEvent } from "../utils/test-utils";
 
 describe("VoiceBroadcastRecordingsStore", () => {
     const roomId = "!room:example.com";
     let client: MatrixClient;
     let room: Room;
     let infoEvent: MatrixEvent;
+    let otherInfoEvent: MatrixEvent;
     let recording: VoiceBroadcastRecording;
+    let otherRecording: VoiceBroadcastRecording;
     let recordings: VoiceBroadcastRecordingsStore;
-    let onCurrentChanged: (recording: VoiceBroadcastRecording) => void;
+    let onCurrentChanged: (recording: VoiceBroadcastRecording | null) => void;
 
     beforeEach(() => {
         client = stubClient();
@@ -50,24 +44,37 @@ describe("VoiceBroadcastRecordingsStore", () => {
             if (roomId === room.roomId) {
                 return room;
             }
+            return null;
         });
-        infoEvent = mkEvent({
-            event: true,
-            type: VoiceBroadcastInfoEventType,
-            user: client.getUserId(),
-            room: roomId,
-            content: {},
-        });
-        recording = {
-            infoEvent,
-        } as unknown as VoiceBroadcastRecording;
+        infoEvent = mkVoiceBroadcastInfoStateEvent(
+            roomId,
+            VoiceBroadcastInfoState.Started,
+            client.getUserId()!,
+            client.getDeviceId()!,
+        );
+        otherInfoEvent = mkVoiceBroadcastInfoStateEvent(
+            roomId,
+            VoiceBroadcastInfoState.Started,
+            client.getUserId()!,
+            client.getDeviceId()!,
+        );
+        recording = new VoiceBroadcastRecording(infoEvent, client);
+        otherRecording = new VoiceBroadcastRecording(otherInfoEvent, client);
         recordings = new VoiceBroadcastRecordingsStore();
         onCurrentChanged = jest.fn();
         recordings.on(VoiceBroadcastRecordingsStoreEvent.CurrentChanged, onCurrentChanged);
     });
 
     afterEach(() => {
+        recording.destroy();
         recordings.off(VoiceBroadcastRecordingsStoreEvent.CurrentChanged, onCurrentChanged);
+    });
+
+    it("when setting a recording without info event Id, it should raise an error", () => {
+        infoEvent.event.event_id = undefined;
+        expect(() => {
+            recordings.setCurrent(recording);
+        }).toThrow("Got broadcast info event without Id");
     });
 
     describe("when setting a current Voice Broadcast recording", () => {
@@ -76,7 +83,8 @@ describe("VoiceBroadcastRecordingsStore", () => {
         });
 
         it("should return it as current", () => {
-            expect(recordings.current).toBe(recording);
+            expect(recordings.hasCurrent()).toBe(true);
+            expect(recordings.getCurrent()).toBe(recording);
         });
 
         it("should return it by id", () => {
@@ -95,6 +103,47 @@ describe("VoiceBroadcastRecordingsStore", () => {
 
             it("should not emit a CurrentChanged event", () => {
                 expect(onCurrentChanged).not.toHaveBeenCalled();
+            });
+        });
+
+        describe("and calling clearCurrent()", () => {
+            beforeEach(() => {
+                recordings.clearCurrent();
+            });
+
+            it("should clear the current recording", () => {
+                expect(recordings.hasCurrent()).toBe(false);
+                expect(recordings.getCurrent()).toBeNull();
+            });
+
+            it("should emit a current changed event", () => {
+                expect(onCurrentChanged).toHaveBeenCalledWith(null);
+            });
+
+            it("and calling it again should work", () => {
+                recordings.clearCurrent();
+                expect(recordings.getCurrent()).toBeNull();
+            });
+        });
+
+        describe("and setting another recording and stopping the previous recording", () => {
+            beforeEach(() => {
+                recordings.setCurrent(otherRecording);
+                recording.stop();
+            });
+
+            it("should keep the current recording", () => {
+                expect(recordings.getCurrent()).toBe(otherRecording);
+            });
+        });
+
+        describe("and the recording stops", () => {
+            beforeEach(() => {
+                recording.stop();
+            });
+
+            it("should clear the current recording", () => {
+                expect(recordings.getCurrent()).toBeNull();
             });
         });
     });
@@ -119,10 +168,7 @@ describe("VoiceBroadcastRecordingsStore", () => {
             });
 
             it("should return the recording", () => {
-                expect(returnedRecording).toEqual({
-                    infoEvent,
-                    client,
-                });
+                expect(returnedRecording.infoEvent).toBe(infoEvent);
             });
         });
     });
