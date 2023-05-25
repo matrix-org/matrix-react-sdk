@@ -3776,5 +3776,7 @@
     "Unnamed audio": "Audio bez nazwy",
     "Use email to optionally be discoverable by existing contacts.": "Użyj adresu e-mail, aby opcjonalnie móc być odkrywanym przez istniejące kontakty.",
     "Someone already has that username. Try another or if it is you, sign in below.": "Ktoś już ma taką nazwę użytkownika. Użyj innej lub zaloguj się poniżej, jeśli to jesteś Ty.",
-    "%(completed)s of %(total)s keys restored": "%(completed)s z %(total)s kluczy przywrócono"
+    "%(completed)s of %(total)s keys restored": "%(completed)s z %(total)s kluczy przywrócono",
+    "Your language": "Twój język",
+    "Your device ID": "Twoje ID urządzenia"
 }
