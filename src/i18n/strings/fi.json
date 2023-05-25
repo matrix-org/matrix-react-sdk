@@ -2427,7 +2427,6 @@
     "Sidebar": "Sivupalkki",
     "Manage your signed-in devices below. A device's name is visible to people you communicate with.": "Hallitse sisäänkirjattuja laitteitasi alapuolella. Laitteen nimi näkyy kaikille, joiden kanssa olet yhteydessä.",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Jaa anonyymia tietoa auttaaksesi ongelmien tunnistamisessa. Ei mitään henkilökohtaista. Ei kolmansia osapuolia.",
-    "Okay": "OK",
     "Updating spaces... (%(progress)s out of %(count)s)|one": "Päivitetään avaruutta...",
     "Updating spaces... (%(progress)s out of %(count)s)|other": "Päivitetään avaruuksia... (%(progress)s/%(count)s)",
     "Use high contrast": "Käytä suurta kontrastia",

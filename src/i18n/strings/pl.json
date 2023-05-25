@@ -2574,7 +2574,6 @@
     "Are you sure you want to sign out of %(count)s sessions?|one": "Czy na pewno chcesz się wylogować z %(count)s sesji?",
     "Are you sure you want to sign out of %(count)s sessions?|other": "Czy na pewno chcesz się wylogować z %(count)s sesji?",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Twój administrator serwera wyłączył szyfrowanie end-to-end domyślnie w pokojach prywatnych i wiadomościach bezpośrednich.",
-    "Okay": "Okej",
     "You have no ignored users.": "Nie posiadasz ignorowanych użytkowników.",
     "Enable hardware acceleration (restart %(appName)s to take effect)": "Włącz akceleracje sprzętową (uruchom ponownie %(appName)s, aby zastosować zmiany)",
     "Room directory": "Katalog pokoju",

@@ -2799,7 +2799,6 @@
     "Final result based on %(count)s votes|other": "Résultat final sur la base de %(count)s votes",
     "Manage pinned events": "Gérer les évènements épinglés",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Partager des données anonymisées pour nous aider à identifier les problèmes. Rien de personnel. Aucune tierce partie.",
-    "Okay": "D’accord",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties. <LearnMoreLink>Learn More</LearnMoreLink>": "Partager des données anonymisées pour nous aider à identifier les problèmes. Aucune tierce partie. <LearnMoreLink>En savoir plus</LearnMoreLink>",
     "You previously consented to share anonymous usage data with us. We're updating how that works.": "Vous aviez précédemment consenti au partage de données d’utilisation anonymisées avec nous. Nous sommes en train de changer ce fonctionnement.",
     "Help improve %(analyticsOwner)s": "Aidez à améliorer %(analyticsOwner)s",
