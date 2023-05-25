@@ -3777,5 +3777,7 @@
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Setelah pengguna yang diundang telah bergabung ke %(brand)s, Anda akan dapat bercakapan dan ruangan akan terenkripsi secara ujung ke ujung",
     "Waiting for users to join %(brand)s": "Menunggu pengguna untuk bergabung ke %(brand)s",
     "You do not have permission to invite users": "Anda tidak memiliki izin untuk mengundang pengguna",
-    "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s mengubah nama tampilan dan foto profilnya"
+    "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s mengubah nama tampilan dan foto profilnya",
+    "Your language": "Bahasa Anda",
+    "Your device ID": "ID perangkat Anda"
 }
