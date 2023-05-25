@@ -18,7 +18,8 @@ import { render } from "@testing-library/react";
 import React from "react";
 
 import AppearanceUserSettingsTab from "../../../../../../src/components/views/settings/tabs/user/AppearanceUserSettingsTab";
-import { stubClient } from "../../../../../test-utils";
+import { renderWithClientContextOptions, stubClient } from "../../../../../test-utils";
+import { MatrixClientPeg } from "../../../../../../src/MatrixClientPeg";
 
 // Fake random strings to give a predictable snapshot
 jest.mock("matrix-js-sdk/src/randomstring", () => ({
@@ -31,7 +32,10 @@ describe("AppearanceUserSettingsTab", () => {
     });
 
     it("should render", () => {
-        const { asFragment } = render(<AppearanceUserSettingsTab />);
+        const { asFragment } = render(
+            <AppearanceUserSettingsTab />,
+            renderWithClientContextOptions(MatrixClientPeg.safeGet()),
+        );
         expect(asFragment()).toMatchSnapshot();
     });
 });
