@@ -76,6 +76,7 @@ import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
 import { ElementCall } from "../../../models/Call";
 import { UnreadNotificationBadge } from "./NotificationBadge/UnreadNotificationBadge";
 import { EventTileThreadToolbar } from "./EventTile/EventTileThreadToolbar";
+import { Icon as ThreadSummaryIcon } from "../../../../res/img/element-icons/thread-summary.svg";
 
 export type GetRelationsForEvent = (
     eventId: string,
@@ -470,6 +471,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
         return (
             <div className="mx_ThreadPanel_replies">
+                <ThreadSummaryIcon className="mx_Icon mx_Icon--thread" />
                 <span className="mx_ThreadPanel_replies_amount">{this.state.thread.length}</span>
                 <ThreadMessagePreview thread={this.state.thread} />
             </div>
