@@ -326,7 +326,7 @@ describe("Verify own device", () => {
         cy.startHomeserver("default")
             .as("homeserver")
             .then((homeserver: HomeserverInstance) => {
-                // Populate `win.matrixcs`
+                // Visit the login page of the app, to load the matrix sdk
                 cy.intercept("GET", "**/r0/login").as("login");
                 cy.visit("/#/login");
                 cy.wait("@login");
@@ -357,7 +357,11 @@ describe("Verify own device", () => {
         cy.findByRole("button", { name: "Sign in" }).click();
     }
 
-    function doAliceVerificationRequest() {
+    /* Click the "Verify with another device" button, and have the bot client auto-accept it.
+     *
+     * Stores the incoming `VerificationRequest` on the bot client as `@verificationRequest`.
+     */
+    function initiateAliceVerificationRequest() {
         // alice bot waits for verification request
         const promiseVerificationRequest = waitForVerificationRequest(aliceBotClient);
 
@@ -373,8 +377,8 @@ describe("Verify own device", () => {
     it("with SAS", function (this: CryptoTestContext) {
         loginAlice(this.homeserver);
 
-        // Launch and do the verification request between alice and the bot
-        doAliceVerificationRequest();
+        // Launch the verification request between alice and the bot
+        initiateAliceVerificationRequest();
 
         // Handle emoji SAS verification
         cy.get(".mx_InfoDialog").within(() => {
