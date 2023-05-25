@@ -20,14 +20,7 @@ on:
                 type: string
                 required: true
                 description: "The name of the github repository to check out and build."
-            matrix-js-sdk-sha:
-                type: string
-                required: false
-                description: "The Git SHA of matrix-js-sdk to build against. By default, will use a matching branch name if it exists, or develop."
 
-    # support manual dispatch
-    workflow_dispatch:
-        inputs:
             matrix-js-sdk-sha:
                 type: string
                 required: false
