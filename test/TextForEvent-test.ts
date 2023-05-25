@@ -186,6 +186,7 @@ describe("TextForEvent", () => {
         beforeAll(() => {
             mockClient = createTestClient() as Mocked<MatrixClient>;
             MatrixClientPeg.get = () => mockClient;
+            MatrixClientPeg.safeGet = () => mockClient;
             mockClient.getRoom.mockClear().mockReturnValue(mockRoom);
             mockRoom.getMember
                 .mockClear()
