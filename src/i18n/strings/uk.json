@@ -3777,5 +3777,7 @@
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Після того, як запрошені користувачі приєднаються до %(brand)s, ви зможете спілкуватися в бесіді, а кімната буде наскрізно зашифрована",
     "Waiting for users to join %(brand)s": "Очікування приєднання користувача до %(brand)s",
     "You do not have permission to invite users": "У вас немає дозволу запрошувати користувачів",
-    "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s змінює своє ім'я та зображення профілю"
+    "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s змінює своє ім'я та зображення профілю",
+    "Your language": "Ваша мова",
+    "Your device ID": "ID вашого пристрою"
 }

@@ -3777,5 +3777,7 @@
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Keď sa pozvaní používatelia pripoja k aplikácii %(brand)s, budete môcť konverzovať a miestnosť bude end-to-end šifrovaná",
     "Waiting for users to join %(brand)s": "Čaká sa na používateľov, kým sa pripoja k aplikácii %(brand)s",
     "You do not have permission to invite users": "Nemáte oprávnenie pozývať používateľov",
-    "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s zmenil/a svoje zobrazované meno a profilový obrázok"
+    "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s zmenil/a svoje zobrazované meno a profilový obrázok",
+    "Your language": "Váš jazyk",
+    "Your device ID": "ID vášho zariadenia"
 }
