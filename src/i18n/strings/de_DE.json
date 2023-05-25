@@ -2760,7 +2760,6 @@
     "%(spaceName)s and %(count)s others|one": "%(spaceName)s und %(count)s anderer",
     "%(spaceName)s and %(count)s others|zero": "%(spaceName)s",
     "%(spaceName)s and %(count)s others|other": "%(spaceName)s und %(count)s andere",
-    "Okay": "Okay",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties. <LearnMoreLink>Learn More</LearnMoreLink>": "Teile Daten anonymisiert um uns zu helfen Probleme zu identifizieren. Nichts persönliches. Keine Dritten. <LearnMoreLink>Mehr dazu hier</LearnMoreLink>",
     "You previously consented to share anonymous usage data with us. We're updating how that works.": "Sie haben zuvor zugestimmt, anonymisierte Nutzungsdaten mit uns zu teilen. Wir aktualisieren, wie das funktioniert.",
     "Help improve %(analyticsOwner)s": "Hilf mit, %(analyticsOwner)s zu verbessern",
@@ -3777,5 +3776,7 @@
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Sobald eingeladene Benutzer %(brand)s beigetreten sind, werdet ihr euch unterhalten können und der Raum wird Ende-zu-Ende-verschlüsselt sein",
     "Waiting for users to join %(brand)s": "Warte darauf, dass Benutzer %(brand)s beitreten",
     "You do not have permission to invite users": "Du bist nicht berechtigt, Benutzer einzuladen",
-    "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s hat den Anzeigenamen und das Profilbild geändert"
+    "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s hat den Anzeigenamen und das Profilbild geändert",
+    "Your language": "Deine Sprache",
+    "Your device ID": "Deine Geräte-ID"
 }

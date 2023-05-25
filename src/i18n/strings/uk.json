@@ -2118,7 +2118,6 @@
     "No votes cast": "Жодного голосу",
     "Help improve %(analyticsOwner)s": "Допоможіть поліпшити %(analyticsOwner)s",
     "You previously consented to share anonymous usage data with us. We're updating how that works.": "Раніше ви погодилися надсилати нам анонімні дані про використання. Ми оновлюємо цей функціонал.",
-    "Okay": "Гаразд",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Збір анонімних даних дає нам змогу дізнаватися про збої. Жодних особистих даних. Жодних третіх сторін.",
     "You can read all our terms <PrivacyPolicyUrl>here</PrivacyPolicyUrl>": "Можете прочитати всі наші умови <PrivacyPolicyUrl>тут</PrivacyPolicyUrl>",
     "We <Bold>don't</Bold> record or profile any account data": "Ми <Bold>не</Bold> зберігаємо й <Bold>не</Bold> аналізуємо жодних даних облікового запису",
@@ -3777,5 +3776,7 @@
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Після того, як запрошені користувачі приєднаються до %(brand)s, ви зможете спілкуватися в бесіді, а кімната буде наскрізно зашифрована",
     "Waiting for users to join %(brand)s": "Очікування приєднання користувача до %(brand)s",
     "You do not have permission to invite users": "У вас немає дозволу запрошувати користувачів",
-    "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s змінює своє ім'я та зображення профілю"
+    "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s змінює своє ім'я та зображення профілю",
+    "Your language": "Ваша мова",
+    "Your device ID": "ID вашого пристрою"
 }
