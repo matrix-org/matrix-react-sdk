@@ -35,6 +35,7 @@ import PosthogTrackers from "../../PosthogTrackers";
 import { ButtonEvent } from "../views/elements/AccessibleButton";
 import Spinner from "../views/elements/Spinner";
 import Heading from "../views/typography/Heading";
+import { Icon as ThreadSummaryIcon } from "../../../res/img/element-icons/thread-summary.svg";
 
 interface IProps {
     roomId: string;
@@ -187,7 +188,9 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ hasThreads, filterOption, sh
 
     return (
         <aside className="mx_ThreadPanel_empty">
-            <div className="mx_ThreadPanel_largeIcon" />
+            <div className="mx_ThreadPanel_empty_icon">
+                <ThreadSummaryIcon className="mx_Icon mx_Icon--thread" />
+            </div>
             <h2>{_t("Keep discussions organised with threads")}</h2>
             {body}
         </aside>

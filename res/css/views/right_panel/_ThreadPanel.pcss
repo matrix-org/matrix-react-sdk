@@ -199,6 +199,18 @@ limitations under the License.
         }
     }
 
+    .mx_ThreadPanel_empty_icon {
+        border-radius: 50%;
+        padding: 18px;
+        background: $system;
+
+        .mx_Icon--thread {
+            flex: unset;
+            height: 28px;
+            width: 28px;
+        }
+    }
+
     .mx_ThreadPanel_empty_tip {
         font-size: $font-12px;
         line-height: $font-15px;
@@ -206,20 +218,6 @@ limitations under the License.
         > b {
             font-weight: var(--font-semi-bold);
         }
-    }
-}
-
-.mx_ThreadPanel_largeIcon {
-    width: 28px;
-    height: 28px;
-    padding: 18px;
-    background: $system;
-    border-radius: 50%;
-
-    &::after {
-        @mixin ThreadSummaryIcon;
-        width: inherit;
-        height: inherit;
     }
 }
 
