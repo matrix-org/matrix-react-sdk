@@ -16,6 +16,10 @@ on:
                 type: string
                 required: true
                 description: "The name of the github repository to check out and build."
+            rust-crypto:
+                type: boolean
+                required: false
+                description: "Enable Rust cryptography for the cypress run."
         secrets:
             CYPRESS_RECORD_KEY:
                 required: true
@@ -153,6 +157,12 @@ jobs:
                   persist-credentials: false
                   path: matrix-react-sdk
                   repository: ${{ inputs.react-sdk-repository || github.repository }}
+
+            # Enable rust crypto if the calling workflow requests it
+            - name: Enable rust crypto
+              if: "inputs.rust-crypto == 'true'"
+              run: |
+                  echo "CYPRESS_RUST_CRYPTO=1" >> "$GITHUB_ENV"
 
             - name: Run Cypress tests
               uses: cypress-io/github-action@40a1a26c08d0e549e8516612ecebbd1ab5eeec8f
