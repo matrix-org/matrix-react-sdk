@@ -73,7 +73,7 @@ export interface IMatrixClientPeg {
      */
     getHomeserverName(): string | null;
 
-    get(): MatrixClient | null;
+    get(): MatrixClient;
     safeGet(): MatrixClient;
     unset(): void;
     assign(): Promise<any>;
