@@ -19,7 +19,13 @@ import type { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/
 import type { CypressBot } from "../../support/bot";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { UserCredentials } from "../../support/login";
-import { checkDeviceIsCrossSigned, EmojiMapping, handleVerificationRequest, waitForVerificationRequest } from "./utils";
+import {
+    checkDeviceIsCrossSigned,
+    EmojiMapping,
+    handleVerificationRequest,
+    logIntoElement,
+    waitForVerificationRequest,
+} from "./utils";
 import { skipIfRustCrypto } from "../../support/util";
 
 interface CryptoTestContext extends Mocha.Context {
@@ -342,21 +348,6 @@ describe("Verify own device", () => {
         cy.stopHomeserver(this.homeserver);
     });
 
-    function loginAlice(homeserver: HomeserverInstance) {
-        // Change homeserver
-        cy.findByRole("button", { name: "Edit" }).click();
-        // Select homeserver modal
-        cy.get(`[aria-labelledby="mx_BaseDialog_title"`).within(() => {
-            cy.findByRole("textbox").type(homeserver.baseUrl);
-            cy.findByRole("button", { name: "Continue" }).click();
-        });
-        // Fill credentials
-        cy.findByRole("textbox", { name: "Username" }).type(aliceBotClient.getUserId());
-        cy.findByLabelText("Password").type(aliceBotClient.__cypress_password);
-        // Sign in
-        cy.findByRole("button", { name: "Sign in" }).click();
-    }
-
     /* Click the "Verify with another device" button, and have the bot client auto-accept it.
      *
      * Stores the incoming `VerificationRequest` on the bot client as `@verificationRequest`.
@@ -375,7 +366,7 @@ describe("Verify own device", () => {
     }
 
     it("with SAS", function (this: CryptoTestContext) {
-        loginAlice(this.homeserver);
+        logIntoElement(this.homeserver.baseUrl, aliceBotClient.getUserId(), aliceBotClient.__cypress_password);
 
         // Launch the verification request between alice and the bot
         initiateAliceVerificationRequest();
