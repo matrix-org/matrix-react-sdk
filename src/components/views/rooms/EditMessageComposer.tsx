@@ -152,13 +152,10 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     }
 
     private getRoom(): Room {
-        const roomId = this.props.editState.getEvent().getRoomId();
-        const room = this.props.mxClient.getRoom(roomId);
-        // Something is very wrong if we encounter this
-        if (!room) {
-            throw new Error(`Cannot find room for event ${roomId}`);
+        if (!this.context.room) {
+            throw new Error(`Cannot render without room`);
         }
-        return room;
+        return this.context.room;
     }
 
     private onKeyDown = (event: KeyboardEvent): void => {
@@ -344,7 +341,13 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                 const [cmd, args, commandText] = getSlashCommand(this.model);
                 if (cmd) {
                     const threadId = editedEvent?.getThread()?.id || null;
-                    const [content, commandSuccessful] = await runSlashCommand(cmd, args, roomId, threadId);
+                    const [content, commandSuccessful] = await runSlashCommand(
+                        MatrixClientPeg.get(),
+                        cmd,
+                        args,
+                        roomId,
+                        threadId,
+                    );
                     if (!commandSuccessful) {
                         return; // errored
                     }
