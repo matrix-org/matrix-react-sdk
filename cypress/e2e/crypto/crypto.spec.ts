@@ -144,160 +144,137 @@ const verify = function (this: CryptoTestContext) {
 };
 
 describe("Cryptography", function () {
-    describe("Cryptography", () => {
-        let aliceCredentials: UserCredentials;
+    let aliceCredentials: UserCredentials;
 
-        beforeEach(function () {
-            cy.startHomeserver("default")
-                .as("homeserver")
-                .then((homeserver: HomeserverInstance) => {
-                    cy.initTestUser(homeserver, "Alice", undefined, "alice_").then((credentials) => {
-                        aliceCredentials = credentials;
-                    });
-                    cy.getBot(homeserver, {
-                        displayName: "Bob",
-                        autoAcceptInvites: false,
-                        userIdPrefix: "bob_",
-                    }).as("bob");
+    beforeEach(function () {
+        cy.startHomeserver("default")
+            .as("homeserver")
+            .then((homeserver: HomeserverInstance) => {
+                cy.initTestUser(homeserver, "Alice", undefined, "alice_").then((credentials) => {
+                    aliceCredentials = credentials;
                 });
-        });
+                cy.getBot(homeserver, {
+                    displayName: "Bob",
+                    autoAcceptInvites: false,
+                    userIdPrefix: "bob_",
+                }).as("bob");
+            });
+    });
 
-        afterEach(function (this: CryptoTestContext) {
-            cy.stopHomeserver(this.homeserver);
-        });
+    afterEach(function (this: CryptoTestContext) {
+        cy.stopHomeserver(this.homeserver);
+    });
 
-        it("setting up secure key backup should work", () => {
-            skipIfRustCrypto();
-            cy.openUserSettings("Security & Privacy");
-            cy.findByRole("button", { name: "Set up Secure Backup" }).click();
-            cy.get(".mx_Dialog").within(() => {
-                cy.findByRole("button", { name: "Continue" }).click();
-                cy.get(".mx_CreateSecretStorageDialog_recoveryKey code").invoke("text").as("securityKey");
-                // Clicking download instead of Copy because of https://github.com/cypress-io/cypress/issues/2851
-                cy.findByRole("button", { name: "Download" }).click();
-                cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
-                cy.get(".mx_InteractiveAuthDialog").within(() => {
-                    cy.get(".mx_Dialog_title").within(() => {
-                        cy.findByText("Setting up keys").should("exist");
-                        cy.findByText("Setting up keys").should("not.exist");
-                    });
+    it("setting up secure key backup should work", () => {
+        skipIfRustCrypto();
+        cy.openUserSettings("Security & Privacy");
+        cy.findByRole("button", { name: "Set up Secure Backup" }).click();
+        cy.get(".mx_Dialog").within(() => {
+            cy.findByRole("button", { name: "Continue" }).click();
+            cy.get(".mx_CreateSecretStorageDialog_recoveryKey code").invoke("text").as("securityKey");
+            // Clicking download instead of Copy because of https://github.com/cypress-io/cypress/issues/2851
+            cy.findByRole("button", { name: "Download" }).click();
+            cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
+            cy.get(".mx_InteractiveAuthDialog").within(() => {
+                cy.get(".mx_Dialog_title").within(() => {
+                    cy.findByText("Setting up keys").should("exist");
+                    cy.findByText("Setting up keys").should("not.exist");
                 });
-
-                cy.findByText("Secure Backup successful").should("exist");
-                cy.findByRole("button", { name: "Done" }).click();
-                cy.findByText("Secure Backup successful").should("not.exist");
             });
-            return;
+
+            cy.findByText("Secure Backup successful").should("exist");
+            cy.findByRole("button", { name: "Done" }).click();
+            cy.findByText("Secure Backup successful").should("not.exist");
+        });
+        return;
+    });
+
+    it("creating a DM should work, being e2e-encrypted / user verification", function (this: CryptoTestContext) {
+        cy.bootstrapCrossSigning(aliceCredentials);
+        startDMWithBob.call(this);
+        // send first message
+        cy.findByRole("textbox", { name: "Send a message…" }).type("Hey!{enter}");
+        checkDMRoom();
+        bobJoin.call(this);
+        testMessages.call(this);
+        verify.call(this);
+
+        // Assert that verified icon is rendered
+        cy.findByRole("button", { name: "Room members" }).click();
+        cy.findByRole("button", { name: "Room information" }).click();
+        cy.get(".mx_RoomSummaryCard_e2ee_verified").should("exist");
+
+        // Take a snapshot of RoomSummaryCard with a verified E2EE icon
+        cy.get(".mx_RightPanel").percySnapshotElement("RoomSummaryCard - with a verified E2EE icon", {
+            widths: [264], // Emulate the UI. The value is based on minWidth specified on MainSplit.tsx
+        });
+    });
+
+    it("should allow verification when there is no existing DM", function (this: CryptoTestContext) {
+        cy.bootstrapCrossSigning(aliceCredentials);
+        autoJoin(this.bob);
+
+        // we need to have a room with the other user present, so we can open the verification panel
+        let roomId: string;
+        cy.createRoom({ name: "TestRoom", invite: [this.bob.getUserId()] }).then((_room1Id) => {
+            roomId = _room1Id;
+            cy.log(`Created test room ${roomId}`);
+            cy.visit(`/#/room/${roomId}`);
+            // wait for Bob to join the room, otherwise our attempt to open his user details may race
+            // with his join.
+            cy.findByText("Bob joined the room").should("exist");
         });
 
-        it("creating a DM should work, being e2e-encrypted / user verification", function (this: CryptoTestContext) {
-            cy.bootstrapCrossSigning(aliceCredentials);
-            startDMWithBob.call(this);
-            // send first message
-            cy.findByRole("textbox", { name: "Send a message…" }).type("Hey!{enter}");
-            checkDMRoom();
-            bobJoin.call(this);
-            testMessages.call(this);
-            verify.call(this);
+        verify.call(this);
+    });
 
-            // Assert that verified icon is rendered
-            cy.findByRole("button", { name: "Room members" }).click();
-            cy.findByRole("button", { name: "Room information" }).click();
-            cy.get(".mx_RoomSummaryCard_e2ee_verified").should("exist");
+    it("should show the correct shield on edited e2e events", function (this: CryptoTestContext) {
+        cy.bootstrapCrossSigning(aliceCredentials);
 
-            // Take a snapshot of RoomSummaryCard with a verified E2EE icon
-            cy.get(".mx_RightPanel").percySnapshotElement("RoomSummaryCard - with a verified E2EE icon", {
-                widths: [264], // Emulate the UI. The value is based on minWidth specified on MainSplit.tsx
-            });
-        });
+        // bob has a second, not cross-signed, device
+        cy.loginBot(this.homeserver, this.bob.getUserId(), this.bob.__cypress_password, {}).as("bobSecondDevice");
 
-        it("should allow verification when there is no existing DM", function (this: CryptoTestContext) {
-            cy.bootstrapCrossSigning(aliceCredentials);
-            autoJoin(this.bob);
+        autoJoin(this.bob);
 
-            // we need to have a room with the other user present, so we can open the verification panel
-            let roomId: string;
-            cy.createRoom({ name: "TestRoom", invite: [this.bob.getUserId()] }).then((_room1Id) => {
-                roomId = _room1Id;
+        // first create the room, so that we can open the verification panel
+        cy.createRoom({ name: "TestRoom", invite: [this.bob.getUserId()] })
+            .as("testRoomId")
+            .then((roomId) => {
                 cy.log(`Created test room ${roomId}`);
                 cy.visit(`/#/room/${roomId}`);
+
+                // enable encryption
+                cy.getClient().then((cli) => {
+                    cli.sendStateEvent(roomId, "m.room.encryption", { algorithm: "m.megolm.v1.aes-sha2" });
+                });
+
                 // wait for Bob to join the room, otherwise our attempt to open his user details may race
                 // with his join.
                 cy.findByText("Bob joined the room").should("exist");
             });
 
-            verify.call(this);
-        });
+        verify.call(this);
 
-        it("should show the correct shield on edited e2e events", function (this: CryptoTestContext) {
-            cy.bootstrapCrossSigning(aliceCredentials);
+        cy.get<string>("@testRoomId").then((roomId) => {
+            // bob sends a valid event
+            cy.wrap(this.bob.sendTextMessage(roomId, "Hoo!")).as("testEvent");
 
-            // bob has a second, not cross-signed, device
-            cy.loginBot(this.homeserver, this.bob.getUserId(), this.bob.__cypress_password, {}).as("bobSecondDevice");
+            // the message should appear, decrypted, with no warning
+            cy.get(".mx_EventTile_last .mx_EventTile_body")
+                .within(() => {
+                    cy.findByText("Hoo!");
+                })
+                .closest(".mx_EventTile")
+                .should("have.class", "mx_EventTile_verified")
+                .should("not.have.descendants", ".mx_EventTile_e2eIcon_warning");
 
-            autoJoin(this.bob);
-
-            // first create the room, so that we can open the verification panel
-            cy.createRoom({ name: "TestRoom", invite: [this.bob.getUserId()] })
-                .as("testRoomId")
-                .then((roomId) => {
-                    cy.log(`Created test room ${roomId}`);
-                    cy.visit(`/#/room/${roomId}`);
-
-                    // enable encryption
-                    cy.getClient().then((cli) => {
-                        cli.sendStateEvent(roomId, "m.room.encryption", { algorithm: "m.megolm.v1.aes-sha2" });
-                    });
-
-                    // wait for Bob to join the room, otherwise our attempt to open his user details may race
-                    // with his join.
-                    cy.findByText("Bob joined the room").should("exist");
-                });
-
-            verify.call(this);
-
-            cy.get<string>("@testRoomId").then((roomId) => {
-                // bob sends a valid event
-                cy.wrap(this.bob.sendTextMessage(roomId, "Hoo!")).as("testEvent");
-
-                // the message should appear, decrypted, with no warning
-                cy.get(".mx_EventTile_last .mx_EventTile_body")
-                    .within(() => {
-                        cy.findByText("Hoo!");
-                    })
-                    .closest(".mx_EventTile")
-                    .should("have.class", "mx_EventTile_verified")
-                    .should("not.have.descendants", ".mx_EventTile_e2eIcon_warning");
-
-                // bob sends an edit to the first message with his unverified device
-                cy.get<MatrixClient>("@bobSecondDevice").then((bobSecondDevice) => {
-                    cy.get<ISendEventResponse>("@testEvent").then((testEvent) => {
-                        bobSecondDevice.sendMessage(roomId, {
-                            "m.new_content": {
-                                msgtype: "m.text",
-                                body: "Haa!",
-                            },
-                            "m.relates_to": {
-                                rel_type: "m.replace",
-                                event_id: testEvent.event_id,
-                            },
-                        });
-                    });
-                });
-
-                // the edit should have a warning
-                cy.contains(".mx_EventTile_body", "Haa!")
-                    .closest(".mx_EventTile")
-                    .within(() => {
-                        cy.get(".mx_EventTile_e2eIcon_warning").should("exist");
-                    });
-
-                // a second edit from the verified device should be ok
+            // bob sends an edit to the first message with his unverified device
+            cy.get<MatrixClient>("@bobSecondDevice").then((bobSecondDevice) => {
                 cy.get<ISendEventResponse>("@testEvent").then((testEvent) => {
-                    this.bob.sendMessage(roomId, {
+                    bobSecondDevice.sendMessage(roomId, {
                         "m.new_content": {
                             msgtype: "m.text",
-                            body: "Hee!",
+                            body: "Haa!",
                         },
                         "m.relates_to": {
                             rel_type: "m.replace",
@@ -305,88 +282,109 @@ describe("Cryptography", function () {
                         },
                     });
                 });
-
-                cy.get(".mx_EventTile_last .mx_EventTile_body")
-                    .within(() => {
-                        cy.findByText("Hee!");
-                    })
-                    .closest(".mx_EventTile")
-                    .should("have.class", "mx_EventTile_verified")
-                    .should("not.have.descendants", ".mx_EventTile_e2eIcon_warning");
             });
+
+            // the edit should have a warning
+            cy.contains(".mx_EventTile_body", "Haa!")
+                .closest(".mx_EventTile")
+                .within(() => {
+                    cy.get(".mx_EventTile_e2eIcon_warning").should("exist");
+                });
+
+            // a second edit from the verified device should be ok
+            cy.get<ISendEventResponse>("@testEvent").then((testEvent) => {
+                this.bob.sendMessage(roomId, {
+                    "m.new_content": {
+                        msgtype: "m.text",
+                        body: "Hee!",
+                    },
+                    "m.relates_to": {
+                        rel_type: "m.replace",
+                        event_id: testEvent.event_id,
+                    },
+                });
+            });
+
+            cy.get(".mx_EventTile_last .mx_EventTile_body")
+                .within(() => {
+                    cy.findByText("Hee!");
+                })
+                .closest(".mx_EventTile")
+                .should("have.class", "mx_EventTile_verified")
+                .should("not.have.descendants", ".mx_EventTile_e2eIcon_warning");
         });
     });
+});
 
-    describe("Verify own device", () => {
-        let aliceBotClient: CypressBot;
+describe("Verify own device", () => {
+    let aliceBotClient: CypressBot;
 
-        beforeEach(function () {
-            cy.startHomeserver("default")
-                .as("homeserver")
-                .then((homeserver: HomeserverInstance) => {
-                    // Populate `win.matrixcs`
-                    cy.intercept("GET", "**/r0/login").as("login");
-                    cy.visit("/#/login");
-                    cy.wait("@login");
+    beforeEach(function () {
+        cy.startHomeserver("default")
+            .as("homeserver")
+            .then((homeserver: HomeserverInstance) => {
+                // Populate `win.matrixcs`
+                cy.intercept("GET", "**/r0/login").as("login");
+                cy.visit("/#/login");
+                cy.wait("@login");
 
-                    // Create a new device for alice
-                    cy.getBot(homeserver, { bootstrapCrossSigning: true }).then((bot) => {
-                        aliceBotClient = bot;
-                    });
+                // Create a new device for alice
+                cy.getBot(homeserver, { bootstrapCrossSigning: true }).then((bot) => {
+                    aliceBotClient = bot;
                 });
+            });
+    });
+
+    afterEach(function (this: CryptoTestContext) {
+        cy.stopHomeserver(this.homeserver);
+    });
+
+    function loginAlice(homeserver: HomeserverInstance) {
+        // Change homeserver
+        cy.findByRole("button", { name: "Edit" }).click();
+        // Select homeserver modal
+        cy.get(`[aria-labelledby="mx_BaseDialog_title"`).within(() => {
+            cy.findByRole("textbox").type(homeserver.baseUrl);
+            cy.findByRole("button", { name: "Continue" }).click();
+        });
+        // Fill credentials
+        cy.findByRole("textbox", { name: "Username" }).type(aliceBotClient.getUserId());
+        cy.findByLabelText("Password").type(aliceBotClient.__cypress_password);
+        // Sign in
+        cy.findByRole("button", { name: "Sign in" }).click();
+    }
+
+    function doAliceVerificationRequest() {
+        // alice bot waits for verification request
+        const promiseVerificationRequest = waitForVerificationRequest(aliceBotClient);
+
+        // Click on "Verify with another device"
+        cy.get(".mx_AuthPage").within(() => {
+            cy.findByRole("button", { name: "Verify with another device" }).click();
         });
 
-        afterEach(function (this: CryptoTestContext) {
-            cy.stopHomeserver(this.homeserver);
+        // alice bot responds yes to verification request from alice
+        cy.wrap(promiseVerificationRequest).as("verificationRequest");
+    }
+
+    it("with SAS", function (this: CryptoTestContext) {
+        loginAlice(this.homeserver);
+
+        // Launch and do the verification request between alice and the bot
+        doAliceVerificationRequest();
+
+        // Handle emoji SAS verification
+        cy.get(".mx_InfoDialog").within(() => {
+            cy.get<VerificationRequest>("@verificationRequest").then((request: VerificationRequest) => {
+                // Handle emoji request and check that emojis are matching
+                doTwoWaySasVerification(request);
+            });
+
+            cy.findByRole("button", { name: "They match" }).click();
+            cy.findByRole("button", { name: "Got it" }).click();
         });
 
-        function loginAlice(homeserver: HomeserverInstance) {
-            // Change homeserver
-            cy.findByRole("button", { name: "Edit" }).click();
-            // Select homeserver modal
-            cy.get(`[aria-labelledby="mx_BaseDialog_title"`).within(() => {
-                cy.findByRole("textbox").type(homeserver.baseUrl);
-                cy.findByRole("button", { name: "Continue" }).click();
-            });
-            // Fill credentials
-            cy.findByRole("textbox", { name: "Username" }).type(aliceBotClient.getUserId());
-            cy.findByLabelText("Password").type(aliceBotClient.__cypress_password);
-            // Sign in
-            cy.findByRole("button", { name: "Sign in" }).click();
-        }
-
-        function doAliceVerificationRequest() {
-            // alice bot waits for verification request
-            const promiseVerificationRequest = waitForVerificationRequest(aliceBotClient);
-
-            // Click on "Verify with another device"
-            cy.get(".mx_AuthPage").within(() => {
-                cy.findByRole("button", { name: "Verify with another device" }).click();
-            });
-
-            // alice bot responds yes to verification request from alice
-            cy.wrap(promiseVerificationRequest).as("verificationRequest");
-        }
-
-        it("with SAS", function (this: CryptoTestContext) {
-            loginAlice(this.homeserver);
-
-            // Launch and do the verification request between alice and the bot
-            doAliceVerificationRequest();
-
-            // Handle emoji SAS verification
-            cy.get(".mx_InfoDialog").within(() => {
-                cy.get<VerificationRequest>("@verificationRequest").then((request: VerificationRequest) => {
-                    // Handle emoji request and check that emojis are matching
-                    doTwoWaySasVerification(request);
-                });
-
-                cy.findByRole("button", { name: "They match" }).click();
-                cy.findByRole("button", { name: "Got it" }).click();
-            });
-
-            // Check that our device is now cross-signed
-            checkDeviceIsCrossSigned();
-        });
+        // Check that our device is now cross-signed
+        checkDeviceIsCrossSigned();
     });
 });
