@@ -27,6 +27,7 @@ import { User } from "matrix-js-sdk/src/models/user";
 import { SAS, SasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
 import { logger } from "matrix-js-sdk/src/logger";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
+import { ShowQrCodeCallbacks, ShowSasCallbacks } from "matrix-js-sdk/src/crypto-api/verification";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import VerificationQRCode from "../elements/crypto/VerificationQRCode";
@@ -48,10 +49,10 @@ interface IProps {
 }
 
 interface IState {
-    sasEvent?: SAS["sasEvent"];
+    sasEvent?: ShowSasCallbacks;
     emojiButtonClicked?: boolean;
     reciprocateButtonClicked?: boolean;
-    reciprocateQREvent?: ReciprocateQRCode["reciprocateQREvent"];
+    reciprocateQREvent?: ShowQrCodeCallbacks;
 }
 
 export default class VerificationPanel extends React.PureComponent<IProps, IState> {
