@@ -104,7 +104,7 @@ export interface MessagePreview {
 }
 
 const isThreadReply = (event: MatrixEvent): boolean => {
-    // a thread rood event cannot be a thread reply
+    // a thread root event cannot be a thread reply
     if (event.isThreadRoot) return false;
 
     const thread = event.getThread();
