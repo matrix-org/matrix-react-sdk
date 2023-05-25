@@ -451,7 +451,7 @@ describe("TextForEvent", () => {
 
         beforeEach(() => {
             stubClient();
-            mockClient = MatrixClientPeg.get();
+            mockClient = MatrixClientPeg.safeGet();
 
             mocked(mockClient.getRoom).mockReturnValue({
                 name: "Test room",

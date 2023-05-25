@@ -71,7 +71,7 @@ export function stubClient(): MatrixClient {
     jest.spyOn(peg, "get");
     jest.spyOn(peg, "unset");
     jest.spyOn(peg, "replaceUsingCreds");
-    // MatrixClientPeg.get() is called a /lot/, so implement it with our own
+    // MatrixClientPeg.safeGet() is called a /lot/, so implement it with our own
     // fast stub function rather than a sinon stub
     peg.get = function () {
         return client;
