@@ -57,3 +57,11 @@ export function wrapInSdkContext<T>(
         }
     };
 }
+
+export function renderWithClientContextOptions(client: MatrixClient) {
+    return {
+        wrapper: ({ children }) => (
+            <MatrixClientContext.Provider value={client}>{children}</MatrixClientContext.Provider>
+        ),
+    };
+}
