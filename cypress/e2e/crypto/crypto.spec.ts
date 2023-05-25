@@ -190,6 +190,7 @@ describe("Cryptography", function () {
     });
 
     it("creating a DM should work, being e2e-encrypted / user verification", function (this: CryptoTestContext) {
+        skipIfRustCrypto();
         cy.bootstrapCrossSigning(aliceCredentials);
         startDMWithBob.call(this);
         // send first message
@@ -211,6 +212,7 @@ describe("Cryptography", function () {
     });
 
     it("should allow verification when there is no existing DM", function (this: CryptoTestContext) {
+        skipIfRustCrypto();
         cy.bootstrapCrossSigning(aliceCredentials);
         autoJoin(this.bob);
 
@@ -229,6 +231,7 @@ describe("Cryptography", function () {
     });
 
     it("should show the correct shield on edited e2e events", function (this: CryptoTestContext) {
+        skipIfRustCrypto();
         cy.bootstrapCrossSigning(aliceCredentials);
 
         // bob has a second, not cross-signed, device
