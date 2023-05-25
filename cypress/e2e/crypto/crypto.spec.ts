@@ -327,26 +327,27 @@ describe("Cryptography", function () {
 
 describe("Verify own device", () => {
     let aliceBotClient: CypressBot;
+    let homeserver: HomeserverInstance;
 
-    beforeEach(function () {
-        cy.startHomeserver("default")
-            .as("homeserver")
-            .then((homeserver: HomeserverInstance) => {
-                // Visit the login page of the app, to load the matrix sdk
-                cy.visit("/#/login");
+    beforeEach(() => {
+        cy.startHomeserver("default").then((data: HomeserverInstance) => {
+            homeserver = data;
 
-                // wait for the page to load
-                cy.window({ log: false }).should("have.property", "matrixcs");
+            // Visit the login page of the app, to load the matrix sdk
+            cy.visit("/#/login");
 
-                // Create a new device for alice
-                cy.getBot(homeserver, { bootstrapCrossSigning: true }).then((bot) => {
-                    aliceBotClient = bot;
-                });
+            // wait for the page to load
+            cy.window({ log: false }).should("have.property", "matrixcs");
+
+            // Create a new device for alice
+            cy.getBot(homeserver, { bootstrapCrossSigning: true }).then((bot) => {
+                aliceBotClient = bot;
             });
+        });
     });
 
-    afterEach(function (this: CryptoTestContext) {
-        cy.stopHomeserver(this.homeserver);
+    afterEach(() => {
+        cy.stopHomeserver(homeserver);
     });
 
     /* Click the "Verify with another device" button, and have the bot client auto-accept it.
@@ -367,7 +368,7 @@ describe("Verify own device", () => {
     }
 
     it("with SAS", function (this: CryptoTestContext) {
-        logIntoElement(this.homeserver.baseUrl, aliceBotClient.getUserId(), aliceBotClient.__cypress_password);
+        logIntoElement(homeserver.baseUrl, aliceBotClient.getUserId(), aliceBotClient.__cypress_password);
 
         // Launch the verification request between alice and the bot
         initiateAliceVerificationRequest();
