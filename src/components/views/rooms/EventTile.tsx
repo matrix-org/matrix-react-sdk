@@ -488,13 +488,19 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         if (this.context.timelineRenderingType === TimelineRenderingType.Search && this.props.mxEvent.threadRootId) {
             if (this.props.highlightLink) {
                 return (
-                    <a className="mx_ThreadSummary_icon" href={this.props.highlightLink}>
+                    <a className="mx_ThreadSummary_info" href={this.props.highlightLink}>
+                        <ThreadSummaryIcon className="mx_Icon mx_Icon--thread" />
                         {_t("From a thread")}
                     </a>
                 );
             }
 
-            return <p className="mx_ThreadSummary_icon">{_t("From a thread")}</p>;
+            return (
+                <p className="mx_ThreadSummary_info">
+                    <ThreadSummaryIcon className="mx_Icon mx_Icon--thread" />
+                    {_t("From a thread")}
+                </p>
+            );
         }
     }
 
