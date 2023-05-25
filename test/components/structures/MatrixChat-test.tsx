@@ -29,6 +29,10 @@ import { Action } from "../../../src/dispatcher/actions";
 import { UserTab } from "../../../src/components/views/dialogs/UserTab";
 import { clearAllModals, flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../test-utils";
 import * as leaveRoomUtils from "../../../src/utils/leave-behaviour";
+import RoomListStore from "../../../src/stores/room-list/RoomListStore";
+import { RoomUpdateCause } from "../../../src/stores/room-list/models";
+import SettingsStore from "../../../src/settings/SettingsStore";
+import ThemeWatcher from "../../../src/settings/watchers/ThemeWatcher";
 
 describe("<MatrixChat />", () => {
     const userId = "@alice:server.org";
@@ -36,6 +40,13 @@ describe("<MatrixChat />", () => {
     const accessToken = "abc123";
     const mockClient = getMockClientWithEventEmitter({
         ...mockClientMethodsUser(userId),
+        // room related
+        hasLazyLoadMembersEnabled: jest.fn(),
+        forget: jest.fn(),
+        getRoom: jest.fn(),
+        stopPeeking: jest.fn(),
+        isRoomEncrypted: jest.fn(),
+        // other
         startClient: jest.fn(),
         stopClient: jest.fn(),
         setCanResetTimelineCallback: jest.fn(),
@@ -46,7 +57,7 @@ describe("<MatrixChat />", () => {
         getClientWellKnown: jest.fn().mockReturnValue({}),
         isVersionSupported: jest.fn().mockResolvedValue(false),
         isCryptoEnabled: jest.fn().mockReturnValue(false),
-        getRoom: jest.fn(),
+        getCapabilities: jest.fn().mockReturnValue({}),
         getMediaHandler: jest.fn().mockReturnValue({
             setVideoInput: jest.fn(),
             setAudioInput: jest.fn(),
@@ -117,13 +128,15 @@ describe("<MatrixChat />", () => {
             mx_device_id: deviceId,
         };
 
-        beforeEach(() => {
+        beforeEach(async () => {
             localStorageSpy.mockImplementation((key: unknown) => mockLocalStorage[key as string] || "");
 
             jest.spyOn(StorageManager, "idbLoad").mockImplementation(async (table, key) => {
                 const safeKey = Array.isArray(key) ? key[0] : key;
                 return mockidb[table]?.[safeKey];
             });
+
+            await clearAllModals();
         });
 
         const getComponentAndWaitForReady = async (): Promise<RenderResult> => {
@@ -190,12 +203,10 @@ describe("<MatrixChat />", () => {
                     mockClient.getRoom.mockImplementation(
                         (id) => [room, spaceRoom].find((room) => room.roomId === id) || null,
                     );
-                    jest.spyOn(defaultDispatcher, "dispatch").mockClear();
                 });
 
                 describe("leave_room", () => {
                     beforeEach(async () => {
-                        await clearAllModals();
                         await getComponentAndWaitForReady();
                         // this is thoroughly unit tested elsewhere
                         jest.spyOn(leaveRoomUtils, "leaveRoomBehaviour").mockClear().mockResolvedValue(undefined);
@@ -299,6 +310,98 @@ describe("<MatrixChat />", () => {
                                 ),
                             ).toBeInTheDocument();
                         });
+                    });
+                });
+
+                describe("forget_room", () => {
+                    const dispatchAction = () =>
+                        defaultDispatcher.dispatch({
+                            action: "forget_room",
+                            room_id: roomId,
+                        });
+
+                    beforeEach(async () => {
+                        jest.spyOn(room.currentState, "getStateEvents").mockRestore();
+                        await getComponentAndWaitForReady();
+                        // clear dispatch calls during init
+                        jest.spyOn(defaultDispatcher, "dispatch").mockClear();
+                        mockClient.forget.mockClear().mockResolvedValue(undefined);
+                        // stub
+                        jest.spyOn(RoomListStore.instance, "manualRoomUpdate").mockReturnValue(undefined);
+                    });
+
+                    it("should forget the room and update roomlist", async () => {
+                        dispatchAction();
+
+                        await flushPromises();
+                        expect(mockClient.forget).toHaveBeenCalledWith(roomId);
+                        expect(RoomListStore.instance.manualRoomUpdate).toHaveBeenCalledWith(
+                            room,
+                            RoomUpdateCause.RoomRemoved,
+                        );
+                    });
+
+                    it("should not redirect to home page if forgotten room is not current room", async () => {
+                        dispatchAction();
+
+                        await flushPromises();
+                        expect(defaultDispatcher.dispatch).not.toHaveBeenCalledWith({
+                            action: Action.ViewHomePage,
+                        });
+                    });
+
+                    // @TODO(kerrya) re-enable when tests are moved out of MatrixChat
+                    // loading RoomView/changing page kicks off so many actions
+                    // that take a long time to settle
+                    // and make this test flaky and leaky
+                    // when test is moved to utils and just tests forget room behaviour
+                    // that will not be an issue
+                    it.skip("should redirect to home page if forgotten room is the current room", async () => {
+                        // dispatching this loads RoomView and adds a lot of stuff to mock
+                        // these tests will move to utils soon and wont load roomview
+                        // so just do something quick and dirty here
+                        jest.spyOn(SettingsStore, "getValue").mockReturnValue(undefined);
+                        jest.spyOn(ThemeWatcher.prototype, "recheck").mockImplementation(() => {});
+                        defaultDispatcher.dispatch({
+                            action: Action.ViewRoom,
+                            room_id: roomId,
+                        });
+                        jest.spyOn(defaultDispatcher, "dispatch").mockClear();
+
+                        dispatchAction();
+
+                        await flushPromises();
+                        expect(defaultDispatcher.dispatch).toHaveBeenCalledWith({
+                            action: Action.ViewHomePage,
+                        });
+
+                        await flushPromises();
+                    });
+
+                    it("should show an error dialog if forgetting fails", async () => {
+                        const error = { errcode: "test", message: "Oups!" };
+                        mockClient.forget.mockRejectedValue(error);
+                        dispatchAction();
+                        await flushPromises();
+
+                        const dialog = await screen.findByRole("dialog");
+
+                        expect(within(dialog).getByText("Failed to forget room test")).toBeInTheDocument();
+                        expect(within(dialog).getByText("Oups!")).toBeInTheDocument();
+                    });
+
+                    it("should show an error dialog with default error messages when error is not a MatrixError", async () => {
+                        const error = {};
+                        mockClient.forget.mockRejectedValue(error);
+                        dispatchAction();
+                        await flushPromises();
+
+                        const dialog = await screen.findByRole("dialog");
+
+                        expect(
+                            within(dialog).getByText("Failed to forget room unknown error code"),
+                        ).toBeInTheDocument();
+                        expect(within(dialog).getByText("Operation failed")).toBeInTheDocument();
                     });
                 });
             });
