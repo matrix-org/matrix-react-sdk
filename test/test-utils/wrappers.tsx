@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { ComponentType, Ref } from "react";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { RenderOptions } from "@testing-library/react";
 
 import { MatrixClientPeg as peg } from "../../src/MatrixClientPeg";
 import MatrixClientContext from "../../src/contexts/MatrixClientContext";
@@ -58,7 +59,7 @@ export function wrapInSdkContext<T>(
     };
 }
 
-export function renderWithClientContextOptions(client: MatrixClient) {
+export function renderWithClientContextOptions(client: MatrixClient): RenderOptions {
     return {
         wrapper: ({ children }) => (
             <MatrixClientContext.Provider value={client}>{children}</MatrixClientContext.Provider>
