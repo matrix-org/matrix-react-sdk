@@ -15,8 +15,9 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { IGeneratedSas, ISasEvent, SasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
+import { SasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
 import { VerificationBase, VerificationEvent } from "matrix-js-sdk/src/crypto/verification/Base";
+import { GeneratedSas, ShowSasCallbacks } from "matrix-js-sdk/src/crypto-api/verification";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -50,11 +51,11 @@ interface IState {
         displayname?: string;
     } | null;
     opponentProfileError: Error | null;
-    sas: IGeneratedSas | null;
+    sas: GeneratedSas | null;
 }
 
 export default class IncomingSasDialog extends React.Component<IProps, IState> {
-    private showSasEvent: ISasEvent | null;
+    private showSasEvent: ShowSasCallbacks | null;
 
     public constructor(props: IProps) {
         super(props);
@@ -118,7 +119,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
             });
     };
 
-    private onVerifierShowSas = (e: ISasEvent): void => {
+    private onVerifierShowSas = (e: ShowSasCallbacks): void => {
         this.showSasEvent = e;
         this.setState({
             phase: PHASE_SHOW_SAS,
