@@ -50,10 +50,13 @@ exports[`RoomStatusBar <RoomStatusBar /> unsent messages should render warning w
         class="mx_RoomStatusBar_unsentButtonBar"
       >
         <div
-          class="mx_AccessibleButton mx_RoomStatusBar_unsentCancelAllBtn"
+          class="mx_AccessibleButton"
           role="button"
           tabindex="0"
         >
+          <div
+            class="mx_Icon"
+          />
           Delete all
         </div>
         <div
@@ -61,6 +64,9 @@ exports[`RoomStatusBar <RoomStatusBar /> unsent messages should render warning w
           role="button"
           tabindex="0"
         >
+          <div
+            class="mx_Icon"
+          />
           Retry all
         </div>
       </div>
@@ -106,10 +112,13 @@ exports[`RoomStatusBar <RoomStatusBar /> unsent messages should render warning w
         class="mx_RoomStatusBar_unsentButtonBar"
       >
         <div
-          class="mx_AccessibleButton mx_RoomStatusBar_unsentCancelAllBtn"
+          class="mx_AccessibleButton"
           role="button"
           tabindex="0"
         >
+          <div
+            class="mx_Icon"
+          />
           Delete all
         </div>
         <div
@@ -117,6 +126,9 @@ exports[`RoomStatusBar <RoomStatusBar /> unsent messages should render warning w
           role="button"
           tabindex="0"
         >
+          <div
+            class="mx_Icon"
+          />
           Retry all
         </div>
       </div>

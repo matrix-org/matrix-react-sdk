@@ -32,6 +32,8 @@ import InlineSpinner from "../views/elements/InlineSpinner";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { RoomStatusBarUnsentMessages } from "./RoomStatusBarUnsentMessages";
 import ExternalLink from "../views/elements/ExternalLink";
+import { Icon as TrashcanIcon } from "../../../res/img/element-icons/trashcan.svg";
+import { Icon as RetryIcon } from "../../../res/img/element-icons/retry.svg";
 
 const STATUS_BAR_HIDDEN = 0;
 const STATUS_BAR_EXPANDED = 1;
@@ -246,10 +248,12 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
 
         let buttonRow = (
             <>
-                <AccessibleButton onClick={this.onCancelAllClick} className="mx_RoomStatusBar_unsentCancelAllBtn">
+                <AccessibleButton onClick={this.onCancelAllClick}>
+                    <TrashcanIcon className="mx_Icon" />
                     {_t("Delete all")}
                 </AccessibleButton>
                 <AccessibleButton onClick={this.onResendAllClick} className="mx_RoomStatusBar_unsentRetry">
+                    <RetryIcon className="mx_Icon" />
                     {_t("Retry all")}
                 </AccessibleButton>
             </>
