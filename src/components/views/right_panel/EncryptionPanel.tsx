@@ -26,7 +26,6 @@ import { User } from "matrix-js-sdk/src/models/user";
 
 import EncryptionInfo from "./EncryptionInfo";
 import VerificationPanel from "./VerificationPanel";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { ensureDMExists } from "../../../createRoom";
 import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
 import Modal from "../../../Modal";
@@ -34,6 +33,7 @@ import { _t } from "../../../languageHandler";
 import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import ErrorDialog from "../dialogs/ErrorDialog";
+import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 
 // cancellation codes which constitute a key mismatch
 const MISMATCHES = ["m.key_mismatch", "m.user_error", "m.mismatched_sas"];
@@ -48,6 +48,7 @@ interface IProps {
 }
 
 const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
+    const cli = useMatrixClientContext();
     const { verificationRequest, verificationRequestPromise, member, onClose, layout, isRoomEncrypted } = props;
     const [request, setRequest] = useState(verificationRequest);
     // state to show a spinner immediately after clicking "start verification",
@@ -105,7 +106,6 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
 
     const onStartVerification = useCallback(async (): Promise<void> => {
         setRequesting(true);
-        const cli = MatrixClientPeg.get();
         let verificationRequest_: VerificationRequest;
         try {
             const roomId = await ensureDMExists(cli, member.userId);
@@ -134,14 +134,12 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
             });
         }
         if (!RightPanelStore.instance.isOpen) RightPanelStore.instance.togglePanel(null);
-    }, [member]);
+    }, [cli, member]);
 
     const requested: boolean =
         (!request && isRequesting) ||
         (!!request && (phase === PHASE_REQUESTED || phase === PHASE_UNSENT || phase === undefined));
-    const isSelfVerification = request
-        ? request.isSelfVerification
-        : member.userId === MatrixClientPeg.get().getUserId();
+    const isSelfVerification = request ? request.isSelfVerification : member.userId === cli.getUserId();
 
     if (!request || requested) {
         const initiatedByMe = (!request && isRequesting) || (!!request && request.initiatedByMe);
