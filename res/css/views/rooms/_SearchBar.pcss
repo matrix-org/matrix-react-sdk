@@ -73,13 +73,17 @@ limitations under the License.
     }
 
     .mx_SearchBar_cancelButton {
-        background-color: $alert;
-        mask: url("$(res)/img/cancel.svg");
-        mask-repeat: no-repeat;
-        mask-position: center;
-        mask-size: 14px;
-        padding: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2px; /* clickable area size: 2px * 2 + 14px = 18px */
         margin: 0 12px 0 3px;
-        cursor: pointer;
+
+        .mx_Icon {
+            color: $alert;
+            flex: 0 0 14px;
+            height: 14px;
+            width: 14px;
+        }
     }
 }

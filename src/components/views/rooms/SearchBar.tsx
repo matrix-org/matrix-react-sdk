@@ -25,6 +25,7 @@ import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import SearchWarning, { WarningKind } from "../elements/SearchWarning";
 import { Icon as SearchInputIcon } from "../../../../res/img/feather-customised/search-input.svg";
+import { Icon as CancelIcon } from "../../../../res/img/cancel.svg";
 
 interface IProps {
     onCancelClick: () => void;
@@ -136,7 +137,9 @@ export default class SearchBar extends React.Component<IProps, IState> {
                         className="mx_SearchBar_cancelButton"
                         onClick={this.props.onCancelClick}
                         aria-label={_t("Cancel")}
-                    />
+                    >
+                        <CancelIcon className="mx_Icon" />
+                    </AccessibleButton>
                 </div>
                 <SearchWarning isRoomEncrypted={this.props.isRoomEncrypted} kind={WarningKind.Search} />
             </>
