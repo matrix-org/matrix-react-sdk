@@ -15,11 +15,7 @@ limitations under the License.
 */
 
 import React, { useCallback, useEffect, useState } from "react";
-import {
-    PHASE_REQUESTED,
-    PHASE_UNSENT,
-    VerificationRequest,
-} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { VerificationPhase, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { User } from "matrix-js-sdk/src/models/user";
@@ -138,7 +134,8 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
 
     const requested: boolean =
         (!request && isRequesting) ||
-        (!!request && (phase === PHASE_REQUESTED || phase === PHASE_UNSENT || phase === undefined));
+        (!!request &&
+            (phase === VerificationPhase.Requested || phase === VerificationPhase.Unsent || phase === undefined));
     const isSelfVerification = request
         ? request.isSelfVerification
         : member.userId === MatrixClientPeg.get().getUserId();
