@@ -1464,7 +1464,6 @@
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Επαληθεύστε μεμονωμένα κάθε συνεδρία που χρησιμοποιείται από έναν χρήστη για να την επισημάνετε ως αξιόπιστη, χωρίς να εμπιστεύεστε συσκευές με διασταυρούμενη υπογραφή.",
     "Rename": "Μετονομασία",
     "Display Name": "Εμφανιζόμενο όνομα",
-    "Sign out %(count)s selected devices|one": "Αποσύνδεση%(count)s επιλεγμένων συσκευών",
     "Verified devices": "Επαληθευμένες συσκευές",
     "Select all": "Επιλογή όλων",
     "Deselect all": "Αποεπιλογή όλων",

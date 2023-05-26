@@ -2612,7 +2612,6 @@
     "Remove them from everything I'm able to": "ລຶບອອກຈາກທຸກສິ່ງທີ່ຂ້ອຍສາມາດເຮັດໄດ້",
     "Remove from %(roomName)s": "ລຶບອອກຈາກ %(roomName)s",
     "Disinvite from %(roomName)s": "ຍົກເລີກເຊີນຈາກ %(roomName)s",
-    "Verified devices": "ອຸປະກອນທີ່ກວດສອບໄດ້",
     "Select all": "ເລືອກທັງຫມົດ",
     "Deselect all": "ຍົກເລີກການເລືອກທັງໝົດ",
     "Authentication": "ການຢືນຢັນ",

@@ -2680,7 +2680,6 @@
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Kjo dhomë s’kalon mesazhe në ndonjë platformë. <a>Mësoni më tepër.</a>",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Kjo dhomë gjendet në disa hapësira për të cilat nuk jeni një nga përgjegjësit. Në këto hapësira, dhoma e vjetër prapë do të shfaqet, por njerëzve do t’u kërkohet të marrin pjesë te e reja.",
     "Rename": "Riemërtojeni",
-    "Sign out %(count)s selected devices|one": "Bëj daljen nga %(count)s pajisje e përzgjedhur",
     "Verified devices": "Pajisje të verifikuara",
     "Select all": "Përzgjidhi krejt",
     "Deselect all": "Shpërzgjidhi krejt",

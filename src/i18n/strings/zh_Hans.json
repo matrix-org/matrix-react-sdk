@@ -2670,7 +2670,6 @@
     "Joining": "加入中",
     "Automatically send debug logs on any error": "遇到任何错误自动发送调试日志",
     "Rename": "重命名",
-    "Sign out %(count)s selected devices|one": "登出%(count)s台选定的设备",
     "Verified devices": "已验证的设备",
     "Select all": "全选",
     "Deselect all": "取消全选",
