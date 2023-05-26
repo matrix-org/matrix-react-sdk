@@ -40,6 +40,11 @@ describe("SearchBar", () => {
         searchProps.onSearch.mockClear();
     });
 
+    it("should render", () => {
+        const { container } = render(<SearchBar {...searchProps} />);
+        expect(container).toMatchSnapshot();
+    });
+
     it("must not search when input value is empty", () => {
         const { container } = render(<SearchBar {...searchProps} />);
         const roomButtons = container.querySelectorAll(".mx_SearchBar_button");

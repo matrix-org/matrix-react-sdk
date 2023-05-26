@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchBar should render 1`] = `
+<div>
+  <div
+    class="mx_SearchBar"
+  >
+    <div
+      class="mx_SearchBar_buttons"
+      role="radiogroup"
+    >
+      <div
+        aria-checked="true"
+        class="mx_AccessibleButton mx_SearchBar_button"
+        role="radio"
+        tabindex="0"
+      >
+        This Room
+      </div>
+      <div
+        aria-checked="false"
+        class="mx_AccessibleButton mx_SearchBar_button mx_SearchBar_unselected"
+        role="radio"
+        tabindex="0"
+      >
+        All Rooms
+      </div>
+    </div>
+    <div
+      class="mx_SearchBar_input mx_textinput"
+    >
+      <input
+        aria-label="Search this room"
+        placeholder="Search…"
+        type="text"
+      />
+      <div
+        aria-label="Search"
+        class="mx_AccessibleButton mx_SearchBar_searchButton"
+        role="button"
+        tabindex="0"
+      />
+    </div>
+    <div
+      aria-label="Cancel"
+      class="mx_AccessibleButton mx_SearchBar_cancel"
+      role="button"
+      tabindex="0"
+    />
+  </div>
+</div>
+`;
