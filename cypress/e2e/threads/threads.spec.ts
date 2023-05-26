@@ -490,6 +490,52 @@ describe("Threads", () => {
         cy.get(".mx_ThreadView").percySnapshotElement("Reply to the location on ThreadView", { percyCSS });
     });
 
+    it("should support search", () => {
+        const roomName = "Test Room";
+        const messageInitial = "Test Message";
+        const messageReply = "Reply";
+
+        cy.createRoom({ name: roomName }).viewRoomByName(roomName);
+
+        // Send message
+        cy.get(".mx_RoomView_body").within(() => {
+            cy.findByRole("textbox", { name: "Send a message…" }).type(`${messageInitial}{enter}`);
+
+            // Create thread
+            cy.contains(".mx_EventTile[data-scroll-tokens]", messageInitial)
+                .realHover()
+                .findByRole("button", { name: "Reply in thread" })
+                .click();
+        });
+
+        // User responds in thread
+        cy.get(".mx_ThreadView").within(() => {
+            cy.findByRole("textbox", { name: "Send a message…" }).type(`${messageReply}{enter}`);
+        });
+
+        // Assert that ThreadSummary is rendered on the timeline
+        cy.get(".mx_RoomView_body .mx_ThreadSummary").within(() => {
+            cy.get(".mx_ThreadSummary_content").findByText(messageReply).should("be.visible");
+        });
+
+        // User clicks the search button on the room header
+        cy.get(".mx_RoomHeader").within(() => {
+            cy.findByRole("button", { name: "Search" }).click();
+        });
+
+        // User searches the message sent to the thread
+        cy.get(".mx_SearchBar").within(() => {
+            cy.findByRole("textbox", { name: "Search this room" }).type(messageReply);
+            cy.findByRole("button", { name: "Search" }).click();
+        });
+
+        // Assert that ThreadSummary is rendered on the search results panel
+        cy.get(".mx_RoomView_searchResultsPanel .mx_ThreadSummary_info").within(() => {
+            cy.get(".mx_Icon--thread").should("be.visible");
+            cy.findByText(/From a thread/).should("be.visible");
+        });
+    });
+
     it("right panel behaves correctly", () => {
         // Create room
         let roomId: string;
