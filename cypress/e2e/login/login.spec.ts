@@ -56,7 +56,7 @@ describe("Login", () => {
             cy.findByPlaceholderText("Password").type(password);
             cy.findByRole("button", { name: "Sign in" }).click();
 
-            cy.url().should("contain", "/#/home", { timeout: 30000 });
+            cy.url().should("contain", "/#/home");
         });
     });
 
