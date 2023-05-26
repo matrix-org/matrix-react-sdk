@@ -218,9 +218,9 @@ class NotifierClass {
     }
 
     private async createAudioSourceForRoom(roomId: string): Promise<AudioBufferSourceNode> {
-        const audio=await this.getSoundBufferForRoom(roomId);
-        const source=this.audioContext.createBufferSource();
-        source.buffer=audio;
+        const audio = await this.getSoundBufferForRoom(roomId);
+        const source = this.audioContext.createBufferSource();
+        source.buffer = audio;
         source.connect(this.audioContext.destination);
         return source;
     }
@@ -228,16 +228,16 @@ class NotifierClass {
     private async getSoundBufferForRoom(roomId: string): Promise<AudioBuffer> {
         const sound = this.getSoundForRoom(roomId);
         // TODO: Choose from mp3 and ogg
-        const url=sound?sound["url"]:"media/message.mp3";
+        const url = sound ? sound["url"] : "media/message.mp3";
 
-        if(this.sounds.hasOwnProperty(url)){
+        if (this.sounds.hasOwnProperty(url)) {
             return this.sounds[url];
         }
 
-        const response=await fetch(url);
-        const buffer=await response.arrayBuffer();
-        const audio=await this.audioContext.decodeAudioData(buffer);
-        this.sounds[url]=audio;
+        const response = await fetch(url);
+        const buffer = await response.arrayBuffer();
+        const audio = await this.audioContext.decodeAudioData(buffer);
+        this.sounds[url] = audio;
         return audio;
     }
 
@@ -249,7 +249,7 @@ class NotifierClass {
         }
 
         // Play notification sound here
-        const source=await this.createAudioSourceForRoom(room.roomId);
+        const source = await this.createAudioSourceForRoom(room.roomId);
         source.start();
     }
 
