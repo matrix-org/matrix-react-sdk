@@ -2675,7 +2675,6 @@
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Ez a szoba egy platformmal sem köt össze üzeneteket. <a>Tudjon meg többet.</a>",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Ez a szoba olyan terekben is benne van amiben ön nem adminisztrátor. Ezekben a terekben a régi szoba jelenik meg és az emberek kapnak egy jelzést, hogy lépjenek be az újba.",
     "Rename": "Átnevezés",
-    "Verified devices": "Ellenőrzött eszközök",
     "Select all": "Mindet kijelöli",
     "Deselect all": "Semmit nem jelöl ki",
     "Sign out devices|one": "Eszközből való kijelentkezés",

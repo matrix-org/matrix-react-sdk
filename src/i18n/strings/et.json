@@ -2685,7 +2685,6 @@
     "The homeserver the user you're verifying is connected to": "Sinu poolt verifitseeritava kasutaja koduserver",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "See jututuba ei kasuta sõnumisildasid liidestamiseks muude süsteemidega. <a>Lisateave.</a>",
     "Rename": "Muuda nime",
-    "Verified devices": "Verifitseeritud seadmed",
     "Select all": "Vali kõik",
     "Deselect all": "Eemalda kõik valikud",
     "Sign out devices|other": "Logi seadmed võrgust välja",
