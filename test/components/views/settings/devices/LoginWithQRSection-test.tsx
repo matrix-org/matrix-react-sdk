@@ -16,7 +16,7 @@ limitations under the License.
 
 import { render } from "@testing-library/react";
 import { mocked } from "jest-mock";
-import { IClientWellKnown, IServerVersions, MatrixClient, UNSTABLE_MSC3882_CAPABILITY } from "matrix-js-sdk/src/matrix";
+import { IClientWellKnown, IServerVersions, MatrixClient, GET_LOGIN_TOKEN_CAPABILITY } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
 import LoginWithQRSection from "../../../../../src/components/views/settings/devices/LoginWithQRSection";
@@ -67,14 +67,21 @@ describe("<LoginWithQRSection />", () => {
             expect(container).toMatchSnapshot();
         });
 
-        it("only MSC3882 enabled", async () => {
+        it("only MSC3882 r0 enabled", async () => {
             const { container } = render(getComponent({ versions: makeVersions({ "org.matrix.msc3882": true }) }));
             expect(container).toMatchSnapshot();
         });
 
         it("only MSC3882 r1 enabled", async () => {
             const { container } = render(
-                getComponent({ capabilities: { [UNSTABLE_MSC3882_CAPABILITY.name]: { enabled: true } } }),
+                getComponent({ capabilities: { [GET_LOGIN_TOKEN_CAPABILITY.altName]: { enabled: true } } }),
+            );
+            expect(container).toMatchSnapshot();
+        });
+
+        it("only get_login_token enabled", async () => {
+            const { container } = render(
+                getComponent({ capabilities: { [GET_LOGIN_TOKEN_CAPABILITY.name]: { enabled: true } } }),
             );
             expect(container).toMatchSnapshot();
         });
@@ -83,7 +90,17 @@ describe("<LoginWithQRSection />", () => {
             const { container } = render(
                 getComponent({
                     versions: makeVersions({ "org.matrix.msc3886": true }),
-                    capabilities: { [UNSTABLE_MSC3882_CAPABILITY.name]: { enabled: false } },
+                    capabilities: { [GET_LOGIN_TOKEN_CAPABILITY.altName]: { enabled: false } },
+                }),
+            );
+            expect(container).toMatchSnapshot();
+        });
+
+        it("MSC3886 + get_login_token disabled", async () => {
+            const { container } = render(
+                getComponent({
+                    versions: makeVersions({ "org.matrix.msc3886": true }),
+                    capabilities: { [GET_LOGIN_TOKEN_CAPABILITY.name]: { enabled: false } },
                 }),
             );
             expect(container).toMatchSnapshot();
@@ -91,7 +108,7 @@ describe("<LoginWithQRSection />", () => {
     });
 
     describe("should render panel", () => {
-        it("MSC3882 + MSC3886", async () => {
+        it("MSC3882 r0 + MSC3886", async () => {
             const { container } = render(
                 getComponent({
                     versions: makeVersions({
@@ -110,7 +127,21 @@ describe("<LoginWithQRSection />", () => {
                         "org.matrix.msc3886": true,
                     }),
                     capabilities: {
-                        [UNSTABLE_MSC3882_CAPABILITY.name]: { enabled: true },
+                        [GET_LOGIN_TOKEN_CAPABILITY.altName]: { enabled: true },
+                    },
+                }),
+            );
+            expect(container).toMatchSnapshot();
+        });
+
+        it("get_login_token + MSC3886", async () => {
+            const { container } = render(
+                getComponent({
+                    versions: makeVersions({
+                        "org.matrix.msc3886": true,
+                    }),
+                    capabilities: {
+                        [GET_LOGIN_TOKEN_CAPABILITY.name]: { enabled: true },
                     },
                 }),
             );
