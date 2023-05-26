@@ -15,10 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import {
-    VerificationRequest,
-    VerificationRequestEvent,
-} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { logger } from "matrix-js-sdk/src/logger";
 

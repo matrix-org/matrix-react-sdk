@@ -17,10 +17,8 @@ limitations under the License.
 import React from "react";
 import { MatrixEvent, User } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import {
-    Phase as VerificationPhase,
-    VerificationRequestEvent,
-} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { Phase as VerificationPhase } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
