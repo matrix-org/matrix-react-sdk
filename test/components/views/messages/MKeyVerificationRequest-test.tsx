@@ -18,10 +18,8 @@ import React from "react";
 import { render, within } from "@testing-library/react";
 import { EventEmitter } from "events";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
-import {
-    Phase as VerificationPhase,
-    VerificationRequest,
-} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { VerificationPhase } from "matrix-js-sdk/src/crypto-api/verification";
+import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../test-utils";
