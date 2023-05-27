@@ -20,6 +20,8 @@ import classNames from "classnames";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { _t } from "../../../languageHandler";
 import { Playback, PlaybackState } from "../../../audio/Playback";
+import { Icon as PlayIcon } from "../../../../res/img/element-icons/play.svg";
+import { Icon as PauseIcon } from "../../../../res/img/element-icons/pause.svg";
 
 // omitted props are handled by render function
 interface IProps extends Omit<React.ComponentProps<typeof AccessibleTooltipButton>, "title" | "onClick" | "disabled"> {
@@ -52,21 +54,28 @@ export default class PlayPauseButton extends React.PureComponent<IProps> {
         const { playback, playbackPhase, ...restProps } = this.props;
         const isPlaying = playback.isPlaying;
         const isDisabled = playbackPhase === PlaybackState.Decoding;
-        const classes = classNames("mx_PlayPauseButton", {
-            mx_PlayPauseButton_play: !isPlaying,
-            mx_PlayPauseButton_pause: isPlaying,
-            mx_PlayPauseButton_disabled: isDisabled,
+        const classes = classNames("mx_Icon", {
+            "mx_Icon--disabled": isDisabled,
         });
+
+        let button;
+        if (!isPlaying) {
+            button = <PlayIcon className={classNames(classes, "mx_Icon--play")} />;
+        } else if (isPlaying) {
+            button = <PauseIcon className={classNames(classes, "mx_Icon--pause")} />;
+        }
 
         return (
             <AccessibleTooltipButton
                 data-testid="play-pause-button"
-                className={classes}
+                className="mx_PlayPauseButton"
                 title={isPlaying ? _t("Pause") : _t("Play")}
                 onClick={this.onClick}
                 disabled={isDisabled}
                 {...restProps}
-            />
+            >
+                {button}
+            </AccessibleTooltipButton>
         );
     }
 }
