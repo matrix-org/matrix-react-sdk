@@ -720,7 +720,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             layoutButtons.push(
                 <AccessibleButton
                     key="toggleMaximised"
-                    className="mx_AppTileMenuBar_widgets_button"
+                    className="mx_AppTile_menuBar_widgets_button"
                     title={isMaximised ? _t("Un-maximise") : _t("Maximise")}
                     onClick={this.onToggleMaximisedClick}
                 >
@@ -735,7 +735,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             layoutButtons.push(
                 <AccessibleButton
                     key="minimise"
-                    className="mx_AppTileMenuBar_widgets_button"
+                    className="mx_AppTile_menuBar_widgets_button"
                     title={_t("Minimise")}
                     onClick={this.onMinimiseClicked}
                 >
@@ -748,18 +748,18 @@ export default class AppTile extends React.Component<IProps, IState> {
             <React.Fragment>
                 <div className={appTileClasses} id={this.props.app.id}>
                     {this.props.showMenubar && (
-                        <div className="mx_AppTileMenuBar">
+                        <div className="mx_AppTile_menuBar">
                             <span
-                                className="mx_AppTileMenuBar_title"
+                                className="mx_AppTile_menuBar_title"
                                 style={{ pointerEvents: this.props.handleMinimisePointerEvents ? "all" : "none" }}
                             >
                                 {this.props.showTitle && this.getTileTitle()}
                             </span>
-                            <span className="mx_AppTileMenuBar_widgets">
+                            <span className="mx_AppTile_menuBar_widgets">
                                 {layoutButtons}
                                 {this.props.showPopout && !this.state.requiresClient && (
                                     <AccessibleButton
-                                        className="mx_AppTileMenuBar_widgets_button"
+                                        className="mx_AppTile_menuBar_widgets_button"
                                         title={_t("Popout widget")}
                                         onClick={this.onPopoutWidgetClick}
                                     >
@@ -767,7 +767,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                                     </AccessibleButton>
                                 )}
                                 <ContextMenuButton
-                                    className="mx_AppTileMenuBar_widgets_button"
+                                    className="mx_AppTile_menuBar_widgets_button"
                                     label={_t("Options")}
                                     isExpanded={this.state.menuDisplayed}
                                     inputRef={this.contextMenuButton}
