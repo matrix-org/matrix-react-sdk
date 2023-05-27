@@ -1,5 +1,5 @@
 /*
-Copyright 2017 Vector Creations Ltd
+Copyright 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,20 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_RoleButton {
-    margin-left: 4px;
-    margin-right: 4px;
-    cursor: pointer;
-    display: inline-block;
-}
+.mx_MessagePanel_myReadMarker {
+    height: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
 
-.mx_RoleButton object {
-    pointer-events: none;
-}
-
-.mx_RoleButton_tooltip {
-    display: inline-block;
-    position: relative;
-    top: -25px;
-    left: 6px;
+    hr {
+        border-top: solid 1px $accent;
+        border-bottom: solid 1px $accent;
+        margin-top: 0;
+        position: relative;
+        top: -1px;
+        z-index: 1;
+        will-change: width;
+        transition: width 400ms easeinsine 1s, opacity 400ms easeinsine 1s;
+        width: 99%;
+        opacity: 1;
+    }
 }

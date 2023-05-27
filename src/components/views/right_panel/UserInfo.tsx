@@ -456,7 +456,7 @@ export const UserOptionsSection: React.FC<{
             const onInviteUserButton = async (ev: ButtonEvent): Promise<void> => {
                 try {
                     // We use a MultiInviter to re-use the invite logic, even though we're only inviting one user.
-                    const inviter = new MultiInviter(roomId || "");
+                    const inviter = new MultiInviter(cli, roomId || "");
                     await inviter.invite([member.userId]).then(() => {
                         if (inviter.getCompletionState(member.userId) !== "invited") {
                             const errorStringFromInviterUtility = inviter.getErrorText(member.userId);
@@ -1560,9 +1560,9 @@ export const UserInfoHeader: React.FC<{
         </div>
     );
 
-    let presenceState;
-    let presenceLastActiveAgo;
-    let presenceCurrentlyActive;
+    let presenceState: string | undefined;
+    let presenceLastActiveAgo: number | undefined;
+    let presenceCurrentlyActive: boolean | undefined;
     if (member instanceof RoomMember && member.user) {
         presenceState = member.user.presence;
         presenceLastActiveAgo = member.user.lastActiveAgo;
@@ -1597,10 +1597,10 @@ export const UserInfoHeader: React.FC<{
                 <div className="mx_UserInfo_profile">
                     <div>
                         <h2>
-                            {e2eIcon}
                             <span title={displayName} aria-label={displayName} dir="auto">
                                 {displayName}
                             </span>
+                            {e2eIcon}
                         </h2>
                     </div>
                     <div className="mx_UserInfo_profile_mxid">

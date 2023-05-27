@@ -407,7 +407,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
     }
 
     public componentDidMount(): void {
-        this.encryptionByDefault = privateShouldBeEncrypted();
+        this.encryptionByDefault = privateShouldBeEncrypted(MatrixClientPeg.get());
 
         if (this.props.initialText) {
             this.updateSuggestions(this.props.initialText);
@@ -613,7 +613,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         }
 
         try {
-            const result = await inviteMultipleToRoom(this.props.roomId, targetIds, true);
+            const result = await inviteMultipleToRoom(cli, this.props.roomId, targetIds, true);
             if (!this.shouldAbortAfterInviteError(result, room)) {
                 // handles setting error message too
                 this.props.onFinished(true);
@@ -986,7 +986,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
 
         // Update the IS in account data. Actually using it may trigger terms.
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        setToDefaultIdentityServer();
+        setToDefaultIdentityServer(MatrixClientPeg.get());
         this.setState({ canUseIdentityServer: true, tryingIdentityServer: false });
     };
 
@@ -1278,7 +1278,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         let title;
         let helpText;
         let buttonText;
-        let goButtonFn;
+        let goButtonFn: (() => Promise<void>) | null = null;
         let consultConnectSection;
         let extraSection;
         let footer;
@@ -1337,7 +1337,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 <div className="mx_InviteDialog_footer">
                     <h3>{_t("Or send invite link")}</h3>
                     <CopyableText getTextToCopy={() => makeUserPermalink(MatrixClientPeg.get().getUserId()!)}>
-                        <a href={link} onClick={this.onLinkClick}>
+                        <a className="mx_InviteDialog_footer_link" href={link} onClick={this.onLinkClick}>
                             {link}
                         </a>
                     </CopyableText>
@@ -1385,12 +1385,17 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 {},
                 {
                     userId: () => (
-                        <a href={makeUserPermalink(userId)} rel="noreferrer noopener" target="_blank">
+                        <a
+                            className="mx_InviteDialog_helpText_userId"
+                            href={makeUserPermalink(userId)}
+                            rel="noreferrer noopener"
+                            target="_blank"
+                        >
                             {userId}
                         </a>
                     ),
                     a: (sub) => (
-                        <a href={makeRoomPermalink(roomId)} rel="noreferrer noopener" target="_blank">
+                        <a href={makeRoomPermalink(cli, roomId)} rel="noreferrer noopener" target="_blank">
                             {sub}
                         </a>
                     ),

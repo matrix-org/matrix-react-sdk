@@ -24,7 +24,7 @@ import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import * as AvatarLogic from "../../../Avatar";
 import SettingsStore from "../../../settings/SettingsStore";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import RoomContext from "../../../contexts/RoomContext";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
@@ -42,7 +42,7 @@ interface IProps {
     // XXX: resizeMethod not actually used.
     resizeMethod?: ResizeMethod;
     defaultToInitialLetter?: boolean; // true to add default url
-    onClick?: React.MouseEventHandler;
+    onClick?: (ev: ButtonEvent) => void;
     inputRef?: React.RefObject<HTMLImageElement & HTMLSpanElement>;
     className?: string;
     tabIndex?: number;
@@ -135,6 +135,7 @@ const BaseAvatar: React.FC<IProps> = (props) => {
         );
         const imgNode = (
             <img
+                loading="lazy"
                 className="mx_BaseAvatar_image"
                 src={AvatarLogic.defaultAvatarUrlForString(idName || name)}
                 alt=""
@@ -201,6 +202,7 @@ const BaseAvatar: React.FC<IProps> = (props) => {
     } else {
         return (
             <img
+                loading="lazy"
                 className={classNames("mx_BaseAvatar mx_BaseAvatar_image", className)}
                 src={imageUrl}
                 onError={onError}

@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 .mx_SettingsTab {
-    --SettingsTab_section-margin-bottom-preferences-labs: 30px;
     --SettingsTab_heading_nth_child-margin-top: 30px; /* TODO: Use a spacing variable */
     --SettingsTab_fullWidthField-margin-inline-end: 100px;
     --SettingsTab_tooltip-max-width: 120px; /* So it fits in the space provided by the page */
@@ -24,6 +23,24 @@ limitations under the License.
 
     a {
         color: $links;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-8;
+        flex-grow: 1;
+    }
+    // never want full width buttons
+    // event when other content is 100% width
+    .mx_AccessibleButton {
+        align-self: flex-start;
+        justify-self: flex-start;
+    }
+
+    .mx_Field {
+        margin: 0;
+        flex: 1;
     }
 }
 

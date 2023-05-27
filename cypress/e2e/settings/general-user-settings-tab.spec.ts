@@ -43,7 +43,7 @@ describe("General user settings tab", () => {
         // Exclude userId from snapshots
         const percyCSS = ".mx_ProfileSettings_profile_controls_userId { visibility: hidden !important; }";
 
-        cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab").percySnapshotElement("User settings tab - General", {
+        cy.findByTestId("mx_GeneralUserSettingsTab").percySnapshotElement("User settings tab - General", {
             percyCSS,
             // Emulate TabbedView's actual min and max widths
             // 580: '.mx_UserSettingsDialog .mx_TabbedView' min-width
@@ -51,7 +51,7 @@ describe("General user settings tab", () => {
             widths: [580, 796],
         });
 
-        cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab").within(() => {
+        cy.findByTestId("mx_GeneralUserSettingsTab").within(() => {
             // Assert that the top heading is rendered
             cy.findByTestId("general").should("have.text", "General").should("be.visible");
 
@@ -83,44 +83,47 @@ describe("General user settings tab", () => {
                 });
 
             // Wait until spinners disappear
-            cy.get(".mx_GeneralUserSettingsTab_accountSection .mx_Spinner").should("not.exist");
-            cy.get(".mx_GeneralUserSettingsTab_discovery .mx_Spinner").should("not.exist");
+            cy.findByTestId("accountSection").within(() => {
+                cy.get(".mx_Spinner").should("not.exist");
+            });
+            cy.findByTestId("discoverySection").within(() => {
+                cy.get(".mx_Spinner").should("not.exist");
+            });
 
-            cy.get(".mx_GeneralUserSettingsTab_accountSection").within(() => {
+            cy.findByTestId("accountSection").within(() => {
                 // Assert that input areas for changing a password exists
-                cy.get("form.mx_GeneralUserSettingsTab_changePassword")
+                cy.get("form.mx_GeneralUserSettingsTab_section--account_changePassword")
                     .scrollIntoView()
                     .within(() => {
                         cy.findByLabelText("Current password").should("be.visible");
                         cy.findByLabelText("New Password").should("be.visible");
                         cy.findByLabelText("Confirm password").should("be.visible");
                     });
-
-                // Check email addresses area
-                cy.get(".mx_EmailAddresses")
-                    .scrollIntoView()
-                    .within(() => {
-                        // Assert that an input area for a new email address is rendered
-                        cy.findByRole("textbox", { name: "Email Address" }).should("be.visible");
-
-                        // Assert the add button is visible
-                        cy.findByRole("button", { name: "Add" }).should("be.visible");
-                    });
-
-                // Check phone numbers area
-                cy.get(".mx_PhoneNumbers")
-                    .scrollIntoView()
-                    .within(() => {
-                        // Assert that an input area for a new phone number is rendered
-                        cy.findByRole("textbox", { name: "Phone Number" }).should("be.visible");
-
-                        // Assert that the add button is rendered
-                        cy.findByRole("button", { name: "Add" }).should("be.visible");
-                    });
             });
+            // Check email addresses area
+            cy.findByTestId("mx_AccountEmailAddresses")
+                .scrollIntoView()
+                .within(() => {
+                    // Assert that an input area for a new email address is rendered
+                    cy.findByRole("textbox", { name: "Email Address" }).should("be.visible");
+
+                    // Assert the add button is visible
+                    cy.findByRole("button", { name: "Add" }).should("be.visible");
+                });
+
+            // Check phone numbers area
+            cy.findByTestId("mx_AccountPhoneNumbers")
+                .scrollIntoView()
+                .within(() => {
+                    // Assert that an input area for a new phone number is rendered
+                    cy.findByRole("textbox", { name: "Phone Number" }).should("be.visible");
+
+                    // Assert that the add button is rendered
+                    cy.findByRole("button", { name: "Add" }).should("be.visible");
+                });
 
             // Check language and region setting dropdown
-            cy.get(".mx_GeneralUserSettingsTab_languageInput")
+            cy.get(".mx_GeneralUserSettingsTab_section_languageInput")
                 .scrollIntoView()
                 .within(() => {
                     // Check the default value
@@ -156,16 +159,10 @@ describe("General user settings tab", () => {
                     // Make sure integration manager's toggle switch is enabled
                     cy.get(".mx_ToggleSwitch_enabled").should("be.visible");
 
-                    // Assert space between "Manage integrations" and the integration server address is set to 4px;
-                    cy.get(".mx_SetIntegrationManager_heading_manager").should("have.css", "column-gap", "4px");
-
-                    cy.get(".mx_SetIntegrationManager_heading_manager").within(() => {
-                        cy.get(".mx_SettingsTab_heading").should("have.text", "Manage integrations");
-
-                        // Assert the headings' inline end margin values are set to zero in favor of the column-gap declaration
-                        cy.get(".mx_SettingsTab_heading").should("have.css", "margin-inline-end", "0px");
-                        cy.get(".mx_SettingsTab_subheading").should("have.css", "margin-inline-end", "0px");
-                    });
+                    cy.get(".mx_SetIntegrationManager_heading_manager").should(
+                        "have.text",
+                        "Manage integrations(scalar.vector.im)",
+                    );
                 });
 
             // Assert the account deactivation button is displayed
@@ -178,7 +175,7 @@ describe("General user settings tab", () => {
     });
 
     it("should support adding and removing a profile picture", () => {
-        cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab .mx_ProfileSettings").within(() => {
+        cy.get(".mx_SettingsTab .mx_ProfileSettings").within(() => {
             // Upload a picture
             cy.get(".mx_ProfileSettings_avatarUpload").selectFile("cypress/fixtures/riot.png", { force: true });
 
@@ -194,7 +191,7 @@ describe("General user settings tab", () => {
 
     it("should set a country calling code based on default_country_code", () => {
         // Check phone numbers area
-        cy.get(".mx_PhoneNumbers")
+        cy.findByTestId("mx_AccountPhoneNumbers")
             .scrollIntoView()
             .within(() => {
                 // Assert that an input area for a new phone number is rendered
@@ -225,7 +222,7 @@ describe("General user settings tab", () => {
     });
 
     it("should support changing a display name", () => {
-        cy.get(".mx_SettingsTab.mx_GeneralUserSettingsTab .mx_ProfileSettings").within(() => {
+        cy.get(".mx_SettingsTab .mx_ProfileSettings").within(() => {
             // Change the diaplay name to USER_NAME_NEW
             cy.findByRole("textbox", { name: "Display Name" }).type(`{selectAll}{del}${USER_NAME_NEW}{enter}`);
         });

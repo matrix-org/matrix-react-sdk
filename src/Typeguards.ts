@@ -1,5 +1,5 @@
 /*
-Copyright 2016 OpenMarket Ltd
+Copyright 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,28 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_ChatCreateOrReuseDialog .mx_ChatCreateOrReuseDialog_tiles {
-    margin-top: 24px;
+export function isNotNull<T>(arg: T): arg is Exclude<T, null> {
+    return arg !== null;
 }
 
-.mx_ChatCreateOrReuseDialog .mx_Dialog_content {
-    margin-bottom: 24px;
-
-    /*
-       To stop spinner that mx_ChatCreateOrReuseDialog_profile replaces from causing a
-       height change
-    */
-    min-height: 100px;
-}
-
-.mx_ChatCreateOrReuseDialog .mx_RoomTile_badge {
-    display: none;
-}
-
-.mx_ChatCreateOrReuseDialog_profile {
-    display: flex;
-}
-
-.mx_ChatCreateOrReuseDialog_profile_name {
-    padding: 14px;
+export function isNotUndefined<T>(arg: T): arg is Exclude<T, undefined> {
+    return arg !== undefined;
 }
