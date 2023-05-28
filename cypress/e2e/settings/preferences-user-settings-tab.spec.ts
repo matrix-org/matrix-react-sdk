@@ -40,7 +40,7 @@ describe("Preferences user settings tab", () => {
             cy.contains("Preferences").should("be.visible");
         });
 
-        cy.findByTestId("mx_PreferencesUserSettingsTab").percySnapshotElement("User settings tab - Preferences", {
+        cy.get(".mx_SettingsTab").percySnapshotElement("User settings tab - Preferences", {
             // Emulate TabbedView's actual min and max widths
             // 580: '.mx_UserSettingsDialog .mx_TabbedView' min-width
             // 796: 1036 (mx_TabbedView_tabsOnLeft actual width) - 240 (mx_TabbedView_tabPanel margin-right)

@@ -43,7 +43,7 @@ describe("General user settings tab", () => {
         // Exclude userId from snapshots
         const percyCSS = ".mx_ProfileSettings_profile_controls_userId { visibility: hidden !important; }";
 
-        cy.findByTestId("mx_GeneralUserSettingsTab").percySnapshotElement("User settings tab - General", {
+        cy.get(".mx_SettingsTab").percySnapshotElement("User settings tab - General", {
             percyCSS,
             // Emulate TabbedView's actual min and max widths
             // 580: '.mx_UserSettingsDialog .mx_TabbedView' min-width
