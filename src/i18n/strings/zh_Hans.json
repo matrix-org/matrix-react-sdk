@@ -2157,7 +2157,6 @@
     "You can add more later too, including already existing ones.": "稍后你可以添加更多房间，包括现有的。",
     "Let's create a room for each of them.": "让我们为每个主题都创建一个房间吧。",
     "What are some things you want to discuss in %(spaceName)s?": "你想在 %(spaceName)s 中讨论什么？",
-    "<b>This is an experimental feature.</b> For now, new users receiving an invite will have to open the invite on <link/> to actually join.": "<b>这是实验性功能。</b>当前收到邀请的新用户必须在<link/>上开启邀请才能真正加入。",
     "Make sure the right people have access. You can invite more later.": "确保对的人可以访问。稍后你可以邀请更多人。",
     "Invite your teammates": "邀请你的伙伴",
     "Failed to invite the following users to your space: %(csvUsers)s": "邀请以下用户加入你的空间失败：%(csvUsers)s",

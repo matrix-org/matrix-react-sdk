@@ -2305,7 +2305,6 @@
     "Let's create a room for each of them.": "Mari kita buat ruangan untuk masing-masing.",
     "What are some things you want to discuss in %(spaceName)s?": "Apa saja yang Anda ingin bahas di %(spaceName)s?",
     "Invite by username": "Undang dengan nama pengguna",
-    "<b>This is an experimental feature.</b> For now, new users receiving an invite will have to open the invite on <link/> to actually join.": "<b>Ini adalah fitur eksperimental.</b> Untuk sementara, pengguna yang mendapatkan undangan harus membuka undangannya di <link/> untuk benar-benar bergabung.",
     "Make sure the right people have access. You can invite more later.": "Pastikan orang-orang tertentu mempunyai akses. Anda dapat mengundang lagi nanti.",
     "Invite your teammates": "Undang tim Anda",
     "Failed to invite the following users to your space: %(csvUsers)s": "Gagal untuk mengundang pengguna berikut ini ke space Anda: %(csvUsers)s",

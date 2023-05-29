@@ -845,7 +845,6 @@
     "Failed to invite the following users to your space: %(csvUsers)s": "امکان دعوت کاربرانی که در ادامه آمده‌اند به فضای کاری شما میسر نیست: %(csvUsers)s",
     "Invite your teammates": "هم‌تیمی‌های خود را دعوت کنید",
     "Make sure the right people have access. You can invite more later.": "اطمینان حاصل کنید که افراد مناسب دسترسی دارند. بعداً می توانید افراد بیشتری دعوت کنید.",
-    "<b>This is an experimental feature.</b> For now, new users receiving an invite will have to open the invite on <link/> to actually join.": "<b>این یک قابلیت آزمایشی است.</b> برای الان، کاربران جدیدی که دعوتنامه دریافت می‌کنند باید آن را بر روی <link/> باز کنند تا بتوانند عضو شوند.",
     "Invite by username": "دعوت به نام کاربری",
     "What are some things you want to discuss in %(spaceName)s?": "برخی از مواردی که می خواهید درباره‌ی آن‌ها در %(spaceName)s بحث کنید، چیست؟",
     "Let's create a room for each of them.": "بیایید برای هر یک از آنها یک اتاق درست کنیم.",

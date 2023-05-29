@@ -3053,7 +3053,6 @@
     "Invalid identity server discovery response": "Μη έγκυρη απόκριση εντοπισμού διακομιστή ταυτότητας",
     "Failed to get autodiscovery configuration from server": "Απέτυχε η λήψη της διαμόρφωσης αυτόματης ανακάλυψης από τον διακομιστή",
     "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Απαντήστε σε ένα νήμα εκτέλεσης που βρίσκεται σε εξέλιξη ή χρησιμοποιήστε το \"%(replyInThread)s\" όταν τοποθετείτε το δείκτη του ποντικιού πάνω από ένα μήνυμα για να ξεκινήσετε ένα νέο.",
-    "<b>This is an experimental feature.</b> For now, new users receiving an invite will have to open the invite on <link/> to actually join.": "<b>Αυτή είναι μια πειραματική λειτουργία.</b> Προς το παρόν, οι νέοι χρήστες που λαμβάνουν πρόσκληση θα πρέπει να ανοίξουν την πρόσκληση στο <link/> για να συμμετάσχουν πραγματικά.",
     "Hold": "Αναμονή",
     "These are likely ones other room admins are a part of.": "Πιθανότατα αυτά είναι μέρος στα οποία συμμετέχουν και άλλοι διαχειριστές δωματίου.",
     "Toggle hidden event visibility": "Εναλλαγή ορατότητας κρυφού συμβάντος",

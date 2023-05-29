@@ -2325,7 +2325,6 @@
     "Access Token": "Åtkomsttoken",
     "Please enter a name for the space": "Vänligen ange ett namn för utrymmet",
     "Connecting": "Ansluter",
-    "<b>This is an experimental feature.</b> For now, new users receiving an invite will have to open the invite on <link/> to actually join.": "<b>Det här är en experimentell funktion.</b> För tillfället så behöver nya inbjudna användare öppna inbjudan på <link/> för att faktiskt gå med.",
     "Space Autocomplete": "Utrymmesautokomplettering",
     "Go to my space": "Gå till mitt utrymme",
     "sends space invaders": "skickar Space Invaders",

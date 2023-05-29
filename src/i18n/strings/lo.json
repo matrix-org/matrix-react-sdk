@@ -955,7 +955,6 @@
     "Let's create a room for each of them.": "ສ້າງຫ້ອງສໍາລັບແຕ່ລະຄົນ.",
     "What are some things you want to discuss in %(spaceName)s?": "ມີຫຍັງແດ່ທີ່ທ່ານຕ້ອງການທີ່ຈະສົນທະນາໃນ %(spaceName)s?",
     "Invite by username": "ເຊີນໂດຍຊື່ຜູ້ໃຊ້",
-    "<b>This is an experimental feature.</b> For now, new users receiving an invite will have to open the invite on <link/> to actually join.": "<b>ນີ້ແມ່ນການທົດລອງຄຸນສົມບັດ.</b> ໃນປັດຈຸບັນ, ສໍາລັບຜູ້ໃຊ້ໃຫມ່ທີ່ໄດ້ຮັບການເຊີນຈະຕ້ອງໄດ້ເປີດຄໍາເຊີນຢູ່ໃນ <link/> ເພື່ອເຂົ້າຮ່ວມຕົວຈິງ.",
     "Make sure the right people have access. You can invite more later.": "ໃຫ້ແນ່ໃຈວ່າບຸກຄົນທີ່ຖືກຕ້ອງມີການເຂົ້າເຖິງ. ທ່ານສາມາດເຊີນເພີ່ມເຕີມໄດ້ໃນພາຍຫຼັງ.",
     "Invite your teammates": "ເຊີນເພື່ອນຮ່ວມທີມຂອງທ່ານ",
     "Failed to invite the following users to your space: %(csvUsers)s": "ການເຊີນຜູ້ໃຊ້ຕໍ່ໄປນີ້ໄປຫາພື້ນທີ່ຂອງທ່ານ: %(csvUsers)s ບໍ່ສຳເລັດ",

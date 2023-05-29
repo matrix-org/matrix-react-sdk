@@ -2783,7 +2783,6 @@
     "Passphrase must not be empty": "Парольна фраза обов'язкова",
     "Passphrases must match": "Парольні фрази мають збігатися",
     "Incorrect username and/or password.": "Хибне користувацьке ім'я й/або пароль.",
-    "<b>This is an experimental feature.</b> For now, new users receiving an invite will have to open the invite on <link/> to actually join.": "<b>Це експериментальна функція.</b> Наразі нові користувачі, які отримають запрошення, повинні відкрити запрошення на <link/>, щоб приєднатися.",
     "Make sure the right people have access. You can invite more later.": "Переконайтеся, що потрібні люди мають доступ. Пізніше ви можете запросити більше людей.",
     "Invite your teammates": "Запросіть учасників своєї команди",
     "Failed to invite the following users to your space: %(csvUsers)s": "Не вдалося запросити до вашого простору таких користувачів: %(csvUsers)s",

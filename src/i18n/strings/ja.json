@@ -2784,7 +2784,6 @@
     "Invalid base_url for m.homeserver": "m.homeserverの不正なbase_url",
     "Skip verification for now": "認証をスキップ",
     "Unable to verify this device": "この端末を認証できません",
-    "<b>This is an experimental feature.</b> For now, new users receiving an invite will have to open the invite on <link/> to actually join.": "<b>これは実験的な機能です。</b>現在、招待を受け取る新規ユーザーが実際に参加するには<link/>のリンクで招待を受け入れる必要があります。",
     "Go to my first room": "最初のルームに移動",
     "Failed to create initial space rooms": "最初のスペースのルームの作成に失敗しました",
     "Other users can invite you to rooms using your contact details": "他のユーザーはあなたの連絡先の情報を用いてルームに招待することができます",

@@ -2422,7 +2422,6 @@
     "Let's create a room for each of them.": "בואו ניצור חדר לכל אחד מהם.",
     "What are some things you want to discuss in %(spaceName)s?": "באילו דברים אתם רוצים לדון ב-%(spaceName)s?",
     "Invite by username": "הזמנה באמצעות שם משתמש",
-    "<b>This is an experimental feature.</b> For now, new users receiving an invite will have to open the invite on <link/> to actually join.": "<b>זוהי תכונה ניסיונית.</b> לעת עתה, משתמשים חדשים שמקבלים הזמנה יצטרכו לפתוח את ההזמנה ב-<link/> כדי להצטרף בפועל.",
     "Make sure the right people have access. You can invite more later.": "ודאו שלאנשים הנכונים תהיה גישה. תוכלו להזמין עוד מאוחר יותר.",
     "Invite your teammates": "הזמינו את חברי הצוות שלכם",
     "Failed to invite the following users to your space: %(csvUsers)s": "נכשל בהזמנת המשתמשים הבאים לחלל העבודה שלכם %(csvUsers)s",

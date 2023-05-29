@@ -425,7 +425,6 @@
     "Let's create a room for each of them.": "Hãy tạo một phòng cho mỗi người trong số họ.",
     "What are some things you want to discuss in %(spaceName)s?": "Một số điều bạn muốn thảo luận trong %(spaceName)s là gì?",
     "Invite by username": "Mời theo tên người dùng",
-    "<b>This is an experimental feature.</b> For now, new users receiving an invite will have to open the invite on <link/> to actually join.": "<b>Đây là tính năng thử nghiệm.</b> Hiện tại, người dùng mới nhận được lời mời sẽ phải mở lời mời đó trên <link/> để thực sự tham gia.",
     "Make sure the right people have access. You can invite more later.": "Đảm bảo đúng người có quyền truy cập. Bạn có thể mời thêm sau.",
     "Invite your teammates": "Mời đồng đội của bạn",
     "Failed to invite the following users to your space: %(csvUsers)s": "Không mời được những người dùng sau vào space của bạn: %(csvUsers)s",

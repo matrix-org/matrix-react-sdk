@@ -2370,7 +2370,6 @@
     "Moderation": "Moderovanie",
     "Automatically send debug logs on any error": "Automatické odosielanie záznamov ladenia pri akejkoľvek chybe",
     "Developer mode": "Režim pre vývojárov",
-    "<b>This is an experimental feature.</b> For now, new users receiving an invite will have to open the invite on <link/> to actually join.": "<b>Toto je experimentálna funkcia.</b> Noví používatelia, ktorí dostanú pozvánku, ju zatiaľ musia otvoriť na <link/>, aby sa mohli skutočne pripojiť.",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Získajte prístup k histórii zabezpečených správ a nastavte bezpečné zasielanie správ zadaním bezpečnostného kľúča.",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "Získajte prístup k histórii zabezpečených správ a nastavte bezpečné zasielanie správ zadaním bezpečnostnej frázy.",
     "Offline encrypted messaging using dehydrated devices": "Šifrované posielanie správ offline pomocou dehydrovaných zariadení",
