@@ -77,7 +77,6 @@ import MainSplit from "./MainSplit";
 import RightPanel from "./RightPanel";
 import SpaceHierarchy, { showRoom } from "./SpaceHierarchy";
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
-import ExternalLink from "../views/elements/ExternalLink";
 
 interface IProps {
     space: Room;
