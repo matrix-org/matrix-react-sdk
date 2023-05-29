@@ -210,11 +210,7 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
 
         const tiles: JSX.Element[] = [];
         for (const list of lists) {
-            // const room = MatrixClientPeg.get().getRoom(list.roomId);
-            let room;
-            if (Math.random() > 0.5) {
-                room = { name: "Room name" };
-            }
+            const room = MatrixClientPeg.get().getRoom(list.roomId);
             const name = room ? (
                 <span>
                     {room.name} (<code>{list.roomId}</code>)
