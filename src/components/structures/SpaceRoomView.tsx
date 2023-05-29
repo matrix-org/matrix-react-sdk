@@ -586,22 +586,6 @@ const SpaceSetupPrivateInvite: React.FC<{
                 {_t("Make sure the right people have access. You can invite more later.")}
             </div>
 
-            <div className="mx_SpaceRoomView_inviteTeammates_betaDisclaimer">
-                {_t(
-                    "<b>This is an experimental feature.</b> For now, " +
-                        "new users receiving an invite will have to open the invite on <link/> to actually join.",
-                    {},
-                    {
-                        b: (sub) => <b>{sub}</b>,
-                        link: () => (
-                            <ExternalLink href="https://app.element.io/" rel="noreferrer noopener" target="_blank">
-                                app.element.io
-                            </ExternalLink>
-                        ),
-                    },
-                )}
-            </div>
-
             {error && <div className="mx_SpaceRoomView_errorText">{error}</div>}
             <form onSubmit={onClick} id="mx_SpaceSetupPrivateInvite">
                 {fields}
