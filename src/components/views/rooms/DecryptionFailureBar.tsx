@@ -156,6 +156,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
     let headline: JSX.Element;
     let message: JSX.Element;
     let button = <React.Fragment />;
+    let keyRequestButton = <React.Fragment />;
     if (waiting) {
         className = "mx_DecryptionFailureBar";
         headline = <React.Fragment>{_t("Decrypting messages…")}</React.Fragment>;
@@ -226,6 +227,19 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
                 {_t("View your device list")}
             </AccessibleButton>
         );
+
+        if (anyUnrequestedSessions) {
+            keyRequestButton = (
+                <AccessibleButton
+                    className="mx_DecryptionFailureBar_end_button"
+                    kind="primary"
+                    onClick={sendKeyRequests}
+                    data-testid="decryption-failure-bar-button"
+                >
+                    {_t("Resend key requests")}
+                </AccessibleButton>
+            );
+        }
     } else {
         className = "mx_DecryptionFailureBar";
         headline = <React.Fragment>{_t("Some messages could not be decrypted")}</React.Fragment>;
@@ -236,21 +250,6 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
                         "Signing in and verifying other devices may help avoid this situation in the future.",
                 )}
             </React.Fragment>
-        );
-    }
-
-    let keyRequestButton = <React.Fragment />;
-    if (!needsVerification && hasOtherVerifiedDevices && anyUnrequestedSessions) {
-        className = "mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd";
-        keyRequestButton = (
-            <AccessibleButton
-                className="mx_DecryptionFailureBar_end_button"
-                kind="primary"
-                onClick={sendKeyRequests}
-                data-testid="decryption-failure-bar-button"
-            >
-                {_t("Resend key requests")}
-            </AccessibleButton>
         );
     }
 
