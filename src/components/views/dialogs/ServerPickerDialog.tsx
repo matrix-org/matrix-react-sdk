@@ -87,19 +87,16 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
         deriveData: async ({ value }): Promise<{ error?: string }> => {
             let hsUrl = (value ?? "").trim(); // trim to account for random whitespace
 
-            // if the URL has no protocol, try validate it as a serverName via well-known
-            if (!hsUrl.includes("://")) {
-                try {
-                    const discoveryResult = await AutoDiscovery.findClientConfig(hsUrl);
-                    this.validatedConf = AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(hsUrl, discoveryResult);
-                    return {}; // we have a validated config, we don't need to try the other paths
-                } catch (e) {
-                    logger.error(`Attempted ${hsUrl} as a server_name but it failed`, e);
-                }
+            try {
+                const discoveryResult = await AutoDiscovery.findClientConfig(hsUrl);
+                this.validatedConf = AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(hsUrl, discoveryResult);
+                return {}; // we have a validated config, we don't need to try the other paths
+            } catch (e) {
+                logger.error(`Attempted ${hsUrl} as a server_name but it failed`, e);
             }
 
-            // if we got to this stage then either the well-known failed or the URL had a protocol specified,
-            // so validate statically only. If the URL has no protocol, default to https.
+            // if we got to this stage then the well-known failed so validate statically only.
+            // If the URL has no protocol, default to https.
             if (!hsUrl.includes("://")) {
                 hsUrl = "https://" + hsUrl;
             }
