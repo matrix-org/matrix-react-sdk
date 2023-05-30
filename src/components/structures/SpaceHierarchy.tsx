@@ -429,7 +429,7 @@ interface IHierarchyLevelProps {
     parents: Set<string>;
     selectedMap?: Map<string, Set<string>>;
     onViewRoomClick(roomId: string, roomType?: RoomType): void;
-    onJoinRoomClick(roomId: string): Promise<unknown>;
+    onJoinRoomClick(roomId: string, parents: Set<string>): Promise<unknown>;
     onToggleClick?(parentId: string, childId: string): void;
 }
 
@@ -511,7 +511,7 @@ export const HierarchyLevel: React.FC<IHierarchyLevelProps> = ({
                     suggested={hierarchy.isSuggested(root.room_id, room.room_id)}
                     selected={selectedMap?.get(root.room_id)?.has(room.room_id)}
                     onViewRoomClick={() => onViewRoomClick(room.room_id, room.room_type as RoomType)}
-                    onJoinRoomClick={() => onJoinRoomClick(room.room_id)}
+                    onJoinRoomClick={() => onJoinRoomClick(room.room_id, newParents)}
                     hasPermissions={hasPermissions}
                     onToggleClick={onToggleClick ? () => onToggleClick(root.room_id, room.room_id) : undefined}
                 />
@@ -532,7 +532,7 @@ export const HierarchyLevel: React.FC<IHierarchyLevelProps> = ({
                         suggested={hierarchy.isSuggested(root.room_id, space.room_id)}
                         selected={selectedMap?.get(root.room_id)?.has(space.room_id)}
                         onViewRoomClick={() => onViewRoomClick(space.room_id, RoomType.Space)}
-                        onJoinRoomClick={() => onJoinRoomClick(space.room_id)}
+                        onJoinRoomClick={() => onJoinRoomClick(space.room_id, newParents)}
                         hasPermissions={hasPermissions}
                         onToggleClick={onToggleClick ? () => onToggleClick(root.room_id, space.room_id) : undefined}
                     >
@@ -839,7 +839,12 @@ const SpaceHierarchy: React.FC<IProps> = ({ space, initialText = "", showRoom, a
                                     selectedMap={selected}
                                     onToggleClick={hasPermissions ? onToggleClick : undefined}
                                     onViewRoomClick={(roomId, roomType) => showRoom(cli, hierarchy, roomId, roomType)}
-                                    onJoinRoomClick={(roomId) => joinRoom(cli, hierarchy, roomId)}
+                                    onJoinRoomClick={async (roomId, parents) => {
+                                        for (const parent of parents) {
+                                            await joinRoom(cli, hierarchy, parent);
+                                        }
+                                        await joinRoom(cli, hierarchy, roomId);
+                                    }}
                                 />
                             </>
                         );
