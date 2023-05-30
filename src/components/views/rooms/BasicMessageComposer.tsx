@@ -128,7 +128,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
     private modifiedFlag = false;
     private isIMEComposing = false;
+    private hasIMEComposingJustEnded = false;
     private hasTextSelected = false;
+    private readonly isSafari: boolean;
 
     private _isCaretAtEnd = false;
     private lastCaret: DocumentOffset;
@@ -148,6 +150,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             surroundWith: SettingsStore.getValue("MessageComposerInput.surroundWith"),
             showVisualBell: false,
         };
+
+        const ua = navigator.userAgent.toLowerCase();
+        this.isSafari = ua.includes("safari/") && !ua.includes("chrome/");
 
         this.useMarkdownHandle = SettingsStore.watchSetting(
             "MessageComposerInput.useMarkdown",
@@ -310,11 +315,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
         // however, doing this async seems to break things in Safari for some reason, so browser sniff.
 
-        const ua = navigator.userAgent.toLowerCase();
-        const isSafari = ua.includes("safari/") && !ua.includes("chrome/");
-
-        if (isSafari) {
+        if (this.isSafari) {
             this.onInput({ inputType: "insertCompositionText" });
+            this.hasIMEComposingJustEnded = true;
         } else {
             Promise.resolve().then(() => {
                 this.onInput({ inputType: "insertCompositionText" });
@@ -326,7 +329,14 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         // checking the event.isComposing flag just in case any browser out there
         // emits events related to the composition after compositionend
         // has been fired
-        return !!(this.isIMEComposing || (event.nativeEvent && event.nativeEvent.isComposing));
+
+        // From https://www.stum.de/2016/06/24/handling-ime-events-in-javascript/
+        // Safari emits an additional keyDown after compositionend
+        return !!(
+            this.isIMEComposing ||
+            this.hasIMEComposingJustEnded ||
+            (event.nativeEvent && event.nativeEvent.isComposing)
+        );
     }
 
     private onCutCopy = (event: ClipboardEvent, type: string): void => {
@@ -505,6 +515,12 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
     private onKeyDown = (event: React.KeyboardEvent): void => {
         if (!this.editorRef.current) return;
+        if (this.isSafari && event.which == 229) {
+            // Swallow the extra keyDown by Safari
+            this.hasIMEComposingJustEnded = false;
+            event.stopPropagation();
+            return;
+        }
         const model = this.props.model;
         let handled = false;
 
