@@ -20,10 +20,7 @@ import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import Modal from "../../../Modal";
 import { _t } from "../../../languageHandler";
-import defaultDispatcher from "../../../dispatcher/dispatcher";
-import { Action } from "../../../dispatcher/actions";
 import AccessibleButton from "../elements/AccessibleButton";
-import { OpenToTabPayload } from "../../../dispatcher/payloads/OpenToTabPayload";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import SetupEncryptionDialog from "../dialogs/security/SetupEncryptionDialog";
 import Spinner from "../elements/Spinner";
@@ -135,11 +132,6 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
         Modal.createDialog(SetupEncryptionDialog);
     };
 
-    const onDeviceListClick = (): void => {
-        const payload: OpenToTabPayload = { action: Action.ViewUserDeviceSettings };
-        defaultDispatcher.dispatch(payload);
-    };
-
     const statusIndicator = waiting ? (
         <Spinner w={24} h={24} />
     ) : (
@@ -161,65 +153,48 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
                 )}
             </React.Fragment>
         );
-    } else if (needsVerification) {
-        if (hasOtherVerifiedDevices || hasKeyBackup) {
-            className = "mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd";
-            headline = <React.Fragment>{_t("Verify this device to access all messages")}</React.Fragment>;
-            message = (
-                <React.Fragment>
-                    {_t("This device was unable to decrypt some messages because it has not been verified yet.")}
-                </React.Fragment>
-            );
-            button = (
-                <AccessibleButton
-                    className="mx_DecryptionFailureBar_end_button"
-                    kind="primary"
-                    onClick={onVerifyClick}
-                    data-testid="decryption-failure-bar-button"
-                >
-                    {_t("Verify")}
-                </AccessibleButton>
-            );
-        } else {
-            // In this case we don't want to display the banner
-            return null;
-        }
-    } else if (hasOtherVerifiedDevices && developerMode) {
+    } else if (needsVerification && (hasOtherVerifiedDevices || hasKeyBackup)) {
         className = "mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd";
-        headline = <React.Fragment>{_t("Open another device to load encrypted messages")}</React.Fragment>;
+        headline = <React.Fragment>{_t("Verify this device to access all messages")}</React.Fragment>;
         message = (
             <React.Fragment>
-                {_t(
-                    "This device is requesting decryption keys from your other devices. " +
-                        "Opening one of your other devices may speed this up.",
-                )}
+                {_t("This device was unable to decrypt some messages because it has not been verified yet.")}
             </React.Fragment>
         );
         button = (
             <AccessibleButton
                 className="mx_DecryptionFailureBar_end_button"
-                kind="primary_outline"
-                onClick={onDeviceListClick}
+                kind="primary"
+                onClick={onVerifyClick}
                 data-testid="decryption-failure-bar-button"
             >
-                {_t("View your device list")}
+                {_t("Verify")}
             </AccessibleButton>
         );
-
-        if (anyUnrequestedSessions) {
-            keyRequestButton = (
-                <AccessibleButton
-                    className="mx_DecryptionFailureBar_end_button"
-                    kind="primary"
-                    onClick={sendKeyRequests}
-                    data-testid="decryption-failure-bar-button"
-                >
-                    {_t("Resend key requests")}
-                </AccessibleButton>
-            );
-        }
+        // In developerMode, we want to be able to resend manually key requests
+    } else if (developerMode && !needsVerification && hasOtherVerifiedDevices && anyUnrequestedSessions) {
+        className = "mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd";
+        headline = <React.Fragment>{_t("Some messages could not be decrypted")}</React.Fragment>;
+        message = (
+            <React.Fragment>
+                {_t(
+                    "Unfortunately, there are no other verified devices to request decryption keys from. " +
+                        "Signing in and verifying other devices may help avoid this situation in the future.",
+                )}
+            </React.Fragment>
+        );
+        keyRequestButton = (
+            <AccessibleButton
+                className="mx_DecryptionFailureBar_end_button"
+                kind="primary"
+                onClick={sendKeyRequests}
+                data-testid="decryption-failure-bar-button"
+            >
+                {_t("Resend key requests")}
+            </AccessibleButton>
+        );
     } else {
-        // In this case we don't want to display the banner
+        // When we are unable to decrypt the message (no other verified devices), we hide the banner
         return null;
     }
 
