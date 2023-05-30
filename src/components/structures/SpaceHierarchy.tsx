@@ -32,7 +32,7 @@ import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { RoomHierarchy } from "matrix-js-sdk/src/room-hierarchy";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { IHierarchyRelation, IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
-import { MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
+import { ClientEvent, MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 import { sortBy, uniqBy } from "lodash";
 import { GuestAccess, HistoryVisibility } from "matrix-js-sdk/src/@types/partials";
@@ -101,7 +101,7 @@ const Tile: React.FC<ITileProps> = ({
     children,
 }) => {
     const cli = useContext(MatrixClientContext);
-    const [joinedRoom, setJoinedRoom] = useState<Room | undefined>(() => {
+    const joinedRoom = useTypedEventEmitterState(cli, ClientEvent.Room, () => {
         const cliRoom = cli?.getRoom(room.room_id);
         return cliRoom?.getMyMembership() === "join" ? cliRoom : undefined;
     });
@@ -128,7 +128,6 @@ const Tile: React.FC<ITileProps> = ({
         ev.stopPropagation();
         onJoinRoomClick()
             .then(() => awaitRoomDownSync(cli, room.room_id))
-            .then(setJoinedRoom)
             .finally(() => {
                 setBusy(false);
             });
