@@ -175,7 +175,7 @@ describe("<MatrixChat />", () => {
 
                 expect(defaultDispatcher.dispatch).toHaveBeenCalledWith({
                     action: Action.ViewUserSettings,
-                    initialTabId: UserTab.Security,
+                    initialTabId: UserTab.SessionManager,
                 });
             });
 
