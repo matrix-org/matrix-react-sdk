@@ -17,7 +17,11 @@ limitations under the License.
 import React from "react";
 import { MatrixEvent, User } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { VerificationPhase, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
+import {
+    canAcceptVerificationRequest,
+    VerificationPhase,
+    VerificationRequestEvent,
+} from "matrix-js-sdk/src/crypto-api";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
@@ -136,7 +140,7 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
         let subtitle: string;
         let stateNode: JSX.Element | undefined;
 
-        if (!request.canAccept) {
+        if (!canAcceptVerificationRequest(request)) {
             let stateLabel;
             const accepted =
                 request.phase === VerificationPhase.Ready ||
@@ -162,7 +166,7 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
             const name = getNameForEventRoom(client, request.otherUserId, mxEvent.getRoomId()!);
             title = _t("%(name)s wants to verify", { name });
             subtitle = userLabelForEventRoom(client, request.otherUserId, mxEvent.getRoomId()!);
-            if (request.canAccept) {
+            if (canAcceptVerificationRequest(request)) {
                 stateNode = (
                     <div className="mx_cryptoEvent_buttons">
                         <AccessibleButton kind="danger" onClick={this.onRejectClicked}>

@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
+import { canAcceptVerificationRequest, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -91,7 +91,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
 
     private checkRequestIsPending = (): void => {
         const { request } = this.props;
-        if (!request.canAccept) {
+        if (!canAcceptVerificationRequest(request)) {
             ToastStore.sharedInstance().dismissToast(this.props.toastKey);
         }
     };
