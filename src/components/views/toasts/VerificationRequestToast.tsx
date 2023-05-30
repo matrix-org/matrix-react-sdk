@@ -113,10 +113,10 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
         // no room id for to_device requests
         const cli = MatrixClientPeg.get();
         try {
-            if (request.channel.roomId) {
+            if (request.roomId) {
                 dis.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
-                    room_id: request.channel.roomId,
+                    room_id: request.roomId,
                     should_peek: false,
                     metricsTrigger: "VerificationRequest",
                 });
@@ -128,7 +128,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
                         { phase: RightPanelPhases.EncryptionPanel, state: { verificationRequest: request, member } },
                     ],
                     undefined,
-                    request.channel.roomId,
+                    request.roomId,
                 );
             } else {
                 Modal.createDialog(
@@ -164,7 +164,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
             }
         } else {
             const userId = request.otherUserId;
-            const roomId = request.channel.roomId;
+            const roomId = request.roomId;
             description = roomId ? userLabelForEventRoom(MatrixClientPeg.get(), userId, roomId) : userId;
             // for legacy to_device verification requests
             if (description === userId) {

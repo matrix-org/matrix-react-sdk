@@ -32,7 +32,6 @@ import {
     VerifierEventHandlerMap,
 } from "matrix-js-sdk/src/crypto-api/verification";
 import { SAS } from "matrix-js-sdk/src/crypto/verification/SAS";
-import { IVerificationChannel } from "matrix-js-sdk/src/crypto/verification/request/Channel";
 
 import VerificationPanel from "../../../../src/components/views/right_panel/VerificationPanel";
 import { stubClient } from "../../../test-utils";
@@ -106,7 +105,6 @@ function renderComponent(props: { request: VerificationRequest; phase: Phase }) 
 function makeMockVerificationRequest(props: Partial<VerificationRequest> = {}): Mocked<VerificationRequest> {
     const request = new TypedEventEmitter<VerificationRequestEvent, any>();
     Object.assign(request, {
-        channel: {} as IVerificationChannel,
         cancel: jest.fn(),
         otherPartySupportsMethod: jest.fn().mockReturnValue(true),
         getQRCodeBytes: jest.fn(),
