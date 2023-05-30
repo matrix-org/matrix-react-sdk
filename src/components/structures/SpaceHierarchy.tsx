@@ -840,7 +840,9 @@ const SpaceHierarchy: React.FC<IProps> = ({ space, initialText = "", showRoom, a
                                     onViewRoomClick={(roomId, roomType) => showRoom(cli, hierarchy, roomId, roomType)}
                                     onJoinRoomClick={async (roomId, parents) => {
                                         for (const parent of parents) {
-                                            await joinRoom(cli, hierarchy, parent);
+                                            if (cli.getRoom(parent)?.getMyMembership() !== "join") {
+                                                await joinRoom(cli, hierarchy, parent);
+                                            }
                                         }
                                         await joinRoom(cli, hierarchy, roomId);
                                     }}
