@@ -603,14 +603,14 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
     }
 
     MatrixClientPeg.replaceUsingCreds(credentials);
+    const client = MatrixClientPeg.get();
 
     setSentryUser(credentials.userId);
 
     if (PosthogAnalytics.instance.isEnabled()) {
-        PosthogAnalytics.instance.startListeningToSettingsChanges();
+        PosthogAnalytics.instance.startListeningToSettingsChanges(client);
     }
 
-    const client = MatrixClientPeg.get();
     if (credentials.freshLogin && SettingsStore.getValue("feature_dehydration")) {
         // If we just logged in, try to rehydrate a device instead of using a
         // new device.  If it succeeds, we'll get a new device ID, so make sure
