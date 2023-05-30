@@ -26,7 +26,6 @@ import AccessibleButton from "../elements/AccessibleButton";
 import { OpenToTabPayload } from "../../../dispatcher/payloads/OpenToTabPayload";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import SetupEncryptionDialog from "../dialogs/security/SetupEncryptionDialog";
-import { SetupEncryptionStore } from "../../../stores/SetupEncryptionStore";
 import Spinner from "../elements/Spinner";
 import { useSettingValue } from "../../../hooks/useSettings";
 
@@ -141,11 +140,6 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
         defaultDispatcher.dispatch(payload);
     };
 
-    const onResetClick = (): void => {
-        const store = SetupEncryptionStore.sharedInstance();
-        store.resetConfirm();
-    };
-
     const statusIndicator = waiting ? (
         <Spinner w={24} h={24} />
     ) : (
@@ -185,26 +179,8 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
                 </AccessibleButton>
             );
         } else {
-            className = "mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd";
-            headline = <React.Fragment>{_t("Reset your keys to prevent future decryption errors")}</React.Fragment>;
-            message = (
-                <React.Fragment>
-                    {_t(
-                        "You will not be able to access old undecryptable messages, " +
-                            "but resetting your keys will allow you to receive new messages.",
-                    )}
-                </React.Fragment>
-            );
-            button = (
-                <AccessibleButton
-                    className="mx_DecryptionFailureBar_end_button"
-                    kind="primary"
-                    onClick={onResetClick}
-                    data-testid="decryption-failure-bar-button"
-                >
-                    {_t("Reset")}
-                </AccessibleButton>
-            );
+            // In this case we don't want to display the banner
+            return null;
         }
     } else if (hasOtherVerifiedDevices && developerMode) {
         className = "mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd";
@@ -241,16 +217,8 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
             );
         }
     } else {
-        className = "mx_DecryptionFailureBar";
-        headline = <React.Fragment>{_t("Some messages could not be decrypted")}</React.Fragment>;
-        message = (
-            <React.Fragment>
-                {_t(
-                    "Unfortunately, there are no other verified devices to request decryption keys from. " +
-                        "Signing in and verifying other devices may help avoid this situation in the future.",
-                )}
-            </React.Fragment>
-        );
+        // In this case we don't want to display the banner
+        return null;
     }
 
     return (
