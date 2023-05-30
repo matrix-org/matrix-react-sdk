@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { mocked } from "jest-mock";
-import { render } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomHierarchy } from "matrix-js-sdk/src/room-hierarchy";
@@ -167,13 +167,21 @@ describe("SpaceHierarchy", () => {
         } as unknown as DMRoomMap;
         jest.spyOn(DMRoomMap, "shared").mockReturnValue(dmRoomMap);
 
-        const root = mkStubRoom("room-id-1", "Room 1", client);
-        const room1 = mkStubRoom("room-id-2", "Room 2", client);
-        const room2 = mkStubRoom("room-id-3", "Room 3", client);
+        const root = mkStubRoom("space-id-1", "Space 1", client);
+        const room1 = mkStubRoom("room-id-2", "Room 1", client);
+        const room2 = mkStubRoom("room-id-3", "Room 2", client);
+        const space1 = mkStubRoom("space-id-4", "Space 2", client);
+        const room3 = mkStubRoom("room-id-5", "Room 3", client);
+        mocked(client.getRooms).mockReturnValue([root]);
+        mocked(client.getRoom).mockImplementation(
+            (roomId) => client.getRooms().find((room) => room.roomId === roomId) ?? null,
+        );
+        [room1, room2, space1, room3].forEach((r) => mocked(r.getMyMembership).mockReturnValue("leave"));
 
         const hierarchyRoot = {
             room_id: root.roomId,
             num_joined_members: 1,
+            room_type: "m.space",
             children_state: [
                 {
                     state_key: room1.roomId,
@@ -183,39 +191,72 @@ describe("SpaceHierarchy", () => {
                     state_key: room2.roomId,
                     content: { order: "2" },
                 },
+                {
+                    state_key: space1.roomId,
+                    content: { order: "3" },
+                },
             ],
         } as IHierarchyRoom;
         const hierarchyRoom1 = { room_id: room1.roomId, num_joined_members: 2 } as IHierarchyRoom;
-        const hierarchyRoom2 = { room_id: root.roomId, num_joined_members: 3 } as IHierarchyRoom;
+        const hierarchyRoom2 = { room_id: room2.roomId, num_joined_members: 3 } as IHierarchyRoom;
+        const hierarchyRoom3 = {
+            name: "Nested room",
+            room_id: room3.roomId,
+            num_joined_members: 3,
+        } as IHierarchyRoom;
+        const hierarchySpace1 = {
+            room_id: space1.roomId,
+            name: "Nested space",
+            num_joined_members: 1,
+            room_type: "m.space",
+            children_state: [
+                {
+                    state_key: room3.roomId,
+                    content: { order: "1" },
+                },
+            ],
+        } as IHierarchyRoom;
 
         const roomHierarchy = {
             roomMap: new Map([
                 [root.roomId, hierarchyRoot],
+                [space1.roomId, hierarchySpace1],
                 [room1.roomId, hierarchyRoom1],
                 [room2.roomId, hierarchyRoom2],
+                [room3.roomId, hierarchyRoom3],
             ]),
             isSuggested: jest.fn(),
         } as unknown as RoomHierarchy;
 
-        it("renders", () => {
-            const defaultProps = {
-                root: hierarchyRoot,
-                roomSet: new Set([hierarchyRoom1, hierarchyRoom2]),
-                hierarchy: roomHierarchy,
-                parents: new Set<string>(),
-                selectedMap: new Map<string, Set<string>>(),
-                onViewRoomClick: jest.fn(),
-                onJoinRoomClick: jest.fn(),
-                onToggleClick: jest.fn(),
-            };
-            const getComponent = (props = {}): React.ReactElement => (
-                <MatrixClientContext.Provider value={client}>
-                    <HierarchyLevel {...defaultProps} {...props} />;
-                </MatrixClientContext.Provider>
-            );
+        const defaultProps = {
+            root: hierarchyRoot,
+            roomSet: new Set([hierarchyRoom1, hierarchyRoom2, hierarchySpace1, hierarchyRoom3]),
+            hierarchy: roomHierarchy,
+            parents: new Set<string>(),
+            selectedMap: new Map<string, Set<string>>(),
+            onViewRoomClick: jest.fn(),
+            onJoinRoomClick: jest.fn(),
+            onToggleClick: jest.fn(),
+        };
+        const getComponent = (props = {}): React.ReactElement => (
+            <MatrixClientContext.Provider value={client}>
+                <HierarchyLevel {...defaultProps} {...props} />;
+            </MatrixClientContext.Provider>
+        );
 
-            const { container } = render(getComponent());
-            expect(container).toMatchSnapshot();
+        it("renders", () => {
+            const { asFragment } = render(getComponent());
+            expect(asFragment()).toMatchSnapshot();
+        });
+
+        it("should join subspace when joining nested room", async () => {
+            const onJoinRoomClick = jest.fn().mockResolvedValue({});
+
+            const { getByText } = render(getComponent({ onJoinRoomClick }));
+            const button = getByText("Nested room")!.closest("li")!.querySelector(".mx_AccessibleButton_kind_primary")!;
+            fireEvent.click(button);
+
+            expect(onJoinRoomClick).toHaveBeenCalledWith(room3.roomId, new Set([root.roomId, space1.roomId]));
         });
     });
 });

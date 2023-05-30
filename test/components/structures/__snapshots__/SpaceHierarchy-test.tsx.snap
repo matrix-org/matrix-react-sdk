@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SpaceHierarchy <HierarchyLevel /> renders 1`] = `
-<div>
+<DocumentFragment>
   <li
     class="mx_SpaceHierarchy_roomTileWrapper"
     role="treeitem"
@@ -17,44 +17,48 @@ exports[`SpaceHierarchy <HierarchyLevel /> renders 1`] = `
         <div
           class="mx_SpaceHierarchy_roomTile_avatar"
         >
-          <img
-            alt=""
-            class="mx_BaseAvatar mx_BaseAvatar_image"
-            data-testid="avatar-img"
-            loading="lazy"
-            src="http://this.is.a.url/avatar.url/room.png"
-            style="width: 20px; height: 20px;"
-          />
+          <span
+            class="mx_BaseAvatar"
+            role="presentation"
+          >
+            <span
+              aria-hidden="true"
+              class="mx_BaseAvatar_initial"
+              style="font-size: 13px; width: 20px; line-height: 20px;"
+            >
+              U
+            </span>
+            <img
+              alt=""
+              aria-hidden="true"
+              class="mx_BaseAvatar_image"
+              data-testid="avatar-img"
+              loading="lazy"
+              src="data:image/png;base64,00"
+              style="width: 20px; height: 20px;"
+            />
+          </span>
         </div>
         <div
           class="mx_SpaceHierarchy_roomTile_name"
         >
           Unnamed Room
-          <div
-            class="mx_SpaceHierarchy_roomTile_joined"
-          >
-            Joined
-          </div>
         </div>
         <div
           class="mx_SpaceHierarchy_roomTile_info"
         >
           2 members
-           · 
-          <span
-            dir="auto"
-          />
         </div>
       </div>
       <div
         class="mx_SpaceHierarchy_actions"
       >
         <div
-          class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+          class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
           role="button"
           tabindex="-1"
         >
-          View
+          Join
         </div>
         <span
           class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
@@ -94,44 +98,48 @@ exports[`SpaceHierarchy <HierarchyLevel /> renders 1`] = `
         <div
           class="mx_SpaceHierarchy_roomTile_avatar"
         >
-          <img
-            alt=""
-            class="mx_BaseAvatar mx_BaseAvatar_image"
-            data-testid="avatar-img"
-            loading="lazy"
-            src="http://this.is.a.url/avatar.url/room.png"
-            style="width: 20px; height: 20px;"
-          />
+          <span
+            class="mx_BaseAvatar"
+            role="presentation"
+          >
+            <span
+              aria-hidden="true"
+              class="mx_BaseAvatar_initial"
+              style="font-size: 13px; width: 20px; line-height: 20px;"
+            >
+              U
+            </span>
+            <img
+              alt=""
+              aria-hidden="true"
+              class="mx_BaseAvatar_image"
+              data-testid="avatar-img"
+              loading="lazy"
+              src="data:image/png;base64,00"
+              style="width: 20px; height: 20px;"
+            />
+          </span>
         </div>
         <div
           class="mx_SpaceHierarchy_roomTile_name"
         >
           Unnamed Room
-          <div
-            class="mx_SpaceHierarchy_roomTile_joined"
-          >
-            Joined
-          </div>
         </div>
         <div
           class="mx_SpaceHierarchy_roomTile_info"
         >
           3 members
-           · 
-          <span
-            dir="auto"
-          />
         </div>
       </div>
       <div
         class="mx_SpaceHierarchy_actions"
       >
         <div
-          class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+          class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
           role="button"
           tabindex="-1"
         >
-          View
+          Join
         </div>
         <span
           class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
@@ -156,6 +164,183 @@ exports[`SpaceHierarchy <HierarchyLevel /> renders 1`] = `
       </div>
     </div>
   </li>
+  <li
+    aria-expanded="true"
+    class="mx_SpaceHierarchy_roomTileWrapper"
+    role="treeitem"
+  >
+    <div
+      class="mx_AccessibleButton mx_SpaceHierarchy_roomTile mx_SpaceHierarchy_subspace"
+      role="button"
+      tabindex="-1"
+    >
+      <div
+        class="mx_SpaceHierarchy_roomTile_item"
+      >
+        <div
+          class="mx_SpaceHierarchy_roomTile_avatar"
+        >
+          <span
+            class="mx_BaseAvatar"
+            role="presentation"
+          >
+            <span
+              aria-hidden="true"
+              class="mx_BaseAvatar_initial"
+              style="font-size: 13px; width: 20px; line-height: 20px;"
+            >
+              N
+            </span>
+            <img
+              alt=""
+              aria-hidden="true"
+              class="mx_BaseAvatar_image"
+              data-testid="avatar-img"
+              loading="lazy"
+              src="data:image/png;base64,00"
+              style="width: 20px; height: 20px;"
+            />
+          </span>
+        </div>
+        <div
+          class="mx_SpaceHierarchy_roomTile_name"
+        >
+          Nested space
+        </div>
+        <div
+          class="mx_SpaceHierarchy_roomTile_info"
+        >
+          1 member · 1 room
+        </div>
+      </div>
+      <div
+        class="mx_SpaceHierarchy_actions"
+      >
+        <div
+          class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+          role="button"
+          tabindex="-1"
+        >
+          Join
+        </div>
+        <span
+          class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+        >
+          <input
+            id="checkbox_abdefghi"
+            tabindex="-1"
+            type="checkbox"
+          />
+          <label
+            for="checkbox_abdefghi"
+          >
+            <div
+              class="mx_Checkbox_background"
+            >
+              <div
+                class="mx_Checkbox_checkmark"
+              />
+            </div>
+          </label>
+        </span>
+      </div>
+      <div
+        class="mx_SpaceHierarchy_subspace_toggle mx_SpaceHierarchy_subspace_toggle_shown"
+      />
+    </div>
+    <div
+      class="mx_SpaceHierarchy_subspace_children"
+      role="group"
+    />
+  </li>
+  <li
+    class="mx_SpaceHierarchy_roomTileWrapper"
+    role="treeitem"
+  >
+    <div
+      class="mx_AccessibleButton mx_SpaceHierarchy_roomTile"
+      role="button"
+      tabindex="-1"
+    >
+      <div
+        class="mx_SpaceHierarchy_roomTile_item"
+      >
+        <div
+          class="mx_SpaceHierarchy_roomTile_avatar"
+        >
+          <span
+            class="mx_BaseAvatar"
+            role="presentation"
+          >
+            <span
+              aria-hidden="true"
+              class="mx_BaseAvatar_initial"
+              style="font-size: 13px; width: 20px; line-height: 20px;"
+            >
+              N
+            </span>
+            <img
+              alt=""
+              aria-hidden="true"
+              class="mx_BaseAvatar_image"
+              data-testid="avatar-img"
+              loading="lazy"
+              src="data:image/png;base64,00"
+              style="width: 20px; height: 20px;"
+            />
+          </span>
+        </div>
+        <div
+          class="mx_SpaceHierarchy_roomTile_name"
+        >
+          Nested room
+        </div>
+        <div
+          class="mx_SpaceHierarchy_roomTile_info"
+        >
+          3 members
+        </div>
+      </div>
+      <div
+        class="mx_SpaceHierarchy_actions"
+      >
+        <div
+          class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+          role="button"
+          tabindex="-1"
+        >
+          Join
+        </div>
+        <div
+          aria-describedby="mx_TooltipTarget_abdefghi"
+          class="mx_TextWithTooltip_target"
+          tabindex="0"
+        >
+          <span
+            class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+          >
+            <input
+              disabled=""
+              id="checkbox_abdefghi"
+              tabindex="-1"
+              type="checkbox"
+            />
+            <label
+              for="checkbox_abdefghi"
+            >
+              <div
+                class="mx_Checkbox_background"
+              >
+                <div
+                  class="mx_Checkbox_checkmark"
+                />
+              </div>
+            </label>
+          </span>
+        </div>
+      </div>
+    </div>
+  </li>
   ;
-</div>
+</DocumentFragment>
 `;
