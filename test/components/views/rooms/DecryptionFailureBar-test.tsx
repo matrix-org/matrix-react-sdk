@@ -21,7 +21,7 @@ import "@testing-library/jest-dom";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import { DecryptionFailureBar } from "../../../../src/components/views/rooms/DecryptionFailureBar";
 import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
-import { Action } from "../../../../src/dispatcher/actions";
+import SettingsStore from "../../../../src/settings/SettingsStore";
 
 type MockDevice = { deviceId: string };
 
@@ -74,6 +74,7 @@ describe("<DecryptionFailureBar />", () => {
     beforeEach(() => {
         jest.useFakeTimers();
         jest.spyOn(defaultDispatcher, "dispatch").mockRestore();
+        jest.spyOn(SettingsStore, "getValue").mockRestore();
     });
 
     afterEach(() => {
@@ -166,7 +167,7 @@ describe("<DecryptionFailureBar />", () => {
         bar.unmount();
     });
 
-    it("Prompts the user to reset if they have no other verified devices and no backups", async () => {
+    it("The banner is hidden if they have no other verified devices and no backups", async () => {
         ourDevice = unverifiedDevice1;
         allDevices = [unverifiedDevice1, unverifiedDevice2];
         keyBackup = false;
@@ -189,40 +190,12 @@ describe("<DecryptionFailureBar />", () => {
         act(() => {
             jest.advanceTimersByTime(5000);
         });
-        expect(getBar(bar)).toMatchSnapshot();
+        expect(getBar(bar)).toBe(null);
 
         bar.unmount();
     });
 
-    it("Recommends opening other devices if there are other verified devices", async () => {
-        ourDevice = verifiedDevice1;
-        allDevices = [verifiedDevice1, verifiedDevice2];
-        keyBackup = false;
-
-        const bar = render(
-            // @ts-ignore
-            <MatrixClientContext.Provider value={mockClient}>
-                <DecryptionFailureBar
-                    failures={[
-                        // @ts-ignore
-                        mockEvent1,
-                    ]}
-                />
-                ,
-            </MatrixClientContext.Provider>,
-        );
-
-        await waitFor(() => expect(mockClient.isSecretStored).toHaveBeenCalled());
-
-        act(() => {
-            jest.advanceTimersByTime(5000);
-        });
-        expect(getBar(bar)).toMatchSnapshot();
-
-        bar.unmount();
-    });
-
-    it("Displays a general error message if there are no other verified devices", async () => {
+    it("The banner is hidden if there are no other verified devices", async () => {
         ourDevice = verifiedDevice1;
         allDevices = [verifiedDevice1, unverifiedDevice1];
         keyBackup = true;
@@ -245,14 +218,16 @@ describe("<DecryptionFailureBar />", () => {
         act(() => {
             jest.advanceTimersByTime(5000);
         });
-        expect(getBar(bar)).toMatchSnapshot();
+        expect(getBar(bar)).toBe(null);
 
         bar.unmount();
     });
 
-    it("Displays button to resend key requests if we are verified", async () => {
+    it("Displays button to resend key requests if we are verified and developerMode is enabled", async () => {
         ourDevice = verifiedDevice1;
         allDevices = [verifiedDevice1, verifiedDevice2];
+
+        jest.spyOn(SettingsStore, "getValue").mockImplementation((setting) => setting === "developerMode");
 
         const bar = render(
             // @ts-ignore
@@ -288,41 +263,6 @@ describe("<DecryptionFailureBar />", () => {
 
         bar.unmount();
     });
-    it("Displays button to review device list if we are verified", async () => {
-        // stub so we dont have to deal with launching modals
-        jest.spyOn(defaultDispatcher, "dispatch").mockImplementation(() => {});
-        ourDevice = verifiedDevice1;
-        allDevices = [verifiedDevice1, verifiedDevice2];
-
-        const bar = render(
-            // @ts-ignore
-            <MatrixClientContext.Provider value={mockClient}>
-                <DecryptionFailureBar
-                    failures={[
-                        // @ts-ignore
-                        mockEvent1,
-                        // @ts-ignore
-                        mockEvent2,
-                        // @ts-ignore
-                        mockEvent3,
-                    ]}
-                />
-                ,
-            </MatrixClientContext.Provider>,
-        );
-
-        await waitFor(() => expect(mockClient.isSecretStored).toHaveBeenCalled());
-
-        act(() => {
-            jest.advanceTimersByTime(5000);
-        });
-
-        fireEvent.click(screen.getByText("View your device list"));
-
-        expect(defaultDispatcher.dispatch).toHaveBeenCalledWith({ action: Action.ViewUserDeviceSettings });
-
-        bar.unmount();
-    });
 
     it("Does not display a button to send key requests if we are unverified", async () => {
         ourDevice = unverifiedDevice1;
@@ -353,9 +293,11 @@ describe("<DecryptionFailureBar />", () => {
         bar.unmount();
     });
 
-    it("Displays the button to resend key requests only if there are sessions we haven't already requested", async () => {
+    it("Displays the button to resend key requests only if there are sessions we haven't already requested and developerMode is enabled", async () => {
         ourDevice = verifiedDevice1;
         allDevices = [verifiedDevice1, verifiedDevice2];
+
+        jest.spyOn(SettingsStore, "getValue").mockImplementation((setting) => setting === "developerMode");
 
         const bar = render(
             // @ts-ignore
@@ -442,7 +384,7 @@ describe("<DecryptionFailureBar />", () => {
 
         ourDevice = verifiedDevice1;
         await act(callback);
-        expect(getBar(bar)).toMatchSnapshot();
+        expect(getBar(bar)).toBe(null);
 
         bar.unmount();
     });
