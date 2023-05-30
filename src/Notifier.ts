@@ -227,8 +227,19 @@ class NotifierClass {
 
     private async getSoundBufferForRoom(roomId: string): Promise<AudioBuffer> {
         const sound = this.getSoundForRoom(roomId);
-        // TODO: Choose from mp3 and ogg
-        const url = sound ? sound["url"] : "media/message.mp3";
+
+        const audioElement = document.createElement("audio");
+        let format="";
+        if(audioElement.canPlayType("audio/mpeg")){
+            format="mp3";
+        }else if(audioElement.canPlayType("audio/ogg")){
+            format="ogg";
+        }else{
+            console.log("Browser doens't support mp3 or ogg");
+            // Will probably never happen. If happened, format="" and will fail to load audio. Who cares...
+        }
+
+        const url = sound ? sound["url"] : "media/message."+format;
 
         if (this.sounds.hasOwnProperty(url)) {
             return this.sounds[url];
