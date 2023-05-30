@@ -825,7 +825,7 @@ async function startMatrixClient(client: MatrixClient, startSyncing = true): Pro
     SettingsStore.runMigrations();
 
     // This needs to be started after crypto is set up
-    DeviceListener.sharedInstance().start();
+    DeviceListener.sharedInstance().start(client);
     // Similarly, don't start sending presence updates until we've started
     // the client
     if (!SettingsStore.getValue("lowBandwidth")) {
