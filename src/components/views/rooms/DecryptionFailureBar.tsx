@@ -28,6 +28,7 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import SetupEncryptionDialog from "../dialogs/security/SetupEncryptionDialog";
 import { SetupEncryptionStore } from "../../../stores/SetupEncryptionStore";
 import Spinner from "../elements/Spinner";
+import { useSettingValue } from "../../../hooks/useSettings";
 
 interface IProps {
     failures: MatrixEvent[];
@@ -38,6 +39,7 @@ const WAIT_PERIOD = 5000;
 
 export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
     const context = useContext(MatrixClientContext);
+    const developerMode = useSettingValue<boolean>("developerMode");
 
     // Display a spinner for a few seconds before presenting an error message,
     // in case keys are about to arrive
@@ -203,7 +205,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
                 </AccessibleButton>
             );
         }
-    } else if (hasOtherVerifiedDevices) {
+    } else if (hasOtherVerifiedDevices && developerMode) {
         className = "mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd";
         headline = <React.Fragment>{_t("Open another device to load encrypted messages")}</React.Fragment>;
         message = (
