@@ -1968,7 +1968,7 @@
     "Topic: %(topic)s ": "Teema: %(topic)s ",
     "Topic: %(topic)s (<a>edit</a>)": "Teema: %(topic)s (<a>muudetud</a>)",
     "This is the beginning of your direct message history with <displayName/>.": "See on sinu ja kasutaja <displayName/> otsesuhtluse ajaloo algus.",
-    "Only the two of you are in this conversation, unless either of you invites anyone to join.": "Seni kuni emb-kumb teist kolmandaid osapooli liituma ei kutsu, olete siin vestluses vaid teie kahekesi.",
+    "Only the two of you are in this conversation, unless either of you invites anyone to join.": "Kuni kumbki teist kolmandaid osapooli liituma ei kutsu, olete siin vestluses vaid teie kahekesi.",
     "Takes the call in the current room off hold": "Võtab selles jututoas ootel oleva kõne",
     "Places the call in the current room on hold": "Jätab kõne selles jututoas ootele",
     "Go to Home View": "Avalehele",
