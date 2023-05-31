@@ -43,8 +43,8 @@ exports[`<ServerPickerDialog /> should render dialog 1`] = `
         class="mx_StyledRadioButton mx_StyledRadioButton_enabled"
       >
         <input
-          aria-label="Default homeserver"
           checked=""
+          data-testid="defaultHomeserver"
           name="defaultChosen"
           type="radio"
           value="true"

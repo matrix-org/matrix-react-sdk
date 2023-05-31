@@ -105,8 +105,8 @@ describe("<ServerPickerDialog />", () => {
             const onFinished = jest.fn();
             getComponent({ onFinished });
 
-            fireEvent.click(screen.getByLabelText("Default homeserver"));
-            expect(screen.getByLabelText("Default homeserver")).toBeChecked();
+            fireEvent.click(screen.getByTestId("defaultHomeserver"));
+            expect(screen.getByTestId("defaultHomeserver")).toBeChecked();
 
             fireEvent.click(screen.getByText("Continue"));
 
