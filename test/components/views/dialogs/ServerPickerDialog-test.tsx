@@ -61,10 +61,6 @@ describe("<ServerPickerDialog />", () => {
         });
 
         fetchMock.resetHistory();
-
-        // stub error log, as lots of errors expected
-        // and make test results hard to see
-        // jest.spyOn(logger, 'error').mockClear().mockImplementation(() => {});
     });
 
     it("should render dialog", () => {
