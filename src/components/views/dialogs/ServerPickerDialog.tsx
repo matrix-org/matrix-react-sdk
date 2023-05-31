@@ -196,6 +196,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                         value="true"
                         checked={this.state.defaultChosen}
                         onChange={this.onDefaultChosen}
+                        aria-label={_t("Default homeserver")}
                     >
                         {defaultServerName}
                     </StyledRadioButton>
