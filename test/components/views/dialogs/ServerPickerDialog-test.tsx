@@ -20,8 +20,8 @@ import fetchMock from "fetch-mock-jest";
 
 import ServerPickerDialog from "../../../../src/components/views/dialogs/ServerPickerDialog";
 import SdkConfig from "../../../../src/SdkConfig";
-import { ComponentProps } from "../../../../src/Modal";
 import { flushPromises } from "../../../test-utils";
+import { ValidatedServerConfig } from "../../../../src/utils/ValidatedServerConfig";
 
 // Fake random strings to give a predictable snapshot for IDs
 jest.mock("matrix-js-sdk/src/randomstring", () => ({
@@ -52,8 +52,12 @@ describe("<ServerPickerDialog />", () => {
         serverConfig: defaultServerConfig,
         onFinished: jest.fn(),
     };
-    const getComponent = (props: Partial<ComponentProps<typeof ServerPickerDialog>> = {}) =>
-        render(<ServerPickerDialog {...defaultProps} {...props} />);
+    const getComponent = (
+        props: Partial<{
+            onFinished: any;
+            serverConfig: ValidatedServerConfig;
+        }> = {},
+    ) => render(<ServerPickerDialog {...defaultProps} {...props} />);
 
     beforeEach(() => {
         SdkConfig.add({
@@ -70,9 +74,9 @@ describe("<ServerPickerDialog />", () => {
 
     // checkbox and text input have the same aria-label
     const getOtherHomeserverCheckBox = () =>
-        screen.getAllByLabelText("Other homeserver").find((node) => node.getAttribute("type") === "radio");
+        screen.getAllByLabelText("Other homeserver").find((node) => node.getAttribute("type") === "radio")!;
     const getOtherHomeserverInput = () =>
-        screen.getAllByLabelText("Other homeserver").find((node) => node.getAttribute("type") === "text");
+        screen.getAllByLabelText("Other homeserver").find((node) => node.getAttribute("type") === "text")!;
 
     describe("when default server config is selected", () => {
         it("should select other homeserver field on open", () => {
