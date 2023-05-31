@@ -167,6 +167,23 @@ describe("<ServerPickerDialog />", () => {
                 expect(fetchMock).toHaveFetched(wellKnownUrl);
             });
 
+            it("should lookup .well-known for homeserver with protocol", async () => {
+                const homeserver = "http://myhomeserver4.site";
+                const wellKnownUrl = `${homeserver}/.well-known/matrix/client`;
+                fetchMock.get(wellKnownUrl, {});
+                getComponent();
+
+                fireEvent.change(getOtherHomeserverInput(), { target: { value: homeserver } });
+                expect(getOtherHomeserverInput()).toHaveDisplayValue(homeserver);
+                // trigger validation
+                fireEvent.blur(getOtherHomeserverInput());
+
+                // validation on submit is async
+                await flushPromises();
+
+                expect(fetchMock).toHaveFetched(wellKnownUrl);
+            });
+
             it("should submit using validated config from a valid .well-known", async () => {
                 const homeserver = "myhomeserver2.site";
                 const wellKnownUrl = `https://${homeserver}/.well-known/matrix/client`;
