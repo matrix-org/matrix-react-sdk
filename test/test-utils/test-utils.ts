@@ -483,7 +483,7 @@ export const mkReaction = (event: MatrixEvent, opts: Partial<MakeEventProps> = {
         event: true,
         room: event.getRoomId(),
         type: EventType.Reaction,
-        user: event.getSender(),
+        user: event.getSender()!,
         content: {
             "m.relates_to": {
                 rel_type: RelationType.Annotation,
