@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { mocked } from "jest-mock";
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved } from "@testing-library/react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomHierarchy } from "matrix-js-sdk/src/room-hierarchy";
@@ -25,7 +25,7 @@ import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { mkStubRoom, stubClient } from "../../test-utils";
 import dispatcher from "../../../src/dispatcher/dispatcher";
-import { HierarchyLevel, showRoom, toLocalRoom } from "../../../src/components/structures/SpaceHierarchy";
+import SpaceHierarchy, { showRoom, toLocalRoom } from "../../../src/components/structures/SpaceHierarchy";
 import { Action } from "../../../src/dispatcher/actions";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import DMRoomMap from "../../../src/utils/DMRoomMap";
@@ -158,7 +158,18 @@ describe("SpaceHierarchy", () => {
         });
     });
 
-    describe("<HierarchyLevel />", () => {
+    describe("<SpaceHierarchy />", () => {
+        beforeEach(() => {
+            // IntersectionObserver isn't available in test environment
+            const mockIntersectionObserver = jest.fn();
+            mockIntersectionObserver.mockReturnValue({
+                observe: () => null,
+                unobserve: () => null,
+                disconnect: () => null,
+            });
+            window.IntersectionObserver = mockIntersectionObserver;
+        });
+
         stubClient();
         const client = MatrixClientPeg.get();
 
@@ -197,12 +208,13 @@ describe("SpaceHierarchy", () => {
                 },
             ],
         } as IHierarchyRoom;
-        const hierarchyRoom1 = { room_id: room1.roomId, num_joined_members: 2 } as IHierarchyRoom;
-        const hierarchyRoom2 = { room_id: room2.roomId, num_joined_members: 3 } as IHierarchyRoom;
+        const hierarchyRoom1 = { room_id: room1.roomId, num_joined_members: 2, children_state: [] } as IHierarchyRoom;
+        const hierarchyRoom2 = { room_id: room2.roomId, num_joined_members: 3, children_state: [] } as IHierarchyRoom;
         const hierarchyRoom3 = {
             name: "Nested room",
             room_id: room3.roomId,
             num_joined_members: 3,
+            children_state: [],
         } as IHierarchyRoom;
         const hierarchySpace1 = {
             room_id: space1.roomId,
@@ -217,46 +229,42 @@ describe("SpaceHierarchy", () => {
             ],
         } as IHierarchyRoom;
 
-        const roomHierarchy = {
-            roomMap: new Map([
-                [root.roomId, hierarchyRoot],
-                [space1.roomId, hierarchySpace1],
-                [room1.roomId, hierarchyRoom1],
-                [room2.roomId, hierarchyRoom2],
-                [room3.roomId, hierarchyRoom3],
-            ]),
-            isSuggested: jest.fn(),
-        } as unknown as RoomHierarchy;
+        mocked(client.getRoomHierarchy).mockResolvedValue({
+            rooms: [hierarchyRoot, hierarchyRoom1, hierarchyRoom2, hierarchySpace1, hierarchyRoom3],
+        });
 
         const defaultProps = {
-            root: hierarchyRoot,
-            roomSet: new Set([hierarchyRoom1, hierarchyRoom2, hierarchySpace1, hierarchyRoom3]),
-            hierarchy: roomHierarchy,
-            parents: new Set<string>(),
-            selectedMap: new Map<string, Set<string>>(),
-            onViewRoomClick: jest.fn(),
-            onJoinRoomClick: jest.fn(),
-            onToggleClick: jest.fn(),
+            space: root,
+            showRoom: jest.fn(),
         };
         const getComponent = (props = {}): React.ReactElement => (
             <MatrixClientContext.Provider value={client}>
-                <HierarchyLevel {...defaultProps} {...props} />;
+                <SpaceHierarchy {...defaultProps} {...props} />;
             </MatrixClientContext.Provider>
         );
 
-        it("renders", () => {
+        it("renders", async () => {
             const { asFragment } = render(getComponent());
+            // Wait for spinners to go away
+            await waitForElementToBeRemoved(screen.getAllByRole("progressbar"));
             expect(asFragment()).toMatchSnapshot();
         });
 
         it("should join subspace when joining nested room", async () => {
-            const onJoinRoomClick = jest.fn().mockResolvedValue({});
+            mocked(client.joinRoom).mockResolvedValue({} as Room);
 
-            const { getByText } = render(getComponent({ onJoinRoomClick }));
+            const { getByText } = render(getComponent());
+            // Wait for spinners to go away
+            await waitForElementToBeRemoved(screen.getAllByRole("progressbar"));
             const button = getByText("Nested room")!.closest("li")!.querySelector(".mx_AccessibleButton_kind_primary")!;
             fireEvent.click(button);
 
-            expect(onJoinRoomClick).toHaveBeenCalledWith(room3.roomId, new Set([root.roomId, space1.roomId]));
+            await waitFor(() => {
+                expect(client.joinRoom).toHaveBeenCalledTimes(2);
+            });
+            // Joins subspace
+            expect(client.joinRoom).toHaveBeenCalledWith(space1.roomId, expect.any(Object));
+            expect(client.joinRoom).toHaveBeenCalledWith(room3.roomId, expect.any(Object));
         });
     });
 });
