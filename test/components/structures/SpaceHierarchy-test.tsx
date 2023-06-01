@@ -207,14 +207,30 @@ describe("SpaceHierarchy", () => {
                     content: { order: "3" },
                 },
             ],
+            world_readable: true,
+            guest_can_join: true,
         } as IHierarchyRoom;
-        const hierarchyRoom1 = { room_id: room1.roomId, num_joined_members: 2, children_state: [] } as IHierarchyRoom;
-        const hierarchyRoom2 = { room_id: room2.roomId, num_joined_members: 3, children_state: [] } as IHierarchyRoom;
+        const hierarchyRoom1 = {
+            room_id: room1.roomId,
+            num_joined_members: 2,
+            children_state: [],
+            world_readable: true,
+            guest_can_join: true,
+        } as IHierarchyRoom;
+        const hierarchyRoom2 = {
+            room_id: room2.roomId,
+            num_joined_members: 3,
+            children_state: [],
+            world_readable: true,
+            guest_can_join: true,
+        } as IHierarchyRoom;
         const hierarchyRoom3 = {
             name: "Nested room",
             room_id: room3.roomId,
             num_joined_members: 3,
             children_state: [],
+            world_readable: true,
+            guest_can_join: true,
         } as IHierarchyRoom;
         const hierarchySpace1 = {
             room_id: space1.roomId,
@@ -227,6 +243,8 @@ describe("SpaceHierarchy", () => {
                     content: { order: "1" },
                 },
             ],
+            world_readable: true,
+            guest_can_join: true,
         } as IHierarchyRoom;
 
         mocked(client.getRoomHierarchy).mockResolvedValue({
