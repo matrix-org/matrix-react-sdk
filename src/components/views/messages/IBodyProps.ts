@@ -55,4 +55,7 @@ export interface IBodyProps {
     getRelationsForEvent?: GetRelationsForEvent;
 
     ref?: React.RefObject<any> | LegacyRef<any>;
+
+    // Used by EventTilePreview to disable interactions and tab indexes
+    inhibitInteraction?: boolean;
 }

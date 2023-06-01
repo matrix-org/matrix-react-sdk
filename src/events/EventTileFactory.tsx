@@ -74,6 +74,7 @@ export interface EventTileTypeProps {
     maxImageHeight?: number; // pixels
     overrideBodyTypes?: Record<string, typeof React.Component>;
     overrideEventTypes?: Record<string, typeof React.Component>;
+    inhibitInteraction?: boolean;
 }
 
 type FactoryProps = Omit<EventTileTypeProps, "ref">;
@@ -322,6 +323,7 @@ export function renderTile(
         getRelationsForEvent,
         isSeeingThroughMessageHiddenForModeration,
         timestamp,
+        inhibitInteraction,
     } = props;
 
     switch (renderType) {
@@ -340,6 +342,7 @@ export function renderTile(
                 getRelationsForEvent,
                 isSeeingThroughMessageHiddenForModeration,
                 permalinkCreator,
+                inhibitInteraction,
             });
         default:
             // NEARLY ALL THE OPTIONS!
@@ -357,6 +360,7 @@ export function renderTile(
                 getRelationsForEvent,
                 isSeeingThroughMessageHiddenForModeration,
                 timestamp,
+                inhibitInteraction,
             });
     }
 }
