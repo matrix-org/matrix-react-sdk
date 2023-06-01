@@ -94,16 +94,20 @@ export async function waitForRoomReadyAndApplyAfterCreateCallbacks(
         });
     }
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         const finish = (): void => {
             if (checkRoomStateIntervalHandle) clearInterval(checkRoomStateIntervalHandle);
             if (stopgapTimeoutHandle) clearTimeout(stopgapTimeoutHandle);
 
-            applyAfterCreateCallbacks(localRoom, actualRoomId).then(() => {
-                localRoom.state = LocalRoomState.CREATED;
-                client.emit(ClientEvent.Room, localRoom);
-                resolve(actualRoomId);
-            });
+            applyAfterCreateCallbacks(localRoom, actualRoomId)
+                .then(() => {
+                    localRoom.state = LocalRoomState.CREATED;
+                    client.emit(ClientEvent.Room, localRoom);
+                    resolve(actualRoomId);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
         };
 
         const stopgapFinish = (): void => {
