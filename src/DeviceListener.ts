@@ -66,7 +66,7 @@ export default class DeviceListener {
     // The set of device IDs we're currently displaying toasts for
     private displayingToastsForDeviceIds = new Set<string>();
     private running = false;
-    // The client with which the instance is running, set if running, undefined if not.
+    // The client with which the instance is running. Only set if `running` is true, otherwise undefined.
     private client?: MatrixClient;
     private shouldRecordClientInformation = false;
     private enableBulkUnverifiedSessionsReminder = true;
