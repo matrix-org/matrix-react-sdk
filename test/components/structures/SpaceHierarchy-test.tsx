@@ -189,7 +189,7 @@ describe("SpaceHierarchy", () => {
         );
         [room1, room2, space1, room3].forEach((r) => mocked(r.getMyMembership).mockReturnValue("leave"));
 
-        const hierarchyRoot = {
+        const hierarchyRoot: IHierarchyRoom = {
             room_id: root.roomId,
             num_joined_members: 1,
             room_type: "m.space",
@@ -197,42 +197,51 @@ describe("SpaceHierarchy", () => {
                 {
                     state_key: room1.roomId,
                     content: { order: "1" },
+                    origin_server_ts: 111,
+                    type: "m.space.child",
+                    sender: "@other:server",
                 },
                 {
                     state_key: room2.roomId,
                     content: { order: "2" },
+                    origin_server_ts: 111,
+                    type: "m.space.child",
+                    sender: "@other:server",
                 },
                 {
                     state_key: space1.roomId,
                     content: { order: "3" },
+                    origin_server_ts: 111,
+                    type: "m.space.child",
+                    sender: "@other:server",
                 },
             ],
             world_readable: true,
             guest_can_join: true,
-        } as IHierarchyRoom;
-        const hierarchyRoom1 = {
+        };
+        const hierarchyRoom1: IHierarchyRoom = {
             room_id: room1.roomId,
             num_joined_members: 2,
             children_state: [],
             world_readable: true,
             guest_can_join: true,
-        } as IHierarchyRoom;
-        const hierarchyRoom2 = {
+        };
+        const hierarchyRoom2: IHierarchyRoom = {
             room_id: room2.roomId,
             num_joined_members: 3,
             children_state: [],
             world_readable: true,
             guest_can_join: true,
-        } as IHierarchyRoom;
-        const hierarchyRoom3 = {
+        };
+        const hierarchyRoom3: IHierarchyRoom = {
             name: "Nested room",
             room_id: room3.roomId,
             num_joined_members: 3,
             children_state: [],
             world_readable: true,
             guest_can_join: true,
-        } as IHierarchyRoom;
-        const hierarchySpace1 = {
+        };
+        const hierarchySpace1: IHierarchyRoom = {
             room_id: space1.roomId,
             name: "Nested space",
             num_joined_members: 1,
@@ -241,11 +250,14 @@ describe("SpaceHierarchy", () => {
                 {
                     state_key: room3.roomId,
                     content: { order: "1" },
+                    origin_server_ts: 111,
+                    type: "m.space.child",
+                    sender: "@other:server",
                 },
             ],
             world_readable: true,
             guest_can_join: true,
-        } as IHierarchyRoom;
+        };
 
         mocked(client.getRoomHierarchy).mockResolvedValue({
             rooms: [hierarchyRoot, hierarchyRoom1, hierarchyRoom2, hierarchySpace1, hierarchyRoom3],
