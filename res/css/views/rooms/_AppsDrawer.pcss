@@ -163,11 +163,8 @@ limitations under the License.
 }
 
 .mx_AppTile {
-    border: var(--container-border-width) solid $widget-menu-bar-bg-color;
     display: flex;
     flex-direction: column;
-    box-sizing: border-box;
-    background-color: $widget-menu-bar-bg-color;
 
     .mx_AppTile_menuBar {
         margin: 0;
@@ -229,10 +226,15 @@ limitations under the License.
         }
     }
 
-    &.mx_AppTile--fullWidth,
-    &.mx_AppTile--mini {
-        /* Cancel the value inherited from mx_AppTile */
-        box-sizing: unset;
+    &.mx_AppTile--large,
+    &.mx_AppTile--fullWidth {
+        /* These border and background values are not supposed to be applied to mx_AppTile--mini */
+        border: var(--container-border-width) solid $widget-menu-bar-bg-color;
+        background-color: $widget-menu-bar-bg-color;
+    }
+
+    &.mx_AppTile--large {
+        box-sizing: border-box;
     }
 
     &.mx_AppTile--fullWidth {
@@ -243,10 +245,6 @@ limitations under the License.
     &.mx_AppTile--mini {
         width: 100%;
         height: var(--AppTile--mini-height);
-
-        /* Cancel the values inherited from mx_AppTile */
-        border: unset;
-        background-color: unset;
     }
 }
 
