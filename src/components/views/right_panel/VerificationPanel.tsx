@@ -400,7 +400,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
     private updateVerifierState = (): void => {
         const { request } = this.props;
         const sasEvent = request.verifier.getShowSasCallbacks();
-        const reciprocateQREvent = request.verifier.getShowQrCodeCallbacks();
+        const reciprocateQREvent = request.verifier.getReciprocateQrCodeCallbacks();
         request.verifier?.off(VerifierEvent.ShowSas, this.updateVerifierState);
         request.verifier?.off(VerifierEvent.ShowReciprocateQr, this.updateVerifierState);
         this.setState({ sasEvent, reciprocateQREvent });
@@ -428,7 +428,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         request.on(VerificationRequestEvent.Change, this.onRequestChange);
         if (request.verifier) {
             const sasEvent = request.verifier.getShowSasCallbacks();
-            const reciprocateQREvent = request.verifier.getShowQrCodeCallbacks();
+            const reciprocateQREvent = request.verifier.getReciprocateQrCodeCallbacks();
             this.setState({ sasEvent, reciprocateQREvent });
         }
         this.onRequestChange();

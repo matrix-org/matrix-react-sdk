@@ -119,7 +119,7 @@ function makeMockVerifier(): Mocked<VerificationBase> {
         cancel: jest.fn(),
         verify: jest.fn(),
         getShowSasCallbacks: jest.fn(),
-        getShowQrCodeCallbacks: jest.fn(),
+        getReciprocateQrCodeCallbacks: jest.fn(),
     });
     return verifier as unknown as Mocked<VerificationBase>;
 }
