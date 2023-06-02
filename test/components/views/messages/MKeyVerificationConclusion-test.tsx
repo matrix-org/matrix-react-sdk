@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 import { render } from "@testing-library/react";
 import { EventEmitter } from "events";
-import { MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
+import { EventType, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 import {
@@ -44,21 +44,29 @@ describe("MKeyVerificationConclusion", () => {
         pending = false,
         phase = VerificationPhase.Unsent,
         otherUserId,
+        cancellingUserId,
     }: {
         pending?: boolean;
         phase?: VerificationPhase;
         otherUserId?: string;
+        cancellingUserId?: string;
     }) => {
         class MockVerificationRequest extends EventEmitter {
             constructor(
                 public readonly pending: boolean,
                 public readonly phase: VerificationPhase,
                 public readonly otherUserId?: string,
+                public readonly cancellingUserId?: string,
             ) {
                 super();
             }
         }
-        return new MockVerificationRequest(pending, phase, otherUserId) as unknown as VerificationRequest;
+        return new MockVerificationRequest(
+            pending,
+            phase,
+            otherUserId,
+            cancellingUserId,
+        ) as unknown as VerificationRequest;
     };
 
     beforeEach(() => {
@@ -134,5 +142,15 @@ describe("MKeyVerificationConclusion", () => {
             new UserTrustLevel(true, true, true),
         );
         expect(container).not.toBeEmpty();
+    });
+
+    it("should render appropriately if we cancelled the verification", () => {
+        const event = new MatrixEvent({ type: "m.key.verification.cancel" });
+        event.verificationRequest = getMockVerificationRequest({
+            phase: VerificationPhase.Cancelled,
+            cancellingUserId: userId,
+        });
+        const { container } = render(<MKeyVerificationConclusion mxEvent={event} />);
+        expect(container).toHaveTextContent("You cancelled verifying");
     });
 });
