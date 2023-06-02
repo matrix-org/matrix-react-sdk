@@ -113,7 +113,7 @@ import { PosthogAnalytics } from "../../PosthogAnalytics";
 import { initSentry } from "../../sentry";
 import LegacyCallHandler from "../../LegacyCallHandler";
 import { showSpaceInvite } from "../../utils/space";
-import AccessibleButton from "../views/elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { SummarizedNotificationState } from "../../stores/notifications/SummarizedNotificationState";
 import Views from "../../Views";
@@ -143,7 +143,7 @@ import { findDMForUser } from "../../utils/dm/findDMForUser";
 import { Linkify } from "../../HtmlUtils";
 import { NotificationColor } from "../../stores/notifications/NotificationColor";
 import { UserTab } from "../views/dialogs/UserTab";
-import { Icon as EncryptionIcon } from "../../../res/img/compound/encryption-24px.svg";
+
 // legacy export
 export { default as Views } from "../../Views";
 
@@ -161,11 +161,10 @@ interface IScreen {
 
 interface IProps {
     config: IConfigOptions;
-    serverConfig?: ValidatedServerConfig;
     onNewScreen: (screen: string, replaceLast: boolean) => void;
     enableGuest?: boolean;
     // the queryParams extracted from the [real] query-string of the URI
-    realQueryParams?: QueryDict;
+    realQueryParams: QueryDict;
     // the initial queryParams extracted from the hash-fragment of the URI
     startingFragmentQueryParams?: QueryDict;
     // called when we have completed a token login
@@ -232,7 +231,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private focusComposer: boolean;
     private subTitleStatus: string;
     private prevWindowWidth: number;
-    private voiceBroadcastResumer: VoiceBroadcastResumer;
+    private voiceBroadcastResumer?: VoiceBroadcastResumer;
 
     private readonly loggedInView: React.RefObject<LoggedInViewType>;
     private readonly dispatcherRef: string;
@@ -422,7 +421,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     public componentDidUpdate(prevProps: IProps, prevState: IState): void {
         if (this.shouldTrackPageChange(prevState, this.state)) {
             const durationMs = this.stopPageChangeTimer();
-            PosthogTrackers.instance.trackPageChange(this.state.view, this.state.page_type, durationMs);
+            if (durationMs != null) {
+                PosthogTrackers.instance.trackPageChange(this.state.view, this.state.page_type, durationMs);
+            }
         }
         if (this.focusComposer) {
             dis.fire(Action.FocusSendMessageComposer);
@@ -440,7 +441,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         window.removeEventListener("resize", this.onWindowResized);
 
         this.stores.accountPasswordStore.clearPassword();
-        if (this.voiceBroadcastResumer) this.voiceBroadcastResumer.destroy();
+        this.voiceBroadcastResumer?.destroy();
     }
 
     private onWindowResized = (): void => {
@@ -472,15 +473,13 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }, 1000);
 
     private getFallbackHsUrl(): string | undefined {
-        if (this.props.serverConfig?.isDefault) {
+        if (this.getServerProperties().serverConfig?.isDefault) {
             return this.props.config.fallback_hs_url;
         }
     }
 
     private getServerProperties(): { serverConfig: ValidatedServerConfig } {
-        let props = this.state.serverConfig;
-        if (!props) props = this.props.serverConfig; // for unit tests
-        if (!props) props = SdkConfig.get("validated_server_config")!;
+        const props = this.state.serverConfig || SdkConfig.get("validated_server_config")!;
         return { serverConfig: props };
     }
 
@@ -626,7 +625,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 this.notifyNewScreen("forgot_password");
                 break;
             case "start_chat":
-                createRoom({
+                createRoom(MatrixClientPeg.get(), {
                     dmUserId: payload.user_id,
                 });
                 break;
@@ -701,7 +700,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 break;
             }
             case Action.ViewUserDeviceSettings: {
-                viewUserDeviceSettings(SettingsStore.getValue("feature_new_device_manager"));
+                viewUserDeviceSettings();
                 break;
             }
             case Action.ViewUserSettings: {
@@ -935,7 +934,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             await this.firstSyncPromise.promise;
         }
 
-        let presentedId = roomInfo.room_alias || roomInfo.room_id;
+        let presentedId = roomInfo.room_alias || roomInfo.room_id!;
         const room = MatrixClientPeg.get().getRoom(roomInfo.room_id);
         if (room) {
             // Not all timeline events are decrypted ahead of time anymore
@@ -1063,7 +1062,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         const [shouldCreate, opts] = await modal.finished;
         if (shouldCreate) {
-            createRoom(opts!);
+            createRoom(MatrixClientPeg.get(), opts!);
         }
     }
 
@@ -1155,7 +1154,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     private leaveRoom(roomId: string): void {
-        const roomToLeave = MatrixClientPeg.get().getRoom(roomId);
+        const cli = MatrixClientPeg.get();
+        const roomToLeave = cli.getRoom(roomId);
         const warnings = this.leaveRoomWarnings(roomId);
 
         const isSpace = roomToLeave?.isSpaceRoom();
@@ -1174,9 +1174,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 </span>
             ),
             button: _t("Leave"),
-            onFinished: (shouldLeave) => {
+            onFinished: async (shouldLeave) => {
                 if (shouldLeave) {
-                    leaveRoomBehaviour(roomId);
+                    await leaveRoomBehaviour(cli, roomId);
 
                     dis.dispatch<AfterLeaveRoomPayload>({
                         action: Action.AfterLeaveRoom,
@@ -1212,7 +1212,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     private async copyRoom(roomId: string): Promise<void> {
-        const roomLink = makeRoomPermalink(roomId);
+        const roomLink = makeRoomPermalink(MatrixClientPeg.get(), roomId);
         const success = await copyPlaintext(roomLink);
         if (!success) {
             Modal.createDialog(ErrorDialog, {
@@ -1246,7 +1246,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         const welcomeUserRooms = DMRoomMap.shared().getDMRoomsForUserId(welcomeUserId);
         if (welcomeUserRooms.length === 0) {
-            const roomId = await createRoom({
+            const roomId = await createRoom(MatrixClientPeg.get(), {
                 dmUserId: snakedConfig.get("welcome_user_id"),
                 // Only view the welcome user if we're NOT looking at a room
                 andView: !this.state.currentRoomId,
@@ -1505,7 +1505,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             if (state === SyncState.Syncing && prevState === SyncState.Syncing) {
                 return;
             }
-            logger.info("MatrixClient sync state => %s", state);
+            logger.info(`MatrixClient sync state => ${state}`);
             if (state !== SyncState.Prepared) {
                 return;
             }
@@ -1669,9 +1669,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 ToastStore.sharedInstance().addOrReplaceToast({
                     key: "verifreq_" + request.channel.transactionId,
                     title: _t("Verification requested"),
-                    iconElement: (
-                        <EncryptionIcon className="mx_Icon mx_Icon_24 mx_Icon_secondary-content mx_Toast_icon" />
-                    ),
+                    icon: "verification",
                     props: { request },
                     component: VerificationRequestToast,
                     priority: 90,
@@ -1774,7 +1772,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         } else if (screen === "start_sso" || screen === "start_cas") {
             let cli = MatrixClientPeg.get();
             if (!cli) {
-                const { hsUrl, isUrl } = this.props.serverConfig;
+                const { hsUrl, isUrl } = this.getServerProperties().serverConfig;
                 cli = createClient({
                     baseUrl: hsUrl,
                     idBaseUrl: isUrl,
@@ -1866,7 +1864,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 subAction: params?.action,
             });
         } else {
-            logger.info("Ignoring showScreen for '%s'", screen);
+            logger.info(`Ignoring showScreen for '${screen}'`);
         }
     }
 
@@ -1877,7 +1875,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.setPageSubtitle();
     }
 
-    private onLogoutClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void {
+    private onLogoutClick(event: ButtonEvent): void {
         dis.dispatch({
             action: "logout",
         });
@@ -1938,7 +1936,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private setPageSubtitle(subtitle = ""): void {
         if (this.state.currentRoomId) {
             const client = MatrixClientPeg.get();
-            const room = client && client.getRoom(this.state.currentRoomId);
+            const room = client?.getRoom(this.state.currentRoomId);
             if (room) {
                 subtitle = `${this.subTitleStatus} | ${room.name} ${subtitle}`;
             }

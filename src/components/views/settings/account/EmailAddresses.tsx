@@ -23,7 +23,7 @@ import { MatrixError } from "matrix-js-sdk/src/matrix";
 import { _t, UserFriendlyError } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Field from "../../elements/Field";
-import AccessibleButton from "../../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../elements/AccessibleButton";
 import * as Email from "../../../../email";
 import AddThreepid from "../../../../AddThreepid";
 import Modal from "../../../../Modal";
@@ -59,21 +59,21 @@ export class ExistingEmailAddress extends React.Component<IExistingEmailAddressP
         };
     }
 
-    private onRemove = (e: React.MouseEvent): void => {
+    private onRemove = (e: ButtonEvent): void => {
         e.stopPropagation();
         e.preventDefault();
 
         this.setState({ verifyRemove: true });
     };
 
-    private onDontRemove = (e: React.MouseEvent): void => {
+    private onDontRemove = (e: ButtonEvent): void => {
         e.stopPropagation();
         e.preventDefault();
 
         this.setState({ verifyRemove: false });
     };
 
-    private onActuallyRemove = (e: React.MouseEvent): void => {
+    private onActuallyRemove = (e: ButtonEvent): void => {
         e.stopPropagation();
         e.preventDefault();
 
@@ -94,21 +94,21 @@ export class ExistingEmailAddress extends React.Component<IExistingEmailAddressP
     public render(): React.ReactNode {
         if (this.state.verifyRemove) {
             return (
-                <div className="mx_ExistingEmailAddress">
-                    <span className="mx_ExistingEmailAddress_promptText">
+                <div className="mx_GeneralUserSettingsTab_section--discovery_existing">
+                    <span className="mx_GeneralUserSettingsTab_section--discovery_existing_promptText">
                         {_t("Remove %(email)s?", { email: this.props.email.address })}
                     </span>
                     <AccessibleButton
                         onClick={this.onActuallyRemove}
                         kind="danger_sm"
-                        className="mx_ExistingEmailAddress_confirmBtn"
+                        className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     >
                         {_t("Remove")}
                     </AccessibleButton>
                     <AccessibleButton
                         onClick={this.onDontRemove}
                         kind="link_sm"
-                        className="mx_ExistingEmailAddress_confirmBtn"
+                        className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     >
                         {_t("Cancel")}
                     </AccessibleButton>
@@ -117,8 +117,10 @@ export class ExistingEmailAddress extends React.Component<IExistingEmailAddressP
         }
 
         return (
-            <div className="mx_ExistingEmailAddress">
-                <span className="mx_ExistingEmailAddress_email">{this.props.email.address}</span>
+            <div className="mx_GeneralUserSettingsTab_section--discovery_existing">
+                <span className="mx_GeneralUserSettingsTab_section--discovery_existing_address">
+                    {this.props.email.address}
+                </span>
                 <AccessibleButton onClick={this.onRemove} kind="danger_sm">
                     {_t("Remove")}
                 </AccessibleButton>
@@ -179,7 +181,7 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
             return;
         }
 
-        const task = new AddThreepid();
+        const task = new AddThreepid(MatrixClientPeg.get());
         this.setState({ verifying: true, continueDisabled: true, addTask: task });
 
         task.addEmailAddress(email)
@@ -196,7 +198,7 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
             });
     };
 
-    private onContinueClick = (e: React.MouseEvent): void => {
+    private onContinueClick = (e: ButtonEvent): void => {
         e.stopPropagation();
         e.preventDefault();
 
@@ -274,7 +276,7 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
         }
 
         return (
-            <div className="mx_EmailAddresses">
+            <>
                 {existingEmailElements}
                 <form onSubmit={this.onAddClick} autoComplete="off" noValidate={true}>
                     <Field
@@ -287,7 +289,7 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
                     />
                     {addButton}
                 </form>
-            </div>
+            </>
         );
     }
 }

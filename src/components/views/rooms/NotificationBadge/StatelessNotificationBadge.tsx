@@ -18,22 +18,35 @@ import React, { MouseEvent, ReactNode } from "react";
 import classNames from "classnames";
 
 import { formatCount } from "../../../../utils/FormattingUtils";
-import AccessibleButton from "../../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../elements/AccessibleButton";
 import { NotificationColor } from "../../../../stores/notifications/NotificationColor";
 import { useSettingValue } from "../../../../hooks/useSettings";
+import { XOR } from "../../../../@types/common";
 
 interface Props {
     symbol: string | null;
     count: number;
     color: NotificationColor;
-    onClick?: (ev: MouseEvent) => void;
     onMouseOver?: (ev: MouseEvent) => void;
     onMouseLeave?: (ev: MouseEvent) => void;
     children?: ReactNode;
     label?: string;
 }
 
-export function StatelessNotificationBadge({ symbol, count, color, ...props }: Props): JSX.Element {
+interface ClickableProps extends Props {
+    /**
+     * If specified will return an AccessibleButton instead of a div.
+     */
+    onClick(ev: ButtonEvent): void;
+    tabIndex?: number;
+}
+
+export function StatelessNotificationBadge({
+    symbol,
+    count,
+    color,
+    ...props
+}: XOR<Props, ClickableProps>): JSX.Element {
     const hideBold = useSettingValue("feature_hidebold");
 
     // Don't show a badge if we don't need to

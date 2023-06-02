@@ -336,7 +336,7 @@ const SpaceSetupFirstRooms: React.FC<{
             const filteredRoomNames = roomNames.map((name) => name.trim()).filter(Boolean);
             const roomIds = await Promise.all(
                 filteredRoomNames.map((name) => {
-                    return createRoom({
+                    return createRoom(space.client, {
                         createOpts: {
                             preset: isPublic ? Preset.PublicChat : Preset.PrivateChat,
                             name,
@@ -548,7 +548,7 @@ const SpaceSetupPrivateInvite: React.FC<{
         setBusy(true);
         const targetIds = emailAddresses.map((name) => name.trim()).filter(Boolean);
         try {
-            const result = await inviteMultipleToRoom(space.roomId, targetIds);
+            const result = await inviteMultipleToRoom(space.client, space.roomId, targetIds);
 
             const failedUsers = Object.keys(result.states).filter((a) => result.states[a] === "error");
             if (failedUsers.length > 0) {
@@ -583,22 +583,6 @@ const SpaceSetupPrivateInvite: React.FC<{
             <h1>{_t("Invite your teammates")}</h1>
             <div className="mx_SpaceRoomView_description">
                 {_t("Make sure the right people have access. You can invite more later.")}
-            </div>
-
-            <div className="mx_SpaceRoomView_inviteTeammates_betaDisclaimer">
-                {_t(
-                    "<b>This is an experimental feature.</b> For now, " +
-                        "new users receiving an invite will have to open the invite on <link/> to actually join.",
-                    {},
-                    {
-                        b: (sub) => <b>{sub}</b>,
-                        link: () => (
-                            <a href="https://app.element.io/" rel="noreferrer noopener" target="_blank">
-                                app.element.io
-                            </a>
-                        ),
-                    },
-                )}
             </div>
 
             {error && <div className="mx_SpaceRoomView_errorText">{error}</div>}

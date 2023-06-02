@@ -62,7 +62,7 @@ export interface InteractiveAuthProps<T> {
     continueText?: string;
     continueKind?: string;
     // callback
-    makeRequest(auth?: IAuthData): Promise<UIAResponse<T>>;
+    makeRequest(auth: IAuthDict | null): Promise<UIAResponse<T>>;
     // callback called when the auth process has finished,
     // successfully or unsuccessfully.
     // @param {boolean} status True if the operation requiring
@@ -119,6 +119,17 @@ export default class InteractiveAuthComponent<T> extends React.Component<Interac
             clientSecret: this.props.clientSecret,
             emailSid: this.props.emailSid,
             requestEmailToken: this.requestEmailToken,
+            supportedStages: [
+                AuthType.Password,
+                AuthType.Recaptcha,
+                AuthType.Email,
+                AuthType.Msisdn,
+                AuthType.Terms,
+                AuthType.RegistrationToken,
+                AuthType.UnstableRegistrationToken,
+                AuthType.Sso,
+                AuthType.SsoUnstable,
+            ],
         });
 
         if (this.props.poll) {
@@ -200,7 +211,7 @@ export default class InteractiveAuthComponent<T> extends React.Component<Interac
         );
     };
 
-    private requestCallback = (auth: IAuthData | null, background: boolean): Promise<IAuthData> => {
+    private requestCallback = (auth: IAuthDict | null, background: boolean): Promise<UIAResponse<T>> => {
         // This wrapper just exists because the js-sdk passes a second
         // 'busy' param for backwards compat. This throws the tests off
         // so discard it here.
@@ -209,6 +220,12 @@ export default class InteractiveAuthComponent<T> extends React.Component<Interac
 
     private onBusyChanged = (busy: boolean): void => {
         // if we've started doing stuff, reset the error messages
+        // The JS SDK eagerly reports itself as "not busy" right after any
+        // immediate work has completed, but that's not really what we want at
+        // the UI layer, so we ignore this signal and show a spinner until
+        // there's a new screen to show the user. This is implemented by setting
+        // `busy: false` in `authStateUpdated`.
+        // See also https://github.com/vector-im/element-web/issues/12546
         if (busy) {
             this.setState({
                 busy: true,
@@ -216,12 +233,11 @@ export default class InteractiveAuthComponent<T> extends React.Component<Interac
                 errorCode: undefined,
             });
         }
-        // The JS SDK eagerly reports itself as "not busy" right after any
-        // immediate work has completed, but that's not really what we want at
-        // the UI layer, so we ignore this signal and show a spinner until
-        // there's a new screen to show the user. This is implemented by setting
-        // `busy: false` in `authStateUpdated`.
-        // See also https://github.com/vector-im/element-web/issues/12546
+
+        // authStateUpdated is not called during sso flows
+        if (!busy && (this.state.authStage === AuthType.Sso || this.state.authStage === AuthType.SsoUnstable)) {
+            this.setState({ busy });
+        }
     };
 
     private setFocus(): void {

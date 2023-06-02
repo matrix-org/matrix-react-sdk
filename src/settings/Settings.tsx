@@ -84,7 +84,6 @@ export enum LabGroup {
     VoiceAndVideo,
     Moderation,
     Analytics,
-    MessagePreviews,
     Themes,
     Encryption,
     Experimental,
@@ -105,7 +104,6 @@ export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.VoiceAndVideo]: _td("Voice & Video"),
     [LabGroup.Moderation]: _td("Moderation"),
     [LabGroup.Analytics]: _td("Analytics"),
-    [LabGroup.MessagePreviews]: _td("Message Previews"),
     [LabGroup.Themes]: _td("Themes"),
     [LabGroup.Encryption]: _td("Encryption"),
     [LabGroup.Experimental]: _td("Experimental"),
@@ -215,7 +213,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
                 ),
             feedbackLabel: "video-room-feedback",
             feedbackSubheading: _td(
-                "Thank you for trying the beta, " + "please go into as much detail as you can so we can improve it.",
+                "Thank you for trying the beta, please go into as much detail as you can so we can improve it.",
             ),
             image: require("../../res/img/betas/video_rooms.png"),
             requiresRefresh: true,
@@ -231,7 +229,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
             "feature_exploring_public_spaces",
             defaultWatchManager,
             [["org.matrix.msc3827.stable"]],
-            undefined,
+            "v1.4",
             _td("Requires your server to support the stable version of MSC3827"),
         ),
     },
@@ -295,22 +293,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         isFeature: true,
         labsGroup: LabGroup.Themes,
         displayName: _td("Support adding custom themes"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-    },
-    "feature_roomlist_preview_reactions_dms": {
-        isFeature: true,
-        labsGroup: LabGroup.MessagePreviews,
-        displayName: _td("Show message previews for reactions in DMs"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-        // this option is a subset of `feature_roomlist_preview_reactions_all` so disable it when that one is enabled
-        controller: new IncompatibleController("feature_roomlist_preview_reactions_all"),
-    },
-    "feature_roomlist_preview_reactions_all": {
-        isFeature: true,
-        labsGroup: LabGroup.MessagePreviews,
-        displayName: _td("Show message previews for reactions in all rooms"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
@@ -462,27 +444,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         displayName: _td("Force 15s voice broadcast chunk length"),
         default: false,
-    },
-    "feature_new_device_manager": {
-        isFeature: true,
-        labsGroup: LabGroup.Experimental,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Use new session manager"),
-        default: false,
-        betaInfo: {
-            title: _td("New session manager"),
-            caption: () => (
-                <>
-                    <p>{_t("Have greater visibility and control over all your sessions.")}</p>
-                    <p>
-                        {_t(
-                            "Our new sessions manager provides better visibility of all your sessions, " +
-                                "and greater control over them including the ability to remotely toggle push notifications.",
-                        )}
-                    </p>
-                </>
-            ),
-        },
     },
     "feature_rust_crypto": {
         // use the rust matrix-sdk-crypto-js for crypto.
@@ -1086,6 +1047,10 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         default: true,
     },
     [UIFeature.Widgets]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.LocationSharing]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
     },

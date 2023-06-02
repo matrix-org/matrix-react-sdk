@@ -139,7 +139,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
 
     // the credentials used to init the current client object.
     // used if we tear it down & recreate it with a different store
-    private currentClientCreds: IMatrixClientCreds;
+    private currentClientCreds: IMatrixClientCreds | null = null;
 
     public get(): MatrixClient {
         return this.matrixClient;
@@ -194,6 +194,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     private onUnexpectedStoreClose = async (): Promise<void> => {
         if (!this.matrixClient) return;
         this.matrixClient.stopClient(); // stop the client as the database has failed
+        this.matrixClient.store.destroy();
 
         if (!this.matrixClient.isGuest()) {
             // If the user is not a guest then prompt them to reload rather than doing it for them

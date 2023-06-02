@@ -17,12 +17,12 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
+import { checkDeviceIsCrossSigned } from "../crypto/utils";
 
 describe("Registration", () => {
     let homeserver: HomeserverInstance;
 
     beforeEach(() => {
-        cy.stubDefaultServer();
         cy.visit("/#/register");
         cy.startHomeserver("consent").then((data) => {
             homeserver = data;
@@ -83,12 +83,20 @@ describe("Registration", () => {
 
         cy.url().should("contain", "/#/home");
 
+        /*
+         * Cross-signing checks
+         */
+
+        // check that the device considers itself verified
         cy.findByRole("button", { name: "User menu" }).click();
-        cy.findByRole("menuitem", { name: "Security & Privacy" }).click();
-        cy.get(".mx_DevicesPanel_myDevice .mx_DevicesPanel_deviceTrust .mx_E2EIcon").should(
-            "have.class",
-            "mx_E2EIcon_verified",
-        );
+        cy.findByRole("menuitem", { name: "All settings" }).click();
+        cy.findByRole("tab", { name: "Sessions" }).click();
+        cy.findByTestId("current-session-section").within(() => {
+            cy.findByTestId("device-metadata-isVerified").should("have.text", "Verified");
+        });
+
+        // check that cross-signing keys have been uploaded.
+        checkDeviceIsCrossSigned();
     });
 
     it("should require username to fulfil requirements and be available", () => {

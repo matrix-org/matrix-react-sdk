@@ -31,12 +31,12 @@ import { upgradeRoom } from "../../../utils/RoomUpgrade";
 import { arrayHasDiff } from "../../../utils/arrays";
 import { useLocalEcho } from "../../../hooks/useLocalEcho";
 import dis from "../../../dispatcher/dispatcher";
-import { ROOM_SECURITY_TAB } from "../dialogs/RoomSettingsDialog";
+import { RoomSettingsTab } from "../dialogs/RoomSettingsDialog";
 import { Action } from "../../../dispatcher/actions";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { doesRoomVersionSupport, PreferredRoomVersions } from "../../../utils/PreferredRoomVersions";
 
-interface IProps {
+export interface JoinRuleSettingsProps {
     room: Room;
     promptUpgrade?: boolean;
     closeSettingsFn(): void;
@@ -45,7 +45,7 @@ interface IProps {
     aliasWarning?: ReactNode;
 }
 
-const JoinRuleSettings: React.FC<IProps> = ({
+const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
     room,
     promptUpgrade,
     aliasWarning,
@@ -287,7 +287,10 @@ const JoinRuleSettings: React.FC<IProps> = ({
                                     fn(_t("Upgrading room"), 0, total);
                                 } else if (!progress.roomSynced) {
                                     fn(_t("Loading new room"), 1, total);
-                                } else if (progress.inviteUsersProgress < progress.inviteUsersTotal) {
+                                } else if (
+                                    progress.inviteUsersProgress !== undefined &&
+                                    progress.inviteUsersProgress < progress.inviteUsersTotal
+                                ) {
                                     fn(
                                         _t("Sending invites... (%(progress)s out of %(count)s)", {
                                             progress: progress.inviteUsersProgress,
@@ -296,13 +299,16 @@ const JoinRuleSettings: React.FC<IProps> = ({
                                         2 + progress.inviteUsersProgress,
                                         total,
                                     );
-                                } else if (progress.updateSpacesProgress < progress.updateSpacesTotal) {
+                                } else if (
+                                    progress.updateSpacesProgress !== undefined &&
+                                    progress.updateSpacesProgress < progress.updateSpacesTotal
+                                ) {
                                     fn(
                                         _t("Updating spaces... (%(progress)s out of %(count)s)", {
                                             progress: progress.updateSpacesProgress,
                                             count: progress.updateSpacesTotal,
                                         }),
-                                        2 + progress.inviteUsersProgress + progress.updateSpacesProgress,
+                                        2 + (progress.inviteUsersProgress ?? 0) + progress.updateSpacesProgress,
                                         total,
                                     );
                                 }
@@ -320,7 +326,7 @@ const JoinRuleSettings: React.FC<IProps> = ({
                         // open new settings on this tab
                         dis.dispatch({
                             action: "open_room_settings",
-                            initial_tab_id: ROOM_SECURITY_TAB,
+                            initial_tab_id: RoomSettingsTab.Security,
                         });
                     },
                 });
