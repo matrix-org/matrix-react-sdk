@@ -105,16 +105,10 @@ describe("<ServerPickerDialog />", () => {
             const onFinished = jest.fn();
             getComponent({ onFinished });
 
-            fireEvent.click(screen.getByLabelText("Default homeserver"));
-            expect(screen.getByLabelText("Default homeserver")).toBeChecked();
+            fireEvent.click(screen.getByTestId("defaultHomeserver"));
+            expect(screen.getByTestId("defaultHomeserver")).toBeChecked();
 
             fireEvent.click(screen.getByText("Continue"));
-
-            // serverpicker still validates the 'other homeserver' field on submit
-            // when default is chosen
-            // so this throws a lot of errors into the console
-            // and is asynchronous while waiting for validation
-            await flushPromises();
 
             // closed dialog with default server
             expect(onFinished).toHaveBeenCalledWith(defaultServerConfig);
