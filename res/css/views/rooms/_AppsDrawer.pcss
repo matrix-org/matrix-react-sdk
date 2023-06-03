@@ -235,6 +235,14 @@ limitations under the License.
         }
     }
 
+    /* appTileBody is embedded to PersistedElement outside of mx_AppTile,
+       so rules to style appTileBody generally should not be included here. */
+    .mx_AppTileBody--large,
+    .mx_AppTileBody--mini {
+        height: inherit;
+        flex: 1;
+    }
+
     &.mx_AppTile--large,
     &.mx_AppTile--fullWidth {
         /* These border and background values are not supposed to be applied to mx_AppTile--mini */
@@ -321,14 +329,6 @@ limitations under the License.
             display: none;
         }
     }
-}
-
-/* appTileBody is embedded to PersistedElement outside of mx_AppTile,
-   so rules to style appTileBody generally should not be included here. */
-.mx_AppTile .mx_AppTileBody--large,
-.mx_AppTile .mx_AppTileBody--mini {
-    height: inherit;
-    flex: 1;
 }
 
 @keyframes mx_AppTileBody_fadeInSpinnerAnimation {
