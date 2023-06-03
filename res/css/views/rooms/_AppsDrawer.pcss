@@ -254,12 +254,13 @@ limitations under the License.
     }
 }
 
-/* appTileBody is embedded to PersistedElement outside of mx_AppTile,
-   so the style rules for appTileBody should not be included in mx_AppTile. */
+/* Rules added to this selector style appTileBody generally */
 .mx_AppTileBody {
+    /* Apply to every variant of appTileBody */
     border-radius: 8px;
 
     /* const loadingElement */
+    /* Note the loading spinner and the message next to it are not always included in mx_AppTileBody--loading */
     .mx_AppTileBody_fadeInSpinner {
         /* place spinner and the message at the center of mx_AppTileBody */
         height: 100%;
@@ -320,6 +321,8 @@ limitations under the License.
     }
 }
 
+/* appTileBody is embedded to PersistedElement outside of mx_AppTile,
+   so rules to style appTileBody generally should not be included here. */
 .mx_AppTile .mx_AppTileBody--large,
 .mx_AppTileFullWidth .mx_AppTileBody--large,
 .mx_AppTile_mini .mx_AppTileBody--mini {
