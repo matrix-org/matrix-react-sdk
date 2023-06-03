@@ -43,7 +43,7 @@ exports[`AppTile destroys non-persisted right panel widget on room change 1`] = 
         id="1"
       >
         <div
-          class="mx_AppTileBody mx_AppTileBody--normal mx_AppTileBody--loading"
+          class="mx_AppTileBody mx_AppTileBody--large mx_AppTileBody--loading"
         >
           <div
             class="mx_AppTileBody_fadeInSpinner"
