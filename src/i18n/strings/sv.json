@@ -3727,5 +3727,7 @@
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Kan inte bjuda in användare via e-post utan en identitetsserver. Du kan ansluta till en under \"Inställningar\".",
     "The add / bind with MSISDN flow is misconfigured": "Flöde för tilläggning/bindning med MSISDN är felkonfigurerat",
     "No identity access token found": "Ingen identitetsåtkomsttoken hittades",
-    "Identity server not set": "Identitetsserver inte inställd"
+    "Identity server not set": "Identitetsserver inte inställd",
+    "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Ett nätverksfel uppstod vid försök att hitta och hoppa till det angivna datumet. Din hemserver kanske är nere eller så var det vara ett tillfälligt problem med din internetuppkoppling. Var god försök igen. Om detta fortsätter, kontakta din hemserveradministratör.",
+    "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Vi kunde inte hitta en händelse från %(dateString)s eller senare. Pröva att välja ett tidigare datum."
 }
