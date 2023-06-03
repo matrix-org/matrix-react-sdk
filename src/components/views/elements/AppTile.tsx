@@ -597,7 +597,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         const appTileBodyClass = classNames({
             "mx_AppTileBody": true,
-            "mx_AppTileBody--normal": !this.props.miniMode,
+            "mx_AppTileBody--large": !this.props.miniMode,
             "mx_AppTileBody--mini": this.props.miniMode,
             "mx_AppTileBody--loading": this.state.loading,
         });
