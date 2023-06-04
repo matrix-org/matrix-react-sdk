@@ -283,9 +283,9 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
                     room={this.props.room}
                     minHeight={100}
                     maxHeight={this.props.maxHeight - 50}
-                    className="mx_AppsContainer_resizer"
-                    handleWrapperClass="mx_AppsContainer_resizer_container"
-                    handleClass="mx_AppsContainer_resizer_container_handle"
+                    className="mx_AppsDrawer_resizer"
+                    handleWrapperClass="mx_AppsDrawer_resizer_container"
+                    handleClass="mx_AppsDrawer_resizer_container_handle"
                     resizeNotifier={this.props.resizeNotifier}
                 >
                     {appContainers}

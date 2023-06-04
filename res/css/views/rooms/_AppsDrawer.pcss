@@ -32,13 +32,17 @@ limitations under the License.
     overflow: hidden;
     flex-grow: 1;
 
-    .mx_AppsContainer_resizer_container {
+    .mx_AppsDrawer_resizer {
+        margin-bottom: var(--container-gap-width);
+    }
+
+    .mx_AppsDrawer_resizer_container {
         width: 100%;
         height: 10px;
         display: block;
         position: relative;
 
-        .mx_AppsContainer_resizer_container_handle {
+        .mx_AppsDrawer_resizer_container_handle {
             cursor: ns-resize;
 
             /* Override styles from library, making the whole area the target area */
@@ -68,7 +72,7 @@ limitations under the License.
     }
 
     &:hover {
-        .mx_AppsContainer_resizer_container_handle::after {
+        .mx_AppsDrawer_resizer_container_handle::after {
             opacity: 0.8;
             background: $primary-content;
         }
@@ -121,10 +125,6 @@ limitations under the License.
             min-width: var(--minWidth) !important;
         }
     }
-}
-
-.mx_AppsContainer_resizer {
-    margin-bottom: var(--container-gap-width);
 }
 
 .mx_AppsContainer {
