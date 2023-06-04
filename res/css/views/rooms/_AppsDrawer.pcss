@@ -37,33 +37,33 @@ limitations under the License.
         height: 10px;
         display: block;
         position: relative;
-    }
 
-    .mx_AppsContainer_resizer_container_handle {
-        cursor: ns-resize;
+        .mx_AppsContainer_resizer_container_handle {
+            cursor: ns-resize;
 
-        /* Override styles from library, making the whole area the target area */
-        width: 100% !important;
-        height: 100% !important;
+            /* Override styles from library, making the whole area the target area */
+            width: 100% !important;
+            height: 100% !important;
 
-        /* This is positioned directly below frame */
-        position: absolute;
-        bottom: 50% !important; /* override from library */
-
-        /* We then render the pill handle in an ::after to keep it in the handle's */
-        /* area without being a massive line across the screen */
-        &::after {
-            content: "";
+            /* This is positioned directly below frame */
             position: absolute;
-            border-radius: 3px;
+            bottom: 50% !important; /* override from library */
 
-            height: 4px;
-            bottom: 0;
+            /* We then render the pill handle in an ::after to keep it in the handle's */
+            /* area without being a massive line across the screen */
+            &::after {
+                content: "";
+                position: absolute;
+                border-radius: 3px;
 
-            /* Together, these make the bar 64px wide */
-            /* These are also overridden from the library */
-            left: calc(50% - 32px);
-            right: calc(50% - 32px);
+                height: 4px;
+                bottom: 0;
+
+                /* Together, these make the bar 64px wide */
+                /* These are also overridden from the library */
+                left: calc(50% - 32px);
+                right: calc(50% - 32px);
+            }
         }
     }
 
