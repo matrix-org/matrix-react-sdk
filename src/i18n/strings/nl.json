@@ -959,7 +959,6 @@
     "Command Help": "Hulp bij opdrachten",
     "Call failed due to misconfigured server": "Oproep mislukt door verkeerd geconfigureerde server",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Vraag je homeserver-beheerder (<code>%(homeserverDomain)s</code>) een TURN-server te configureren voor de betrouwbaarheid van de oproepen.",
-    "Try using turn.matrix.org": "Probeer turn.matrix.org te gebruiken",
     "Identity server has no terms of service": "De identiteitsserver heeft geen dienstvoorwaarden",
     "The identity server you have chosen does not have any terms of service.": "De identiteitsserver die je hebt gekozen heeft geen dienstvoorwaarden.",
     "Only continue if you trust the owner of the server.": "Ga enkel verder indien je de eigenaar van de server vertrouwt.",

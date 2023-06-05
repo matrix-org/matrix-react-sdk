@@ -955,7 +955,6 @@
     "Discovery options will appear once you have added a phone number above.": "Mundësitë e zbulimit do të shfaqen sapo të keni shtuar më sipër një numër telefoni.",
     "Call failed due to misconfigured server": "Thirrja dështoi për shkak shërbyesi të keqformësuar",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Që thirrjet të funksionojnë pa probleme, ju lutemi, kërkojini përgjegjësit të shërbyesit tuaj Home (<code>%(homeserverDomain)s</code>) të formësojë një shërbyes TURN.",
-    "Try using turn.matrix.org": "Provo të përdorësh turn.matrix.org",
     "Identity server has no terms of service": "Shërbyesi i identiteteve s’ka kushte shërbimi",
     "The identity server you have chosen does not have any terms of service.": "Shërbyesi i identiteteve që keni zgjedhur nuk ka ndonjë kusht shërbimi.",
     "Only continue if you trust the owner of the server.": "Vazhdoni vetëm nëse i besoni të zotit të shërbyesit.",

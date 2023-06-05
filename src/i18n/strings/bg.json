@@ -936,7 +936,6 @@
     "This account has been deactivated.": "Този акаунт е деактивиран.",
     "Call failed due to misconfigured server": "Неуспешен разговор поради неправилно конфигуриран сървър",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Попитайте администратора на сървъра ви (<code>%(homeserverDomain)s</code>) да конфигурира TURN сървър, за да може разговорите да работят надеждно.",
-    "Try using turn.matrix.org": "Опитай turn.matrix.org",
     "Messages": "Съобщения",
     "Actions": "Действия",
     "Displays list of commands with usages and descriptions": "Показва списък с команди, начин на използване и описания",

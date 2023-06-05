@@ -959,7 +959,6 @@
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "La déconnexion de votre serveur d’identité signifie que vous ne serez plus découvrable par d’autres utilisateurs et que vous ne pourrez plus faire d’invitation par e-mail ou téléphone.",
     "Call failed due to misconfigured server": "L’appel a échoué à cause d’un serveur mal configuré",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Demandez à l’administrateur de votre serveur d’accueil (<code>%(homeserverDomain)s</code>) de configurer un serveur TURN afin que les appels fonctionnent de manière fiable.",
-    "Try using turn.matrix.org": "Essayer d’utiliser turn.matrix.org",
     "Only continue if you trust the owner of the server.": "Continuez seulement si vous faites confiance au propriétaire du serveur.",
     "Identity server has no terms of service": "Le serveur d’identité n’a pas de conditions de service",
     "The identity server you have chosen does not have any terms of service.": "Le serveur d’identité que vous avez choisi n’a pas de conditions de service.",

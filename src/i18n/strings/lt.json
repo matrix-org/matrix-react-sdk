@@ -429,7 +429,6 @@
     "Your %(brand)s is misconfigured": "Jūsų %(brand)s yra neteisingai sukonfigūruotas",
     "Call failed due to misconfigured server": "Skambutis nepavyko dėl neteisingai sukonfigūruoto serverio",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Paprašykite savo serverio administratoriaus (<code>%(homeserverDomain)s</code>) sukonfiguruoti TURN serverį, kad skambučiai veiktų patikimai.",
-    "Try using turn.matrix.org": "Bandyti naudojant turn.matrix.org",
     "The file '%(fileName)s' failed to upload.": "Failo '%(fileName)s' nepavyko įkelti.",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "Failas '%(fileName)s' viršyja šio serverio įkeliamų failų dydžio limitą",
     "The server does not support the room version specified.": "Serveris nepalaiko nurodytos kambario versijos.",

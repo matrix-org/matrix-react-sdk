@@ -177,7 +177,6 @@
     "Call Failed": "Opkald mislykkedes",
     "Call failed due to misconfigured server": "Opkaldet mislykkedes pga. fejlkonfigureret server",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Bed administratoren af din homeserver (<code>%(homeserverDomain)s</code>) om at konfigurere en TURN server for at opkald virker pålideligt.",
-    "Try using turn.matrix.org": "Prøv at bruge turn.matrix.org",
     "Permission Required": "Tilladelse påkrævet",
     "You do not have permission to start a conference call in this room": "Du har ikke rettighed til at starte et gruppekald i dette rum",
     "The file '%(fileName)s' failed to upload.": "Filen '%(fileName)s' kunne ikke uploades.",

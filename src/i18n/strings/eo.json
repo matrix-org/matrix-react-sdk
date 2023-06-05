@@ -936,7 +936,6 @@
     "This account has been deactivated.": "Tiu ĉi konto malaktiviĝis.",
     "Call failed due to misconfigured server": "Voko malsukcesis pro misagordita servilo",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Bonvolu peti la administranton de via hejmservilo (<code>%(homeserverDomain)s</code>) agordi TURN-servilon, por ke vokoj funkciu dependeble.",
-    "Try using turn.matrix.org": "Provu uzi servilon turn.matrix.org",
     "Sends a message as plain text, without interpreting it as markdown": "Sendas mesaĝon kiel platan tekston, sen interpreto al Markdown",
     "You do not have the required permissions to use this command.": "Vi ne havas sufiĉajn permesojn por uzi ĉi tiun komandon.",
     "Changes the avatar of the current room": "Ŝanĝas la profilbildon de la nuna ĉambro",

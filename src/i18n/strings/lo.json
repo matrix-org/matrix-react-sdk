@@ -251,7 +251,6 @@
     "Call failed because microphone could not be accessed. Check that a microphone is plugged in and set up correctly.": "ໂທບໍ່ສຳເລັດ ເນື່ອງຈາກບໍ່ສາມາດເຂົ້າເຖິງໄມໂຄຣໂຟນໄດ້. ກວດເບິ່ງວ່າສຽບໄມໂຄຣໂຟນ ແລະ ຕັ້ງຄ່າໃຫ້ຖືກຕ້ອງ.",
     "Unable to access microphone": "ບໍ່ສາມາດເຂົ້າເຖິງໄມໂຄຣໂຟນໄດ້",
     "OK": "ຕົກລົງ",
-    "Alternatively, you can try to use the public server at <code>turn.matrix.org</code>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "ອີກທາງເລືອກໜຶ່ງ, ທ່ານສາມາດລອງໃຊ້ເຊີບເວີສາທາລະນະຢູ່ທີ່ <code>turn.matrix.org</code>, ແຕ່ອັນນີ້ຈະບໍ່ເປັນທີ່ເຊື່ອຖືໄດ້ ແລະ ຈະແບ່ງປັນທີ່ຢູ່ IP ຂອງທ່ານກັບເຊີບເວີນັ້ນ. ທ່ານຍັງສາມາດຈັດການສິ່ງນີ້ໄດ້ໂດຍການຕັ້ງຄ່າ.",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "ກະລຸນາຕິດຕໍ່ຜູ້ຄຸ້ມຄອງສະຖານີຂອງທ່ານ (<code>%(homeserverDomain)s</code>) ເພື່ອກໍານົດຄ່າຂອງ TURN Server ເພື່ອໃຫ້ການໂທເຮັດວຽກໄດ້ຢ່າງສະຖຽນ.",
     "Call failed due to misconfigured server": "ການໂທບໍ່ສຳເລັດເນື່ອງຈາກເຊີບເວີຕັ້ງຄ່າຜິດພາດ",
     "The call was answered on another device.": "ການຮັບສາຍຢູ່ໃນອຸປະກອນອື່ນ.",

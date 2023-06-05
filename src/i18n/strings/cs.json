@@ -900,7 +900,6 @@
     "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Můžete se přihlásit, ale některé funkce nebudou dostupné dokud nezačne server identity fungovat. Pokud se vám toto varování zobrazuje i nadále, zkontrolujte svojí konfiguraci nebo kontaktujte správce serveru.",
     "Call failed due to misconfigured server": "Volání selhalo, protože je rozbitá konfigurace serveru",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Požádejte správce svého domovského serveru (<code>%(homeserverDomain)s</code>) jestli by nemohl nakonfigurovat TURN server, aby volání fungovala spolehlivě.",
-    "Try using turn.matrix.org": "Zkuste použít turn.matrix.org",
     "Messages": "Zprávy",
     "Actions": "Akce",
     "Sends a message as plain text, without interpreting it as markdown": "Pošle zprávu jako prostý text, neinterpretuje jí jako Markdown",

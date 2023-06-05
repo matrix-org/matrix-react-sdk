@@ -220,7 +220,6 @@
     "Unable to access webcam / microphone": "לא ניתן היה להפעיל מצלמה / מיקרופון",
     "Call failed because microphone could not be accessed. Check that a microphone is plugged in and set up correctly.": "השיחה נכשלה בגלל שלא ניתן היה להפעיל את המיקרופון. אנא בדקו שהמיקרופון מחובר ומוגדר נכון.",
     "Unable to access microphone": "לא ניתן לגשת אל המיקרופון",
-    "Alternatively, you can try to use the public server at <code>turn.matrix.org</code>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "לחלופין אתם יכולים לנסות את השרת הציבורי <code>turn.matrix.org</code>, אך דעו שהוא לא יהיה עקבי וכתובת הרשת שלכם תהיה חשופה לשרת הזה. אתם יכולים לנהל תכונה זו בהגדרות השרת.",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "אנא בקשו ממנהל השרת (<code>%(homeserverDomain)s</code>) לסדר את הגדרות שרת TURN על מנת שהשיחות יפעלו בעקביות.",
     "Call failed due to misconfigured server": "השיחה נכשלה בגלל הגדרות שרת שגויות",
     "The call was answered on another device.": "השיחה נענתה במכשיר אחר.",

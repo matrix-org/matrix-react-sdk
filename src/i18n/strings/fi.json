@@ -945,7 +945,6 @@
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Yhteyden katkaiseminen identiteettipalvelimeesi tarkoittaa, että muut käyttäjät eivät löydä sinua etkä voi kutsua muita sähköpostin tai puhelinnumeron perusteella.",
     "Call failed due to misconfigured server": "Puhelu epäonnistui palvelimen väärien asetusten takia",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Pyydä kotipalvelimesi (<code>%(homeserverDomain)s</code>) ylläpitäjää asentamaan TURN-palvelin, jotta puhelut toimisivat luotettavasti.",
-    "Try using turn.matrix.org": "Kokeile käyttää palvelinta turn.matrix.org",
     "Only continue if you trust the owner of the server.": "Jatka vain, jos luotat palvelimen omistajaan.",
     "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>reagoi(vat) emojilla %(shortName)s</reactedWith>",
     "Accept <policyLink /> to continue:": "Hyväksy <policyLink /> jatkaaksesi:",

@@ -111,7 +111,6 @@
     "Changes your avatar in this current room only": "Endrer avataren din kun i det nåværende rommet",
     "Call failed due to misconfigured server": "Oppringingen feilet på grunn av feil-konfigurert tjener",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Vennligst be administratoren av din hjemmetjener (<code>%(homeserverDomain)s</code>) til å konfigurere en TURN tjener slik at samtaler vil fungere best mulig.",
-    "Try using turn.matrix.org": "Prøv å bruke turn.matrix.org",
     "OK": "OK",
     "Continue": "Fortsett",
     "The file '%(fileName)s' failed to upload.": "Filen '%(fileName)s' kunne ikke lastes opp.",

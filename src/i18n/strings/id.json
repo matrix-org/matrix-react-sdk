@@ -577,7 +577,6 @@
     "Call failed because microphone could not be accessed. Check that a microphone is plugged in and set up correctly.": "Panggilan gagal karena mikrofon tidak dapat diakses. Periksa apakah mikrofon sudah dicolokkan dan diatur dengan benar.",
     "Unable to load! Check your network connectivity and try again.": "Tidak dapat memuat! Periksa koneksi jaringan Anda dan coba lagi.",
     "Unable to access microphone": "Tidak dapat mengakses mikrofon",
-    "Alternatively, you can try to use the public server at <code>turn.matrix.org</code>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Sebagai alternatif, Anda bisa coba menggunakan server publik di <code>turn.matrix.org</code>, tetapi ini tidak terlalu andal, dan akan membagikan alamat IP Anda dengan servernya. Anda juga bisa kelola ini di Pengaturan.",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Mohon tanyakan ke administrator homeserver Anda (<code>%(homeserverDomain)s</code>) untuk mengkonfigurasikan server TURN supaya panggilan dapat bekerja dengan benar.",
     "Call failed due to misconfigured server": "Panggilan gagal karena servernya tidak dikonfigurasi dengan benar",
     "Answered Elsewhere": "Dijawab di Perangkat Lain",

@@ -742,7 +742,6 @@
     "Scissors": "Tijeras",
     "Call failed due to misconfigured server": "La llamada ha fallado debido a una mala configuración del servidor",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Por favor, pídele al administrador de tu servidor base (<code>%(homeserverDomain)s</code>) que configure un servidor TURN para que las llamadas funcionen correctamente.",
-    "Try using turn.matrix.org": "Probar usando turn.matrix.org",
     "Messages": "Mensajes",
     "Actions": "Acciones",
     "Other": "Otros",

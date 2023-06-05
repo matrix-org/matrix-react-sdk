@@ -935,7 +935,6 @@
     "Summary": "Riepilogo",
     "Call failed due to misconfigured server": "Chiamata non riuscita a causa di un server non configurato correttamente",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Chiedi all'amministratore del tuo homeserver(<code>%(homeserverDomain)s</code>) per configurare un server TURN affinché le chiamate funzionino in modo affidabile.",
-    "Try using turn.matrix.org": "Prova a usare turn.matrix.org",
     "Messages": "Messaggi",
     "Actions": "Azioni",
     "Displays list of commands with usages and descriptions": "Visualizza l'elenco dei comandi con usi e descrizioni",

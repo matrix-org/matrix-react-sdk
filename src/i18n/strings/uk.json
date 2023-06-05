@@ -259,7 +259,6 @@
     "Add Phone Number": "Додати номер телефону",
     "Call failed due to misconfigured server": "Виклик не вдався через неправильне налаштування сервера",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Запропонуйте адміністратору вашого домашнього серверу (<code>%(homeserverDomain)s</code>) налаштувати сервер TURN для надійної роботи викликів.",
-    "Try using turn.matrix.org": "Спробуйте використати turn.matrix.org",
     "Identity server has no terms of service": "Сервер ідентифікації не має умов надання послуг",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Щоб підтвердити адресу е-пошти або телефон ця дія потребує доступу до типового серверу ідентифікації <server />, але сервер не має жодних умов надання послуг.",
     "Only continue if you trust the owner of the server.": "Продовжуйте лише якщо довіряєте власнику сервера.",

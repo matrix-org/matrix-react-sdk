@@ -817,7 +817,6 @@
     "Add Phone Number": "添加电话号码",
     "Call failed due to misconfigured server": "服务器配置错误导致通话失败",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "请联系你的家服务器（<code>%(homeserverDomain)s</code>）的管理员配置 TURN 服务器，以确保通话过程稳定。",
-    "Try using turn.matrix.org": "尝试使用 turn.matrix.org",
     "Your %(brand)s is misconfigured": "你的 %(brand)s 配置有错误",
     "Use Single Sign On to continue": "使用单点登录继续",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "使用单一登入证明你的身份，以确认添加此电子邮件地址。",

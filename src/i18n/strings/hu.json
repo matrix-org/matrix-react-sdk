@@ -935,7 +935,6 @@
     "Summary": "Összefoglaló",
     "Call failed due to misconfigured server": "A hívás a helytelenül beállított kiszolgáló miatt sikertelen",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Kérje meg a Matrix-kiszolgáló (<code>%(homeserverDomain)s</code>) rendszergazdáját, hogy a hívások megfelelő működéséhez állítson be egy TURN-kiszolgálót.",
-    "Try using turn.matrix.org": "A turn.matrix.org használatának kipróbálása",
     "Messages": "Üzenetek",
     "Actions": "Műveletek",
     "Displays list of commands with usages and descriptions": "Parancsok megjelenítése példával és leírással",

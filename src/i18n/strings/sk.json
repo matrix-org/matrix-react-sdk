@@ -801,7 +801,6 @@
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ak ste neodstránili spôsob obnovenia vy, je možné, že útočník sa pokúša dostať k vášmu účtu. Radšej si ihneď zmeňte vaše heslo a nastavte si nový spôsob obnovenia v Nastaveniach.",
     "Call failed due to misconfigured server": "Hovor zlyhal z dôvodu nesprávne nastaveného servera",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Prosím, požiadajte správcu vášho domovského servera (<code>%(homeserverDomain)s</code>) aby nakonfiguroval Turn server, čo zlepší spoľahlivosť audio / video hovorov.",
-    "Try using turn.matrix.org": "Skúsiť používať turn.matrix.org",
     "The file '%(fileName)s' failed to upload.": "Nepodarilo sa nahrať súbor „%(fileName)s“.",
     "The server does not support the room version specified.": "Server nepodporuje zadanú verziu miestnosti.",
     "Messages": "Správy",
