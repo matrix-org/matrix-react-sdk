@@ -3534,7 +3534,6 @@
     "You ended a <a>voice broadcast</a>": "Befejezte a <a>hangközvetítést</a>",
     "Unable to decrypt message": "Üzenet visszafejtése sikertelen",
     "This message could not be decrypted": "Ezt az üzenetet nem lehet visszafejteni",
-    "View your device list": "Eszközlista megjelenítése",
     "Reset your keys to prevent future decryption errors": "Kulcsok alaphelyzetbe állítása a jövőbeni visszafejtési hibák elkerüléséért",
     "Rust cryptography implementation": "Rust titkosítási implementáció",
     "%(senderName)s ended a voice broadcast": "%(senderName)s befejezte a hangközvetítést",

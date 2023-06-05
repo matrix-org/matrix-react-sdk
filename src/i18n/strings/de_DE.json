@@ -3534,7 +3534,6 @@
     "You ended a <a>voice broadcast</a>": "Du hast eine <a>Sprachübertragung</a> beendet",
     "Unable to decrypt message": "Nachrichten-Entschlüsselung nicht möglich",
     "This message could not be decrypted": "Diese Nachricht konnte nicht enschlüsselt werden",
-    "View your device list": "Deine Geräteliste ansehen",
     "Reset your keys to prevent future decryption errors": "Setze deine Schlüssel zurück, um zukünftige Entschlüsselungsfehler zu vermeiden",
     "Rust cryptography implementation": "Rust-Verschlüsselungsumsetzung",
     "%(senderName)s ended a voice broadcast": "%(senderName)s beendete eine Sprachübertragung",

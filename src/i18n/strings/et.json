@@ -3534,7 +3534,6 @@
     "You ended a <a>voice broadcast</a>": "Sa lõpetasid <a>ringhäälingukõne</a>",
     "Unable to decrypt message": "Sõnumi dekrüptimine ei õnnestunud",
     "This message could not be decrypted": "Seda sõnumit ei õnnestunud dekrüptida",
-    "View your device list": "Vaata oma seadmete loendit",
     "Reset your keys to prevent future decryption errors": "Tulevaste dekrüptimisvigade vältimiseks palun lähtesta oma krüptovõtmed",
     "Rust cryptography implementation": "Rust'is teostatud krüptolahendus",
     "%(senderName)s ended a voice broadcast": "%(senderName)s lõpetas ringhäälingukõne",

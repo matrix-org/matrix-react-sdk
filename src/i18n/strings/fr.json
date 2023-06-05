@@ -3534,7 +3534,6 @@
     "You ended a <a>voice broadcast</a>": "Vous avez terminé une <a>diffusion audio</a>",
     "Unable to decrypt message": "Impossible de déchiffrer le message",
     "This message could not be decrypted": "Ce message n’a pas pu être déchiffré",
-    "View your device list": "Voir la liste de vos appareils",
     "Reset your keys to prevent future decryption errors": "Réinitialiser vos clés pour éviter d’autres erreurs de déchiffrement",
     "Rust cryptography implementation": "Implémentation cryptographique en Rust",
     "%(senderName)s ended a voice broadcast": "%(senderName)s a terminé une diffusion audio",

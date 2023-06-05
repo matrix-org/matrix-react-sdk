@@ -3333,7 +3333,6 @@
     "Edit link": "リンクを編集",
     "Unable to decrypt message": "メッセージを復号化できません",
     "Connection error - Recording paused": "接続エラー - 録音を停止しました",
-    "You will not be able to access old undecryptable messages, but resetting your keys will allow you to receive new messages.": "復号化できない以前のメッセージにアクセスすることはできなくなりますが、鍵をリセットすると新しいメッセージを受信できるようになります。",
     "Please wait as we try to decrypt your messages. This may take a few moments.": "メッセージの復号化を試みています。お待ちください。復号化には少々時間がかかる可能性があります。",
     "This message could not be decrypted": "このメッセージを復号化できませんでした",
     "Favourite Messages": "お気に入りメッセージ",
