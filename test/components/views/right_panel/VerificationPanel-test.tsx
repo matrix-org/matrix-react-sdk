@@ -16,7 +16,6 @@ limitations under the License.
 
 import { act, render, waitFor } from "@testing-library/react";
 import React, { ComponentProps } from "react";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
 import { User } from "matrix-js-sdk/src/models/user";
 import { Mocked } from "jest-mock";
@@ -27,6 +26,7 @@ import {
     VerifierEvent,
     VerifierEventHandlerMap,
     VerificationPhase as Phase,
+    VerificationRequest,
     VerificationRequestEvent,
 } from "matrix-js-sdk/src/crypto-api/verification";
 

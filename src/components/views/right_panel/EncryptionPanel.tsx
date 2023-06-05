@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { useCallback, useEffect, useState } from "react";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { VerificationPhase, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
+import { VerificationPhase, VerificationRequest, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { User } from "matrix-js-sdk/src/models/user";
 

@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import EventEmitter from "events";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { VerificationPhase, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
+import { VerificationPhase, VerificationRequest, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { logger } from "matrix-js-sdk/src/logger";
