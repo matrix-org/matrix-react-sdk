@@ -356,7 +356,6 @@
     "Add Phone Number": "Προσθήκη Τηλεφωνικού Αριθμού",
     "Call failed due to misconfigured server": "Η κλήση απέτυχε λόγω της λανθασμένης διάρθρωσης του διακομιστή",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Παρακαλείστε να ρωτήσετε τον διαχειριστή του κεντρικού διακομιστή σας (<code>%(homeserverDomain)s</code>) να ρυθμίσουν έναν διακομιστή πρωτοκόλλου TURN ώστε οι κλήσεις να λειτουργούν απρόσκοπτα.",
-    "Alternatively, you can try to use the public server at <code>turn.matrix.org</code>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Εναλλακτικά, δοκιμάστε να χρησιμοποιήσετε τον δημόσιο διακομιστή στο <code>turn.matrix.org</code>, αλλά δεν θα είναι το ίδιο απρόσκοπτο, και θα κοινοποιεί την διεύθυνση IP σας με τον διακομιστή. Μπορείτε επίσης να το διαχειριστείτε στις Ρυθμίσεις.",
     "Try using turn.matrix.org": "Δοκιμάστε το turn.matrix.org",
     "Permission Required": "Απαιτείται Άδεια",
     "You do not have permission to start a conference call in this room": "Δεν έχετε άδεια για να ξεκινήσετε μια κλήση συνδιάσκεψης σε αυτό το δωμάτιο",

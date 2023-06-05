@@ -364,7 +364,6 @@
     "Call Failed": "A chamada falhou",
     "Call failed due to misconfigured server": "Chamada falhada devido a um erro de configuração do servidor",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Peça ao administrador do seu servidor inicial (<code>%(homeserverDomain)s</code>) de configurar um servidor TURN para que as chamadas funcionem fiavelmente.",
-    "Alternatively, you can try to use the public server at <code>turn.matrix.org</code>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Alternativamente, pode tentar usar o servidor público em <code>turn.matrix.org</code>, mas não será tão fiável e partilhará o seu IP com esse servidor. Também pode gerir isso nas definições.",
     "Try using turn.matrix.org": "Tente utilizar turn.matrix.org",
     "Explore rooms": "Explorar rooms",
     "Sign In": "Iniciar sessão",

@@ -429,7 +429,6 @@
     "Your %(brand)s is misconfigured": "Jūsų %(brand)s yra neteisingai sukonfigūruotas",
     "Call failed due to misconfigured server": "Skambutis nepavyko dėl neteisingai sukonfigūruoto serverio",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Paprašykite savo serverio administratoriaus (<code>%(homeserverDomain)s</code>) sukonfiguruoti TURN serverį, kad skambučiai veiktų patikimai.",
-    "Alternatively, you can try to use the public server at <code>turn.matrix.org</code>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Alternatyviai, jūs galite bandyti naudoti viešą serverį <code>turn.matrix.org</code>, bet tai nebus taip patikima, ir tai atskleis jūsų IP adresą šiam serveriui. Jūs taip pat galite tvarkyti tai Nustatymuose.",
     "Try using turn.matrix.org": "Bandyti naudojant turn.matrix.org",
     "The file '%(fileName)s' failed to upload.": "Failo '%(fileName)s' nepavyko įkelti.",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "Failas '%(fileName)s' viršyja šio serverio įkeliamų failų dydžio limitą",

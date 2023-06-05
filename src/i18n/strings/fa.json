@@ -185,7 +185,6 @@
     "Unable to access webcam / microphone": "امکان دسترسی به دوربین/میکروفون وجود ندارد",
     "Call failed because microphone could not be accessed. Check that a microphone is plugged in and set up correctly.": "تماس به دلیل عدم دسترسی به میکروفون موفقیت‌آمیز نبود. لطفا اتصال و تنظیمات صحیح میکروفون را بررسی نمائید.",
     "Unable to access microphone": "دسترسی به میکروفون امکان‌پذیر نیست",
-    "Try using turn.matrix.org": "turn.hivaa.im را امتحان کنید",
     "Alternatively, you can try to use the public server at <code>turn.matrix.org</code>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "همچنین شما می‌توانید از سرور TURN عمومی <code>turn.hivaa.im</code> استفاده نمائید؛ توجه کنید در این حالت، میزان کیفیت تماس‌ها چندان قابل اتکاء نبوده و همچنین آدرس IP کاربران برای سرور مشخص می‌شود. در صورت نیاز می‌توانید پیکربندی این بخش را در تنظیمات برنامه تغییر دهید.",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "لطفا برای برقراری تماس، از مدیر <code>%(homeserverDomain)s</code> بخواهید سرور TURN را پیکربندی نماید.",
     "Call failed due to misconfigured server": "تماس به دلیل پیکربندی نادرست سرور موفقیت‌آمیز نبود",

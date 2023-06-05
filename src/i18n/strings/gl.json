@@ -529,7 +529,6 @@
     "Unable to load! Check your network connectivity and try again.": "Non cargou! Comproba a conexión á rede e volta a intentalo.",
     "Call failed due to misconfigured server": "Fallou a chamada porque o servidor está mal configurado",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Contacta coa administración do teu servidor (<code>%(homeserverDomain)s</code>) para configurar un servidor TURN para que as chamadas funcionen de xeito fiable.",
-    "Alternatively, you can try to use the public server at <code>turn.matrix.org</code>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "De xeito alternativo, podes intentar usar o servidor público <code>turn.matrix.org</code>, pero non é tan fiable, e compartirá o teu enderezo IP con ese servidor. Podes xestionar esto en Axustes.",
     "Try using turn.matrix.org": "Inténtao usando turn.matrix.org",
     "The file '%(fileName)s' failed to upload.": "Fallou a subida do ficheiro '%(fileName)s'.",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "O ficheiro '%(fileName)s' supera o tamaño máximo permitido polo servidor",
