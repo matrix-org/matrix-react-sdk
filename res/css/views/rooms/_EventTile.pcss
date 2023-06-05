@@ -15,15 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-:root {
-    --EventTile-gutter-left: 64px;
-}
+$left-gutter: 64px;
 
 .mx_EventTile {
     --EventTile_content-margin-inline-end: 34px; /* TODO: Use a spacing variable */
     --EventTile_group_line-spacing-block-start: 1px;
     --EventTile_group_line-spacing-block-end: 3px;
-    --EventTile_group_line-spacing-inline-start: var(--EventTile-gutter-left);
+    --EventTile_group_line-spacing-inline-start: $left-gutter;
     --EventTile_group_line-line-height: $font-22px;
     --EventTile_ThreadSummary-line-height: calc(2 * $font-12px);
 
@@ -520,7 +518,7 @@ limitations under the License.
 
         .mx_ThreadSummary,
         .mx_ThreadSummary_icon {
-            margin-left: var(--EventTile-gutter-left);
+            margin-left: $left-gutter;
         }
 
         .mx_ReactionsRow {
@@ -529,8 +527,8 @@ limitations under the License.
 
         > .mx_DisambiguatedProfile {
             line-height: $font-20px;
-            margin-left: var(--EventTile-gutter-left);
-            max-width: calc(100% - var(--EventTile-gutter-left));
+            margin-left: $left-gutter;
+            max-width: calc(100% - $left-gutter);
         }
 
         > .mx_EventTile_avatar {
@@ -550,7 +548,7 @@ limitations under the License.
 
             .mx_ThreadSummary {
                 /* leave space on both left & right gutters */
-                max-width: min(calc(100% - var(--EventTile-gutter-left) - $inline-end-margin), 600px);
+                max-width: min(calc(100% - $left-gutter - $inline-end-margin), 600px);
             }
 
             /* on ELS we need the margin to allow interaction with the expand/collapse button */
@@ -574,7 +572,7 @@ limitations under the License.
 
             .mx_EventTile_avatar {
                 top: initial;
-                inset-inline-start: var(--EventTile-gutter-left);
+                inset-inline-start: $left-gutter;
                 height: 14px;
             }
 
@@ -598,7 +596,7 @@ limitations under the License.
             &.mx_EventTile_verified.mx_EventTile_info .mx_EventTile_line,
             &.mx_EventTile_unverified.mx_EventTile_info .mx_EventTile_line,
             &.mx_EventTile_unknown.mx_EventTile_info .mx_EventTile_line {
-                padding-inline-start: calc(var(--EventTile-gutter-left) + 18px + var(--selected-message-border-width));
+                padding-inline-start: calc($left-gutter + 18px + var(--selected-message-border-width));
             }
         }
     }
@@ -663,11 +661,11 @@ limitations under the License.
 
     &[data-layout="group"] {
         .mx_EventTile_line {
-            padding-left: var(--EventTile-gutter-left);
+            padding-left: $left-gutter;
         }
 
         .mx_GenericEventListSummary_unstyledList > .mx_EventTile_info .mx_EventTile_avatar ~ .mx_EventTile_line {
-            /* override padding-left var(--EventTile-gutter-left) */
+            /* override padding-left $left-gutter */
             padding-inline-start: calc(var(--EventTile_group_line-spacing-inline-start) + 20px);
         }
     }
