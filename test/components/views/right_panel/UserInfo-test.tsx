@@ -206,7 +206,8 @@ describe("<UserInfo />", () => {
         verificationRequest = new MockVerificationRequest({});
     });
 
-    afterEach(() => {
+    afterEach(async () => {
+        await clearAllModals();
         jest.clearAllMocks();
     });
 
