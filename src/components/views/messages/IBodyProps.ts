@@ -56,6 +56,7 @@ export interface IBodyProps {
 
     ref?: React.RefObject<any> | LegacyRef<any>;
 
-    // Used by EventTilePreview to disable interactions and tab indexes
+    // Set to `true` to disable interactions (e.g. video controls) and tab indexes.
+    // This may be useful when displaying a preview of the event.
     inhibitInteraction?: boolean;
 }
