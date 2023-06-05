@@ -3251,7 +3251,6 @@
     "Unable to decrypt message": "Viestin salauksen purkaminen ei onnistu",
     "Change layout": "Vaihda asettelua",
     "This message could not be decrypted": "Tämän viestin salausta ei voitu purkaa",
-    "View your device list": "Näytä laiteluettelo",
     "Please wait as we try to decrypt your messages. This may take a few moments.": "Odota, kun yritämme purkaa viestiesi salausta. Tämä saattaa kestää hetken.",
     "Improve your account security by following these recommendations.": "Paranna tilisi tietoturvaa seuraamalla näitä suosituksia.",
     "%(count)s sessions selected|one": "%(count)s istunto valittu",
