@@ -14,12 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_ImageView {
-    --button-gap: 24px;
-    --button-size: 32px;
-    --icon-size: 22px;
-    --panel-height: 68px;
+$button-size: 32px;
+$icon-size: 22px;
+$button-gap: 24px;
 
+:root {
+    --image-view-panel-height: 68px;
+}
+
+.mx_ImageView {
     display: flex;
     width: 100%;
     height: 100%;
@@ -49,7 +52,7 @@ limitations under the License.
 
 .mx_ImageView_panel {
     width: 100%;
-    height: var(--panel-height);
+    height: var(--image-view-panel-height);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -94,17 +97,17 @@ limitations under the License.
     flex-grow: 1;
     flex-basis: 0;
     justify-content: flex-end;
-    gap: calc(var(--button-gap) - (var(--button-size) - var(--icon-size)));
+    gap: calc($button-gap - ($button-size - $icon-size));
 }
 
 .mx_ImageView_button {
-    padding: calc((var(--button-size) - var(--icon-size)) / 2);
+    padding: calc(($button-size - $icon-size) / 2);
     display: block;
 
     &::before {
         content: "";
-        height: var(--icon-size);
-        width: var(--icon-size);
+        height: $icon-size;
+        width: $icon-size;
         mask-repeat: no-repeat;
         mask-size: contain;
         mask-position: center;
@@ -138,12 +141,12 @@ limitations under the License.
 }
 
 .mx_ImageView_button_close {
-    padding: calc(var(--button-size) - var(--button-size));
+    padding: calc($button-size - $button-size);
     border-radius: 100%;
     background: #21262c; /* same on all themes */
     &::before {
-        width: var(--button-size);
-        height: var(--button-size);
+        width: $button-size;
+        height: $button-size;
         mask-image: url("$(res)/img/image-view/close.svg");
         mask-size: 40%;
     }
