@@ -254,6 +254,11 @@ function handleClipboardEvent(
     const { clipboardData: data } = clipboardEvent;
     const { room, timelineRenderingType, replyToEvent } = roomContext;
 
+    function handleError(error): ClipboardEvent {
+        console.log(error);
+        return clipboardEvent;
+    }
+
     if (clipboardEvent.type !== "paste" || data === null || room === undefined) {
         return clipboardEvent;
     }
@@ -263,13 +268,9 @@ function handleClipboardEvent(
     // We check text/rtf instead of text/plain as when copy+pasting a file from Finder or Gnome Image Viewer
     // it puts the filename in as text/plain which we want to ignore.
     if (data.files.length && !data.types.includes("text/rtf")) {
-        ContentMessages.sharedInstance().sendContentListToRoom(
-            Array.from(data.files),
-            room.roomId,
-            eventRelation,
-            mxClient,
-            timelineRenderingType,
-        );
+        ContentMessages.sharedInstance()
+            .sendContentListToRoom(Array.from(data.files), room.roomId, eventRelation, mxClient, timelineRenderingType)
+            .catch(handleError);
         return null;
     }
 
@@ -285,41 +286,28 @@ function handleClipboardEvent(
             !imgDoc.querySelector("img")?.src.startsWith("blob:") ||
             imgDoc.childNodes.length !== 1
         ) {
-            console.log("Failed to handle pasted content as Safari inserted content");
-            return clipboardEvent;
+            handleError("Failed to handle pasted content as Safari inserted content");
         }
         const imgSrc = imgDoc!.querySelector("img")!.src;
 
-        fetch(imgSrc).then(
-            (response) => {
-                response.blob().then(
-                    (imgBlob) => {
-                        const type = imgBlob.type;
-                        const safetype = getBlobSafeMimeType(type);
-                        const ext = type.split("/")[1];
-                        const parts = response.url.split("/");
-                        const filename = parts[parts.length - 1];
-                        const file = new File([imgBlob], filename + "." + ext, { type: safetype });
-                        ContentMessages.sharedInstance().sendContentToRoom(
-                            file,
-                            room.roomId,
-                            eventRelation,
-                            mxClient,
-                            replyToEvent,
-                        );
-                        return null;
-                    },
-                    (error) => {
-                        console.log(error);
-                        return clipboardEvent;
-                    },
+        fetch(imgSrc).then((response) => {
+            response.blob().then((imgBlob) => {
+                const type = imgBlob.type;
+                const safetype = getBlobSafeMimeType(type);
+                const ext = type.split("/")[1];
+                const parts = response.url.split("/");
+                const filename = parts[parts.length - 1];
+                const file = new File([imgBlob], filename + "." + ext, { type: safetype });
+                ContentMessages.sharedInstance().sendContentToRoom(
+                    file,
+                    room.roomId,
+                    eventRelation,
+                    mxClient,
+                    replyToEvent,
                 );
-            },
-            (error) => {
-                console.log(error);
-                return clipboardEvent;
-            },
-        );
+                return null;
+            }, handleError);
+        }, handleError);
     }
 
     return clipboardEvent;
