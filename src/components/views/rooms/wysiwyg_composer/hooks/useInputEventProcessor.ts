@@ -16,7 +16,7 @@ limitations under the License.
 
 import { Wysiwyg, WysiwygEvent } from "@matrix-org/matrix-wysiwyg";
 import { useCallback } from "react";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { IEventRelation, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { useSettingValue } from "../../../../../hooks/useSettings";
 import { getKeyBindingsManager } from "../../../../../KeyBindingsManager";
@@ -40,6 +40,7 @@ export function useInputEventProcessor(
     onSend: () => void,
     autocompleteRef: React.RefObject<Autocomplete>,
     initialContent?: string,
+    eventRelation?: IEventRelation,
 ): (event: WysiwygEvent, composer: Wysiwyg, editor: HTMLElement) => WysiwygEvent | null {
     const roomContext = useRoomContext();
     const composerContext = useComposerContext();
@@ -59,7 +60,8 @@ export function useInputEventProcessor(
                         ContentMessages.sharedInstance().sendContentListToRoom(
                             Array.from(clipboardData.files),
                             roomContext.room.roomId,
-                            {}, // this.props.relation, is IEventRelation, which is passed through MessageComposer
+                            eventRelation,
+                            // this.props.relation, is IEventRelation, which is passed through MessageComposer
                             // which it looks like comes from ThreadView
                             // looks like there is a call to this.props.room.getThread(this.props.mxEvent.getId())
 
@@ -102,7 +104,16 @@ export function useInputEventProcessor(
                 return handleInputEvent(event, send, isCtrlEnterToSend);
             }
         },
-        [isCtrlEnterToSend, onSend, initialContent, roomContext, composerContext, mxClient, autocompleteRef],
+        [
+            isCtrlEnterToSend,
+            onSend,
+            initialContent,
+            roomContext,
+            composerContext,
+            mxClient,
+            autocompleteRef,
+            eventRelation,
+        ],
     );
 }
 
