@@ -824,6 +824,26 @@ describe("Timeline", () => {
                 cy.get(".mx_RoomView_searchResultsPanel").percySnapshotElement("Search results - with TextualEvent");
             });
         });
+
+        describe("with emoji", () => {
+            it("should not push down a line on a code block", () => {
+                const fontSize = "14px"; // This value is based on _EventTile.pcss
+
+                cy.visit("/#/room/" + roomId);
+
+                // Create a code block message with emoji
+                cy.sendEvent(roomId, null, "m.room.message" as EventType, {
+                    msgtype: "m.text" as MsgType,
+                    body: "```\nℹ ｢wdm｣: Compiled with warnings\nThis is another line\n```",
+                    format: "org.matrix.custom.html",
+                    formatted_body: "<pre><code>ℹ ｢wdm｣: Compiled with warnings\nThis is another line\n</code></pre>\n",
+                });
+
+                // Assert that the same font-size value is applied to the message and the emoji
+                cy.get(".mx_EventTile_content .markdown-body").should("have.css", "font-size", fontSize);
+                cy.get(".mx_EventTile_content .markdown-body .mx_Emoji").should("have.css", "font-size", fontSize);
+            });
+        });
     });
 
     describe("message sending", () => {
