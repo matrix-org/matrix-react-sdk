@@ -3486,7 +3486,6 @@
     "Change layout": "Cambiar disposición",
     "This message could not be decrypted": "No se ha podido descifrar este mensaje",
     " in <strong>%(room)s</strong>": " en <strong>%(room)s</strong>",
-    "Verify this device to access all messages": "Verifica este dispositivo para acceder a todos tus mensajes",
     "Improve your account security by following these recommendations.": "Mejora la seguridad de tu cuenta siguiendo estas recomendaciones.",
     "Sign out of %(count)s sessions|one": "Cerrar %(count)s sesión",
     "Sign out of %(count)s sessions|other": "Cerrar %(count)s sesiones",

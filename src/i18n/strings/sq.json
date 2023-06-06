@@ -3525,7 +3525,6 @@
     "You ended a <a>voice broadcast</a>": "Përfunduat një <a>transmetim zanor</a>",
     "Unable to decrypt message": "S’arrihet të shfshehtëzohet mesazhi",
     "This message could not be decrypted": "Ky mesazh s’u shfshehtëzua dot",
-    "Reset your keys to prevent future decryption errors": "Që të parandaloni gabime të ardhshëm shfshehtëzimi, riujdisni kyçet tuaj",
     "Rust cryptography implementation": "Sendërtim kriptografie Rust",
     "%(senderName)s ended a voice broadcast": "%(senderName)s përfundoi një transmetim zanor",
     "You ended a voice broadcast": "Përfunduat një transmetim zanor",

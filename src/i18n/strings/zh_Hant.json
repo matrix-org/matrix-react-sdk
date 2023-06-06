@@ -3534,7 +3534,6 @@
     "You ended a <a>voice broadcast</a>": "您結束了<a>語音廣播</a>",
     "Unable to decrypt message": "無法解密訊息",
     "This message could not be decrypted": "此訊息無法解密",
-    "Reset your keys to prevent future decryption errors": "重設您的金鑰以避免未來的解密錯誤",
     "Rust cryptography implementation": "Rust 密碼學實作",
     "%(senderName)s ended a voice broadcast": "%(senderName)s 已結束語音廣播",
     "You ended a voice broadcast": "您結束了語音廣播",

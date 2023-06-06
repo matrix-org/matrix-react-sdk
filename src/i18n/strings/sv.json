@@ -3516,7 +3516,6 @@
     "Sign in new device": "Logga in ny enhet",
     "Unable to decrypt message": "Kunde inte avkryptera meddelande",
     "This message could not be decrypted": "Det här meddelandet kunde inte avkrypteras",
-    "Reset your keys to prevent future decryption errors": "Återställ dina nycklar för att förhindra framtida avkrypteringsfel",
     "Rust cryptography implementation": "Kryptografiimplementering i Rust",
     "%(senderName)s ended a voice broadcast": "%(senderName)s avslutade en röstsändning",
     "You ended a voice broadcast": "Du avslutade en röstsändning",

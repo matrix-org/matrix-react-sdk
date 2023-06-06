@@ -3534,7 +3534,6 @@
     "You ended a <a>voice broadcast</a>": "Ви завершили <a>голосову трансляцію</a>",
     "Unable to decrypt message": "Не вдалося розшифрувати повідомлення",
     "This message could not be decrypted": "Не вдалося розшифрувати це повідомлення",
-    "Reset your keys to prevent future decryption errors": "Скиньте ключі, щоб запобігти помилкам під час розшифрування в майбутньому",
     "%(senderName)s ended a voice broadcast": "%(senderName)s завершує голосову трансляцію",
     "You ended a voice broadcast": "Ви завершили голосову трансляцію",
     "Rust cryptography implementation": "Реалізація криптографії Rust",

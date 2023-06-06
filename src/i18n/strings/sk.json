@@ -3534,7 +3534,6 @@
     "Defaults to room member list.": "Predvolené nastavenie je zoznam členov miestnosti.",
     "Unable to decrypt message": "Nie je možné dešifrovať správu",
     "This message could not be decrypted": "Túto správu sa nepodarilo dešifrovať",
-    "Reset your keys to prevent future decryption errors": "Obnovte svoje kľúče, aby ste predišli budúcim chybám pri dešifrovaní",
     "%(senderName)s ended a voice broadcast": "%(senderName)s ukončil/a hlasové vysielanie",
     "You ended a voice broadcast": "Ukončili ste hlasové vysielanie",
     "Rust cryptography implementation": "Implementácia kryptografie Rust",

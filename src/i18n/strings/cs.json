@@ -3534,7 +3534,6 @@
     "You ended a <a>voice broadcast</a>": "Ukončili jste <a>hlasové vysílání</a>",
     "Unable to decrypt message": "Nepodařilo se dešifrovat zprávu",
     "This message could not be decrypted": "Tuto zprávu se nepodařilo dešifrovat",
-    "Reset your keys to prevent future decryption errors": "Resetujte své klíče, abyste předešli budoucím chybám při dešifrování",
     "%(senderName)s ended a voice broadcast": "%(senderName)s ukončil(a) hlasové vysílání",
     "You ended a voice broadcast": "Ukončili jste hlasové vysílání",
     "Rust cryptography implementation": "Implementace kryptografie v jazyce Rust",

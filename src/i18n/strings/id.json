@@ -3534,7 +3534,6 @@
     "You ended a <a>voice broadcast</a>": "Anda mengakhiri sebuah <a>siaran suara</a>",
     "Unable to decrypt message": "Tidak dapat mendekripsi pesan",
     "This message could not be decrypted": "Pesan ini tidak dapat didekripsi",
-    "Reset your keys to prevent future decryption errors": "Atur ulang kunci Anda untuk mencegah kesalahan pendekripsian di masa mendatang",
     "Rust cryptography implementation": "Implementasi kriptografi Rust",
     "%(senderName)s ended a voice broadcast": "%(senderName)s mdngakhiri sebuah siaran suara",
     "You ended a voice broadcast": "Anda mengakhiri sebuah siaran suara",
