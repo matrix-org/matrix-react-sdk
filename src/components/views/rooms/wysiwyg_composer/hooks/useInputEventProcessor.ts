@@ -35,6 +35,7 @@ import { endEditing } from "../utils/editing";
 import Autocomplete from "../../Autocomplete";
 import { handleEventWithAutocomplete } from "./utils";
 import ContentMessages from "../../../../../ContentMessages";
+import { getBlobSafeMimeType } from "../../../../../utils/blobs";
 
 export function useInputEventProcessor(
     onSend: () => void,
@@ -49,34 +50,6 @@ export function useInputEventProcessor(
 
     return useCallback(
         (event: WysiwygEvent, composer: Wysiwyg, editor: HTMLElement) => {
-            if (event instanceof ClipboardEvent) {
-                // This code unashamedly pillaged from SendMessageComposer.onPaste with the arguments
-                // tweaked a bit to see if it works.
-                // It does work, just need to figure out the `this.props.relation` translation
-
-                const { clipboardData } = event;
-                if (clipboardData?.files.length && !clipboardData.types.includes("text/rtf")) {
-                    if (roomContext.room?.roomId) {
-                        ContentMessages.sharedInstance().sendContentListToRoom(
-                            Array.from(clipboardData.files),
-                            roomContext.room.roomId,
-                            eventRelation,
-                            // this.props.relation, is IEventRelation, which is passed through MessageComposer
-                            // which it looks like comes from ThreadView
-                            // looks like there is a call to this.props.room.getThread(this.props.mxEvent.getId())
-
-                            // looks like skipping out this bit means when you try and paste into a thread in the right
-                            // panel, it actually just appears in the timeline
-                            mxClient,
-                            roomContext.timelineRenderingType,
-                        );
-                        return null;
-                    }
-                }
-
-                return event;
-            }
-
             const send = (): void => {
                 event.stopPropagation?.();
                 event.preventDefault?.();
@@ -86,6 +59,11 @@ export function useInputEventProcessor(
                 }
                 onSend();
             };
+
+            const isClipboardEvent = event instanceof ClipboardEvent;
+            if (isClipboardEvent) {
+                return handleClipboardEvent(event, roomContext, mxClient, eventRelation);
+            }
 
             const isKeyboardEvent = event instanceof KeyboardEvent;
             if (isKeyboardEvent) {
@@ -254,4 +232,95 @@ function handleInputEvent(event: InputEvent, send: Send, isCtrlEnterToSend: bool
     }
 
     return event;
+}
+
+/**
+ * Takes a ClipboardEvent and handles image pasting. If the event is not a paste event, or
+ * pasting is not successful, returns the original event to allow it to pass through.
+ * Otherwise, returns null to indicate that the event has been handled.
+ *
+ * @param clipboardEvent - event to process
+ * @param roomContext - room in which the event occurs
+ * @param mxClient - current matrix client
+ * @param eventRelation - used to send the event to the correct timeline
+ * @returns - null if event is handled here, the `clipboardEvent` param if not
+ */
+function handleClipboardEvent(
+    clipboardEvent: ClipboardEvent,
+    roomContext: IRoomState,
+    mxClient: MatrixClient,
+    eventRelation?: IEventRelation,
+): ClipboardEvent | null {
+    const { clipboardData: data } = clipboardEvent;
+    const { room, timelineRenderingType, replyToEvent } = roomContext;
+
+    if (clipboardEvent.type !== "paste" || data === null || room === undefined) {
+        return clipboardEvent;
+    }
+
+    // Prioritize text on the clipboard over files if RTF is present as Office on macOS puts a bitmap
+    // in the clipboard as well as the content being copied. Modern versions of Office seem to not do this anymore.
+    // We check text/rtf instead of text/plain as when copy+pasting a file from Finder or Gnome Image Viewer
+    // it puts the filename in as text/plain which we want to ignore.
+    if (data.files.length && !data.types.includes("text/rtf")) {
+        ContentMessages.sharedInstance().sendContentListToRoom(
+            Array.from(data.files),
+            room.roomId,
+            eventRelation,
+            mxClient,
+            timelineRenderingType,
+        );
+        return null;
+    }
+
+    // Safari `Insert from iPhone or iPad`
+    // data.getData("text/html") returns a string like: <img src="blob:https://...">
+    if (data.types.includes("text/html")) {
+        const imgElementStr = data.getData("text/html");
+        const parser = new DOMParser();
+        const imgDoc = parser.parseFromString(imgElementStr, "text/html");
+
+        if (
+            imgDoc.getElementsByTagName("img").length !== 1 ||
+            !imgDoc.querySelector("img")?.src.startsWith("blob:") ||
+            imgDoc.childNodes.length !== 1
+        ) {
+            console.log("Failed to handle pasted content as Safari inserted content");
+            return clipboardEvent;
+        }
+        const imgSrc = imgDoc!.querySelector("img")!.src;
+
+        fetch(imgSrc).then(
+            (response) => {
+                response.blob().then(
+                    (imgBlob) => {
+                        const type = imgBlob.type;
+                        const safetype = getBlobSafeMimeType(type);
+                        const ext = type.split("/")[1];
+                        const parts = response.url.split("/");
+                        const filename = parts[parts.length - 1];
+                        const file = new File([imgBlob], filename + "." + ext, { type: safetype });
+                        ContentMessages.sharedInstance().sendContentToRoom(
+                            file,
+                            room.roomId,
+                            eventRelation,
+                            mxClient,
+                            replyToEvent,
+                        );
+                        return null;
+                    },
+                    (error) => {
+                        console.log(error);
+                        return clipboardEvent;
+                    },
+                );
+            },
+            (error) => {
+                console.log(error);
+                return clipboardEvent;
+            },
+        );
+    }
+
+    return clipboardEvent;
 }
