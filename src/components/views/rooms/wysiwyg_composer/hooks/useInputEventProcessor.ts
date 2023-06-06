@@ -254,8 +254,12 @@ function handleClipboardEvent(
     const { clipboardData: data } = clipboardEvent;
     const { room, timelineRenderingType, replyToEvent } = roomContext;
 
-    function handleError(error): ClipboardEvent {
-        console.log(error);
+    function errorHandler(error: unknown): ClipboardEvent {
+        if (error instanceof Error) {
+            console.log(error.message);
+        } else if (error instanceof String) {
+            console.log(error);
+        }
         return clipboardEvent;
     }
 
@@ -270,7 +274,7 @@ function handleClipboardEvent(
     if (data.files.length && !data.types.includes("text/rtf")) {
         ContentMessages.sharedInstance()
             .sendContentListToRoom(Array.from(data.files), room.roomId, eventRelation, mxClient, timelineRenderingType)
-            .catch(handleError);
+            .catch(errorHandler);
         return null;
     }
 
@@ -286,7 +290,7 @@ function handleClipboardEvent(
             !imgDoc.querySelector("img")?.src.startsWith("blob:") ||
             imgDoc.childNodes.length !== 1
         ) {
-            handleError("Failed to handle pasted content as Safari inserted content");
+            errorHandler("Failed to handle pasted content as Safari inserted content");
         }
         const imgSrc = imgDoc!.querySelector("img")!.src;
 
@@ -306,8 +310,8 @@ function handleClipboardEvent(
                     replyToEvent,
                 );
                 return null;
-            }, handleError);
-        }, handleError);
+            }, errorHandler);
+        }, errorHandler);
     }
 
     return clipboardEvent;
