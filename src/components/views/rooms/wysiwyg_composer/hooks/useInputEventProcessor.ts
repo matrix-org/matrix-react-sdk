@@ -62,7 +62,8 @@ export function useInputEventProcessor(
 
             const isClipboardEvent = event instanceof ClipboardEvent;
             if (isClipboardEvent) {
-                return handleClipboardEvent(event, roomContext, mxClient, eventRelation);
+                const handled = handleClipboardEvent(event, roomContext, mxClient, eventRelation);
+                return handled ? null : event;
             }
 
             const isKeyboardEvent = event instanceof KeyboardEvent;
@@ -235,36 +236,34 @@ function handleInputEvent(event: InputEvent, send: Send, isCtrlEnterToSend: bool
 }
 
 /**
- * Takes a ClipboardEvent and handles image pasting. If the event is not a paste event, or
- * pasting is not successful, returns the original event to allow it to pass through.
- * Otherwise, returns null to indicate that the event has been handled.
+ * Takes a ClipboardEvent and handles image pasting. Returns a boolean to indicate if it has handled
+ * the event or not.
  *
  * @param clipboardEvent - event to process
  * @param roomContext - room in which the event occurs
  * @param mxClient - current matrix client
  * @param eventRelation - used to send the event to the correct timeline
- * @returns - null if event is handled here, the `clipboardEvent` param if not
+ * @returns - boolean to show if the event was handled or not
  */
-function handleClipboardEvent(
+export function handleClipboardEvent(
     clipboardEvent: ClipboardEvent,
     roomContext: IRoomState,
     mxClient: MatrixClient,
     eventRelation?: IEventRelation,
-): ClipboardEvent | null {
+): boolean {
     const { clipboardData: data } = clipboardEvent;
     const { room, timelineRenderingType, replyToEvent } = roomContext;
 
-    function errorHandler(error: unknown): ClipboardEvent {
+    function handleError(error: unknown): void {
         if (error instanceof Error) {
             console.log(error.message);
-        } else if (error instanceof String) {
+        } else if (typeof error === "string") {
             console.log(error);
         }
-        return clipboardEvent;
     }
 
     if (clipboardEvent.type !== "paste" || data === null || room === undefined) {
-        return clipboardEvent;
+        return false;
     }
 
     // Prioritize text on the clipboard over files if RTF is present as Office on macOS puts a bitmap
@@ -274,8 +273,8 @@ function handleClipboardEvent(
     if (data.files.length && !data.types.includes("text/rtf")) {
         ContentMessages.sharedInstance()
             .sendContentListToRoom(Array.from(data.files), room.roomId, eventRelation, mxClient, timelineRenderingType)
-            .catch(errorHandler);
-        return null;
+            .catch(handleError);
+        return true;
     }
 
     // Safari `Insert from iPhone or iPad`
@@ -290,7 +289,8 @@ function handleClipboardEvent(
             !imgDoc.querySelector("img")?.src.startsWith("blob:") ||
             imgDoc.childNodes.length !== 1
         ) {
-            errorHandler("Failed to handle pasted content as Safari inserted content");
+            handleError("Failed to handle pasted content as Safari inserted content");
+            return false;
         }
         const imgSrc = imgDoc!.querySelector("img")!.src;
 
@@ -309,10 +309,10 @@ function handleClipboardEvent(
                     mxClient,
                     replyToEvent,
                 );
-                return null;
-            }, errorHandler);
-        }, errorHandler);
+            }, handleError);
+        }, handleError);
+        return true;
     }
 
-    return clipboardEvent;
+    return false;
 }
