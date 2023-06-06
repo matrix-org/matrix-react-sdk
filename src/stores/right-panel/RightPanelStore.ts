@@ -35,6 +35,7 @@ import { ActionPayload } from "../../dispatcher/payloads";
 import { Action } from "../../dispatcher/actions";
 import { ActiveRoomChangedPayload } from "../../dispatcher/payloads/ActiveRoomChangedPayload";
 import { SdkContextClass } from "../../contexts/SDKContext";
+import { MatrixClientPeg } from "../../MatrixClientPeg";
 
 /**
  * A class for tracking the state of the right panel between layouts and
@@ -308,7 +309,9 @@ export default class RightPanelStore extends ReadyWatchingStore {
         if (card.phase === RightPanelPhases.RoomMemberInfo && card.state) {
             // RightPanelPhases.RoomMemberInfo -> needs to be changed to RightPanelPhases.EncryptionPanel if there is a pending verification request
             const { member } = card.state;
-            const pendingRequest = member ? pendingVerificationRequestForUser(member) : undefined;
+            const pendingRequest = member
+                ? pendingVerificationRequestForUser(MatrixClientPeg.get(), member)
+                : undefined;
             if (pendingRequest) {
                 return {
                     phase: RightPanelPhases.EncryptionPanel,
@@ -341,7 +344,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         if (!this.currentCard?.state) return;
         const { member } = this.currentCard.state;
         if (!member) return;
-        const pendingRequest = pendingVerificationRequestForUser(member);
+        const pendingRequest = pendingVerificationRequestForUser(MatrixClientPeg.get(), member);
         if (pendingRequest) {
             this.currentCard.state.verificationRequest = pendingRequest;
             this.emitAndUpdateSettings();
@@ -365,6 +368,13 @@ export default class RightPanelStore extends ReadyWatchingStore {
                         card.phase != RightPanelPhases.Room3pidMemberInfo,
                 );
             }
+        }
+        // when we're switching to a room, clear out thread permalinks to not get you stuck in the middle of the thread
+        // in order to fix https://github.com/matrix-org/matrix-react-sdk/pull/11011
+        if (this.currentCard?.phase === RightPanelPhases.ThreadView) {
+            this.currentCard.state.initialEvent = undefined;
+            this.currentCard.state.isInitialEventHighlighted = undefined;
+            this.currentCard.state.initialEventScrollIntoView = undefined;
         }
 
         // If the right panel stays open mode is used, and the panel was either
