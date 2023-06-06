@@ -16,6 +16,8 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
+import { logger } from "matrix-js-sdk/src/logger";
+import { FALLBACK_ICE_SERVER } from "matrix-js-sdk/src/webrtc/call";
 
 import { _t } from "../../../../../languageHandler";
 import MediaDeviceHandler, { IMediaDevices, MediaDeviceKindEnum } from "../../../../../MediaDeviceHandler";
@@ -40,6 +42,21 @@ interface IState {
     audioNoiseSuppression: boolean;
 }
 
+/**
+ * Maps deviceKind to the right get method on MediaDeviceHandler
+ * Helpful for setting state
+ */
+const mapDeviceKindToHandlerValue = (deviceKind: MediaDeviceKindEnum): string | null => {
+    switch (deviceKind) {
+        case MediaDeviceKindEnum.AudioOutput:
+            return MediaDeviceHandler.getAudioOutput();
+        case MediaDeviceKindEnum.AudioInput:
+            return MediaDeviceHandler.getAudioInput();
+        case MediaDeviceKindEnum.VideoInput:
+            return MediaDeviceHandler.getVideoInput();
+    }
+};
+
 export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
     public constructor(props: {}) {
         super(props);
@@ -58,16 +75,16 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
     public async componentDidMount(): Promise<void> {
         const canSeeDeviceLabels = await MediaDeviceHandler.hasAnyLabeledDevices();
         if (canSeeDeviceLabels) {
-            this.refreshMediaDevices();
+            await this.refreshMediaDevices();
         }
     }
 
     private refreshMediaDevices = async (stream?: MediaStream): Promise<void> => {
         this.setState({
             mediaDevices: (await MediaDeviceHandler.getDevices()) ?? null,
-            [MediaDeviceKindEnum.AudioOutput]: MediaDeviceHandler.getAudioOutput(),
-            [MediaDeviceKindEnum.AudioInput]: MediaDeviceHandler.getAudioInput(),
-            [MediaDeviceKindEnum.VideoInput]: MediaDeviceHandler.getVideoInput(),
+            [MediaDeviceKindEnum.AudioOutput]: mapDeviceKindToHandlerValue(MediaDeviceKindEnum.AudioOutput),
+            [MediaDeviceKindEnum.AudioInput]: mapDeviceKindToHandlerValue(MediaDeviceKindEnum.AudioInput),
+            [MediaDeviceKindEnum.VideoInput]: mapDeviceKindToHandlerValue(MediaDeviceKindEnum.VideoInput),
         });
         if (stream) {
             // kill stream (after we've enumerated the devices, otherwise we'd get empty labels again)
@@ -80,13 +97,20 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
     private requestMediaPermissions = async (): Promise<void> => {
         const stream = await requestMediaPermissions();
         if (stream) {
-            this.refreshMediaDevices(stream);
+            await this.refreshMediaDevices(stream);
         }
     };
 
-    private setDevice = (deviceId: string, kind: MediaDeviceKindEnum): void => {
-        MediaDeviceHandler.instance.setDevice(deviceId, kind);
+    private setDevice = async (deviceId: string, kind: MediaDeviceKindEnum): Promise<void> => {
+        // set state immediately so UI is responsive
         this.setState<any>({ [kind]: deviceId });
+        try {
+            await MediaDeviceHandler.instance.setDevice(deviceId, kind);
+        } catch (error) {
+            logger.error(`Failed to set device ${kind}: ${deviceId}`);
+            // reset state to current value
+            this.setState<any>({ [kind]: mapDeviceKindToHandlerValue(kind) });
+        }
     };
 
     private changeWebRtcMethod = (p2p: boolean): void => {
@@ -202,6 +226,9 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
                         />
                         <SettingsFlag
                             name="fallbackICEServerAllowed"
+                            label={_t("Allow fallback call assist server (%(server)s)", {
+                                server: new URL(FALLBACK_ICE_SERVER).pathname,
+                            })}
                             level={SettingLevel.DEVICE}
                             onChange={this.changeFallbackICEServerAllowed}
                         />

@@ -61,6 +61,7 @@ import SettingsSubsection, { SettingsSubsectionText } from "../../shared/Setting
 import { SettingsSubsectionHeading } from "../../shared/SettingsSubsectionHeading";
 import Heading from "../../../typography/Heading";
 import InlineSpinner from "../../../elements/InlineSpinner";
+import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -96,6 +97,9 @@ interface IState {
 }
 
 export default class GeneralUserSettingsTab extends React.Component<IProps, IState> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
     private readonly dispatcherRef: string;
 
     public constructor(props: IProps) {
@@ -217,6 +221,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         try {
             const idAccessToken = await authClient.getAccessToken({ check: false });
             await startTermsFlow(
+                this.context,
                 [new Service(SERVICE_TYPES.IS, idServerUrl, idAccessToken!)],
                 (policiesAndServices, agreedUrls, extraClassNames) => {
                     return new Promise((resolve, reject) => {
@@ -319,14 +324,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             },
         });
     };
-
-    private renderProfileSection(): JSX.Element {
-        return (
-            <div className="mx_SettingsTab_section">
-                <ProfileSettings />
-            </div>
-        );
-    }
 
     private renderAccountSection(): JSX.Element {
         let threepidSection: ReactNode = null;
@@ -558,13 +555,12 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
         return (
             <SettingsTab data-testid="mx_GeneralUserSettingsTab">
-                <div className="mx_SettingsTab_heading" data-testid="general">
-                    {_t("General")}
-                </div>
-                {this.renderProfileSection()}
-                {this.renderAccountSection()}
-                {this.renderLanguageSection()}
-                {supportsMultiLanguageSpellCheck ? this.renderSpellCheckSection() : null}
+                <SettingsSection heading={_t("General")}>
+                    <ProfileSettings />
+                    {this.renderAccountSection()}
+                    {this.renderLanguageSection()}
+                    {supportsMultiLanguageSpellCheck ? this.renderSpellCheckSection() : null}
+                </SettingsSection>
                 {discoverySection}
                 {this.renderIntegrationManagerSection()}
                 {accountManagementSection}
