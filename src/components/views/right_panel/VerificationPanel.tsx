@@ -48,10 +48,10 @@ interface IProps {
 }
 
 interface IState {
-    sasEvent?: ShowSasCallbacks;
+    sasEvent: ShowSasCallbacks | null;
     emojiButtonClicked?: boolean;
     reciprocateButtonClicked?: boolean;
-    reciprocateQREvent?: ShowQrCodeCallbacks;
+    reciprocateQREvent: ShowQrCodeCallbacks | null;
 }
 
 export default class VerificationPanel extends React.PureComponent<IProps, IState> {
@@ -59,7 +59,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
 
     public constructor(props: IProps) {
         super(props);
-        this.state = {};
+        this.state = { sasEvent: null, reciprocateQREvent: null };
         this.hasVerifier = false;
     }
 
@@ -398,11 +398,12 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
     };
 
     private updateVerifierState = (): void => {
-        const { request } = this.props;
-        const sasEvent = request.verifier.getShowSasCallbacks();
-        const reciprocateQREvent = request.verifier.getReciprocateQrCodeCallbacks();
-        request.verifier?.off(VerifierEvent.ShowSas, this.updateVerifierState);
-        request.verifier?.off(VerifierEvent.ShowReciprocateQr, this.updateVerifierState);
+        // this method is only called once we know there is a verifier.
+        const verifier = this.props.request.verifier!;
+        const sasEvent = verifier.getShowSasCallbacks();
+        const reciprocateQREvent = verifier.getReciprocateQrCodeCallbacks();
+        verifier.off(VerifierEvent.ShowSas, this.updateVerifierState);
+        verifier.off(VerifierEvent.ShowReciprocateQr, this.updateVerifierState);
         this.setState({ sasEvent, reciprocateQREvent });
     };
 
