@@ -100,6 +100,16 @@ describe("handleClipboardEvent", () => {
         expect(output).toBe(false);
     });
 
+    it("returns false if room clipboardData files and types are empty", () => {
+        const originalEvent = {
+            type: "paste",
+            clipboardData: { files: [], types: [] },
+        } as unknown as ClipboardEvent;
+        const input = [originalEvent, mockRoomState, mockClient] as const;
+        const output = handleClipboardEvent(...input);
+        expect(output).toBe(false);
+    });
+
     it("handles event and calls sendContentListToRoom when data files are present", () => {
         const originalEvent = {
             type: "paste",
@@ -192,6 +202,27 @@ describe("handleClipboardEvent", () => {
         expect(fetchSpy).toHaveBeenCalledWith("blob:");
     });
 
+    it("calls error handler when fetch fails", async () => {
+        const mockErrorMessage = "fetch failed";
+        fetchSpy.mockRejectedValueOnce(mockErrorMessage);
+        const originalEvent = {
+            type: "paste",
+            clipboardData: {
+                files: [],
+                types: ["text/html"],
+                getData: jest.fn().mockReturnValue(`<img src="blob:" />`),
+            },
+        } as unknown as ClipboardEvent;
+        const mockEventRelation = {} as unknown as IEventRelation;
+        const input = [originalEvent, mockRoomState, mockClient, mockEventRelation] as const;
+        const output = handleClipboardEvent(...input);
+
+        await waitFor(() => {
+            expect(logSpy).toHaveBeenCalledWith(mockErrorMessage);
+        });
+        expect(output).toBe(true);
+    });
+
     it("calls sendContentToRoom when parsing is successful", async () => {
         fetchSpy.mockResolvedValueOnce({
             url: "test/file",
@@ -214,6 +245,34 @@ describe("handleClipboardEvent", () => {
 
         await waitFor(() => {
             expect(sendContentToRoomSpy).toHaveBeenCalledTimes(1);
+        });
+        expect(output).toBe(true);
+    });
+
+    it("calls error handler when parsing is not successful", async () => {
+        fetchSpy.mockResolvedValueOnce({
+            url: "test/file",
+            blob: () => {
+                return Promise.resolve({ type: "image/jpeg" } as Blob);
+            },
+        } as Response);
+        const mockErrorMessage = "sendContentToRoom failed";
+        sendContentToRoomSpy.mockRejectedValueOnce(mockErrorMessage);
+
+        const originalEvent = {
+            type: "paste",
+            clipboardData: {
+                files: [],
+                types: ["text/html"],
+                getData: jest.fn().mockReturnValue(`<img src="blob:" />`),
+            },
+        } as unknown as ClipboardEvent;
+        const mockEventRelation = {} as unknown as IEventRelation;
+        const input = [originalEvent, mockRoomState, mockClient, mockEventRelation] as const;
+        const output = handleClipboardEvent(...input);
+
+        await waitFor(() => {
+            expect(logSpy).toHaveBeenCalledWith(mockErrorMessage);
         });
         expect(output).toBe(true);
     });
