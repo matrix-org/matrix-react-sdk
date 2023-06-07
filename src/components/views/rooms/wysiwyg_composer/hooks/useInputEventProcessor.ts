@@ -242,7 +242,7 @@ function handleInputEvent(event: InputEvent, send: Send, isCtrlEnterToSend: bool
  * @param clipboardEvent - event to process
  * @param roomContext - room in which the event occurs
  * @param mxClient - current matrix client
- * @param eventRelation - used to send the event to the correct timeline
+ * @param eventRelation - used to send the event to the correct place eg timeline vs thread
  * @returns - boolean to show if the event was handled or not
  */
 export function handleClipboardEvent(
@@ -251,6 +251,7 @@ export function handleClipboardEvent(
     mxClient: MatrixClient,
     eventRelation?: IEventRelation,
 ): boolean {
+    // Logic in this function follows that of `SendMessageComposer.onPaste`
     const { clipboardData: data } = clipboardEvent;
     const { room, timelineRenderingType, replyToEvent } = roomContext;
 
