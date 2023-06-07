@@ -87,6 +87,8 @@ export enum KeyBindingAction {
     ScrollUp = "KeyBinding.scrollUpInTimeline",
     /** Scroll down in the timeline */
     ScrollDown = "KeyBinding.scrollDownInTimeline",
+    /** Mark room as read **/
+    MarkRoomAsRead = "KeyBinding.markRoomAsRead",
     /** Dismiss read marker and jump to bottom */
     DismissReadMarker = "KeyBinding.dismissReadMarkerAndJumpToBottom",
     /** Jump to oldest unread message */
@@ -241,6 +243,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             KeyBindingAction.ScrollDown,
             KeyBindingAction.JumpToFirstMessage,
             KeyBindingAction.JumpToLatestMessage,
+            KeyBindingAction.MarkRoomAsRead,
         ],
     },
     [CategoryName.ROOM_LIST]: {
@@ -425,6 +428,13 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             key: Key.E,
         },
         displayName: _td("Toggle webcam on/off"),
+    },
+    [KeyBindingAction.MarkRoomAsRead]: {
+        default: {
+            shiftKey: true,
+            key: Key.ESCAPE,
+        },
+        displayName: _td("Mark as read"),
     },
     [KeyBindingAction.DismissReadMarker]: {
         default: {

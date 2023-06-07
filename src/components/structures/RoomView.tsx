@@ -117,6 +117,7 @@ import { WidgetType } from "../../widgets/WidgetType";
 import WidgetUtils from "../../utils/WidgetUtils";
 import { shouldEncryptRoomWithSingle3rdPartyInvite } from "../../utils/room/shouldEncryptRoomWithSingle3rdPartyInvite";
 import { WaitingForThirdPartyRoomView } from "./WaitingForThirdPartyRoomView";
+import { clearRoomNotification } from "../../utils/notifications";
 
 const DEBUG = false;
 const PREVENT_MULTIPLE_JITSI_WITHIN = 30_000;
@@ -1046,6 +1047,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         const action = getKeyBindingsManager().getRoomAction(ev);
         switch (action) {
+            case KeyBindingAction.MarkRoomAsRead:
+                clearRoomNotification(this.state.room, this.context.client);
+                handled = true;
+                break;
             case KeyBindingAction.DismissReadMarker:
                 this.messagePanel?.forgetReadMarker();
                 this.jumpToLiveTimeline();
