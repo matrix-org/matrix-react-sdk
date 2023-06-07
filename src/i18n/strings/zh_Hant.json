@@ -3746,5 +3746,9 @@
     "You do not have permission to invite users": "您沒有權限邀請使用者",
     "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s 更改了顯示名稱與大頭照",
     "Your language": "您的語言",
-    "Your device ID": "您的裝置 ID"
+    "Your device ID": "您的裝置 ID",
+    "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "或是您也可以試著使用公開伺服器 <server/>，但可能不夠可靠，而且會跟該伺服器分享您的 IP 位址。您也可以在設定中管理此設定。",
+    "Try using %(server)s": "嘗試使用 %(server)s",
+    "Allow fallback call assist server (%(server)s)": "允許使用備用通話輔助伺服器（%(server)s）",
+    "User is not logged in": "使用者未登入"
 }
