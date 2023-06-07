@@ -1,6 +1,6 @@
 {
     "name": "matrix-react-sdk",
-    "version": "3.72.0",
+    "version": "3.73.0",
     "description": "SDK for matrix.org using React",
     "author": "matrix.org",
     "repository": {
@@ -174,7 +174,7 @@
         "@typescript-eslint/eslint-plugin": "^5.35.1",
         "@typescript-eslint/parser": "^5.6.0",
         "allchange": "^1.1.0",
-        "axe-core": "4.7.1",
+        "axe-core": "4.7.2",
         "babel-jest": "^29.0.0",
         "blob-polyfill": "^7.0.0",
         "chokidar": "^3.5.1",
