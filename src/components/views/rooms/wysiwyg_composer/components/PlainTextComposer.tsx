@@ -50,6 +50,7 @@ export function PlainTextComposer({
     initialContent,
     leftComponent,
     rightComponent,
+    eventRelation,
 }: PlainTextComposerProps): JSX.Element {
     const {
         ref: editorRef,
@@ -63,7 +64,7 @@ export function PlainTextComposer({
         onSelect,
         handleCommand,
         handleMention,
-    } = usePlainTextListeners(initialContent, onChange, onSend);
+    } = usePlainTextListeners(initialContent, onChange, onSend, eventRelation);
 
     const composerFunctions = useComposerFunctions(editorRef, setContent);
     usePlainTextInitialization(initialContent, editorRef);

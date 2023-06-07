@@ -16,6 +16,7 @@ limitations under the License.
 
 import { KeyboardEvent, RefObject, SyntheticEvent, useCallback, useRef, useState } from "react";
 import { Attributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
+import { IEventRelation } from "matrix-js-sdk/src/matrix";
 
 import { useSettingValue } from "../../../../../hooks/useSettings";
 import { IS_MAC, Key } from "../../../../../Keyboard";
@@ -23,6 +24,9 @@ import Autocomplete from "../../Autocomplete";
 import { handleEventWithAutocomplete } from "./utils";
 import { useSuggestion } from "./useSuggestion";
 import { isNotNull, isNotUndefined } from "../../../../../Typeguards";
+import { handleClipboardEvent } from "./useInputEventProcessor";
+import { useRoomContext } from "../../../../../contexts/RoomContext";
+import { useMatrixClientContext } from "../../../../../contexts/MatrixClientContext";
 
 function isDivElement(target: EventTarget): target is HTMLDivElement {
     return target instanceof HTMLDivElement;
@@ -59,6 +63,7 @@ export function usePlainTextListeners(
     initialContent?: string,
     onChange?: (content: string) => void,
     onSend?: () => void,
+    eventRelation?: IEventRelation,
 ): {
     ref: RefObject<HTMLDivElement>;
     autocompleteRef: React.RefObject<Autocomplete>;
@@ -72,6 +77,9 @@ export function usePlainTextListeners(
     onSelect: (event: SyntheticEvent<HTMLDivElement>) => void;
     suggestion: MappedSuggestion | null;
 } {
+    const roomContext = useRoomContext();
+    const mxClient = useMatrixClientContext();
+
     const ref = useRef<HTMLDivElement | null>(null);
     const autocompleteRef = useRef<Autocomplete | null>(null);
     const [content, setContent] = useState<string | undefined>(initialContent);
@@ -106,13 +114,28 @@ export function usePlainTextListeners(
     const enterShouldSend = !useSettingValue<boolean>("MessageComposerInput.ctrlEnterToSend");
     const onInput = useCallback(
         (event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>) => {
+            console.log("<<< handling ", event);
             if (isDivElement(event.target)) {
+                console.log("<<< setting ", event.target.innerHTML);
+
                 // if enterShouldSend, we do not need to amend the html before setting text
                 const newInnerHTML = enterShouldSend ? event.target.innerHTML : amendInnerHtml(event.target.innerHTML);
                 setText(newInnerHTML);
             }
         },
         [setText, enterShouldSend],
+    );
+
+    const onPaste = useCallback(
+        (event: SyntheticEvent<HTMLDivElement, ClipboardEvent>) => {
+            const handled = handleClipboardEvent(event, roomContext, mxClient, eventRelation);
+            if (handled) {
+                event.preventDefault(); // we only handle image pasting manually
+            } else {
+                onInput(event);
+            }
+        },
+        [eventRelation, mxClient, onInput, roomContext],
     );
 
     const onKeyDown = useCallback(
@@ -150,7 +173,7 @@ export function usePlainTextListeners(
         ref,
         autocompleteRef,
         onInput,
-        onPaste: onInput,
+        onPaste,
         onKeyDown,
         content,
         setContent: setText,
