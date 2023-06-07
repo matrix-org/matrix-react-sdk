@@ -292,25 +292,26 @@ export function handleClipboardEvent(
             handleError("Failed to handle pasted content as Safari inserted content");
             return false;
         }
-        const imgSrc = imgDoc!.querySelector("img")!.src;
+        const imgSrc = imgDoc.querySelector("img")!.src;
 
-        fetch(imgSrc).then((response) => {
-            response.blob().then((imgBlob) => {
-                const type = imgBlob.type;
-                const safetype = getBlobSafeMimeType(type);
-                const ext = type.split("/")[1];
-                const parts = response.url.split("/");
-                const filename = parts[parts.length - 1];
-                const file = new File([imgBlob], filename + "." + ext, { type: safetype });
-                ContentMessages.sharedInstance().sendContentToRoom(
-                    file,
-                    room.roomId,
-                    eventRelation,
-                    mxClient,
-                    replyToEvent,
-                );
-            }, handleError);
-        }, handleError);
+        fetch(imgSrc)
+            .then((response) => {
+                response
+                    .blob()
+                    .then((imgBlob) => {
+                        const type = imgBlob.type;
+                        const safetype = getBlobSafeMimeType(type);
+                        const ext = type.split("/")[1];
+                        const parts = response.url.split("/");
+                        const filename = parts[parts.length - 1];
+                        const file = new File([imgBlob], filename + "." + ext, { type: safetype });
+                        ContentMessages.sharedInstance()
+                            .sendContentToRoom(file, room.roomId, eventRelation, mxClient, replyToEvent)
+                            .catch(handleError);
+                    })
+                    .catch(handleError);
+            })
+            .catch(handleError);
         return true;
     }
 
