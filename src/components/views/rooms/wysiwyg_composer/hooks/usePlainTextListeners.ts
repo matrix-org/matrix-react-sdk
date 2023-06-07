@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { KeyboardEvent, RefObject, SyntheticEvent, useCallback, useRef, useState } from "react";
+import { KeyboardEvent, RefObject, SyntheticEvent, ClipboardEvent, useCallback, useRef, useState } from "react";
 import { Attributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 import { IEventRelation } from "matrix-js-sdk/src/matrix";
 
@@ -68,8 +68,8 @@ export function usePlainTextListeners(
     ref: RefObject<HTMLDivElement>;
     autocompleteRef: React.RefObject<Autocomplete>;
     content?: string;
-    onInput(event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>): void;
-    onPaste(event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>): void;
+    onInput(event: SyntheticEvent<HTMLDivElement, InputEvent> | ClipboardEvent): void;
+    onPaste(event: ClipboardEvent): void;
     onKeyDown(event: KeyboardEvent<HTMLDivElement>): void;
     setContent(text?: string): void;
     handleMention: (link: string, text: string, attributes: Attributes) => void;
@@ -113,7 +113,7 @@ export function usePlainTextListeners(
 
     const enterShouldSend = !useSettingValue<boolean>("MessageComposerInput.ctrlEnterToSend");
     const onInput = useCallback(
-        (event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>) => {
+        (event: SyntheticEvent<HTMLDivElement, InputEvent> | ClipboardEvent) => {
             console.log("<<< handling ", event);
             if (isDivElement(event.target)) {
                 console.log("<<< setting ", event.target.innerHTML);
@@ -127,7 +127,7 @@ export function usePlainTextListeners(
     );
 
     const onPaste = useCallback(
-        (event: SyntheticEvent<HTMLDivElement, ClipboardEvent>) => {
+        (event: ClipboardEvent) => {
             const handled = handleClipboardEvent(event, roomContext, mxClient, eventRelation);
             if (handled) {
                 event.preventDefault(); // we only handle image pasting manually

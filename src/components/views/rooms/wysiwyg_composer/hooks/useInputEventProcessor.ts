@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { Wysiwyg, WysiwygEvent } from "@matrix-org/matrix-wysiwyg";
-import { useCallback } from "react";
+import { useCallback, ClipboardEvent as ReactClipboardEvent } from "react";
 import { IEventRelation, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { useSettingValue } from "../../../../../hooks/useSettings";
@@ -257,8 +257,7 @@ function handleInputEvent(event: InputEvent, send: Send, isCtrlEnterToSend: bool
  * @returns - boolean to show if the event was handled or not
  */
 export function handleClipboardEvent(
-    event: ClipboardEvent | InputEvent,
-    data: DataTransfer | null,
+    clipboardEvent: ClipboardEvent | ReactClipboardEvent | InputEvent,
     roomContext: IRoomState,
     mxClient: MatrixClient,
     eventRelation?: IEventRelation,
