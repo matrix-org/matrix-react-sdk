@@ -3746,5 +3746,9 @@
     "You do not have permission to invite users": "Sul pole õigusi kutse saatmiseks teistele kasutajatele",
     "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s muutis oma kuvatavat nime ja tunnuspilti",
     "Your language": "Sinu keel",
-    "Your device ID": "Sinu seadme tunnus"
+    "Your device ID": "Sinu seadme tunnus",
+    "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Alternatiivina võid sa kasutada avalikku serverit <server/>, kuid see ei pruugi olla piisavalt töökindel ning sa jagad ka oma IP-aadressi selle serveriga. Täpsemalt saad seda määrata seadistustes.",
+    "User is not logged in": "Kasutaja pole võrku loginud",
+    "Allow fallback call assist server (%(server)s)": "Varuvariandina luba kasutada ka teist kõnehõlbustusserverit (%(server)s)",
+    "Try using %(server)s": "Proovi kasutada %(server)s serverit"
 }
