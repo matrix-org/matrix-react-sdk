@@ -3746,5 +3746,9 @@
     "You do not have permission to invite users": "Nemáte oprávnění zvát uživatele",
     "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s změnil(a) své zobrazované jméno a profilový obrázek",
     "Your language": "Váš jazyk",
-    "Your device ID": "ID vašeho zařízení"
+    "Your device ID": "ID vašeho zařízení",
+    "User is not logged in": "Uživatel není přihlášen",
+    "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Případně můžete zkusit použít veřejný server na adrese <server/>, ale ten nebude tak spolehlivý a bude sdílet vaši IP adresu s tímto serverem. Můžete to spravovat také v Nastavení.",
+    "Allow fallback call assist server (%(server)s)": "Povolit záložní asistenční server hovorů (%(server)s)",
+    "Try using %(server)s": "Zkuste použít %(server)s"
 }
