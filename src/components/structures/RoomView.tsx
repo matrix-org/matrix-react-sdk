@@ -1048,8 +1048,9 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         const action = getKeyBindingsManager().getRoomAction(ev);
         switch (action) {
             case KeyBindingAction.MarkRoomAsRead:
-                if (!this.state.room) break;
-                clearRoomNotification(this.state.room!, this.context.client);
+                if (!!this.state.room && !!this.context.client) {
+                    clearRoomNotification(this.state.room, this.context.client);
+                }
                 handled = true;
                 break;
             case KeyBindingAction.DismissReadMarker:
