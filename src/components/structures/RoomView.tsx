@@ -1042,14 +1042,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         }
     };
 
-    private onReactKeyDown = (ev: React.KeyboardEvent): void => {
+    private onReactKeyDown = async (ev: React.KeyboardEvent): Promise<void> => {
         let handled = false;
 
         const action = getKeyBindingsManager().getRoomAction(ev);
         switch (action) {
             case KeyBindingAction.MarkRoomAsRead:
                 if (!!this.state.room && !!this.context.client) {
-                    clearRoomNotification(this.state.room, this.context.client);
+                    await clearRoomNotification(this.state.room, this.context.client);
                     handled = true;
                 }
                 break;
