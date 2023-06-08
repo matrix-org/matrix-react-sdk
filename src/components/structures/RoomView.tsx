@@ -223,7 +223,6 @@ export interface IRoomState {
     wasContextSwitch?: boolean;
     editState?: EditorStateTransfer;
     timelineRenderingType: TimelineRenderingType;
-    threadId?: string;
     liveTimeline?: EventTimeline;
     narrow: boolean;
     msc3946ProcessDynamicPredecessor: boolean;

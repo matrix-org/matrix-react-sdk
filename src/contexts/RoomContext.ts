@@ -29,7 +29,11 @@ export enum TimelineRenderingType {
     Pinned = "Pinned",
 }
 
-const RoomContext = createContext<IRoomState>({
+const RoomContext = createContext<
+    IRoomState & {
+        threadId?: string;
+    }
+>({
     roomLoading: true,
     peekLoading: false,
     shouldPeek: true,
