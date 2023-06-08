@@ -63,7 +63,7 @@ const ThreadSummary: React.FC<IProps> = ({ mxEvent, thread, ...props }) => {
             }}
             aria-label={_t("Open thread")}
         >
-            <ThreadSummaryIcon className="mx_Icon mx_Icon--thread" />
+            <ThreadSummaryIcon className="mx_Icon mx_Icon_18 mx_Icon_secondary-content" />
             <span className="mx_ThreadSummary_replies_amount">{countSection}</span>
             <ThreadMessagePreview thread={thread} showDisplayname={!roomContext.narrow} />
             <div className="mx_ThreadSummary_chevron" />

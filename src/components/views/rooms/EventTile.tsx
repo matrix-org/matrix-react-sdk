@@ -471,7 +471,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
         return (
             <div className="mx_ThreadPanel_replies">
-                <ThreadSummaryIcon className="mx_Icon mx_Icon--thread" />
+                <ThreadSummaryIcon className="mx_Icon mx_Icon_18 mx_Icon_secondary-content" />
                 <span className="mx_ThreadPanel_replies_amount">{this.state.thread.length}</span>
                 <ThreadMessagePreview thread={this.state.thread} />
             </div>
@@ -489,7 +489,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             if (this.props.highlightLink) {
                 return (
                     <a className="mx_ThreadSummary_info" href={this.props.highlightLink}>
-                        <ThreadSummaryIcon className="mx_Icon mx_Icon--thread" />
+                        <ThreadSummaryIcon className="mx_Icon mx_Icon_18 mx_Icon_secondary-content" />
                         {_t("From a thread")}
                     </a>
                 );
@@ -497,7 +497,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
             return (
                 <p className="mx_ThreadSummary_info">
-                    <ThreadSummaryIcon className="mx_Icon mx_Icon--thread" />
+                    <ThreadSummaryIcon className="mx_Icon mx_Icon_18 mx_Icon_secondary-content" />
                     {_t("From a thread")}
                 </p>
             );

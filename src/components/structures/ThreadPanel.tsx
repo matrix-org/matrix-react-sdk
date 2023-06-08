@@ -189,7 +189,7 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ hasThreads, filterOption, sh
     return (
         <aside className="mx_ThreadPanel_empty">
             <div className="mx_ThreadPanel_empty_icon">
-                <ThreadSummaryIcon className="mx_Icon mx_Icon--thread" />
+                <ThreadSummaryIcon className="mx_Icon mx_Icon_secondary-content" />
             </div>
             <h2>{_t("Keep discussions organised with threads")}</h2>
             {body}

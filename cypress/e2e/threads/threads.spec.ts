@@ -531,7 +531,7 @@ describe("Threads", () => {
 
         // Assert that ThreadSummary is rendered on the search results panel
         cy.get(".mx_RoomView_searchResultsPanel .mx_ThreadSummary_info").within(() => {
-            cy.get(".mx_Icon--thread").should("be.visible");
+            cy.get(".mx_Icon_secondary-content").should("be.visible");
             cy.findByText(/From a thread/).should("be.visible");
         });
     });
