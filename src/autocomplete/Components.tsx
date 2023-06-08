@@ -51,6 +51,9 @@ interface IPillCompletionProps extends ITextualCompletionProps {
     children?: React.ReactNode;
 }
 
+/*The HTML in the dangerouslySetInnerHTML for title below is generated in and comes from EmojiProvider so it should be safe to set it here
+if there are still concerns the sanitizeHTML function can be used
+*/
 export const PillCompletion = forwardRef<IPillCompletionProps, any>((props, ref) => {
     const {
         title,
