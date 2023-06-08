@@ -46,4 +46,18 @@ describe("<MainSplit/>", () => {
         // Assert it matches the default width of 350
         expect(container.querySelector<HTMLElement>(".mx_RightPanel_ResizeWrapper")!.style.width).toBe("500px");
     });
+
+    it("prefers size stashed in LocalStorage to the defaultSize prop", () => {
+        localStorage.setItem("mx_rhs_size_thread", "333");
+        const { container } = render(
+            <MainSplit
+                resizeNotifier={resizeNotifier}
+                children={children}
+                panel={panel}
+                sizeKey="thread"
+                defaultSize={400}
+            />,
+        );
+        expect(container.querySelector<HTMLElement>(".mx_RightPanel_ResizeWrapper")!.style.width).toBe("333px");
+    });
 });
