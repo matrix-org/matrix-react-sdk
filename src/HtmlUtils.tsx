@@ -57,6 +57,8 @@ const BIGEMOJI_REGEX = new RegExp(`^(${EMOJIBASE_REGEX.source})+$`, "i");
 
 const COLOR_REGEX = /^#[0-9a-fA-F]{6}$/;
 
+const CUSTOM_EMOTES_REGEX =/:[\w+-]+:/g;
+
 export const PERMITTED_URL_SCHEMES = [
     "bitcoin",
     "ftp",
@@ -613,7 +615,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
                 // XXX: hacky bodge to temporarily apply a textFilter to the sanitizeParams structure.
                 sanitizeParams.textFilter = function(safeText) {
                     return highlighter.applyHighlights(safeText, safeHighlights).join('')
-                        .replace(/:[\w+-]+:/g, m => opts.emotes[m] ? opts.emotes[m] : m);
+                        .replace(CUSTOM_EMOTES_REGEX, m => opts.emotes[m] ? opts.emotes[m] : m);
                 };
             }
 
@@ -680,7 +682,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         "mx_EventTile_bigEmoji": emojiBody,
         "markdown-body": isHtmlMessage && !emojiBody,
     });
-    const tmp = strippedBody?.replace(/:[\w+-]+:/g, m => opts.emotes[m] ? opts.emotes[m] : m);
+    const tmp = strippedBody?.replace(CUSTOM_EMOTES_REGEX, m => opts.emotes[m] ? opts.emotes[m] : m);
     if (tmp !== strippedBody) {
         safeBody=tmp;
     }
@@ -690,7 +692,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         emojiBodyElements = formatEmojis(strippedBody, false) as JSX.Element[];
     }
 
-    return safeBody ?
+    return safeBody ? 
         <span
             key="body"
             ref={opts.ref}
@@ -698,11 +700,11 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
             dangerouslySetInnerHTML={{ __html: safeBody }}
             dir="auto"
         />
-    ) : (
+     : 
         <span key="body" ref={opts.ref} className={className} dir="auto">
             {emojiBodyElements || strippedBody}
         </span>
-    );
+    ;
 }
 
 /**
