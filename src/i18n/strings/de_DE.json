@@ -3746,5 +3746,9 @@
     "You do not have permission to invite users": "Du bist nicht berechtigt, Benutzer einzuladen",
     "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s hat den Anzeigenamen und das Profilbild geändert",
     "Your language": "Deine Sprache",
-    "Your device ID": "Deine Geräte-ID"
+    "Your device ID": "Deine Geräte-ID",
+    "Allow fallback call assist server (%(server)s)": "Ersatz-Anrufassistenz-Server erlauben (%(server)s)",
+    "User is not logged in": "Benutzer ist nicht angemeldet",
+    "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Alternativ kannst du versuchen, den öffentlichen Server unter <server/> zu verwenden. Dieser wird nicht so zuverlässig sein und deine IP-Adresse wird mit ihm geteilt. Du kannst dies auch in den Einstellungen konfigurieren.",
+    "Try using %(server)s": "Versuche %(server)s zu verwenden"
 }
