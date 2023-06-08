@@ -616,7 +616,7 @@ exports[`KeyboardUserSettingsTab renders list of keyboard shortcuts 1`] = `
                   >
                     <kbd>
                        
-                      Shift
+                      Alt
                        
                     </kbd>
                     +
