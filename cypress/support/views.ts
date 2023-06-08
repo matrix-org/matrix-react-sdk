@@ -54,7 +54,8 @@ declare global {
 }
 
 Cypress.Commands.add("viewRoomByName", (name: string): Chainable<JQuery<HTMLElement>> => {
-    return cy.findByRole("treeitem", { name: name }).should("have.class", "mx_RoomTile").click();
+    // long timeout to wait for new room to appear in room list
+    return cy.findByRole("treeitem", { name: name, timeout: 30000 }).should("have.class", "mx_RoomTile").click();
 });
 
 Cypress.Commands.add("getSpacePanelButton", (name: string): Chainable<JQuery<HTMLElement>> => {
