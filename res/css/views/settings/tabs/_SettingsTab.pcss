@@ -29,16 +29,19 @@ limitations under the License.
         gap: $spacing-8;
         flex-grow: 1;
     }
-    // never want full width buttons
-    // event when other content is 100% width
-    .mx_AccessibleButton {
-        align-self: flex-start;
-        justify-self: flex-start;
-    }
 
     .mx_Field {
         margin: 0;
         flex: 1;
+    }
+
+    #mx_tabpanel_USER_GENERAL_TAB & {
+        /* On General settings tab never want full width buttons */
+        /* event when other content is 100% width */
+        .mx_AccessibleButton {
+            align-self: flex-start;
+            justify-self: flex-start;
+        }
     }
 }
 
