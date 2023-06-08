@@ -36,6 +36,7 @@ import Autocomplete from "../../Autocomplete";
 import { handleEventWithAutocomplete } from "./utils";
 import ContentMessages from "../../../../../ContentMessages";
 import { getBlobSafeMimeType } from "../../../../../utils/blobs";
+import { isNotNull } from "../../../../../Typeguards";
 
 export function useInputEventProcessor(
     onSend: () => void,
@@ -60,9 +61,17 @@ export function useInputEventProcessor(
                 onSend();
             };
 
+            // this is required to handle edge case image pasting in Safari, see
+            // https://github.com/vector-im/element-web/issues/25327
+            const isInputEventForClipboard =
+                event instanceof InputEvent && event.inputType === "insertFromPaste" && isNotNull(event.dataTransfer);
             const isClipboardEvent = event instanceof ClipboardEvent;
-            if (isClipboardEvent) {
-                const handled = handleClipboardEvent(event, roomContext, mxClient, eventRelation);
+
+            const shouldHandleAsClipboardEvent = isClipboardEvent || isInputEventForClipboard;
+
+            if (shouldHandleAsClipboardEvent) {
+                const data = isClipboardEvent ? event.clipboardData : event.dataTransfer;
+                const handled = handleClipboardEvent(event, data, roomContext, mxClient, eventRelation);
                 return handled ? null : event;
             }
 
@@ -236,23 +245,24 @@ function handleInputEvent(event: InputEvent, send: Send, isCtrlEnterToSend: bool
 }
 
 /**
- * Takes a ClipboardEvent and handles image pasting. Returns a boolean to indicate if it has handled
- * the event or not.
+ * Takes an event and handles image pasting. Returns a boolean to indicate if it has handled
+ * the event or not. Must accept either clipboard or input events in order to prevent issue:
+ * https://github.com/vector-im/element-web/issues/25327
  *
- * @param clipboardEvent - event to process
+ * @param event - event to process
  * @param roomContext - room in which the event occurs
  * @param mxClient - current matrix client
  * @param eventRelation - used to send the event to the correct place eg timeline vs thread
  * @returns - boolean to show if the event was handled or not
  */
 export function handleClipboardEvent(
-    clipboardEvent: ClipboardEvent,
+    event: ClipboardEvent | InputEvent,
+    data: DataTransfer | null,
     roomContext: IRoomState,
     mxClient: MatrixClient,
     eventRelation?: IEventRelation,
 ): boolean {
     // Logic in this function follows that of `SendMessageComposer.onPaste`
-    const { clipboardData: data } = clipboardEvent;
     const { room, timelineRenderingType, replyToEvent } = roomContext;
 
     function handleError(error: unknown): void {
@@ -263,7 +273,7 @@ export function handleClipboardEvent(
         }
     }
 
-    if (clipboardEvent.type !== "paste" || data === null || room === undefined) {
+    if (event.type !== "paste" || data === null || room === undefined) {
         return false;
     }
 

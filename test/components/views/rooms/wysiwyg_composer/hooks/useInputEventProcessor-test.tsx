@@ -45,19 +45,19 @@ describe("handleClipboardEvent", () => {
     });
 
     function createMockClipboardEvent(props: any): ClipboardEvent {
-        return { ...props } as ClipboardEvent;
+        return { clipboardData: { files: [], types: [] }, ...props } as ClipboardEvent;
     }
 
     it("returns false if it is not a paste event", () => {
         const originalEvent = createMockClipboardEvent({ type: "copy" });
-        const output = handleClipboardEvent(originalEvent, mockRoomState, mockClient);
+        const output = handleClipboardEvent(originalEvent, originalEvent.clipboardData, mockRoomState, mockClient);
 
         expect(output).toBe(false);
     });
 
     it("returns false if clipboard data is null", () => {
         const originalEvent = createMockClipboardEvent({ type: "paste", clipboardData: null });
-        const output = handleClipboardEvent(originalEvent, mockRoomState, mockClient);
+        const output = handleClipboardEvent(originalEvent, originalEvent.clipboardData, mockRoomState, mockClient);
 
         expect(output).toBe(false);
     });
@@ -65,7 +65,12 @@ describe("handleClipboardEvent", () => {
     it("returns false if room is undefined", () => {
         const originalEvent = createMockClipboardEvent({ type: "paste" });
         const { room, ...roomStateWithoutRoom } = mockRoomState;
-        const output = handleClipboardEvent(originalEvent, roomStateWithoutRoom, mockClient);
+        const output = handleClipboardEvent(
+            originalEvent,
+            originalEvent.clipboardData,
+            roomStateWithoutRoom,
+            mockClient,
+        );
 
         expect(output).toBe(false);
     });
@@ -75,7 +80,7 @@ describe("handleClipboardEvent", () => {
             type: "paste",
             clipboardData: { files: [], types: [] },
         });
-        const output = handleClipboardEvent(originalEvent, mockRoomState, mockClient);
+        const output = handleClipboardEvent(originalEvent, originalEvent.clipboardData, mockRoomState, mockClient);
         expect(output).toBe(false);
     });
 
@@ -84,7 +89,7 @@ describe("handleClipboardEvent", () => {
             type: "paste",
             clipboardData: { files: ["something here"], types: [] },
         });
-        const output = handleClipboardEvent(originalEvent, mockRoomState, mockClient);
+        const output = handleClipboardEvent(originalEvent, originalEvent.clipboardData, mockRoomState, mockClient);
 
         expect(sendContentListToRoomSpy).toHaveBeenCalledTimes(1);
         expect(sendContentListToRoomSpy).toHaveBeenCalledWith(
@@ -103,7 +108,13 @@ describe("handleClipboardEvent", () => {
             clipboardData: { files: ["something here"], types: [] },
         });
         const mockEventRelation = {} as unknown as IEventRelation;
-        const output = handleClipboardEvent(originalEvent, mockRoomState, mockClient, mockEventRelation);
+        const output = handleClipboardEvent(
+            originalEvent,
+            originalEvent.clipboardData,
+            mockRoomState,
+            mockClient,
+            mockEventRelation,
+        );
 
         expect(sendContentListToRoomSpy).toHaveBeenCalledTimes(1);
         expect(sendContentListToRoomSpy).toHaveBeenCalledWith(
@@ -125,7 +136,13 @@ describe("handleClipboardEvent", () => {
             clipboardData: { files: ["something here"], types: [] },
         });
         const mockEventRelation = {} as unknown as IEventRelation;
-        const output = handleClipboardEvent(originalEvent, mockRoomState, mockClient, mockEventRelation);
+        const output = handleClipboardEvent(
+            originalEvent,
+            originalEvent.clipboardData,
+            mockRoomState,
+            mockClient,
+            mockEventRelation,
+        );
 
         expect(sendContentListToRoomSpy).toHaveBeenCalledTimes(1);
         await waitFor(() => {
@@ -144,7 +161,13 @@ describe("handleClipboardEvent", () => {
             },
         });
         const mockEventRelation = {} as unknown as IEventRelation;
-        const output = handleClipboardEvent(originalEvent, mockRoomState, mockClient, mockEventRelation);
+        const output = handleClipboardEvent(
+            originalEvent,
+            originalEvent.clipboardData,
+            mockRoomState,
+            mockClient,
+            mockEventRelation,
+        );
 
         expect(logSpy).toHaveBeenCalledWith("Failed to handle pasted content as Safari inserted content");
         expect(output).toBe(false);
@@ -160,7 +183,7 @@ describe("handleClipboardEvent", () => {
             },
         });
         const mockEventRelation = {} as unknown as IEventRelation;
-        handleClipboardEvent(originalEvent, mockRoomState, mockClient, mockEventRelation);
+        handleClipboardEvent(originalEvent, originalEvent.clipboardData, mockRoomState, mockClient, mockEventRelation);
 
         expect(fetchSpy).toHaveBeenCalledTimes(1);
         expect(fetchSpy).toHaveBeenCalledWith("blob:");
@@ -178,7 +201,13 @@ describe("handleClipboardEvent", () => {
             },
         });
         const mockEventRelation = {} as unknown as IEventRelation;
-        const output = handleClipboardEvent(originalEvent, mockRoomState, mockClient, mockEventRelation);
+        const output = handleClipboardEvent(
+            originalEvent,
+            originalEvent.clipboardData,
+            mockRoomState,
+            mockClient,
+            mockEventRelation,
+        );
 
         await waitFor(() => {
             expect(logSpy).toHaveBeenCalledWith(mockErrorMessage);
@@ -203,7 +232,13 @@ describe("handleClipboardEvent", () => {
             },
         });
         const mockEventRelation = {} as unknown as IEventRelation;
-        const output = handleClipboardEvent(originalEvent, mockRoomState, mockClient, mockEventRelation);
+        const output = handleClipboardEvent(
+            originalEvent,
+            originalEvent.clipboardData,
+            mockRoomState,
+            mockClient,
+            mockEventRelation,
+        );
 
         await waitFor(() => {
             expect(sendContentToRoomSpy).toHaveBeenCalledWith(
@@ -236,7 +271,13 @@ describe("handleClipboardEvent", () => {
             },
         });
         const mockEventRelation = {} as unknown as IEventRelation;
-        const output = handleClipboardEvent(originalEvent, mockRoomState, mockClient, mockEventRelation);
+        const output = handleClipboardEvent(
+            originalEvent,
+            originalEvent.clipboardData,
+            mockRoomState,
+            mockClient,
+            mockEventRelation,
+        );
 
         await waitFor(() => {
             expect(logSpy).toHaveBeenCalledWith(mockErrorMessage);
