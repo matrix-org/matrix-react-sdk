@@ -42,12 +42,15 @@ import { Room } from './matrix-js-sdk/src/models/room';
 import { mediaFromMxc } from '../../../customisations/Media';
 import { decryptFile } from '../../../utils/DecryptFile';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 export const CATEGORY_HEADER_HEIGHT = 20;
 export const EMOJI_HEIGHT = 35;
 export const EMOJIS_PER_ROW = 8;
 
 const ZERO_WIDTH_JOINER = "\u200D";
+
+const EMOTES_STATE=new UnstableValue("org.matrix.msc3892.emotes","m.room.emotes")
 
 interface IProps {
     selectedEmojis?: Set<string>;
@@ -81,7 +84,8 @@ class EmojiPicker extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
-        const emotesEvent = props.room?.currentState.getStateEvents("m.room.emotes", "");
+
+        const emotesEvent = props.room?.currentState.getStateEvents(EMOTES_STATE.name, "");
         const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
         this.emotesPromise = this.decryptEmotes(rawEmotes, props.room?.roomId);
         this.finalEmotes=[];
@@ -341,6 +345,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
             if (lcFilter.includes(this.state.filter)) {
                 emojis = this.memoizedDataByCategory[cat.id];
             } else {
+                
                 emojis = cat.id === "recent" ? this.recentlyUsed : DATA_BY_CATEGORY[cat.id];
                 if(cat.id==="custom"){
                     emojis=this.finalEmotes

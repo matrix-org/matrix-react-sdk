@@ -26,8 +26,9 @@ import { mediaFromMxc } from '../../../customisations/Media';
 import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 import SettingsFieldset from "../settings/SettingsFieldset";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
-const EMOTES_STATE=new UnstableValue("m.room.emotes","org.matrix.msc3892.emotes")
-const COMPAT_STATE=new UnstableValue("m.room.clientemote_compatibility","org.matrix.msc3892.clientemote_compatibility")
+const EMOTES_STATE=new UnstableValue("org.matrix.msc3892.emotes","m.room.emotes")
+const COMPAT_STATE=new UnstableValue("org.matrix.msc3892.clientemote_compatibility","m.room.clientemote_compatibility")
+const EMOTES_COMP=new UnstableValue("im.ponies.room_emotes","m.room.room_emotes")
 interface IProps {
     roomId: string;
 }
@@ -59,17 +60,17 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         const room = client.getRoom(props.roomId);
         if (!room) throw new Error(`Expected a room for ID: ${props.roomId}`);
         
-        const emotesEvent = room.currentState.getStateEvents(EMOTES_STATE, "");
+        const emotesEvent = room.currentState.getStateEvents(EMOTES_STATE.name, "");
         const emotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
         const value = {};
         for (const emote in emotes) {
             value[emote] = emote;
         }
 
-        const compatEvent = room.currentState.getStateEvents(COMPAT_STATE, "");
+        const compatEvent = room.currentState.getStateEvents(COMPAT_STATE.name, "");
         const compat = compatEvent ? (compatEvent.getContent().isCompat || false) : false;
 
-        const imagePackEvent = room.currentState.getStateEvents("m.image_pack", "");
+        const imagePackEvent = room.currentState.getStateEvents(EMOTES_COMP.name, "");
         this.imagePack = imagePackEvent ? (imagePackEvent.getContent() || {"images":new Map<string,object>()}) : {"images":new Map<string,object>()};
         if(!this.imagePack["images"]){
             this.imagePack={"images":new Map<string,object>()}
@@ -85,7 +86,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             newEmoteFile: [],
             deleted: false,
             deletedItems: {},
-            canAddEmote: room.currentState.maySendStateEvent(EMOTES_STATE, client.getUserId()),
+            canAddEmote: room.currentState.maySendStateEvent(EMOTES_STATE.name, client.getUserId()),
             value: value,
             compatibility:compat
         };
@@ -205,9 +206,9 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                 }
             }
             newState.value = value;
-            await client.sendStateEvent(this.props.roomId, EMOTES_STATE, emotesMxcs, "");
+            await client.sendStateEvent(this.props.roomId, EMOTES_STATE.name, emotesMxcs, "");
             this.imagePack=newPack
-            await client.sendStateEvent(this.props.roomId, "m.image_pack", this.imagePack, "");
+            await client.sendStateEvent(this.props.roomId, EMOTES_COMP.name, this.imagePack, "");
             
             newState.newEmoteFileAdded = false;
             newState.newEmoteCodeAdded = false;
@@ -281,7 +282,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
     private onCompatChange = async (allowed: boolean) => {
         
         const client = MatrixClientPeg.get();
-        await client.sendStateEvent(this.props.roomId, COMPAT_STATE, { isCompat: allowed }, "");
+        await client.sendStateEvent(this.props.roomId, COMPAT_STATE.name, { isCompat: allowed }, "");
         
         if (allowed) {
             for (const shortcode in this.state.emotes) {
@@ -296,7 +297,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                 }
             }
 
-            await client.sendStateEvent(this.props.roomId, "m.image_pack", this.imagePack, "");
+            await client.sendStateEvent(this.props.roomId, EMOTES_COMP.name, this.imagePack, "");
         }
 
         this.setState({

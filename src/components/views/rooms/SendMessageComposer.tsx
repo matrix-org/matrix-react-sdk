@@ -78,7 +78,8 @@ import { getBlobSafeMimeType } from "../../../utils/blobs";
  * @param editedContent - The content of the parent event being edited.
  */
 
-const COMPAT_STATE=new UnstableValue("m.room.clientemote_compatibility","org.matrix.msc3892.clientemote_compatibility")
+const COMPAT_STATE=new UnstableValue("org.matrix.msc3892.clientemote_compatibility","m.room.clientemote_compatibility")
+const EMOTES_COMP=new UnstableValue("im.ponies.room_emotes","m.room.room_emotes")
 
 export function attachMentions(
     sender: string,
@@ -305,10 +306,10 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
         const room = this.props.room
 
-        const compatEvent = room.currentState.getStateEvents(COMPAT_STATE, "");
+        const compatEvent = room.currentState.getStateEvents(COMPAT_STATE.name, "");
         this.compat = compatEvent ? (compatEvent.getContent().isCompat || false) : false;
 
-        const imagePackEvent = room.currentState.getStateEvents("m.image_pack", "");
+        const imagePackEvent = room.currentState.getStateEvents(EMOTES_COMP.name, "");
         this.imagePack = imagePackEvent ? (imagePackEvent.getContent() || {"images":new Map<string,object>()}) : {"images":new Map<string,object>()};
         this.emotes=new Map<string,string>()
 
