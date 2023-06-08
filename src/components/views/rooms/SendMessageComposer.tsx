@@ -469,7 +469,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
     public async sendMessage(): Promise<void> {
         const model = this.model;
-        
+
         if (model.isEmpty) {
             return;
         }

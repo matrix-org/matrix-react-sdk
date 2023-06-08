@@ -18,7 +18,6 @@ import React from "react";
 import EMOJIBASE from "emojibase-data/en/compact.json";
 import SHORTCODES from "emojibase-data/en/shortcodes/iamcal.json";
 
-
 export interface IEmoji {
     label: string;
     group?: number;

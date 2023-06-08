@@ -81,7 +81,6 @@ class EmojiPicker extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
-
         const emotesEvent = props.room?.currentState.getStateEvents("m.room.emotes", "");
         const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
         this.emotesPromise = this.decryptEmotes(rawEmotes, props.room?.roomId);

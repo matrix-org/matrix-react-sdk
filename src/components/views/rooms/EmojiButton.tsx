@@ -22,7 +22,7 @@ import ContextMenu, { aboveLeftOf, MenuProps, useContextMenu } from "../../struc
 import EmojiPicker from "../emojipicker/EmojiPicker";
 import { CollapsibleButton } from "./CollapsibleButton";
 import { OverflowMenuContext } from "./MessageComposerButtons";
-import { Room } from 'matrix-js-sdk/src/models/room';
+import { Room } from "matrix-js-sdk/src/models/room";
 
 interface IEmojiButtonProps {
     addEmoji: (unicode: string) => boolean;
@@ -77,6 +77,3 @@ export function EmojiButton({ addEmoji, menuPosition, className, room }: IEmojiB
         </>
     );
 }
-
-
-

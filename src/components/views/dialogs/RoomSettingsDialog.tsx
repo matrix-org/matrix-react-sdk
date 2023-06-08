@@ -152,7 +152,6 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
             <NotificationSettingsTab roomId={this.props.roomId} closeSettingsFn={() => this.props.onFinished(true)} />,
             "RoomSettingsNotifications",
         ));
-
         tabs.push(new Tab(
             ROOM_EMOTES_TAB,
             _td("Emotes"),
