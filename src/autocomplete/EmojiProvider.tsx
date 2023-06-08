@@ -24,17 +24,18 @@ import EMOTICON_REGEX from "emojibase-regex/emoticon";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
-import { _t } from '../languageHandler';
-import AutocompleteProvider from './AutocompleteProvider';
-import QueryMatcher from './QueryMatcher';
-import { PillCompletion } from './Components';
-import { ICompletion, ISelectionRange } from './Autocompleter';
+import { _t } from "../languageHandler";
+import AutocompleteProvider from "./AutocompleteProvider";
+import QueryMatcher from "./QueryMatcher";
+import { PillCompletion } from "./Components";
+import { ICompletion, ISelectionRange } from "./Autocompleter";
 import SettingsStore from "../settings/SettingsStore";
-import { EMOJI, IEmoji, getEmojiFromUnicode } from '../emoji';
-import { TimelineRenderingType } from '../contexts/RoomContext';
-import * as recent from '../emojipicker/recent';
-import { decryptFile } from '../utils/DecryptFile';
-import { mediaFromMxc } from '../customisations/Media';
+import { EMOJI, IEmoji, getEmojiFromUnicode } from "../emoji";
+import { TimelineRenderingType } from "../contexts/RoomContext";
+import * as recent from "../emojipicker/recent";
+import { filterBoolean } from "../utils/arrays";
+import { decryptFile } from "../utils/DecryptFile";
+import { mediaFromMxc } from "../customisations/Media";
 
 const LIMIT = 20;
 
@@ -130,6 +131,7 @@ export default class EmojiProvider extends AutocompleteProvider {
         if (!SettingsStore.getValue("MessageComposerInput.suggestEmoji")) {
             return []; // don't give any suggestions if the user doesn't want them
         }
+
         this.emotes = await this.emotesPromise;
         const emojisAndEmotes=[...SORTED_EMOJI];
         for (const key in this.emotes) {

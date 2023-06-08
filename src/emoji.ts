@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import EMOJIBASE from 'emojibase-data/en/compact.json';
-import SHORTCODES from 'emojibase-data/en/shortcodes/iamcal.json';
+import React from "react";
+import EMOJIBASE from "emojibase-data/en/compact.json";
+import SHORTCODES from "emojibase-data/en/shortcodes/iamcal.json";
 
 
 export interface IEmoji {

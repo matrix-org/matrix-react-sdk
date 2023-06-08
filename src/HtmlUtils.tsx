@@ -585,7 +585,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
     if (opts.forComposerQuote) {
         sanitizeParams = composerSanitizeHtmlParams;
     }
-    
+
     let strippedBody: string;
     let safeBody: string | undefined; // safe, sanitised HTML, preferred over `strippedBody` which is fully plaintext
 
@@ -607,6 +607,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         const highlighter = safeHighlights?.length
             ? new HtmlHighlighter("mx_EventTile_searchHighlight", opts.highlightLink)
             : null;
+
         if (isFormattedBody) {
             if (highlighter) {
                 // XXX: We sanitize the HTML whilst also highlighting its text nodes, to avoid accidentally trying

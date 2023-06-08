@@ -14,23 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, KeyboardEvent, ReactNode, TransitionEvent } from 'react';
-import ReactDOM from 'react-dom';
-import classNames from 'classnames';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { EventType } from 'matrix-js-sdk/src/@types/event';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { Relations } from "matrix-js-sdk/src/models/relations";
-import { logger } from 'matrix-js-sdk/src/logger';
+import React, { createRef, KeyboardEvent, ReactNode, TransitionEvent } from "react";
+import ReactDOM from "react-dom";
+import classNames from "classnames";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { logger } from "matrix-js-sdk/src/logger";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
 import { isSupportedReceiptType } from "matrix-js-sdk/src/utils";
 import { Optional } from "matrix-events-sdk";
 
-import shouldHideEvent from '../../shouldHideEvent';
-import { wantsDateSeparator } from '../../DateUtils';
-import { MatrixClientPeg } from '../../MatrixClientPeg';
-import SettingsStore from '../../settings/SettingsStore';
+import shouldHideEvent from "../../shouldHideEvent";
+import { wantsDateSeparator } from "../../DateUtils";
+import { MatrixClientPeg } from "../../MatrixClientPeg";
+import SettingsStore from "../../settings/SettingsStore";
 import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import { Layout } from "../../settings/enums/Layout";
 import { _t } from "../../languageHandler";
@@ -59,9 +58,6 @@ import { haveRendererForEvent } from "../../events/EventTileFactory";
 import { editorRoomKey } from "../../Editing";
 import { hasThreadSummary } from "../../utils/EventUtils";
 import { VoiceBroadcastInfoEventType } from "../../voice-broadcast";
-import { mediaFromMxc } from "../../customisations/Media";
-import { mockStateEventImplementation } from '../../../test/test-utils';
-
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];

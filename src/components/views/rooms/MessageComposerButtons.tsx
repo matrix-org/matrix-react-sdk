@@ -148,7 +148,6 @@ function emojiButton(props: IProps, room: Room): ReactElement {
     );
 }
 
-
 function uploadButton(): ReactElement {
     return <UploadButton key="controls_upload" />;
 }

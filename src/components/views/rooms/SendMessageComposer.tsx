@@ -80,7 +80,6 @@ import { getBlobSafeMimeType } from "../../../utils/blobs";
 
 const COMPAT_STATE=new UnstableValue("m.room.clientemote_compatibility","org.matrix.msc3892.clientemote_compatibility")
 
-
 export function attachMentions(
     sender: string,
     content: IContent,
@@ -164,8 +163,6 @@ export function attachMentions(
     }
 }
 
-
-
 // Merges favouring the given relation
 export function attachRelation(content: IContent, relation?: IEventRelation): void {
     if (relation) {
@@ -187,7 +184,6 @@ export function createMessageContent(
     emotes?:Map<string,string>,
     compat?:boolean,
 ): IContent {
-    
     const isEmote = containsEmote(model);
     if (isEmote) {
         model = stripEmoteCommand(model);
@@ -198,6 +194,7 @@ export function createMessageContent(
     model = unescapeMessage(model);
 
     const body = textSerialize(model);
+
     let emoteBody;
     if (compat) {
         emoteBody = body.replace(/:[\w+-]+:/g, m => emotes[m] ? emotes[m] : m)
@@ -223,8 +220,6 @@ export function createMessageContent(
             content.formatted_body = emoteBody
         }
     }
-
-
 
     // Build the mentions property and add it to the event content.
     attachMentions(sender, content, model, replyToEvent);
@@ -334,8 +329,6 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             this.editorRef.current?.focus();
         }
     }
-
-
 
     private onKeyDown = (event: KeyboardEvent): void => {
         // ignore any keypress while doing IME compositions
@@ -476,6 +469,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
     public async sendMessage(): Promise<void> {
         const model = this.model;
+        
         if (model.isEmpty) {
             return;
         }
