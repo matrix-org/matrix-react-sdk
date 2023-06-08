@@ -26,9 +26,15 @@ interface IProps {
     collapsedRhs?: boolean;
     panel?: JSX.Element;
     children: ReactNode;
+    sizeKey?: string;
+    defaultSize: number;
 }
 
 export default class MainSplit extends React.Component<IProps> {
+    public static defaultProps = {
+        defaultSize: 350,
+    };
+
     private onResizeStart = (): void => {
         this.props.resizeNotifier.startResizing();
     };
@@ -37,6 +43,14 @@ export default class MainSplit extends React.Component<IProps> {
         this.props.resizeNotifier.notifyRightHandleResized();
     };
 
+    private get storageKey(): string {
+        let key = "mx_rhs_size";
+        if (!!this.props.sizeKey) {
+            key += `_${this.props.sizeKey}`;
+        }
+        return key;
+    }
+
     private onResizeStop = (
         event: MouseEvent | TouchEvent,
         direction: Direction,
@@ -44,14 +58,14 @@ export default class MainSplit extends React.Component<IProps> {
         delta: NumberSize,
     ): void => {
         this.props.resizeNotifier.stopResizing();
-        window.localStorage.setItem("mx_rhs_size", (this.loadSidePanelSize().width + delta.width).toString());
+        window.localStorage.setItem(this.storageKey, (this.loadSidePanelSize().width + delta.width).toString());
     };
 
     private loadSidePanelSize(): { height: string | number; width: number } {
-        let rhsSize = parseInt(window.localStorage.getItem("mx_rhs_size")!, 10);
+        let rhsSize = parseInt(window.localStorage.getItem(this.storageKey)!, 10);
 
         if (isNaN(rhsSize)) {
-            rhsSize = 350;
+            rhsSize = this.props.defaultSize;
         }
 
         return {
@@ -70,6 +84,7 @@ export default class MainSplit extends React.Component<IProps> {
         if (hasResizer) {
             children = (
                 <Resizable
+                    key={this.props.sizeKey}
                     defaultSize={this.loadSidePanelSize()}
                     minWidth={264}
                     maxWidth="50%"
