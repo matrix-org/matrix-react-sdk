@@ -62,14 +62,14 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         if (!room) throw new Error(`Expected a room for ID: ${props.roomId}`);
         
         //TODO: Do not encrypt/decrypt if room is not encrypted
-        const emotesEvent = room.currentState.getStateEvents("m.room.emotes", "");
+        const emotesEvent = room.currentState.getStateEvents(EMOTES_STATE, "");
         const emotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
         const value = {};
         for (const emote in emotes) {
             value[emote] = emote;
         }
 
-        const compatEvent = room.currentState.getStateEvents("m.room.clientemote_compatibility", "");
+        const compatEvent = room.currentState.getStateEvents(COMPAT_STATE, "");
         const compat = compatEvent ? (compatEvent.getContent().isCompat || false) : false;
 
         const imagePackEvent = room.currentState.getStateEvents("m.image_pack", "");
@@ -88,7 +88,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             newEmoteFile: [],
             deleted: false,
             deletedItems: {},
-            canAddEmote: room.currentState.maySendStateEvent("m.room.emotes", client.getUserId()),
+            canAddEmote: room.currentState.maySendStateEvent(EMOTES_STATE, client.getUserId()),
             value: value,
             compatibility:compat
         };
@@ -212,7 +212,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                 }
             }
             newState.value = value;
-            await client.sendStateEvent(this.props.roomId, "m.room.emotes", emotesMxcs, "");
+            await client.sendStateEvent(this.props.roomId, EMOTES_STATE, emotesMxcs, "");
             this.imagePack=newPack
             await client.sendStateEvent(this.props.roomId, "m.image_pack", this.imagePack, "");
             
@@ -294,7 +294,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
     private onCompatChange = async (allowed: boolean) => {
         
         const client = MatrixClientPeg.get();
-        await client.sendStateEvent(this.props.roomId, "m.room.clientemote_compatibility", { isCompat: allowed }, "");
+        await client.sendStateEvent(this.props.roomId, COMPAT_STATE, { isCompat: allowed }, "");
         
         if (allowed) {
             for (const shortcode in this.state.emotes) {

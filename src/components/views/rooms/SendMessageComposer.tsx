@@ -23,6 +23,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 import dis from "../../../dispatcher/dispatcher";
 import EditorModel from "../../../editor/model";
@@ -76,6 +77,10 @@ import { getBlobSafeMimeType } from "../../../utils/blobs";
  * @param replyToEvent - The event being replied to or undefined if it is not a reply.
  * @param editedContent - The content of the parent event being edited.
  */
+
+const COMPAT_STATE=new UnstableValue("m.room.clientemote_compatibility","org.matrix.msc3892.clientemote_compatibility")
+
+
 export function attachMentions(
     sender: string,
     content: IContent,
@@ -305,7 +310,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
         const room = this.props.room
 
-        const compatEvent = room.currentState.getStateEvents("m.room.clientemote_compatibility", "");
+        const compatEvent = room.currentState.getStateEvents(COMPAT_STATE, "");
         this.compat = compatEvent ? (compatEvent.getContent().isCompat || false) : false;
 
         const imagePackEvent = room.currentState.getStateEvents("m.image_pack", "");

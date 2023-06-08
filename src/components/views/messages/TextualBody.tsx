@@ -49,8 +49,10 @@ import { getParentEventId } from '../../../utils/Reply';
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { decryptFile } from '../../../utils/DecryptFile';
 import { mediaFromMxc } from '../../../customisations/Media';
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 const MAX_HIGHLIGHT_LENGTH = 4096;
+const EMOTES_STATE=new UnstableValue("m.room.emotes","org.matrix.msc3892.emotes")
 
 interface IState {
     // the URLs (if any) to be previewed with a LinkPreviewWidget inside this TextualBody.
@@ -572,7 +574,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         const client = MatrixClientPeg.get();
         const room = client.getRoom(this.props.mxEvent.getRoomId());
         //TODO: Do not encrypt/decrypt if room is not encrypted
-        const emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
+        const emotesEvent = room?.currentState.getStateEvents(EMOTES_STATE, "");
         const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
         const decryptede=new Map<string, string>;
         let durl="";
