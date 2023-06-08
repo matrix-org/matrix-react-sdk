@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { createRef } from "react";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -24,9 +24,8 @@ import { uploadFile } from "../../../ContentMessages";
 import { decryptFile } from "../../../utils/DecryptFile";
 import { mediaFromMxc } from '../../../customisations/Media';
 import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
-import SettingsFieldset from '../settings/SettingsFieldset';
-import LabelledToggleSwitch from '../elements/LabelledToggleSwitch';
-import { stringify } from '../dialogs/devtools/Event';
+import SettingsFieldset from "../settings/SettingsFieldset";
+import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 const EMOTES_STATE=new UnstableValue("m.room.emotes","org.matrix.msc3892.emotes")
 const COMPAT_STATE=new UnstableValue("m.room.clientemote_compatibility","org.matrix.msc3892.clientemote_compatibility")
 interface IProps {
@@ -48,7 +47,6 @@ interface IState {
     compatiblity: boolean;
 }
 
-// TODO: Merge with EmoteSettings?
 export default class RoomEmoteSettings extends React.Component<IProps, IState> {
     private emoteUpload = createRef<HTMLInputElement>();
     private emoteCodeUpload = createRef<HTMLInputElement>();
@@ -61,7 +59,6 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         const room = client.getRoom(props.roomId);
         if (!room) throw new Error(`Expected a room for ID: ${props.roomId}`);
         
-        //TODO: Do not encrypt/decrypt if room is not encrypted
         const emotesEvent = room.currentState.getStateEvents(EMOTES_STATE, "");
         const emotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
         const value = {};
@@ -134,8 +131,6 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             value: value,
         });
 
-        //this.emoteUpload.current.value = "";
-        //this.emoteCodeUpload.current.value = "";
     };
     private deleteEmote = (e: React.MouseEvent): Promise<void> => {
         e.stopPropagation();
@@ -166,13 +161,11 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         const emotesMxcs = {};
         const value = {};
         const newPack={"images":new Map<string,object>()}
-        // TODO: What do we do about errors?
 
         if (this.state.emotes || (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded)) {
-            //TODO: Encrypt the shortcode and the image data before uploading
             if (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded) {
                 for (let i = 0; i < this.state.newEmoteCode.length; i++) {
-                    const newEmote = await uploadFile(client, this.props.roomId, this.state.newEmoteFile[i]); //await client.uploadContent(this.state.newEmoteFile); FOR UNENCRYPTED
+                    const newEmote = await uploadFile(client, this.props.roomId, this.state.newEmoteFile[i]);
                     if (client.isRoomEncrypted(this.props.roomId)) {
                         emotesMxcs[this.state.newEmoteCode[i]] = newEmote.file;
                     } else {
@@ -216,8 +209,6 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             this.imagePack=newPack
             await client.sendStateEvent(this.props.roomId, "m.image_pack", this.imagePack, "");
             
-            //this.emoteUpload.current.value = "";
-            //this.emoteCodeUpload.current.value = "";
             newState.newEmoteFileAdded = false;
             newState.newEmoteCodeAdded = false;
             newState.EmoteFieldsTouched = {};
@@ -256,7 +247,6 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             uploadedFiles.push(file);
             newCodes.push(fileName);
         }
-        //reader.onload = (ev) => {
         this.setState({
             newEmoteCodeAdded: true,
             newEmoteFileAdded: true,
@@ -266,9 +256,6 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                 ...this.state.EmoteFieldsTouched,
             },
         });
-        //this.emoteUploadImage.current.src = URL.createObjectURL(file);
-        //};
-        //reader.readAsDataURL(file);
     };
     private onEmoteCodeAdd = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if (e.target.value.length > 0) {
@@ -331,7 +318,6 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         this.setState({
             decryptedemotes: decryptede,
         });
-        //this.forceUpdate();
     }
     public render(): JSX.Element {
         let emoteSettingsButtons;
