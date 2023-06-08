@@ -3173,5 +3173,19 @@
     "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "Nếu bạn đã báo cáo lỗi qua GitHub, nhật ký gỡ lỗi có thể giúp chúng tôi theo dõi vấn đề. ",
     "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "Với mã hóa đầu cuối miễn phí, cuộc gọi thoại và truyền hình không giới hạn, %(brand)s là cách tuyệt vời để giữ liên lạc.",
     "Connecting to integration manager…": "Đang kết nối tới quản lý tích hợp…",
-    "IRC (Experimental)": "IRC (thử nghiệm)"
+    "IRC (Experimental)": "IRC (thử nghiệm)",
+    "Unfortunately we're unable to start a recording right now. Please try again later.": "Thật không may là chúng tôi không thể bắt đầu ghi âm. Vui lòng thử lại.",
+    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Bạn còn có thể yêu cầu quản trị viên máy chủ nhà nâng cấp máy chủ để thay đổi nó.",
+    "Don’t miss a thing by taking %(brand)s with you": "Không bỏ lỡ gì bằng cách mang %(brand)s bên bạn",
+    "Show HTML representation of room topics": "Hiện chủ đề phòng bằng HTML",
+    "Element Call video rooms": "Phòng truyền hình Element Call",
+    "Community ownership": "Làm chủ cộng đồng",
+    "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Ngoài ra, bạn còn có thể thử dùng máy chủ công cộng tại <server/>, nhưng máy chủ này sẽ không đáng tin cậy, sẽ chia sẻ địa chỉ IP của bạn với máy chủ đó. Bạn cũng có thể quản lý ở phần Cài đặt.",
+    "You attempted to join using a room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.": "Bạn tìm cách tham gia một phòng bằng định danh (ID) phòng nhưng không cung cấp danh sách các máy chủ để tham gia qua. Định danh phòng là nội bộ và không thể được dùng để tham gia phòng mà không có thông tin thêm.",
+    "Dynamic room predecessors": "Tiền nhiệm động cho phòng",
+    "Complete these to get the most out of %(brand)s": "Hoàn thành những việc sau để tận dụng tất cả của %(brand)s",
+    "Try using %(server)s": "Thử dùng %(server)s",
+    "User is not logged in": "Người dùng đang không đăng nhập",
+    "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Bạn không thể bắt đầu gọi vì bạn đang ghi âm để cuộc phát thanh trực tiếp. Hãy ngừng phát thanh để bắt đầu gọi.",
+    "Enable intentional mentions": "Bật đề cập có chủ ý"
 }
