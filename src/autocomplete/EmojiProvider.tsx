@@ -23,18 +23,18 @@ import { uniq, sortBy, uniqBy, ListIteratee } from "lodash";
 import EMOTICON_REGEX from "emojibase-regex/emoticon";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import { _t } from "../languageHandler";
-import AutocompleteProvider from "./AutocompleteProvider";
-import QueryMatcher from "./QueryMatcher";
-import { PillCompletion } from "./Components";
-import { ICompletion, ISelectionRange } from "./Autocompleter";
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import { _t } from '../languageHandler';
+import AutocompleteProvider from './AutocompleteProvider';
+import QueryMatcher from './QueryMatcher';
+import { PillCompletion } from './Components';
+import { ICompletion, ISelectionRange } from './Autocompleter';
 import SettingsStore from "../settings/SettingsStore";
-import { EMOJI, IEmoji, getEmojiFromUnicode } from "../emoji";
-import { TimelineRenderingType } from "../contexts/RoomContext";
-import * as recent from "../emojipicker/recent";
-import { filterBoolean } from "../utils/arrays";
-import { mediaFromMxc } from "../customisations/Media";
+import { EMOJI, IEmoji, getEmojiFromUnicode } from '../emoji';
+import { TimelineRenderingType } from '../contexts/RoomContext';
+import * as recent from '../emojipicker/recent';
 import { decryptFile } from '../utils/DecryptFile';
+import { mediaFromMxc } from '../customisations/Media';
 
 const LIMIT = 20;
 
@@ -82,18 +82,13 @@ export default class EmojiProvider extends AutocompleteProvider {
     public matcher: QueryMatcher<ISortedEmoji>;
     public nameMatcher: QueryMatcher<ISortedEmoji>;
     private readonly recentlyUsed: IEmoji[];
-    emotes: Dictionary<any>;
-    emotesPromise: Promise<any>;
+    private emotes: Map<string, string>;
+    private emotesPromise: Promise<Map<string, string>>;
     constructor(room: Room, renderingType?: TimelineRenderingType) {
         super({ commandRegex: EMOJI_REGEX, renderingType });
         const emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
         const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
-        this.emotesPromise = this.decryptEmotes(rawEmotes);
-        this.emotes={};
-        // for (const key in rawEmotes) { FOR UNENCRYPTED
-        //     this.emotes[key] = "<img class='mx_Emote' title=':"+key+
-        //      ":'src=" + mediaFromMxc(rawEmotes[key]).srcHttp + "/>";
-        // }
+        this.emotesPromise = this.decryptEmotes(rawEmotes, room?.roomId);
         this.matcher = new QueryMatcher<ISortedEmoji>(SORTED_EMOJI, {
             keys: [],
             funcs: [(o) => o.emoji.shortcodes.map((s) => `:${s}:`)],
@@ -105,19 +100,25 @@ export default class EmojiProvider extends AutocompleteProvider {
             // For removing punctuation
             shouldMatchWordsOnly: true,
         });
-
-        this.recentlyUsed = Array.from(new Set(filterBoolean(recent.get().map(getEmojiFromUnicode))));
+        this.recentlyUsed = Array.from(new Set(recent.get().map(getEmojiFromUnicode).filter(Boolean)));
     }
 
-    private async decryptEmotes(emotes: Object){
-        const decryptede={}
+    private async decryptEmotes(emotes: Object, roomId: string) {
+        const decryptede=new Map<string, string>();
+        const client = MatrixClientPeg.get();
+        let durl = "";
+        const isEnc=client.isRoomEncrypted(roomId);
         for (const shortcode in emotes) {
-            const blob =  await decryptFile(emotes[shortcode]);
-            const durl=URL.createObjectURL(blob);
-            decryptede[shortcode] = "<img class='mx_Emote' title=':"+shortcode+
-                  ":'src='" + durl + "'/>";
+            if (isEnc) {
+                const blob = await decryptFile(emotes[shortcode]);
+                durl = URL.createObjectURL(blob);
+            } else {
+                durl = mediaFromMxc(emotes[shortcode]).srcHttp;
+            }
+            decryptede[shortcode] = "<img class='mx_Emote' title=':" + shortcode +
+                ":'src='" + durl + "'/>";
         }
-        return decryptede
+        return decryptede;
     }
 
     async getCompletions(
@@ -129,8 +130,7 @@ export default class EmojiProvider extends AutocompleteProvider {
         if (!SettingsStore.getValue("MessageComposerInput.suggestEmoji")) {
             return []; // don't give any suggestions if the user doesn't want them
         }
-        this.emotes=await this.emotesPromise
-        //console.log("emotes",this.emotes)
+        this.emotes=await this.emotesPromise;
         const emojisAndEmotes=[...SORTED_EMOJI];
         for (const key in this.emotes) {
             emojisAndEmotes.push({
@@ -145,7 +145,7 @@ export default class EmojiProvider extends AutocompleteProvider {
         }
         this.matcher.setObjects(emojisAndEmotes);
         this.nameMatcher.setObjects(emojisAndEmotes);
-        let completions = [];
+        let completions: ISortedEmoji[] = [];
         const { command, range } = this.getCurrentCommand(query, selection);
 
         if (command && command[0].length > 2) {
@@ -184,7 +184,7 @@ export default class EmojiProvider extends AutocompleteProvider {
                 }
             });
 
-            completions = completions.map(c => ({
+            return completions.map(c => ({
                 completion: this.emotes[c.emoji.hexcode]? ":"+c.emoji.hexcode+":":c.emoji.unicode,
                 component: (
                     <PillCompletion title={this.emotes[c.emoji.hexcode]? c.emoji.unicode:":"+c.emoji.shortcodes[0]+":"} aria-label={c.emoji.unicode}>

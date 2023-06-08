@@ -58,8 +58,6 @@ interface IProps {
     toggleButtonMenu: () => void;
     showVoiceBroadcastButton: boolean;
     onStartVoiceBroadcastClick: () => void;
-    isRichTextEnabled: boolean;
-    onComposerModeClick: () => void;
 }
 
 type OverflowMenuCloser = () => void;
@@ -139,62 +137,17 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
 };
 
 function emojiButton(props: IProps, room: Room): ReactElement {
-    return <EmojiButton
-        key="emoji_button"
-        addEmoji={props.addEmoji}
-        menuPosition={props.menuPosition}
-        room={room}
-
-    />;
-}
-
-interface IEmojiButtonProps {
-    addEmoji: (unicode: string) => boolean;
-    menuPosition: AboveLeftOf;
-    room: Room;
-}
-
-const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition, room}) => {
-    const overflowMenuCloser = useContext(OverflowMenuContext);
-    const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
-    let contextMenu: React.ReactElement | null = null;
-    if (menuDisplayed) {
-        const position = (
-            menuPosition ?? aboveLeftOf(button.current.getBoundingClientRect())
-        );
-
-        contextMenu = <ContextMenu
-            {...position}
-            onFinished={() => {
-                closeMenu();
-                overflowMenuCloser?.();
-            }}
-            managed={false}
-        >
-            <EmojiPicker onChoose={addEmoji} showQuickReactions={true} room={room}/>
-        </ContextMenu>;
-    }
-
-    const className = classNames(
-        "mx_MessageComposer_button",
-        {
-            "mx_MessageComposer_button_highlight": menuDisplayed,
-        },
-        "mx_EmojiButton_icon"
-    );
-
-    // TODO: replace ContextMenuTooltipButton with a unified representation of
-    // the header buttons and the right panel buttons
-    return <React.Fragment>
-        <CollapsibleButton
-            className={className}
-            iconClassName="mx_MessageComposer_emoji"
-            onClick={openMenu}
-            title={_t("Emoji")}
-            inputRef={button}
+    return (
+        <EmojiButton
+            key="emoji_button"
+            addEmoji={props.addEmoji}
+            menuPosition={props.menuPosition}
+            room={room}
+            className="mx_MessageComposer_button"
         />
     );
 }
+
 
 function uploadButton(): ReactElement {
     return <UploadButton key="controls_upload" />;

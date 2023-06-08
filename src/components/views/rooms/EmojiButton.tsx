@@ -28,7 +28,7 @@ interface IEmojiButtonProps {
     addEmoji: (unicode: string) => boolean;
     menuPosition?: MenuProps;
     className?: string;
-    room?: Room;
+    room: Room,
 }
 
 export function EmojiButton({ addEmoji, menuPosition, className, room }: IEmojiButtonProps) {
@@ -52,7 +52,7 @@ export function EmojiButton({ addEmoji, menuPosition, className, room }: IEmojiB
                 }}
                 managed={false}
             >
-                <EmojiPicker onChoose={addEmoji} showQuickReactions={true} room={room} />
+                <EmojiPicker onChoose={addEmoji} showQuickReactions={true} room = {room} />
             </ContextMenu>
         );
     }
@@ -77,3 +77,6 @@ export function EmojiButton({ addEmoji, menuPosition, className, room }: IEmojiB
         </>
     );
 }
+
+
+

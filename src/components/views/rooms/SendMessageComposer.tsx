@@ -160,6 +160,7 @@ export function attachMentions(
 }
 
 
+
 // Merges favouring the given relation
 export function attachRelation(content: IContent, relation?: IEventRelation): void {
     if (relation) {
