@@ -783,7 +783,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         isLastSuccessful = isLastSuccessful && mxEv.getSender() === MatrixClientPeg.get().getUserId();
 
         const callEventGrouper = this.props.callEventGroupers.get(mxEv.getContent().call_id);
-
         // use txnId as key if available so that we don't remount during sending
         ret.push(
             <EventTile

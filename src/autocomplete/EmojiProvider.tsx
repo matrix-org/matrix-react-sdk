@@ -130,7 +130,7 @@ export default class EmojiProvider extends AutocompleteProvider {
         if (!SettingsStore.getValue("MessageComposerInput.suggestEmoji")) {
             return []; // don't give any suggestions if the user doesn't want them
         }
-        this.emotes=await this.emotesPromise;
+        this.emotes = await this.emotesPromise;
         const emojisAndEmotes=[...SORTED_EMOJI];
         for (const key in this.emotes) {
             emojisAndEmotes.push({

@@ -680,8 +680,8 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         "mx_EventTile_bigEmoji": emojiBody,
         "markdown-body": isHtmlMessage && !emojiBody,
     });
-    const tmp=strippedBody?.replace(/:[\w+-]+:/g, m => opts.emotes[m] ? opts.emotes[m] : m);
-    if (tmp!=strippedBody) {
+    const tmp = strippedBody?.replace(/:[\w+-]+:/g, m => opts.emotes[m] ? opts.emotes[m] : m);
+    if (tmp !== strippedBody) {
         safeBody=tmp;
     }
 
