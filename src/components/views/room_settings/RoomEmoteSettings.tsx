@@ -45,7 +45,7 @@ interface IState {
     deleted: boolean;
     deletedItems: Dictionary<any>;
     value: Dictionary<string>;
-    compatiblity: boolean;
+    compatibility: boolean;
 }
 
 export default class RoomEmoteSettings extends React.Component<IProps, IState> {
