@@ -93,6 +93,7 @@ export enum LabGroup {
 export enum Features {
     VoiceBroadcast = "feature_voice_broadcast",
     VoiceBroadcastForceSmallChunks = "feature_voice_broadcast_force_small_chunks",
+    OidcNativeFlow = "feature_oidc_native_flow",
 }
 
 export const labGroupNames: Record<LabGroup, string> = {
@@ -443,6 +444,11 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     [Features.VoiceBroadcastForceSmallChunks]: {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         displayName: _td("Force 15s voice broadcast chunk length"),
+        default: false,
+    },
+    [Features.OidcNativeFlow]: {
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Enable new native OIDC flows (Under active development)"),
         default: false,
     },
     "feature_rust_crypto": {
@@ -880,9 +886,8 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "fallbackICEServerAllowed": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        displayName: _td("Allow fallback call assist server (turn.matrix.org)"),
         description: _td(
-            "Only applies if your homeserver does not offer one. " + "Your IP address would be shared during a call.",
+            "Only applies if your homeserver does not offer one. Your IP address would be shared during a call.",
         ),
         // This is a tri-state value, where `null` means "prompt the user".
         default: null,
