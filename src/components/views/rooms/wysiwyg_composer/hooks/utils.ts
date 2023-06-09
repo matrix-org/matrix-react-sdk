@@ -208,7 +208,7 @@ export function handleClipboardEvent(
  * must be listenened for with an onBeforeInput handler and so will be caught as input events.
  *
  * @param event - the event to test, can be a WysiwygEvent if it comes from the rich text editor, or
- * input of clipboard events if from the plain text editor
+ * input or clipboard events if from the plain text editor
  * @returns - true if event should be handled as a clipboard event
  */
 export function isEventToHandleAsClipboardEvent(
