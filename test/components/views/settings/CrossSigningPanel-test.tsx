@@ -17,7 +17,6 @@ limitations under the License.
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { mocked } from "jest-mock";
-import { CryptoApi } from "matrix-js-sdk/src/matrix";
 
 import CrossSigningPanel from "../../../../src/components/views/settings/CrossSigningPanel";
 import {
@@ -32,17 +31,6 @@ describe("<CrossSigningPanel />", () => {
     const mockClient = getMockClientWithEventEmitter({
         ...mockClientMethodsUser(userId),
         ...mockClientMethodsCrypto(),
-        getCrypto: jest.fn().mockReturnValue({
-            getCrossSigningStatus: jest.fn().mockResolvedValue({
-                publicKeysOnDevice: true,
-                privateKeysInSecretStorage: false,
-                privateKeysCachedLocally: {
-                    masterKey: true,
-                    selfSigningKey: true,
-                    userSigningKey: true,
-                },
-            }),
-        } as unknown as CryptoApi),
         doesServerSupportUnstableFeature: jest.fn(),
     });
     const getComponent = () => render(<CrossSigningPanel />);
