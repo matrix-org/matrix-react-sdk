@@ -258,7 +258,7 @@ function handleInputEvent(event: InputEvent, send: Send, isCtrlEnterToSend: bool
  */
 export function handleClipboardEvent(
     event: ClipboardEvent | InputEvent,
-    data: DataTransfer,
+    data: DataTransfer | null,
     roomContext: IRoomState,
     mxClient: MatrixClient,
     eventRelation?: IEventRelation,
