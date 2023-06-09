@@ -159,13 +159,30 @@ describe("LeftPanel", () => {
     });
 
     describe("for room list wrapper", () => {
+        const message = "Message";
+
         beforeEach(() => {
             cy.get(".mx_LeftPanel_roomListWrapper").should("exist");
         });
 
-        it("should display a message preview", () => {
-            const message = "Message";
+        it("should hide and unhide the room tile by clicking the list header", () => {
+            cy.createRoom({ name: roomName });
 
+            cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                // Assert the room tile is rendered by default
+                cy.findByRole("treeitem", { name: roomName }).should("exist");
+
+                // Click the header to hide the room tile
+                cy.findByRole("button", { name: "Rooms" }).click();
+                cy.findByRole("treeitem", { name: roomName }).should("not.exist");
+
+                // Click again to redisplay the room tile
+                cy.findByRole("button", { name: "Rooms" }).click();
+                cy.findByRole("treeitem", { name: roomName }).should("exist");
+            });
+        });
+
+        it("should display a message preview", () => {
             cy.createRoom({ name: roomName }).viewRoomByName(roomName);
 
             cy.getComposer().type(`${message}{enter}`);
