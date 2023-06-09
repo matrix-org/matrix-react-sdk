@@ -35,10 +35,24 @@ describe("LeftPanel", () => {
         cy.stopHomeserver(homeserver);
     });
 
-    it("should render the Rooms list", () => {
-        // create rooms and check room names are correct
-        cy.createRoom({ name: "Apple" }).then(() => cy.findByRole("treeitem", { name: "Apple" }));
-        cy.createRoom({ name: "Pineapple" }).then(() => cy.findByRole("treeitem", { name: "Pineapple" }));
-        cy.createRoom({ name: "Orange" }).then(() => cy.findByRole("treeitem", { name: "Orange" }));
+    describe("for room list wrapper", () => {
+        beforeEach(() => {
+            cy.get(".mx_LeftPanel_roomListWrapper").should("exist");
+        });
+
+        describe("for Rooms", () => {
+            it("should render a sublist", () => {
+                cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                    cy.findByRole("group", { name: "Rooms" }).within(() => {
+                        // create rooms and check room names are correct
+                        cy.createRoom({ name: "Apple" }).then(() => cy.findByRole("treeitem", { name: "Apple" }));
+                        cy.createRoom({ name: "Pineapple" }).then(() =>
+                            cy.findByRole("treeitem", { name: "Pineapple" }),
+                        );
+                        cy.createRoom({ name: "Orange" }).then(() => cy.findByRole("treeitem", { name: "Orange" }));
+                    });
+                });
+            });
+        });
     });
 });
