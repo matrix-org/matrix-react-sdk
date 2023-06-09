@@ -68,8 +68,9 @@ export function usePlainTextListeners(
     ref: RefObject<HTMLDivElement>;
     autocompleteRef: React.RefObject<Autocomplete>;
     content?: string;
+    onBeforeInput(event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>): void;
     onInput(event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>): void;
-    onPaste(event: SyntheticEvent<HTMLDivElement, ClipboardEvent>): void;
+    onPaste(event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>): void;
     onKeyDown(event: KeyboardEvent<HTMLDivElement>): void;
     setContent(text?: string): void;
     handleMention: (link: string, text: string, attributes: Attributes) => void;
@@ -114,10 +115,7 @@ export function usePlainTextListeners(
     const enterShouldSend = !useSettingValue<boolean>("MessageComposerInput.ctrlEnterToSend");
     const onInput = useCallback(
         (event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>) => {
-            console.log("<<< handling ", event);
             if (isDivElement(event.target)) {
-                console.log("<<< setting ", event.target.innerHTML);
-
                 // if enterShouldSend, we do not need to amend the html before setting text
                 const newInnerHTML = enterShouldSend ? event.target.innerHTML : amendInnerHtml(event.target.innerHTML);
                 setText(newInnerHTML);
@@ -127,16 +125,32 @@ export function usePlainTextListeners(
     );
 
     const onPaste = useCallback(
-        (event: SyntheticEvent<HTMLDivElement, ClipboardEvent>) => {
-            const handled = handleClipboardEvent(
-                event.nativeEvent,
-                event.nativeEvent.clipboardData,
-                roomContext,
-                mxClient,
-                eventRelation,
-            );
-            if (handled) {
-                event.preventDefault(); // we only handle image pasting manually
+        (event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>) => {
+            // this is required to handle edge case image pasting in Safari, see
+            // https://github.com/vector-im/element-web/issues/25327 and it is caught by the
+            // `beforeinput` listener attached to the composer
+            const { nativeEvent } = event;
+
+            // attempt to manually handle image paste events occurring from the clipboard or the special
+            // case detailed in the above issue
+            const isClipboardEvent = nativeEvent instanceof ClipboardEvent;
+            const isSpecialCaseInputEvent =
+                nativeEvent instanceof InputEvent &&
+                nativeEvent.inputType === "insertFromPaste" &&
+                isNotNull(nativeEvent.dataTransfer);
+
+            const isEventToHandle = isClipboardEvent || isSpecialCaseInputEvent;
+
+            let imagePasteWasHandled = false;
+
+            if (isEventToHandle) {
+                const data = isClipboardEvent ? nativeEvent.clipboardData : nativeEvent.dataTransfer;
+                imagePasteWasHandled = handleClipboardEvent(nativeEvent, data, roomContext, mxClient, eventRelation);
+            }
+
+            // only prevent default behaviour if the image paste event was handled
+            if (imagePasteWasHandled) {
+                event.preventDefault();
             } else {
                 onInput(event);
             }
@@ -178,6 +192,7 @@ export function usePlainTextListeners(
     return {
         ref,
         autocompleteRef,
+        onBeforeInput: onPaste,
         onInput,
         onPaste,
         onKeyDown,
