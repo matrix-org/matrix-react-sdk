@@ -17,6 +17,7 @@ limitations under the License.
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { mocked } from "jest-mock";
+import { CryptoApi } from "matrix-js-sdk/src/matrix";
 
 import CrossSigningPanel from "../../../../src/components/views/settings/CrossSigningPanel";
 import {
@@ -25,7 +26,6 @@ import {
     mockClientMethodsCrypto,
     mockClientMethodsUser,
 } from "../../../test-utils";
-import { CryptoApi } from "../../../../../matrix-js-sdk";
 
 describe("<CrossSigningPanel />", () => {
     const userId = "@alice:server.org";
