@@ -21,10 +21,9 @@ import { IEventRelation } from "matrix-js-sdk/src/matrix";
 import { useSettingValue } from "../../../../../hooks/useSettings";
 import { IS_MAC, Key } from "../../../../../Keyboard";
 import Autocomplete from "../../Autocomplete";
-import { handleEventWithAutocomplete } from "./utils";
+import { handleClipboardEvent, handleEventWithAutocomplete, isEventToHandleAsClipboardEvent } from "./utils";
 import { useSuggestion } from "./useSuggestion";
 import { isNotNull, isNotUndefined } from "../../../../../Typeguards";
-import { handleClipboardEvent } from "./useInputEventProcessor";
 import { useRoomContext } from "../../../../../contexts/RoomContext";
 import { useMatrixClientContext } from "../../../../../contexts/MatrixClientContext";
 
@@ -131,20 +130,11 @@ export function usePlainTextListeners(
             // `beforeinput` listener attached to the composer
             const { nativeEvent } = event;
 
-            // attempt to manually handle image paste events occurring from the clipboard or the special
-            // case detailed in the above issue
-            const isClipboardEvent = nativeEvent instanceof ClipboardEvent;
-            const isInputEventForClipboard =
-                nativeEvent instanceof InputEvent &&
-                nativeEvent.inputType === "insertFromPaste" &&
-                isNotNull(nativeEvent.dataTransfer);
-
-            const shouldHandleAsClipboardEvent = isClipboardEvent || isInputEventForClipboard;
-
             let imagePasteWasHandled = false;
 
-            if (shouldHandleAsClipboardEvent) {
-                const data = isClipboardEvent ? nativeEvent.clipboardData : nativeEvent.dataTransfer;
+            if (isEventToHandleAsClipboardEvent(nativeEvent)) {
+                const data =
+                    nativeEvent instanceof ClipboardEvent ? nativeEvent.clipboardData : nativeEvent.dataTransfer;
                 imagePasteWasHandled = handleClipboardEvent(nativeEvent, data, roomContext, mxClient, eventRelation);
             }
 

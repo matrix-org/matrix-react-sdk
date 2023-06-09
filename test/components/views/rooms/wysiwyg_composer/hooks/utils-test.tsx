@@ -16,11 +16,11 @@ limitations under the License.
 import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { waitFor } from "@testing-library/react";
 
-import { handleClipboardEvent } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/useInputEventProcessor";
 import { TimelineRenderingType } from "../../../../../../src/contexts/RoomContext";
 import { mkStubRoom, stubClient } from "../../../../../test-utils";
 import ContentMessages from "../../../../../../src/ContentMessages";
 import { IRoomState } from "../../../../../../src/components/structures/RoomView";
+import { handleClipboardEvent } from "../../../../../../src/components/views/rooms/wysiwyg_composer/hooks/utils";
 
 const mockClient = stubClient();
 const mockRoom = mkStubRoom("mock room", "mock room", mockClient);
