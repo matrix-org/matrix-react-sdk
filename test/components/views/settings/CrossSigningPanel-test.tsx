@@ -34,7 +34,7 @@ describe("<CrossSigningPanel />", () => {
         ...mockClientMethodsCrypto(),
         getCrypto: jest.fn().mockReturnValue({
             getCrossSigningStatus: jest.fn().mockResolvedValue({
-                publicKeyOnDevice: true,
+                publicKeysOnDevice: true,
                 privateKeysInSecretStorage: false,
                 privateKeysCachedLocally: {
                     masterKey: true,
@@ -51,7 +51,7 @@ describe("<CrossSigningPanel />", () => {
         mockClient.doesServerSupportUnstableFeature.mockResolvedValue(true);
         mockClient.isCrossSigningReady.mockResolvedValue(false);
         mocked(mockClient.getCrypto().getCrossSigningStatus).mockResolvedValue({
-            publicKeyOnDevice: true,
+            publicKeysOnDevice: true,
             privateKeysInSecretStorage: false,
             privateKeysCachedLocally: {
                 masterKey: true,
@@ -93,7 +93,7 @@ describe("<CrossSigningPanel />", () => {
 
         it("should render when keys are backed up", async () => {
             mocked(mockClient.getCrypto().getCrossSigningStatus).mockResolvedValue({
-                publicKeyOnDevice: true,
+                publicKeysOnDevice: true,
                 privateKeysInSecretStorage: true,
                 privateKeysCachedLocally: {
                     masterKey: true,
@@ -123,7 +123,7 @@ describe("<CrossSigningPanel />", () => {
 
         it("should render when keys are backed up", async () => {
             mocked(mockClient.getCrypto().getCrossSigningStatus).mockResolvedValue({
-                publicKeyOnDevice: true,
+                publicKeysOnDevice: true,
                 privateKeysInSecretStorage: true,
                 privateKeysCachedLocally: {
                     masterKey: true,

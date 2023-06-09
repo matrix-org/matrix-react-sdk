@@ -94,7 +94,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
         if (!crypto) return;
 
         const crossSigningStatus = await crypto.getCrossSigningStatus();
-        const crossSigningPublicKeysOnDevice = crossSigningStatus.publicKeyOnDevice;
+        const crossSigningPublicKeysOnDevice = crossSigningStatus.publicKeysOnDevice;
         const crossSigningPrivateKeysInStorage = crossSigningStatus.privateKeysInSecretStorage;
         const masterPrivateKeyCached = crossSigningStatus.privateKeysCachedLocally.masterKey;
         const selfSigningPrivateKeyCached = crossSigningStatus.privateKeysCachedLocally.selfSigningKey;
