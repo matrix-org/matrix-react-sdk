@@ -25,6 +25,7 @@ import { SettingLevel } from "../../../src/settings/SettingLevel";
 describe("LeftPanel", () => {
     let homeserver: HomeserverInstance;
     const roomName = "Test Room";
+    const spaceName = "Test Space";
 
     beforeEach(() => {
         cy.startHomeserver("default").then((data) => {
@@ -38,6 +39,92 @@ describe("LeftPanel", () => {
 
     afterEach(() => {
         cy.stopHomeserver(homeserver);
+    });
+
+    describe("for room list header", () => {
+        beforeEach(() => {
+            // Assert the room list header is rendered
+            cy.get(".mx_RoomListHeader").within(() => {
+                // Assert that the default menu name is rendered
+                cy.findByRole("button", { name: "Home options" }).should("exist");
+            });
+        });
+
+        describe("for Space", () => {
+            beforeEach(() => {
+                // Create a room
+                cy.createRoom({ name: roomName }).as("roomId1");
+
+                // Create a Space and add the room to it
+                cy.get<string>("@roomId1").then((roomId1) => {
+                    cy.createSpace({
+                        name: spaceName,
+                        initial_state: [
+                            {
+                                type: "m.space.child",
+                                state_key: roomId1,
+                                content: {
+                                    via: roomId1,
+                                },
+                            },
+                        ],
+                    });
+                });
+            });
+
+            it("should switch menu names", () => {
+                cy.get(".mx_RoomListHeader").within(() => {
+                    // Assert that the button with the name "Home options" is rendered
+                    cy.findByRole("button", { name: "Home options" }).should("exist");
+                });
+
+                // Click the created Space's button on SpacePanel
+                cy.get(".mx_SpacePanel").within(() => {
+                    cy.findByRole("button", { name: spaceName }).click();
+                });
+
+                cy.get(".mx_RoomListHeader").within(() => {
+                    // Assert that menu name was replaced
+                    cy.findByRole("button", { name: `${spaceName} menu` }).should("exist");
+                });
+            });
+
+            it("should render context menu by clicking the menu button", () => {
+                cy.get(".mx_SpacePanel").within(() => {
+                    cy.findByRole("button", { name: spaceName }).click();
+                });
+
+                cy.get(".mx_RoomListHeader").within(() => {
+                    // Click the menu button on the header
+                    cy.findByRole("button", { name: `${spaceName} menu` }).click();
+                });
+
+                // Assert that context menu for Space is rendered
+                cy.findByRole("menu").within(() => {
+                    cy.findByRole("menuitem", { name: "Space home" }).should("exist");
+                });
+            });
+
+            it("should render a room tile by clicking 'Show all rooms' context menu", () => {
+                cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                    // Assert the room tile is not rendered
+                    cy.findByRole("treeitem", { name: roomName }).should("not.exist");
+                });
+
+                cy.get(".mx_RoomListHeader").within(() => {
+                    // Force click as "Home options" button is hidden by "Notifications" toast on Cypress Cloud
+                    cy.findByRole("button", { name: "Home options" }).click({ force: true });
+                });
+
+                // Click "Show all rooms" on the context menu
+                cy.findByRole("menuitemcheckbox", { name: "Show all rooms" }).click();
+
+                cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                    // Assert the room tile is rendered
+                    cy.findByRole("treeitem", { name: roomName }).should("exist");
+                });
+            });
+        });
     });
 
     describe("for room list wrapper", () => {
