@@ -258,6 +258,7 @@ function handleInputEvent(event: InputEvent, send: Send, isCtrlEnterToSend: bool
  */
 export function handleClipboardEvent(
     clipboardEvent: ClipboardEvent | ReactClipboardEvent | InputEvent,
+    data: DataTransfer,
     roomContext: IRoomState,
     mxClient: MatrixClient,
     eventRelation?: IEventRelation,
