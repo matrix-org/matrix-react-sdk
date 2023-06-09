@@ -40,6 +40,32 @@ describe("LeftPanel", () => {
             cy.get(".mx_LeftPanel_roomListWrapper").should("exist");
         });
 
+        it("should display a message preview", () => {
+            const message = "Message";
+
+            cy.createRoom({ name: "Apple" }).viewRoomByName("Apple");
+
+            cy.getComposer().type(`${message}{enter}`);
+
+            // Enable message preview
+            cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                cy.findByRole("treeitem", { name: "Rooms" })
+                    .realHover()
+                    .findByRole("button", { name: "List options" })
+                    .click();
+            });
+
+            // Force click because the size of the checkbox is zero
+            cy.findByLabelText("Show previews of messages").click({ force: true });
+
+            // Assert that the preview is visible on the room tile
+            cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                cy.findByRole("group", { name: "Rooms" }).within(() => {
+                    cy.get(".mx_RoomTile_subtitle").findByText(message).should("be.visible");
+                });
+            });
+        });
+
         describe("for Rooms", () => {
             it("should render a sublist", () => {
                 cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
