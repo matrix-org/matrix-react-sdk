@@ -93,6 +93,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
     private applyFormatting(): void {
         this.decryptEmotes();
+        const content = this.contentRef.current!;
         const showLineNumbers = SettingsStore.getValue("showCodeLineNumbers");
         this.activateSpoilers([this.contentRef.current]);
 
@@ -644,6 +645,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                 stripReplyFallback: stripReply,
                 ref: this.contentRef,
                 returnString: false,
+                emotes: this.state.finalEmotes,
             });
         }
         if (this.props.replacingEventId) {
