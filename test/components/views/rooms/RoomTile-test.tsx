@@ -155,7 +155,7 @@ describe("RoomTile", () => {
     describe("when message previews are not enabled", () => {
         it("should render the room", () => {
             mocked(shouldShowComponent).mockReturnValue(true);
-            const renderResult: RenderResult = renderRoomTile();
+            const renderResult = renderRoomTile();
             expect(renderResult.container).toMatchSnapshot();
         });
 
@@ -305,7 +305,7 @@ describe("RoomTile", () => {
         });
 
         it("should render a room without a message as expected", async () => {
-            const renderResult: RenderResult = renderRoomTile();
+            const renderResult = renderRoomTile();
             // flush promises here because the preview is created asynchronously
             await flushPromises();
             expect(renderResult.asFragment()).toMatchSnapshot();
@@ -317,7 +317,7 @@ describe("RoomTile", () => {
             });
 
             it("should render as expected", async () => {
-                const renderResult: RenderResult = renderRoomTile();
+                const renderResult = renderRoomTile();
                 expect(await screen.findByText("test message")).toBeInTheDocument();
                 expect(renderResult.asFragment()).toMatchSnapshot();
             });
@@ -329,7 +329,7 @@ describe("RoomTile", () => {
             });
 
             it("should render as expected", async () => {
-                const renderResult: RenderResult = renderRoomTile();
+                const renderResult = renderRoomTile();
                 expect(await screen.findByText("test thread reply")).toBeInTheDocument();
                 expect(renderResult.asFragment()).toMatchSnapshot();
             });
