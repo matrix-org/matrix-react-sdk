@@ -134,16 +134,16 @@ export function usePlainTextListeners(
             // attempt to manually handle image paste events occurring from the clipboard or the special
             // case detailed in the above issue
             const isClipboardEvent = nativeEvent instanceof ClipboardEvent;
-            const isSpecialCaseInputEvent =
+            const isInputEventForClipboard =
                 nativeEvent instanceof InputEvent &&
                 nativeEvent.inputType === "insertFromPaste" &&
                 isNotNull(nativeEvent.dataTransfer);
 
-            const isEventToHandle = isClipboardEvent || isSpecialCaseInputEvent;
+            const shouldHandleAsClipboardEvent = isClipboardEvent || isInputEventForClipboard;
 
             let imagePasteWasHandled = false;
 
-            if (isEventToHandle) {
+            if (shouldHandleAsClipboardEvent) {
                 const data = isClipboardEvent ? nativeEvent.clipboardData : nativeEvent.dataTransfer;
                 imagePasteWasHandled = handleClipboardEvent(nativeEvent, data, roomContext, mxClient, eventRelation);
             }
