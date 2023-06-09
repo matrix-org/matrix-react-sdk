@@ -204,19 +204,19 @@ function textForMemberEvent(
                 return () =>
                     reason
                         ? _t("%(senderName)s withdrew %(targetName)s's invitation: %(reason)s", {
-                              senderName,
-                              targetName,
-                              reason,
-                          })
+                            senderName,
+                            targetName,
+                            reason,
+                        })
                         : _t("%(senderName)s withdrew %(targetName)s's invitation", { senderName, targetName });
             } else if (prevContent.membership === "join") {
                 return () =>
                     reason
                         ? _t("%(senderName)s removed %(targetName)s: %(reason)s", {
-                              senderName,
-                              targetName,
-                              reason,
-                          })
+                            senderName,
+                            targetName,
+                            reason,
+                        })
                         : _t("%(senderName)s removed %(targetName)s", { senderName, targetName });
             } else {
                 return null;
@@ -365,7 +365,7 @@ function textForServerACLEvent(ev: MatrixEvent): (() => string) | null {
     return getText;
 }
 
-function textForMessageEvent(ev: MatrixEvent, client: MatrixClient,enclosedSender?: boolean): (() => string) | null {
+function textForMessageEvent(ev: MatrixEvent, client: MatrixClient, enclosedSender?: boolean): (() => string) | null {
     if (isLocationEvent(ev)) {
         return textForLocationEvent(ev);
     }
@@ -385,9 +385,9 @@ function textForMessageEvent(ev: MatrixEvent, client: MatrixClient,enclosedSende
             message = _t("%(senderDisplayName)s sent a sticker.", { senderDisplayName });
         } else {
             // in this case, parse it as a plain text message
-            if(enclosedSender){
+            if (enclosedSender) {
                 message = `<${senderDisplayName}>` + ": " + message;
-            }else{
+            } else {
                 message = senderDisplayName + ": " + message;
             }
         }
@@ -480,14 +480,14 @@ function textForHistoryVisibilityEvent(event: MatrixEvent): (() => string) | nul
             return () =>
                 _t(
                     "%(senderName)s made future room history visible to all room members, " +
-                        "from the point they are invited.",
+                    "from the point they are invited.",
                     { senderName },
                 );
         case HistoryVisibility.Joined:
             return () =>
                 _t(
                     "%(senderName)s made future room history visible to all room members, " +
-                        "from the point they joined.",
+                    "from the point they joined.",
                     { senderName },
                 );
         case HistoryVisibility.Shared:
@@ -808,21 +808,21 @@ function textForMjolnirEvent(event: MatrixEvent): (() => string) | null {
         return () =>
             _t(
                 "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching " +
-                    "%(newGlob)s for %(reason)s",
+                "%(newGlob)s for %(reason)s",
                 { senderName, oldGlob: prevEntity, newGlob: entity, reason },
             );
     } else if (ROOM_RULE_TYPES.includes(event.getType())) {
         return () =>
             _t(
                 "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching " +
-                    "%(newGlob)s for %(reason)s",
+                "%(newGlob)s for %(reason)s",
                 { senderName, oldGlob: prevEntity, newGlob: entity, reason },
             );
     } else if (SERVER_RULE_TYPES.includes(event.getType())) {
         return () =>
             _t(
                 "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching " +
-                    "%(newGlob)s for %(reason)s",
+                "%(newGlob)s for %(reason)s",
                 { senderName, oldGlob: prevEntity, newGlob: entity, reason },
             );
     }
@@ -831,7 +831,7 @@ function textForMjolnirEvent(event: MatrixEvent): (() => string) | null {
     return () =>
         _t(
             "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s " +
-                "for %(reason)s",
+            "for %(reason)s",
             { senderName, oldGlob: prevEntity, newGlob: entity, reason },
         );
 }
@@ -892,7 +892,7 @@ interface IHandlers {
         client: MatrixClient,
         allowJSX: boolean,
         showHiddenEvents?: boolean,
-        enclosedSender?:boolean
+        enclosedSender?: boolean
     ) => (() => Renderable) | null;
 }
 
@@ -965,17 +965,22 @@ export function textForEvent(ev: MatrixEvent, client: MatrixClient): string;
 export function textForEvent(
     ev: MatrixEvent,
     client: MatrixClient,
+    enclosedSender: true,
+): string;
+export function textForEvent(
+    ev: MatrixEvent,
+    client: MatrixClient,
     allowJSX: true,
     showHiddenEvents?: boolean,
-    enclosedSender?:boolean
+    enclosedSender?: boolean,
 ): string | React.ReactNode;
 export function textForEvent(
     ev: MatrixEvent,
     client: MatrixClient,
     allowJSX = false,
     showHiddenEvents?: boolean,
-    enclosedSender?:boolean
+    enclosedSender?: boolean,
 ): string | React.ReactNode {
     const handler = (ev.isState() ? stateHandlers : handlers)[ev.getType()];
-    return handler?.(ev, client, allowJSX, showHiddenEvents,enclosedSender)?.() || "";
+    return handler?.(ev, client, allowJSX, showHiddenEvents, enclosedSender)?.() || "";
 }
