@@ -122,6 +122,7 @@ export function handleEventWithAutocomplete(
  * https://github.com/vector-im/element-web/issues/25327
  *
  * @param event - event to process
+ * @param data - data from the event to process
  * @param roomContext - room in which the event occurs
  * @param mxClient - current matrix client
  * @param eventRelation - used to send the event to the correct place eg timeline vs thread
@@ -203,17 +204,16 @@ export function handleClipboardEvent(
 
 /**
  * Util to determine if an input event or clipboard event must be handled as a clipboard event.
- * Required due to https://github.com/vector-im/element-web/issues/25327, certain paste events
- * must be detected with an onBeforeInput handler and will be input events
- * @param event - the event to test
+ * Due to https://github.com/vector-im/element-web/issues/25327, certain paste events
+ * must be listenened for with an onBeforeInput handler and so will be caught as input events.
+ *
+ * @param event - the event to test, can be a WysiwygEvent if it comes from the rich text editor, or
+ * input of clipboard events if from the plain text editor
  * @returns - true if event should be handled as a clipboard event
  */
 export function isEventToHandleAsClipboardEvent(
     event: WysiwygEvent | InputEvent | ClipboardEvent,
 ): event is InputEvent | ClipboardEvent {
-    // this is required to handle edge case image pasting in Safari, see
-    // https://github.com/vector-im/element-web/issues/25327 and it is caught by the
-    // `beforeinput` listener attached to the composer
     const isInputEventForClipboard =
         event instanceof InputEvent && event.inputType === "insertFromPaste" && isNotNull(event.dataTransfer);
     const isClipboardEvent = event instanceof ClipboardEvent;
