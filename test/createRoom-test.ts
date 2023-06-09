@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import { mocked, Mocked } from "jest-mock";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
-import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
+import { CryptoApi, MatrixClient, Device } from "matrix-js-sdk/src/matrix";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 
 import { stubClient, setupAsyncStoreWithClient, mockPlatformPeg } from "./test-utils";
@@ -33,7 +32,7 @@ describe("createRoom", () => {
     let client: Mocked<MatrixClient>;
     beforeEach(() => {
         stubClient();
-        client = mocked(MatrixClientPeg.get());
+        client = mocked(MatrixClientPeg.safeGet());
     });
 
     afterEach(() => jest.clearAllMocks());
@@ -44,7 +43,7 @@ describe("createRoom", () => {
         const createCallSpy = jest.spyOn(JitsiCall, "create");
 
         const userId = client.getUserId()!;
-        const roomId = await createRoom({ roomType: RoomType.ElementVideo });
+        const roomId = await createRoom(client, { roomType: RoomType.ElementVideo });
 
         const [
             [
@@ -76,7 +75,7 @@ describe("createRoom", () => {
     it("sets up Element video rooms correctly", async () => {
         const userId = client.getUserId()!;
         const createCallSpy = jest.spyOn(ElementCall, "create");
-        const roomId = await createRoom({ roomType: RoomType.UnstableCall });
+        const roomId = await createRoom(client, { roomType: RoomType.UnstableCall });
 
         const userPower = client.createRoom.mock.calls[0][0].power_level_content_override?.users?.[userId];
         const callPower =
@@ -103,7 +102,7 @@ describe("createRoom", () => {
         const createJitsiCallSpy = jest.spyOn(JitsiCall, "create");
         const createElementCallSpy = jest.spyOn(ElementCall, "create");
 
-        await createRoom({});
+        await createRoom(client, {});
 
         expect(createJitsiCallSpy).not.toHaveBeenCalled();
         expect(createElementCallSpy).not.toHaveBeenCalled();
@@ -114,7 +113,7 @@ describe("createRoom", () => {
             if (name === "feature_group_calls") return true;
         });
 
-        await createRoom({});
+        await createRoom(client, {});
 
         const callPower =
             client.createRoom.mock.calls[0][0].power_level_content_override?.events?.[ElementCall.CALL_EVENT_TYPE.name];
@@ -130,7 +129,7 @@ describe("createRoom", () => {
     it("should upload avatar if one is passed", async () => {
         client.uploadContent.mockResolvedValue({ content_uri: "mxc://foobar" });
         const avatar = new File([], "avatar.png");
-        await createRoom({ avatar });
+        await createRoom(client, { avatar });
         expect(client.createRoom).toHaveBeenCalledWith(
             expect.objectContaining({
                 initial_state: expect.arrayContaining([
@@ -151,30 +150,32 @@ describe("canEncryptToAllUsers", () => {
     const user2Id = "@user2:example.com";
 
     const devices = new Map([
-        ["DEV1", {} as unknown as DeviceInfo],
-        ["DEV2", {} as unknown as DeviceInfo],
+        ["DEV1", {} as unknown as Device],
+        ["DEV2", {} as unknown as Device],
     ]);
 
     let client: Mocked<MatrixClient>;
+    let cryptoApi: Mocked<CryptoApi>;
 
     beforeAll(() => {
         client = mocked(stubClient());
+        cryptoApi = mocked(client.getCrypto()!);
     });
 
     it("should return true if userIds is empty", async () => {
-        client.downloadKeys.mockResolvedValue(new Map());
+        cryptoApi.getUserDeviceInfo.mockResolvedValue(new Map());
         const result = await canEncryptToAllUsers(client, []);
         expect(result).toBe(true);
     });
 
     it("should return true if download keys does not return any user", async () => {
-        client.downloadKeys.mockResolvedValue(new Map());
+        cryptoApi.getUserDeviceInfo.mockResolvedValue(new Map());
         const result = await canEncryptToAllUsers(client, [user1Id, user2Id]);
         expect(result).toBe(true);
     });
 
     it("should return false if none of the users has a device", async () => {
-        client.downloadKeys.mockResolvedValue(
+        cryptoApi.getUserDeviceInfo.mockResolvedValue(
             new Map([
                 [user1Id, new Map()],
                 [user2Id, new Map()],
@@ -185,7 +186,7 @@ describe("canEncryptToAllUsers", () => {
     });
 
     it("should return false if some of the users don't have a device", async () => {
-        client.downloadKeys.mockResolvedValue(
+        cryptoApi.getUserDeviceInfo.mockResolvedValue(
             new Map([
                 [user1Id, new Map()],
                 [user2Id, devices],
@@ -196,7 +197,7 @@ describe("canEncryptToAllUsers", () => {
     });
 
     it("should return true if all users have a device", async () => {
-        client.downloadKeys.mockResolvedValue(
+        cryptoApi.getUserDeviceInfo.mockResolvedValue(
             new Map([
                 [user1Id, devices],
                 [user2Id, devices],

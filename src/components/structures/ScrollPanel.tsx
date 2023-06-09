@@ -179,22 +179,22 @@ export default class ScrollPanel extends React.Component<IProps> {
     };
     private readonly itemlist = createRef<HTMLOListElement>();
     private unmounted = false;
-    private scrollTimeout: Timer;
+    private scrollTimeout?: Timer;
     // Are we currently trying to backfill?
-    private isFilling: boolean;
+    private isFilling = false;
     // Is the current fill request caused by a props update?
     private isFillingDueToPropsUpdate = false;
     // Did another request to check the fill state arrive while we were trying to backfill?
-    private fillRequestWhileRunning: boolean;
+    private fillRequestWhileRunning = false;
     // Is that next fill request scheduled because of a props update?
-    private pendingFillDueToPropsUpdate: boolean;
-    private scrollState: IScrollState;
-    private preventShrinkingState: IPreventShrinkingState;
-    private unfillDebouncer: number | null;
-    private bottomGrowth: number;
-    private minListHeight: number;
-    private heightUpdateInProgress: boolean;
-    private divScroll: HTMLDivElement;
+    private pendingFillDueToPropsUpdate = false;
+    private scrollState!: IScrollState;
+    private preventShrinkingState: IPreventShrinkingState | null = null;
+    private unfillDebouncer: number | null = null;
+    private bottomGrowth!: number;
+    private minListHeight!: number;
+    private heightUpdateInProgress = false;
+    private divScroll: HTMLDivElement | null = null;
 
     public constructor(props: IProps) {
         super(props);
@@ -226,13 +226,15 @@ export default class ScrollPanel extends React.Component<IProps> {
         this.unmounted = true;
 
         this.props.resizeNotifier?.removeListener("middlePanelResizedNoisy", this.onResize);
+
+        this.divScroll = null;
     }
 
     private onScroll = (ev: Event): void => {
         // skip scroll events caused by resizing
         if (this.props.resizeNotifier && this.props.resizeNotifier.isResizing) return;
         debuglog("onScroll called past resize gate; scroll node top:", this.getScrollNode().scrollTop);
-        this.scrollTimeout.restart();
+        this.scrollTimeout?.restart();
         this.saveScrollState();
         this.updatePreventShrinking();
         this.props.onScroll?.(ev);
@@ -382,13 +384,12 @@ export default class ScrollPanel extends React.Component<IProps> {
         }
 
         const itemlist = this.itemlist.current;
-        const firstTile = itemlist && (itemlist.firstElementChild as HTMLElement);
-        const contentTop = firstTile && firstTile.offsetTop;
+        const firstTile = itemlist?.firstElementChild as HTMLElement | undefined;
         const fillPromises: Promise<void>[] = [];
 
         // if scrollTop gets to 1 screen from the top of the first tile,
         // try backward filling
-        if (!firstTile || sn.scrollTop - contentTop < sn.clientHeight) {
+        if (!firstTile || sn.scrollTop - firstTile.offsetTop < sn.clientHeight) {
             // need to back-fill
             fillPromises.push(this.maybeFill(depth, true));
         }
@@ -424,7 +425,7 @@ export default class ScrollPanel extends React.Component<IProps> {
     // check if unfilling is possible and send an unfill request if necessary
     private checkUnfillState(backwards: boolean): void {
         let excessHeight = this.getExcessHeight(backwards);
-        if (excessHeight <= 0) {
+        if (excessHeight <= 0 || !this.itemlist.current) {
             return;
         }
 
@@ -617,10 +618,7 @@ export default class ScrollPanel extends React.Component<IProps> {
      * node (specifically, the bottom of it) will be positioned. If omitted, it
      * defaults to 0.
      */
-    public scrollToToken = (scrollToken: string, pixelOffset: number, offsetBase: number): void => {
-        pixelOffset = pixelOffset || 0;
-        offsetBase = offsetBase || 0;
-
+    public scrollToToken = (scrollToken: string, pixelOffset = 0, offsetBase = 0): void => {
         // set the trackedScrollToken, so we can get the node through getTrackedNode
         this.scrollState = {
             stuckAtBottom: false,
@@ -652,6 +650,7 @@ export default class ScrollPanel extends React.Component<IProps> {
         const viewportBottom = scrollNode.scrollHeight - (scrollNode.scrollTop + scrollNode.clientHeight);
 
         const itemlist = this.itemlist.current;
+        if (!itemlist) return;
         const messages = itemlist.children;
         let node: HTMLElement | null = null;
 
@@ -676,7 +675,7 @@ export default class ScrollPanel extends React.Component<IProps> {
             debuglog("unable to save scroll state: found no children in the viewport");
             return;
         }
-        const scrollToken = node!.dataset.scrollTokens.split(",")[0];
+        const scrollToken = node!.dataset.scrollTokens?.split(",")[0];
         debuglog("saving anchored scroll state to message", scrollToken);
         const bottomOffset = this.topFromBottom(node);
         this.scrollState = {
@@ -705,7 +704,7 @@ export default class ScrollPanel extends React.Component<IProps> {
                 this.bottomGrowth += bottomDiff;
                 scrollState.bottomOffset = newBottomOffset;
                 const newHeight = `${this.getListHeight()}px`;
-                if (itemlist.style.height !== newHeight) {
+                if (itemlist && itemlist.style.height !== newHeight) {
                     itemlist.style.height = newHeight;
                 }
                 debuglog("balancing height because messages below viewport grew by", bottomDiff);
@@ -726,7 +725,7 @@ export default class ScrollPanel extends React.Component<IProps> {
     // need a better name that also indicates this will change scrollTop? Rebalance height? Reveal content?
     private async updateHeight(): Promise<void> {
         // wait until user has stopped scrolling
-        if (this.scrollTimeout.isRunning()) {
+        if (this.scrollTimeout?.isRunning()) {
             debuglog("updateHeight waiting for scrolling to end ... ");
             await this.scrollTimeout.finished();
             debuglog("updateHeight actually running now");
@@ -755,7 +754,7 @@ export default class ScrollPanel extends React.Component<IProps> {
 
         const scrollState = this.scrollState;
         if (scrollState.stuckAtBottom) {
-            if (itemlist.style.height !== newHeight) {
+            if (itemlist && itemlist.style.height !== newHeight) {
                 itemlist.style.height = newHeight;
             }
             if (sn.scrollTop !== sn.scrollHeight) {
@@ -770,7 +769,7 @@ export default class ScrollPanel extends React.Component<IProps> {
             // the currently filled piece of the timeline
             if (trackedNode) {
                 const oldTop = trackedNode.offsetTop;
-                if (itemlist.style.height !== newHeight) {
+                if (itemlist && itemlist.style.height !== newHeight) {
                     itemlist.style.height = newHeight;
                 }
                 const newTop = trackedNode.offsetTop;
@@ -789,7 +788,7 @@ export default class ScrollPanel extends React.Component<IProps> {
         const scrollState = this.scrollState;
         const trackedNode = scrollState.trackedNode;
 
-        if (!trackedNode?.parentElement) {
+        if (!trackedNode?.parentElement && this.itemlist.current) {
             let node: HTMLElement | undefined = undefined;
             const messages = this.itemlist.current.children;
             const scrollToken = scrollState.trackedScrollToken;
@@ -823,9 +822,9 @@ export default class ScrollPanel extends React.Component<IProps> {
 
     private getMessagesHeight(): number {
         const itemlist = this.itemlist.current;
-        const lastNode = itemlist.lastElementChild as HTMLElement;
+        const lastNode = itemlist?.lastElementChild as HTMLElement;
         const lastNodeBottom = lastNode ? lastNode.offsetTop + lastNode.clientHeight : 0;
-        const firstNodeTop = itemlist.firstElementChild ? (itemlist.firstElementChild as HTMLElement).offsetTop : 0;
+        const firstNodeTop = (itemlist?.firstElementChild as HTMLElement)?.offsetTop ?? 0;
         // 18 is itemlist padding
         return lastNodeBottom - firstNodeTop + 18 * 2;
     }
@@ -865,8 +864,8 @@ export default class ScrollPanel extends React.Component<IProps> {
     */
     public preventShrinking = (): void => {
         const messageList = this.itemlist.current;
-        const tiles = messageList && messageList.children;
-        if (!messageList) {
+        const tiles = messageList?.children;
+        if (!tiles) {
             return;
         }
         let lastTileNode;
@@ -893,7 +892,7 @@ export default class ScrollPanel extends React.Component<IProps> {
     public clearPreventShrinking = (): void => {
         const messageList = this.itemlist.current;
         const balanceElement = messageList && messageList.parentElement;
-        if (balanceElement) balanceElement.style.paddingBottom = null;
+        if (balanceElement) balanceElement.style.removeProperty("paddingBottom");
         this.preventShrinkingState = null;
         debuglog("prevent shrinking cleared");
     };
@@ -907,7 +906,7 @@ export default class ScrollPanel extends React.Component<IProps> {
     what it was when marking.
     */
     public updatePreventShrinking = (): void => {
-        if (this.preventShrinkingState) {
+        if (this.preventShrinkingState && this.itemlist.current) {
             const sn = this.getScrollNode();
             const scrollState = this.scrollState;
             const messageList = this.itemlist.current;
@@ -925,7 +924,7 @@ export default class ScrollPanel extends React.Component<IProps> {
             if (!shouldClear) {
                 const currentOffset = messageList.clientHeight - (offsetNode.offsetTop + offsetNode.clientHeight);
                 const offsetDiff = offsetFromBottom - currentOffset;
-                if (offsetDiff > 0) {
+                if (offsetDiff > 0 && balanceElement) {
                     balanceElement.style.paddingBottom = `${offsetDiff}px`;
                     debuglog("update prevent shrinking ", offsetDiff, "px from bottom");
                 } else if (offsetDiff < 0) {

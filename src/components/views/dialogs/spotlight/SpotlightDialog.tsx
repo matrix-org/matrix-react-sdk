@@ -21,17 +21,7 @@ import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
 import { IPublicRoomsChunkRoom, MatrixClient, RoomMember, RoomType } from "matrix-js-sdk/src/matrix";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { normalize } from "matrix-js-sdk/src/utils";
-import React, {
-    ChangeEvent,
-    KeyboardEvent,
-    RefObject,
-    useCallback,
-    useContext,
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from "react";
+import React, { ChangeEvent, RefObject, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import sanitizeHtml from "sanitize-html";
 
 import { KeyBindingAction } from "../../../../accessibility/KeyboardShortcuts";
@@ -89,6 +79,7 @@ import { isLocalRoom } from "../../../../utils/localRoom/isLocalRoom";
 import RoomAvatar from "../../avatars/RoomAvatar";
 import { useFeatureEnabled } from "../../../../hooks/useSettings";
 import { filterBoolean } from "../../../../utils/arrays";
+import { transformSearchTerm } from "../../../../utils/SearchInput";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -288,8 +279,8 @@ interface IDirectoryOpts {
 }
 
 const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = null, onFinished }) => {
-    const inputRef = useRef<HTMLInputElement>();
-    const scrollContainerRef = useRef<HTMLDivElement>();
+    const inputRef = useRef<HTMLInputElement>(null);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
     const cli = MatrixClientPeg.get();
     const rovingContext = useContext(RovingTabIndexContext);
     const [query, _setQuery] = useState(initialText);
@@ -466,7 +457,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     const [spaceResults, spaceResultsLoading] = useSpaceResults(activeSpace ?? undefined, query);
 
     const setQuery = (e: ChangeEvent<HTMLInputElement>): void => {
-        const newQuery = e.currentTarget.value;
+        const newQuery = transformSearchTerm(e.currentTarget.value);
         _setQuery(newQuery);
     };
     useEffect(() => {
@@ -1066,7 +1057,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         );
     }
 
-    const onDialogKeyDown = (ev: KeyboardEvent): void => {
+    const onDialogKeyDown = (ev: KeyboardEvent | React.KeyboardEvent): void => {
         const navigationAction = getKeyBindingsManager().getNavigationAction(ev);
         switch (navigationAction) {
             case KeyBindingAction.FilterRooms:
@@ -1089,7 +1080,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 ev.stopPropagation();
                 ev.preventDefault();
 
-                if (rovingContext.state.refs.length > 0) {
+                if (rovingContext.state.activeRef && rovingContext.state.refs.length > 0) {
                     let refs = rovingContext.state.refs;
                     if (!query && !filter !== null) {
                         // If the current selection is not in the recently viewed row then only include the
@@ -1112,6 +1103,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 if (
                     !query &&
                     !filter !== null &&
+                    rovingContext.state.activeRef &&
                     rovingContext.state.refs.length > 0 &&
                     refIsForRecentlyViewed(rovingContext.state.activeRef)
                 ) {
@@ -1137,7 +1129,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         }
     };
 
-    const onKeyDown = (ev: KeyboardEvent): void => {
+    const onKeyDown = (ev: React.KeyboardEvent): void => {
         const action = getKeyBindingsManager().getAccessibilityAction(ev);
 
         switch (action) {

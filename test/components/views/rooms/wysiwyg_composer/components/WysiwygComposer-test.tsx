@@ -158,7 +158,7 @@ describe("WysiwygComposer", () => {
         });
     });
 
-    describe("Mentions", () => {
+    describe("Mentions and commands", () => {
         const dispatchSpy = jest.spyOn(defaultDispatcher, "dispatch");
 
         const mockCompletions: ICompletion[] = [
@@ -181,6 +181,7 @@ describe("WysiwygComposer", () => {
             {
                 // no href user
                 type: "user",
+                href: undefined,
                 completion: "user_without_href",
                 completionId: "@user_3:host.local",
                 range: { start: 1, end: 1 },
@@ -201,6 +202,24 @@ describe("WysiwygComposer", () => {
                 range: { start: 1, end: 1 },
                 component: <div>room_without_completion_id</div>,
             },
+            {
+                type: "command",
+                completion: "/spoiler",
+                range: { start: 1, end: 1 },
+                component: <div>/spoiler</div>,
+            },
+            {
+                type: "at-room",
+                completion: "@room",
+                range: { start: 1, end: 1 },
+                component: <div>@room</div>,
+            },
+            {
+                type: "community",
+                completion: "community-completion",
+                range: { start: 1, end: 1 },
+                component: <div>community</div>,
+            },
         ];
 
         const constructMockProvider = (data: ICompletion[]) =>
@@ -211,9 +230,10 @@ describe("WysiwygComposer", () => {
             } as unknown as AutocompleteProvider);
 
         // for each test we will insert input simulating a user mention
+        const initialInput = "@abc";
         const insertMentionInput = async () => {
             fireEvent.input(screen.getByRole("textbox"), {
-                data: "@abc",
+                data: initialInput,
                 inputType: "insertText",
             });
 
@@ -276,6 +296,28 @@ describe("WysiwygComposer", () => {
 
             // check that it inserts the completion text as a link
             expect(screen.getByRole("link", { name: mockCompletions[0].completion })).toBeInTheDocument();
+        });
+
+        it("pressing escape closes the autocomplete", async () => {
+            await insertMentionInput();
+
+            // press escape
+            await userEvent.keyboard("{Escape}");
+
+            // check that it closes the autocomplete
+            await waitFor(() => {
+                expect(screen.queryByRole("presentation")).not.toBeInTheDocument();
+            });
+        });
+
+        it("typing with the autocomplete open still works as expected", async () => {
+            await insertMentionInput();
+
+            // add some more text, then check the autocomplete is open AND the text is in the composer
+            await userEvent.keyboard("extra");
+
+            expect(screen.queryByRole("presentation")).toBeInTheDocument();
+            expect(screen.getByRole("textbox")).toHaveTextContent("@abcextra");
         });
 
         it("clicking on a mention in the composer dispatches the correct action", async () => {
@@ -348,6 +390,36 @@ describe("WysiwygComposer", () => {
 
             // check that it has inserted a link and falls back to the completion text
             expect(screen.getByRole("link", { name: "#room_without_completion_id" })).toBeInTheDocument();
+        });
+
+        it("selecting a command inserts the command", async () => {
+            await insertMentionInput();
+
+            // select the room suggestion
+            await userEvent.click(screen.getByText("/spoiler"));
+
+            // check that it has inserted the plain text
+            expect(screen.getByText("/spoiler")).toBeInTheDocument();
+        });
+
+        it("selecting an at-room completion inserts @room", async () => {
+            await insertMentionInput();
+
+            // select the room suggestion
+            await userEvent.click(screen.getByText("@room"));
+
+            // check that it has inserted the @room link
+            expect(screen.getByRole("link", { name: "@room" })).toBeInTheDocument();
+        });
+
+        it("allows a community completion to pass through", async () => {
+            await insertMentionInput();
+
+            // select the room suggestion
+            await userEvent.click(screen.getByText("community"));
+
+            // check that it we still have the initial text
+            expect(screen.getByText(initialInput)).toBeInTheDocument();
         });
     });
 

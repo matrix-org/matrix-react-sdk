@@ -37,10 +37,6 @@ const CONNECTING_STATES = [
 
 const SUPPORTED_STATES = [CallState.Connected, CallState.Ringing, CallState.Ended];
 
-export enum CustomCallState {
-    Missed = "missed",
-}
-
 const isCallEventType = (eventType: string): boolean =>
     eventType.startsWith("m.call.") || eventType.startsWith("org.matrix.call.");
 
@@ -73,7 +69,7 @@ export function buildLegacyCallEventGroupers(
 export default class LegacyCallEventGrouper extends EventEmitter {
     private events: Set<MatrixEvent> = new Set<MatrixEvent>();
     private call: MatrixCall | null = null;
-    public state: CallState | CustomCallState;
+    public state?: CallState;
 
     public constructor() {
         super();
@@ -103,7 +99,7 @@ export default class LegacyCallEventGrouper extends EventEmitter {
 
     public get isVoice(): boolean | undefined {
         const invite = this.invite;
-        if (!invite) return;
+        if (!invite) return undefined;
 
         // FIXME: Find a better way to determine this from the event?
         if (invite.getContent()?.offer?.sdp?.indexOf("m=video") !== -1) return false;
@@ -123,15 +119,18 @@ export default class LegacyCallEventGrouper extends EventEmitter {
     }
 
     public get duration(): number | null {
-        if (!this.hangup || !this.selectAnswer) return null;
-        return this.hangup.getDate().getTime() - this.selectAnswer.getDate().getTime();
+        if (!this.hangup?.getDate() || !this.selectAnswer?.getDate()) return null;
+        return this.hangup.getDate()!.getTime() - this.selectAnswer.getDate()!.getTime();
     }
 
     /**
      * Returns true if there are only events from the other side - we missed the call
      */
-    private get callWasMissed(): boolean {
-        return ![...this.events].some((event) => event.sender?.userId === MatrixClientPeg.get().getUserId());
+    public get callWasMissed(): boolean {
+        return (
+            this.state === CallState.Ended &&
+            ![...this.events].some((event) => event.sender?.userId === MatrixClientPeg.get().getUserId())
+        );
     }
 
     private get callId(): string | undefined {
@@ -152,15 +151,21 @@ export default class LegacyCallEventGrouper extends EventEmitter {
     };
 
     public answerCall = (): void => {
-        LegacyCallHandler.instance.answerCall(this.roomId);
+        const roomId = this.roomId;
+        if (!roomId) return;
+        LegacyCallHandler.instance.answerCall(roomId);
     };
 
     public rejectCall = (): void => {
-        LegacyCallHandler.instance.hangupOrReject(this.roomId, true);
+        const roomId = this.roomId;
+        if (!roomId) return;
+        LegacyCallHandler.instance.hangupOrReject(roomId, true);
     };
 
     public callBack = (): void => {
-        LegacyCallHandler.instance.placeCall(this.roomId, this.isVoice ? CallType.Voice : CallType.Video);
+        const roomId = this.roomId;
+        if (!roomId) return;
+        LegacyCallHandler.instance.placeCall(roomId, this.isVoice ? CallType.Voice : CallType.Video);
     };
 
     public toggleSilenced = (): void => {
@@ -177,23 +182,27 @@ export default class LegacyCallEventGrouper extends EventEmitter {
     }
 
     private setState = (): void => {
-        if (CONNECTING_STATES.includes(this.call?.state)) {
+        if (this.call && CONNECTING_STATES.includes(this.call.state)) {
             this.state = CallState.Connecting;
-        } else if (SUPPORTED_STATES.includes(this.call?.state)) {
+        } else if (this.call && SUPPORTED_STATES.includes(this.call.state)) {
             this.state = this.call.state;
         } else {
-            if (this.callWasMissed) this.state = CustomCallState.Missed;
-            else if (this.reject) this.state = CallState.Ended;
-            else if (this.hangup) this.state = CallState.Ended;
-            else if (this.invite && this.call) this.state = CallState.Connecting;
+            if (this.reject) {
+                this.state = CallState.Ended;
+            } else if (this.hangup) {
+                this.state = CallState.Ended;
+            } else if (this.invite && this.call) {
+                this.state = CallState.Connecting;
+            }
         }
         this.emit(LegacyCallEventGrouperEvent.StateChanged, this.state);
     };
 
     private setCall = (): void => {
-        if (this.call) return;
+        const callId = this.callId;
+        if (!callId || this.call) return;
 
-        this.call = LegacyCallHandler.instance.getCallById(this.callId);
+        this.call = LegacyCallHandler.instance.getCallById(callId);
         this.setCallListeners();
         this.setState();
     };

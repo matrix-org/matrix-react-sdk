@@ -47,7 +47,7 @@ interface IState {
 }
 
 export default class VerificationRequestToast extends React.PureComponent<IProps, IState> {
-    private intervalHandle: number;
+    private intervalHandle?: number;
 
     public constructor(props: IProps) {
         super(props);
@@ -74,10 +74,12 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
 
         if (request.isSelfVerification) {
             const cli = MatrixClientPeg.get();
-            const device = await cli.getDevice(request.channel.deviceId);
-            const ip = device.last_seen_ip;
+            const device = request.otherDeviceId ? await cli.getDevice(request.otherDeviceId) : null;
+            const ip = device?.last_seen_ip;
             this.setState({
-                device: cli.getStoredDevice(cli.getUserId()!, request.channel.deviceId) ?? undefined,
+                device:
+                    (request.otherDeviceId && cli.getStoredDevice(cli.getSafeUserId(), request.otherDeviceId)) ||
+                    undefined,
                 ip,
             });
         }
@@ -111,10 +113,10 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
         // no room id for to_device requests
         const cli = MatrixClientPeg.get();
         try {
-            if (request.channel.roomId) {
+            if (request.roomId) {
                 dis.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
-                    room_id: request.channel.roomId,
+                    room_id: request.roomId,
                     should_peek: false,
                     metricsTrigger: "VerificationRequest",
                 });
@@ -126,7 +128,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
                         { phase: RightPanelPhases.EncryptionPanel, state: { verificationRequest: request, member } },
                     ],
                     undefined,
-                    request.channel.roomId,
+                    request.roomId,
                 );
             } else {
                 Modal.createDialog(
@@ -162,8 +164,8 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
             }
         } else {
             const userId = request.otherUserId;
-            const roomId = request.channel.roomId;
-            description = roomId ? userLabelForEventRoom(userId, roomId) : userId;
+            const roomId = request.roomId;
+            description = roomId ? userLabelForEventRoom(MatrixClientPeg.get(), userId, roomId) : userId;
             // for legacy to_device verification requests
             if (description === userId) {
                 const client = MatrixClientPeg.get();

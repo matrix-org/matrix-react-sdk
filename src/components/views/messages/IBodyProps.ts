@@ -32,7 +32,7 @@ export interface IBodyProps {
     highlightLink?: string;
 
     /* callback called when dynamic content in events are loaded */
-    onHeightChanged: () => void;
+    onHeightChanged?: () => void;
 
     showUrlPreview?: boolean;
     forExport?: boolean;
@@ -40,7 +40,7 @@ export interface IBodyProps {
     replacingEventId?: string;
     editState?: EditorStateTransfer;
     onMessageAllowed: () => void; // TODO: Docs
-    permalinkCreator: RoomPermalinkCreator;
+    permalinkCreator?: RoomPermalinkCreator;
     mediaEventHelper: MediaEventHelper;
 
     /*
@@ -55,4 +55,8 @@ export interface IBodyProps {
     getRelationsForEvent?: GetRelationsForEvent;
 
     ref?: React.RefObject<any> | LegacyRef<any>;
+
+    // Set to `true` to disable interactions (e.g. video controls) and to remove controls from the tab order.
+    // This may be useful when displaying a preview of the event.
+    inhibitInteraction?: boolean;
 }

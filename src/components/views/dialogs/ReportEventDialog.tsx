@@ -19,7 +19,7 @@ import React, { ChangeEvent } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from "../../../languageHandler";
+import { _t, UserFriendlyError } from "../../../languageHandler";
 import { ensureDMExists } from "../../../createRoom";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import SdkConfig from "../../../SdkConfig";
@@ -245,6 +245,10 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                 // Report to moderators through to the dedicated bot,
                 // as configured in the room's state events.
                 const dmRoomId = await ensureDMExists(client, this.moderation.moderationBotUserId);
+                if (!dmRoomId) {
+                    throw new UserFriendlyError("Unable to create room with moderation bot");
+                }
+
                 await client.sendEvent(dmRoomId, ABUSE_EVENT_TYPE, {
                     event_id: ev.getId(),
                     room_id: ev.getRoomId(),
@@ -255,12 +259,12 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                 });
             } else {
                 // Report to homeserver admin through the dedicated Matrix API.
-                await client.reportEvent(ev.getRoomId(), ev.getId(), -100, this.state.reason.trim());
+                await client.reportEvent(ev.getRoomId()!, ev.getId()!, -100, this.state.reason.trim());
             }
 
             // if the user should also be ignored, do that
             if (this.state.ignoreUserToo) {
-                await client.setIgnoredUsers([...client.getIgnoredUsers(), ev.getSender()]);
+                await client.setIgnoredUsers([...client.getIgnoredUsers(), ev.getSender()!]);
             }
 
             this.props.onFinished(true);
@@ -309,8 +313,8 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
             // Display report-to-moderator dialog.
             // We let the user pick a nature.
             const client = MatrixClientPeg.get();
-            const homeServerName = SdkConfig.get("validated_server_config").hsName;
-            let subtitle;
+            const homeServerName = SdkConfig.get("validated_server_config")!.hsName;
+            let subtitle: string;
             switch (this.state.nature) {
                 case Nature.Disagreement:
                     subtitle = _t(
@@ -340,7 +344,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                     );
                     break;
                 case NonStandardValue.Admin:
-                    if (client.isRoomEncrypted(this.props.mxEvent.getRoomId())) {
+                    if (client.isRoomEncrypted(this.props.mxEvent.getRoomId()!)) {
                         subtitle = _t(
                             "This room is dedicated to illegal or toxic content " +
                                 "or the moderators fail to moderate illegal or toxic content.\n" +

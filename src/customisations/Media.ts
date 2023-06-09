@@ -20,6 +20,7 @@ import { Optional } from "matrix-events-sdk";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { IMediaEventContent, IPreparedMedia, prepEventContentAsMedia } from "./models/IMediaEventContent";
+import { UserFriendlyError } from "../languageHandler";
 
 // Populate this class with the details of your customisations when copying it.
 
@@ -77,7 +78,7 @@ export class Media {
      */
     public get srcHttp(): string | null {
         // eslint-disable-next-line no-restricted-properties
-        return this.client.mxcUrlToHttp(this.srcMxc);
+        return this.client.mxcUrlToHttp(this.srcMxc) || null;
     }
 
     /**
@@ -141,7 +142,11 @@ export class Media {
      * @returns {Promise<Response>} Resolves to the server's response for chaining.
      */
     public downloadSource(): Promise<Response> {
-        return fetch(this.srcHttp);
+        const src = this.srcHttp;
+        if (!src) {
+            throw new UserFriendlyError("Failed to download source media, no source url was found");
+        }
+        return fetch(src);
     }
 }
 

@@ -213,7 +213,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
         this.connectionState = ConnectionState.Connecting;
 
         const { [MediaDeviceKindEnum.AudioInput]: audioInputs, [MediaDeviceKindEnum.VideoInput]: videoInputs } =
-            await MediaDeviceHandler.getDevices();
+            (await MediaDeviceHandler.getDevices())!;
 
         let audioInput: MediaDeviceInfo | null = null;
         if (!MediaDeviceHandler.startWithAudioMuted) {
@@ -227,7 +227,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
         }
 
         const messagingStore = WidgetMessagingStore.instance;
-        this.messaging = messagingStore.getMessagingForUid(this.widgetUid);
+        this.messaging = messagingStore.getMessagingForUid(this.widgetUid) ?? null;
         if (!this.messaging) {
             // The widget might still be initializing, so wait for it
             try {
@@ -342,7 +342,7 @@ export class JitsiCall extends Call {
     }
 
     public static async create(room: Room): Promise<void> {
-        await WidgetUtils.addJitsiWidget(room.roomId, CallType.Video, "Group call", true, room.name);
+        await WidgetUtils.addJitsiWidget(room.client, room.roomId, CallType.Video, "Group call", true, room.name);
     }
 
     private updateParticipants(): void {
@@ -659,6 +659,8 @@ export class ElementCall extends Call {
             analyticsID,
         });
 
+        if (SettingsStore.getValue("fallbackICEServerAllowed")) params.append("allowIceFallback", "");
+
         // Set custom fonts
         if (SettingsStore.getValue("useSystemFont")) {
             SettingsStore.getValue<string>("systemFont")
@@ -773,6 +775,7 @@ export class ElementCall extends Call {
     }
 
     public destroy(): void {
+        ActiveWidgetStore.instance.destroyPersistentWidget(this.widget.id, this.groupCall.room.roomId);
         WidgetStore.instance.removeVirtualWidget(this.widget.id, this.groupCall.room.roomId);
         this.off(CallEvent.Participants, this.onParticipants);
         this.groupCall.off(GroupCallEvent.ParticipantsChanged, this.onGroupCallParticipants);

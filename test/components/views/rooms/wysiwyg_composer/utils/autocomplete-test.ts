@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
+import React from "react";
 
 import { ICompletion } from "../../../../../../src/autocomplete/Autocompleter";
 import {
@@ -34,6 +35,7 @@ const createMockCompletion = (props: Partial<ICompletion>): ICompletion => {
     return {
         completion: "mock",
         range: { beginning: true, start: 0, end: 0 },
+        component: React.createElement("div"),
         ...props,
     };
 };
@@ -100,8 +102,8 @@ describe("getRoomFromCompletion", () => {
 });
 
 describe("getMentionDisplayText", () => {
-    it("returns an empty string if we are not handling a user or a room type", () => {
-        const nonHandledCompletionTypes = ["at-room", "community", "command"] as const;
+    it("returns an empty string if we are not handling a user, room or at-room type", () => {
+        const nonHandledCompletionTypes = ["community", "command"] as const;
         const nonHandledCompletions = nonHandledCompletionTypes.map((type) => createMockCompletion({ type }));
 
         nonHandledCompletions.forEach((completion) => {
@@ -131,12 +133,18 @@ describe("getMentionDisplayText", () => {
         // as this uses the mockClient, the name will be the mock room name returned from there
         expect(getMentionDisplayText(userCompletion, mockClient)).toBe(testCompletion);
     });
+
+    it("returns the completion if we are handling an at-room completion", () => {
+        const testCompletion = "display this";
+        const atRoomCompletion = createMockCompletion({ type: "at-room", completion: testCompletion });
+
+        expect(getMentionDisplayText(atRoomCompletion, mockClient)).toBe(testCompletion);
+    });
 });
 
 describe("getMentionAttributes", () => {
-    // TODO handle all completion types
-    it("returns an empty object for completion types other than room or user", () => {
-        const nonHandledCompletionTypes = ["at-room", "community", "command"] as const;
+    it("returns an empty object for completion types other than room, user or at-room", () => {
+        const nonHandledCompletionTypes = ["community", "command"] as const;
         const nonHandledCompletions = nonHandledCompletionTypes.map((type) => createMockCompletion({ type }));
 
         nonHandledCompletions.forEach((completion) => {
@@ -216,6 +224,16 @@ describe("getMentionAttributes", () => {
                 "data-mention-type": "room",
                 "style": `--avatar-background: url(${testAvatarUrlForString}); --avatar-letter: '${testInitialLetter}'`,
             });
+        });
+    });
+
+    describe("at-room mentions", () => {
+        it("returns expected attributes", () => {
+            const atRoomCompletion = createMockCompletion({ type: "at-room" });
+
+            const result = getMentionAttributes(atRoomCompletion, mockClient, mockRoom);
+
+            expect(result).toEqual({ "data-mention-type": "at-room" });
         });
     });
 });

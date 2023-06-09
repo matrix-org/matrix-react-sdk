@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -55,13 +55,18 @@ limitations under the License.
         flex-direction: column;
         justify-content: center;
 
-        .mx_RoomTile_title,
         .mx_RoomTile_subtitle {
-            width: 100%;
+            align-items: center;
+            color: $secondary-content;
+            display: flex;
+            gap: $spacing-4;
+            line-height: $font-18px;
+        }
 
-            /* Ellipsize any text overflow */
-            text-overflow: ellipsis;
+        .mx_RoomTile_title,
+        .mx_RoomTile_subtitle_text {
             overflow: hidden;
+            text-overflow: ellipsis;
             white-space: nowrap;
         }
 
@@ -70,13 +75,8 @@ limitations under the License.
             line-height: $font-18px;
 
             &.mx_RoomTile_titleHasUnreadEvents {
-                font-weight: 600;
+                font-weight: var(--font-semi-bold);
             }
-        }
-
-        .mx_RoomTile_subtitle {
-            line-height: $font-18px;
-            color: $secondary-content;
         }
 
         .mx_RoomTile_titleWithSubtitle {
@@ -233,10 +233,6 @@ limitations under the License.
 
     .mx_RoomTile_iconExport::before {
         mask-image: url("$(res)/img/element-icons/export.svg");
-    }
-
-    .mx_RoomTile_iconDeveloperTools::before {
-        mask-image: url("$(res)/img/element-icons/settings/flask.svg");
     }
 
     .mx_RoomTile_iconCopyLink::before {

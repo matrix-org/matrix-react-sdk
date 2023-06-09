@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import * as linkifyjs from "linkifyjs";
-import { Opts, registerCustomProtocol, registerPlugin } from "linkifyjs";
+import { EventListeners, Opts, registerCustomProtocol, registerPlugin } from "linkifyjs";
 import linkifyElement from "linkify-element";
 import linkifyString from "linkify-string";
 import { User } from "matrix-js-sdk/src/matrix";
@@ -30,6 +30,7 @@ import dis from "./dispatcher/dispatcher";
 import { Action } from "./dispatcher/actions";
 import { ViewUserPayload } from "./dispatcher/payloads/ViewUserPayload";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import { MatrixClientPeg } from "./MatrixClientPeg";
 
 export enum Type {
     URL = "url",
@@ -58,6 +59,8 @@ function matrixOpaqueIdLinkifyParser({
         TLD,
         COLON,
         SYM,
+        SLASH,
+        EQUALS,
         HYPHEN,
         UNDERSCORE,
         // because 'localhost' is tokenised to the localhost token,
@@ -69,7 +72,7 @@ function matrixOpaqueIdLinkifyParser({
     const S_START = parser.start;
     const matrixSymbol = utils.createTokenClass(name, { isLink: true });
 
-    const localpartTokens = [domain, TLD, LOCALHOST, SYM, UNDERSCORE, HYPHEN];
+    const localpartTokens = [domain, TLD, DOT, LOCALHOST, SYM, SLASH, EQUALS, UNDERSCORE, HYPHEN];
     const domainpartTokens = [domain, TLD, LOCALHOST, HYPHEN];
 
     const INITIAL_STATE = S_START.tt(token);
@@ -136,7 +139,7 @@ export const ELEMENT_URL_PATTERN =
     ")(#.*)";
 
 export const options: Opts = {
-    events: function (href: string, type: string): Partial<GlobalEventHandlers> {
+    events: function (href: string, type: string): EventListeners {
         switch (type as Type) {
             case Type.URL: {
                 // intercept local permalinks to users and show them like userids (in userinfo of current room)
@@ -146,7 +149,7 @@ export const options: Opts = {
                         return {
                             // @ts-ignore see https://linkify.js.org/docs/options.html
                             click: function (e: MouseEvent) {
-                                onUserClick(e, permalink.userId);
+                                onUserClick(e, permalink.userId!);
                             },
                         };
                     } else {
@@ -185,6 +188,8 @@ export const options: Opts = {
                     },
                 };
         }
+
+        return {};
     },
 
     formatHref: function (href: string, type: Type | string): string {
@@ -192,7 +197,7 @@ export const options: Opts = {
             case Type.RoomAlias:
             case Type.UserId:
             default: {
-                return tryTransformEntityToPermalink(href);
+                return tryTransformEntityToPermalink(MatrixClientPeg.get(), href) ?? "";
             }
         }
     },
@@ -213,7 +218,7 @@ export const options: Opts = {
                     transformed !== href || // if it could be converted to handle locally for matrix symbols e.g. @user:server.tdl and matrix.to
                     decodeURIComponent(href).match(ELEMENT_URL_PATTERN) // for https links to Element domains
                 ) {
-                    return null;
+                    return "";
                 } else {
                     return "_blank";
                 }
@@ -221,7 +226,7 @@ export const options: Opts = {
                 // malformed URI
             }
         }
-        return null;
+        return "";
     },
 };
 

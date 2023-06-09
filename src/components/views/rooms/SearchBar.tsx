@@ -27,7 +27,7 @@ import SearchWarning, { WarningKind } from "../elements/SearchWarning";
 
 interface IProps {
     onCancelClick: () => void;
-    onSearch: (query: string, scope: string) => void;
+    onSearch: (query: string, scope: SearchScope) => void;
     searchInProgress?: boolean;
     isRoomEncrypted?: boolean;
 }
@@ -121,6 +121,9 @@ export default class SearchBar extends React.Component<IProps, IState> {
                             type="text"
                             autoFocus={true}
                             placeholder={_t("Search…")}
+                            aria-label={
+                                this.state.scope === SearchScope.Room ? _t("Search this room") : _t("Search all rooms")
+                            }
                             onKeyDown={this.onSearchChange}
                         />
                         <AccessibleButton

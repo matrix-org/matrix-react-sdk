@@ -56,7 +56,7 @@ class FilePanel extends React.Component<IProps, IState> {
     // This is used to track if a decrypted event was a live event and should be
     // added to the timeline.
     private decryptingEvents = new Set<string>();
-    public noRoom: boolean;
+    public noRoom = false;
     private card = createRef<HTMLDivElement>();
 
     public state: IState = {
@@ -67,11 +67,11 @@ class FilePanel extends React.Component<IProps, IState> {
     private onRoomTimeline = (
         ev: MatrixEvent,
         room: Room | undefined,
-        toStartOfTimeline: boolean,
+        toStartOfTimeline: boolean | undefined,
         removed: boolean,
         data: IRoomTimelineData,
     ): void => {
-        if (room?.roomId !== this.props?.roomId) return;
+        if (room?.roomId !== this.props.roomId) return;
         if (toStartOfTimeline || !data || !data.liveEvent || ev.isRedacted()) return;
 
         const client = MatrixClientPeg.get();
@@ -154,11 +154,8 @@ class FilePanel extends React.Component<IProps, IState> {
             },
         });
 
-        const filterId = await client.getOrCreateFilter("FILTER_FILES_" + client.credentials.userId, filter);
-        filter.filterId = filterId;
-        const timelineSet = room.getOrCreateFilteredTimelineSet(filter);
-
-        return timelineSet;
+        filter.filterId = await client.getOrCreateFilter("FILTER_FILES_" + client.credentials.userId, filter);
+        return room.getOrCreateFilteredTimelineSet(filter);
     }
 
     private onPaginationRequest = (
@@ -276,7 +273,9 @@ class FilePanel extends React.Component<IProps, IState> {
                         withoutScrollContainer
                         ref={this.card}
                     >
-                        <Measured sensor={this.card.current} onMeasurement={this.onMeasurement} />
+                        {this.card.current && (
+                            <Measured sensor={this.card.current} onMeasurement={this.onMeasurement} />
+                        )}
                         <SearchWarning isRoomEncrypted={isRoomEncrypted} kind={WarningKind.Files} />
                         <TimelinePanel
                             manageReadReceipts={false}

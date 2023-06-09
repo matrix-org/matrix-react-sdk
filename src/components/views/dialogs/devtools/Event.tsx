@@ -54,12 +54,13 @@ export const stateKeyField = (defaultValue?: string): IFieldDef => ({
 });
 
 const validateEventContent = withValidation<any, Error | undefined>({
-    deriveData({ value }) {
+    async deriveData({ value }) {
         try {
             JSON.parse(value!);
         } catch (e) {
-            return e;
+            return e as Error;
         }
+        return undefined;
     },
     rules: [
         {
@@ -182,7 +183,7 @@ export const TimelineEventEditor: React.FC<IEditorProps> = ({ mxEvent, onBack })
         return cli.sendEvent(context.room.roomId, eventType, content || {});
     };
 
-    let defaultContent = "";
+    let defaultContent: string | undefined;
 
     if (mxEvent) {
         const originalContent = mxEvent.getContent();

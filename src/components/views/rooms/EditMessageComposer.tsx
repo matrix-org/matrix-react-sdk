@@ -49,6 +49,8 @@ import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { editorRoomKey, editorStateKey } from "../../../Editing";
 import DocumentOffset from "../../../editor/offset";
 import { attachMentions, attachRelation } from "./SendMessageComposer";
+import { filterBoolean } from "../../../utils/arrays";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
     const html = mxEvent.getContent().formatted_body;
@@ -129,7 +131,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     private readonly editorRef = createRef<BasicMessageComposer>();
     private readonly dispatcherRef: string;
     private readonly replyToEvent?: MatrixEvent;
-    private model: EditorModel;
+    private model!: EditorModel;
 
     public constructor(props: IEditMessageComposerProps, context: React.ContextType<typeof RoomContext>) {
         super(props);
@@ -149,8 +151,11 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         this.dispatcherRef = dis.register(this.onAction);
     }
 
-    private getRoom(): Room | null {
-        return this.props.mxClient.getRoom(this.props.editState.getEvent().getRoomId());
+    private getRoom(): Room {
+        if (!this.context.room) {
+            throw new Error(`Cannot render without room`);
+        }
+        return this.context.room;
     }
 
     private onKeyDown = (event: KeyboardEvent): void => {
@@ -177,6 +182,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                     events: this.events,
                     isForward: false,
                     fromEventId: this.props.editState.getEvent().getId(),
+                    matrixClient: MatrixClientPeg.get(),
                 });
                 if (previousEvent) {
                     dis.dispatch({
@@ -196,6 +202,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                     events: this.events,
                     isForward: true,
                     fromEventId: this.props.editState.getEvent().getId(),
+                    matrixClient: MatrixClientPeg.get(),
                 });
                 if (nextEvent) {
                     dis.dispatch({
@@ -229,18 +236,20 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     }
 
     private get editorRoomKey(): string {
-        return editorRoomKey(this.props.editState.getEvent().getRoomId(), this.context.timelineRenderingType);
+        return editorRoomKey(this.props.editState.getEvent().getRoomId()!, this.context.timelineRenderingType);
     }
 
     private get editorStateKey(): string {
-        return editorStateKey(this.props.editState.getEvent().getId());
+        return editorStateKey(this.props.editState.getEvent().getId()!);
     }
 
     private get events(): MatrixEvent[] {
         const liveTimelineEvents = this.context.liveTimeline?.getEvents();
-        const pendingEvents = this.getRoom()?.getPendingEvents();
+        const room = this.getRoom();
+        if (!liveTimelineEvents || !room) return [];
+        const pendingEvents = room.getPendingEvents();
         const isInThread = Boolean(this.props.editState.getEvent().getThread());
-        return liveTimelineEvents?.concat(isInThread ? [] : pendingEvents) ?? [];
+        return liveTimelineEvents.concat(isInThread ? [] : pendingEvents);
     }
 
     private cancelEdit = (): void => {
@@ -273,7 +282,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     private saveStoredEditorState = (): void => {
         const item = SendHistoryManager.createItem(this.model);
         this.clearPreviousEdit();
-        localStorage.setItem(this.editorRoomKey, this.props.editState.getEvent().getId());
+        localStorage.setItem(this.editorRoomKey, this.props.editState.getEvent().getId()!);
         localStorage.setItem(this.editorStateKey, JSON.stringify(item));
     };
 
@@ -327,12 +336,18 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
 
         // If content is modified then send an updated event into the room
         if (this.isContentModified(newContent)) {
-            const roomId = editedEvent.getRoomId();
+            const roomId = editedEvent.getRoomId()!;
             if (!containsEmote(this.model) && isSlashCommand(this.model)) {
                 const [cmd, args, commandText] = getSlashCommand(this.model);
                 if (cmd) {
                     const threadId = editedEvent?.getThread()?.id || null;
-                    const [content, commandSuccessful] = await runSlashCommand(cmd, args, roomId, threadId);
+                    const [content, commandSuccessful] = await runSlashCommand(
+                        MatrixClientPeg.get(),
+                        cmd,
+                        args,
+                        roomId,
+                        threadId,
+                    );
                     if (!commandSuccessful) {
                         return; // errored
                     }
@@ -384,8 +399,8 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         // in case we're currently editing a pending event
         const sel = document.getSelection()!;
         let caret: DocumentOffset | undefined;
-        if (sel.focusNode) {
-            caret = getCaretOffsetAndText(this.editorRef.current?.editorRef.current, sel).caret;
+        if (sel.focusNode && this.editorRef.current?.editorRef.current) {
+            caret = getCaretOffsetAndText(this.editorRef.current.editorRef.current, sel).caret;
         }
         const parts = this.model.serializeParts();
         // if caret is undefined because for some reason there isn't a valid selection,
@@ -409,7 +424,8 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         if (editState.hasEditorState()) {
             // if restoring state from a previous editor,
             // restore serialized parts from the state
-            parts = editState.getSerializedParts().map((p) => partCreator.deserializePart(p));
+            // (editState.hasEditorState() checks getSerializedParts is not null)
+            parts = filterBoolean<Part>(editState.getSerializedParts()!.map((p) => partCreator.deserializePart(p)));
         } else {
             // otherwise, either restore serialized parts from localStorage or parse the body of the event
             const restoredParts = this.restoreStoredEditorState(partCreator);
@@ -456,12 +472,15 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     };
 
     public render(): React.ReactNode {
+        const room = this.getRoom();
+        if (!room) return null;
+
         return (
             <div className={classNames("mx_EditMessageComposer", this.props.className)} onKeyDown={this.onKeyDown}>
                 <BasicMessageComposer
                     ref={this.editorRef}
                     model={this.model}
-                    room={this.getRoom()}
+                    room={room}
                     threadId={this.props.editState?.getEvent()?.getThread()?.id}
                     initialCaret={this.props.editState.getCaret() ?? undefined}
                     label={_t("Edit message")}

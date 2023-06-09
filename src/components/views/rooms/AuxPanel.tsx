@@ -100,14 +100,14 @@ export default class AuxPanel extends React.Component<IProps, IState> {
 
         if (this.props.room && SettingsStore.getValue("feature_state_counters")) {
             const stateEvs = this.props.room.currentState.getStateEvents("re.jki.counter");
-            stateEvs.sort((a, b) => lexicographicCompare(a.getStateKey(), b.getStateKey()));
+            stateEvs.sort((a, b) => lexicographicCompare(a.getStateKey()!, b.getStateKey()!));
 
             for (const ev of stateEvs) {
                 const title = ev.getContent().title;
                 const value = ev.getContent().value;
                 const link = ev.getContent().link;
                 const severity = ev.getContent().severity || "normal";
-                const stateKey = ev.getStateKey();
+                const stateKey = ev.getStateKey()!;
 
                 // We want a non-empty title but can accept falsy values (e.g.
                 // zero)
@@ -173,18 +173,14 @@ export default class AuxPanel extends React.Component<IProps, IState> {
                 }
 
                 span = (
-                    <span
-                        className="m_RoomView_auxPanel_stateViews_span"
-                        data-severity={severity}
-                        key={"x-" + stateKey}
-                    >
+                    <span className="mx_AuxPanel_stateViews_span" data-severity={severity} key={"x-" + stateKey}>
                         {span}
                     </span>
                 );
 
                 counters.push(span);
                 counters.push(
-                    <span className="m_RoomView_auxPanel_stateViews_delim" key={"delim" + idx}>
+                    <span className="mx_AuxPanel_stateViews_delim" key={"delim" + idx}>
                         {" "}
                         ─{" "}
                     </span>,
@@ -193,12 +189,12 @@ export default class AuxPanel extends React.Component<IProps, IState> {
 
             if (counters.length > 0) {
                 counters.pop(); // remove last deliminator
-                stateViews = <div className="m_RoomView_auxPanel_stateViews">{counters}</div>;
+                stateViews = <div className="mx_AuxPanel_stateViews">{counters}</div>;
             }
         }
 
         return (
-            <AutoHideScrollbar className="mx_RoomView_auxPanel">
+            <AutoHideScrollbar className="mx_AuxPanel">
                 {stateViews}
                 {this.props.children}
                 {appsDrawer}

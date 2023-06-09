@@ -52,10 +52,10 @@ const SpacePublicShare: React.FC<IProps> = ({ space, onFinished }) => {
                     }
                 }}
             >
-                <h3>{_t("Share invite link")}</h3>
-                <span>{copiedText}</span>
+                {_t("Share invite link")}
+                <div>{copiedText}</div>
             </AccessibleButton>
-            {space.canInvite(MatrixClientPeg.get()?.getUserId()) && shouldShowComponent(UIComponent.InviteUsers) ? (
+            {space.canInvite(MatrixClientPeg.get()?.getSafeUserId()) && shouldShowComponent(UIComponent.InviteUsers) ? (
                 <AccessibleButton
                     className="mx_SpacePublicShare_inviteButton"
                     onClick={() => {
@@ -63,8 +63,8 @@ const SpacePublicShare: React.FC<IProps> = ({ space, onFinished }) => {
                         showRoomInviteDialog(space.roomId);
                     }}
                 >
-                    <h3>{_t("Invite people")}</h3>
-                    <span>{_t("Invite with email or username")}</span>
+                    {_t("Invite people")}
+                    <div>{_t("Invite with email or username")}</div>
                 </AccessibleButton>
             ) : null}
         </div>

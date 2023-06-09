@@ -136,6 +136,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
     };
 
     private onPassPhraseNext = async (): Promise<void> => {
+        if (!this.state.backupInfo) return;
         this.setState({
             loading: true,
             restoreError: null,
@@ -177,7 +178,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
     };
 
     private onRecoveryKeyNext = async (): Promise<void> => {
-        if (!this.state.recoveryKeyValid) return;
+        if (!this.state.recoveryKeyValid || !this.state.backupInfo) return;
 
         this.setState({
             loading: true,
@@ -228,6 +229,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
         try {
             // `accessSecretStorage` may prompt for storage access as needed.
             await accessSecretStorage(async (): Promise<void> => {
+                if (!this.state.backupInfo) return;
                 await MatrixClientPeg.get().restoreKeyBackupWithSecretStorage(
                     this.state.backupInfo,
                     undefined,
@@ -324,7 +326,10 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                 details = _t("Fetching keys from server…");
             } else if (this.state.progress.stage === ProgressState.LoadKeys) {
                 const { total, successes, failures } = this.state.progress;
-                details = _t("%(completed)s of %(total)s keys restored", { total, completed: successes + failures });
+                details = _t("%(completed)s of %(total)s keys restored", {
+                    total,
+                    completed: (successes ?? 0) + (failures ?? 0),
+                });
             } else if (this.state.progress.stage === ProgressState.PreFetch) {
                 details = _t("Fetching keys from server…");
             }

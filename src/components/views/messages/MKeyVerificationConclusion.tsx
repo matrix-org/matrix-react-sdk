@@ -18,6 +18,7 @@ import React from "react";
 import classNames from "classnames";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import {
+    Phase as VerificationPhase,
     VerificationRequest,
     VerificationRequestEvent,
 } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
@@ -78,11 +79,11 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
             return false;
         }
         // .cancel event that was sent after the verification finished, ignore
-        if (mxEvent.getType() === EventType.KeyVerificationCancel && !request.cancelled) {
+        if (mxEvent.getType() === EventType.KeyVerificationCancel && request.phase !== VerificationPhase.Cancelled) {
             return false;
         }
         // .done event that was sent after the verification cancelled, ignore
-        if (mxEvent.getType() === EventType.KeyVerificationDone && !request.done) {
+        if (mxEvent.getType() === EventType.KeyVerificationDone && request.phase !== VerificationPhase.Done) {
             return false;
         }
 
@@ -112,30 +113,32 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
 
         let title: string | undefined;
 
-        if (request.done) {
+        if (request.phase === VerificationPhase.Done) {
             title = _t("You verified %(name)s", {
-                name: getNameForEventRoom(request.otherUserId, mxEvent.getRoomId()!),
+                name: getNameForEventRoom(client, request.otherUserId, mxEvent.getRoomId()!),
             });
-        } else if (request.cancelled) {
+        } else if (request.phase === VerificationPhase.Cancelled) {
             const userId = request.cancellingUserId;
             if (userId === myUserId) {
                 title = _t("You cancelled verifying %(name)s", {
-                    name: getNameForEventRoom(request.otherUserId, mxEvent.getRoomId()!),
+                    name: getNameForEventRoom(client, request.otherUserId, mxEvent.getRoomId()!),
                 });
             } else if (userId) {
-                title = _t("%(name)s cancelled verifying", { name: getNameForEventRoom(userId, mxEvent.getRoomId()!) });
+                title = _t("%(name)s cancelled verifying", {
+                    name: getNameForEventRoom(client, userId, mxEvent.getRoomId()!),
+                });
             }
         }
 
         if (title) {
             const classes = classNames("mx_cryptoEvent mx_cryptoEvent_icon", {
-                mx_cryptoEvent_icon_verified: request.done,
+                mx_cryptoEvent_icon_verified: request.phase === VerificationPhase.Done,
             });
             return (
                 <EventTileBubble
                     className={classes}
                     title={title}
-                    subtitle={userLabelForEventRoom(request.otherUserId, mxEvent.getRoomId()!)}
+                    subtitle={userLabelForEventRoom(client, request.otherUserId, mxEvent.getRoomId()!)}
                     timestamp={this.props.timestamp}
                 />
             );

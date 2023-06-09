@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 .mx_BetaCard {
-    margin-bottom: $spacing-20;
     padding: $spacing-24;
     background-color: $system;
     border-radius: 8px;
@@ -32,11 +31,11 @@ limitations under the License.
             flex: 1;
 
             .mx_BetaCard_title {
-                font-weight: $font-semi-bold;
+                font-weight: var(--font-semi-bold);
                 font-size: $font-18px;
                 line-height: $font-22px;
                 color: $primary-content;
-                margin: $spacing-4 0 14px; // TODO: use a spacing variable
+                margin: $spacing-4 0 14px;
 
                 display: flex;
                 align-items: center;
@@ -114,19 +113,15 @@ limitations under the License.
             }
         }
     }
-
-    &:last-child {
-        margin-bottom: 0;
-    }
 }
 
 .mx_BetaCard_betaPill {
     background-color: $accent-alt;
-    padding: $spacing-4 10px; // TODO: use a spacing variable
+    padding: $spacing-4 10px;
     border-radius: 8px;
     text-transform: uppercase;
     font-size: $font-12px;
-    font-weight: $font-semi-bold;
+    font-weight: var(--font-semi-bold);
     line-height: 15px;
     color: $button-primary-fg-color;
     display: inline-block;

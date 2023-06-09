@@ -28,6 +28,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
+import { HTTPError } from "matrix-js-sdk/src/http-api";
 
 import PlatformPeg from "../PlatformPeg";
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -193,7 +194,7 @@ export default class EventIndex extends EventEmitter {
     private onRoomTimeline = async (
         ev: MatrixEvent,
         room: Room | undefined,
-        toStartOfTimeline: boolean,
+        toStartOfTimeline: boolean | undefined,
         removed: boolean,
         data: IRoomTimelineData,
     ): Promise<void> => {
@@ -235,8 +236,11 @@ export default class EventIndex extends EventEmitter {
         const indexManager = PlatformPeg.get()?.getEventIndexingManager();
         if (!indexManager) return;
 
+        const associatedId = ev.getAssociatedId();
+        if (!associatedId) return;
+
         try {
-            await indexManager.deleteEvent(ev.getAssociatedId());
+            await indexManager.deleteEvent(associatedId);
         } catch (e) {
             logger.log("EventIndex: Error deleting event from index", e);
         }
@@ -468,7 +472,7 @@ export default class EventIndex extends EventEmitter {
                     checkpoint.direction,
                 );
             } catch (e) {
-                if (e.httpStatus === 403) {
+                if (e instanceof HTTPError && e.httpStatus === 403) {
                     logger.log(
                         "EventIndex: Removing checkpoint as we don't have ",
                         "permissions to fetch messages from this room.",
@@ -519,10 +523,10 @@ export default class EventIndex extends EventEmitter {
             const profiles: Record<string, IMatrixProfile> = {};
 
             stateEvents.forEach((ev) => {
-                if (ev.event.content && ev.event.content.membership === "join") {
-                    profiles[ev.event.sender] = {
-                        displayname: ev.event.content.displayname,
-                        avatar_url: ev.event.content.avatar_url,
+                if (ev.getContent().membership === "join") {
+                    profiles[ev.getSender()!] = {
+                        displayname: ev.getContent().displayname,
+                        avatar_url: ev.getContent().avatar_url,
                     };
                 }
             });
@@ -561,7 +565,7 @@ export default class EventIndex extends EventEmitter {
                 return object;
             });
 
-            let newCheckpoint;
+            let newCheckpoint: ICrawlerCheckpoint | null = null;
 
             // The token can be null for some reason. Don't create a checkpoint
             // in that case since adding it to the db will fail.
@@ -733,7 +737,7 @@ export default class EventIndex extends EventEmitter {
         const matrixEvents = events.map((e) => {
             const matrixEvent = eventMapper(e.event);
 
-            const member = new RoomMember(room.roomId, matrixEvent.getSender());
+            const member = new RoomMember(room.roomId, matrixEvent.getSender()!);
 
             // We can't really reconstruct the whole room state from our
             // EventIndex to calculate the correct display name. Use the

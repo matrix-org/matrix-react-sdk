@@ -75,7 +75,7 @@ describe("RoomHeader", () => {
         mockPlatformPeg({ supportsJitsiScreensharing: () => true });
 
         stubClient();
-        client = mocked(MatrixClientPeg.get());
+        client = mocked(MatrixClientPeg.safeGet());
         client.getUserId.mockReturnValue("@alice:example.org");
 
         room = new Room("!1:example.org", client, "@alice:example.org", {
@@ -118,7 +118,7 @@ describe("RoomHeader", () => {
             [MediaDeviceKindEnum.AudioOutput]: [],
         });
 
-        DMRoomMap.makeShared();
+        DMRoomMap.makeShared(client);
         jest.spyOn(DMRoomMap.shared(), "getUserIdForRoomId").mockReturnValue(carol.userId);
     });
 
@@ -126,7 +126,7 @@ describe("RoomHeader", () => {
         await Promise.all([CallStore.instance, WidgetStore.instance].map(resetAsyncStoreWithClient));
         client.reEmitter.stopReEmitting(room, [RoomStateEvent.Events]);
         jest.restoreAllMocks();
-        SdkConfig.put({});
+        SdkConfig.reset();
     });
 
     const mockRoomType = (type: string) => {
@@ -765,7 +765,7 @@ interface IRoomCreationInfo {
 
 function createRoom(info: IRoomCreationInfo) {
     stubClient();
-    const client: MatrixClient = MatrixClientPeg.get();
+    const client: MatrixClient = MatrixClientPeg.safeGet();
 
     const roomId = "!1234567890:domain";
     const userId = client.getUserId()!;
@@ -776,7 +776,7 @@ function createRoom(info: IRoomCreationInfo) {
         };
     }
 
-    DMRoomMap.makeShared().start();
+    DMRoomMap.makeShared(client).start();
 
     const room = new Room(roomId, client, userId, {
         pendingEventOrdering: PendingEventOrdering.Detached,

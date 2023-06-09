@@ -24,14 +24,14 @@ import { OwnProfileStore } from "../../../stores/OwnProfileStore";
 import Modal from "../../../Modal";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import { mediaFromMxc } from "../../../customisations/Media";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import AvatarSetting from "./AvatarSetting";
 import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 import PosthogTrackers from "../../../PosthogTrackers";
+import { SettingsSubsectionHeading } from "./shared/SettingsSubsectionHeading";
 
 interface IState {
-    userId?: string;
     originalDisplayName: string;
     displayName: string;
     originalAvatarUrl: string | null;
@@ -41,16 +41,16 @@ interface IState {
 }
 
 export default class ProfileSettings extends React.Component<{}, IState> {
+    private readonly userId: string;
     private avatarUpload: React.RefObject<HTMLInputElement> = createRef();
 
     public constructor(props: {}) {
         super(props);
 
-        const client = MatrixClientPeg.get();
+        this.userId = MatrixClientPeg.get().getSafeUserId();
         let avatarUrl = OwnProfileStore.instance.avatarMxc;
         if (avatarUrl) avatarUrl = mediaFromMxc(avatarUrl).getSquareThumbnailHttp(96);
         this.state = {
-            userId: client.getUserId()!,
             originalDisplayName: OwnProfileStore.instance.displayName ?? "",
             displayName: OwnProfileStore.instance.displayName ?? "",
             originalAvatarUrl: avatarUrl,
@@ -66,7 +66,9 @@ export default class ProfileSettings extends React.Component<{}, IState> {
 
     private removeAvatar = (): void => {
         // clear file upload field so same file can be selected
-        this.avatarUpload.current.value = "";
+        if (this.avatarUpload.current) {
+            this.avatarUpload.current.value = "";
+        }
         this.setState({
             avatarUrl: undefined,
             avatarFile: null,
@@ -74,7 +76,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
         });
     };
 
-    private cancelProfileChanges = async (e: React.MouseEvent): Promise<void> => {
+    private cancelProfileChanges = async (e: ButtonEvent): Promise<void> => {
         e.stopPropagation();
         e.preventDefault();
 
@@ -87,7 +89,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
         });
     };
 
-    private saveProfile = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    private saveProfile = async (e: ButtonEvent): Promise<void> => {
         e.stopPropagation();
         e.preventDefault();
 
@@ -150,7 +152,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
         const reader = new FileReader();
         reader.onload = (ev) => {
             this.setState({
-                avatarUrl: ev.target?.result,
+                avatarUrl: ev.target?.result ?? undefined,
                 avatarFile: file,
                 enableProfileSave: true,
             });
@@ -159,7 +161,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
     };
 
     public render(): React.ReactNode {
-        const userIdentifier = UserIdentifierCustomisations.getDisplayUserIdentifier(this.state.userId, {
+        const userIdentifier = UserIdentifierCustomisations.getDisplayUserIdentifier(this.userId, {
             withDisplayName: true,
         });
 
@@ -182,7 +184,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
                 />
                 <div className="mx_ProfileSettings_profile">
                     <div className="mx_ProfileSettings_profile_controls">
-                        <span className="mx_SettingsTab_subheading">{_t("Profile")}</span>
+                        <SettingsSubsectionHeading heading={_t("Profile")} />
                         <Field
                             label={_t("Display Name")}
                             type="text"
@@ -198,7 +200,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
                     </div>
                     <AvatarSetting
                         avatarUrl={avatarUrl}
-                        avatarName={this.state.displayName || this.state.userId}
+                        avatarName={this.state.displayName || this.userId}
                         avatarAltText={_t("Profile picture")}
                         uploadAvatar={this.uploadAvatar}
                         removeAvatar={this.removeAvatar}

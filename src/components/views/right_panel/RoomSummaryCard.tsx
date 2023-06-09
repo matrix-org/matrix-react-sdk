@@ -108,8 +108,8 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
     const [canModifyWidget, setCanModifyWidget] = useState<boolean>();
 
     useEffect(() => {
-        setCanModifyWidget(WidgetUtils.canUserModifyWidgets(room.roomId));
-    }, [room.roomId]);
+        setCanModifyWidget(WidgetUtils.canUserModifyWidgets(room.client, room.roomId));
+    }, [room.client, room.roomId]);
 
     const onOpenWidgetClick = (): void => {
         RightPanelStore.instance.pushCard({
@@ -318,7 +318,13 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) 
                 />
             </div>
 
-            <RoomName room={room}>{(name) => <h2 title={name}>{name}</h2>}</RoomName>
+            <RoomName room={room}>
+                {(name) => (
+                    <h1 className="mx_RoomSummaryCard_roomName" title={name}>
+                        {name}
+                    </h1>
+                )}
+            </RoomName>
             <div className="mx_RoomSummaryCard_alias" title={alias}>
                 {alias}
             </div>

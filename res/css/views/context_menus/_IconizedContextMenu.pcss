@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,6 +18,9 @@ limitations under the License.
 .mx_IconizedContextMenu {
     min-width: 146px;
     width: max-content;
+    // override default ul styles
+    margin: 0;
+    padding: 0;
 
     .mx_IconizedContextMenu_optionList {
         & > * {
@@ -27,7 +30,7 @@ limitations under the License.
 
         .mx_IconizedContextMenu_optionList_label {
             font-size: $font-15px;
-            font-weight: $font-semi-bold;
+            font-weight: var(--font-semi-bold);
         }
 
         /* the notFirst class is for cases where the optionList might be under a header of sorts. */
@@ -178,6 +181,10 @@ limitations under the License.
     .mx_IconizedContextMenu_unchecked {
         margin-left: 16px;
         margin-right: -5px;
+    }
+
+    .mx_IconizedContextMenu_developerTools::before {
+        mask-image: url("$(res)/img/element-icons/settings/flask.svg");
     }
 
     .mx_IconizedContextMenu_checked::before {

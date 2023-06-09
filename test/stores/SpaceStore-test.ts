@@ -93,7 +93,7 @@ DMRoomMap.sharedInstance = { getUserIdForRoomId, getDMRoomsForUserId };
 describe("SpaceStore", () => {
     stubClient();
     const store = SpaceStore.instance;
-    const client = MatrixClientPeg.get();
+    const client = MatrixClientPeg.safeGet();
 
     const spyDispatcher = jest.spyOn(defaultDispatcher, "dispatch");
 
@@ -669,6 +669,29 @@ describe("SpaceStore", () => {
             it("does not honour m.space.parent if sender does not have permission in parent space", () => {
                 expect(store.isRoomInSpace(space3, room3)).toBeFalsy();
             });
+        });
+    });
+
+    it("should add new DM Invites to the People Space Notification State", async () => {
+        mkRoom(dm1);
+        mocked(client.getRoom(dm1)!).getMyMembership.mockReturnValue("join");
+        mocked(client).getRoom.mockImplementation((roomId) => rooms.find((room) => room.roomId === roomId) || null);
+
+        await run();
+
+        mkRoom(dm2);
+        const cliDm2 = client.getRoom(dm2)!;
+        mocked(cliDm2).getMyMembership.mockReturnValue("invite");
+        mocked(client).getRoom.mockImplementation((roomId) => rooms.find((room) => room.roomId === roomId) || null);
+        client.emit(RoomEvent.MyMembership, cliDm2, "invite");
+
+        [dm1, dm2].forEach((d) => {
+            expect(
+                store
+                    .getNotificationState(MetaSpace.People)
+                    .rooms.map((r) => r.roomId)
+                    .includes(d),
+            ).toBeTruthy();
         });
     });
 

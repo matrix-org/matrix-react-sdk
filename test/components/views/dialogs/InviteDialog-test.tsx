@@ -104,7 +104,6 @@ describe("InviteDialog", () => {
         "Error retrieving profile for userId @carol:example.com",
         "Error retrieving profile for userId @localpart:server.tld",
         "Error retrieving profile for userId @localpart:server:tld",
-        "Starting load of AsyncWrapper for modal",
         "[Invite:Recents] Excluding @alice:example.org from recents",
     );
 
@@ -144,7 +143,7 @@ describe("InviteDialog", () => {
             getClientWellKnown: jest.fn().mockResolvedValue({}),
         });
         SdkConfig.put({ validated_server_config: {} as ValidatedServerConfig } as IConfigOptions);
-        DMRoomMap.makeShared();
+        DMRoomMap.makeShared(mockClient);
         jest.clearAllMocks();
 
         room = new Room(roomId, mockClient, mockClient.getSafeUserId());

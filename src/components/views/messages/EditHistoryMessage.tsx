@@ -17,6 +17,7 @@ limitations under the License.
 import React, { createRef } from "react";
 import { EventStatus, IContent, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import classNames from "classnames";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
 
 import * as HtmlUtils from "../../../HtmlUtils";
 import { editBodyDiffToHtml } from "../../../utils/MessageDiffUtils";
@@ -91,6 +92,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
             ViewSource,
             {
                 mxEvent: this.props.mxEvent,
+                ignoreEdits: true,
             },
             "mx_Dialog_viewsource",
         );
@@ -99,7 +101,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
     private pillifyLinks(): void {
         // not present for redacted events
         if (this.content.current) {
-            pillifyLinks(this.content.current.children, this.props.mxEvent, this.pills);
+            pillifyLinks(MatrixClientPeg.get(), this.content.current.children, this.props.mxEvent, this.pills);
         }
     }
 
@@ -127,7 +129,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
         this.tooltipifyLinks();
     }
 
-    private renderActionBar(): JSX.Element {
+    private renderActionBar(): React.ReactNode {
         // hide the button when already redacted
         let redactButton: JSX.Element | undefined;
         if (!this.props.mxEvent.isRedacted() && !this.props.isBaseEvent && this.state.canRedact) {
@@ -141,13 +143,18 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
             );
         }
 
-        // disabled remove button when not allowed
-        return (
-            <div className="mx_MessageActionBar">
-                {redactButton}
-                {viewSourceButton}
-            </div>
-        );
+        if (!redactButton && !viewSourceButton) {
+            // Hide the empty MessageActionBar
+            return null;
+        } else {
+            // disabled remove button when not allowed
+            return (
+                <div className="mx_MessageActionBar">
+                    {redactButton}
+                    {viewSourceButton}
+                </div>
+            );
+        }
     }
 
     public render(): React.ReactNode {
@@ -166,7 +173,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
                     returnString: false,
                 });
             }
-            if (mxEvent.getContent().msgtype === "m.emote") {
+            if (mxEvent.getContent().msgtype === MsgType.Emote) {
                 const name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
                 contentContainer = (
                     <div className="mx_EventTile_content" ref={this.content}>

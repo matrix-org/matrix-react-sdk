@@ -66,11 +66,12 @@ export class MockClientWithEventEmitter extends EventEmitter {
  * ```
  */
 export const getMockClientWithEventEmitter = (
-    mockProperties: Partial<Record<MethodLikeKeys<MatrixClient>, unknown>>,
+    mockProperties: Partial<Record<keyof MatrixClient, unknown>>,
 ): MockedObject<MatrixClient> => {
     const mock = mocked(new MockClientWithEventEmitter(mockProperties) as unknown as MatrixClient);
 
     jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mock);
+    jest.spyOn(MatrixClientPeg, "safeGet").mockReturnValue(mock);
 
     // @ts-ignore simplified test stub
     mock.canSupport = new Map();
@@ -80,7 +81,10 @@ export const getMockClientWithEventEmitter = (
     return mock;
 };
 
-export const unmockClientPeg = () => jest.spyOn(MatrixClientPeg, "get").mockRestore();
+export const unmockClientPeg = () => {
+    jest.spyOn(MatrixClientPeg, "get").mockRestore();
+    jest.spyOn(MatrixClientPeg, "safeGet").mockRestore();
+};
 
 /**
  * Returns basic mocked client methods related to the current user
@@ -143,15 +147,15 @@ export const mockClientMethodsCrypto = (): Partial<
     Record<MethodLikeKeys<MatrixClient> & PropertyLikeKeys<MatrixClient>, unknown>
 > => ({
     isCryptoEnabled: jest.fn(),
-    isSecretStorageReady: jest.fn(),
     isCrossSigningReady: jest.fn(),
     isKeyBackupKeyStored: jest.fn(),
     getCrossSigningCacheCallbacks: jest.fn().mockReturnValue({ getCrossSigningKeyCache: jest.fn() }),
     getStoredCrossSigningForUser: jest.fn(),
     checkKeyBackup: jest.fn().mockReturnValue({}),
+    secretStorage: { hasKey: jest.fn() },
     crypto: {
+        isSecretStorageReady: jest.fn(),
         getSessionBackupPrivateKey: jest.fn(),
-        secretStorage: { hasKey: jest.fn() },
         crossSigningInfo: {
             getId: jest.fn(),
             isStoredInSecretStorage: jest.fn(),

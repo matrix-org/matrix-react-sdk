@@ -90,8 +90,8 @@ describe("PipContainer", () => {
         user = userEvent.setup();
 
         stubClient();
-        client = mocked(MatrixClientPeg.get());
-        DMRoomMap.makeShared();
+        client = mocked(MatrixClientPeg.safeGet());
+        DMRoomMap.makeShared(client);
 
         room = new Room("!1:example.org", client, "@alice:example.org", {
             pendingEventOrdering: PendingEventOrdering.Detached,
