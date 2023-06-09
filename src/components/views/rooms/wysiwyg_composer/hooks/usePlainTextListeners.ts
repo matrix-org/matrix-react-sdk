@@ -128,7 +128,7 @@ export function usePlainTextListeners(
 
     const onPaste = useCallback(
         (event: ClipboardEvent) => {
-            const handled = handleClipboardEvent(event, roomContext, mxClient, eventRelation);
+            const handled = handleClipboardEvent(event, event.clipboardData, roomContext, mxClient, eventRelation);
             if (handled) {
                 event.preventDefault(); // we only handle image pasting manually
             } else {
