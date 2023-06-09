@@ -62,7 +62,8 @@ export function useInputEventProcessor(
             };
 
             // this is required to handle edge case image pasting in Safari, see
-            // https://github.com/vector-im/element-web/issues/25327
+            // https://github.com/vector-im/element-web/issues/25327 and it is caught by the
+            // `beforeinput` listener attached to the composer
             const isInputEventForClipboard =
                 event instanceof InputEvent && event.inputType === "insertFromPaste" && isNotNull(event.dataTransfer);
             const isClipboardEvent = event instanceof ClipboardEvent;
