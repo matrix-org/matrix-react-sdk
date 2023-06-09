@@ -27,6 +27,8 @@ describe("LeftPanel", () => {
 
             cy.initTestUser(homeserver, "Hanako");
         });
+
+        cy.get(".mx_LeftPanel").should("exist");
     });
 
     afterEach(() => {
