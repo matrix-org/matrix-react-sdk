@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IEventRelation, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { MutableRefObject, RefObject } from "react";
+import { IEventRelation, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { WysiwygEvent } from "@matrix-org/matrix-wysiwyg";
 
 import { TimelineRenderingType } from "../../../../../contexts/RoomContext";
 import { IRoomState } from "../../../../structures/RoomView";
@@ -25,7 +26,6 @@ import { KeyBindingAction } from "../../../../../accessibility/KeyboardShortcuts
 import { getBlobSafeMimeType } from "../../../../../utils/blobs";
 import ContentMessages from "../../../../../ContentMessages";
 import { isNotNull } from "../../../../../Typeguards";
-import { WysiwygEvent, WysiwygInputEvent } from "@matrix-org/matrix-wysiwyg";
 
 export function focusComposer(
     composerElement: MutableRefObject<HTMLElement | null>,
