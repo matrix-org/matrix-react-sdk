@@ -50,7 +50,7 @@ describe("<CrossSigningPanel />", () => {
     beforeEach(() => {
         mockClient.doesServerSupportUnstableFeature.mockResolvedValue(true);
         mockClient.isCrossSigningReady.mockResolvedValue(false);
-        mocked(mockClient.getCrypto().getCrossSigningStatus).mockResolvedValue({
+        mocked(mockClient.getCrypto()!.getCrossSigningStatus).mockResolvedValue({
             publicKeysOnDevice: true,
             privateKeysInSecretStorage: false,
             privateKeysCachedLocally: {
@@ -92,7 +92,7 @@ describe("<CrossSigningPanel />", () => {
         });
 
         it("should render when keys are backed up", async () => {
-            mocked(mockClient.getCrypto().getCrossSigningStatus).mockResolvedValue({
+            mocked(mockClient.getCrypto()!.getCrossSigningStatus).mockResolvedValue({
                 publicKeysOnDevice: true,
                 privateKeysInSecretStorage: true,
                 privateKeysCachedLocally: {
@@ -122,7 +122,7 @@ describe("<CrossSigningPanel />", () => {
         });
 
         it("should render when keys are backed up", async () => {
-            mocked(mockClient.getCrypto().getCrossSigningStatus).mockResolvedValue({
+            mocked(mockClient.getCrypto()!.getCrossSigningStatus).mockResolvedValue({
                 publicKeysOnDevice: true,
                 privateKeysInSecretStorage: true,
                 privateKeysCachedLocally: {
