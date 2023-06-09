@@ -105,21 +105,20 @@ export default class EmojiProvider extends AutocompleteProvider {
     }
 
     private async decryptEmotes(emotes: Object, roomId: string) {
-        const decryptede=new Map<string, string>();
+        const decryptedEmoteMap=new Map<string, string>();
         const client = MatrixClientPeg.get();
-        let durl = "";
+        let decryptedurl = "";
         const isEnc=client.isRoomEncrypted(roomId);
         for (const shortcode in emotes) {
             if (isEnc) {
                 const blob = await decryptFile(emotes[shortcode]);
-                durl = URL.createObjectURL(blob);
+                decryptedurl = URL.createObjectURL(blob);
             } else {
-                durl = mediaFromMxc(emotes[shortcode]).srcHttp;
+                decryptedurl = mediaFromMxc(emotes[shortcode]).srcHttp;
             }
-            decryptede[shortcode] = "<img class='mx_Emote' title=':" + shortcode +
-                ":'src='" + durl + "'/>";
+            decryptedEmoteMap[":"+shortcode+":"] = decryptedurl
         }
-        return decryptede;
+        return decryptedEmoteMap;
     }
 
     async getCompletions(
@@ -137,7 +136,7 @@ export default class EmojiProvider extends AutocompleteProvider {
         for (const key in this.emotes) {
             emojisAndEmotes.push({
                 emoji: { label: key,
-                    shortcodes: [this.emotes[key]],
+                    shortcodes: [key],
                     hexcode: key,
                     unicode: this.emotes[key],
 
@@ -187,10 +186,10 @@ export default class EmojiProvider extends AutocompleteProvider {
             });
 
             return completions.map(c => ({
-                completion: this.emotes[c.emoji.hexcode]? ":"+c.emoji.hexcode+":":c.emoji.unicode,
+                completion: this.emotes[c.emoji.hexcode]? c.emoji.hexcode:c.emoji.unicode,
                 component: (
-                    <PillCompletion title={this.emotes[c.emoji.hexcode]? c.emoji.unicode:":"+c.emoji.shortcodes[0]+":"} aria-label={c.emoji.unicode}>
-                        <span>{ this.emotes[c.emoji.hexcode]? ":"+c.emoji.hexcode+":":c.emoji.unicode }</span>
+                    <PillCompletion isEmote={this.emotes[c.emoji.hexcode]?true:false} title={this.emotes[c.emoji.hexcode]? c.emoji.unicode:c.emoji.shortcodes[0]} aria-label={c.emoji.unicode}>
+                        <span>{ this.emotes[c.emoji.hexcode]? c.emoji.hexcode:c.emoji.unicode }</span>
                     </PillCompletion>
                 ),
                 range: range!,
