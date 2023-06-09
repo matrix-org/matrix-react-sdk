@@ -125,11 +125,7 @@ export function usePlainTextListeners(
 
     const onPaste = useCallback(
         (event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>) => {
-            // this is required to handle edge case image pasting in Safari, see
-            // https://github.com/vector-im/element-web/issues/25327 and it is caught by the
-            // `beforeinput` listener attached to the composer
             const { nativeEvent } = event;
-
             let imagePasteWasHandled = false;
 
             if (isEventToHandleAsClipboardEvent(nativeEvent)) {
@@ -138,7 +134,7 @@ export function usePlainTextListeners(
                 imagePasteWasHandled = handleClipboardEvent(nativeEvent, data, roomContext, mxClient, eventRelation);
             }
 
-            // only prevent default behaviour if the image paste event was handled
+            // prevent default behaviour and skip call to onInput if the image paste event was handled
             if (imagePasteWasHandled) {
                 event.preventDefault();
             } else {
