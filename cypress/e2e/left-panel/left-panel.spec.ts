@@ -48,7 +48,7 @@ describe("LeftPanel", () => {
         it("should display a message preview", () => {
             const message = "Message";
 
-            cy.createRoom({ name: "Apple" }).viewRoomByName("Apple");
+            cy.createRoom({ name: roomName }).viewRoomByName(roomName);
 
             cy.getComposer().type(`${message}{enter}`);
 
