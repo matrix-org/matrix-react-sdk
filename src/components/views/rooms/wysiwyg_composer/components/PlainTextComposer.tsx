@@ -55,6 +55,7 @@ export function PlainTextComposer({
     const {
         ref: editorRef,
         autocompleteRef,
+        onBeforeInput,
         onInput,
         onPaste,
         onKeyDown,
@@ -78,6 +79,7 @@ export function PlainTextComposer({
             className={classNames(className, { [`${className}-focused`]: isFocused })}
             onFocus={onFocus}
             onBlur={onFocus}
+            onBeforeInput={onBeforeInput}
             onInput={onInput}
             onPaste={onPaste}
             onKeyDown={onKeyDown}
