@@ -165,6 +165,71 @@ describe("LeftPanel", () => {
             cy.get(".mx_LeftPanel_roomListWrapper").should("exist");
         });
 
+        it("should sort rooms by activity and alphabetically", () => {
+            const room1Name = "Test Room A";
+            const room2Name = "Test Room B";
+            let bot: MatrixClient;
+            let roomId: string;
+
+            cy.getBot(homeserver, { displayName: "BotBob", autoAcceptInvites: false }).then((_bot) => {
+                bot = _bot;
+            });
+
+            // Create a empty room
+            cy.createRoom({ name: room1Name });
+
+            // Create another room where invited bot sends a message
+            cy.createRoom({ name: room2Name })
+                .then((_roomId) => {
+                    roomId = _roomId;
+                    return cy.inviteUser(roomId, bot.getUserId());
+                })
+                .then(async () => {
+                    await bot.joinRoom(roomId);
+                    bot.sendMessage(roomId, { body: `This is a message to ${room2Name}`, msgtype: "m.text" });
+                });
+
+            cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                // Assert that the second room is rendered above the first room
+                cy.get(".mx_RoomTile").first().contains(room2Name).should("exist");
+                cy.get(".mx_RoomTile").last().contains(room1Name).should("exist");
+
+                cy.findByRole("treeitem", { name: "Rooms" })
+                    .realHover()
+                    .findByRole("button", { name: "List options" })
+                    .click();
+            });
+
+            // Force click because the size of the checkbox is zero
+            cy.findByLabelText("A-Z").click({ force: true });
+
+            // Foce click to close the context menu
+            cy.get(".mx_ContextualMenu_background").click({ force: true });
+
+            // Assert the context menu was closed
+            cy.get(".mx_ContextualMenu").should("not.exist");
+
+            cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                // Assert that the first room (Test Room A) is rendered above the second room (Test Room B)
+                cy.get(".mx_RoomTile").first().contains(room1Name).should("exist");
+                cy.get(".mx_RoomTile").last().contains(room2Name).should("exist");
+
+                cy.findByRole("treeitem", { name: "Rooms" })
+                    .realHover()
+                    .findByRole("button", { name: "List options" })
+                    .click();
+            });
+
+            // Force click because the size of the checkbox is zero
+            cy.findByLabelText("Show rooms with unread messages first").click({ force: true });
+
+            // TODO Uncomment once https://github.com/vector-im/element-web/issues/25553 is fixed
+            // cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+            //    cy.get(".mx_RoomTile").first().contains(room2Name).should("exist");
+            //    cy.get(".mx_RoomTile").last().contains(room1Name).should("exist");
+            // });
+        });
+
         it("should hide and unhide the room tile by clicking the list header", () => {
             cy.createRoom({ name: roomName });
 
