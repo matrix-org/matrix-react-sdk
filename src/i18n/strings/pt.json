@@ -406,5 +406,6 @@
     "The user you called is busy.": "O utilizador para o qual tentou ligar está ocupado.",
     "The call was answered on another device.": "A chamada foi atendida noutro dispositivo.",
     "Unable to access microphone": "Não é possível aceder ao microfone.",
-    "Answered Elsewhere": "Atendida noutro lado"
+    "Answered Elsewhere": "Atendida noutro lado",
+    "The call could not be established": "Não foi possível estabelecer a chamada"
 }
