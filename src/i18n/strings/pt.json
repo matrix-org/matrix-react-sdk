@@ -382,5 +382,6 @@
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Confirme que quer adicionar este número de telefone usando Single Sign On para provar a sua identidade.",
     "Confirm adding phone number": "Confirme que quer adicionar o número de telefone",
     "Click the button below to confirm adding this phone number.": "Pressione o botão abaixo para confirmar a adição este número de telefone.",
-    "Unable to load! Check your network connectivity and try again.": "Impossível carregar! Verifique a sua ligação de rede e tente novamente."
+    "Unable to load! Check your network connectivity and try again.": "Impossível carregar! Verifique a sua ligação de rede e tente novamente.",
+    "The file '%(fileName)s' failed to upload.": "O carregamento do ficheiro '%(fileName)s' falhou."
 }
