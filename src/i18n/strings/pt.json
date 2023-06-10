@@ -371,5 +371,6 @@
     "Identity server URL must be HTTPS": "O link do servidor de identidade deve começar com HTTPS",
     "Comment": "Comente",
     "Confirm": "Confirme",
-    "Use Single Sign On to continue": "Use Single Sign On para continuar"
+    "Use Single Sign On to continue": "Use Single Sign On para continuar",
+    "Identity server not set": "Servidor de identidade não definido"
 }
