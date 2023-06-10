@@ -384,5 +384,6 @@
     "Click the button below to confirm adding this phone number.": "Pressione o botão abaixo para confirmar a adição este número de telefone.",
     "Unable to load! Check your network connectivity and try again.": "Impossível carregar! Verifique a sua ligação de rede e tente novamente.",
     "The file '%(fileName)s' failed to upload.": "O carregamento do ficheiro '%(fileName)s' falhou.",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "O ficheiro '%(fileName)s' excede o tamanho limite deste homeserver para carregamentos"
+    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "O ficheiro '%(fileName)s' excede o tamanho limite deste homeserver para carregamentos",
+    "The server does not support the room version specified.": "O servidor não suporta a versão especificada da sala."
 }
