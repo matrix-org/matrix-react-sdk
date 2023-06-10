@@ -182,10 +182,46 @@ describe("LeftPanel", () => {
             });
         });
 
-        it("should display a message preview", () => {
-            cy.createRoom({ name: roomName }).viewRoomByName(roomName);
+        it("should display a room name and message preview regardless of font size setting", () => {
+            // Minimize the font size with the slider on Appearance user settings tab
+            const minimizeFontSize = () => {
+                cy.openUserSettings("Appearance");
+                cy.get(".mx_FontScalingPanel_fontSlider").within(() => {
+                    // Click the left position of the slider
+                    cy.get("input").realClick({ position: "left" });
+                });
+                cy.closeDialog();
+            };
 
-            cy.getComposer().type(`${message}{enter}`);
+            // Maximize the font size with the slider on Appearance user settings tab
+            const maximizeFontSize = () => {
+                cy.openUserSettings("Appearance");
+                cy.get(".mx_FontScalingPanel_fontSlider").within(() => {
+                    // Click the right position of the slider
+                    cy.get("input").realClick({ position: "right" });
+                });
+                cy.closeDialog();
+            };
+
+            // Assert that the room name and the preview are visible on the room tile
+            const checkVisibility = () => {
+                cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                    cy.findByRole("group", { name: "Rooms" }).within(() => {
+                        cy.get(".mx_RoomTile_title").findByText(roomName).should("be.visible");
+                        cy.get(".mx_RoomTile_subtitle").findByText(message).should("be.visible");
+                    });
+                });
+            };
+
+            // Create a room and send a message to it
+            cy.createRoom({ name: roomName })
+                .as("roomId1")
+                .then((roomId1) => {
+                    cy.sendEvent(roomId1, null, "m.room.message" as EventType, {
+                        msgtype: "m.text",
+                        body: message,
+                    });
+                });
 
             // Enable message preview
             cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
@@ -198,12 +234,19 @@ describe("LeftPanel", () => {
             // Force click because the size of the checkbox is zero
             cy.findByLabelText("Show previews of messages").click({ force: true });
 
-            // Assert that the preview is visible on the room tile
-            cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
-                cy.findByRole("group", { name: "Rooms" }).within(() => {
-                    cy.get(".mx_RoomTile_subtitle").findByText(message).should("be.visible");
-                });
-            });
+            // Foce click to close the context menu
+            cy.get(".mx_ContextualMenu_background").click({ force: true });
+
+            // Assert the context menu was closed
+            cy.get(".mx_ContextualMenu").should("not.exist");
+
+            minimizeFontSize();
+
+            checkVisibility();
+
+            maximizeFontSize();
+
+            checkVisibility();
         });
 
         describe("for Saved Items", () => {
