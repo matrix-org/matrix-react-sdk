@@ -375,7 +375,7 @@
     "Identity server not set": "Servidor de identidade não definido",
     "No identity access token found": "Nenhum token de identidade de acesso encontrado",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Confirme adicionar este endereço de email usando Single Sign On para provar a sua identidade.",
-    "Confirm adding email": "Confirme o email",
+    "Confirm adding email": "Confirmar adição de email",
     "Single Sign On": "Single Sign On",
     "Click the button below to confirm adding this email address.": "Pressione o botão abaixo para confirmar que quer adicionar este endereço de email"
 }
