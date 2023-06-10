@@ -402,5 +402,9 @@
     "%(minutes)sm %(seconds)ss left": "%(minutes)sm %(seconds)ss restantes",
     "Only continue if you trust the owner of the server.": "Continue apenas se confia no dono do servidor.",
     "User Busy": "Utilizador ocupado",
-    "Trust": "Confiar"
+    "Trust": "Confiar",
+    "The user you called is busy.": "O utilizador para o qual tentou ligar está ocupado.",
+    "The call was answered on another device.": "A chamada foi atendida noutro dispositivo.",
+    "Unable to access microphone": "Não é possível aceder ao microfone.",
+    "Answered Elsewhere": "Atendida noutro lado"
 }
