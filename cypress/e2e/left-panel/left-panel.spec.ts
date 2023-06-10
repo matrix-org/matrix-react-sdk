@@ -41,6 +41,37 @@ describe("LeftPanel", () => {
         cy.stopHomeserver(homeserver);
     });
 
+    describe("for filter container", () => {
+        it("should display spotlight dialog by clicking trigger", () => {
+            // Assert the filter container is rendered
+            cy.get(".mx_LeftPanel_filterContainer").within(() => {
+                cy.get(".mx_RoomSearch_spotlightTrigger").click();
+            });
+
+            cy.findByRole("dialog", { name: "Search Dialog" }).should("exist");
+        });
+
+        it("should display spotlight dialog by clicking 'Explore rooms' button", () => {
+            cy.get(".mx_LeftPanel_filterContainer").within(() => {
+                cy.findByRole("button", { name: "Explore rooms" }).click();
+            });
+
+            cy.findByRole("dialog", { name: "Search Dialog" }).within(() => {
+                // Assert that the spotlight dialog for searching public rooms
+                cy.get(".mx_SpotlightDialog_filterPublicRooms").should("exist");
+            });
+        });
+
+        it("should display v2 breadcrumbs", () => {
+            cy.setSettingValue("feature_breadcrumbs_v2", null, SettingLevel.DEVICE, true);
+
+            cy.get(".mx_LeftPanel_filterContainer").within(() => {
+                // Assert that the v2 breadcrumbs are rendered
+                cy.findByTitle("Recently viewed").should("exist");
+            });
+        });
+    });
+
     describe("for room list header", () => {
         beforeEach(() => {
             // Assert the room list header is rendered
