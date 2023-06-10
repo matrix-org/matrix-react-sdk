@@ -380,5 +380,6 @@
     "Click the button below to confirm adding this email address.": "Pressione o botão abaixo para confirmar que quer adicionar este endereço de email.",
     "The add / bind with MSISDN flow is misconfigured": "A junção / vinculo com o fluxo MSISDN está mal configurado",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Confirme que quer adicionar este número de telefone usando Single Sign On para provar a sua identidade.",
-    "Confirm adding phone number": "Confirme que quer adicionar o número de telefone"
+    "Confirm adding phone number": "Confirme que quer adicionar o número de telefone",
+    "Click the button below to confirm adding this phone number.": "Clique no botão abaixo para confirmar que quer adicionar este número de telefone."
 }
