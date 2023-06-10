@@ -397,7 +397,7 @@
     "%(seconds)ss left": "%(seconds)ss restantes",
     "%(value)sm": "%(value)sm",
     "Identity server has no terms of service": "O servidor de identidade não tem termos de serviço",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Esta acção requer acesso ao servidor de identidade padrão <server /> para validar o endereço de email ou número de telefone, mas o servidor não tem quaisquer termos de serviço.",
+    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Esta acção requer acesso ao servidor de identidade padrão <server /> para validar um endereço de email ou número de telefone, mas o servidor não tem quaisquer termos de serviço.",
     "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)sh %(minutes)sm %(seconds)ss restantes",
     "%(minutes)sm %(seconds)ss left": "%(minutes)sm %(seconds)ss restantes",
     "Only continue if you trust the owner of the server.": "Continue apenas se confiar no dono do servidor."
