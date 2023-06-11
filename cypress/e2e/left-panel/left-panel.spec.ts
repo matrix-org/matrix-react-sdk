@@ -159,7 +159,25 @@ describe("LeftPanel", () => {
     });
 
     describe("for room list wrapper", () => {
+        let bot: MatrixClient;
+        const botName = "BotBob";
         const message = "Message";
+
+        const createBotDM = () => {
+            // Create a bot
+            cy.getBot(homeserver, { displayName: botName }).then((_bot) => {
+                bot = _bot;
+            });
+
+            // Create DM with the bot
+            cy.getClient().then(async (cli) => {
+                const botRoom = await cli.createRoom({ is_direct: true });
+                await cli.invite(botRoom.room_id, bot.getUserId());
+                await cli.setAccountData("m.direct" as EventType, {
+                    [bot.getUserId()]: [botRoom.room_id],
+                });
+            });
+        };
 
         beforeEach(() => {
             cy.get(".mx_LeftPanel_roomListWrapper").should("exist");
@@ -168,7 +186,6 @@ describe("LeftPanel", () => {
         it("should sort rooms by activity and alphabetically", () => {
             const room1Name = "Test Room A";
             const room2Name = "Test Room B";
-            let bot: MatrixClient;
             let roomId: string;
 
             cy.getBot(homeserver, { displayName: "BotBob", autoAcceptInvites: false }).then((_bot) => {
@@ -361,23 +378,8 @@ describe("LeftPanel", () => {
         });
 
         describe("for People", () => {
-            let bot: MatrixClient;
-            const botName = "BotBob";
-
             beforeEach(() => {
-                // Create a bot
-                cy.getBot(homeserver, { displayName: botName }).then((_bot) => {
-                    bot = _bot;
-                });
-
-                // Create DM with the bot
-                cy.getClient().then(async (cli) => {
-                    const botRoom = await cli.createRoom({ is_direct: true });
-                    await cli.invite(botRoom.room_id, bot.getUserId());
-                    await cli.setAccountData("m.direct" as EventType, {
-                        [bot.getUserId()]: [botRoom.room_id],
-                    });
-                });
+                createBotDM();
             });
 
             it("should render a sublist", () => {
@@ -603,23 +605,8 @@ describe("LeftPanel", () => {
             });
 
             describe("with 'People' setting enabled", () => {
-                let bot: MatrixClient;
-                const botName = "BotBob";
-
                 beforeEach(() => {
-                    // Create a bot
-                    cy.getBot(homeserver, { displayName: botName }).then((_bot) => {
-                        bot = _bot;
-                    });
-
-                    // Create DM with the bot
-                    cy.getClient().then(async (cli) => {
-                        const botRoom = await cli.createRoom({ is_direct: true });
-                        await cli.invite(botRoom.room_id, bot.getUserId());
-                        await cli.setAccountData("m.direct" as EventType, {
-                            [bot.getUserId()]: [botRoom.room_id],
-                        });
-                    });
+                    createBotDM();
 
                     cy.findByTestId("Sidebar").within(() => {
                         // Force click because the size of the checkbox is zero
