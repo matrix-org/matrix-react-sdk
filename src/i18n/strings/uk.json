@@ -3746,5 +3746,8 @@
     "You do not have permission to invite users": "У вас немає дозволу запрошувати користувачів",
     "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s змінює своє ім'я та зображення профілю",
     "Your language": "Ваша мова",
-    "Your device ID": "ID вашого пристрою"
+    "Your device ID": "ID вашого пристрою",
+    "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Як альтернативу, ви можете спробувати публічний сервер на <server/>, але він не буде надто надійним, а також поширюватиме вашу IP-адресу на тому сервері. Ви також можете керувати цим у налаштуваннях.",
+    "Try using %(server)s": "Спробуйте використати %(server)s",
+    "User is not logged in": "Користувач не увійшов"
 }
