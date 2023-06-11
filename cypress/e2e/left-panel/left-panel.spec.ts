@@ -45,7 +45,8 @@ describe("LeftPanel", () => {
         it("should display spotlight dialog by clicking trigger", () => {
             // Assert the filter container is rendered
             cy.get(".mx_LeftPanel_filterContainer").within(() => {
-                cy.get(".mx_RoomSearch_spotlightTrigger").click();
+                // Force click as Notification toast covers the button on Cypress Cloud
+                cy.get(".mx_RoomSearch_spotlightTrigger").click({ force: true });
             });
 
             cy.findByRole("dialog", { name: "Search Dialog" }).should("exist");
@@ -127,7 +128,8 @@ describe("LeftPanel", () => {
 
                 cy.get(".mx_RoomListHeader").within(() => {
                     // Click the menu button on the header
-                    cy.findByRole("button", { name: `${spaceName} menu` }).click();
+                    // Force click as Notification toast covers the button on Cypress Cloud
+                    cy.findByRole("button", { name: `${spaceName} menu` }).click({ force: true });
                 });
 
                 // Assert that context menu for Space is rendered
