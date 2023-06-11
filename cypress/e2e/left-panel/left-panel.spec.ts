@@ -165,6 +165,18 @@ describe("LeftPanel", () => {
         const botName = "BotBob";
         const message = "Message";
 
+        // Click "Room options" button which appears by hovering over the room tile
+        const clickRoomOptions = () => {
+            cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                cy.findByRole("group", { name: "Rooms" }).within(() => {
+                    cy.findByRole("treeitem", { name: roomName })
+                        .realHover()
+                        .findByRole("button", { name: "Room options" })
+                        .click();
+                });
+            });
+        };
+
         const createBotDM = () => {
             // Create a bot
             cy.getBot(homeserver, { displayName: botName }).then((_bot) => {
@@ -178,6 +190,58 @@ describe("LeftPanel", () => {
                 await cli.setAccountData("m.direct" as EventType, {
                     [bot.getUserId()]: [botRoom.room_id],
                 });
+            });
+        };
+
+        const beforeSavedItems = () => {
+            // Enable Favorites
+            cy.setSettingValue("feature_favourite_messages", null, SettingLevel.DEVICE, true);
+        };
+
+        const beforeFavorites = () => {
+            cy.createRoom({ name: roomName });
+
+            clickRoomOptions();
+
+            // Click "Favorite" on the context menu
+            cy.findByRole("menuitemcheckbox", { name: "Favourite" }).click();
+
+            cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                cy.findByRole("group", { name: "Favourites" }).should("exist");
+            });
+        };
+
+        const beforePeople = () => {
+            createBotDM();
+
+            cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                cy.findByRole("group", { name: "People" }).should("exist");
+            });
+        };
+
+        const beforeHistorical = () => {
+            cy.createRoom({ name: roomName });
+
+            clickRoomOptions();
+
+            cy.findByRole("menuitem", { name: "Leave" }).click();
+            cy.findByRole("button", { name: "Leave" }).click();
+
+            cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                cy.findByRole("group", { name: "Historical" }).should("exist");
+            });
+        };
+
+        const beforeLowPriority = () => {
+            cy.createRoom({ name: roomName });
+
+            clickRoomOptions();
+
+            // Click "Low Priority" on the context menu
+            cy.findByRole("menuitemcheckbox", { name: "Low Priority" }).click();
+
+            cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                cy.findByRole("group", { name: "Low priority" }).should("exist");
             });
         };
 
@@ -336,7 +400,7 @@ describe("LeftPanel", () => {
         describe("for Saved Items", () => {
             beforeEach(() => {
                 // Enable Favorites
-                cy.setSettingValue("feature_favourite_messages", null, SettingLevel.DEVICE, true);
+                beforeSavedItems();
             });
 
             it("should render a sublist", () => {
@@ -350,24 +414,7 @@ describe("LeftPanel", () => {
 
         describe("for Favorites", () => {
             beforeEach(() => {
-                cy.createRoom({ name: roomName });
-
-                cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
-                    cy.findByRole("group", { name: "Rooms" }).within(() => {
-                        cy.findByRole("treeitem", { name: roomName })
-                            .realHover()
-                            .findByRole("button", { name: "Room options" })
-                            .click();
-                    });
-                });
-
-                // Click "Favorite" on the context menu
-                cy.findByRole("menuitemcheckbox", { name: "Favourite" }).click();
-
-                cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
-                    // Assert that the favorite room list was rendered
-                    cy.findByRole("group", { name: "Favourites" }).should("exist");
-                });
+                beforeFavorites();
             });
 
             it("should render a sublist", () => {
@@ -381,7 +428,7 @@ describe("LeftPanel", () => {
 
         describe("for People", () => {
             beforeEach(() => {
-                createBotDM();
+                beforePeople();
             });
 
             it("should render a sublist", () => {
@@ -411,25 +458,7 @@ describe("LeftPanel", () => {
         describe("for Historical", () => {
             // Create a room and leave it
             beforeEach(() => {
-                cy.createRoom({ name: roomName });
-
-                cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
-                    cy.findByRole("group", { name: "Rooms" }).within(() => {
-                        // Assert the room tile is rendered by default
-                        cy.findByRole("treeitem", { name: roomName })
-                            .realHover()
-                            .findByRole("button", { name: "Room options" })
-                            .click();
-                    });
-                });
-
-                cy.findByRole("menuitem", { name: "Leave" }).click();
-                cy.findByRole("button", { name: "Leave" }).click();
-
-                cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
-                    // Wait until the user left the room
-                    cy.findByRole("group", { name: "Historical" }).should("exist");
-                });
+                beforeHistorical();
             });
 
             it("should render a sublist", () => {
@@ -463,25 +492,7 @@ describe("LeftPanel", () => {
 
         describe("for Low Priority", () => {
             beforeEach(() => {
-                cy.createRoom({ name: roomName });
-
-                cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
-                    cy.findByRole("group", { name: "Rooms" }).within(() => {
-                        // Assert the room tile is rendered by default
-                        cy.findByRole("treeitem", { name: roomName })
-                            .realHover()
-                            .findByRole("button", { name: "Room options" })
-                            .click();
-                    });
-                });
-
-                // Click "Low Prioirity" on the context menu
-                cy.findByRole("menuitemcheckbox", { name: "Low Priority" }).click();
-
-                cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
-                    // Wait until the room is set to low priority
-                    cy.findByRole("group", { name: "Low priority" }).should("exist");
-                });
+                beforeLowPriority();
             });
 
             it("should render a sublist", () => {
@@ -490,6 +501,34 @@ describe("LeftPanel", () => {
                     cy.findByRole("group", { name: "Low priority" }).within(() => {
                         cy.get(".mx_RoomTile").findByText(roomName);
                     });
+                });
+            });
+        });
+
+        describe("for all groups", () => {
+            it("should render sublists and take a Percy snapshot", () => {
+                // Run every task to have all of the groups displayed
+                beforeSavedItems();
+                beforeFavorites();
+                beforeHistorical();
+                beforeLowPriority();
+
+                // Create a new room to have group "Rooms" displayed again,
+                // which disappears by setting a room to low priority
+                cy.createRoom({ name: roomName });
+
+                // Add a contact at the last after creating the room due to flakiness
+                beforePeople();
+
+                cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                    cy.findByRole("group", { name: "People" }).within(() => {
+                        // Assert that the botName is set to the room name
+                        cy.findByRole("treeitem", { name: botName }).should("exist");
+                    });
+                });
+
+                cy.get(".mx_LeftPanel_wrapper--user").percySnapshotElement("LeftPanel with all groups", {
+                    widths: [350], // default width on Cypress
                 });
             });
         });
