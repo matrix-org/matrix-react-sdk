@@ -63,7 +63,7 @@ const SidebarUserSettingsTab: React.FC = () => {
     };
 
     return (
-        <SettingsTab>
+        <SettingsTab data-testid="Sidebar">
             <SettingsSection heading={_t("Sidebar")}>
                 <SettingsSubsection
                     heading={_t("Spaces to show")}

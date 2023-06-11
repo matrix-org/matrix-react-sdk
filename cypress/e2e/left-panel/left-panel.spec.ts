@@ -81,7 +81,7 @@ describe("LeftPanel", () => {
             });
         });
 
-        describe("for Space", () => {
+        describe("for a created Space", () => {
             beforeEach(() => {
                 // Create a room
                 cy.createRoom({ name: roomName }).as("roomId1");
@@ -485,6 +485,247 @@ describe("LeftPanel", () => {
                     // Assert that the room is rendered in "Low priority" sublist
                     cy.findByRole("group", { name: "Low priority" }).within(() => {
                         cy.get(".mx_RoomTile").findByText(roomName);
+                    });
+                });
+            });
+        });
+
+        describe("for pre-built Spaces via Sidebar user settings tab", () => {
+            beforeEach(() => {
+                // Create a room
+                cy.createRoom({ name: roomName }).as("roomId1");
+
+                cy.openUserSettings("Sidebar");
+            });
+
+            it("should display and hide a room with Home and 'Show all rooms' settings enabled", () => {
+                // Create a Space and add the room to it
+                cy.get<string>("@roomId1").then((roomId1) => {
+                    cy.createSpace({
+                        name: spaceName,
+                        initial_state: [
+                            {
+                                type: "m.space.child",
+                                state_key: roomId1,
+                                content: {
+                                    via: roomId1,
+                                },
+                            },
+                        ],
+                    });
+                });
+
+                // Enable "Show all rooms"
+                // Force click because the size of the checkbox is zero
+                // Regex pattern due to double lines
+                cy.findByLabelText(/Show all rooms/).click({ force: true });
+
+                // Assert that the checkmark is visible
+                cy.get(".mx_SidebarUserSettingsTab_homeAllRoomsCheckbox").within(() => {
+                    cy.get(".mx_Checkbox_checkmark").should("be.visible");
+                });
+
+                cy.closeDialog();
+
+                cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                    // Assert the room tile is rendered
+                    cy.findByRole("treeitem", { name: roomName }).should("exist");
+                });
+
+                // Re-open the user settings tab
+                cy.openUserSettings("Sidebar");
+
+                // Disable "Show all rooms"
+                cy.findByLabelText(/Show all rooms/).click({ force: true });
+
+                // Assert that the checkmark is not visible
+                cy.get(".mx_SidebarUserSettingsTab_homeAllRoomsCheckbox").within(() => {
+                    cy.get(".mx_Checkbox_checkmark").should("not.be.visible");
+                });
+
+                cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                    // Assert the room tile is not rendered
+                    cy.findByRole("treeitem", { name: roomName }).should("not.exist");
+                });
+            });
+
+            it("should display favorite messages and rooms with Favorite enabled", () => {
+                cy.findByTestId("Sidebar").within(() => {
+                    // Force click because the size of the checkbox is zero
+                    // Regex pattern due to double lines
+                    cy.findByLabelText(/Favourites/).click({ force: true });
+                });
+
+                cy.closeDialog();
+
+                // Assert the Space for favorites is enabled and the icon button for it is rendered in mx_SpacePanel
+                cy.get(".mx_SpacePanel").within(() => {
+                    cy.findByRole("button", { name: "Favourites" }).should("exist");
+                });
+
+                // Enable Favorites Messages
+                cy.setSettingValue("feature_favourite_messages", null, SettingLevel.DEVICE, true);
+
+                // Display the room options context menu
+                cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                    cy.findByRole("group", { name: "Rooms" }).within(() => {
+                        cy.get(".mx_RoomTile").realHover().findByRole("button", { name: "Room options" }).click();
+                    });
+                });
+
+                // Click "Favorite" on the context menu
+                cy.findByRole("menuitemcheckbox", { name: "Favourite" }).click();
+
+                // Click the icon button on mx_SpacePanel
+                cy.get(".mx_SpacePanel").within(() => {
+                    cy.findByRole("button", { name: "Favourites" }).click();
+                });
+
+                cy.get(".mx_RoomListHeader").within(() => {
+                    // Assert that the header title of Space for favorites is rendered
+                    cy.get(".mx_RoomListHeader_contextLessTitle").findByText("Favourites");
+                });
+
+                cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                    // Assert that the room tile for favorite messages is rendered
+                    cy.findByRole("group", { name: "Saved Items" }).within(() => {
+                        cy.findByRole("treeitem", { name: "Favourite Messages" }).should("exist");
+                    });
+
+                    // Assert that the favorite room is rendered
+                    cy.findByRole("group", { name: "Favourites" }).within(() => {
+                        cy.findByRole("treeitem", { name: roomName }).should("exist");
+                    });
+
+                    // Assert there are not other room tiles on the room list
+                    cy.get(".mx_RoomTile").should("have.length", 2);
+                });
+            });
+
+            describe("with 'People' setting enabled", () => {
+                let bot: MatrixClient;
+                const botName = "BotBob";
+
+                beforeEach(() => {
+                    // Create a bot
+                    cy.getBot(homeserver, { displayName: botName }).then((_bot) => {
+                        bot = _bot;
+                    });
+
+                    // Create DM with the bot
+                    cy.getClient().then(async (cli) => {
+                        const botRoom = await cli.createRoom({ is_direct: true });
+                        await cli.invite(botRoom.room_id, bot.getUserId());
+                        await cli.setAccountData("m.direct" as EventType, {
+                            [bot.getUserId()]: [botRoom.room_id],
+                        });
+                    });
+
+                    cy.findByTestId("Sidebar").within(() => {
+                        // Force click because the size of the checkbox is zero
+                        // Regex pattern due to double lines
+                        cy.findByLabelText(/People/).click({ force: true });
+                    });
+
+                    cy.closeDialog();
+
+                    // Assert the Space for People is enabled and the icon button for it is rendered in mx_SpacePanel
+                    cy.get(".mx_SpacePanel").within(() => {
+                        cy.findByRole("button", { name: "People" }).should("exist");
+                    });
+
+                    // Click the icon button for the Space for People
+                    cy.get(".mx_SpacePanel").within(() => {
+                        cy.findByRole("button", { name: "People" }).click();
+                    });
+                });
+
+                it("should display the contact on the sublist", () => {
+                    cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                        cy.findByRole("group", { name: "People" }).within(() => {
+                            cy.findByRole("treeitem", { name: botName }).should("exist");
+                        });
+
+                        // Assert there are not other room tiles on the room list
+                        cy.get(".mx_RoomTile").should("have.length", 1);
+                    });
+                });
+
+                it("should render sublists for the contact and Saved Items", () => {
+                    // Enable Favorites Messages
+                    cy.setSettingValue("feature_favourite_messages", null, SettingLevel.DEVICE, true);
+
+                    cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                        // Assert that the room tile for favorite messages is rendered
+                        cy.findByRole("group", { name: "Saved Items" }).within(() => {
+                            cy.findByRole("treeitem", { name: "Favourite Messages" }).should("exist");
+                        });
+
+                        cy.findByRole("group", { name: "People" }).within(() => {
+                            cy.findByRole("treeitem", { name: botName }).should("exist");
+                        });
+
+                        // Assert there are not other room tiles on the room list
+                        cy.get(".mx_RoomTile").should("have.length", 2);
+                    });
+                });
+            });
+
+            describe("with 'Rooms outside of a space' setting enabled", () => {
+                beforeEach(() => {
+                    cy.findByTestId("Sidebar").within(() => {
+                        // Force click because the size of the checkbox is zero
+                        // Regex pattern due to double lines
+                        cy.findByLabelText(/Rooms outside of a space/).click({ force: true });
+                    });
+
+                    cy.closeDialog();
+
+                    // Click the icon button on mx_SpacePanel
+                    cy.get(".mx_SpacePanel").within(() => {
+                        cy.findByRole("button", { name: "Other rooms" }).click();
+                    });
+
+                    cy.get(".mx_RoomListHeader").within(() => {
+                        // Assert that the header title of Space for othe rooms is rendered
+                        cy.get(".mx_RoomListHeader_contextLessTitle").findByText("Other rooms");
+                    });
+                });
+
+                it("should display a room not a part of a Space", () => {
+                    cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                        // Assert that the room tile for favorite messages is rendered
+                        cy.findByRole("group", { name: "Rooms" }).within(() => {
+                            cy.findByRole("treeitem", { name: roomName }).should("exist");
+                        });
+                    });
+                });
+
+                it("should not display a room which is a part of a Space", () => {
+                    // Create a Space and add the room to it
+                    cy.get<string>("@roomId1").then((roomId1) => {
+                        cy.createSpace({
+                            name: spaceName,
+                            initial_state: [
+                                {
+                                    type: "m.space.child",
+                                    state_key: roomId1,
+                                    content: {
+                                        via: roomId1,
+                                    },
+                                },
+                            ],
+                        });
+                    });
+
+                    cy.get(".mx_LeftPanel_roomListWrapper").within(() => {
+                        // Assert that the room tile is not rendered
+                        cy.findByRole("group", { name: "Rooms" }).within(() => {
+                            cy.findByRole("treeitem", { name: roomName }).should("not.exist");
+                        });
+
+                        // Assert that Skelton UI is rendered instead
+                        cy.get(".mx_RoomSublist_skeletonUI").should("exist");
                     });
                 });
             });

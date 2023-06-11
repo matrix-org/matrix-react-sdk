@@ -4,6 +4,7 @@ exports[`<SidebarUserSettingsTab /> renders sidebar settings 1`] = `
 <div>
   <div
     class="mx_SettingsTab"
+    data-testid="Sidebar"
   >
     <div
       class="mx_SettingsTab_sections"
