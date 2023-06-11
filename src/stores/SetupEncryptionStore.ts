@@ -17,6 +17,7 @@ limitations under the License.
 import EventEmitter from "events";
 import {
     PHASE_DONE as VERIF_PHASE_DONE,
+    Phase as VerificationPhase,
     VerificationRequest,
     VerificationRequestEvent,
 } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
@@ -45,7 +46,7 @@ export enum Phase {
 
 export class SetupEncryptionStore extends EventEmitter {
     private started?: boolean;
-    public phase: Phase;
+    public phase?: Phase;
     public verificationRequest: VerificationRequest | null = null;
     public backupInfo: IKeyBackupInfo | null = null;
     // ID of the key that the secrets we want are encrypted with
@@ -150,7 +151,7 @@ export class SetupEncryptionStore extends EventEmitter {
                 }).catch(reject);
             });
 
-            if (cli.getCrossSigningId()) {
+            if (await cli.getCrypto()?.getCrossSigningKeyId()) {
                 this.phase = Phase.Done;
                 this.emit("update");
             }
@@ -164,9 +165,9 @@ export class SetupEncryptionStore extends EventEmitter {
         }
     }
 
-    private onUserTrustStatusChanged = (userId: string): void => {
+    private onUserTrustStatusChanged = async (userId: string): Promise<void> => {
         if (userId !== MatrixClientPeg.get().getUserId()) return;
-        const publicKeysTrusted = MatrixClientPeg.get().getCrossSigningId();
+        const publicKeysTrusted = await MatrixClientPeg.get().getCrypto()?.getCrossSigningKeyId();
         if (publicKeysTrusted) {
             this.phase = Phase.Done;
             this.emit("update");
@@ -177,8 +178,8 @@ export class SetupEncryptionStore extends EventEmitter {
         this.setActiveVerificationRequest(request);
     };
 
-    public onVerificationRequestChange = (): void => {
-        if (this.verificationRequest?.cancelled) {
+    public onVerificationRequestChange = async (): Promise<void> => {
+        if (this.verificationRequest?.phase === VerificationPhase.Cancelled) {
             this.verificationRequest.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
             this.verificationRequest = null;
             this.emit("update");
@@ -188,7 +189,7 @@ export class SetupEncryptionStore extends EventEmitter {
             // At this point, the verification has finished, we just need to wait for
             // cross signing to be ready to use, so wait for the user trust status to
             // change (or change to DONE if it's already ready).
-            const publicKeysTrusted = MatrixClientPeg.get().getCrossSigningId();
+            const publicKeysTrusted = await MatrixClientPeg.get().getCrypto()?.getCrossSigningKeyId();
             this.phase = publicKeysTrusted ? Phase.Done : Phase.Busy;
             this.emit("update");
         }

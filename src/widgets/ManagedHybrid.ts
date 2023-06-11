@@ -24,6 +24,7 @@ import { IStoredLayout, WidgetLayoutStore } from "../stores/widgets/WidgetLayout
 import WidgetEchoStore from "../stores/WidgetEchoStore";
 import WidgetStore from "../stores/WidgetStore";
 import SdkConfig from "../SdkConfig";
+import DMRoomMap from "../utils/DMRoomMap";
 
 /* eslint-disable camelcase */
 interface IManagedHybridWidgetData {
@@ -33,16 +34,25 @@ interface IManagedHybridWidgetData {
 }
 /* eslint-enable camelcase */
 
-function getWidgetBuildUrl(): string | undefined {
+function getWidgetBuildUrl(roomId: string): string | undefined {
+    const isDm = !!DMRoomMap.shared().getUserIdForRoomId(roomId);
     if (SdkConfig.get().widget_build_url) {
+        if (isDm && SdkConfig.get().widget_build_url_ignore_dm) {
+            return undefined;
+        }
         return SdkConfig.get().widget_build_url;
     }
+
+    const wellKnown = getCallBehaviourWellKnown(MatrixClientPeg.get());
+    if (isDm && wellKnown?.ignore_dm) {
+        return undefined;
+    }
     /* eslint-disable-next-line camelcase */
-    return getCallBehaviourWellKnown()?.widget_build_url;
+    return wellKnown?.widget_build_url;
 }
 
-export function isManagedHybridWidgetEnabled(): boolean {
-    return !!getWidgetBuildUrl();
+export function isManagedHybridWidgetEnabled(roomId: string): boolean {
+    return !!getWidgetBuildUrl(roomId);
 }
 
 export async function addManagedHybridWidget(roomId: string): Promise<void> {
@@ -53,14 +63,14 @@ export async function addManagedHybridWidget(roomId: string): Promise<void> {
     }
 
     // Check for permission
-    if (!WidgetUtils.canUserModifyWidgets(roomId)) {
+    if (!WidgetUtils.canUserModifyWidgets(cli, roomId)) {
         logger.error(`User not allowed to modify widgets in ${roomId}`);
         return;
     }
 
     // Get widget data
     /* eslint-disable-next-line camelcase */
-    const widgetBuildUrl = getWidgetBuildUrl();
+    const widgetBuildUrl = getWidgetBuildUrl(roomId);
     if (!widgetBuildUrl) {
         return;
     }
@@ -87,7 +97,7 @@ export async function addManagedHybridWidget(roomId: string): Promise<void> {
 
     // Add the widget
     try {
-        await WidgetUtils.setRoomWidgetContent(roomId, widgetId, widgetContent);
+        await WidgetUtils.setRoomWidgetContent(cli, roomId, widgetId, widgetContent);
     } catch (e) {
         logger.error(`Unable to add managed hybrid widget in room ${roomId}`, e);
         return;

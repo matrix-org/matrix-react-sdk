@@ -91,7 +91,7 @@ const msgTypeHandlers: Record<string, (event: MatrixEvent) => string | null> = {
             return null;
         }
 
-        return TextForEvent.textForEvent(event);
+        return TextForEvent.textForEvent(event, MatrixClientPeg.get());
     },
 };
 
@@ -111,7 +111,7 @@ class NotifierClass {
         if (msgType && msgTypeHandlers.hasOwnProperty(msgType)) {
             return msgTypeHandlers[msgType](ev);
         }
-        return TextForEvent.textForEvent(ev);
+        return TextForEvent.textForEvent(ev, MatrixClientPeg.get());
     }
 
     // XXX: exported for tests
@@ -132,7 +132,7 @@ class NotifierClass {
         let msg = this.notificationMessageForEvent(ev);
         if (!msg) return;
 
-        let title;
+        let title: string | undefined;
         if (!ev.sender || room.name === ev.sender.name) {
             title = room.name;
             // notificationMessageForEvent includes sender, but we already have the sender here
@@ -152,6 +152,8 @@ class NotifierClass {
                 msg = ev.getContent().body;
             }
         }
+
+        if (!title) return;
 
         if (!this.isBodyEnabled()) {
             msg = "";

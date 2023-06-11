@@ -15,8 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
+import { IWidget } from "matrix-widget-api";
+import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import { _t, _td } from "../../../languageHandler";
 import AppTile from "../elements/AppTile";
@@ -32,7 +34,6 @@ import { WidgetMessagingStore } from "../../../stores/widgets/WidgetMessagingSto
 import { ActionPayload } from "../../../dispatcher/payloads";
 import ScalarAuthClient from "../../../ScalarAuthClient";
 import GenericElementContextMenu from "../context_menus/GenericElementContextMenu";
-import { IApp } from "../../../stores/WidgetStore";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 
@@ -122,7 +123,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
         }
 
         this.props.setStickerPickerOpen(false);
-        WidgetUtils.removeStickerpickerWidgets()
+        WidgetUtils.removeStickerpickerWidgets(this.props.room.client)
             .then(() => {
                 this.forceUpdate();
             })
@@ -138,7 +139,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
         this.dispatcherRef = dis.register(this.onAction);
 
         // Track updates to widget state in account data
-        MatrixClientPeg.get().on(RoomEvent.AccountData, this.updateWidget);
+        MatrixClientPeg.get().on(ClientEvent.AccountData, this.updateWidget);
 
         RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         // Initialise widget state from current account data
@@ -147,7 +148,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
 
     public componentWillUnmount(): void {
         const client = MatrixClientPeg.get();
-        if (client) client.removeListener(RoomEvent.AccountData, this.updateWidget);
+        if (client) client.removeListener(ClientEvent.AccountData, this.updateWidget);
         RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         window.removeEventListener("resize", this.onResize);
         if (this.dispatcherRef) {
@@ -168,7 +169,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
     }
 
     private updateWidget = (): void => {
-        const stickerpickerWidget = WidgetUtils.getStickerpickerWidgets()[0];
+        const stickerpickerWidget = WidgetUtils.getStickerpickerWidgets(this.props.room.client)[0];
         if (!stickerpickerWidget) {
             Stickerpicker.currentWidget = undefined;
             this.setState({ stickerpickerWidget: null, widgetId: null });
@@ -264,15 +265,12 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
             stickerpickerWidget.content.name = stickerpickerWidget.content.name || _t("Stickerpack");
 
             // FIXME: could this use the same code as other apps?
-            const stickerApp: IApp = {
+            const stickerApp: IWidget = {
                 id: stickerpickerWidget.id,
                 url: stickerpickerWidget.content.url,
                 name: stickerpickerWidget.content.name,
                 type: stickerpickerWidget.content.type,
                 data: stickerpickerWidget.content.data,
-                roomId: stickerpickerWidget.content.roomId,
-                eventId: stickerpickerWidget.content.eventId,
-                avatar_url: stickerpickerWidget.content.avatar_url,
                 creatorUserId: stickerpickerWidget.content.creatorUserId || stickerpickerWidget.sender,
             };
 

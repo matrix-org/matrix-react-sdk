@@ -120,7 +120,7 @@ describe("<TextualBody />", () => {
         );
 
     it("renders m.emote correctly", () => {
-        DMRoomMap.makeShared();
+        DMRoomMap.makeShared(defaultMatrixClient);
 
         const ev = mkEvent({
             type: "m.room.message",
@@ -140,7 +140,7 @@ describe("<TextualBody />", () => {
     });
 
     it("renders m.notice correctly", () => {
-        DMRoomMap.makeShared();
+        DMRoomMap.makeShared(defaultMatrixClient);
 
         const ev = mkEvent({
             type: "m.room.message",
@@ -161,7 +161,7 @@ describe("<TextualBody />", () => {
 
     describe("renders plain-text m.text correctly", () => {
         beforeEach(() => {
-            DMRoomMap.makeShared();
+            DMRoomMap.makeShared(defaultMatrixClient);
         });
 
         it("simple message renders as expected", () => {
@@ -199,7 +199,7 @@ describe("<TextualBody />", () => {
             const { container } = getComponent({ mxEvent: ev });
             const content = container.querySelector(".mx_EventTile_body");
             expect(content.innerHTML).toMatchInlineSnapshot(
-                `"Chat with <span><bdi><a class="mx_Pill mx_UserPill mx_UserPill_me" href="https://matrix.to/#/@user:example.com" aria-describedby="mx_Pill_0.123456"><img class="mx_BaseAvatar mx_BaseAvatar_image" src="mxc://avatar.url/image.png" style="width: 16px; height: 16px;" alt="" data-testid="avatar-img" aria-hidden="true"><span class="mx_Pill_text">Member</span></a></bdi></span>"`,
+                `"Chat with <span><bdi><a class="mx_Pill mx_UserPill mx_UserPill_me" href="https://matrix.to/#/@user:example.com" aria-describedby="mx_Pill_0.123456"><img loading="lazy" class="mx_BaseAvatar mx_BaseAvatar_image" src="mxc://avatar.url/image.png" style="width: 16px; height: 16px;" alt="" data-testid="avatar-img" aria-hidden="true"><span class="mx_Pill_text">Member</span></a></bdi></span>"`,
             );
         });
 
@@ -264,7 +264,7 @@ describe("<TextualBody />", () => {
                 isGuest: () => false,
                 mxcUrlToHttp: (s: string) => s,
             });
-            DMRoomMap.makeShared();
+            DMRoomMap.makeShared(defaultMatrixClient);
         });
 
         it("italics, bold, underline and strikethrough render as expected", () => {
@@ -408,7 +408,7 @@ describe("<TextualBody />", () => {
             isGuest: () => false,
             mxcUrlToHttp: (s: string) => s,
         });
-        DMRoomMap.makeShared();
+        DMRoomMap.makeShared(defaultMatrixClient);
 
         const ev = mkRoomTextMessage("Visit https://matrix.org/");
         const { container, rerender } = getComponent(

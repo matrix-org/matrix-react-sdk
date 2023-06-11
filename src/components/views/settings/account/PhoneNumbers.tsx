@@ -22,7 +22,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { _t, UserFriendlyError } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Field from "../../elements/Field";
-import AccessibleButton from "../../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../elements/AccessibleButton";
 import AddThreepid from "../../../../AddThreepid";
 import CountryDropdown from "../../auth/CountryDropdown";
 import Modal from "../../../../Modal";
@@ -54,21 +54,21 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
         };
     }
 
-    private onRemove = (e: React.MouseEvent): void => {
+    private onRemove = (e: ButtonEvent): void => {
         e.stopPropagation();
         e.preventDefault();
 
         this.setState({ verifyRemove: true });
     };
 
-    private onDontRemove = (e: React.MouseEvent): void => {
+    private onDontRemove = (e: ButtonEvent): void => {
         e.stopPropagation();
         e.preventDefault();
 
         this.setState({ verifyRemove: false });
     };
 
-    private onActuallyRemove = (e: React.MouseEvent): void => {
+    private onActuallyRemove = (e: ButtonEvent): void => {
         e.stopPropagation();
         e.preventDefault();
 
@@ -89,21 +89,21 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
     public render(): React.ReactNode {
         if (this.state.verifyRemove) {
             return (
-                <div className="mx_GeneralUserSettingsTab_discovery_existing">
-                    <span className="mx_GeneralUserSettingsTab_discovery_existing_promptText">
+                <div className="mx_GeneralUserSettingsTab_section--discovery_existing">
+                    <span className="mx_GeneralUserSettingsTab_section--discovery_existing_promptText">
                         {_t("Remove %(phone)s?", { phone: this.props.msisdn.address })}
                     </span>
                     <AccessibleButton
                         onClick={this.onActuallyRemove}
                         kind="danger_sm"
-                        className="mx_GeneralUserSettingsTab_discovery_existing_button"
+                        className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     >
                         {_t("Remove")}
                     </AccessibleButton>
                     <AccessibleButton
                         onClick={this.onDontRemove}
                         kind="link_sm"
-                        className="mx_GeneralUserSettingsTab_discovery_existing_button"
+                        className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     >
                         {_t("Cancel")}
                     </AccessibleButton>
@@ -112,8 +112,8 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
         }
 
         return (
-            <div className="mx_GeneralUserSettingsTab_discovery_existing">
-                <span className="mx_GeneralUserSettingsTab_discovery_existing_address">
+            <div className="mx_GeneralUserSettingsTab_section--discovery_existing">
+                <span className="mx_GeneralUserSettingsTab_section--discovery_existing_address">
                     +{this.props.msisdn.address}
                 </span>
                 <AccessibleButton onClick={this.onRemove} kind="danger_sm">
@@ -173,7 +173,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
         });
     };
 
-    private onAddClick = (e: React.MouseEvent | React.FormEvent): void => {
+    private onAddClick = (e: ButtonEvent | React.FormEvent): void => {
         e.stopPropagation();
         e.preventDefault();
 
@@ -182,7 +182,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
         const phoneNumber = this.state.newPhoneNumber;
         const phoneCountry = this.state.phoneCountry;
 
-        const task = new AddThreepid();
+        const task = new AddThreepid(MatrixClientPeg.get());
         this.setState({ verifying: true, continueDisabled: true, addTask: task });
 
         task.addMsisdn(phoneCountry, phoneNumber)
@@ -199,7 +199,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
             });
     };
 
-    private onContinueClick = (e: React.MouseEvent | React.FormEvent): void => {
+    private onContinueClick = (e: ButtonEvent | React.FormEvent): void => {
         e.stopPropagation();
         e.preventDefault();
 
@@ -305,7 +305,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
         );
 
         return (
-            <div className="mx_PhoneNumbers">
+            <>
                 {existingPhoneElements}
                 <form onSubmit={this.onAddClick} autoComplete="off" noValidate={true} className="mx_PhoneNumbers_new">
                     <div className="mx_PhoneNumbers_input">
@@ -321,7 +321,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
                     </div>
                 </form>
                 {addVerifySection}
-            </div>
+            </>
         );
     }
 }

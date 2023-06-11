@@ -47,9 +47,11 @@ describe("Invite dialog", function () {
         // Open the room info panel
         cy.findByRole("button", { name: "Room info" }).click();
 
-        // Click "People" button on the panel
-        // Regex pattern due to the string of "mx_BaseCard_Button_sublabel"
-        cy.findByRole("button", { name: /People/ }).click();
+        cy.get(".mx_RightPanel").within(() => {
+            // Click "People" button on the panel
+            // Regex pattern due to the string of "mx_BaseCard_Button_sublabel"
+            cy.findByRole("button", { name: /People/ }).click();
+        });
 
         cy.get(".mx_BaseCard_header").within(() => {
             // Click "Invite to this room" button
@@ -161,6 +163,14 @@ describe("Invite dialog", function () {
 
         // Assert that the invite dialog disappears
         cy.get(".mx_InviteDialog_other").should("not.exist");
+
+        // Assert that the hovered user name on invitation UI does not have background color
+        // TODO: implement the test on room-header.spec.ts
+        cy.get(".mx_RoomHeader").within(() => {
+            cy.get(".mx_RoomHeader_name--textonly")
+                .realHover()
+                .should("have.css", "background-color", "rgba(0, 0, 0, 0)");
+        });
 
         // Send a message to invite the bots
         cy.getComposer().type("Hello{enter}");

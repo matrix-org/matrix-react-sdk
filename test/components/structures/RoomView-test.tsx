@@ -56,6 +56,11 @@ import WidgetUtils from "../../../src/utils/WidgetUtils";
 import { WidgetType } from "../../../src/widgets/WidgetType";
 import WidgetStore from "../../../src/stores/WidgetStore";
 
+// Fake random strings to give a predictable snapshot for IDs
+jest.mock("matrix-js-sdk/src/randomstring", () => ({
+    randomString: () => "abdefghi",
+}));
+
 const RoomView = wrapInMatrixClientContext(_RoomView);
 
 describe("RoomView", () => {
@@ -71,7 +76,7 @@ describe("RoomView", () => {
     beforeEach(() => {
         mockPlatformPeg({ reload: () => {} });
         stubClient();
-        cli = mocked(MatrixClientPeg.get());
+        cli = mocked(MatrixClientPeg.safeGet());
 
         room = new Room(`!${roomCount++}:example.org`, cli, "@alice:example.org");
         jest.spyOn(room, "findPredecessor");
@@ -83,7 +88,7 @@ describe("RoomView", () => {
         room.on(RoomEvent.Timeline, (...args) => cli.emit(RoomEvent.Timeline, ...args));
         room.on(RoomEvent.TimelineReset, (...args) => cli.emit(RoomEvent.TimelineReset, ...args));
 
-        DMRoomMap.makeShared();
+        DMRoomMap.makeShared(cli);
         stores = new SdkContextClass();
         stores.client = cli;
         stores.rightPanelStore.useUnitTestClient(cli);
@@ -457,7 +462,7 @@ describe("RoomView", () => {
                 });
 
                 it("the last Jitsi widget should be removed", () => {
-                    expect(WidgetUtils.setRoomWidget).toHaveBeenCalledWith(room.roomId, widget2Id);
+                    expect(WidgetUtils.setRoomWidget).toHaveBeenCalledWith(cli, room.roomId, widget2Id);
                 });
             });
 

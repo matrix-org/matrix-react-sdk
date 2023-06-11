@@ -154,7 +154,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                         decryptedThumbnailUrl: thumbnailUrl,
                         decryptedBlob: await this.props.mediaEventHelper.sourceBlob.value,
                     });
-                    this.props.onHeightChanged();
+                    this.props.onHeightChanged?.();
                 } else {
                     logger.log("NOT preloading video");
                     const content = this.props.mxEvent.getContent<IMediaEventContent>();
@@ -216,7 +216,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                 this.videoRef.current.play();
             },
         );
-        this.props.onHeightChanged();
+        this.props.onHeightChanged?.();
     };
 
     protected get showFileBody(): boolean {
@@ -234,7 +234,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
 
     public render(): React.ReactNode {
         const content = this.props.mxEvent.getContent();
-        const autoplay = SettingsStore.getValue("autoplayVideo");
+        const autoplay = !this.props.inhibitInteraction && SettingsStore.getValue("autoplayVideo");
 
         let aspectRatio;
         if (content.info?.w && content.info?.h) {
@@ -287,7 +287,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                         ref={this.videoRef}
                         src={contentUrl}
                         title={content.body}
-                        controls
+                        controls={!this.props.inhibitInteraction}
                         // Disable downloading as it doesn't work with e2ee video,
                         // users should use the dedicated Download button in the Message Action Bar
                         controlsList="nodownload"
