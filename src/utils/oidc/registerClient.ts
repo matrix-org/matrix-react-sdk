@@ -67,13 +67,13 @@ const doRegistration = async (
 
         const body = await response.json();
         const clientId = body["client_id"];
-        if (!clientId) {
+        if (!clientId || typeof clientId !== "string") {
             throw new Error(OidcClientError.DynamicRegistrationInvalid);
         }
 
         return clientId;
     } catch (error) {
-        if (Object.values(OidcClientError).includes(error.message)) {
+        if (Object.values(OidcClientError).includes((error as Error).message as OidcClientError)) {
             throw error;
         } else {
             logger.error("Dynamic registration request failed", error);
@@ -100,6 +100,9 @@ const registerOidcClient = async (
         clientUri: baseUrl,
         redirectUris: [baseUrl],
     };
+    if (!delegatedAuthConfig.registrationEndpoint) {
+        throw new Error(OidcClientError.DynamicRegistrationNotSupported);
+    }
     const clientId = await doRegistration(delegatedAuthConfig.registrationEndpoint, clientMetadata);
 
     return clientId;
@@ -136,9 +139,6 @@ export const getOidcClientId = async (
     if (staticClientId) {
         logger.debug(`Using static clientId for issuer ${delegatedAuthConfig.issuer}`);
         return staticClientId;
-    }
-    if (!delegatedAuthConfig.registrationEndpoint) {
-        throw new Error(OidcClientError.DynamicRegistrationNotSupported);
     }
     return await registerOidcClient(delegatedAuthConfig, clientName, baseUrl);
 };

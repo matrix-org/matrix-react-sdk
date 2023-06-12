@@ -348,7 +348,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         } catch (e) {
             this.setState({
                 busy: false,
-                ...AutoDiscoveryUtils.authComponentStateForError(e),
+                ...AutoDiscoveryUtils.authComponentStateForError(e as Error),
             });
         }
     }
