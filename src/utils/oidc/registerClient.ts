@@ -16,7 +16,10 @@ limitations under the License.
 
 import { IDelegatedAuthConfig } from "matrix-js-sdk/src/client";
 import { Method } from "matrix-js-sdk/src/http-api";
+import { logger } from "matrix-js-sdk/src/logger";
 import { ValidatedIssuerConfig } from "matrix-js-sdk/src/oidc/validate";
+
+import { OidcClientError } from "./error";
 
 // "staticOidcClients": {
 //     "https://dev-6525741.okta.com/": {
@@ -37,7 +40,7 @@ export type OidcRegistrationClientMetadata = {
 };
 
 /**
- *
+ * Make the registration request
  * @param issuer issue URL
  * @param clientMetadata registration metadata
  * @returns {Promise<string>} resolves to the registered client id when registration is successful
@@ -69,19 +72,27 @@ const doRegistration = async (
     });
 
     if (response.status >= 400) {
-        throw new Error("Failed to register client");
+        throw new Error(OidcClientError.DynamicRegistrationFailed);
     }
 
     const body = await response.json();
     const clientId = body["client_id"];
     if (!clientId) {
-        throw new Error("Invalid clientId");
+        throw new Error(OidcClientError.DynamicRegistrationInvalid);
     }
 
     return clientId;
 };
 
-export const registerOidcClient = async (
+/**
+ * Attempts dynamic registration against the configured registration endpoint
+ * @param delegatedAuthConfig  Auth config from ValidatedServerConfig
+ * @param clientName Client name to register with the OP, eg 'Element'
+ * @param baseUrl URL of the home page of the Client, eg 'https://app.element.io/'
+ * @returns Promise<string> resolved with registered clientId
+ * @throws on failed request or invalid response
+ */
+const registerOidcClient = async (
     delegatedAuthConfig: IDelegatedAuthConfig & ValidatedIssuerConfig,
     clientName: string,
     baseUrl: string,
@@ -94,4 +105,42 @@ export const registerOidcClient = async (
     const clientId = await doRegistration(delegatedAuthConfig.registrationEndpoint, clientMetadata);
 
     return clientId;
+};
+
+/**
+ * Get the configured clientId for the issuer
+ * @param issuer delegated auth OIDC issuer
+ * @param staticOidcClients static client config from config.json
+ * @returns clientId if found, otherwise undefined
+ */
+const getStaticOidcClientId = (issuer: string, staticOidcClients?: Record<string, string>): string | undefined => {
+    return staticOidcClients?.[issuer];
+};
+
+/**
+ * Get the clientId for configured oidc OP
+ * Checks statically configured clientIds first
+ * Then attempts dynamic registration with the OP
+ * @param delegatedAuthConfig Auth config from ValidatedServerConfig
+ * @param clientName Client name to register with the OP, eg 'Element'
+ * @param baseUrl URL of the home page of the Client, eg 'https://app.element.io/'
+ * @param staticOidcClients static client config from config.json
+ * @returns Promise<string> resolves with clientId
+ * @throws if no clientId is found or registration failed
+ */
+export const getOidcClientId = async (
+    delegatedAuthConfig: IDelegatedAuthConfig & ValidatedIssuerConfig,
+    clientName: string,
+    baseUrl: string,
+    staticOidcClients?: Record<string, string>,
+): Promise<string> => {
+    const staticClientId = getStaticOidcClientId(delegatedAuthConfig.issuer, staticOidcClients);
+    if (staticClientId) {
+        logger.debug(`Using static clientId for issuer ${delegatedAuthConfig.issuer}`);
+        return staticClientId;
+    }
+    if (!delegatedAuthConfig.registrationEndpoint) {
+        throw new Error(OidcClientError.DynamicRegistrationNotSupported);
+    }
+    return await registerOidcClient(delegatedAuthConfig, clientName, baseUrl);
 };
