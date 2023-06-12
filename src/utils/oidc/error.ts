@@ -21,5 +21,3 @@ export enum OidcClientError {
     DynamicRegistrationFailed = "Dynamic registration failed",
     DynamicRegistrationInvalid = "Dynamic registration invalid response",
 }
-
-export type OidcError = OidcClientError | OidcDiscoveryError;
