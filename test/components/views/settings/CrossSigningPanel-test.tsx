@@ -16,7 +16,8 @@ limitations under the License.
 
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { mocked } from "jest-mock";
+import { Mocked, mocked } from "jest-mock";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import CrossSigningPanel from "../../../../src/components/views/settings/CrossSigningPanel";
 import {
@@ -28,25 +29,18 @@ import {
 
 describe("<CrossSigningPanel />", () => {
     const userId = "@alice:server.org";
-    const mockClient = getMockClientWithEventEmitter({
-        ...mockClientMethodsUser(userId),
-        ...mockClientMethodsCrypto(),
-        doesServerSupportUnstableFeature: jest.fn(),
-    });
+    let mockClient: Mocked<MatrixClient>;
     const getComponent = () => render(<CrossSigningPanel />);
 
     beforeEach(() => {
+        mockClient = getMockClientWithEventEmitter({
+            ...mockClientMethodsUser(userId),
+            ...mockClientMethodsCrypto(),
+            doesServerSupportUnstableFeature: jest.fn(),
+        });
+
         mockClient.doesServerSupportUnstableFeature.mockResolvedValue(true);
         mockClient.isCrossSigningReady.mockResolvedValue(false);
-        mocked(mockClient.getCrypto()!.getCrossSigningStatus).mockResolvedValue({
-            publicKeysOnDevice: true,
-            privateKeysInSecretStorage: false,
-            privateKeysCachedLocally: {
-                masterKey: true,
-                selfSigningKey: true,
-                userSigningKey: true,
-            },
-        });
     });
 
     it("should render a spinner while loading", () => {
