@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { act, render } from "@testing-library/react";
-import React from "react";
+import { act, render, waitFor } from "@testing-library/react";
+import React, { ComponentProps } from "react";
 import {
     Phase,
     VerificationRequest,
@@ -24,15 +24,13 @@ import {
 import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
 import { User } from "matrix-js-sdk/src/models/user";
 import { Mocked } from "jest-mock";
-import { VerificationBase } from "matrix-js-sdk/src/crypto/verification/Base";
 import {
     EmojiMapping,
     ShowSasCallbacks,
+    Verifier,
     VerifierEvent,
     VerifierEventHandlerMap,
 } from "matrix-js-sdk/src/crypto-api/verification";
-import { SAS } from "matrix-js-sdk/src/crypto/verification/SAS";
-import { IVerificationChannel } from "matrix-js-sdk/src/crypto/verification/request/Channel";
 
 import VerificationPanel from "../../../../src/components/views/right_panel/VerificationPanel";
 import { stubClient } from "../../../test-utils";
@@ -42,22 +40,67 @@ describe("<VerificationPanel />", () => {
         stubClient();
     });
 
-    it("should show a 'Verify by emoji' button", () => {
-        const container = renderComponent({
-            request: makeMockVerificationRequest(),
-            phase: Phase.Ready,
+    describe("'Ready' phase (dialog mode)", () => {
+        it("should show a 'Start' button", () => {
+            const container = renderComponent({
+                request: makeMockVerificationRequest({
+                    phase: Phase.Ready,
+                }),
+                layout: "dialog",
+            });
+            container.getByRole("button", { name: "Start" });
         });
-        container.getByRole("button", { name: "Verify by emoji" });
+
+        it("should show a QR code if the other side can scan and QR bytes are calculated", async () => {
+            const request = makeMockVerificationRequest({
+                phase: Phase.Ready,
+            });
+            request.getQRCodeBytes.mockReturnValue(Buffer.from("test", "utf-8"));
+            const container = renderComponent({
+                request: request,
+                layout: "dialog",
+            });
+            container.getByText("Scan this unique code");
+            // it shows a spinner at first; wait for the update which makes it show the QR code
+            await waitFor(() => {
+                container.getByAltText("QR Code");
+            });
+        });
+    });
+
+    describe("'Ready' phase (regular mode)", () => {
+        it("should show a 'Verify by emoji' button", () => {
+            const container = renderComponent({
+                request: makeMockVerificationRequest({ phase: Phase.Ready }),
+            });
+            container.getByRole("button", { name: "Verify by emoji" });
+        });
+
+        it("should show a QR code if the other side can scan and QR bytes are calculated", async () => {
+            const request = makeMockVerificationRequest({
+                phase: Phase.Ready,
+            });
+            request.getQRCodeBytes.mockReturnValue(Buffer.from("test", "utf-8"));
+            const container = renderComponent({
+                request: request,
+                member: new User("@other:user"),
+            });
+            container.getByText("Ask @other:user to scan your code:");
+            // it shows a spinner at first; wait for the update which makes it show the QR code
+            await waitFor(() => {
+                container.getByAltText("QR Code");
+            });
+        });
     });
 
     describe("'Verify by emoji' flow", () => {
-        let mockVerifier: Mocked<VerificationBase>;
+        let mockVerifier: Mocked<Verifier>;
         let mockRequest: Mocked<VerificationRequest>;
 
         beforeEach(() => {
             mockVerifier = makeMockVerifier();
             mockRequest = makeMockVerificationRequest({
-                verifier: mockVerifier,
+                verifier: mockVerifier as unknown as VerificationRequest["verifier"],
                 chosenMethod: "m.sas.v1",
             });
         });
@@ -78,7 +121,7 @@ describe("<VerificationPanel />", () => {
 
             // fire the ShowSas event
             const sasEvent = makeMockSasCallbacks();
-            (mockVerifier as unknown as SAS).sasEvent = sasEvent;
+            mockVerifier.getShowSasCallbacks.mockReturnValue(sasEvent);
             act(() => {
                 mockVerifier.emit(VerifierEvent.ShowSas, sasEvent);
             });
@@ -92,13 +135,14 @@ describe("<VerificationPanel />", () => {
     });
 });
 
-function renderComponent(props: { request: VerificationRequest; phase: Phase }) {
+function renderComponent(props: Partial<ComponentProps<typeof VerificationPanel>> & { request: VerificationRequest }) {
     const defaultProps = {
         layout: "",
         member: {} as User,
         onClose: () => undefined,
         isRoomEncrypted: false,
         inDialog: false,
+        phase: props.request.phase,
     };
     return render(<VerificationPanel {...defaultProps} {...props} />);
 }
@@ -106,21 +150,23 @@ function renderComponent(props: { request: VerificationRequest; phase: Phase }) 
 function makeMockVerificationRequest(props: Partial<VerificationRequest> = {}): Mocked<VerificationRequest> {
     const request = new TypedEventEmitter<VerificationRequestEvent, any>();
     Object.assign(request, {
-        channel: {} as IVerificationChannel,
         cancel: jest.fn(),
         otherPartySupportsMethod: jest.fn().mockReturnValue(true),
+        getQRCodeBytes: jest.fn(),
         ...props,
     });
     return request as unknown as Mocked<VerificationRequest>;
 }
 
-function makeMockVerifier(): Mocked<VerificationBase> {
+function makeMockVerifier(): Mocked<Verifier> {
     const verifier = new TypedEventEmitter<VerifierEvent, VerifierEventHandlerMap>();
     Object.assign(verifier, {
         cancel: jest.fn(),
         verify: jest.fn(),
+        getShowSasCallbacks: jest.fn(),
+        getReciprocateQrCodeCallbacks: jest.fn(),
     });
-    return verifier as unknown as Mocked<VerificationBase>;
+    return verifier as unknown as Mocked<Verifier>;
 }
 
 function makeMockSasCallbacks(): ShowSasCallbacks {
