@@ -192,6 +192,8 @@ export interface IConfigOptions {
         existing_issues_url: string;
         new_issue_url: string;
     };
+
+    oidc_static_clients?: Record<string, string>;
 }
 
 export interface ISsoRedirectOptions {

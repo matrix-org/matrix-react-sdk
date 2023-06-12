@@ -38,6 +38,11 @@ import AuthHeader from "../../views/auth/AuthHeader";
 import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleButton";
 import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 import { filterBoolean } from "../../../utils/arrays";
+import { Features } from "../../../settings/Settings";
+import { getOidcClientId } from "../../../utils/oidc/registerClient";
+import SdkConfig from "../../../SdkConfig";
+import { IConfigOptions } from "../../../IConfigOptions";
+import { OidcClientError } from "../../../utils/oidc/error";
 
 // These are used in several places, and come from the js-sdk's autodiscovery
 // stuff. We define them here so that they'll be picked up by i18n.
@@ -98,6 +103,9 @@ interface IState {
     serverIsAlive: boolean;
     serverErrorIsFatal: boolean;
     serverDeadError?: ReactNode;
+
+    // @TODO(kerrya) does this need to be in state?
+    oidcClientId?: string;
 }
 
 type OnPasswordLogin = {
@@ -110,12 +118,16 @@ type OnPasswordLogin = {
  */
 export default class LoginComponent extends React.PureComponent<IProps, IState> {
     private unmounted = false;
+    private oidcNativeFlowEnabled = false;
     private loginLogic!: Login;
 
     private readonly stepRendererMap: Record<string, () => ReactNode>;
 
     public constructor(props: IProps) {
         super(props);
+
+        // only set on a config level, so we don't need to watch
+        this.oidcNativeFlowEnabled = SettingsStore.getValue(Features.OidcNativeFlow);
 
         this.state = {
             busy: false,
@@ -156,7 +168,8 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
     public componentDidUpdate(prevProps: IProps): void {
         if (
             prevProps.serverConfig.hsUrl !== this.props.serverConfig.hsUrl ||
-            prevProps.serverConfig.isUrl !== this.props.serverConfig.isUrl
+            prevProps.serverConfig.isUrl !== this.props.serverConfig.isUrl ||
+            prevProps.serverConfig.delegatedAuthentication !== this.props.serverConfig.delegatedAuthentication
         ) {
             // Ensure that we end up actually logging in to the right place
             this.initLoginLogic(this.props.serverConfig);
@@ -322,28 +335,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         }
     };
 
-    private async initLoginLogic({ hsUrl, isUrl }: ValidatedServerConfig): Promise<void> {
-        let isDefaultServer = false;
-        if (
-            this.props.serverConfig.isDefault &&
-            hsUrl === this.props.serverConfig.hsUrl &&
-            isUrl === this.props.serverConfig.isUrl
-        ) {
-            isDefaultServer = true;
-        }
-
-        const fallbackHsUrl = isDefaultServer ? this.props.fallbackHsUrl! : null;
-
-        const loginLogic = new Login(hsUrl, isUrl, fallbackHsUrl, {
-            defaultDeviceDisplayName: this.props.defaultDeviceDisplayName,
-        });
-        this.loginLogic = loginLogic;
-
-        this.setState({
-            busy: true,
-            loginIncorrect: false,
-        });
-
+    private async checkServerLiveliness({ hsUrl, isUrl }: Pick<ValidatedServerConfig, 'hsUrl' | 'isUrl'>): Promise<void> {
         // Do a quick liveliness check on the URLs
         try {
             const { warning } = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(hsUrl, isUrl);
@@ -364,6 +356,70 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 ...AutoDiscoveryUtils.authComponentStateForError(e),
             });
         }
+    }
+
+    private async tryInitOidcNativeFlow(): Promise<boolean> {
+        if (!this.props.serverConfig.delegatedAuthentication || !this.oidcNativeFlowEnabled) {
+            return false;
+        }
+        try {
+            const clientId = await getOidcClientId(
+                this.props.serverConfig.delegatedAuthentication,
+                SdkConfig.get().brand,
+                window.location.origin,
+                SdkConfig.get().oidc_static_clients,
+            );
+
+            if (!this.isSupportedFlow('oidcNativeFlow')) {
+                throw new Error('OIDC native login flow configured but UI not yet supported.');
+            }
+
+            this.setState({
+                busy: false,
+                oidcClientId: clientId,
+                flows: ['oidcNativeFlow']
+            });
+            return true;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    }
+
+    private async initLoginLogic({ hsUrl, isUrl }: ValidatedServerConfig): Promise<void> {
+        let isDefaultServer = false;
+        if (
+            this.props.serverConfig.isDefault &&
+            hsUrl === this.props.serverConfig.hsUrl &&
+            isUrl === this.props.serverConfig.isUrl
+        ) {
+            isDefaultServer = true;
+        }
+
+        const fallbackHsUrl = isDefaultServer ? this.props.fallbackHsUrl! : null;
+
+        this.setState({
+            busy: true,
+            loginIncorrect: false,
+            oidcClientId: undefined,
+        });
+
+        await this.checkServerLiveliness({ hsUrl, isUrl });
+
+        const useOidcNativeFlow = await this.tryInitOidcNativeFlow();
+
+        console.log('hhh initLoginLogic', { useOidcNativeFlow });
+
+        // don't continue with setup
+        // as we are using oidc native flow
+        if (useOidcNativeFlow) {
+            return;
+        }
+
+        const loginLogic = new Login(hsUrl, isUrl, fallbackHsUrl, {
+            defaultDeviceDisplayName: this.props.defaultDeviceDisplayName,
+        });
+        this.loginLogic = loginLogic;
 
         loginLogic
             .getFlows()
@@ -472,6 +528,8 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             ) : null;
 
         const errorText = this.state.errorText;
+
+        console.log('hhh render()', this.state);
 
         let errorTextSection;
         if (errorText) {

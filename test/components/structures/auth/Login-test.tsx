@@ -189,6 +189,7 @@ describe("Login", function () {
             versions: [],
         });
         rerender(getRawComponent("https://server2"));
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
 
         fireEvent.click(container.querySelector(".mx_SSOButton")!);
         expect(platform.startSingleSignOn.mock.calls[1][0].baseUrl).toBe("https://server2");
