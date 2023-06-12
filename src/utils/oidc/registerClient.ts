@@ -53,23 +53,33 @@ const doRegistration = async (
         "Accept": "application/json",
         "Content-Type": "application/json",
     };
-    const response = await fetch(registrationEndpoint, {
-        method: Method.Post,
-        headers,
-        body: JSON.stringify(metadata),
-    });
 
-    if (response.status >= 400) {
-        throw new Error(OidcClientError.DynamicRegistrationFailed);
+    try {
+        const response = await fetch(registrationEndpoint, {
+            method: Method.Post,
+            headers,
+            body: JSON.stringify(metadata),
+        });
+
+        if (response.status >= 400) {
+            throw new Error(OidcClientError.DynamicRegistrationFailed);
+        }
+
+        const body = await response.json();
+        const clientId = body["client_id"];
+        if (!clientId) {
+            throw new Error(OidcClientError.DynamicRegistrationInvalid);
+        }
+
+        return clientId;
+    } catch (error) {
+        if (Object.values(OidcClientError).includes(error.message)) {
+            throw error;
+        } else {
+            logger.error("Dynamic registration request failed", error);
+            throw new Error(OidcClientError.DynamicRegistrationFailed);
+        }
     }
-
-    const body = await response.json();
-    const clientId = body["client_id"];
-    if (!clientId) {
-        throw new Error(OidcClientError.DynamicRegistrationInvalid);
-    }
-
-    return clientId;
 };
 
 /**

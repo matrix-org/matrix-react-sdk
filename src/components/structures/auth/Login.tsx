@@ -17,7 +17,7 @@ limitations under the License.
 import React, { ReactNode } from "react";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ISSOFlow, LoginFlow, SSOAction } from "matrix-js-sdk/src/@types/auth";
+import { ILoginFlow, ISSOFlow, LoginFlow, SSOAction } from "matrix-js-sdk/src/@types/auth";
 
 import { _t, _td, UserFriendlyError } from "../../../languageHandler";
 import Login from "../../../Login";
@@ -52,6 +52,11 @@ _td("Invalid identity server discovery response");
 _td("Invalid base_url for m.identity_server");
 _td("Identity server URL does not appear to be a valid identity server");
 _td("General failure");
+export interface OidcNativeFlow extends ILoginFlow {
+    type: "oidcNativeFlow";
+    clientId: string;
+}
+type ClientLoginFlow = LoginFlow | OidcNativeFlow;
 
 interface IProps {
     serverConfig: ValidatedServerConfig;
@@ -87,7 +92,7 @@ interface IState {
     // can we attempt to log in or are there validation errors?
     canTryLogin: boolean;
 
-    flows?: LoginFlow[];
+    flows?: ClientLoginFlow[];
 
     // used for preserving form values when changing homeserver
     username: string;
@@ -101,9 +106,6 @@ interface IState {
     serverIsAlive: boolean;
     serverErrorIsFatal: boolean;
     serverDeadError?: ReactNode;
-
-    // @TODO(kerrya) does this need to be in state?
-    oidcClientId?: string;
 }
 
 type OnPasswordLogin = {
@@ -371,18 +373,22 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 SdkConfig.get().oidc_static_clients,
             );
 
-            if (!this.isSupportedFlow("oidcNativeFlow")) {
+            const flow = {
+                type: "oidcNativeFlow",
+                clientId,
+            };
+
+            if (!this.isSupportedFlow(flow)) {
                 throw new Error("OIDC native login flow configured but UI not yet supported.");
             }
 
             this.setState({
                 busy: false,
-                oidcClientId: clientId,
-                flows: ["oidcNativeFlow"],
+                flows: [flow],
             });
             return true;
         } catch (error) {
-            console.error(error);
+            logger.error(error);
             return false;
         }
     }
@@ -402,14 +408,11 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         this.setState({
             busy: true,
             loginIncorrect: false,
-            oidcClientId: undefined,
         });
 
         await this.checkServerLiveliness({ hsUrl, isUrl });
 
         const useOidcNativeFlow = await this.tryInitOidcNativeFlow();
-
-        console.log("hhh initLoginLogic", { useOidcNativeFlow });
 
         // don't continue with setup
         // as we are using oidc native flow
@@ -458,7 +461,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             });
     }
 
-    private isSupportedFlow = (flow: LoginFlow): boolean => {
+    private isSupportedFlow = (flow: ClientLoginFlow): boolean => {
         // technically the flow can have multiple steps, but no one does this
         // for login and loginLogic doesn't support it so we can ignore it.
         if (!this.stepRendererMap[flow.type]) {
@@ -529,8 +532,6 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             ) : null;
 
         const errorText = this.state.errorText;
-
-        console.log("hhh render()", this.state);
 
         let errorTextSection;
         if (errorText) {
