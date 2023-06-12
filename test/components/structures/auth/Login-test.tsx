@@ -408,20 +408,52 @@ describe("Login", function () {
             expect(screen.getByLabelText("Username")).toBeInTheDocument();
         });
 
-        it("should fallback to normal login while oidc native login is not supported in UI", async () => {
+        // short term during active development, UI will be added in next PRs
+        it("should show error when oidc native flow is correctly configured but not supported by UI", async () => {
             fetchMock.post(delegatedAuth.registrationEndpoint, { client_id: "abc123" });
             getComponent(hsUrl, isUrl, delegatedAuth);
 
             await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
 
-            expect(logger.error).toHaveBeenCalledWith(
-                new Error("OIDC native login flow configured but UI not yet supported."),
-            );
+            // did not continue with matrix login
+            expect(mockClient.loginFlows).not.toHaveBeenCalled();
+            // no oidc native UI yet
+            expect(
+                screen.getByText("This homeserver doesn't offer any login flows which are supported by this client."),
+            ).toBeInTheDocument();
+        });
 
+        /**
+         * Oidc-aware flows still work while the oidc-native feature flag is disabled
+         */
+        it("should show oidc-aware flow for oidc-enabled homeserver when oidc native flow setting is disabled", async () => {
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+            mockClient.loginFlows.mockResolvedValue({
+                flows: [
+                    {
+                        type: "m.login.sso",
+                        [DELEGATED_OIDC_COMPATIBILITY.name]: true,
+                    },
+                    {
+                        type: "m.login.password",
+                    },
+                ],
+            });
+
+            const { container } = getComponent(hsUrl, isUrl, delegatedAuth);
+
+            await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
+
+            // didn't try to register
+            expect(fetchMock).not.toHaveBeenCalledWith(delegatedAuth.registrationEndpoint);
             // continued with normal setup
             expect(mockClient.loginFlows).toHaveBeenCalled();
-            // normal password login rendered
-            expect(screen.getByLabelText("Username")).toBeInTheDocument();
+            // oidc-aware 'continue' button displayed
+            const ssoButtons = container.querySelectorAll(".mx_SSOButton");
+            expect(ssoButtons.length).toBe(1);
+            expect(ssoButtons[0].textContent).toBe("Continue");
+            // no password form visible
+            expect(container.querySelector("form")).toBeFalsy();
         });
     });
 });

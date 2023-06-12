@@ -17,10 +17,10 @@ limitations under the License.
 import React, { ReactNode } from "react";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ILoginFlow, ISSOFlow, LoginFlow, SSOAction } from "matrix-js-sdk/src/@types/auth";
+import { ISSOFlow, SSOAction } from "matrix-js-sdk/src/@types/auth";
 
 import { _t, _td, UserFriendlyError } from "../../../languageHandler";
-import Login from "../../../Login";
+import Login, { ClientLoginFlow } from "../../../Login";
 import { messageForConnectionError, messageForLoginError } from "../../../utils/ErrorUtils";
 import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 import AuthPage from "../../views/auth/AuthPage";
@@ -39,8 +39,6 @@ import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleBu
 import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 import { filterBoolean } from "../../../utils/arrays";
 import { Features } from "../../../settings/Settings";
-import { getOidcClientId } from "../../../utils/oidc/registerClient";
-import SdkConfig from "../../../SdkConfig";
 
 // These are used in several places, and come from the js-sdk's autodiscovery
 // stuff. We define them here so that they'll be picked up by i18n.
@@ -52,12 +50,6 @@ _td("Invalid identity server discovery response");
 _td("Invalid base_url for m.identity_server");
 _td("Identity server URL does not appear to be a valid identity server");
 _td("General failure");
-export interface OidcNativeFlow extends ILoginFlow {
-    type: "oidcNativeFlow";
-    clientId: string;
-}
-type ClientLoginFlow = LoginFlow | OidcNativeFlow;
-
 interface IProps {
     serverConfig: ValidatedServerConfig;
     // If true, the component will consider itself busy.
@@ -361,38 +353,6 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         }
     }
 
-    private async tryInitOidcNativeFlow(): Promise<boolean> {
-        if (!this.props.serverConfig.delegatedAuthentication || !this.oidcNativeFlowEnabled) {
-            return false;
-        }
-        try {
-            const clientId = await getOidcClientId(
-                this.props.serverConfig.delegatedAuthentication,
-                SdkConfig.get().brand,
-                window.location.origin,
-                SdkConfig.get().oidc_static_clients,
-            );
-
-            const flow = {
-                type: "oidcNativeFlow",
-                clientId,
-            };
-
-            if (!this.isSupportedFlow(flow)) {
-                throw new Error("OIDC native login flow configured but UI not yet supported.");
-            }
-
-            this.setState({
-                busy: false,
-                flows: [flow],
-            });
-            return true;
-        } catch (error) {
-            logger.error(error);
-            return false;
-        }
-    }
-
     private async initLoginLogic({ hsUrl, isUrl }: ValidatedServerConfig): Promise<void> {
         let isDefaultServer = false;
         if (
@@ -412,16 +372,11 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
 
         await this.checkServerLiveliness({ hsUrl, isUrl });
 
-        const useOidcNativeFlow = await this.tryInitOidcNativeFlow();
-
-        // don't continue with setup
-        // as we are using oidc native flow
-        if (useOidcNativeFlow) {
-            return;
-        }
-
         const loginLogic = new Login(hsUrl, isUrl, fallbackHsUrl, {
             defaultDeviceDisplayName: this.props.defaultDeviceDisplayName,
+            delegatedAuthentication: this.oidcNativeFlowEnabled
+                ? this.props.serverConfig.delegatedAuthentication
+                : undefined,
         });
         this.loginLogic = loginLogic;
 
