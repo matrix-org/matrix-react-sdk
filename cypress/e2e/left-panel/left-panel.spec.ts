@@ -286,7 +286,7 @@ describe("LeftPanel", () => {
             // Force click because the size of the checkbox is zero
             cy.findByLabelText("A-Z").click({ force: true });
 
-            // Foce click to close the context menu
+            // Force click to close the context menu
             cy.get(".mx_ContextualMenu_background").click({ force: true });
 
             // Assert the context menu was closed
@@ -378,11 +378,10 @@ describe("LeftPanel", () => {
                     .findByRole("button", { name: "List options" })
                     .click();
             });
-
             // Force click because the size of the checkbox is zero
             cy.findByLabelText("Show previews of messages").click({ force: true });
 
-            // Foce click to close the context menu
+            // Force click to close the context menu
             cy.get(".mx_ContextualMenu_background").click({ force: true });
 
             // Assert the context menu was closed
