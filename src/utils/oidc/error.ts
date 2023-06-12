@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { OidcDiscoveryError } from "matrix-js-sdk/src/oidc/validate";
-
 export enum OidcClientError {
     DynamicRegistrationNotSupported = "Dynamic registration not supported",
     DynamicRegistrationFailed = "Dynamic registration failed",
