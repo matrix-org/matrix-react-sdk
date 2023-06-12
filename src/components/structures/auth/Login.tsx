@@ -41,8 +41,6 @@ import { filterBoolean } from "../../../utils/arrays";
 import { Features } from "../../../settings/Settings";
 import { getOidcClientId } from "../../../utils/oidc/registerClient";
 import SdkConfig from "../../../SdkConfig";
-import { IConfigOptions } from "../../../IConfigOptions";
-import { OidcClientError } from "../../../utils/oidc/error";
 
 // These are used in several places, and come from the js-sdk's autodiscovery
 // stuff. We define them here so that they'll be picked up by i18n.
@@ -335,7 +333,10 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         }
     };
 
-    private async checkServerLiveliness({ hsUrl, isUrl }: Pick<ValidatedServerConfig, 'hsUrl' | 'isUrl'>): Promise<void> {
+    private async checkServerLiveliness({
+        hsUrl,
+        isUrl,
+    }: Pick<ValidatedServerConfig, "hsUrl" | "isUrl">): Promise<void> {
         // Do a quick liveliness check on the URLs
         try {
             const { warning } = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(hsUrl, isUrl);
@@ -370,14 +371,14 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 SdkConfig.get().oidc_static_clients,
             );
 
-            if (!this.isSupportedFlow('oidcNativeFlow')) {
-                throw new Error('OIDC native login flow configured but UI not yet supported.');
+            if (!this.isSupportedFlow("oidcNativeFlow")) {
+                throw new Error("OIDC native login flow configured but UI not yet supported.");
             }
 
             this.setState({
                 busy: false,
                 oidcClientId: clientId,
-                flows: ['oidcNativeFlow']
+                flows: ["oidcNativeFlow"],
             });
             return true;
         } catch (error) {
@@ -408,7 +409,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
 
         const useOidcNativeFlow = await this.tryInitOidcNativeFlow();
 
-        console.log('hhh initLoginLogic', { useOidcNativeFlow });
+        console.log("hhh initLoginLogic", { useOidcNativeFlow });
 
         // don't continue with setup
         // as we are using oidc native flow
@@ -529,7 +530,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
 
         const errorText = this.state.errorText;
 
-        console.log('hhh render()', this.state);
+        console.log("hhh render()", this.state);
 
         let errorTextSection;
         if (errorText) {

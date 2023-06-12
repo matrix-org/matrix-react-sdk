@@ -21,18 +21,6 @@ import { ValidatedIssuerConfig } from "matrix-js-sdk/src/oidc/validate";
 
 import { OidcClientError } from "./error";
 
-// "staticOidcClients": {
-//     "https://dev-6525741.okta.com/": {
-//         "client_id": "0oa5x44w64wpNsxi45d7"
-//     },
-//     "https://keycloak-oidc.lab.element.dev/realms/master/": {
-//         "client_id": "hydrogen-oidc-playground"
-//     },
-//     "https://id.thirdroom.io/realms/thirdroom/": {
-//         "client_id": "hydrogen-oidc-playground"
-//     }
-//   }
-
 export type OidcRegistrationClientMetadata = {
     clientName: string;
     clientUri: string;
