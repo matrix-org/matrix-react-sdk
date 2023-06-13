@@ -16,7 +16,7 @@ limitations under the License.
 
 import { Wysiwyg, WysiwygEvent } from "@matrix-org/matrix-wysiwyg";
 import { useCallback } from "react";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { IEventRelation, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { useSettingValue } from "../../../../../hooks/useSettings";
 import { getKeyBindingsManager } from "../../../../../KeyBindingsManager";
@@ -33,12 +33,13 @@ import { isCaretAtEnd, isCaretAtStart } from "../utils/selection";
 import { getEventsFromEditorStateTransfer, getEventsFromRoom } from "../utils/event";
 import { endEditing } from "../utils/editing";
 import Autocomplete from "../../Autocomplete";
-import { handleEventWithAutocomplete } from "./utils";
+import { handleClipboardEvent, handleEventWithAutocomplete, isEventToHandleAsClipboardEvent } from "./utils";
 
 export function useInputEventProcessor(
     onSend: () => void,
     autocompleteRef: React.RefObject<Autocomplete>,
     initialContent?: string,
+    eventRelation?: IEventRelation,
 ): (event: WysiwygEvent, composer: Wysiwyg, editor: HTMLElement) => WysiwygEvent | null {
     const roomContext = useRoomContext();
     const composerContext = useComposerContext();
@@ -47,10 +48,6 @@ export function useInputEventProcessor(
 
     return useCallback(
         (event: WysiwygEvent, composer: Wysiwyg, editor: HTMLElement) => {
-            if (event instanceof ClipboardEvent) {
-                return event;
-            }
-
             const send = (): void => {
                 event.stopPropagation?.();
                 event.preventDefault?.();
@@ -60,6 +57,12 @@ export function useInputEventProcessor(
                 }
                 onSend();
             };
+
+            if (isEventToHandleAsClipboardEvent(event)) {
+                const data = event instanceof ClipboardEvent ? event.clipboardData : event.dataTransfer;
+                const handled = handleClipboardEvent(event, data, roomContext, mxClient, eventRelation);
+                return handled ? null : event;
+            }
 
             const isKeyboardEvent = event instanceof KeyboardEvent;
             if (isKeyboardEvent) {
@@ -78,7 +81,16 @@ export function useInputEventProcessor(
                 return handleInputEvent(event, send, isCtrlEnterToSend);
             }
         },
-        [isCtrlEnterToSend, onSend, initialContent, roomContext, composerContext, mxClient, autocompleteRef],
+        [
+            isCtrlEnterToSend,
+            onSend,
+            initialContent,
+            roomContext,
+            composerContext,
+            mxClient,
+            autocompleteRef,
+            eventRelation,
+        ],
     );
 }
 

@@ -82,7 +82,7 @@ describe("AppTile", () => {
 
     beforeAll(async () => {
         stubClient();
-        cli = MatrixClientPeg.get();
+        cli = MatrixClientPeg.safeGet();
         cli.hasLazyLoadMembersEnabled = () => false;
 
         // Init misc. startup deps
@@ -326,6 +326,9 @@ describe("AppTile", () => {
 
         expect(renderResult.getByText("Example 1")).toBeInTheDocument();
         expect(ActiveWidgetStore.instance.isLive("1", "r1")).toBe(true);
+
+        const { asFragment } = renderResult;
+        expect(asFragment()).toMatchSnapshot(); // Take snapshot of AppsDrawer with AppTile
 
         // We want to verify that as we move the widget to the center container,
         // the widget frame remains running.
