@@ -83,6 +83,18 @@ describe("MKeyVerificationRequest", () => {
         expect(within(container).getByRole("button")).toHaveTextContent("@other:user accepted");
     });
 
+    it("should render appropriately when the request was initiated by the other user and has not yet been accepted", () => {
+        const event = new MatrixEvent({ type: "m.key.verification.request" });
+        event.verificationRequest = getMockVerificationRequest({
+            phase: VerificationPhase.Requested,
+            initiatedByMe: false,
+            otherUserId: "@other:user",
+        });
+        const result = render(<MKeyVerificationRequest mxEvent={event} />);
+        expect(result.container).toHaveTextContent("@other:user wants to verify");
+        result.getByRole("button", { name: "Accept" });
+    });
+
     it("should render appropriately when the request was initiated by the other user and has been accepted", () => {
         const event = new MatrixEvent({ type: "m.key.verification.request" });
         event.verificationRequest = getMockVerificationRequest({
