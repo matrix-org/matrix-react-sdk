@@ -392,7 +392,7 @@ describe("AppTile", () => {
             expect(moveToContainerSpy).toHaveBeenCalledWith(r1, app1, Container.Center);
         });
 
-        it("should not display 'Continue' button on permission load", () => {
+        it("should render permission request", () => {
             jest.spyOn(ModuleRunner.instance, "invoke").mockImplementation((lifecycleEvent, opts, widgetInfo) => {
                 if (lifecycleEvent === WidgetLifecycle.PreLoadRequest && (widgetInfo as WidgetInfo).id === app1.id) {
                     (opts as ApprovalOpts).approved = false;
@@ -414,7 +414,7 @@ describe("AppTile", () => {
             expect(renderResult.queryByRole("button", { name: "Continue" })).toBeInTheDocument();
         });
 
-        it("should display 'Continue' button on permission load", () => {
+        it("should not display 'Continue' button on permission load", () => {
             jest.spyOn(ModuleRunner.instance, "invoke").mockImplementation((lifecycleEvent, opts, widgetInfo) => {
                 if (lifecycleEvent === WidgetLifecycle.PreLoadRequest && (widgetInfo as WidgetInfo).id === app1.id) {
                     (opts as ApprovalOpts).approved = true;
