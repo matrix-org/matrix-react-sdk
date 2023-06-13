@@ -617,12 +617,17 @@ export function mkStubRoom(
     } as unknown as Room;
 }
 
-export function mkServerConfig(hsUrl: string, isUrl: string): ValidatedServerConfig {
+export function mkServerConfig(
+    hsUrl: string,
+    isUrl: string,
+    delegatedAuthentication?: ValidatedServerConfig["delegatedAuthentication"],
+): ValidatedServerConfig {
     return {
         hsUrl,
         hsName: "TEST_ENVIRONMENT",
         hsNameIsDifferent: false, // yes, we lie
         isUrl,
+        delegatedAuthentication,
     } as ValidatedServerConfig;
 }
 

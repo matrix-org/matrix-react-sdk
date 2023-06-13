@@ -19,18 +19,32 @@ limitations under the License.
 import { createClient } from "matrix-js-sdk/src/matrix";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
-import { DELEGATED_OIDC_COMPATIBILITY, ILoginParams, LoginFlow } from "matrix-js-sdk/src/@types/auth";
+import { OidcDiscoveryError } from "matrix-js-sdk/src/oidc/validate";
+import { DELEGATED_OIDC_COMPATIBILITY, ILoginFlow, ILoginParams, LoginFlow } from "matrix-js-sdk/src/@types/auth";
 
 import { IMatrixClientCreds } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";
+import { ValidatedServerConfig } from "./utils/ValidatedServerConfig";
+import { getOidcClientId } from "./utils/oidc/registerClient";
+import { IConfigOptions } from "./IConfigOptions";
+import SdkConfig from "./SdkConfig";
+
+export type ClientLoginFlow = LoginFlow | OidcNativeFlow;
 
 interface ILoginOptions {
     defaultDeviceDisplayName?: string;
+    /**
+     * Delegated auth config from server config
+     * When prop is passed we will attempt to use delegated auth
+     * Labs flag should be checked in parent
+     */
+    delegatedAuthentication?: ValidatedServerConfig["delegatedAuthentication"];
 }
 
 export default class Login {
-    private flows: Array<LoginFlow> = [];
+    private flows: Array<ClientLoginFlow> = [];
     private readonly defaultDeviceDisplayName?: string;
+    private readonly delegatedAuthentication?: ValidatedServerConfig["delegatedAuthentication"];
     private tempClient: MatrixClient | null = null; // memoize
 
     public constructor(
@@ -40,6 +54,7 @@ export default class Login {
         opts: ILoginOptions,
     ) {
         this.defaultDeviceDisplayName = opts.defaultDeviceDisplayName;
+        this.delegatedAuthentication = opts.delegatedAuthentication;
     }
 
     public getHomeserverUrl(): string {
@@ -75,7 +90,20 @@ export default class Login {
         return this.tempClient;
     }
 
-    public async getFlows(): Promise<Array<LoginFlow>> {
+    public async getFlows(): Promise<Array<ClientLoginFlow>> {
+        // try to use oidc native flow
+        try {
+            const oidcFlow = await tryInitOidcNativeFlow(
+                this.delegatedAuthentication,
+                SdkConfig.get().brand,
+                SdkConfig.get().oidc_static_clients,
+            );
+            return [oidcFlow];
+        } catch (error) {
+            logger.error(error);
+        }
+
+        // oidc native flow not supported, continue with matrix login
         const client = this.createTemporaryClient();
         const { flows }: { flows: LoginFlow[] } = await client.loginFlows();
         // If an m.login.sso flow is present which is also flagged as being for MSC3824 OIDC compatibility then we only
@@ -150,6 +178,36 @@ export default class Login {
             });
     }
 }
+
+export interface OidcNativeFlow extends ILoginFlow {
+    type: "oidcNativeFlow";
+    clientId: string;
+}
+/**
+ * Finds static clientId for configured issuer, or attempts dynamic registration with the OP
+ * @param delegatedAuthConfig  Auth config from ValidatedServerConfig
+ * @param clientName Client name to register with the OP, eg 'Element', used during client registration with OP
+ * @param staticOidcClients static client config from config.json, used during client registration with OP
+ * @returns Promise<OidcNativeFlow> when oidc native authentication flow is supported and correctly configured
+ * @throws when oidc native flow is not configured, client can't register with OP, or any unexpected error
+ */
+const tryInitOidcNativeFlow = async (
+    delegatedAuthConfig: ValidatedServerConfig["delegatedAuthentication"] | undefined,
+    brand: string,
+    oidcStaticClients?: IConfigOptions["oidc_static_clients"],
+): Promise<OidcNativeFlow> => {
+    if (!delegatedAuthConfig) {
+        throw new Error(OidcDiscoveryError.NotSupported);
+    }
+    const clientId = await getOidcClientId(delegatedAuthConfig, brand, window.location.origin, oidcStaticClients);
+
+    const flow = {
+        type: "oidcNativeFlow",
+        clientId,
+    } as OidcNativeFlow;
+
+    return flow;
+};
 
 /**
  * Send a login request to the given server, and format the response

@@ -39,13 +39,12 @@ const getStaticOidcClientId = (issuer: string, staticOidcClients?: Record<string
 /**
  * Get the clientId for an OIDC OP
  * Checks statically configured clientIds first
- * Then attempts dynamic registration with the OP
  * @param delegatedAuthConfig Auth config from ValidatedServerConfig
  * @param clientName Client name to register with the OP, eg 'Element'
  * @param baseUrl URL of the home page of the Client, eg 'https://app.element.io/'
  * @param staticOidcClients static client config from config.json
  * @returns Promise<string> resolves with clientId
- * @throws if no clientId is found or registration failed
+ * @throws if no clientId is found
  */
 export const getOidcClientId = async (
     delegatedAuthConfig: IDelegatedAuthConfig & ValidatedIssuerConfig,
