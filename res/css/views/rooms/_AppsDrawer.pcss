@@ -71,6 +71,35 @@ limitations under the License.
         }
     }
 
+    /* Note appsContainer is not included in PersistentVResizer (mx_AppsDrawer_resizer) if widgetIsMaxmised is true */
+    .mx_AppsDrawer_appsContainer {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        flex: 1;
+        min-height: 0;
+
+        .mx_AppTile:first-of-type {
+            border-left-width: var(--container-border-width);
+            border-radius: 10px 0 0 10px;
+        }
+        .mx_AppTile:last-of-type {
+            border-right-width: var(--container-border-width);
+            border-radius: 0 10px 10px 0;
+        }
+
+        .mx_ResizeHandle--horizontal {
+            position: relative;
+
+            > div {
+                width: 0;
+            }
+        }
+    }
+
     &:hover {
         .mx_AppsDrawer_resizer_container_handle::after {
             opacity: 0.8;
@@ -123,34 +152,6 @@ limitations under the License.
             flex-grow: 1;
             width: 0 !important;
             min-width: var(--minWidth) !important;
-        }
-    }
-}
-
-.mx_AppsDrawer_appsContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    flex: 1;
-    min-height: 0;
-
-    .mx_AppTile:first-of-type {
-        border-left-width: var(--container-border-width);
-        border-radius: 10px 0 0 10px;
-    }
-    .mx_AppTile:last-of-type {
-        border-right-width: var(--container-border-width);
-        border-radius: 0 10px 10px 0;
-    }
-
-    .mx_ResizeHandle--horizontal {
-        position: relative;
-
-        > div {
-            width: 0;
         }
     }
 }
