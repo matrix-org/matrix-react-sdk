@@ -236,7 +236,7 @@ legend {
         background-color: transparent;
         color: $input-darker-fg-color;
         border-radius: 4px;
-        border: 1px solid rgba($primary-content, 0.1);
+        border: 1px solid var(--cpd-color-gray-300);
         /* these things should probably not be defined globally */
         margin: 9px;
     }
@@ -249,7 +249,7 @@ legend {
     :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type="text"]::placeholder,
     :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type="search"]::placeholder,
     .mx_textinput input::placeholder {
-        color: rgba($input-darker-fg-color, 0.75);
+        color: var(--cpd-color-text-placeholder);
     }
 }
 
@@ -789,7 +789,8 @@ legend {
 }
 
 @define-mixin composerButtonHighLight {
-    background: rgba($accent, 0.25);
+    /* TODO: Refactor as this will break for apps that override the accent color */
+    background: var(--cpd-color-green-300);
     /* make the icon the accent color too */
     &::before {
         background-color: $accent !important;
@@ -832,7 +833,7 @@ legend {
 
     &:hover {
         &::after {
-            background: rgba($hover-color, 0.1);
+            background: var(--cpd-color-bg-action-secondary-hovered);
         }
 
         &::before {

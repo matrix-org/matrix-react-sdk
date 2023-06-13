@@ -55,8 +55,8 @@ limitations under the License.
         bottom: 0;
         width: 60px;
         box-sizing: border-box;
-        /* XXX: We use `$system-transparent` instead of `transparent` to work around a Safari <15.4 bug */
-        background: linear-gradient(270deg, $system 50%, $system-transparent 100%);
+        /* XXX: We use an HEXA `transparent` to work around a Safari <15.4 bug */
+        background: linear-gradient(270deg, $system 50%, #e1e6ec00 100%);
 
         opacity: 0;
         transform: translateX(60px);

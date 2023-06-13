@@ -150,16 +150,12 @@ $tertiary-content: $tertiary-fg-color;
 $quaternary-content: #6f7882;
 $quinary-content: $quaternary-content;
 $system: #f4f6fa;
-$system-transparent: rgba($system, 0); /* XXX: workaround for Safari 15.3 linear-gradient bug */
 $background: $primary-bg-color;
 $overlay-background: rgba($background, 0.85);
 
 $panels: rgba($system, 0.9);
 $panel-base: #8d97a5; /* This color is not intended for use in the app */
-$panel-selected: rgba($tertiary-content, 0.3);
-$panel-hover: rgba($tertiary-content, 0.1);
 $panel-actions: $roomtile-selected-bg-color;
-$space-nav: rgba($tertiary-content, 0.15);
 /* Legacy theme backports */
 
 /* ******************** */
@@ -193,6 +189,31 @@ $username-variant5-color: #ff812d;
 $username-variant6-color: #2dc2c5;
 $username-variant7-color: #5c56f5;
 $username-variant8-color: #74d12c;
+
+/**
+ * Creating a `semantic` color scale. This will not be needed with the new
+ * visual language, but necessery during the transition period
+ * This abstract the `green` away from where accent shades are used
+ * Take: `background: rgba($accent, 0.1);`
+ * would be transformed to: `background: $accent-300;`
+ *
+ * To use under very rare circumstances, always prefer the semantics defined
+ * in https://compound.element.io/?path=/docs/tokens-semantic-colors--docs
+ */
+ $accent-100: var(--cpd-color-green-100);
+ $accent-200: var(--cpd-color-green-200);
+ $accent-300: var(--cpd-color-green-300);
+ $accent-400: var(--cpd-color-green-400);
+ $accent-500: var(--cpd-color-green-500);
+ $accent-600: var(--cpd-color-green-600);
+ $accent-700: var(--cpd-color-green-700);
+ $accent-800: var(--cpd-color-green-800);
+ $accent-900: var(--cpd-color-green-900);
+ $accent-1000: var(--cpd-color-green-1000);
+ $accent-1100: var(--cpd-color-green-1100);
+ $accent-1200: var(--cpd-color-green-1200);
+ $accent-1300: var(--cpd-color-green-1300);
+ $accent-1400: var(--cpd-color-green-1400);
 
 /* ******************** */
 
