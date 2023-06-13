@@ -29,10 +29,10 @@ export type OidcRegistrationClientMetadata = {
 
 /**
  * Make the registration request
- * @param issuer issue URL
+ * @param registrationEndpoint URL as configured on ValidatedServerConfig
  * @param clientMetadata registration metadata
  * @returns {Promise<string>} resolves to the registered client id when registration is successful
- * @throws when registration fails, or issue does not support dynamic registration
+ * @throws when registration request fails, or response is invalid
  */
 const doRegistration = async (
     registrationEndpoint: string,
