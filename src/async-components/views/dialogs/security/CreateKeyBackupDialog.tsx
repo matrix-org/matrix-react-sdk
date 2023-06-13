@@ -35,7 +35,6 @@ interface IProps {
 }
 
 interface IState {
-    secureSecretStorage: boolean | null;
     phase: Phase;
     passPhrase: string;
     passPhraseValid: boolean;
@@ -54,7 +53,6 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         super(props);
 
         this.state = {
-            secureSecretStorage: null,
             phase: Phase.BackingUp,
             passPhrase: "",
             passPhraseValid: false,
@@ -67,10 +65,8 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
     public async componentDidMount(): Promise<void> {
         const cli = MatrixClientPeg.get();
         const secureSecretStorage = await cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing");
-        this.setState({ secureSecretStorage });
 
-        // If we're using secret storage, skip ahead to the backing up step, as
-        // `accessSecretStorage` will handle passphrases as needed.
+        // If we're using secret storage, `accessSecretStorage` will handle passphrases as needed.
         if (secureSecretStorage) {
             this.setState({ phase: Phase.BackingUp });
             this.createBackup();
@@ -78,21 +74,18 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
     }
 
     private createBackup = async (): Promise<void> => {
-        const { secureSecretStorage } = this.state;
         this.setState({
             phase: Phase.BackingUp,
             error: undefined,
         });
         let info;
         try {
-            if (secureSecretStorage) {
-                await accessSecretStorage(async (): Promise<void> => {
-                    info = await MatrixClientPeg.get().prepareKeyBackupVersion(null /* random key */, {
-                        secureSecretStorage: true,
-                    });
-                    info = await MatrixClientPeg.get().createKeyBackupVersion(info);
+            await accessSecretStorage(async (): Promise<void> => {
+                info = await MatrixClientPeg.get().prepareKeyBackupVersion(null /* random key */, {
+                    secureSecretStorage: true,
                 });
-            }
+                info = await MatrixClientPeg.get().createKeyBackupVersion(info);
+            });
             await MatrixClientPeg.get().scheduleAllGroupSessionsForBackup();
             this.setState({
                 phase: Phase.Done,
