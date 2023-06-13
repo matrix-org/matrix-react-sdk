@@ -260,7 +260,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
             "mx_AppsDrawer--2apps": apps.length === 2,
             "mx_AppsDrawer--3apps": apps.length === 3,
         });
-        const appContainers = (
+        const appsContainer = (
             <div className="mx_AppsContainer" ref={this.collectResizer}>
                 {apps.map((app, i) => {
                     if (i < 1) return app;
@@ -276,7 +276,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
 
         let drawer;
         if (widgetIsMaxmised) {
-            drawer = appContainers;
+            drawer = appsContainer;
         } else {
             drawer = (
                 <PersistentVResizer
@@ -288,7 +288,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
                     handleClass="mx_AppsDrawer_resizer_container_handle"
                     resizeNotifier={this.props.resizeNotifier}
                 >
-                    {appContainers}
+                    {appsContainer}
                 </PersistentVResizer>
             );
         }
