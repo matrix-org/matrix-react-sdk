@@ -42,6 +42,7 @@ interface IProps {
 }
 
 interface IState {
+    /** number of seconds left in the timeout counter. Zero if there is no timeout. */
     counter: number;
     device?: DeviceInfo;
     ip?: string;
@@ -52,7 +53,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
 
     public constructor(props: IProps) {
         super(props);
-        this.state = { counter: Math.ceil(props.request.timeout / 1000) };
+        this.state = { counter: Math.ceil((props.request.timeout ?? 0) / 1000) };
     }
 
     public async componentDidMount(): Promise<void> {
