@@ -28,7 +28,7 @@ export type OidcRegistrationClientMetadata = {
 };
 
 /**
- * Make the registration request
+ * Make the client registration request
  * @param registrationEndpoint URL as configured on ValidatedServerConfig
  * @param clientMetadata registration metadata
  * @returns {Promise<string>} resolves to the registered client id when registration is successful
@@ -88,7 +88,7 @@ const doRegistration = async (
  * @param clientName Client name to register with the OP, eg 'Element'
  * @param baseUrl URL of the home page of the Client, eg 'https://app.element.io/'
  * @returns Promise<string> resolved with registered clientId
- * @throws on failed request or invalid response
+ * @throws when registration is not supported, on failed request or invalid response
  */
 const registerOidcClient = async (
     delegatedAuthConfig: IDelegatedAuthConfig & ValidatedIssuerConfig,
@@ -109,7 +109,7 @@ const registerOidcClient = async (
 };
 
 /**
- * Get the configured clientId for the issuer
+ * Get the statically configured clientId for the issuer
  * @param issuer delegated auth OIDC issuer
  * @param staticOidcClients static client config from config.json
  * @returns clientId if found, otherwise undefined
@@ -119,7 +119,7 @@ const getStaticOidcClientId = (issuer: string, staticOidcClients?: Record<string
 };
 
 /**
- * Get the clientId for configured oidc OP
+ * Get the clientId for an OIDC OP
  * Checks statically configured clientIds first
  * Then attempts dynamic registration with the OP
  * @param delegatedAuthConfig Auth config from ValidatedServerConfig
