@@ -1047,16 +1047,18 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         const action = getKeyBindingsManager().getRoomAction(ev);
         switch (action) {
-            case KeyBindingAction.MarkRoomAsRead:
-                if (!!this.state.room && !!this.context.client) {
-                    await clearRoomNotification(this.state.room, this.context.client);
+            case KeyBindingAction.DismissReadMarker:
+                // Clear all notifications if we already dismissed the read marker and we are at the bottom of the message panel
+                if (this.messagePanel?.isReadMarkerUpToDate() && this.messagePanel?.canResetTimeline()) {
+                    if (!!this.state.room && !!this.context.client) {
+                        await clearRoomNotification(this.state.room, this.context.client);
+                        handled = true;
+                    }
+                } else {
+                    this.messagePanel?.forgetReadMarker();
+                    this.jumpToLiveTimeline();
                     handled = true;
                 }
-                break;
-            case KeyBindingAction.DismissReadMarker:
-                this.messagePanel?.forgetReadMarker();
-                this.jumpToLiveTimeline();
-                handled = true;
                 break;
             case KeyBindingAction.JumpToOldestUnread:
                 this.jumpToReadMarker();
