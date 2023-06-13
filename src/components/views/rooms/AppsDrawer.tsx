@@ -261,7 +261,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
             "mx_AppsDrawer--3apps": apps.length === 3,
         });
         const appsContainer = (
-            <div className="mx_AppsContainer" ref={this.collectResizer}>
+            <div className="mx_AppsDrawer_appsContainer" ref={this.collectResizer}>
                 {apps.map((app, i) => {
                     if (i < 1) return app;
                     return (
