@@ -240,7 +240,7 @@ exports[`AppTile preserves non-persisted widget on container move 1`] = `
             </span>
           </div>
           <div
-            class="mx_AppTileBody mx_AppTile_loading"
+            class="mx_AppTileBody mx_AppTileBody--large mx_AppTileBody--loading"
           >
             <div
               class="mx_AppTileBody_fadeInSpinner"
