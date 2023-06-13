@@ -838,7 +838,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         if (!this.state.busy) {
             let filterText = this.state.filterText;
             let targets = this.state.targets.map((t) => t); // cheap clone for mutation
-            const idx = targets.indexOf(member);
+            const idx = targets.findIndex((m) => m.userId === member.userId);
             if (idx >= 0) {
                 targets.splice(idx, 1);
             } else {
