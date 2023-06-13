@@ -191,8 +191,26 @@ describe("Cryptography", function () {
             cy.findByText("Secure Backup successful").should("exist");
             cy.findByRole("button", { name: "Done" }).click();
             cy.findByText("Secure Backup successful").should("not.exist");
+
+            function verifyKey(keyType: string) {
+                return cy
+                    .getClient()
+                    .then((cli) => cy.wrap(cli.getAccountDataFromServer(`m.cross_signing.${keyType}`)))
+                    .then((accountData: { encrypted: Record<string, Record<string, string>> }) => {
+                        expect(accountData.encrypted).to.exist;
+                        const keys = Object.keys(accountData.encrypted);
+                        const key = accountData.encrypted[keys[0]];
+                        expect(key.ciphertext).to.exist;
+                        expect(key.iv).to.exist;
+                        expect(key.mac).to.exist;
+                    });
+            }
+
+            // Check that the keys are available in the account data from the server
+            verifyKey("master");
+            verifyKey("self_signing");
+            verifyKey("user_signing");
         });
-        return;
     });
 
     it("creating a DM should work, being e2e-encrypted / user verification", function (this: CryptoTestContext) {
