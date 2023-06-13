@@ -105,7 +105,7 @@ export default class PlainTextExporter extends Exporter {
         }
         if (this.isReply(mxEv))
             return `<${senderDisplayName}>` + ": " + this.textForReplyEvent(mxEv.getContent()) + mediaText;
-        else return textForEvent(mxEv, this.room.client, true) + mediaText;
+        else return textForEvent(mxEv, this.room.client, true, true) + mediaText;
     };
 
     protected async createOutput(events: MatrixEvent[]): Promise<string> {
