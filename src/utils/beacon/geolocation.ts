@@ -122,7 +122,7 @@ export const getCurrentPosition = async (): Promise<GeolocationPosition> => {
         });
         return position;
     } catch (error) {
-        throw new Error(mapGeolocationError(error));
+        throw new Error(mapGeolocationError(error as Error));
     }
 };
 
@@ -139,6 +139,6 @@ export const watchPosition = (
         };
         return clearWatch;
     } catch (error) {
-        throw new Error(mapGeolocationError(error));
+        throw new Error(mapGeolocationError(error as Error));
     }
 };

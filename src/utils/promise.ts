@@ -40,10 +40,10 @@ export async function retry<T, E extends Error>(
             // If `await fn()` throws then we won't reach here
             return v;
         } catch (err) {
-            if (predicate && !predicate(err)) {
+            if (predicate && !predicate(err as E)) {
                 throw err;
             }
-            lastErr = err;
+            lastErr = err as E;
         }
     }
     throw lastErr;

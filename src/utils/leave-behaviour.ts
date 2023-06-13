@@ -106,7 +106,7 @@ export async function leaveRoomBehaviour(
                 const message = e.data.error || _t("Unexpected server error trying to leave the room");
                 results[roomId] = Object.assign(new Error(message), { errcode: e.data.errcode, data: e.data });
             } else {
-                results[roomId] = e || new Error("Failed to leave room for unknown causes");
+                results[roomId] = (e as Error) || new Error("Failed to leave room for unknown causes");
             }
         }
     } else {

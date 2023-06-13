@@ -36,7 +36,7 @@ function log(msg: string): void {
     logger.log(`StorageManager: ${msg}`);
 }
 
-function error(msg: string, ...args: string[]): void {
+function error(msg: string, ...args: unknown[]): void {
     logger.error(`StorageManager: ${msg}`, ...args);
 }
 
