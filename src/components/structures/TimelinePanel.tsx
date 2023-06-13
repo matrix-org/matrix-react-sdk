@@ -1340,14 +1340,14 @@ class TimelinePanel extends React.Component<IProps, IState> {
     /**
      * Check if the read marker is dismissed or up to date
      */
-    public isReadMarkerUpToDate = () : boolean => {
+    public isReadMarkerUpToDate = (): boolean => {
         if (!this.props.manageReadMarkers) return false;
 
         // Find the read receipt
         const rmId = this.getCurrentReadReceipt();
 
         // Is the RM already up to date?
-        return (rmId === this.state.readMarkerEventId);
+        return rmId === this.state.readMarkerEventId;
     };
 
     /**
