@@ -43,12 +43,16 @@ export default class ReactionsRowButtonTooltip extends React.PureComponent<IProp
         let tooltipLabel: JSX.Element | undefined;
         if (room) {
             const senders: string[] = [];
+            let customReactionName = "";
             for (const reactionEvent of reactionEvents) {
                 const member = room.getMember(reactionEvent.getSender()!);
                 const name = member?.name ?? reactionEvent.getSender()!;
                 senders.push(name);
+                if (reactionEvent.event.content?.["com.beeper.reaction.shortcode"]) {
+                    customReactionName = reactionEvent.event.content?.["com.beeper.reaction.shortcode"];
+                }
             }
-            const shortName = unicodeToShortcode(content);
+            const shortName = unicodeToShortcode(content) || customReactionName;
             tooltipLabel = (
                 <div>
                     {_t(
