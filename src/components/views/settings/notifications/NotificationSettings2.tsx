@@ -315,7 +315,7 @@ export default function NotificationSettings2(): JSX.Element {
                         onAdd={(keyword) => {
                             reconcile({
                                 ...model,
-                                keywords: [...model.keywords, keyword],
+                                keywords: [keyword, ...model.keywords],
                             });
                         }}
                         onRemove={(keyword) => {
