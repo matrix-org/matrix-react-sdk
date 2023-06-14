@@ -92,7 +92,9 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
     }
 
     private applyFormatting(): void {
-        this.decryptEmotes();
+        if(MatrixClientPeg.get()?.getRoom(this.props.mxEvent.getRoomId())){
+            this.decryptEmotes();
+        }
         const content = this.contentRef.current!;
         const showLineNumbers = SettingsStore.getValue("showCodeLineNumbers");
         this.activateSpoilers([content]);

@@ -86,10 +86,15 @@ class EmojiPicker extends React.Component<IProps, IState> {
 
         const emotesEvent = props.room?.currentState.getStateEvents(EMOTES_STATE.name, "");
         const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
-        this.emotesPromise = this.decryptEmotes(rawEmotes, props.room?.roomId);
+        if(props.room){
+            this.emotesPromise = this.decryptEmotes(rawEmotes, props.room?.roomId);
+        }
+        
         this.finalEmotes=[];
         this.finalEmotesMap=new Map<string,IEmoji>();
-        this.loadEmotes()
+        if(props.room){
+            this.loadEmotes()
+        }
 
         this.state = {
             filter: "",
@@ -169,7 +174,6 @@ class EmojiPicker extends React.Component<IProps, IState> {
 
     private async loadEmotes(){
         this.emotes=await this.emotesPromise
-        const recentlyUsedCopy=this.recentlyUsed
         for (const key in this.emotes) {
             this.finalEmotes.push(
                 {   label: key,
@@ -190,29 +194,27 @@ class EmojiPicker extends React.Component<IProps, IState> {
             });
         }
 
-        let rec=Array.from(new Set(recent.get()));
+        let rec=Array.from(new Set(filterBoolean(recent.get().map(x=>getEmojiFromUnicode(x)?getEmojiFromUnicode(x):this.finalEmotesMap.get(x as string)))));//Array.from(new Set(recent.get()));
         rec.forEach((v,i)=>{
-            if(this.finalEmotesMap.get(v as string)){
+            if(this.finalEmotesMap.get(v.unicode)){
                 if(i>=this.recentlyUsed.length){
-                    this.recentlyUsed.push(this.finalEmotesMap.get(v as string))
+                    this.recentlyUsed.push(this.finalEmotesMap.get(v.unicode))
                 }
                 else{
-                    this.recentlyUsed[i]=this.finalEmotesMap.get(v as string)
+                    this.recentlyUsed[i]=this.finalEmotesMap.get(v.unicode)
                 }
                 
-            } else if(getEmojiFromUnicode(v as string)){
+            } else if(getEmojiFromUnicode(v.unicode)){
                 if(i>=this.recentlyUsed.length){
-                    this.recentlyUsed.push(getEmojiFromUnicode(v as string))
+                    this.recentlyUsed.push(getEmojiFromUnicode(v.unicode))
                 }
                 else{
-                    this.recentlyUsed[i]=getEmojiFromUnicode(v as string)
+                    this.recentlyUsed[i]=getEmojiFromUnicode(v.unicode)
                 }    
             }
         })
-        if(this.recentlyUsed!=recentlyUsedCopy){
-            this.onScroll();
-        }
-          
+
+        this.onScroll();       
     }
 
     private async decryptEmotes(emotes: Object, roomId: string) {

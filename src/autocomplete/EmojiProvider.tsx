@@ -89,7 +89,9 @@ export default class EmojiProvider extends AutocompleteProvider {
         super({ commandRegex: EMOJI_REGEX, renderingType });
         const emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
         const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
-        this.emotesPromise = this.decryptEmotes(rawEmotes, room?.roomId);
+        if(room){
+            this.emotesPromise = this.decryptEmotes(rawEmotes, room?.roomId);
+        }
         this.matcher = new QueryMatcher<ISortedEmoji>(SORTED_EMOJI, {
             keys: [],
             funcs: [(o) => o.emoji.shortcodes.map((s) => `:${s}:`)],
