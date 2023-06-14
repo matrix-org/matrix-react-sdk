@@ -259,7 +259,6 @@
     "Start chat": "Začať konverzáciu",
     "And %(count)s more...|other": "A %(count)s ďalších…",
     "Confirm Removal": "Potvrdiť odstránenie",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Ste si istí, že chcete odstrániť (vymazať) túto udalosť? Nezabudnite, že ak odstránite názov miestnosti alebo zmenu témy, môže to vrátiť zmenu späť.",
     "Create": "Vytvoriť",
     "Unknown error": "Neznáma chyba",
     "Incorrect password": "Nesprávne heslo",
