@@ -20,12 +20,6 @@ import { ValidatedIssuerConfig } from "matrix-js-sdk/src/oidc/validate";
 
 import { OidcClientError } from "./error";
 
-export type OidcRegistrationClientMetadata = {
-    clientName: string;
-    clientUri: string;
-    redirectUris: string[];
-};
-
 /**
  * Get the statically configured clientId for the issuer
  * @param issuer delegated auth OIDC issuer
