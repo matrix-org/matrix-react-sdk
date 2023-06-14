@@ -250,7 +250,6 @@
     "You must join the room to see its files": "Tev ir jāpievienojas istabai, lai redzētu tās failus",
     "Failed to invite": "Neizdevās uzaicināt",
     "Confirm Removal": "Apstipriniet dzēšanu",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Vai tiešām vēlaties dzēst šo notikumu? Ņemiet vērā, ka istabas nosaukuma dzēšana vai temata maiņa var atcelt izmaiņas.",
     "Unknown error": "Nezināma kļūda",
     "Incorrect password": "Nepareiza parole",
     "Unable to restore session": "Neizdevās atjaunot sesiju",

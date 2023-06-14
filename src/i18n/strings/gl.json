@@ -287,7 +287,6 @@
     "Start chat": "Iniciar conversa",
     "And %(count)s more...|other": "E %(count)s máis...",
     "Confirm Removal": "Confirma a retirada",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Estás certa de que queres quitar (eliminar) este evento? Debes saber que se eliminas un nome de sala ou cambias o asunto, poderías desfacer o cambio.",
     "Create": "Crear",
     "Unknown error": "Fallo descoñecido",
     "Incorrect password": "Contrasinal incorrecto",

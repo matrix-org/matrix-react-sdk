@@ -347,7 +347,6 @@
     "%(items)s and %(lastItem)s": "%(items)s a také %(lastItem)s",
     "And %(count)s more...|other": "A %(count)s dalších...",
     "Confirm Removal": "Potvrdit odstranění",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Opravdu chcete odstranit (smazat) tuto událost? V případě, že smažete název místnosti anebo změníte téma, je možné, že se změny neprovedou.",
     "Unknown error": "Neznámá chyba",
     "Incorrect password": "Nesprávné heslo",
     "Unable to restore session": "Nelze obnovit relaci",
