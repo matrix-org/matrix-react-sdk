@@ -2595,9 +2595,10 @@
     "@typescript-eslint/types" "5.59.6"
     eslint-visitor-keys "^3.3.0"
 
-"@vector-im/compound-design-tokens@https://github.com/vector-im/compound-design-tokens#develop":
-  version "0.0.2"
-  resolved "https://github.com/vector-im/compound-design-tokens#66beb1a965772a7a8670a49f1a4a3ea8132eb0f8"
+"@vector-im/compound-design-tokens@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@vector-im/compound-design-tokens/-/compound-design-tokens-0.0.3.tgz#89214c69108a14f5d3e4a73ddc44852862531f2b"
+  integrity sha512-XxmySUvfjD6EuAM7f6lsGIhuv94TFfoEpKxYh+HKn1hPBFcMEKKImu/jK5tnpOv2xuZOSrK0Pm6qMLnxLwOXOw==
   dependencies:
     svg2vectordrawable "^2.9.1"
 
