@@ -26,7 +26,13 @@ interface IProps {
     collapsedRhs?: boolean;
     panel?: JSX.Element;
     children: ReactNode;
+    /**
+     * The optional string key to append onto the storage key to be able to save multiple panel widths.
+     */
     sizeKey?: string;
+    /**
+     * The size to use for the panel component if one isn't persisted in storage. Defaults to 350.
+     */
     defaultSize: number;
 }
 
@@ -43,7 +49,7 @@ export default class MainSplit extends React.Component<IProps> {
         this.props.resizeNotifier.notifyRightHandleResized();
     };
 
-    private get storageKey(): string {
+    private get sizeSettingStorageKey(): string {
         let key = "mx_rhs_size";
         if (!!this.props.sizeKey) {
             key += `_${this.props.sizeKey}`;
@@ -58,11 +64,14 @@ export default class MainSplit extends React.Component<IProps> {
         delta: NumberSize,
     ): void => {
         this.props.resizeNotifier.stopResizing();
-        window.localStorage.setItem(this.storageKey, (this.loadSidePanelSize().width + delta.width).toString());
+        window.localStorage.setItem(
+            this.sizeSettingStorageKey,
+            (this.loadSidePanelSize().width + delta.width).toString(),
+        );
     };
 
     private loadSidePanelSize(): { height: string | number; width: number } {
-        let rhsSize = parseInt(window.localStorage.getItem(this.storageKey)!, 10);
+        let rhsSize = parseInt(window.localStorage.getItem(this.sizeSettingStorageKey)!, 10);
 
         if (isNaN(rhsSize)) {
             rhsSize = this.props.defaultSize;
