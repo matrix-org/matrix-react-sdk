@@ -41,13 +41,18 @@ import { NonEmptyArray } from "../../../@types/common";
 import { PollHistoryTab } from "../settings/tabs/room/PollHistoryTab";
 import ErrorBoundary from "../elements/ErrorBoundary";
 
-export const ROOM_GENERAL_TAB = "ROOM_GENERAL_TAB";
-export const ROOM_SECURITY_TAB = "ROOM_SECURITY_TAB";
-export const ROOM_ROLES_TAB = "ROOM_ROLES_TAB";
-export const ROOM_NOTIFICATIONS_TAB = "ROOM_NOTIFICATIONS_TAB";
-export const ROOM_BRIDGES_TAB = "ROOM_BRIDGES_TAB";
-export const ROOM_EMOTES_TAB = "ROOM_EMOTES_TAB";
-export const ROOM_ADVANCED_TAB = "ROOM_ADVANCED_TAB";
+
+export const enum RoomSettingsTab {
+    General = "ROOM_GENERAL_TAB",
+    Voip = "ROOM_VOIP_TAB",
+    Security = "ROOM_SECURITY_TAB",
+    Roles = "ROOM_ROLES_TAB",
+    Notifications = "ROOM_NOTIFICATIONS_TAB",
+    Bridges = "ROOM_BRIDGES_TAB",
+    Advanced = "ROOM_ADVANCED_TAB",
+    Emotes = "ROOM_EMOTES_TAB",
+    PollHistory = "ROOM_POLL_HISTORY_TAB",
+}
 
 interface IProps {
     roomId: string;
@@ -121,39 +126,60 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
     private getTabs(): NonEmptyArray<Tab<RoomSettingsTab>> {
         const tabs: Tab<RoomSettingsTab>[] = [];
 
+        tabs.push(
+            new Tab(
+                RoomSettingsTab.General,
+                _td("General"),
+                "mx_RoomSettingsDialog_settingsIcon",
+                <GeneralRoomSettingsTab room={this.state.room} />,
+                "RoomSettingsGeneral",
+            ),
+        );
+        if (SettingsStore.getValue("feature_group_calls")) {
+            tabs.push(
+                new Tab(
+                    RoomSettingsTab.Voip,
+                    _td("Voice & Video"),
+                    "mx_RoomSettingsDialog_voiceIcon",
+                    <VoipRoomSettingsTab room={this.state.room} />,
+                ),
+            );
+        }
+        tabs.push(
+            new Tab(
+                RoomSettingsTab.Security,
+                _td("Security & Privacy"),
+                "mx_RoomSettingsDialog_securityIcon",
+                <SecurityRoomSettingsTab room={this.state.room} closeSettingsFn={() => this.props.onFinished(true)} />,
+                "RoomSettingsSecurityPrivacy",
+            ),
+        );
+        tabs.push(
+            new Tab(
+                RoomSettingsTab.Roles,
+                _td("Roles & Permissions"),
+                "mx_RoomSettingsDialog_rolesIcon",
+                <RolesRoomSettingsTab room={this.state.room} />,
+                "RoomSettingsRolesPermissions",
+            ),
+        );
+        tabs.push(
+            new Tab(
+                RoomSettingsTab.Notifications,
+                _td("Notifications"),
+                "mx_RoomSettingsDialog_notificationsIcon",
+                (
+                    <NotificationSettingsTab
+                        roomId={this.state.room.roomId}
+                        closeSettingsFn={() => this.props.onFinished(true)}
+                    />
+                ),
+                "RoomSettingsNotifications",
+            ),
+        );
+
         tabs.push(new Tab(
-            ROOM_GENERAL_TAB,
-            _td("General"),
-            "mx_RoomSettingsDialog_settingsIcon",
-            <GeneralRoomSettingsTab roomId={this.props.roomId} />,
-            "RoomSettingsGeneral",
-        ));
-        tabs.push(new Tab(
-            ROOM_SECURITY_TAB,
-            _td("Security & Privacy"),
-            "mx_RoomSettingsDialog_securityIcon",
-            <SecurityRoomSettingsTab
-                roomId={this.props.roomId}
-                closeSettingsFn={() => this.props.onFinished(true)}
-            />,
-            "RoomSettingsSecurityPrivacy",
-        ));
-        tabs.push(new Tab(
-            ROOM_ROLES_TAB,
-            _td("Roles & Permissions"),
-            "mx_RoomSettingsDialog_rolesIcon",
-            <RolesRoomSettingsTab roomId={this.props.roomId} />,
-            "RoomSettingsRolesPermissions",
-        ));
-        tabs.push(new Tab(
-            ROOM_NOTIFICATIONS_TAB,
-            _td("Notifications"),
-            "mx_RoomSettingsDialog_notificationsIcon",
-            <NotificationSettingsTab roomId={this.props.roomId} closeSettingsFn={() => this.props.onFinished(true)} />,
-            "RoomSettingsNotifications",
-        ));
-        tabs.push(new Tab(
-            ROOM_EMOTES_TAB,
+            RoomSettingsTab.Emotes,
             _td("Emotes"),
             "mx_RoomSettingsDialog_emotesIcon",
             <EmoteSettingsTab roomId={this.props.roomId} />,
