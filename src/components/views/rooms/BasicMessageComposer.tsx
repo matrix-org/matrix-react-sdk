@@ -50,7 +50,8 @@ import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { ALTERNATE_KEY_NAME, KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { _t } from "../../../languageHandler";
 import { linkify } from "../../../linkify-matrix";
-import { SDKContext } from "../../../contexts/SDKContext";
+import { SdkContextClass } from "../../../contexts/SDKContext";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 // matches emoticons which follow the start of a line or whitespace
 const REGEX_EMOTICON_WHITESPACE = new RegExp("(?:^|\\s)(" + EMOTICON_REGEX.source + ")\\s|:^$");
@@ -122,9 +123,6 @@ interface IState {
 }
 
 export default class BasicMessageEditor extends React.Component<IProps, IState> {
-    public static contextType = SDKContext;
-    public context!: React.ContextType<typeof SDKContext>;
-
     public readonly editorRef = createRef<HTMLDivElement>();
     private autocompleteRef = createRef<Autocomplete>();
     private formatBarRef = createRef<MessageComposerFormatBar>();
@@ -271,11 +269,15 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         if (isTyping && this.props.model.parts[0].type === "command") {
             const { cmd } = parseCommandString(this.props.model.parts[0].text);
             const command = CommandMap.get(cmd!);
-            if (!command?.isEnabled(this.context.client ?? null) || command.category !== CommandCategories.messages) {
+            if (!command?.isEnabled(MatrixClientPeg.get()) || command.category !== CommandCategories.messages) {
                 isTyping = false;
             }
         }
-        this.context.typingStore.setSelfTyping(this.props.room.roomId, this.props.threadId ?? null, isTyping);
+        SdkContextClass.instance.typingStore.setSelfTyping(
+            this.props.room.roomId,
+            this.props.threadId ?? null,
+            isTyping,
+        );
 
         this.props.onChange?.(selection, inputType, diff);
     };
