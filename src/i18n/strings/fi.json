@@ -3427,5 +3427,7 @@
     "Reload": "Lataa uudelleen",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Tämä voi johtua siitä, että sovellus on auki useissa välilehdissä tai selaimen tietojen tyhjentämisestä.",
     "Database unexpectedly closed": "Tietokanta sulkeutui odottamattomasti",
-    "Identity server not set": "Identiteettipalvelinta ei ole asetettu"
+    "Identity server not set": "Identiteettipalvelinta ei ole asetettu",
+    "Set a new account password…": "Aseta uusi tilin salasana…",
+    "User is not logged in": "Käyttäjä ei ole sisäänkirjautunut"
 }
