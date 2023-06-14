@@ -265,7 +265,6 @@
     "Reject all %(invitedRooms)s invites": "Odrzuć wszystkie zaproszenia do %(invitedRooms)s",
     "Failed to invite": "Wysłanie zaproszenia nie powiodło się",
     "Confirm Removal": "Potwierdź usunięcie",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Jesteś pewien że chcesz usunąć to wydarzenie? Pamiętaj, że jeśli usuniesz nazwę pokoju lub aktualizację tematu pokoju, zmiana może zostać cofnięta.",
     "Unable to restore session": "Przywrócenie sesji jest niemożliwe",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Jeśli wcześniej używałeś/aś nowszej wersji %(brand)s, Twoja sesja może być niekompatybilna z tą wersją. Zamknij to okno i powróć do nowszej wersji.",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Nastąpiła próba załadowania danego punktu w historii tego pokoju, lecz nie masz uprawnień, by zobaczyć określoną wiadomość.",

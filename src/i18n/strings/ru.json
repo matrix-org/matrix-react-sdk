@@ -226,7 +226,6 @@
     "Reject all %(invitedRooms)s invites": "Отклонить все %(invitedRooms)s приглашения",
     "Failed to invite": "Пригласить не удалось",
     "Confirm Removal": "Подтвердите удаление",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Вы действительно хотите удалить это событие? Обратите внимание, что если это смена названия комнаты или темы, то удаление отменит это изменение.",
     "Unknown error": "Неизвестная ошибка",
     "Incorrect password": "Неверный пароль",
     "Unable to restore session": "Восстановление сеанса не удалось",
