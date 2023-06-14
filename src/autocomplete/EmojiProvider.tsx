@@ -33,7 +33,6 @@ import SettingsStore from "../settings/SettingsStore";
 import { EMOJI, IEmoji, getEmojiFromUnicode } from "../emoji";
 import { TimelineRenderingType } from "../contexts/RoomContext";
 import * as recent from "../emojipicker/recent";
-import { filterBoolean } from "../utils/arrays";
 import { decryptFile } from "../utils/DecryptFile";
 import { mediaFromMxc } from "../customisations/Media";
 

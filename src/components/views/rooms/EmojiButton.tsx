@@ -28,7 +28,7 @@ interface IEmojiButtonProps {
     addEmoji: (unicode: string) => boolean;
     menuPosition?: MenuProps;
     className?: string;
-    room: Room,
+    room?: Room,
 }
 
 export function EmojiButton({ addEmoji, menuPosition, className, room }: IEmojiButtonProps) {

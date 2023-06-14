@@ -58,6 +58,8 @@ interface IProps {
     toggleButtonMenu: () => void;
     showVoiceBroadcastButton: boolean;
     onStartVoiceBroadcastClick: () => void;
+    isRichTextEnabled: boolean;
+    onComposerModeClick: () => void;
 }
 
 type OverflowMenuCloser = () => void;
@@ -77,7 +79,15 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     let moreButtons: ReactNode[];
     if (narrow) {
         mainButtons = [
-            emojiButton(props,room),
+            isWysiwygLabEnabled ? (
+                <ComposerModeButton
+                    key="composerModeButton"
+                    isRichTextEnabled={props.isRichTextEnabled}
+                    onClick={props.onComposerModeClick}
+                />
+            ) : (
+                emojiButton(props)
+            ),
         ];
         moreButtons = [
             uploadButton(), // props passed via UploadButtonContext
@@ -89,7 +99,15 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         ];
     } else {
         mainButtons = [
-            emojiButton(props,room),
+            isWysiwygLabEnabled ? (
+                <ComposerModeButton
+                    key="composerModeButton"
+                    isRichTextEnabled={props.isRichTextEnabled}
+                    onClick={props.onComposerModeClick}
+                />
+            ) : (
+                emojiButton(props)
+            ),
             uploadButton(), // props passed via UploadButtonContext
         ];
         moreButtons = [

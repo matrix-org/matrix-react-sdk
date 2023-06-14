@@ -37,7 +37,7 @@ import { Key } from "../../../Keyboard";
 import { clamp } from "../../../utils/numbers";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import { Ref } from "../../../accessibility/roving/types";
-import { Room } from './matrix-js-sdk/src/models/room';
+import { Room } from 'matrix-js-sdk/src/models/room';
 import { mediaFromMxc } from '../../../customisations/Media';
 import { decryptFile } from '../../../utils/DecryptFile';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -77,7 +77,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
     private scrollRef = React.createRef<AutoHideScrollbar<"div">>();
 
     private emotes: Map<string, React.Component>;
-    private emotesPromise: Promise<Map<string, string>>;
+    private emotesPromise: Promise<Map<string, React.Component>>;
     private finalEmotes: IEmoji[];
     private finalEmotesMap:Map<string,IEmoji>;
     constructor(props: IProps) {
@@ -213,20 +213,20 @@ class EmojiPicker extends React.Component<IProps, IState> {
     }
 
     private async decryptEmotes(emotes: Object, roomId: string) {
-        const decryptede=new Map<string, string>();
+        const decryptedemotes=new Map<string, React.Component>();
         const client = MatrixClientPeg.get();
-        let durl = "";
+        let decryptedurl = "";
         const isEnc=client.isRoomEncrypted(roomId);
         for (const shortcode in emotes) {
             if (isEnc) {
                 const blob = await decryptFile(emotes[shortcode]);
-                durl = URL.createObjectURL(blob);
+                decryptedurl = URL.createObjectURL(blob);
             } else {
-                durl = mediaFromMxc(emotes[shortcode]).srcHttp;
+                decryptedurl = mediaFromMxc(emotes[shortcode]).srcHttp;
             }
-            decryptede[shortcode] = <img class='mx_Emote' title={":" + shortcode +":"} src= {durl}/>;
+            decryptedemotes[shortcode] = <img className='mx_Emote' title={":" + shortcode +":"} src= {decryptedurl}/>;
         }
-        return decryptede;
+        return decryptedemotes;
     }
     
     private onScroll = () => {
