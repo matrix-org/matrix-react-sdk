@@ -35,7 +35,6 @@ import { TimelineRenderingType } from "../contexts/RoomContext";
 import * as recent from "../emojipicker/recent";
 import { decryptFile } from "../utils/DecryptFile";
 import { mediaFromMxc } from "../customisations/Media";
-import { MatrixClient } from "matrix-js-sdk/src/client";
 
 const LIMIT = 20;
 
