@@ -95,9 +95,6 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         this.decryptEmotes();
         const content = this.contentRef.current!;
         const showLineNumbers = SettingsStore.getValue("showCodeLineNumbers");
-        this.activateSpoilers([this.contentRef.current]);
-
-        const showLineNumbers = SettingsStore.getValue("showCodeLineNumbers");
         this.activateSpoilers([content]);
 
         HtmlUtils.linkifyElement(content);

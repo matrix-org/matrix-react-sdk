@@ -37,7 +37,6 @@ import { Key } from "../../../Keyboard";
 import { clamp } from "../../../utils/numbers";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import { Ref } from "../../../accessibility/roving/types";
-import Category, { ICategory, CategoryKey } from "./Category";
 import { Room } from './matrix-js-sdk/src/models/room';
 import { mediaFromMxc } from '../../../customisations/Media';
 import { decryptFile } from '../../../utils/DecryptFile';
