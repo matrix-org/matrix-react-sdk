@@ -15,19 +15,12 @@ limitations under the License.
 */
 
 import React, { useCallback, useEffect, useState } from "react";
-import {
-    PHASE_REQUESTED,
-    PHASE_UNSENT,
-    Phase as VerificationPhase,
-    VerificationRequest,
-    VerificationRequestEvent,
-} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { VerificationPhase, VerificationRequest, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { User } from "matrix-js-sdk/src/models/user";
 
 import EncryptionInfo from "./EncryptionInfo";
 import VerificationPanel from "./VerificationPanel";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { ensureDMExists } from "../../../createRoom";
 import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
 import Modal from "../../../Modal";
@@ -35,6 +28,7 @@ import { _t } from "../../../languageHandler";
 import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import ErrorDialog from "../dialogs/ErrorDialog";
+import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 
 // cancellation codes which constitute a key mismatch
 const MISMATCHES = ["m.key_mismatch", "m.user_error", "m.mismatched_sas"];
@@ -49,6 +43,7 @@ interface IProps {
 }
 
 const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
+    const cli = useMatrixClientContext();
     const { verificationRequest, verificationRequestPromise, member, onClose, layout, isRoomEncrypted } = props;
     const [request, setRequest] = useState(verificationRequest);
     // state to show a spinner immediately after clicking "start verification",
@@ -77,7 +72,11 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
     }, [verificationRequestPromise]);
     const changeHandler = useCallback(() => {
         // handle transitions -> cancelled for mismatches which fire a modal instead of showing a card
-        if (request && request.phase === VerificationPhase.Cancelled && MISMATCHES.includes(request.cancellationCode)) {
+        if (
+            request &&
+            request.phase === VerificationPhase.Cancelled &&
+            MISMATCHES.includes(request.cancellationCode ?? "")
+        ) {
             Modal.createDialog(ErrorDialog, {
                 headerImage: require("../../../../res/img/e2e/warning-deprecated.svg").default,
                 title: _t("Your messages are not secure"),
@@ -106,7 +105,6 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
 
     const onStartVerification = useCallback(async (): Promise<void> => {
         setRequesting(true);
-        const cli = MatrixClientPeg.get();
         let verificationRequest_: VerificationRequest;
         try {
             const roomId = await ensureDMExists(cli, member.userId);
@@ -135,14 +133,13 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
             });
         }
         if (!RightPanelStore.instance.isOpen) RightPanelStore.instance.togglePanel(null);
-    }, [member]);
+    }, [cli, member]);
 
     const requested: boolean =
         (!request && isRequesting) ||
-        (!!request && (phase === PHASE_REQUESTED || phase === PHASE_UNSENT || phase === undefined));
-    const isSelfVerification = request
-        ? request.isSelfVerification
-        : member.userId === MatrixClientPeg.get().getUserId();
+        (!!request &&
+            (phase === VerificationPhase.Requested || phase === VerificationPhase.Unsent || phase === undefined));
+    const isSelfVerification = request ? request.isSelfVerification : member.userId === cli.getUserId();
 
     if (!request || requested) {
         const initiatedByMe = (!request && isRequesting) || (!!request && request.initiatedByMe);
