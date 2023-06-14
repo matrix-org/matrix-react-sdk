@@ -83,6 +83,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
         Modal.createDialog(
             ConfirmAndWaitRedactDialog,
             {
+                event,
                 redact: async () => {
                     await cli.redactEvent(event.getRoomId()!, event.getId()!);
                 },
