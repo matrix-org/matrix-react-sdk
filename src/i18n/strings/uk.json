@@ -3748,5 +3748,6 @@
     "Your device ID": "ID вашого пристрою",
     "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Як альтернативу, ви можете спробувати публічний сервер на <server/>, але він не буде надто надійним, а також поширюватиме вашу IP-адресу на тому сервері. Ви також можете керувати цим у налаштуваннях.",
     "Try using %(server)s": "Спробуйте використати %(server)s",
-    "User is not logged in": "Користувач не увійшов"
+    "User is not logged in": "Користувач не увійшов",
+    "Allow fallback call assist server (%(server)s)": "Дозволити резервний сервер підтримки викликів (%(server)s)"
 }
