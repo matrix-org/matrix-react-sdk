@@ -203,7 +203,6 @@
     "Reject all %(invitedRooms)s invites": "Rejeter la totalité des %(invitedRooms)s invitations",
     "Failed to invite": "Échec de l’invitation",
     "Confirm Removal": "Confirmer la suppression",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Voulez-vous vraiment supprimer cet évènement ? Notez que si vous supprimez le changement du nom ou du sujet d’un salon, il est possible que ce changement soit annulé.",
     "Unknown error": "Erreur inconnue",
     "Incorrect password": "Mot de passe incorrect",
     "Unable to restore session": "Impossible de restaurer la session",

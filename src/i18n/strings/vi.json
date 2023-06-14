@@ -856,7 +856,6 @@
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Xóa tất cả dữ liệu khỏi phiên này là vĩnh viễn. Các tin nhắn được mã hóa sẽ bị mất trừ khi các khóa của chúng đã được sao lưu.",
     "Clear all data in this session?": "Xóa tất cả dữ liệu trong phiên này?",
     "Reason (optional)": "Lý do (không bắt buộc)",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Bạn có chắc chắn muốn loại bỏ (xóa) sự kiện này không? Lưu ý rằng nếu bạn xóa tên phòng hoặc thay đổi chủ đề, nó có thể hoàn tác thay đổi.",
     "You cannot delete this message. (%(code)s)": "Bạn không thể xóa tin nhắn này.  (%(code)s)",
     "Skip": "Bỏ qua",
     "Email address": "Địa chỉ thư điện tử",
