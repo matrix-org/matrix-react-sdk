@@ -371,7 +371,6 @@
     "Muted Users": "Dämpade användare",
     "This room is not accessible by remote Matrix servers": "Detta rum är inte tillgängligt för externa Matrix-servrar",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Kunde inte ladda händelsen som svarades på, antingen så finns den inte eller så har du inte behörighet att se den.",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Är du säker på att du vill ta bort (radera) den här händelsen? Observera att om du tar bort en rumsnamns- eller ämnesändring kan det ångra ändringen.",
     "Event sent!": "Händelse skickad!",
     "Event Type": "Händelsetyp",
     "Event Content": "Händelseinnehåll",
