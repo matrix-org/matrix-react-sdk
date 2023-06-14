@@ -107,7 +107,7 @@ export default class EmojiProvider extends AutocompleteProvider {
     private async decryptEmotes(emotes: Object, roomId: string) {
         const decryptedEmoteMap=new Map<string, string>();
         let decryptedurl = "";
-        const isEnc=MatrixClientPeg.get().isRoomEncrypted(roomId);
+        const isEnc=MatrixClientPeg.get()?.isRoomEncrypted(roomId);
         for (const shortcode in emotes) {
             if (isEnc) {
                 const blob = await decryptFile(emotes[shortcode]);

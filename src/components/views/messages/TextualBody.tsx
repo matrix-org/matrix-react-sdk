@@ -572,26 +572,26 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
     }
     private async decryptEmotes() {
         const client = MatrixClientPeg.get();
-        const room = client.getRoom(this.props.mxEvent.getRoomId());
+        const room = client?.getRoom(this.props.mxEvent.getRoomId());
         //TODO: Do not encrypt/decrypt if room is not encrypted
         const emotesEvent = room?.currentState.getStateEvents(EMOTES_STATE.name, "");
         const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
-        const decryptede=new Map<string, string>;
-        let durl="";
-        const isEnc=client.isRoomEncrypted(this.props.mxEvent.getRoomId());
+        const decryptedemotes=new Map<string, string>;
+        let decryptedurl="";
+        const isEnc=client?.isRoomEncrypted(this.props.mxEvent.getRoomId());
         for (const shortcode in rawEmotes) {
             if (isEnc) {
                 const blob = await decryptFile(rawEmotes[shortcode]);
-                durl = URL.createObjectURL(blob);
+                decryptedurl = URL.createObjectURL(blob);
             } else {
-                durl = mediaFromMxc(rawEmotes[shortcode]).srcHttp;
+                decryptedurl = mediaFromMxc(rawEmotes[shortcode])?.srcHttp;
             }
 
-            decryptede[":" + shortcode + ":"] = "<img class='mx_Emote' title=':"+shortcode.replace(/[^a-zA-Z0-9_]/g, "")+
-                  ":' src='" + durl + "'/>";
+            decryptedemotes[":" + shortcode + ":"] = "<img class='mx_Emote' title=':"+shortcode.replace(/[^a-zA-Z0-9_]/g, "")+
+                  ":' src='" + decryptedurl + "'/>";
         }
         this.setState({
-            finalEmotes: decryptede,
+            finalEmotes: decryptedemotes,
         });
         this.forceUpdate();
     }

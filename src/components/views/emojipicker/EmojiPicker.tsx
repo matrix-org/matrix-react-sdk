@@ -104,7 +104,6 @@ class EmojiPicker extends React.Component<IProps, IState> {
             custom: this.finalEmotes,
             ...DATA_BY_CATEGORY,
         };
-
         this.categories = [{
             id: "recent",
             name: _t("Frequently Used"),
@@ -170,6 +169,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
 
     private async loadEmotes(){
         this.emotes=await this.emotesPromise
+        const recentlyUsedCopy=this.recentlyUsed
         for (const key in this.emotes) {
             this.finalEmotes.push(
                 {   label: key,
@@ -209,19 +209,22 @@ class EmojiPicker extends React.Component<IProps, IState> {
                 }    
             }
         })
-        this.onScroll();  
+        if(this.recentlyUsed!=recentlyUsedCopy){
+            this.onScroll();
+        }
+          
     }
 
     private async decryptEmotes(emotes: Object, roomId: string) {
         const decryptedemotes=new Map<string, React.Component>();
         let decryptedurl = "";
-        const isEnc=MatrixClientPeg.get().isRoomEncrypted(roomId);
+        const isEnc=MatrixClientPeg.get()?.isRoomEncrypted(roomId);
         for (const shortcode in emotes) {
             if (isEnc) {
                 const blob = await decryptFile(emotes[shortcode]);
                 decryptedurl = URL.createObjectURL(blob);
             } else {
-                decryptedurl = mediaFromMxc(emotes[shortcode]).srcHttp;
+                decryptedurl = mediaFromMxc(emotes[shortcode])?.srcHttp;
             }
             decryptedemotes[shortcode] = <img className='mx_Emote' title={":" + shortcode +":"} src= {decryptedurl}/>;
         }
