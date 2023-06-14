@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import classnames from "classnames";
 import React, { HTMLAttributes } from "react";
 
 import Heading from "../../typography/Heading";
@@ -40,8 +41,8 @@ export interface SettingsSectionProps extends HTMLAttributes<HTMLDivElement> {
  * </SettingsTab>
  * ```
  */
-export const SettingsSection: React.FC<SettingsSectionProps> = ({ heading, children, ...rest }) => (
-    <div {...rest} className="mx_SettingsSection">
+export const SettingsSection: React.FC<SettingsSectionProps> = ({ className, heading, children, ...rest }) => (
+    <div {...rest} className={classnames("mx_SettingsSection", className)}>
         {typeof heading === "string" ? <Heading size="h2">{heading}</Heading> : <>{heading}</>}
         <div className="mx_SettingsSection_subSections">{children}</div>
     </div>

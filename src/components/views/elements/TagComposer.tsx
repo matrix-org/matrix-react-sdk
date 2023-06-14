@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import classNames from "classnames";
 import React, { ChangeEvent, FormEvent } from "react";
 
 import Field from "./Field";
@@ -67,7 +68,11 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
 
     public render(): React.ReactNode {
         return (
-            <div className="mx_TagComposer">
+            <div
+                className={classNames("mx_TagComposer", {
+                    mx_TagComposer_disabled: this.props.disabled,
+                })}
+            >
                 <form className="mx_TagComposer_input" onSubmit={this.onAdd}>
                     <Field
                         value={this.state.newTag}

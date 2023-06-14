@@ -93,6 +93,7 @@ export enum LabGroup {
 export enum Features {
     VoiceBroadcast = "feature_voice_broadcast",
     VoiceBroadcastForceSmallChunks = "feature_voice_broadcast_force_small_chunks",
+    NotificationSettings2 = "feature_notification_settings2",
     OidcNativeFlow = "feature_oidc_native_flow",
 }
 
@@ -218,6 +219,25 @@ export const SETTINGS: { [setting: string]: ISetting } = {
             ),
             image: require("../../res/img/betas/video_rooms.png"),
             requiresRefresh: true,
+        },
+    },
+    [Features.NotificationSettings2]: {
+        isFeature: true,
+        labsGroup: LabGroup.Experimental,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("New Notification Settings"),
+        default: false,
+        betaInfo: {
+            title: _td("Notification Settings"),
+            caption: () => (
+                <>
+                    <p>
+                        {_t("A simpler way to customize notification settings in %(brand)s just the way you like.", {
+                            brand: SdkConfig.get().brand,
+                        })}
+                    </p>
+                </>
+            ),
         },
     },
     "feature_exploring_public_spaces": {

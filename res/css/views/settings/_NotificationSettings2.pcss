@@ -1,0 +1,80 @@
+.mx_NotificationSettings2 {
+    .mx_SettingsSection_subSections {
+        color: $primary-content;
+        gap: 32px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mx_SettingsSubsection_description {
+        margin-bottom: 20px;
+
+        .mx_SettingsSubsection_text {
+            font-size: 1.2rem;
+
+            .mx_NotificationBadge {
+                vertical-align: baseline;
+                display: inline-flex;
+                margin: 0 2px;
+            }
+        }
+    }
+
+    .mx_SettingsSubsection_content {
+        margin-top: 12px;
+        grid-gap: 12px;
+        justify-items: stretch;
+        justify-content: stretch;
+    }
+
+    .mx_SettingsBanner {
+        margin-bottom: 32px;
+    }
+
+    .mx_NotificationSettings2_flags {
+        grid-gap: 4px;
+    }
+
+    .mx_StyledRadioButton_content {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .mx_TagComposer {
+        margin-top: 16px;
+
+        &.mx_TagComposer_disabled {
+            opacity: 0.7;
+        }
+
+        .mx_TagComposer_tags {
+            margin-top: 16px;
+            gap: 8px;
+
+            .mx_Tag {
+                border-radius: 18px;
+                line-height: 2.4rem;
+                padding: 6px 12px;
+                background: $panel-actions;
+                margin: 0;
+
+                .mx_Tag_delete {
+                    background: $tertiary-content;
+                    color: #fff;
+                    align-self: initial;
+                }
+            }
+        }
+    }
+}
+
+.mx_NotificationPusherSettings {
+    .mx_NotificationPusherSettings_description {
+        color: $primary-content;
+    }
+
+    .mx_NotificationPusherSettings_detail {
+        margin-top: -4px;
+        margin-bottom: 12px;
+    }
+}
