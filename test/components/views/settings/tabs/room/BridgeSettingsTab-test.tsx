@@ -19,7 +19,7 @@ import { render } from "@testing-library/react";
 import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 
 import BridgeSettingsTab from "../../../../../../src/components/views/settings/tabs/room/BridgeSettingsTab";
-import { getMockClientWithEventEmitter, renderWithClientContextOptions } from "../../../../../test-utils";
+import { getMockClientWithEventEmitter, withClientContextRenderOptions } from "../../../../../test-utils";
 
 describe("<BridgeSettingsTab />", () => {
     const userId = "@alice:server.org";
@@ -29,7 +29,7 @@ describe("<BridgeSettingsTab />", () => {
     const roomId = "!room:server.org";
 
     const getComponent = (room: Room) =>
-        render(<BridgeSettingsTab room={room} />, renderWithClientContextOptions(client));
+        render(<BridgeSettingsTab room={room} />, withClientContextRenderOptions(client));
 
     it("renders when room is not bridging messages to any platform", () => {
         const room = new Room(roomId, client, userId);

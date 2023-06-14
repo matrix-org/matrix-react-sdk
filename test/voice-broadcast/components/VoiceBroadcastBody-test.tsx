@@ -28,7 +28,7 @@ import {
     VoiceBroadcastPlayback,
     VoiceBroadcastRecordingsStore,
 } from "../../../src/voice-broadcast";
-import { renderWithClientContextOptions, stubClient, wrapInSdkContext } from "../../test-utils";
+import { withClientContextRenderOptions, stubClient, wrapInSdkContext } from "../../test-utils";
 import { mkVoiceBroadcastInfoStateEvent } from "../utils/test-utils";
 import { MediaEventHelper } from "../../../src/utils/MediaEventHelper";
 import { RoomPermalinkCreator } from "../../../src/utils/permalinks/Permalinks";
@@ -66,7 +66,7 @@ describe("VoiceBroadcastBody", () => {
                 onMessageAllowed={() => {}}
                 permalinkCreator={new RoomPermalinkCreator(room)}
             />,
-            renderWithClientContextOptions(client),
+            withClientContextRenderOptions(client),
         );
         testRecording = SdkContextClass.instance.voiceBroadcastRecordingsStore.getByInfoEvent(infoEvent, client);
     };
