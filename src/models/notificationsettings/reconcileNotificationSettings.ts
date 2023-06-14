@@ -179,20 +179,8 @@ export function reconcileNotificationSettings(
 
     for (const rule of newRules.values()) {
         const original = oldRules.get(rule.rule_id);
-        const enabledChanged = rule.enabled !== undefined && rule.enabled !== original.enabled;
-        const actionsChanged = rule.actions !== undefined && !deepCompare(rule.actions, original.actions);
-        if (enabledChanged) {
-            console.debug(
-                `Push Rule (${rule.kind}:${rule.rule_id}) status changed from ${original.enabled} to ${rule.enabled}`,
-            );
-        }
-        if (actionsChanged) {
-            const originalActions = JSON.stringify(NotificationUtils.decodeActions(original.actions));
-            const newActions = JSON.stringify(NotificationUtils.decodeActions(rule.actions));
-            console.debug(
-                `Push Rule (${rule.kind}:${rule.rule_id}) actions changed from ${originalActions} to ${newActions}`,
-            );
-        }
+        const enabledChanged = rule.enabled !== undefined && rule.enabled !== original?.enabled;
+        const actionsChanged = rule.actions !== undefined && !deepCompare(rule.actions, original?.actions);
         if (enabledChanged || actionsChanged) {
             changes.updated.push(rule);
         }
@@ -201,7 +189,7 @@ export function reconcileNotificationSettings(
     const contentRules = pushRules.global.content?.filter((rule) => !rule.rule_id.startsWith(".")) ?? [];
     const newKeywords = new Set(model.keywords);
     for (const rule of contentRules) {
-        if (!newKeywords.has(rule.pattern)) {
+        if (!newKeywords.has(rule.pattern!)) {
             changes.deleted.push({
                 rule_id: rule.rule_id,
                 kind: PushRuleKind.ContentSpecific,

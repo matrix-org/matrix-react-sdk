@@ -22,7 +22,7 @@ export function buildPushRuleMap(rulesets: IPushRules): PushRuleMap {
     const rules = new Map<RuleId | string, IAnnotatedPushRule>();
 
     for (const kind of Object.values(PushRuleKind)) {
-        for (const rule of rulesets.global[kind]) {
+        for (const rule of rulesets.global[kind] ?? []) {
             if (rule.rule_id.startsWith(".")) {
                 rules.set(rule.rule_id, { ...rule, kind });
             }

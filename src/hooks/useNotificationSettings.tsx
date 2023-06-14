@@ -66,11 +66,13 @@ export function useNotificationSettings(cli: MatrixClient): UseNotificationSetti
 
     const reconcile = useCallback(
         (model: NotificationSettings) => {
-            setModel(model);
-            const changes = reconcileNotificationSettings(pushRules.current, model, supportsIntentionalMentions);
-            applyChanges(cli, changes)
-                .then(updatePushRules)
-                .catch((err) => console.error(err));
+            if (pushRules.current !== null) {
+                setModel(model);
+                const changes = reconcileNotificationSettings(pushRules.current, model, supportsIntentionalMentions);
+                applyChanges(cli, changes)
+                    .then(updatePushRules)
+                    .catch((err) => console.error(err));
+            }
         },
         [cli, updatePushRules, supportsIntentionalMentions],
     );
