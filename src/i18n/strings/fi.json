@@ -3429,5 +3429,10 @@
     "Database unexpectedly closed": "Tietokanta sulkeutui odottamattomasti",
     "Identity server not set": "Identiteettipalvelinta ei ole asetettu",
     "Set a new account password…": "Aseta uusi tilin salasana…",
-    "User is not logged in": "Käyttäjä ei ole sisäänkirjautunut"
+    "User is not logged in": "Käyttäjä ei ole sisäänkirjautunut",
+    "Room directory": "Huoneluettelo",
+    "Encrypting your message…": "Salataan viestiäsi…",
+    "Joining space…": "Liitytään avaruuteen…",
+    "Sending your message…": "Lähetetään viestiäsi…",
+    "Error details": "Virheen tiedot"
 }
