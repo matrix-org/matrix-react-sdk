@@ -981,7 +981,6 @@
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "ניקוי כל הנתונים מהפגישה זו הוא קבוע. הודעות מוצפנות יאבדו אלא אם כן גובו על המפתחות שלהן.",
     "Clear all data in this session?": "למחוק את כל הנתונים בפגישה זו?",
     "Reason (optional)": "סיבה (לא חובה)",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "האם אתה בטוח שברצונך להסיר (למחוק) אירוע זה? שים לב שאם תמחק שם של חדר או שינוי נושא, זה עלול לבטל את השינוי.",
     "Confirm Removal": "אשר הסרה",
     "Removing…": "מסיר…",
     "Skip": "דלג",

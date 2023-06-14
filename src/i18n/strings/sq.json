@@ -522,7 +522,6 @@
     "Not a valid %(brand)s keyfile": "S’është kartelë kyçesh %(brand)s e vlefshme",
     "Historical": "Të dikurshme",
     "Please review and accept all of the homeserver's policies": "Ju lutemi, shqyrtoni dhe pranoni krejt rregullat e këtij shërbyesi home",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Jeni i sigurt se doni të hiqet (fshihet) ky akt? Mbani parasysh se nëse fshini emrin e një dhome ose ndryshimin e temës, kjo mund të sjellë zhbërjen e ndryshimit.",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Që të shmanget humbja e historikut të fjalosjes tuaj, duhet të eksportoni kyçet e dhomës tuaj përpara se të dilni nga llogari. Që ta bëni këtë, duhe të riktheheni te versioni më i ri i %(brand)s-it",
     "Incompatible Database": "Bazë të dhënash e Papërputhshme",
     "Continue With Encryption Disabled": "Vazhdo Me Fshehtëzimin të Çaktivizuar",

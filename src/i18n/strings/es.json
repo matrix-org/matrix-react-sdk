@@ -454,7 +454,6 @@
     "<a>In reply to</a> <pill>": "<a>Respondiendo a </a> <pill>",
     "And %(count)s more...|other": "Y %(count)s más…",
     "Confirm Removal": "Confirmar eliminación",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "¿Seguro que quieres eliminar este evento? Ten en cuenta que, si borras un cambio de nombre o asunto de sala, podrías deshacer el cambio.",
     "Create": "Crear",
     "Clear Storage and Sign Out": "Borrar almacenamiento y cerrar sesión",
     "Send Logs": "Enviar Registros",
