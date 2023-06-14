@@ -185,6 +185,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
             <EmoteSettingsTab roomId={this.props.roomId} />,
             "RoomSettingsNotifications",
         ));
+        
         if (SettingsStore.getValue("feature_bridge_state")) {
             tabs.push(
                 new Tab(

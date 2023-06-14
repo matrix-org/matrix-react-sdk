@@ -35,6 +35,7 @@ import { TimelineRenderingType } from "../contexts/RoomContext";
 import * as recent from "../emojipicker/recent";
 import { decryptFile } from "../utils/DecryptFile";
 import { mediaFromMxc } from "../customisations/Media";
+import { MatrixClient } from "matrix-js-sdk/src/client";
 
 const LIMIT = 20;
 
@@ -105,9 +106,8 @@ export default class EmojiProvider extends AutocompleteProvider {
 
     private async decryptEmotes(emotes: Object, roomId: string) {
         const decryptedEmoteMap=new Map<string, string>();
-        const client = MatrixClientPeg.get();
         let decryptedurl = "";
-        const isEnc=client.isRoomEncrypted(roomId);
+        const isEnc=MatrixClientPeg.get().isRoomEncrypted(roomId);
         for (const shortcode in emotes) {
             if (isEnc) {
                 const blob = await decryptFile(emotes[shortcode]);
@@ -202,7 +202,7 @@ export default class EmojiProvider extends AutocompleteProvider {
             return completions.map(c => ({
                 completion: this.emotes[c.emoji.hexcode]? c.emoji.hexcode:c.emoji.unicode,
                 component: (
-                    <PillCompletion isEmote={this.emotes[c.emoji.hexcode]?true:false} title={this.emotes[c.emoji.hexcode]? c.emoji.unicode:c.emoji.shortcodes[0]} aria-label={c.emoji.unicode}>
+                    <PillCompletion isEmote={this.emotes[c.emoji.hexcode]?true:false} title={this.emotes[c.emoji.hexcode]? c.emoji.unicode:`:${c.emoji.shortcodes[0]}:`} aria-label={c.emoji.unicode}>
                         <span>{ this.emotes[c.emoji.hexcode]? c.emoji.hexcode:c.emoji.unicode }</span>
                     </PillCompletion>
                 ),

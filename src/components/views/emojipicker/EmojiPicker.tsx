@@ -108,14 +108,14 @@ class EmojiPicker extends React.Component<IProps, IState> {
         this.categories = [{
             id: "recent",
             name: _t("Frequently Used"),
-            enabled: true,
-            visible: true,
+            enabled: this.recentlyUsed.length > 0,
+            visible: this.recentlyUsed.length > 0,
             ref: React.createRef(),
         },{
             id: "custom",
             name: _t("Custom"),
             enabled: true,
-            visible: true,
+            visible: this.finalEmotes.length > 0,
             ref: React.createRef(),
         },{
             id: "people",
@@ -214,9 +214,8 @@ class EmojiPicker extends React.Component<IProps, IState> {
 
     private async decryptEmotes(emotes: Object, roomId: string) {
         const decryptedemotes=new Map<string, React.Component>();
-        const client = MatrixClientPeg.get();
         let decryptedurl = "";
-        const isEnc=client.isRoomEncrypted(roomId);
+        const isEnc=MatrixClientPeg.get().isRoomEncrypted(roomId);
         for (const shortcode in emotes) {
             if (isEnc) {
                 const blob = await decryptFile(emotes[shortcode]);
