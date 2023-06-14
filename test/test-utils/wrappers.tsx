@@ -59,6 +59,10 @@ export function wrapInSdkContext<T>(
     };
 }
 
+/**
+ * Test helper to generate React testing library render options for wrapping with a MatrixClientContext.Provider
+ * @param client the MatrixClient instance to expose via the provider
+ */
 export function withClientContextRenderOptions(client: MatrixClient): RenderOptions {
     return {
         wrapper: ({ children }) => (
