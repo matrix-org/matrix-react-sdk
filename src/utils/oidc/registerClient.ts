@@ -21,6 +21,12 @@ import { ValidatedIssuerConfig } from "matrix-js-sdk/src/oidc/validate";
 
 import { OidcClientError } from "./error";
 
+export type OidcRegistrationClientMetadata = {
+    clientName: string;
+    clientUri: string;
+    redirectUris: string[];
+};
+
 /**
  * Make the client registration request
  * @param registrationEndpoint URL as configured on ValidatedServerConfig
