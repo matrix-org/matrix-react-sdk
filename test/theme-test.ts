@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { SpyInstance } from "jest-mock";
 import { setTheme } from "../src/theme";
 
 describe("theme", () => {
@@ -22,7 +23,7 @@ describe("theme", () => {
         let darkTheme: HTMLStyleElement;
 
         let spyQuerySelectorAll: jest.MockInstance<NodeListOf<Element>, [selectors: string]>;
-        let spyClassList: jest.MockInstance<string[], [void]>;
+        let spyClassList: SpyInstance<void, string[], any>;
 
         beforeEach(() => {
             const styles = [
