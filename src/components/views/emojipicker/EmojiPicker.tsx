@@ -119,7 +119,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
             id: "custom",
             name: _t("Custom"),
             enabled: true,
-            visible: this.finalEmotes.length > 0,
+            visible: true,
             ref: React.createRef(),
         },{
             id: "people",
