@@ -196,6 +196,7 @@ export function attemptTokenLogin(
     defaultDeviceDisplayName?: string,
     fragmentAfterLogin?: string,
 ): Promise<boolean> {
+    debugger;
     if (!queryParams.loginToken) {
         return Promise.resolve(false);
     }
