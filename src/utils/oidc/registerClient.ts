@@ -27,7 +27,9 @@ import { OidcClientError } from "./error";
  * @returns clientId if found, otherwise undefined
  */
 const getStaticOidcClientId = (issuer: string, staticOidcClients?: Record<string, string>): string | undefined => {
-    return staticOidcClients?.[issuer];
+    // static_oidc_clients are configured with a trailing slash
+    const issuerWithTrailingSlash = issuer.endsWith("/") ? issuer : issuer + "/";
+    return staticOidcClients?.[issuerWithTrailingSlash];
 };
 
 /**
