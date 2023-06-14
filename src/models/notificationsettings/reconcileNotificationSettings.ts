@@ -94,8 +94,8 @@ function toStandardRules(
     standardRules.set(RuleId.MemberEvent, {
         rule_id: RuleId.MemberEvent,
         kind: PushRuleKind.Override,
-        enabled: model.activity.status_event,
-        actions: StandardActions.ACTION_NOTIFY,
+        enabled: true,
+        actions: model.activity.status_event ? StandardActions.ACTION_NOTIFY : StandardActions.ACTION_DONT_NOTIFY,
     });
 
     const mentionActions = NotificationUtils.encodeActions({
@@ -125,9 +125,7 @@ function toStandardRules(
         actions: userMentionActions,
     });
 
-    const roomMentionActions = model.mentions.room
-        ? StandardActions.ACTION_HIGHLIGHT
-        : StandardActions.ACTION_DONT_NOTIFY;
+    const roomMentionActions = model.mentions.room ? StandardActions.ACTION_NOTIFY : StandardActions.ACTION_DONT_NOTIFY;
     if (supportsIntentionalMentions) {
         standardRules.set(RuleId.IsRoomMention, {
             rule_id: RuleId.IsRoomMention,
@@ -147,7 +145,7 @@ function toStandardRules(
         rule_id: RuleId.Tombstone,
         kind: PushRuleKind.Override,
         enabled: model.activity.status_event,
-        actions: StandardActions.ACTION_NOTIFY,
+        actions: StandardActions.ACTION_HIGHLIGHT,
     });
 
     standardRules.set(RuleId.IncomingCall, {
@@ -179,9 +177,21 @@ export function reconcileNotificationSettings(
 
     for (const rule of newRules.values()) {
         const original = oldRules.get(rule.rule_id);
-        const enabledChanged = rule.enabled !== undefined && rule.enabled !== original?.enabled;
-        const actionsChanged = rule.actions !== undefined && !deepCompare(rule.actions, original?.actions);
-        if (enabledChanged || actionsChanged) {
+        let changed = false;
+        if (original === undefined) {
+            changed = true;
+        } else if (rule.enabled !== undefined && rule.enabled !== original.enabled) {
+            changed = true;
+        } else if (rule.actions !== undefined) {
+            const originalActions = NotificationUtils.decodeActions(original.actions);
+            const actions = NotificationUtils.decodeActions(rule.actions);
+            if (originalActions === null || actions === null) {
+                changed = true;
+            } else if (!deepCompare(actions, originalActions)) {
+                changed = true;
+            }
+        }
+        if (changed) {
             changes.updated.push(rule);
         }
     }

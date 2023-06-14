@@ -22,6 +22,9 @@ import { NotificationSettings } from "./NotificationSettings";
 import { buildPushRuleMap } from "./PushRuleMap";
 
 function shouldNotify(rules: (IPushRule | null | undefined | false)[]): boolean {
+    if (rules.length === 0) {
+        return true;
+    }
     for (const rule of rules) {
         if (rule === null || rule === undefined || rule === false || !rule.enabled) {
             continue;
