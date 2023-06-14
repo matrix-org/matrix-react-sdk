@@ -211,7 +211,7 @@ export function reconcileNotificationSettings(
                 enabled: model.mentions.keywords,
             });
         }
-        newKeywords.delete(rule.pattern);
+        newKeywords.delete(rule.pattern!);
     }
     for (const keyword of newKeywords) {
         changes.added.push({

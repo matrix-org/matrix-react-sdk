@@ -30,20 +30,20 @@ function shouldNotify(rules: (IPushRule | null | undefined | false)[]): boolean 
             continue;
         }
         const actions = NotificationUtils.decodeActions(rule.actions);
-        if (actions.notify) {
+        if (actions !== null && actions.notify) {
             return true;
         }
     }
     return false;
 }
 
-function determineSound(rules: (IPushRule | null | undefined | false)[]): string | null {
+function determineSound(rules: (IPushRule | null | undefined | false)[]): string | undefined {
     for (const rule of rules) {
         if (rule === null || rule === undefined || rule === false || !rule.enabled) {
             continue;
         }
         const actions = NotificationUtils.decodeActions(rule.actions);
-        if (actions.notify && actions.sound !== undefined) {
+        if (actions !== null && actions.notify && actions.sound !== undefined) {
             return actions.sound;
         }
     }
@@ -90,6 +90,6 @@ export function toNotificationSettings(
             ]),
             keywords: shouldNotify(contentRules),
         },
-        keywords: contentRules.map((it) => it.pattern),
+        keywords: contentRules.map((it) => it.pattern!),
     };
 }
