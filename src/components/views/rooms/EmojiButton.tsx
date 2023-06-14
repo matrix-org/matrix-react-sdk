@@ -52,7 +52,7 @@ export function EmojiButton({ addEmoji, menuPosition, className, room }: IEmojiB
                 }}
                 managed={false}
             >
-                <EmojiPicker onChoose={addEmoji} showQuickReactions={true} room = {room} />
+                <EmojiPicker onChoose={addEmoji} onFinished={onFinished} room = {room} />
             </ContextMenu>
         );
     }

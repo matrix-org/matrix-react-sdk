@@ -86,7 +86,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
                     onClick={props.onComposerModeClick}
                 />
             ) : (
-                emojiButton(props)
+                emojiButton(props,room)
             ),
         ];
         moreButtons = [
@@ -106,7 +106,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
                     onClick={props.onComposerModeClick}
                 />
             ) : (
-                emojiButton(props)
+                emojiButton(props,room)
             ),
             uploadButton(), // props passed via UploadButtonContext
         ];

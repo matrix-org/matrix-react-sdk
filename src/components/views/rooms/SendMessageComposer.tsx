@@ -41,7 +41,7 @@ import { CommandPartCreator, Part, PartCreator, SerializedPart, Type } from "../
 import { findEditableEvent } from "../../../utils/EventUtils";
 import SendHistoryManager from "../../../SendHistoryManager";
 import { CommandCategories } from "../../../SlashCommands";
-import ContentMessages, { uploadFile } from "../../../ContentMessages";
+import ContentMessages from "../../../ContentMessages";
 import { withMatrixClientHOC, MatrixClientProps } from "../../../contexts/MatrixClientContext";
 import { Action } from "../../../dispatcher/actions";
 import { containsEmoji } from "../../../effects/utils";
