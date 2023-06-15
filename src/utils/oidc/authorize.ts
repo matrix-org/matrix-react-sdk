@@ -16,6 +16,7 @@ limitations under the License.
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { randomString } from "matrix-js-sdk/src/randomstring";
+
 import { ValidatedServerConfig } from "../ValidatedServerConfig";
 
 type AuthorizationParams = {
@@ -48,6 +49,13 @@ const generateCodeChallenge = async (codeVerifier: string): Promise<string> => {
         .replace(/\//g, "_");
 };
 
+/**
+ * Store authorization params for retrieval when returning from OIDC OP
+ * @param { AuthorizationParams } authorizationParams
+ * @param { ValidatedServerConfig["delegatedAuthentication"] } delegatedAuthConfig used for future interactions with OP
+ * @param clientId this client's id as registered with configured issuer
+ * @param homeserver target homeserver
+ */
 const storeAuthorizationParams = async (
     { redirectUri, state, nonce, codeVerifier }: AuthorizationParams,
     { issuer }: ValidatedServerConfig["delegatedAuthentication"],
@@ -88,18 +96,21 @@ const generateAuthorizationUrl = async (
     url.searchParams.append("client_id", clientId);
     url.searchParams.append("state", state);
     url.searchParams.append("scope", scope);
-    if (nonce) {
-        url.searchParams.append("nonce", nonce);
-    }
+    url.searchParams.append("nonce", nonce);
 
-    if (codeVerifier) {
-        url.searchParams.append("code_challenge_method", "S256");
-        url.searchParams.append("code_challenge", await generateCodeChallenge(codeVerifier));
-    }
+    url.searchParams.append("code_challenge_method", "S256");
+    url.searchParams.append("code_challenge", await generateCodeChallenge(codeVerifier));
 
     return url.toString();
 };
 
+/**
+ * Start OIDC authorization code flow
+ * Navigates to configured authorization endpoint
+ * @param delegatedAuthConfig from discovery
+ * @param clientId this client's id as registered with configured issuer
+ * @param homeserver target homeserver
+ */
 export const startOidcLogin = async (
     delegatedAuthConfig: ValidatedServerConfig["delegatedAuthentication"],
     clientId: string,

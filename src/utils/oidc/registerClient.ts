@@ -115,9 +115,8 @@ const registerOidcClient = async (
  * @returns clientId if found, otherwise undefined
  */
 const getStaticOidcClientId = (issuer: string, staticOidcClients?: Record<string, string>): string | undefined => {
-    console.log('hhh getStaticClient', issuer, staticOidcClients);
     // static_oidc_clients are configured with a trailing slash
-    const issuerWithTrailingSlash = issuer.endsWith('/') ? issuer : issuer + '/';
+    const issuerWithTrailingSlash = issuer.endsWith("/") ? issuer : issuer + "/";
     return staticOidcClients?.[issuerWithTrailingSlash];
 };
 
