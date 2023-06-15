@@ -444,6 +444,10 @@ describe("TextForEvent", () => {
         it("returns correct message for normal message", () => {
             expect(textForEvent(messageEvent, mockClient)).toEqual("@a: test message");
         });
+
+        it("returns sender name enclosed with < >", () => {
+            expect(textForEvent(messageEvent, mockClient, true, true)).toEqual("<@a>: test message");
+        });
     });
 
     describe("textForCallEvent()", () => {
