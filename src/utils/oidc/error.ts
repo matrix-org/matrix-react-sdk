@@ -14,6 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * OIDC error strings, intended for logging
+ */
 export enum OidcClientError {
     DynamicRegistrationNotSupported = "Dynamic registration not supported",
     DynamicRegistrationFailed = "Dynamic registration failed",
