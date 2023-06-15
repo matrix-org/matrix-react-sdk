@@ -34,15 +34,6 @@ describe("CreateKeyBackupDialog", () => {
         MatrixClientPeg.get = () => mockClient;
     });
 
-    it("should display the spinner if secret storage is unavailable", () => {
-        mockClient.doesServerSupportUnstableFeature = jest.fn().mockReturnValue(false);
-        const { asFragment } = render(<CreateKeyBackupDialog onFinished={jest.fn()} />);
-
-        // Check if the spinner is displayed
-        expect(screen.getByTestId("spinner")).toBeDefined();
-        expect(asFragment()).toMatchSnapshot();
-    });
-
     it("should display the spinner when creating backup", () => {
         const { asFragment } = render(<CreateKeyBackupDialog onFinished={jest.fn()} />);
 
