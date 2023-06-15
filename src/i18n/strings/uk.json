@@ -2378,7 +2378,6 @@
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Це дає змогу імпортувати ключі шифрування, які ви раніше експортували з іншого клієнта Matrix. Тоді ви зможете розшифрувати будь-які повідомлення, які міг розшифровувати той клієнт.",
     "Import room keys": "Імпортувати ключі кімнат",
     "Confirm passphrase": "Підтвердьте парольну фразу",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Точно вилучити (видалити) цю подію? Зауважте, видалення зміни назви чи теми кімнати може скасувати цю зміну.",
     "Decide where your account is hosted": "Оберіть, де розмістити ваш обліковий запис",
     "Host account on": "Розмістити обліковий запис на",
     "Could not load user profile": "Не вдалося звантажити профіль користувача",
@@ -3505,7 +3504,6 @@
     "Requires compatible homeserver.": "Потрібен сумісний домашній сервер.",
     "Low bandwidth mode": "Режим низької пропускної спроможності",
     "Under active development.": "У стадії активної розробки.",
-    "Favourite Messages": "Обрані повідомлення",
     "Temporary implementation. Locations persist in room history.": "Тимчасова реалізація. Місце перебування зберігається в історії кімнати.",
     "Live Location Sharing": "Надсилання місця перебування наживо",
     "Under active development, cannot be disabled.": "На стадії активної розробки, вимкнути не можна.",
@@ -3749,5 +3747,6 @@
     "Your device ID": "ID вашого пристрою",
     "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Як альтернативу, ви можете спробувати публічний сервер на <server/>, але він не буде надто надійним, а також поширюватиме вашу IP-адресу на тому сервері. Ви також можете керувати цим у налаштуваннях.",
     "Try using %(server)s": "Спробуйте використати %(server)s",
-    "User is not logged in": "Користувач не увійшов"
+    "User is not logged in": "Користувач не увійшов",
+    "Allow fallback call assist server (%(server)s)": "Дозволити резервний сервер підтримки викликів (%(server)s)"
 }

@@ -347,7 +347,6 @@
     "%(items)s and %(lastItem)s": "%(items)s a také %(lastItem)s",
     "And %(count)s more...|other": "A %(count)s dalších...",
     "Confirm Removal": "Potvrdit odstranění",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Opravdu chcete odstranit (smazat) tuto událost? V případě, že smažete název místnosti anebo změníte téma, je možné, že se změny neprovedou.",
     "Unknown error": "Neznámá chyba",
     "Incorrect password": "Nesprávné heslo",
     "Unable to restore session": "Nelze obnovit relaci",
@@ -431,7 +430,7 @@
     "Search…": "Hledat…",
     "Back": "Zpět",
     "Reply": "Odpovědět",
-    "Show message in desktop notification": "Zobrazovat zprávu v oznámení na ploše",
+    "Show message in desktop notification": "Zobrazit text zprávy v oznámení na ploše",
     "Messages in group chats": "Zprávy ve skupinách",
     "Yesterday": "Včera",
     "Error encountered (%(errorDetail)s).": "Nastala chyba (%(errorDetail)s).",
@@ -3506,7 +3505,6 @@
     "Requires compatible homeserver.": "Vyžaduje kompatibilní domovský server.",
     "Low bandwidth mode": "Režim malé šířky pásma",
     "Under active development.": "V aktivním vývoji.",
-    "Favourite Messages": "Oblíbené zprávy",
     "Temporary implementation. Locations persist in room history.": "Dočasná implementace. Polohy zůstanou v historii místností.",
     "Live Location Sharing": "Sdílení polohy živě",
     "Under active development, cannot be disabled.": "V aktivním vývoji, nelze zakázat.",
@@ -3750,5 +3748,6 @@
     "User is not logged in": "Uživatel není přihlášen",
     "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Případně můžete zkusit použít veřejný server na adrese <server/>, ale ten nebude tak spolehlivý a bude sdílet vaši IP adresu s tímto serverem. Můžete to spravovat také v Nastavení.",
     "Allow fallback call assist server (%(server)s)": "Povolit záložní asistenční server hovorů (%(server)s)",
-    "Try using %(server)s": "Zkuste použít %(server)s"
+    "Try using %(server)s": "Zkuste použít %(server)s",
+    "Enable new native OIDC flows (Under active development)": "Povolit nové původní toky OIDC (ve fázi aktivního vývoje)"
 }
