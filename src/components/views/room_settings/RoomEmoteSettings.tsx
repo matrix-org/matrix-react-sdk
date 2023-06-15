@@ -186,9 +186,9 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                     if (this.state.compatibility) {
                         if (client.isRoomEncrypted(this.props.roomId)) {
                             const compatNewEmote = await client.uploadContent(this.state.newEmoteFile[i]);
-                            newPack["images"].set(this.state.newEmoteCode[i], { url: compatNewEmote.content_uri });
+                            newPack["images"][this.state.newEmoteCode[i]] = { url: compatNewEmote.content_uri };
                         } else {
-                            newPack["images"].set(this.state.newEmoteCode[i], { url: newEmote.url });
+                            newPack["images"][this.state.newEmoteCode[i]] = { url: newEmote.url };
                         }
                     }
                 }
@@ -206,15 +206,15 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                         emotesMxcs[this.state.EmoteFieldsTouched[shortcode]] = val;
                         value.set(this.state.EmoteFieldsTouched[shortcode], this.state.EmoteFieldsTouched[shortcode]);
                         if (this.imagePack["images"][shortcode]) {
-                            newPack["images"].set(this.state.EmoteFieldsTouched[shortcode], {
+                            newPack["images"][this.state.EmoteFieldsTouched[shortcode]] = {
                                 url: this.imagePack["images"][shortcode]["url"],
-                            });
+                            };
                         }
                     } else {
                         emotesMxcs[shortcode] = val;
                         value.set(shortcode, shortcode);
                         if (this.imagePack["images"].get(shortcode)) {
-                            newPack["images"].set(shortcode, { url: this.imagePack["images"][shortcode]["url"] });
+                            newPack["images"][shortcode] = { url: this.imagePack["images"][shortcode]["url"] };
                         }
                     }
                 }
@@ -309,9 +309,9 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                     if (client.isRoomEncrypted(this.props.roomId)) {
                         const blob = await decryptFile(val as IEncryptedFile);
                         const uploadedEmote = await client.uploadContent(blob);
-                        this.imagePack["images"].set(shortcode, { url: uploadedEmote.content_uri });
+                        this.imagePack["images"][shortcode] = { url: uploadedEmote.content_uri };
                     } else {
-                        this.imagePack["images"].set(shortcode, { url: val });
+                        this.imagePack["images"][shortcode] = { url: val };
                     }
                 }
             }
