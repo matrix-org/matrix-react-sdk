@@ -257,7 +257,6 @@
     "Reject all %(invitedRooms)s invites": "拒絕所有 %(invitedRooms)s 邀請",
     "Failed to invite": "無法邀請",
     "Confirm Removal": "確認刪除",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "您確定您想要移除（刪除）此活動嗎？注意，若您刪除聊天室名稱或主題的變更，變更會被復原。",
     "Unknown error": "未知的錯誤",
     "Incorrect password": "不正確的密碼",
     "Unable to restore session": "無法復原工作階段",

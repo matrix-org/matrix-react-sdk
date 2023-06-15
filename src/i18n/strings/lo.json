@@ -2983,7 +2983,6 @@
     "Legal": "ຖືກກົດໝາຍ",
     "Clear all data in this session?": "ລຶບລ້າງຂໍ້ມູນທັງໝົດໃນລະບົບນີ້ບໍ?",
     "Reason (optional)": "ເຫດຜົນ (ທາງເລືອກ)",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "ທ່ານແນ່ໃຈບໍ່ວ່າ ທ່ານຕ້ອງການເອົາ (ລຶບ) ເຫດການນີ້ອອກ? ກະລຸນາຮັບຊາບວ່າຖ້າທ່ານລຶບຊື່ຫ້ອງ ຫຼືການປ່ຽນຫົວຂໍ້, ມັນສາມາດຍົກເລີກການປ່ຽນແປງໄດ້.",
     "Confirm Removal": "ຢືນຢັນການລຶບອອກ",
     "Removing…": "ກຳລັງລຶບ…",
     "You cannot delete this message. (%(code)s)": "ທ່ານບໍ່ສາມາດລຶບຂໍ້ຄວາມນີ້ໄດ້. (%(code)s)",

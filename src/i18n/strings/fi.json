@@ -299,7 +299,6 @@
     "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
     "were unbanned %(count)s times|other": "vapautettiin porttikiellosta %(count)s kertaa",
     "And %(count)s more...|other": "Ja %(count)s muuta...",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Oletko varma että haluat poistaa tämän tapahtuman? Huomaa että jos poistat huoneen nimen tai aiheen muutoksen, saattaa muutos kumoutua.",
     "Leave": "Poistu",
     "Description": "Kuvaus",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Huomaa että olet kirjautumassa palvelimelle %(hs)s, etkä palvelimelle matrix.org.",
@@ -3428,5 +3427,12 @@
     "Reload": "Lataa uudelleen",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Tämä voi johtua siitä, että sovellus on auki useissa välilehdissä tai selaimen tietojen tyhjentämisestä.",
     "Database unexpectedly closed": "Tietokanta sulkeutui odottamattomasti",
-    "Identity server not set": "Identiteettipalvelinta ei ole asetettu"
+    "Identity server not set": "Identiteettipalvelinta ei ole asetettu",
+    "Set a new account password…": "Aseta uusi tilin salasana…",
+    "User is not logged in": "Käyttäjä ei ole sisäänkirjautunut",
+    "Room directory": "Huoneluettelo",
+    "Encrypting your message…": "Salataan viestiäsi…",
+    "Joining space…": "Liitytään avaruuteen…",
+    "Sending your message…": "Lähetetään viestiäsi…",
+    "Error details": "Virheen tiedot"
 }
