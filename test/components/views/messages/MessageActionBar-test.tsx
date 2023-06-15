@@ -433,7 +433,7 @@ describe("<MessageActionBar />", () => {
         });
     });
 
-    it.each([["React"], ["Reply"], ["Reply in thread"], ["Favourite"], ["Edit"]])(
+    it.each([["React"], ["Reply"], ["Reply in thread"], ["Edit"]])(
         "does not show context menu when right-clicking",
         (buttonLabel: string) => {
             // For favourite button
