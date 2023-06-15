@@ -28,8 +28,8 @@ export interface IEmoji {
     unicode: string;
     skins?: Omit<IEmoji, "shortcodes" | "tags">[]; // Currently unused
     emoticon?: string | string[];
-    customLabel?:string;
-    customComponent?:React.Component;
+    customLabel?: string;
+    customComponent?: React.Component;
 }
 
 // The unicode is stored without the variant selector

@@ -50,11 +50,11 @@ import { getParentEventId } from "../../../utils/Reply";
 import { EditWysiwygComposer } from "../rooms/wysiwyg_composer";
 import { IEventTileOps } from "../rooms/EventTile";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { decryptFile } from '../../../utils/DecryptFile';
-import { mediaFromMxc } from '../../../customisations/Media';
+import { decryptFile } from "../../../utils/DecryptFile";
+import { mediaFromMxc } from "../../../customisations/Media";
 
 const MAX_HIGHLIGHT_LENGTH = 4096;
-const EMOTES_STATE=new UnstableValue("org.matrix.msc3892.emotes","m.room.emotes")
+const EMOTES_STATE = new UnstableValue("org.matrix.msc3892.emotes", "m.room.emotes");
 
 interface IState {
     // the URLs (if any) to be previewed with a LinkPreviewWidget inside this TextualBody.
@@ -92,7 +92,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
     }
 
     private applyFormatting(): void {
-        if(MatrixClientPeg.get()?.getRoom(this.props.mxEvent.getRoomId())){
+        if (MatrixClientPeg.get()?.getRoom(this.props.mxEvent.getRoomId())) {
             this.decryptEmotes();
         }
         const content = this.contentRef.current!;
@@ -572,17 +572,14 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         }
         return <span className="mx_EventTile_pendingModeration">{`(${text})`}</span>;
     }
-    private async decryptEmotes() {
+    private async decryptEmotes(): Promise<void> {
         const client = MatrixClientPeg.get();
         const room = client.getRoom(this.props.mxEvent.getRoomId());
         const emotesEvent = room?.currentState.getStateEvents(EMOTES_STATE.name, "");
-        const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
-        const decryptedemotes=new Map<string, string>;
-        let decryptedurl="";
-        if(!room){
-            return
-        }
-        const isEnc=client?.isRoomEncrypted(this.props.mxEvent.getRoomId());
+        const rawEmotes = emotesEvent ? emotesEvent.getContent() || {} : {};
+        const decryptedemotes = new Map<string, string>();
+        let decryptedurl = "";
+        const isEnc = client?.isRoomEncrypted(this.props.mxEvent.getRoomId());
         for (const shortcode in rawEmotes) {
             if (isEnc) {
                 const blob = await decryptFile(rawEmotes[shortcode]);
@@ -591,15 +588,21 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                 decryptedurl = mediaFromMxc(rawEmotes[shortcode])?.srcHttp;
             }
 
-            decryptedemotes.set(":" + shortcode + ":", "<img class='mx_Emote' title=':"+shortcode.replace(/[^a-zA-Z0-9_]/g, "")+
-                  ":' src='" + decryptedurl + "'/>");
+            decryptedemotes.set(
+                ":" + shortcode + ":",
+                "<img class='mx_Emote' title=':" +
+                    shortcode.replace(/[^a-zA-Z0-9_]/g, "") +
+                    ":' src='" +
+                    decryptedurl +
+                    "'/>",
+            );
         }
         this.setState({
             finalEmotes: decryptedemotes,
         });
         this.forceUpdate();
     }
-    render() {
+    public render(): React.ReactNode {
         if (this.props.editState) {
             const isWysiwygComposerEnabled = SettingsStore.getValue("feature_wysiwyg_composer");
             return isWysiwygComposerEnabled ? (
@@ -622,7 +625,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             stripReplyFallback: stripReply,
             ref: this.contentRef,
             returnString: false,
-            emotes:this.state.finalEmotes
+            emotes: this.state.finalEmotes,
         });
         if (this.props.replacingEventId) {
             body = (

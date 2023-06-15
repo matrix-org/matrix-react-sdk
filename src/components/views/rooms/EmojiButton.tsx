@@ -28,10 +28,10 @@ interface IEmojiButtonProps {
     addEmoji: (unicode: string) => boolean;
     menuPosition?: MenuProps;
     className?: string;
-    room?: Room,
+    room?: Room;
 }
 
-export function EmojiButton({ addEmoji, menuPosition, className, room }: IEmojiButtonProps) {
+export function EmojiButton({ addEmoji, menuPosition, className }: IEmojiButtonProps): JSX.Element {
     const overflowMenuCloser = useContext(OverflowMenuContext);
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 

@@ -58,7 +58,7 @@ const BIGEMOJI_REGEX = new RegExp(`^(${EMOJIBASE_REGEX.source})+$`, "i");
 
 const COLOR_REGEX = /^#[0-9a-fA-F]{6}$/;
 
-const CUSTOM_EMOTES_REGEX =/:[\w+-]+:/g;
+const CUSTOM_EMOTES_REGEX = /:[\w+-]+:/g;
 
 export const PERMITTED_URL_SCHEMES = [
     "bitcoin",
@@ -496,7 +496,6 @@ export function formatEmojis(message: string | undefined, isHtmlMessage: boolean
     return result;
 }
 
-
 /* turn a matrix event body into html
  *
  * content: 'content' of the MatrixEvent
@@ -551,9 +550,14 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
                 // are interrupted by HTML tags (not that we did before) - e.g. foo<span/>bar won't get highlighted
                 // by an attempt to search for 'foobar'.  Then again, the search query probably wouldn't work either
                 // XXX: hacky bodge to temporarily apply a textFilter to the sanitizeParams structure.
-                sanitizeParams.textFilter = function(safeText) {
-                    return highlighter.applyHighlights(safeText, safeHighlights).join('')
-                        .replace(CUSTOM_EMOTES_REGEX, m => opts.emotes.get(m) ? opts.emotes.get(m) : m);
+                sanitizeParams.textFilter = function (safeText) {
+                    if (opts.emotes) {
+                        return highlighter
+                            .applyHighlights(safeText, safeHighlights)
+                            .join("")
+                            .replace(CUSTOM_EMOTES_REGEX, (m) => (opts.emotes.get(m) ? opts.emotes.get(m) : m));
+                    }
+                    return highlighter.applyHighlights(safeText, safeHighlights).join("");
                 };
             }
 
@@ -620,17 +624,18 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         "mx_EventTile_bigEmoji": emojiBody,
         "markdown-body": isHtmlMessage && !emojiBody,
     });
-    const tmp = strippedBody?.replace(CUSTOM_EMOTES_REGEX, m => opts.emotes.get(m) ? opts.emotes.get(m) : m);
-    if (tmp !== strippedBody) {
-        safeBody=tmp;
+    if (opts.emotes) {
+        const tmp = strippedBody?.replace(CUSTOM_EMOTES_REGEX, (m) => (opts.emotes.get(m) ? opts.emotes.get(m) : m));
+        if (tmp !== strippedBody) {
+            safeBody = tmp;
+        }
     }
-
     let emojiBodyElements: JSX.Element[];
     if (!safeBody && bodyHasEmoji) {
         emojiBodyElements = formatEmojis(strippedBody, false) as JSX.Element[];
     }
 
-    return safeBody ? 
+    return safeBody ? (
         <span
             key="body"
             ref={opts.ref}
@@ -638,11 +643,11 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
             dangerouslySetInnerHTML={{ __html: safeBody }}
             dir="auto"
         />
-     : 
+    ) : (
         <span key="body" ref={opts.ref} className={className} dir="auto">
             {emojiBodyElements || strippedBody}
         </span>
-    ;
+    );
 }
 
 /**

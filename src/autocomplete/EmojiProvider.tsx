@@ -83,14 +83,18 @@ export default class EmojiProvider extends AutocompleteProvider {
     public matcher: QueryMatcher<ISortedEmoji>;
     public nameMatcher: QueryMatcher<ISortedEmoji>;
     private readonly recentlyUsed: IEmoji[];
-    private emotes: Map<string, string>=new Map();
-    private emotesPromise: Promise<Map<string, string>>;
-    constructor(room: Room, renderingType?: TimelineRenderingType) {
+    private emotes: Map<string, Object> = new Map();
+    private emotesPromise: Promise<Map<string, Object>>;
+    public constructor(room: Room, renderingType?: TimelineRenderingType) {
         super({ commandRegex: EMOJI_REGEX, renderingType });
         const emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
-        const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
-        if(room){
-            this.emotesPromise = this.decryptEmotes(rawEmotes as Map<string,Object>, room?.roomId);
+        const rawEmotes = emotesEvent ? emotesEvent.getContent() || {} : {};
+        const emotesMap = new Map();
+        for (const shortcode in rawEmotes) {
+            emotesMap.set(shortcode, rawEmotes[shortcode]);
+        }
+        if (room) {
+            this.emotesPromise = this.decryptEmotes(emotesMap, room?.roomId);
         }
         this.matcher = new QueryMatcher<ISortedEmoji>(SORTED_EMOJI, {
             keys: [],
@@ -106,23 +110,23 @@ export default class EmojiProvider extends AutocompleteProvider {
         this.recentlyUsed = Array.from(new Set(recent.get().map(getEmojiFromUnicode).filter(Boolean)));
     }
 
-    private async decryptEmotes(emotes: Map<string,Object>, roomId: string) {
-        const decryptedEmoteMap=new Map<string, string>();
+    private async decryptEmotes(emotes: Map<string, Object>, roomId: string): Promise<Map<string, string>> {
+        const decryptedEmoteMap = new Map<string, string>();
         let decryptedurl = "";
-        const isEnc=MatrixClientPeg.get()?.isRoomEncrypted(roomId);
-        for (const shortcode in emotes.keys()) {
+        const isEnc = MatrixClientPeg.get()?.isRoomEncrypted(roomId);
+        for (const [shortcode, val] of emotes) {
             if (isEnc) {
-                const blob = await decryptFile((emotes as Map<string,IEncryptedFile>).get(shortcode));
+                const blob = await decryptFile(val as IEncryptedFile);
                 decryptedurl = URL.createObjectURL(blob);
             } else {
-                decryptedurl = mediaFromMxc((emotes as Map<string, string>).get(shortcode)).srcHttp;
+                decryptedurl = mediaFromMxc(val as string).srcHttp;
             }
-            decryptedEmoteMap.set(":"+shortcode+":", decryptedurl)
+            decryptedEmoteMap.set(":" + shortcode + ":", decryptedurl);
         }
         return decryptedEmoteMap;
     }
 
-    async getCompletions(
+    public async getCompletions(
         query: string,
         selection: ISelectionRange,
         force?: boolean,
@@ -133,15 +137,10 @@ export default class EmojiProvider extends AutocompleteProvider {
         }
 
         this.emotes = await this.emotesPromise;
-        const emojisAndEmotes=[...SORTED_EMOJI];
-        for (const key in this.emotes.keys()) {
+        const emojisAndEmotes = [...SORTED_EMOJI];
+        for (const [key, val] of this.emotes) {
             emojisAndEmotes.push({
-                emoji: { label: key,
-                    shortcodes: [key],
-                    hexcode: key,
-                    unicode: this.emotes[key],
-
-                },
+                emoji: { label: key, shortcodes: [key], hexcode: key, unicode: val as string },
                 _orderBy: 0,
             });
         }
@@ -201,11 +200,15 @@ export default class EmojiProvider extends AutocompleteProvider {
             completions = recentlyUsedAutocomplete.concat(completions);
             completions = uniqBy(completions, "emoji");
 
-            return completions.map(c => ({
-                completion: this.emotes.get(c.emoji.hexcode)? c.emoji.hexcode:c.emoji.unicode,
+            return completions.map((c) => ({
+                completion: this.emotes.get(c.emoji.hexcode) ? c.emoji.hexcode : c.emoji.unicode,
                 component: (
-                    <PillCompletion isEmote={this.emotes.get(c.emoji.hexcode)?true:false} title={this.emotes.get(c.emoji.hexcode)? c.emoji.unicode:`:${c.emoji.shortcodes[0]}:`} aria-label={c.emoji.unicode}>
-                        <span>{ this.emotes.get(c.emoji.hexcode)? c.emoji.hexcode:c.emoji.unicode }</span>
+                    <PillCompletion
+                        isEmote={this.emotes.get(c.emoji.hexcode) ? true : false}
+                        title={this.emotes.get(c.emoji.hexcode) ? c.emoji.unicode : `:${c.emoji.shortcodes[0]}:`}
+                        aria-label={c.emoji.unicode}
+                    >
+                        <span>{this.emotes.get(c.emoji.hexcode) ? c.emoji.hexcode : c.emoji.unicode}</span>
                     </PillCompletion>
                 ),
                 range: range!,

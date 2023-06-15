@@ -78,8 +78,11 @@ import { getBlobSafeMimeType } from "../../../utils/blobs";
  * @param editedContent - The content of the parent event being edited.
  */
 
-const COMPAT_STATE=new UnstableValue("org.matrix.msc3892.clientemote_compatibility","m.room.clientemote_compatibility")
-const EMOTES_COMP=new UnstableValue("im.ponies.room_emotes","m.room.room_emotes")
+const COMPAT_STATE = new UnstableValue(
+    "org.matrix.msc3892.clientemote_compatibility",
+    "m.room.clientemote_compatibility",
+);
+const EMOTES_COMP = new UnstableValue("im.ponies.room_emotes", "m.room.room_emotes");
 
 export function attachMentions(
     sender: string,
@@ -182,8 +185,8 @@ export function createMessageContent(
     relation: IEventRelation | undefined,
     permalinkCreator?: RoomPermalinkCreator,
     includeReplyLegacyFallback = true,
-    emotes?:Map<string,string>,
-    compat?:boolean,
+    emotes?: Map<string, string>,
+    compat?: boolean,
 ): IContent {
     const isEmote = containsEmote(model);
     if (isEmote) {
@@ -197,8 +200,8 @@ export function createMessageContent(
     const body = textSerialize(model);
 
     let emoteBody;
-    if (compat) {
-        emoteBody = body.replace(/:[\w+-]+:/g, m => emotes.get(m) ? emotes.get(m) : m)
+    if (compat && emotes) {
+        emoteBody = body.replace(/:[\w+-]+:/g, (m) => (emotes.get(m) ? emotes.get(m) : m));
     }
     const content: IContent = {
         msgtype: isEmote ? MsgType.Emote : MsgType.Text,
@@ -209,16 +212,15 @@ export function createMessageContent(
         useMarkdown: SettingsStore.getValue("MessageComposerInput.useMarkdown"),
     });
     if (formattedBody) {
-        if(compat){
-            formattedBody=formattedBody.replace(/:[\w+-]+:/g, m => emotes.get(m) ? emotes.get(m) : m)
+        if (compat && emotes) {
+            formattedBody = formattedBody.replace(/:[\w+-]+:/g, (m) => (emotes.get(m) ? emotes.get(m) : m));
         }
         content.format = "org.matrix.custom.html";
         content.formatted_body = formattedBody;
-    }
-    else if (compat){
-        if(body!=emoteBody){
-            content.format="org.matrix.custom.html"
-            content.formatted_body = emoteBody
+    } else if (compat) {
+        if (body != emoteBody) {
+            content.format = "org.matrix.custom.html";
+            content.formatted_body = emoteBody;
         }
     }
 
@@ -276,9 +278,9 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     private dispatcherRef: string;
     private sendHistoryManager: SendHistoryManager;
     private imagePack: object;
-    private emotes: Map<string,string>;
+    private emotes: Map<string, string>;
     private compat: boolean;
-    static defaultProps = {
+    public static defaultProps = {
         includeReplyLegacyFallback: true,
     };
 
@@ -304,17 +306,32 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         this.dispatcherRef = dis.register(this.onAction);
         this.sendHistoryManager = new SendHistoryManager(this.props.room.roomId, "mx_cider_history_");
 
-        const room = this.props.room
+        const room = this.props.room;
 
         const compatEvent = room.currentState.getStateEvents(COMPAT_STATE.name, "");
-        this.compat = compatEvent ? (compatEvent.getContent().isCompat || false) : false;
+        this.compat = compatEvent ? compatEvent.getContent().isCompat || false : false;
 
         const imagePackEvent = room.currentState.getStateEvents(EMOTES_COMP.name, "");
-        this.imagePack = imagePackEvent ? (imagePackEvent.getContent() || {"images":new Map<string,object>()}) : {"images":new Map<string,object>()};
-        this.emotes=new Map<string,string>()
+        this.imagePack = imagePackEvent
+            ? imagePackEvent.getContent() || { images: new Map<string, object>() }
+            : { images: new Map<string, object>() };
+        this.emotes = new Map<string, string>();
 
-        for (const shortcode in this.imagePack["images"].keys()){
-            this.emotes.set(":"+shortcode.replace(/[^a-zA-Z0-9_]/g, "")+":","<img data-mx-emoticon src='"+this.imagePack["images"].get(shortcode)["url"] +"' height='32' alt='"+":"+shortcode.replace(/[^a-zA-Z0-9_]/g, "")+":'"+" title='"+":"+shortcode.replace(/[^a-zA-Z0-9_]/g, "")+":'"+"/>")
+        for (const [shortcode, val] of this.imagePack["images"]) {
+            this.emotes.set(
+                ":" + shortcode.replace(/[^a-zA-Z0-9_]/g, "") + ":",
+                "<img data-mx-emoticon src='" +
+                    val["url"] +
+                    "' height='32' alt='" +
+                    ":" +
+                    shortcode.replace(/[^a-zA-Z0-9_]/g, "") +
+                    ":'" +
+                    " title='" +
+                    ":" +
+                    shortcode.replace(/[^a-zA-Z0-9_]/g, "") +
+                    ":'" +
+                    "/>",
+            );
         }
     }
 

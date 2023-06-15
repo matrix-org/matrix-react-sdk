@@ -41,7 +41,6 @@ import { NonEmptyArray } from "../../../@types/common";
 import { PollHistoryTab } from "../settings/tabs/room/PollHistoryTab";
 import ErrorBoundary from "../elements/ErrorBoundary";
 
-
 export const enum RoomSettingsTab {
     General = "ROOM_GENERAL_TAB",
     Voip = "ROOM_VOIP_TAB",
@@ -178,14 +177,16 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
             ),
         );
 
-        tabs.push(new Tab(
-            RoomSettingsTab.Emotes,
-            _td("Emotes"),
-            "mx_RoomSettingsDialog_emotesIcon",
-            <EmoteSettingsTab roomId={this.props.roomId} />,
-            "RoomSettingsNotifications",
-        ));
-        
+        tabs.push(
+            new Tab(
+                RoomSettingsTab.Emotes,
+                _td("Emotes"),
+                "mx_RoomSettingsDialog_emotesIcon",
+                <EmoteSettingsTab roomId={this.props.roomId} />,
+                "RoomSettingsNotifications",
+            ),
+        );
+
         if (SettingsStore.getValue("feature_bridge_state")) {
             tabs.push(
                 new Tab(

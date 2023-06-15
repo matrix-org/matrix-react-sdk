@@ -284,8 +284,11 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         // RoomContext, however we still need a fallback for roomless MessagePanels.
         this._showHiddenEvents = SettingsStore.getValue("showHiddenEventsInTimeline");
 
-        this.showTypingNotificationsWatcherRef =
-            SettingsStore.watchSetting("showTypingNotifications", null, this.onShowTypingNotificationsChange);
+        this.showTypingNotificationsWatcherRef = SettingsStore.watchSetting(
+            "showTypingNotifications",
+            null,
+            this.onShowTypingNotificationsChange,
+        );
     }
 
     public componentDidMount(): void {

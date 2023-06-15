@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ContextType } from 'react';
+import React, { ContextType } from "react";
 
 import { _t } from "../../../../../languageHandler";
 import RoomEmoteSettings from "../../../room_settings/RoomEmoteSettings";
@@ -30,9 +30,9 @@ interface IState {
 
 export default class EmoteRoomSettingsTab extends React.Component<IProps, IState> {
     public static contextType = MatrixClientContext;
-    context: ContextType<typeof MatrixClientContext>;
+    public context!: ContextType<typeof MatrixClientContext>;
 
-    constructor(props: IProps, context: ContextType<typeof MatrixClientContext>) {
+    public constructor(props: IProps, context: ContextType<typeof MatrixClientContext>) {
         super(props, context);
 
         this.state = {
@@ -43,12 +43,10 @@ export default class EmoteRoomSettingsTab extends React.Component<IProps, IState
     public render(): JSX.Element {
         return (
             <div className="mx_SettingsTab mx_EmoteRoomSettingsTab">
-
-                <div className="mx_SettingsTab_heading">{ _t("Emotes") }</div>
-                <div className='mx_SettingsTab_section mx_EmoteRoomSettingsTab_profileSection'>
+                <div className="mx_SettingsTab_heading">{_t("Emotes")}</div>
+                <div className="mx_SettingsTab_section mx_EmoteRoomSettingsTab_profileSection">
                     <RoomEmoteSettings roomId={this.props.roomId} />
                 </div>
-
             </div>
         );
     }
