@@ -314,7 +314,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         // the first thing to do is to try the token params in the query-string
         // if the session isn't soft logged out (ie: is a clean session being logged in)
         if (!Lifecycle.isSoftLogout()) {
-            Lifecycle.attemptTokenLogin(
+            Lifecycle.attemptDelegatedAuthLogin(
                 this.props.realQueryParams,
                 this.props.defaultDeviceDisplayName,
                 this.getFragmentAfterLogin(),
@@ -323,6 +323,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     // remove the loginToken from the URL regardless
                     this.props.onTokenLoginCompleted();
                 }
+
+                // @TODO(kerrya) remove OIDC code and state from URL 
 
                 if (loggedIn) {
                     this.tokenLogin = true;

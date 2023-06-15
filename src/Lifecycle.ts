@@ -64,6 +64,7 @@ import AbstractLocalStorageSettingsHandler from "./settings/handlers/AbstractLoc
 import { OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPayload";
 import { SdkContextClass } from "./contexts/SDKContext";
 import { messageForLoginError } from "./utils/ErrorUtils";
+import { completeOidcLogin } from "./utils/oidc/authorize";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -181,7 +182,39 @@ export async function getStoredSessionOwner(): Promise<[string, boolean] | [null
 }
 
 /**
+ * If query string includes OIDC authorization code flow parameters attempt to login using oidc flow
+ * Else, we may be returning from SSO - attempt token login
+ *
  * @param {Object} queryParams    string->string map of the
+ *     query-parameters extracted from the real query-string of the starting
+ *     URI.
+ *
+ * @param {string} defaultDeviceDisplayName
+ * @param {string} fragmentAfterLogin path to go to after a successful login, only used for "Try again"
+ *
+ * @returns {Promise} promise which resolves to true if we completed the token
+ *    login, else false
+ */
+export async function attemptDelegatedAuthLogin(
+    queryParams: QueryDict,
+    defaultDeviceDisplayName?: string,
+    fragmentAfterLogin?: string,
+): Promise<boolean> {
+    if (queryParams.code && queryParams.state) {
+        try {
+            await completeOidcLogin(queryParams);
+            return true;
+        } catch (error) {
+            logger.error("Failed to login via OIDC", error)
+            return false;
+        }
+    }
+
+    return attemptTokenLogin(queryParams, defaultDeviceDisplayName, fragmentAfterLogin);
+}
+
+/**
+ * @param {QueryDict} queryParams    string->string map of the
  *     query-parameters extracted from the real query-string of the starting
  *     URI.
  *
@@ -196,7 +229,6 @@ export function attemptTokenLogin(
     defaultDeviceDisplayName?: string,
     fragmentAfterLogin?: string,
 ): Promise<boolean> {
-    debugger;
     if (!queryParams.loginToken) {
         return Promise.resolve(false);
     }

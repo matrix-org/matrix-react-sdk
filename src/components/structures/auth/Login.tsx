@@ -39,7 +39,7 @@ import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleBu
 import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 import { filterBoolean } from "../../../utils/arrays";
 import { Features } from "../../../settings/Settings";
-import { login, startOidcLogin } from "../../../utils/oidc/authorize";
+import { startOidcLogin } from "../../../utils/oidc/authorize";
 
 // These are used in several places, and come from the js-sdk's autodiscovery
 // stuff. We define them here so that they'll be picked up by i18n.
@@ -472,7 +472,11 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 className="mx_Login_fullWidthButton"
                 kind="primary"
                 onClick={async () => {
-                    await startOidcLogin(this.props.serverConfig.delegatedAuthentication!, flow.clientId, this.props.serverConfig.hsUrl);
+                    await startOidcLogin(
+                        this.props.serverConfig.delegatedAuthentication!,
+                        flow.clientId,
+                        this.props.serverConfig.hsUrl,
+                    );
                 }}
             >
                 {_t("Continue")}
