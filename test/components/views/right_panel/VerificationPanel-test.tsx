@@ -16,20 +16,18 @@ limitations under the License.
 
 import { act, render, waitFor } from "@testing-library/react";
 import React, { ComponentProps } from "react";
-import {
-    Phase,
-    VerificationRequest,
-    VerificationRequestEvent,
-} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
 import { User } from "matrix-js-sdk/src/models/user";
 import { Mocked } from "jest-mock";
-import { VerificationBase } from "matrix-js-sdk/src/crypto/verification/Base";
 import {
     EmojiMapping,
     ShowSasCallbacks,
+    Verifier,
     VerifierEvent,
     VerifierEventHandlerMap,
+    VerificationPhase as Phase,
+    VerificationRequest,
+    VerificationRequestEvent,
 } from "matrix-js-sdk/src/crypto-api/verification";
 
 import VerificationPanel from "../../../../src/components/views/right_panel/VerificationPanel";
@@ -94,13 +92,13 @@ describe("<VerificationPanel />", () => {
     });
 
     describe("'Verify by emoji' flow", () => {
-        let mockVerifier: Mocked<VerificationBase>;
+        let mockVerifier: Mocked<Verifier>;
         let mockRequest: Mocked<VerificationRequest>;
 
         beforeEach(() => {
             mockVerifier = makeMockVerifier();
             mockRequest = makeMockVerificationRequest({
-                verifier: mockVerifier,
+                verifier: mockVerifier as unknown as VerificationRequest["verifier"],
                 chosenMethod: "m.sas.v1",
             });
         });
@@ -158,7 +156,7 @@ function makeMockVerificationRequest(props: Partial<VerificationRequest> = {}): 
     return request as unknown as Mocked<VerificationRequest>;
 }
 
-function makeMockVerifier(): Mocked<VerificationBase> {
+function makeMockVerifier(): Mocked<Verifier> {
     const verifier = new TypedEventEmitter<VerifierEvent, VerifierEventHandlerMap>();
     Object.assign(verifier, {
         cancel: jest.fn(),
@@ -166,7 +164,7 @@ function makeMockVerifier(): Mocked<VerificationBase> {
         getShowSasCallbacks: jest.fn(),
         getReciprocateQrCodeCallbacks: jest.fn(),
     });
-    return verifier as unknown as Mocked<VerificationBase>;
+    return verifier as unknown as Mocked<Verifier>;
 }
 
 function makeMockSasCallbacks(): ShowSasCallbacks {
