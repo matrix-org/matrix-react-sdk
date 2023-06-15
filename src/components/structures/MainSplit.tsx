@@ -27,7 +27,10 @@ interface IProps {
     panel?: JSX.Element;
     children: ReactNode;
     /**
-     * The optional string key to append onto the storage key to be able to save multiple panel widths.
+     * A unique identifier for this panel split.
+     *
+     * This is appended to the key used to store the panel size in localStorage, allowing the widths of different
+     * panels to be stored.
      */
     sizeKey?: string;
     /**
