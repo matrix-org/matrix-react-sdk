@@ -63,7 +63,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         };
     }
 
-    public async componentDidMount(): Promise<void> {
+    public componentDidMount(): void {
         this.createBackup();
     }
 
