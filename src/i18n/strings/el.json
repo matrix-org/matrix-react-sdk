@@ -257,7 +257,6 @@
     "Show timestamps in 12 hour format (e.g. 2:30pm)": "Εμφάνιση χρονικών σημάνσεων σε 12ωρη μορφή ώρας (π.χ. 2:30 μ.μ.)",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Δεν θα μπορέσετε να αναιρέσετε αυτήν την αλλαγή καθώς προωθείτε τον χρήστη να έχει το ίδιο επίπεδο δύναμης με τον εαυτό σας.",
     "Sent messages will be stored until your connection has returned.": "Τα απεσταλμένα μηνύματα θα αποθηκευτούν μέχρι να αακτηθεί η σύνδεσή σας.",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Είστε βέβαιοι ότι θέλετε να καταργήσετε (διαγράψετε) αυτό το συμβάν; Σημειώστε ότι αν διαγράψετε το όνομα δωματίου ή αλλάξετε το θέμα, θα μπορούσε να αναιρέσει την αλλαγή.",
     "Failed to load timeline position": "Δεν ήταν δυνατή η φόρτωση της θέσης του χρονολόγιου",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Προσπαθήσατε να φορτώσετε ένα συγκεκριμένο σημείο στο χρονολόγιο του δωματίου, αλλά δεν έχετε δικαίωμα να δείτε το εν λόγω μήνυμα.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Προσπαθήσατε να φορτώσετε ένα συγκεκριμένο σημείο στο χρονολόγιο του δωματίου, αλλά δεν καταφέρατε να το βρείτε.",
