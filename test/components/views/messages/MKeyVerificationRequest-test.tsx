@@ -15,13 +15,11 @@ limitations under the License.
 */
 
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, within } from "@testing-library/react";
 import { EventEmitter } from "events";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
-import {
-    Phase as VerificationPhase,
-    VerificationRequest,
-} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { VerificationPhase } from "matrix-js-sdk/src/crypto-api/verification";
+import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../test-utils";
@@ -72,6 +70,41 @@ describe("MKeyVerificationRequest", () => {
         event.verificationRequest = getMockVerificationRequest({});
         const { container } = render(<MKeyVerificationRequest mxEvent={event} />);
         expect(container).toHaveTextContent("You sent a verification request");
+    });
+
+    it("should render appropriately when the request was initiated by me and has been accepted", () => {
+        const event = new MatrixEvent({ type: "m.key.verification.request" });
+        event.verificationRequest = getMockVerificationRequest({
+            phase: VerificationPhase.Ready,
+            otherUserId: "@other:user",
+        });
+        const { container } = render(<MKeyVerificationRequest mxEvent={event} />);
+        expect(container).toHaveTextContent("You sent a verification request");
+        expect(within(container).getByRole("button")).toHaveTextContent("@other:user accepted");
+    });
+
+    it("should render appropriately when the request was initiated by the other user and has not yet been accepted", () => {
+        const event = new MatrixEvent({ type: "m.key.verification.request" });
+        event.verificationRequest = getMockVerificationRequest({
+            phase: VerificationPhase.Requested,
+            initiatedByMe: false,
+            otherUserId: "@other:user",
+        });
+        const result = render(<MKeyVerificationRequest mxEvent={event} />);
+        expect(result.container).toHaveTextContent("@other:user wants to verify");
+        result.getByRole("button", { name: "Accept" });
+    });
+
+    it("should render appropriately when the request was initiated by the other user and has been accepted", () => {
+        const event = new MatrixEvent({ type: "m.key.verification.request" });
+        event.verificationRequest = getMockVerificationRequest({
+            phase: VerificationPhase.Ready,
+            initiatedByMe: false,
+            otherUserId: "@other:user",
+        });
+        const { container } = render(<MKeyVerificationRequest mxEvent={event} />);
+        expect(container).toHaveTextContent("@other:user wants to verify");
+        expect(within(container).getByRole("button")).toHaveTextContent("You accepted");
     });
 
     it("should render appropriately when the request was cancelled", () => {
