@@ -274,7 +274,7 @@ exports[`AppTile for a pinned widget should render permission request 1`] = `
           </div>
           <div>
             <span>
-              Using this widget may share data
+              Using this widget may share data 
               <div
                 aria-describedby="mx_TooltipTarget_abdefghi"
                 class="mx_TextWithTooltip_target mx_TextWithTooltip_target--helpIcon"
