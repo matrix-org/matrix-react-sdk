@@ -238,7 +238,10 @@ class EmojiPicker extends React.Component<IProps, IState> {
         this.onScroll();
     }
 
-    private async decryptEmotes(emotes: Map<string, Object>, roomId: string): Promise<Map<string, React.Component>> {
+    private async decryptEmotes(
+        emotes: Map<string, string | IEncryptedFile>,
+        roomId: string,
+    ): Promise<Map<string, React.Component>> {
         const decryptedemotes = new Map<string, React.Component>();
         let decryptedurl = "";
         const isEnc = MatrixClientPeg.get()?.isRoomEncrypted(roomId);

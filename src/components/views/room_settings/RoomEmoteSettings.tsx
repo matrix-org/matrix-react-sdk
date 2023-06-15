@@ -39,7 +39,7 @@ interface IProps {
 }
 
 interface IState {
-    emotes: Map<string, Object>;
+    emotes: Map<string, string | IEncryptedFile>;
     decryptedemotes: Map<string, string>;
     EmoteFieldsTouched: Record<string, string>;
     newEmoteFileAdded: boolean;
@@ -48,7 +48,7 @@ interface IState {
     newEmoteFile: Array<File>;
     canAddEmote: boolean;
     deleted: boolean;
-    deletedItems: Map<string, Object>;
+    deletedItems: Map<string, string | IEncryptedFile>;
     value: Map<string, string>;
     compatibility: boolean;
 }
