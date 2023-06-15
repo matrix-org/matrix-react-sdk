@@ -19,6 +19,7 @@ import React, { createRef } from "react";
 import FileSaver from "file-saver";
 import { IPreparedKeyBackupVersion } from "matrix-js-sdk/src/crypto/backup";
 import { logger } from "matrix-js-sdk/src/logger";
+import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t, _td } from "../../../../languageHandler";
@@ -83,7 +84,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
     }
 
     public async componentDidMount(): Promise<void> {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         const secureSecretStorage = await cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing");
         this.setState({ secureSecretStorage });
 
@@ -123,19 +124,20 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             phase: Phase.BackingUp,
             error: undefined,
         });
-        let info;
+        let info: IKeyBackupInfo | undefined;
+        const cli = MatrixClientPeg.safeGet();
         try {
             if (secureSecretStorage) {
                 await accessSecretStorage(async (): Promise<void> => {
-                    info = await MatrixClientPeg.get().prepareKeyBackupVersion(null /* random key */, {
+                    info = await cli.prepareKeyBackupVersion(null /* random key */, {
                         secureSecretStorage: true,
                     });
-                    info = await MatrixClientPeg.get().createKeyBackupVersion(info);
+                    info = await cli.createKeyBackupVersion(info);
                 });
             } else {
-                info = await MatrixClientPeg.get().createKeyBackupVersion(this.keyBackupInfo);
+                info = await cli.createKeyBackupVersion(this.keyBackupInfo);
             }
-            await MatrixClientPeg.get().scheduleAllGroupSessionsForBackup();
+            await cli.scheduleAllGroupSessionsForBackup();
             this.setState({
                 phase: Phase.Done,
             });
@@ -145,8 +147,8 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             // delete the version, disable backup, or do nothing?  If we just
             // disable without deleting, we'll enable on next app reload since
             // it is trusted.
-            if (info) {
-                MatrixClientPeg.get().deleteKeyBackupVersion(info.version);
+            if (!!info?.version) {
+                cli.deleteKeyBackupVersion(info.version);
             }
             this.setState({
                 error: e,
@@ -167,7 +169,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
     };
 
     private onSkipPassPhraseClick = async (): Promise<void> => {
-        this.keyBackupInfo = await MatrixClientPeg.get().prepareKeyBackupVersion();
+        this.keyBackupInfo = await MatrixClientPeg.safeGet().prepareKeyBackupVersion();
         this.setState({
             copied: false,
             downloaded: false,
@@ -194,7 +196,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
 
         if (this.state.passPhrase !== this.state.passPhraseConfirm) return;
 
-        this.keyBackupInfo = await MatrixClientPeg.get().prepareKeyBackupVersion(this.state.passPhrase);
+        this.keyBackupInfo = await MatrixClientPeg.safeGet().prepareKeyBackupVersion(this.state.passPhrase);
         this.setState({
             copied: false,
             downloaded: false,

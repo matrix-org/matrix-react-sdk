@@ -300,7 +300,7 @@ export function renderTile(
     showHiddenEvents: boolean,
     cli?: MatrixClient,
 ): Optional<JSX.Element> {
-    cli = cli ?? MatrixClientPeg.get(); // because param defaults don't do the correct thing
+    cli = cli ?? MatrixClientPeg.safeGet(); // because param defaults don't do the correct thing
 
     const factory = pickFactory(props.mxEvent, cli, showHiddenEvents);
     if (!factory) return undefined;
@@ -378,7 +378,7 @@ export function renderReplyTile(
     showHiddenEvents: boolean,
     cli?: MatrixClient,
 ): Optional<JSX.Element> {
-    cli = cli ?? MatrixClientPeg.get(); // because param defaults don't do the correct thing
+    cli = cli ?? MatrixClientPeg.safeGet(); // because param defaults don't do the correct thing
 
     const factory = pickFactory(props.mxEvent, cli, showHiddenEvents);
     if (!factory) return undefined;
@@ -436,7 +436,7 @@ export function haveRendererForEvent(mxEvent: MatrixEvent, showHiddenEvents: boo
     // No tile for replacement events since they update the original tile
     if (mxEvent.isRelation(RelationType.Replace)) return false;
 
-    const cli = MatrixClientPeg.get();
+    const cli = MatrixClientPeg.safeGet();
     const handler = pickFactory(mxEvent, cli, showHiddenEvents);
     if (!handler) return false;
     if (handler === TextualEventFactory) {
