@@ -553,7 +553,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
                 // XXX: hacky bodge to temporarily apply a textFilter to the sanitizeParams structure.
                 sanitizeParams.textFilter = function(safeText) {
                     return highlighter.applyHighlights(safeText, safeHighlights).join('')
-                        .replace(CUSTOM_EMOTES_REGEX, m => opts.emotes[m] ? opts.emotes[m] : m);
+                        .replace(CUSTOM_EMOTES_REGEX, m => opts.emotes.get(m) ? opts.emotes.get(m) : m);
                 };
             }
 
@@ -620,7 +620,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         "mx_EventTile_bigEmoji": emojiBody,
         "markdown-body": isHtmlMessage && !emojiBody,
     });
-    const tmp = strippedBody?.replace(CUSTOM_EMOTES_REGEX, m => opts.emotes[m] ? opts.emotes[m] : m);
+    const tmp = strippedBody?.replace(CUSTOM_EMOTES_REGEX, m => opts.emotes.get(m) ? opts.emotes.get(m) : m);
     if (tmp !== strippedBody) {
         safeBody=tmp;
     }

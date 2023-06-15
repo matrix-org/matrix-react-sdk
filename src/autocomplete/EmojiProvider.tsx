@@ -35,6 +35,7 @@ import { TimelineRenderingType } from "../contexts/RoomContext";
 import * as recent from "../emojipicker/recent";
 import { decryptFile } from "../utils/DecryptFile";
 import { mediaFromMxc } from "../customisations/Media";
+import { IEncryptedFile } from "../customisations/models/IMediaEventContent";
 
 const LIMIT = 20;
 
@@ -82,14 +83,14 @@ export default class EmojiProvider extends AutocompleteProvider {
     public matcher: QueryMatcher<ISortedEmoji>;
     public nameMatcher: QueryMatcher<ISortedEmoji>;
     private readonly recentlyUsed: IEmoji[];
-    private emotes: Map<string, string>;
+    private emotes: Map<string, string>=new Map();
     private emotesPromise: Promise<Map<string, string>>;
     constructor(room: Room, renderingType?: TimelineRenderingType) {
         super({ commandRegex: EMOJI_REGEX, renderingType });
         const emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
         const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
         if(room){
-            this.emotesPromise = this.decryptEmotes(rawEmotes, room?.roomId);
+            this.emotesPromise = this.decryptEmotes(rawEmotes as Map<string,Object>, room?.roomId);
         }
         this.matcher = new QueryMatcher<ISortedEmoji>(SORTED_EMOJI, {
             keys: [],
@@ -105,18 +106,18 @@ export default class EmojiProvider extends AutocompleteProvider {
         this.recentlyUsed = Array.from(new Set(recent.get().map(getEmojiFromUnicode).filter(Boolean)));
     }
 
-    private async decryptEmotes(emotes: Object, roomId: string) {
+    private async decryptEmotes(emotes: Map<string,Object>, roomId: string) {
         const decryptedEmoteMap=new Map<string, string>();
         let decryptedurl = "";
         const isEnc=MatrixClientPeg.get()?.isRoomEncrypted(roomId);
-        for (const shortcode in emotes) {
+        for (const shortcode in emotes.keys()) {
             if (isEnc) {
-                const blob = await decryptFile(emotes[shortcode]);
+                const blob = await decryptFile((emotes as Map<string,IEncryptedFile>).get(shortcode));
                 decryptedurl = URL.createObjectURL(blob);
             } else {
-                decryptedurl = mediaFromMxc(emotes[shortcode]).srcHttp;
+                decryptedurl = mediaFromMxc((emotes as Map<string, string>).get(shortcode)).srcHttp;
             }
-            decryptedEmoteMap[":"+shortcode+":"] = decryptedurl
+            decryptedEmoteMap.set(":"+shortcode+":", decryptedurl)
         }
         return decryptedEmoteMap;
     }
@@ -133,7 +134,7 @@ export default class EmojiProvider extends AutocompleteProvider {
 
         this.emotes = await this.emotesPromise;
         const emojisAndEmotes=[...SORTED_EMOJI];
-        for (const key in this.emotes) {
+        for (const key in this.emotes.keys()) {
             emojisAndEmotes.push({
                 emoji: { label: key,
                     shortcodes: [key],
@@ -201,10 +202,10 @@ export default class EmojiProvider extends AutocompleteProvider {
             completions = uniqBy(completions, "emoji");
 
             return completions.map(c => ({
-                completion: this.emotes[c.emoji.hexcode]? c.emoji.hexcode:c.emoji.unicode,
+                completion: this.emotes.get(c.emoji.hexcode)? c.emoji.hexcode:c.emoji.unicode,
                 component: (
-                    <PillCompletion isEmote={this.emotes[c.emoji.hexcode]?true:false} title={this.emotes[c.emoji.hexcode]? c.emoji.unicode:`:${c.emoji.shortcodes[0]}:`} aria-label={c.emoji.unicode}>
-                        <span>{ this.emotes[c.emoji.hexcode]? c.emoji.hexcode:c.emoji.unicode }</span>
+                    <PillCompletion isEmote={this.emotes.get(c.emoji.hexcode)?true:false} title={this.emotes.get(c.emoji.hexcode)? c.emoji.unicode:`:${c.emoji.shortcodes[0]}:`} aria-label={c.emoji.unicode}>
+                        <span>{ this.emotes.get(c.emoji.hexcode)? c.emoji.hexcode:c.emoji.unicode }</span>
                     </PillCompletion>
                 ),
                 range: range!,

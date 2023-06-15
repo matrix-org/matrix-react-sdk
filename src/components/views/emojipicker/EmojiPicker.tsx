@@ -42,6 +42,7 @@ import { Ref } from "../../../accessibility/roving/types";
 import { mediaFromMxc } from '../../../customisations/Media';
 import { decryptFile } from '../../../utils/DecryptFile';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import { IEncryptedFile } from "../../../customisations/models/IMediaEventContent";
 
 
 export const CATEGORY_HEADER_HEIGHT = 20;
@@ -88,7 +89,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
         const emotesEvent = props.room?.currentState.getStateEvents(EMOTES_STATE.name, "");
         const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
         if(props.room){
-            this.emotesPromise = this.decryptEmotes(rawEmotes, props.room?.roomId);
+            this.emotesPromise = this.decryptEmotes(rawEmotes as Map<string,Object>, props.room?.roomId);
         }
         
         this.finalEmotes=[];
@@ -175,14 +176,14 @@ class EmojiPicker extends React.Component<IProps, IState> {
 
     private async loadEmotes(){
         this.emotes=await this.emotesPromise
-        for (const key in this.emotes) {
+        for (const key in this.emotes.keys()) {
             this.finalEmotes.push(
                 {   label: key,
                     shortcodes: [key],
                     hexcode: key,
                     unicode: ":"+key+":",
                     customLabel:key,
-                    customComponent:this.emotes[key]
+                    customComponent:this.emotes.get(key)
                 }
             );
             this.finalEmotesMap.set((":"+key+":").trim(),{   
@@ -191,7 +192,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
                 hexcode: key,
                 unicode: ":"+key+":",
                 customLabel:key,
-                customComponent:this.emotes[key]
+                customComponent:this.emotes.get(key)
             });
         }
 
@@ -218,16 +219,16 @@ class EmojiPicker extends React.Component<IProps, IState> {
         this.onScroll();       
     }
 
-    private async decryptEmotes(emotes: Object, roomId: string) {
+    private async decryptEmotes(emotes: Map<string,Object>, roomId: string) {
         const decryptedemotes=new Map<string, React.Component>();
         let decryptedurl = "";
         const isEnc=MatrixClientPeg.get()?.isRoomEncrypted(roomId);
-        for (const shortcode in emotes) {
+        for (const shortcode in emotes.keys()) {
             if (isEnc) {
-                const blob = await decryptFile(emotes[shortcode]);
+                const blob = await decryptFile(emotes.get(shortcode) as IEncryptedFile);
                 decryptedurl = URL.createObjectURL(blob);
             } else {
-                decryptedurl = mediaFromMxc(emotes[shortcode])?.srcHttp;
+                decryptedurl = mediaFromMxc(emotes.get(shortcode) as string)?.srcHttp;
             }
             decryptedemotes[shortcode] = <img className='mx_Emote' title={":" + shortcode +":"} src={decryptedurl} />;
         }

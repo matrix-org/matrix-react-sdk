@@ -26,6 +26,7 @@ import { decryptFile } from "../../../utils/DecryptFile";
 import { mediaFromMxc } from '../../../customisations/Media';
 import SettingsFieldset from "../settings/SettingsFieldset";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
+import { IEncryptedFile } from "../../../customisations/models/IMediaEventContent";
 const EMOTES_STATE=new UnstableValue("org.matrix.msc3892.emotes","m.room.emotes")
 const COMPAT_STATE=new UnstableValue("org.matrix.msc3892.clientemote_compatibility","m.room.clientemote_compatibility")
 const EMOTES_COMP=new UnstableValue("im.ponies.room_emotes","m.room.room_emotes")
@@ -35,8 +36,8 @@ interface IProps {
 }
 
 interface IState {
-    emotes: Dictionary<any>;
-    decryptedemotes: Dictionary<string>;
+    emotes: Map<string,Object>;
+    decryptedemotes: Map<string,string>;
     EmoteFieldsTouched: Record<string, string>;
     newEmoteFileAdded: boolean;
     newEmoteCodeAdded: boolean;
@@ -44,8 +45,8 @@ interface IState {
     newEmoteFile: Array<File>;
     canAddEmote: boolean;
     deleted: boolean;
-    deletedItems: Dictionary<any>;
-    value: Dictionary<string>;
+    deletedItems: Map<string,Object>;
+    value: Map<string,string>;
     compatibility: boolean;
 }
 
@@ -63,9 +64,9 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         
         const emotesEvent = room.currentState.getStateEvents(EMOTES_STATE.name, "");
         const emotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
-        const value = {};
-        for (const emote in emotes) {
-            value[emote] = emote;
+        const value = new Map();
+        for (const emote in emotes.keys()) {
+            value.set(emote,emote);
         }
 
         const compatEvent = room.currentState.getStateEvents(COMPAT_STATE.name, "");
@@ -78,15 +79,15 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         }
 
         this.state = {
-            emotes: emotes,
-            decryptedemotes: {},
+            emotes: emotes as Map<string,object>,
+            decryptedemotes: new Map(),
             EmoteFieldsTouched: {},
             newEmoteFileAdded: false,
             newEmoteCodeAdded: false,
             newEmoteCode: [""],
             newEmoteFile: [],
             deleted: false,
-            deletedItems: {},
+            deletedItems: new Map(),
             canAddEmote: room.currentState.maySendStateEvent(EMOTES_STATE.name, client.getUserId()),
             value: value,
             compatibility:compat
@@ -111,15 +112,15 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
     private cancelEmoteChanges = async (e: React.MouseEvent): Promise<void> => {
         e.stopPropagation();
         e.preventDefault();
-        const value = {};
+        const value = new Map();
         if (this.state.deleted) {
             for (const key in this.state.deletedItems) {
-                this.state.emotes[key] = this.state.deletedItems[key];
-                value[key] = key;
+                this.state.emotes.set(key,this.state.deletedItems.get(key));
+                value.set(key, key);
             }
         }
         document.querySelectorAll(".mx_EmoteSettings_existingEmoteCode").forEach(field => {
-            value[(field as HTMLInputElement).id] = (field as HTMLInputElement).id;
+            value.set((field as HTMLInputElement).id, (field as HTMLInputElement).id)
         });
         if (!this.isSaveEnabled()) return;
         this.setState({
@@ -129,7 +130,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             newEmoteCode: [""],
             newEmoteFile: [],
             deleted: false,
-            deletedItems: {},
+            deletedItems: new Map(),
             value: value,
         });
 
@@ -137,16 +138,16 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
     private deleteEmote = (e: React.MouseEvent): Promise<void> => {
         e.stopPropagation();
         e.preventDefault();
-        const cleanemotes = {};
+        const cleanemotes = new Map();
         const deletedItems = this.state.deletedItems;
-        const value = {};
+        const value = new Map();
         const id = e.currentTarget.getAttribute("id");
-        for (const emote in this.state.emotes) {
+        for (const emote in this.state.emotes.keys()) {
             if (emote != id) {
-                cleanemotes[emote] = this.state.emotes[emote];
-                value[emote] = emote;
+                cleanemotes.set(emote,this.state.emotes.get(emote));
+                value.set(emote,emote);
             } else {
-                deletedItems[emote] = this.state.emotes[emote];
+                deletedItems.set(emote, this.state.emotes.get(emote));
             }
         }
 
@@ -160,8 +161,8 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         if (!this.isSaveEnabled()) return;
         const client = MatrixClientPeg.get();
         const newState: Partial<IState> = {};
-        const emotesMxcs = {};
-        const value = {};
+        const emotesMxcs = new Map();
+        const value = new Map();
         const newPack={"images":new Map<string,object>()}
 
         if (this.state.emotes || (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded)) {
@@ -169,17 +170,17 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                 for (let i = 0; i < this.state.newEmoteCode.length; i++) {
                     const newEmote = await uploadFile(client, this.props.roomId, this.state.newEmoteFile[i]);
                     if (client.isRoomEncrypted(this.props.roomId)) {
-                        emotesMxcs[this.state.newEmoteCode[i]] = newEmote.file;
+                        emotesMxcs.set(this.state.newEmoteCode[i], newEmote.file);
                     } else {
-                        emotesMxcs[this.state.newEmoteCode[i]] = newEmote.url;
+                        emotesMxcs.set(this.state.newEmoteCode[i], newEmote.url);
                     }
                     value[this.state.newEmoteCode[i]] = this.state.newEmoteCode[i];
                     if(this.state.compatibility){
                         if (client.isRoomEncrypted(this.props.roomId)) {     
                             const compatNewEmote=await client.uploadContent(this.state.newEmoteFile[i])
-                            newPack["images"][this.state.newEmoteCode[i]] = {"url":compatNewEmote.content_uri};
+                            newPack["images"].set(this.state.newEmoteCode[i], {"url":compatNewEmote.content_uri});
                         } else {
-                            newPack["images"][this.state.newEmoteCode[i]] = {"url":newEmote.url};
+                            newPack["images"].set(this.state.newEmoteCode[i], {"url":newEmote.url});
                         }
                     }
                 }
@@ -194,14 +195,14 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                         emotesMxcs[this.state.EmoteFieldsTouched[shortcode]] = this.state.emotes[shortcode];
                         value[this.state.EmoteFieldsTouched[shortcode]] = this.state.EmoteFieldsTouched[shortcode];
                         if (this.imagePack["images"][shortcode]) {
-                            newPack["images"][this.state.EmoteFieldsTouched[shortcode]] = { "url": this.imagePack["images"][shortcode]["url"] };
+                            newPack["images"].set(this.state.EmoteFieldsTouched[shortcode], { "url": this.imagePack["images"][shortcode]["url"] });
                         }
 
                     } else {
-                        emotesMxcs[shortcode] = this.state.emotes[shortcode];
-                        value[shortcode] = shortcode;
-                        if (this.imagePack["images"][shortcode]) {
-                            newPack["images"][shortcode] = { "url": this.imagePack["images"][shortcode]["url"] }
+                        emotesMxcs.set(shortcode,this.state.emotes.get(shortcode));
+                        value.set(shortcode,shortcode);
+                        if (this.imagePack["images"].get(shortcode)) {
+                            newPack["images"].set(shortcode,{ "url": this.imagePack["images"][shortcode]["url"] })
                         }
                     }
                 }
@@ -216,7 +217,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             newState.EmoteFieldsTouched = {};
             newState.emotes = emotesMxcs;
             newState.deleted = false;
-            newState.deletedItems = {};
+            newState.deletedItems = new Map();
             newState.newEmoteCode = [""];
             newState.newEmoteFile =[];
         }
@@ -291,9 +292,9 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                     if (client.isRoomEncrypted(this.props.roomId)) {
                         const blob = await decryptFile(this.state.emotes[shortcode]);
                         const uploadedEmote = await client.uploadContent(blob)
-                        this.imagePack["images"][shortcode] = { "url": uploadedEmote.content_uri };
+                        this.imagePack["images"].set(shortcode, { "url": uploadedEmote.content_uri });
                     } else {
-                        this.imagePack["images"][shortcode] = { "url": this.state.emotes[shortcode] };
+                        this.imagePack["images"].set(shortcode, { "url": this.state.emotes[shortcode] });
                     }
                 }
             }
@@ -308,17 +309,17 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
       
     }
     private async decryptEmotes(isEnc: boolean) {
-        const decryptede = {};
-        for (const shortcode in this.state.emotes) {
+        let decryptedemotes = new Map();
+        for (const shortcode in this.state.emotes.keys()) {
             if (isEnc) {
-                const blob = await decryptFile(this.state.emotes[shortcode]);
-                decryptede[shortcode] = URL.createObjectURL(blob);
+                const blob = await decryptFile(this.state.emotes.get(shortcode) as IEncryptedFile);
+                decryptedemotes.set(shortcode, URL.createObjectURL(blob));
             } else {
-                decryptede[shortcode] = mediaFromMxc(this.state.emotes[shortcode]).srcHttp;
+                decryptedemotes.set(shortcode, mediaFromMxc(this.state.emotes.get(shortcode) as string).srcHttp);
             }
         }
         this.setState({
-            decryptedemotes: decryptede,
+            decryptedemotes: decryptedemotes,
         });
     }
     public render(): JSX.Element {

@@ -591,8 +591,8 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                 decryptedurl = mediaFromMxc(rawEmotes[shortcode])?.srcHttp;
             }
 
-            decryptedemotes[":" + shortcode + ":"] = "<img class='mx_Emote' title=':"+shortcode.replace(/[^a-zA-Z0-9_]/g, "")+
-                  ":' src='" + decryptedurl + "'/>";
+            decryptedemotes.set(":" + shortcode + ":", "<img class='mx_Emote' title=':"+shortcode.replace(/[^a-zA-Z0-9_]/g, "")+
+                  ":' src='" + decryptedurl + "'/>");
         }
         this.setState({
             finalEmotes: decryptedemotes,

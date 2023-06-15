@@ -198,7 +198,7 @@ export function createMessageContent(
 
     let emoteBody;
     if (compat) {
-        emoteBody = body.replace(/:[\w+-]+:/g, m => emotes[m] ? emotes[m] : m)
+        emoteBody = body.replace(/:[\w+-]+:/g, m => emotes.get(m) ? emotes.get(m) : m)
     }
     const content: IContent = {
         msgtype: isEmote ? MsgType.Emote : MsgType.Text,
@@ -210,7 +210,7 @@ export function createMessageContent(
     });
     if (formattedBody) {
         if(compat){
-            formattedBody=formattedBody.replace(/:[\w+-]+:/g, m => emotes[m] ? emotes[m] : m)
+            formattedBody=formattedBody.replace(/:[\w+-]+:/g, m => emotes.get(m) ? emotes.get(m) : m)
         }
         content.format = "org.matrix.custom.html";
         content.formatted_body = formattedBody;
@@ -313,8 +313,8 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         this.imagePack = imagePackEvent ? (imagePackEvent.getContent() || {"images":new Map<string,object>()}) : {"images":new Map<string,object>()};
         this.emotes=new Map<string,string>()
 
-        for (const shortcode in this.imagePack["images"]){
-            this.emotes[":"+shortcode+":"]="<img data-mx-emoticon src='"+this.imagePack["images"][shortcode]["url"] +"' height='32' alt='"+":"+shortcode+":'"+" title='"+":"+shortcode+":'"+"/>"
+        for (const shortcode in this.imagePack["images"].keys()){
+            this.emotes.set(":"+shortcode.replace(/[^a-zA-Z0-9_]/g, "")+":","<img data-mx-emoticon src='"+this.imagePack["images"].get(shortcode)["url"] +"' height='32' alt='"+":"+shortcode.replace(/[^a-zA-Z0-9_]/g, "")+":'"+" title='"+":"+shortcode.replace(/[^a-zA-Z0-9_]/g, "")+":'"+"/>")
         }
     }
 
