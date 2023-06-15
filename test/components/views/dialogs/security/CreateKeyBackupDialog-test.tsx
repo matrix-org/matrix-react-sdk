@@ -16,7 +16,6 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import CreateKeyBackupDialog from "../../../../../src/async-components/views/dialogs/security/CreateKeyBackupDialog";
 import { createTestClient } from "../../../../test-utils";
@@ -27,11 +26,8 @@ jest.mock("../../../../../src/SecurityManager", () => ({
 }));
 
 describe("CreateKeyBackupDialog", () => {
-    let mockClient: MatrixClient;
     beforeEach(() => {
-        mockClient = createTestClient();
-        mockClient.doesServerSupportUnstableFeature = jest.fn().mockReturnValue(true);
-        MatrixClientPeg.get = () => mockClient;
+        MatrixClientPeg.get = () => createTestClient();
     });
 
     it("should display the spinner when creating backup", () => {
