@@ -99,7 +99,6 @@
     "Remove %(count)s messages|one": "Eemalda 1 sõnum",
     "Remove recent messages": "Eemalda hiljutised sõnumid",
     "Filter room members": "Filtreeri jututoa liikmeid",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Kas sa oled kindel et soovid eemaldada (kustutada) seda sündmust? Pane tähele, et see muutus võib tagasi pöörduda, kui muudad hiljem jututoa nime või teema nime.",
     "Sign out and remove encryption keys?": "Logi välja ja eemalda krüptimisvõtmed?",
     "Upload files (%(current)s of %(total)s)": "Laadin faile üles (%(current)s / %(total)s)",
     "Upload files": "Laadi failid üles",
