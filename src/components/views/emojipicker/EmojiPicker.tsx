@@ -77,8 +77,8 @@ class EmojiPicker extends React.Component<IProps, IState> {
 
     private scrollRef = React.createRef<AutoHideScrollbar<"div">>();
 
-    private emotes: Map<string, React.Component>;
-    private emotesPromise: Promise<Map<string, React.Component>>;
+    private emotes: Map<string, JSX.Element>;
+    private emotesPromise: Promise<Map<string, JSX.Element>>;
     private finalEmotes: IEmoji[];
     private finalEmotesMap: Map<string, IEmoji>;
     public constructor(props: IProps) {
@@ -241,8 +241,8 @@ class EmojiPicker extends React.Component<IProps, IState> {
     private async decryptEmotes(
         emotes: Map<string, string | IEncryptedFile>,
         roomId: string,
-    ): Promise<Map<string, React.Component>> {
-        const decryptedemotes = new Map<string, React.Component>();
+    ): Promise<Map<string, JSX.Element>> {
+        const decryptedemotes = new Map<string, JSX.Element>();
         let decryptedurl = "";
         const isEnc = MatrixClientPeg.get()?.isRoomEncrypted(roomId);
         for (const [shortcode, val] of emotes) {
