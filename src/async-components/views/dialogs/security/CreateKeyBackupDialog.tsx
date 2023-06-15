@@ -17,6 +17,7 @@ limitations under the License.
 
 import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
+import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t } from "../../../../languageHandler";
@@ -63,22 +64,14 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
     }
 
     public async componentDidMount(): Promise<void> {
-        const cli = MatrixClientPeg.get();
-        const secureSecretStorage = await cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing");
-
-        // If we're using secret storage, `accessSecretStorage` will handle passphrases as needed.
-        if (secureSecretStorage) {
-            this.setState({ phase: Phase.BackingUp });
-            this.createBackup();
-        }
+        this.createBackup();
     }
 
     private createBackup = async (): Promise<void> => {
         this.setState({
-            phase: Phase.BackingUp,
             error: undefined,
         });
-        let info;
+        let info: IKeyBackupInfo | undefined;
         try {
             await accessSecretStorage(async (): Promise<void> => {
                 info = await MatrixClientPeg.get().prepareKeyBackupVersion(null /* random key */, {
@@ -96,7 +89,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             // delete the version, disable backup, or do nothing?  If we just
             // disable without deleting, we'll enable on next app reload since
             // it is trusted.
-            if (info) {
+            if (info?.version) {
                 MatrixClientPeg.get().deleteKeyBackupVersion(info.version);
             }
             this.setState({
