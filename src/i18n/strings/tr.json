@@ -246,7 +246,6 @@
     "Reject all %(invitedRooms)s invites": "Tüm %(invitedRooms)s davetlerini reddet",
     "Failed to invite": "Davet edilemedi",
     "Confirm Removal": "Kaldırma İşlemini Onayla",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Bu etkinliği kaldırmak(silmek) istediğinizden emin misiniz ? Bir odayı ismini silmeniz veya konu değiştirmeniz , geri alınabilir bir durumdur.",
     "Unknown error": "Bilinmeyen Hata",
     "Incorrect password": "Yanlış Şifre",
     "Unable to restore session": "Oturum geri yüklenemiyor",
