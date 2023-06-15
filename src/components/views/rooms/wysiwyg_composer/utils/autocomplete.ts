@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Attributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
+import { AllowedMentionAttributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 
 import { ICompletion } from "../../../../../autocomplete/Autocompleter";
@@ -91,7 +91,11 @@ export function getMentionDisplayText(completion: ICompletion, client: MatrixCli
  * @param client - the MatrixClient is required for us to look up the correct room mention text
  * @returns an object of attributes containing HTMLAnchor attributes or data-* attributes
  */
-export function getMentionAttributes(completion: ICompletion, client: MatrixClient, room: Room): Attributes {
+export function getMentionAttributes(
+    completion: ICompletion,
+    client: MatrixClient,
+    room: Room,
+): { "data-mention-type"?: string; "style"?: string } {
     // To ensure that we always have something set in the --avatar-letter CSS variable
     // as otherwise alignment varies depending on whether the content is empty or not.
 

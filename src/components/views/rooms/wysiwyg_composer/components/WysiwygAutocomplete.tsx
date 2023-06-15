@@ -22,6 +22,7 @@ import Autocomplete from "../../Autocomplete";
 import { ICompletion } from "../../../../../autocomplete/Autocompleter";
 import { useMatrixClientContext } from "../../../../../contexts/MatrixClientContext";
 import { getMentionDisplayText, getMentionAttributes, buildQuery } from "../utils/autocomplete";
+import { isNotUndefined } from "../../../../../Typeguards";
 
 interface WysiwygAutocompleteProps {
     /**
@@ -72,25 +73,23 @@ const WysiwygAutocomplete = forwardRef(
                     return;
                 }
                 case "at-room": {
-                    // TODO improve handling of at-room to either become a span or use a placeholder href
-                    // We have an issue in that we can't use a placeholder because the rust model is always
-                    // applying a prefix to the href, so an href of "#" becomes https://# and also we can not
-                    // represent a plain span in rust
-                    handleMention(
-                        window.location.href,
-                        getMentionDisplayText(completion, client),
-                        getMentionAttributes(completion, client, room),
-                    );
+                    const { style } = getMentionAttributes(completion, client, room);
+                    const attributesMap = new Map();
+                    if (isNotUndefined(style)) {
+                        attributesMap.set("style", style);
+                    }
+                    handleMention("#", getMentionDisplayText(completion, client), attributesMap);
                     return;
                 }
                 case "room":
                 case "user": {
                     if (typeof completion.href === "string") {
-                        handleMention(
-                            completion.href,
-                            getMentionDisplayText(completion, client),
-                            getMentionAttributes(completion, client, room),
-                        );
+                        const { style } = getMentionAttributes(completion, client, room);
+                        const attributesMap = new Map();
+                        if (isNotUndefined(style)) {
+                            attributesMap.set("style", style);
+                        }
+                        handleMention(completion.href, getMentionDisplayText(completion, client), attributesMap);
                     }
                     return;
                 }
