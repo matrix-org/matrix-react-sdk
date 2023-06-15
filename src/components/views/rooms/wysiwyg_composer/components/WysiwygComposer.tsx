@@ -61,7 +61,7 @@ export const WysiwygComposer = memo(function WysiwygComposer({
     const autocompleteRef = useRef<Autocomplete | null>(null);
 
     const inputEventProcessor = useInputEventProcessor(onSend, autocompleteRef, initialContent, eventRelation);
-    const { ref, isWysiwygReady, content, actionStates, wysiwyg, suggestion, getMessageHTMLContent } = useWysiwyg({
+    const { ref, isWysiwygReady, content, actionStates, wysiwyg, suggestion, messageContent } = useWysiwyg({
         initialContent,
         inputEventProcessor,
     });
@@ -74,11 +74,10 @@ export const WysiwygComposer = memo(function WysiwygComposer({
     useSetCursorPosition(!isReady, ref);
 
     useEffect(() => {
-        const messageContent = getMessageHTMLContent();
         if (!disabled && isNotNull(messageContent)) {
             onChange(messageContent);
         }
-    }, [onChange, getMessageHTMLContent, disabled]);
+    }, [onChange, messageContent, disabled]);
 
     useEffect(() => {
         function handleClick(e: Event): void {
@@ -118,6 +117,7 @@ export const WysiwygComposer = memo(function WysiwygComposer({
                 ref={autocompleteRef}
                 suggestion={suggestion}
                 handleMention={wysiwyg.mention}
+                handleAtRoomMention={wysiwyg.mentionAtRoom}
                 handleCommand={wysiwyg.command}
             />
             <FormattingButtons composer={wysiwyg} actionStates={actionStates} />

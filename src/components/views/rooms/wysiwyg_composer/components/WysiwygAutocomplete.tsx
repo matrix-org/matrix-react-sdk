@@ -42,6 +42,11 @@ interface WysiwygAutocompleteProps {
      * a command in the autocomplete list or pressing enter on a selected item
      */
     handleCommand: FormattingFunctions["command"];
+
+    /**
+     * Handler purely for the at-room mentions special case
+     */
+    handleAtRoomMention: FormattingFunctions["mentionAtRoom"];
 }
 
 /**
@@ -53,7 +58,7 @@ interface WysiwygAutocompleteProps {
  */
 const WysiwygAutocomplete = forwardRef(
     (
-        { suggestion, handleMention, handleCommand }: WysiwygAutocompleteProps,
+        { suggestion, handleMention, handleCommand, handleAtRoomMention }: WysiwygAutocompleteProps,
         ref: ForwardedRef<Autocomplete>,
     ): JSX.Element | null => {
         const { room } = useRoomContext();
@@ -78,7 +83,7 @@ const WysiwygAutocomplete = forwardRef(
                     if (isNotUndefined(style)) {
                         attributesMap.set("style", style);
                     }
-                    handleMention("#", getMentionDisplayText(completion, client), attributesMap);
+                    handleAtRoomMention(attributesMap);
                     return;
                 }
                 case "room":
