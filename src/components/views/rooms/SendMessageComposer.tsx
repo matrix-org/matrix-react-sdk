@@ -316,12 +316,14 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             ? imagePackEvent.getContent() || { images: new Map<string, object>() }
             : { images: new Map<string, object>() };
         this.emotes = new Map<string, string>();
-
-        for (const [shortcode, val] of this.imagePack["images"]) {
+        if (!this.imagePack["images"]) {
+            this.imagePack = { images: new Map<string, object>() };
+        }
+        for (const shortcode in this.imagePack["images"]) {
             this.emotes.set(
                 ":" + shortcode.replace(/[^a-zA-Z0-9_]/g, "") + ":",
                 "<img data-mx-emoticon src='" +
-                    val["url"] +
+                    this.imagePack["images"][shortcode]["url"] +
                     "' height='32' alt='" +
                     ":" +
                     shortcode.replace(/[^a-zA-Z0-9_]/g, "") +
