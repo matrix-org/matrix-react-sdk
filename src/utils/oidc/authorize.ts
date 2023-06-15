@@ -56,12 +56,12 @@ const generateCodeChallenge = async (codeVerifier: string): Promise<string> => {
  * @param clientId this client's id as registered with configured issuer
  * @param homeserver target homeserver
  */
-const storeAuthorizationParams = async (
+const storeAuthorizationParams = (
     { redirectUri, state, nonce, codeVerifier }: AuthorizationParams,
     { issuer }: ValidatedServerConfig["delegatedAuthentication"],
     clientId: string,
     homeserver: string,
-): Promise<void> => {
+): void => {
     window.sessionStorage.setItem(`oidc_${state}_nonce`, nonce);
     window.sessionStorage.setItem(`oidc_${state}_redirectUri`, redirectUri);
     window.sessionStorage.setItem(`oidc_${state}_codeVerifier`, codeVerifier);
