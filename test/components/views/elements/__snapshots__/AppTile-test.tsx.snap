@@ -230,7 +230,7 @@ exports[`AppTile for a pinned widget should render permission request 1`] = `
       </span>
     </div>
     <div
-      class="mx_AppTileBody"
+      class="mx_AppTileBody mx_AppTileBody--large"
     >
       <div
         class="mx_AppPermission"
