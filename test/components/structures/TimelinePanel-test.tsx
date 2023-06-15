@@ -259,6 +259,39 @@ describe("TimelinePanel", () => {
                 setUpTimelineSet();
             });
 
+            describe("and receving an event", () => {
+                beforeEach(async () => {
+                    await renderTimelinePanel();
+                    timelineSet.addLiveEvent(ev1, {});
+                    await flushPromises();
+                    // @ts-ignore Simulate user activity by calling updateReadMarker on the TimelinePanel.
+                    await timelinePanel.updateReadMarker();
+                });
+
+                it("the read marker should not be up to date", async () => {
+                    expect(timelinePanel.isReadMarkerUpToDate()).toBe(false);
+                });
+
+                describe("and reading the whole timeline", () => {
+                    beforeEach(async () => {
+                        await renderTimelinePanel();
+                        timelineSet.addLiveEvent(ev1, {});
+                        await flushPromises();
+
+                        // @ts-ignore
+                        await timelinePanel.sendReadReceipts();
+                        // @ts-ignore This function scrolls to bottom and sends the read receipts
+                        await timelinePanel.forgetReadMarker();
+                        // @ts-ignore Simulate user activity by calling updateReadMarker on the TimelinePanel.
+                        await timelinePanel.updateReadMarker();
+                    });
+
+                    it("the read marker should be up to date", async () => {
+                        expect(timelinePanel.isReadMarkerUpToDate()).toBe(true);
+                    });
+                });
+            });
+
             describe("and reading the timeline", () => {
                 beforeEach(async () => {
                     await renderTimelinePanel();
