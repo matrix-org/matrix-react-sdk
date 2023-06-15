@@ -3504,7 +3504,6 @@
     "Requires compatible homeserver.": "Nécessite un serveur d’accueil compatible.",
     "Low bandwidth mode": "Mode faible bande passante",
     "Under active development.": "En cours de développement.",
-    "Favourite Messages": "Messages favoris",
     "Temporary implementation. Locations persist in room history.": "Implémentation temporaire. Les positions sont persistantes dans l’historique du salon.",
     "Live Location Sharing": "Partage de la position en direct",
     "Under active development, cannot be disabled.": "En cours de développement, ne peut être désactivé.",

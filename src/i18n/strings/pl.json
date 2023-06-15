@@ -2351,7 +2351,6 @@
     "Rust cryptography implementation": "Implementacja kryptografii Rust",
     "Force 15s voice broadcast chunk length": "Wymuś 15s długość kawałków dla transmisji głosowej",
     "Under active development.": "W trakcie aktywnego rozwoju.",
-    "Favourite Messages": "Ulubione wiadomości",
     "Enable MSC3946 (to support late-arriving room archives)": "Włącz MSC3946 (dla opóźnionych archiwów pokoju)",
     "Temporary implementation. Locations persist in room history.": "Implementacja tymczasowa. Lokalizacje są zapisywane w historii pokoju.",
     "Live Location Sharing": "Udostępnianie lokalizacji na żywo",

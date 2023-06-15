@@ -3505,7 +3505,6 @@
     "Hide notification dot (only display counters badges)": "Ocultar el punto indicador de notificaciones (solo mostrar un indicador con número)",
     "Rust cryptography implementation": "Implementación de la criptografía en Rust",
     "Under active development.": "Funcionalidad en desarrollo.",
-    "Favourite Messages": "Mensajes favoritos",
     "Temporary implementation. Locations persist in room history.": "Implementación temporal. Las ubicaciones persisten en el historial de la sala.",
     "Live Location Sharing": "Compartir ubicación en tiempo real",
     "Under active development, cannot be disabled.": "En desarrollo, no se puede desactivar.",

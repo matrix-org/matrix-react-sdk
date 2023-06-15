@@ -3412,7 +3412,6 @@
     "Are you sure you want to sign out of %(count)s sessions?|other": "Вы уверены, что хотите выйти из %(count)s сеансов?",
     "You have unverified sessions": "У вас есть неподтверждённые сеансы",
     "Rich text editor": "Наглядный текстовый редактор",
-    "Favourite Messages": "Избранные сообщения",
     "Search users in this room…": "Поиск пользователей в этой комнате…",
     "Apply": "Применить",
     "You ended a <a>voice broadcast</a>": "Вы завершили <a>голосовую трансляцию</a>",

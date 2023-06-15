@@ -3383,7 +3383,6 @@
     "%(hours)sh %(minutes)sm %(seconds)ss left": "剩余%(hours)s小时%(minutes)s分钟%(seconds)s秒",
     "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.": "在支持审核的房间中，“报告”按钮将让你向房间协管员举报滥用行为。",
     "Notifications silenced": "通知已静音",
-    "Favourite Messages": "收藏的消息",
     "Temporary implementation. Locations persist in room history.": "临时的实现。位置在房间历史中持续保留。",
     "Live Location Sharing": "实时位置共享",
     "Under active development, cannot be disabled.": "正在积极开发中，不能禁用。",
