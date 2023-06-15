@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { createRef } from "react";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -23,7 +24,6 @@ import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 import { uploadFile } from "../../../ContentMessages";
 import { decryptFile } from "../../../utils/DecryptFile";
 import { mediaFromMxc } from '../../../customisations/Media';
-import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 import SettingsFieldset from "../settings/SettingsFieldset";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 const EMOTES_STATE=new UnstableValue("org.matrix.msc3892.emotes","m.room.emotes")
@@ -440,8 +440,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                     multiple
                 />
                 { emoteSettingsButtons }
-                {
-                    <SettingsFieldset
+                <SettingsFieldset
                     legend={_t("Emote Compatibility on Other Clients")}
                     description={_t("This will allow emotes sent to be compatible with non-Element clients that have custom emotes. \
                     This uses a different spec and emote images will be stored on the server unencrypted. Emotes sent before this setting is enabled will not work on the other clients. \
@@ -455,7 +454,6 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                         disabled={!this.state.canAddEmote}
                     />
                 </SettingsFieldset>
-                }
                 { uploadedEmotes }
                 {
                     existingEmotes

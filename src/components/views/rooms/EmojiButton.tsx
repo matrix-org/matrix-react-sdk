@@ -16,13 +16,13 @@ limitations under the License.
 
 import classNames from "classnames";
 import React, { useContext } from "react";
+import { Room } from "matrix-js-sdk/src/models/room";
 
 import { _t } from "../../../languageHandler";
 import ContextMenu, { aboveLeftOf, MenuProps, useContextMenu } from "../../structures/ContextMenu";
 import EmojiPicker from "../emojipicker/EmojiPicker";
 import { CollapsibleButton } from "./CollapsibleButton";
 import { OverflowMenuContext } from "./MessageComposerButtons";
-import { Room } from "matrix-js-sdk/src/models/room";
 
 interface IEmojiButtonProps {
     addEmoji: (unicode: string) => boolean;
@@ -52,7 +52,7 @@ export function EmojiButton({ addEmoji, menuPosition, className, room }: IEmojiB
                 }}
                 managed={false}
             >
-                <EmojiPicker onChoose={addEmoji} onFinished={onFinished} room = {room} />
+                <EmojiPicker onChoose={addEmoji} onFinished={onFinished} room={room} />
             </ContextMenu>
         );
     }

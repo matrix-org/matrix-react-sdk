@@ -579,7 +579,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         delete sanitizeParams.textFilter;
     }
 
-    let contentBody = safeBody ?? strippedBody;
+    const contentBody = safeBody ?? strippedBody;
     if (opts.returnString) {
         return contentBody;
     }

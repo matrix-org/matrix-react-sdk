@@ -16,6 +16,8 @@ limitations under the License.
 */
 
 import React, { Dispatch } from "react";
+import { Room } from 'matrix-js-sdk/src/models/room';
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 import { _t } from "../../../languageHandler";
 import * as recent from "../../../emojipicker/recent";
@@ -37,11 +39,10 @@ import { Key } from "../../../Keyboard";
 import { clamp } from "../../../utils/numbers";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import { Ref } from "../../../accessibility/roving/types";
-import { Room } from 'matrix-js-sdk/src/models/room';
 import { mediaFromMxc } from '../../../customisations/Media';
 import { decryptFile } from '../../../utils/DecryptFile';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
+
 
 export const CATEGORY_HEADER_HEIGHT = 20;
 export const EMOJI_HEIGHT = 35;
@@ -194,7 +195,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
             });
         }
 
-        let rec=Array.from(new Set(filterBoolean(recent.get().map(x=>getEmojiFromUnicode(x)?getEmojiFromUnicode(x):this.finalEmotesMap.get(x as string)))));//Array.from(new Set(recent.get()));
+        const rec=Array.from(new Set(filterBoolean(recent.get().map(x=>getEmojiFromUnicode(x)?getEmojiFromUnicode(x):this.finalEmotesMap.get(x as string)))));//Array.from(new Set(recent.get()));
         rec.forEach((v,i)=>{
             if(this.finalEmotesMap.get(v.unicode)){
                 if(i>=this.recentlyUsed.length){
@@ -228,7 +229,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
             } else {
                 decryptedurl = mediaFromMxc(emotes[shortcode])?.srcHttp;
             }
-            decryptedemotes[shortcode] = <img className='mx_Emote' title={":" + shortcode +":"} src= {decryptedurl}/>;
+            decryptedemotes[shortcode] = <img className='mx_Emote' title={":" + shortcode +":"} src={decryptedurl} />;
         }
         return decryptedemotes;
     }

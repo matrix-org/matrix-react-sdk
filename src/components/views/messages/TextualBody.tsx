@@ -18,6 +18,7 @@ import React, { createRef, SyntheticEvent, MouseEvent } from "react";
 import ReactDOM from "react-dom";
 import highlight from "highlight.js";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 import * as HtmlUtils from "../../../HtmlUtils";
 import { formatDate } from "../../../DateUtils";
@@ -51,7 +52,6 @@ import { IEventTileOps } from "../rooms/EventTile";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { decryptFile } from '../../../utils/DecryptFile';
 import { mediaFromMxc } from '../../../customisations/Media';
-import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 const MAX_HIGHLIGHT_LENGTH = 4096;
 const EMOTES_STATE=new UnstableValue("org.matrix.msc3892.emotes","m.room.emotes")
