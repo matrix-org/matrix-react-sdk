@@ -2,7 +2,7 @@
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
 Copyright 2017 - 2019 New Vector Ltd
-Copyright 2019 - 2021 The Matrix.org Foundation C.I.C
+Copyright 2019 - 2023 The Matrix.org Foundation C.I.C
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,8 +19,6 @@ limitations under the License.
 
 @import url("@vector-im/compound-design-tokens/assets/web/css/compound-design-tokens.css");
 
-@import "./_font-sizes.pcss";
-@import "./_font-weights.pcss";
 @import "./_animations.pcss";
 @import "./_spacing.pcss";
 @import url("maplibre-gl/dist/maplibre-gl.css");
@@ -139,7 +137,7 @@ input[type="password"] {
     font-family: inherit;
     padding: 9px;
     font-size: $font-14px;
-    font-weight: var(--font-semi-bold);
+    font-weight: var(--cpd-font-weight-semibold);
     min-width: 0;
 }
 
@@ -571,7 +569,7 @@ legend {
     margin-bottom: 5px;
 
     /* flip colours for the secondary ones */
-    font-weight: var(--font-semi-bold);
+    font-weight: var(--cpd-font-weight-semibold);
     border: 1px solid $accent;
     color: $accent;
     background-color: $button-secondary-bg-color;
@@ -750,7 +748,7 @@ legend {
 
 @define-mixin LegacyCallButton {
     box-sizing: border-box;
-    font-weight: var(--font-semi-bold);
+    font-weight: var(--cpd-font-weight-semibold);
     height: $font-24px;
     line-height: $font-24px;
     margin-right: 0;
@@ -772,7 +770,7 @@ legend {
 
 @define-mixin ThreadRepliesAmount {
     color: $secondary-content;
-    font-weight: var(--font-semi-bold);
+    font-weight: var(--cpd-font-weight-semibold);
     white-space: nowrap;
     position: relative;
     padding: 0 $spacing-12 0 $spacing-8;
