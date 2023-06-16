@@ -123,8 +123,8 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         e.preventDefault();
         const value = new Map();
         if (this.state.deleted) {
-            for (const key in this.state.deletedItems) {
-                this.state.emotes.set(key, this.state.deletedItems.get(key));
+            for (const [key, val] of this.state.deletedItems) {
+                this.state.emotes.set(key, val);
                 value.set(key, key);
             }
         }
@@ -150,12 +150,12 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         const deletedItems = this.state.deletedItems;
         const value = new Map();
         const id = e.currentTarget.getAttribute("id");
-        for (const emote in this.state.emotes) {
-            if (emote != id) {
-                cleanemotes.set(emote, this.state.emotes.get(emote));
-                value.set(emote, emote);
+        for (const [shortcode, val] of this.state.emotes) {
+            if (shortcode != id) {
+                cleanemotes.set(shortcode, val);
+                value.set(shortcode, shortcode);
             } else {
-                deletedItems.set(emote, this.state.emotes.get(emote));
+                deletedItems.set(shortcode, val);
             }
         }
 
@@ -354,7 +354,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
 
         const existingEmotes = [];
         if (this.state.emotes) {
-            for (const [emotecode, val] of this.state.decryptedemotes) {
+            for (const emotecode of Array.from(this.state.emotes.keys()).sort()) {
                 existingEmotes.push(
                     <li className="mx_EmoteSettings_addEmoteField">
                         <input
@@ -364,7 +364,11 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                             onChange={this.onEmoteChange}
                             className="mx_EmoteSettings_existingEmoteCode"
                         />
-                        <img alt={":" + emotecode + ":"} className="mx_EmoteSettings_uploadedEmoteImage" src={val} />
+                        <img
+                            alt={":" + emotecode + ":"}
+                            className="mx_EmoteSettings_uploadedEmoteImage"
+                            src={this.state.decryptedemotes.get(emotecode)}
+                        />
                         <div className="mx_EmoteSettings_uploadButton">
                             <AccessibleButton
                                 onClick={this.deleteEmote}
