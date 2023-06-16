@@ -78,8 +78,9 @@ html {
 }
 
 body {
-    font-family: $font-family;
-    font-size: $font-15px;
+    font: var(--cpd-font-body-md-regular);
+    letter-spacing: var(--cpd-font-letter-spacing-body-md);
+
     background-color: $background;
     color: $primary-content;
     border: 0px;
@@ -120,8 +121,8 @@ b {
 
 h2 {
     color: $primary-content;
-    font-weight: 400;
-    font-size: $font-18px;
+    font: var(--cpd-font-heading-lg-regular);
+    letter-spacing: var(--cpd-font-letter-spacing-heading-lg);
     margin-top: 16px;
     margin-bottom: 16px;
 }
@@ -338,9 +339,8 @@ legend {
 
     /* Styles copied/inspired by GroupLayout, ReplyTile, and EventTile variants. */
     .markdown-body {
-        font-family: inherit !important;
-        white-space: normal !important;
-        line-height: inherit !important;
+        font: var(--cpd-font-body-md-regular) !important;
+        letter-spacing: var(--cpd-font-letter-spacing-body-md);
         color: inherit; /* inherit the colour from the dark or light theme by default (but not for code blocks) */
         font-size: $font-14px;
 

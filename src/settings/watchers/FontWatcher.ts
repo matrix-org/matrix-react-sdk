@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -24,11 +24,12 @@ import { UpdateSystemFontPayload } from "../../dispatcher/payloads/UpdateSystemF
 import { ActionPayload } from "../../dispatcher/payloads";
 
 export class FontWatcher implements IWatcher {
-    public static readonly MIN_SIZE = 8;
-    public static readonly DEFAULT_SIZE = 10;
-    public static readonly MAX_SIZE = 15;
-    // Externally we tell the user the font is size 15. Internally we use 10.
-    public static readonly SIZE_DIFF = 5;
+    public static readonly MIN_SIZE = 11;
+    public static readonly DEFAULT_SIZE = 16;
+    public static readonly MAX_SIZE = 21;
+    // TODO: Need to write migration code so that everyone that had previous
+    // preference set gets automatically onto the new system
+    public static readonly SIZE_DIFF = 0;
 
     private dispatcherRef: string | null;
 
