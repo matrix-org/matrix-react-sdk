@@ -77,23 +77,17 @@ const WysiwygAutocomplete = forwardRef(
                     return;
                 }
                 case "at-room": {
-                    const atRoomAttributes = getMentionAttributes(completion, client, room);
-                    // the rust model can automatically add data-mention-type, so do not pass as an argument
-                    if (atRoomAttributes.has("data-mention-type")) {
-                        atRoomAttributes.delete("data-mention-type");
-                    }
-                    handleAtRoomMention(atRoomAttributes);
+                    handleAtRoomMention(getMentionAttributes(completion, client, room));
                     return;
                 }
                 case "room":
                 case "user": {
                     if (typeof completion.href === "string") {
-                        const mentionAttributes = getMentionAttributes(completion, client, room);
-                        // the rust model can automatically add data-mention-type, so do not pass as an argument
-                        if (mentionAttributes.has("data-mention-type")) {
-                            mentionAttributes.delete("data-mention-type");
-                        }
-                        handleMention(completion.href, getMentionDisplayText(completion, client), mentionAttributes);
+                        handleMention(
+                            completion.href,
+                            getMentionDisplayText(completion, client),
+                            getMentionAttributes(completion, client, room),
+                        );
                     }
                     return;
                 }

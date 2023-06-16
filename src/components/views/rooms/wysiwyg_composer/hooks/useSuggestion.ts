@@ -18,6 +18,7 @@ import { Attributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 import { SyntheticEvent, useState } from "react";
 
 import { isNotNull, isNotUndefined } from "../../../../../Typeguards";
+import { AllowedMentionAttributes } from "@matrix-org/matrix-wysiwyg";
 
 /**
  * Information about the current state of the `useSuggestion` hook.
@@ -53,7 +54,8 @@ export function useSuggestion(
     editorRef: React.RefObject<HTMLDivElement>,
     setText: (text?: string) => void,
 ): {
-    handleMention: (href: string, displayName: string, attributes: Attributes) => void;
+    handleMention: (href: string, displayName: string, attributes: AllowedMentionAttributes) => void;
+    handleAtRoomMention: (attributes: AllowedMentionAttributes) => void;
     handleCommand: (text: string) => void;
     onSelect: (event: SyntheticEvent<HTMLDivElement>) => void;
     suggestion: MappedSuggestion | null;
@@ -64,8 +66,11 @@ export function useSuggestion(
     // we can not depend on input events only
     const onSelect = (): void => processSelectionChange(editorRef, setSuggestionData);
 
-    const handleMention = (href: string, displayName: string, attributes: Attributes): void =>
+    const handleMention = (href: string, displayName: string, attributes: AllowedMentionAttributes): void =>
         processMention(href, displayName, attributes, suggestionData, setSuggestionData, setText);
+
+    const handleAtRoomMention = (attributes: AllowedMentionAttributes): void =>
+        processMention("#", "@room", attributes, suggestionData, setSuggestionData, setText);
 
     const handleCommand = (replacementText: string): void =>
         processCommand(replacementText, suggestionData, setSuggestionData, setText);
@@ -74,6 +79,7 @@ export function useSuggestion(
         suggestion: suggestionData?.mappedSuggestion ?? null,
         handleCommand,
         handleMention,
+        handleAtRoomMention,
         onSelect,
     };
 }
