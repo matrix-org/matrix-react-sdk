@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import { KeyboardEvent, RefObject, SyntheticEvent, useCallback, useRef, useState } from "react";
-import { MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
-import { AllowedMentionAttributes, IEventRelation } from "matrix-js-sdk/src/matrix";
+import { AllowedMentionAttributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
+import { IEventRelation } from "matrix-js-sdk/src/matrix";
 
 import { useSettingValue } from "../../../../../hooks/useSettings";
 import { IS_MAC, Key } from "../../../../../Keyboard";
