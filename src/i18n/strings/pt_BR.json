@@ -202,7 +202,6 @@
     "Reject all %(invitedRooms)s invites": "Recusar todos os %(invitedRooms)s convites",
     "Failed to invite": "Falha ao enviar o convite",
     "Confirm Removal": "Confirmar a remoção",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Tem certeza de que deseja apagar este evento? Observe que, se você apagar a alteração do nome ou descrição de uma sala, isso reverterá a alteração.",
     "Unknown error": "Erro desconhecido",
     "Incorrect password": "Senha incorreta",
     "Unable to restore session": "Não foi possível restaurar a sessão",
@@ -2754,7 +2753,7 @@
     "Confirm signing out these devices|one": "Confirme a saída deste dispositivo",
     "Current session": "Sessão atual",
     "Developer tools": "Ferramentas de desenvolvimento",
-    "Welcome to %(brand)s": "Boas-vindas ao",
+    "Welcome to %(brand)s": "Bem-vindo a %(brand)s",
     "Processing event %(number)s out of %(total)s": "Processando evento %(number)s de %(total)s",
     "Exported %(count)s events in %(seconds)s seconds|one": "%(count)s evento exportado em %(seconds)s segundos",
     "Exported %(count)s events in %(seconds)s seconds|other": "%(count)s eventos exportados em %(seconds)s segundos",
@@ -2787,5 +2786,14 @@
     "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)sh %(minutes)sm %(seconds)ss restantes",
     "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "Se você começar a ouvir esta tramissão ao vivo, a gravação desta transmissão, será encerrada.",
     "Listen to live broadcast?": "Ouvir transmissão ao vivo?",
-    "%(senderName)s started a voice broadcast": "%(senderName)s iniciou uma transmissão de voz"
+    "%(senderName)s started a voice broadcast": "%(senderName)s iniciou uma transmissão de voz",
+    "Underline": "Sublinhar",
+    "Numbered list": "Lista numerada",
+    "Text": "Texto",
+    "Edit link": "Editar ligação",
+    "Link": "Ligação",
+    "Copy link to thread": "Copiar ligação para o tópico",
+    "Create a link": "Criar uma ligação",
+    "Italic": "Itálico",
+    "View in room": "Ver na sala"
 }

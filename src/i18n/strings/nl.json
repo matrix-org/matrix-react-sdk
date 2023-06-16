@@ -248,7 +248,6 @@
     "Reject all %(invitedRooms)s invites": "Alle %(invitedRooms)s de uitnodigingen weigeren",
     "Failed to invite": "Uitnodigen is mislukt",
     "Confirm Removal": "Verwijdering bevestigen",
-    "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Weet je zeker dat je deze gebeurtenis wilt verwijderen? Besef wel dat het verwijderen van een kamernaam of -onderwerp wijziging die wijziging mogelijk teniet doet.",
     "Unknown error": "Onbekende fout",
     "Incorrect password": "Onjuist wachtwoord",
     "Unable to restore session": "Herstellen van sessie mislukt",
