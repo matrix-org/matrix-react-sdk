@@ -14,13 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
+import { AllowedMentionAttributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 
 import { ICompletion } from "../../../../../autocomplete/Autocompleter";
 import * as Avatar from "../../../../../Avatar";
 
-export type MentionAttributes = Map<"style" | "data-mention-type", string>;
 /**
  * Builds the query for the `<Autocomplete />` component from the rust suggestion. This
  * will change as we implement handling / commands.
@@ -92,12 +91,16 @@ export function getMentionDisplayText(completion: ICompletion, client: MatrixCli
  * @param client - the MatrixClient is required for us to look up the correct room mention text
  * @returns an object of attributes containing HTMLAnchor attributes or data-* attributes
  */
-export function getMentionAttributes(completion: ICompletion, client: MatrixClient, room: Room): MentionAttributes {
+export function getMentionAttributes(
+    completion: ICompletion,
+    client: MatrixClient,
+    room: Room,
+): AllowedMentionAttributes {
     // To ensure that we always have something set in the --avatar-letter CSS variable
     // as otherwise alignment varies depending on whether the content is empty or not.
     // Use a zero width space so that it counts as content, but does not display anything.
     const defaultLetterContent = "\u200b";
-    const attributes: MentionAttributes = new Map();
+    const attributes: AllowedMentionAttributes = new Map();
 
     if (completion.type === "user") {
         // logic as used in UserPillPart.setAvatar in parts.ts
