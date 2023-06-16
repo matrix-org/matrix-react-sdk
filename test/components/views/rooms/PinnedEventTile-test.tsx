@@ -27,6 +27,7 @@ describe("<PinnedEventTile />", () => {
     const roomId = "!room:server.org";
     const mockClient = getMockClientWithEventEmitter({
         getRoom: jest.fn(),
+        isRoomEncrypted: jest.fn(),
     });
     const room = new Room(roomId, mockClient, userId);
     const permalinkCreator = new RoomPermalinkCreator(room);

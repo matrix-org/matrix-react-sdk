@@ -89,6 +89,7 @@ describe("<TextualBody />", () => {
             getAccountData: (): MatrixEvent | undefined => undefined,
             isGuest: () => false,
             mxcUrlToHttp: (s: string) => s,
+            isRoomEncrypted: (roomId: string) => false,
             getUserId: () => "@user:example.com",
             fetchRoomEvent: () => {
                 throw new Error("MockClient event not found");
@@ -108,6 +109,7 @@ describe("<TextualBody />", () => {
         highlightLink: "",
         onMessageAllowed: jest.fn(),
         onHeightChanged: jest.fn(),
+        isRoomEncrypted: jest.fn().mockReturnValue(false),
         permalinkCreator: new RoomPermalinkCreator(defaultRoom),
         mediaEventHelper: {} as MediaEventHelper,
     };
@@ -262,6 +264,7 @@ describe("<TextualBody />", () => {
                 on: (): void => undefined,
                 removeListener: (): void => undefined,
                 isGuest: () => false,
+                isRoomEncrypted: (roomId: string) => false,
                 mxcUrlToHttp: (s: string) => s,
             });
             DMRoomMap.makeShared(defaultMatrixClient);
@@ -406,6 +409,7 @@ describe("<TextualBody />", () => {
             getAccountData: (): MatrixClient | undefined => undefined,
             getUrlPreview: (url: string) => new Promise(() => {}),
             isGuest: () => false,
+            isRoomEncrypted: (roomId: string) => false,
             mxcUrlToHttp: (s: string) => s,
         });
         DMRoomMap.makeShared(defaultMatrixClient);

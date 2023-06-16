@@ -573,7 +573,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         return <span className="mx_EventTile_pendingModeration">{`(${text})`}</span>;
     }
     private async decryptEmotes(): Promise<void> {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const room = client.getRoom(this.props.mxEvent.getRoomId());
         const emotesEvent = room?.currentState.getStateEvents(EMOTES_STATE.name, "");
         const rawEmotes = emotesEvent ? emotesEvent.getContent() || {} : {};

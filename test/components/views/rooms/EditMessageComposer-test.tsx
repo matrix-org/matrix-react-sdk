@@ -48,6 +48,7 @@ describe("<EditMessageComposer/>", () => {
         ...mockClientMethodsUser(userId),
         getRoom: jest.fn(),
         sendMessage: jest.fn(),
+        isRoomEncrypted: jest.fn(),
     });
     const room = new Room(roomId, mockClient, userId);
 

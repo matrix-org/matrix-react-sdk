@@ -156,7 +156,7 @@ export function createTestClient(): MatrixClient {
                 content: {},
             });
         }),
-        mxcUrlToHttp: (mxc: string) => `http://this.is.a.url/${mxc.substring(6)}`,
+        mxcUrlToHttp: (mxc: string) => `http://this.is.a.url/${mxc.toString().substring(6)}`,
         setAccountData: jest.fn(),
         setRoomAccountData: jest.fn(),
         setRoomTopic: jest.fn(),
