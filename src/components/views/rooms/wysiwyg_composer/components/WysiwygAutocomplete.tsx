@@ -22,7 +22,6 @@ import Autocomplete from "../../Autocomplete";
 import { ICompletion } from "../../../../../autocomplete/Autocompleter";
 import { useMatrixClientContext } from "../../../../../contexts/MatrixClientContext";
 import { getMentionDisplayText, getMentionAttributes, buildQuery } from "../utils/autocomplete";
-import { isNotUndefined } from "../../../../../Typeguards";
 
 interface WysiwygAutocompleteProps {
     /**
@@ -78,23 +77,23 @@ const WysiwygAutocomplete = forwardRef(
                     return;
                 }
                 case "at-room": {
-                    const { style } = getMentionAttributes(completion, client, room);
-                    const attributesMap = new Map();
-                    if (isNotUndefined(style)) {
-                        attributesMap.set("style", style);
+                    const atRoomAttributes = getMentionAttributes(completion, client, room);
+                    // the rust model can automatically add data-mention-type, so do not pass as an argument
+                    if (atRoomAttributes.has("data-mention-type")) {
+                        atRoomAttributes.delete("data-mention-type");
                     }
-                    handleAtRoomMention(attributesMap);
+                    handleAtRoomMention(atRoomAttributes);
                     return;
                 }
                 case "room":
                 case "user": {
                     if (typeof completion.href === "string") {
-                        const { style } = getMentionAttributes(completion, client, room);
-                        const attributesMap = new Map();
-                        if (isNotUndefined(style)) {
-                            attributesMap.set("style", style);
+                        const mentionAttributes = getMentionAttributes(completion, client, room);
+                        // the rust model can automatically add data-mention-type, so do not pass as an argument
+                        if (mentionAttributes.has("data-mention-type")) {
+                            mentionAttributes.delete("data-mention-type");
                         }
-                        handleMention(completion.href, getMentionDisplayText(completion, client), attributesMap);
+                        handleMention(completion.href, getMentionDisplayText(completion, client), mentionAttributes);
                     }
                     return;
                 }
