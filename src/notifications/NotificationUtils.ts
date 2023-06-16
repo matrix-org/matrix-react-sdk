@@ -60,8 +60,7 @@ export class NotificationUtils {
         let sound: string | undefined;
         let highlight: boolean | undefined = false;
 
-        for (const element of actions) {
-            const action = element;
+        for (const action of actions) {
             if (action === PushRuleActionName.Notify) {
                 notify = true;
             } else if (action === PushRuleActionName.DontNotify) {
