@@ -16,7 +16,9 @@
         "lib": ["es2020", "dom", "dom.iterable"],
         "alwaysStrict": true,
         "strictBindCallApply": true,
-        "noImplicitThis": true
+        "noImplicitThis": true,
+        "strict": true,
+        "strictNullChecks": true
     },
     "include": [
         "./node_modules/matrix-js-sdk/src/@types/*.d.ts",

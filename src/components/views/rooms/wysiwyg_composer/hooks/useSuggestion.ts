@@ -14,11 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Attributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
+import { AllowedMentionAttributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 import { SyntheticEvent, useState } from "react";
 
 import { isNotNull, isNotUndefined } from "../../../../../Typeguards";
-import { AllowedMentionAttributes } from "@matrix-org/matrix-wysiwyg";
 
 /**
  * Information about the current state of the `useSuggestion` hook.
@@ -149,7 +148,7 @@ export function processSelectionChange(
 export function processMention(
     href: string,
     displayName: string,
-    attributes: Attributes, // these will be used when formatting the link as a pill
+    attributes: AllowedMentionAttributes, // these will be used when formatting the link as a pill
     suggestionData: SuggestionState,
     setSuggestionData: React.Dispatch<React.SetStateAction<SuggestionState>>,
     setText: (text?: string) => void,
@@ -166,9 +165,11 @@ export function processMention(
     const linkTextNode = document.createTextNode(displayName);
     linkElement.setAttribute("href", href);
     linkElement.setAttribute("contenteditable", "false");
-    Object.entries(attributes).forEach(
-        ([attr, value]) => isNotUndefined(value) && linkElement.setAttribute(attr, value),
-    );
+
+    for (const [attr, value] of attributes.entries()) {
+        linkElement.setAttribute(attr, value);
+    }
+
     linkElement.appendChild(linkTextNode);
 
     // create text nodes to go before and after the link
