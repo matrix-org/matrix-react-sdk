@@ -89,6 +89,7 @@ export function getMentionDisplayText(completion: ICompletion, client: MatrixCli
  *
  * @param completion - the item selected from the autocomplete
  * @param client - the MatrixClient is required for us to look up the correct room mention text
+ * @param room - the room the composer is currently in
  * @returns an object of attributes containing HTMLAnchor attributes or data-* attributes
  */
 export function getMentionAttributes(completion: ICompletion, client: MatrixClient, room: Room): Attributes {
