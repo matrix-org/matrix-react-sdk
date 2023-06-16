@@ -75,6 +75,24 @@ NodeList [
     </span>
   </li>,
   <li
+    aria-controls="mx_tabpanel_ROOM_EMOTES_TAB"
+    aria-selected="false"
+    class="mx_AccessibleButton mx_TabbedView_tabLabel"
+    data-testid="settings-tab-ROOM_EMOTES_TAB"
+    role="tab"
+    tabindex="-1"
+  >
+    <span
+      class="mx_TabbedView_maskedIcon mx_RoomSettingsDialog_emotesIcon"
+    />
+    <span
+      class="mx_TabbedView_tabLabel_text"
+      id="mx_tabpanel_ROOM_EMOTES_TAB_label"
+    >
+      Emotes
+    </span>
+  </li>,
+  <li
     aria-controls="mx_tabpanel_ROOM_POLL_HISTORY_TAB"
     aria-selected="false"
     class="mx_AccessibleButton mx_TabbedView_tabLabel"

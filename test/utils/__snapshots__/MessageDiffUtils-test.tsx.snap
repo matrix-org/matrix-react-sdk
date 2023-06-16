@@ -38,36 +38,29 @@ exports[`editBodyDiffToHtml handles complex transformations 1`] = `
       <span
         class="mx_EditHistoryMessage_deletion"
       >
-        <span
-          data-mx-maths="{<span class='mx_Emoji' title=':snowman:'>☃️</span>}^\\infty"
-        >
-          <code>
-            {
-            <span
-              class="mx_Emoji"
-              title=":snowman:"
-            >
-              ☃️
-            </span>
-            }^\\infty
-          </code>
+        <span>
+          {
+          <span
+            class="mx_EditHistoryMessage_deletion"
+          >
+            ☃️
+          </span>
+          <span
+            class="mx_EditHistoryMessage_insertion"
+          >
+            😃
+          </span>
+          }^\\infty
         </span>
       </span>
       <span
         class="mx_EditHistoryMessage_insertion"
       >
         <span
-          data-mx-maths="{<span class='mx_Emoji' title=':smiley:'>😃</span>}^\\infty"
+          data-mx-maths="{😃}^\\infty"
         >
           <code>
-            {
-            <span
-              class="mx_Emoji"
-              title=":snowman:"
-            >
-              ☃️
-            </span>
-            }^\\infty
+            {☃️}^\\infty
           </code>
         </span>
       </span>
