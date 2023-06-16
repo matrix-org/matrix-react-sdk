@@ -15,12 +15,7 @@ limitations under the License.
 */
 
 import EventEmitter from "events";
-import {
-    PHASE_DONE as VERIF_PHASE_DONE,
-    Phase as VerificationPhase,
-    VerificationRequest,
-    VerificationRequestEvent,
-} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { VerificationPhase, VerificationRequest, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -67,7 +62,7 @@ export class SetupEncryptionStore extends EventEmitter {
         this.started = true;
         this.phase = Phase.Loading;
 
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         cli.on(CryptoEvent.VerificationRequest, this.onVerificationRequest);
         cli.on(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
 
@@ -88,15 +83,17 @@ export class SetupEncryptionStore extends EventEmitter {
         }
         this.started = false;
         this.verificationRequest?.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
-        if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener(CryptoEvent.VerificationRequest, this.onVerificationRequest);
-            MatrixClientPeg.get().removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
+
+        const cli = MatrixClientPeg.get();
+        if (!!cli) {
+            cli.removeListener(CryptoEvent.VerificationRequest, this.onVerificationRequest);
+            cli.removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
         }
     }
 
     public async fetchKeyInfo(): Promise<void> {
         if (!this.started) return; // bail if we were stopped
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         const keys = await cli.isSecretStored("m.cross_signing.master");
         if (keys === null || Object.keys(keys).length === 0) {
             this.keyId = null;
@@ -125,8 +122,8 @@ export class SetupEncryptionStore extends EventEmitter {
     public async usePassPhrase(): Promise<void> {
         this.phase = Phase.Busy;
         this.emit("update");
-        const cli = MatrixClientPeg.get();
         try {
+            const cli = MatrixClientPeg.safeGet();
             const backupInfo = await cli.getKeyBackupVersion();
             this.backupInfo = backupInfo;
             this.emit("update");
@@ -166,8 +163,8 @@ export class SetupEncryptionStore extends EventEmitter {
     }
 
     private onUserTrustStatusChanged = async (userId: string): Promise<void> => {
-        if (userId !== MatrixClientPeg.get().getUserId()) return;
-        const publicKeysTrusted = await MatrixClientPeg.get().getCrypto()?.getCrossSigningKeyId();
+        if (userId !== MatrixClientPeg.safeGet().getSafeUserId()) return;
+        const publicKeysTrusted = await MatrixClientPeg.safeGet().getCrypto()?.getCrossSigningKeyId();
         if (publicKeysTrusted) {
             this.phase = Phase.Done;
             this.emit("update");
@@ -183,13 +180,13 @@ export class SetupEncryptionStore extends EventEmitter {
             this.verificationRequest.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
             this.verificationRequest = null;
             this.emit("update");
-        } else if (this.verificationRequest?.phase === VERIF_PHASE_DONE) {
+        } else if (this.verificationRequest?.phase === VerificationPhase.Done) {
             this.verificationRequest.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
             this.verificationRequest = null;
             // At this point, the verification has finished, we just need to wait for
             // cross signing to be ready to use, so wait for the user trust status to
             // change (or change to DONE if it's already ready).
-            const publicKeysTrusted = await MatrixClientPeg.get().getCrypto()?.getCrossSigningKeyId();
+            const publicKeysTrusted = await MatrixClientPeg.safeGet().getCrypto()?.getCrossSigningKeyId();
             this.phase = publicKeysTrusted ? Phase.Done : Phase.Busy;
             this.emit("update");
         }
@@ -222,7 +219,7 @@ export class SetupEncryptionStore extends EventEmitter {
             // secret storage and setting up a new recovery key, then
             // create new cross-signing keys once that succeeds.
             await accessSecretStorage(async (): Promise<void> => {
-                const cli = MatrixClientPeg.get();
+                const cli = MatrixClientPeg.safeGet();
                 await cli.bootstrapCrossSigning({
                     authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
                         const cachedPassword = SdkContextClass.instance.accountPasswordStore.getPassword();
@@ -232,9 +229,9 @@ export class SetupEncryptionStore extends EventEmitter {
                                 type: "m.login.password",
                                 identifier: {
                                     type: "m.id.user",
-                                    user: cli.getUserId(),
+                                    user: cli.getSafeUserId(),
                                 },
-                                user: cli.getUserId(),
+                                user: cli.getSafeUserId(),
                                 password: cachedPassword,
                             });
                             return;
@@ -270,12 +267,12 @@ export class SetupEncryptionStore extends EventEmitter {
         this.phase = Phase.Finished;
         this.emit("update");
         // async - ask other clients for keys, if necessary
-        MatrixClientPeg.get().crypto?.cancelAndResendAllOutgoingKeyRequests();
+        MatrixClientPeg.safeGet().crypto?.cancelAndResendAllOutgoingKeyRequests();
     }
 
     private async setActiveVerificationRequest(request: VerificationRequest): Promise<void> {
         if (!this.started) return; // bail if we were stopped
-        if (request.otherUserId !== MatrixClientPeg.get().getUserId()) return;
+        if (request.otherUserId !== MatrixClientPeg.safeGet().getUserId()) return;
 
         if (this.verificationRequest) {
             this.verificationRequest.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);

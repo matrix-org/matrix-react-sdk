@@ -22,7 +22,7 @@ describe("theme", () => {
         let darkTheme: HTMLStyleElement;
 
         let spyQuerySelectorAll: jest.MockInstance<NodeListOf<Element>, [selectors: string]>;
-        let spyClassList: jest.MockInstance<string[], [void]>;
+        let spyClassList: jest.SpyInstance<void, string[], any>;
 
         beforeEach(() => {
             const styles = [
