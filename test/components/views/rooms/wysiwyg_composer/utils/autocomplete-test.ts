@@ -233,7 +233,10 @@ describe("getMentionAttributes", () => {
 
             const result = getMentionAttributes(atRoomCompletion, mockClient, mockRoom);
 
-            expect(result).toEqual({ "data-mention-type": "at-room" });
+            expect(result).toEqual({
+                "data-mention-type": "at-room",
+                "style": `--avatar-background: url(${testAvatarUrlForRoom}); --avatar-letter: '\u200b'`,
+            });
         });
     });
 });
