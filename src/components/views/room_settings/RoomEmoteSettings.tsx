@@ -182,7 +182,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                     } else {
                         emotesMxcs[this.state.newEmoteCode[i]] = newEmote.url;
                     }
-                    value[this.state.newEmoteCode[i]] = this.state.newEmoteCode[i];
+                    value.set(this.state.newEmoteCode[i], this.state.newEmoteCode[i]);
                     if (this.state.compatibility) {
                         if (client.isRoomEncrypted(this.props.roomId)) {
                             const compatNewEmote = await client.uploadContent(this.state.newEmoteFile[i]);
