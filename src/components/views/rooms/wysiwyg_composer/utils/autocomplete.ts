@@ -133,7 +133,19 @@ export function getMentionAttributes(completion: ICompletion, client: MatrixClie
             "style": `--avatar-background: url(${avatarUrl}); --avatar-letter: '${initialLetter}'`,
         };
     } else if (completion.type === "at-room") {
-        return { "data-mention-type": completion.type };
+        // logic as used in RoomPillPart.setAvatar in parts.ts, but now we know the current room
+        // from the arguments passed
+        let initialLetter = defaultLetterContent;
+        let avatarUrl = Avatar.avatarUrlForRoom(room, 16, 16, "crop");
+        if (!avatarUrl) {
+            initialLetter = Avatar.getInitialLetter(room.name);
+            avatarUrl = Avatar.defaultAvatarUrlForString(room.roomId);
+        }
+
+        return {
+            "data-mention-type": completion.type,
+            "style": `--avatar-background: url(${avatarUrl}); --avatar-letter: '${initialLetter}'`,
+        };
     }
     return {};
 }
