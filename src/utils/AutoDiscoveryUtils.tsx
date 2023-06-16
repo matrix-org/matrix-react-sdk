@@ -267,13 +267,13 @@ export default class AutoDiscoveryUtils {
             const { authorizationEndpoint, registrationEndpoint, tokenEndpoint, account, issuer } = discoveryResult[
                 M_AUTHENTICATION.stable!
             ] as IDelegatedAuthConfig & ValidatedIssuerConfig;
-            delegatedAuthentication = {
+            delegatedAuthentication = Object.freeze({
                 authorizationEndpoint,
                 registrationEndpoint,
                 tokenEndpoint,
                 account,
                 issuer,
-            };
+            });
         }
 
         return {
