@@ -19,7 +19,7 @@ limitations under the License.
 import { createClient } from "matrix-js-sdk/src/matrix";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
-import { OidcDiscoveryError } from "matrix-js-sdk/src/oidc/validate";
+import { OidcError } from "matrix-js-sdk/src/oidc/error";
 import { DELEGATED_OIDC_COMPATIBILITY, ILoginFlow, ILoginParams, LoginFlow } from "matrix-js-sdk/src/@types/auth";
 
 import { IMatrixClientCreds } from "./MatrixClientPeg";
@@ -197,7 +197,7 @@ const tryInitOidcNativeFlow = async (
     oidcStaticClients?: IConfigOptions["oidc_static_clients"],
 ): Promise<OidcNativeFlow> => {
     if (!delegatedAuthConfig) {
-        throw new Error(OidcDiscoveryError.NotSupported);
+        throw new Error(OidcError.NotSupported);
     }
     const clientId = await getOidcClientId(delegatedAuthConfig, brand, window.location.origin, oidcStaticClients);
 
