@@ -58,15 +58,13 @@ describe("useNotificationSettings", () => {
 
     beforeAll(async () => {
         pushRules = (await import("../models/notificationsettings/pushrules_sample.json")) as IPushRules;
-    })
+    });
 
     beforeEach(() => {
         stubClient();
         cli = MatrixClientPeg.safeGet();
-        cli.getPushRules = jest.fn(cli.getPushRules)
-            .mockResolvedValue(pushRules);
-        cli.supportsIntentionalMentions = jest.fn(cli.supportsIntentionalMentions)
-            .mockReturnValue(false);
+        cli.getPushRules = jest.fn(cli.getPushRules).mockResolvedValue(pushRules);
+        cli.supportsIntentionalMentions = jest.fn(cli.supportsIntentionalMentions).mockReturnValue(false);
     });
 
     it("correctly parses model", async () => {
@@ -76,7 +74,7 @@ describe("useNotificationSettings", () => {
             await waitForNextUpdate();
             expect(result.current.model).toEqual(expectedModel);
             expect(result.current.hasPendingChanges).toBeFalsy();
-        })
+        });
     });
 
     it("correctly generates change calls", async () => {
@@ -110,31 +108,59 @@ describe("useNotificationSettings", () => {
             expect(deletePushRule).toHaveBeenCalledWith("global", PushRuleKind.ContentSpecific, "j4nne");
             expect(deletePushRule).toHaveBeenCalledWith("global", PushRuleKind.ContentSpecific, "janne");
             expect(setPushRuleEnabled).toHaveBeenCalledTimes(6);
-            expect(setPushRuleEnabled).toHaveBeenCalledWith("global", PushRuleKind.Underride, RuleId.EncryptedMessage, true);
+            expect(setPushRuleEnabled).toHaveBeenCalledWith(
+                "global",
+                PushRuleKind.Underride,
+                RuleId.EncryptedMessage,
+                true,
+            );
             expect(setPushRuleEnabled).toHaveBeenCalledWith("global", PushRuleKind.Underride, RuleId.Message, true);
             expect(setPushRuleEnabled).toHaveBeenCalledWith("global", PushRuleKind.Underride, RuleId.EncryptedDM, true);
             expect(setPushRuleEnabled).toHaveBeenCalledWith("global", PushRuleKind.Underride, RuleId.DM, true);
-            expect(setPushRuleEnabled).toHaveBeenCalledWith("global", PushRuleKind.Override, RuleId.SuppressNotices, false);
+            expect(setPushRuleEnabled).toHaveBeenCalledWith(
+                "global",
+                PushRuleKind.Override,
+                RuleId.SuppressNotices,
+                false,
+            );
             expect(setPushRuleEnabled).toHaveBeenCalledWith("global", PushRuleKind.Override, RuleId.InviteToSelf, true);
             expect(setPushRuleActions).toHaveBeenCalledTimes(6);
             expect(setPushRuleActions).toHaveBeenCalledWith(
-                "global", PushRuleKind.Underride, RuleId.EncryptedMessage, StandardActions.ACTION_NOTIFY,
+                "global",
+                PushRuleKind.Underride,
+                RuleId.EncryptedMessage,
+                StandardActions.ACTION_NOTIFY,
             );
             expect(setPushRuleActions).toHaveBeenCalledWith(
-                "global", PushRuleKind.Underride, RuleId.Message, StandardActions.ACTION_NOTIFY,
+                "global",
+                PushRuleKind.Underride,
+                RuleId.Message,
+                StandardActions.ACTION_NOTIFY,
             );
             expect(setPushRuleActions).toHaveBeenCalledWith(
-                "global", PushRuleKind.Underride, RuleId.EncryptedDM, StandardActions.ACTION_NOTIFY_DEFAULT_SOUND,
+                "global",
+                PushRuleKind.Underride,
+                RuleId.EncryptedDM,
+                StandardActions.ACTION_NOTIFY_DEFAULT_SOUND,
             );
             expect(setPushRuleActions).toHaveBeenCalledWith(
-                "global", PushRuleKind.Underride, RuleId.DM, StandardActions.ACTION_NOTIFY_DEFAULT_SOUND,
+                "global",
+                PushRuleKind.Underride,
+                RuleId.DM,
+                StandardActions.ACTION_NOTIFY_DEFAULT_SOUND,
             );
             expect(setPushRuleActions).toHaveBeenCalledWith(
-                "global", PushRuleKind.Override, RuleId.SuppressNotices, StandardActions.ACTION_DONT_NOTIFY,
+                "global",
+                PushRuleKind.Override,
+                RuleId.SuppressNotices,
+                StandardActions.ACTION_DONT_NOTIFY,
             );
             expect(setPushRuleActions).toHaveBeenCalledWith(
-                "global", PushRuleKind.Override, RuleId.InviteToSelf, StandardActions.ACTION_NOTIFY_DEFAULT_SOUND,
+                "global",
+                PushRuleKind.Override,
+                RuleId.InviteToSelf,
+                StandardActions.ACTION_NOTIFY_DEFAULT_SOUND,
             );
         });
     });
-})
+});
