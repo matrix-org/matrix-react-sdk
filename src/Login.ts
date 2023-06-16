@@ -19,7 +19,6 @@ limitations under the License.
 import { createClient } from "matrix-js-sdk/src/matrix";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
-import { OidcDiscoveryError } from "matrix-js-sdk/src/oidc/validate";
 import { DELEGATED_OIDC_COMPATIBILITY, ILoginFlow, ILoginParams, LoginFlow } from "matrix-js-sdk/src/@types/auth";
 
 import { IMatrixClientCreds } from "./MatrixClientPeg";
@@ -29,6 +28,11 @@ import { getOidcClientId } from "./utils/oidc/registerClient";
 import { IConfigOptions } from "./IConfigOptions";
 import SdkConfig from "./SdkConfig";
 
+/**
+ * Login flows supported by this client
+ * LoginFlow type use the client API /login endpoint
+ * OidcNativeFlow is specific to this client
+ */
 export type ClientLoginFlow = LoginFlow | OidcNativeFlow;
 
 interface ILoginOptions {
@@ -91,16 +95,18 @@ export default class Login {
     }
 
     public async getFlows(): Promise<Array<ClientLoginFlow>> {
-        // try to use oidc native flow
-        try {
-            const oidcFlow = await tryInitOidcNativeFlow(
-                this.delegatedAuthentication,
-                SdkConfig.get().brand,
-                SdkConfig.get().oidc_static_clients,
-            );
-            return [oidcFlow];
-        } catch (error) {
-            logger.error(error);
+        // try to use oidc native flow if we have delegated auth config
+        if (this.delegatedAuthentication) {
+            try {
+                const oidcFlow = await tryInitOidcNativeFlow(
+                    this.delegatedAuthentication,
+                    SdkConfig.get().brand,
+                    SdkConfig.get().oidc_static_clients,
+                );
+                return [oidcFlow];
+            } catch (error) {
+                logger.error(error);
+            }
         }
 
         // oidc native flow not supported, continue with matrix login
@@ -179,26 +185,30 @@ export default class Login {
     }
 }
 
+/**
+ * Describes the OIDC native login flow
+ * Separate from js-sdk's `LoginFlow` as this does not use the same /login flow
+ * to which that type belongs.
+ */
 export interface OidcNativeFlow extends ILoginFlow {
     type: "oidcNativeFlow";
+    // this client's id as registered with the configured OIDC OP
     clientId: string;
 }
 /**
  * Finds static clientId for configured issuer, or attempts dynamic registration with the OP
+ * Returns OIDC native flow when client is ready to attempt login via OIDC native flow
  * @param delegatedAuthConfig  Auth config from ValidatedServerConfig
  * @param clientName Client name to register with the OP, eg 'Element', used during client registration with OP
  * @param staticOidcClients static client config from config.json, used during client registration with OP
  * @returns Promise<OidcNativeFlow> when oidc native authentication flow is supported and correctly configured
- * @throws when oidc native flow is not configured, client can't register with OP, or any unexpected error
+ * @throws when client can't register with OP, or any unexpected error
  */
 const tryInitOidcNativeFlow = async (
-    delegatedAuthConfig: ValidatedServerConfig["delegatedAuthentication"] | undefined,
+    delegatedAuthConfig: ValidatedServerConfig["delegatedAuthentication"],
     brand: string,
     oidcStaticClients?: IConfigOptions["oidc_static_clients"],
 ): Promise<OidcNativeFlow> => {
-    if (!delegatedAuthConfig) {
-        throw new Error(OidcDiscoveryError.NotSupported);
-    }
     const clientId = await getOidcClientId(delegatedAuthConfig, brand, window.location.origin, oidcStaticClients);
 
     const flow = {

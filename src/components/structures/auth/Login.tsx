@@ -375,6 +375,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
 
         const loginLogic = new Login(hsUrl, isUrl, fallbackHsUrl, {
             defaultDeviceDisplayName: this.props.defaultDeviceDisplayName,
+            // if native OIDC is enabled in the client pass the server's delegated auth settings
             delegatedAuthentication: this.oidcNativeFlowEnabled
                 ? this.props.serverConfig.delegatedAuthentication
                 : undefined,

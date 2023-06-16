@@ -352,10 +352,14 @@ describe("Login", function () {
             authorizationEndpoint: issuer + "authorization",
         };
         beforeEach(() => {
-            jest.spyOn(logger, "error").mockClear();
+            jest.spyOn(logger, "error");
             jest.spyOn(SettingsStore, "getValue").mockImplementation(
                 (settingName) => settingName === Features.OidcNativeFlow,
             );
+        });
+
+        afterEach(() => {
+            jest.spyOn(logger, "error").mockRestore();
         });
 
         it("should not attempt registration when oidc native flow setting is disabled", async () => {
