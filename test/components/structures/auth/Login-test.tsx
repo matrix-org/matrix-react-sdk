@@ -43,7 +43,9 @@ describe("Login", function () {
             brand: "test-brand",
             disable_custom_urls: true,
         });
-        mockClient.login.mockClear().mockResolvedValue({});
+        mockClient.login
+            .mockClear()
+            .mockResolvedValue({ access_token: "abc123", user_id: "@user:server.org", device_id: "zyx987" });
         mockClient.loginFlows.mockClear().mockResolvedValue({ flows: [{ type: "m.login.password" }] });
         mocked(createClient).mockImplementation((opts) => {
             mockClient.idBaseUrl = opts.idBaseUrl;

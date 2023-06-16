@@ -17,7 +17,7 @@ limitations under the License.
 import React, { ChangeEvent, SyntheticEvent } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
-import { ISSOFlow, LoginFlow, SSOAction } from "matrix-js-sdk/src/@types/auth";
+import { ISSOFlow, LoginFlow, SSOAction, UserIdentifier } from "matrix-js-sdk/src/@types/auth";
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 
 import { _t } from "../../../languageHandler";
@@ -154,7 +154,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         const loginType = "m.login.password";
         const loginParams = {
             identifier: {
-                type: "m.id.user",
+                type: "m.id.user" as UserIdentifier,
                 user: cli.getUserId(),
             },
             password: this.state.password,

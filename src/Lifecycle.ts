@@ -667,38 +667,43 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
         localStorage.deleteItem("mx_has_access_token");
     }
 
-    if (credentials.pickleKey) {
-        let encryptedAccessToken: IEncryptedPayload | undefined;
-        try {
-            // try to encrypt the access token using the pickle key
-            const encrKey = await pickleKeyToAesKey(credentials.pickleKey);
-            encryptedAccessToken = await encryptAES(credentials.accessToken, encrKey, "access_token");
-            encrKey.fill(0);
-        } catch (e) {
-            logger.warn("Could not encrypt access token", e);
+    if (!credentials.accessToken)
+        if (credentials.pickleKey) {
+            let encryptedAccessToken: IEncryptedPayload | undefined;
+            try {
+                // try to encrypt the access token using the pickle key
+                const encrKey = await pickleKeyToAesKey(credentials.pickleKey);
+                encryptedAccessToken = await encryptAES(credentials.accessToken, encrKey, "access_token");
+                encrKey.fill(0);
+            } catch (e) {
+                logger.warn("Could not encrypt access token", e);
+            }
+            try {
+                // save either the encrypted access token, or the plain access
+                // token if we were unable to encrypt (e.g. if the browser doesn't
+                // have WebCrypto).
+                await StorageManager.idbSave(
+                    "account",
+                    "mx_access_token",
+                    encryptedAccessToken || credentials.accessToken,
+                );
+            } catch (e) {
+                // if we couldn't save to indexedDB, fall back to localStorage.  We
+                // store the access token unencrypted since localStorage only saves
+                // strings.
+                localStorage.setItem("mx_access_token", credentials.accessToken);
+            }
+            localStorage.setItem("mx_has_pickle_key", String(true));
+        } else {
+            try {
+                await StorageManager.idbSave("account", "mx_access_token", credentials.accessToken);
+            } catch (e) {
+                localStorage.setItem("mx_access_token", credentials.accessToken);
+            }
+            if (localStorage.getItem("mx_has_pickle_key") === "true") {
+                logger.error("Expected a pickle key, but none provided.  Encryption may not work.");
+            }
         }
-        try {
-            // save either the encrypted access token, or the plain access
-            // token if we were unable to encrypt (e.g. if the browser doesn't
-            // have WebCrypto).
-            await StorageManager.idbSave("account", "mx_access_token", encryptedAccessToken || credentials.accessToken);
-        } catch (e) {
-            // if we couldn't save to indexedDB, fall back to localStorage.  We
-            // store the access token unencrypted since localStorage only saves
-            // strings.
-            localStorage.setItem("mx_access_token", credentials.accessToken);
-        }
-        localStorage.setItem("mx_has_pickle_key", String(true));
-    } else {
-        try {
-            await StorageManager.idbSave("account", "mx_access_token", credentials.accessToken);
-        } catch (e) {
-            localStorage.setItem("mx_access_token", credentials.accessToken);
-        }
-        if (localStorage.getItem("mx_has_pickle_key") === "true") {
-            logger.error("Expected a pickle key, but none provided.  Encryption may not work.");
-        }
-    }
 
     // if we didn't get a deviceId from the login, leave mx_device_id unset,
     // rather than setting it to "undefined".
@@ -893,9 +898,9 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
         // now restore those invites and registration time
         if (!opts?.deleteEverything) {
             pendingInvites.forEach((i) => {
-                const roomId = i.roomId;
-                delete i.roomId; // delete to avoid confusing the store
-                ThreepidInviteStore.instance.storeInvite(roomId, i);
+                // remove roomId from invite to avoid confusing the store
+                const { roomId, ...invite } = i;
+                ThreepidInviteStore.instance.storeInvite(roomId, invite);
             });
 
             if (registrationTime) {
