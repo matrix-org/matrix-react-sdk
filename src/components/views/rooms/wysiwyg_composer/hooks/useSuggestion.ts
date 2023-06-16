@@ -17,7 +17,7 @@ limitations under the License.
 import { AllowedMentionAttributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 import { SyntheticEvent, useState } from "react";
 
-import { isNotNull, isNotUndefined } from "../../../../../Typeguards";
+import { isNotNull } from "../../../../../Typeguards";
 
 /**
  * Information about the current state of the `useSuggestion` hook.

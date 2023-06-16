@@ -133,6 +133,7 @@ export function getMentionAttributes(
         attributes.set("data-mention-type", completion.type);
         attributes.set("style", `--avatar-background: url(${avatarUrl}); --avatar-letter: '${initialLetter}'`);
     } else if (completion.type === "at-room") {
+        // TODO add avatar logic for at-room
         attributes.set("data-mention-type", completion.type);
     }
 
