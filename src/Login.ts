@@ -23,7 +23,7 @@ import { DELEGATED_OIDC_COMPATIBILITY, ILoginFlow, ILoginParams, LoginFlow } fro
 
 import { IMatrixClientCreds } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";
-import { ValidatedServerConfig } from "./utils/ValidatedServerConfig";
+import { ValidatedDelegatedAuthConfig } from "./utils/ValidatedServerConfig";
 import { getOidcClientId } from "./utils/oidc/registerClient";
 import { IConfigOptions } from "./IConfigOptions";
 import SdkConfig from "./SdkConfig";
@@ -42,13 +42,13 @@ interface ILoginOptions {
      * When prop is passed we will attempt to use delegated auth
      * Labs flag should be checked in parent
      */
-    delegatedAuthentication?: ValidatedServerConfig["delegatedAuthentication"];
+    delegatedAuthentication?: ValidatedDelegatedAuthConfig;
 }
 
 export default class Login {
     private flows: Array<ClientLoginFlow> = [];
     private readonly defaultDeviceDisplayName?: string;
-    private readonly delegatedAuthentication?: ValidatedServerConfig["delegatedAuthentication"];
+    private readonly delegatedAuthentication?: ValidatedDelegatedAuthConfig;
     private tempClient: MatrixClient | null = null; // memoize
 
     public constructor(
@@ -205,7 +205,7 @@ export interface OidcNativeFlow extends ILoginFlow {
  * @throws when client can't register with OP, or any unexpected error
  */
 const tryInitOidcNativeFlow = async (
-    delegatedAuthConfig: ValidatedServerConfig["delegatedAuthentication"],
+    delegatedAuthConfig: ValidatedDelegatedAuthConfig,
     brand: string,
     oidcStaticClients?: IConfigOptions["oidc_static_clients"],
 ): Promise<OidcNativeFlow> => {

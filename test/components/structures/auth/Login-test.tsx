@@ -28,7 +28,7 @@ import Login from "../../../../src/components/structures/auth/Login";
 import BasePlatform from "../../../../src/BasePlatform";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { Features } from "../../../../src/settings/Settings";
-import { ValidatedServerConfig } from "../../../../src/utils/ValidatedServerConfig";
+import { ValidatedDelegatedAuthConfig } from "../../../../src/utils/ValidatedServerConfig";
 import * as registerClientUtils from "../../../../src/utils/oidc/registerClient";
 import { OidcClientError } from "../../../../src/utils/oidc/error";
 
@@ -81,7 +81,7 @@ describe("Login", function () {
     function getRawComponent(
         hsUrl = "https://matrix.org",
         isUrl = "https://vector.im",
-        delegatedAuthentication?: ValidatedServerConfig["delegatedAuthentication"],
+        delegatedAuthentication?: ValidatedDelegatedAuthConfig,
     ) {
         return (
             <Login
@@ -93,11 +93,7 @@ describe("Login", function () {
         );
     }
 
-    function getComponent(
-        hsUrl?: string,
-        isUrl?: string,
-        delegatedAuthentication?: ValidatedServerConfig["delegatedAuthentication"],
-    ) {
+    function getComponent(hsUrl?: string, isUrl?: string, delegatedAuthentication?: ValidatedDelegatedAuthConfig) {
         return render(getRawComponent(hsUrl, isUrl, delegatedAuthentication));
     }
 
