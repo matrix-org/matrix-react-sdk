@@ -16,6 +16,7 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
+import { mocked } from "jest-mock";
 
 import CreateKeyBackupDialog from "../../../../../src/async-components/views/dialogs/security/CreateKeyBackupDialog";
 import { createTestClient } from "../../../../test-utils";
@@ -35,6 +36,18 @@ describe("CreateKeyBackupDialog", () => {
 
         // Check if the spinner is displayed
         expect(screen.getByTestId("spinner")).toBeDefined();
+        expect(asFragment()).toMatchSnapshot();
+    });
+
+    it("should display the error message when backup creation failed", async () => {
+        const matrixClient = createTestClient();
+        mocked(matrixClient.scheduleAllGroupSessionsForBackup).mockRejectedValue("my error");
+        MatrixClientPeg.get = () => matrixClient;
+
+        const { asFragment } = render(<CreateKeyBackupDialog onFinished={jest.fn()} />);
+
+        // Check if the error message is displayed
+        await waitFor(() => expect(screen.getByText("Unable to create key backup")).toBeDefined());
         expect(asFragment()).toMatchSnapshot();
     });
 
