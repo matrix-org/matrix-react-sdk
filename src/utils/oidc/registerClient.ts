@@ -19,7 +19,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { ValidatedIssuerConfig } from "matrix-js-sdk/src/oidc/validate";
 import { registerOidcClient } from "matrix-js-sdk/src/oidc/register";
 
-
 /**
  * Get the statically configured clientId for the issuer
  * @param issuer delegated auth OIDC issuer

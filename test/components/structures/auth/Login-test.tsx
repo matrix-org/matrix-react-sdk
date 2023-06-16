@@ -21,6 +21,7 @@ import fetchMock from "fetch-mock-jest";
 import { DELEGATED_OIDC_COMPATIBILITY, IdentityProviderBrand } from "matrix-js-sdk/src/@types/auth";
 import { logger } from "matrix-js-sdk/src/logger";
 import { createClient, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { OidcError } from "matrix-js-sdk/src/oidc/error";
 
 import SdkConfig from "../../../../src/SdkConfig";
 import { mkServerConfig, mockPlatformPeg, unmockPlatformPeg } from "../../../test-utils";
@@ -30,7 +31,6 @@ import SettingsStore from "../../../../src/settings/SettingsStore";
 import { Features } from "../../../../src/settings/Settings";
 import { ValidatedServerConfig } from "../../../../src/utils/ValidatedServerConfig";
 import * as registerClientUtils from "../../../../src/utils/oidc/registerClient";
-import { OidcClientError } from "../../../../src/utils/oidc/error";
 
 jest.mock("matrix-js-sdk/src/matrix");
 
@@ -400,7 +400,7 @@ describe("Login", function () {
 
             // tried to register
             expect(fetchMock).toHaveBeenCalledWith(delegatedAuth.registrationEndpoint, expect.any(Object));
-            expect(logger.error).toHaveBeenCalledWith(new Error(OidcClientError.DynamicRegistrationFailed));
+            expect(logger.error).toHaveBeenCalledWith(new Error(OidcError.DynamicRegistrationFailed));
 
             // continued with normal setup
             expect(mockClient.loginFlows).toHaveBeenCalled();
