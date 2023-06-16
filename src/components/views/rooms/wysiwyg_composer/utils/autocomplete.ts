@@ -137,8 +137,9 @@ export function getMentionAttributes(completion: ICompletion, client: MatrixClie
         // from the arguments passed
         let initialLetter = defaultLetterContent;
         let avatarUrl = Avatar.avatarUrlForRoom(room, 16, 16, "crop");
+
         if (!avatarUrl) {
-            initialLetter = Avatar.getInitialLetter(room.name);
+            initialLetter = Avatar.getInitialLetter(room.name) ?? defaultLetterContent;
             avatarUrl = Avatar.defaultAvatarUrlForString(room.roomId);
         }
 
