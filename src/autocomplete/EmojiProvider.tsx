@@ -33,6 +33,7 @@ import SettingsStore from "../settings/SettingsStore";
 import { EMOJI, IEmoji, getEmojiFromUnicode } from "../emoji";
 import { TimelineRenderingType } from "../contexts/RoomContext";
 import * as recent from "../emojipicker/recent";
+import { filterBoolean } from "../utils/arrays";
 import { decryptFile } from "../utils/DecryptFile";
 import { mediaFromMxc } from "../customisations/Media";
 import { IEncryptedFile } from "../customisations/models/IMediaEventContent";
@@ -107,7 +108,8 @@ export default class EmojiProvider extends AutocompleteProvider {
             // For removing punctuation
             shouldMatchWordsOnly: true,
         });
-        this.recentlyUsed = Array.from(new Set(recent.get().map(getEmojiFromUnicode).filter(Boolean)));
+
+        this.recentlyUsed = Array.from(new Set(filterBoolean(recent.get().map(getEmojiFromUnicode))));
     }
 
     private async decryptEmotes(
