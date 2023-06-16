@@ -18,6 +18,14 @@ import { DependencyList, useCallback, useEffect, useState } from "react";
 
 type Fn<T> = () => Promise<T>;
 
+/**
+ * Works just like useMemo or our own useAsyncMemo, but additionally exposes a method to refresh the cached value
+ * as if the dependency had changed
+ * @param fn function to memoize
+ * @param deps React hooks dependencies for the function
+ * @param initialValue initial value
+ * @return tuple of cached value and refresh callback
+ */
 export function useAsyncRefreshMemo<T>(fn: Fn<T>, deps: DependencyList, initialValue: T): [T, () => void];
 export function useAsyncRefreshMemo<T>(fn: Fn<T>, deps: DependencyList, initialValue?: T): [T | undefined, () => void];
 export function useAsyncRefreshMemo<T>(fn: Fn<T>, deps: DependencyList, initialValue?: T): [T | undefined, () => void] {
