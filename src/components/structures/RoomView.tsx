@@ -62,7 +62,6 @@ import RoomPreviewBar from "../views/rooms/RoomPreviewBar";
 import RoomPreviewCard from "../views/rooms/RoomPreviewCard";
 import SearchBar, { SearchScope } from "../views/rooms/SearchBar";
 import RoomUpgradeWarningBar from "../views/rooms/RoomUpgradeWarningBar";
-import { DecryptionFailureBar } from "../views/rooms/DecryptionFailureBar";
 import AuxPanel from "../views/rooms/AuxPanel";
 import RoomHeader, { ISearchInfo } from "../views/rooms/RoomHeader";
 import { IOOBData, IThreepidInvite } from "../../stores/ThreepidInviteStore";
@@ -180,6 +179,11 @@ export interface IRoomState {
     showApps: boolean;
     isPeeking: boolean;
     showRightPanel: boolean;
+    /**
+     * Whether the right panel shown is either of ThreadPanel or ThreadView.
+     * Always false when `showRightPanel` is false.
+     */
+    threadRightPanel: boolean;
     // error object, as from the matrix client/server API
     // If we failed to load information about the room,
     // store the error here.
@@ -224,11 +228,8 @@ export interface IRoomState {
     wasContextSwitch?: boolean;
     editState?: EditorStateTransfer;
     timelineRenderingType: TimelineRenderingType;
-    threadId?: string;
     liveTimeline?: EventTimeline;
     narrow: boolean;
-    // List of undecryptable events currently visible on-screen
-    visibleDecryptionFailures?: MatrixEvent[];
     msc3946ProcessDynamicPredecessor: boolean;
 }
 
@@ -405,6 +406,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             showApps: false,
             isPeeking: false,
             showRightPanel: false,
+            threadRightPanel: false,
             joining: false,
             showTopUnreadMessagesBar: false,
             statusBarVisible: false,
@@ -428,7 +430,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             timelineRenderingType: TimelineRenderingType.Room,
             liveTimeline: undefined,
             narrow: false,
-            visibleDecryptionFailures: [],
             msc3946ProcessDynamicPredecessor: SettingsStore.getValue("feature_dynamic_room_predecessors"),
         };
 
@@ -627,6 +628,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             mainSplitContentType: room ? this.getMainSplitContentType(room) : undefined,
             initialEventId: undefined, // default to clearing this, will get set later in the method if needed
             showRightPanel: roomId ? this.context.rightPanelStore.isOpenForRoom(roomId) : false,
+            threadRightPanel: roomId
+                ? [RightPanelPhases.ThreadView, RightPanelPhases.ThreadPanel].includes(
+                      this.context.rightPanelStore.currentCardForRoom(roomId).phase!,
+                  )
+                : false,
             activeCall: roomId ? CallStore.instance.getActiveCall(roomId) : null,
         };
 
@@ -1015,8 +1021,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     }
 
     private onRightPanelStoreUpdate = (): void => {
+        const { roomId } = this.state;
         this.setState({
-            showRightPanel: this.state.roomId ? this.context.rightPanelStore.isOpenForRoom(this.state.roomId) : false,
+            showRightPanel: roomId ? this.context.rightPanelStore.isOpenForRoom(roomId) : false,
+            threadRightPanel: roomId
+                ? [RightPanelPhases.ThreadView, RightPanelPhases.ThreadPanel].includes(
+                      this.context.rightPanelStore.currentCardForRoom(roomId).phase!,
+                  )
+                : false,
         });
     };
 
@@ -1244,7 +1256,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     private onEventDecrypted = (ev: MatrixEvent): void => {
         if (!this.state.room || !this.state.matrixClientIsReady) return; // not ready at all
         if (ev.getRoomId() !== this.state.room.roomId) return; // not for us
-        this.updateVisibleDecryptionFailures();
         if (ev.isDecryptionFailure()) return;
         this.handleEffects(ev);
     };
@@ -1512,7 +1523,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         }
         const dmInviter = room.getDMInviter();
         if (dmInviter) {
-            Rooms.setDMRoom(room.roomId, dmInviter);
+            Rooms.setDMRoom(room.client, room.roomId, dmInviter);
         }
     }
 
@@ -1552,20 +1563,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         }
     };
 
-    private updateVisibleDecryptionFailures = throttle(
-        () =>
-            this.setState((prevState) => ({
-                visibleDecryptionFailures:
-                    this.messagePanel?.getVisibleDecryptionFailures(
-                        // If there were visible failures last time we checked,
-                        // add a margin to provide hysteresis and prevent flickering
-                        (prevState.visibleDecryptionFailures?.length ?? 0) > 0,
-                    ) ?? [],
-            })),
-        500,
-        { leading: false, trailing: true },
-    );
-
     private onMessageListScroll = (): void => {
         if (this.messagePanel?.isAtEndOfLiveTimeline()) {
             this.setState({
@@ -1578,7 +1575,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             });
         }
         this.updateTopUnreadMessagesBar();
-        this.updateVisibleDecryptionFailures();
     };
 
     private resetJumpToEvent = (eventId?: string): void => {
@@ -1621,7 +1617,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         const roomId = scope === SearchScope.Room ? this.getRoomId() : undefined;
         debuglog("sending search request");
         const abortController = new AbortController();
-        const promise = eventSearch(term, roomId, abortController.signal);
+        const promise = eventSearch(this.context.client!, term, roomId, abortController.signal);
 
         this.setState({
             search: {
@@ -2203,11 +2199,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             );
         }
 
-        let decryptionFailureBar: JSX.Element | undefined;
-        if (this.state.visibleDecryptionFailures && this.state.visibleDecryptionFailures.length > 0) {
-            decryptionFailureBar = <DecryptionFailureBar failures={this.state.visibleDecryptionFailures} />;
-        }
-
         if (this.state.room?.isSpaceRoom() && !this.props.forceTimeline) {
             return (
                 <SpaceRoomView
@@ -2233,7 +2224,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 resizeNotifier={this.props.resizeNotifier}
             >
                 {aux}
-                {decryptionFailureBar}
             </AuxPanel>
         );
 
@@ -2465,7 +2455,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             viewingCall={viewingCall}
                             activeCall={this.state.activeCall}
                         />
-                        <MainSplit panel={rightPanel} resizeNotifier={this.props.resizeNotifier}>
+                        <MainSplit
+                            panel={rightPanel}
+                            resizeNotifier={this.props.resizeNotifier}
+                            // Override defaults when a thread is being shown to allow persisting a separate
+                            // right panel width for thread panels as they tend to want to be wider.
+                            sizeKey={this.state.threadRightPanel ? "thread" : undefined}
+                            defaultSize={this.state.threadRightPanel ? 500 : undefined}
+                        >
                             <div
                                 className={mainSplitContentClasses}
                                 ref={this.roomViewBody}

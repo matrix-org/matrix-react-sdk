@@ -106,6 +106,7 @@ export interface IConfigOptions {
     };
 
     widget_build_url?: string; // url called to replace jitsi/call widget creation
+    widget_build_url_ignore_dm?: boolean;
     audio_stream_url?: string;
     jitsi?: {
         preferred_domain: string;
@@ -151,6 +152,8 @@ export interface IConfigOptions {
     enable_presence_by_hs_url?: Record<string, boolean>; // <HomeserverName, Enabled>
 
     terms_and_conditions_links?: { url: string; text: string }[];
+    help_url: string;
+    help_encryption_url: string;
 
     latex_maths_delims?: {
         inline?: {

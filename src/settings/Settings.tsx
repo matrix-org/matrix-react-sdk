@@ -93,6 +93,7 @@ export enum LabGroup {
 export enum Features {
     VoiceBroadcast = "feature_voice_broadcast",
     VoiceBroadcastForceSmallChunks = "feature_voice_broadcast_force_small_chunks",
+    OidcNativeFlow = "feature_oidc_native_flow",
 }
 
 export const labGroupNames: Record<LabGroup, string> = {
@@ -425,14 +426,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         shouldWarn: true,
         default: false,
     },
-    "feature_favourite_messages": {
-        isFeature: true,
-        labsGroup: LabGroup.Messaging,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Favourite Messages"),
-        description: _td("Under active development."),
-        default: false,
-    },
     [Features.VoiceBroadcast]: {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
@@ -445,26 +438,10 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("Force 15s voice broadcast chunk length"),
         default: false,
     },
-    "feature_new_device_manager": {
-        isFeature: true,
-        labsGroup: LabGroup.Experimental,
+    [Features.OidcNativeFlow]: {
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Use new session manager"),
+        displayName: _td("Enable new native OIDC flows (Under active development)"),
         default: false,
-        betaInfo: {
-            title: _td("New session manager"),
-            caption: () => (
-                <>
-                    <p>{_t("Have greater visibility and control over all your sessions.")}</p>
-                    <p>
-                        {_t(
-                            "Our new sessions manager provides better visibility of all your sessions, " +
-                                "and greater control over them including the ability to remotely toggle push notifications.",
-                        )}
-                    </p>
-                </>
-            ),
-        },
     },
     "feature_rust_crypto": {
         // use the rust matrix-sdk-crypto-js for crypto.
@@ -901,9 +878,8 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "fallbackICEServerAllowed": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        displayName: _td("Allow fallback call assist server (turn.matrix.org)"),
         description: _td(
-            "Only applies if your homeserver does not offer one. " + "Your IP address would be shared during a call.",
+            "Only applies if your homeserver does not offer one. Your IP address would be shared during a call.",
         ),
         // This is a tri-state value, where `null` means "prompt the user".
         default: null,
