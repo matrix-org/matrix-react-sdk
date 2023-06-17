@@ -229,17 +229,17 @@ class NotifierClass {
         const sound = this.getSoundForRoom(roomId);
 
         const audioElement = document.createElement("audio");
-        let format="";
-        if(audioElement.canPlayType("audio/mpeg")){
-            format="mp3";
-        }else if(audioElement.canPlayType("audio/ogg")){
-            format="ogg";
-        }else{
+        let format = "";
+        if (audioElement.canPlayType("audio/mpeg")) {
+            format = "mp3";
+        } else if (audioElement.canPlayType("audio/ogg")) {
+            format = "ogg";
+        } else {
             console.log("Browser doens't support mp3 or ogg");
             // Will probably never happen. If happened, format="" and will fail to load audio. Who cares...
         }
 
-        const url = sound ? sound["url"] : "media/message."+format;
+        const url = sound ? sound["url"] : "media/message." + format;
 
         if (this.sounds.hasOwnProperty(url)) {
             return this.sounds[url];
