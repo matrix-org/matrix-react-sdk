@@ -107,23 +107,21 @@ limitations under the License.
         z-index: 1;
     }
 
-    &.mx_AppsDrawer--2apps .mx_AppTile {
-        width: 50%;
-
-        &:nth-child(3) {
+    &.mx_AppsDrawer--2apps,
+    &.mx_AppsDrawer--3apps {
+        .mx_AppTile:nth-child(3) {
             flex-grow: 1;
             width: 0 !important;
             min-width: var(--minWidth) !important;
         }
     }
+
+    &.mx_AppsDrawer--2apps .mx_AppTile {
+        width: 50%;
+    }
+
     &.mx_AppsDrawer--3apps .mx_AppTile {
         width: 33%;
-
-        &:nth-child(3) {
-            flex-grow: 1;
-            width: 0 !important;
-            min-width: var(--minWidth) !important;
-        }
     }
 }
 
