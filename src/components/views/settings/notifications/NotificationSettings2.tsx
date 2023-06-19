@@ -370,7 +370,8 @@ export default function NotificationSettings2(): JSX.Element {
                             if (model !== null) {
                                 reconcile(DefaultNotificationSettings);
                             }
-                        }}>
+                        }}
+                    >
                         {_t("Reset to default settings")}
                     </AccessibleButton>
                 </SettingsSubsection>
