@@ -108,21 +108,19 @@ export class SetupEncryptionStore extends EventEmitter {
         // do we have any other verified devices which are E2EE which we can verify against?
         const dehydratedDevice = await cli.getDehydratedDevice();
         const ownUserId = cli.getUserId()!;
-        const crypto = cli.getCrypto();
-        if (crypto) {
-            const userDevices: Iterable<Device> =
-                (await crypto.getUserDeviceInfo([ownUserId])).get(ownUserId)?.values() ?? [];
-            this.hasDevicesToVerifyAgainst = await asyncSome(userDevices, async (device) => {
-                // ignore the dehydrated device
-                if (dehydratedDevice && device.deviceId == dehydratedDevice?.device_id) return false;
+        const crypto = cli.getCrypto()!;
+        const userDevices: Iterable<Device> =
+            (await crypto.getUserDeviceInfo([ownUserId])).get(ownUserId)?.values() ?? [];
+        this.hasDevicesToVerifyAgainst = await asyncSome(userDevices, async (device) => {
+            // ignore the dehydrated device
+            if (dehydratedDevice && device.deviceId == dehydratedDevice?.device_id) return false;
 
-                // ignore devices without an identity key
-                if (!device.getIdentityKey()) return false;
+            // ignore devices without an identity key
+            if (!device.getIdentityKey()) return false;
 
-                const verificationStatus = await crypto.getDeviceVerificationStatus(ownUserId, device.deviceId);
-                return !!verificationStatus?.signedByOwner;
-            });
-        }
+            const verificationStatus = await crypto.getDeviceVerificationStatus(ownUserId, device.deviceId);
+            return !!verificationStatus?.signedByOwner;
+        });
 
         this.phase = Phase.Intro;
         this.emit("update");

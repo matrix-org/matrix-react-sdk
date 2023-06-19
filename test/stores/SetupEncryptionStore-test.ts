@@ -16,9 +16,10 @@ limitations under the License.
 
 import { mocked, Mocked } from "jest-mock";
 import { IBootstrapCrossSigningOpts } from "matrix-js-sdk/src/crypto";
-import { CryptoApi, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { CryptoApi, DeviceVerificationStatus, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { SecretStorageKeyDescriptionAesV1, ServerSideSecretStorage } from "matrix-js-sdk/src/secret-storage";
 import { Device } from "matrix-js-sdk/src/models/device";
+import { IDehydratedDevice } from "matrix-js-sdk/src/crypto/dehydration";
 
 import { SdkContextClass } from "../../src/contexts/SDKContext";
 import { accessSecretStorage } from "../../src/SecurityManager";
@@ -42,6 +43,7 @@ describe("SetupEncryptionStore", () => {
             bootstrapCrossSigning: jest.fn(),
             getVerificationRequestsToDeviceInProgress: jest.fn().mockReturnValue([]),
             getUserDeviceInfo: jest.fn(),
+            getDeviceVerificationStatus: jest.fn(),
         } as unknown as Mocked<CryptoApi>;
         client.getCrypto.mockReturnValue(mockCrypto);
 
@@ -76,6 +78,59 @@ describe("SetupEncryptionStore", () => {
 
             expect(setupEncryptionStore.keyId).toEqual("sskeyid");
             expect(setupEncryptionStore.keyInfo).toBe(fakeKey);
+        });
+
+        it("should spot a signed device", async () => {
+            mockSecretStorage.isStored.mockResolvedValue({ sskeyid: {} as SecretStorageKeyDescriptionAesV1 });
+
+            const fakeDevice = new Device({
+                deviceId: "deviceId",
+                userId: "",
+                algorithms: [],
+                keys: new Map([["curve25519:deviceId", "identityKey"]]),
+            });
+            mockCrypto.getUserDeviceInfo.mockResolvedValue(
+                new Map([[client.getSafeUserId(), new Map([[fakeDevice.deviceId, fakeDevice]])]]),
+            );
+            mockCrypto.getDeviceVerificationStatus.mockResolvedValue(
+                new DeviceVerificationStatus({ signedByOwner: true }),
+            );
+
+            setupEncryptionStore.start();
+            await emitPromise(setupEncryptionStore, "update");
+
+            expect(setupEncryptionStore.hasDevicesToVerifyAgainst).toBe(true);
+        });
+
+        it("should ignore the dehydrated device", async () => {
+            mockSecretStorage.isStored.mockResolvedValue({ sskeyid: {} as SecretStorageKeyDescriptionAesV1 });
+
+            client.getDehydratedDevice.mockResolvedValue({ device_id: "dehydrated" } as IDehydratedDevice);
+
+            const fakeDevice = new Device({
+                deviceId: "dehydrated",
+                userId: "",
+                algorithms: [],
+                keys: new Map([["curve25519:dehydrated", "identityKey"]]),
+            });
+            mockCrypto.getUserDeviceInfo.mockResolvedValue(
+                new Map([[client.getSafeUserId(), new Map([[fakeDevice.deviceId, fakeDevice]])]]),
+            );
+
+            setupEncryptionStore.start();
+            await emitPromise(setupEncryptionStore, "update");
+
+            expect(setupEncryptionStore.hasDevicesToVerifyAgainst).toBe(false);
+            expect(mockCrypto.getDeviceVerificationStatus).not.toHaveBeenCalled();
+        });
+
+        it("should correctly handle getUserDeviceInfo() returning an empty map", async () => {
+            mockSecretStorage.isStored.mockResolvedValue({ sskeyid: {} as SecretStorageKeyDescriptionAesV1 });
+            mockCrypto.getUserDeviceInfo.mockResolvedValue(new Map());
+
+            setupEncryptionStore.start();
+            await emitPromise(setupEncryptionStore, "update");
+            expect(setupEncryptionStore.hasDevicesToVerifyAgainst).toBe(false);
         });
     });
 
