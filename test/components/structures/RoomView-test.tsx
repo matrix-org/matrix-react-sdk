@@ -55,6 +55,7 @@ import VoipUserMapper from "../../../src/VoipUserMapper";
 import WidgetUtils from "../../../src/utils/WidgetUtils";
 import { WidgetType } from "../../../src/widgets/WidgetType";
 import WidgetStore from "../../../src/stores/WidgetStore";
+import { ViewRoomErrorPayload } from "../../../src/dispatcher/payloads/ViewRoomErrorPayload";
 
 // Fake random strings to give a predictable snapshot for IDs
 jest.mock("matrix-js-sdk/src/randomstring", () => ({
@@ -138,8 +139,8 @@ describe("RoomView", () => {
         return roomView;
     };
 
-    const renderRoomView = async (): Promise<ReturnType<typeof render>> => {
-        if (stores.roomViewStore.getRoomId() !== room.roomId) {
+    const renderRoomView = async (switchRoom = true): Promise<ReturnType<typeof render>> => {
+        if (switchRoom && stores.roomViewStore.getRoomId() !== room.roomId) {
             const switchedRoom = new Promise<void>((resolve) => {
                 const subFn = () => {
                     if (stores.roomViewStore.getRoomId()) {
@@ -496,5 +497,17 @@ describe("RoomView", () => {
                 itShouldNotRemoveTheLastWidget();
             });
         });
+    });
+
+    it("should show error view if failed to look up room alias", async () => {
+        const { asFragment } = await renderRoomView();
+
+        defaultDispatcher.dispatch<ViewRoomErrorPayload>({
+            action: Action.ViewRoomError,
+            room_alias: "#addy:server",
+            room_id: null,
+        });
+
+        expect(asFragment()).toMatchSnapshot();
     });
 });
