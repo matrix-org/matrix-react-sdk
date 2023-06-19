@@ -2866,7 +2866,6 @@
     "Show join/leave messages (invites/removes/bans unaffected)": "Сообщения о присоединении/покидании (приглашения/удаления/блокировки не затрагиваются)",
     "Use a more compact 'Modern' layout": "Использовать более компактный \"Современный\" макет",
     "Jump to date (adds /jumptodate and jump to date headers)": "Перейти к дате (добавляет /jumptodate и переход к заголовкам дат)",
-    "Use new room breadcrumbs": "Использовать новые навигационные тропы комнат",
     "Let moderators hide messages pending moderation.": "Позволяет модераторам скрывать сообщения, ожидающие модерации.",
     "Developer": "Разработка",
     "Experimental": "Экспериментально",

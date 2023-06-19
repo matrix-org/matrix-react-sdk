@@ -2054,7 +2054,6 @@
     "Request media permissions": "Запитати медіадозволи",
     "Missing media permissions, click the button below to request.": "Бракує медіадозволів, натисніть кнопку нижче, щоб їх надати.",
     "Use a more compact 'Modern' layout": "Використовувати компактний вигляд «Модерн»",
-    "Use new room breadcrumbs": "Використовувати нові навігаційні стежки кімнат",
     "Render LaTeX maths in messages": "Форматувати LaTeX-формули в повідомленнях",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties. <LearnMoreLink>Learn More</LearnMoreLink>": "Збір анонімних даних дає нам змогу дізнаватися про збої. Жодних особистих даних. Жодних третіх сторін. <LearnMoreLink>Докладніше</LearnMoreLink>",
     "Developer": "Розробка",

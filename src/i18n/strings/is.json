@@ -1299,7 +1299,6 @@
     "Failed to remove tag %(tagName)s from room": "Mistókst að fjarlægja merkið %(tagName)s af spjallrás",
     "%(doneRooms)s out of %(totalRooms)s": "%(doneRooms)s af %(totalRooms)s",
     "Set up Secure Messages": "Setja upp örugg skilaboð",
-    "Use new room breadcrumbs": "Nota nýju 'brauðmola'-auðkennismyndirnar",
     "You do not have permission to start a conference call in this room": "Þú hefur ekki aðgangsheimildir til að hefja fjarfund á þessari spjallrás",
     "Permission Required": "Krafist er heimildar",
     "Unable to transfer call": "Mistókst að áframsenda símtal",

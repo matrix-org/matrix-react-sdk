@@ -2594,7 +2594,6 @@
     "From a thread": "スレッドから",
     "Got an account? <a>Sign in</a>": "アカウントがありますか？<a>サインインしてください</a>",
     "New here? <a>Create an account</a>": "初めてですか？<a>アカウントを作成しましょう</a>",
-    "Use new room breadcrumbs": "新しいルームのパンくずリストを使用",
     "Identity server URL does not appear to be a valid identity server": "これは正しいIDサーバーのURLではありません",
     "<%(count)s spaces>|other": "<%(count)s個のスペース>",
     "Create key backup": "鍵のバックアップを作成",

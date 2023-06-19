@@ -2809,7 +2809,6 @@
     "Dial": "Wählen",
     "Automatically send debug logs on decryption errors": "Sende bei Entschlüsselungsfehlern automatisch Protokolle zur Fehlerkorrektur",
     "Show join/leave messages (invites/removes/bans unaffected)": "Bei-/Austrittsnachrichten (Einladung/Entfernen/Bann nicht betroffen)",
-    "Use new room breadcrumbs": "Kürzlich besuchte Räume anzeigen („Breadcrumbs“)",
     "Back to thread": "Zurück zum Thread",
     "Back to chat": "Zurück zur Unterhaltung",
     "Remove, ban, or invite people to your active room, and make you leave": "Entferne, verbanne oder lade andere in deinen aktiven Raum ein und verlasse den Raum selbst",

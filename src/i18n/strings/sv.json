@@ -2711,7 +2711,6 @@
     "Quick settings": "Snabbinställningar",
     "sends rainfall": "skickar regn",
     "Sends the given message with rainfall": "Skickar det givna meddelandet med regn",
-    "Use new room breadcrumbs": "Använd nya rumsbrödsmulor",
     "We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.": "Vi kunde inte förstå det givna datumet (%(inputDate)s). Pröva formatet ÅÅÅÅ-MM-DD.",
     "Spaces to show": "Utrymmen att visa",
     "Sidebar": "Sidofält",

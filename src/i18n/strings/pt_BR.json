@@ -2478,7 +2478,6 @@
     "Developer mode": "Modo desenvolvedor",
     "Automatically send debug logs on any error": "Enviar automaticamente logs de depuração em qualquer erro",
     "Surround selected text when typing special characters": "Circule o texto selecionado ao digitar caracteres especiais",
-    "Use new room breadcrumbs": "Use a localização atual da nova sala",
     "Click the button below to confirm signing out these devices.|one": "Clique no botão abaixo para confirmar a desconexão deste dispositivo.",
     "Click the button below to confirm signing out these devices.|other": "Clique no botão abaixo para confirmar a desconexão de outros dispositivos.",
     "Confirm logging out these devices by using Single Sign On to prove your identity.|one": "Confirme o logout deste dispositivo usando o logon único para provar sua identidade.",
