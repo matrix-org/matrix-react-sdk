@@ -77,8 +77,8 @@ class EmojiPicker extends React.Component<IProps, IState> {
 
     private scrollRef = React.createRef<AutoHideScrollbar<"div">>();
 
-    private emotes: Map<string, JSX.Element>;
-    private emotesPromise: Promise<Map<string, JSX.Element>>;
+    private emotes!: Map<string, JSX.Element>;
+    private emotesPromise!: Promise<Map<string, JSX.Element>>;
     private finalEmotes: IEmoji[];
     private finalEmotesMap: Map<string, IEmoji>;
     public constructor(props: IProps) {
@@ -222,15 +222,15 @@ class EmojiPicker extends React.Component<IProps, IState> {
         rec.forEach((v, i) => {
             if (this.finalEmotesMap.get(v.unicode)) {
                 if (i >= this.recentlyUsed.length) {
-                    this.recentlyUsed.push(this.finalEmotesMap.get(v.unicode));
+                    this.recentlyUsed.push(this.finalEmotesMap.get(v.unicode)!);
                 } else {
-                    this.recentlyUsed[i] = this.finalEmotesMap.get(v.unicode);
+                    this.recentlyUsed[i] = this.finalEmotesMap.get(v.unicode)!;
                 }
             } else if (getEmojiFromUnicode(v.unicode)) {
                 if (i >= this.recentlyUsed.length) {
-                    this.recentlyUsed.push(getEmojiFromUnicode(v.unicode));
+                    this.recentlyUsed.push(getEmojiFromUnicode(v.unicode)!);
                 } else {
-                    this.recentlyUsed[i] = getEmojiFromUnicode(v.unicode);
+                    this.recentlyUsed[i] = getEmojiFromUnicode(v.unicode)!;
                 }
             }
         });
@@ -250,7 +250,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
                 const blob = await decryptFile(val as IEncryptedFile);
                 decryptedurl = URL.createObjectURL(blob);
             } else {
-                decryptedurl = mediaFromMxc(val as string)?.srcHttp;
+                decryptedurl = mediaFromMxc(val as string)?.srcHttp!;
             }
             decryptedemotes.set(
                 shortcode,

@@ -553,11 +553,11 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
                 sanitizeParams.textFilter = function (safeText) {
                     if (opts.emotes) {
                         return highlighter
-                            .applyHighlights(safeText, safeHighlights)
+                            .applyHighlights(safeText, safeHighlights!)
                             .join("")
-                            .replace(CUSTOM_EMOTES_REGEX, (m) => (opts.emotes.get(m) ? opts.emotes.get(m) : m));
+                            .replace(CUSTOM_EMOTES_REGEX, (m) => (opts?.emotes?.get(m) ? opts?.emotes?.get(m)! : m));
                     }
-                    return highlighter.applyHighlights(safeText, safeHighlights).join("");
+                    return highlighter.applyHighlights(safeText, safeHighlights!).join("");
                 };
             }
 
@@ -625,7 +625,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         "markdown-body": isHtmlMessage && !emojiBody,
     });
     if (opts.emotes) {
-        const tmp = strippedBody?.replace(CUSTOM_EMOTES_REGEX, (m) => (opts.emotes.get(m) ? opts.emotes.get(m) : m));
+        const tmp = strippedBody?.replace(CUSTOM_EMOTES_REGEX, (m) => (opts?.emotes?.get(m) ? opts?.emotes?.get(m)! : m));
         if (tmp !== strippedBody) {
             safeBody = tmp;
         }
@@ -645,7 +645,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         />
     ) : (
         <span key="body" ref={opts.ref} className={className} dir="auto">
-            {emojiBodyElements || strippedBody}
+            {emojiBodyElements! || strippedBody}
         </span>
     );
 }

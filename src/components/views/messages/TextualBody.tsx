@@ -579,13 +579,13 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         const rawEmotes = emotesEvent ? emotesEvent.getContent() || {} : {};
         const decryptedemotes = new Map<string, string>();
         let decryptedurl = "";
-        const isEnc = client?.isRoomEncrypted(this.props.mxEvent.getRoomId());
+        const isEnc = client?.isRoomEncrypted(this.props.mxEvent.getRoomId()!);
         for (const shortcode in rawEmotes) {
             if (isEnc) {
                 const blob = await decryptFile(rawEmotes[shortcode]);
                 decryptedurl = URL.createObjectURL(blob);
             } else {
-                decryptedurl = mediaFromMxc(rawEmotes[shortcode])?.srcHttp;
+                decryptedurl = mediaFromMxc(rawEmotes[shortcode])?.srcHttp!;
             }
 
             decryptedemotes.set(

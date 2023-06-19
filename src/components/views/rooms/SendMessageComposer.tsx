@@ -201,7 +201,7 @@ export function createMessageContent(
 
     let emoteBody;
     if (compat && emotes) {
-        emoteBody = body.replace(/:[\w+-]+:/g, (m) => (emotes.get(m) ? emotes.get(m) : m));
+        emoteBody = body.replace(/:[\w+-]+:/g, (m) => (emotes.get(m) ? emotes.get(m)! : m));
     }
     const content: IContent = {
         msgtype: isEmote ? MsgType.Emote : MsgType.Text,
@@ -213,7 +213,7 @@ export function createMessageContent(
     });
     if (formattedBody) {
         if (compat && emotes) {
-            formattedBody = formattedBody.replace(/:[\w+-]+:/g, (m) => (emotes.get(m) ? emotes.get(m) : m));
+            formattedBody = formattedBody.replace(/:[\w+-]+:/g, (m) => (emotes.get(m) ? emotes.get(m)! : m));
         }
         content.format = "org.matrix.custom.html";
         content.formatted_body = formattedBody;
@@ -277,7 +277,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     private currentlyComposedEditorState: SerializedPart[] | null = null;
     private dispatcherRef: string;
     private sendHistoryManager: SendHistoryManager;
-    private imagePack: object;
+    private imagePack: Record<string,Record<string,Record<string,string>>>;;
     private emotes: Map<string, string>;
     private compat: boolean;
     public static defaultProps = {
@@ -313,12 +313,13 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
         const imagePackEvent = room.currentState.getStateEvents(EMOTES_COMP.name, "");
         this.imagePack = imagePackEvent
-            ? imagePackEvent.getContent() || { images: new Map<string, object>() }
-            : { images: new Map<string, object>() };
+            ? imagePackEvent.getContent() || { "images": {} }
+            : { "images": {} };
         this.emotes = new Map<string, string>();
         if (!this.imagePack["images"]) {
-            this.imagePack = { images: new Map<string, object>() };
+            this.imagePack["images"]={};
         }
+        
         for (const shortcode in this.imagePack["images"]) {
             this.emotes.set(
                 ":" + shortcode.replace(/[^a-zA-Z0-9_]/g, "") + ":",

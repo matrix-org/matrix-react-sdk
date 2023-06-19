@@ -85,7 +85,7 @@ export default class EmojiProvider extends AutocompleteProvider {
     public nameMatcher: QueryMatcher<ISortedEmoji>;
     private readonly recentlyUsed: IEmoji[];
     private emotes: Map<string, string> = new Map();
-    private emotesPromise: Promise<Map<string, string>>;
+    private emotesPromise!: Promise<Map<string, string>>;
     public constructor(room: Room, renderingType?: TimelineRenderingType) {
         super({ commandRegex: EMOJI_REGEX, renderingType });
         const emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
@@ -124,7 +124,7 @@ export default class EmojiProvider extends AutocompleteProvider {
                 const blob = await decryptFile(val as IEncryptedFile);
                 decryptedurl = URL.createObjectURL(blob);
             } else {
-                decryptedurl = mediaFromMxc(val as string).srcHttp;
+                decryptedurl = mediaFromMxc(val as string)?.srcHttp!;
             }
             decryptedEmoteMap.set(":" + shortcode + ":", decryptedurl);
         }

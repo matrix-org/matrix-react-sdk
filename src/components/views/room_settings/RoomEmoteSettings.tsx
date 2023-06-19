@@ -19,7 +19,7 @@ import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, {ButtonEvent} from "../elements/AccessibleButton";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 import { uploadFile } from "../../../ContentMessages";
 import { decryptFile } from "../../../utils/DecryptFile";
@@ -57,7 +57,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
     private emoteUpload = createRef<HTMLInputElement>();
     private emoteCodeUpload = createRef<HTMLInputElement>();
     private emoteUploadImage = createRef<HTMLImageElement>();
-    private imagePack: object;
+    private imagePack: Record<string,Record<string,Record<string,string>>>;
     public constructor(props: IProps) {
         super(props);
 
@@ -79,10 +79,10 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
 
         const imagePackEvent = room.currentState.getStateEvents(EMOTES_COMP.name, "");
         this.imagePack = imagePackEvent
-            ? imagePackEvent.getContent() || { images: new Map<string, object>() }
-            : { images: new Map<string, object>() };
+            ? imagePackEvent.getContent() || { "images": {} }
+            : { "images": {} };
         if (!this.imagePack["images"]) {
-            this.imagePack = { images: new Map<string, object>() };
+            this.imagePack["images"]={};
         }
 
         this.state = {
@@ -95,7 +95,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             newEmoteFile: [],
             deleted: false,
             deletedItems: new Map(),
-            canAddEmote: room.currentState.maySendStateEvent(EMOTES_STATE.name, client.getUserId()),
+            canAddEmote: room.currentState.maySendStateEvent(EMOTES_STATE.name, client.getUserId()!),
             value: value,
             compatibility: compat,
         };
@@ -107,7 +107,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
     }
 
     private uploadEmoteClick = (): void => {
-        this.emoteUpload.current.click();
+        this.emoteUpload.current?.click();
     };
 
     private isSaveEnabled = (): boolean => {
@@ -118,7 +118,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         );
     };
 
-    private cancelEmoteChanges = async (e: React.MouseEvent): Promise<void> => {
+    private cancelEmoteChanges = async (e: ButtonEvent): Promise<void> => {
         e.stopPropagation();
         e.preventDefault();
         const value = new Map();
@@ -143,7 +143,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             value: value,
         });
     };
-    private deleteEmote = (e: React.MouseEvent): Promise<void> => {
+    private deleteEmote = (e: ButtonEvent): void => {
         e.stopPropagation();
         e.preventDefault();
         const cleanemotes = new Map();
@@ -160,7 +160,6 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         }
 
         this.setState({ deleted: true, emotes: cleanemotes, deletedItems: deletedItems, value: value });
-        return;
     };
     private saveEmote = async (e: React.FormEvent): Promise<void> => {
         e.stopPropagation();
@@ -169,26 +168,26 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         if (!this.isSaveEnabled()) return;
         const client = MatrixClientPeg.get();
         const newState: Partial<IState> = {};
-        const emotesMxcs = {};
+        const emotesMxcs : { [key: string]:IEncryptedFile|string } = {};
         const value = new Map();
-        const newPack = { images: new Map<string, object>() };
+        const newPack: Map<string,Record<string,string>> = new Map();
 
         if (this.state.emotes || (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded)) {
             if (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded) {
                 for (let i = 0; i < this.state.newEmoteCode.length; i++) {
                     const newEmote = await uploadFile(client, this.props.roomId, this.state.newEmoteFile[i]);
                     if (client.isRoomEncrypted(this.props.roomId)) {
-                        emotesMxcs[this.state.newEmoteCode[i]] = newEmote.file;
+                        emotesMxcs[this.state.newEmoteCode[i]] = newEmote.file!;
                     } else {
-                        emotesMxcs[this.state.newEmoteCode[i]] = newEmote.url;
+                        emotesMxcs[this.state.newEmoteCode[i]] = newEmote.url!;
                     }
                     value.set(this.state.newEmoteCode[i], this.state.newEmoteCode[i]);
                     if (this.state.compatibility) {
                         if (client.isRoomEncrypted(this.props.roomId)) {
                             const compatNewEmote = await client.uploadContent(this.state.newEmoteFile[i]);
-                            newPack["images"][this.state.newEmoteCode[i]] = { url: compatNewEmote.content_uri };
+                            newPack.set(this.state.newEmoteCode[i], { url: compatNewEmote.content_uri });
                         } else {
-                            newPack["images"][this.state.newEmoteCode[i]] = { url: newEmote.url };
+                            newPack.set(this.state.newEmoteCode[i], { url: newEmote.url! });
                         }
                     }
                 }
@@ -206,22 +205,26 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                         emotesMxcs[this.state.EmoteFieldsTouched[shortcode]] = val;
                         value.set(this.state.EmoteFieldsTouched[shortcode], this.state.EmoteFieldsTouched[shortcode]);
                         if (this.imagePack["images"][shortcode]) {
-                            newPack["images"][this.state.EmoteFieldsTouched[shortcode]] = {
+                            newPack.set(this.state.EmoteFieldsTouched[shortcode], {
                                 url: this.imagePack["images"][shortcode]["url"],
-                            };
+                            });
                         }
                     } else {
                         emotesMxcs[shortcode] = val;
                         value.set(shortcode, shortcode);
-                        if (this.imagePack["images"].get(shortcode)) {
-                            newPack["images"][shortcode] = { url: this.imagePack["images"][shortcode]["url"] };
+                        if (this.imagePack["images"][shortcode]) {
+                            newPack.set(shortcode, { url: this.imagePack["images"][shortcode]["url"] });
                         }
                     }
                 }
             }
             newState.value = value;
             await client.sendStateEvent(this.props.roomId, EMOTES_STATE.name, emotesMxcs, "");
-            this.imagePack = newPack;
+
+            for (const [key,val] of newPack){
+                this.imagePack["images"][key]=val
+            }
+
             await client.sendStateEvent(this.props.roomId, EMOTES_COMP.name, this.imagePack, "");
 
             newState.newEmoteFileAdded = false;
@@ -241,9 +244,9 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
     };
 
     private onEmoteChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const id = e.target.getAttribute("id");
+        const id = e.target.getAttribute("id")!;
         const b = this.state.value;
-        b.set(id, e.target.value.replace(SHORTCODE_REGEX, ""));
+        b.set(id, e.target?.value?.replace(SHORTCODE_REGEX, ""));
         this.setState({
             value: b,
             EmoteFieldsTouched: { ...this.state.EmoteFieldsTouched, [id]: e.target.value.replace(SHORTCODE_REGEX, "") },
@@ -261,8 +264,8 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             return;
         }
 
-        const uploadedFiles = [];
-        const newCodes = [];
+        const uploadedFiles: Array<File> = [];
+        const newCodes: string[] = [];
         for (const file of e.target.files) {
             const fileName = file.name.replace(/\.[^.]*$/, "");
             uploadedFiles.push(file);
@@ -281,7 +284,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
     private onEmoteCodeAdd = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if (e.target.value.replace(SHORTCODE_REGEX, "").length > 0) {
             const updatedCode = this.state.newEmoteCode;
-            updatedCode[e.target.getAttribute("data-index")] = e.target.value.replace(SHORTCODE_REGEX, "");
+            updatedCode[parseInt(e.target.getAttribute("data-index")!)] = e.target.value.replace(SHORTCODE_REGEX, "");
             this.setState({
                 newEmoteCodeAdded: true,
                 newEmoteCode: updatedCode,
@@ -291,7 +294,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             });
         } else {
             const updatedCode = this.state.newEmoteCode;
-            updatedCode[e.target.getAttribute("data-index")] = e.target.value.replace(SHORTCODE_REGEX, "");
+            updatedCode[parseInt(e.target.getAttribute("data-index")!)] = e.target.value.replace(SHORTCODE_REGEX, "");
             this.setState({
                 newEmoteCodeAdded: false,
                 newEmoteCode: updatedCode,
@@ -311,7 +314,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                         const uploadedEmote = await client.uploadContent(blob);
                         this.imagePack["images"][shortcode] = { url: uploadedEmote.content_uri };
                     } else {
-                        this.imagePack["images"][shortcode] = { url: val };
+                        this.imagePack["images"][shortcode] = { url: val as string };
                     }
                 }
             }
@@ -352,7 +355,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             );
         }
 
-        const existingEmotes = [];
+        const existingEmotes: Array<JSX.Element> = [];
         if (this.state.emotes) {
             for (const emotecode of Array.from(this.state.emotes.keys()).sort()) {
                 existingEmotes.push(
@@ -396,7 +399,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             );
         }
 
-        const uploadedEmotes = [];
+        const uploadedEmotes: Array<JSX.Element> = [];
         for (let i = 0; i < this.state.newEmoteCode.length; i++) {
             const fileUrl = this.state.newEmoteFile[i] ? URL.createObjectURL(this.state.newEmoteFile[i]) : "";
             uploadedEmotes.push(
