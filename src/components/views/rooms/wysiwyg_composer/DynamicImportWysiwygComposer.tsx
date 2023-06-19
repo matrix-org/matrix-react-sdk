@@ -31,7 +31,7 @@ export const dynamicImportSendMessage = async (
     isHTML: boolean,
     params: SendMessageParams,
 ): Promise<ISendEventResponse | undefined> => {
-    const { sendMessage } = await import("./utils/message");
+    const { sendMessage } = await retry(() => import("./utils/message"), RETRY_COUNT);
 
     return sendMessage(message, isHTML, params);
 };
