@@ -53,11 +53,19 @@ interface IState {
     compatibility: boolean;
 }
 
+interface compatibilityImagePack {
+    images: {
+        [key: string]: {
+            url?: string;
+        };
+    };
+}
+
 export default class RoomEmoteSettings extends React.Component<IProps, IState> {
     private emoteUpload = createRef<HTMLInputElement>();
     private emoteCodeUpload = createRef<HTMLInputElement>();
     private emoteUploadImage = createRef<HTMLImageElement>();
-    private imagePack: Record<string, Record<string, Record<string, string>>>;
+    private imagePack: compatibilityImagePack;
     public constructor(props: IProps) {
         super(props);
 
@@ -93,7 +101,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             newEmoteFile: [],
             deleted: false,
             deletedItems: new Map(),
-            canAddEmote: room.currentState.maySendStateEvent(EMOTES_STATE.name, client.getUserId()!),
+            canAddEmote: room.currentState.maySendStateEvent(EMOTES_STATE.name, client.getSafeUserId()),
             value: value,
             compatibility: compat,
         };
@@ -204,14 +212,14 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                         value.set(this.state.EmoteFieldsTouched[shortcode], this.state.EmoteFieldsTouched[shortcode]);
                         if (this.imagePack["images"][shortcode]) {
                             newPack.set(this.state.EmoteFieldsTouched[shortcode], {
-                                url: this.imagePack["images"][shortcode]["url"],
+                                url: this.imagePack["images"][shortcode]["url"]!,
                             });
                         }
                     } else {
                         emotesMxcs[shortcode] = val;
                         value.set(shortcode, shortcode);
                         if (this.imagePack["images"][shortcode]) {
-                            newPack.set(shortcode, { url: this.imagePack["images"][shortcode]["url"] });
+                            newPack.set(shortcode, { url: this.imagePack["images"][shortcode]["url"]! });
                         }
                     }
                 }

@@ -267,6 +267,14 @@ interface ISendMessageComposerProps extends MatrixClientProps {
     toggleStickerPickerOpen: () => void;
 }
 
+interface compatibilityImagePack {
+    images: {
+        [key: string]: {
+            url: string;
+        };
+    };
+}
+
 export class SendMessageComposer extends React.Component<ISendMessageComposerProps> {
     public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
@@ -277,7 +285,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     private currentlyComposedEditorState: SerializedPart[] | null = null;
     private dispatcherRef: string;
     private sendHistoryManager: SendHistoryManager;
-    private imagePack: Record<string, Record<string, Record<string, string>>>;
+    private imagePack: compatibilityImagePack;
     private emotes: Map<string, string>;
     private compat: boolean;
     public static defaultProps = {

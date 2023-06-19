@@ -85,7 +85,7 @@ export default class EmojiProvider extends AutocompleteProvider {
     public nameMatcher: QueryMatcher<ISortedEmoji>;
     private readonly recentlyUsed: IEmoji[];
     private emotes: Map<string, string> = new Map();
-    private emotesPromise!: Promise<Map<string, string>>;
+    private emotesPromise?: Promise<Map<string, string>>;
     public constructor(room: Room, renderingType?: TimelineRenderingType) {
         super({ commandRegex: EMOJI_REGEX, renderingType });
         const emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
@@ -141,7 +141,12 @@ export default class EmojiProvider extends AutocompleteProvider {
             return []; // don't give any suggestions if the user doesn't want them
         }
 
-        this.emotes = await this.emotesPromise;
+        const returnedEmotes = await this.emotesPromise;
+        if (!returnedEmotes) {
+            this.emotes = new Map();
+        } else {
+            this.emotes = returnedEmotes;
+        }
         const emojisAndEmotes = [...SORTED_EMOJI];
         for (const [key, val] of this.emotes) {
             emojisAndEmotes.push({

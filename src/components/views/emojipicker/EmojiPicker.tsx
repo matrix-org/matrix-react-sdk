@@ -77,8 +77,8 @@ class EmojiPicker extends React.Component<IProps, IState> {
 
     private scrollRef = React.createRef<AutoHideScrollbar<"div">>();
 
-    private emotes!: Map<string, JSX.Element>;
-    private emotesPromise!: Promise<Map<string, JSX.Element>>;
+    private emotes?: Map<string, JSX.Element>;
+    private emotesPromise?: Promise<Map<string, JSX.Element>>;
     private finalEmotes: IEmoji[];
     private finalEmotesMap: Map<string, IEmoji>;
     public constructor(props: IProps) {
@@ -189,6 +189,9 @@ class EmojiPicker extends React.Component<IProps, IState> {
 
     private async loadEmotes(): Promise<void> {
         this.emotes = await this.emotesPromise;
+        if (!this.emotes) {
+            return;
+        }
         for (const [key, val] of this.emotes) {
             this.finalEmotes.push({
                 label: key,
