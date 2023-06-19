@@ -40,7 +40,7 @@ export const dynamicImportConversionFunctions = async (): Promise<{
     richToPlain(rich: string): Promise<string>;
     plainToRich(plain: string): Promise<string>;
 }> => {
-    const { richToPlain, plainToRich } = await import("@matrix-org/matrix-wysiwyg");
+    const { richToPlain, plainToRich } = await retry(() => import("@matrix-org/matrix-wysiwyg"), RETRY_COUNT);
 
     return { richToPlain, plainToRich };
 };
