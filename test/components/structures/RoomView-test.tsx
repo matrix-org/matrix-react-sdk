@@ -19,7 +19,7 @@ import { mocked, MockedObject } from "jest-mock";
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, RoomStateEvent } from "matrix-js-sdk/src/matrix";
+import { EventType, MatrixError, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { MEGOLM_ALGORITHM } from "matrix-js-sdk/src/crypto/olmlib";
 import { fireEvent, render, screen, RenderResult } from "@testing-library/react";
 
@@ -34,6 +34,7 @@ import {
     filterConsole,
     mkRoomMemberJoinEvent,
     mkThirdPartyInviteEvent,
+    emitPromise,
 } from "../../test-utils";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { Action } from "../../../src/dispatcher/actions";
@@ -500,14 +501,17 @@ describe("RoomView", () => {
     });
 
     it("should show error view if failed to look up room alias", async () => {
-        const { asFragment } = await renderRoomView();
+        const { asFragment, findByText } = await renderRoomView(false);
 
         defaultDispatcher.dispatch<ViewRoomErrorPayload>({
             action: Action.ViewRoomError,
             room_alias: "#addy:server",
             room_id: null,
+            err: new MatrixError({ errcode: "M_NOT_FOUND" }),
         });
+        await emitPromise(stores.roomViewStore, UPDATE_EVENT);
 
+        await findByText("Are you sure you're at the right place?");
         expect(asFragment()).toMatchSnapshot();
     });
 });
