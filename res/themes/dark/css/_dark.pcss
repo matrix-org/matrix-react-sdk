@@ -1,18 +1,24 @@
 /* Colors from Figma Compound https://www.figma.com/file/X4XTH9iS2KGJ2wFKDqkyed/Compound?node-id=559%3A741 */
 /* ******************** */
-$primary-content: #ffffff;
-$secondary-content: #a9b2bc;
-$tertiary-content: #8e99a4;
-$quaternary-content: #6f7882;
-$quinary-content: #394049;
+$primary-content: var(--cpd-color-text-primary);
+$secondary-content: var(--cpd-color-text-secondary);
+$tertiary-content: var(--cpd-color-gray-800);
+$quaternary-content: var(--cpd-color-gray-600);
+$quinary-content: var(--cpd-color-gray-400);
 
-$system: #21262c;
-$background: #15191e;
-$overlay-background: rgba($background, 0.85);
+$system: var(--cpd-color-bg-subtle-primary);
+$background: var(--cpd-color-bg-canvas-default);
+$overlay-background: var(--cpd-color-alpha-gray-1300);
 
-$panel-base: #8d97a5; /* This color is not intended for use in the app */
-$panels: rgba($system, 0.9);
-$panel-actions: rgba($panel-base, 0.2);
+$panels: var(--cpd-color-bg-subtle-secondary);
+$panel-actions: var(--cpd-color-alpha-gray-400);
+/* ******************** */
+
+/* RoomList */
+/* ******************** */
+$roomlist-bg-color: rgba(45, 45, 45, 0.9); /* TODO: there's no corresponding compound color */
+$roomsublist-skeleton-ui-bg: linear-gradient(180deg, $background 0%, #ffffff00 100%);
+$roomtile-default-badge-bg-color: $muted-fg-color;
 /* ******************** */
 
 /**
@@ -42,13 +48,13 @@ $panel-actions: rgba($panel-base, 0.2);
 
 /* Reused Figma non-compound colors */
 /* ******************** */
-$inverted-bg-color: $background;
-$header-panel-bg-color: #20252b;
+$inverted-bg-color: var(--cpd-color-bg-action-primary-rest);
+$header-panel-bg-color: var(--cpd-color-bg-subtle-primary);
 /* ******************** */
 
 /* Theme specific colors */
 /* ******************** */
-$icon-button-color: $tertiary-content;
+$icon-button-color: $secondary-content;
 /* ******************** */
 
 /* Colors that aren't in Figma and are theme specific - we need to get rid of these */
@@ -136,7 +142,7 @@ $dialog-close-external-color: $primary-content;
 
 /* RoomList */
 /* ******************** */
-$roomlist-bg-color: rgba($system, 0.9);
+$system: var(--cpd-color-bg-subtle-secondary);
 $roomsublist-skeleton-ui-bg: linear-gradient(180deg, #3e444c 0%, #3e444c00 100%);
 $roomtile-default-badge-bg-color: $input-darker-fg-color;
 /* ******************** */
@@ -244,7 +250,7 @@ $appearance-tab-border-color: $room-highlight-color;
 $composer-shadow-color: rgba(0, 0, 0, 0.28);
 $breadcrumb-placeholder-bg-color: #272c35;
 $theme-button-bg-color: #e3e8f0;
-$resend-button-divider-color: rgba($header-panel-text-primary-color, 0.74);
+$resend-button-divider-color: var(--cpd-color-gray-700);
 $inlinecode-border-color: $quinary-content;
 $inlinecode-background-color: $system;
 $codeblock-background-color: #2a3039;
