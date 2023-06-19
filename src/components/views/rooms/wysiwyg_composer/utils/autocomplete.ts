@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Attributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
+import { AllowedMentionAttributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 
 import { ICompletion } from "../../../../../autocomplete/Autocompleter";
@@ -92,18 +92,22 @@ export function getMentionDisplayText(completion: ICompletion, client: MatrixCli
  * @param room - the room the composer is currently in
  * @returns an object of attributes containing HTMLAnchor attributes or data-* attributes
  */
-export function getMentionAttributes(completion: ICompletion, client: MatrixClient, room: Room): Attributes {
+export function getMentionAttributes(
+    completion: ICompletion,
+    client: MatrixClient,
+    room: Room,
+): AllowedMentionAttributes {
     // To ensure that we always have something set in the --avatar-letter CSS variable
     // as otherwise alignment varies depending on whether the content is empty or not.
-
     // Use a zero width space so that it counts as content, but does not display anything.
     const defaultLetterContent = "\u200b";
+    const attributes: AllowedMentionAttributes = new Map();
 
     if (completion.type === "user") {
         // logic as used in UserPillPart.setAvatar in parts.ts
         const mentionedMember = room.getMember(completion.completionId || "");
 
-        if (!mentionedMember) return {};
+        if (!mentionedMember) return attributes;
 
         const name = mentionedMember.name || mentionedMember.userId;
         const defaultAvatarUrl = Avatar.defaultAvatarUrlForString(mentionedMember.userId);
@@ -113,10 +117,8 @@ export function getMentionAttributes(completion: ICompletion, client: MatrixClie
             initialLetter = Avatar.getInitialLetter(name) ?? defaultLetterContent;
         }
 
-        return {
-            "data-mention-type": completion.type,
-            "style": `--avatar-background: url(${avatarUrl}); --avatar-letter: '${initialLetter}'`,
-        };
+        attributes.set("data-mention-type", completion.type);
+        attributes.set("style", `--avatar-background: url(${avatarUrl}); --avatar-letter: '${initialLetter}'`);
     } else if (completion.type === "room") {
         // logic as used in RoomPillPart.setAvatar in parts.ts
         const mentionedRoom = getRoomFromCompletion(completion, client);
@@ -129,10 +131,8 @@ export function getMentionAttributes(completion: ICompletion, client: MatrixClie
             avatarUrl = Avatar.defaultAvatarUrlForString(mentionedRoom?.roomId ?? aliasFromCompletion);
         }
 
-        return {
-            "data-mention-type": completion.type,
-            "style": `--avatar-background: url(${avatarUrl}); --avatar-letter: '${initialLetter}'`,
-        };
+        attributes.set("data-mention-type", completion.type);
+        attributes.set("style", `--avatar-background: url(${avatarUrl}); --avatar-letter: '${initialLetter}'`);
     } else if (completion.type === "at-room") {
         // logic as used in RoomPillPart.setAvatar in parts.ts, but now we know the current room
         // from the arguments passed
@@ -149,5 +149,6 @@ export function getMentionAttributes(completion: ICompletion, client: MatrixClie
             "style": `--avatar-background: url(${avatarUrl}); --avatar-letter: '${initialLetter}'`,
         };
     }
-    return {};
+
+    return attributes;
 }
