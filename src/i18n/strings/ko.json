@@ -958,7 +958,6 @@
     "That doesn't match.": "맞지 않습니다.",
     "Go back to set it again.": "돌아가서 다시 설정하기.",
     "Download": "다운로드",
-    "<b>Save it</b> on a USB key or backup drive": "USB 키나 백업 드라이브에 <b>저장</b>",
     "Your keys are being backed up (the first backup could take a few minutes).": "키를 백업했습니다 (처음 백업에는 시간이 걸릴 수 있습니다).",
     "Success!": "성공!",
     "Unable to create key backup": "키 백업을 만들 수 없음",

@@ -541,7 +541,6 @@
     "That doesn't match.": "Dette stemmer ikkje.",
     "Go back to set it again.": "Gå tilbake for å sette den på nytt.",
     "Download": "Last ned",
-    "<b>Save it</b> on a USB key or backup drive": "<b>Lagra</b> til ein USB-pinne eller sikkerheitskopidisk",
     "Your keys are being backed up (the first backup could take a few minutes).": "Nøklane dine blir sikkerheitskopiert (den første kopieringa kan ta nokre minutt).",
     "Success!": "Suksess!",
     "Unable to create key backup": "Klarte ikkje å lage sikkerheitskopi av nøkkelen",
