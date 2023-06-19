@@ -144,10 +144,8 @@ export function getMentionAttributes(
             avatarUrl = Avatar.defaultAvatarUrlForString(room.roomId);
         }
 
-        return {
-            "data-mention-type": completion.type,
-            "style": `--avatar-background: url(${avatarUrl}); --avatar-letter: '${initialLetter}'`,
-        };
+        attributes.set("data-mention-type", completion.type);
+        attributes.set("style", `--avatar-background: url(${avatarUrl}); --avatar-letter: '${initialLetter}'`);
     }
 
     return attributes;

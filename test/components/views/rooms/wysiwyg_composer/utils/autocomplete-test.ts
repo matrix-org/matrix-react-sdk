@@ -247,10 +247,12 @@ describe("getMentionAttributes", () => {
 
             const result = getMentionAttributes(atRoomCompletion, mockClient, mockRoom);
 
-            expect(result).toEqual({
-                "data-mention-type": "at-room",
-                "style": `--avatar-background: url(${testAvatarUrlForRoom}); --avatar-letter: '\u200b'`,
-            });
+            expect(result).toEqual(
+                new Map([
+                    ["data-mention-type", "at-room"],
+                    ["style", `--avatar-background: url(${testAvatarUrlForRoom}); --avatar-letter: '\u200b'`],
+                ]),
+            );
         });
 
         it("returns expected style attributes when avatar url for room is falsy", () => {
@@ -261,10 +263,15 @@ describe("getMentionAttributes", () => {
 
             const result = getMentionAttributes(atRoomCompletion, mockClient, mockRoom);
 
-            expect(result).toEqual({
-                "data-mention-type": "at-room",
-                "style": `--avatar-background: url(${testAvatarUrlForString}); --avatar-letter: '${testInitialLetter}'`,
-            });
+            expect(result).toEqual(
+                new Map([
+                    ["data-mention-type", "at-room"],
+                    [
+                        "style",
+                        `--avatar-background: url(${testAvatarUrlForString}); --avatar-letter: '${testInitialLetter}'`,
+                    ],
+                ]),
+            );
         });
     });
 });
