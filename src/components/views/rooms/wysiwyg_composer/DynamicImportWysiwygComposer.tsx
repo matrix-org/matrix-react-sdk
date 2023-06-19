@@ -22,6 +22,8 @@ import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 import { SendMessageParams } from "./utils/message";
 import { retry } from "../../../../utils/promise";
 
+// Due to issues such as https://github.com/vector-im/element-web/issues/25277, we add retry
+// attempts to all of the dynamic imports in this file
 const RETRY_COUNT = 3;
 const SendComposer = lazy(() => retry(() => import("./SendWysiwygComposer"), RETRY_COUNT));
 const EditComposer = lazy(() => retry(() => import("./EditWysiwygComposer"), RETRY_COUNT));
