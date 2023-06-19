@@ -30,7 +30,7 @@ export function SettingsBanner({ children, icon, action, onAction }: PropsWithCh
             {icon}
             <div className="mx_SettingsBanner_content">{children}</div>
             {action && (
-                <AccessibleButton kind="primary_outline" onClick={onAction}>
+                <AccessibleButton kind="primary_outline" onClick={onAction ?? null}>
                     {action}
                 </AccessibleButton>
             )}
