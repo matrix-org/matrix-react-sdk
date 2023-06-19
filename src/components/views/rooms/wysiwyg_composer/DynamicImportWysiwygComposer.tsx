@@ -20,9 +20,11 @@ import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 // we need to import the types for TS, but do not import the sendMessage
 // function to avoid importing from "@matrix-org/matrix-wysiwyg"
 import { SendMessageParams } from "./utils/message";
+import { retry } from "../../../../utils/promise";
 
-const SendComposer = lazy(() => import("./SendWysiwygComposer"));
-const EditComposer = lazy(() => import("./EditWysiwygComposer"));
+const RETRY_COUNT = 3;
+const SendComposer = lazy(() => retry(() => import("./SendWysiwygComposer"), RETRY_COUNT));
+const EditComposer = lazy(() => retry(() => import("./EditWysiwygComposer"), RETRY_COUNT));
 
 export const dynamicImportSendMessage = async (
     message: string,
