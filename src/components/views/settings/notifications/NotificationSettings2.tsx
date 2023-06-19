@@ -90,7 +90,7 @@ export default function NotificationSettings2(): JSX.Element {
 
     return (
         <div className="mx_NotificationSettings2">
-            {hasPendingChanges && (
+            {hasPendingChanges && model !== null && (
                 <SettingsBanner
                     icon={<img src={NewAndImprovedIcon} alt="" width={12} />}
                     action={_t("Switch now")}
@@ -109,12 +109,14 @@ export default function NotificationSettings2(): JSX.Element {
                         label={_t("Enable notifications for this account")}
                         value={!settings.globalMute}
                         disabled={disabled}
-                        onChange={(value) =>
-                            reconcile({
-                                ...model,
-                                globalMute: !value,
-                            })
-                        }
+                        onChange={(value) => {
+                            if (model !== null) {
+                                reconcile({
+                                    ...model,
+                                    globalMute: !value,
+                                });
+                            }
+                        }}
                     />
                     <LabelledToggleSwitch
                         label={_t("Enable desktop notifications for this session")}
@@ -147,22 +149,24 @@ export default function NotificationSettings2(): JSX.Element {
                         value={toDefaultLevels(settings.defaultLevels)}
                         disabled={disabled}
                         definitions={NotificationOptions}
-                        onChange={(value) =>
-                            reconcile({
-                                ...model,
-                                defaultLevels: {
-                                    ...model.defaultLevels,
-                                    dm:
-                                        value !== NotificationDefaultLevels.MENTIONS_KEYWORDS
-                                            ? RoomNotifState.AllMessages
-                                            : RoomNotifState.MentionsOnly,
-                                    room:
-                                        value === NotificationDefaultLevels.ALL_MESSAGES
-                                            ? RoomNotifState.AllMessages
-                                            : RoomNotifState.MentionsOnly,
-                                },
-                            })
-                        }
+                        onChange={(value) => {
+                            if (model !== null) {
+                                reconcile({
+                                    ...model,
+                                    defaultLevels: {
+                                        ...model.defaultLevels,
+                                        dm:
+                                            value !== NotificationDefaultLevels.MENTIONS_KEYWORDS
+                                                ? RoomNotifState.AllMessages
+                                                : RoomNotifState.MentionsOnly,
+                                        room:
+                                            value === NotificationDefaultLevels.ALL_MESSAGES
+                                                ? RoomNotifState.AllMessages
+                                                : RoomNotifState.MentionsOnly,
+                                    },
+                                });
+                            }
+                        }}
                     />
                 </SettingsSubsection>
                 <SettingsSubsection
@@ -173,43 +177,49 @@ export default function NotificationSettings2(): JSX.Element {
                         label="People"
                         value={settings.sound.people !== undefined}
                         disabled={disabled}
-                        onChange={(value) =>
-                            reconcile({
-                                ...model,
-                                sound: {
-                                    ...model.sound,
-                                    people: value ? "default" : undefined,
-                                },
-                            })
-                        }
+                        onChange={(value) => {
+                            if (model !== null) {
+                                reconcile({
+                                    ...model,
+                                    sound: {
+                                        ...model.sound,
+                                        people: value ? "default" : undefined,
+                                    },
+                                });
+                            }
+                        }}
                     />
                     <LabelledCheckbox
                         label={_t("Mentions and Keywords")}
                         value={settings.sound.mentions !== undefined}
                         disabled={disabled}
-                        onChange={(value) =>
-                            reconcile({
-                                ...model,
-                                sound: {
-                                    ...model.sound,
-                                    mentions: value ? "default" : undefined,
-                                },
-                            })
-                        }
+                        onChange={(value) => {
+                            if (model !== null) {
+                                reconcile({
+                                    ...model,
+                                    sound: {
+                                        ...model.sound,
+                                        mentions: value ? "default" : undefined,
+                                    },
+                                });
+                            }
+                        }}
                     />
                     <LabelledCheckbox
                         label={_t("Audio and Video calls")}
                         value={settings.sound.calls !== undefined}
                         disabled={disabled}
-                        onChange={(value) =>
-                            reconcile({
-                                ...model,
-                                sound: {
-                                    ...model.sound,
-                                    calls: value ? "ring" : undefined,
-                                },
-                            })
-                        }
+                        onChange={(value) => {
+                            if (model !== null) {
+                                reconcile({
+                                    ...model,
+                                    sound: {
+                                        ...model.sound,
+                                        calls: value ? "ring" : undefined,
+                                    },
+                                });
+                            }
+                        }}
                     />
                 </SettingsSubsection>
                 <SettingsSubsection heading={_t("Other things we think you might be interested in:")}>
@@ -217,43 +227,49 @@ export default function NotificationSettings2(): JSX.Element {
                         label={_t("Invited to a room")}
                         value={settings.activity.invite}
                         disabled={disabled}
-                        onChange={(value) =>
-                            reconcile({
-                                ...model,
-                                activity: {
-                                    ...model.activity,
-                                    invite: value,
-                                },
-                            })
-                        }
+                        onChange={(value) => {
+                            if (model !== null) {
+                                reconcile({
+                                    ...model,
+                                    activity: {
+                                        ...model.activity,
+                                        invite: value,
+                                    },
+                                });
+                            }
+                        }}
                     />
                     <LabelledCheckbox
                         label={_t("New room activity, upgrades and status messages occur")}
                         value={settings.activity.status_event}
                         disabled={disabled}
-                        onChange={(value) =>
-                            reconcile({
-                                ...model,
-                                activity: {
-                                    ...model.activity,
-                                    status_event: value,
-                                },
-                            })
-                        }
+                        onChange={(value) => {
+                            if (model !== null) {
+                                reconcile({
+                                    ...model,
+                                    activity: {
+                                        ...model.activity,
+                                        status_event: value,
+                                    },
+                                });
+                            }
+                        }}
                     />
                     <LabelledCheckbox
                         label={_t("Messages are sent by a bot")}
                         value={settings.activity.bot_notices}
                         disabled={disabled}
-                        onChange={(value) =>
-                            reconcile({
-                                ...model,
-                                activity: {
-                                    ...model.activity,
-                                    bot_notices: value,
-                                },
-                            })
-                        }
+                        onChange={(value) => {
+                            if (model !== null) {
+                                reconcile({
+                                    ...model,
+                                    activity: {
+                                        ...model.activity,
+                                        bot_notices: value,
+                                    },
+                                });
+                            }
+                        }}
                     />
                 </SettingsSubsection>
                 <SettingsSubsection
@@ -270,59 +286,69 @@ export default function NotificationSettings2(): JSX.Element {
                         label={_t("Notify when someone mentions using @room")}
                         value={settings.mentions.room}
                         disabled={disabled}
-                        onChange={(value) =>
-                            reconcile({
-                                ...model,
-                                mentions: {
-                                    ...model.mentions,
-                                    room: value,
-                                },
-                            })
-                        }
+                        onChange={(value) => {
+                            if (model !== null) {
+                                reconcile({
+                                    ...model,
+                                    mentions: {
+                                        ...model.mentions,
+                                        room: value,
+                                    },
+                                });
+                            }
+                        }}
                     />
                     <LabelledCheckbox
                         label={_t("Notify when someone mentions using @displayname or @mxid")}
                         value={settings.mentions.user}
                         disabled={disabled}
-                        onChange={(value) =>
-                            reconcile({
-                                ...model,
-                                mentions: {
-                                    ...model.mentions,
-                                    user: value,
-                                },
-                            })
-                        }
+                        onChange={(value) => {
+                            if (model !== null) {
+                                reconcile({
+                                    ...model,
+                                    mentions: {
+                                        ...model.mentions,
+                                        user: value,
+                                    },
+                                });
+                            }
+                        }}
                     />
                     <LabelledCheckbox
                         label={_t("Notify when someone uses a keyword")}
                         byline={_t("Enter keywords here, or use for spelling variations or nicknames")}
                         value={settings.mentions.keywords}
                         disabled={disabled}
-                        onChange={(value) =>
-                            reconcile({
-                                ...model,
-                                mentions: {
-                                    ...model.mentions,
-                                    keywords: value,
-                                },
-                            })
-                        }
+                        onChange={(value) => {
+                            if (model !== null) {
+                                reconcile({
+                                    ...model,
+                                    mentions: {
+                                        ...model.mentions,
+                                        keywords: value,
+                                    },
+                                });
+                            }
+                        }}
                     />
                     <TagComposer
                         tags={model?.keywords ?? []}
                         disabled={disabled}
                         onAdd={(keyword) => {
-                            reconcile({
-                                ...model,
-                                keywords: [keyword, ...model.keywords],
-                            });
+                            if (model !== null) {
+                                reconcile({
+                                    ...model,
+                                    keywords: [keyword, ...model.keywords],
+                                });
+                            }
                         }}
                         onRemove={(keyword) => {
-                            reconcile({
-                                ...model,
-                                keywords: model.keywords.filter((it) => it !== keyword),
-                            });
+                            if (model !== null) {
+                                reconcile({
+                                    ...model,
+                                    keywords: model.keywords.filter((it) => it !== keyword),
+                                });
+                            }
                         }}
                         label={_t("Keyword")}
                         placeholder={_t("New keyword")}
@@ -338,7 +364,13 @@ export default function NotificationSettings2(): JSX.Element {
                     >
                         {_t("Mark all messages as read")}
                     </AccessibleButton>
-                    <AccessibleButton kind="danger_outline" onClick={() => reconcile(DefaultNotificationSettings)}>
+                    <AccessibleButton
+                        kind="danger_outline"
+                        onClick={() => {
+                            if (model !== null) {
+                                reconcile(DefaultNotificationSettings);
+                            }
+                        }}>
                         {_t("Reset to default settings")}
                     </AccessibleButton>
                 </SettingsSubsection>
