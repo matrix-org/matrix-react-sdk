@@ -585,7 +585,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                 const blob = await decryptFile(rawEmotes[shortcode]);
                 decryptedurl = URL.createObjectURL(blob);
             } else {
-                decryptedurl = mediaFromMxc(rawEmotes[shortcode])?.srcHttp!;
+                decryptedurl = mediaFromMxc(rawEmotes[shortcode]).srcHttp!;
             }
 
             decryptedemotes.set(

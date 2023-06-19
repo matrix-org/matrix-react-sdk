@@ -250,7 +250,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
                 const blob = await decryptFile(val as IEncryptedFile);
                 decryptedurl = URL.createObjectURL(blob);
             } else {
-                decryptedurl = mediaFromMxc(val as string)?.srcHttp!;
+                decryptedurl = mediaFromMxc(val as string).srcHttp!;
             }
             decryptedemotes.set(
                 shortcode,

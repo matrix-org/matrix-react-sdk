@@ -124,7 +124,7 @@ export default class EmojiProvider extends AutocompleteProvider {
                 const blob = await decryptFile(val as IEncryptedFile);
                 decryptedurl = URL.createObjectURL(blob);
             } else {
-                decryptedurl = mediaFromMxc(val as string)?.srcHttp!;
+                decryptedurl = mediaFromMxc(val as string).srcHttp!;
             }
             decryptedEmoteMap.set(":" + shortcode + ":", decryptedurl);
         }

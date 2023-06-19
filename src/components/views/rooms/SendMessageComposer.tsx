@@ -277,7 +277,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     private currentlyComposedEditorState: SerializedPart[] | null = null;
     private dispatcherRef: string;
     private sendHistoryManager: SendHistoryManager;
-    private imagePack: Record<string,Record<string,Record<string,string>>>;;
+    private imagePack: Record<string, Record<string, Record<string, string>>>;
     private emotes: Map<string, string>;
     private compat: boolean;
     public static defaultProps = {
@@ -312,14 +312,12 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         this.compat = compatEvent ? compatEvent.getContent().isCompat || false : false;
 
         const imagePackEvent = room.currentState.getStateEvents(EMOTES_COMP.name, "");
-        this.imagePack = imagePackEvent
-            ? imagePackEvent.getContent() || { "images": {} }
-            : { "images": {} };
+        this.imagePack = imagePackEvent ? imagePackEvent.getContent() || { images: {} } : { images: {} };
         this.emotes = new Map<string, string>();
         if (!this.imagePack["images"]) {
-            this.imagePack["images"]={};
+            this.imagePack["images"] = {};
         }
-        
+
         for (const shortcode in this.imagePack["images"]) {
             this.emotes.set(
                 ":" + shortcode.replace(/[^a-zA-Z0-9_]/g, "") + ":",

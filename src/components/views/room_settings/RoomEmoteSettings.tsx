@@ -19,7 +19,7 @@ import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import AccessibleButton, {ButtonEvent} from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 import { uploadFile } from "../../../ContentMessages";
 import { decryptFile } from "../../../utils/DecryptFile";
@@ -57,7 +57,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
     private emoteUpload = createRef<HTMLInputElement>();
     private emoteCodeUpload = createRef<HTMLInputElement>();
     private emoteUploadImage = createRef<HTMLImageElement>();
-    private imagePack: Record<string,Record<string,Record<string,string>>>;
+    private imagePack: Record<string, Record<string, Record<string, string>>>;
     public constructor(props: IProps) {
         super(props);
 
@@ -78,11 +78,9 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         const compat = compatEvent ? compatEvent.getContent().isCompat || false : false;
 
         const imagePackEvent = room.currentState.getStateEvents(EMOTES_COMP.name, "");
-        this.imagePack = imagePackEvent
-            ? imagePackEvent.getContent() || { "images": {} }
-            : { "images": {} };
+        this.imagePack = imagePackEvent ? imagePackEvent.getContent() || { images: {} } : { images: {} };
         if (!this.imagePack["images"]) {
-            this.imagePack["images"]={};
+            this.imagePack["images"] = {};
         }
 
         this.state = {
@@ -168,9 +166,9 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         if (!this.isSaveEnabled()) return;
         const client = MatrixClientPeg.get();
         const newState: Partial<IState> = {};
-        const emotesMxcs : { [key: string]:IEncryptedFile|string } = {};
+        const emotesMxcs: { [key: string]: IEncryptedFile | string } = {};
         const value = new Map();
-        const newPack: Map<string,Record<string,string>> = new Map();
+        const newPack: Map<string, Record<string, string>> = new Map();
 
         if (this.state.emotes || (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded)) {
             if (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded) {
@@ -221,8 +219,8 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             newState.value = value;
             await client.sendStateEvent(this.props.roomId, EMOTES_STATE.name, emotesMxcs, "");
 
-            for (const [key,val] of newPack){
-                this.imagePack["images"][key]=val
+            for (const [key, val] of newPack) {
+                this.imagePack["images"][key] = val;
             }
 
             await client.sendStateEvent(this.props.roomId, EMOTES_COMP.name, this.imagePack, "");
