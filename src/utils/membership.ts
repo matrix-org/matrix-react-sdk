@@ -92,7 +92,7 @@ export async function waitForMember(
     let handler: (event: MatrixEvent, state: RoomState, member: RoomMember) => void;
 
     // check if the user is in the room before we start -- in which case, no need to wait.
-    if (!!client.getRoom(roomId)?.getMember(userId)) {
+    if ((client.getRoom(roomId)?.getMember(userId) ?? null) !== null) {
         return true;
     }
 
