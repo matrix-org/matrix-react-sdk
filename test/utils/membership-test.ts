@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient, Room, RoomMember, RoomStateEvent } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, MatrixEvent, Room, RoomMember, RoomState, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 
 import { waitForMember } from "../../src/utils/membership";
@@ -59,10 +59,15 @@ describe("waitForMember", () => {
         const resultProm = waitForMember(client, roomId, userId, { timeout });
         jest.advanceTimersByTime(50);
         expect(await resultProm).toBe(false);
-        client.emit(RoomStateEvent.NewMember, undefined, undefined, {
-            roomId,
-            userId: "@anotherClient:domain",
-        } as RoomMember);
+        client.emit(
+            RoomStateEvent.NewMember,
+            undefined as unknown as MatrixEvent,
+            undefined as unknown as RoomState,
+            {
+                roomId,
+                userId: "@anotherClient:domain",
+            } as RoomMember,
+        );
         jest.useRealTimers();
     });
 
@@ -70,7 +75,12 @@ describe("waitForMember", () => {
         const roomId = "!roomId:domain";
         const userId = "@clientId:domain";
         const resultProm = waitForMember(client, roomId, userId, { timeout });
-        client.emit(RoomStateEvent.NewMember, undefined, undefined, { roomId, userId } as RoomMember);
+        client.emit(
+            RoomStateEvent.NewMember,
+            undefined as unknown as MatrixEvent,
+            undefined as unknown as RoomState,
+            { roomId, userId } as RoomMember,
+        );
         expect(await resultProm).toBe(true);
     });
 
