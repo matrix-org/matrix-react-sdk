@@ -2114,7 +2114,6 @@
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Oleme tuvastanud, et selles sessioonis ei leidu turvafraasi ega krüptitud sõnumite turvavõtit.",
     "A new Security Phrase and key for Secure Messages have been detected.": "Tuvastasin krüptitud sõnumite uue turvafraasi ja turvavõtme.",
     "Confirm your Security Phrase": "Kinnita oma turvafraasi",
-    "Your Security Key": "Sinu turvavõti",
     "Great! This Security Phrase looks strong enough.": "Suurepärane! Turvafraas on piisavalt kange.",
     "Set my room layout for everyone": "Kasuta minu jututoa paigutust kõigi jaoks",
     "Search (must be enabled)": "Otsing (peab olema lubatud)",

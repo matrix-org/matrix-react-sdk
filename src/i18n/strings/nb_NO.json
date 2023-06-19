@@ -875,7 +875,6 @@
     "That matches!": "Det samsvarer!",
     "That doesn't match.": "Det samsvarer ikke.",
     "Go back to set it again.": "Gå tilbake for å velge på nytt.",
-    "<b>Copy it</b> to your personal cloud storage": "<b>Kopier den</b> til din personlige skylagring",
     "Other users may not trust it": "Andre brukere kan kanskje mistro den",
     "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith> reagerte med %(shortName)s</reactedWith>",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s kan ikke forhåndsvises. Vil du bli med i den?",

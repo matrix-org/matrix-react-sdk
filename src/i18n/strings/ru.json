@@ -2098,7 +2098,6 @@
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Этот сеанс обнаружил, что ваши секретная фраза и ключ безопасности для защищенных сообщений были удалены.",
     "A new Security Phrase and key for Secure Messages have been detected.": "Обнаружены новая секретная фраза и ключ безопасности для защищенных сообщений.",
     "Confirm your Security Phrase": "Подтвердите секретную фразу",
-    "Your Security Key": "Ваш ключ безопасности",
     "Great! This Security Phrase looks strong enough.": "Отлично! Эта контрольная фраза выглядит достаточно сильной.",
     "Allow this widget to verify your identity": "Разрешите этому виджету проверить ваш идентификатор",
     "Something went wrong in confirming your identity. Cancel and try again.": "Что-то пошло не так при вашей идентификации. Отмените последнее действие и попробуйте еще раз.",

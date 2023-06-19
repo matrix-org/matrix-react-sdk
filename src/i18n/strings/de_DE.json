@@ -2109,7 +2109,6 @@
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "In dieser Sitzung wurde festgestellt, dass deine Sicherheitsphrase und dein Schlüssel für sichere Nachrichten entfernt wurden.",
     "A new Security Phrase and key for Secure Messages have been detected.": "Eine neue Sicherheitsphrase und ein neuer Schlüssel für sichere Nachrichten wurden erkannt.",
     "Confirm your Security Phrase": "Deine Sicherheitsphrase bestätigen",
-    "Your Security Key": "Dein Sicherheitsschlüssel",
     "Great! This Security Phrase looks strong enough.": "Großartig! Diese Sicherheitsphrase sieht stark genug aus.",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "Greife auf deinen verschlüsselten Nachrichtenverlauf zu und richte die sichere Kommunikation ein, indem du deine Sicherheitsphrase eingibst.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Wenn du deinen Sicherheitsschlüssel vergessen hast, kannst du <button>neue Wiederherstellungsoptionen einrichten</button>",

@@ -966,7 +966,6 @@
     "%(severalUsers)schanged their avatar %(count)s times|other": "%(severalUsers)s %(count)s مرتبه آواتار خود را تغییر دادند",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)s نام خود را تغییر داد",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)s نام خود را %(count)s مرتبه تغییر داد",
-    "<b>Copy it</b> to your personal cloud storage": "روی فضای شخصی خودتان <b>نسخه‌ی رونوشت</b> بگیرید",
     "Your keys are being backed up (the first backup could take a few minutes).": "در حال پیشتیبان‌گیری از کلیدهای شما (اولین نسخه پشتیبان ممکن است چند دقیقه طول بکشد).",
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)s نام خود را تغییر دادند",
     "Confirm your Security Phrase": "عبارت امنیتی خود را تأیید کنیدعبارت امنیتی خود را تائید نمائید",

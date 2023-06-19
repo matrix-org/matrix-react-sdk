@@ -2126,7 +2126,6 @@
     "sends space invaders": "发送空间入侵者",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "此会话已检测到你的安全短语和安全消息密钥被移除。",
     "A new Security Phrase and key for Secure Messages have been detected.": "检测到新的安全短语和安全消息密钥。",
-    "Your Security Key is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase.": "你的安全密钥是一张安全网——如果你忘记了你的安全短语的话，你可以用它来恢复你对已加密消息的访问权。",
     "Enter your Security Phrase a second time to confirm it.": "再次输入你的安全短语进行确认。",
     "Great! This Security Phrase looks strong enough.": "棒！这个安全短语看着够强。",
     "Space Autocomplete": "空间自动完成",

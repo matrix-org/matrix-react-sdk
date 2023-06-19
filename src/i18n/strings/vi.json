@@ -327,7 +327,6 @@
     "Success!": "Thành công!",
     "Confirm your Security Phrase": "Xác nhận cụm từ bảo mật của bạn",
     "Your keys are being backed up (the first backup could take a few minutes).": "Các khóa của bạn đang được sao lưu (bản sao lưu đầu tiên có thể mất vài phút).",
-    "Your Security Key is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase.": "Khóa bảo mật của bạn là một mạng lưới an toàn - bạn có thể sử dụng nó để khôi phục quyền truy cập vào các thư được mã hóa của mình nếu bạn quên Cụm từ bảo mật của mình.",
     "Enter your Security Phrase a second time to confirm it.": "Nhập Cụm từ bảo mật của bạn lần thứ hai để xác nhận.",
     "Go back to set it again.": "Quay lại để thiết lập lại.",
     "That doesn't match.": "Điều đó không phù hợp.",

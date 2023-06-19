@@ -2616,7 +2616,6 @@
     "To proceed, please accept the verification request on your other device.": "続行するには、他の端末で認証リクエストを承認してください。",
     "You can also set up Secure Backup & manage your keys in Settings.": "セキュアバックアップを設定し、設定画面から鍵を管理することもできます。",
     "If you cancel now, you may lose encrypted messages & data if you lose access to your logins.": "いまキャンセルすると、ログイン情報にアクセスできなくなった場合に、暗号化されたメッセージやデータを失ってしまう可能性があります。",
-    "Make a copy of your Security Key": "セキュリティーキーのコピーを作成",
     "Enter your Security Phrase a second time to confirm it.": "確認のため、セキュリティーフレーズを再入力してください。",
     "Enter a Security Phrase": "セキュリティーフレーズを入力",
     "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.": "このセキュリティーフレーズではバックアップを復号化できませんでした。正しいセキュリティーフレーズを入力したことを確認してください。",

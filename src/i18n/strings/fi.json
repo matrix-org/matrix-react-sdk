@@ -2904,7 +2904,6 @@
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Talleta turva-avaimesi turvalliseen paikkaan, kuten salasanojen hallintasovellukseen tai kassakaappiin, sillä sitä käytetään salaamasi datan suojaamiseen.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Luomme sinulle turva-vaimen talletettavaksi jonnekin turvalliseen paikkaan, kuten salasanojen hallintasovellukseen tai kassakaappiin.",
     "Generate a Security Key": "Luo turva-avain",
-    "Your Security Key": "Turva-avaimesi",
     "Not a valid Security Key": "Ei kelvollinen turva-avain",
     "This looks like a valid Security Key!": "Tämä vaikuttaa kelvolliselta turva-avaimelta!",
     "Enter Security Key": "Anna turva-avain",

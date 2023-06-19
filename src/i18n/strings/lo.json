@@ -1290,7 +1290,6 @@
     "Success!": "ສໍາເລັດ!",
     "Confirm your Security Phrase": "ຢືນຢັນປະໂຫຍກຄວາມປອດໄພຂອງທ່ານ",
     "Your keys are being backed up (the first backup could take a few minutes).": "ກະແຈຂອງທ່ານກຳລັງຖືກສຳຮອງຂໍ້ມູນ (ການສຳຮອງຂໍ້ມູນຄັ້ງທຳອິດອາດໃຊ້ເວລາສອງສາມນາທີ).",
-    "Your Security Key is in your <b>Downloads</b> folder.": "ກະແຈຄວາມປອດໄພຂອງທ່ານຢູ່ໃນໂຟນເດີ <b>ດາວໂຫລດ</b> ຂອງທ່ານ.",
     "Your Security Key is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase.": "ລະຫັດຄວາມປອດໄພຂອງທ່ານເປັນຕາຂ່າຍຄວາມປອດໄພ - ທ່ານສາມາດນໍາໃຊ້ເພື່ອຟື້ນຟູການເຂົ້າເຖິງຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດຂອງທ່ານ ເມື່ອທ່ານລືມປະໂຫຍກຄວາມປອດໄພຂອງທ່ານ.",
     "Enter your Security Phrase a second time to confirm it.": "ກະລຸນາໃສ່ປະໂຫຍກຄວາມປອດໄພຂອງທ່ານເປັນເທື່ອທີສອງເພື່ອຢືນຢັນ.",
     "Go back to set it again.": "ກັບຄືນໄປຕັ້ງໃໝ່ອີກຄັ້ງ.",

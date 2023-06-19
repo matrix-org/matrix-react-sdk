@@ -2492,7 +2492,6 @@
     "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": "Notaðu leynilegan frasa eða setningu sem aðeins þú þekkir, og útbúðu öryggislykil fyrir öryggisafrit.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Við munum útbúa öryggislykil fyrir þig til að geyma á öruggum stað, eins og í lykilorðastýringu eða jafnvel í peningaskáp.",
     "Your keys are being backed up (the first backup could take a few minutes).": "Verið er að öryggisafrita dulritunarlyklana þína (öryggisafritun getur tekið dálítinn tíma í fyrsta skiptið).",
-    "Your Security Key has been <b>copied to your clipboard</b>, paste it to:": "Öryggislykillinn þinn hefur verið <b>afritaður á klippispjaldið þitt</b>, límdu hann á:",
     "Go back to set it again.": "Farðu til baka til að setja hann aftur.",
     "Great! This Security Phrase looks strong enough.": "Frábært! Þessi öryggisfrasi virðist vera nógu sterkur.",
     "Failed to re-authenticate due to a homeserver problem": "Tókst ekki að endurauðkenna vegna vandamála með heimaþjón",

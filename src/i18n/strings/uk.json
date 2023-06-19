@@ -2609,7 +2609,6 @@
     "Uploading %(filename)s and %(count)s others|zero": "Вивантаження %(filename)s",
     "Uploading %(filename)s and %(count)s others|other": "Вивантаження %(filename)s і ще %(count)s",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Зауважте, ви входите на сервер %(hs)s, не на matrix.org.",
-    "Your Security Key has been <b>copied to your clipboard</b>, paste it to:": "Ваш ключ безпеки <b>скопійований до вашого буферу обміну</b>, вставте його, щоб:",
     "Enter your Security Phrase a second time to confirm it.": "Введіть свою фразу безпеки ще раз для підтвердження.",
     "Go back to set it again.": "Поверніться, щоб налаштувати заново.",
     "That doesn't match.": "Не збігається.",
