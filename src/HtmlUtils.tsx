@@ -630,7 +630,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
             safeBody = tmp;
         }
     }
-    let emojiBodyElements: JSX.Element[];
+    let emojiBodyElements: JSX.Element[] | undefined;
     if (!safeBody && bodyHasEmoji) {
         emojiBodyElements = formatEmojis(strippedBody, false) as JSX.Element[];
     }
