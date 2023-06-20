@@ -150,7 +150,7 @@ export default class EmojiProvider extends AutocompleteProvider {
         const emojisAndEmotes = [...SORTED_EMOJI];
         for (const [key, val] of this.emotes) {
             emojisAndEmotes.push({
-                emoji: { label: key, shortcodes: [key], hexcode: key, unicode: val as string },
+                emoji: { label: key, shortcodes: [key], hexcode: key, unicode: val as string, order: 0, group: 0 },
                 _orderBy: 0,
             });
         }

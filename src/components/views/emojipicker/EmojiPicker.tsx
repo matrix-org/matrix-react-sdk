@@ -200,6 +200,8 @@ class EmojiPicker extends React.Component<IProps, IState> {
                 unicode: ":" + key + ":",
                 customLabel: key,
                 customComponent: val,
+                group: 0,
+                order: 0,
             });
             this.finalEmotesMap.set((":" + key + ":").trim(), {
                 label: key,
@@ -208,6 +210,8 @@ class EmojiPicker extends React.Component<IProps, IState> {
                 unicode: ":" + key + ":",
                 customLabel: key,
                 customComponent: val,
+                group: 0,
+                order: 0,
             });
         }
 

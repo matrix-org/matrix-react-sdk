@@ -19,9 +19,9 @@ import SHORTCODES from "emojibase-data/en/shortcodes/iamcal.json";
 
 export interface IEmoji {
     label: string;
-    group?: number;
+    group: number;
     hexcode: string;
-    order?: number;
+    order: number;
     shortcodes: string[];
     tags?: string[];
     unicode: string;
