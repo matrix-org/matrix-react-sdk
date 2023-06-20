@@ -14,36 +14,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { mocked } from "jest-mock";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import { MatrixClientPeg } from "../../src/MatrixClientPeg";
 import TypingStore from "../../src/stores/TypingStore";
 import { LOCAL_ROOM_ID_PREFIX } from "../../src/models/LocalRoom";
 import SettingsStore from "../../src/settings/SettingsStore";
+import { TestSdkContext } from "../TestSdkContext";
 
 jest.mock("../../src/settings/SettingsStore", () => ({
     getValue: jest.fn(),
+    monitorSetting: jest.fn(),
+    watchSetting: jest.fn(),
 }));
 
 describe("TypingStore", () => {
     let typingStore: TypingStore;
     let mockClient: MatrixClient;
-    const settings = {
-        "sendTypingNotifications": true,
-        "feature_thread": false,
-    };
     const roomId = "!test:example.com";
     const localRoomId = LOCAL_ROOM_ID_PREFIX + "test";
 
     beforeEach(() => {
-        typingStore = new TypingStore();
         mockClient = {
             sendTyping: jest.fn(),
         } as unknown as MatrixClient;
-        MatrixClientPeg.get = () => mockClient;
-        mocked(SettingsStore.getValue).mockImplementation((setting: string) => {
-            return settings[setting];
+        const context = new TestSdkContext();
+        context.client = mockClient;
+        typingStore = new TypingStore(context);
+        jest.spyOn(SettingsStore, "getValue").mockImplementation((name: string) => {
+            return name === "sendTypingNotifications";
         });
     });
 

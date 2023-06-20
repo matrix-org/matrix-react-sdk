@@ -15,7 +15,9 @@ limitations under the License.
 */
 
 .mx_RoomView_body[data-layout="bubble"] {
-    .mx_RoomView_timeline, .mx_RoomView_statusArea, .mx_MessageComposer {
+    .mx_RoomView_timeline,
+    .mx_RoomView_statusArea,
+    .mx_MessageComposer {
         width: 100%;
         max-width: 1200px;
         margin: 0 auto;
@@ -41,11 +43,6 @@ limitations under the License.
     --EventTile_bubble_line-margin-inline-start: -9px;
     --EventTile_bubble_line-margin-inline-end: -12px;
     --EventTile_bubble_gap-inline: 5px;
-
-    position: relative;
-    margin-top: var(--gutterSize);
-    margin-left: var(--EventTile_bubble-margin-inline-start);
-    font-size: $font-14px;
 
     .mx_MessageTimestamp {
         width: unset; /* Cancel the default width */
@@ -73,7 +70,7 @@ limitations under the License.
     }
 
     &::before {
-        content: '';
+        content: "";
         position: absolute;
         top: -1px;
         bottom: -1px;
@@ -85,7 +82,6 @@ limitations under the License.
 
     &:hover,
     &.mx_EventTile_selected {
-
         &::before {
             background: $eventbubble-bg-hover;
         }
@@ -154,7 +150,7 @@ limitations under the License.
         }
     }
 
-    .mx_CallEvent {
+    .mx_LegacyCallEvent {
         background-color: unset;
 
         border-style: solid;
@@ -292,23 +288,13 @@ limitations under the License.
             }
 
             /* we put the timestamps for media (other than stickers) atop the media */
-            /* for images we also apply a linear gradient and change the timestamp colour to aid readability */
             &.mx_EventTile_image {
                 .mx_MessageTimestamp {
-                    color: #ffffff; /* regardless of theme, always visible on the below gradient */
-                }
-
-                /* linear gradient to make the timestamp more visible */
-                .mx_MImageBody::before {
-                    content: "";
-                    position: absolute;
-                    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);
-                    z-index: 1;
-                    top: 0;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                    pointer-events: none;
+                    border-radius: var(--MBody-border-radius);
+                    /* Hardcoded colours because it's the same on all themes */
+                    background-color: rgba(0, 0, 0, 0.6);
+                    color: #ffffff;
+                    padding: 0px 4px 0px 4px;
                 }
             }
         }
@@ -485,11 +471,9 @@ limitations under the License.
             grid-template:
                 "reply reply" auto
                 "shield body" auto
-                "shield link" auto
-                / auto  1fr;
+                / auto 1fr;
 
             .mx_UnknownBody,
-            .mx_EventTile_keyRequestInfo,
             .mx_ReplyChain_wrapper,
             .mx_ViewSourceEvent {
                 min-width: 0; /* Prevent a grid blowout */
@@ -497,14 +481,13 @@ limitations under the License.
 
             .mx_EventTile_e2eIcon {
                 grid-area: shield;
+                margin-top: auto;
+                margin-bottom: auto;
             }
 
-            .mx_UnknownBody {
+            .mx_UnknownBody,
+            .mx_DecryptionFailureBody {
                 grid-area: body;
-            }
-
-            .mx_EventTile_keyRequestInfo {
-                grid-area: link;
             }
 
             .mx_ReplyChain_wrapper {
@@ -519,8 +502,7 @@ limitations under the License.
                 align-items: center;
                 grid-template:
                     "shield source" auto
-                    "shield link" auto
-                    / auto  1fr;
+                    / auto 1fr;
 
                 .mx_ViewSourceEvent {
                     grid-area: source;
@@ -533,6 +515,7 @@ limitations under the License.
         max-width: 100%;
     }
 
+    .mx_LegacyCallEvent_wrapper,
     .mx_CallEvent_wrapper {
         justify-content: center;
     }
@@ -545,7 +528,8 @@ limitations under the License.
         padding-right: 60px; /* align with bubbles text */
         font-style: italic;
 
-        > a { /* timestamp anchor wrapper */
+        > a {
+            /* timestamp anchor wrapper */
             align-self: center;
             bottom: unset;
             top: unset;
@@ -608,7 +592,8 @@ limitations under the License.
             bottom: unset;
             align-self: center;
 
-            .mx_MessageTimestamp, &.mx_MessageTimestamp {
+            .mx_MessageTimestamp,
+            &.mx_MessageTimestamp {
                 vertical-align: middle;
             }
         }

@@ -16,11 +16,11 @@ limitations under the License.
 
 import React, { LegacyRef } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Relations } from "matrix-js-sdk/src/models/relations";
 
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import EditorStateTransfer from "../../../utils/EditorStateTransfer";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
+import { GetRelationsForEvent } from "../rooms/EventTile";
 
 export interface IBodyProps {
     mxEvent: MatrixEvent;
@@ -32,7 +32,7 @@ export interface IBodyProps {
     highlightLink?: string;
 
     /* callback called when dynamic content in events are loaded */
-    onHeightChanged: () => void;
+    onHeightChanged?: () => void;
 
     showUrlPreview?: boolean;
     forExport?: boolean;
@@ -40,7 +40,7 @@ export interface IBodyProps {
     replacingEventId?: string;
     editState?: EditorStateTransfer;
     onMessageAllowed: () => void; // TODO: Docs
-    permalinkCreator: RoomPermalinkCreator;
+    permalinkCreator?: RoomPermalinkCreator;
     mediaEventHelper: MediaEventHelper;
 
     /*
@@ -52,7 +52,11 @@ export interface IBodyProps {
     isSeeingThroughMessageHiddenForModeration?: boolean;
 
     // helper function to access relations for this event
-    getRelationsForEvent?: (eventId: string, relationType: string, eventType: string) => Relations;
+    getRelationsForEvent?: GetRelationsForEvent;
 
     ref?: React.RefObject<any> | LegacyRef<any>;
+
+    // Set to `true` to disable interactions (e.g. video controls) and to remove controls from the tab order.
+    // This may be useful when displaying a preview of the event.
+    inhibitInteraction?: boolean;
 }

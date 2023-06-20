@@ -15,13 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from "react";
-import classNames from 'classnames';
+import React, { CSSProperties, useState } from "react";
+import classNames from "classnames";
 
-import { _t, _td } from '../../../languageHandler';
+import { _t, _td } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
-import Tooltip from "../elements/Tooltip";
+import Tooltip, { Alignment } from "../elements/Tooltip";
 import { E2EStatus } from "../../../utils/ShieldUtils";
+import { XOR } from "../../../@types/common";
 
 export enum E2EState {
     Verified = "verified",
@@ -42,45 +43,68 @@ const crossSigningRoomTitles: { [key in E2EState]?: string } = {
     [E2EState.Verified]: _td("Everyone in this room is verified"),
 };
 
-interface IProps {
-    isUser?: boolean;
-    status?: E2EState | E2EStatus;
+interface Props {
     className?: string;
     size?: number;
     onClick?: () => void;
     hideTooltip?: boolean;
+    tooltipAlignment?: Alignment;
     bordered?: boolean;
 }
 
-const E2EIcon: React.FC<IProps> = ({ isUser, status, className, size, onClick, hideTooltip, bordered }) => {
+interface UserProps extends Props {
+    isUser: true;
+    status: E2EState | E2EStatus;
+}
+
+interface RoomProps extends Props {
+    isUser?: false;
+    status: E2EStatus;
+}
+
+const E2EIcon: React.FC<XOR<UserProps, RoomProps>> = ({
+    isUser,
+    status,
+    className,
+    size,
+    onClick,
+    hideTooltip,
+    tooltipAlignment,
+    bordered,
+}) => {
     const [hover, setHover] = useState(false);
 
-    const classes = classNames({
-        mx_E2EIcon: true,
-        mx_E2EIcon_bordered: bordered,
-        mx_E2EIcon_warning: status === E2EState.Warning,
-        mx_E2EIcon_normal: status === E2EState.Normal,
-        mx_E2EIcon_verified: status === E2EState.Verified,
-    }, className);
+    const classes = classNames(
+        {
+            mx_E2EIcon: true,
+            mx_E2EIcon_bordered: bordered,
+            mx_E2EIcon_warning: status === E2EState.Warning,
+            mx_E2EIcon_normal: status === E2EState.Normal,
+            mx_E2EIcon_verified: status === E2EState.Verified,
+        },
+        className,
+    );
 
-    let e2eTitle;
+    let e2eTitle: string | undefined;
     if (isUser) {
         e2eTitle = crossSigningUserTitles[status];
     } else {
         e2eTitle = crossSigningRoomTitles[status];
     }
 
-    let style;
+    let style: CSSProperties | undefined;
     if (size) {
         style = { width: `${size}px`, height: `${size}px` };
     }
 
-    const onMouseOver = () => setHover(true);
-    const onMouseLeave = () => setHover(false);
+    const onMouseOver = (): void => setHover(true);
+    const onMouseLeave = (): void => setHover(false);
 
-    let tip;
-    if (hover && !hideTooltip) {
-        tip = <Tooltip label={e2eTitle ? _t(e2eTitle) : ""} />;
+    const label = e2eTitle ? _t(e2eTitle) : "";
+
+    let tip: JSX.Element | undefined;
+    if (hover && !hideTooltip && label) {
+        tip = <Tooltip label={label} alignment={tooltipAlignment} />;
     }
 
     if (onClick) {
@@ -91,15 +115,18 @@ const E2EIcon: React.FC<IProps> = ({ isUser, status, className, size, onClick, h
                 onMouseLeave={onMouseLeave}
                 className={classes}
                 style={style}
+                aria-label={label}
             >
-                { tip }
+                {tip}
             </AccessibleButton>
         );
     }
 
-    return <div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} className={classes} style={style}>
-        { tip }
-    </div>;
+    return (
+        <div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} className={classes} style={style} aria-label={label}>
+            {tip}
+        </div>
+    );
 };
 
 export default E2EIcon;

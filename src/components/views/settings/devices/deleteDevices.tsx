@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
-import { IAuthData } from "matrix-js-sdk/src/interactive-auth";
+import { IAuthDict, IAuthData } from "matrix-js-sdk/src/interactive-auth";
 
 import { _t } from "../../../../languageHandler";
 import Modal from "../../../../Modal";
@@ -23,20 +23,22 @@ import { InteractiveAuthCallback } from "../../../structures/InteractiveAuth";
 import { SSOAuthEntry } from "../../auth/InteractiveAuthEntryComponents";
 import InteractiveAuthDialog from "../../dialogs/InteractiveAuthDialog";
 
-const makeDeleteRequest = (
-    matrixClient: MatrixClient, deviceIds: string[],
-) => async (auth?: IAuthData): Promise<void> => {
-    await matrixClient.deleteMultipleDevices(deviceIds, auth);
-};
+const makeDeleteRequest =
+    (matrixClient: MatrixClient, deviceIds: string[]) =>
+    async (auth: IAuthDict | null): Promise<IAuthData> => {
+        return matrixClient.deleteMultipleDevices(deviceIds, auth ?? undefined);
+    };
 
 export const deleteDevicesWithInteractiveAuth = async (
-    matrixClient: MatrixClient, deviceIds: string[], onFinished?: InteractiveAuthCallback,
-) => {
+    matrixClient: MatrixClient,
+    deviceIds: string[],
+    onFinished: InteractiveAuthCallback,
+): Promise<void> => {
     if (!deviceIds.length) {
         return;
     }
     try {
-        await makeDeleteRequest(matrixClient, deviceIds)();
+        await makeDeleteRequest(matrixClient, deviceIds)(null);
         // no interactive auth needed
         onFinished(true, undefined);
     } catch (error) {

@@ -20,6 +20,7 @@ limitations under the License.
     align-items: flex-start;
     justify-content: space-between;
     margin-bottom: 4px;
+    width: 100%;
 
     .mx_ToggleSwitch {
         flex: 0 0 auto;
@@ -56,8 +57,13 @@ limitations under the License.
     color: $secondary-content;
 
     /* Support code/pre elements in settings flag descriptions */
-    pre, code {
+    pre,
+    code {
         font-family: $monospace-font-family !important;
         background-color: $rte-code-bg-color;
+    }
+
+    .mx_SettingsTab_microcopy_warning::before {
+        content: "⚠️ ";
     }
 }

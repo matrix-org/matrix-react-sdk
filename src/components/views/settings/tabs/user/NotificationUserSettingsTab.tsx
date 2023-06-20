@@ -14,20 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 import { _t } from "../../../../../languageHandler";
 import Notifications from "../../Notifications";
+import { SettingsSection } from "../../shared/SettingsSection";
+import SettingsTab from "../SettingsTab";
 
 export default class NotificationUserSettingsTab extends React.Component {
-    render() {
+    public render(): React.ReactNode {
         return (
-            <div className="mx_SettingsTab">
-                <div className="mx_SettingsTab_heading">{ _t("Notifications") }</div>
-                <div className="mx_SettingsTab_section mx_SettingsTab_subsectionText">
+            <SettingsTab>
+                <SettingsSection heading={_t("Notifications")}>
                     <Notifications />
-                </div>
-            </div>
+                </SettingsSection>
+            </SettingsTab>
         );
     }
 }

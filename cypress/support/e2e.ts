@@ -18,9 +18,10 @@ limitations under the License.
 
 import "@percy/cypress";
 import "cypress-real-events";
+import "@testing-library/cypress/add-commands";
 
-import "./performance";
-import "./synapse";
+import "./config.json";
+import "./homeserver";
 import "./login";
 import "./labs";
 import "./client";
@@ -36,4 +37,5 @@ import "./iframes";
 import "./timeline";
 import "./network";
 import "./composer";
+import "./proxy";
 import "./axe";

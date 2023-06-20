@@ -15,28 +15,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as linkifyjs from 'linkifyjs';
-import { registerCustomProtocol, registerPlugin } from 'linkifyjs';
-import linkifyElement from 'linkify-element';
-import linkifyString from 'linkify-string';
-import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
+import * as linkifyjs from "linkifyjs";
+import { EventListeners, Opts, registerCustomProtocol, registerPlugin } from "linkifyjs";
+import linkifyElement from "linkify-element";
+import linkifyString from "linkify-string";
+import { User } from "matrix-js-sdk/src/matrix";
 
 import {
     parsePermalink,
     tryTransformEntityToPermalink,
     tryTransformPermalinkToLocalHref,
 } from "./utils/permalinks/Permalinks";
-import dis from './dispatcher/dispatcher';
-import { Action } from './dispatcher/actions';
-import { ViewUserPayload } from './dispatcher/payloads/ViewUserPayload';
+import dis from "./dispatcher/dispatcher";
+import { Action } from "./dispatcher/actions";
+import { ViewUserPayload } from "./dispatcher/payloads/ViewUserPayload";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
-import { showGroupReplacedWithSpacesDialog } from "./group_helpers";
+import { MatrixClientPeg } from "./MatrixClientPeg";
 
 export enum Type {
     URL = "url",
     UserId = "userid",
     RoomAlias = "roomalias",
-    GroupId = "groupid",
 }
 
 // Linkify stuff doesn't type scanner/parser/utils properly :/
@@ -50,9 +49,9 @@ function matrixOpaqueIdLinkifyParser({
     scanner: any;
     parser: any;
     utils: any;
-    token: '#' | '+' | '@';
+    token: "#" | "+" | "@";
     name: Type;
-}) {
+}): void {
     const {
         DOT,
         // IPV4 necessity
@@ -60,6 +59,8 @@ function matrixOpaqueIdLinkifyParser({
         TLD,
         COLON,
         SYM,
+        SLASH,
+        EQUALS,
         HYPHEN,
         UNDERSCORE,
         // because 'localhost' is tokenised to the localhost token,
@@ -71,7 +72,7 @@ function matrixOpaqueIdLinkifyParser({
     const S_START = parser.start;
     const matrixSymbol = utils.createTokenClass(name, { isLink: true });
 
-    const localpartTokens = [domain, TLD, LOCALHOST, SYM, UNDERSCORE, HYPHEN];
+    const localpartTokens = [domain, TLD, DOT, LOCALHOST, SYM, SLASH, EQUALS, UNDERSCORE, HYPHEN];
     const domainpartTokens = [domain, TLD, LOCALHOST, HYPHEN];
 
     const INITIAL_STATE = S_START.tt(token);
@@ -105,22 +106,15 @@ function matrixOpaqueIdLinkifyParser({
     PORT_STATE.tt(NUM, matrixSymbol);
 }
 
-function onUserClick(event: MouseEvent, userId: string) {
+function onUserClick(event: MouseEvent, userId: string): void {
     event.preventDefault();
-    const member = new RoomMember(null, userId);
-    if (!member) { return; }
     dis.dispatch<ViewUserPayload>({
         action: Action.ViewUser,
-        member: member,
+        member: new User(userId),
     });
 }
 
-function onGroupClick(event: MouseEvent, groupId: string) {
-    event.preventDefault();
-    showGroupReplacedWithSpacesDialog(groupId);
-}
-
-function onAliasClick(event: MouseEvent, roomAlias: string) {
+function onAliasClick(event: MouseEvent, roomAlias: string): void {
     event.preventDefault();
     dis.dispatch<ViewRoomPayload>({
         action: Action.ViewRoom,
@@ -130,7 +124,7 @@ function onAliasClick(event: MouseEvent, roomAlias: string) {
     });
 }
 
-const escapeRegExp = function(s: string): string {
+const escapeRegExp = function (s: string): string {
     return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 };
 
@@ -138,14 +132,15 @@ const escapeRegExp = function(s: string): string {
 // Anyone else really should be using matrix.to. vector:// allowed to support Element Desktop relative links.
 export const ELEMENT_URL_PATTERN =
     "^(?:vector://|https?://)?(?:" +
-        escapeRegExp(window.location.host + window.location.pathname) + "|" +
-        "(?:www\\.)?(?:riot|vector)\\.im/(?:app|beta|staging|develop)/|" +
-        "(?:app|beta|staging|develop)\\.element\\.io/" +
+    escapeRegExp(window.location.host + window.location.pathname) +
+    "|" +
+    "(?:www\\.)?(?:riot|vector)\\.im/(?:app|beta|staging|develop)/|" +
+    "(?:app|beta|staging|develop)\\.element\\.io/" +
     ")(#.*)";
 
-export const options = {
-    events: function(href: string, type: Type | string): Partial<GlobalEventHandlers> {
-        switch (type) {
+export const options: Opts = {
+    events: function (href: string, type: string): EventListeners {
+        switch (type as Type) {
             case Type.URL: {
                 // intercept local permalinks to users and show them like userids (in userinfo of current room)
                 try {
@@ -153,8 +148,8 @@ export const options = {
                     if (permalink?.userId) {
                         return {
                             // @ts-ignore see https://linkify.js.org/docs/options.html
-                            click: function(e: MouseEvent) {
-                                onUserClick(e, permalink.userId);
+                            click: function (e: MouseEvent) {
+                                onUserClick(e, permalink.userId!);
                             },
                         };
                     } else {
@@ -163,8 +158,8 @@ export const options = {
                         if (localHref !== href) {
                             // it could be converted to a localHref -> therefore handle locally
                             return {
-                            // @ts-ignore see https://linkify.js.org/docs/options.html
-                                click: function(e: MouseEvent) {
+                                // @ts-ignore see https://linkify.js.org/docs/options.html
+                                click: function (e: MouseEvent) {
                                     e.preventDefault();
                                     window.location.hash = localHref;
                                 },
@@ -179,51 +174,43 @@ export const options = {
             case Type.UserId:
                 return {
                     // @ts-ignore see https://linkify.js.org/docs/options.html
-                    click: function(e: MouseEvent) {
-                        const userId = parsePermalink(href).userId;
-                        onUserClick(e, userId);
+                    click: function (e: MouseEvent) {
+                        const userId = parsePermalink(href)?.userId;
+                        if (userId) onUserClick(e, userId);
                     },
                 };
             case Type.RoomAlias:
                 return {
                     // @ts-ignore see https://linkify.js.org/docs/options.html
-                    click: function(e: MouseEvent) {
-                        const alias = parsePermalink(href).roomIdOrAlias;
-                        onAliasClick(e, alias);
-                    },
-                };
-
-            case Type.GroupId:
-                return {
-                    // @ts-ignore see https://linkify.js.org/docs/options.html
-                    click: function(e: MouseEvent) {
-                        const groupId = parsePermalink(href).groupId;
-                        onGroupClick(e, groupId);
+                    click: function (e: MouseEvent) {
+                        const alias = parsePermalink(href)?.roomIdOrAlias;
+                        if (alias) onAliasClick(e, alias);
                     },
                 };
         }
+
+        return {};
     },
 
-    formatHref: function(href: string, type: Type | string): string {
+    formatHref: function (href: string, type: Type | string): string {
         switch (type) {
             case Type.RoomAlias:
             case Type.UserId:
-            case Type.GroupId:
             default: {
-                return tryTransformEntityToPermalink(href);
+                return tryTransformEntityToPermalink(MatrixClientPeg.get(), href) ?? "";
             }
         }
     },
 
     attributes: {
-        rel: 'noreferrer noopener',
+        rel: "noreferrer noopener",
     },
 
-    ignoreTags: ['pre', 'code'],
+    ignoreTags: ["pre", "code"],
 
-    className: 'linkified',
+    className: "linkified",
 
-    target: function(href: string, type: Type | string): string {
+    target: function (href: string, type: Type | string): string {
         if (type === Type.URL) {
             try {
                 const transformed = tryTransformPermalinkToLocalHref(href);
@@ -231,21 +218,21 @@ export const options = {
                     transformed !== href || // if it could be converted to handle locally for matrix symbols e.g. @user:server.tdl and matrix.to
                     decodeURIComponent(href).match(ELEMENT_URL_PATTERN) // for https links to Element domains
                 ) {
-                    return null;
+                    return "";
                 } else {
-                    return '_blank';
+                    return "_blank";
                 }
             } catch (e) {
                 // malformed URI
             }
         }
-        return null;
+        return "";
     },
 };
 
 // Run the plugins
-registerPlugin(Type.RoomAlias, ({ scanner, parser, utils }) => {
-    const token = scanner.tokens.POUND as '#';
+registerPlugin(Type.RoomAlias, ({ scanner, parser, utils }: any) => {
+    const token = scanner.tokens.POUND as "#";
     matrixOpaqueIdLinkifyParser({
         scanner,
         parser,
@@ -255,19 +242,8 @@ registerPlugin(Type.RoomAlias, ({ scanner, parser, utils }) => {
     });
 });
 
-registerPlugin(Type.GroupId, ({ scanner, parser, utils }) => {
-    const token = scanner.tokens.PLUS as '+';
-    matrixOpaqueIdLinkifyParser({
-        scanner,
-        parser,
-        utils,
-        token,
-        name: Type.GroupId,
-    });
-});
-
-registerPlugin(Type.UserId, ({ scanner, parser, utils }) => {
-    const token = scanner.tokens.AT as '@';
+registerPlugin(Type.UserId, ({ scanner, parser, utils }: any) => {
+    const token = scanner.tokens.AT as "@";
     matrixOpaqueIdLinkifyParser({
         scanner,
         parser,
