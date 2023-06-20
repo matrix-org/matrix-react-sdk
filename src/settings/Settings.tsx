@@ -238,6 +238,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
                     </p>
                 </>
             ),
+            image: require("../../res/img/betas/notification_settings.png"),
         },
     },
     "feature_exploring_public_spaces": {
