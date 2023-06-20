@@ -16,7 +16,7 @@ limitations under the License.
 
 import { ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { IPusher } from "matrix-js-sdk/src/matrix";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 
 import { useMatrixClientContext } from "../../../../contexts/MatrixClientContext";
 import { Action } from "../../../../dispatcher/actions";
@@ -30,16 +30,6 @@ import AccessibleButton from "../../elements/AccessibleButton";
 import LabelledCheckbox from "../../elements/LabelledCheckbox";
 import { SettingsIndent } from "../shared/SettingsIndent";
 import SettingsSubsection, { SettingsSubsectionText } from "../shared/SettingsSubsection";
-
-const EmailPusherTemplate: Omit<IPusher, "pushkey" | "device_display_name" | "append"> = {
-    kind: "email",
-    app_id: "m.email",
-    app_display_name: "Email Notifications",
-    lang: navigator.language,
-    data: {
-        brand: SdkConfig.get().brand,
-    },
-};
 
 function generalTabButton(content: string): JSX.Element {
     return (
@@ -58,6 +48,16 @@ function generalTabButton(content: string): JSX.Element {
 }
 
 export function NotificationPusherSettings(): JSX.Element {
+    const EmailPusherTemplate: Omit<IPusher, "pushkey" | "device_display_name" | "append"> = useMemo(() => ({
+        kind: "email",
+        app_id: "m.email",
+        app_display_name: "Email Notifications",
+        lang: navigator.language,
+        data: {
+            brand: SdkConfig.get().brand,
+        },
+    }), []);
+
     const cli = useMatrixClientContext();
     const [pushers, refreshPushers] = usePushers(cli);
     const [threepids, refreshThreepids] = useThreepids(cli);
