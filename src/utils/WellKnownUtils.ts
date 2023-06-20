@@ -18,6 +18,7 @@ import { IClientWellKnown, MatrixClient } from "matrix-js-sdk/src/client";
 import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 const CALL_BEHAVIOUR_WK_KEY = "io.element.call_behaviour";
+
 const E2EE_WK_KEY = "io.element.e2ee";
 const E2EE_WK_KEY_DEPRECATED = "im.vector.riot.e2ee";
 export const TILE_SERVER_WK_KEY = new UnstableValue("m.tile_server", "org.matrix.msc3488.tile_server");
@@ -31,6 +32,13 @@ export interface ICallBehaviourWellKnown {
 
 export interface IE2EEWellKnown {
     default?: boolean;
+    /**
+     * Forces the encryption to disabled for all new rooms
+     * When true, overrides condfigured 'default' behaviour
+     * Hides the option to enable encryption on room creation
+     * Disables the option to enable encryption in room settings for all new and existing rooms
+     */
+    force_disable?: boolean;
     secure_backup_required?: boolean;
     secure_backup_setup_methods?: SecureBackupSetupMethod[];
 }
@@ -51,13 +59,9 @@ export function getCallBehaviourWellKnown(matrixClient: MatrixClient): ICallBeha
 
 export function getE2EEWellKnown(matrixClient: MatrixClient): IE2EEWellKnown | null {
     const clientWellKnown = matrixClient.getClientWellKnown();
-    if (clientWellKnown?.[E2EE_WK_KEY]) {
-        return clientWellKnown[E2EE_WK_KEY];
-    }
-    if (clientWellKnown?.[E2EE_WK_KEY_DEPRECATED]) {
-        return clientWellKnown[E2EE_WK_KEY_DEPRECATED];
-    }
-    return null;
+    const e2eeWellKnown = clientWellKnown?.[E2EE_WK_KEY] ?? clientWellKnown?.[E2EE_WK_KEY_DEPRECATED];
+
+    return e2eeWellKnown || null;
 }
 
 export function getTileServerWellKnown(matrixClient: MatrixClient): ITileServerWellKnown | undefined {

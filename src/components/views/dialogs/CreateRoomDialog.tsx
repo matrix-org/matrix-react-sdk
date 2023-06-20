@@ -24,7 +24,7 @@ import SdkConfig from "../../../SdkConfig";
 import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { IOpts } from "../../../createRoom";
+import { allowChangingEncryption, IOpts } from "../../../createRoom";
 import Field from "../elements/Field";
 import RoomAliasField from "../elements/RoomAliasField";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
@@ -33,7 +33,7 @@ import BaseDialog from "../dialogs/BaseDialog";
 import JoinRuleDropdown from "../elements/JoinRuleDropdown";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
-import { privateShouldBeEncrypted } from "../../../utils/rooms";
+import { shouldForceDisableEncryption, privateShouldBeEncrypted } from "../../../utils/rooms";
 
 interface IProps {
     type?: RoomType;
@@ -86,11 +86,11 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             detailsOpen: false,
             noFederate: SdkConfig.get().default_federate === false,
             nameIsValid: false,
-            canChangeEncryption: true,
+            canChangeEncryption: false,
         };
 
-        cli.doesServerForceEncryptionForPreset(Preset.PrivateChat).then((isForced) =>
-            this.setState({ canChangeEncryption: !isForced }),
+        allowChangingEncryption(cli, Preset.PrivateChat).then((canChangeEncryption) =>
+            this.setState({ canChangeEncryption }),
         );
     }
 
@@ -107,8 +107,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             const { alias } = this.state;
             createOpts.room_alias_name = alias.substring(1, alias.indexOf(":"));
         } else {
-            // If we cannot change encryption we pass `true` for safety, the server should automatically do this for us.
-            opts.encryption = this.state.canChangeEncryption ? this.state.isEncrypted : true;
+            opts.encryption = this.state.isEncrypted;
         }
 
         if (this.state.topic) {
