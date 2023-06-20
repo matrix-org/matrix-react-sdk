@@ -65,17 +65,15 @@ export class ConsoleLogger {
 
     public monkeyPatch(consoleObj: Console): void {
         // Monkey-patch console logging
-        (Object.keys(consoleFunctionsToLevels) as LogFunctionName[]).forEach(
-            (fnName: LogFunctionName) => {
-                const level = consoleFunctionsToLevels[fnName];
-                const originalFn = consoleObj[fnName].bind(consoleObj);
-                this.originalFunctions[fnName] = originalFn;
-                consoleObj[fnName] = (...args) => {
-                    this.log(level, ...args);
-                    originalFn(...args);
-                };
-            },
-        );
+        (Object.keys(consoleFunctionsToLevels) as LogFunctionName[]).forEach((fnName: LogFunctionName) => {
+            const level = consoleFunctionsToLevels[fnName];
+            const originalFn = consoleObj[fnName].bind(consoleObj);
+            this.originalFunctions[fnName] = originalFn;
+            consoleObj[fnName] = (...args) => {
+                this.log(level, ...args);
+                originalFn(...args);
+            };
+        });
     }
 
     public bypassRageshake(fnName: LogFunctionName, ...args: (Error | DOMException | object | string)[]): void {
