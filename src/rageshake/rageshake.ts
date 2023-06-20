@@ -63,6 +63,7 @@ export class ConsoleLogger {
             info: "I",
             warn: "W",
             error: "E",
+            debug: "D",
         } as const;
         (Object.keys(consoleFunctionsToLevels) as [keyof typeof consoleFunctionsToLevels]).forEach(
             (fnName: keyof typeof consoleFunctionsToLevels) => {
