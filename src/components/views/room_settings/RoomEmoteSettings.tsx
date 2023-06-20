@@ -378,13 +378,14 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                             className="mx_EmoteSettings_uploadedEmoteImage"
                             src={this.state.decryptedemotes.get(emotecode)}
                         />
-                        <div className="mx_EmoteSettings_uploadButton">
+                        <div className="mx_EmoteSettings_deleteButton">
                             <AccessibleButton
                                 onClick={this.deleteEmote}
                                 className=""
                                 kind="danger_outline"
                                 aria-label="Close"
                                 id={emotecode}
+                                disabled={!this.state.canAddEmote}
                             >
                                 {_t("Delete")}
                             </AccessibleButton>
