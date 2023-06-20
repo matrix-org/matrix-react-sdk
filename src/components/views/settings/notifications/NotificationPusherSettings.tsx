@@ -48,15 +48,18 @@ function generalTabButton(content: string): JSX.Element {
 }
 
 export function NotificationPusherSettings(): JSX.Element {
-    const EmailPusherTemplate: Omit<IPusher, "pushkey" | "device_display_name" | "append"> = useMemo(() => ({
-        kind: "email",
-        app_id: "m.email",
-        app_display_name: "Email Notifications",
-        lang: navigator.language,
-        data: {
-            brand: SdkConfig.get().brand,
-        },
-    }), []);
+    const EmailPusherTemplate: Omit<IPusher, "pushkey" | "device_display_name" | "append"> = useMemo(
+        () => ({
+            kind: "email",
+            app_id: "m.email",
+            app_display_name: "Email Notifications",
+            lang: navigator.language,
+            data: {
+                brand: SdkConfig.get().brand,
+            },
+        }),
+        [],
+    );
 
     const cli = useMatrixClientContext();
     const [pushers, refreshPushers] = usePushers(cli);
@@ -82,7 +85,7 @@ export function NotificationPusherSettings(): JSX.Element {
             refreshThreepids();
             refreshPushers();
         },
-        [cli, pushers, refreshPushers, refreshThreepids],
+        [EmailPusherTemplate, cli, pushers, refreshPushers, refreshThreepids],
     );
 
     const notificationTargets = pushers.filter((it) => it.kind !== "email");
