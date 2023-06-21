@@ -18,14 +18,12 @@ import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { getE2EEWellKnown } from "../WellKnownUtils";
 
-// @todo(kerrya) better comment
-// @todo(kerrya) better name?
 /**
  * Check e2ee io.element.e2ee setting
- * If force_disable is true
- * then do not allow encryption to be enabled
- *
- * Doesn't check whether encyrption is possible, just NOT DISALLOWED by wk config
+ * Returns true when .well-known e2ee config force_disable is TRUE
+ * When true all new rooms should be created with encryption disabled
+ * Can be overriden by synapse option encryption_enabled_by_default_for_room_type ( :/ )
+ * https://matrix-org.github.io/synapse/latest/usage/configuration/config_documentation.html#encryption_enabled_by_default_for_room_type
  *
  * @param client
  * @returns whether encryption can be enabled for any room
