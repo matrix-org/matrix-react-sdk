@@ -42,7 +42,7 @@ import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import Spinner from "./components/views/elements/Spinner";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 import { findDMForUser } from "./utils/dm/findDMForUser";
-import { allowEnableEncryption, privateShouldBeEncrypted, shouldForceDisableEncryption } from "./utils/rooms";
+import { privateShouldBeEncrypted, shouldForceDisableEncryption } from "./utils/rooms";
 import { waitForMember } from "./utils/membership";
 import { PreferredRoomVersions } from "./utils/PreferredRoomVersions";
 import SettingsStore from "./settings/SettingsStore";
@@ -491,7 +491,7 @@ export async function allowChangingEncryption(client: MatrixClient, chatPreset: 
     // server version config overrides wk config
     if (doesServerForceEncryptionForPreset && doesWellKnownForceDisableEncryption) {
         console.warn(
-            `Conflicting e2ee settings: server config and .well-known configuration disagree. Using server forced encryption setting for chat type ${Preset.PrivateChat}`,
+            `Conflicting e2ee settings: server config and .well-known configuration disagree. Using server forced encryption setting for chat type ${chatPreset}`,
         );
     }
 

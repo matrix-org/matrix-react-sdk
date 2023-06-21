@@ -33,7 +33,7 @@ import BaseDialog from "../dialogs/BaseDialog";
 import JoinRuleDropdown from "../elements/JoinRuleDropdown";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
-import { shouldForceDisableEncryption, privateShouldBeEncrypted } from "../../../utils/rooms";
+import { privateShouldBeEncrypted } from "../../../utils/rooms";
 
 interface IProps {
     type?: RoomType;

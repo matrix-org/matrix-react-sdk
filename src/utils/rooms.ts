@@ -43,10 +43,7 @@ export function privateShouldBeEncrypted(client: MatrixClient): boolean {
  * @returns whether encryption can be enabled for any room
  */
 export function shouldForceDisableEncryption(client: MatrixClient): boolean {
-    const e2eeWellKnown = getE2EEWellKnown(client) || {};
-
-    // @TODO(kerrya) duh
-    e2eeWellKnown["force_disable"] = true;
+    const e2eeWellKnown = getE2EEWellKnown(client);
 
     if (e2eeWellKnown) {
         const shouldForceDisable = e2eeWellKnown["force_disable"] === true;
