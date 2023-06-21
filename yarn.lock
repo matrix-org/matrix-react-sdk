@@ -3638,6 +3638,11 @@ cypress-axe@^1.0.0:
   resolved "https://registry.yarnpkg.com/cypress-axe/-/cypress-axe-1.4.0.tgz#e67482bfe9e740796bf77c7823f19781a8a2faff"
   integrity sha512-Ut7NKfzjyKm0BEbt2WxuKtLkIXmx6FD2j0RwdvO/Ykl7GmB/qRQkwbKLk3VP35+83hiIr8GKD04PDdrTK5BnyA==
 
+cypress-each@^1.13.3:
+  version "1.13.3"
+  resolved "https://registry.yarnpkg.com/cypress-each/-/cypress-each-1.13.3.tgz#c0f59628975164e23a3fd10090b587a66ed9438e"
+  integrity sha512-aNFoDuybFAQ7OObbeO5yxBGmXkGKVAcT1wLHLiL3+HQi+g+q3vECbn4J9cYOXJ7yYfbcBLh8dgQd/IG3Ls2z7A==
+
 cypress-multi-reporters@^1.6.1:
   version "1.6.3"
   resolved "https://registry.yarnpkg.com/cypress-multi-reporters/-/cypress-multi-reporters-1.6.3.tgz#0f0da8db4caf8d7a21f94e5209148348416d7c71"
@@ -6572,8 +6577,8 @@ matrix-events-sdk@0.0.1:
   integrity sha512-1QEOsXO+bhyCroIe2/A5OwaxHvBm7EsSQ46DEDn8RBIfQwN5HWBpFvyWWR4QY0KHPPnnJdI99wgRiAl7Ad5qaA==
 
 "matrix-js-sdk@github:matrix-org/matrix-js-sdk#develop":
-  version "26.0.1"
-  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/51218ddc1d9e54e99aee97f31d11c193d727b977"
+  version "26.1.0"
+  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/b77fe465f75fc0c273e22d6ff8bde658f35a68b6"
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@matrix-org/matrix-sdk-crypto-js" "^0.1.0-alpha.10"
