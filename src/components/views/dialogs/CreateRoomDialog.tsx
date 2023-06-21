@@ -306,6 +306,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                         value={this.state.isEncrypted}
                         className="mx_CreateRoomDialog_e2eSwitch" // for end-to-end tests
                         disabled={!this.state.canChangeEncryption}
+                        data-testid="enableE2ee"
                     />
                     <p>{microcopy}</p>
                 </React.Fragment>
