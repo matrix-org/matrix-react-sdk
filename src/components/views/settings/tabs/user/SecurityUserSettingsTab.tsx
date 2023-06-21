@@ -20,6 +20,7 @@ import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
+import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import dis from "../../../../../dispatcher/dispatcher";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
@@ -40,7 +41,6 @@ import type { IServerVersions } from "matrix-js-sdk/src/matrix";
 import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
 import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
-import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 
 interface IIgnoredUserProps {
     userId: string;
@@ -84,19 +84,16 @@ interface IState {
 }
 
 export default class SecurityUserSettingsTab extends React.Component<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
     private dispatcherRef?: string;
 
-    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
+    public constructor(props: IProps) {
         super(props);
-        this.context = context; // otherwise React will only set it prior to render due to type def above
 
         // Get rooms we're invited to
         const invitedRoomIds = new Set(this.getInvitedRooms().map((room) => room.roomId));
 
         this.state = {
-            ignoredUserIds: this.context.getIgnoredUsers(),
+            ignoredUserIds: MatrixClientPeg.safeGet().getIgnoredUsers(),
             waitingUnignored: [],
             managingInvites: false,
             invitedRoomIds,
@@ -105,7 +102,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
 
     private onAction = ({ action }: ActionPayload): void => {
         if (action === "ignore_state_changed") {
-            const ignoredUserIds = this.context.getIgnoredUsers();
+            const ignoredUserIds = MatrixClientPeg.safeGet().getIgnoredUsers();
             const newWaitingUnignored = this.state.waitingUnignored.filter((e) => ignoredUserIds.includes(e));
             this.setState({ ignoredUserIds, waitingUnignored: newWaitingUnignored });
         }
@@ -113,13 +110,15 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
 
     public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
-        this.context.on(RoomEvent.MyMembership, this.onMyMembership);
-        this.context.getVersions().then((versions) => this.setState({ versions }));
+        MatrixClientPeg.safeGet().on(RoomEvent.MyMembership, this.onMyMembership);
+        MatrixClientPeg.safeGet()
+            .getVersions()
+            .then((versions) => this.setState({ versions }));
     }
 
     public componentWillUnmount(): void {
         if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
-        this.context.removeListener(RoomEvent.MyMembership, this.onMyMembership);
+        MatrixClientPeg.safeGet().removeListener(RoomEvent.MyMembership, this.onMyMembership);
     }
 
     private onMyMembership = (room: Room, membership: string): void => {
@@ -160,14 +159,16 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         if (index !== -1) {
             currentlyIgnoredUserIds.splice(index, 1);
             this.setState(({ waitingUnignored }) => ({ waitingUnignored: [...waitingUnignored, userId] }));
-            this.context.setIgnoredUsers(currentlyIgnoredUserIds);
+            MatrixClientPeg.safeGet().setIgnoredUsers(currentlyIgnoredUserIds);
         }
     };
 
     private getInvitedRooms = (): Room[] => {
-        const cli = this.context;
-        const userId = cli.getSafeUserId();
-        return cli.getRooms().filter((r) => r.hasMembershipState(userId, "invite"));
+        return MatrixClientPeg.safeGet()
+            .getRooms()
+            .filter((r) => {
+                return r.hasMembershipState(MatrixClientPeg.safeGet().getUserId()!, "invite");
+            });
     };
 
     private manageInvites = async (accept: boolean): Promise<void> => {
@@ -179,7 +180,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         const invitedRoomIdsValues = Array.from(this.state.invitedRoomIds);
 
         // Execute all acceptances/rejections sequentially
-        const cli = this.context;
+        const cli = MatrixClientPeg.safeGet();
         const action = accept ? cli.joinRoom.bind(cli) : cli.leave.bind(cli);
         for (let i = 0; i < invitedRoomIdsValues.length; i++) {
             const roomId = invitedRoomIdsValues[i];
@@ -297,7 +298,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         );
 
         let warning;
-        if (!privateShouldBeEncrypted(this.context)) {
+        if (!privateShouldBeEncrypted(MatrixClientPeg.safeGet())) {
             warning = (
                 <div className="mx_SecurityUserSettingsTab_warning">
                     {_t(

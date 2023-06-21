@@ -394,7 +394,7 @@ export default class LegacyCallHandler extends EventEmitter {
 
     private onCallIncoming = (call: MatrixCall): void => {
         // if the runtime env doesn't do VoIP, stop here.
-        if (!MatrixClientPeg.safeGet().supportsVoip()) {
+        if (!MatrixClientPeg.get()?.supportsVoip()) {
             return;
         }
 
@@ -907,6 +907,7 @@ export default class LegacyCallHandler extends EventEmitter {
     }
 
     private async placeMatrixCall(roomId: string, type: CallType, transferee?: MatrixCall): Promise<void> {
+        const cli = MatrixClientPeg.safeGet();
         const mappedRoomId = (await VoipUserMapper.sharedInstance().getOrCreateVirtualRoomForRoom(roomId)) || roomId;
         logger.debug("Mapped real room " + roomId + " to room ID " + mappedRoomId);
 
@@ -916,15 +917,15 @@ export default class LegacyCallHandler extends EventEmitter {
         // in this queue, and since we're about to place a new call, they can only be events from
         // previous calls that are probably stale by now, so just cancel them.
         if (mappedRoomId !== roomId) {
-            const mappedRoom = MatrixClientPeg.safeGet().getRoom(mappedRoomId);
+            const mappedRoom = cli.getRoom(mappedRoomId);
             if (mappedRoom?.getPendingEvents().length) {
                 Resend.cancelUnsentEvents(mappedRoom);
             }
         }
 
-        const timeUntilTurnCresExpire = MatrixClientPeg.safeGet().getTurnServersExpiry() - Date.now();
+        const timeUntilTurnCresExpire = cli.getTurnServersExpiry() - Date.now();
         logger.log("Current turn creds expire in " + timeUntilTurnCresExpire + " ms");
-        const call = MatrixClientPeg.safeGet().createCall(mappedRoomId)!;
+        const call = cli.createCall(mappedRoomId)!;
 
         try {
             this.addCallForRoom(roomId, call);
@@ -953,6 +954,7 @@ export default class LegacyCallHandler extends EventEmitter {
     }
 
     public async placeCall(roomId: string, type: CallType, transferee?: MatrixCall): Promise<void> {
+        const cli = MatrixClientPeg.safeGet();
         // Pause current broadcast, if any
         SdkContextClass.instance.voiceBroadcastPlaybacksStore.getCurrent()?.pause();
 
@@ -969,7 +971,7 @@ export default class LegacyCallHandler extends EventEmitter {
         }
 
         // if the runtime env doesn't do VoIP, whine.
-        if (!MatrixClientPeg.safeGet().supportsVoip()) {
+        if (!cli.supportsVoip()) {
             Modal.createDialog(ErrorDialog, {
                 title: _t("Calls are unsupported"),
                 description: _t("You cannot place calls in this browser."),
@@ -977,7 +979,7 @@ export default class LegacyCallHandler extends EventEmitter {
             return;
         }
 
-        if (MatrixClientPeg.safeGet().getSyncState() === SyncState.Error) {
+        if (cli.getSyncState() === SyncState.Error) {
             Modal.createDialog(ErrorDialog, {
                 title: _t("Connectivity to the server has been lost"),
                 description: _t("You cannot place calls without a connection to the server."),
@@ -994,7 +996,7 @@ export default class LegacyCallHandler extends EventEmitter {
             return;
         }
 
-        const room = MatrixClientPeg.safeGet().getRoom(roomId);
+        const room = cli.getRoom(roomId);
         if (!room) {
             logger.error(`Room ${roomId} does not exist.`);
             return;
