@@ -57,6 +57,7 @@ import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
+import { clearRoomNotification } from "../../utils/notifications";
 
 const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
@@ -1387,6 +1388,25 @@ class TimelinePanel extends React.Component<IProps, IState> {
             this.timelineWindow &&
             !this.timelineWindow.canPaginate(EventTimeline.FORWARDS)
         );
+    };
+
+    /*
+     * Dismiss the read marker if any or mark the entire room as read if none
+     */
+    public dismissReadMarkerOrMarkAsRead = async (): Promise<void> => {
+        const client = MatrixClientPeg.get();
+        // if no client or client is guest don't send RR or RM
+        if (!client || client.isGuest()) {
+            this.jumpToLiveTimeline();
+            return
+        }
+        // Clear all notifications if we already dismissed the read marker and we are at the bottom of the message panel
+        if (this.isReadMarkerUpToDate() && this.canResetTimeline()) {
+            await clearRoomNotification(this.props.timelineSet?.room, client);
+        } else {
+            this.forgetReadMarker();
+            this.jumpToLiveTimeline();
+        }
     };
 
     /* get the current scroll state. See ScrollPanel.getScrollState for
