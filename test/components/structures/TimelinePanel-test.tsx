@@ -264,6 +264,7 @@ describe("TimelinePanel", () => {
                     await renderTimelinePanel();
                     timelineSet.addLiveEvent(ev1, {});
                     await flushPromises();
+                    // @ts-ignore Simulate user activity by calling updateReadMarker (private) on the TimelinePanel.
                     await timelinePanel.updateReadMarker();
                 });
 
@@ -275,8 +276,10 @@ describe("TimelinePanel", () => {
                     it("the read marker should be up to date", async () => {
                         await renderTimelinePanel();
                         timelineSet.addLiveEvent(ev1, {});
+                        // @ts-ignore sendReadReceipts is private
                         await timelinePanel.sendReadReceipts();
                         await timelinePanel.forgetReadMarker();
+                        // @ts-ignore Simulate user activity by calling updateReadMarker (private) on the TimelinePanel.
                         await timelinePanel.updateReadMarker();
                         await flushPromises();
                         expect(timelinePanel.isReadMarkerUpToDate()).toBe(true);
