@@ -26,7 +26,7 @@ import { getE2EEWellKnown } from "../WellKnownUtils";
  * https://matrix-org.github.io/synapse/latest/usage/configuration/config_documentation.html#encryption_enabled_by_default_for_room_type
  *
  * @param client
- * @returns whether encryption can be enabled for any room
+ * @returns whether well-known config forces encryption to DISABLED
  */
 export function shouldForceDisableEncryption(client: MatrixClient): boolean {
     const e2eeWellKnown = getE2EEWellKnown(client);
