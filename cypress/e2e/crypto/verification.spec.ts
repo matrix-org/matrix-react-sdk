@@ -72,8 +72,11 @@ describe("Device verification", () => {
         // Handle emoji SAS verification
         cy.get(".mx_InfoDialog").within(() => {
             cy.get<VerificationRequest>("@verificationRequest").then((request: VerificationRequest) => {
+                // the bot chooses to do an emoji verification
+                const verifier = request.beginKeyVerification("m.sas.v1");
+
                 // Handle emoji request and check that emojis are matching
-                doTwoWaySasVerification(request);
+                doTwoWaySasVerification(verifier);
             });
 
             cy.findByRole("button", { name: "They match" }).click();

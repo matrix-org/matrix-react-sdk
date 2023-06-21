@@ -117,7 +117,9 @@ const verify = function (this: CryptoTestContext) {
         cy.findByRole("button", { name: "Verify by emoji", timeout: 30000 }).click();
 
         cy.wrap(bobsVerificationRequestPromise).then((request: VerificationRequest) => {
-            doTwoWaySasVerification(request);
+            // the bot user races with the Element user to hit the "verify by emoji" button
+            const verifier = request.beginKeyVerification("m.sas.v1");
+            doTwoWaySasVerification(verifier);
         });
         cy.findByRole("button", { name: "They match" }).click();
         cy.findByText("You've successfully verified Bob!").should("exist");
