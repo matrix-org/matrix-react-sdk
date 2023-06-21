@@ -59,7 +59,7 @@ export default class IdentityAuthClient {
     }
 
     private get matrixClient(): MatrixClient {
-        return this.tempClient ? this.tempClient : MatrixClientPeg.get();
+        return this.tempClient ? this.tempClient : MatrixClientPeg.safeGet();
     }
 
     private writeToken(): void {
