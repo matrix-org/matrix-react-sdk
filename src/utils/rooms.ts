@@ -20,14 +20,13 @@ import { shouldForceDisableEncryption } from "./room/shouldForceDisableEncryptio
 import { getE2EEWellKnown } from "./WellKnownUtils";
 
 export function privateShouldBeEncrypted(client: MatrixClient): boolean {
-    const e2eeWellKnown = getE2EEWellKnown(client);
     if (shouldForceDisableEncryption(client)) {
         return false;
     }
+    const e2eeWellKnown = getE2EEWellKnown(client);
     if (e2eeWellKnown) {
         const defaultDisabled = e2eeWellKnown["default"] === false;
         return !defaultDisabled;
     }
     return true;
 }
-
