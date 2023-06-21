@@ -428,7 +428,6 @@ describe("TimelinePanel", () => {
                     expect(client.setRoomReadMarkers).not.toHaveBeenCalled();
                 });
             });
-
         });
     });
 

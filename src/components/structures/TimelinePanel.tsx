@@ -1398,7 +1398,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // if no client or client is guest don't send RR or RM
         if (!client || client.isGuest()) {
             this.jumpToLiveTimeline();
-            return
+            return;
         }
         // Clear all notifications if we already dismissed the read marker and we are at the bottom of the message panel
         if (this.isReadMarkerUpToDate() && this.canResetTimeline()) {
