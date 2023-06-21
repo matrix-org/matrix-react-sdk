@@ -50,21 +50,24 @@ describe("<CreateRoomDialog />", () => {
 
     const getComponent = (props = {}) => render(<CreateRoomDialog onFinished={jest.fn()} {...props} />);
 
-    it("should render correctly with defaults", () => {
+    it("should render correctly with defaults", async () => {
         getComponent();
+        await flushPromises();
 
         expect(screen.getByRole("dialog")).toMatchSnapshot();
     });
 
-    it("should default to private room", () => {
+    it("should default to private room", async () => {
         getComponent();
+        await flushPromises();
 
         expect(screen.getByText("Create a private room")).toBeInTheDocument();
     });
 
-    it("should use defaultName from props", () => {
+    it("should use defaultName from props", async () => {
         const defaultName = "My test room";
         getComponent({ defaultName });
+        await flushPromises();
 
         expect(screen.getByLabelText("Name")).toHaveDisplayValue(defaultName);
     });
@@ -72,7 +75,7 @@ describe("<CreateRoomDialog />", () => {
     describe("for a private room", () => {
         // default behaviour is a private room
 
-        it("should use server .well-known default for encryption setting", () => {
+        it("should use server .well-known default for encryption setting", async () => {
             // default to off
             mockClient.getClientWellKnown.mockReturnValue({
                 "io.element.e2ee": {
@@ -80,6 +83,8 @@ describe("<CreateRoomDialog />", () => {
                 },
             });
             getComponent();
+            await flushPromises();
+
             expect(getE2eeEnableToggleInputElement()).not.toBeChecked();
             expect(getE2eeEnableToggleIsDisabled()).toBeFalsy();
             expect(
@@ -89,7 +94,7 @@ describe("<CreateRoomDialog />", () => {
             );
         });
 
-        it("should use defaultEncrypted prop", () => {
+        it("should use defaultEncrypted prop", async () => {
             // default to off in server wk
             mockClient.getClientWellKnown.mockReturnValue({
                 "io.element.e2ee": {
@@ -98,6 +103,7 @@ describe("<CreateRoomDialog />", () => {
             });
             // but pass defaultEncrypted prop
             getComponent({ defaultEncrypted: true });
+            await flushPromises();
             // encryption enabled
             expect(getE2eeEnableToggleInputElement()).toBeChecked();
             expect(getE2eeEnableToggleIsDisabled()).toBeFalsy();
@@ -117,6 +123,7 @@ describe("<CreateRoomDialog />", () => {
         it("should warn when trying to create a room with an invalid form", async () => {
             const onFinished = jest.fn();
             getComponent({ onFinished });
+            await flushPromises();
 
             fireEvent.click(screen.getByText("Create room"));
             await flushPromises();
@@ -128,6 +135,7 @@ describe("<CreateRoomDialog />", () => {
         it("should create a private room", async () => {
             const onFinished = jest.fn();
             getComponent({ onFinished });
+            await flushPromises();
 
             const roomName = "Test Room Name";
             fireEvent.change(screen.getByLabelText("Name"), { target: { value: roomName } });
@@ -150,6 +158,7 @@ describe("<CreateRoomDialog />", () => {
         it("should set join rule to public defaultPublic is truthy", async () => {
             const onFinished = jest.fn();
             getComponent({ defaultPublic: true, onFinished });
+            await flushPromises();
 
             expect(screen.getByText("Create a public room")).toBeInTheDocument();
 
@@ -163,6 +172,7 @@ describe("<CreateRoomDialog />", () => {
         it("should not create a public room without an alias", async () => {
             const onFinished = jest.fn();
             getComponent({ onFinished });
+            await flushPromises();
 
             // set to public
             fireEvent.click(screen.getByLabelText("Room visibility"));
@@ -188,6 +198,7 @@ describe("<CreateRoomDialog />", () => {
         it("should create a public room", async () => {
             const onFinished = jest.fn();
             getComponent({ onFinished, defaultPublic: true });
+            await flushPromises();
 
             // set name
             const roomName = "Test Room Name";
