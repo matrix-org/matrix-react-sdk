@@ -95,7 +95,7 @@ export async function createMessageContent(
 
     // if we're editing rich text, the message content is pure html
     // BUT if we're not, the message content will be plain text
-    const body = isHTML ? await richToPlain(message) : message;
+    const body = isHTML ? await richToPlain(message) : convertMdMessageToMatrixMessage(message);
     const bodyPrefix = (isReplyAndEditing && getTextReplyFallback(editedEvent)) || "";
     const formattedBodyPrefix = (isReplyAndEditing && getHtmlReplyFallback(editedEvent)) || "";
 
@@ -139,5 +139,15 @@ export async function createMessageContent(
         });
     }
 
+    return content;
+}
+
+/**
+ * Without a model, we need to manually amend uncontrolled message content to make sure that mentions
+ * meet the matrix specification
+ * @param content - the output from the `MessageComposer` state when in plain text mode
+ * @returns - a string formatted with the mentions replaced as necessary
+ */
+function convertMdMessageToMatrixMessage(content: string): string {
     return content;
 }

@@ -154,4 +154,11 @@ describe("createMessageContent", () => {
 
         expect(content).toMatchObject({ msgtype: MsgType.Emote });
     });
+
+    it("Should replace at-room mentions with `@room` text", async () => {
+        const html = '​<a href="#" contenteditable="false" data-mention-type="at-room" style="some styling">@room</a> ';
+        const content = await createMessageContent(html, false, { permalinkCreator });
+
+        expect(content).toMatchObject({ body: "@room " });
+    });
 });
