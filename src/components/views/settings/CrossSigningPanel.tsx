@@ -127,7 +127,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
     private bootstrapCrossSigning = async ({ forceReset = false }): Promise<void> => {
         this.setState({ error: undefined });
         try {
-            const cli = MatrixClientPeg.get();
+            const cli = MatrixClientPeg.safeGet();
             await cli.bootstrapCrossSigning({
                 authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
                     const { finished } = Modal.createDialog(InteractiveAuthDialog, {
