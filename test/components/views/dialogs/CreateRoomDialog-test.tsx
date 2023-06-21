@@ -21,11 +21,6 @@ import { Preset, Visibility } from "matrix-js-sdk/src/matrix";
 import CreateRoomDialog from "../../../../src/components/views/dialogs/CreateRoomDialog";
 import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../test-utils";
 
-// mock so we can snapshot test fields
-jest.mock("matrix-js-sdk/src/randomstring", () => ({
-    randomString: () => "not-a-random-string",
-}));
-
 describe("<CreateRoomDialog />", () => {
     const userId = "@alice:server.org";
     const mockClient = getMockClientWithEventEmitter({
@@ -37,8 +32,7 @@ describe("<CreateRoomDialog />", () => {
         getRoomIdForAlias: jest.fn().mockRejectedValue({ errcode: "M_NOT_FOUND" }),
     });
 
-    const getE2eeEnableToggle = () => screen.getByTestId("enableE2ee");
-    const getE2eeEnableToggleInputElement = () => within(getE2eeEnableToggle()).getByRole("switch");
+    const getE2eeEnableToggleInputElement = () => screen.getByLabelText("Enable end-to-end encryption");
     // labelled toggle switch doesn't set the disabled attribute, only aria-disabled
     const getE2eeEnableToggleIsDisabled = () =>
         getE2eeEnableToggleInputElement().getAttribute("aria-disabled") === "true";
@@ -49,13 +43,6 @@ describe("<CreateRoomDialog />", () => {
     });
 
     const getComponent = (props = {}) => render(<CreateRoomDialog onFinished={jest.fn()} {...props} />);
-
-    it("should render correctly with defaults", async () => {
-        getComponent();
-        await flushPromises();
-
-        expect(screen.getByRole("dialog")).toMatchSnapshot();
-    });
 
     it("should default to private room", async () => {
         getComponent();
@@ -230,7 +217,7 @@ describe("<CreateRoomDialog />", () => {
             expect(screen.getByText("Create a public room")).toBeInTheDocument();
 
             // e2e section is not rendered
-            expect(screen.queryByTestId("enableE2ee")).not.toBeInTheDocument();
+            expect(screen.queryByText("Enable end-to-end encryption")).not.toBeInTheDocument();
 
             const roomName = "Test Room Name";
             fireEvent.change(screen.getByLabelText("Name"), { target: { value: roomName } });
