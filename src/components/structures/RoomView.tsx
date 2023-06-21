@@ -117,7 +117,6 @@ import { WidgetType } from "../../widgets/WidgetType";
 import WidgetUtils from "../../utils/WidgetUtils";
 import { shouldEncryptRoomWithSingle3rdPartyInvite } from "../../utils/room/shouldEncryptRoomWithSingle3rdPartyInvite";
 import { WaitingForThirdPartyRoomView } from "./WaitingForThirdPartyRoomView";
-import { clearRoomNotification } from "../../utils/notifications";
 
 const DEBUG = false;
 const PREVENT_MULTIPLE_JITSI_WITHIN = 30_000;
