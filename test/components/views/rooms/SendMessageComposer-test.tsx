@@ -16,9 +16,10 @@ limitations under the License.
 
 import React from "react";
 import { fireEvent, render, waitFor } from "@testing-library/react";
-import { IContent, MatrixClient, MsgType } from "matrix-js-sdk/src/matrix";
+import { IContent, MatrixClient, MatrixEvent, MsgType } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 import userEvent from "@testing-library/user-event";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 import SendMessageComposer, {
     attachMentions,
@@ -45,7 +46,11 @@ import SettingsStore from "../../../../src/settings/SettingsStore";
 jest.mock("../../../../src/utils/local-room", () => ({
     doMaybeLocalRoomAction: jest.fn(),
 }));
-
+const EMOTES_COMP = new UnstableValue("im.ponies.room_emotes", "m.room.room_emotes");
+const COMPAT_STATE = new UnstableValue(
+    "org.matrix.msc3892.clientemote_compatibility",
+    "m.room.clientemote_compatibility",
+);
 describe("<SendMessageComposer/>", () => {
     const defaultRoomContext: IRoomState = {
         roomLoading: true,
@@ -600,5 +605,95 @@ describe("<SendMessageComposer/>", () => {
 
         await userEvent.type(composer, "Hello");
         expect(cli.prepareToEncrypt).toHaveBeenCalled();
+    });
+
+    it("should load compatible emotes and replace them in messages when compatibility is on", async () => {
+        const cli = stubClient();
+        const room = mkStubRoom("!roomId:server", "Room", cli);
+        mocked(cli.getRoom).mockReturnValue(room);
+        mocked(cli.isRoomEncrypted).mockReturnValue(false);
+        // @ts-ignore - mocked doesn't support overloads properly
+        mocked(room.currentState.getStateEvents).mockImplementation((type, key) => {
+            if (key === undefined) return [] as MatrixEvent[];
+            if (type === EMOTES_COMP.name) {
+                return new MatrixEvent({
+                    sender: "@sender:server",
+                    room_id: room.roomId,
+                    type: EMOTES_COMP.name,
+                    state_key: "",
+                    content: {
+                        images: {
+                            testEmote: {
+                                url: "http://this.is.a.url/server/custom-emote-123.png",
+                            },
+                        },
+                    },
+                });
+            }
+            if (type === COMPAT_STATE.name) {
+                return new MatrixEvent({
+                    sender: "@sender:server",
+                    room_id: room.roomId,
+                    type: EMOTES_COMP.name,
+                    state_key: "",
+                    content: {
+                        isCompat: true,
+                    },
+                });
+            }
+
+            return null;
+        });
+
+        render(
+            <MatrixClientContext.Provider value={cli}>
+                <SendMessageComposer room={room} toggleStickerPickerOpen={jest.fn()} />
+            </MatrixClientContext.Provider>,
+        );
+
+        const permalinkCreator = jest.fn() as any;
+        const model = new EditorModel([], createPartCreator());
+        const documentOffset = new DocumentOffset(30, true);
+        model.update(":testEmote: and some text", "insertText", documentOffset);
+
+        const emoteMap = new Map<string, string>();
+        emoteMap.set(
+            ":testEmote:",
+            "<img data-mx-emoticon src='http://this.is.a.url/server/custom-emote-123.png' height='32' alt=':testEmote:' title=':testEmote:'/>",
+        );
+
+        let content = createMessageContent(
+            "@alice:test",
+            model,
+            undefined,
+            undefined,
+            permalinkCreator,
+            undefined,
+            emoteMap,
+            true,
+        );
+
+        expect(content).toEqual({
+            body: ":testEmote: and some text",
+            msgtype: "m.text",
+            format: "org.matrix.custom.html",
+            formatted_body:
+                "<img data-mx-emoticon src='http://this.is.a.url/server/custom-emote-123.png' height='32' alt=':testEmote:' title=':testEmote:'/> and some text",
+        });
+
+        content = createMessageContent(
+            "@alice:test",
+            model,
+            undefined,
+            undefined,
+            permalinkCreator,
+            undefined,
+            emoteMap,
+            false,
+        );
+        expect(content).toEqual({
+            body: ":testEmote: and some text",
+            msgtype: "m.text",
+        });
     });
 });

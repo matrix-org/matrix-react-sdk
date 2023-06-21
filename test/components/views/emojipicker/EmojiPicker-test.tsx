@@ -17,10 +17,18 @@ limitations under the License.
 import React, { createRef } from "react";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { mocked } from "jest-mock";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
+import { mkStubRoom, stubClient } from "../../../test-utils";
 import EmojiPicker from "../../../../src/components/views/emojipicker/EmojiPicker";
-import { stubClient } from "../../../test-utils";
+import { Media, mediaFromMxc } from "../../../../src/customisations/Media";
 
+jest.mock("../../../../src/customisations/Media", () => ({
+    mediaFromMxc: jest.fn(),
+}));
+const EMOTES_STATE = new UnstableValue("org.matrix.msc3892.emotes", "m.room.emotes");
 describe("EmojiPicker", function () {
     stubClient();
 
@@ -97,5 +105,41 @@ describe("EmojiPicker", function () {
 
         expect(onChoose).toHaveBeenCalledWith("📫️");
         expect(onFinished).toHaveBeenCalled();
+    });
+    it("should load custom emotes", async () => {
+        const cli = stubClient();
+        const room = mkStubRoom("!roomId:server", "Room", cli);
+        mocked(cli.getRoom).mockReturnValue(room);
+        mocked(cli.isRoomEncrypted).mockReturnValue(false);
+        mocked(mediaFromMxc).mockReturnValue({
+            srcHttp: "http://this.is.a.url/server/custom-emote-123.png",
+        } as Media);
+        const ref = createRef<EmojiPicker>();
+
+        // @ts-ignore - mocked doesn't support overloads properly
+        mocked(room.currentState.getStateEvents).mockImplementation((type, key) => {
+            if (key === undefined) return [] as MatrixEvent[];
+            if (type === EMOTES_STATE.name) {
+                return new MatrixEvent({
+                    sender: "@sender:server",
+                    room_id: room.roomId,
+                    type: EMOTES_STATE.name,
+                    state_key: "",
+                    content: {
+                        testEmote: "http://this.is.a.url/server/custom-emote-123.png",
+                    },
+                });
+            }
+            return null;
+        });
+        const { container } = render(
+            <EmojiPicker ref={ref} onChoose={(str: string) => false} onFinished={jest.fn()} room={room} />,
+        );
+        await new Promise(process.nextTick);
+
+        const customCategory = container.querySelector("#mx_EmojiPicker_category_custom");
+        if (!customCategory) {
+            throw new Error("custom emote not in emojipicker");
+        }
     });
 });

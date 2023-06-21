@@ -194,6 +194,23 @@ describe("EmoteSettingsTab", () => {
     it("should save new emotes", async () => {
         mocked(cli.getRoom).mockReturnValue(room);
         mocked(cli.isRoomEncrypted).mockReturnValue(false);
+        // @ts-ignore - mocked doesn't support overloads properly
+        mocked(room.currentState.getStateEvents).mockImplementation((type, key) => {
+            if (key === undefined) return [] as MatrixEvent[];
+            if (type === EMOTES_STATE.name) {
+                return new MatrixEvent({
+                    sender: "@sender:server",
+                    room_id: roomId,
+                    type: EMOTES_STATE.name,
+                    state_key: "",
+                    content: {
+                        oldEmote: "http://this.is.a.url/server/custom-emote-123.png",
+                    },
+                });
+            }
+            return null;
+        });
+
         const tab = renderTab();
 
         fireEvent.click(screen.getByText("Upload Emote"));
@@ -207,7 +224,10 @@ describe("EmoteSettingsTab", () => {
         expect(cli.sendStateEvent).toHaveBeenCalledWith(
             roomId,
             EMOTES_STATE.name,
-            { coolnewemote: "http://this.is.a.url/server/custom-emote-123.png" },
+            {
+                coolnewemote: "http://this.is.a.url/server/custom-emote-123.png",
+                oldEmote: "http://this.is.a.url/server/custom-emote-123.png",
+            },
             "",
         );
     });
@@ -317,13 +337,19 @@ describe("EmoteSettingsTab", () => {
                 target: { files: [newemotefile] },
             }),
         );
+        fireEvent.change(tab.container.querySelector("input.mx_EmoteSettings_emoteField")!, {
+            target: { value: "" },
+        });
+        fireEvent.change(tab.container.querySelector("input.mx_EmoteSettings_emoteField")!, {
+            target: { value: "coolnewemotecustomname" },
+        });
         fireEvent.click(screen.getByText("Save"));
         await new Promise(process.nextTick);
         await new Promise(process.nextTick);
         expect(cli.sendStateEvent).toHaveBeenLastCalledWith(
             roomId,
             EMOTES_COMP.name,
-            { images: { coolnewemote: { url: "http://this.is.a.url/server/custom-emote-123.png" } } },
+            { images: { coolnewemotecustomname: { url: "http://this.is.a.url/server/custom-emote-123.png" } } },
             "",
         );
     });
