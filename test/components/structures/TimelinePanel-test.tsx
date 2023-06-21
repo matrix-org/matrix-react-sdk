@@ -290,6 +290,17 @@ describe("TimelinePanel", () => {
                         expect(timelinePanel.isReadMarkerUpToDate()).toBe(true);
                     });
                 });
+
+                describe("and pressing Escape", () => {
+                    it("should send read receipts and update the read marker", async () => {
+                        await renderTimelinePanel();
+                        timelineSet.addLiveEvent(ev1, {});
+                        await timelinePanel.dismissAnyReadMarkerOrMarkAsRead();
+                        await flushPromises();
+                        expect(client.sendReadReceipt).toHaveBeenCalled();
+                        expect(client.setRoomReadMarkers).toHaveBeenCalledWith(roomId, ev1.getId());
+                    });
+                });
             });
 
             describe("and reading the timeline", () => {
@@ -406,6 +417,18 @@ describe("TimelinePanel", () => {
                 expect(client.setRoomReadMarkers).not.toHaveBeenCalled();
                 expect(client.sendReadReceipt).toHaveBeenCalledWith(threadEv1, ReceiptType.Read);
             });
+
+            describe("and pressing Escape", () => {
+                it("should only mark threads as read", async () => {
+                    await renderTimelinePanel();
+                    timelineSet.addLiveEvent(threadEv1, {});
+                    await timelinePanel.dismissAnyReadMarkerOrMarkAsRead();
+                    await flushPromises();
+                    expect(client.sendReadReceipt).not.toHaveBeenCalled();
+                    expect(client.setRoomReadMarkers).not.toHaveBeenCalled();
+                });
+            });
+
         });
     });
 
