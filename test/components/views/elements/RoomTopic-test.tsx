@@ -21,6 +21,10 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { mkEvent, stubClient } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import RoomTopic from "../../../../src/components/views/elements/RoomTopic";
+import dis from "../../../../src/dispatcher/dispatcher";
+import { Action } from "../../../../src/dispatcher/actions";
+
+jest.mock("../../../../src/dispatcher/dispatcher");
 
 describe("<RoomTopic/>", () => {
     const originalHref = window.location.href;
@@ -29,7 +33,7 @@ describe("<RoomTopic/>", () => {
         window.location.href = originalHref;
     });
 
-    function runClickTest(topic: string, clickText: string, expectedHref: string) {
+    function runClickTest(topic: string, clickText: string) {
         stubClient();
 
         const room = new Room("!pMBteVpcoJRdCJxDmn:matrix.org", MatrixClientPeg.safeGet(), "@alice:example.org");
@@ -47,7 +51,6 @@ describe("<RoomTopic/>", () => {
         render(<RoomTopic room={room} />);
 
         fireEvent.click(screen.getByText(clickText));
-        expect(window.location.href).toEqual(expectedHref);
     }
 
     it("should capture permalink clicks", () => {
@@ -55,12 +58,24 @@ describe("<RoomTopic/>", () => {
             "https://matrix.to/#/!pMBteVpcoJRdCJxDmn:matrix.org/$K4Kg0fL-GKpW1EQ6lS36bP4eUXadWJFkdK_FH73Df8A?via=matrix.org";
         const expectedHref =
             "http://localhost/#/room/!pMBteVpcoJRdCJxDmn:matrix.org/$K4Kg0fL-GKpW1EQ6lS36bP4eUXadWJFkdK_FH73Df8A?via=matrix.org";
-        runClickTest(`... ${permalink} ...`, permalink, expectedHref);
+        runClickTest(`... ${permalink} ...`, permalink);
+        expect(window.location.href).toEqual(expectedHref);
+        expect(dis.fire).toHaveBeenCalledTimes(0);
     });
 
     it("should not capture non-permalink clicks", () => {
         const link = "https://matrix.org";
         const expectedHref = originalHref;
-        runClickTest(`... ${link} ...`, link, expectedHref);
+        runClickTest(`... ${link} ...`, link);
+        expect(window.location.href).toEqual(expectedHref);
+        expect(dis.fire).toHaveBeenCalledTimes(0);
+    });
+
+    it("should open topic dialog when not clicking a link", () => {
+        const topic = "foobar";
+        const expectedHref = originalHref;
+        runClickTest(topic, topic);
+        expect(window.location.href).toEqual(expectedHref);
+        expect(dis.fire).toHaveBeenCalledWith(Action.ShowRoomTopic);
     });
 });

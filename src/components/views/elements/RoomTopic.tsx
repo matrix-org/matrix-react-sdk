@@ -55,12 +55,7 @@ export default function RoomTopic({ room, ...props }: IProps): JSX.Element {
                 return;
             }
 
-            const anchor: HTMLLinkElement | null = e.target as HTMLLinkElement;
-
-            if (!anchor) {
-                return;
-            }
-
+            const anchor = e.target as HTMLLinkElement;
             const localHref = tryTransformPermalinkToLocalHref(anchor.href);
 
             if (localHref !== anchor.href) {
