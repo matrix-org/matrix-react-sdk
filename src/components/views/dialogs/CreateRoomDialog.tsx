@@ -24,7 +24,7 @@ import SdkConfig from "../../../SdkConfig";
 import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { allowChangingEncryption, IOpts } from "../../../createRoom";
+import { checkUserIsAllowedToChangeEncryption, IOpts } from "../../../createRoom";
 import Field from "../elements/Field";
 import RoomAliasField from "../elements/RoomAliasField";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
@@ -89,8 +89,12 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             canChangeEncryption: false,
         };
 
-        allowChangingEncryption(cli, Preset.PrivateChat).then((canChangeEncryption) =>
-            this.setState({ canChangeEncryption }),
+        checkUserIsAllowedToChangeEncryption(cli, Preset.PrivateChat).then(({ allowChange, forcedValue }) =>
+            this.setState((state) => ({
+                canChangeEncryption: allowChange,
+                // override with forcedValue if it is set
+                isEncrypted: forcedValue ?? state.isEncrypted,
+            })),
         );
     }
 

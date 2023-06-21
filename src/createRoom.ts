@@ -474,8 +474,19 @@ export async function ensureDMExists(client: MatrixClient, userId: string): Prom
     return roomId;
 }
 
+interface AllowedEncryptionSetting {
+    /**
+     * True when the user is allowed to choose whether encryption is enabled
+     */
+    allowChange: boolean;
+    /**
+     * Set when user is not allowed to choose encryption setting
+     * True when encryption is forced to enabled
+     */
+    forcedValue?: boolean;
+}
 /**
- * Check if server configuration supports the user setting encryption for a room
+ * Check if server configuration supports the user changing encryption for a room
  * First check if server features force enable encryption for the given room type
  * If not, check if server .well-known forces encryption to disabled
  * If either are forced, then do not allow the user to change room's encryption
@@ -483,7 +494,10 @@ export async function ensureDMExists(client: MatrixClient, userId: string): Prom
  * @param chatPreset chat type
  * @returns Promise<boolean>
  */
-export async function allowChangingEncryption(client: MatrixClient, chatPreset: Preset): Promise<boolean> {
+export async function checkUserIsAllowedToChangeEncryption(
+    client: MatrixClient,
+    chatPreset: Preset,
+): Promise<AllowedEncryptionSetting> {
     const doesServerForceEncryptionForPreset = await client.doesServerForceEncryptionForPreset(chatPreset);
     const doesWellKnownForceDisableEncryption = shouldForceDisableEncryption(client);
 
@@ -496,5 +510,12 @@ export async function allowChangingEncryption(client: MatrixClient, chatPreset: 
         );
     }
 
-    return !doesServerForceEncryptionForPreset && !doesWellKnownForceDisableEncryption;
+    if (doesServerForceEncryptionForPreset) {
+        return { allowChange: false, forcedValue: true };
+    }
+    if (doesWellKnownForceDisableEncryption) {
+        return { allowChange: false, forcedValue: false };
+    }
+
+    return { allowChange: true };
 }
