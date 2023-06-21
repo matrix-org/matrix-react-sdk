@@ -49,6 +49,7 @@ interface IState {
     joinRule: JoinRule;
     isPublic: boolean;
     isEncrypted: boolean;
+    useMls: boolean;
     name: string;
     topic: string;
     alias: string;
@@ -109,6 +110,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
         } else {
             // If we cannot change encryption we pass `true` for safety, the server should automatically do this for us.
             opts.encryption = this.state.canChangeEncryption ? this.state.isEncrypted : true;
+            opts.useMls = this.state.useMls;
         }
 
         if (this.state.topic) {
@@ -187,6 +189,10 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
 
     private onEncryptedChange = (isEncrypted: boolean): void => {
         this.setState({ isEncrypted });
+    };
+
+    private onUseMlsChange = (useMls: boolean): void => {
+        this.setState({ useMls });
     };
 
     private onAliasChange = (alias: string): void => {
@@ -312,6 +318,19 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                 </React.Fragment>
             );
         }
+        let mlsSection: JSX.Element;
+        if (this.state.isEncrypted) {
+            mlsSection = (
+                <React.Fragment>
+                    <LabelledToggleSwitch
+                        label="Use MLS"
+                        onChange={this.onUseMlsChange}
+                        value={this.state.useMls}
+                    />
+                    <p>Experimental! Don't do it!</p>
+                </React.Fragment>
+            );
+        }
 
         let federateLabel = _t(
             "You might enable this if the room will only be used for collaborating with internal " +
@@ -375,6 +394,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                             <summary className="mx_CreateRoomDialog_details_summary">
                                 {this.state.detailsOpen ? _t("Hide advanced") : _t("Show advanced")}
                             </summary>
+                            {mlsSection}
                             <LabelledToggleSwitch
                                 label={_t("Block anyone not part of %(serverName)s from ever joining this room.", {
                                     serverName: MatrixClientPeg.getHomeserverName(),
