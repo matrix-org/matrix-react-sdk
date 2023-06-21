@@ -18,8 +18,9 @@ import { richToPlain, plainToRich } from "@matrix-org/matrix-wysiwyg";
 import { IContent, IEventRelation, MatrixEvent, MsgType } from "matrix-js-sdk/src/matrix";
 
 import SettingsStore from "../../../../../settings/SettingsStore";
-import { RoomPermalinkCreator } from "../../../../../utils/permalinks/Permalinks";
+import { parsePermalink, RoomPermalinkCreator } from "../../../../../utils/permalinks/Permalinks";
 import { addReplyToMessageContent } from "../../../../../utils/Reply";
+import { isNotNull, isNotUndefined } from "../../../../../Typeguards";
 
 export const EMOTE_PREFIX = "/me ";
 
@@ -107,11 +108,7 @@ export async function createMessageContent(
     // TODO markdown support
 
     const isMarkdownEnabled = SettingsStore.getValue<boolean>("MessageComposerInput.useMarkdown");
-    const formattedBody = isHTML
-        ? message
-        : isMarkdownEnabled
-        ? await plainToRich(convertPlainTextToFormattedBody(message))
-        : null;
+    const formattedBody = isHTML ? message : isMarkdownEnabled ? await plainToRich(message) : null;
 
     if (formattedBody) {
         content.format = "org.matrix.custom.html";
@@ -147,14 +144,15 @@ export async function createMessageContent(
 }
 
 /**
- * Without a model, we need to manually amend uncontrolled message content to make sure that mentions
- * meet the matrix specification
+ * Without a model, we need to manually amend mentions in uncontrolled message content
+ * to make sure that mentions meet the matrix specification.
+ *
  * @param content - the output from the `MessageComposer` state when in plain text mode
- * @returns - a string formatted with the mentions replaced as necessary
+ * @returns - a string formatted with the mentions replaced as required
  */
 function convertPlainTextToBody(content: string): string {
-    const d = new DOMParser().parseFromString(content, "text/html");
-    const mentions = Array.from(d.querySelectorAll("a[data-mention-type]"));
+    const document = new DOMParser().parseFromString(content, "text/html");
+    const mentions = Array.from(document.querySelectorAll("a[data-mention-type]"));
 
     mentions.forEach((mention) => {
         const mentionType = mention.getAttribute("data-mention-type");
@@ -168,32 +166,21 @@ function convertPlainTextToBody(content: string): string {
                 mention.replaceWith(innerText);
                 break;
             }
-            default:
-                break;
-        }
-    });
+            case "room": {
+                // for this case we use parsePermalink to try and get the mx id
+                const href = mention.getAttribute("href");
 
-    return d.body.innerHTML;
-}
+                // if the mention has no href attribute, leave it alone
+                if (href === null) break;
 
-/**
- * Strip the attributes used for display of mentions in the plain text editor from the message output
- * or replace at-room mentions with plain text
- *
- * @param content - the output from the `MessageComposer` state when in plain text mode
- * @returns - a string of HTML where the mentions only contain an href attribute (or `@room` text for the
- * at-room special case)
- */
-function convertPlainTextToFormattedBody(content: string): string {
-    const d = new DOMParser().parseFromString(content, "text/html");
-    const mentions = Array.from(d.querySelectorAll("a[data-mention-type]"));
+                // otherwise, attempt to parse the room alias or id from the href
+                const permalinkParts = parsePermalink(href);
 
-    mentions.forEach((mention) => {
-        const mentionType = mention.getAttribute("data-mention-type");
-        switch (mentionType) {
-            case "at-room": {
-                console.log("here");
-                mention.replaceWith("@room");
+                // then if we have permalink parts with a valid roomIdOrAlias, replace the
+                // room mention with that text
+                if (isNotNull(permalinkParts) && isNotNull(permalinkParts.roomIdOrAlias)) {
+                    mention.replaceWith(permalinkParts.roomIdOrAlias);
+                }
                 break;
             }
             default:
@@ -201,5 +188,5 @@ function convertPlainTextToFormattedBody(content: string): string {
         }
     });
 
-    return d.body.innerHTML;
+    return document.body.innerHTML;
 }

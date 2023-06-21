@@ -61,7 +61,7 @@ describe("createMessageContent", () => {
 
             // Then
             expect(content).toEqual({
-                "body": "> <myfakeuser> Replying to thisnn*__hello__ world*",
+                "body": "> <myfakeuser> Replying to this\n\n*__hello__ world*",
                 "format": "org.matrix.custom.html",
                 "formatted_body":
                     '<mx-reply><blockquote><a href="$$permalink$$">In reply to</a>' +
@@ -158,14 +158,14 @@ describe("createMessageContent", () => {
     });
 
     describe("Plaintext composer input", () => {
-        it.only("Should replace at-room mentions with `@room` text", async () => {
+        it("Should replace at-room mentions with `@room` in body", async () => {
             const messageComposerState = `<a href="#" contenteditable="false" data-mention-type="at-room" style="some styling">@room</a> `;
 
             const content = await createMessageContent(messageComposerState, false, { permalinkCreator });
-            expect(content).toMatchObject({ body: "@room ", formatted_body: "@room " });
+            expect(content).toMatchObject({ body: "@room " });
         });
 
-        it("Should replace user mentions with user name in body text", async () => {
+        it("Should replace user mentions with user name in body", async () => {
             const messageComposerState = `<a href="https://matrix.to/#/@test_user:element.io" contenteditable="false" data-mention-type="user" style="some styling">a test user</a> `;
 
             const content = await createMessageContent(messageComposerState, false, { permalinkCreator });
@@ -173,13 +173,13 @@ describe("createMessageContent", () => {
             expect(content).toMatchObject({ body: "a test user " });
         });
 
-        it("Should strip attributges from user mentions in formatted_body", async () => {
-            const messageComposerState = `<a href="https://matrix.to/#/@test_user:element.io" contenteditable="false" data-mention-type="user" style="some styling">a test user</a> `;
+        it("Should replace room mentions with room mxid in body", async () => {
+            const messageComposerState = `<a href="https://matrix.to/#/#test_room:element.io" contenteditable="false" data-mention-type="room" style="some styling">a test room</a> `;
 
             const content = await createMessageContent(messageComposerState, false, { permalinkCreator });
 
             expect(content).toMatchObject({
-                formatted_body: `<a href="https://matrix.to/#/@test_user:element.io">a test user</a> `,
+                body: "#test_room:element.io ",
             });
         });
     });
