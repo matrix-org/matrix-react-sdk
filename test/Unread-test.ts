@@ -496,7 +496,7 @@ describe("Unread", () => {
 
             const { thread } = mkThread({ room, client, authorId: myId, participantUserIds: [aliceId] });
 
-            expect(thread.replyToEvent.getTs()).toBeLessThan(
+            expect(thread.replyToEvent!.getTs()).toBeLessThan(
                 receipt.getContent()[event.getId()!][ReceiptType.Read][myId].ts,
             );
             expect(doesRoomOrThreadHaveUnreadMessages(thread)).toBe(false);
