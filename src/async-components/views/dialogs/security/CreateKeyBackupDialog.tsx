@@ -90,7 +90,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             // delete the version, disable backup, or do nothing?  If we just
             // disable without deleting, we'll enable on next app reload since
             // it is trusted.
-            if (!!info?.version) {
+            if (info?.version) {
                 cli.deleteKeyBackupVersion(info.version);
             }
             this.setState({
