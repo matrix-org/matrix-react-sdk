@@ -259,7 +259,7 @@ describe("TimelinePanel", () => {
                 setUpTimelineSet();
             });
 
-            describe("and receving an event", () => {
+            describe("and receiving an event", () => {
                 beforeEach(async () => {
                     await renderTimelinePanel();
                     timelineSet.addLiveEvent(ev1, {});
