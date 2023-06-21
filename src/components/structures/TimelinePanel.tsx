@@ -1393,7 +1393,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
     /*
      * Dismiss the read marker if any or mark the entire room as read if none
      */
-    public dismissReadMarkerOrMarkAsRead = async (): Promise<void> => {
+    public dismissAnyReadMarkerOrMarkAsRead = async (): Promise<void> => {
         const client = MatrixClientPeg.get();
         // if no client or client is guest don't send RR or RM
         if (!client || client.isGuest()) {

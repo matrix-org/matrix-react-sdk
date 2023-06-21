@@ -1048,7 +1048,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         const action = getKeyBindingsManager().getRoomAction(ev);
         switch (action) {
             case KeyBindingAction.DismissReadMarker:
-                this.messagePanel?.dismissReadMarkerOrMarkAsRead();
+                this.messagePanel?.dismissAnyReadMarkerOrMarkAsRead();
                 break;
             case KeyBindingAction.JumpToOldestUnread:
                 this.jumpToReadMarker();
