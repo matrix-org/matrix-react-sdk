@@ -119,3 +119,24 @@ export function logIntoElement(homeserverUrl: string, username: string, password
     cy.findByPlaceholderText("Password").type(password);
     cy.findByRole("button", { name: "Sign in" }).click();
 }
+
+/**
+ * Given a VerificationRequest in a bot client, add cypress commands to:
+ *   - wait for the bot to receive a 'verify by emoji' notification
+ *   - check that the bot sees the same emoji as the application
+ *
+ * @param botVerificationRequest - a verification request in a bot client
+ */
+export function doTwoWaySasVerification(botVerificationRequest: VerificationRequest): void {
+    // on the bot side, wait for the emojis, confirm they match, and return them
+    const emojiPromise = handleVerificationRequest(botVerificationRequest);
+
+    // then, check that our application shows an emoji panel with the same emojis.
+    cy.wrap(emojiPromise).then((emojis: EmojiMapping[]) => {
+        cy.get(".mx_VerificationShowSas_emojiSas_block").then((emojiBlocks) => {
+            emojis.forEach((emoji: EmojiMapping, index: number) => {
+                expect(emojiBlocks[index].textContent.toLowerCase()).to.eq(emoji[0] + emoji[1]);
+            });
+        });
+    });
+}
