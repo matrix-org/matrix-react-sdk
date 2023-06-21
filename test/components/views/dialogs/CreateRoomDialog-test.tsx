@@ -201,7 +201,6 @@ describe("<CreateRoomDialog />", () => {
             fireEvent.click(screen.getByText("Create room"));
             await flushPromises();
 
-            // didn't submit
             expect(onFinished).toHaveBeenCalledWith(true, {
                 createOpts: {
                     name: roomName,

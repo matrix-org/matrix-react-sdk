@@ -190,7 +190,6 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
     };
 
     private onAliasChange = (alias: string): void => {
-        console.log("here", alias);
         this.setState({ alias });
     };
 
