@@ -20,7 +20,7 @@ import { IContent, IEventRelation, MatrixEvent, MsgType } from "matrix-js-sdk/sr
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { parsePermalink, RoomPermalinkCreator } from "../../../../../utils/permalinks/Permalinks";
 import { addReplyToMessageContent } from "../../../../../utils/Reply";
-import { isNotNull, isNotUndefined } from "../../../../../Typeguards";
+import { isNotNull } from "../../../../../Typeguards";
 
 export const EMOTE_PREFIX = "/me ";
 
