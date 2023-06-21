@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, RenderResult, screen } from "@testing-library/react";
+import { fireEvent, render, RenderResult, screen, waitFor } from "@testing-library/react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
@@ -25,13 +25,19 @@ import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 import EmoteRoomSettingsTab from "../../../../../../src/components/views/settings/tabs/room/EmoteSettingsTab";
 import { mkStubRoom, withClientContextRenderOptions, stubClient } from "../../../../../test-utils";
 import { MatrixClientPeg } from "../../../../../../src/MatrixClientPeg";
+import { uploadFile } from "../../../../../../src/ContentMessages";
+
+jest.mock("../../../../../../src/ContentMessages", () => ({
+    uploadFile: jest.fn(),
+}));
 
 describe("EmoteSettingsTab", () => {
     const EMOTES_STATE = new UnstableValue("org.matrix.msc3892.emotes", "m.room.emotes");
+    const EMOTES_COMP = new UnstableValue("im.ponies.room_emotes", "m.room.room_emotes");
     const roomId = "!room:example.com";
     let cli: MatrixClient;
     let room: Room;
-
+    let newemotefile: File;
     const renderTab = (propRoom: Room = room): RenderResult => {
         return render(<EmoteRoomSettingsTab roomId={roomId} />, withClientContextRenderOptions(cli));
     };
@@ -40,6 +46,10 @@ describe("EmoteSettingsTab", () => {
         stubClient();
         cli = MatrixClientPeg.safeGet();
         room = mkStubRoom(roomId, "test room", cli);
+        newemotefile = new File(["(⌐□_□)"], "coolnewemote.png", { type: "image/png" });
+        mocked(uploadFile).mockResolvedValue({
+            url: "http://this.is.a.url/server/custom-emote-123.png",
+        });
     });
 
     it("should allow an Admin to upload emotes", () => {
@@ -144,7 +154,7 @@ describe("EmoteSettingsTab", () => {
 
         const tab = renderTab();
 
-        fireEvent.change(tab.container.querySelector("input.mx_EmoteSettings_existingEmoteCode"), {
+        fireEvent.change(tab.container.querySelector("input.mx_EmoteSettings_existingEmoteCode")!, {
             target: { value: "changed" },
         });
         fireEvent.click(screen.getByText("Save"));
@@ -152,6 +162,168 @@ describe("EmoteSettingsTab", () => {
             roomId,
             EMOTES_STATE.name,
             { changed: "http://this.is.a.url/server/custom-emote-123.png" },
+            "",
+        );
+    });
+
+    it("should save emote deletion", () => {
+        mocked(cli.getRoom).mockReturnValue(room);
+        mocked(cli.isRoomEncrypted).mockReturnValue(false);
+        // @ts-ignore - mocked doesn't support overloads properly
+        mocked(room.currentState.getStateEvents).mockImplementation((type, key) => {
+            if (key === undefined) return [] as MatrixEvent[];
+            if (type === EMOTES_STATE.name) {
+                return new MatrixEvent({
+                    sender: "@sender:server",
+                    room_id: roomId,
+                    type: EMOTES_STATE.name,
+                    state_key: "",
+                    content: {
+                        testEmote: "http://this.is.a.url/server/custom-emote-123.png",
+                    },
+                });
+            }
+            return null;
+        });
+        renderTab();
+        fireEvent.click(screen.getByText("Delete"));
+        fireEvent.click(screen.getByText("Save"));
+        expect(cli.sendStateEvent).toHaveBeenCalledWith(roomId, EMOTES_STATE.name, {}, "");
+    });
+
+    it("should save new emotes", async () => {
+        mocked(cli.getRoom).mockReturnValue(room);
+        mocked(cli.isRoomEncrypted).mockReturnValue(false);
+        const tab = renderTab();
+
+        fireEvent.click(screen.getByText("Upload Emote"));
+        await waitFor(() =>
+            fireEvent.change(tab.container.querySelector("input.mx_EmoteSettings_emoteUpload")!, {
+                target: { files: [newemotefile] },
+            }),
+        );
+        fireEvent.click(screen.getByText("Save"));
+        await new Promise(process.nextTick);
+        expect(cli.sendStateEvent).toHaveBeenCalledWith(
+            roomId,
+            EMOTES_STATE.name,
+            { coolnewemote: "http://this.is.a.url/server/custom-emote-123.png" },
+            "",
+        );
+    });
+
+    it("should enable compatibility", async () => {
+        mocked(cli.getRoom).mockReturnValue(room);
+        mocked(cli.isRoomEncrypted).mockReturnValue(false);
+        // @ts-ignore - mocked doesn't support overloads properly
+        mocked(room.currentState.getStateEvents).mockImplementation((type, key) => {
+            if (key === undefined) return [] as MatrixEvent[];
+            if (type === EMOTES_STATE.name) {
+                return new MatrixEvent({
+                    sender: "@sender:server",
+                    room_id: roomId,
+                    type: EMOTES_STATE.name,
+                    state_key: "",
+                    content: {
+                        testEmote: "http://this.is.a.url/server/custom-emote-123.png",
+                    },
+                });
+            }
+            return null;
+        });
+
+        const tab = renderTab();
+        fireEvent.click(tab.container.querySelector("div.mx_ToggleSwitch")!);
+        await new Promise(process.nextTick);
+        expect(cli.sendStateEvent).toHaveBeenCalledWith(
+            roomId,
+            EMOTES_COMP.name,
+            {
+                images: {
+                    testEmote: {
+                        url: "http://this.is.a.url/server/custom-emote-123.png",
+                    },
+                },
+            },
+            "",
+        );
+    });
+
+    it("should save edits to emotes in compatibility", async () => {
+        mocked(cli.getRoom).mockReturnValue(room);
+        mocked(cli.isRoomEncrypted).mockReturnValue(false);
+        // @ts-ignore - mocked doesn't support overloads properly
+        mocked(room.currentState.getStateEvents).mockImplementation((type, key) => {
+            if (key === undefined) return [] as MatrixEvent[];
+            if (type === EMOTES_STATE.name) {
+                return new MatrixEvent({
+                    sender: "@sender:server",
+                    room_id: roomId,
+                    type: EMOTES_STATE.name,
+                    state_key: "",
+                    content: {
+                        testEmote: "http://this.is.a.url/server/custom-emote-123.png",
+                    },
+                });
+            }
+            if (type === EMOTES_COMP.name) {
+                return new MatrixEvent({
+                    sender: "@sender:server",
+                    room_id: roomId,
+                    type: EMOTES_STATE.name,
+                    state_key: "",
+                    content: {
+                        images: {
+                            testEmote: {
+                                url: "http://this.is.a.url/server/custom-emote-123.png",
+                            },
+                        },
+                    },
+                });
+            }
+            return null;
+        });
+
+        const tab = renderTab();
+        fireEvent.click(tab.container.querySelector("div.mx_ToggleSwitch")!);
+        fireEvent.change(tab.container.querySelector("input.mx_EmoteSettings_existingEmoteCode")!, {
+            target: { value: "changed" },
+        });
+        fireEvent.click(screen.getByText("Save"));
+        await new Promise(process.nextTick);
+        expect(cli.sendStateEvent).toHaveBeenLastCalledWith(
+            roomId,
+            EMOTES_COMP.name,
+            {
+                images: {
+                    changed: {
+                        url: "http://this.is.a.url/server/custom-emote-123.png",
+                    },
+                },
+            },
+            "",
+        );
+    });
+
+    it("should save new emotes in compatibility", async () => {
+        mocked(cli.getRoom).mockReturnValue(room);
+        mocked(cli.isRoomEncrypted).mockReturnValue(false);
+        // @ts-ignore - mocked doesn't support overloads properly
+        const tab = renderTab();
+        fireEvent.click(tab.container.querySelector("div.mx_ToggleSwitch")!);
+        fireEvent.click(screen.getByText("Upload Emote"));
+        await waitFor(() =>
+            fireEvent.change(tab.container.querySelector("input.mx_EmoteSettings_emoteUpload")!, {
+                target: { files: [newemotefile] },
+            }),
+        );
+        fireEvent.click(screen.getByText("Save"));
+        await new Promise(process.nextTick);
+        await new Promise(process.nextTick);
+        expect(cli.sendStateEvent).toHaveBeenLastCalledWith(
+            roomId,
+            EMOTES_COMP.name,
+            { images: { coolnewemote: { url: "http://this.is.a.url/server/custom-emote-123.png" } } },
             "",
         );
     });

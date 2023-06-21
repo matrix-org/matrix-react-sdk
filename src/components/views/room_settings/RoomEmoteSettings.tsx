@@ -226,7 +226,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             }
             newState.value = value;
             await client.sendStateEvent(this.props.roomId, EMOTES_STATE.name, emotesMxcs, "");
-
+            this.imagePack = { images: {} };
             for (const [key, val] of newPack) {
                 this.imagePack["images"][key] = val;
             }
@@ -363,7 +363,9 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
 
         const existingEmotes: Array<JSX.Element> = [];
         if (this.state.emotes) {
-            for (const emotecode of Array.from(this.state.emotes.keys()).sort()) {
+            for (const emotecode of Array.from(this.state.emotes.keys()).sort(function (a, b) {
+                return a.localeCompare(b);
+            })) {
                 existingEmotes.push(
                     <li className="mx_EmoteSettings_addEmoteField">
                         <input
