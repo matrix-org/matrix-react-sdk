@@ -94,8 +94,8 @@ export async function createMessageContent(
     }
 
     // if we're editing rich text, the message content is pure html
-    // BUT if we're not, the message content will be plain text
-    const body = isHTML ? await richToPlain(message) : convertMdMessageToMatrixMessage(message);
+    // BUT if we're not, the message content will be plain text where we need to convert the mentions
+    const body = isHTML ? await richToPlain(message) : convertPlainTextToBody(message);
     const bodyPrefix = (isReplyAndEditing && getTextReplyFallback(editedEvent)) || "";
     const formattedBodyPrefix = (isReplyAndEditing && getHtmlReplyFallback(editedEvent)) || "";
 
@@ -107,7 +107,11 @@ export async function createMessageContent(
     // TODO markdown support
 
     const isMarkdownEnabled = SettingsStore.getValue<boolean>("MessageComposerInput.useMarkdown");
-    const formattedBody = isHTML ? message : isMarkdownEnabled ? await plainToRich(message) : null;
+    const formattedBody = isHTML
+        ? message
+        : isMarkdownEnabled
+        ? await plainToRich(convertPlainTextToFormattedBody(message))
+        : null;
 
     if (formattedBody) {
         content.format = "org.matrix.custom.html";
@@ -148,6 +152,54 @@ export async function createMessageContent(
  * @param content - the output from the `MessageComposer` state when in plain text mode
  * @returns - a string formatted with the mentions replaced as necessary
  */
-function convertMdMessageToMatrixMessage(content: string): string {
-    return content;
+function convertPlainTextToBody(content: string): string {
+    const d = new DOMParser().parseFromString(content, "text/html");
+    const mentions = Array.from(d.querySelectorAll("a[data-mention-type]"));
+
+    mentions.forEach((mention) => {
+        const mentionType = mention.getAttribute("data-mention-type");
+        switch (mentionType) {
+            case "at-room": {
+                mention.replaceWith("@room");
+                break;
+            }
+            case "user": {
+                const innerText = mention.innerHTML;
+                mention.replaceWith(innerText);
+                break;
+            }
+            default:
+                break;
+        }
+    });
+
+    return d.body.innerHTML;
+}
+
+/**
+ * Strip the attributes used for display of mentions in the plain text editor from the message output
+ * or replace at-room mentions with plain text
+ *
+ * @param content - the output from the `MessageComposer` state when in plain text mode
+ * @returns - a string of HTML where the mentions only contain an href attribute (or `@room` text for the
+ * at-room special case)
+ */
+function convertPlainTextToFormattedBody(content: string): string {
+    const d = new DOMParser().parseFromString(content, "text/html");
+    const mentions = Array.from(d.querySelectorAll("a[data-mention-type]"));
+
+    mentions.forEach((mention) => {
+        const mentionType = mention.getAttribute("data-mention-type");
+        switch (mentionType) {
+            case "at-room": {
+                console.log("here");
+                mention.replaceWith("@room");
+                break;
+            }
+            default:
+                break;
+        }
+    });
+
+    return d.body.innerHTML;
 }
