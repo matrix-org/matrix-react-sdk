@@ -225,11 +225,11 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         }
         this.haveCheckedDevice = true;
 
-        const userDevices = await client.getCrypto()?.getUserDeviceInfo([userId]);
-        if (!userDevices || !userDevices.get(userId)) {
-            return;
-        }
-        this.setState({ otherDeviceDetails: userDevices.get(userId).get(deviceId) });
+        const deviceMap = await client.getCrypto()?.getUserDeviceInfo([userId]);
+        if (!deviceMap) return;
+        const userDevices = deviceMap.get(userId);
+        if (!userDevices) return;
+        this.setState({ otherDeviceDetails: userDevices.get(deviceId) });
     }
 
     private renderQRReciprocatePhase(): JSX.Element {

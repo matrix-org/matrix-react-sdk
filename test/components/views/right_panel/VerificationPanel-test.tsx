@@ -142,12 +142,12 @@ describe("<VerificationPanel />", () => {
                 const otherDeviceDetails = new Device({
                     algorithms: [],
                     deviceId: "other_device",
-                    keys: undefined,
+                    keys: new Map(),
                     userId: "",
                     displayName: "my other device",
                 });
 
-                mocked(client.getCrypto()).getUserDeviceInfo.mockResolvedValue(
+                mocked(client.getCrypto()!).getUserDeviceInfo.mockResolvedValue(
                     new Map([[client.getSafeUserId(), new Map([["other_device", otherDeviceDetails]])]]),
                 );
             });
