@@ -52,7 +52,7 @@ describe("Login", function () {
         SdkConfig.put({
             brand: "test-brand",
             disable_custom_urls: true,
-            oidc_static_clients: oidcStaticClientsConfig,
+            oidc_static_client_ids: oidcStaticClientsConfig,
         });
         mockClient.login.mockClear().mockResolvedValue({});
         mockClient.loginFlows.mockClear().mockResolvedValue({ flows: [{ type: "m.login.password" }] });
