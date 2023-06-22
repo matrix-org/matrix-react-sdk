@@ -60,10 +60,10 @@ describe("<Notifications />", () => {
         cli.supportsIntentionalMentions = jest.fn(cli.supportsIntentionalMentions).mockReturnValue(false);
         cli.setPushRuleEnabled = jest.fn(cli.setPushRuleEnabled);
         cli.setPushRuleActions = jest.fn(cli.setPushRuleActions);
-        cli.addPushRule = jest.fn(cli.addPushRule).mockResolvedValue(undefined);
-        cli.deletePushRule = jest.fn(cli.deletePushRule).mockResolvedValue(undefined);
-        cli.removePusher = jest.fn(cli.removePusher).mockResolvedValue(undefined);
-        cli.setPusher = jest.fn(cli.setPusher).mockResolvedValue(undefined);
+        cli.addPushRule = jest.fn(cli.addPushRule).mockResolvedValue({});
+        cli.deletePushRule = jest.fn(cli.deletePushRule).mockResolvedValue({});
+        cli.removePusher = jest.fn(cli.removePusher).mockResolvedValue({});
+        cli.setPusher = jest.fn(cli.setPusher).mockResolvedValue({});
     });
 
     it("matches the snapshot", async () => {
