@@ -31,6 +31,10 @@ import defaultDispatcher from "../../../../../dispatcher/dispatcher";
 import { Action } from "../../../../../dispatcher/actions";
 import { parsePermalink } from "../../../../../utils/permalinks/Permalinks";
 import { isNotNull } from "../../../../../Typeguards";
+import { useMatrixClientContext } from "../../../../../contexts/MatrixClientContext";
+import { ICompletion } from "../../../../../autocomplete/Autocompleter";
+import { getMentionAttributes } from "../utils/autocomplete";
+import { findRoom } from "../../../../../hooks/usePermalinkTargetRoom";
 
 interface WysiwygComposerProps {
     disabled?: boolean;
@@ -58,6 +62,8 @@ export const WysiwygComposer = memo(function WysiwygComposer({
     eventRelation,
 }: WysiwygComposerProps) {
     const { room } = useRoomContext();
+    const client = useMatrixClientContext();
+
     const autocompleteRef = useRef<Autocomplete | null>(null);
 
     const inputEventProcessor = useInputEventProcessor(onSend, autocompleteRef, initialContent, eventRelation);
@@ -96,15 +102,57 @@ export const WysiwygComposer = memo(function WysiwygComposer({
             }
         }
 
-        const mentions: NodeList | undefined = ref.current?.querySelectorAll("a[data-mention-type]");
-        if (mentions) {
-            mentions.forEach((mention) => mention.addEventListener("click", handleClick));
-        }
+        const mentions = ref.current ? Array.from(ref.current.querySelectorAll("a[data-mention-type]")) : [];
+
+        mentions.forEach((mention) => {
+            // we always need to add the click handlers
+            mention.addEventListener("click", handleClick);
+
+            // we might need to add the style attribute for the case where we are editing a message in the timeline
+            if (!mention.hasAttribute("style")) {
+                const type = mention.getAttribute("data-mention-type");
+                const href = mention.getAttribute("href");
+
+                let style = "";
+                switch (type) {
+                    case "user": {
+                        const { userId: completionId } = parsePermalink(href);
+                        const attributes = getMentionAttributes({ type, completionId } as ICompletion, client, room);
+                        style = attributes.get("style");
+
+                        break;
+                    }
+                    case "room": {
+                        // for a room, first try and find it, need it's id - this is going to have to be async
+                        const { roomIdOrAlias } = parsePermalink(href);
+                        const foundRoom = findRoom(roomIdOrAlias);
+                        const attributes = getMentionAttributes(
+                            { type, completion: foundRoom.name, completionId: foundRoom.roomId } as ICompletion,
+                            client,
+                            room,
+                        );
+
+                        // special case for rooms, we also need to amend their inner html
+                        mention.innerHTML = foundRoom.name;
+                        style = attributes.get("style");
+                        mention.setAttribute("style", style);
+                        break;
+                    }
+                    case "at-room": {
+                        const attributes = getMentionAttributes({ type } as ICompletion, client, room);
+                        const style = attributes.get("style");
+                        mention.setAttribute("style", style);
+                        break;
+                    }
+                }
+                mention.setAttribute("style", style);
+            }
+        });
 
         return () => {
-            if (mentions) mentions.forEach((mention) => mention.removeEventListener("click", handleClick));
+            mentions.forEach((mention) => mention.removeEventListener("click", handleClick));
         };
-    }, [ref, room, content]);
+    }, [ref, room, content, client]);
 
     return (
         <div
