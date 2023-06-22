@@ -520,6 +520,19 @@ describe("<MatrixChat />", () => {
                 // Complete security begin screen is rendered
                 expect(screen.getByText("Unable to verify this device")).toBeInTheDocument();
             });
+
+            it("should setup e2e when server supports cross signing", async () => {
+                loginClient.doesServerSupportUnstableFeature.mockResolvedValue(true);
+
+                await getComponentAndLogin();
+
+                expect(loginClient.userHasCrossSigningKeys).toHaveBeenCalled();
+
+                await flushPromises();
+
+                // set up keys screen is rendered
+                expect(screen.getByText("Setting up keys")).toBeInTheDocument();
+            });
         });
     });
 });
