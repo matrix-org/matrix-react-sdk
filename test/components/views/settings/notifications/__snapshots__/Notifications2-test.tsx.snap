@@ -703,7 +703,9 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
             class="mx_SettingsSubsection_content"
           >
             <div
-              class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_danger_outline"
+              aria-disabled="true"
+              class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_danger_outline mx_AccessibleButton_disabled"
+              disabled=""
               role="button"
               tabindex="0"
             >
