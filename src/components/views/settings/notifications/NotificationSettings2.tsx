@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { useState } from "react";
 
 import NewAndImprovedIcon from "../../../../../res/img/element-icons/new-and-improved.svg";
 import { useMatrixClientContext } from "../../../../contexts/MatrixClientContext";
@@ -76,6 +76,11 @@ function boldText(text: string): JSX.Element {
     return <strong>{text}</strong>;
 }
 
+function useHasUnreadNotifications(): boolean {
+    const cli = useMatrixClientContext();
+    return cli.getRooms().some(room => room.getUnreadNotificationCount() > 0);
+}
+
 export default function NotificationSettings2(): JSX.Element {
     const cli = useMatrixClientContext();
 
@@ -87,6 +92,9 @@ export default function NotificationSettings2(): JSX.Element {
 
     const disabled = model === null || hasPendingChanges;
     const settings = model ?? DefaultNotificationSettings;
+
+    const [updatingUnread, setUpdatingUnread] = useState<boolean>(false);
+    const hasUnreadNotifications = useHasUnreadNotifications();
 
     return (
         <div className="mx_NotificationSettings2">
@@ -356,14 +364,19 @@ export default function NotificationSettings2(): JSX.Element {
                 </SettingsSubsection>
                 <NotificationPusherSettings />
                 <SettingsSubsection heading={_t("Quick Actions")}>
-                    <AccessibleButton
-                        kind="primary_outline"
-                        onClick={async () => {
-                            await clearAllNotifications(cli);
-                        }}
-                    >
-                        {_t("Mark all messages as read")}
-                    </AccessibleButton>
+                    {hasUnreadNotifications && (
+                        <AccessibleButton
+                            kind="primary_outline"
+                            disabled={updatingUnread}
+                            onClick={async () => {
+                                setUpdatingUnread(true);
+                                await clearAllNotifications(cli);
+                                setUpdatingUnread(false);
+                            }}
+                        >
+                            {_t("Mark all messages as read")}
+                        </AccessibleButton>
+                    )}
                     <AccessibleButton
                         kind="danger_outline"
                         onClick={() => {
