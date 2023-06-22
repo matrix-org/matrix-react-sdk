@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { memo, MutableRefObject, ReactNode, useEffect, useRef } from "react";
 import { IEventRelation } from "matrix-js-sdk/src/matrix";
-import { useWysiwyg, FormattingFunctions, AllowedMentionAttributes } from "@matrix-org/matrix-wysiwyg";
+import { useWysiwyg, FormattingFunctions } from "@matrix-org/matrix-wysiwyg";
 import classNames from "classnames";
 
 import Autocomplete from "../../Autocomplete";
@@ -30,13 +30,9 @@ import { useRoomContext } from "../../../../../contexts/RoomContext";
 import defaultDispatcher from "../../../../../dispatcher/dispatcher";
 import { Action } from "../../../../../dispatcher/actions";
 import { parsePermalink } from "../../../../../utils/permalinks/Permalinks";
-import { isNotNull } from "../../../../../Typeguards";
+import { isNotNull, isNotUndefined } from "../../../../../Typeguards";
 import { useMatrixClientContext } from "../../../../../contexts/MatrixClientContext";
-import { ICompletion } from "../../../../../autocomplete/Autocompleter";
-import { getMentionAttributes } from "../utils/autocomplete";
-import { findRoom } from "../../../../../hooks/usePermalinkTargetRoom";
-
-const STYLE = "style";
+import { getStyleAttributeForMention } from "../utils/mentions";
 
 interface WysiwygComposerProps {
     disabled?: boolean;
@@ -107,40 +103,14 @@ export const WysiwygComposer = memo(function WysiwygComposer({
         const mentions = ref.current ? Array.from(ref.current.querySelectorAll("a[data-mention-type]")) : [];
 
         mentions.forEach((mention) => {
-            // we always need to add the click handlers
+            // Click handlers are always added
             mention.addEventListener("click", handleClick);
 
-            // we might need to add the style attribute for the case where we are editing a message in the timeline
-            if (!mention.hasAttribute(STYLE)) {
-                const type = mention.getAttribute("data-mention-type");
-                const href = mention.getAttribute("href");
-
-                let attributes: AllowedMentionAttributes;
-                switch (type) {
-                    case "user": {
-                        const { userId: completionId } = parsePermalink(href);
-                        attributes = getMentionAttributes({ type, completionId } as ICompletion, client, room);
-                        break;
-                    }
-                    case "room": {
-                        // for a room, first try and find it, need it's id - this is going to have to be async
-                        const { roomIdOrAlias } = parsePermalink(href);
-                        const foundRoom = findRoom(roomIdOrAlias);
-                        attributes = getMentionAttributes(
-                            { type, completion: foundRoom.name, completionId: foundRoom.roomId } as ICompletion,
-                            client,
-                            room,
-                        );
-                        break;
-                    }
-                    case "at-room": {
-                        attributes = getMentionAttributes({ type } as ICompletion, client, room);
-                        break;
-                    }
-                }
-
-                if (attributes.has(STYLE)) {
-                    mention.setAttribute(STYLE, attributes.get(STYLE));
+            // Style attributes are only added when necessary, which occurs when editing a message from the timeline
+            if (isNotUndefined(room)) {
+                const styleAttribute = getStyleAttributeForMention(mention, client, room);
+                if (isNotNull(styleAttribute)) {
+                    mention.setAttribute("style", styleAttribute);
                 }
             }
         });
