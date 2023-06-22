@@ -14,12 +14,21 @@ limitations under the License.
 
 // Fake random strings to give a predictable snapshot for IDs
 // Simple Xorshift random number generator with predictable ID
-export function predictableRandom(): () => number {
-    let random = 314159265;
-    return (): number => {
-        random ^= random << 13;
-        random ^= random >> 17;
-        random ^= random << 5;
-        return random / 1073741823;
-    };
+export class PredictableRandom {
+    private state: number;
+
+    constructor() {
+        this.state = 314159265;
+    }
+
+    get(): number {
+        this.state ^= this.state << 13;
+        this.state ^= this.state >> 17;
+        this.state ^= this.state << 5;
+        return this.state / 1073741823;
+    }
+
+    reset(): void {
+        this.state = 314159265;
+    }
 }

@@ -340,6 +340,7 @@ export default function NotificationSettings2(): JSX.Element {
                         }}
                     />
                     <TagComposer
+                        id="mx_NotificationSettings2_Keywords"
                         tags={model?.keywords ?? []}
                         disabled={disabled}
                         onAdd={(keyword) => {

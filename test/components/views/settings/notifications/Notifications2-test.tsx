@@ -22,10 +22,11 @@ import NotificationSettings2 from "../../../../../src/components/views/settings/
 import MatrixClientContext from "../../../../../src/contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../../../src/MatrixClientPeg";
 import { StandardActions } from "../../../../../src/notifications/StandardActions";
-import { predictableRandom } from "../../../../predictableRandom";
+import { PredictableRandom } from "../../../../predictableRandom";
 import { mkMessage, stubClient } from "../../../../test-utils";
+import Mock = jest.Mock;
 
-const mockRandom = predictableRandom();
+const mockRandom = new PredictableRandom();
 
 // Fake random strings to give a predictable snapshot for IDs
 jest.mock("matrix-js-sdk/src/randomstring", () => ({
@@ -34,7 +35,7 @@ jest.mock("matrix-js-sdk/src/randomstring", () => ({
         let ret = "";
 
         for (let i = 0; i < len; ++i) {
-            ret += chars.charAt(Math.floor(mockRandom() * chars.length));
+            ret += chars.charAt(Math.floor(mockRandom.get() * chars.length));
         }
 
         return ret;
@@ -42,6 +43,19 @@ jest.mock("matrix-js-sdk/src/randomstring", () => ({
 }));
 
 const waitForUpdate = (): Promise<void> => new Promise((resolve) => setTimeout(resolve));
+
+const labelGlobalMute = "Enable notifications for this account";
+const labelLevelAllMessage = "All messages";
+const labelSoundPeople = "People";
+const labelSoundMentions = "Mentions and Keywords";
+const labelSoundCalls = "Audio and Video calls";
+const labelActivityInvites = "Invited to a room";
+const labelActivityStatus = "New room activity, upgrades and status messages occur";
+const labelActivityBots = "Messages are sent by a bot";
+const labelMentionUser = "Notify when someone mentions using @displayname or @mxid";
+const labelMentionRoom = "Notify when someone mentions using @room";
+const labelMentionKeyword =
+    "Notify when someone uses a keyword" + "Enter keywords here, or use for spelling variations or nicknames";
 
 const keywords = ["justjann3", "justj4nn3", "justj4nne", "Janne", "J4nne", "Jann3", "jann3", "j4nne", "janne"];
 
@@ -64,6 +78,8 @@ describe("<Notifications />", () => {
         cli.deletePushRule = jest.fn(cli.deletePushRule).mockResolvedValue({});
         cli.removePusher = jest.fn(cli.removePusher).mockResolvedValue({});
         cli.setPusher = jest.fn(cli.setPusher).mockResolvedValue({});
+
+        mockRandom.reset();
     });
 
     it("matches the snapshot", async () => {
@@ -101,9 +117,69 @@ describe("<Notifications />", () => {
         expect(screen.container).toMatchSnapshot();
     });
 
+    it("correctly handles the loading/disabled state", async () => {
+        (cli.getPushRules as Mock).mockReturnValue(new Promise<IPushRules>(() => {}));
+
+        const user = userEvent.setup();
+        const screen = render(
+            <MatrixClientContext.Provider value={cli}>
+                <NotificationSettings2 />
+            </MatrixClientContext.Provider>,
+        );
+        await act(async () => {
+            await waitForUpdate();
+            expect(screen.container).toMatchSnapshot();
+
+            const globalMute = screen.getByLabelText(labelGlobalMute);
+            expect(globalMute).toHaveAttribute("aria-disabled", "true");
+
+            const levelAllMessages = screen.getByLabelText(labelLevelAllMessage);
+            expect(levelAllMessages).toBeDisabled();
+
+            const soundPeople = screen.getByLabelText(labelSoundPeople);
+            expect(soundPeople).toBeDisabled();
+            const soundMentions = screen.getByLabelText(labelSoundMentions);
+            expect(soundMentions).toBeDisabled();
+            const soundCalls = screen.getByLabelText(labelSoundCalls);
+            expect(soundCalls).toBeDisabled();
+
+            const activityInvites = screen.getByLabelText(labelActivityInvites);
+            expect(activityInvites).toBeDisabled();
+            const activityStatus = screen.getByLabelText(labelActivityStatus);
+            expect(activityStatus).toBeDisabled();
+            const activityBots = screen.getByLabelText(labelActivityBots);
+            expect(activityBots).toBeDisabled();
+
+            const mentionUser = screen.getByLabelText(labelMentionUser);
+            expect(mentionUser).toBeDisabled();
+            const mentionRoom = screen.getByLabelText(labelMentionRoom);
+            expect(mentionRoom).toBeDisabled();
+            const mentionKeyword = screen.getByLabelText(labelMentionKeyword);
+            expect(mentionKeyword).toBeDisabled();
+            await Promise.all([
+                user.click(globalMute),
+                user.click(levelAllMessages),
+                user.click(soundPeople),
+                user.click(soundMentions),
+                user.click(soundCalls),
+                user.click(activityInvites),
+                user.click(activityStatus),
+                user.click(activityBots),
+                user.click(mentionUser),
+                user.click(mentionRoom),
+                user.click(mentionKeyword),
+            ]);
+        });
+
+        expect(cli.setPushRuleActions).not.toHaveBeenCalled();
+        expect(cli.setPushRuleEnabled).not.toHaveBeenCalled();
+        expect(cli.addPushRule).not.toHaveBeenCalled();
+        expect(cli.deletePushRule).not.toHaveBeenCalled();
+    });
+
     describe("form elements actually toggle the model value", () => {
         it("global mute", async () => {
-            const label = "Enable notifications for this account";
+            const label = labelGlobalMute;
 
             const user = userEvent.setup();
             const screen = render(
@@ -121,7 +197,7 @@ describe("<Notifications />", () => {
         });
 
         it("notification level", async () => {
-            const label = "All messages";
+            const label = labelLevelAllMessage;
 
             const user = userEvent.setup();
             const screen = render(
@@ -146,7 +222,7 @@ describe("<Notifications />", () => {
 
         describe("play a sound for", () => {
             it("people", async () => {
-                const label = "People";
+                const label = labelSoundPeople;
 
                 const user = userEvent.setup();
                 const screen = render(
@@ -181,7 +257,7 @@ describe("<Notifications />", () => {
             });
 
             it("mentions", async () => {
-                const label = "Mentions and Keywords";
+                const label = labelSoundMentions;
 
                 const user = userEvent.setup();
                 const screen = render(
@@ -210,7 +286,7 @@ describe("<Notifications />", () => {
             });
 
             it("calls", async () => {
-                const label = "Audio and Video calls";
+                const label = labelSoundCalls;
 
                 const user = userEvent.setup();
                 const screen = render(
@@ -235,7 +311,7 @@ describe("<Notifications />", () => {
 
         describe("activity", () => {
             it("invite", async () => {
-                const label = "Invited to a room";
+                const label = labelActivityInvites;
 
                 const user = userEvent.setup();
                 const screen = render(
@@ -257,7 +333,7 @@ describe("<Notifications />", () => {
                 );
             });
             it("status messages", async () => {
-                const label = "New room activity, upgrades and status messages occur";
+                const label = labelActivityStatus;
 
                 const user = userEvent.setup();
                 const screen = render(
@@ -285,7 +361,7 @@ describe("<Notifications />", () => {
                 );
             });
             it("notices", async () => {
-                const label = "Messages are sent by a bot";
+                const label = labelActivityBots;
 
                 const user = userEvent.setup();
                 const screen = render(
@@ -309,7 +385,7 @@ describe("<Notifications />", () => {
         });
         describe("mentions", () => {
             it("room mentions", async () => {
-                const label = "Notify when someone mentions using @room";
+                const label = labelMentionRoom;
 
                 const user = userEvent.setup();
                 const screen = render(
@@ -331,7 +407,7 @@ describe("<Notifications />", () => {
                 );
             });
             it("user mentions", async () => {
-                const label = "Notify when someone mentions using @displayname or @mxid";
+                const label = labelMentionUser;
 
                 const user = userEvent.setup();
                 const screen = render(
@@ -359,9 +435,7 @@ describe("<Notifications />", () => {
                 );
             });
             it("keywords", async () => {
-                const label =
-                    "Notify when someone uses a keyword" +
-                    "Enter keywords here, or use for spelling variations or nicknames";
+                const label = labelMentionKeyword;
 
                 const user = userEvent.setup();
                 const screen = render(

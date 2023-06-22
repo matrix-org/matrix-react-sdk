@@ -23,6 +23,7 @@ import AccessibleButton from "./AccessibleButton";
 import { Tag } from "./Tag";
 
 interface IProps {
+    id?: string;
     tags: string[];
     onAdd: (tag: string) => void;
     onRemove: (tag: string) => void;
@@ -75,6 +76,7 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
             >
                 <form className="mx_TagComposer_input" onSubmit={this.onAdd}>
                     <Field
+                        id={this.props.id ? this.props.id + "_field" : undefined}
                         value={this.state.newTag}
                         onChange={this.onInputChange}
                         label={this.props.label || _t("Keyword")}
