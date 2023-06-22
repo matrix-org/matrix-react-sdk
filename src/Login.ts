@@ -38,9 +38,10 @@ export type ClientLoginFlow = LoginFlow | OidcNativeFlow;
 interface ILoginOptions {
     defaultDeviceDisplayName?: string;
     /**
-     * Delegated auth config from server config
-     * When prop is passed we will attempt to use delegated auth
-     * Labs flag should be checked in parent
+     * Delegated auth config from server's .well-known.
+     * 
+     * If this property is set, we will attempt an OIDC login using the delegated auth settings.
+     * The caller is responsible for checking that OIDC is enabled in the labs settings.
      */
     delegatedAuthentication?: ValidatedDelegatedAuthConfig;
 }
