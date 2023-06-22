@@ -35,7 +35,7 @@ export interface ValidatedServerConfig {
     /**
      * Config related to delegated authentication
      * Included when delegated auth is configured and valid, otherwise undefined
-     * From homeserver .well-known m.authentication, and issuer's ./well-known/openid-configuration
+     * From homeserver .well-known m.authentication, and issuer's .well-known/openid-configuration
      * Used for OIDC native flow authentication
      */
     delegatedAuthentication?: ValidatedDelegatedAuthConfig;
