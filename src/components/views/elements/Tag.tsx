@@ -14,21 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { DetailedHTMLProps, HTMLAttributes } from "react";
 
 import AccessibleButton from "./AccessibleButton";
 import { Icon as CancelRounded } from "../../../../res/img/element-icons/cancel-rounded.svg";
 
-interface IProps {
+interface IProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     icon?: () => JSX.Element;
     label: string;
     onDeleteClick?: () => void;
     disabled?: boolean;
 }
 
-export const Tag: React.FC<IProps> = ({ icon, label, onDeleteClick, disabled = false }) => {
+export const Tag: React.FC<IProps> = ({ icon, label, onDeleteClick, disabled = false, ...other }) => {
     return (
-        <div className="mx_Tag">
+        <div className="mx_Tag" {...other}>
             {icon?.()}
             {label}
             {onDeleteClick && (

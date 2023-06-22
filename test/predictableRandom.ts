@@ -16,7 +16,7 @@ limitations under the License.
 // Simple Xorshift random number generator with predictable ID
 export function predictableRandom(): () => number {
     let random = 314159265;
-    return (): number =>{
+    return (): number => {
         random ^= random << 13;
         random ^= random >> 17;
         random ^= random << 5;

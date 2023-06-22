@@ -623,9 +623,11 @@ exports[`<Notifications /> matches the snapshot 1`] = `
               </form>
               <div
                 class="mx_TagComposer_tags"
+                role="list"
               >
                 <div
                   class="mx_Tag"
+                  role="listitem"
                 >
                   justjann3
                   <div
@@ -639,6 +641,7 @@ exports[`<Notifications /> matches the snapshot 1`] = `
                 </div>
                 <div
                   class="mx_Tag"
+                  role="listitem"
                 >
                   justj4nn3
                   <div
@@ -652,6 +655,7 @@ exports[`<Notifications /> matches the snapshot 1`] = `
                 </div>
                 <div
                   class="mx_Tag"
+                  role="listitem"
                 >
                   justj4nne
                   <div
@@ -665,6 +669,7 @@ exports[`<Notifications /> matches the snapshot 1`] = `
                 </div>
                 <div
                   class="mx_Tag"
+                  role="listitem"
                 >
                   Janne
                   <div
@@ -678,6 +683,7 @@ exports[`<Notifications /> matches the snapshot 1`] = `
                 </div>
                 <div
                   class="mx_Tag"
+                  role="listitem"
                 >
                   J4nne
                   <div
@@ -691,6 +697,7 @@ exports[`<Notifications /> matches the snapshot 1`] = `
                 </div>
                 <div
                   class="mx_Tag"
+                  role="listitem"
                 >
                   Jann3
                   <div
@@ -704,6 +711,7 @@ exports[`<Notifications /> matches the snapshot 1`] = `
                 </div>
                 <div
                   class="mx_Tag"
+                  role="listitem"
                 >
                   jann3
                   <div
@@ -717,6 +725,7 @@ exports[`<Notifications /> matches the snapshot 1`] = `
                 </div>
                 <div
                   class="mx_Tag"
+                  role="listitem"
                 >
                   j4nne
                   <div
@@ -730,6 +739,7 @@ exports[`<Notifications /> matches the snapshot 1`] = `
                 </div>
                 <div
                   class="mx_Tag"
+                  role="listitem"
                 >
                   janne
                   <div

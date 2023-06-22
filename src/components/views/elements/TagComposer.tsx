@@ -86,13 +86,14 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
                         {_t("Add")}
                     </AccessibleButton>
                 </form>
-                <div className="mx_TagComposer_tags">
+                <div className="mx_TagComposer_tags" role="list">
                     {this.props.tags.map((t, i) => (
                         <Tag
                             label={t}
                             key={t}
                             onDeleteClick={this.onRemove.bind(this, t)}
                             disabled={this.props.disabled}
+                            role="listitem"
                         />
                     ))}
                 </div>

@@ -12,7 +12,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { act, findByRole, queryByRole, render, waitFor } from "@testing-library/react";
+import { act, findByRole, getByRole, queryByRole, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { IPushRules, MatrixClient, NotificationCountType, PushRuleKind, Room, RuleId } from "matrix-js-sdk/src/matrix";
@@ -43,6 +43,8 @@ jest.mock("matrix-js-sdk/src/randomstring", () => ({
 
 const waitForUpdate = (): Promise<void> => new Promise((resolve) => setTimeout(resolve));
 
+const keywords = ["justjann3", "justj4nn3", "justj4nne", "Janne", "J4nne", "Jann3", "jann3", "j4nne", "janne"];
+
 describe("<Notifications />", () => {
     let cli: MatrixClient;
     let pushRules: IPushRules;
@@ -58,8 +60,10 @@ describe("<Notifications />", () => {
         cli.supportsIntentionalMentions = jest.fn(cli.supportsIntentionalMentions).mockReturnValue(false);
         cli.setPushRuleEnabled = jest.fn(cli.setPushRuleEnabled);
         cli.setPushRuleActions = jest.fn(cli.setPushRuleActions);
-        cli.removePusher = jest.fn(cli.removePusher).mockResolvedValue({});
-        cli.setPusher = jest.fn(cli.setPusher).mockResolvedValue({});
+        cli.addPushRule = jest.fn(cli.addPushRule).mockResolvedValue(undefined);
+        cli.deletePushRule = jest.fn(cli.deletePushRule).mockResolvedValue(undefined);
+        cli.removePusher = jest.fn(cli.removePusher).mockResolvedValue(undefined);
+        cli.setPusher = jest.fn(cli.setPusher).mockResolvedValue(undefined);
     });
 
     it("matches the snapshot", async () => {
@@ -353,6 +357,78 @@ describe("<Notifications />", () => {
                     RuleId.ContainsUserName,
                     StandardActions.ACTION_DONT_NOTIFY,
                 );
+            });
+            it("keywords", async () => {
+                const label =
+                    "Notify when someone uses a keyword" +
+                    "Enter keywords here, or use for spelling variations or nicknames";
+
+                const user = userEvent.setup();
+                const screen = render(
+                    <MatrixClientContext.Provider value={cli}>
+                        <NotificationSettings2 />
+                    </MatrixClientContext.Provider>,
+                );
+                await act(waitForUpdate);
+                expect(screen.getByLabelText(label)).not.toBeDisabled();
+                await act(async () => {
+                    await user.click(screen.getByLabelText(label));
+                    await waitForUpdate();
+                });
+                for (const pattern of keywords) {
+                    expect(cli.setPushRuleEnabled).toHaveBeenCalledWith(
+                        "global",
+                        PushRuleKind.ContentSpecific,
+                        pattern,
+                        false,
+                    );
+                }
+            });
+        });
+        describe("keywords", () => {
+            it("allows adding keywords", async () => {
+                const user = userEvent.setup();
+                const screen = render(
+                    <MatrixClientContext.Provider value={cli}>
+                        <NotificationSettings2 />
+                    </MatrixClientContext.Provider>,
+                );
+                await act(waitForUpdate);
+                const inputField = screen.getByRole("textbox", { name: "Keyword" });
+                const addButton = screen.getByRole("button", { name: "Add" });
+                expect(inputField).not.toBeDisabled();
+                expect(addButton).not.toBeDisabled();
+                await act(async () => {
+                    await user.type(inputField, "testkeyword");
+                    await user.click(addButton);
+                    await waitForUpdate();
+                });
+                expect(cli.addPushRule).toHaveBeenCalledWith("global", PushRuleKind.ContentSpecific, "testkeyword", {
+                    kind: PushRuleKind.ContentSpecific,
+                    rule_id: "testkeyword",
+                    enabled: true,
+                    default: false,
+                    actions: StandardActions.ACTION_NOTIFY,
+                    pattern: "testkeyword",
+                });
+            });
+
+            it("allows deleting keywords", async () => {
+                const user = userEvent.setup();
+                const screen = render(
+                    <MatrixClientContext.Provider value={cli}>
+                        <NotificationSettings2 />
+                    </MatrixClientContext.Provider>,
+                );
+                await act(waitForUpdate);
+                const tag = screen.getByText("justj4nn3");
+                const deleteButton = getByRole(tag, "button", { name: "Remove" });
+                expect(deleteButton).not.toBeDisabled();
+                await act(async () => {
+                    await user.click(deleteButton);
+                    await waitForUpdate();
+                });
+                expect(cli.deletePushRule).toHaveBeenCalledWith("global", PushRuleKind.ContentSpecific, "justj4nn3");
             });
         });
     });
