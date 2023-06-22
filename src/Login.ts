@@ -199,6 +199,7 @@ export interface OidcNativeFlow extends ILoginFlow {
 /**
  * Finds static clientId for configured issuer, or attempts dynamic registration with the OP
  * Returns OIDC native flow when client is ready to attempt login via OIDC native flow
+ *
  * @param delegatedAuthConfig  Auth config from ValidatedServerConfig
  * @param clientName Client name to register with the OP, eg 'Element', used during client registration with OP
  * @param staticOidcClients static client config from config.json, used during client registration with OP
