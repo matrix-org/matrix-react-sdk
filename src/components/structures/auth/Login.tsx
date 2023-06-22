@@ -161,6 +161,8 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         if (
             prevProps.serverConfig.hsUrl !== this.props.serverConfig.hsUrl ||
             prevProps.serverConfig.isUrl !== this.props.serverConfig.isUrl ||
+            // delegatedAuthentication is only set by buildValidatedConfigFromDiscovery and won't be modified
+            // so shallow comparison is fine
             prevProps.serverConfig.delegatedAuthentication !== this.props.serverConfig.delegatedAuthentication
         ) {
             // Ensure that we end up actually logging in to the right place
@@ -374,6 +376,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
 
         const loginLogic = new Login(hsUrl, isUrl, fallbackHsUrl, {
             defaultDeviceDisplayName: this.props.defaultDeviceDisplayName,
+            // if native OIDC is enabled in the client pass the server's delegated auth settings
             delegatedAuthentication: this.oidcNativeFlowEnabled
                 ? this.props.serverConfig.delegatedAuthentication
                 : undefined,

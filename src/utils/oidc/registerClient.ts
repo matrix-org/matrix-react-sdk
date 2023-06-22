@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IDelegatedAuthConfig } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ValidatedIssuerConfig } from "matrix-js-sdk/src/oidc/validate";
 import { registerOidcClient } from "matrix-js-sdk/src/oidc/register";
+
+import { ValidatedDelegatedAuthConfig } from "../ValidatedServerConfig";
 
 /**
  * Get the statically configured clientId for the issuer
@@ -26,7 +26,9 @@ import { registerOidcClient } from "matrix-js-sdk/src/oidc/register";
  * @returns clientId if found, otherwise undefined
  */
 const getStaticOidcClientId = (issuer: string, staticOidcClients?: Record<string, string>): string | undefined => {
-    return staticOidcClients?.[issuer];
+    // static_oidc_clients are configured with a trailing slash
+    const issuerWithTrailingSlash = issuer.endsWith("/") ? issuer : issuer + "/";
+    return staticOidcClients?.[issuerWithTrailingSlash];
 };
 
 /**
@@ -38,10 +40,11 @@ const getStaticOidcClientId = (issuer: string, staticOidcClients?: Record<string
  * @param baseUrl URL of the home page of the Client, eg 'https://app.element.io/'
  * @param staticOidcClients static client config from config.json
  * @returns Promise<string> resolves with clientId
- * @throws if no clientId is found or registration failed
+ * @throws if no clientId is found
  */
 export const getOidcClientId = async (
-    delegatedAuthConfig: IDelegatedAuthConfig & ValidatedIssuerConfig,
+    delegatedAuthConfig: ValidatedDelegatedAuthConfig,
+    // these are used in the following PR
     clientName: string,
     baseUrl: string,
     staticOidcClients?: Record<string, string>,

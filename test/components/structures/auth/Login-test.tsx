@@ -29,7 +29,7 @@ import Login from "../../../../src/components/structures/auth/Login";
 import BasePlatform from "../../../../src/BasePlatform";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { Features } from "../../../../src/settings/Settings";
-import { ValidatedServerConfig } from "../../../../src/utils/ValidatedServerConfig";
+import { ValidatedDelegatedAuthConfig } from "../../../../src/utils/ValidatedServerConfig";
 import * as registerClientUtils from "../../../../src/utils/oidc/registerClient";
 
 jest.mock("matrix-js-sdk/src/matrix");
@@ -52,7 +52,7 @@ describe("Login", function () {
         SdkConfig.put({
             brand: "test-brand",
             disable_custom_urls: true,
-            oidc_static_clients: oidcStaticClientsConfig,
+            oidc_static_client_ids: oidcStaticClientsConfig,
         });
         mockClient.login.mockClear().mockResolvedValue({});
         mockClient.loginFlows.mockClear().mockResolvedValue({ flows: [{ type: "m.login.password" }] });
@@ -81,7 +81,7 @@ describe("Login", function () {
     function getRawComponent(
         hsUrl = "https://matrix.org",
         isUrl = "https://vector.im",
-        delegatedAuthentication?: ValidatedServerConfig["delegatedAuthentication"],
+        delegatedAuthentication?: ValidatedDelegatedAuthConfig,
     ) {
         return (
             <Login
@@ -93,11 +93,7 @@ describe("Login", function () {
         );
     }
 
-    function getComponent(
-        hsUrl?: string,
-        isUrl?: string,
-        delegatedAuthentication?: ValidatedServerConfig["delegatedAuthentication"],
-    ) {
+    function getComponent(hsUrl?: string, isUrl?: string, delegatedAuthentication?: ValidatedDelegatedAuthConfig) {
         return render(getRawComponent(hsUrl, isUrl, delegatedAuthentication));
     }
 
@@ -352,10 +348,14 @@ describe("Login", function () {
             authorizationEndpoint: issuer + "authorization",
         };
         beforeEach(() => {
-            jest.spyOn(logger, "error").mockClear();
+            jest.spyOn(logger, "error");
             jest.spyOn(SettingsStore, "getValue").mockImplementation(
                 (settingName) => settingName === Features.OidcNativeFlow,
             );
+        });
+
+        afterEach(() => {
+            jest.spyOn(logger, "error").mockRestore();
         });
 
         it("should not attempt registration when oidc native flow setting is disabled", async () => {
