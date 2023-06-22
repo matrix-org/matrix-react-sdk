@@ -356,7 +356,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     private async postLoginSetup(): Promise<void> {
-        console.log("YOOOO postLoginSetup");
         const cli = MatrixClientPeg.safeGet();
         const cryptoEnabled = cli.isCryptoEnabled();
         if (!cryptoEnabled) {
