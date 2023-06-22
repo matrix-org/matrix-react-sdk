@@ -179,6 +179,11 @@ export interface IRoomState {
     showApps: boolean;
     isPeeking: boolean;
     showRightPanel: boolean;
+    /**
+     * Whether the right panel shown is either of ThreadPanel or ThreadView.
+     * Always false when `showRightPanel` is false.
+     */
+    threadRightPanel: boolean;
     // error object, as from the matrix client/server API
     // If we failed to load information about the room,
     // store the error here.
@@ -215,7 +220,6 @@ export interface IRoomState {
     showUrlPreview?: boolean;
     e2eStatus?: E2EStatus;
     rejecting?: boolean;
-    rejectError?: Error;
     hasPinnedWidgets?: boolean;
     mainSplitContentType?: MainSplitContentType;
     // whether or not a spaces context switch brought us here,
@@ -223,7 +227,6 @@ export interface IRoomState {
     wasContextSwitch?: boolean;
     editState?: EditorStateTransfer;
     timelineRenderingType: TimelineRenderingType;
-    threadId?: string;
     liveTimeline?: EventTimeline;
     narrow: boolean;
     msc3946ProcessDynamicPredecessor: boolean;
@@ -402,6 +405,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             showApps: false,
             isPeeking: false,
             showRightPanel: false,
+            threadRightPanel: false,
             joining: false,
             showTopUnreadMessagesBar: false,
             statusBarVisible: false,
@@ -514,7 +518,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     /**
      * Removes the Jitsi widget from the current user if
      * - Multiple Jitsi widgets have been added within {@link PREVENT_MULTIPLE_JITSI_WITHIN}
-     * - The last (server timestamp) of these widgets is from the currrent user
+     * - The last (server timestamp) of these widgets is from the current user
      * This solves the issue if some people decide to start a conference and click the call button at the same time.
      */
     private doMaybeRemoveOwnJitsiWidget(): void {
@@ -587,7 +591,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             return;
         }
 
-        if (!initial && this.state.roomId !== this.context.roomViewStore.getRoomId()) {
+        const roomLoadError = this.context.roomViewStore.getRoomLoadError() ?? undefined;
+        if (!initial && !roomLoadError && this.state.roomId !== this.context.roomViewStore.getRoomId()) {
             // RoomView explicitly does not support changing what room
             // is being viewed: instead it should just be re-mounted when
             // switching rooms. Therefore, if the room ID changes, we
@@ -609,7 +614,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             roomId: roomId ?? undefined,
             roomAlias: this.context.roomViewStore.getRoomAlias() ?? undefined,
             roomLoading: this.context.roomViewStore.isRoomLoading(),
-            roomLoadError: this.context.roomViewStore.getRoomLoadError() ?? undefined,
+            roomLoadError,
             joining: this.context.roomViewStore.isJoining(),
             replyToEvent: this.context.roomViewStore.getQuotingEvent() ?? undefined,
             // we should only peek once we have a ready client
@@ -623,6 +628,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             mainSplitContentType: room ? this.getMainSplitContentType(room) : undefined,
             initialEventId: undefined, // default to clearing this, will get set later in the method if needed
             showRightPanel: roomId ? this.context.rightPanelStore.isOpenForRoom(roomId) : false,
+            threadRightPanel: roomId
+                ? [RightPanelPhases.ThreadView, RightPanelPhases.ThreadPanel].includes(
+                      this.context.rightPanelStore.currentCardForRoom(roomId).phase!,
+                  )
+                : false,
             activeCall: roomId ? CallStore.instance.getActiveCall(roomId) : null,
         };
 
@@ -1011,8 +1021,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     }
 
     private onRightPanelStoreUpdate = (): void => {
+        const { roomId } = this.state;
         this.setState({
-            showRightPanel: this.state.roomId ? this.context.rightPanelStore.isOpenForRoom(this.state.roomId) : false,
+            showRightPanel: roomId ? this.context.rightPanelStore.isOpenForRoom(roomId) : false,
+            threadRightPanel: roomId
+                ? [RightPanelPhases.ThreadView, RightPanelPhases.ThreadPanel].includes(
+                      this.context.rightPanelStore.currentCardForRoom(roomId).phase!,
+                  )
+                : false,
         });
     };
 
@@ -1663,7 +1679,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
                 this.setState({
                     rejecting: false,
-                    rejectError: error,
                 });
             },
         );
@@ -1697,7 +1712,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
             this.setState({
                 rejecting: false,
-                rejectError: error,
             });
         }
     };
@@ -2439,7 +2453,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             viewingCall={viewingCall}
                             activeCall={this.state.activeCall}
                         />
-                        <MainSplit panel={rightPanel} resizeNotifier={this.props.resizeNotifier}>
+                        <MainSplit
+                            panel={rightPanel}
+                            resizeNotifier={this.props.resizeNotifier}
+                            // Override defaults when a thread is being shown to allow persisting a separate
+                            // right panel width for thread panels as they tend to want to be wider.
+                            sizeKey={this.state.threadRightPanel ? "thread" : undefined}
+                            defaultSize={this.state.threadRightPanel ? 500 : undefined}
+                        >
                             <div
                                 className={mainSplitContentClasses}
                                 ref={this.roomViewBody}

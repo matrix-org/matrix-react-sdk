@@ -48,7 +48,7 @@ import { MapperOpts } from "matrix-js-sdk/src/event-mapper";
 
 import type { GroupCall } from "matrix-js-sdk/src/webrtc/groupCall";
 import { MatrixClientPeg as peg } from "../../src/MatrixClientPeg";
-import { ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
+import { ValidatedDelegatedAuthConfig, ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
 import { EnhancedMap } from "../../src/utils/maps";
 import { AsyncStoreWithClient } from "../../src/stores/AsyncStoreWithClient";
 import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/MatrixClientBackedSettingsHandler";
@@ -157,6 +157,7 @@ export function createTestClient(): MatrixClient {
             });
         }),
         mxcUrlToHttp: (mxc: string) => `http://this.is.a.url/${mxc.substring(6)}`,
+        scheduleAllGroupSessionsForBackup: jest.fn().mockResolvedValue(undefined),
         setAccountData: jest.fn(),
         setRoomAccountData: jest.fn(),
         setRoomTopic: jest.fn(),
@@ -237,6 +238,8 @@ export function createTestClient(): MatrixClient {
         searchUserDirectory: jest.fn().mockResolvedValue({ limited: false, results: [] }),
         setDeviceVerified: jest.fn(),
         joinRoom: jest.fn(),
+        getSyncStateData: jest.fn(),
+        getDehydratedDevice: jest.fn(),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
@@ -620,7 +623,7 @@ export function mkStubRoom(
 export function mkServerConfig(
     hsUrl: string,
     isUrl: string,
-    delegatedAuthentication?: ValidatedServerConfig["delegatedAuthentication"],
+    delegatedAuthentication?: ValidatedDelegatedAuthConfig,
 ): ValidatedServerConfig {
     return {
         hsUrl,
