@@ -368,7 +368,7 @@ describe("<MatrixChat />", () => {
             return renderResult;
         };
 
-        const waitForSyncAndLoad = async (client: MatrixClient, withoutSecuritySetup: boolean): Promise<void> => {
+        const waitForSyncAndLoad = async (client: MatrixClient, withoutSecuritySetup?: boolean): Promise<void> => {
             // need to wait for different elements depending on which flow
             // without security setup we go to a loading page
             if (withoutSecuritySetup) {
