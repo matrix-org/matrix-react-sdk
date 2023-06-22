@@ -102,7 +102,7 @@ export default function NotificationSettings2(): JSX.Element {
                 <SettingsBanner
                     icon={<img src={NewAndImprovedIcon} alt="" width={12} />}
                     action={_t("Switch now")}
-                    onAction={() => reconcile(model)}
+                    onAction={() => reconcile(model!)}
                 >
                     {_t(
                         "<strong>Update:</strong> We have updated our notification settings. This won’t affect your previously selected settings.",
@@ -118,12 +118,10 @@ export default function NotificationSettings2(): JSX.Element {
                         value={!settings.globalMute}
                         disabled={disabled}
                         onChange={(value) => {
-                            if (model !== null) {
-                                reconcile({
-                                    ...model,
-                                    globalMute: !value,
-                                });
-                            }
+                            reconcile({
+                                ...model!,
+                                globalMute: !value,
+                            });
                         }}
                     />
                     <LabelledToggleSwitch
@@ -158,22 +156,20 @@ export default function NotificationSettings2(): JSX.Element {
                         disabled={disabled}
                         definitions={NotificationOptions}
                         onChange={(value) => {
-                            if (model !== null) {
-                                reconcile({
-                                    ...model,
-                                    defaultLevels: {
-                                        ...model.defaultLevels,
-                                        dm:
-                                            value !== NotificationDefaultLevels.MENTIONS_KEYWORDS
-                                                ? RoomNotifState.AllMessages
-                                                : RoomNotifState.MentionsOnly,
-                                        room:
-                                            value === NotificationDefaultLevels.ALL_MESSAGES
-                                                ? RoomNotifState.AllMessages
-                                                : RoomNotifState.MentionsOnly,
-                                    },
-                                });
-                            }
+                            reconcile({
+                                ...model!,
+                                defaultLevels: {
+                                    ...model!.defaultLevels,
+                                    dm:
+                                        value !== NotificationDefaultLevels.MENTIONS_KEYWORDS
+                                            ? RoomNotifState.AllMessages
+                                            : RoomNotifState.MentionsOnly,
+                                    room:
+                                        value === NotificationDefaultLevels.ALL_MESSAGES
+                                            ? RoomNotifState.AllMessages
+                                            : RoomNotifState.MentionsOnly,
+                                },
+                            });
                         }}
                     />
                 </SettingsSubsection>
@@ -186,15 +182,13 @@ export default function NotificationSettings2(): JSX.Element {
                         value={settings.sound.people !== undefined}
                         disabled={disabled}
                         onChange={(value) => {
-                            if (model !== null) {
-                                reconcile({
-                                    ...model,
-                                    sound: {
-                                        ...model.sound,
-                                        people: value ? "default" : undefined,
-                                    },
-                                });
-                            }
+                            reconcile({
+                                ...model!,
+                                sound: {
+                                    ...model!.sound,
+                                    people: value ? "default" : undefined,
+                                },
+                            });
                         }}
                     />
                     <LabelledCheckbox
@@ -202,15 +196,13 @@ export default function NotificationSettings2(): JSX.Element {
                         value={settings.sound.mentions !== undefined}
                         disabled={disabled}
                         onChange={(value) => {
-                            if (model !== null) {
-                                reconcile({
-                                    ...model,
-                                    sound: {
-                                        ...model.sound,
-                                        mentions: value ? "default" : undefined,
-                                    },
-                                });
-                            }
+                            reconcile({
+                                ...model!,
+                                sound: {
+                                    ...model!.sound,
+                                    mentions: value ? "default" : undefined,
+                                },
+                            });
                         }}
                     />
                     <LabelledCheckbox
@@ -218,15 +210,13 @@ export default function NotificationSettings2(): JSX.Element {
                         value={settings.sound.calls !== undefined}
                         disabled={disabled}
                         onChange={(value) => {
-                            if (model !== null) {
-                                reconcile({
-                                    ...model,
-                                    sound: {
-                                        ...model.sound,
-                                        calls: value ? "ring" : undefined,
-                                    },
-                                });
-                            }
+                            reconcile({
+                                ...model!,
+                                sound: {
+                                    ...model!.sound,
+                                    calls: value ? "ring" : undefined,
+                                },
+                            });
                         }}
                     />
                 </SettingsSubsection>
@@ -236,15 +226,13 @@ export default function NotificationSettings2(): JSX.Element {
                         value={settings.activity.invite}
                         disabled={disabled}
                         onChange={(value) => {
-                            if (model !== null) {
-                                reconcile({
-                                    ...model,
-                                    activity: {
-                                        ...model.activity,
-                                        invite: value,
-                                    },
-                                });
-                            }
+                            reconcile({
+                                ...model!,
+                                activity: {
+                                    ...model!.activity,
+                                    invite: value,
+                                },
+                            });
                         }}
                     />
                     <LabelledCheckbox
@@ -252,15 +240,13 @@ export default function NotificationSettings2(): JSX.Element {
                         value={settings.activity.status_event}
                         disabled={disabled}
                         onChange={(value) => {
-                            if (model !== null) {
-                                reconcile({
-                                    ...model,
-                                    activity: {
-                                        ...model.activity,
-                                        status_event: value,
-                                    },
-                                });
-                            }
+                            reconcile({
+                                ...model!,
+                                activity: {
+                                    ...model!.activity,
+                                    status_event: value,
+                                },
+                            });
                         }}
                     />
                     <LabelledCheckbox
@@ -268,15 +254,13 @@ export default function NotificationSettings2(): JSX.Element {
                         value={settings.activity.bot_notices}
                         disabled={disabled}
                         onChange={(value) => {
-                            if (model !== null) {
-                                reconcile({
-                                    ...model,
-                                    activity: {
-                                        ...model.activity,
-                                        bot_notices: value,
-                                    },
-                                });
-                            }
+                            reconcile({
+                                ...model!,
+                                activity: {
+                                    ...model!.activity,
+                                    bot_notices: value,
+                                },
+                            });
                         }}
                     />
                 </SettingsSubsection>
@@ -295,15 +279,13 @@ export default function NotificationSettings2(): JSX.Element {
                         value={settings.mentions.room}
                         disabled={disabled}
                         onChange={(value) => {
-                            if (model !== null) {
-                                reconcile({
-                                    ...model,
-                                    mentions: {
-                                        ...model.mentions,
-                                        room: value,
-                                    },
-                                });
-                            }
+                            reconcile({
+                                ...model!,
+                                mentions: {
+                                    ...model!.mentions,
+                                    room: value,
+                                },
+                            });
                         }}
                     />
                     <LabelledCheckbox
@@ -311,15 +293,13 @@ export default function NotificationSettings2(): JSX.Element {
                         value={settings.mentions.user}
                         disabled={disabled}
                         onChange={(value) => {
-                            if (model !== null) {
-                                reconcile({
-                                    ...model,
-                                    mentions: {
-                                        ...model.mentions,
-                                        user: value,
-                                    },
-                                });
-                            }
+                            reconcile({
+                                ...model!,
+                                mentions: {
+                                    ...model!.mentions,
+                                    user: value,
+                                },
+                            });
                         }}
                     />
                     <LabelledCheckbox
@@ -328,15 +308,13 @@ export default function NotificationSettings2(): JSX.Element {
                         value={settings.mentions.keywords}
                         disabled={disabled}
                         onChange={(value) => {
-                            if (model !== null) {
-                                reconcile({
-                                    ...model,
-                                    mentions: {
-                                        ...model.mentions,
-                                        keywords: value,
-                                    },
-                                });
-                            }
+                            reconcile({
+                                ...model!,
+                                mentions: {
+                                    ...model!.mentions,
+                                    keywords: value,
+                                },
+                            });
                         }}
                     />
                     <TagComposer
@@ -344,20 +322,16 @@ export default function NotificationSettings2(): JSX.Element {
                         tags={model?.keywords ?? []}
                         disabled={disabled}
                         onAdd={(keyword) => {
-                            if (model !== null) {
-                                reconcile({
-                                    ...model,
-                                    keywords: [keyword, ...model.keywords],
-                                });
-                            }
+                            reconcile({
+                                ...model!,
+                                keywords: [keyword, ...model!.keywords],
+                            });
                         }}
                         onRemove={(keyword) => {
-                            if (model !== null) {
-                                reconcile({
-                                    ...model,
-                                    keywords: model.keywords.filter((it) => it !== keyword),
-                                });
-                            }
+                            reconcile({
+                                ...model!,
+                                keywords: model!.keywords.filter((it) => it !== keyword),
+                            });
                         }}
                         label={_t("Keyword")}
                         placeholder={_t("New keyword")}
@@ -380,10 +354,9 @@ export default function NotificationSettings2(): JSX.Element {
                     )}
                     <AccessibleButton
                         kind="danger_outline"
+                        disabled={model === null}
                         onClick={() => {
-                            if (model !== null) {
-                                reconcile(DefaultNotificationSettings);
-                            }
+                            reconcile(DefaultNotificationSettings);
                         }}
                     >
                         {_t("Reset to default settings")}
