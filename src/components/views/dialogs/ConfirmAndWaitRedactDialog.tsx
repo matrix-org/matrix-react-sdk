@@ -22,6 +22,7 @@ import ConfirmRedactDialog from "./ConfirmRedactDialog";
 import ErrorDialog from "./ErrorDialog";
 import BaseDialog from "./BaseDialog";
 import Spinner from "../elements/Spinner";
+import { HTTPError, MatrixError } from "matrix-js-sdk";
 
 interface IProps {
     event: MatrixEvent;
@@ -62,7 +63,13 @@ export default class ConfirmAndWaitRedactDialog extends React.PureComponent<IPro
                 await this.props.redact();
                 this.props.onFinished(true);
             } catch (error) {
-                const code = error.errcode || error.statusCode;
+                let code: string | number | undefined;
+                if (error instanceof MatrixError) {
+                    code = error.errcode;
+                } else if (error instanceof HTTPError) {
+                    code = error.httpStatus;
+                }
+
                 if (typeof code !== "undefined") {
                     this.setState({ redactionErrorCode: code });
                 } else {

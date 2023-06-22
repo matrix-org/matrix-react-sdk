@@ -2098,7 +2098,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // forwards, otherwise if somebody hits the bottom of the loaded
         // events when viewing historical messages, we get stuck in a loop
         // of paginating our way through the entire history of the room.
-        const stickyBottom = !this.timelineWindow.canPaginate(EventTimeline.FORWARDS);
+        const stickyBottom = !this.timelineWindow?.canPaginate(EventTimeline.FORWARDS);
 
         // If the state is PREPARED or CATCHUP, we're still waiting for the js-sdk to sync with
         // the HS and fetch the latest events, so we are effectively forward paginating.
