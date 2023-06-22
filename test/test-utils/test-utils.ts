@@ -157,6 +157,7 @@ export function createTestClient(): MatrixClient {
             });
         }),
         mxcUrlToHttp: (mxc: string) => `http://this.is.a.url/${mxc.substring(6)}`,
+        scheduleAllGroupSessionsForBackup: jest.fn().mockResolvedValue(undefined),
         setAccountData: jest.fn(),
         setRoomAccountData: jest.fn(),
         setRoomTopic: jest.fn(),
@@ -238,6 +239,7 @@ export function createTestClient(): MatrixClient {
         setDeviceVerified: jest.fn(),
         joinRoom: jest.fn(),
         getSyncStateData: jest.fn(),
+        getDehydratedDevice: jest.fn(),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
