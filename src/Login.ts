@@ -39,7 +39,7 @@ interface ILoginOptions {
     defaultDeviceDisplayName?: string;
     /**
      * Delegated auth config from server's .well-known.
-     * 
+     *
      * If this property is set, we will attempt an OIDC login using the delegated auth settings.
      * The caller is responsible for checking that OIDC is enabled in the labs settings.
      */
@@ -197,8 +197,10 @@ export interface OidcNativeFlow extends ILoginFlow {
     clientId: string;
 }
 /**
- * Finds static clientId for configured issuer, or attempts dynamic registration with the OP
- * Returns OIDC native flow when client is ready to attempt login via OIDC native flow
+ * Prepares an OidcNativeFlow for logging into the server.
+ *
+ * Finds a static clientId for configured issuer, or attempts dynamic registration with the OP, and wraps the
+ * results.
  *
  * @param delegatedAuthConfig  Auth config from ValidatedServerConfig
  * @param clientName Client name to register with the OP, eg 'Element', used during client registration with OP
