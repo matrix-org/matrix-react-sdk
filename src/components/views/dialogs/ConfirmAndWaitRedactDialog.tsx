@@ -16,13 +16,13 @@ limitations under the License.
 
 import React from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { HTTPError, MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import ConfirmRedactDialog from "./ConfirmRedactDialog";
 import ErrorDialog from "./ErrorDialog";
 import BaseDialog from "./BaseDialog";
 import Spinner from "../elements/Spinner";
-import { HTTPError, MatrixError } from "matrix-js-sdk";
 
 interface IProps {
     event: MatrixEvent;
