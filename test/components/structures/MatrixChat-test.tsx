@@ -17,7 +17,7 @@ limitations under the License.
 import React, { ComponentProps } from "react";
 import { fireEvent, render, RenderResult, screen, within } from "@testing-library/react";
 import fetchMockJest from "fetch-mock-jest";
-import { ClientEvent } from "matrix-js-sdk/src/client";
+import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 import { SyncState } from "matrix-js-sdk/src/sync";
 import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
 import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
@@ -88,12 +88,26 @@ describe("<MatrixChat />", () => {
         render(<MatrixChat {...defaultProps} {...props} />);
     const localStorageSpy = jest.spyOn(localStorage.__proto__, "getItem").mockReturnValue(undefined);
 
+    const waitForSyncAndLoad = async (client: MatrixClient): Promise<void> => {
+        // we think we are logged in, but are still waiting for the /sync to complete
+        await screen.findByText("Logout");
+        // initial sync
+        client.emit(ClientEvent.Sync, SyncState.Prepared, null);
+        // wait for logged in view to load
+        await screen.findByLabelText("User menu");
+        // let things settle
+        await flushPromises();
+        // and some more for good measure
+        // this proved to be a little flaky
+        await flushPromises();
+    }
+
     beforeEach(() => {
         fetchMockJest.get("https://test.com/_matrix/client/versions", {
             unstable_features: {},
             versions: [],
         });
-        localStorageSpy.mockClear();
+        localStorageSpy.mockReset();
         jest.spyOn(StorageManager, "idbLoad").mockRestore();
         jest.spyOn(StorageManager, "idbSave").mockResolvedValue(undefined);
         jest.spyOn(defaultDispatcher, "dispatch").mockClear();
@@ -130,17 +144,8 @@ describe("<MatrixChat />", () => {
 
         const getComponentAndWaitForReady = async (): Promise<RenderResult> => {
             const renderResult = getComponent();
-            // we think we are logged in, but are still waiting for the /sync to complete
-            await screen.findByText("Logout");
-            // initial sync
-            mockClient.emit(ClientEvent.Sync, SyncState.Prepared, null);
-            // wait for logged in view to load
-            await screen.findByLabelText("User menu");
-            // let things settle
-            await flushPromises();
-            // and some more for good measure
-            // this proved to be a little flaky
-            await flushPromises();
+            
+            await waitForSyncAndLoad(mockClient);
 
             return renderResult;
         };
