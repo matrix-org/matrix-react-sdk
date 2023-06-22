@@ -12,20 +12,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { act, findByRole, fireEvent, queryByRole, render, waitFor } from "@testing-library/react";
+import { act, findByRole, queryByRole, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { IPushRules, MatrixClient, NotificationCountType, PushRuleKind, Room, RuleId } from "matrix-js-sdk/src/matrix";
 import React from "react";
-import { ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 
 import NotificationSettings2 from "../../../../../src/components/views/settings/notifications/NotificationSettings2";
 import MatrixClientContext from "../../../../../src/contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../../../src/MatrixClientPeg";
 import { StandardActions } from "../../../../../src/notifications/StandardActions";
-import { mockRandom } from "../../../../predictableRandom";
+import { predictableRandom } from "../../../../predictableRandom";
 import { mkMessage, stubClient } from "../../../../test-utils";
 
-mockRandom();
+const mockRandom = predictableRandom();
+
+// Fake random strings to give a predictable snapshot for IDs
+jest.mock("matrix-js-sdk/src/randomstring", () => ({
+    randomString: jest.fn((len): string => {
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let ret = "";
+
+        for (let i = 0; i < len; ++i) {
+            ret += chars.charAt(Math.floor(mockRandom() * chars.length));
+        }
+
+        return ret;
+    }),
+}));
 
 const waitForUpdate = (): Promise<void> => new Promise((resolve) => setTimeout(resolve));
 
@@ -95,7 +109,10 @@ describe("<Notifications />", () => {
             );
             await act(waitForUpdate);
             expect(screen.getByLabelText(label)).not.toBeDisabled();
-            await act(() => user.click(screen.getByLabelText(label)));
+            await act(async () => {
+                await user.click(screen.getByLabelText(label));
+                await waitForUpdate();
+            });
             expect(cli.setPushRuleEnabled).toHaveBeenCalledWith("global", PushRuleKind.Override, RuleId.Master, true);
         });
 
@@ -110,7 +127,10 @@ describe("<Notifications />", () => {
             );
             await act(waitForUpdate);
             expect(screen.getByLabelText(label)).not.toBeDisabled();
-            await act(() => user.click(screen.getByLabelText(label)));
+            await act(async () => {
+                await user.click(screen.getByLabelText(label));
+                await waitForUpdate();
+            });
             expect(cli.setPushRuleEnabled).toHaveBeenCalledWith(
                 "global",
                 PushRuleKind.Underride,
@@ -132,7 +152,10 @@ describe("<Notifications />", () => {
                 );
                 await act(waitForUpdate);
                 expect(screen.getByLabelText(label)).not.toBeDisabled();
-                await act(() => user.click(screen.getByLabelText(label)));
+                await act(async () => {
+                    await user.click(screen.getByLabelText(label));
+                    await waitForUpdate();
+                });
                 expect(cli.setPushRuleActions).toHaveBeenCalledWith(
                     "global",
                     PushRuleKind.Underride,
@@ -164,7 +187,10 @@ describe("<Notifications />", () => {
                 );
                 await act(waitForUpdate);
                 expect(screen.getByLabelText(label)).not.toBeDisabled();
-                await act(() => user.click(screen.getByLabelText(label)));
+                await act(async () => {
+                    await user.click(screen.getByLabelText(label));
+                    await waitForUpdate();
+                });
                 expect(cli.setPushRuleActions).toHaveBeenCalledWith(
                     "global",
                     PushRuleKind.Override,
@@ -190,7 +216,10 @@ describe("<Notifications />", () => {
                 );
                 await act(waitForUpdate);
                 expect(screen.getByLabelText(label)).not.toBeDisabled();
-                await act(() => user.click(screen.getByLabelText(label)));
+                await act(async () => {
+                    await user.click(screen.getByLabelText(label));
+                    await waitForUpdate();
+                });
                 expect(cli.setPushRuleActions).toHaveBeenCalledWith(
                     "global",
                     PushRuleKind.Underride,
@@ -212,7 +241,10 @@ describe("<Notifications />", () => {
                 );
                 await act(waitForUpdate);
                 expect(screen.getByLabelText(label)).not.toBeDisabled();
-                await act(() => user.click(screen.getByLabelText(label)));
+                await act(async () => {
+                    await user.click(screen.getByLabelText(label));
+                    await waitForUpdate();
+                });
                 expect(cli.setPushRuleActions).toHaveBeenCalledWith(
                     "global",
                     PushRuleKind.Override,
@@ -231,7 +263,10 @@ describe("<Notifications />", () => {
                 );
                 await act(waitForUpdate);
                 expect(screen.getByLabelText(label)).not.toBeDisabled();
-                await act(() => user.click(screen.getByLabelText(label)));
+                await act(async () => {
+                    await user.click(screen.getByLabelText(label));
+                    await waitForUpdate();
+                });
                 expect(cli.setPushRuleActions).toHaveBeenCalledWith(
                     "global",
                     PushRuleKind.Override,
@@ -256,7 +291,10 @@ describe("<Notifications />", () => {
                 );
                 await act(waitForUpdate);
                 expect(screen.getByLabelText(label)).not.toBeDisabled();
-                await act(() => user.click(screen.getByLabelText(label)));
+                await act(async () => {
+                    await user.click(screen.getByLabelText(label));
+                    await waitForUpdate();
+                });
                 expect(cli.setPushRuleActions).toHaveBeenCalledWith(
                     "global",
                     PushRuleKind.Override,
@@ -277,7 +315,10 @@ describe("<Notifications />", () => {
                 );
                 await act(waitForUpdate);
                 expect(screen.getByLabelText(label)).not.toBeDisabled();
-                await act(() => user.click(screen.getByLabelText(label)));
+                await act(async () => {
+                    await user.click(screen.getByLabelText(label));
+                    await waitForUpdate();
+                });
                 expect(cli.setPushRuleActions).toHaveBeenCalledWith(
                     "global",
                     PushRuleKind.Override,
@@ -296,7 +337,10 @@ describe("<Notifications />", () => {
                 );
                 await act(waitForUpdate);
                 expect(screen.getByLabelText(label)).not.toBeDisabled();
-                await act(() => user.click(screen.getByLabelText(label)));
+                await act(async () => {
+                    await user.click(screen.getByLabelText(label));
+                    await waitForUpdate();
+                });
                 expect(cli.setPushRuleActions).toHaveBeenCalledWith(
                     "global",
                     PushRuleKind.Override,
@@ -349,7 +393,10 @@ describe("<Notifications />", () => {
             );
             await act(waitForUpdate);
             expect(screen.getByLabelText(label)).not.toBeDisabled();
-            await act(() => user.click(screen.getByLabelText(label)));
+            await act(async () => {
+                await user.click(screen.getByLabelText(label));
+                await waitForUpdate();
+            });
             expect(cli.setPusher).toHaveBeenCalledWith({
                 app_display_name: "Email Notifications",
                 app_id: "m.email",
@@ -405,7 +452,10 @@ describe("<Notifications />", () => {
             );
             await act(waitForUpdate);
             expect(screen.getByLabelText(label)).not.toBeDisabled();
-            await act(() => user.click(screen.getByLabelText(label)));
+            await act(async () => {
+                await user.click(screen.getByLabelText(label));
+                await waitForUpdate();
+            });
             expect(cli.removePusher).toHaveBeenCalledWith("test@example.tld", "m.email");
         });
     });
@@ -441,6 +491,7 @@ describe("<Notifications />", () => {
             room.addLiveEvents([message]);
             room.setUnreadNotificationCount(NotificationCountType.Total, 1);
 
+            const user = userEvent.setup();
             const { container } = render(
                 <MatrixClientContext.Provider value={cli}>
                     <NotificationSettings2 />
@@ -451,7 +502,10 @@ describe("<Notifications />", () => {
                 name: "Mark all messages as read",
             });
 
-            fireEvent.click(clearNotificationEl);
+            await act(async () => {
+                await user.click(clearNotificationEl);
+                await waitForUpdate();
+            });
             expect(cli.sendReadReceipt).toHaveBeenCalled();
 
             await waitFor(() => {

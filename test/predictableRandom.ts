@@ -12,14 +12,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export function mockRandom() {
-    // Fake random strings to give a predictable snapshot for IDs
-    // Simple Xorshift random number generator with predictable ID
+// Fake random strings to give a predictable snapshot for IDs
+// Simple Xorshift random number generator with predictable ID
+export function predictableRandom(): () => number {
     let random = 314159265;
-    jest.spyOn(global.Math, "random").mockImplementation((): number => {
+    return (): number =>{
         random ^= random << 13;
         random ^= random >> 17;
         random ^= random << 5;
         return random / 1073741823;
-    });
+    };
 }
