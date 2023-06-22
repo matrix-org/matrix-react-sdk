@@ -85,6 +85,7 @@ describe("<MatrixChat />", () => {
             isStored: jest.fn().mockReturnValue(null),
         },
         getDehydratedDevice: jest.fn(),
+        isRoomEncrypted: jest.fn(),
     });
     let mockClient = getMockClientWithEventEmitter(getMockClientMethods());
     const serverConfig = {
@@ -339,7 +340,7 @@ describe("<MatrixChat />", () => {
     });
 
     describe("login via key/pass", () => {
-        let loginClient;
+        let loginClient!: ReturnType<typeof getMockClientWithEventEmitter>;
 
         const mockCrypto = {
             getVerificationRequestsToDeviceInProgress: jest.fn().mockReturnValue([]),
@@ -427,8 +428,8 @@ describe("<MatrixChat />", () => {
         describe("post login setup", () => {
             beforeEach(() => {
                 loginClient.isCryptoEnabled.mockReturnValue(true);
-                loginClient.getCrypto.mockReturnValue(mockCrypto);
-                loginClient.userHasCrossSigningKeys.mockClear().mockReturnValue(false);
+                loginClient.getCrypto.mockReturnValue(mockCrypto as any);
+                loginClient.userHasCrossSigningKeys.mockClear().mockResolvedValue(false);
             });
 
             it("should go straight to logged in view when crypto is not enabled", async () => {
@@ -454,8 +455,61 @@ describe("<MatrixChat />", () => {
                 await screen.findByLabelText("User menu");
             });
 
+            describe("when server supports cross signing and user does not have cross signing setup", () => {
+                beforeEach(() => {
+                    loginClient.doesServerSupportUnstableFeature.mockResolvedValue(true);
+                    loginClient.userHasCrossSigningKeys.mockResolvedValue(false);
+                });
+
+                describe("when encryption is force disabled", () => {
+                    const unencryptedRoom = new Room("!unencrypted:server.org", loginClient, userId);
+                    const encryptedRoom = new Room("!encrypted:server.org", loginClient, userId);
+
+                    beforeEach(() => {
+                        loginClient.getClientWellKnown.mockReturnValue({
+                            "io.element.e2ee": {
+                                force_disable: true,
+                            },
+                        });
+
+                        loginClient.isRoomEncrypted.mockImplementation((roomId) => roomId === encryptedRoom.roomId);
+                    });
+
+                    it("should go straight to logged in view when user is not in any encrypted rooms", async () => {
+                        loginClient.getRooms.mockReturnValue([unencryptedRoom]);
+                        await getComponentAndLogin(false);
+
+                        await flushPromises();
+
+                        // logged in, did not setup keys
+                        await screen.findByLabelText("User menu");
+                    });
+
+                    it("should go to setup e2e screen when user is in encrypted rooms", async () => {
+                        loginClient.getRooms.mockReturnValue([unencryptedRoom, encryptedRoom]);
+                        await getComponentAndLogin();
+                        await flushPromises();
+                        // set up keys screen is rendered
+                        expect(screen.getByText("Setting up keys")).toBeInTheDocument();
+                    });
+                });
+
+                it("should go to setup e2e screen", async () => {
+                    loginClient.doesServerSupportUnstableFeature.mockResolvedValue(true);
+
+                    await getComponentAndLogin();
+
+                    expect(loginClient.userHasCrossSigningKeys).toHaveBeenCalled();
+
+                    await flushPromises();
+
+                    // set up keys screen is rendered
+                    expect(screen.getByText("Setting up keys")).toBeInTheDocument();
+                });
+            });
+
             it("should show complete security screen when user has cross signing setup", async () => {
-                loginClient.userHasCrossSigningKeys.mockReturnValue(true);
+                loginClient.userHasCrossSigningKeys.mockResolvedValue(true);
 
                 await getComponentAndLogin();
 
@@ -465,19 +519,6 @@ describe("<MatrixChat />", () => {
 
                 // Complete security begin screen is rendered
                 expect(screen.getByText("Unable to verify this device")).toBeInTheDocument();
-            });
-
-            it("should setup e2e when server supports cross signing", async () => {
-                loginClient.doesServerSupportUnstableFeature.mockResolvedValue(true);
-
-                await getComponentAndLogin();
-
-                expect(loginClient.userHasCrossSigningKeys).toHaveBeenCalled();
-
-                await flushPromises();
-
-                // set up keys screen is rendered
-                expect(screen.getByText("Setting up keys")).toBeInTheDocument();
             });
         });
     });
