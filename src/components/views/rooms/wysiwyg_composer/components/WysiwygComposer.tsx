@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { memo, MutableRefObject, ReactNode, useEffect, useRef } from "react";
 import { IEventRelation } from "matrix-js-sdk/src/matrix";
-import { useWysiwyg, FormattingFunctions } from "@matrix-org/matrix-wysiwyg";
+import { useWysiwyg, FormattingFunctions, AllowedMentionAttributes } from "@matrix-org/matrix-wysiwyg";
 import classNames from "classnames";
 
 import Autocomplete from "../../Autocomplete";
@@ -35,6 +35,8 @@ import { useMatrixClientContext } from "../../../../../contexts/MatrixClientCont
 import { ICompletion } from "../../../../../autocomplete/Autocompleter";
 import { getMentionAttributes } from "../utils/autocomplete";
 import { findRoom } from "../../../../../hooks/usePermalinkTargetRoom";
+
+const STYLE = "style";
 
 interface WysiwygComposerProps {
     disabled?: boolean;
@@ -109,43 +111,37 @@ export const WysiwygComposer = memo(function WysiwygComposer({
             mention.addEventListener("click", handleClick);
 
             // we might need to add the style attribute for the case where we are editing a message in the timeline
-            if (!mention.hasAttribute("style")) {
+            if (!mention.hasAttribute(STYLE)) {
                 const type = mention.getAttribute("data-mention-type");
                 const href = mention.getAttribute("href");
 
-                let style = "";
+                let attributes: AllowedMentionAttributes;
                 switch (type) {
                     case "user": {
                         const { userId: completionId } = parsePermalink(href);
-                        const attributes = getMentionAttributes({ type, completionId } as ICompletion, client, room);
-                        style = attributes.get("style");
-
+                        attributes = getMentionAttributes({ type, completionId } as ICompletion, client, room);
                         break;
                     }
                     case "room": {
                         // for a room, first try and find it, need it's id - this is going to have to be async
                         const { roomIdOrAlias } = parsePermalink(href);
                         const foundRoom = findRoom(roomIdOrAlias);
-                        const attributes = getMentionAttributes(
+                        attributes = getMentionAttributes(
                             { type, completion: foundRoom.name, completionId: foundRoom.roomId } as ICompletion,
                             client,
                             room,
                         );
-
-                        // special case for rooms, we also need to amend their inner html
-                        mention.innerHTML = foundRoom.name;
-                        style = attributes.get("style");
-                        mention.setAttribute("style", style);
                         break;
                     }
                     case "at-room": {
-                        const attributes = getMentionAttributes({ type } as ICompletion, client, room);
-                        const style = attributes.get("style");
-                        mention.setAttribute("style", style);
+                        attributes = getMentionAttributes({ type } as ICompletion, client, room);
                         break;
                     }
                 }
-                mention.setAttribute("style", style);
+
+                if (attributes.has(STYLE)) {
+                    mention.setAttribute(STYLE, attributes.get(STYLE));
+                }
             }
         });
 
