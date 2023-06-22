@@ -69,7 +69,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
     public constructor(props: IProps) {
         super(props);
 
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const room = client.getRoom(props.roomId);
         if (!room) throw new Error(`Expected a room for ID: ${props.roomId}`);
 
@@ -108,7 +108,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         this.decryptEmotes(client.isRoomEncrypted(props.roomId));
     }
     public componentDidMount(): void {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         this.decryptEmotes(client.isRoomEncrypted(this.props.roomId));
     }
 
@@ -172,7 +172,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         e.preventDefault();
 
         if (!this.isSaveEnabled()) return;
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const newState: Partial<IState> = {};
         const emotesMxcs: { [key: string]: IEncryptedFile | string } = {};
         const value = new Map();
@@ -309,7 +309,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
     };
 
     private onCompatChange = async (allowed: boolean): Promise<void> => {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         await client.sendStateEvent(this.props.roomId, COMPAT_STATE.name, { isCompat: allowed }, "");
 
         if (allowed) {
