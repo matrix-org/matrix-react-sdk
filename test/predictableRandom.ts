@@ -20,6 +20,6 @@ export function mockRandom() {
         random ^= random << 13;
         random ^= random >> 17;
         random ^= random << 5;
-        return (random / 1073741823);
+        return random / 1073741823;
     });
 }

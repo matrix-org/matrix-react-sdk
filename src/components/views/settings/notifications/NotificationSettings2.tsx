@@ -78,7 +78,7 @@ function boldText(text: string): JSX.Element {
 
 function useHasUnreadNotifications(): boolean {
     const cli = useMatrixClientContext();
-    return cli.getRooms().some(room => room.getUnreadNotificationCount() > 0);
+    return cli.getRooms().some((room) => room.getUnreadNotificationCount() > 0);
 }
 
 export default function NotificationSettings2(): JSX.Element {

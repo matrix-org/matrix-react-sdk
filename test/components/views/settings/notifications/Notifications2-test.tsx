@@ -27,7 +27,7 @@ import { mkMessage, stubClient } from "../../../../test-utils";
 
 mockRandom();
 
-const waitForUpdate = (): Promise<void> => new Promise(resolve => setTimeout(resolve));
+const waitForUpdate = (): Promise<void> => new Promise((resolve) => setTimeout(resolve));
 
 describe("<Notifications />", () => {
     let cli: MatrixClient;
@@ -52,17 +52,17 @@ describe("<Notifications />", () => {
         cli.getPushers = jest.fn(cli.getPushers).mockResolvedValue({
             pushers: [
                 {
-                    "app_display_name": "Element",
-                    "app_id": "im.vector.app",
-                    "data": {},
-                    "device_display_name": "My EyeFon",
-                    "kind": "http",
-                    "lang": "en",
-                    "pushkey": "",
-                    "enabled": true,
+                    app_display_name: "Element",
+                    app_id: "im.vector.app",
+                    data: {},
+                    device_display_name: "My EyeFon",
+                    kind: "http",
+                    lang: "en",
+                    pushkey: "",
+                    enabled: true,
                 },
             ],
-        })
+        });
         cli.getThreePids = jest.fn(cli.getThreePids).mockResolvedValue({
             threepids: [
                 {
@@ -81,13 +81,13 @@ describe("<Notifications />", () => {
         );
         await act(waitForUpdate);
         expect(screen.container).toMatchSnapshot();
-    })
+    });
 
     describe("form elements actually toggle the model value", () => {
         it("global mute", async () => {
             const label = "Enable notifications for this account";
 
-            const user = userEvent.setup()
+            const user = userEvent.setup();
             const screen = render(
                 <MatrixClientContext.Provider value={cli}>
                     <NotificationSettings2 />
@@ -97,12 +97,12 @@ describe("<Notifications />", () => {
             expect(screen.getByLabelText(label)).not.toBeDisabled();
             await act(() => user.click(screen.getByLabelText(label)));
             expect(cli.setPushRuleEnabled).toHaveBeenCalledWith("global", PushRuleKind.Override, RuleId.Master, true);
-        })
+        });
 
         it("notification level", async () => {
             const label = "All messages";
 
-            const user = userEvent.setup()
+            const user = userEvent.setup();
             const screen = render(
                 <MatrixClientContext.Provider value={cli}>
                     <NotificationSettings2 />
@@ -111,15 +111,20 @@ describe("<Notifications />", () => {
             await act(waitForUpdate);
             expect(screen.getByLabelText(label)).not.toBeDisabled();
             await act(() => user.click(screen.getByLabelText(label)));
-            expect(cli.setPushRuleEnabled).toHaveBeenCalledWith("global", PushRuleKind.Underride, RuleId.EncryptedMessage, true);
+            expect(cli.setPushRuleEnabled).toHaveBeenCalledWith(
+                "global",
+                PushRuleKind.Underride,
+                RuleId.EncryptedMessage,
+                true,
+            );
             expect(cli.setPushRuleEnabled).toHaveBeenCalledWith("global", PushRuleKind.Underride, RuleId.Message, true);
-        })
+        });
 
         describe("play a sound for", () => {
             it("people", async () => {
                 const label = "People";
 
-                const user = userEvent.setup()
+                const user = userEvent.setup();
                 const screen = render(
                     <MatrixClientContext.Provider value={cli}>
                         <NotificationSettings2 />
@@ -128,15 +133,30 @@ describe("<Notifications />", () => {
                 await act(waitForUpdate);
                 expect(screen.getByLabelText(label)).not.toBeDisabled();
                 await act(() => user.click(screen.getByLabelText(label)));
-                expect(cli.setPushRuleActions).toHaveBeenCalledWith("global", PushRuleKind.Underride, RuleId.EncryptedDM, StandardActions.ACTION_NOTIFY_DEFAULT_SOUND);
-                expect(cli.setPushRuleActions).toHaveBeenCalledWith("global", PushRuleKind.Underride, RuleId.DM, StandardActions.ACTION_NOTIFY_DEFAULT_SOUND);
-                expect(cli.setPushRuleActions).toHaveBeenCalledWith("global", PushRuleKind.Override, RuleId.InviteToSelf, StandardActions.ACTION_NOTIFY_DEFAULT_SOUND);
-            })
+                expect(cli.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    PushRuleKind.Underride,
+                    RuleId.EncryptedDM,
+                    StandardActions.ACTION_NOTIFY_DEFAULT_SOUND,
+                );
+                expect(cli.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    PushRuleKind.Underride,
+                    RuleId.DM,
+                    StandardActions.ACTION_NOTIFY_DEFAULT_SOUND,
+                );
+                expect(cli.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    PushRuleKind.Override,
+                    RuleId.InviteToSelf,
+                    StandardActions.ACTION_NOTIFY_DEFAULT_SOUND,
+                );
+            });
 
             it("mentions", async () => {
                 const label = "Mentions and Keywords";
 
-                const user = userEvent.setup()
+                const user = userEvent.setup();
                 const screen = render(
                     <MatrixClientContext.Provider value={cli}>
                         <NotificationSettings2 />
@@ -145,14 +165,24 @@ describe("<Notifications />", () => {
                 await act(waitForUpdate);
                 expect(screen.getByLabelText(label)).not.toBeDisabled();
                 await act(() => user.click(screen.getByLabelText(label)));
-                expect(cli.setPushRuleActions).toHaveBeenCalledWith("global", PushRuleKind.Override, RuleId.ContainsDisplayName, StandardActions.ACTION_HIGHLIGHT);
-                expect(cli.setPushRuleActions).toHaveBeenCalledWith("global", PushRuleKind.ContentSpecific, RuleId.ContainsUserName, StandardActions.ACTION_HIGHLIGHT);
-            })
+                expect(cli.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    PushRuleKind.Override,
+                    RuleId.ContainsDisplayName,
+                    StandardActions.ACTION_HIGHLIGHT,
+                );
+                expect(cli.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    PushRuleKind.ContentSpecific,
+                    RuleId.ContainsUserName,
+                    StandardActions.ACTION_HIGHLIGHT,
+                );
+            });
 
             it("calls", async () => {
                 const label = "Audio and Video calls";
 
-                const user = userEvent.setup()
+                const user = userEvent.setup();
                 const screen = render(
                     <MatrixClientContext.Provider value={cli}>
                         <NotificationSettings2 />
@@ -161,15 +191,20 @@ describe("<Notifications />", () => {
                 await act(waitForUpdate);
                 expect(screen.getByLabelText(label)).not.toBeDisabled();
                 await act(() => user.click(screen.getByLabelText(label)));
-                expect(cli.setPushRuleActions).toHaveBeenCalledWith("global", PushRuleKind.Underride, RuleId.IncomingCall, StandardActions.ACTION_NOTIFY);
-            })
-        })
+                expect(cli.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    PushRuleKind.Underride,
+                    RuleId.IncomingCall,
+                    StandardActions.ACTION_NOTIFY,
+                );
+            });
+        });
 
         describe("activity", () => {
             it("invite", async () => {
                 const label = "Invited to a room";
 
-                const user = userEvent.setup()
+                const user = userEvent.setup();
                 const screen = render(
                     <MatrixClientContext.Provider value={cli}>
                         <NotificationSettings2 />
@@ -178,12 +213,17 @@ describe("<Notifications />", () => {
                 await act(waitForUpdate);
                 expect(screen.getByLabelText(label)).not.toBeDisabled();
                 await act(() => user.click(screen.getByLabelText(label)));
-                expect(cli.setPushRuleActions).toHaveBeenCalledWith("global", PushRuleKind.Override, RuleId.InviteToSelf, StandardActions.ACTION_NOTIFY);
-            })
+                expect(cli.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    PushRuleKind.Override,
+                    RuleId.InviteToSelf,
+                    StandardActions.ACTION_NOTIFY,
+                );
+            });
             it("status messages", async () => {
                 const label = "New room activity, upgrades and status messages occur";
 
-                const user = userEvent.setup()
+                const user = userEvent.setup();
                 const screen = render(
                     <MatrixClientContext.Provider value={cli}>
                         <NotificationSettings2 />
@@ -192,13 +232,23 @@ describe("<Notifications />", () => {
                 await act(waitForUpdate);
                 expect(screen.getByLabelText(label)).not.toBeDisabled();
                 await act(() => user.click(screen.getByLabelText(label)));
-                expect(cli.setPushRuleActions).toHaveBeenCalledWith("global", PushRuleKind.Override, RuleId.MemberEvent, StandardActions.ACTION_NOTIFY);
-                expect(cli.setPushRuleActions).toHaveBeenCalledWith("global", PushRuleKind.Override, RuleId.Tombstone, StandardActions.ACTION_HIGHLIGHT);
-            })
+                expect(cli.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    PushRuleKind.Override,
+                    RuleId.MemberEvent,
+                    StandardActions.ACTION_NOTIFY,
+                );
+                expect(cli.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    PushRuleKind.Override,
+                    RuleId.Tombstone,
+                    StandardActions.ACTION_HIGHLIGHT,
+                );
+            });
             it("notices", async () => {
                 const label = "Messages are sent by a bot";
 
-                const user = userEvent.setup()
+                const user = userEvent.setup();
                 const screen = render(
                     <MatrixClientContext.Provider value={cli}>
                         <NotificationSettings2 />
@@ -207,14 +257,19 @@ describe("<Notifications />", () => {
                 await act(waitForUpdate);
                 expect(screen.getByLabelText(label)).not.toBeDisabled();
                 await act(() => user.click(screen.getByLabelText(label)));
-                expect(cli.setPushRuleActions).toHaveBeenCalledWith("global", PushRuleKind.Override, RuleId.SuppressNotices, StandardActions.ACTION_DONT_NOTIFY);
-            })
-        })
+                expect(cli.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    PushRuleKind.Override,
+                    RuleId.SuppressNotices,
+                    StandardActions.ACTION_DONT_NOTIFY,
+                );
+            });
+        });
         describe("mentions", () => {
             it("room mentions", async () => {
                 const label = "Notify when someone mentions using @room";
 
-                const user = userEvent.setup()
+                const user = userEvent.setup();
                 const screen = render(
                     <MatrixClientContext.Provider value={cli}>
                         <NotificationSettings2 />
@@ -223,12 +278,17 @@ describe("<Notifications />", () => {
                 await act(waitForUpdate);
                 expect(screen.getByLabelText(label)).not.toBeDisabled();
                 await act(() => user.click(screen.getByLabelText(label)));
-                expect(cli.setPushRuleActions).toHaveBeenCalledWith("global", PushRuleKind.Override, RuleId.AtRoomNotification, StandardActions.ACTION_DONT_NOTIFY);
-            })
+                expect(cli.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    PushRuleKind.Override,
+                    RuleId.AtRoomNotification,
+                    StandardActions.ACTION_DONT_NOTIFY,
+                );
+            });
             it("user mentions", async () => {
                 const label = "Notify when someone mentions using @displayname or @mxid";
 
-                const user = userEvent.setup()
+                const user = userEvent.setup();
                 const screen = render(
                     <MatrixClientContext.Provider value={cli}>
                         <NotificationSettings2 />
@@ -237,28 +297,38 @@ describe("<Notifications />", () => {
                 await act(waitForUpdate);
                 expect(screen.getByLabelText(label)).not.toBeDisabled();
                 await act(() => user.click(screen.getByLabelText(label)));
-                expect(cli.setPushRuleActions).toHaveBeenCalledWith("global", PushRuleKind.Override, RuleId.ContainsDisplayName, StandardActions.ACTION_DONT_NOTIFY);
-                expect(cli.setPushRuleActions).toHaveBeenCalledWith("global", PushRuleKind.ContentSpecific, RuleId.ContainsUserName, StandardActions.ACTION_DONT_NOTIFY);
-            })
-        })
-    })
+                expect(cli.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    PushRuleKind.Override,
+                    RuleId.ContainsDisplayName,
+                    StandardActions.ACTION_DONT_NOTIFY,
+                );
+                expect(cli.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    PushRuleKind.ContentSpecific,
+                    RuleId.ContainsUserName,
+                    StandardActions.ACTION_DONT_NOTIFY,
+                );
+            });
+        });
+    });
 
     describe("pusher settings", () => {
         it("can create email pushers", async () => {
             cli.getPushers = jest.fn(cli.getPushers).mockResolvedValue({
                 pushers: [
                     {
-                        "app_display_name": "Element",
-                        "app_id": "im.vector.app",
-                        "data": {},
-                        "device_display_name": "My EyeFon",
-                        "kind": "http",
-                        "lang": "en",
-                        "pushkey": "",
-                        "enabled": true,
+                        app_display_name: "Element",
+                        app_id: "im.vector.app",
+                        data: {},
+                        device_display_name: "My EyeFon",
+                        kind: "http",
+                        lang: "en",
+                        pushkey: "",
+                        enabled: true,
                     },
                 ],
-            })
+            });
             cli.getThreePids = jest.fn(cli.getThreePids).mockResolvedValue({
                 threepids: [
                     {
@@ -271,7 +341,7 @@ describe("<Notifications />", () => {
             });
 
             const label = "test@example.tld";
-            const user = userEvent.setup()
+            const user = userEvent.setup();
             const screen = render(
                 <MatrixClientContext.Provider value={cli}>
                     <NotificationSettings2 />
@@ -281,40 +351,40 @@ describe("<Notifications />", () => {
             expect(screen.getByLabelText(label)).not.toBeDisabled();
             await act(() => user.click(screen.getByLabelText(label)));
             expect(cli.setPusher).toHaveBeenCalledWith({
-                "app_display_name": "Email Notifications",
-                "app_id": "m.email",
-                "append": true,
-                "data": { "brand": "Element" },
-                "device_display_name": "test@example.tld",
-                "kind": "email",
-                "lang": "en-US",
-                "pushkey": "test@example.tld",
+                app_display_name: "Email Notifications",
+                app_id: "m.email",
+                append: true,
+                data: { brand: "Element" },
+                device_display_name: "test@example.tld",
+                kind: "email",
+                lang: "en-US",
+                pushkey: "test@example.tld",
             });
-        })
+        });
 
         it("can remove email pushers", async () => {
             cli.getPushers = jest.fn(cli.getPushers).mockResolvedValue({
                 pushers: [
                     {
-                        "app_display_name": "Element",
-                        "app_id": "im.vector.app",
-                        "data": {},
-                        "device_display_name": "My EyeFon",
-                        "kind": "http",
-                        "lang": "en",
-                        "pushkey": "abctest",
+                        app_display_name: "Element",
+                        app_id: "im.vector.app",
+                        data: {},
+                        device_display_name: "My EyeFon",
+                        kind: "http",
+                        lang: "en",
+                        pushkey: "abctest",
                     },
                     {
-                        "app_display_name": "Email Notifications",
-                        "app_id": "m.email",
-                        "data": { "brand": "Element" },
-                        "device_display_name": "test@example.tld",
-                        "kind": "email",
-                        "lang": "en-US",
-                        "pushkey": "test@example.tld",
+                        app_display_name: "Email Notifications",
+                        app_id: "m.email",
+                        data: { brand: "Element" },
+                        device_display_name: "test@example.tld",
+                        kind: "email",
+                        lang: "en-US",
+                        pushkey: "test@example.tld",
                     },
                 ],
-            })
+            });
             cli.getThreePids = jest.fn(cli.getThreePids).mockResolvedValue({
                 threepids: [
                     {
@@ -327,7 +397,7 @@ describe("<Notifications />", () => {
             });
 
             const label = "test@example.tld";
-            const user = userEvent.setup()
+            const user = userEvent.setup();
             const screen = render(
                 <MatrixClientContext.Provider value={cli}>
                     <NotificationSettings2 />
@@ -337,8 +407,8 @@ describe("<Notifications />", () => {
             expect(screen.getByLabelText(label)).not.toBeDisabled();
             await act(() => user.click(screen.getByLabelText(label)));
             expect(cli.removePusher).toHaveBeenCalledWith("test@example.tld", "m.email");
-        })
-    })
+        });
+    });
 
     describe("clear all notifications", () => {
         it("is hidden when no notifications exist", async () => {
@@ -351,9 +421,11 @@ describe("<Notifications />", () => {
                 </MatrixClientContext.Provider>,
             );
             await waitForUpdate();
-            expect(queryByRole(container, "button", {
-                name: "Mark all messages as read",
-            })).not.toBeInTheDocument();
+            expect(
+                queryByRole(container, "button", {
+                    name: "Mark all messages as read",
+                }),
+            ).not.toBeInTheDocument();
         });
 
         it("clears all notifications", async () => {
