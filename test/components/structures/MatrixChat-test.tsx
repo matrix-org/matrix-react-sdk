@@ -339,7 +339,7 @@ describe("<MatrixChat />", () => {
     });
 
     describe("login via key/pass", () => {
-        let loginClient;
+        let loginClient!: ReturnType<typeof getMockClientWithEventEmitter>;
 
         const mockCrypto = {
             getVerificationRequestsToDeviceInProgress: jest.fn().mockReturnValue([]),
@@ -427,8 +427,8 @@ describe("<MatrixChat />", () => {
         describe("post login setup", () => {
             beforeEach(() => {
                 loginClient.isCryptoEnabled.mockReturnValue(true);
-                loginClient.getCrypto.mockReturnValue(mockCrypto);
-                loginClient.userHasCrossSigningKeys.mockClear().mockReturnValue(false);
+                loginClient.getCrypto.mockReturnValue(mockCrypto as any);
+                loginClient.userHasCrossSigningKeys.mockClear().mockResolvedValue(false);
             });
 
             it("should go straight to logged in view when crypto is not enabled", async () => {
@@ -455,7 +455,7 @@ describe("<MatrixChat />", () => {
             });
 
             it("should show complete security screen when user has cross signing setup", async () => {
-                loginClient.userHasCrossSigningKeys.mockReturnValue(true);
+                loginClient.userHasCrossSigningKeys.mockResolvedValue(true);
 
                 await getComponentAndLogin();
 
