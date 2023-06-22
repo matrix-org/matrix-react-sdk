@@ -22,6 +22,7 @@ import React from "react";
 import { uniq, sortBy, uniqBy, ListIteratee } from "lodash";
 import EMOTICON_REGEX from "emojibase-regex/emoticon";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { _t } from "../languageHandler";
@@ -43,6 +44,7 @@ const LIMIT = 20;
 // Match for ascii-style ";-)" emoticons or ":wink:" shortcodes provided by emojibase
 // anchored to only match from the start of parts otherwise it'll show emoji suggestions whilst typing matrix IDs
 const EMOJI_REGEX = new RegExp("(" + EMOTICON_REGEX.source + "|(?:^|\\s):[+-\\w]*:?)$", "g");
+const EMOTES_STATE = new UnstableValue("org.matrix.msc3892.emotes", "m.room.emotes");
 
 interface ISortedEmoji {
     emoji: IEmoji;
@@ -88,7 +90,7 @@ export default class EmojiProvider extends AutocompleteProvider {
     private emotesPromise?: Promise<Map<string, string>>;
     public constructor(room: Room, renderingType?: TimelineRenderingType) {
         super({ commandRegex: EMOJI_REGEX, renderingType });
-        const emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
+        const emotesEvent = room?.currentState.getStateEvents(EMOTES_STATE.name, "");
         const rawEmotes = emotesEvent ? emotesEvent.getContent() || {} : {};
         const emotesMap = new Map();
         for (const shortcode in rawEmotes) {

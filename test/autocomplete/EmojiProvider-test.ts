@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { mocked } from "jest-mock";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
+
 import EmojiProvider from "../../src/autocomplete/EmojiProvider";
 import { mkStubRoom } from "../test-utils/test-utils";
 import { add } from "../../src/emojipicker/recent";
@@ -40,6 +44,7 @@ const EMOJI_SHORTCODES = [
 // This means that we cannot compare their autocompletion before and after the ending `:` and have
 // to simply assert that the final completion with the colon is the exact emoji.
 const TOO_SHORT_EMOJI_SHORTCODE = [{ emojiShortcode: ":o", expectedEmoji: "⭕️" }];
+const EMOTES_STATE = new UnstableValue("org.matrix.msc3892.emotes", "m.room.emotes");
 
 describe("EmojiProvider", function () {
     const testRoom = mkStubRoom(undefined, undefined, undefined);
@@ -94,5 +99,31 @@ describe("EmojiProvider", function () {
         expect(completionsList[0]?.component?.props.title).toEqual(":heart:");
         expect(completionsList[1]?.component?.props.title).toEqual(":heartpulse:");
         expect(completionsList[2]?.component?.props.title).toEqual(":heart_eyes:");
+    });
+
+    it("loads and returns custom emotes", async function () {
+        const cli = stubClient();
+        mocked(cli.getRoom).mockReturnValue(testRoom);
+        mocked(cli.isRoomEncrypted).mockReturnValue(false);
+        // @ts-ignore - mocked doesn't support overloads properly
+        mocked(testRoom.currentState.getStateEvents).mockImplementation((type, key) => {
+            if (key === undefined) return [] as MatrixEvent[];
+            if (type === EMOTES_STATE.name) {
+                return new MatrixEvent({
+                    sender: "@sender:server",
+                    room_id: testRoom.roomId,
+                    type: EMOTES_STATE.name,
+                    state_key: "",
+                    content: {
+                        testEmote: "abcde/custom-emote-123.png",
+                    },
+                });
+            }
+            return null;
+        });
+
+        const ep = new EmojiProvider(testRoom);
+        const completionsList = await ep.getCompletions(":testEmote", { beginning: true, start: 0, end: 6 });
+        expect(completionsList[0]?.component?.props.title).toEqual("http://this.is.a.url/custom-emote-123.png");
     });
 });

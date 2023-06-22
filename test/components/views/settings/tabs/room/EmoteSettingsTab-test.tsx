@@ -113,6 +113,7 @@ describe("EmoteSettingsTab", () => {
                     state_key: "",
                     content: {
                         testEmote: "http://this.is.a.url/server/custom-emote-123.png",
+                        anotherEmote: "http://this.is.a.url/server/custom-emote-123.png",
                     },
                 });
             }
@@ -120,14 +121,14 @@ describe("EmoteSettingsTab", () => {
         });
         const tab = renderTab();
 
-        fireEvent.click(screen.getByText("Delete"));
-        let emotefield = tab.container.querySelector("input.mx_EmoteSettings_existingEmoteCode");
-        if (emotefield) {
+        fireEvent.click(screen.getAllByText("Delete")[0]);
+        let emotefieldnum = tab.container.querySelectorAll("input.mx_EmoteSettings_existingEmoteCode").length;
+        if (emotefieldnum > 1) {
             throw new Error("not deleting");
         }
         fireEvent.click(screen.getByText("Cancel"));
-        emotefield = tab.container.querySelector("input.mx_EmoteSettings_existingEmoteCode");
-        if (!emotefield) {
+        emotefieldnum = tab.container.querySelectorAll("input.mx_EmoteSettings_existingEmoteCode").length;
+        if (emotefieldnum < 2) {
             throw new Error("not restoring when cancel is clicked");
         }
     });
