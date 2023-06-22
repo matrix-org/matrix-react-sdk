@@ -46,6 +46,7 @@ const waitForUpdate = (): Promise<void> => new Promise((resolve) => setTimeout(r
 
 const labelGlobalMute = "Enable notifications for this account";
 const labelLevelAllMessage = "All messages";
+const labelLevelMentionsOnly = "Mentions and Keywords only";
 const labelSoundPeople = "People";
 const labelSoundMentions = "Mentions and Keywords";
 const labelSoundCalls = "Audio and Video calls";
@@ -56,6 +57,7 @@ const labelMentionUser = "Notify when someone mentions using @displayname or @mx
 const labelMentionRoom = "Notify when someone mentions using @room";
 const labelMentionKeyword =
     "Notify when someone uses a keyword" + "Enter keywords here, or use for spelling variations or nicknames";
+const labelResetDefault = "Reset to default settings";
 
 const keywords = ["justjann3", "justj4nn3", "justj4nne", "Janne", "J4nne", "Jann3", "jann3", "j4nne", "janne"];
 
@@ -197,8 +199,6 @@ describe("<Notifications />", () => {
         });
 
         it("notification level", async () => {
-            const label = labelLevelAllMessage;
-
             const user = userEvent.setup();
             const screen = render(
                 <MatrixClientContext.Provider value={cli}>
@@ -206,9 +206,9 @@ describe("<Notifications />", () => {
                 </MatrixClientContext.Provider>,
             );
             await act(waitForUpdate);
-            expect(screen.getByLabelText(label)).not.toBeDisabled();
+            expect(screen.getByLabelText(labelLevelAllMessage)).not.toBeDisabled();
             await act(async () => {
-                await user.click(screen.getByLabelText(label));
+                await user.click(screen.getByLabelText(labelLevelAllMessage));
                 await waitForUpdate();
             });
             expect(cli.setPushRuleEnabled).toHaveBeenCalledWith(
@@ -218,6 +218,19 @@ describe("<Notifications />", () => {
                 true,
             );
             expect(cli.setPushRuleEnabled).toHaveBeenCalledWith("global", PushRuleKind.Underride, RuleId.Message, true);
+            (cli.setPushRuleEnabled as Mock).mockClear();
+            expect(screen.getByLabelText(labelLevelMentionsOnly)).not.toBeDisabled();
+            await act(async () => {
+                await user.click(screen.getByLabelText(labelLevelMentionsOnly));
+                await waitForUpdate();
+            });
+            expect(cli.setPushRuleEnabled).toHaveBeenCalledWith(
+                "global",
+                PushRuleKind.Underride,
+                RuleId.EncryptedDM,
+                true,
+            );
+            expect(cli.setPushRuleEnabled).toHaveBeenCalledWith("global", PushRuleKind.Underride, RuleId.DM, true);
         });
 
         describe("play a sound for", () => {
@@ -504,6 +517,89 @@ describe("<Notifications />", () => {
                 });
                 expect(cli.deletePushRule).toHaveBeenCalledWith("global", PushRuleKind.ContentSpecific, "justj4nn3");
             });
+        });
+
+        it("resets the model correctly", async () => {
+            const user = userEvent.setup();
+            const screen = render(
+                <MatrixClientContext.Provider value={cli}>
+                    <NotificationSettings2 />
+                </MatrixClientContext.Provider>,
+            );
+            await act(waitForUpdate);
+            const button = screen.getByText(labelResetDefault);
+            expect(button).not.toBeDisabled();
+            await act(async () => {
+                await user.click(button);
+                await waitForUpdate();
+            });
+            expect(cli.setPushRuleEnabled).toHaveBeenCalledWith(
+                "global",
+                PushRuleKind.Underride,
+                RuleId.EncryptedMessage,
+                true,
+            );
+            expect(cli.setPushRuleEnabled).toHaveBeenCalledWith("global", PushRuleKind.Underride, RuleId.Message, true);
+            expect(cli.setPushRuleEnabled).toHaveBeenCalledWith(
+                "global",
+                PushRuleKind.Underride,
+                RuleId.EncryptedDM,
+                true,
+            );
+            expect(cli.setPushRuleEnabled).toHaveBeenCalledWith("global", PushRuleKind.Underride, RuleId.DM, true);
+            expect(cli.setPushRuleEnabled).toHaveBeenCalledWith(
+                "global",
+                PushRuleKind.Override,
+                RuleId.SuppressNotices,
+                false,
+            );
+            expect(cli.setPushRuleEnabled).toHaveBeenCalledWith(
+                "global",
+                PushRuleKind.Override,
+                RuleId.InviteToSelf,
+                true,
+            );
+
+            expect(cli.setPushRuleActions).toHaveBeenCalledWith(
+                "global",
+                PushRuleKind.Underride,
+                RuleId.EncryptedMessage,
+                StandardActions.ACTION_NOTIFY,
+            );
+            expect(cli.setPushRuleActions).toHaveBeenCalledWith(
+                "global",
+                PushRuleKind.Underride,
+                RuleId.Message,
+                StandardActions.ACTION_NOTIFY,
+            );
+            expect(cli.setPushRuleActions).toHaveBeenCalledWith(
+                "global",
+                PushRuleKind.Underride,
+                RuleId.EncryptedDM,
+                StandardActions.ACTION_NOTIFY_DEFAULT_SOUND,
+            );
+            expect(cli.setPushRuleActions).toHaveBeenCalledWith(
+                "global",
+                PushRuleKind.Underride,
+                RuleId.DM,
+                StandardActions.ACTION_NOTIFY_DEFAULT_SOUND,
+            );
+            expect(cli.setPushRuleActions).toHaveBeenCalledWith(
+                "global",
+                PushRuleKind.Override,
+                RuleId.SuppressNotices,
+                StandardActions.ACTION_DONT_NOTIFY,
+            );
+            expect(cli.setPushRuleActions).toHaveBeenCalledWith(
+                "global",
+                PushRuleKind.Override,
+                RuleId.InviteToSelf,
+                StandardActions.ACTION_NOTIFY_DEFAULT_SOUND,
+            );
+
+            for (const pattern of keywords) {
+                expect(cli.deletePushRule).toHaveBeenCalledWith("global", PushRuleKind.ContentSpecific, pattern);
+            }
         });
     });
 
