@@ -25,11 +25,11 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
             <div
               class="mx_SettingsSubsectionHeading"
             >
-              <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+              <h4
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Secure Backup
-              </h3>
+              </h4>
             </div>
             <div
               class="mx_SettingsSubsection_content"
@@ -108,11 +108,11 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
             <div
               class="mx_SettingsSubsectionHeading"
             >
-              <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+              <h4
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Message search
-              </h3>
+              </h4>
             </div>
             <div
               class="mx_SettingsSubsection_content"
@@ -144,11 +144,11 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
             <div
               class="mx_SettingsSubsectionHeading"
             >
-              <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+              <h4
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Cross-signing
-              </h3>
+              </h4>
             </div>
             <div
               class="mx_SettingsSubsection_content"
@@ -241,11 +241,11 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
             <div
               class="mx_SettingsSubsectionHeading"
             >
-              <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+              <h4
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Cryptography
-              </h3>
+              </h4>
             </div>
             <div
               class="mx_SettingsSubsection_content"
@@ -328,11 +328,11 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
             <div
               class="mx_SettingsSubsectionHeading"
             >
-              <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+              <h4
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Ignored users
-              </h3>
+              </h4>
             </div>
             <div
               class="mx_SettingsSubsection_content"
@@ -350,11 +350,11 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
             <div
               class="mx_SettingsSubsectionHeading"
             >
-              <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+              <h4
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Encryption
-              </h3>
+              </h4>
             </div>
             <div
               class="mx_SettingsSubsection_content"

@@ -26,11 +26,11 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
             <div
               class="mx_SettingsSubsectionHeading"
             >
-              <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+              <h4
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Room list
-              </h3>
+              </h4>
             </div>
             <div
               class="mx_SettingsSubsection_content"
@@ -68,11 +68,11 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
             <div
               class="mx_SettingsSubsectionHeading"
             >
-              <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+              <h4
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Spaces
-              </h3>
+              </h4>
             </div>
             <div
               class="mx_SettingsSubsection_content"
@@ -115,11 +115,11 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
             <div
               class="mx_SettingsSubsectionHeading"
             >
-              <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+              <h4
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Keyboard shortcuts
-              </h3>
+              </h4>
             </div>
             <div
               class="mx_SettingsSubsection_description"
@@ -176,11 +176,11 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
             <div
               class="mx_SettingsSubsectionHeading"
             >
-              <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+              <h4
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Displaying time
-              </h3>
+              </h4>
             </div>
             <div
               class="mx_SettingsSubsection_content"
@@ -243,11 +243,11 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
             <div
               class="mx_SettingsSubsectionHeading"
             >
-              <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+              <h4
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Presence
-              </h3>
+              </h4>
             </div>
             <div
               class="mx_SettingsSubsection_description"
@@ -319,11 +319,11 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
             <div
               class="mx_SettingsSubsectionHeading"
             >
-              <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+              <h4
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Composer
-              </h3>
+              </h4>
             </div>
             <div
               class="mx_SettingsSubsection_content"
@@ -522,11 +522,11 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
             <div
               class="mx_SettingsSubsectionHeading"
             >
-              <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+              <h4
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Code blocks
-              </h3>
+              </h4>
             </div>
             <div
               class="mx_SettingsSubsection_content"
@@ -614,11 +614,11 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
             <div
               class="mx_SettingsSubsectionHeading"
             >
-              <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+              <h4
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Images, GIFs and videos
-              </h3>
+              </h4>
             </div>
             <div
               class="mx_SettingsSubsection_content"
@@ -731,11 +731,11 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
             <div
               class="mx_SettingsSubsectionHeading"
             >
-              <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+              <h4
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Timeline
-              </h3>
+              </h4>
             </div>
             <div
               class="mx_SettingsSubsection_content"
@@ -1023,11 +1023,11 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
             <div
               class="mx_SettingsSubsectionHeading"
             >
-              <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+              <h4
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Room directory
-              </h3>
+              </h4>
             </div>
             <div
               class="mx_SettingsSubsection_content"
@@ -1065,11 +1065,11 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
             <div
               class="mx_SettingsSubsectionHeading"
             >
-              <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+              <h4
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 General
-              </h3>
+              </h4>
             </div>
             <div
               class="mx_SettingsSubsection_content mx_SettingsSubsection_contentStretch"

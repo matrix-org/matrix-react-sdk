@@ -134,9 +134,8 @@ a:visited {
 input[type="text"],
 input[type="search"],
 input[type="password"] {
-    font-family: inherit;
     padding: 9px;
-    font-size: $font-14px;
+    font: var(--cpd-font-body-md-semibold);
     font-weight: var(--cpd-font-weight-semibold);
     min-width: 0;
 }
@@ -340,7 +339,6 @@ legend {
         font: var(--cpd-font-body-md-regular) !important;
         letter-spacing: var(--cpd-font-letter-spacing-body-md);
         color: inherit; /* inherit the colour from the dark or light theme by default (but not for code blocks) */
-        font-size: $font-14px;
 
         pre,
         code {
@@ -497,7 +495,7 @@ legend {
 
 .mx_Dialog_content {
     margin: 24px 0 68px;
-    font-size: $font-14px;
+    font: var(--cpd-font-body-md-regular);
     color: $primary-content;
     word-wrap: break-word;
 }
@@ -534,8 +532,7 @@ legend {
     vertical-align: middle;
     border: 0px;
     border-radius: 8px;
-    font-family: $font-family;
-    font-size: $font-14px;
+    font: var(--cpd-font-body-md-regular);
     color: $button-fg-color;
     background-color: $accent;
     width: auto;

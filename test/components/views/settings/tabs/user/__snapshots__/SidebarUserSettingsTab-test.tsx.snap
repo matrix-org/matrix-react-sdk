@@ -25,11 +25,11 @@ exports[`<SidebarUserSettingsTab /> renders sidebar settings 1`] = `
             <div
               class="mx_SettingsSubsectionHeading"
             >
-              <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+              <h4
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Spaces to show
-              </h3>
+              </h4>
             </div>
             <div
               class="mx_SettingsSubsection_description"
