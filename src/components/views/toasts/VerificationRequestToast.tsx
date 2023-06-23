@@ -16,9 +16,10 @@ limitations under the License.
 
 import React from "react";
 import {
+    canAcceptVerificationRequest,
     VerificationRequest,
     VerificationRequestEvent,
-} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+} from "matrix-js-sdk/src/crypto-api";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -41,6 +42,7 @@ interface IProps {
 }
 
 interface IState {
+    /** number of seconds left in the timeout counter. Zero if there is no timeout. */
     counter: number;
     device?: DeviceInfo;
     ip?: string;
@@ -51,7 +53,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
 
     public constructor(props: IProps) {
         super(props);
-        this.state = { counter: Math.ceil(props.request.timeout / 1000) };
+        this.state = { counter: Math.ceil((props.request.timeout ?? 0) / 1000) };
     }
 
     public async componentDidMount(): Promise<void> {
@@ -73,7 +75,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
         this.checkRequestIsPending();
 
         if (request.isSelfVerification) {
-            const cli = MatrixClientPeg.get();
+            const cli = MatrixClientPeg.safeGet();
             const device = request.otherDeviceId ? await cli.getDevice(request.otherDeviceId) : null;
             const ip = device?.last_seen_ip;
             this.setState({
@@ -93,7 +95,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
 
     private checkRequestIsPending = (): void => {
         const { request } = this.props;
-        if (!request.canAccept) {
+        if (!canAcceptVerificationRequest(request)) {
             ToastStore.sharedInstance().dismissToast(this.props.toastKey);
         }
     };
@@ -111,7 +113,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
         ToastStore.sharedInstance().dismissToast(this.props.toastKey);
         const { request } = this.props;
         // no room id for to_device requests
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         try {
             if (request.roomId) {
                 dis.dispatch<ViewRoomPayload>({
@@ -163,12 +165,12 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
                 });
             }
         } else {
+            const client = MatrixClientPeg.safeGet();
             const userId = request.otherUserId;
             const roomId = request.roomId;
-            description = roomId ? userLabelForEventRoom(MatrixClientPeg.get(), userId, roomId) : userId;
+            description = roomId ? userLabelForEventRoom(client, userId, roomId) : userId;
             // for legacy to_device verification requests
             if (description === userId) {
-                const client = MatrixClientPeg.get();
                 const user = client.getUser(userId);
                 if (user && user.displayName) {
                     description = _t("%(name)s (%(userId)s)", { name: user.displayName, userId });

@@ -14,10 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export enum OidcClientError {
-    DynamicRegistrationNotSupported = "Dynamic registration not supported",
-    DynamicRegistrationFailed = "Dynamic registration failed",
-    DynamicRegistrationInvalid = "Dynamic registration invalid response",
-    CodeExchangeFailed = "Failed to exchange code for token",
-    InvalidBearerToken = "Invalid bearer token",
+import { IAnnotatedPushRule, IPushRules, PushRuleKind, RuleId } from "matrix-js-sdk/src/matrix";
+
+export type PushRuleMap = Map<RuleId | string, IAnnotatedPushRule>;
+
+export function buildPushRuleMap(rulesets: IPushRules): PushRuleMap {
+    const rules = new Map<RuleId | string, IAnnotatedPushRule>();
+
+    for (const kind of Object.values(PushRuleKind)) {
+        for (const rule of rulesets.global[kind] ?? []) {
+            if (rule.rule_id.startsWith(".")) {
+                rules.set(rule.rule_id, { ...rule, kind });
+            }
+        }
+    }
+
+    return rules;
 }

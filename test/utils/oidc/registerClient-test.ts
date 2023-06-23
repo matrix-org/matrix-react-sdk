@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import fetchMockJest from "fetch-mock-jest";
+import { OidcError } from "matrix-js-sdk/src/oidc/error";
 
-import { OidcClientError } from "../../../src/utils/oidc/error";
 import { getOidcClientId } from "../../../src/utils/oidc/registerClient";
 
 describe("getOidcClientId()", () => {
@@ -56,7 +56,7 @@ describe("getOidcClientId()", () => {
         };
         expect(
             async () => await getOidcClientId(authConfigWithoutRegistration, clientName, baseUrl, staticOidcClients),
-        ).rejects.toThrow(OidcClientError.DynamicRegistrationNotSupported);
+        ).rejects.toThrow(OidcError.DynamicRegistrationNotSupported);
         // didn't try to register
         expect(fetchMockJest).toHaveFetchedTimes(0);
     });
@@ -67,7 +67,7 @@ describe("getOidcClientId()", () => {
             registrationEndpoint: undefined,
         };
         expect(async () => await getOidcClientId(authConfigWithoutRegistration, clientName, baseUrl)).rejects.toThrow(
-            OidcClientError.DynamicRegistrationNotSupported,
+            OidcError.DynamicRegistrationNotSupported,
         );
         // didn't try to register
         expect(fetchMockJest).toHaveFetchedTimes(0);
@@ -104,7 +104,7 @@ describe("getOidcClientId()", () => {
             status: 500,
         });
         expect(() => getOidcClientId(delegatedAuthConfig, clientName, baseUrl)).rejects.toThrow(
-            OidcClientError.DynamicRegistrationFailed,
+            OidcError.DynamicRegistrationFailed,
         );
     });
 
@@ -115,7 +115,7 @@ describe("getOidcClientId()", () => {
             body: "{}",
         });
         expect(() => getOidcClientId(delegatedAuthConfig, clientName, baseUrl)).rejects.toThrow(
-            OidcClientError.DynamicRegistrationInvalid,
+            OidcError.DynamicRegistrationInvalid,
         );
     });
 });

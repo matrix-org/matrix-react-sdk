@@ -18,10 +18,10 @@ import React from "react";
 import { verificationMethods } from "matrix-js-sdk/src/crypto";
 import { SCAN_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
 import {
-    Phase,
     VerificationRequest,
+    VerificationPhase as Phase,
     VerificationRequestEvent,
-} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+} from "matrix-js-sdk/src/crypto-api";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { User } from "matrix-js-sdk/src/models/user";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -202,10 +202,10 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
     };
 
     private getDevice(): DeviceInfo | null {
-        const deviceId = this.props.request && this.props.request.otherDeviceId;
-        const userId = MatrixClientPeg.get().getUserId();
+        const deviceId = this.props.request?.otherDeviceId;
+        const userId = MatrixClientPeg.safeGet().getUserId();
         if (deviceId && userId) {
-            return MatrixClientPeg.get().getStoredDevice(userId, deviceId);
+            return MatrixClientPeg.safeGet().getStoredDevice(userId, deviceId);
         } else {
             return null;
         }

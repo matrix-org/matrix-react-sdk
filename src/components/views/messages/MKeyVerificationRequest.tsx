@@ -18,9 +18,10 @@ import React from "react";
 import { MatrixEvent, User } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import {
-    Phase as VerificationPhase,
+    canAcceptVerificationRequest,
+    VerificationPhase,
     VerificationRequestEvent,
-} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+} from "matrix-js-sdk/src/crypto-api";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
@@ -54,7 +55,7 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
         let member: User | undefined;
         const { verificationRequest } = this.props.mxEvent;
         if (verificationRequest) {
-            member = MatrixClientPeg.get().getUser(verificationRequest.otherUserId) ?? undefined;
+            member = MatrixClientPeg.safeGet().getUser(verificationRequest.otherUserId) ?? undefined;
         }
         RightPanelStore.instance.setCards([
             { phase: RightPanelPhases.RoomSummary },
@@ -74,7 +75,7 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
                 this.openRequest();
                 await request.accept();
             } catch (err) {
-                logger.error(err.message);
+                logger.error(err);
             }
         }
     };
@@ -85,13 +86,13 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
             try {
                 await request.cancel();
             } catch (err) {
-                logger.error(err.message);
+                logger.error(err);
             }
         }
     };
 
     private acceptedLabel(userId: string): string {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const myUserId = client.getUserId();
         if (userId === myUserId) {
             return _t("You accepted");
@@ -103,7 +104,7 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
     }
 
     private cancelledLabel(userId: string): string {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const myUserId = client.getUserId();
         const cancellationCode = this.props.mxEvent.verificationRequest?.cancellationCode;
         const declined = cancellationCode === "m.user";
@@ -127,7 +128,7 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
     }
 
     public render(): React.ReactNode {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const { mxEvent } = this.props;
         const request = mxEvent.verificationRequest;
 
@@ -139,7 +140,7 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
         let subtitle: string;
         let stateNode: JSX.Element | undefined;
 
-        if (!request.canAccept) {
+        if (!canAcceptVerificationRequest(request)) {
             let stateLabel;
             const accepted =
                 request.phase === VerificationPhase.Ready ||
@@ -165,7 +166,7 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
             const name = getNameForEventRoom(client, request.otherUserId, mxEvent.getRoomId()!);
             title = _t("%(name)s wants to verify", { name });
             subtitle = userLabelForEventRoom(client, request.otherUserId, mxEvent.getRoomId()!);
-            if (request.canAccept) {
+            if (canAcceptVerificationRequest(request)) {
                 stateNode = (
                     <div className="mx_cryptoEvent_buttons">
                         <AccessibleButton kind="danger" onClick={this.onRejectClicked}>
