@@ -107,7 +107,7 @@ const getCodeAndStateFromQueryParams = (queryParams: QueryDict): { code: string;
     const state = queryParams["state"];
 
     if (!code || typeof code !== "string" || !state || typeof state !== "string") {
-        throw new Error("TODO(kerrya) Invalid query parameters. `code` and `state` are required.");
+        throw new Error("Invalid query parameters for OIDC native login. `code` and `state` are required.");
     }
     return { code, state };
 };
@@ -115,7 +115,7 @@ const getCodeAndStateFromQueryParams = (queryParams: QueryDict): { code: string;
 /**
  * Attempt to complete authorization code flow to login
  * @param {QueryDict} queryParams the query-parameters extracted from the real query-string of the starting URI.
- * @returns {Promise<void>} Promise that resolves when login was successful
+ * @returns {Promise<{}>} Promise that resolves with accesstoken, identityServerUrl, and homeserverUrl when login was successful
  * @throws When login failed
  */
 export const completeOidcLogin = async (

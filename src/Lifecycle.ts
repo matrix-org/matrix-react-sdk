@@ -211,12 +211,9 @@ async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> 
     try {
         const { accessToken, homeserverUrl, identityServerUrl } = await completeOidcLogin(queryParams);
 
-        // @TODO(kerrya) try catch with error code for this
         const {
             user_id: userId,
-            // @TODO(kerrya) should use this deviceId, or check they match?
             device_id: deviceId,
-            // @TODO(kerrya) WhoAmIResponse needs to be updated
             is_guest: isGuest,
         } = await getUserIdFromAccessToken(accessToken, homeserverUrl, identityServerUrl);
 
@@ -230,7 +227,7 @@ async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> 
         };
 
         // @TODO(kerrya) should clear storage?
-        // @TODO(kerrya) other token login doesnt use this codepath, why?
+        // @TODO(kerrya) other token login doesn't use this codepath, why?
         await doSetLoggedIn(credentials, true);
         return true;
     } catch (error) {
