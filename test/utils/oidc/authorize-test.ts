@@ -83,7 +83,7 @@ describe("startOidcLogin()", () => {
 
         const authUrl = new URL(window.location.href);
 
-        expect(authUrl.searchParams.get("response_mode")).toEqual("fragment");
+        expect(authUrl.searchParams.get("response_mode")).toEqual("query");
         expect(authUrl.searchParams.get("response_type")).toEqual("code");
         expect(authUrl.searchParams.get("client_id")).toEqual(clientId);
         expect(authUrl.searchParams.get("code_challenge_method")).toEqual("S256");
