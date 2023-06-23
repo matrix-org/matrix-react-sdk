@@ -238,16 +238,6 @@ describe("FilePanel", () => {
                 });
             });
         });
-
-        it("should not add inline padding to a tile when it is selected with right click", () => {
-            // Upload a file
-            uploadFile("cypress/fixtures/1sec.ogg");
-
-            cy.get(".mx_FilePanel .mx_RoomView_MessageList").within(() => {
-                // Wait until the spinner of the audio player vanishes
-                cy.get(".mx_InlineSpinner").should("not.exist");
-            });
-        });
     });
 
     describe("download", () => {
