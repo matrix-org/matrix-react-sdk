@@ -65,6 +65,7 @@ import { OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPaylo
 import { SdkContextClass } from "./contexts/SDKContext";
 import { messageForLoginError } from "./utils/ErrorUtils";
 import { completeOidcLogin } from "./utils/oidc/authorize";
+import { OidcError } from "matrix-js-sdk/src/oidc/error";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -192,8 +193,8 @@ export async function getStoredSessionOwner(): Promise<[string, boolean] | [null
  * @param {string} defaultDeviceDisplayName
  * @param {string} fragmentAfterLogin path to go to after a successful login, only used for "Try again"
  *
- * @returns {Promise} promise which resolves to true if we completed the token
- *    login, else false
+ * @returns {Promise} promise which resolves to true if we completed the delegated auth login
+ *      else false
  */
 export async function attemptDelegatedAuthLogin(
     queryParams: QueryDict,
@@ -201,16 +202,69 @@ export async function attemptDelegatedAuthLogin(
     fragmentAfterLogin?: string,
 ): Promise<boolean> {
     if (queryParams.code && queryParams.state) {
-        try {
-            await completeOidcLogin(queryParams);
-            return true;
-        } catch (error) {
-            logger.error("Failed to login via OIDC", error)
-            return false;
-        }
+        return attemptOidcNativeLogin(queryParams);
     }
 
     return attemptTokenLogin(queryParams, defaultDeviceDisplayName, fragmentAfterLogin);
+}
+
+async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> {
+    try {
+        const { accessToken, homeserverUrl, identityServerUrl } = await completeOidcLogin(queryParams);
+
+        // @TODO(kerrya) try catch with error code for this
+        const {
+            user_id: userId,
+            // @TODO(kerrya) should use this deviceId, or check they match?
+            device_id: deviceId,
+            // @TODO(kerrya) WhoAmIResponse needs to be updated
+            is_guest: isGuest,
+        } = await getUserIdFromAccessToken(accessToken, homeserverUrl, identityServerUrl);
+
+        const credentials = {
+            accessToken,
+            homeserverUrl,
+            identityServerUrl,
+            deviceId,
+            userId,
+            isGuest,
+        };
+
+        // @TODO(kerrya) should clear storage?
+        // @TODO(kerrya) other token login doesnt use this codepath, why?
+        await doSetLoggedIn(credentials, true);
+        return true;
+    } catch (error) {
+        logger.error("Failed to login via OIDC", error);
+        return false;
+    }
+}
+
+/**
+ * Gets information about the owner of a given access token.
+ * @param accessToken
+ * @param homeserverUrl
+ * @param identityServerUrl
+ * @returns Promise that resolves with whoami response
+ * @throws when whoami request fails
+ */
+async function getUserIdFromAccessToken(
+    accessToken: string,
+    homeserverUrl: string,
+    identityServerUrl?: string,
+): Promise<ReturnType<MatrixClient["whoami"]>> {
+    try {
+        const client = createClient({
+            baseUrl: homeserverUrl,
+            accessToken: accessToken,
+            idBaseUrl: identityServerUrl,
+        });
+
+        return await client.whoami();
+    } catch (error) {
+        console.error("Failed to retrieve userId using accessToken", error);
+        throw new Error("Failed to retrieve userId using accessToken");
+    }
 }
 
 /**

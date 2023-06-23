@@ -15,7 +15,11 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { generateAuthorizationParams, generateAuthorizationUrl, completeAuthorizationCodeGrant } from "matrix-js-sdk/src/oidc/authorize";
+import {
+    generateAuthorizationParams,
+    generateAuthorizationUrl,
+    completeAuthorizationCodeGrant,
+} from "matrix-js-sdk/src/oidc/authorize";
 import { QueryDict } from "matrix-js-sdk/src/utils";
 
 import { ValidatedDelegatedAuthConfig } from "../ValidatedServerConfig";
@@ -77,7 +81,7 @@ export const startOidcLogin = async (
     clientId: string,
     homeserver: string,
 ): Promise<void> => {
-    // TODO(kerrya) afterloginfragment
+    // TODO(kerrya) afterloginfragment https://github.com/vector-im/element-web/issues/25656
     const redirectUri = window.location.origin;
     const authParams = generateAuthorizationParams({ redirectUri });
 
@@ -109,7 +113,16 @@ const getCodeAndStateFromQueryParams = (queryParams: QueryDict): { code: string;
     return { code, state };
 };
 
-
+export interface IMatrixClientCreds {
+    homeserverUrl: string;
+    identityServerUrl?: string;
+    userId: string;
+    deviceId?: string;
+    accessToken?: string;
+    guest?: boolean;
+    pickleKey?: string;
+    freshLogin?: boolean;
+}
 
 /**
  * Attempt to complete authorization code flow to login
@@ -117,15 +130,27 @@ const getCodeAndStateFromQueryParams = (queryParams: QueryDict): { code: string;
  * @returns {Promise<void>} Promise that resolves when login was successful
  * @throws When login failed
  */
-export const completeOidcLogin = async (queryParams: QueryDict): Promise<void> => {
+export const completeOidcLogin = async (
+    queryParams: QueryDict,
+): Promise<{
+    homeserverUrl: string;
+    identityServerUrl?: string;
+    accessToken: string;
+}> => {
     const { code, state } = getCodeAndStateFromQueryParams(queryParams);
 
     const storedAuthorizationParams = retrieveAuthorizationParams(state);
 
-    await completeAuthorizationCodeGrant(code, storedAuthorizationParams);
+    const bearerToken = await completeAuthorizationCodeGrant(code, storedAuthorizationParams);
 
-    logger.debug("Got a valid token");
+    // @TODO(kerrya) do I need to verify anything else in response?
 
-    // TODO(kerrya) use the token somewhere :-)
-    throw new Error("OIDC login not fully implemented.")
+    // @TODO(kerrya) do something with the refresh token
+
+    return {
+        homeserverUrl: storedAuthorizationParams.homeserver,
+        accessToken: bearerToken.access_token,
+        // @TODO(kerrya) persist this in session storage with other auth params
+        // identityServerUrl
+    };
 };

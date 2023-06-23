@@ -325,7 +325,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     this.props.onTokenLoginCompleted();
                 }
 
-                // @TODO(kerrya) remove OIDC code and state from URL 
+                // @TODO(kerrya) remove OIDC code and state from URL
 
                 if (loggedIn) {
                     this.tokenLogin = true;
