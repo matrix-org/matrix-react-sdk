@@ -212,19 +212,40 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
     public async connect(): Promise<void> {
         this.connectionState = ConnectionState.Connecting;
 
-        const { [MediaDeviceKindEnum.AudioInput]: audioInputs, [MediaDeviceKindEnum.VideoInput]: videoInputs } =
-            (await MediaDeviceHandler.getDevices())!;
-
-        let audioInput: MediaDeviceInfo | null = null;
-        if (!MediaDeviceHandler.startWithAudioMuted) {
-            const deviceId = MediaDeviceHandler.getAudioInput();
-            audioInput = audioInputs.find((d) => d.deviceId === deviceId) ?? audioInputs[0] ?? null;
-        }
-        let videoInput: MediaDeviceInfo | null = null;
-        if (!MediaDeviceHandler.startWithVideoMuted) {
-            const deviceId = MediaDeviceHandler.getVideoInput();
-            videoInput = videoInputs.find((d) => d.deviceId === deviceId) ?? videoInputs[0] ?? null;
-        }
+        // const { [MediaDeviceKindEnum.AudioInput]: audioInputs, [MediaDeviceKindEnum.VideoInput]: videoInputs } =
+        //     (await MediaDeviceHandler.getDevices())!;
+        //
+        // let audioInput: MediaDeviceInfo | null = null;
+        // if (!MediaDeviceHandler.startWithAudioMuted) {
+        //     const deviceId = MediaDeviceHandler.getAudioInput();
+        //     audioInput = audioInputs.find((d) => d.deviceId === deviceId) ?? audioInputs[0] ?? null;
+        // }
+        // let videoInput: MediaDeviceInfo | null = null;
+        // if (!MediaDeviceHandler.startWithVideoMuted) {
+        //     const deviceId = MediaDeviceHandler.getVideoInput();
+        //     videoInput = videoInputs.find((d) => d.deviceId === deviceId) ?? videoInputs[0] ?? null;
+        // }
+        //
+        // const messagingStore = WidgetMessagingStore.instance;
+        // this.messaging = messagingStore.getMessagingForUid(this.widgetUid) ?? null;
+        // if (!this.messaging) {
+        //     // The widget might still be initializing, so wait for it
+        //     try {
+        //         await waitForEvent(
+        //             messagingStore,
+        //             WidgetMessagingStoreEvent.StoreMessaging,
+        //             (uid: string, widgetApi: ClientWidgetApi) => {
+        //                 if (uid === this.widgetUid) {
+        //                     this.messaging = widgetApi;
+        //                     return true;
+        //                 }
+        //                 return false;
+        //             },
+        //         );
+        //     } catch (e) {
+        //         throw new Error(`Failed to bind call widget in room ${this.roomId}: ${e}`);
+        //     }
+        // }
 
         const messagingStore = WidgetMessagingStore.instance;
         this.messaging = messagingStore.getMessagingForUid(this.widgetUid) ?? null;
@@ -248,7 +269,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
         }
 
         try {
-            await this.performConnection(audioInput, videoInput);
+            await this.performConnection(null, null);
         } catch (e) {
             this.connectionState = ConnectionState.Disconnected;
             throw e;

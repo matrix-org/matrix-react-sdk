@@ -151,38 +151,41 @@ export const Lobby: FC<LobbyProps> = ({ room, joinCallButtonDisabledTooltip, con
 
     const [videoStream, audioInputs, videoInputs] = useAsyncMemo(
         async (): Promise<[MediaStream | null, MediaDeviceInfo[], MediaDeviceInfo[]]> => {
-            let devices = await MediaDeviceHandler.getDevices();
-
-            // We get the preview stream before requesting devices: this is because
-            // we need (in some browsers) an active media stream in order to get
-            // non-blank labels for the devices.
-            let stream: MediaStream | null = null;
-            try {
-                if (devices!.audioinput.length > 0) {
-                    // Holding just an audio stream will be enough to get us all device labels, so
-                    // if video is muted, don't bother requesting video.
-                    stream = await navigator.mediaDevices.getUserMedia({
-                        audio: true,
-                        video: !videoMuted && devices!.videoinput.length > 0 && { deviceId: videoInputId },
-                    });
-                } else if (devices!.videoinput.length > 0) {
-                    // We have to resort to a video stream, even if video is supposed to be muted.
-                    stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: videoInputId } });
-                }
-            } catch (e) {
-                logger.error(`Failed to get stream for device ${videoInputId}`, e);
-            }
+            let devices = [];
+            let stream: MediaStream | null = new MediaStream();
+            // let devices = await MediaDeviceHandler.getDevices();
+            //
+            // // We get the preview stream before requesting devices: this is because
+            // // we need (in some browsers) an active media stream in order to get
+            // // non-blank labels for the devices.
+            // let stream: MediaStream | null = null;
+            // try {
+            //     if (devices!.audioinput.length > 0) {
+            //         // Holding just an audio stream will be enough to get us all device labels, so
+            //         // if video is muted, don't bother requesting video.
+            //         stream = await navigator.mediaDevices.getUserMedia({
+            //             audio: true,
+            //             video: !videoMuted && devices!.videoinput.length > 0 && { deviceId: videoInputId },
+            //         });
+            //     } else if (devices!.videoinput.length > 0) {
+            //         // We have to resort to a video stream, even if video is supposed to be muted.
+            //         stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: videoInputId } });
+            //     }
+            // } catch (e) {
+            //     logger.error(`Failed to get stream for device ${videoInputId}`, e);
+            // }
 
             // Refresh the devices now that we hold a stream
-            if (stream !== null) devices = await MediaDeviceHandler.getDevices();
-
-            // If video is muted, we don't actually want the stream, so we can get rid of it now.
-            if (videoMuted) {
-                stream?.getTracks().forEach((t) => t.stop());
-                stream = null;
-            }
-
-            return [stream, devices?.audioinput ?? [], devices?.videoinput ?? []];
+            // if (stream !== null) devices = await MediaDeviceHandler.getDevices();
+            //
+            // // If video is muted, we don't actually want the stream, so we can get rid of it now.
+            // if (videoMuted) {
+            //     stream?.getTracks().forEach((t) => t.stop());
+            //     stream = null;
+            // }
+            //
+            // return [stream, devices?.audioinput ?? [], devices?.videoinput ?? []];
+            return [null, [], []];
         },
         [videoInputId, videoMuted],
         [null, [], []],
