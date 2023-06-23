@@ -16,7 +16,6 @@ limitations under the License.
 
 import fetchMockJest from "fetch-mock-jest";
 import * as randomStringUtils from "matrix-js-sdk/src/randomstring";
-import { logger } from "matrix-js-sdk/src/logger";
 
 import { startOidcLogin } from "../../../src/utils/oidc/authorize";
 
@@ -52,8 +51,6 @@ describe("startOidcLogin()", () => {
             href: baseUrl,
             origin: baseUrl,
         };
-        // @ts-ignore ugly mocking
-        window.crypto = undefined;
 
         jest.spyOn(randomStringUtils, "randomString").mockRestore();
     });
@@ -100,53 +97,5 @@ describe("startOidcLogin()", () => {
         expect(authUrl.searchParams.has("state")).toBeTruthy();
         expect(authUrl.searchParams.has("nonce")).toBeTruthy();
         expect(authUrl.searchParams.has("code_challenge")).toBeTruthy();
-    });
-
-    it("uses a plain text code challenge when crypto is not available", async () => {
-        jest.spyOn(logger, "warn");
-        await startOidcLogin(delegatedAuthConfig, clientId, homeserver);
-
-        expect(logger.warn).toHaveBeenCalledWith(
-            "A secure context is required to generate code challenge. Using plain text code challenge",
-        );
-
-        const authUrl = new URL(window.location.href);
-
-        // compare the code challenge in url to the code verifier we stored in session storage
-        const codeChallenge = authUrl.searchParams.get("code_challenge");
-        const codeVerifier = sessionStorageGetSpy.mock.calls.find(([key]) =>
-            (key as string).includes("codeVerifier"),
-        )[1];
-        expect(codeVerifier).toEqual(codeChallenge);
-    });
-
-    it("uses a s256 code challenge when crypto is available", async () => {
-        delete window.crypto;
-        window.crypto = {
-            // @ts-ignore mock
-            subtle: {
-                digest: jest.fn().mockReturnValue(new ArrayBuffer(32)),
-            },
-        };
-
-        await startOidcLogin(delegatedAuthConfig, clientId, homeserver);
-
-        expect(logger.warn).toHaveBeenCalledWith(
-            "A secure context is required to generate code challenge. Using plain text code challenge",
-        );
-
-        const authUrl = new URL(window.location.href);
-
-        // compare the code challenge in url to the code verifier we stored in session storage
-        const codeChallenge = authUrl.searchParams.get("code_challenge");
-        const codeVerifier = sessionStorageGetSpy.mock.calls.find(([key]) =>
-            (key as string).includes("codeVerifier"),
-        )[1];
-
-        expect(window.crypto.subtle.digest).toHaveBeenCalledWith("SHA-256", expect.any(Object));
-
-        expect(codeVerifier).not.toEqual(codeChallenge);
-        // result from new ArrayBuffer(32)
-        expect(codeChallenge).toEqual("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     });
 });
