@@ -31,7 +31,7 @@ function isDivElement(target: EventTarget): target is HTMLDivElement {
     return target instanceof HTMLDivElement;
 }
 
-// Hitting enter inside the editor inserts an editable div, initially containing a <br />
+// Hitting enter inside the editor inserts an editable div, initially containing a <br>
 // For correct display, first replace this pattern with a newline character and then remove divs
 // noting that they are used to delimit paragraphs
 function amendInnerHtml(text: string): string {
@@ -39,6 +39,84 @@ function amendInnerHtml(text: string): string {
         .replace(/<div><br><\/div>/g, "\n") // this is pressing enter then not typing
         .replace(/<div>/g, "\n") // this is from pressing enter, then typing inside the div
         .replace(/<\/div>/g, "");
+}
+
+// We need to do something better and less hacky to now account for the fact that mentions are html
+// The approach will be to manually build a string by parsing the html into a document then manually
+// creating a string of exactly the format required by the markdown parser of the rust model.
+export function amendInnerHtmlButBetter(composer: HTMLDivElement): string {
+    const i = document.createNodeIterator(composer, NodeFilter.SHOW_ALL);
+    let node = i.nextNode();
+    // loop through every single node and do...something
+    let outputStuff = "";
+    while (node !== null) {
+        const isTopLevelTextNode = node.nodeName === "#text" && node.parentElement.isSameNode(composer);
+        const isNestedTextNode =
+            node.nodeName === "#text" &&
+            !node.parentElement.isSameNode(composer) &&
+            node.parentElement.nodeName === "DIV";
+        const isTopLevelMention =
+            node.nodeName === "#text" &&
+            node.parentElement.nodeName === "A" &&
+            node.parentElement.parentElement.isSameNode(composer);
+        const isNestedMention =
+            node.nodeName === "#text" &&
+            node.parentElement.nodeName === "A" &&
+            node.parentElement.parentElement.nodeName === "DIV" &&
+            !node.parentElement.parentElement.isSameNode(composer);
+        const isLineBreak = node.nodeName === "BR" && node.parentElement.nodeName === "DIV";
+
+        // if we find a br inside a div, take an \n
+        if (isLineBreak) {
+            outputStuff += "\n";
+        }
+
+        // if we find a text node inside a nested div, take the text content
+        if (isNestedTextNode) {
+            let content = node.textContent;
+            const nextSibling = node.nextSibling || node.parentElement.nextSibling;
+            if (nextSibling && nextSibling.nodeName !== "A") {
+                content += "\n";
+            }
+            outputStuff += content;
+        }
+
+        // if we find a top level text node, take the text content
+        if (isTopLevelTextNode) {
+            let content = node.textContent;
+            if (node.nextSibling !== null && node.nextSibling.nodeName !== "A") {
+                content += "\n";
+            }
+            outputStuff += content;
+        }
+
+        // for a top level mention, grab the outerHTML
+        if (isTopLevelMention) {
+            outputStuff += node.parentElement.outerHTML;
+            const nextSibling = node.parentElement.nextSibling;
+            const isNextToBlockNode = nextSibling && !["#text", "A"].includes(nextSibling.nodeName);
+            if (isNextToBlockNode) {
+                outputStuff += "\n";
+            }
+        }
+
+        // for a nested mention, grab the outerHTML but we need to consider if we add a newline or not
+        if (isNestedMention) {
+            outputStuff += node.parentElement.outerHTML;
+            const isNextToBlockNode =
+                node.parentElement.nextSibling !== null &&
+                !["#text", "A"].includes(node.parentElement.nextSibling.nodeName);
+            const isInDivNextToAnything =
+                node.parentElement.nextSibling === null && node.parentElement.parentElement.nextSibling !== null;
+            if (isInDivNextToAnything || isNextToBlockNode) {
+                outputStuff += "\n";
+            }
+        }
+
+        node = i.nextNode();
+    }
+
+    return outputStuff;
 }
 
 /**
