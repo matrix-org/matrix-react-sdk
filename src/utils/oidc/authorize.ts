@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { logger } from "matrix-js-sdk/src/logger";
 import {
     generateAuthorizationParams,
     generateAuthorizationUrl,
@@ -113,17 +112,6 @@ const getCodeAndStateFromQueryParams = (queryParams: QueryDict): { code: string;
     return { code, state };
 };
 
-export interface IMatrixClientCreds {
-    homeserverUrl: string;
-    identityServerUrl?: string;
-    userId: string;
-    deviceId?: string;
-    accessToken?: string;
-    guest?: boolean;
-    pickleKey?: string;
-    freshLogin?: boolean;
-}
-
 /**
  * Attempt to complete authorization code flow to login
  * @param {QueryDict} queryParams the query-parameters extracted from the real query-string of the starting URI.
@@ -143,7 +131,7 @@ export const completeOidcLogin = async (
 
     const bearerToken = await completeAuthorizationCodeGrant(code, storedAuthorizationParams);
 
-    // @TODO(kerrya) do I need to verify anything else in response?
+    // @TODO(kerrya) is there more verification to do here?
 
     // @TODO(kerrya) do something with the refresh token
 
