@@ -138,6 +138,20 @@ describe("linkify-matrix", () => {
                 },
             ]);
         });
+        it("properly parses " + char + "localhost:foo.com", () => {
+            const test = char + "localhost:foo.com";
+            const found = linkify.find(test);
+            expect(found).toEqual([
+                {
+                    href: char + "localhost:foo.com",
+                    type,
+                    value: char + "localhost:foo.com",
+                    start: 0,
+                    end: test.length,
+                    isLink: true,
+                },
+            ]);
+        });
         it("properly parses " + char + "foo:localhost", () => {
             const test = char + "foo:localhost";
             const found = linkify.find(test);
@@ -162,7 +176,6 @@ describe("linkify-matrix", () => {
                     value: char + "foo:bar.com",
                     start: 0,
                     end: test.length,
-
                     isLink: true,
                 },
             ]);
@@ -219,7 +232,6 @@ describe("linkify-matrix", () => {
                     href: char + "foo:bar.com",
                     start: 0,
                     end: test.length - ":".length,
-
                     isLink: true,
                 },
             ]);
@@ -234,6 +246,20 @@ describe("linkify-matrix", () => {
                     value: char + "foo:bar.com:2225",
                     start: 0,
                     end: test.length,
+                    isLink: true,
+                },
+            ]);
+        });
+        it("igonres duplicate :NUM (double port specifier)", () => {
+            const test = "" + char + "foo:bar.com:2225:1234";
+            const found = linkify.find(test);
+            expect(found).toEqual([
+                {
+                    href: char + "foo:bar.com:2225",
+                    type,
+                    value: char + "foo:bar.com:2225",
+                    start: 0,
+                    end: 17,
                     isLink: true,
                 },
             ]);
@@ -262,7 +288,6 @@ describe("linkify-matrix", () => {
                     value: char + "foo.asdf:bar.com",
                     start: 0,
                     end: test.length - ":".repeat(4).length,
-
                     isLink: true,
                 },
             ]);
@@ -286,12 +311,20 @@ describe("linkify-matrix", () => {
             const found = linkify.find(test);
             expect(found).toEqual([
                 {
-                    href: char + "foo:bar.com-baz.com",
+                    href: char + "foo:bar.com",
                     type,
-                    value: char + "foo:bar.com-baz.com",
-                    end: 20,
+                    value: char + "foo:bar.com",
+                    end: 12,
                     start: 0,
                     isLink: true,
+                },
+                {
+                    href: "http://baz.com",
+                    type: "url",
+                    value: "baz.com",
+                    isLink: true,
+                    start: 13,
+                    end: test.length,
                 },
             ]);
         });
