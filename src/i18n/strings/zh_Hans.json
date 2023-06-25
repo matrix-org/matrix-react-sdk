@@ -3421,5 +3421,6 @@
     "No identity access token found": "找不到身份访问令牌",
     "This session is backing up your keys.": "此会话正在备份你的密钥。",
     "Identity server not set": "身份服务器未设置",
-    "The add / bind with MSISDN flow is misconfigured": "MSISDN的新增/绑定流程配置错误"
+    "The add / bind with MSISDN flow is misconfigured": "MSISDN的新增/绑定流程配置错误",
+    "User is not logged in": "用户未登录"
 }
