@@ -150,10 +150,10 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
               <input
                 checked=""
                 disabled=""
-                id="defaultNotificationLevel-ALL_MESSAGES"
+                id="defaultNotificationLevel-all_messages"
                 name="defaultNotificationLevel"
                 type="radio"
-                value="ALL_MESSAGES"
+                value="all_messages"
               />
               <div>
                 <div />
@@ -172,10 +172,10 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
             >
               <input
                 disabled=""
-                id="defaultNotificationLevel-PEOPLE_MENTIONS_KEYWORDS"
+                id="defaultNotificationLevel-people_mentions_keywords"
                 name="defaultNotificationLevel"
                 type="radio"
-                value="PEOPLE_MENTIONS_KEYWORDS"
+                value="people_mentions_keywords"
               />
               <div>
                 <div />
@@ -194,10 +194,10 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
             >
               <input
                 disabled=""
-                id="defaultNotificationLevel-MENTIONS_KEYWORDS"
+                id="defaultNotificationLevel-mentions_keywords"
                 name="defaultNotificationLevel"
                 type="radio"
-                value="MENTIONS_KEYWORDS"
+                value="mentions_keywords"
               />
               <div>
                 <div />
@@ -868,10 +868,10 @@ exports[`<Notifications /> matches the snapshot 1`] = `
             >
               <input
                 checked=""
-                id="defaultNotificationLevel-ALL_MESSAGES"
+                id="defaultNotificationLevel-all_messages"
                 name="defaultNotificationLevel"
                 type="radio"
-                value="ALL_MESSAGES"
+                value="all_messages"
               />
               <div>
                 <div />
@@ -889,10 +889,10 @@ exports[`<Notifications /> matches the snapshot 1`] = `
               class="mx_StyledRadioButton mx_StyledRadioButton_enabled mx_StyledRadioButton_checked"
             >
               <input
-                id="defaultNotificationLevel-PEOPLE_MENTIONS_KEYWORDS"
+                id="defaultNotificationLevel-people_mentions_keywords"
                 name="defaultNotificationLevel"
                 type="radio"
-                value="PEOPLE_MENTIONS_KEYWORDS"
+                value="people_mentions_keywords"
               />
               <div>
                 <div />
@@ -910,10 +910,10 @@ exports[`<Notifications /> matches the snapshot 1`] = `
               class="mx_StyledRadioButton mx_StyledRadioButton_enabled"
             >
               <input
-                id="defaultNotificationLevel-MENTIONS_KEYWORDS"
+                id="defaultNotificationLevel-mentions_keywords"
                 name="defaultNotificationLevel"
                 type="radio"
-                value="MENTIONS_KEYWORDS"
+                value="mentions_keywords"
               />
               <div>
                 <div />

@@ -104,7 +104,7 @@ exports[`<LabsUserSettingsTab /> renders settings marked as beta as beta cards 1
             class="mx_BetaCard_caption"
           >
             <p>
-              A simpler way to customize notification settings in  just the way you like.
+              Introducing a simpler way to change your notification settings. Customize your , just the way you like.
             </p>
           </div>
           <div
