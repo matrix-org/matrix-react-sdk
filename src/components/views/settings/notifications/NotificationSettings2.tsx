@@ -42,32 +42,32 @@ import SettingsSubsection from "../shared/SettingsSubsection";
 import { NotificationPusherSettings } from "./NotificationPusherSettings";
 
 enum NotificationDefaultLevels {
-    ALL_MESSAGES = "ALL_MESSAGES",
-    PEOPLE_MENTIONS_KEYWORDS = "PEOPLE_MENTIONS_KEYWORDS",
-    MENTIONS_KEYWORDS = "MENTIONS_KEYWORDS",
+    AllMessages = "all_messages",
+    PeopleMentionsKeywords = "people_mentions_keywords",
+    MentionsKeywords = "mentions_keywords",
 }
 
 function toDefaultLevels(levels: NotificationSettings["defaultLevels"]): NotificationDefaultLevels {
     if (levels.room === RoomNotifState.AllMessages) {
-        return NotificationDefaultLevels.ALL_MESSAGES;
+        return NotificationDefaultLevels.AllMessages;
     } else if (levels.dm === RoomNotifState.AllMessages) {
-        return NotificationDefaultLevels.PEOPLE_MENTIONS_KEYWORDS;
+        return NotificationDefaultLevels.PeopleMentionsKeywords;
     } else {
-        return NotificationDefaultLevels.MENTIONS_KEYWORDS;
+        return NotificationDefaultLevels.MentionsKeywords;
     }
 }
 
 const NotificationOptions = [
     {
-        value: NotificationDefaultLevels.ALL_MESSAGES,
+        value: NotificationDefaultLevels.AllMessages,
         label: _t("All messages"),
     },
     {
-        value: NotificationDefaultLevels.PEOPLE_MENTIONS_KEYWORDS,
+        value: NotificationDefaultLevels.PeopleMentionsKeywords,
         label: _t("People, Mentions and Keywords"),
     },
     {
-        value: NotificationDefaultLevels.MENTIONS_KEYWORDS,
+        value: NotificationDefaultLevels.MentionsKeywords,
         label: _t("Mentions and Keywords only"),
     },
 ];
@@ -161,11 +161,11 @@ export default function NotificationSettings2(): JSX.Element {
                                 defaultLevels: {
                                     ...model!.defaultLevels,
                                     dm:
-                                        value !== NotificationDefaultLevels.MENTIONS_KEYWORDS
+                                        value !== NotificationDefaultLevels.MentionsKeywords
                                             ? RoomNotifState.AllMessages
                                             : RoomNotifState.MentionsOnly,
                                     room:
-                                        value === NotificationDefaultLevels.ALL_MESSAGES
+                                        value === NotificationDefaultLevels.AllMessages
                                             ? RoomNotifState.AllMessages
                                             : RoomNotifState.MentionsOnly,
                                 },
