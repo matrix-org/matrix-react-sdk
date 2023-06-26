@@ -115,6 +115,7 @@ jobs:
                   working-directory: matrix-react-sdk
                   # The built-in Electron runner seems to grind to a halt trying to run the tests, so use chrome.
                   browser: ${{ steps.setup-chrome.outputs.chrome-path }}
+                  headed: true
                   start: npx serve -p 8080 ../webapp
                   wait-on: "http://localhost:8080"
                   record: true
