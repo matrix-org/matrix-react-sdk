@@ -250,7 +250,7 @@ describe("linkify-matrix", () => {
                 },
             ]);
         });
-        it("igonres duplicate :NUM (double port specifier)", () => {
+        it("ignores duplicate :NUM (double port specifier)", () => {
             const test = "" + char + "foo:bar.com:2225:1234";
             const found = linkify.find(test);
             expect(found).toEqual([
@@ -311,20 +311,12 @@ describe("linkify-matrix", () => {
             const found = linkify.find(test);
             expect(found).toEqual([
                 {
-                    href: char + "foo:bar.com",
+                    href: char + "foo:bar.com-baz.com",
                     type,
-                    value: char + "foo:bar.com",
-                    end: 12,
+                    value: char + "foo:bar.com-baz.com",
+                    end: 20,
                     start: 0,
                     isLink: true,
-                },
-                {
-                    href: "http://baz.com",
-                    type: "url",
-                    value: "baz.com",
-                    isLink: true,
-                    start: 13,
-                    end: test.length,
                 },
             ]);
         });

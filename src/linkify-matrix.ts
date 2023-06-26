@@ -64,7 +64,9 @@ function matrixOpaqueIdLinkifyParser({
     // Contains NUM, WORD, UWORD, EMOJI, TLD, UTLD, SCHEME, SLASH_SCHEME and LOCALHOST plus custom protocols (e.g. "matrix")
     const { domain } = scanner.tokens.groups;
 
-    const localpartTokens = [DOT, SYM, SLASH, EQUALS, UNDERSCORE, HYPHEN];
+    // Tokens we need that are not contained in the domain group
+    const additionalLocalpartTokens = [DOT, SYM, SLASH, EQUALS, UNDERSCORE, HYPHEN];
+    const additionalDomainpartTokens = [HYPHEN];
 
     const matrixToken = linkifyjs.createTokenClass(name, { isLink: true });
     const matrixTokenState = new linkifyjs.State(matrixToken) as any as linkifyjs.State<linkifyjs.MultiToken>; // linkify doesn't appear to type this correctly
@@ -79,13 +81,16 @@ function matrixOpaqueIdLinkifyParser({
     // Localpart
     const LOCALPART_STATE = new linkifyjs.State<linkifyjs.MultiToken>();
     INITIAL_STATE.ta(domain, LOCALPART_STATE);
-    INITIAL_STATE.ta(localpartTokens, LOCALPART_STATE);
+    INITIAL_STATE.ta(additionalLocalpartTokens, LOCALPART_STATE);
     LOCALPART_STATE.ta(domain, LOCALPART_STATE);
-    LOCALPART_STATE.ta(localpartTokens, LOCALPART_STATE);
+    LOCALPART_STATE.ta(additionalLocalpartTokens, LOCALPART_STATE);
 
     // Domainpart
     const DOMAINPART_STATE_DOT = LOCALPART_STATE.tt(COLON);
     DOMAINPART_STATE_DOT.ta(domain, matrixTokenState);
+    DOMAINPART_STATE_DOT.ta(additionalDomainpartTokens, matrixTokenState);
+    matrixTokenState.ta(domain, matrixTokenState);
+    matrixTokenState.ta(additionalDomainpartTokens, matrixTokenState);
     matrixTokenState.tt(DOT, DOMAINPART_STATE_DOT);
 
     // Port suffixes
