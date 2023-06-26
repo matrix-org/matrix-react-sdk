@@ -416,6 +416,7 @@ class NotifierClass {
         if (!data.liveEvent || !!toStartOfTimeline) return; // only notify for new things, not old.
         if (!this.isSyncing) return; // don't alert for any messages initially
         if (ev.getSender() === MatrixClientPeg.safeGet().getUserId()) return;
+        if (data.timeline.getTimelineSet().threadListType !== null) return; // Ignore events on the thread list generated timelines
 
         MatrixClientPeg.safeGet().decryptEventIfNeeded(ev);
 
