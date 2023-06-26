@@ -55,16 +55,35 @@ type StoredAuthorizationParams = Omit<ReturnType<typeof generateAuthorizationPar
     homeserverUrl: string;
     identityServerUrl: string;
 };
+
+/**
+ * Validate that stored params are present and valid
+ * @param params as retrieved from session storage
+ * @returns validated stored authorization params
+ * @throws when params are invalid or missing
+ */
+const validateStoredAuthorizationParams = (params: Partial<StoredAuthorizationParams>): StoredAuthorizationParams => {
+    const requiredStringProperties = ["nonce", "redirectUri", "codeVerifier", "clientId", "homeserverUrl"];
+    if (
+        requiredStringProperties.every((key: string) => params[key] && typeof params[key] === "string") &&
+        (params.identityServerUrl === undefined || typeof params.identityServerUrl === "string") &&
+        !!params.delegatedAuthConfig
+    ) {
+        return params as StoredAuthorizationParams;
+    }
+    throw new Error("Cannot complete OIDC login: required properties not found in session storage");
+};
+
 const retrieveAuthorizationParams = (state: string): StoredAuthorizationParams => {
     const nonce = window.sessionStorage.getItem(`oidc_${state}_nonce`);
     const redirectUri = window.sessionStorage.getItem(`oidc_${state}_redirectUri`);
     const codeVerifier = window.sessionStorage.getItem(`oidc_${state}_codeVerifier`);
     const clientId = window.sessionStorage.getItem(`oidc_${state}_clientId`);
     const homeserverUrl = window.sessionStorage.getItem(`oidc_${state}_homeserverUrl`);
-    const identityServerUrl = window.sessionStorage.getItem(`oidc_${state}_identityServerUrl`) ?? "";
+    const identityServerUrl = window.sessionStorage.getItem(`oidc_${state}_identityServerUrl`) ?? undefined;
     const delegatedAuthConfig = JSON.parse(window.sessionStorage.getItem(`oidc_${state}_delegatedAuthConfig`));
 
-    return {
+    return validateStoredAuthorizationParams({
         nonce,
         redirectUri,
         codeVerifier,
@@ -72,7 +91,7 @@ const retrieveAuthorizationParams = (state: string): StoredAuthorizationParams =
         homeserverUrl,
         identityServerUrl,
         delegatedAuthConfig,
-    };
+    });
 };
 
 /**
@@ -147,7 +166,5 @@ export const completeOidcLogin = async (
         homeserverUrl: storedAuthorizationParams.homeserverUrl,
         identityServerUrl: storedAuthorizationParams.identityServerUrl,
         accessToken: bearerToken.access_token,
-        // @TODO(kerrya) persist this in session storage with other auth params
-        // identityServerUrl
     };
 };
