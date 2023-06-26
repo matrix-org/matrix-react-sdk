@@ -306,7 +306,7 @@ describe("linkify-matrix", () => {
                 },
             ]);
         });
-        it("does not parse multiple room aliases in one string", () => {
+        it("properly parses room alias with hyphen in domain part", () => {
             const test = "" + char + "foo:bar.com-baz.com";
             const found = linkify.find(test);
             expect(found).toEqual([
