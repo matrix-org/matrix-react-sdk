@@ -412,7 +412,8 @@ class NotifierClass {
         removed: boolean,
         data: IRoomTimelineData,
     ): void => {
-        if (!data.liveEvent) return; // only notify for new things, not old.
+        if (removed) return; // only notify for new events, not removed ones
+        if (!data.liveEvent || !!toStartOfTimeline) return; // only notify for new things, not old.
         if (!this.isSyncing) return; // don't alert for any messages initially
         if (ev.getSender() === MatrixClientPeg.safeGet().getUserId()) return;
 
