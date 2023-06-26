@@ -14,7 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { generateAuthorizationParams, generateAuthorizationUrl } from "matrix-js-sdk/src/oidc/authorize";
+import {
+    AuthorizationParams,
+    generateAuthorizationParams,
+    generateAuthorizationUrl,
+} from "matrix-js-sdk/src/oidc/authorize";
 
 import { ValidatedDelegatedAuthConfig } from "../ValidatedServerConfig";
 
@@ -26,7 +30,7 @@ import { ValidatedDelegatedAuthConfig } from "../ValidatedServerConfig";
  * @param homeserver target homeserver
  */
 const storeAuthorizationParams = (
-    { redirectUri, state, nonce, codeVerifier }: ReturnType<typeof generateAuthorizationParams>,
+    { redirectUri, state, nonce, codeVerifier }: AuthorizationParams,
     { issuer }: ValidatedDelegatedAuthConfig,
     clientId: string,
     homeserver: string,
