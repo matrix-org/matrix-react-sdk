@@ -52,7 +52,7 @@ export function NotificationPusherSettings(): JSX.Element {
         () => ({
             kind: "email",
             app_id: "m.email",
-            app_display_name: "Email Notifications",
+            app_display_name: _t("Email Notifications"),
             lang: navigator.language,
             data: {
                 brand: SdkConfig.get().brand,
