@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import {
+    AuthorizationParams,
     generateAuthorizationParams,
     generateAuthorizationUrl,
     completeAuthorizationCodeGrant,
@@ -31,7 +32,7 @@ import { ValidatedDelegatedAuthConfig } from "../ValidatedServerConfig";
  * @param homeserver target homeserver
  */
 const storeAuthorizationParams = (
-    { redirectUri, state, nonce, codeVerifier }: ReturnType<typeof generateAuthorizationParams>,
+    { redirectUri, state, nonce, codeVerifier }: AuthorizationParams,
     delegatedAuthConfig: ValidatedDelegatedAuthConfig,
     clientId: string,
     homeserver: string,
