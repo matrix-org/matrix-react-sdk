@@ -72,7 +72,7 @@ describe("startOidcLogin()", () => {
             randomStringUtils.randomString(64),
         );
         expect(sessionStorageGetSpy).toHaveBeenCalledWith(`oidc_${state}_clientId`, clientId);
-        expect(sessionStorageGetSpy).toHaveBeenCalledWith(`oidc_${state}_homeserver`, homeserver);
+        expect(sessionStorageGetSpy).toHaveBeenCalledWith(`oidc_${state}_homeserverUrl`, homeserver);
         expect(sessionStorageGetSpy).toHaveBeenCalledWith(
             `oidc_${state}_delegatedAuthConfig`,
             JSON.stringify(delegatedAuthConfig),

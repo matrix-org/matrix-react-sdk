@@ -35,28 +35,33 @@ const storeAuthorizationParams = (
     { redirectUri, state, nonce, codeVerifier }: AuthorizationParams,
     delegatedAuthConfig: ValidatedDelegatedAuthConfig,
     clientId: string,
-    homeserver: string,
+    homeserverUrl: string,
+    identityServerUrl?: string,
 ): void => {
     window.sessionStorage.setItem(`oidc_${state}_nonce`, nonce);
     window.sessionStorage.setItem(`oidc_${state}_redirectUri`, redirectUri);
     window.sessionStorage.setItem(`oidc_${state}_codeVerifier`, codeVerifier);
-    window.sessionStorage.setItem(`oidc_${state}_homeserver`, homeserver);
     window.sessionStorage.setItem(`oidc_${state}_clientId`, clientId);
     window.sessionStorage.setItem(`oidc_${state}_delegatedAuthConfig`, JSON.stringify(delegatedAuthConfig));
-    window.sessionStorage.setItem(`oidc_${state}_homeserver`, homeserver);
+    window.sessionStorage.setItem(`oidc_${state}_homeserverUrl`, homeserverUrl);
+    if (identityServerUrl) {
+        window.sessionStorage.setItem(`oidc_${state}_identityServerUrl`, identityServerUrl);
+    }
 };
 
 type StoredAuthorizationParams = Omit<ReturnType<typeof generateAuthorizationParams>, "state" | "scope"> & {
     delegatedAuthConfig: ValidatedDelegatedAuthConfig;
     clientId: string;
-    homeserver: string;
+    homeserverUrl: string;
+    identityServerUrl: string;
 };
 const retrieveAuthorizationParams = (state: string): StoredAuthorizationParams => {
     const nonce = window.sessionStorage.getItem(`oidc_${state}_nonce`);
     const redirectUri = window.sessionStorage.getItem(`oidc_${state}_redirectUri`);
     const codeVerifier = window.sessionStorage.getItem(`oidc_${state}_codeVerifier`);
     const clientId = window.sessionStorage.getItem(`oidc_${state}_clientId`);
-    const homeserver = window.sessionStorage.getItem(`oidc_${state}_homeserver`);
+    const homeserverUrl = window.sessionStorage.getItem(`oidc_${state}_homeserverUrl`);
+    const identityServerUrl = window.sessionStorage.getItem(`oidc_${state}_identityServerUrl`) ?? "";
     const delegatedAuthConfig = JSON.parse(window.sessionStorage.getItem(`oidc_${state}_delegatedAuthConfig`));
 
     return {
@@ -64,7 +69,8 @@ const retrieveAuthorizationParams = (state: string): StoredAuthorizationParams =
         redirectUri,
         codeVerifier,
         clientId,
-        homeserver,
+        homeserverUrl,
+        identityServerUrl,
         delegatedAuthConfig,
     };
 };
@@ -79,13 +85,14 @@ const retrieveAuthorizationParams = (state: string): StoredAuthorizationParams =
 export const startOidcLogin = async (
     delegatedAuthConfig: ValidatedDelegatedAuthConfig,
     clientId: string,
-    homeserver: string,
+    homeserverUrl: string,
+    identityServerUrl?: string,
 ): Promise<void> => {
     // TODO(kerrya) afterloginfragment https://github.com/vector-im/element-web/issues/25656
     const redirectUri = window.location.origin;
     const authParams = generateAuthorizationParams({ redirectUri });
 
-    storeAuthorizationParams(authParams, delegatedAuthConfig, clientId, homeserver);
+    storeAuthorizationParams(authParams, delegatedAuthConfig, clientId, homeserverUrl, identityServerUrl);
 
     const authorizationUrl = await generateAuthorizationUrl(
         delegatedAuthConfig.authorizationEndpoint,
@@ -137,7 +144,8 @@ export const completeOidcLogin = async (
     // @TODO(kerrya) do something with the refresh token
 
     return {
-        homeserverUrl: storedAuthorizationParams.homeserver,
+        homeserverUrl: storedAuthorizationParams.homeserverUrl,
+        identityServerUrl: storedAuthorizationParams.identityServerUrl,
         accessToken: bearerToken.access_token,
         // @TODO(kerrya) persist this in session storage with other auth params
         // identityServerUrl
