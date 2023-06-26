@@ -54,7 +54,7 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            fontSize: (SettingsStore.getValue("baseFontSize", null) + FontWatcher.SIZE_DIFF).toString(),
+            fontSize: SettingsStore.getValue("baseFontSizeV2", null).toString(),
             useCustomFontSize: SettingsStore.getValue("useCustomFontSize"),
             layout: SettingsStore.getValue("layout"),
         };
@@ -80,13 +80,13 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
 
     private onFontSizeChanged = (size: number): void => {
         this.setState({ fontSize: size.toString() });
-        SettingsStore.setValue("baseFontSize", null, SettingLevel.DEVICE, size - FontWatcher.SIZE_DIFF);
+        SettingsStore.setValue("baseFontSizeV2", null, SettingLevel.DEVICE, size);
     };
 
     private onValidateFontSize = async ({ value }: Pick<IFieldState, "value">): Promise<IValidationResult> => {
         const parsedSize = parseFloat(value!);
-        const min = FontWatcher.MIN_SIZE + FontWatcher.SIZE_DIFF;
-        const max = FontWatcher.MAX_SIZE + FontWatcher.SIZE_DIFF;
+        const min = FontWatcher.MIN_SIZE;
+        const max = FontWatcher.MAX_SIZE;
 
         if (isNaN(parsedSize)) {
             return { valid: false, feedback: _t("Size must be a number") };
@@ -99,7 +99,7 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
             };
         }
 
-        SettingsStore.setValue("baseFontSize", null, SettingLevel.DEVICE, parseInt(value!, 10) - FontWatcher.SIZE_DIFF);
+        SettingsStore.setValue("baseFontSizeV2", null, SettingLevel.DEVICE, parseInt(value!, 10));
 
         return { valid: true, feedback: _t("Use between %(min)s pt and %(max)s pt", { min, max }) };
     };

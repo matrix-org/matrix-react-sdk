@@ -24,22 +24,57 @@ import { UpdateSystemFontPayload } from "../../dispatcher/payloads/UpdateSystemF
 import { ActionPayload } from "../../dispatcher/payloads";
 
 export class FontWatcher implements IWatcher {
-    public static readonly MIN_SIZE = 11;
+    /**
+     * Value indirectly defined by Compound.
+     * All `rem` calculations are made from a `16px` values in the
+     * @vector-im/compound-design-tokens package
+     *
+     * We might want to move to using `100%` instead so we can inherit the user
+     * preference set in the browser regarding font sizes.
+     */
     public static readonly DEFAULT_SIZE = 16;
-    public static readonly MAX_SIZE = 21;
-    // TODO: Need to write migration code so that everyone that had previous
-    // preference set gets automatically onto the new system
-    public static readonly SIZE_DIFF = 0;
+    public static readonly MIN_SIZE = FontWatcher.DEFAULT_SIZE - 5;
+    public static readonly MAX_SIZE = FontWatcher.DEFAULT_SIZE + 5;
 
     private dispatcherRef: string | null;
 
     public constructor() {
         this.dispatcherRef = null;
+        this.migrateBaseFontSize();
     }
 
     public start(): void {
         this.updateFont();
         this.dispatcherRef = dis.register(this.onAction);
+    }
+
+    /**
+     * Migrating the old `baseFontSize` for Compound.
+     * Everything will becomes slightly larger, and getting rid of the `SIZE_DIFF`
+     * weirdness for locally persisted values
+     */
+    private migrateBaseFontSize(): void {
+        const legacyBaseFontSize = SettingsStore.getValue("baseFontSize");
+
+        if (legacyBaseFontSize && !SettingsStore.getValue("baseFontSizeV2")) {
+            console.log("Migrating base font size for Compound, current value", legacyBaseFontSize);
+
+            // For some odd reason, the persisted value in user storage has an offset
+            // of 5 pixels for all values stored under `baseFontSize`
+            const LEGACY_SIZE_DIFF = 5;
+            // Compound uses a base font size of `16px`, whereas the old Element
+            // styles based their calculations off a `15px` root font size.
+            const ROOT_FONT_SIZE_INCREASE = 1;
+
+            const baseFontSize = legacyBaseFontSize + ROOT_FONT_SIZE_INCREASE + LEGACY_SIZE_DIFF;
+
+            console.log("New base font size will be", baseFontSize);
+
+            this.setRootFontSize(baseFontSize);
+
+            SettingsStore.setValue("baseFontSize", null, SettingLevel.DEVICE, null);
+            console.log("Migration complete, deleting legacy `baseFontSize`");
+        }
     }
 
     public stop(): void {
@@ -48,7 +83,7 @@ export class FontWatcher implements IWatcher {
     }
 
     private updateFont(): void {
-        this.setRootFontSize(SettingsStore.getValue("baseFontSize"));
+        this.setRootFontSize(SettingsStore.getValue("baseFontSizeV2"));
         this.setSystemFont({
             useSystemFont: SettingsStore.getValue("useSystemFont"),
             font: SettingsStore.getValue("systemFont"),
@@ -77,7 +112,7 @@ export class FontWatcher implements IWatcher {
         const fontSize = Math.max(Math.min(FontWatcher.MAX_SIZE, size), FontWatcher.MIN_SIZE);
 
         if (fontSize !== size) {
-            SettingsStore.setValue("baseFontSize", null, SettingLevel.DEVICE, fontSize);
+            SettingsStore.setValue("baseFontSizeV2", null, SettingLevel.DEVICE, fontSize);
         }
         document.querySelector<HTMLElement>(":root")!.style.fontSize = toPx(fontSize);
     };
