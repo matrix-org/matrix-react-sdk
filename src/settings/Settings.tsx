@@ -232,7 +232,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
             caption: () => (
                 <>
                     <p>
-                        {_t("A simpler way to customize notification settings in %(brand)s just the way you like.", {
+                        {_t("Introducing a simpler way to change your notification settings. Customize your %(brand)s, just the way you like.", {
                             brand: SdkConfig.get().brand,
                         })}
                     </p>
