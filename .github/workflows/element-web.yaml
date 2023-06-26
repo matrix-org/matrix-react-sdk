@@ -96,8 +96,8 @@ jobs:
             pull-requests: read
         environment: Cypress
         steps:
-            - uses: browser-actions/setup-chrome@c485fa3bab6be59dce18dbc18ef6ab7cbc8ff5f1
-            - run: echo "BROWSER_PATH=$(which chrome)" >> $GITHUB_ENV
+            - id: setup-chrome
+              uses: browser-actions/setup-chrome@c485fa3bab6be59dce18dbc18ef6ab7cbc8ff5f1
 
             - uses: actions/download-artifact@v3
               with:
@@ -113,9 +113,8 @@ jobs:
               uses: cypress-io/github-action@fbfad281d97a63e3e8a605ebfccba8dbea8aea93
               with:
                   working-directory: matrix-react-sdk
-                  # The built-in Electron runner seems to grind to a halt trying
-                  # to run the tests, so use chrome.
-                  browser: "${{ env.BROWSER_PATH }}"
+                  # The built-in Electron runner seems to grind to a halt trying to run the tests, so use chrome.
+                  browser: ${{ steps.setup-chrome.outputs.chrome-path }}
                   start: npx serve -p 8080 ../webapp
                   wait-on: "http://localhost:8080"
                   record: true
@@ -144,6 +143,9 @@ jobs:
                   COMMIT_INFO_EMAIL: ${{ needs.prepare.outputs.commit_email }}
                   CYPRESS_PULL_REQUEST_ID: ${{ needs.prepare.outputs.pr_id }}
                   CYPRESS_PULL_REQUEST_URL: https://github.com/${{ github.repository }}/pull/${{ needs.prepare.outputs.pr_id }}
+
+                  PERCY_BROWSER_EXECUTABLE: ${{ steps.setup-chrome.outputs.chrome-path }}
+                  PERCY_ENABLE: 0
 
             - name: Upload Artifact
               if: failure()
