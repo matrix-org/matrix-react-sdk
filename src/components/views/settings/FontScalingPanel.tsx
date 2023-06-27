@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -105,9 +105,6 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
     };
 
     public render(): React.ReactNode {
-        const min = 13;
-        const max = 18;
-
         return (
             <SettingsSubsection heading={_t("Font size")} stretchContent data-testid="mx_FontScalingPanel">
                 <EventTilePreview
@@ -121,8 +118,8 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
                 <div className="mx_FontScalingPanel_fontSlider">
                     <div className="mx_FontScalingPanel_fontSlider_smallText">Aa</div>
                     <Slider
-                        min={min}
-                        max={max}
+                        min={FontWatcher.MIN_SIZE}
+                        max={FontWatcher.MAX_SIZE}
                         step={1}
                         value={parseInt(this.state.fontSize, 10)}
                         onChange={this.onFontSizeChanged}
@@ -140,7 +137,7 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
                         this.setState({ useCustomFontSize: checked });
                         if (!checked) {
                             const size = parseInt(this.state.fontSize, 10);
-                            const clamped = clamp(size, min, max);
+                            const clamped = clamp(size, FontWatcher.MIN_SIZE, FontWatcher.MAX_SIZE);
                             if (clamped !== size) {
                                 this.onFontSizeChanged(clamped);
                             }
