@@ -546,7 +546,7 @@ describe("Notifier", () => {
             const fn = jest.spyOn(Notifier, "evaluateEvent");
 
             await testRoom.createThreadsTimelineSets();
-            testRoom.threadsTimelineSets[0].addEventToTimeline(
+            testRoom.threadsTimelineSets[0]!.addEventToTimeline(
                 mkEvent({
                     event: true,
                     type: "m.room.message",
@@ -554,7 +554,7 @@ describe("Notifier", () => {
                     room: roomId,
                     content: { body: "this is a thread root" },
                 }),
-                testRoom.threadsTimelineSets[0].getLiveTimeline(),
+                testRoom.threadsTimelineSets[0]!.getLiveTimeline(),
                 false,
                 false,
             );
