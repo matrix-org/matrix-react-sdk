@@ -958,6 +958,7 @@
     "Let moderators hide messages pending moderation.": "Let moderators hide messages pending moderation.",
     "Report to moderators": "Report to moderators",
     "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.": "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.",
+    "Support custom emotes.": "Support custom emotes.",
     "Render LaTeX maths in messages": "Render LaTeX maths in messages",
     "Message Pinning": "Message Pinning",
     "Rich text editor": "Rich text editor",

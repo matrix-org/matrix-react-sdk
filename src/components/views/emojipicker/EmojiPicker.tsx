@@ -126,8 +126,8 @@ class EmojiPicker extends React.Component<IProps, IState> {
             {
                 id: "custom",
                 name: _t("Custom"),
-                enabled: true,
-                visible: true,
+                enabled: customEmotesEnabled,
+                visible: customEmotesEnabled,
                 ref: React.createRef(),
             },
             {
@@ -421,7 +421,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
             this.memoizedDataByCategory[cat.id] = emojis;
             cat.enabled = emojis.length > 0;
             if (cat.id == "custom") {
-                cat.enabled = true;
+                cat.enabled = SettingsStore.getValue("feature_custom_emotes");
             }
             // The setState below doesn't re-render the header and we already have the refs for updateVisibility, so...
             if (cat.ref.current) {
