@@ -117,30 +117,32 @@ export class FontWatcher implements IWatcher {
         document.querySelector<HTMLElement>(":root")!.style.fontSize = toPx(fontSize);
     };
 
+    private static readonly FONT_FAMILY_CUSTOM_PROPERTY = "--cpd-font-family-sans";
+
     private setSystemFont = ({
         useSystemFont,
         font,
     }: Pick<UpdateSystemFontPayload, "useSystemFont" | "font">): void => {
         if (useSystemFont) {
-            // Make sure that fonts with spaces in their names get interpreted properly
-            document.body.style.fontFamily = font
-                .split(",")
-                .map((font) => {
-                    font = font.trim();
-                    if (!font.startsWith('"') && !font.endsWith('"')) {
-                        font = `"${font}"`;
-                    }
-                    return font;
-                })
-                .join(",");
-
             /**
              * Overrides the default font family from Compound
+             * Make sure that fonts with spaces in their names get interpreted properly
              */
-            document.body.style.setProperty("--cpd-font-family-sans", font);
+            document.body.style.setProperty(
+                FontWatcher.FONT_FAMILY_CUSTOM_PROPERTY,
+                font
+                    .split(",")
+                    .map((font) => {
+                        font = font.trim();
+                        if (!font.startsWith('"') && !font.endsWith('"')) {
+                            font = `"${font}"`;
+                        }
+                        return font;
+                    })
+                    .join(","),
+            );
         } else {
-            document.body.style.fontFamily = "";
-            document.body.style.removeProperty("--cpd-font-family-sans");
+            document.body.style.removeProperty(FontWatcher.FONT_FAMILY_CUSTOM_PROPERTY);
         }
     };
 }
