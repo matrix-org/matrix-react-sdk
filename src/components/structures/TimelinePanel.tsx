@@ -1865,7 +1865,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
         /* Threads do not have server side support for read receipts and the concept
         is very tied to the main room timeline, we are forcing the timeline to
         send read receipts for threaded events */
-        if (this.context.timelineRenderingType === TimelineRenderingType.Thread) {
+        if (
+            this.context.timelineRenderingType === TimelineRenderingType.Thread &&
+            SettingsStore.getValue("feature_threads_again")
+        ) {
             return 0;
         }
         const index = this.state.events.findIndex((ev) => ev.getId() === evId);

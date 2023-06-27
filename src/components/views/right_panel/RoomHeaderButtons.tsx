@@ -292,20 +292,22 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
                 onClick={this.onTimelineCardClicked}
             />,
         );
-        rightPanelPhaseButtons.set(
-            RightPanelPhases.ThreadPanel,
-            <HeaderButton
-                key={RightPanelPhases.ThreadPanel}
-                name="threadsButton"
-                data-testid="threadsButton"
-                title={_t("Threads")}
-                onClick={this.onThreadsPanelClicked}
-                isHighlighted={this.isPhase(RoomHeaderButtons.THREAD_PHASES)}
-                isUnread={this.state.threadNotificationColor > NotificationColor.None}
-            >
-                <UnreadIndicator color={this.state.threadNotificationColor} />
-            </HeaderButton>,
-        );
+        if (SettingsStore.getValue("feature_threads_again")) {
+            rightPanelPhaseButtons.set(
+                RightPanelPhases.ThreadPanel,
+                <HeaderButton
+                    key={RightPanelPhases.ThreadPanel}
+                    name="threadsButton"
+                    data-testid="threadsButton"
+                    title={_t("Threads")}
+                    onClick={this.onThreadsPanelClicked}
+                    isHighlighted={this.isPhase(RoomHeaderButtons.THREAD_PHASES)}
+                    isUnread={this.state.threadNotificationColor > NotificationColor.None}
+                >
+                    <UnreadIndicator color={this.state.threadNotificationColor} />
+                </HeaderButton>,
+            );
+        }
         rightPanelPhaseButtons.set(
             RightPanelPhases.NotificationPanel,
             <HeaderButton

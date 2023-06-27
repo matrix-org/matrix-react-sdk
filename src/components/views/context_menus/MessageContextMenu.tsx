@@ -56,6 +56,7 @@ import { getForwardableEvent } from "../../../events/forward/getForwardableEvent
 import { getShareableLocationEvent } from "../../../events/location/getShareableLocationEvent";
 import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
 import { CardContext } from "../right_panel/context";
+import { UserTab } from "../dialogs/UserTab";
 
 interface IReplyInThreadButton {
     mxEvent: MatrixEvent;
@@ -70,7 +71,12 @@ const ReplyInThreadButton: React.FC<IReplyInThreadButton> = ({ mxEvent, closeMen
     if (Boolean(relationType) && relationType !== RelationType.Thread) return null;
 
     const onClick = (): void => {
-        if (mxEvent.getThread() && !mxEvent.isThreadRoot) {
+        if (!SettingsStore.getValue("feature_threads_again")) {
+            dis.dispatch({
+                action: Action.ViewUserSettings,
+                initialTabId: UserTab.Labs,
+            });
+        } else if (mxEvent.getThread() && !mxEvent.isThreadRoot) {
             dis.dispatch<ShowThreadPayload>({
                 action: Action.ShowThread,
                 rootEvent: mxEvent.getThread()!.rootEvent!,

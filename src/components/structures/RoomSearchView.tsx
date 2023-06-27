@@ -34,6 +34,7 @@ import ResizeNotifier from "../../utils/ResizeNotifier";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import RoomContext from "../../contexts/RoomContext";
+import SettingsStore from "../../settings/SettingsStore";
 
 const DEBUG = false;
 let debuglog = function (msg: string): void {};
@@ -90,6 +91,8 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                                 return false;
                             }
 
+                            setResults({ ...results }); // copy to force a refresh
+
                             // postgres on synapse returns us precise details of the strings
                             // which actually got matched for highlighting.
                             //
@@ -101,11 +104,16 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                                 highlights = highlights.concat(term);
                             }
 
-                            // For overlapping highlights,
-                            // favour longer (more specific) terms first
-                            highlights = highlights.sort(function (a, b) {
-                                return b.length - a.length;
-                            });
+                            // For overlapping highlights, favour longer (more specific) terms first
+                            setHighlights(
+                                highlights.sort(function (a, b) {
+                                    return b.length - a.length;
+                                }),
+                            );
+
+                            if (!SettingsStore.getValue("feature_threads_again")) {
+                                return false;
+                            }
 
                             for (const result of results.results) {
                                 for (const event of result.context.getTimeline()) {
@@ -124,8 +132,6 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                                 }
                             }
 
-                            setHighlights(highlights);
-                            setResults({ ...results }); // copy to force a refresh
                             return false;
                         },
                         (error) => {

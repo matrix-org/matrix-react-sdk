@@ -27,6 +27,7 @@ import { PollStartEvent } from "matrix-js-sdk/src/extensible_events_v1/PollStart
 import { PERMITTED_URL_SCHEMES } from "../HtmlUtils";
 import { makeUserPermalink, RoomPermalinkCreator } from "./permalinks/Permalinks";
 import { isSelfLocation } from "./location";
+import SettingsStore from "../settings/SettingsStore";
 
 export function getParentEventId(ev?: MatrixEvent): string | undefined {
     if (!ev || ev.isRedacted()) return;
@@ -206,7 +207,16 @@ export function makeReplyMixIn(ev?: MatrixEvent): IEventRelation {
     };
 
     if (ev.threadRootId) {
-        mixin.is_falling_back = false;
+        if (SettingsStore.getValue("feature_threads_again")) {
+            mixin.is_falling_back = false;
+        } else {
+            // Clients that do not offer a threading UI should behave as follows when replying, for best interaction
+            // with those that do. They should set the m.in_reply_to part as usual, and then add on
+            // "rel_type": "m.thread" and "event_id": "$thread_root", copying $thread_root from the replied-to event.
+            const relation = ev.getRelation();
+            mixin.rel_type = relation?.rel_type;
+            mixin.event_id = relation?.event_id;
+        }
     }
 
     return mixin;
@@ -223,7 +233,11 @@ export function shouldDisplayReply(event: MatrixEvent): boolean {
     }
 
     const relation = event.getRelation();
-    if (relation?.rel_type === THREAD_RELATION_TYPE.name && relation?.is_falling_back) {
+    if (
+        SettingsStore.getValue("feature_threads_again") &&
+        relation?.rel_type === THREAD_RELATION_TYPE.name &&
+        relation?.is_falling_back
+    ) {
         return false;
     }
 

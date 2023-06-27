@@ -159,7 +159,7 @@ export async function sendMessage(
             // For initial threads launch, chat effects are disabled
             // see #19731
             const isNotThread = relation?.rel_type !== THREAD_RELATION_TYPE.name;
-            if (isNotThread) {
+            if (isNotThread || !SettingsStore.getValue("feature_threads_again")) {
                 dis.dispatch({ action: `effects.${effect.command}` });
             }
         }

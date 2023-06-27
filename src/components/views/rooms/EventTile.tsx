@@ -76,6 +76,7 @@ import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
 import { ElementCall } from "../../../models/Call";
 import { UnreadNotificationBadge } from "./NotificationBadge/UnreadNotificationBadge";
 import { EventTileThreadToolbar } from "./EventTile/EventTileThreadToolbar";
+import SettingsStore from "../../../settings/SettingsStore";
 
 export type GetRelationsForEvent = (
     eventId: string,
@@ -383,7 +384,9 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             }
         }
 
-        this.props.mxEvent.on(ThreadEvent.Update, this.updateThread);
+        if (SettingsStore.getValue("feature_threads_again")) {
+            this.props.mxEvent.on(ThreadEvent.Update, this.updateThread);
+        }
 
         client.decryptEventIfNeeded(this.props.mxEvent);
 
@@ -420,7 +423,9 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         if (this.props.showReactions) {
             this.props.mxEvent.removeListener(MatrixEventEvent.RelationsCreated, this.onReactionsCreated);
         }
-        this.props.mxEvent.off(ThreadEvent.Update, this.updateThread);
+        if (SettingsStore.getValue("feature_threads_again")) {
+            this.props.mxEvent.off(ThreadEvent.Update, this.updateThread);
+        }
         this.unmounted = false;
     }
 
@@ -449,6 +454,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
     };
 
     private get thread(): Thread | null {
+        if (!SettingsStore.getValue("feature_threads_again")) return null;
+
         let thread: Thread | undefined = this.props.mxEvent.getThread();
         /**
          * Accessing the threads value through the room due to a race condition

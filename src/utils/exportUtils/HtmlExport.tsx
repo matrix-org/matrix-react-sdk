@@ -38,6 +38,7 @@ import MatrixClientContext from "../../contexts/MatrixClientContext";
 import getExportCSS from "./exportCSS";
 import { textForEvent } from "../../TextForEvent";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
+import SettingsStore from "../../settings/SettingsStore";
 
 import exportJS from "!!raw-loader!./exportJS";
 
@@ -46,6 +47,7 @@ export default class HTMLExporter extends Exporter {
     protected permalinkCreator: RoomPermalinkCreator;
     protected totalSize: number;
     protected mediaOmitText: string;
+    private threadsEnabled: boolean;
 
     public constructor(
         room: Room,
@@ -60,6 +62,7 @@ export default class HTMLExporter extends Exporter {
         this.mediaOmitText = !this.exportOptions.attachmentsIncluded
             ? _t("Media omitted")
             : _t("Media omitted - file size limit exceeded");
+        this.threadsEnabled = SettingsStore.getValue("feature_threads_again");
     }
 
     protected async getRoomAvatar(): Promise<string> {
@@ -434,7 +437,7 @@ export default class HTMLExporter extends Exporter {
             content += this.needsDateSeparator(event, prevEvent) ? this.getDateSeparator(event) : "";
             const shouldBeJoined =
                 !this.needsDateSeparator(event, prevEvent) &&
-                shouldFormContinuation(prevEvent, event, this.room.client, false);
+                shouldFormContinuation(prevEvent, event, this.room.client, false, undefined, this.threadsEnabled);
             const body = await this.createMessageBody(event, shouldBeJoined);
             this.totalSize += Buffer.byteLength(body);
             content += body;

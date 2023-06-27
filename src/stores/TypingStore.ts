@@ -65,7 +65,7 @@ export default class TypingStore {
         if (SettingsStore.getValue("lowBandwidth")) return;
         // Disable typing notification for threads for the initial launch
         // before we figure out a better user experience for them
-        if (threadId) return;
+        if (threadId && SettingsStore.getValue("feature_threads_again")) return;
 
         let currentTyping = this.typingStates[roomId];
         if ((!isTyping && !currentTyping) || currentTyping?.isTyping === isTyping) {

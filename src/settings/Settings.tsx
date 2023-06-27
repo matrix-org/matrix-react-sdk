@@ -91,6 +91,7 @@ export enum LabGroup {
 }
 
 export enum Features {
+    Threads = "feature_threads_again",
     VoiceBroadcast = "feature_voice_broadcast",
     VoiceBroadcastForceSmallChunks = "feature_voice_broadcast_force_small_chunks",
     OidcNativeFlow = "feature_oidc_native_flow",
@@ -179,6 +180,37 @@ export interface IFeature extends Omit<IBaseSetting<boolean>, "isFeature"> {
 export type ISetting = IBaseSetting | IFeature;
 
 export const SETTINGS: { [setting: string]: ISetting } = {
+    "feature_threads_again": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        displayName: _td("Threaded messages"),
+        supportedLevels: LEVELS_FEATURE,
+        default: true,
+        // Reload to ensure that the MatrixClient get re-initialised
+        controller: new ReloadOnChangeController(),
+        betaInfo: {
+            title: _td("Threaded messages"),
+            caption: () => (
+                <>
+                    <p>{_t("Keep discussions organised with threads.")}</p>
+                    <p>
+                        {_t(
+                            "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.",
+                            {},
+                            {
+                                a: (sub) => (
+                                    <a href="https://element.io/help#threads" rel="noreferrer noopener" target="_blank">
+                                        {sub}
+                                    </a>
+                                ),
+                            },
+                        )}
+                    </p>
+                </>
+            ),
+            requiresRefresh: true,
+        },
+    },
     "feature_video_rooms": {
         isFeature: true,
         labsGroup: LabGroup.VoiceAndVideo,

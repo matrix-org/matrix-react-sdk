@@ -56,6 +56,9 @@ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayloa
 import { GetRelationsForEvent } from "../rooms/EventTile";
 import { VoiceBroadcastInfoEventType } from "../../../voice-broadcast/types";
 import { ButtonEvent } from "../elements/AccessibleButton";
+import SettingsStore from "../../../settings/SettingsStore";
+import { Thread } from "matrix-js-sdk";
+import { UserTab } from "../dialogs/UserTab";
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -200,6 +203,10 @@ const ReplyInThreadButton: React.FC<IReplyInThreadButton> = ({ mxEvent }) => {
 
     const relationType = mxEvent?.getRelation()?.rel_type;
     const hasARelation = !!relationType && relationType !== RelationType.Thread;
+    if (!SettingsStore.getValue("feature_threads_again") && !Thread.hasServerSideSupport) {
+        // hide the prompt if the user would only have degraded mode
+        return null;
+    }
 
     const onClick = (e: ButtonEvent): void => {
         // Don't open the regular browser or our context menu on right-click
@@ -207,7 +214,12 @@ const ReplyInThreadButton: React.FC<IReplyInThreadButton> = ({ mxEvent }) => {
         e.stopPropagation();
 
         const thread = mxEvent.getThread();
-        if (thread?.rootEvent && !mxEvent.isThreadRoot) {
+        if (!SettingsStore.getValue("feature_threads_again")) {
+            defaultDispatcher.dispatch({
+                action: Action.ViewUserSettings,
+                initialTabId: UserTab.Labs,
+            });
+        } else if (thread?.rootEvent && !mxEvent.isThreadRoot) {
             defaultDispatcher.dispatch<ShowThreadPayload>({
                 action: Action.ShowThread,
                 rootEvent: thread.rootEvent,
@@ -493,6 +505,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                     );
                 }
             } else if (
+                SettingsStore.getValue("feature_threads_again") &&
                 // Show thread icon even for deleted messages, but only within main timeline
                 this.context.timelineRenderingType === TimelineRenderingType.Room &&
                 this.props.mxEvent.getThread()

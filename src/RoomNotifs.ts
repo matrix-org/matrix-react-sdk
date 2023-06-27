@@ -254,11 +254,13 @@ export function determineUnreadState(
         return { symbol: null, count: trueCount, color: NotificationColor.Grey };
     }
 
-    // We don't have any notified messages, but we might have unread messages. Let's
-    // find out.
-    let hasUnread = false;
-    if (threadId) hasUnread = doesRoomOrThreadHaveUnreadMessages(room.getThread(threadId)!);
-    else hasUnread = doesRoomHaveUnreadMessages(room);
+    // We don't have any notified messages, but we might have unread messages. Let's find out.
+    let hasUnread: boolean;
+    if (threadId && SettingsStore.getValue("feature_threads_again")) {
+        hasUnread = doesRoomOrThreadHaveUnreadMessages(room.getThread(threadId)!);
+    } else {
+        hasUnread = doesRoomHaveUnreadMessages(room);
+    }
 
     return {
         symbol: null,
