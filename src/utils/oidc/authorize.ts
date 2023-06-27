@@ -81,7 +81,7 @@ const retrieveAuthorizationParams = (state: string): StoredAuthorizationParams =
     const clientId = window.sessionStorage.getItem(`oidc_${state}_clientId`);
     const homeserverUrl = window.sessionStorage.getItem(`oidc_${state}_homeserverUrl`);
     const identityServerUrl = window.sessionStorage.getItem(`oidc_${state}_identityServerUrl`) ?? undefined;
-    const delegatedAuthConfig = JSON.parse(window.sessionStorage.getItem(`oidc_${state}_delegatedAuthConfig`));
+    const delegatedAuthConfig = window.sessionStorage.getItem(`oidc_${state}_delegatedAuthConfig`);
 
     return validateStoredAuthorizationParams({
         nonce,
@@ -90,7 +90,7 @@ const retrieveAuthorizationParams = (state: string): StoredAuthorizationParams =
         clientId,
         homeserverUrl,
         identityServerUrl,
-        delegatedAuthConfig,
+        delegatedAuthConfig: delegatedAuthConfig ? JSON.parse(delegatedAuthConfig) : undefined,
     });
 };
 

@@ -258,7 +258,7 @@ async function getUserIdFromAccessToken(
 
         return await client.whoami();
     } catch (error) {
-        console.error("Failed to retrieve userId using accessToken", error);
+        logger.error("Failed to retrieve userId using accessToken", error);
         throw new Error("Failed to retrieve userId using accessToken");
     }
 }

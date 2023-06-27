@@ -320,12 +320,14 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 this.props.defaultDeviceDisplayName,
                 this.getFragmentAfterLogin(),
             ).then(async (loggedIn): Promise<boolean | void> => {
-                if (this.props.realQueryParams?.loginToken) {
-                    // remove the loginToken from the URL regardless
+                if (
+                    this.props.realQueryParams?.loginToken ||
+                    this.props.realQueryParams?.code ||
+                    this.props.realQueryParams?.state
+                ) {
+                    // remove the loginToken or auth code from the URL regardless
                     this.props.onTokenLoginCompleted();
                 }
-
-                // @TODO(kerrya) remove OIDC code and state from URL
 
                 if (loggedIn) {
                     this.tokenLogin = true;
@@ -340,7 +342,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 // if the user has followed a login or register link, don't reanimate
                 // the old creds, but rather go straight to the relevant page
                 const firstScreen = this.screenAfterLogin ? this.screenAfterLogin.screen : null;
-
                 const restoreSuccess = await this.loadSession();
                 if (restoreSuccess) {
                     return true;
