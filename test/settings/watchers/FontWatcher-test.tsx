@@ -40,14 +40,14 @@ describe("FontWatcher", function () {
         const watcher = new FontWatcher();
         await setSystemFont("Font Name");
         expect(getFontFamily()).toBe("");
-        watcher.start();
+        await watcher.start();
         expect(getFontFamily()).toBe('"Font Name"');
     });
 
     it("should load font on Action.OnLoggedIn", async () => {
         await setSystemFont("Font Name");
-        new FontWatcher().start();
-        document.body.style.removeProperty(FontWatcher.FONT_FAMILY_CUSTOM_PROPERTY); // clear the fontFamily which was set by start which we tested already
+        await new FontWatcher().start();
+        document.body.style.removeProperty(FontWatcher.FONT_FAMILY_CUSTOM_PROPERTY); // clear the fontFamily which was  by start which we tested already
         defaultDispatcher.fire(Action.OnLoggedIn, true);
         expect(getFontFamily()).toBe('"Font Name"');
     });
@@ -55,7 +55,7 @@ describe("FontWatcher", function () {
     it("should reset font on Action.OnLoggedOut", async () => {
         await setSystemFont("Font Name");
         const watcher = new FontWatcher();
-        watcher.start();
+        await watcher.start();
         expect(getFontFamily()).toBe('"Font Name"');
         defaultDispatcher.fire(Action.OnLoggedOut, true);
         expect(getFontFamily()).toBe("");
@@ -63,9 +63,9 @@ describe("FontWatcher", function () {
 
     describe("Sets font as expected", () => {
         let fontWatcher: FontWatcher;
-        beforeEach(() => {
+        beforeEach(async () => {
             fontWatcher = new FontWatcher();
-            fontWatcher.start();
+            await fontWatcher.start();
         });
         afterEach(() => {
             fontWatcher.stop();
@@ -82,6 +82,29 @@ describe("FontWatcher", function () {
         it("trims whitespace, encloses the fonts by double quotes, and sets them as the system font", async () => {
             await setSystemFont(`  Fira Code  ,  "Commodore 64" `);
             expect(getFontFamily()).toBe(`"Fira Code","Commodore 64"`);
+        });
+    });
+
+    describe("Migrates baseFontSize", () => {
+        let watcher;
+
+        beforeEach(() => {
+            watcher = new FontWatcher();
+        });
+
+        afterEach(() => {
+            watcher.stop();
+        });
+
+        it("should not run the migration", async () => {
+            await watcher.start();
+            expect(SettingsStore.getValue("baseFontSizeV2")).toBe(16);
+        });
+
+        it("should migrate to default font size", async () => {
+            await SettingsStore.setValue("baseFontSize", null, SettingLevel.DEVICE, 13);
+            await watcher.start();
+            expect(SettingsStore.getValue("baseFontSizeV2")).toBe(19);
         });
     });
 });

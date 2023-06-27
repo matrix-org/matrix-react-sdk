@@ -450,7 +450,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "baseFontSize": {
         displayName: _td("Font size"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        default: FontWatcher.DEFAULT_SIZE,
+        default: "",
         controller: new FontSizeController(),
     },
     /**

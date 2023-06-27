@@ -22,6 +22,7 @@ import { Action } from "../../dispatcher/actions";
 import { SettingLevel } from "../SettingLevel";
 import { UpdateSystemFontPayload } from "../../dispatcher/payloads/UpdateSystemFontPayload";
 import { ActionPayload } from "../../dispatcher/payloads";
+import { clamp } from "../../utils/numbers";
 
 export class FontWatcher implements IWatcher {
     /**
@@ -42,14 +43,14 @@ export class FontWatcher implements IWatcher {
         this.dispatcherRef = null;
     }
 
-    public start(): void {
+    public async start(): Promise<void> {
         this.updateFont();
         this.dispatcherRef = dis.register(this.onAction);
         /**
          * baseFontSize is an account level setting which is loaded after the initial
          * sync. Hence why we can't do that in the `constructor`
          */
-        this.migrateBaseFontSize();
+        await this.migrateBaseFontSize();
     }
 
     /**
@@ -57,10 +58,9 @@ export class FontWatcher implements IWatcher {
      * Everything will becomes slightly larger, and getting rid of the `SIZE_DIFF`
      * weirdness for locally persisted values
      */
-    private migrateBaseFontSize(): void {
+    private async migrateBaseFontSize(): Promise<void> {
         const legacyBaseFontSize = SettingsStore.getValue("baseFontSize");
-
-        if (legacyBaseFontSize && !SettingsStore.getValue("baseFontSizeV2")) {
+        if (legacyBaseFontSize) {
             console.log("Migrating base font size for Compound, current value", legacyBaseFontSize);
 
             // For some odd reason, the persisted value in user storage has an offset
@@ -72,11 +72,8 @@ export class FontWatcher implements IWatcher {
 
             const baseFontSize = legacyBaseFontSize + ROOT_FONT_SIZE_INCREASE + LEGACY_SIZE_DIFF;
 
-            console.log("New base font size will be", baseFontSize);
-
-            this.setRootFontSize(baseFontSize);
-
-            SettingsStore.setValue("baseFontSize", null, SettingLevel.DEVICE, null);
+            await SettingsStore.setValue("baseFontSizeV2", null, SettingLevel.DEVICE, baseFontSize);
+            await SettingsStore.setValue("baseFontSize", null, SettingLevel.DEVICE, "");
             console.log("Migration complete, deleting legacy `baseFontSize`");
         }
     }
@@ -112,11 +109,11 @@ export class FontWatcher implements IWatcher {
         }
     };
 
-    private setRootFontSize = (size: number): void => {
-        const fontSize = Math.max(Math.min(FontWatcher.MAX_SIZE, size), FontWatcher.MIN_SIZE);
+    private setRootFontSize = async (size: number): Promise<void> => {
+        const fontSize = clamp(size, FontWatcher.MIN_SIZE, FontWatcher.MAX_SIZE);
 
         if (fontSize !== size) {
-            SettingsStore.setValue("baseFontSizeV2", null, SettingLevel.DEVICE, fontSize);
+            await SettingsStore.setValue("baseFontSizeV2", null, SettingLevel.DEVICE, fontSize);
         }
         document.querySelector<HTMLElement>(":root")!.style.fontSize = toPx(fontSize);
     };
