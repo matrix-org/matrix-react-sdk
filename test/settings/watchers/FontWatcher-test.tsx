@@ -86,24 +86,24 @@ describe("FontWatcher", function () {
     });
 
     describe("Migrates baseFontSize", () => {
-        let watcher;
+        let watcher: FontWatcher | undefined;
 
         beforeEach(() => {
             watcher = new FontWatcher();
         });
 
         afterEach(() => {
-            watcher.stop();
+            watcher!.stop();
         });
 
         it("should not run the migration", async () => {
-            await watcher.start();
+            await watcher!.start();
             expect(SettingsStore.getValue("baseFontSizeV2")).toBe(16);
         });
 
         it("should migrate to default font size", async () => {
             await SettingsStore.setValue("baseFontSize", null, SettingLevel.DEVICE, 13);
-            await watcher.start();
+            await watcher!.start();
             expect(SettingsStore.getValue("baseFontSizeV2")).toBe(19);
         });
     });
