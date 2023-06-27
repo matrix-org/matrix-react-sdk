@@ -17,7 +17,7 @@ limitations under the License.
 import React, { HTMLAttributes } from "react";
 import classNames from "classnames";
 
-type Size = "h1" | "h2" | "h3" | "h4";
+type Size = "1" | "2" | "3" | "4";
 
 type HTMLHeadingTags = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
@@ -33,10 +33,10 @@ interface HeadingProps extends HTMLAttributes<HTMLHeadingElement> {
     size: Size;
 }
 
-const Heading: React.FC<HeadingProps> = ({ as, size, className, children, ...rest }) =>
-    React.createElement(as || size || "h1", {
+const Heading: React.FC<HeadingProps> = ({ as, size = "1", className, children, ...rest }) =>
+    React.createElement(as || `h${size}`, {
         ...rest,
-        className: classNames(`mx_Heading_${size}`, className),
+        className: classNames(`mx_Heading_h${size}`, className),
         children,
     });
 
