@@ -34,7 +34,7 @@ describe("startOidcLogin()", () => {
     };
 
     const sessionStorageGetSpy = jest.spyOn(sessionStorage.__proto__, "setItem").mockReturnValue(undefined);
-    const randomStringMockImpl = (length) => new Array(length).fill("x").join("");
+    const randomStringMockImpl = (length: number) => new Array(length).fill("x").join("");
 
     // to restore later
     const realWindowLocation = window.location;
@@ -45,6 +45,7 @@ describe("startOidcLogin()", () => {
 
         sessionStorageGetSpy.mockClear();
 
+        // @ts-ignore allow delete of non-optional prop
         delete window.location;
         // @ts-ignore ugly mocking
         window.location = {
@@ -89,7 +90,7 @@ describe("startOidcLogin()", () => {
         expect(authUrl.searchParams.get("code_challenge_method")).toEqual("S256");
 
         // scope ends with a 10char randomstring deviceId
-        const scope = authUrl.searchParams.get("scope");
+        const scope = authUrl.searchParams.get("scope")!;
         expect(scope.substring(0, scope.length - 10)).toEqual(expectedScopeWithoutDeviceId);
         expect(scope.substring(scope.length - 10)).toBeTruthy();
 
