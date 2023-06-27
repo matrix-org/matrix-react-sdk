@@ -123,7 +123,7 @@ describe("Appearance user settings tab", () => {
                 cy.get("input").realClick({ position: "left" });
 
                 // Assert that the smallest font size is selected
-                cy.get("input[value='13']").should("exist");
+                cy.get("input[value='11']").should("exist");
                 cy.get("output .mx_Slider_selection_label").findByText("13");
             });
 
