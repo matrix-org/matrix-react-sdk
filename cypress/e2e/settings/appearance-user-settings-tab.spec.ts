@@ -122,9 +122,10 @@ describe("Appearance user settings tab", () => {
                 // Click the left position of the slider
                 cy.get("input").realClick({ position: "left" });
 
+                const MIN_FONT_SIZE = 11;
                 // Assert that the smallest font size is selected
-                cy.get("input[value='11']").should("exist");
-                cy.get("output .mx_Slider_selection_label").findByText("13");
+                cy.get(`input[value='${MIN_FONT_SIZE}']`).should("exist");
+                cy.get("output .mx_Slider_selection_label").findByText(MIN_FONT_SIZE);
             });
 
             cy.get(".mx_FontScalingPanel_fontSlider").percySnapshotElement("Font size slider - smallest (13)", {
