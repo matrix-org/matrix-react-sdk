@@ -21,6 +21,7 @@ import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/mo
 import classNames from "classnames";
 import { MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
+import { Thread } from "matrix-js-sdk/src/matrix";
 
 import { Icon as ContextMenuIcon } from "../../../../res/img/element-icons/context-menu.svg";
 import { Icon as EditIcon } from "../../../../res/img/element-icons/room/message-bar/edit.svg";
@@ -57,7 +58,6 @@ import { GetRelationsForEvent } from "../rooms/EventTile";
 import { VoiceBroadcastInfoEventType } from "../../../voice-broadcast/types";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import SettingsStore from "../../../settings/SettingsStore";
-import { Thread } from "matrix-js-sdk";
 import { UserTab } from "../dialogs/UserTab";
 
 interface IOptionsButtonProps {
