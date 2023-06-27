@@ -220,7 +220,6 @@ export interface IRoomState {
     showUrlPreview?: boolean;
     e2eStatus?: E2EStatus;
     rejecting?: boolean;
-    rejectError?: Error;
     hasPinnedWidgets?: boolean;
     mainSplitContentType?: MainSplitContentType;
     // whether or not a spaces context switch brought us here,
@@ -519,7 +518,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     /**
      * Removes the Jitsi widget from the current user if
      * - Multiple Jitsi widgets have been added within {@link PREVENT_MULTIPLE_JITSI_WITHIN}
-     * - The last (server timestamp) of these widgets is from the currrent user
+     * - The last (server timestamp) of these widgets is from the current user
      * This solves the issue if some people decide to start a conference and click the call button at the same time.
      */
     private doMaybeRemoveOwnJitsiWidget(): void {
@@ -592,7 +591,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             return;
         }
 
-        if (!initial && this.state.roomId !== this.context.roomViewStore.getRoomId()) {
+        const roomLoadError = this.context.roomViewStore.getRoomLoadError() ?? undefined;
+        if (!initial && !roomLoadError && this.state.roomId !== this.context.roomViewStore.getRoomId()) {
             // RoomView explicitly does not support changing what room
             // is being viewed: instead it should just be re-mounted when
             // switching rooms. Therefore, if the room ID changes, we
@@ -614,7 +614,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             roomId: roomId ?? undefined,
             roomAlias: this.context.roomViewStore.getRoomAlias() ?? undefined,
             roomLoading: this.context.roomViewStore.isRoomLoading(),
-            roomLoadError: this.context.roomViewStore.getRoomLoadError() ?? undefined,
+            roomLoadError,
             joining: this.context.roomViewStore.isJoining(),
             replyToEvent: this.context.roomViewStore.getQuotingEvent() ?? undefined,
             // we should only peek once we have a ready client
@@ -1679,7 +1679,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
                 this.setState({
                     rejecting: false,
-                    rejectError: error,
                 });
             },
         );
@@ -1713,7 +1712,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
             this.setState({
                 rejecting: false,
-                rejectError: error,
             });
         }
     };
