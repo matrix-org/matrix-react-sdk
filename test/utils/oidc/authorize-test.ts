@@ -39,7 +39,7 @@ describe("OIDC authorization", () => {
     const sessionStorageSetSpy = jest.spyOn(sessionStorage.__proto__, "setItem").mockReturnValue(undefined);
     const sessionStorageGetSpy = jest.spyOn(sessionStorage.__proto__, "getItem").mockReturnValue(undefined);
 
-    const randomStringMockImpl = (length) => new Array(length).fill("x").join("");
+    const randomStringMockImpl = (length: number) => new Array(length).fill("x").join("");
 
     // to restore later
     const realWindowLocation = window.location;
@@ -51,6 +51,7 @@ describe("OIDC authorization", () => {
         sessionStorageSetSpy.mockClear();
         sessionStorageGetSpy.mockReset();
 
+        // @ts-ignore allow delete of non-optional prop
         delete window.location;
         // @ts-ignore ugly mocking
         window.location = {
