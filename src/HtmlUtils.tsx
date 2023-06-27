@@ -582,12 +582,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
     } finally {
         delete sanitizeParams.textFilter;
     }
-
-    const contentBody = safeBody ?? strippedBody;
-    if (opts.returnString) {
-        return contentBody;
-    }
-
+    
     let emojiBody = false;
     if (!opts.disableBigEmoji && bodyHasEmoji) {
         const contentBody = safeBody ?? strippedBody;
