@@ -130,11 +130,11 @@ exports[`<CurrentDeviceSection /> handles when device is falsy 1`] = `
     <div
       class="mx_SettingsSubsectionHeading"
     >
-      <h4
+      <h3
         class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
       >
         Current session
-      </h4>
+      </h3>
       <div
         aria-disabled="true"
         aria-expanded="false"
@@ -166,11 +166,11 @@ exports[`<CurrentDeviceSection /> renders device and correct security card when 
     <div
       class="mx_SettingsSubsectionHeading"
     >
-      <h4
+      <h3
         class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
       >
         Current session
-      </h4>
+      </h3>
       <div
         aria-expanded="false"
         aria-haspopup="true"
@@ -309,11 +309,11 @@ exports[`<CurrentDeviceSection /> renders device and correct security card when 
     <div
       class="mx_SettingsSubsectionHeading"
     >
-      <h4
+      <h3
         class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
       >
         Current session
-      </h4>
+      </h3>
       <div
         aria-expanded="false"
         aria-haspopup="true"

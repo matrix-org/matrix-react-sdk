@@ -121,7 +121,7 @@ export class FontWatcher implements IWatcher {
         document.querySelector<HTMLElement>(":root")!.style.fontSize = toPx(fontSize);
     };
 
-    private static readonly FONT_FAMILY_CUSTOM_PROPERTY = "--cpd-font-family-sans";
+    public static readonly FONT_FAMILY_CUSTOM_PROPERTY = "--cpd-font-family-sans";
 
     private setSystemFont = ({
         useSystemFont,
