@@ -133,8 +133,14 @@ export class FontWatcher implements IWatcher {
                     return font;
                 })
                 .join(",");
+
+            /**
+             * Overrides the default font family from Compound
+             */
+            document.body.style.setProperty("--cpd-font-family-sans", font);
         } else {
             document.body.style.fontFamily = "";
+            document.body.style.removeProperty("--cpd-font-family-sans");
         }
     };
 }
