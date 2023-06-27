@@ -589,11 +589,13 @@ describe("<MatrixChat />", () => {
 
         describe("when login succeeds", () => {
             beforeEach(() => {
-                jest.spyOn(StorageManager, "idbLoad").mockImplementation(async (db: string, key: string) => {
-                    if (key === "mx_access_token") {
-                        return accessToken;
-                    }
-                });
+                jest.spyOn(StorageManager, "idbLoad").mockImplementation(
+                    async (_table: string, key: string | string[]) => {
+                        if (key === "mx_access_token") {
+                            return accessToken as any;
+                        }
+                    },
+                );
             });
             it("should clear storage", async () => {
                 getComponent({ realQueryParams });
