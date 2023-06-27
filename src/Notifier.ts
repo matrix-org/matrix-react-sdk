@@ -106,9 +106,8 @@ class NotifierClass {
     private toolbarHidden?: boolean;
     private isSyncing?: boolean;
 
-    // Cache the sounds loaded
     private audioContext: AudioContext = new AudioContext();
-    private sounds: Record<string, AudioBuffer> = {};
+    private sounds: Record<string, AudioBuffer> = {}; // Cache the sounds loaded
 
     public notificationMessageForEvent(ev: MatrixEvent): string | null {
         const msgType = ev.getContent().msgtype;
@@ -228,6 +227,7 @@ class NotifierClass {
     private async getSoundBufferForRoom(roomId: string): Promise<AudioBuffer> {
         const sound = this.getSoundForRoom(roomId);
 
+        // Detect supported formats
         const audioElement = document.createElement("audio");
         let format = "";
         if (audioElement.canPlayType("audio/mpeg")) {
@@ -235,7 +235,8 @@ class NotifierClass {
         } else if (audioElement.canPlayType("audio/ogg")) {
             format = "ogg";
         } else {
-            console.log("Browser doens't support mp3 or ogg");
+            logger.error("Browser doens't support mp3 or ogg");
+            return;
             // Will probably never happen. If happened, format="" and will fail to load audio. Who cares...
         }
 

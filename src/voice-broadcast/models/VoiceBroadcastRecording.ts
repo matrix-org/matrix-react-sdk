@@ -75,6 +75,8 @@ export class VoiceBroadcastRecording
     private reconnectedListener: ClientEventHandlerMap[ClientEvent.Sync];
     private roomId: string;
     private infoEventId: string;
+    private audioContext: AudioContext = new AudioContext();
+    private sounds: Record<string, AudioBuffer> = {}; // Cache the sounds loaded
 
     /**
      * Broadcast chunks have a sequence number to bring them in the correct order and to know if a message is missing.
@@ -346,15 +348,33 @@ export class VoiceBroadcastRecording
             return;
         }
 
-        // Audio files are added to the document in Element Web.
-        // See <audio> elements in https://github.com/vector-im/element-web/blob/develop/src/vector/index.html
-        const audioElement = document.querySelector<HTMLAudioElement>("audio#errorAudio");
-
-        try {
-            await audioElement?.play();
-        } catch (e) {
-            logger.warn("error playing 'errorAudio'", e);
+        // Detect supported formats
+        const audioElement = document.createElement("audio");
+        let format = "";
+        if (audioElement.canPlayType("audio/mpeg")) {
+            format = "mp3";
+        } else if (audioElement.canPlayType("audio/ogg")) {
+            format = "ogg";
+        } else {
+            console.log("Browser doens't support mp3 or ogg");
+            // Will probably never happen. If happened, format="" and will fail to load audio. Who cares...
         }
+
+        if(!this.sounds.hasOwnProperty("errorAudio")) {
+            // No cache, fetch it
+            const response=await fetch(`./media/error.${format}`);
+            if(response.status!=200){
+                logger.warn("Failed to fetch error audio");
+            }
+            const buffer=await response.arrayBuffer();
+            const sound=await this.audioContext.decodeAudioData(buffer);
+            this.sounds["errorAudio"]=sound;
+        }
+        const source=this.audioContext.createBufferSource();
+        source.buffer=this.sounds["errorAudio"];
+        source.connect(this.audioContext.destination);
+        source.start();
+
     }
 
     private async uploadFile(chunk: ChunkRecordedPayload): ReturnType<typeof uploadFile> {
