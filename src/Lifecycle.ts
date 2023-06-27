@@ -223,7 +223,6 @@ export function attemptTokenLogin(
             logger.log("Logged in with token");
             return clearStorage().then(async (): Promise<boolean> => {
                 await persistCredentials(creds);
-
                 // remember that we just logged in
                 sessionStorage.setItem("mx_fresh_login", String(true));
                 return true;
