@@ -360,21 +360,20 @@ export class VoiceBroadcastRecording
             // Will probably never happen. If happened, format="" and will fail to load audio. Who cares...
         }
 
-        if(!this.sounds.hasOwnProperty("errorAudio")) {
+        if (!this.sounds.hasOwnProperty("errorAudio")) {
             // No cache, fetch it
-            const response=await fetch(`./media/error.${format}`);
-            if(response.status!=200){
+            const response = await fetch(`./media/error.${format}`);
+            if (response.status != 200) {
                 logger.warn("Failed to fetch error audio");
             }
-            const buffer=await response.arrayBuffer();
-            const sound=await this.audioContext.decodeAudioData(buffer);
-            this.sounds["errorAudio"]=sound;
+            const buffer = await response.arrayBuffer();
+            const sound = await this.audioContext.decodeAudioData(buffer);
+            this.sounds["errorAudio"] = sound;
         }
-        const source=this.audioContext.createBufferSource();
-        source.buffer=this.sounds["errorAudio"];
+        const source = this.audioContext.createBufferSource();
+        source.buffer = this.sounds["errorAudio"];
         source.connect(this.audioContext.destination);
         source.start();
-
     }
 
     private async uploadFile(chunk: ChunkRecordedPayload): ReturnType<typeof uploadFile> {

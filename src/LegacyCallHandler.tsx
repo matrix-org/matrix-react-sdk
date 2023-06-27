@@ -452,50 +452,50 @@ export default class LegacyCallHandler extends EventEmitter {
             return;
         }
 
-        const URLs={
-            "ringAudio": `./media/ring.${format}`,
-            "ringbackAudio": `./media/ringback.${format}`,
-            "callendAudio": `./media/callend.${format}`,
-            "busyAudio": `./media/busy.${format}`,
-        }
-        const loop={
-            "ringAudio": true,
-            "ringbackAudio": true,
-            "callendAudio": false,
-            "busyAudio": false,
-        }
+        const URLs = {
+            ringAudio: `./media/ring.${format}`,
+            ringbackAudio: `./media/ringback.${format}`,
+            callendAudio: `./media/callend.${format}`,
+            busyAudio: `./media/busy.${format}`,
+        };
+        const loop = {
+            ringAudio: true,
+            ringbackAudio: true,
+            callendAudio: false,
+            busyAudio: false,
+        };
 
         const playDownloadedSound = (sound: AudioBuffer): void => {
-            const source=this.audioContext.createBufferSource();
-            source.buffer=sound;
-            source.loop=loop[audioId];
+            const source = this.audioContext.createBufferSource();
+            source.buffer = sound;
+            source.loop = loop[audioId];
             source.connect(this.audioContext.destination);
-            this.playingSources[audioId]=source;
+            this.playingSources[audioId] = source;
             source.start();
 
             logger.debug(`${logPrefix} playing audio successfully`);
-        }
+        };
 
-        const soundUrl=URLs[audioId];
-        if(this.sounds.hasOwnProperty(soundUrl)){
-            const sound=this.sounds[soundUrl];
+        const soundUrl = URLs[audioId];
+        if (this.sounds.hasOwnProperty(soundUrl)) {
+            const sound = this.sounds[soundUrl];
             logger.debug(`${logPrefix} hit cache`);
             playDownloadedSound(sound);
-        }else{
+        } else {
             logger.debug(`${logPrefix} fetching audio`);
             fetch(soundUrl).then((response) => {
-                if(response.status!==200){
+                if (response.status !== 200) {
                     logger.error(`${logPrefix} failed to fetch audio`);
                     return;
                 }
                 response.arrayBuffer().then((buffer) => {
                     this.audioContext.decodeAudioData(buffer, (decodedData) => {
                         const sound = decodedData;
-                        this.sounds[soundUrl]=sound;
+                        this.sounds[soundUrl] = sound;
                         playDownloadedSound(sound);
                     });
-                })
-            })
+                });
+            });
         }
     }
 
@@ -503,8 +503,8 @@ export default class LegacyCallHandler extends EventEmitter {
         const logPrefix = `LegacyCallHandler.pause(${audioId}):`;
         logger.debug(`${logPrefix} beginning of function`);
 
-        const source=this.playingSources[audioId];
-        if(!source){
+        const source = this.playingSources[audioId];
+        if (!source) {
             logger.debug(`${logPrefix} audio not playing`);
             return;
         }
