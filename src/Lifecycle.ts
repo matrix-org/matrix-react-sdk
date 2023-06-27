@@ -223,6 +223,7 @@ export function attemptTokenLogin(
             logger.log("Logged in with token");
             return clearStorage().then(async (): Promise<boolean> => {
                 await persistCredentials(creds);
+
                 // remember that we just logged in
                 sessionStorage.setItem("mx_fresh_login", String(true));
                 return true;
@@ -664,7 +665,7 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
     if (credentials.accessToken) {
         localStorage.setItem("mx_has_access_token", "true");
     } else {
-        localStorage.deleteItem("mx_has_access_token");
+        localStorage.removeItem("mx_has_access_token");
     }
 
     if (credentials.pickleKey) {
