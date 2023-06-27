@@ -18,12 +18,23 @@ import React, { HTMLAttributes } from "react";
 import classNames from "classnames";
 
 type Size = "h1" | "h2" | "h3" | "h4";
+
+type HTMLHeadingTags = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
 interface HeadingProps extends HTMLAttributes<HTMLHeadingElement> {
+    /**
+     * Defines the type of heading used
+     */
+    as?: HTMLHeadingTags;
+    /**
+     * Defines the appearance of the heading
+     * Falls back to the type of heading used if `as` is not provided
+     */
     size: Size;
 }
 
-const Heading: React.FC<HeadingProps> = ({ size, className, children, ...rest }) =>
-    React.createElement(size || "h1", {
+const Heading: React.FC<HeadingProps> = ({ as, size, className, children, ...rest }) =>
+    React.createElement(as || size || "h1", {
         ...rest,
         className: classNames(`mx_Heading_${size}`, className),
         children,

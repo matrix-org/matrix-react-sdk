@@ -42,4 +42,8 @@ describe("<Heading />", () => {
     it("renders h4 with correct attributes", () => {
         expect(getComponent({ size: "h4" }).asFragment()).toMatchSnapshot();
     });
+
+    it("can have different appearance to its heading level", () => {
+        expect(getComponent({ size: "h4", as: "h1" }).asFragment()).toMatchSnapshot();
+    });
 });
