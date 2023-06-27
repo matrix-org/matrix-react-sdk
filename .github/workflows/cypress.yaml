@@ -5,9 +5,7 @@
 name: Cypress End to End Tests
 on:
     workflow_run:
-        # disabled for ER test
-        # workflows: ["Element Web - Build"]
-        workflows: []
+        workflows: ["Element Web - Build"]
         types:
             - completed
 
