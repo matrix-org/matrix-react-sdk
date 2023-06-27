@@ -45,3 +45,23 @@ export async function getDeviceCryptoInfo(
     const deviceMap = await crypto.getUserDeviceInfo([userId], downloadUncached);
     return deviceMap.get(userId)?.get(deviceId);
 }
+
+/**
+ * Get the IDs of the given user's devices.
+ *
+ * Only devices with Crypto support are returned. If the MatrixClient doesn't support cryptography, an empty Set is
+ * returned.
+ *
+ * @param client  - Matrix Client.
+ * @param userId  - ID of the user to query.
+ */
+
+export async function getUserDeviceIds(client: MatrixClient, userId: string): Promise<Set<string>> {
+    const crypto = client.getCrypto();
+    if (!crypto) {
+        return new Set();
+    }
+
+    const deviceMap = await crypto.getUserDeviceInfo([userId]);
+    return new Set(deviceMap.get(userId)?.keys() ?? []);
+}
