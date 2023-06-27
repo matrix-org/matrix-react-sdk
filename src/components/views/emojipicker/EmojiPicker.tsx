@@ -43,6 +43,7 @@ import { mediaFromMxc } from "../../../customisations/Media";
 import { decryptFile } from "../../../utils/DecryptFile";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { IEncryptedFile } from "../../../customisations/models/IMediaEventContent";
+import SettingsStore from "../../../settings/SettingsStore";
 
 export const CATEGORY_HEADER_HEIGHT = 20;
 export const EMOJI_HEIGHT = 35;
@@ -87,16 +88,17 @@ class EmojiPicker extends React.Component<IProps, IState> {
         const emotesEvent = props.room?.currentState.getStateEvents(EMOTES_STATE.name, "");
         const rawEmotes = emotesEvent ? emotesEvent.getContent() || {} : {};
         const emotesMap = new Map();
+        const customEmotesEnabled = SettingsStore.getValue("feature_custom_emotes");
         for (const shortcode in rawEmotes) {
             emotesMap.set(shortcode, rawEmotes[shortcode]);
         }
-        if (props.room) {
+        if (props.room && customEmotesEnabled) {
             this.emotesPromise = this.decryptEmotes(emotesMap, props.room?.roomId);
         }
 
         this.finalEmotes = [];
         this.finalEmotesMap = new Map<string, IEmoji>();
-        if (props.room) {
+        if (props.room && customEmotesEnabled) {
             this.loadEmotes();
         }
 

@@ -24,6 +24,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { mkStubRoom, stubClient } from "../../../test-utils";
 import EmojiPicker from "../../../../src/components/views/emojipicker/EmojiPicker";
 import { Media, mediaFromMxc } from "../../../../src/customisations/Media";
+import SettingsStore from "../../../../src/settings/SettingsStore";
 
 jest.mock("../../../../src/customisations/Media", () => ({
     mediaFromMxc: jest.fn(),
@@ -109,11 +110,13 @@ describe("EmojiPicker", function () {
     it("should load custom emotes", async () => {
         const cli = stubClient();
         const room = mkStubRoom("!roomId:server", "Room", cli);
+        jest.spyOn(SettingsStore, "getValue").mockReturnValue(true);
         mocked(cli.getRoom).mockReturnValue(room);
         mocked(cli.isRoomEncrypted).mockReturnValue(false);
         mocked(mediaFromMxc).mockReturnValue({
             srcHttp: "http://this.is.a.url/server/custom-emote-123.png",
         } as Media);
+
         const ref = createRef<EmojiPicker>();
 
         // @ts-ignore - mocked doesn't support overloads properly

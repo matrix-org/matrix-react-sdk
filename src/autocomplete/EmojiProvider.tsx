@@ -93,10 +93,11 @@ export default class EmojiProvider extends AutocompleteProvider {
         const emotesEvent = room?.currentState.getStateEvents(EMOTES_STATE.name, "");
         const rawEmotes = emotesEvent ? emotesEvent.getContent() || {} : {};
         const emotesMap = new Map();
+        const customEmotesEnabled = SettingsStore.getValue("feature_custom_emotes");
         for (const shortcode in rawEmotes) {
             emotesMap.set(shortcode, rawEmotes[shortcode]);
         }
-        if (room) {
+        if (room && customEmotesEnabled) {
             this.emotesPromise = this.decryptEmotes(emotesMap, room?.roomId);
         }
         this.matcher = new QueryMatcher<ISortedEmoji>(SORTED_EMOJI, {

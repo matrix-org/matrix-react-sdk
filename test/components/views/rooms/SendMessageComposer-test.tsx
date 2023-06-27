@@ -610,6 +610,11 @@ describe("<SendMessageComposer/>", () => {
     it("should load compatible emotes and replace them in messages when compatibility is on", async () => {
         const cli = stubClient();
         const room = mkStubRoom("!roomId:server", "Room", cli);
+        jest.spyOn(SettingsStore, "getValue").mockImplementation((settingName) => {
+            if (settingName === "feature_custom_emotes") {
+                return true;
+            }
+        });
         mocked(cli.getRoom).mockReturnValue(room);
         mocked(cli.isRoomEncrypted).mockReturnValue(false);
         // @ts-ignore - mocked doesn't support overloads properly

@@ -23,6 +23,7 @@ import { mkStubRoom } from "../test-utils/test-utils";
 import { add } from "../../src/emojipicker/recent";
 import { stubClient } from "../test-utils";
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
+import SettingsStore from "../../src/settings/SettingsStore";
 
 const EMOJI_SHORTCODES = [
     ":+1",
@@ -103,8 +104,10 @@ describe("EmojiProvider", function () {
 
     it("loads and returns custom emotes", async function () {
         const cli = stubClient();
+        jest.spyOn(SettingsStore, "getValue").mockReturnValue(true);
         mocked(cli.getRoom).mockReturnValue(testRoom);
         mocked(cli.isRoomEncrypted).mockReturnValue(false);
+
         // @ts-ignore - mocked doesn't support overloads properly
         mocked(testRoom.currentState.getStateEvents).mockImplementation((type, key) => {
             if (key === undefined) return [] as MatrixEvent[];

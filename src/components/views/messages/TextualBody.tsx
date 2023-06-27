@@ -92,7 +92,10 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
     }
 
     private applyFormatting(): void {
-        if (MatrixClientPeg.get()?.getRoom(this.props.mxEvent.getRoomId())) {
+        if (
+            MatrixClientPeg.get()?.getRoom(this.props.mxEvent.getRoomId()) &&
+            SettingsStore.getValue("feature_custom_emotes")
+        ) {
             this.decryptEmotes();
         }
         const content = this.contentRef.current!;

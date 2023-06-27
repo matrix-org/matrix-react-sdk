@@ -253,6 +253,13 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
+    "feature_custom_emotes": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        displayName: _td("Support custom emotes."),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_latex_maths": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,

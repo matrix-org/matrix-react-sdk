@@ -200,7 +200,8 @@ export function createMessageContent(
     const body = textSerialize(model);
 
     let emoteBody;
-    if (compat && emotes) {
+    const customEmotesEnabled = SettingsStore.getValue("feature_custom_emotes");
+    if (compat && emotes && customEmotesEnabled) {
         emoteBody = body.replace(/:[\w+-]+:/g, (m) => (emotes.get(m) ? emotes.get(m)! : m));
     }
     const content: IContent = {
@@ -212,12 +213,12 @@ export function createMessageContent(
         useMarkdown: SettingsStore.getValue("MessageComposerInput.useMarkdown"),
     });
     if (formattedBody) {
-        if (compat && emotes) {
+        if (compat && emotes && customEmotesEnabled) {
             formattedBody = formattedBody.replace(/:[\w+-]+:/g, (m) => (emotes.get(m) ? emotes.get(m)! : m));
         }
         content.format = "org.matrix.custom.html";
         content.formatted_body = formattedBody;
-    } else if (compat) {
+    } else if (compat && customEmotesEnabled) {
         if (body != emoteBody) {
             content.format = "org.matrix.custom.html";
             content.formatted_body = emoteBody;
