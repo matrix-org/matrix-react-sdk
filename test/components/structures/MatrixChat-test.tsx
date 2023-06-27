@@ -37,32 +37,6 @@ import {
 } from "../../test-utils";
 import * as leaveRoomUtils from "../../../src/utils/leave-behaviour";
 
-const waitForSyncAndLoad = async (client: MatrixClient, withoutSecuritySetup?: boolean): Promise<void> => {
-    // need to wait for different elements depending on which flow
-    // without security setup we go to a loading page
-    if (withoutSecuritySetup) {
-        // we think we are logged in, but are still waiting for the /sync to complete
-        await screen.findByText("Logout");
-        // initial sync
-        client.emit(ClientEvent.Sync, SyncState.Prepared, null);
-        // wait for logged in view to load
-        await screen.findByLabelText("User menu");
-
-        // otherwise we stay on login and load from there for longer
-    } else {
-        // we are logged in, but are still waiting for the /sync to complete
-        await screen.findByText("Syncing…");
-        // initial sync
-        client.emit(ClientEvent.Sync, SyncState.Prepared, null);
-    }
-
-    // let things settle
-    await flushPromises();
-    // and some more for good measure
-    // this proved to be a little flaky
-    await flushPromises();
-};
-
 describe("<MatrixChat />", () => {
     const userId = "@alice:server.org";
     const deviceId = "qwertyui";
@@ -398,6 +372,32 @@ describe("<MatrixChat />", () => {
             await flushPromises();
 
             return renderResult;
+        };
+
+        const waitForSyncAndLoad = async (client: MatrixClient, withoutSecuritySetup?: boolean): Promise<void> => {
+            // need to wait for different elements depending on which flow
+            // without security setup we go to a loading page
+            if (withoutSecuritySetup) {
+                // we think we are logged in, but are still waiting for the /sync to complete
+                await screen.findByText("Logout");
+                // initial sync
+                client.emit(ClientEvent.Sync, SyncState.Prepared, null);
+                // wait for logged in view to load
+                await screen.findByLabelText("User menu");
+
+                // otherwise we stay on login and load from there for longer
+            } else {
+                // we are logged in, but are still waiting for the /sync to complete
+                await screen.findByText("Syncing…");
+                // initial sync
+                client.emit(ClientEvent.Sync, SyncState.Prepared, null);
+            }
+
+            // let things settle
+            await flushPromises();
+            // and some more for good measure
+            // this proved to be a little flaky
+            await flushPromises();
         };
 
         const getComponentAndLogin = async (withoutSecuritySetup?: boolean): Promise<void> => {
