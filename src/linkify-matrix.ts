@@ -30,6 +30,7 @@ import dis from "./dispatcher/dispatcher";
 import { Action } from "./dispatcher/actions";
 import { ViewUserPayload } from "./dispatcher/payloads/ViewUserPayload";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import { MatrixClientPeg } from "./MatrixClientPeg";
 
 export enum Type {
     URL = "url",
@@ -37,17 +38,14 @@ export enum Type {
     RoomAlias = "roomalias",
 }
 
-// Linkify stuff doesn't type scanner/parser/utils properly :/
 function matrixOpaqueIdLinkifyParser({
     scanner,
     parser,
-    utils,
     token,
     name,
 }: {
-    scanner: any;
-    parser: any;
-    utils: any;
+    scanner: linkifyjs.ScannerInit;
+    parser: linkifyjs.ParserInit;
     token: "#" | "+" | "@";
     name: Type;
 }): void {
@@ -55,52 +53,48 @@ function matrixOpaqueIdLinkifyParser({
         DOT,
         // IPV4 necessity
         NUM,
-        TLD,
         COLON,
         SYM,
+        SLASH,
+        EQUALS,
         HYPHEN,
         UNDERSCORE,
-        // because 'localhost' is tokenised to the localhost token,
-        // usernames @localhost:foo.com are otherwise not matched!
-        LOCALHOST,
-        domain,
     } = scanner.tokens;
 
-    const S_START = parser.start;
-    const matrixSymbol = utils.createTokenClass(name, { isLink: true });
+    // Contains NUM, WORD, UWORD, EMOJI, TLD, UTLD, SCHEME, SLASH_SCHEME and LOCALHOST plus custom protocols (e.g. "matrix")
+    const { domain } = scanner.tokens.groups;
 
-    const localpartTokens = [domain, TLD, LOCALHOST, SYM, UNDERSCORE, HYPHEN];
-    const domainpartTokens = [domain, TLD, LOCALHOST, HYPHEN];
+    // Tokens we need that are not contained in the domain group
+    const additionalLocalpartTokens = [DOT, SYM, SLASH, EQUALS, UNDERSCORE, HYPHEN];
+    const additionalDomainpartTokens = [HYPHEN];
 
-    const INITIAL_STATE = S_START.tt(token);
+    const matrixToken = linkifyjs.createTokenClass(name, { isLink: true });
+    const matrixTokenState = new linkifyjs.State(matrixToken) as any as linkifyjs.State<linkifyjs.MultiToken>; // linkify doesn't appear to type this correctly
 
-    const LOCALPART_STATE = INITIAL_STATE.tt(domain);
-    for (const token of localpartTokens) {
-        INITIAL_STATE.tt(token, LOCALPART_STATE);
-        LOCALPART_STATE.tt(token, LOCALPART_STATE);
-    }
-    const LOCALPART_STATE_DOT = LOCALPART_STATE.tt(DOT);
-    for (const token of localpartTokens) {
-        LOCALPART_STATE_DOT.tt(token, LOCALPART_STATE);
-    }
+    const matrixTokenWithPort = linkifyjs.createTokenClass(name, { isLink: true });
+    const matrixTokenWithPortState = new linkifyjs.State(
+        matrixTokenWithPort,
+    ) as any as linkifyjs.State<linkifyjs.MultiToken>; // linkify doesn't appear to type this correctly
 
+    const INITIAL_STATE = parser.start.tt(token);
+
+    // Localpart
+    const LOCALPART_STATE = new linkifyjs.State<linkifyjs.MultiToken>();
+    INITIAL_STATE.ta(domain, LOCALPART_STATE);
+    INITIAL_STATE.ta(additionalLocalpartTokens, LOCALPART_STATE);
+    LOCALPART_STATE.ta(domain, LOCALPART_STATE);
+    LOCALPART_STATE.ta(additionalLocalpartTokens, LOCALPART_STATE);
+
+    // Domainpart
     const DOMAINPART_STATE_DOT = LOCALPART_STATE.tt(COLON);
-    const DOMAINPART_STATE = DOMAINPART_STATE_DOT.tt(domain);
-    DOMAINPART_STATE.tt(DOT, DOMAINPART_STATE_DOT);
-    for (const token of domainpartTokens) {
-        DOMAINPART_STATE.tt(token, DOMAINPART_STATE);
-        // we are done if we have a domain
-        DOMAINPART_STATE.tt(token, matrixSymbol);
-    }
+    DOMAINPART_STATE_DOT.ta(domain, matrixTokenState);
+    DOMAINPART_STATE_DOT.ta(additionalDomainpartTokens, matrixTokenState);
+    matrixTokenState.ta(domain, matrixTokenState);
+    matrixTokenState.ta(additionalDomainpartTokens, matrixTokenState);
+    matrixTokenState.tt(DOT, DOMAINPART_STATE_DOT);
 
-    // accept repeated TLDs (e.g .org.uk) but do not accept double dots: ..
-    for (const token of domainpartTokens) {
-        DOMAINPART_STATE_DOT.tt(token, DOMAINPART_STATE);
-    }
-
-    const PORT_STATE = DOMAINPART_STATE.tt(COLON);
-
-    PORT_STATE.tt(NUM, matrixSymbol);
+    // Port suffixes
+    matrixTokenState.tt(COLON).tt(NUM, matrixTokenWithPortState);
 }
 
 function onUserClick(event: MouseEvent, userId: string): void {
@@ -146,7 +140,7 @@ export const options: Opts = {
                         return {
                             // @ts-ignore see https://linkify.js.org/docs/options.html
                             click: function (e: MouseEvent) {
-                                onUserClick(e, permalink.userId);
+                                onUserClick(e, permalink.userId!);
                             },
                         };
                     } else {
@@ -189,12 +183,12 @@ export const options: Opts = {
         return {};
     },
 
-    formatHref: function (href: string, type: Type | string): string | null {
+    formatHref: function (href: string, type: Type | string): string {
         switch (type) {
             case Type.RoomAlias:
             case Type.UserId:
             default: {
-                return tryTransformEntityToPermalink(href);
+                return tryTransformEntityToPermalink(MatrixClientPeg.safeGet(), href) ?? "";
             }
         }
     },
@@ -207,7 +201,7 @@ export const options: Opts = {
 
     className: "linkified",
 
-    target: function (href: string, type: Type | string): string | null {
+    target: function (href: string, type: Type | string): string {
         if (type === Type.URL) {
             try {
                 const transformed = tryTransformPermalinkToLocalHref(href);
@@ -215,7 +209,7 @@ export const options: Opts = {
                     transformed !== href || // if it could be converted to handle locally for matrix symbols e.g. @user:server.tdl and matrix.to
                     decodeURIComponent(href).match(ELEMENT_URL_PATTERN) // for https links to Element domains
                 ) {
-                    return null;
+                    return "";
                 } else {
                     return "_blank";
                 }
@@ -223,28 +217,26 @@ export const options: Opts = {
                 // malformed URI
             }
         }
-        return null;
+        return "";
     },
 };
 
 // Run the plugins
-registerPlugin(Type.RoomAlias, ({ scanner, parser, utils }: any) => {
+registerPlugin(Type.RoomAlias, ({ scanner, parser }) => {
     const token = scanner.tokens.POUND as "#";
     matrixOpaqueIdLinkifyParser({
         scanner,
         parser,
-        utils,
         token,
         name: Type.RoomAlias,
     });
 });
 
-registerPlugin(Type.UserId, ({ scanner, parser, utils }: any) => {
+registerPlugin(Type.UserId, ({ scanner, parser }) => {
     const token = scanner.tokens.AT as "@";
     matrixOpaqueIdLinkifyParser({
         scanner,
         parser,
-        utils,
         token,
         name: Type.UserId,
     });

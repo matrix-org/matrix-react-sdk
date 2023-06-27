@@ -67,7 +67,7 @@ export default class MessageEditHistoryDialog extends React.PureComponent<IProps
         const opts = { from: this.state.nextBatch ?? undefined };
         const roomId = this.props.mxEvent.getRoomId()!;
         const eventId = this.props.mxEvent.getId()!;
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
 
         const { resolve, reject, promise } = defer<boolean>();
         let result: Awaited<ReturnType<MatrixClient["relations"]>>;
@@ -76,7 +76,7 @@ export default class MessageEditHistoryDialog extends React.PureComponent<IProps
             result = await client.relations(roomId, eventId, RelationType.Replace, EventType.RoomMessage, opts);
         } catch (error) {
             // log if the server returned an error
-            if (error.errcode) {
+            if (error instanceof MatrixError && error.errcode) {
                 logger.error("fetching /relations failed with error", error);
             }
             this.setState({ error: error as MatrixError }, () => reject(error));
@@ -102,7 +102,7 @@ export default class MessageEditHistoryDialog extends React.PureComponent<IProps
 
     private locallyRedactEventsIfNeeded(newEvents: MatrixEvent[]): void {
         const roomId = this.props.mxEvent.getRoomId();
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const room = client.getRoom(roomId);
         if (!room) return;
         const pendingEvents = room.getPendingEvents();

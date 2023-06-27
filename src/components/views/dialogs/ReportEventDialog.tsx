@@ -19,7 +19,7 @@ import React, { ChangeEvent } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from "../../../languageHandler";
+import { _t, UserFriendlyError } from "../../../languageHandler";
 import { ensureDMExists } from "../../../createRoom";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import SdkConfig from "../../../SdkConfig";
@@ -107,7 +107,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
             // Does the room support it, too?
 
             // Extract state events to determine whether we should display
-            const client = MatrixClientPeg.get();
+            const client = MatrixClientPeg.safeGet();
             const room = client.getRoom(props.mxEvent.getRoomId());
 
             for (const stateEventType of MODERATED_BY_STATE_EVENT_TYPE) {
@@ -237,7 +237,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
         });
 
         try {
-            const client = MatrixClientPeg.get();
+            const client = MatrixClientPeg.safeGet();
             const ev = this.props.mxEvent;
             if (this.moderation && this.state.nature !== NonStandardValue.Admin) {
                 const nature = this.state.nature;
@@ -245,6 +245,10 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                 // Report to moderators through to the dedicated bot,
                 // as configured in the room's state events.
                 const dmRoomId = await ensureDMExists(client, this.moderation.moderationBotUserId);
+                if (!dmRoomId) {
+                    throw new UserFriendlyError("Unable to create room with moderation bot");
+                }
+
                 await client.sendEvent(dmRoomId, ABUSE_EVENT_TYPE, {
                     event_id: ev.getId(),
                     room_id: ev.getRoomId(),
@@ -308,7 +312,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
         if (this.moderation) {
             // Display report-to-moderator dialog.
             // We let the user pick a nature.
-            const client = MatrixClientPeg.get();
+            const client = MatrixClientPeg.safeGet();
             const homeServerName = SdkConfig.get("validated_server_config")!.hsName;
             let subtitle: string;
             switch (this.state.nature) {

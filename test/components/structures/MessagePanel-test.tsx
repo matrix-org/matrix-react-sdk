@@ -29,6 +29,7 @@ import RoomContext, { TimelineRenderingType } from "../../../src/contexts/RoomCo
 import DMRoomMap from "../../../src/utils/DMRoomMap";
 import * as TestUtilsMatrix from "../../test-utils";
 import {
+    createTestClient,
     getMockClientWithEventEmitter,
     makeBeaconInfoEvent,
     mockClientMethodsEvents,
@@ -112,7 +113,7 @@ describe("MessagePanel", function () {
             return arg === "showDisplaynameChanges";
         });
 
-        DMRoomMap.makeShared();
+        DMRoomMap.makeShared(client);
     });
 
     afterEach(function () {
@@ -353,7 +354,7 @@ describe("MessagePanel", function () {
         const tiles = container.getElementsByClassName("mx_EventTile");
 
         // find the <li> which wraps the read marker
-        const [rm] = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
+        const [rm] = container.getElementsByClassName("mx_MessagePanel_myReadMarker");
 
         // it should follow the <li> which wraps the event tile for event 4
         const eventContainer = tiles[4];
@@ -373,7 +374,7 @@ describe("MessagePanel", function () {
         const [summary] = container.getElementsByClassName("mx_GenericEventListSummary");
 
         // find the <li> which wraps the read marker
-        const [rm] = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
+        const [rm] = container.getElementsByClassName("mx_MessagePanel_myReadMarker");
 
         expect(rm.previousSibling).toEqual(summary);
 
@@ -395,7 +396,7 @@ describe("MessagePanel", function () {
         const [summary] = container.getElementsByClassName("mx_GenericEventListSummary");
 
         // find the <li> which wraps the read marker
-        const [rm] = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
+        const [rm] = container.getElementsByClassName("mx_MessagePanel_myReadMarker");
 
         expect(rm.previousSibling).toEqual(summary);
 
@@ -420,7 +421,7 @@ describe("MessagePanel", function () {
         const tiles = container.getElementsByClassName("mx_EventTile");
 
         // find the <li> which wraps the read marker
-        const [rm] = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
+        const [rm] = container.getElementsByClassName("mx_MessagePanel_myReadMarker");
         expect(rm.previousSibling).toEqual(tiles[4]);
 
         rerender(
@@ -434,7 +435,7 @@ describe("MessagePanel", function () {
         );
 
         // now there should be two RM containers
-        const readMarkers = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
+        const readMarkers = container.getElementsByClassName("mx_MessagePanel_myReadMarker");
 
         expect(readMarkers.length).toEqual(2);
 
@@ -510,7 +511,7 @@ describe("MessagePanel", function () {
         );
 
         // find the <li> which wraps the read marker
-        const [rm] = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
+        const [rm] = container.getElementsByClassName("mx_MessagePanel_myReadMarker");
 
         const [messageList] = container.getElementsByClassName("mx_RoomView_MessageList");
         const rows = messageList.children;
@@ -773,16 +774,17 @@ describe("shouldFormContinuation", () => {
             msg: "And here's another message in the main timeline after the thread root",
         });
 
-        expect(shouldFormContinuation(message1, message2, false)).toEqual(true);
-        expect(shouldFormContinuation(message2, threadRoot, false)).toEqual(true);
-        expect(shouldFormContinuation(threadRoot, message3, false)).toEqual(true);
+        const client = createTestClient();
+        expect(shouldFormContinuation(message1, message2, client, false)).toEqual(true);
+        expect(shouldFormContinuation(message2, threadRoot, client, false)).toEqual(true);
+        expect(shouldFormContinuation(threadRoot, message3, client, false)).toEqual(true);
 
         const thread = {
             length: 1,
             replyToEvent: {},
         } as unknown as Thread;
         jest.spyOn(threadRoot, "getThread").mockReturnValue(thread);
-        expect(shouldFormContinuation(message2, threadRoot, false)).toEqual(false);
-        expect(shouldFormContinuation(threadRoot, message3, false)).toEqual(false);
+        expect(shouldFormContinuation(message2, threadRoot, client, false)).toEqual(false);
+        expect(shouldFormContinuation(threadRoot, message3, client, false)).toEqual(false);
     });
 });

@@ -26,7 +26,7 @@ import { MatrixClientPeg } from "../MatrixClientPeg";
 import { _t } from "../languageHandler";
 import RoomAvatar from "../components/views/avatars/RoomAvatar";
 import AccessibleTooltipButton from "../components/views/elements/AccessibleTooltipButton";
-import AccessibleButton from "../components/views/elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../components/views/elements/AccessibleButton";
 
 export const getIncomingLegacyCallToastKey = (callId: string): string => `call_${callId}`;
 
@@ -73,17 +73,17 @@ export default class IncomingLegacyCallToast extends React.Component<IProps, ISt
         this.setState({ silenced: LegacyCallHandler.instance.isCallSilenced(this.props.call.callId) });
     };
 
-    private onAnswerClick = (e: React.MouseEvent): void => {
+    private onAnswerClick = (e: ButtonEvent): void => {
         e.stopPropagation();
         LegacyCallHandler.instance.answerCall(this.roomId);
     };
 
-    private onRejectClick = (e: React.MouseEvent): void => {
+    private onRejectClick = (e: ButtonEvent): void => {
         e.stopPropagation();
         LegacyCallHandler.instance.hangupOrReject(this.roomId, true);
     };
 
-    private onSilenceClick = (e: React.MouseEvent): void => {
+    private onSilenceClick = (e: ButtonEvent): void => {
         e.stopPropagation();
         const callId = this.props.call.callId;
         this.state.silenced
@@ -92,7 +92,7 @@ export default class IncomingLegacyCallToast extends React.Component<IProps, ISt
     };
 
     public render(): React.ReactNode {
-        const room = MatrixClientPeg.get().getRoom(this.roomId);
+        const room = MatrixClientPeg.safeGet().getRoom(this.roomId);
         const isVoice = this.props.call.type === CallType.Voice;
         const callForcedSilent = LegacyCallHandler.instance.isForcedSilent();
 
@@ -119,7 +119,7 @@ export default class IncomingLegacyCallToast extends React.Component<IProps, ISt
                         <div className="mx_LegacyCallEvent_type_icon" />
                         {isVoice ? _t("Voice call") : _t("Video call")}
                     </div>
-                    <div className="mx_Toast_buttons mx_IncomingLegacyCallToast_buttons">
+                    <div className="mx_IncomingLegacyCallToast_buttons">
                         <AccessibleButton
                             className="mx_IncomingLegacyCallToast_button mx_IncomingLegacyCallToast_button_decline"
                             onClick={this.onRejectClick}

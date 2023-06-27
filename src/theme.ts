@@ -145,8 +145,8 @@ function generateCustomFontFaceCSS(faces: IFontFaces[]): string {
                     return "";
                 })
                 .join(", ");
-            const props = Object.keys(face).filter((prop: (typeof allowedFontFaceProps)[number]) =>
-                allowedFontFaceProps.includes(prop),
+            const props = Object.keys(face).filter((prop) =>
+                allowedFontFaceProps.includes(prop as (typeof allowedFontFaceProps)[number]),
             ) as Array<(typeof allowedFontFaceProps)[number]>;
             const body = props
                 .map((prop) => {
@@ -268,6 +268,24 @@ export async function setTheme(theme?: string): Promise<void> {
 
     const styleSheet = styleElements.get(stylesheetName)!;
     styleSheet.disabled = false;
+
+    /**
+     * Adds the Compound theme class to the top-most element in the document
+     * This will automatically refresh the colour scales based on the OS or user
+     * preferences
+     *
+     * Note: Theming through Compound is not yet established. Brand theming should
+     * be done in a similar manner as it used to be done.
+     */
+    document.body.classList.remove("cpd-theme-light", "cpd-theme-dark", "cpd-theme-light-hc", "cpd-theme-dark-hc");
+
+    let compoundThemeClassName = `cpd-theme-` + (stylesheetName.includes("light") ? "light" : "dark");
+    // Always respect user OS preference!
+    if (isHighContrastTheme(theme) || window.matchMedia("(prefers-contrast: more)").matches) {
+        compoundThemeClassName += "-hc";
+    }
+
+    document.body.classList.add(compoundThemeClassName);
 
     return new Promise((resolve, reject) => {
         const switchTheme = function (): void {

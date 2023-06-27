@@ -28,10 +28,15 @@ import {
     CryptoApi,
     DeviceVerificationStatus,
 } from "matrix-js-sdk/src/matrix";
-import { Phase, VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import {
+    Phase,
+    VerificationRequest,
+    VerificationRequestEvent,
+} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
-import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
+import { Device } from "matrix-js-sdk/src/models/device";
 import { defer } from "matrix-js-sdk/src/utils";
+import { EventEmitter } from "events";
 
 import UserInfo, {
     BanToggleButton,
@@ -55,6 +60,7 @@ import Modal from "../../../../src/Modal";
 import { E2EStatus } from "../../../../src/utils/ShieldUtils";
 import { DirectoryMember, startDmOnFirstMessage } from "../../../../src/utils/direct-messages";
 import { clearAllModals, flushPromises } from "../../../test-utils";
+import ErrorDialog from "../../../../src/components/views/dialogs/ErrorDialog";
 
 jest.mock("../../../../src/utils/direct-messages", () => ({
     ...jest.requireActual("../../../../src/utils/direct-messages"),
@@ -127,6 +133,7 @@ beforeEach(() => {
 
     mockCrypto = mocked({
         getDeviceVerificationStatus: jest.fn(),
+        getUserDeviceInfo: jest.fn(),
     } as unknown as CryptoApi);
 
     mockClient = mocked({
@@ -155,20 +162,29 @@ beforeEach(() => {
         downloadKeys: jest.fn(),
         getStoredDevicesForUser: jest.fn(),
         getCrypto: jest.fn().mockReturnValue(mockCrypto),
+        getStoredCrossSigningForUser: jest.fn(),
     } as unknown as MatrixClient);
 
     jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
+    jest.spyOn(MatrixClientPeg, "safeGet").mockReturnValue(mockClient);
 });
 
 describe("<UserInfo />", () => {
-    const verificationRequest = {
-        pending: true,
-        on: jest.fn(),
-        phase: Phase.Ready,
-        channel: { transactionId: 1 },
-        otherPartySupportsMethod: jest.fn(),
-        off: jest.fn(),
-    } as unknown as VerificationRequest;
+    class MockVerificationRequest extends EventEmitter {
+        pending = true;
+        phase: Phase = Phase.Ready;
+        cancellationCode: string | null = null;
+
+        constructor(opts: Partial<VerificationRequest>) {
+            super();
+            Object.assign(this, {
+                channel: { transactionId: 1 },
+                otherPartySupportsMethod: jest.fn(),
+                ...opts,
+            });
+        }
+    }
+    let verificationRequest: MockVerificationRequest;
 
     const defaultProps = {
         user: defaultUser,
@@ -186,6 +202,15 @@ describe("<UserInfo />", () => {
             wrapper: Wrapper,
         });
     };
+
+    beforeEach(() => {
+        verificationRequest = new MockVerificationRequest({});
+    });
+
+    afterEach(async () => {
+        await clearAllModals();
+        jest.clearAllMocks();
+    });
 
     it("closes on close button click", async () => {
         renderComponent();
@@ -218,6 +243,42 @@ describe("<UserInfo />", () => {
             // the verificationRequest has phase of Phase.Ready but .otherPartySupportsMethod
             // will not return true, so we expect to see the noCommonMethod error from VerificationPanel
             expect(screen.getByText(/try with a different client/i)).toBeInTheDocument();
+        });
+
+        it("should show error modal when the verification request is cancelled with a mismatch", () => {
+            renderComponent({ phase: RightPanelPhases.EncryptionPanel, verificationRequest });
+
+            const spy = jest.spyOn(Modal, "createDialog");
+            act(() => {
+                verificationRequest.phase = Phase.Cancelled;
+                verificationRequest.cancellationCode = "m.key_mismatch";
+                verificationRequest.emit(VerificationRequestEvent.Change);
+            });
+            expect(spy).toHaveBeenCalledWith(
+                ErrorDialog,
+                expect.objectContaining({ title: "Your messages are not secure" }),
+            );
+        });
+
+        it("should not show error modal when the verification request is changed for some other reason", () => {
+            renderComponent({ phase: RightPanelPhases.EncryptionPanel, verificationRequest });
+
+            const spy = jest.spyOn(Modal, "createDialog");
+
+            // change to "started"
+            act(() => {
+                verificationRequest.phase = Phase.Started;
+                verificationRequest.emit(VerificationRequestEvent.Change);
+            });
+
+            // cancelled for some other reason
+            act(() => {
+                verificationRequest.phase = Phase.Cancelled;
+                verificationRequest.cancellationCode = "changed my mind";
+                verificationRequest.emit(VerificationRequestEvent.Change);
+            });
+
+            expect(spy).not.toHaveBeenCalled();
         });
 
         it("renders close button correctly when encryption panel with a pending verification request", () => {
@@ -265,14 +326,18 @@ describe("<UserInfo />", () => {
         beforeEach(() => {
             mockClient.isCryptoEnabled.mockReturnValue(true);
             mockClient.checkUserTrust.mockReturnValue(new UserTrustLevel(false, false, false));
+            mockClient.doesServerSupportUnstableFeature.mockResolvedValue(true);
 
-            const device1 = DeviceInfo.fromStorage(
-                {
-                    unsigned: { device_display_name: "my device" },
-                },
-                "d1",
-            );
-            mockClient.getStoredDevicesForUser.mockReturnValue([device1]);
+            const device = new Device({
+                deviceId: "d1",
+                userId: defaultUserId,
+                displayName: "my device",
+                algorithms: [],
+                keys: new Map(),
+            });
+            const devicesMap = new Map<string, Device>([[device.deviceId, device]]);
+            const userDeviceMap = new Map<string, Map<string, Device>>([[defaultUserId, devicesMap]]);
+            mockCrypto.getUserDeviceInfo.mockResolvedValue(userDeviceMap);
         });
 
         it("renders a device list which can be expanded", async () => {
@@ -291,6 +356,18 @@ describe("<UserInfo />", () => {
             // ... which should contain the device name
             expect(within(deviceButton).getByText("my device")).toBeInTheDocument();
         });
+
+        it("renders <BasicUserInfo />", async () => {
+            const { container } = renderComponent({
+                phase: RightPanelPhases.SpaceMemberInfo,
+                verificationRequest,
+                room: mockRoom,
+            });
+            await act(flushPromises);
+
+            await waitFor(() => expect(screen.getByRole("button", { name: "Verify" })).toBeInTheDocument());
+            expect(container).toMatchSnapshot();
+        });
     });
 
     describe("with an encrypted room", () => {
@@ -304,7 +381,7 @@ describe("<UserInfo />", () => {
             renderComponent({ room: mockRoom });
             await act(flushPromises);
 
-            const userHeading = screen.getByRole("heading", { name: defaultUserId });
+            const userHeading = screen.getByRole("heading", { name: /@user:example.com/ });
 
             // there should be a "normal" E2E padlock
             expect(userHeading.getElementsByClassName("mx_E2EIcon_normal")).toHaveLength(1);
@@ -315,7 +392,7 @@ describe("<UserInfo />", () => {
             renderComponent({ room: mockRoom });
             await act(flushPromises);
 
-            const userHeading = screen.getByRole("heading", { name: defaultUserId });
+            const userHeading = screen.getByRole("heading", { name: /@user:example.com/ });
 
             // there should be a "verified" E2E padlock
             expect(userHeading.getElementsByClassName("mx_E2EIcon_verified")).toHaveLength(1);
@@ -350,7 +427,7 @@ describe("<UserInfoHeader />", () => {
 
     it("renders an e2e icon in the header if e2eStatus prop is defined", () => {
         renderComponent({ e2eStatus: E2EStatus.Normal });
-        const header = screen.getByRole("heading", { name: defaultUserId });
+        const header = screen.getByRole("heading");
 
         expect(header.getElementsByClassName("mx_E2EIcon")).toHaveLength(1);
     });
@@ -363,7 +440,7 @@ describe("<UserInfoHeader />", () => {
 });
 
 describe("<DeviceItem />", () => {
-    const device = { deviceId: "deviceId", getDisplayName: () => "deviceName" } as DeviceInfo;
+    const device = { deviceId: "deviceId", displayName: "deviceName" } as Device;
     const defaultProps = {
         userId: defaultUserId,
         device,
@@ -410,7 +487,7 @@ describe("<DeviceItem />", () => {
         renderComponent();
         await act(flushPromises);
 
-        expect(screen.getByRole("button", { name: device.getDisplayName()! })).toBeInTheDocument;
+        expect(screen.getByRole("button", { name: device.displayName! })).toBeInTheDocument();
         expect(screen.queryByText(/trusted/i)).not.toBeInTheDocument();
     });
 
@@ -419,7 +496,7 @@ describe("<DeviceItem />", () => {
         renderComponent();
         await act(flushPromises);
 
-        expect(screen.getByRole("button", { name: `${device.getDisplayName()} Not trusted` })).toBeInTheDocument;
+        expect(screen.getByRole("button", { name: `${device.displayName} Not trusted` })).toBeInTheDocument();
     });
 
     it("with verified device only, displays no button without a label", async () => {
@@ -427,7 +504,7 @@ describe("<DeviceItem />", () => {
         renderComponent();
         await act(flushPromises);
 
-        expect(screen.getByText(device.getDisplayName()!)).toBeInTheDocument();
+        expect(screen.getByText(device.displayName!)).toBeInTheDocument();
         expect(screen.queryByText(/trusted/)).not.toBeInTheDocument();
     });
 
@@ -441,8 +518,9 @@ describe("<DeviceItem />", () => {
         setMockDeviceTrust(false, true);
 
         // expect to see no button in this case
+        // TODO `toBeInTheDocument` is not called, if called the test is failing
         expect(screen.queryByRole("button")).not.toBeInTheDocument;
-        expect(screen.getByText(device.getDisplayName()!)).toBeInTheDocument();
+        expect(screen.getByText(device.displayName!)).toBeInTheDocument();
     });
 
     it("with verified user and device, displays no button and a 'Trusted' label", async () => {
@@ -451,8 +529,8 @@ describe("<DeviceItem />", () => {
         renderComponent();
         await act(flushPromises);
 
-        expect(screen.queryByRole("button")).not.toBeInTheDocument;
-        expect(screen.getByText(device.getDisplayName()!)).toBeInTheDocument();
+        expect(screen.queryByRole("button")).not.toBeInTheDocument();
+        expect(screen.getByText(device.displayName!)).toBeInTheDocument();
         expect(screen.getByText("Trusted")).toBeInTheDocument();
     });
 
@@ -461,8 +539,8 @@ describe("<DeviceItem />", () => {
         renderComponent();
         await act(flushPromises);
 
-        const button = screen.getByRole("button", { name: device.getDisplayName()! });
-        expect(button).toBeInTheDocument;
+        const button = screen.getByRole("button", { name: device.displayName! });
+        expect(button).toBeInTheDocument();
         await userEvent.click(button);
 
         expect(mockVerifyDevice).not.toHaveBeenCalled();
@@ -476,12 +554,35 @@ describe("<DeviceItem />", () => {
         renderComponent();
         await act(flushPromises);
 
-        const button = screen.getByRole("button", { name: device.getDisplayName()! });
-        expect(button).toBeInTheDocument;
+        const button = screen.getByRole("button", { name: device.displayName! });
+        expect(button).toBeInTheDocument();
         await userEvent.click(button);
 
         expect(mockVerifyDevice).toHaveBeenCalledTimes(1);
-        expect(mockVerifyDevice).toHaveBeenCalledWith(defaultUser, device);
+        expect(mockVerifyDevice).toHaveBeenCalledWith(mockClient, defaultUser, device);
+    });
+
+    it("with display name", async () => {
+        const { container } = renderComponent();
+        await act(flushPromises);
+
+        expect(container).toMatchSnapshot();
+    });
+
+    it("without display name", async () => {
+        const device = { deviceId: "deviceId" } as Device;
+        const { container } = renderComponent({ device, userId: defaultUserId });
+        await act(flushPromises);
+
+        expect(container).toMatchSnapshot();
+    });
+
+    it("ambiguous display name", async () => {
+        const device = { deviceId: "deviceId", ambiguous: true, displayName: "my display name" };
+        const { container } = renderComponent({ device, userId: defaultUserId });
+        await act(flushPromises);
+
+        expect(container).toMatchSnapshot();
     });
 });
 
@@ -1099,9 +1200,9 @@ describe("<RoomAdminToolsContainer />", () => {
 describe("disambiguateDevices", () => {
     it("does not add ambiguous key to unique names", () => {
         const initialDevices = [
-            { deviceId: "id1", getDisplayName: () => "name1" } as DeviceInfo,
-            { deviceId: "id2", getDisplayName: () => "name2" } as DeviceInfo,
-            { deviceId: "id3", getDisplayName: () => "name3" } as DeviceInfo,
+            { deviceId: "id1", displayName: "name1" } as Device,
+            { deviceId: "id2", displayName: "name2" } as Device,
+            { deviceId: "id3", displayName: "name3" } as Device,
         ];
         disambiguateDevices(initialDevices);
 
@@ -1113,14 +1214,14 @@ describe("disambiguateDevices", () => {
 
     it("adds ambiguous key to all ids with non-unique names", () => {
         const uniqueNameDevices = [
-            { deviceId: "id3", getDisplayName: () => "name3" } as DeviceInfo,
-            { deviceId: "id4", getDisplayName: () => "name4" } as DeviceInfo,
-            { deviceId: "id6", getDisplayName: () => "name6" } as DeviceInfo,
+            { deviceId: "id3", displayName: "name3" } as Device,
+            { deviceId: "id4", displayName: "name4" } as Device,
+            { deviceId: "id6", displayName: "name6" } as Device,
         ];
         const nonUniqueNameDevices = [
-            { deviceId: "id1", getDisplayName: () => "nonUnique" } as DeviceInfo,
-            { deviceId: "id2", getDisplayName: () => "nonUnique" } as DeviceInfo,
-            { deviceId: "id5", getDisplayName: () => "nonUnique" } as DeviceInfo,
+            { deviceId: "id1", displayName: "nonUnique" } as Device,
+            { deviceId: "id2", displayName: "nonUnique" } as Device,
+            { deviceId: "id5", displayName: "nonUnique" } as Device,
         ];
         const initialDevices = [...uniqueNameDevices, ...nonUniqueNameDevices];
         disambiguateDevices(initialDevices);

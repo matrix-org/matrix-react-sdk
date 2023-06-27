@@ -43,7 +43,7 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
         return instance;
     })();
 
-    private monitoredUser: User | null;
+    private monitoredUser: User | null = null;
 
     private constructor() {
         // seed from localstorage because otherwise we won't get these values until a whole network
@@ -159,7 +159,7 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
     );
 
     private onStateEvents = async (ev: MatrixEvent): Promise<void> => {
-        const myUserId = MatrixClientPeg.get().getUserId();
+        const myUserId = MatrixClientPeg.safeGet().getUserId();
         if (ev.getType() === EventType.RoomMember && ev.getSender() === myUserId && ev.getStateKey() === myUserId) {
             await this.onProfileUpdate();
         }

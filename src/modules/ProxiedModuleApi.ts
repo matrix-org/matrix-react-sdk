@@ -189,7 +189,7 @@ export class ProxiedModuleApi implements ModuleApi {
                 roomId = getCachedRoomIDForAlias(parts.roomIdOrAlias);
                 if (!roomId) {
                     // alias resolution failed
-                    const result = await MatrixClientPeg.get().getRoomIdForAlias(parts.roomIdOrAlias);
+                    const result = await MatrixClientPeg.safeGet().getRoomIdForAlias(parts.roomIdOrAlias);
                     roomId = result.room_id;
                     if (!servers) servers = result.servers; // use provided servers first, if available
                 }
@@ -211,7 +211,7 @@ export class ProxiedModuleApi implements ModuleApi {
     /**
      * @override
      */
-    public getConfigValue<T>(namespace: string, key: string): T {
+    public getConfigValue<T>(namespace: string, key: string): T | undefined {
         // Force cast to `any` because the namespace won't be known to the SdkConfig types
         const maybeObj = SdkConfig.get(namespace as any);
         if (!maybeObj || !(typeof maybeObj === "object")) return undefined;

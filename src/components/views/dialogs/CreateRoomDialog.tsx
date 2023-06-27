@@ -24,7 +24,7 @@ import SdkConfig from "../../../SdkConfig";
 import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { IOpts } from "../../../createRoom";
+import { checkUserIsAllowedToChangeEncryption, IOpts } from "../../../createRoom";
 import Field from "../elements/Field";
 import RoomAliasField from "../elements/RoomAliasField";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
@@ -75,9 +75,10 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             joinRule = JoinRule.Restricted;
         }
 
+        const cli = MatrixClientPeg.safeGet();
         this.state = {
             isPublic: this.props.defaultPublic || false,
-            isEncrypted: this.props.defaultEncrypted ?? privateShouldBeEncrypted(),
+            isEncrypted: this.props.defaultEncrypted ?? privateShouldBeEncrypted(cli),
             joinRule,
             name: this.props.defaultName || "",
             topic: "",
@@ -85,12 +86,16 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             detailsOpen: false,
             noFederate: SdkConfig.get().default_federate === false,
             nameIsValid: false,
-            canChangeEncryption: true,
+            canChangeEncryption: false,
         };
 
-        MatrixClientPeg.get()
-            .doesServerForceEncryptionForPreset(Preset.PrivateChat)
-            .then((isForced) => this.setState({ canChangeEncryption: !isForced }));
+        checkUserIsAllowedToChangeEncryption(cli, Preset.PrivateChat).then(({ allowChange, forcedValue }) =>
+            this.setState((state) => ({
+                canChangeEncryption: allowChange,
+                // override with forcedValue if it is set
+                isEncrypted: forcedValue ?? state.isEncrypted,
+            })),
+        );
     }
 
     private roomCreateOptions(): IOpts {
@@ -106,8 +111,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             const { alias } = this.state;
             createOpts.room_alias_name = alias.substring(1, alias.indexOf(":"));
         } else {
-            // If we cannot change encryption we pass `true` for safety, the server should automatically do this for us.
-            opts.encryption = this.state.canChangeEncryption ? this.state.isEncrypted : true;
+            opts.encryption = this.state.isEncrypted;
         }
 
         if (this.state.topic) {
@@ -221,7 +225,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
 
         let aliasField: JSX.Element | undefined;
         if (this.state.joinRule === JoinRule.Public) {
-            const domain = MatrixClientPeg.get().getDomain()!;
+            const domain = MatrixClientPeg.safeGet().getDomain()!;
             aliasField = (
                 <div className="mx_CreateRoomDialog_aliasContainer">
                     <RoomAliasField
@@ -284,7 +288,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
         let e2eeSection: JSX.Element | undefined;
         if (this.state.joinRule !== JoinRule.Public) {
             let microcopy: string;
-            if (privateShouldBeEncrypted()) {
+            if (privateShouldBeEncrypted(MatrixClientPeg.safeGet())) {
                 if (this.state.canChangeEncryption) {
                     microcopy = isVideoRoom
                         ? _t("You can't disable this later. The room will be encrypted but the embedded call will not.")

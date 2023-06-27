@@ -10,10 +10,11 @@ on:
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
     cancel-in-progress: true
+
 env:
-    # These must be set for fetchdep.sh to get the right branch
-    REPOSITORY: ${{ github.repository }}
+    # fetchdep.sh needs to know our PR number
     PR_NUMBER: ${{ github.event.pull_request.number }}
+
 jobs:
     ts_lint:
         name: "Typescript Syntax Check"
@@ -49,12 +50,6 @@ jobs:
         permissions:
             pull-requests: read
             checks: write
-        strategy:
-            fail-fast: false
-            matrix:
-                args:
-                    - "--strict --noImplicitAny"
-                    - "--noImplicitAny"
         steps:
             - uses: actions/checkout@v3
               with:
@@ -65,7 +60,7 @@ jobs:
 
             - name: Get diff lines
               id: diff
-              uses: Equip-Collaboration/diff-line-numbers@df70b4b83e05105c15f20dc6cc61f1463411b2a6 # v1.0.0
+              uses: Equip-Collaboration/diff-line-numbers@e752977e2cb4207d671bb9e4dad18c07c1b73d52 # v1.1.0
               with:
                   include: '["\\.tsx?$"]'
 
@@ -82,7 +77,7 @@ jobs:
                   use-check: false
                   check-fail-mode: added
                   output-behaviour: annotate
-                  ts-extra-args: ${{ matrix.args }}
+                  ts-extra-args: "--strict --noImplicitAny"
                   files-changed: ${{ steps.files.outputs.files_updated }}
                   files-added: ${{ steps.files.outputs.files_created }}
                   files-deleted: ${{ steps.files.outputs.files_deleted }}

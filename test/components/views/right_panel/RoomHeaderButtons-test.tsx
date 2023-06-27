@@ -35,7 +35,7 @@ describe("RoomHeaderButtons-test.tsx", function () {
         jest.clearAllMocks();
 
         stubClient();
-        client = MatrixClientPeg.get();
+        client = MatrixClientPeg.safeGet();
         client.supportsThreads = () => true;
         room = new Room(ROOM_ID, client, client.getUserId() ?? "", {
             pendingEventOrdering: PendingEventOrdering.Detached,
@@ -54,6 +54,11 @@ describe("RoomHeaderButtons-test.tsx", function () {
         return container.querySelector(".mx_RightPanel_threadsButton .mx_Indicator")!.className.includes(type);
     }
 
+    it("should render", () => {
+        const { asFragment } = getComponent(room);
+        expect(asFragment()).toMatchSnapshot();
+    });
+
     it("shows the thread button", () => {
         const { container } = getComponent(room);
         expect(getThreadButton(container)).not.toBeNull();
@@ -70,8 +75,10 @@ describe("RoomHeaderButtons-test.tsx", function () {
 
     it("thread notification does change the thread button", () => {
         const { container } = getComponent(room);
+        expect(getThreadButton(container)!.className.includes("mx_RoomHeader_button--unread")).toBeFalsy();
 
         room.setThreadUnreadNotificationCount("$123", NotificationCountType.Total, 1);
+        expect(getThreadButton(container)!.className.includes("mx_RoomHeader_button--unread")).toBeTruthy();
         expect(isIndicatorOfType(container, "gray")).toBe(true);
 
         room.setThreadUnreadNotificationCount("$123", NotificationCountType.Highlight, 1);

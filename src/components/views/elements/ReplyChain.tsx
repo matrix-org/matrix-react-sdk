@@ -47,7 +47,7 @@ interface IProps {
     // the latest event in this chain of replies
     parentEv: MatrixEvent;
     // called when the ReplyChain contents has changed, including EventTiles thereof
-    onHeightChanged: () => void;
+    onHeightChanged?: () => void;
     permalinkCreator?: RoomPermalinkCreator;
     // Specifies which layout to use.
     layout?: Layout;
@@ -95,7 +95,7 @@ export default class ReplyChain extends React.Component<IProps, IState> {
     }
 
     private get matrixClient(): MatrixClient {
-        return MatrixClientPeg.get();
+        return MatrixClientPeg.safeGet();
     }
 
     public componentDidMount(): void {
@@ -104,7 +104,7 @@ export default class ReplyChain extends React.Component<IProps, IState> {
     }
 
     public componentDidUpdate(): void {
-        this.props.onHeightChanged();
+        this.props.onHeightChanged?.();
         this.trySetExpandableQuotes();
     }
 

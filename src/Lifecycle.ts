@@ -63,6 +63,7 @@ import { Action } from "./dispatcher/actions";
 import AbstractLocalStorageSettingsHandler from "./settings/handlers/AbstractLocalStorageSettingsHandler";
 import { OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPayload";
 import { SdkContextClass } from "./contexts/SDKContext";
+import { messageForLoginError } from "./utils/ErrorUtils";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -230,17 +231,10 @@ export function attemptTokenLogin(
         .catch((err) => {
             Modal.createDialog(ErrorDialog, {
                 title: _t("We couldn't log you in"),
-                description:
-                    err.name === "ConnectionError"
-                        ? _t(
-                              "Your homeserver was unreachable and was not able to log you in. Please try again. " +
-                                  "If this continues, please contact your homeserver administrator.",
-                          )
-                        : _t(
-                              "Your homeserver rejected your log in attempt. " +
-                                  "This could be due to things just taking too long. Please try again. " +
-                                  "If this continues, please contact your homeserver administrator.",
-                          ),
+                description: messageForLoginError(err, {
+                    hsUrl: homeserver,
+                    hsName: homeserver,
+                }),
                 button: _t("Try again"),
                 onFinished: (tryAgain) => {
                     if (tryAgain) {
@@ -284,7 +278,7 @@ export function handleInvalidStoreError(e: InvalidStoreError): Promise<void> | v
                 }
             })
             .then(() => {
-                return MatrixClientPeg.get().store.deleteAllData();
+                return MatrixClientPeg.safeGet().store.deleteAllData();
             })
             .then(() => {
                 PlatformPeg.get()?.reload();
@@ -547,8 +541,8 @@ export async function setLoggedIn(credentials: IMatrixClientCreds): Promise<Matr
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
 export async function hydrateSession(credentials: IMatrixClientCreds): Promise<MatrixClient> {
-    const oldUserId = MatrixClientPeg.get().getUserId();
-    const oldDeviceId = MatrixClientPeg.get().getDeviceId();
+    const oldUserId = MatrixClientPeg.safeGet().getUserId();
+    const oldDeviceId = MatrixClientPeg.safeGet().getDeviceId();
 
     stopMatrixClient(); // unsets MatrixClientPeg.get()
     localStorage.removeItem("mx_soft_logout");
@@ -559,7 +553,7 @@ export async function hydrateSession(credentials: IMatrixClientCreds): Promise<M
         logger.warn("Clearing all data: Old session belongs to a different user/session");
     }
 
-    if (!credentials.pickleKey) {
+    if (!credentials.pickleKey && credentials.deviceId !== undefined) {
         logger.info("Lifecycle#hydrateSession: Pickle key not provided - trying to get one");
         credentials.pickleKey =
             (await PlatformPeg.get()?.getPickleKey(credentials.userId, credentials.deviceId)) ?? undefined;
@@ -609,14 +603,14 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
     }
 
     MatrixClientPeg.replaceUsingCreds(credentials);
+    const client = MatrixClientPeg.safeGet();
 
     setSentryUser(credentials.userId);
 
     if (PosthogAnalytics.instance.isEnabled()) {
-        PosthogAnalytics.instance.startListeningToSettingsChanges();
+        PosthogAnalytics.instance.startListeningToSettingsChanges(client);
     }
 
-    const client = MatrixClientPeg.get();
     if (credentials.freshLogin && SettingsStore.getValue("feature_dehydration")) {
         // If we just logged in, try to rehydrate a device instead of using a
         // new device.  If it succeeds, we'll get a new device ID, so make sure
@@ -642,7 +636,7 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
     }
 
     dis.fire(Action.OnLoggedIn);
-    await startMatrixClient(/*startSyncing=*/ !softLogout);
+    await startMatrixClient(client, /*startSyncing=*/ !softLogout);
 
     return client;
 }
@@ -730,7 +724,7 @@ export function logout(): void {
 
     PosthogAnalytics.instance.logout();
 
-    if (MatrixClientPeg.get().isGuest()) {
+    if (MatrixClientPeg.get()!.isGuest()) {
         // logout doesn't work for guest sessions
         // Also we sometimes want to re-log in a guest session if we abort the login.
         // defer until next tick because it calls a synchronous dispatch, and we are likely here from a dispatch.
@@ -739,7 +733,7 @@ export function logout(): void {
     }
 
     _isLoggingOut = true;
-    const client = MatrixClientPeg.get();
+    const client = MatrixClientPeg.get()!;
     PlatformPeg.get()?.destroyPickleKey(client.getSafeUserId(), client.getDeviceId() ?? "");
     client.logout(true).then(onLoggedOut, (err) => {
         // Just throwing an error here is going to be very unhelpful
@@ -786,10 +780,11 @@ export function isLoggingOut(): boolean {
 /**
  * Starts the matrix client and all other react-sdk services that
  * listen for events while a session is logged in.
+ * @param client the matrix client to start
  * @param {boolean} startSyncing True (default) to actually start
  * syncing the client.
  */
-async function startMatrixClient(startSyncing = true): Promise<void> {
+async function startMatrixClient(client: MatrixClient, startSyncing = true): Promise<void> {
     logger.log(`Lifecycle: Starting MatrixClient`);
 
     // dispatch this before starting the matrix client: it's used
@@ -802,10 +797,10 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     SdkContextClass.instance.typingStore.reset();
     ToastStore.sharedInstance().reset();
 
-    DialogOpener.instance.prepare();
+    DialogOpener.instance.prepare(client);
     Notifier.start();
     UserActivity.sharedInstance().start();
-    DMRoomMap.makeShared().start();
+    DMRoomMap.makeShared(client).start();
     IntegrationManagers.sharedInstance().startWatching();
     ActiveWidgetStore.instance.start();
     LegacyCallHandler.instance.start();
@@ -830,7 +825,7 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     SettingsStore.runMigrations();
 
     // This needs to be started after crypto is set up
-    DeviceListener.sharedInstance().start();
+    DeviceListener.sharedInstance().start(client);
     // Similarly, don't start sending presence updates until we've started
     // the client
     if (!SettingsStore.getValue("lowBandwidth")) {
@@ -946,6 +941,7 @@ export function stopMatrixClient(unsetClient = true): void {
         if (unsetClient) {
             MatrixClientPeg.unset();
             EventIndexPeg.unset();
+            cli.store.destroy();
         }
     }
 }

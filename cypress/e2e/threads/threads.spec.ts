@@ -69,7 +69,7 @@ describe("Threads", () => {
         const MessageTimestampColor = "rgb(172, 172, 172)";
         const ThreadViewGroupSpacingStart = "56px"; // --ThreadView_group_spacing-start
         // Exclude timestamp and read marker from snapshots
-        const percyCSS = ".mx_MessageTimestamp, .mx_RoomView_myReadMarker { visibility: hidden !important; }";
+        const percyCSS = ".mx_MessageTimestamp, .mx_MessagePanel_myReadMarker { visibility: hidden !important; }";
 
         cy.get(".mx_RoomView_body").within(() => {
             // User sends message
@@ -295,8 +295,8 @@ describe("Threads", () => {
             cy.get(".mx_ThreadSummary_content").findByText("How are things?").should("exist");
         });
 
-        cy.findByRole("tab", { name: "Threads" })
-            .should("have.class", "mx_RightPanel_headerButton_unread") // User asserts thread list unread indicator
+        cy.findByRole("button", { name: "Threads" })
+            .should("have.class", "mx_RoomHeader_button--unread") // User asserts thread list unread indicator
             .click(); // User opens thread list
 
         // User asserts thread with correct root & latest events & unread dot
@@ -445,7 +445,7 @@ describe("Threads", () => {
 
         // Exclude timestamp, read marker, and mapboxgl-map from snapshots
         const percyCSS =
-            ".mx_MessageTimestamp, .mx_RoomView_myReadMarker, .mapboxgl-map { visibility: hidden !important; }";
+            ".mx_MessageTimestamp, .mx_MessagePanel_myReadMarker, .mapboxgl-map { visibility: hidden !important; }";
 
         cy.get(".mx_RoomView_body").within(() => {
             // User sends message
