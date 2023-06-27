@@ -40,12 +40,16 @@ export class FontWatcher implements IWatcher {
 
     public constructor() {
         this.dispatcherRef = null;
-        this.migrateBaseFontSize();
     }
 
     public start(): void {
         this.updateFont();
         this.dispatcherRef = dis.register(this.onAction);
+        /**
+         * baseFontSize is an account level setting which is loaded after the initial
+         * sync. Hence why we can't do that in the `constructor`
+         */
+        this.migrateBaseFontSize();
     }
 
     /**
