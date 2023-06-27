@@ -236,7 +236,6 @@ class NotifierClass {
             format = "ogg";
         } else {
             logger.error("Browser doens't support mp3 or ogg");
-            return;
             // Will probably never happen. If happened, format="" and will fail to load audio. Who cares...
         }
 
