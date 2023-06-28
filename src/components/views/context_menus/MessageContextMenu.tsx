@@ -345,11 +345,9 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     private onEndPollClick = (): void => {
-        const matrixClient = MatrixClientPeg.safeGet();
         Modal.createDialog(
             EndPollDialog,
             {
-                matrixClient,
                 event: this.props.mxEvent,
                 getRelationsForEvent: this.props.getRelationsForEvent,
             },

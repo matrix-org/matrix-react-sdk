@@ -73,7 +73,6 @@ export class DialogOpener {
                 break;
             case Action.OpenForwardDialog:
                 Modal.createDialog(ForwardDialog, {
-                    matrixClient: this.matrixClient,
                     event: payload.event,
                     permalinkCreator: payload.permalinkCreator,
                 });
@@ -103,7 +102,6 @@ export class DialogOpener {
                 Modal.createDialog(
                     SpaceSettingsDialog,
                     {
-                        matrixClient: payload.space.client,
                         space: payload.space,
                     },
                     /*className=*/ undefined,
