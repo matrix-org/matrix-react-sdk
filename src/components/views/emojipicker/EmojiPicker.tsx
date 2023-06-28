@@ -86,7 +86,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
         super(props);
 
         const emotesEvent = props.room?.currentState.getStateEvents(EMOTES_STATE.name, "");
-        const rawEmotes = emotesEvent ? emotesEvent.getContent() || {} : {};
+        const rawEmotes = emotesEvent?.getContent() ?? {};
         const emotesMap = new Map();
         const customEmotesEnabled = SettingsStore.getValue("feature_custom_emotes");
         for (const shortcode in rawEmotes) {
@@ -223,7 +223,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
                     recent
                         .get()
                         .map((x) =>
-                            getEmojiFromUnicode(x) ? getEmojiFromUnicode(x) : this.finalEmotesMap.get(x as string),
+                            getEmojiFromUnicode(x) ?? this.finalEmotesMap.get(x as string),
                         ),
                 ),
             ),

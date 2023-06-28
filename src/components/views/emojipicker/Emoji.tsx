@@ -48,7 +48,7 @@ class Emoji extends React.PureComponent<IProps> {
                 focusOnMouseOver
             >
                 <div className={`mx_EmojiPicker_item ${isSelected ? "mx_EmojiPicker_item_selected" : ""}`}>
-                    {emoji.customComponent ? emoji.customComponent : emoji.unicode}
+                    {emoji.customComponent ?? emoji.unicode}
                 </div>
             </RovingAccessibleButton>
         );

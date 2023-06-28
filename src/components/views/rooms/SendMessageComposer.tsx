@@ -214,7 +214,7 @@ export function createMessageContent(
     });
     if (formattedBody) {
         if (compat && emotes && customEmotesEnabled) {
-            formattedBody = formattedBody.replace(/:[\w+-]+:/g, (m) => (emotes.get(m) ? emotes.get(m)! : m));
+            formattedBody = formattedBody.replace(/:[\w+-]+:/g, (m) => (emotes.has(m) ? emotes.get(m)! : m));
         }
         content.format = "org.matrix.custom.html";
         content.formatted_body = formattedBody;
@@ -321,7 +321,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         this.compat = compatEvent ? compatEvent.getContent().isCompat || false : false;
 
         const imagePackEvent = room.currentState.getStateEvents(EMOTES_COMP.name, "");
-        this.imagePack = imagePackEvent ? imagePackEvent.getContent() || { images: {} } : { images: {} };
+        this.imagePack = imagePackEvent?.getContent() ?? { images: {} };
         this.emotes = new Map<string, string>();
         if (!this.imagePack["images"]) {
             this.imagePack["images"] = {};
