@@ -34,7 +34,6 @@ import {
     RoomType,
     KNOWN_SAFE_ROOM_VERSION,
     ConditionKind,
-    PushRuleActionName,
     IPushRules,
     RelationType,
 } from "matrix-js-sdk/src/matrix";
@@ -794,7 +793,7 @@ export function muteRoom(room: Room): void {
                     pattern: room.roomId,
                 },
             ],
-            actions: [PushRuleActionName.DontNotify],
+            actions: [],
         },
     ];
 }
