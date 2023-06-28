@@ -227,12 +227,14 @@ async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> 
             isGuest,
         };
 
-        // @TODO(kerrya) should clear storage?
-        // @TODO(kerrya) other token login doesn't use this codepath, why?
-        await doSetLoggedIn(credentials, true);
+        logger.debug("Logged in via OIDC native flow");
+        await onSuccessfulDelegatedAuthLogin(credentials);
         return true;
     } catch (error) {
         logger.error("Failed to login via OIDC", error);
+
+        // TODO(kerrya) nice error messages https://github.com/vector-im/element-web/issues/25665
+        await onFailedDelegatedAuthLogin(_t("Something went wrong."));
         return false;
     }
 }

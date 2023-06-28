@@ -743,18 +743,19 @@ describe("<MatrixChat />", () => {
             state: authorizationParams.state,
         };
 
-        const mockLocalStorage: Record<string, string> = {
-            mx_sso_hs_url: serverConfig.hsUrl,
-            mx_sso_is_url: serverConfig.isUrl,
-            // these are only going to be set during login
-            mx_hs_url: serverConfig.hsUrl,
-            mx_is_url: serverConfig.isUrl,
-        };
-
-        let loginClient!: ReturnType<typeof getMockClientWithEventEmitter>;
         const userId = "@alice:server.org";
         const deviceId = "test-device-id";
         const accessToken = "test-access-token-from-oidc";
+
+        const mockLocalStorage: Record<string, string> = {
+            // these are only going to be set during login
+            mx_hs_url: homeserver,
+            mx_is_url: identityServerUrl,
+            mx_user_id: userId,
+            mx_device_id: deviceId,
+        };
+
+        let loginClient!: ReturnType<typeof getMockClientWithEventEmitter>;
 
         const validBearerTokenResponse = {
             token_type: "Bearer",
@@ -894,21 +895,13 @@ describe("<MatrixChat />", () => {
 
         describe("when login succeeds", () => {
             beforeEach(() => {
-                // jest.spyOn(StorageManager, "idbLoad").mockImplementation(async (db: string, key: string) => {
-                //     if (key === "mx_access_token") {
-                //         return accessToken;
-                //     }
-                // });
-            });
-            it("should clear storage", async () => {
-                getComponent({ realQueryParams });
-
-                await flushPromises();
-                await flushPromises();
-
-                // just check we called the clearStorage function
-                expect(loginClient.clearStores).toHaveBeenCalled();
-                expect(localStorageClearSpy).toHaveBeenCalled();
+                localStorageGetSpy.mockImplementation((key: unknown) => mockLocalStorage[key as string] || "");
+                jest.spyOn(StorageManager, "idbLoad").mockImplementation(
+                    async (_table: string, key: string | string[]) => (key === "mx_access_token" ? accessToken : null),
+                );
+                loginClient.getProfileInfo.mockResolvedValue({
+                    displayname: "Ernie",
+                });
             });
 
             it("should persist login credentials", async () => {
@@ -939,10 +932,18 @@ describe("<MatrixChat />", () => {
                         storedAuthorizationParams.homeserverUrl +
                         " softLogout: " +
                         false,
-                    " freshLogin: " + undefined,
+                    " freshLogin: " + false,
                 );
 
+                // client successfully started
                 expect(defaultDispatcher.dispatch).toHaveBeenCalledWith({ action: "client_started" });
+
+                // we think we are logged in, but are still waiting for the /sync to complete
+                await screen.findByText("Logout");
+                // initial sync
+                loginClient.emit(ClientEvent.Sync, SyncState.Prepared, null);
+                // logged in!
+                await screen.findByLabelText("User menu");
             });
         });
     });
