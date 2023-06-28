@@ -22,9 +22,9 @@ import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import TextInputDialog from "./TextInputDialog";
 import withValidation from "../elements/Validation";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 import { SettingLevel } from "../../../settings/SettingLevel";
-import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 
 /**
  * Check that the server natively supports sliding sync.
@@ -63,7 +63,7 @@ async function proxyHealthCheck(endpoint: string, hsUrl?: string): Promise<void>
 }
 
 export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): void }> = ({ onFinished }) => {
-    const cli = useMatrixClientContext();
+    const cli = MatrixClientPeg.safeGet();
     const currentProxy = SettingsStore.getValue("feature_sliding_sync_proxy_url");
     const hasNativeSupport = useAsyncMemo(
         () =>
@@ -87,7 +87,7 @@ export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): 
     const validProxy = withValidation<undefined, { error?: Error }>({
         async deriveData({ value }): Promise<{ error?: Error }> {
             try {
-                await proxyHealthCheck(value!, cli.baseUrl);
+                await proxyHealthCheck(value!, MatrixClientPeg.safeGet().baseUrl);
                 return {};
             } catch (error) {
                 return { error };

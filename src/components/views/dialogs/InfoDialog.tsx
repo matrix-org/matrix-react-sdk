@@ -30,7 +30,7 @@ interface IProps {
     button?: boolean | string;
     hasCloseButton?: boolean;
     fixedWidth?: boolean;
-    onKeyDown?(event: React.KeyboardEvent | KeyboardEvent): void;
+    onKeyDown?(event: KeyboardEvent | React.KeyboardEvent): void;
     onFinished(): void;
 }
 

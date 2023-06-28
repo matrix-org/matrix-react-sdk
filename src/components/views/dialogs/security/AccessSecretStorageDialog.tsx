@@ -20,6 +20,7 @@ import React, { ChangeEvent, FormEvent } from "react";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { logger } from "matrix-js-sdk/src/logger";
 
+import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Field from "../../elements/Field";
 import AccessibleButton, { ButtonEvent } from "../../elements/AccessibleButton";
 import { _t } from "../../../../languageHandler";
@@ -29,7 +30,6 @@ import InteractiveAuthDialog from "../InteractiveAuthDialog";
 import DialogButtons from "../../elements/DialogButtons";
 import BaseDialog from "../BaseDialog";
 import { chromeFileInputFix } from "../../../../utils/BrowserWorkarounds";
-import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 
 // Maximum acceptable size of a key file. It's 59 characters including the spaces we encode,
 // so this should be plenty and allow for people putting extra whitespace in the file because
@@ -62,9 +62,6 @@ interface IState {
  * Access Secure Secret Storage by requesting the user's passphrase.
  */
 export default class AccessSecretStorageDialog extends React.PureComponent<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
     private fileUpload = React.createRef<HTMLInputElement>();
     private inputRef = React.createRef<HTMLInputElement>();
 
@@ -110,8 +107,9 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         }
 
         try {
-            const decodedKey = this.context.keyBackupKeyFromRecoveryKey(this.state.recoveryKey);
-            const correct = await this.context.checkSecretStorageKey(decodedKey, this.props.keyInfo);
+            const cli = MatrixClientPeg.safeGet();
+            const decodedKey = cli.keyBackupKeyFromRecoveryKey(this.state.recoveryKey);
+            const correct = await cli.checkSecretStorageKey(decodedKey, this.props.keyInfo);
             this.setState({
                 recoveryKeyValid: true,
                 recoveryKeyCorrect: correct,
@@ -237,11 +235,12 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
             // Force reset secret storage (which resets the key backup)
             await accessSecretStorage(async (): Promise<void> => {
                 // Now reset cross-signing so everything Just Works™ again.
-                await this.context.bootstrapCrossSigning({
+                const cli = MatrixClientPeg.safeGet();
+                await cli.bootstrapCrossSigning({
                     authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
                         const { finished } = Modal.createDialog(InteractiveAuthDialog, {
                             title: _t("Setting up keys"),
-                            matrixClient: this.context,
+                            matrixClient: cli,
                             makeRequest,
                         });
                         const [confirmed] = await finished;

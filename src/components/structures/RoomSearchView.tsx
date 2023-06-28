@@ -181,7 +181,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
             }
 
             debuglog("requesting more search results");
-            const searchPromise = searchPagination(results);
+            const searchPromise = searchPagination(client, results);
             return handleSearchResult(searchPromise);
         };
 
@@ -237,7 +237,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                 continue;
             }
 
-            if (!haveRendererForEvent(mxEv, roomContext.showHiddenEvents)) {
+            if (!haveRendererForEvent(mxEv, client, roomContext.showHiddenEvents)) {
                 // XXX: can this ever happen? It will make the result count
                 // not match the displayed count.
                 continue;

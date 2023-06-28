@@ -17,7 +17,7 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { Resizable } from "re-resizable";
+import { Resizable, Size } from "re-resizable";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { IWidget } from "matrix-widget-api";
 
@@ -124,7 +124,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
                     Container.Top,
                     this.topApps()
                         .slice(1)
-                        .map((_, i) => this.resizer.forHandleAt(i).size),
+                        .map((_, i) => this.resizer.forHandleAt(i)!.size),
                 );
                 this.setState({ resizingHorizontal: false });
             },
@@ -283,9 +283,9 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
                     room={this.props.room}
                     minHeight={100}
                     maxHeight={this.props.maxHeight - 50}
-                    handleClass="mx_AppsContainer_resizerHandle"
-                    handleWrapperClass="mx_AppsContainer_resizerHandleContainer"
-                    className="mx_AppsContainer_resizer"
+                    className="mx_AppsDrawer_resizer"
+                    handleWrapperClass="mx_AppsDrawer_resizer_container"
+                    handleClass="mx_AppsDrawer_resizer_container_handle"
                     resizeNotifier={this.props.resizeNotifier}
                 >
                     {appContainers}
@@ -339,7 +339,9 @@ const PersistentVResizer: React.FC<IPersistentResizerProps> = ({
 
     return (
         <Resizable
-            size={{ height: Math.min(defaultHeight, maxHeight), width: undefined }}
+            // types do not support undefined height/width
+            // but resizable code checks specifically for undefined on Size prop
+            size={{ height: Math.min(defaultHeight, maxHeight), width: undefined } as unknown as Size}
             minHeight={minHeight}
             maxHeight={maxHeight}
             onResizeStart={() => {
@@ -356,9 +358,9 @@ const PersistentVResizer: React.FC<IPersistentResizerProps> = ({
 
                 resizeNotifier.stopResizing();
             }}
+            className={className}
             handleWrapperClass={handleWrapperClass}
             handleClasses={{ bottom: handleClass }}
-            className={className}
             enable={{ bottom: true }}
         >
             {children}

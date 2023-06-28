@@ -18,7 +18,7 @@ import React from "react";
 import { act, fireEvent, render, RenderResult } from "@testing-library/react";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { logger } from "matrix-js-sdk/src/logger";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 import { defer, sleep } from "matrix-js-sdk/src/utils";
 import {
     ClientEvent,
@@ -53,6 +53,11 @@ import { getClientInformationEventType } from "../../../../../../src/utils/devic
 
 mockPlatformPeg();
 
+// Fake random strings to give a predictable snapshot for IDs
+jest.mock("matrix-js-sdk/src/randomstring", () => ({
+    randomString: () => "abdefghi",
+}));
+
 describe("<SessionManagerTab />", () => {
     const aliceId = "@alice:server.org";
     const deviceId = "alices_device";
@@ -83,6 +88,7 @@ describe("<SessionManagerTab />", () => {
 
     const mockCrypto = mocked({
         getDeviceVerificationStatus: jest.fn(),
+        requestDeviceVerification: jest.fn().mockResolvedValue(mockVerificationRequest),
     } as unknown as CryptoApi);
 
     const mockClient = getMockClientWithEventEmitter({
@@ -91,7 +97,6 @@ describe("<SessionManagerTab />", () => {
         getDevices: jest.fn(),
         getStoredDevice: jest.fn(),
         getDeviceId: jest.fn().mockReturnValue(deviceId),
-        requestVerification: jest.fn().mockResolvedValue(mockVerificationRequest),
         deleteMultipleDevices: jest.fn(),
         generateClientSecret: jest.fn(),
         setDeviceDetails: jest.fn(),
@@ -227,27 +232,6 @@ describe("<SessionManagerTab />", () => {
         expect(container.getElementsByClassName("mx_Spinner").length).toBeFalsy();
     });
 
-    it("does not fail when checking device verification fails", async () => {
-        const logSpy = jest.spyOn(console, "error").mockImplementation((e) => {});
-        mockClient.getDevices.mockResolvedValue({
-            devices: [alicesDevice, alicesMobileDevice],
-        });
-        const failError = new Error("non-specific failure");
-        mockCrypto.getDeviceVerificationStatus.mockImplementation(() => {
-            throw failError;
-        });
-        render(getComponent());
-
-        await act(async () => {
-            await flushPromises();
-        });
-
-        // called for each device despite error
-        expect(mockCrypto.getDeviceVerificationStatus).toHaveBeenCalledWith(aliceId, alicesDevice.device_id);
-        expect(mockCrypto.getDeviceVerificationStatus).toHaveBeenCalledWith(aliceId, alicesMobileDevice.device_id);
-        expect(logSpy).toHaveBeenCalledWith("Error getting device cross-signing info", failError);
-    });
-
     it("sets device verification status correctly", async () => {
         mockClient.getDevices.mockResolvedValue({
             devices: [alicesDevice, alicesMobileDevice, alicesOlderMobileDevice],
@@ -263,7 +247,7 @@ describe("<SessionManagerTab />", () => {
                 return new DeviceVerificationStatus({});
             }
             // alicesOlderMobileDevice does not support encryption
-            throw new Error("encryption not supported");
+            return null;
         });
 
         const { getByTestId } = render(getComponent());
@@ -547,7 +531,7 @@ describe("<SessionManagerTab />", () => {
             // click verify button from current session section
             fireEvent.click(getByTestId(`verification-status-button-${alicesMobileDevice.device_id}`));
 
-            expect(mockClient.requestVerification).toHaveBeenCalledWith(aliceId, [alicesMobileDevice.device_id]);
+            expect(mockCrypto.requestDeviceVerification).toHaveBeenCalledWith(aliceId, alicesMobileDevice.device_id);
             expect(modalSpy).toHaveBeenCalled();
         });
 
@@ -562,8 +546,7 @@ describe("<SessionManagerTab />", () => {
                     return new DeviceVerificationStatus({ crossSigningVerified: true, localVerified: true });
                 }
                 // but alicesMobileDevice doesn't support encryption
-                // XXX this is not what happens if a device doesn't support encryption.
-                throw new Error("encryption not supported");
+                return null;
             });
 
             const { getByTestId, queryByTestId } = render(getComponent());

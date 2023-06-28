@@ -19,6 +19,7 @@ import React from "react";
 import { AuthType, IAuthData } from "matrix-js-sdk/src/interactive-auth";
 import { logger } from "matrix-js-sdk/src/logger";
 
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
 import InteractiveAuth, { ERROR_USER_CANCELLED, InteractiveAuthCallback } from "../../structures/InteractiveAuth";
 import { DEFAULT_PHASE, PasswordAuthEntry, SSOAuthEntry } from "../auth/InteractiveAuthEntryComponents";
@@ -26,7 +27,6 @@ import StyledCheckbox from "../elements/StyledCheckbox";
 import BaseDialog from "./BaseDialog";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 type DialogAesthetics = Partial<{
     [x in AuthType]: {
@@ -56,9 +56,6 @@ interface IState {
 }
 
 export default class DeactivateAccountDialog extends React.Component<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
     public constructor(props: IProps) {
         super(props);
 
@@ -128,7 +125,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         // XXX: this should be returning a promise to maintain the state inside the state machine correct
         // but given that a deactivation is followed by a local logout and all object instances being thrown away
         // this isn't done.
-        this.context
+        MatrixClientPeg.safeGet()
             .deactivateAccount(auth, this.state.shouldErase)
             .then((r) => {
                 // Deactivation worked - logout & close this dialog
@@ -161,7 +158,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
     }
 
     private initAuth(shouldErase: boolean): void {
-        this.context
+        MatrixClientPeg.safeGet()
             .deactivateAccount(null, shouldErase)
             .then((r) => {
                 // If we got here, oops. The server didn't require any auth.
@@ -193,7 +190,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
                 <div>
                     {this.state.bodyText}
                     <InteractiveAuth
-                        matrixClient={this.context}
+                        matrixClient={MatrixClientPeg.safeGet()}
                         authData={this.state.authData}
                         // XXX: onUIAuthComplete breaches the expected method contract, it gets away with it because it
                         // knows the entire app is about to die as a result of the account deactivation.

@@ -15,16 +15,18 @@ limitations under the License.
 */
 
 import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
-import { MatrixClient, MatrixEvent, RelationType } from "matrix-js-sdk/src/matrix";
+import { IRedactOpts, MatrixEvent, RelationType } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
 import { _t } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Modal from "../../../Modal";
 import { isVoiceBroadcastStartedEvent } from "../../../voice-broadcast/utils/isVoiceBroadcastStartedEvent";
 import ErrorDialog from "./ErrorDialog";
 import TextInputDialog from "./TextInputDialog";
 
 interface IProps {
+    event: MatrixEvent;
     onFinished(success?: false, reason?: void): void;
     onFinished(success: true, reason?: string): void;
 }
@@ -34,14 +36,16 @@ interface IProps {
  */
 export default class ConfirmRedactDialog extends React.Component<IProps> {
     public render(): React.ReactNode {
+        let description = _t("Are you sure you wish to remove (delete) this event?");
+        if (this.props.event.isState()) {
+            description += " " + _t("Note that removing room changes like this could undo the change.");
+        }
+
         return (
             <TextInputDialog
                 onFinished={this.props.onFinished}
                 title={_t("Confirm Removal")}
-                description={_t(
-                    "Are you sure you wish to remove (delete) this event? " +
-                        "Note that if you delete a room name or topic change, it could undo the change.",
-                )}
+                description={description}
                 placeholder={_t("Reason (optional)")}
                 focus
                 button={_t("Remove")}
@@ -51,11 +55,9 @@ export default class ConfirmRedactDialog extends React.Component<IProps> {
 }
 
 export function createRedactEventDialog({
-    matrixClient,
     mxEvent,
     onCloseDialog = () => {},
 }: {
-    matrixClient: MatrixClient;
     mxEvent: MatrixEvent;
     onCloseDialog?: () => void;
 }): void {
@@ -69,28 +71,30 @@ export function createRedactEventDialog({
     Modal.createDialog(
         ConfirmRedactDialog,
         {
+            event: mxEvent,
             onFinished: async (proceed, reason): Promise<void> => {
                 if (!proceed) return;
 
-                const withRelations: { with_relations?: RelationType[] } = {};
+                const cli = MatrixClientPeg.safeGet();
+                const withRelTypes: Pick<IRedactOpts, "with_rel_types"> = {};
 
                 // redact related events if this is a voice broadcast started event and
                 // server has support for relation based redactions
                 if (isVoiceBroadcastStartedEvent(mxEvent)) {
-                    const relationBasedRedactionsSupport = matrixClient.canSupport.get(Feature.RelationBasedRedactions);
+                    const relationBasedRedactionsSupport = cli.canSupport.get(Feature.RelationBasedRedactions);
                     if (
                         relationBasedRedactionsSupport &&
                         relationBasedRedactionsSupport !== ServerSupport.Unsupported
                     ) {
-                        withRelations.with_relations = [RelationType.Reference];
+                        withRelTypes.with_rel_types = [RelationType.Reference];
                     }
                 }
 
                 try {
                     onCloseDialog?.();
-                    await matrixClient.redactEvent(roomId, eventId, undefined, {
+                    await cli.redactEvent(roomId, eventId, undefined, {
                         ...(reason ? { reason } : {}),
-                        ...withRelations,
+                        ...withRelTypes,
                     });
                 } catch (e: any) {
                     const code = e.errcode || e.statusCode;

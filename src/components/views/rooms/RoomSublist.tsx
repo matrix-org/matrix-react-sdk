@@ -18,7 +18,7 @@ limitations under the License.
 
 import { Room } from "matrix-js-sdk/src/models/room";
 import classNames from "classnames";
-import { Enable, NumberSize, Resizable } from "re-resizable";
+import { Enable, Resizable } from "re-resizable";
 import { Direction } from "re-resizable/lib/resizer";
 import * as React from "react";
 import { ComponentType, createRef, ReactComponentElement, ReactNode } from "react";
@@ -87,6 +87,12 @@ interface IProps {
 
 function getLabelId(tagId: TagID): string {
     return `mx_RoomSublist_label_${tagId}`;
+}
+
+// TODO: Use re-resizer's NumberSize when it is exposed as the type
+interface ResizeDelta {
+    width: number;
+    height: number;
 }
 
 type PartialDOMRect = Pick<DOMRect, "left" | "top" | "height">;
@@ -308,7 +314,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         e: MouseEvent | TouchEvent,
         travelDirection: Direction,
         refToElement: HTMLElement,
-        delta: NumberSize,
+        delta: ResizeDelta,
     ): void => {
         const newHeight = this.heightAtStart + delta.height;
         this.applyHeightChange(newHeight);
@@ -324,7 +330,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         e: MouseEvent | TouchEvent,
         travelDirection: Direction,
         refToElement: HTMLElement,
-        delta: NumberSize,
+        delta: ResizeDelta,
     ): void => {
         const newHeight = this.heightAtStart + delta.height;
         this.applyHeightChange(newHeight);
@@ -694,6 +700,10 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                             onKeyDown={this.onHeaderKeyDown}
                             onFocus={onFocus}
                             aria-label={this.props.label}
+                            role="treeitem"
+                            aria-expanded={this.state.isExpanded}
+                            aria-level={1}
+                            aria-selected="false"
                         >
                             <div className="mx_RoomSublist_stickableContainer">
                                 <div className="mx_RoomSublist_stickable">
@@ -702,9 +712,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                                         inputRef={ref}
                                         tabIndex={tabIndex}
                                         className="mx_RoomSublist_headerText"
-                                        role="treeitem"
                                         aria-expanded={this.state.isExpanded}
-                                        aria-level={1}
                                         onClick={this.onHeaderClick}
                                         onContextMenu={this.onContextMenu}
                                         title={this.props.isMinimized ? this.props.label : undefined}

@@ -106,6 +106,7 @@ export interface IConfigOptions {
     };
 
     widget_build_url?: string; // url called to replace jitsi/call widget creation
+    widget_build_url_ignore_dm?: boolean;
     audio_stream_url?: string;
     jitsi?: {
         preferred_domain: string;
@@ -151,6 +152,8 @@ export interface IConfigOptions {
     enable_presence_by_hs_url?: Record<string, boolean>; // <HomeserverName, Enabled>
 
     terms_and_conditions_links?: { url: string; text: string }[];
+    help_url: string;
+    help_encryption_url: string;
 
     latex_maths_delims?: {
         inline?: {
@@ -191,6 +194,14 @@ export interface IConfigOptions {
         existing_issues_url: string;
         new_issue_url: string;
     };
+
+    /**
+     * Configuration for OIDC issuers where a static client_id has been issued for the app.
+     * Otherwise dynamic client registration is attempted.
+     * The issuer URL must have a trailing `/`.
+     * OPTIONAL
+     */
+    oidc_static_client_ids?: Record<string, string>;
 }
 
 export interface ISsoRedirectOptions {

@@ -93,7 +93,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
     }
 
     private async onChangePassword(oldPassword: string, newPassword: string): Promise<void> {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
 
         // if the server supports it then don't sign user out of all devices
         const serverSupportsControlOfDevicesLogout = await cli.doesServerSupportLogoutDevices();
@@ -234,6 +234,9 @@ export default class ChangePassword extends React.Component<IProps, IState> {
             import("../../../async-components/views/dialogs/security/ExportE2eKeysDialog") as unknown as Promise<
                 typeof ExportE2eKeysDialog
             >,
+            {
+                matrixClient: MatrixClientPeg.safeGet(),
+            },
         );
     };
 

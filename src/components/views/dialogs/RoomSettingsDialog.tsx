@@ -28,6 +28,7 @@ import GeneralRoomSettingsTab from "../settings/tabs/room/GeneralRoomSettingsTab
 import SecurityRoomSettingsTab from "../settings/tabs/room/SecurityRoomSettingsTab";
 import NotificationSettingsTab from "../settings/tabs/room/NotificationSettingsTab";
 import BridgeSettingsTab from "../settings/tabs/room/BridgeSettingsTab";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import dis from "../../../dispatcher/dispatcher";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
@@ -38,7 +39,6 @@ import { ActionPayload } from "../../../dispatcher/payloads";
 import { NonEmptyArray } from "../../../@types/common";
 import { PollHistoryTab } from "../settings/tabs/room/PollHistoryTab";
 import ErrorBoundary from "../elements/ErrorBoundary";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 export const enum RoomSettingsTab {
     General = "ROOM_GENERAL_TAB",
@@ -62,14 +62,10 @@ interface IState {
 }
 
 class RoomSettingsDialog extends React.Component<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
     private dispatcherRef?: string;
 
-    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
+    public constructor(props: IProps) {
         super(props);
-        this.context = context;
 
         const room = this.getRoom();
         this.state = { room };
@@ -77,7 +73,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
 
     public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
-        this.context.on(RoomEvent.Name, this.onRoomName);
+        MatrixClientPeg.safeGet().on(RoomEvent.Name, this.onRoomName);
         this.onRoomName();
     }
 
@@ -93,7 +89,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
             dis.unregister(this.dispatcherRef);
         }
 
-        this.context.removeListener(RoomEvent.Name, this.onRoomName);
+        MatrixClientPeg.get()?.removeListener(RoomEvent.Name, this.onRoomName);
     }
 
     /**
@@ -102,7 +98,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
      * @throws when room is not found
      */
     private getRoom(): Room {
-        const room = this.context.getRoom(this.props.roomId)!;
+        const room = MatrixClientPeg.safeGet().getRoom(this.props.roomId)!;
 
         // something is really wrong if we encounter this
         if (!room) {
