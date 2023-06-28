@@ -23,13 +23,13 @@ $roomtile-default-badge-bg-color: $muted-fg-color;
 
 /**
  * Creating a `semantic` color scale. This will not be needed with the new
- * visual language, but necessery during the transition period
+ * visual language, but necessary during the transition period
  * This abstract the `green` away from where accent shades are used
  * Take: `background: rgba($accent, 0.1);`
  * would be transformed to: `background: $accent-300;`
  *
  * To use under very rare circumstances, always prefer the semantics defined
- * in https://compound.element.io/?path=/docs/tokens-semantic-colors--docs
+ * in https://compound.element.io/?path=/docs /tokens-semantic-colors--docs
  */
  $accent-100: var(--cpd-color-green-100);
  $accent-200: var(--cpd-color-green-200);
@@ -49,7 +49,7 @@ $roomtile-default-badge-bg-color: $muted-fg-color;
 /* Reused Figma non-compound colors */
 /* ******************** */
 $inverted-bg-color: var(--cpd-color-bg-action-primary-rest);
-$header-panel-bg-color: var(--cpd-color-bg-subtle-primary);
+$header-panel-bg-color: var(--cpd-color-bg-subtle-secondary);
 /* ******************** */
 
 /* Theme specific colors */
@@ -312,10 +312,10 @@ body {
 .mx_SplashPage::before {
     background-image: radial-gradient(
             53.85% 66.75% at 87.55% 0%,
-            hsla(0, 0%, 11%, 0.15) 0%,
-            hsla(250, 100%, 88%, 0) 100%
+            hsla(0deg, 0%, 11%, 0.15) 0%,
+            hsla(250deg, 100%, 88%, 0) 100%
         ),
-        radial-gradient(41.93% 41.93% at 0% 0%, hsla(0, 0%, 38%, 0.28) 0%, hsla(250, 100%, 88%, 0) 100%),
-        radial-gradient(100% 100% at 0% 0%, hsla(250, 100%, 88%, 0.3) 0%, hsla(0, 100%, 86%, 0) 100%),
-        radial-gradient(106.35% 96.26% at 100% 0%, hsla(25, 100%, 88%, 0.4) 0%, hsla(167, 76%, 82%, 0) 100%) !important;
+        radial-gradient(41.93% 41.93% at 0% 0%, hsla(0deg, 0%, 38%, 0.28) 0%, hsla(250deg, 100%, 88%, 0) 100%),
+        radial-gradient(100% 100% at 0% 0%, hsla(250deg, 100%, 88%, 0.3) 0%, hsla(0deg, 100%, 86%, 0) 100%),
+        radial-gradient(106.35% 96.26% at 100% 0%, hsla(25deg, 100%, 88%, 0.4) 0%, hsla(167deg, 76%, 82%, 0) 100%) !important;
 }
