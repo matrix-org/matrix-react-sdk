@@ -92,7 +92,9 @@ export class FontWatcher implements IWatcher {
     }
 
     private onAction = (payload: ActionPayload): void => {
-        if (payload.action === Action.UpdateFontSize) {
+        if (payload.action === Action.MigrateBaseFontSize) {
+            this.migrateBaseFontSize();
+        } else if (payload.action === Action.UpdateFontSize) {
             this.setRootFontSize(payload.size);
         } else if (payload.action === Action.UpdateSystemFont) {
             this.setSystemFont(payload as UpdateSystemFontPayload);
