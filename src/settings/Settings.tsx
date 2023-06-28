@@ -119,7 +119,7 @@ export type SettingValueType =
     | number[]
     | string[]
     | Record<string, unknown>
-    | CustomTheme[]
+    | Record<string, unknown>[]
     | null;
 
 export interface IBaseSetting<T extends SettingValueType = SettingValueType> {

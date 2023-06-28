@@ -35,7 +35,7 @@ interface IFontFaces extends Omit<Record<(typeof allowedFontFaceProps)[number], 
     }[];
 }
 
-export interface CustomTheme {
+export type CustomTheme = {
     name: string;
     colors: {
         [key: string]: string;
@@ -46,7 +46,7 @@ export interface CustomTheme {
         monospace: string;
     };
     is_dark?: boolean; // eslint-disable-line camelcase
-}
+};
 
 /**
  * Given a non-high-contrast theme, find the corresponding high-contrast one
