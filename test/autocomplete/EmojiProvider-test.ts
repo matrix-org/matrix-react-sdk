@@ -45,7 +45,7 @@ const EMOJI_SHORTCODES = [
 // This means that we cannot compare their autocompletion before and after the ending `:` and have
 // to simply assert that the final completion with the colon is the exact emoji.
 const TOO_SHORT_EMOJI_SHORTCODE = [{ emojiShortcode: ":o", expectedEmoji: "⭕️" }];
-const EMOTES_STATE = new UnstableValue("org.matrix.msc3892.emotes", "m.room.emotes");
+const EMOTES_STATE = new UnstableValue("m.room.emotes", "org.matrix.msc3892.emotes");
 
 describe("EmojiProvider", function () {
     const testRoom = mkStubRoom(undefined, undefined, undefined);
@@ -127,6 +127,8 @@ describe("EmojiProvider", function () {
 
         const ep = new EmojiProvider(testRoom);
         const completionsList = await ep.getCompletions(":testEmote", { beginning: true, start: 0, end: 6 });
-        expect(completionsList[0]?.component?.props.title).toEqual("http://this.is.a.url/custom-emote-123.png");
+        expect(completionsList[0]?.component?.props.titleComponent).toEqual(
+            "http://this.is.a.url/custom-emote-123.png",
+        );
     });
 });

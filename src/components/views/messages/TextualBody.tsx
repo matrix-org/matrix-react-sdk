@@ -54,7 +54,7 @@ import { decryptFile } from "../../../utils/DecryptFile";
 import { mediaFromMxc } from "../../../customisations/Media";
 
 const MAX_HIGHLIGHT_LENGTH = 4096;
-const EMOTES_STATE = new UnstableValue("org.matrix.msc3892.emotes", "m.room.emotes");
+const EMOTES_STATE = new UnstableValue("m.room.emotes", "org.matrix.msc3892.emotes");
 
 interface IState {
     // the URLs (if any) to be previewed with a LinkPreviewWidget inside this TextualBody.

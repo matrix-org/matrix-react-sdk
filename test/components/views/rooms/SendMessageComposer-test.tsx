@@ -46,10 +46,10 @@ import SettingsStore from "../../../../src/settings/SettingsStore";
 jest.mock("../../../../src/utils/local-room", () => ({
     doMaybeLocalRoomAction: jest.fn(),
 }));
-const EMOTES_COMP = new UnstableValue("im.ponies.room_emotes", "m.room.room_emotes");
+const EMOTES_COMP = new UnstableValue("m.room.room_emotes", "im.ponies.room_emotes");
 const COMPAT_STATE = new UnstableValue(
-    "org.matrix.msc3892.clientemote_compatibility",
     "m.room.clientemote_compatibility",
+    "org.matrix.msc3892.clientemote_compatibility",
 );
 describe("<SendMessageComposer/>", () => {
     const defaultRoomContext: IRoomState = {

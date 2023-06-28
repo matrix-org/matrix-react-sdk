@@ -29,7 +29,7 @@ import SettingsStore from "../../../../src/settings/SettingsStore";
 jest.mock("../../../../src/customisations/Media", () => ({
     mediaFromMxc: jest.fn(),
 }));
-const EMOTES_STATE = new UnstableValue("org.matrix.msc3892.emotes", "m.room.emotes");
+const EMOTES_STATE = new UnstableValue("m.room.emotes", "org.matrix.msc3892.emotes");
 describe("EmojiPicker", function () {
     stubClient();
 

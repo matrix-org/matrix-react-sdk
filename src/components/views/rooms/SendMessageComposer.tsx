@@ -79,10 +79,10 @@ import { getBlobSafeMimeType } from "../../../utils/blobs";
  */
 
 const COMPAT_STATE = new UnstableValue(
-    "org.matrix.msc3892.clientemote_compatibility",
     "m.room.clientemote_compatibility",
+    "org.matrix.msc3892.clientemote_compatibility",
 );
-const EMOTES_COMP = new UnstableValue("im.ponies.room_emotes", "m.room.room_emotes");
+const EMOTES_COMP = new UnstableValue("m.room.room_emotes", "im.ponies.room_emotes");
 const EMOTES_REGEX = /:[\w+-]+:/g;
 const SHORTCODE_REGEX = /[^a-zA-Z0-9_]/g;
 export function attachMentions(

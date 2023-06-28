@@ -1,5 +1,5 @@
 /*
-Copyright 2019 New Vector Ltd
+Copyright 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -27,12 +27,12 @@ import { mediaFromMxc } from "../../../customisations/Media";
 import SettingsFieldset from "../settings/SettingsFieldset";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import { IEncryptedFile } from "../../../customisations/models/IMediaEventContent";
-const EMOTES_STATE = new UnstableValue("org.matrix.msc3892.emotes", "m.room.emotes");
+const EMOTES_STATE = new UnstableValue("m.room.emotes", "org.matrix.msc3892.emotes");
 const COMPAT_STATE = new UnstableValue(
-    "org.matrix.msc3892.clientemote_compatibility",
     "m.room.clientemote_compatibility",
+    "org.matrix.msc3892.clientemote_compatibility",
 );
-const EMOTES_COMP = new UnstableValue("im.ponies.room_emotes", "m.room.room_emotes");
+const EMOTES_COMP = new UnstableValue("m.room.room_emotes", "im.ponies.room_emotes");
 const SHORTCODE_REGEX = /[^a-zA-Z0-9_]/g;
 interface IProps {
     roomId: string;

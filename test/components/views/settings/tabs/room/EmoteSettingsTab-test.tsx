@@ -32,8 +32,8 @@ jest.mock("../../../../../../src/ContentMessages", () => ({
 }));
 
 describe("EmoteSettingsTab", () => {
-    const EMOTES_STATE = new UnstableValue("org.matrix.msc3892.emotes", "m.room.emotes");
-    const EMOTES_COMP = new UnstableValue("im.ponies.room_emotes", "m.room.room_emotes");
+    const EMOTES_STATE = new UnstableValue("m.room.emotes", "org.matrix.msc3892.emotes");
+    const EMOTES_COMP = new UnstableValue("m.room.room_emotes", "im.ponies.room_emotes");
     const roomId = "!room:example.com";
     let cli: MatrixClient;
     let room: Room;

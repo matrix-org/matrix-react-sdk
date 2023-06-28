@@ -51,7 +51,7 @@ export const EMOJIS_PER_ROW = 8;
 
 const ZERO_WIDTH_JOINER = "\u200D";
 
-const EMOTES_STATE = new UnstableValue("org.matrix.msc3892.emotes", "m.room.emotes");
+const EMOTES_STATE = new UnstableValue("m.room.emotes", "org.matrix.msc3892.emotes");
 
 interface IProps {
     selectedEmojis?: Set<string>;
