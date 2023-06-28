@@ -35,7 +35,8 @@ interface IFontFaces extends Omit<Record<(typeof allowedFontFaceProps)[number], 
     }[];
 }
 
-interface ICustomTheme {
+export interface CustomTheme {
+    name: string;
     colors: {
         [key: string]: string;
     };
@@ -176,7 +177,7 @@ function generateCustomFontFaceCSS(faces: IFontFaces[]): string {
         .join("\n");
 }
 
-function setCustomThemeVars(customTheme: ICustomTheme): void {
+function setCustomThemeVars(customTheme: CustomTheme): void {
     const { style } = document.body;
 
     function setCSSColorVariable(name: string, hexColor: string, doPct = true): void {
@@ -219,7 +220,7 @@ function setCustomThemeVars(customTheme: ICustomTheme): void {
     }
 }
 
-export function getCustomTheme(themeName: string): ICustomTheme {
+export function getCustomTheme(themeName: string): CustomTheme {
     // set css variables
     const customThemes = SettingsStore.getValue("custom_themes");
     if (!customThemes) {
