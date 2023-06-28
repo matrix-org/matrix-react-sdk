@@ -243,7 +243,7 @@ export function attemptTokenLogin(
 }
 
 /**
- * After a succesful token login or OIDC authorization
+ * After a successful token login or OIDC authorization
  * Clear storage then save new credentials in storage
  * @param credentials as returned from login
  */
@@ -260,12 +260,12 @@ type TryAgainFunction = (shouldTryAgain?: boolean) => void;
  * Display a friendly error to the user when token login or OIDC authorization fails
  * @param error
  * @param homeserverUrl
- * @param tryAgain OPTIONAL function to call on try again button from error dialog
+ * @param tryAgain function to call on try again button from error dialog
  */
 async function onFailedDelegatedAuthLogin(
     error: MatrixError,
     homeserverUrl: string,
-    tryAgain?: TryAgainFunction,
+    tryAgain: TryAgainFunction,
 ): Promise<void> {
     Modal.createDialog(ErrorDialog, {
         title: _t("We couldn't log you in"),
