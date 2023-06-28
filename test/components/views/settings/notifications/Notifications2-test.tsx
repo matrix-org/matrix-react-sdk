@@ -495,7 +495,7 @@ describe("<Notifications />", () => {
                     rule_id: "testkeyword",
                     enabled: true,
                     default: false,
-                    actions: StandardActions.ACTION_NOTIFY,
+                    actions: StandardActions.ACTION_HIGHLIGHT_DEFAULT_SOUND,
                     pattern: "testkeyword",
                 });
             });
