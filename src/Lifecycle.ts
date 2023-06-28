@@ -17,10 +17,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { ReactNode } from "react";
 import { createClient } from "matrix-js-sdk/src/matrix";
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { decryptAES, encryptAES, IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -205,6 +205,12 @@ export function attemptTokenLogin(
     const identityServer = localStorage.getItem(SSO_ID_SERVER_URL_KEY) ?? undefined;
     if (!homeserver) {
         logger.warn("Cannot log in with token: can't determine HS URL to use");
+        onFailedDelegatedAuthLogin(
+            _t(
+                "We asked the browser to remember which homeserver you use to let you sign in, " +
+                    "but unfortunately your browser has forgotten it. Go to the sign in page and try again.",
+            ),
+        );
         Modal.createDialog(ErrorDialog, {
             title: _t("We couldn't log you in"),
             description: _t(
@@ -226,7 +232,7 @@ export function attemptTokenLogin(
             return true;
         })
         .catch((error) => {
-            const tryAgainCallback = (tryAgain): void => {
+            const tryAgainCallback: TryAgainFunction = (tryAgain) => {
                 if (tryAgain) {
                     const cli = createClient({
                         baseUrl: homeserver,
@@ -236,7 +242,13 @@ export function attemptTokenLogin(
                     PlatformPeg.get()?.startSingleSignOn(cli, "sso", fragmentAfterLogin, idpId, SSOAction.LOGIN);
                 }
             };
-            onFailedDelegatedAuthLogin(error, homeserver, tryAgainCallback);
+            onFailedDelegatedAuthLogin(
+                messageForLoginError(error, {
+                    hsUrl: homeserver,
+                    hsName: homeserver,
+                }),
+                tryAgainCallback,
+            );
             logger.error("Failed to log in with login token:", error);
             return false;
         });
@@ -258,21 +270,13 @@ async function onSuccessfulDelegatedAuthLogin(credentials: IMatrixClientCreds): 
 type TryAgainFunction = (shouldTryAgain?: boolean) => void;
 /**
  * Display a friendly error to the user when token login or OIDC authorization fails
- * @param error
- * @param homeserverUrl
- * @param tryAgain function to call on try again button from error dialog
+ * @param description error description
+ * @param tryAgain OPTIONAL function to call on try again button from error dialog
  */
-async function onFailedDelegatedAuthLogin(
-    error: MatrixError,
-    homeserverUrl: string,
-    tryAgain: TryAgainFunction,
-): Promise<void> {
+async function onFailedDelegatedAuthLogin(description: string | ReactNode, tryAgain?: TryAgainFunction): Promise<void> {
     Modal.createDialog(ErrorDialog, {
         title: _t("We couldn't log you in"),
-        description: messageForLoginError(error, {
-            hsUrl: homeserverUrl,
-            hsName: homeserverUrl,
-        }),
+        description,
         button: _t("Try again"),
         onFinished: tryAgain,
     });
