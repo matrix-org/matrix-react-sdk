@@ -211,14 +211,6 @@ export function attemptTokenLogin(
                     "but unfortunately your browser has forgotten it. Go to the sign in page and try again.",
             ),
         );
-        Modal.createDialog(ErrorDialog, {
-            title: _t("We couldn't log you in"),
-            description: _t(
-                "We asked the browser to remember which homeserver you use to let you sign in, " +
-                    "but unfortunately your browser has forgotten it. Go to the sign in page and try again.",
-            ),
-            button: _t("Try again"),
-        });
         return Promise.resolve(false);
     }
 
@@ -232,8 +224,8 @@ export function attemptTokenLogin(
             return true;
         })
         .catch((error) => {
-            const tryAgainCallback: TryAgainFunction = (tryAgain) => {
-                if (tryAgain) {
+            const tryAgainCallback: TryAgainFunction = (shouldTryAgain) => {
+                if (shouldTryAgain) {
                     const cli = createClient({
                         baseUrl: homeserver,
                         idBaseUrl: identityServer,
