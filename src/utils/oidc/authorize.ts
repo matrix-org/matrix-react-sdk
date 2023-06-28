@@ -26,8 +26,8 @@ import { ValidatedDelegatedAuthConfig } from "../ValidatedServerConfig";
 
 /**
  * Store authorization params for retrieval when returning from OIDC OP
- * @param { AuthorizationParams } authorizationParams
- * @param { ValidatedServerConfig["delegatedAuthentication"] } delegatedAuthConfig used for future interactions with OP
+ * @param authorizationParams from `generateAuthorizationParams`
+ * @param delegatedAuthConfig used for future interactions with OP
  * @param clientId this client's id as registered with configured issuer
  * @param homeserver target homeserver
  */
@@ -96,10 +96,12 @@ const retrieveAuthorizationParams = (state: string): StoredAuthorizationParams =
 
 /**
  * Start OIDC authorization code flow
+ * Generates auth params, stores them in session storage and
  * Navigates to configured authorization endpoint
  * @param delegatedAuthConfig from discovery
  * @param clientId this client's id as registered with configured issuer
  * @param homeserver target homeserver
+ * @returns Promise that resolves after we have navigated to auth endpoint
  */
 export const startOidcLogin = async (
     delegatedAuthConfig: ValidatedDelegatedAuthConfig,
