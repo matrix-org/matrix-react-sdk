@@ -44,6 +44,7 @@ type UseNotificationSettings = {
 };
 
 export function useNotificationSettings(cli: MatrixClient): UseNotificationSettings {
+    const run = useLinearisedPromise<void>();
     const supportsIntentionalMentions = useMemo(() => cli.supportsIntentionalMentions(), [cli]);
 
     const pushRules = useRef<IPushRules | null>(null);
@@ -61,21 +62,45 @@ export function useNotificationSettings(cli: MatrixClient): UseNotificationSetti
     }, [cli, supportsIntentionalMentions]);
 
     useEffect(() => {
-        updatePushRules().catch((err) => console.error(err));
-    }, [cli, updatePushRules]);
+        run(updatePushRules).catch((err) => console.error(err));
+    }, [cli, run, updatePushRules]);
 
     const reconcile = useCallback(
         (model: NotificationSettings) => {
             if (pushRules.current !== null) {
                 setModel(model);
-                const changes = reconcileNotificationSettings(pushRules.current, model, supportsIntentionalMentions);
-                applyChanges(cli, changes)
-                    .then(updatePushRules)
-                    .catch((err) => console.error(err));
+                run(async () => {
+                    const changes = reconcileNotificationSettings(
+                        pushRules.current,
+                        model,
+                        supportsIntentionalMentions,
+                    );
+                    await applyChanges(cli, changes);
+                    await updatePushRules();
+                }).catch((err) => console.error(err));
             }
         },
-        [cli, updatePushRules, supportsIntentionalMentions],
+        [run, supportsIntentionalMentions, cli, updatePushRules],
     );
 
     return { model, hasPendingChanges, reconcile };
+}
+
+function useLinearisedPromise<T>(): (fun: () => Promise<T>) => Promise<T> {
+    const runningPromise = useRef<Promise<T> | null>(null);
+
+    return useCallback((fun: () => Promise<T>): Promise<T> => {
+        let next: Promise<T>;
+        if (runningPromise.current === null) {
+            next = fun();
+        } else {
+            next = runningPromise.current.then(fun).finally(() => {
+                if (runningPromise.current === next) {
+                    next = null;
+                }
+            });
+        }
+        runningPromise.current = next;
+        return next;
+    }, []);
 }
