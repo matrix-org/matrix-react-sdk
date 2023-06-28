@@ -16,7 +16,8 @@ limitations under the License.
 
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { mocked } from "jest-mock";
+import { Mocked, mocked } from "jest-mock";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import CrossSigningPanel from "../../../../src/components/views/settings/CrossSigningPanel";
 import {
@@ -28,17 +29,18 @@ import {
 
 describe("<CrossSigningPanel />", () => {
     const userId = "@alice:server.org";
-    const mockClient = getMockClientWithEventEmitter({
-        ...mockClientMethodsUser(userId),
-        ...mockClientMethodsCrypto(),
-        doesServerSupportUnstableFeature: jest.fn(),
-    });
+    let mockClient: Mocked<MatrixClient>;
     const getComponent = () => render(<CrossSigningPanel />);
 
     beforeEach(() => {
+        mockClient = getMockClientWithEventEmitter({
+            ...mockClientMethodsUser(userId),
+            ...mockClientMethodsCrypto(),
+            doesServerSupportUnstableFeature: jest.fn(),
+        });
+
         mockClient.doesServerSupportUnstableFeature.mockResolvedValue(true);
         mockClient.isCrossSigningReady.mockResolvedValue(false);
-        mocked(mockClient.crypto!.crossSigningInfo).isStoredInSecretStorage.mockClear().mockResolvedValue(null);
     });
 
     it("should render a spinner while loading", () => {
@@ -57,10 +59,6 @@ describe("<CrossSigningPanel />", () => {
     });
 
     describe("when cross signing is ready", () => {
-        beforeEach(() => {
-            mockClient.isCrossSigningReady.mockResolvedValue(true);
-        });
-
         it("should render when keys are not backed up", async () => {
             getComponent();
             await flushPromises();
@@ -72,21 +70,26 @@ describe("<CrossSigningPanel />", () => {
         });
 
         it("should render when keys are backed up", async () => {
-            mocked(mockClient.crypto!.crossSigningInfo).isStoredInSecretStorage.mockResolvedValue({ test: {} });
+            mocked(mockClient.getCrypto()!.getCrossSigningStatus).mockResolvedValue({
+                publicKeysOnDevice: true,
+                privateKeysInSecretStorage: true,
+                privateKeysCachedLocally: {
+                    masterKey: true,
+                    selfSigningKey: true,
+                    userSigningKey: true,
+                },
+            });
             getComponent();
             await flushPromises();
 
             expect(screen.getByTestId("summarised-status").innerHTML).toEqual("✅ Cross-signing is ready for use.");
             expect(screen.getByText("Cross-signing private keys:").parentElement!).toMatchSnapshot();
-            expect(mockClient.crypto!.crossSigningInfo.isStoredInSecretStorage).toHaveBeenCalledWith(
-                mockClient.secretStorage,
-            );
         });
     });
 
     describe("when cross signing is not ready", () => {
         beforeEach(() => {
-            mockClient.isCrossSigningReady.mockResolvedValue(false);
+            mocked(mockClient.getCrypto()!.isCrossSigningReady).mockResolvedValue(false);
         });
 
         it("should render when keys are not backed up", async () => {
@@ -97,7 +100,15 @@ describe("<CrossSigningPanel />", () => {
         });
 
         it("should render when keys are backed up", async () => {
-            mocked(mockClient.crypto!.crossSigningInfo).isStoredInSecretStorage.mockResolvedValue({ test: {} });
+            mocked(mockClient.getCrypto()!.getCrossSigningStatus).mockResolvedValue({
+                publicKeysOnDevice: true,
+                privateKeysInSecretStorage: true,
+                privateKeysCachedLocally: {
+                    masterKey: true,
+                    selfSigningKey: true,
+                    userSigningKey: true,
+                },
+            });
             getComponent();
             await flushPromises();
 
@@ -105,9 +116,6 @@ describe("<CrossSigningPanel />", () => {
                 "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.",
             );
             expect(screen.getByText("Cross-signing private keys:").parentElement!).toMatchSnapshot();
-            expect(mockClient.crypto!.crossSigningInfo.isStoredInSecretStorage).toHaveBeenCalledWith(
-                mockClient.secretStorage,
-            );
         });
     });
 });
