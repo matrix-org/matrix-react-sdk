@@ -28,8 +28,7 @@ describe("FontSizeController", () => {
         controller.onChange(SettingLevel.ACCOUNT, "$room:server", 12);
 
         expect(dispatchSpy).toHaveBeenCalledWith({
-            action: Action.UpdateFontSize,
-            size: 12,
+            action: Action.MigrateBaseFontSize,
         });
     });
 });
