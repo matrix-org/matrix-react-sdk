@@ -943,14 +943,8 @@ describe("<MatrixChat />", () => {
                 // client successfully started
                 expect(defaultDispatcher.dispatch).toHaveBeenCalledWith({ action: "client_started" });
 
+                // check we get to logged in view
                 await waitForSyncAndLoad(loginClient, true);
-
-                // // we think we are logged in, but are still waiting for the /sync to complete
-                // await screen.findByText("Logout");
-                // // initial sync
-                // loginClient.emit(ClientEvent.Sync, SyncState.Prepared, null);
-                // // logged in!
-                // await screen.findByLabelText("User menu");
             });
         });
     });
