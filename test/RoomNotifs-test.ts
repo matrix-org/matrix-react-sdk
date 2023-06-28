@@ -67,7 +67,7 @@ describe("RoomNotifs test", () => {
     it("getRoomNotifsState handles mute state for legacy DontNotify action", () => {
         const room = mkRoom(client, "!roomId:server");
         muteRoom(room);
-        client.pushRules.global.override[0]!.actions = [PushRuleActionName.DontNotify];
+        client.pushRules!.global.override![0]!.actions = [PushRuleActionName.DontNotify];
         expect(getRoomNotifsState(client, room.roomId)).toBe(RoomNotifState.Mute);
     });
 
