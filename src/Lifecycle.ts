@@ -664,7 +664,7 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
     if (credentials.accessToken) {
         localStorage.setItem("mx_has_access_token", "true");
     } else {
-        localStorage.deleteItem("mx_has_access_token");
+        localStorage.removeItem("mx_has_access_token");
     }
 
     if (credentials.pickleKey) {
@@ -686,14 +686,22 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
             // if we couldn't save to indexedDB, fall back to localStorage.  We
             // store the access token unencrypted since localStorage only saves
             // strings.
-            localStorage.setItem("mx_access_token", credentials.accessToken);
+            if (!!credentials.accessToken) {
+                localStorage.setItem("mx_access_token", credentials.accessToken);
+            } else {
+                localStorage.removeItem("mx_access_token");
+            }
         }
         localStorage.setItem("mx_has_pickle_key", String(true));
     } else {
         try {
             await StorageManager.idbSave("account", "mx_access_token", credentials.accessToken);
         } catch (e) {
-            localStorage.setItem("mx_access_token", credentials.accessToken);
+            if (!!credentials.accessToken) {
+                localStorage.setItem("mx_access_token", credentials.accessToken);
+            } else {
+                localStorage.removeItem("mx_access_token");
+            }
         }
         if (localStorage.getItem("mx_has_pickle_key") === "true") {
             logger.error("Expected a pickle key, but none provided.  Encryption may not work.");
