@@ -17,9 +17,10 @@ limitations under the License.
 import React, { ComponentProps } from "react";
 import { fireEvent, render, RenderResult, screen, within } from "@testing-library/react";
 import fetchMockJest from "fetch-mock-jest";
-import { ClientEvent } from "matrix-js-sdk/src/client";
+import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 import { SyncState } from "matrix-js-sdk/src/sync";
 import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
+import * as MatrixJs from "matrix-js-sdk/src/matrix";
 import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 
 import MatrixChat from "../../../src/components/structures/MatrixChat";
@@ -27,14 +28,21 @@ import * as StorageManager from "../../../src/utils/StorageManager";
 import defaultDispatcher from "../../../src/dispatcher/dispatcher";
 import { Action } from "../../../src/dispatcher/actions";
 import { UserTab } from "../../../src/components/views/dialogs/UserTab";
-import { clearAllModals, flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../test-utils";
+import {
+    clearAllModals,
+    filterConsole,
+    flushPromises,
+    getMockClientWithEventEmitter,
+    mockClientMethodsUser,
+} from "../../test-utils";
 import * as leaveRoomUtils from "../../../src/utils/leave-behaviour";
 
 describe("<MatrixChat />", () => {
     const userId = "@alice:server.org";
     const deviceId = "qwertyui";
     const accessToken = "abc123";
-    const mockClient = getMockClientWithEventEmitter({
+    // reused in createClient mock below
+    const getMockClientMethods = () => ({
         ...mockClientMethodsUser(userId),
         startClient: jest.fn(),
         stopClient: jest.fn(),
@@ -57,7 +65,29 @@ describe("<MatrixChat />", () => {
         store: {
             destroy: jest.fn(),
         },
+        login: jest.fn(),
+        loginFlows: jest.fn(),
+        isGuest: jest.fn().mockReturnValue(false),
+        clearStores: jest.fn(),
+        setGuest: jest.fn(),
+        setNotifTimelineSet: jest.fn(),
+        getAccountData: jest.fn(),
+        doesServerSupportUnstableFeature: jest.fn(),
+        getDevices: jest.fn().mockResolvedValue({ devices: [] }),
+        getProfileInfo: jest.fn(),
+        getVisibleRooms: jest.fn().mockReturnValue([]),
+        getRooms: jest.fn().mockReturnValue([]),
+        userHasCrossSigningKeys: jest.fn(),
+        setGlobalBlacklistUnverifiedDevices: jest.fn(),
+        setGlobalErrorOnUnknownDevices: jest.fn(),
+        getCrypto: jest.fn(),
+        secretStorage: {
+            isStored: jest.fn().mockReturnValue(null),
+        },
+        getDehydratedDevice: jest.fn(),
+        isRoomEncrypted: jest.fn(),
     });
+    let mockClient = getMockClientWithEventEmitter(getMockClientMethods());
     const serverConfig = {
         hsUrl: "https://test.com",
         hsName: "Test Server",
@@ -86,17 +116,28 @@ describe("<MatrixChat />", () => {
     };
     const getComponent = (props: Partial<ComponentProps<typeof MatrixChat>> = {}) =>
         render(<MatrixChat {...defaultProps} {...props} />);
-    const localStorageSpy = jest.spyOn(localStorage.__proto__, "getItem").mockReturnValue(undefined);
+    const localStorageSetSpy = jest.spyOn(localStorage.__proto__, "setItem");
+    const localStorageGetSpy = jest.spyOn(localStorage.__proto__, "getItem").mockReturnValue(undefined);
+    const localStorageClearSpy = jest.spyOn(localStorage.__proto__, "clear");
+    const sessionStorageSetSpy = jest.spyOn(sessionStorage.__proto__, "setItem");
 
-    beforeEach(() => {
+    // make test results readable
+    filterConsole("Failed to parse localStorage object");
+
+    beforeEach(async () => {
+        mockClient = getMockClientWithEventEmitter(getMockClientMethods());
         fetchMockJest.get("https://test.com/_matrix/client/versions", {
             unstable_features: {},
             versions: [],
         });
-        localStorageSpy.mockClear();
+        localStorageGetSpy.mockReset();
+        localStorageSetSpy.mockReset();
+        sessionStorageSetSpy.mockReset();
         jest.spyOn(StorageManager, "idbLoad").mockRestore();
         jest.spyOn(StorageManager, "idbSave").mockResolvedValue(undefined);
         jest.spyOn(defaultDispatcher, "dispatch").mockClear();
+
+        await clearAllModals();
     });
 
     it("should render spinner while app is loading", () => {
@@ -120,7 +161,7 @@ describe("<MatrixChat />", () => {
         };
 
         beforeEach(() => {
-            localStorageSpy.mockImplementation((key: unknown) => mockLocalStorage[key as string] || "");
+            localStorageGetSpy.mockImplementation((key: unknown) => mockLocalStorage[key as string] || "");
 
             jest.spyOn(StorageManager, "idbLoad").mockImplementation(async (table, key) => {
                 const safeKey = Array.isArray(key) ? key[0] : key;
@@ -130,6 +171,7 @@ describe("<MatrixChat />", () => {
 
         const getComponentAndWaitForReady = async (): Promise<RenderResult> => {
             const renderResult = getComponent();
+
             // we think we are logged in, but are still waiting for the /sync to complete
             await screen.findByText("Logout");
             // initial sync
@@ -303,6 +345,364 @@ describe("<MatrixChat />", () => {
                         });
                     });
                 });
+            });
+        });
+    });
+
+    describe("login via key/pass", () => {
+        let loginClient!: ReturnType<typeof getMockClientWithEventEmitter>;
+
+        const mockCrypto = {
+            getVerificationRequestsToDeviceInProgress: jest.fn().mockReturnValue([]),
+            getUserDeviceInfo: jest.fn().mockResolvedValue(new Map()),
+        };
+
+        const userName = "ernie";
+        const password = "ilovebert";
+
+        const getComponentAndWaitForReady = async (): Promise<RenderResult> => {
+            const renderResult = getComponent();
+            // wait for welcome page chrome render
+            await screen.findByText("powered by Matrix");
+
+            // go to login page
+            defaultDispatcher.dispatch({
+                action: "start_login",
+            });
+
+            await flushPromises();
+
+            return renderResult;
+        };
+
+        const waitForSyncAndLoad = async (client: MatrixClient, withoutSecuritySetup?: boolean): Promise<void> => {
+            // need to wait for different elements depending on which flow
+            // without security setup we go to a loading page
+            if (withoutSecuritySetup) {
+                // we think we are logged in, but are still waiting for the /sync to complete
+                await screen.findByText("Logout");
+                // initial sync
+                client.emit(ClientEvent.Sync, SyncState.Prepared, null);
+                // wait for logged in view to load
+                await screen.findByLabelText("User menu");
+
+                // otherwise we stay on login and load from there for longer
+            } else {
+                // we are logged in, but are still waiting for the /sync to complete
+                await screen.findByText("Syncing…");
+                // initial sync
+                client.emit(ClientEvent.Sync, SyncState.Prepared, null);
+            }
+
+            // let things settle
+            await flushPromises();
+            // and some more for good measure
+            // this proved to be a little flaky
+            await flushPromises();
+        };
+
+        const getComponentAndLogin = async (withoutSecuritySetup?: boolean): Promise<void> => {
+            await getComponentAndWaitForReady();
+
+            fireEvent.change(screen.getByLabelText("Username"), { target: { value: userName } });
+            fireEvent.change(screen.getByLabelText("Password"), { target: { value: password } });
+
+            // sign in button is an input
+            fireEvent.click(screen.getByDisplayValue("Sign in"));
+
+            await waitForSyncAndLoad(loginClient, withoutSecuritySetup);
+        };
+
+        beforeEach(() => {
+            loginClient = getMockClientWithEventEmitter(getMockClientMethods());
+            // this is used to create a temporary client during login
+            jest.spyOn(MatrixJs, "createClient").mockReturnValue(loginClient);
+
+            loginClient.login.mockClear().mockResolvedValue({});
+            loginClient.loginFlows.mockClear().mockResolvedValue({ flows: [{ type: "m.login.password" }] });
+
+            loginClient.getProfileInfo.mockResolvedValue({
+                displayname: "Ernie",
+            });
+        });
+
+        it("should render login page", async () => {
+            await getComponentAndWaitForReady();
+
+            expect(screen.getAllByText("Sign in")[0]).toBeInTheDocument();
+        });
+
+        describe("post login setup", () => {
+            beforeEach(() => {
+                loginClient.isCryptoEnabled.mockReturnValue(true);
+                loginClient.getCrypto.mockReturnValue(mockCrypto as any);
+                loginClient.userHasCrossSigningKeys.mockClear().mockResolvedValue(false);
+            });
+
+            it("should go straight to logged in view when crypto is not enabled", async () => {
+                loginClient.isCryptoEnabled.mockReturnValue(false);
+
+                await getComponentAndLogin(true);
+
+                expect(loginClient.userHasCrossSigningKeys).not.toHaveBeenCalled();
+            });
+
+            it("should go straight to logged in view when user does not have cross signing keys and server does not support cross signing", async () => {
+                loginClient.doesServerSupportUnstableFeature.mockResolvedValue(false);
+
+                await getComponentAndLogin(false);
+
+                expect(loginClient.doesServerSupportUnstableFeature).toHaveBeenCalledWith(
+                    "org.matrix.e2e_cross_signing",
+                );
+
+                await flushPromises();
+
+                // logged in
+                await screen.findByLabelText("User menu");
+            });
+
+            describe("when server supports cross signing and user does not have cross signing setup", () => {
+                beforeEach(() => {
+                    loginClient.doesServerSupportUnstableFeature.mockResolvedValue(true);
+                    loginClient.userHasCrossSigningKeys.mockResolvedValue(false);
+                });
+
+                describe("when encryption is force disabled", () => {
+                    const unencryptedRoom = new Room("!unencrypted:server.org", loginClient, userId);
+                    const encryptedRoom = new Room("!encrypted:server.org", loginClient, userId);
+
+                    beforeEach(() => {
+                        loginClient.getClientWellKnown.mockReturnValue({
+                            "io.element.e2ee": {
+                                force_disable: true,
+                            },
+                        });
+
+                        loginClient.isRoomEncrypted.mockImplementation((roomId) => roomId === encryptedRoom.roomId);
+                    });
+
+                    it("should go straight to logged in view when user is not in any encrypted rooms", async () => {
+                        loginClient.getRooms.mockReturnValue([unencryptedRoom]);
+                        await getComponentAndLogin(false);
+
+                        await flushPromises();
+
+                        // logged in, did not setup keys
+                        await screen.findByLabelText("User menu");
+                    });
+
+                    it("should go to setup e2e screen when user is in encrypted rooms", async () => {
+                        loginClient.getRooms.mockReturnValue([unencryptedRoom, encryptedRoom]);
+                        await getComponentAndLogin();
+                        await flushPromises();
+                        // set up keys screen is rendered
+                        expect(screen.getByText("Setting up keys")).toBeInTheDocument();
+                    });
+                });
+
+                it("should go to setup e2e screen", async () => {
+                    loginClient.doesServerSupportUnstableFeature.mockResolvedValue(true);
+
+                    await getComponentAndLogin();
+
+                    expect(loginClient.userHasCrossSigningKeys).toHaveBeenCalled();
+
+                    await flushPromises();
+
+                    // set up keys screen is rendered
+                    expect(screen.getByText("Setting up keys")).toBeInTheDocument();
+                });
+            });
+
+            it("should show complete security screen when user has cross signing setup", async () => {
+                loginClient.userHasCrossSigningKeys.mockResolvedValue(true);
+
+                await getComponentAndLogin();
+
+                expect(loginClient.userHasCrossSigningKeys).toHaveBeenCalled();
+
+                await flushPromises();
+
+                // Complete security begin screen is rendered
+                expect(screen.getByText("Unable to verify this device")).toBeInTheDocument();
+            });
+
+            it("should setup e2e when server supports cross signing", async () => {
+                loginClient.doesServerSupportUnstableFeature.mockResolvedValue(true);
+
+                await getComponentAndLogin();
+
+                expect(loginClient.userHasCrossSigningKeys).toHaveBeenCalled();
+
+                await flushPromises();
+
+                // set up keys screen is rendered
+                expect(screen.getByText("Setting up keys")).toBeInTheDocument();
+            });
+        });
+    });
+
+    describe("when query params have a loginToken", () => {
+        const loginToken = "test-login-token";
+        const realQueryParams = {
+            loginToken,
+        };
+
+        const mockLocalStorage: Record<string, string> = {
+            mx_sso_hs_url: serverConfig.hsUrl,
+            mx_sso_is_url: serverConfig.isUrl,
+            // these are only going to be set during login
+            mx_hs_url: serverConfig.hsUrl,
+            mx_is_url: serverConfig.isUrl,
+        };
+
+        let loginClient!: ReturnType<typeof getMockClientWithEventEmitter>;
+        const userId = "@alice:server.org";
+        const deviceId = "test-device-id";
+        const accessToken = "test-access-token";
+        const clientLoginResponse = {
+            user_id: userId,
+            device_id: deviceId,
+            access_token: accessToken,
+        };
+
+        beforeEach(() => {
+            loginClient = getMockClientWithEventEmitter(getMockClientMethods());
+            // this is used to create a temporary client during login
+            jest.spyOn(MatrixJs, "createClient").mockReturnValue(loginClient);
+
+            loginClient.login.mockClear().mockResolvedValue(clientLoginResponse);
+
+            localStorageGetSpy.mockImplementation((key: unknown) => mockLocalStorage[key as string] || "");
+        });
+
+        it("should show an error dialog when no homeserver is found in local storage", async () => {
+            localStorageGetSpy.mockReturnValue(undefined);
+            getComponent({ realQueryParams });
+
+            expect(localStorageGetSpy).toHaveBeenCalledWith("mx_sso_hs_url");
+            expect(localStorageGetSpy).toHaveBeenCalledWith("mx_sso_is_url");
+
+            const dialog = await screen.findByRole("dialog");
+
+            // warning dialog
+            expect(
+                within(dialog).getByText(
+                    "We asked the browser to remember which homeserver you use to let you sign in, " +
+                        "but unfortunately your browser has forgotten it. Go to the sign in page and try again.",
+                ),
+            ).toBeInTheDocument();
+        });
+
+        it("should attempt token login", async () => {
+            getComponent({ realQueryParams });
+
+            expect(loginClient.login).toHaveBeenCalledWith("m.login.token", {
+                initial_device_display_name: undefined,
+                token: loginToken,
+            });
+        });
+
+        it("should call onTokenLoginCompleted", async () => {
+            const onTokenLoginCompleted = jest.fn();
+            getComponent({ realQueryParams, onTokenLoginCompleted });
+
+            await flushPromises();
+
+            expect(onTokenLoginCompleted).toHaveBeenCalled();
+        });
+
+        describe("when login fails", () => {
+            beforeEach(() => {
+                loginClient.login.mockRejectedValue(new Error("oups"));
+            });
+            it("should show a dialog", async () => {
+                getComponent({ realQueryParams });
+
+                await flushPromises();
+
+                const dialog = await screen.findByRole("dialog");
+
+                // warning dialog
+                expect(
+                    within(dialog).getByText(
+                        "There was a problem communicating with the homeserver, please try again later.",
+                    ),
+                ).toBeInTheDocument();
+            });
+
+            it("should not clear storage", async () => {
+                getComponent({ realQueryParams });
+
+                await flushPromises();
+
+                expect(loginClient.clearStores).not.toHaveBeenCalled();
+            });
+        });
+
+        describe("when login succeeds", () => {
+            beforeEach(() => {
+                jest.spyOn(StorageManager, "idbLoad").mockImplementation(
+                    async (_table: string, key: string | string[]) => {
+                        if (key === "mx_access_token") {
+                            return accessToken as any;
+                        }
+                    },
+                );
+            });
+            it("should clear storage", async () => {
+                getComponent({ realQueryParams });
+
+                await flushPromises();
+
+                // just check we called the clearStorage function
+                expect(loginClient.clearStores).toHaveBeenCalled();
+                expect(localStorageClearSpy).toHaveBeenCalled();
+            });
+
+            it("should persist login credentials", async () => {
+                getComponent({ realQueryParams });
+
+                await flushPromises();
+
+                expect(localStorageSetSpy).toHaveBeenCalledWith("mx_hs_url", serverConfig.hsUrl);
+                expect(localStorageSetSpy).toHaveBeenCalledWith("mx_user_id", userId);
+                expect(localStorageSetSpy).toHaveBeenCalledWith("mx_has_access_token", "true");
+                expect(localStorageSetSpy).toHaveBeenCalledWith("mx_device_id", deviceId);
+            });
+
+            it("should set fresh login flag in session storage", async () => {
+                getComponent({ realQueryParams });
+
+                await flushPromises();
+
+                expect(sessionStorageSetSpy).toHaveBeenCalledWith("mx_fresh_login", "true");
+            });
+
+            it("should override hsUrl in creds when login response wellKnown differs from config", async () => {
+                const hsUrlFromWk = "https://hsfromwk.org";
+                const loginResponseWithWellKnown = {
+                    ...clientLoginResponse,
+                    well_known: {
+                        "m.homeserver": {
+                            base_url: hsUrlFromWk,
+                        },
+                    },
+                };
+                loginClient.login.mockResolvedValue(loginResponseWithWellKnown);
+                getComponent({ realQueryParams });
+
+                await flushPromises();
+
+                expect(localStorageSetSpy).toHaveBeenCalledWith("mx_hs_url", hsUrlFromWk);
+            });
+
+            it("should continue to post login setup when no session is found in local storage", async () => {
+                getComponent({ realQueryParams });
+
+                // logged in but waiting for sync screen
+                await screen.findByText("Logout");
             });
         });
     });

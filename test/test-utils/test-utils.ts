@@ -34,7 +34,6 @@ import {
     RoomType,
     KNOWN_SAFE_ROOM_VERSION,
     ConditionKind,
-    PushRuleActionName,
     IPushRules,
     RelationType,
 } from "matrix-js-sdk/src/matrix";
@@ -48,7 +47,7 @@ import { MapperOpts } from "matrix-js-sdk/src/event-mapper";
 
 import type { GroupCall } from "matrix-js-sdk/src/webrtc/groupCall";
 import { MatrixClientPeg as peg } from "../../src/MatrixClientPeg";
-import { ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
+import { ValidatedDelegatedAuthConfig, ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
 import { EnhancedMap } from "../../src/utils/maps";
 import { AsyncStoreWithClient } from "../../src/stores/AsyncStoreWithClient";
 import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/MatrixClientBackedSettingsHandler";
@@ -60,6 +59,8 @@ import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/Matri
  * TODO: once the components are updated to get their MatrixClients from
  * the react context, we can get rid of this and just inject a test client
  * via the context instead.
+ *
+ * See also `getMockClientWithEventEmitter` which does something similar but different.
  */
 export function stubClient(): MatrixClient {
     const client = createTestClient();
@@ -620,12 +621,17 @@ export function mkStubRoom(
     } as unknown as Room;
 }
 
-export function mkServerConfig(hsUrl: string, isUrl: string): ValidatedServerConfig {
+export function mkServerConfig(
+    hsUrl: string,
+    isUrl: string,
+    delegatedAuthentication?: ValidatedDelegatedAuthConfig,
+): ValidatedServerConfig {
     return {
         hsUrl,
         hsName: "TEST_ENVIRONMENT",
         hsNameIsDifferent: false, // yes, we lie
         isUrl,
+        delegatedAuthentication,
     } as ValidatedServerConfig;
 }
 
@@ -789,7 +795,7 @@ export function muteRoom(room: Room): void {
                     pattern: room.roomId,
                 },
             ],
-            actions: [PushRuleActionName.DontNotify],
+            actions: [],
         },
     ];
 }
