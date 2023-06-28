@@ -46,7 +46,9 @@ function isMuted(rules: (IPushRule | null | undefined | false)[]): boolean {
             continue;
         }
         const actions = NotificationUtils.decodeActions(rule.actions);
-        if (actions !== null && !actions.notify) {
+        if (actions !== null && !actions.notify
+            && actions.highlight !== true
+            && actions.sound === undefined) {
             return true;
         }
     }
