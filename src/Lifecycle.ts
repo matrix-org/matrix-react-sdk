@@ -247,7 +247,7 @@ export function attemptTokenLogin(
 }
 
 /**
- * After a successful token login or OIDC authorization
+ * Called after a successful token login or OIDC authorization.
  * Clear storage then save new credentials in storage
  * @param credentials as returned from login
  */
