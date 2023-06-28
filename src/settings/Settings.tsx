@@ -256,7 +256,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "feature_custom_emotes": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
-        displayName: _td("Support custom emotes"),
+        displayName: _td("Support custom emotes of MSC3892 and MSC2545"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
