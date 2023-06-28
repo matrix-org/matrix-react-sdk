@@ -67,9 +67,9 @@ export function useNotificationSettings(cli: MatrixClient): UseNotificationSetti
 
     const reconcile = useCallback(
         (model: NotificationSettings) => {
-            if (pushRules.current !== null) {
-                setModel(model);
-                run(async () => {
+            setModel(model);
+            run(async () => {
+                if (pushRules.current !== null) {
                     const changes = reconcileNotificationSettings(
                         pushRules.current,
                         model,
@@ -77,8 +77,8 @@ export function useNotificationSettings(cli: MatrixClient): UseNotificationSetti
                     );
                     await applyChanges(cli, changes);
                     await updatePushRules();
-                }).catch((err) => console.error(err));
-            }
+                }
+            }).catch((err) => console.error(err));
         },
         [run, supportsIntentionalMentions, cli, updatePushRules],
     );
@@ -87,20 +87,16 @@ export function useNotificationSettings(cli: MatrixClient): UseNotificationSetti
 }
 
 function useLinearisedPromise<T>(): (fun: () => Promise<T>) => Promise<T> {
-    const runningPromise = useRef<Promise<T> | null>(null);
+    const lastPromise = useRef<Promise<T> | null>(null);
 
     return useCallback((fun: () => Promise<T>): Promise<T> => {
         let next: Promise<T>;
-        if (runningPromise.current === null) {
+        if (lastPromise.current === null) {
             next = fun();
         } else {
-            next = runningPromise.current.then(fun).finally(() => {
-                if (runningPromise.current === next) {
-                    next = null;
-                }
-            });
+            next = lastPromise.current.then(fun);
         }
-        runningPromise.current = next;
+        lastPromise.current = next;
         return next;
     }, []);
 }
