@@ -184,7 +184,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
                     _td("Emotes"),
                     "mx_RoomSettingsDialog_emotesIcon",
                     <EmoteSettingsTab roomId={this.props.roomId} />,
-                    "RoomSettingsNotifications",
+                    null,
                 ),
             );
         }

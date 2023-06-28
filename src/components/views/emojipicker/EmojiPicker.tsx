@@ -217,12 +217,12 @@ class EmojiPicker extends React.Component<IProps, IState> {
             });
         }
 
-        const rec = Array.from(
+        const recentEmotes = Array.from(
             new Set(
                 filterBoolean(recent.get().map((x) => getEmojiFromUnicode(x) ?? this.finalEmotesMap.get(x as string))),
             ),
         );
-        rec.forEach((v, i) => {
+        recentEmotes.forEach((v, i) => {
             if (this.finalEmotesMap.get(v.unicode)) {
                 if (i >= this.recentlyUsed.length) {
                     this.recentlyUsed.push(this.finalEmotesMap.get(v.unicode)!);

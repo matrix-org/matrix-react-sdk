@@ -200,7 +200,7 @@ export function createMessageContent(
 
     const body = textSerialize(model);
 
-    let emoteBody;
+    let emoteBody: string;
     const customEmotesEnabled = SettingsStore.getValue("feature_custom_emotes");
     if (compat && emotes && customEmotesEnabled) {
         emoteBody = body.replace(EMOTES_REGEX, (m) => (emotes.get(m) ? emotes.get(m)! : m));
