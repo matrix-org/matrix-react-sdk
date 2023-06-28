@@ -158,14 +158,12 @@ export const Lobby: FC<LobbyProps> = ({ room, joinCallButtonDisabledTooltip, con
 
     const [videoStream, audioInputs, videoInputs] = useAsyncMemo(
         async (): Promise<[MediaStream | null, MediaDeviceInfo[], MediaDeviceInfo[]]> => {
-            let devices: IMediaDevices;
+            let devices: IMediaDevices | undefined;
             try {
-                const mediaDevices = await MediaDeviceHandler.getDevices();
-                if (mediaDevices === undefined) {
+                devices = await MediaDeviceHandler.getDevices();
+                if (devices === undefined) {
                     handleMediaDeviceFailing("Could not access devices!");
                     return [null, [], []];
-                } else {
-                    devices = mediaDevices;
                 }
             } catch (error) {
                 handleMediaDeviceFailing(`Unable to get Media Devices: ${error}`);
