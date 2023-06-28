@@ -250,7 +250,7 @@ export default function NotificationSettings2(): JSX.Element {
                         }}
                     />
                     <LabelledCheckbox
-                        label={_t("Messages are sent by a bot")}
+                        label={_t("Messages sent by bots")}
                         value={settings.activity.bot_notices}
                         disabled={disabled}
                         onChange={(value) => {
@@ -289,7 +289,9 @@ export default function NotificationSettings2(): JSX.Element {
                         }}
                     />
                     <LabelledCheckbox
-                        label={_t("Notify when someone mentions using @displayname or @mxid")}
+                        label={_t("Notify when someone mentions using @displayname or @%(mxid)s", {
+                            mxid: cli.getUserId()!,
+                        })}
                         value={settings.mentions.user}
                         disabled={disabled}
                         onChange={(value) => {
