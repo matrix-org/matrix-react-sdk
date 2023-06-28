@@ -20,6 +20,7 @@ limitations under the License.
 import { createClient } from "matrix-js-sdk/src/matrix";
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { decryptAES, encryptAES, IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -302,38 +303,62 @@ export function attemptTokenLogin(
         token: queryParams.loginToken as string,
         initial_device_display_name: defaultDeviceDisplayName,
     })
-        .then(function (creds) {
+        .then(async function (creds) {
             logger.log("Logged in with token");
-            return clearStorage().then(async (): Promise<boolean> => {
-                await persistCredentials(creds);
-                // remember that we just logged in
-                sessionStorage.setItem("mx_fresh_login", String(true));
-                return true;
-            });
+            await onSuccessfulDelegatedAuthLogin(creds);
+            return true;
         })
-        .catch((err) => {
-            Modal.createDialog(ErrorDialog, {
-                title: _t("We couldn't log you in"),
-                description: messageForLoginError(err, {
-                    hsUrl: homeserver,
-                    hsName: homeserver,
-                }),
-                button: _t("Try again"),
-                onFinished: (tryAgain) => {
-                    if (tryAgain) {
-                        const cli = createClient({
-                            baseUrl: homeserver,
-                            idBaseUrl: identityServer,
-                        });
-                        const idpId = localStorage.getItem(SSO_IDP_ID_KEY) || undefined;
-                        PlatformPeg.get()?.startSingleSignOn(cli, "sso", fragmentAfterLogin, idpId, SSOAction.LOGIN);
-                    }
-                },
-            });
-            logger.error("Failed to log in with login token:");
-            logger.error(err);
+        .catch((error) => {
+            const tryAgainCallback = (tryAgain): void => {
+                if (tryAgain) {
+                    const cli = createClient({
+                        baseUrl: homeserver,
+                        idBaseUrl: identityServer,
+                    });
+                    const idpId = localStorage.getItem(SSO_IDP_ID_KEY) || undefined;
+                    PlatformPeg.get()?.startSingleSignOn(cli, "sso", fragmentAfterLogin, idpId, SSOAction.LOGIN);
+                }
+            };
+            onFailedDelegatedAuthLogin(error, homeserver, tryAgainCallback);
+            logger.error("Failed to log in with login token:", error);
             return false;
         });
+}
+
+/**
+ * After a successful token login or OIDC authorization
+ * Clear storage then save new credentials in storage
+ * @param credentials as returned from login
+ */
+async function onSuccessfulDelegatedAuthLogin(credentials: IMatrixClientCreds): Promise<void> {
+    await clearStorage();
+    await persistCredentials(credentials);
+
+    // remember that we just logged in
+    sessionStorage.setItem("mx_fresh_login", String(true));
+}
+
+type TryAgainFunction = (shouldTryAgain?: boolean) => void;
+/**
+ * Display a friendly error to the user when token login or OIDC authorization fails
+ * @param error
+ * @param homeserverUrl
+ * @param tryAgain function to call on try again button from error dialog
+ */
+async function onFailedDelegatedAuthLogin(
+    error: MatrixError,
+    homeserverUrl: string,
+    tryAgain: TryAgainFunction,
+): Promise<void> {
+    Modal.createDialog(ErrorDialog, {
+        title: _t("We couldn't log you in"),
+        description: messageForLoginError(error, {
+            hsUrl: homeserverUrl,
+            hsName: homeserverUrl,
+        }),
+        button: _t("Try again"),
+        onFinished: tryAgain,
+    });
 }
 
 export function handleInvalidStoreError(e: InvalidStoreError): Promise<void> | void {
