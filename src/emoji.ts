@@ -27,8 +27,8 @@ export interface IEmoji {
     unicode: string;
     skins?: Omit<IEmoji, "shortcodes" | "tags">[]; // Currently unused
     emoticon?: string | string[];
-    customLabel?: string;
-    customComponent?: JSX.Element;
+    customLabel?: string; // Custom label for custom emotes in emojipicker
+    customComponent?: JSX.Element; // Custom react component for rendering custom emotes in emojipicker
 }
 
 // The unicode is stored without the variant selector

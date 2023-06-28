@@ -382,11 +382,10 @@ class EmojiPicker extends React.Component<IProps, IState> {
             // If the new filter string includes the old filter string, we don't have to re-filter the whole dataset.
             if (lcFilter.includes(this.state.filter)) {
                 emojis = this.memoizedDataByCategory[cat.id];
+            } else if (cat.id === "custom") {
+                emojis = this.finalEmotes;
             } else {
                 emojis = cat.id === "recent" ? this.recentlyUsed : DATA_BY_CATEGORY[cat.id];
-                if (cat.id === "custom") {
-                    emojis = this.finalEmotes;
-                }
             }
 
             if (lcFilter !== "") {

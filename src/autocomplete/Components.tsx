@@ -60,6 +60,7 @@ export const PillCompletion = forwardRef<IPillCompletionProps, any>((props, ref)
         children,
         "aria-selected": ariaSelectedAttribute,
         isEmote,
+        titleComponent,
         ...restProps
     } = props;
     return (
@@ -72,7 +73,7 @@ export const PillCompletion = forwardRef<IPillCompletionProps, any>((props, ref)
         >
             {children}
             <span className="mx_Autocomplete_Completion_title">
-                {isEmote ? <img className="mx_Emote" src={title} alt="" /> : title}
+                {isEmote ? <img className="mx_Emote" src={titleComponent} alt="" /> : title}
             </span>
             <span className="mx_Autocomplete_Completion_subtitle">{subtitle}</span>
             <span className="mx_Autocomplete_Completion_description">{description}</span>

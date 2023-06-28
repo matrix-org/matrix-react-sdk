@@ -218,7 +218,8 @@ export default class EmojiProvider extends AutocompleteProvider {
                 component: (
                     <PillCompletion
                         isEmote={this.emotes.get(c.emoji.hexcode) ? true : false}
-                        title={this.emotes.get(c.emoji.hexcode) ? c.emoji.unicode : `:${c.emoji.shortcodes[0]}:`}
+                        titleComponent={c.emoji.unicode}
+                        title={`:${c.emoji.shortcodes[0]}:`}
                         aria-label={c.emoji.unicode}
                     >
                         <span>{this.emotes.get(c.emoji.hexcode) ? c.emoji.hexcode : c.emoji.unicode}</span>

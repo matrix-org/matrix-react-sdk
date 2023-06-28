@@ -44,14 +44,7 @@ export function EmojiButton({ addEmoji, menuPosition, className, room }: IEmojiB
         };
 
         contextMenu = (
-            <ContextMenu
-                {...position}
-                onFinished={() => {
-                    closeMenu();
-                    overflowMenuCloser?.();
-                }}
-                managed={false}
-            >
+            <ContextMenu {...position} onFinished={onFinished} managed={false}>
                 <EmojiPicker onChoose={addEmoji} onFinished={onFinished} room={room} />
             </ContextMenu>
         );

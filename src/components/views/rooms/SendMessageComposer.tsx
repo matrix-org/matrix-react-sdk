@@ -83,7 +83,8 @@ const COMPAT_STATE = new UnstableValue(
     "m.room.clientemote_compatibility",
 );
 const EMOTES_COMP = new UnstableValue("im.ponies.room_emotes", "m.room.room_emotes");
-
+const EMOTES_REGEX = /:[\w+-]+:/g;
+const SHORTCODE_REGEX = /[^a-zA-Z0-9_]/g;
 export function attachMentions(
     sender: string,
     content: IContent,
@@ -202,7 +203,7 @@ export function createMessageContent(
     let emoteBody;
     const customEmotesEnabled = SettingsStore.getValue("feature_custom_emotes");
     if (compat && emotes && customEmotesEnabled) {
-        emoteBody = body.replace(/:[\w+-]+:/g, (m) => (emotes.get(m) ? emotes.get(m)! : m));
+        emoteBody = body.replace(EMOTES_REGEX, (m) => (emotes.get(m) ? emotes.get(m)! : m));
     }
     const content: IContent = {
         msgtype: isEmote ? MsgType.Emote : MsgType.Text,
@@ -214,7 +215,7 @@ export function createMessageContent(
     });
     if (formattedBody) {
         if (compat && emotes && customEmotesEnabled) {
-            formattedBody = formattedBody.replace(/:[\w+-]+:/g, (m) => (emotes.has(m) ? emotes.get(m)! : m));
+            formattedBody = formattedBody.replace(EMOTES_REGEX, (m) => (emotes.has(m) ? emotes.get(m)! : m));
         }
         content.format = "org.matrix.custom.html";
         content.formatted_body = formattedBody;
@@ -329,18 +330,13 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
         for (const shortcode in this.imagePack["images"]) {
             this.emotes.set(
-                ":" + shortcode.replace(/[^a-zA-Z0-9_]/g, "") + ":",
-                "<img data-mx-emoticon src='" +
-                    this.imagePack["images"][shortcode]["url"] +
-                    "' height='32' alt='" +
-                    ":" +
-                    shortcode.replace(/[^a-zA-Z0-9_]/g, "") +
-                    ":'" +
-                    " title='" +
-                    ":" +
-                    shortcode.replace(/[^a-zA-Z0-9_]/g, "") +
-                    ":'" +
-                    "/>",
+                `:${shortcode.replace(SHORTCODE_REGEX, "")}:`,
+                `<img data-mx-emoticon src='${
+                    this.imagePack["images"][shortcode]["url"]
+                }' height='32' alt=':${shortcode.replace(SHORTCODE_REGEX, "")}:' title=':${shortcode.replace(
+                    SHORTCODE_REGEX,
+                    "",
+                )}:'/>`,
             );
         }
     }
