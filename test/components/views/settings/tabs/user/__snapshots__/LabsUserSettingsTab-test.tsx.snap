@@ -125,7 +125,6 @@ exports[`<LabsUserSettingsTab /> renders settings marked as beta as beta cards 1
           <img
             alt=""
             class="mx_BetaCard_columns_image"
-            src="image-file-stub"
           />
         </div>
       </div>
