@@ -130,6 +130,37 @@ describe("<MatrixChat />", () => {
     // make test results readable
     filterConsole("Failed to parse localStorage object");
 
+    /**
+     * Wait for a bunch of stuff to happen
+     * between deciding we are logged in and removing the spinner
+     * including waiting for initial sync
+     */
+    const waitForSyncAndLoad = async (client: MatrixClient, withoutSecuritySetup?: boolean): Promise<void> => {
+        // need to wait for different elements depending on which flow
+        // without security setup we go to a loading page
+        if (withoutSecuritySetup) {
+            // we think we are logged in, but are still waiting for the /sync to complete
+            await screen.findByText("Logout");
+            // initial sync
+            client.emit(ClientEvent.Sync, SyncState.Prepared, null);
+            // wait for logged in view to load
+            await screen.findByLabelText("User menu");
+
+            // otherwise we stay on login and load from there for longer
+        } else {
+            // we are logged in, but are still waiting for the /sync to complete
+            await screen.findByText("Syncing…");
+            // initial sync
+            client.emit(ClientEvent.Sync, SyncState.Prepared, null);
+        }
+
+        // let things settle
+        await flushPromises();
+        // and some more for good measure
+        // this proved to be a little flaky
+        await flushPromises();
+    };
+
     beforeEach(async () => {
         mockClient = getMockClientWithEventEmitter(getMockClientMethods());
         fetchMock.get("https://test.com/_matrix/client/versions", {
@@ -379,32 +410,6 @@ describe("<MatrixChat />", () => {
             await flushPromises();
 
             return renderResult;
-        };
-
-        const waitForSyncAndLoad = async (client: MatrixClient, withoutSecuritySetup?: boolean): Promise<void> => {
-            // need to wait for different elements depending on which flow
-            // without security setup we go to a loading page
-            if (withoutSecuritySetup) {
-                // we think we are logged in, but are still waiting for the /sync to complete
-                await screen.findByText("Logout");
-                // initial sync
-                client.emit(ClientEvent.Sync, SyncState.Prepared, null);
-                // wait for logged in view to load
-                await screen.findByLabelText("User menu");
-
-                // otherwise we stay on login and load from there for longer
-            } else {
-                // we are logged in, but are still waiting for the /sync to complete
-                await screen.findByText("Syncing…");
-                // initial sync
-                client.emit(ClientEvent.Sync, SyncState.Prepared, null);
-            }
-
-            // let things settle
-            await flushPromises();
-            // and some more for good measure
-            // this proved to be a little flaky
-            await flushPromises();
         };
 
         const getComponentAndLogin = async (withoutSecuritySetup?: boolean): Promise<void> => {
@@ -938,12 +943,14 @@ describe("<MatrixChat />", () => {
                 // client successfully started
                 expect(defaultDispatcher.dispatch).toHaveBeenCalledWith({ action: "client_started" });
 
-                // we think we are logged in, but are still waiting for the /sync to complete
-                await screen.findByText("Logout");
-                // initial sync
-                loginClient.emit(ClientEvent.Sync, SyncState.Prepared, null);
-                // logged in!
-                await screen.findByLabelText("User menu");
+                await waitForSyncAndLoad(loginClient, true);
+
+                // // we think we are logged in, but are still waiting for the /sync to complete
+                // await screen.findByText("Logout");
+                // // initial sync
+                // loginClient.emit(ClientEvent.Sync, SyncState.Prepared, null);
+                // // logged in!
+                // await screen.findByLabelText("User menu");
             });
         });
     });
