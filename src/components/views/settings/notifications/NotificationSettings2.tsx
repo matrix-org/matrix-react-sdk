@@ -289,7 +289,7 @@ export default function NotificationSettings2(): JSX.Element {
                         }}
                     />
                     <LabelledCheckbox
-                        label={_t("Notify when someone mentions using @displayname or @%(mxid)s", {
+                        label={_t("Notify when someone mentions using @displayname or %(mxid)s", {
                             mxid: cli.getUserId()!,
                         })}
                         value={settings.mentions.user}

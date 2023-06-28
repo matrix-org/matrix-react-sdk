@@ -559,7 +559,7 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
                 <span
                   class="mx_LabelledCheckbox_label"
                 >
-                  Notify when someone mentions using @displayname or @@userId:matrix.org
+                  Notify when someone mentions using @displayname or @userId:matrix.org
                 </span>
               </div>
             </label>
@@ -1267,7 +1267,7 @@ exports[`<Notifications /> matches the snapshot 1`] = `
                 <span
                   class="mx_LabelledCheckbox_label"
                 >
-                  Notify when someone mentions using @displayname or @@userId:matrix.org
+                  Notify when someone mentions using @displayname or @userId:matrix.org
                 </span>
               </div>
             </label>

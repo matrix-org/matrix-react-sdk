@@ -1791,7 +1791,7 @@
     "Messages sent by bots": "Messages sent by bots",
     "Show a badge <badge/> when keywords are used in a room.": "Show a badge <badge/> when keywords are used in a room.",
     "Notify when someone mentions using @room": "Notify when someone mentions using @room",
-    "Notify when someone mentions using @displayname or @%(mxid)s": "Notify when someone mentions using @displayname or @%(mxid)s",
+    "Notify when someone mentions using @displayname or %(mxid)s": "Notify when someone mentions using @displayname or %(mxid)s",
     "Notify when someone uses a keyword": "Notify when someone uses a keyword",
     "Enter keywords here, or use for spelling variations or nicknames": "Enter keywords here, or use for spelling variations or nicknames",
     "Quick Actions": "Quick Actions",

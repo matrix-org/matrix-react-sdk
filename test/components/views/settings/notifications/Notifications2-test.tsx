@@ -52,7 +52,7 @@ const labelSoundMentions = "Mentions and Keywords";
 const labelSoundCalls = "Audio and Video calls";
 const labelActivityInvites = "Invited to a room";
 const labelActivityStatus = "New room activity, upgrades and status messages occur";
-const labelActivityBots = "Messages are sent by a bot";
+const labelActivityBots = "Messages sent by bots";
 const labelMentionUser = "Notify when someone mentions using @displayname or @mxid";
 const labelMentionRoom = "Notify when someone mentions using @room";
 const labelMentionKeyword =
@@ -152,7 +152,7 @@ describe("<Notifications />", () => {
             const activityBots = screen.getByLabelText(labelActivityBots);
             expect(activityBots).toBeDisabled();
 
-            const mentionUser = screen.getByLabelText(labelMentionUser);
+            const mentionUser = screen.getByLabelText(labelMentionUser.replace("@mxid", cli.getUserId()!));
             expect(mentionUser).toBeDisabled();
             const mentionRoom = screen.getByLabelText(labelMentionRoom);
             expect(mentionRoom).toBeDisabled();
@@ -420,7 +420,7 @@ describe("<Notifications />", () => {
                 );
             });
             it("user mentions", async () => {
-                const label = labelMentionUser;
+                const label = labelMentionUser.replace("@mxid", cli.getUserId()!);
 
                 const user = userEvent.setup();
                 const screen = render(
