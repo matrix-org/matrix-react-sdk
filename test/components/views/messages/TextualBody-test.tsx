@@ -19,8 +19,9 @@ import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { mocked, MockedObject } from "jest-mock";
 import { render } from "@testing-library/react";
 import * as prettier from "prettier";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
-import { getMockClientWithEventEmitter, mkEvent, mkMessage, mkStubRoom } from "../../../test-utils";
+import { getMockClientWithEventEmitter, mkEvent, mkMessage, mkStubRoom, stubClient } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import * as languageHandler from "../../../../src/languageHandler";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
@@ -28,10 +29,12 @@ import TextualBody from "../../../../src/components/views/messages/TextualBody";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import { MediaEventHelper } from "../../../../src/utils/MediaEventHelper";
+import SettingsStore from "../../../../src/settings/SettingsStore";
 
 const room1Id = "!room1:example.com";
 const room2Id = "!room2:example.com";
 const room2Name = "Room 2";
+const EMOTES_STATE = new UnstableValue("m.room.emotes", "org.matrix.msc3892.emotes");
 
 interface MkRoomTextMessageOpts {
     roomId?: string;
@@ -398,6 +401,35 @@ describe("<TextualBody />", () => {
             expect(content).toContainHTML(
                 '<span class="mx_EventTile_body" dir="auto">' + "escaped *markdown*" + "</span>",
             );
+        });
+        it("renders custom emote", () => {
+            const cli = stubClient();
+            const room = mkStubRoom("!roomId:server", "Room", cli);
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(true);
+            mocked(cli.getRoom).mockReturnValue(room);
+            mocked(cli.isRoomEncrypted).mockReturnValue(false);
+            // @ts-ignore - mocked doesn't support overloads properly
+            mocked(room.currentState.getStateEvents).mockImplementation((type, key) => {
+                if (key === undefined) return [] as MatrixEvent[];
+                if (type === EMOTES_STATE.name) {
+                    return new MatrixEvent({
+                        sender: "@sender:server",
+                        room_id: room.roomId,
+                        type: EMOTES_STATE.name,
+                        state_key: "",
+                        content: {
+                            testEmote: "http://this.is.a.url/server/custom-emote-123.png",
+                        },
+                    });
+                }
+                return null;
+            });
+            const ev = mkRoomTextMessage("this is a plaintext message with a :testEmote:");
+            const { container } = getComponent({ mxEvent: ev });
+            const emote = container.querySelector("img.mx_Emote");
+            if (!emote) {
+                throw new Error("custom emote not rendering");
+            }
         });
     });
 

@@ -25,7 +25,7 @@ import { mkStubRoom, stubClient } from "../../../test-utils";
 import EmojiPicker from "../../../../src/components/views/emojipicker/EmojiPicker";
 import { Media, mediaFromMxc } from "../../../../src/customisations/Media";
 import SettingsStore from "../../../../src/settings/SettingsStore";
-
+import * as recent from "../../../../src/emojipicker/recent";
 jest.mock("../../../../src/customisations/Media", () => ({
     mediaFromMxc: jest.fn(),
 }));
@@ -116,7 +116,7 @@ describe("EmojiPicker", function () {
         mocked(mediaFromMxc).mockReturnValue({
             srcHttp: "http://this.is.a.url/server/custom-emote-123.png",
         } as Media);
-
+        jest.spyOn(recent, "get").mockReturnValue([":testEmote:", "😀"]);
         const ref = createRef<EmojiPicker>();
 
         // @ts-ignore - mocked doesn't support overloads properly
