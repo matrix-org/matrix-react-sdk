@@ -18,6 +18,7 @@ import fetchMock from "fetch-mock-jest";
 import { Method } from "matrix-js-sdk/src/http-api";
 import { generateAuthorizationParams } from "matrix-js-sdk/src/oidc/authorize";
 import * as randomStringUtils from "matrix-js-sdk/src/randomstring";
+import * as OidcValidation from "matrix-js-sdk/src/oidc/validate";
 
 import { completeOidcLogin, startOidcLogin } from "../../../src/utils/oidc/authorize";
 
@@ -60,6 +61,11 @@ describe("OIDC authorization", () => {
         };
 
         jest.spyOn(randomStringUtils, "randomString").mockRestore();
+
+         // annoying to mock jwt decoding used in validateIdToken
+         jest.spyOn(OidcValidation, "validateIdToken")
+         .mockClear()
+         .mockImplementation(() => {});
     });
 
     afterAll(() => {

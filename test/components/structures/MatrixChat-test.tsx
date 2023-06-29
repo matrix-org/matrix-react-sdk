@@ -25,6 +25,7 @@ import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import { generateAuthorizationParams } from "matrix-js-sdk/src/oidc/authorize";
 import { logger } from "matrix-js-sdk/src/logger";
 import { OidcError } from "matrix-js-sdk/src/oidc/error";
+import * as OidcValidation from "matrix-js-sdk/src/oidc/validate";
 
 import MatrixChat from "../../../src/components/structures/MatrixChat";
 import * as StorageManager from "../../../src/utils/StorageManager";
@@ -766,6 +767,7 @@ describe("<MatrixChat />", () => {
             token_type: "Bearer",
             access_token: accessToken,
             refresh_token: "test_refresh_token",
+            id_token: "test_id_token",
             expires_in: 12345,
         };
 
@@ -776,6 +778,15 @@ describe("<MatrixChat />", () => {
             // just check we're back on welcome page
             expect(document.querySelector(".mx_Welcome")!).toBeInTheDocument();
         };
+
+        beforeEach(() => {
+            // annoying to mock jwt decoding used in validateIdToken
+            jest.spyOn(OidcValidation, "validateIdToken")
+                .mockClear()
+                .mockImplementation(() => {});
+
+            jest.spyOn(logger, "error").mockClear();
+        });
 
         beforeEach(() => {
             loginClient = getMockClientWithEventEmitter(getMockClientMethods());
