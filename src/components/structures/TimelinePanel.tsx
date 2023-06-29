@@ -624,13 +624,16 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
             const { events, liveEvents, firstVisibleEventIndex } = this.getEvents();
             this.buildLegacyCallEventGroupers(events);
-            const newState: Partial<IState> = {
+            const newState = {
                 [paginatingKey]: false,
                 [canPaginateKey]: r,
                 events,
                 liveEvents,
                 firstVisibleEventIndex,
-            };
+            } as Pick<
+                IState,
+                typeof paginatingKey | typeof canPaginateKey | "events" | "liveEvents" | "firstVisibleEventIndex"
+            >;
 
             // moving the window in this direction may mean that we can now
             // paginate in the other where we previously could not.
@@ -647,7 +650,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             // has in memory because we never gave the component a chance to scroll
             // itself into the right place
             return new Promise((resolve) => {
-                this.setState<null>(newState, () => {
+                this.setState(newState, () => {
                     // we can continue paginating in the given direction if:
                     // - timelineWindow.paginate says we can
                     // - we're paginating forwards, or we won't be trying to
