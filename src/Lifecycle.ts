@@ -224,15 +224,13 @@ export function attemptTokenLogin(
             return true;
         })
         .catch((error) => {
-            const tryAgainCallback: TryAgainFunction = (shouldTryAgain) => {
-                if (shouldTryAgain) {
-                    const cli = createClient({
-                        baseUrl: homeserver,
-                        idBaseUrl: identityServer,
-                    });
-                    const idpId = localStorage.getItem(SSO_IDP_ID_KEY) || undefined;
-                    PlatformPeg.get()?.startSingleSignOn(cli, "sso", fragmentAfterLogin, idpId, SSOAction.LOGIN);
-                }
+            const tryAgainCallback: TryAgainFunction = () => {
+                const cli = createClient({
+                    baseUrl: homeserver,
+                    idBaseUrl: identityServer,
+                });
+                const idpId = localStorage.getItem(SSO_IDP_ID_KEY) || undefined;
+                PlatformPeg.get()?.startSingleSignOn(cli, "sso", fragmentAfterLogin, idpId, SSOAction.LOGIN);
             };
             onFailedDelegatedAuthLogin(
                 messageForLoginError(error, {
@@ -259,7 +257,7 @@ async function onSuccessfulDelegatedAuthLogin(credentials: IMatrixClientCreds): 
     sessionStorage.setItem("mx_fresh_login", String(true));
 }
 
-type TryAgainFunction = (shouldTryAgain?: boolean) => void;
+type TryAgainFunction = () => void;
 /**
  * Display a friendly error to the user when token login or OIDC authorization fails
  * @param description error description
@@ -270,7 +268,8 @@ async function onFailedDelegatedAuthLogin(description: string | ReactNode, tryAg
         title: _t("We couldn't log you in"),
         description,
         button: _t("Try again"),
-        onFinished: tryAgain,
+        // if we have a tryAgain callback, call it the primary 'try again' button was clicked in the dialog
+        onFinished: tryAgain ? (shouldTryAgain?: boolean) => shouldTryAgain && tryAgain() : undefined,
     });
 }
 
