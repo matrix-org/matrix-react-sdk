@@ -591,6 +591,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const dir = backwards ? EventTimeline.BACKWARDS : EventTimeline.FORWARDS;
         const canPaginateKey = backwards ? "canBackPaginate" : "canForwardPaginate";
         const paginatingKey = backwards ? "backPaginating" : "forwardPaginating";
+        type CanPaginateKey = typeof canPaginateKey;
+        type PaginatingKey = typeof paginatingKey;
 
         if (!this.state[canPaginateKey]) {
             debuglog("have given up", dir, "paginating this timeline");
@@ -599,7 +601,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         if (!this.timelineWindow?.canPaginate(dir)) {
             debuglog("can't", dir, "paginate any further");
-            this.setState({ [canPaginateKey]: false } as Pick<IState, typeof canPaginateKey>);
+            this.setState({ [canPaginateKey]: false } as Pick<IState, CanPaginateKey>);
             return Promise.resolve(false);
         }
 
@@ -609,7 +611,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
 
         debuglog("Initiating paginate; backwards:" + backwards);
-        this.setState({ [paginatingKey]: true } as Pick<IState, typeof paginatingKey>);
+        this.setState({ [paginatingKey]: true } as Pick<IState, PaginatingKey>);
 
         return this.onPaginationRequest(this.timelineWindow, dir, PAGINATE_SIZE).then(async (r) => {
             if (this.unmounted) {
@@ -630,10 +632,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 events,
                 liveEvents,
                 firstVisibleEventIndex,
-            } as Pick<
-                IState,
-                typeof paginatingKey | typeof canPaginateKey | "events" | "liveEvents" | "firstVisibleEventIndex"
-            >;
+            } as Pick<IState, PaginatingKey | CanPaginateKey | "events" | "liveEvents" | "firstVisibleEventIndex">;
 
             // moving the window in this direction may mean that we can now
             // paginate in the other where we previously could not.
