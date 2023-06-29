@@ -824,7 +824,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 return new RoomPermalinkCreator(null, null);
             }
         }
-}
+
         if (this.permalinkCreators[room.roomId]) return this.permalinkCreators[room.roomId];
 
         this.permalinkCreators[room.roomId] = new RoomPermalinkCreator(room);
