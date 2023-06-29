@@ -93,7 +93,10 @@ interface IState {
     submitButtonEnabled: boolean;
 }
 
-export default class InteractiveAuthComponent<T> extends React.Component<InteractiveAuthProps<T>, IState> {
+export default class InteractiveAuthComponent<T extends IAuthDict> extends React.Component<
+    InteractiveAuthProps<T>,
+    IState
+> {
     private readonly authLogic: InteractiveAuth;
     private readonly intervalId: number | null = null;
     private readonly stageComponent = createRef<IStageComponent>();
