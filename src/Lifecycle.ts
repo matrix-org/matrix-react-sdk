@@ -208,6 +208,11 @@ export async function attemptDelegatedAuthLogin(
     return attemptTokenLogin(queryParams, defaultDeviceDisplayName, fragmentAfterLogin);
 }
 
+/**
+ * Attempt to login by completing OIDC authorization code flow
+ * @param queryParams string->string map of the query-parameters extracted from the real query-string of the starting URI.
+ * @returns Promise that resolves to true when login succceeded, else false
+ */
 async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> {
     try {
         const { accessToken, homeserverUrl, identityServerUrl } = await completeOidcLogin(queryParams);
