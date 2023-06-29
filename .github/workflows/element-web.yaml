@@ -61,8 +61,8 @@ jobs:
                   echo "VERSION=$VECTOR_SHA-react-$REACT_SHA-js-$JSSDK_SHA" >> $GITHUB_OUTPUT
 
             - name: Copy config
-              run: cp element.io/develop/config.json config.json
-              working-directory: ./element-web
+              run: cp config.json element-web/config.json
+              working-directory: ./
 
             - name: Build
               env:
