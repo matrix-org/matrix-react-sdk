@@ -40,7 +40,7 @@ type InteractiveAuthCallbackSuccess = (
 type InteractiveAuthCallbackFailure = (success: false, response: IAuthData | Error) => void;
 export type InteractiveAuthCallback = InteractiveAuthCallbackSuccess & InteractiveAuthCallbackFailure;
 
-export interface InteractiveAuthProps<T> {
+export interface InteractiveAuthProps<T extends IAuthDict> {
     // matrix client to use for UI auth requests
     matrixClient: MatrixClient;
     // response from initial request. If not supplied, will do a request on mount.
