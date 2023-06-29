@@ -142,10 +142,10 @@ const getCodeAndStateFromQueryParams = (queryParams: QueryDict): { code: string;
 };
 
 /**
- * Attempt to complete authorization code flow to login
- * @param {QueryDict} queryParams the query-parameters extracted from the real query-string of the starting URI.
- * @returns {Promise<{}>} Promise that resolves with accesstoken, identityServerUrl, and homeserverUrl when login was successful
- * @throws When login failed
+ * Attempt to complete authorization code flow to get an access token
+ * @param queryParams the query-parameters extracted from the real query-string of the starting URI.
+ * @returns Promise that resolves with accessToken, identityServerUrl, and homeserverUrl when login was successful
+ * @throws When we failed to get a valid access token
  */
 export const completeOidcLogin = async (
     queryParams: QueryDict,
@@ -158,15 +158,11 @@ export const completeOidcLogin = async (
 
     const storedAuthorizationParams = retrieveAuthorizationParams(state);
 
-    const bearerToken = await completeAuthorizationCodeGrant(code, storedAuthorizationParams);
-
-    // @TODO(kerrya) is there more verification to do here?
-
-    // @TODO(kerrya) do something with the refresh token
-
+    const bearerTokenResponse = await completeAuthorizationCodeGrant(code, storedAuthorizationParams);
+    // @TODO(kerrya) do something with the refresh token https://github.com/vector-im/element-web/issues/25444
     return {
         homeserverUrl: storedAuthorizationParams.homeserverUrl,
         identityServerUrl: storedAuthorizationParams.identityServerUrl,
-        accessToken: bearerToken.access_token,
+        accessToken: bearerTokenResponse.access_token,
     };
 };
