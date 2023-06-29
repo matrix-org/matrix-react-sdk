@@ -18,7 +18,7 @@ limitations under the License.
 
 import React from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { AuthType, IAuthData } from "matrix-js-sdk/src/interactive-auth";
+import { AuthType, IAuthData, IAuthDict } from "matrix-js-sdk/src/interactive-auth";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -41,7 +41,7 @@ type DialogAesthetics = Partial<{
     };
 }>;
 
-export interface InteractiveAuthDialogProps<T = unknown>
+export interface InteractiveAuthDialogProps<T extends IAuthDict = unknown>
     extends Pick<InteractiveAuthProps<T>, "makeRequest" | "authData"> {
     // matrix client to use for UI auth requests
     matrixClient: MatrixClient;
@@ -81,7 +81,10 @@ interface IState {
     uiaStagePhase: number | null;
 }
 
-export default class InteractiveAuthDialog<T> extends React.Component<InteractiveAuthDialogProps<T>, IState> {
+export default class InteractiveAuthDialog<T extends IAuthDict> extends React.Component<
+    InteractiveAuthDialogProps<T>,
+    IState
+> {
     public constructor(props: InteractiveAuthDialogProps<T>) {
         super(props);
 
