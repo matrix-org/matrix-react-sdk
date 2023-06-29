@@ -258,12 +258,14 @@ describe("CallLobby", () => {
         });
 
         it("hide when unknown error with device list", async () => {
+            const originalGetDevices = MediaDeviceHandler.getDevices;
             MediaDeviceHandler.getDevices = () => Promise.reject("unknown error");
             await renderView();
             expect(MediaDeviceHandler.startWithAudioMuted).toBeTruthy();
             expect(MediaDeviceHandler.startWithVideoMuted).toBeTruthy();
             expect(screen.queryByRole("button", { name: /microphone/ })).toBe(null);
             expect(screen.queryByRole("button", { name: /camera/ })).toBe(null);
+            MediaDeviceHandler.getDevices = originalGetDevices;
         });
 
         it("show without dropdown when only one device is available", async () => {
