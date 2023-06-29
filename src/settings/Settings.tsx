@@ -46,6 +46,7 @@ import { FontWatcher } from "./watchers/FontWatcher";
 import RustCryptoSdkController from "./controllers/RustCryptoSdkController";
 import ServerSupportUnstableFeatureController from "./controllers/ServerSupportUnstableFeatureController";
 import { WatchManager } from "./WatchManager";
+import { CustomTheme } from "../theme";
 
 export const defaultWatchManager = new WatchManager();
 
@@ -112,7 +113,15 @@ export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.Developer]: _td("Developer"),
 };
 
-export type SettingValueType = boolean | number | string | number[] | string[] | Record<string, unknown> | null;
+export type SettingValueType =
+    | boolean
+    | number
+    | string
+    | number[]
+    | string[]
+    | Record<string, unknown>
+    | Record<string, unknown>[]
+    | null;
 
 export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     isFeature?: false | undefined;
@@ -473,6 +482,18 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "baseFontSize": {
         displayName: _td("Font size"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: "",
+        controller: new FontSizeController(),
+    },
+    /**
+     * With the transition to Compound we are moving to a base font size
+     * of 16px. We're taking the opportunity to move away from the `baseFontSize`
+     * setting that had a 5px offset.
+     *
+     */
+    "baseFontSizeV2": {
+        displayName: _td("Font size"),
+        supportedLevels: [SettingLevel.DEVICE],
         default: FontWatcher.DEFAULT_SIZE,
         controller: new FontSizeController(),
     },
@@ -676,7 +697,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "custom_themes": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        default: [],
+        default: [] as CustomTheme[],
     },
     "use_system_theme": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
