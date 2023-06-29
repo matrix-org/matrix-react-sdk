@@ -48,7 +48,9 @@ export function mdSerialize(model: EditorModel): string {
             case Type.UserPill:
                 return (
                     html +
-                    `[${part.text.replace(/[[\\\]]/g, (c) => "\\" + c)}](${makeGenericPermalink(part.resourceId)})`
+                    `[${part.text.replace(/[[\\\]]/g, (c) => "\\" + c).replace(/\n/g, "<br/>")}](${makeGenericPermalink(
+                        part.resourceId,
+                    )})`
                 );
         }
     }, "");
