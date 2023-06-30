@@ -72,9 +72,9 @@ describe("Device verification", () => {
 
         // Handle emoji SAS verification
         cy.get(".mx_InfoDialog").within(() => {
-            cy.get<VerificationRequest>("@verificationRequest").then((request: VerificationRequest) => {
+            cy.get<VerificationRequest>("@verificationRequest").then(async (request: VerificationRequest) => {
                 // the bot chooses to do an emoji verification
-                const verifier = request.beginKeyVerification("m.sas.v1");
+                const verifier = await request.startVerification("m.sas.v1");
 
                 // Handle emoji request and check that emojis are matching
                 doTwoWaySasVerification(verifier);

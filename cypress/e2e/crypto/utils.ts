@@ -57,7 +57,6 @@ export function handleSasVerification(verifier: Verifier): Promise<EmojiMapping[
 
         // @ts-ignore as above, avoiding reference to VerifierEvent
         verifier.on("show_sas", onShowSas);
-        verifier.verify();
     });
 }
 
