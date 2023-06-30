@@ -821,7 +821,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 this.permalinkCreators[roomId] = permalinkCreator;
                 return permalinkCreator;
             } else {
-                throw new Error("Can not get a permalink creator without a roomId");
+                throw new Error("Cannot get a permalink creator without a roomId");
             }
         }
 
