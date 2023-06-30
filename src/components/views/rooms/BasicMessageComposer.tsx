@@ -512,12 +512,10 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     };
 
     private onKeyDown = (event: React.KeyboardEvent): void => {
-        console.log("KeyDown",event,event.which);
         if (!this.editorRef.current) return;
         if (this.isSafari && event.which == 229) {
             // Swallow the extra keyDown by Safari
             event.stopPropagation();
-            console.log("swallowed");
             return;
         }
         const model = this.props.model;
