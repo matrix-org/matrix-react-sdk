@@ -813,15 +813,15 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     private getPermalinkCreatorForRoom(): RoomPermalinkCreator {
         const { room, roomId } = this.state;
 
-        // if room is undefined, attempt to use the roomId to create and store a permalinkCreator
+        // If room is undefined, attempt to use the roomId to create and store a permalinkCreator.
+        // Throw an error if we can not find a roomId in state.
         if (room === undefined) {
             if (isNotUndefined(roomId)) {
                 const permalinkCreator = new RoomPermalinkCreator(null, roomId);
                 this.permalinkCreators[roomId] = permalinkCreator;
                 return permalinkCreator;
             } else {
-                // this will throw every time, should we throw here instead?
-                return new RoomPermalinkCreator(null, null);
+                throw new Error("Can not get a permalink creator without a roomId");
             }
         }
 
