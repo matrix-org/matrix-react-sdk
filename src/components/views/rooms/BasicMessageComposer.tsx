@@ -128,7 +128,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
     private modifiedFlag = false;
     private isIMEComposing = false;
-    private hasIMEComposingJustEnded = false;
     private hasTextSelected = false;
     private readonly isSafari: boolean;
 
@@ -317,7 +316,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
         if (this.isSafari) {
             this.onInput({ inputType: "insertCompositionText" });
-            this.hasIMEComposingJustEnded = true;
         } else {
             Promise.resolve().then(() => {
                 this.onInput({ inputType: "insertCompositionText" });
@@ -334,7 +332,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         // Safari emits an additional keyDown after compositionend
         return !!(
             this.isIMEComposing ||
-            this.hasIMEComposingJustEnded ||
             (event.nativeEvent && event.nativeEvent.isComposing)
         );
     }
@@ -514,11 +511,12 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     };
 
     private onKeyDown = (event: React.KeyboardEvent): void => {
+        console.log("KeyDown",event,event.which);
         if (!this.editorRef.current) return;
         if (this.isSafari && event.which == 229) {
             // Swallow the extra keyDown by Safari
-            this.hasIMEComposingJustEnded = false;
             event.stopPropagation();
+            console.log("swallowed");
             return;
         }
         const model = this.props.model;
