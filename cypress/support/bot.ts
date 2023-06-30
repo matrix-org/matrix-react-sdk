@@ -125,66 +125,64 @@ function setupBotClient(
     opts: CreateBotOpts,
 ): Chainable<MatrixClient> {
     opts = Object.assign({}, defaultCreateBotOptions, opts);
-    return cy.window({ log: false }).then((win) => {
-        const keys = {};
+    return cy.window({ log: false }).then(
+        // extra timeout, as this sometimes takes a while
+        { timeout: 30_000 },
+        async (win): Promise<MatrixClient> => {
+            const keys = {};
 
-        const getCrossSigningKey = (type: string) => {
-            return keys[type];
-        };
+            const getCrossSigningKey = (type: string) => {
+                return keys[type];
+            };
 
-        const saveCrossSigningKeys = (k: Record<string, Uint8Array>) => {
-            Object.assign(keys, k);
-        };
+            const saveCrossSigningKeys = (k: Record<string, Uint8Array>) => {
+                Object.assign(keys, k);
+            };
 
-        const cli = new win.matrixcs.MatrixClient({
-            baseUrl: homeserver.baseUrl,
-            userId: credentials.userId,
-            deviceId: credentials.deviceId,
-            accessToken: credentials.accessToken,
-            store: new win.matrixcs.MemoryStore(),
-            scheduler: new win.matrixcs.MatrixScheduler(),
-            cryptoStore: new win.matrixcs.MemoryCryptoStore(),
-            cryptoCallbacks: { getCrossSigningKey, saveCrossSigningKeys },
-        });
-
-        if (opts.autoAcceptInvites) {
-            cli.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
-                if (member.membership === "invite" && member.userId === cli.getUserId()) {
-                    cli.joinRoom(member.roomId);
-                }
+            const cli = new win.matrixcs.MatrixClient({
+                baseUrl: homeserver.baseUrl,
+                userId: credentials.userId,
+                deviceId: credentials.deviceId,
+                accessToken: credentials.accessToken,
+                store: new win.matrixcs.MemoryStore(),
+                scheduler: new win.matrixcs.MatrixScheduler(),
+                cryptoStore: new win.matrixcs.MemoryCryptoStore(),
+                cryptoCallbacks: { getCrossSigningKey, saveCrossSigningKeys },
             });
-        }
 
-        if (!opts.startClient) {
-            return cy.wrap(cli);
-        }
-
-        return cy.wrap(
-            cli
-                .initCrypto()
-                .then(() => cli.setGlobalErrorOnUnknownDevices(false))
-                .then(() => cli.startClient())
-                .then(async () => {
-                    if (opts.bootstrapCrossSigning) {
-                        await cli.bootstrapCrossSigning({
-                            authUploadDeviceSigningKeys: async (func) => {
-                                await func({
-                                    type: "m.login.password",
-                                    identifier: {
-                                        type: "m.id.user",
-                                        user: credentials.userId,
-                                    },
-                                    password: credentials.password,
-                                });
-                            },
-                        });
+            if (opts.autoAcceptInvites) {
+                cli.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
+                    if (member.membership === "invite" && member.userId === cli.getUserId()) {
+                        cli.joinRoom(member.roomId);
                     }
-                })
-                .then(() => cli),
-            // extra timeout, as this sometimes takes a while
-            { timeout: 30_000 },
-        );
-    });
+                });
+            }
+
+            if (!opts.startClient) {
+                return cli;
+            }
+
+            await cli.initCrypto();
+            cli.setGlobalErrorOnUnknownDevices(false);
+            await cli.startClient();
+
+            if (opts.bootstrapCrossSigning) {
+                await cli.getCrypto()!.bootstrapCrossSigning({
+                    authUploadDeviceSigningKeys: async (func) => {
+                        await func({
+                            type: "m.login.password",
+                            identifier: {
+                                type: "m.id.user",
+                                user: credentials.userId,
+                            },
+                            password: credentials.password,
+                        });
+                    },
+                });
+            }
+            return cli;
+        },
+    );
 }
 
 Cypress.Commands.add("getBot", (homeserver: HomeserverInstance, opts: CreateBotOpts): Chainable<CypressBot> => {
