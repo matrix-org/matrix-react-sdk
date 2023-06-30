@@ -28,13 +28,11 @@ export type EmojiMapping = [emoji: string, name: string];
 export function waitForVerificationRequest(cli: MatrixClient): Promise<VerificationRequest> {
     return new Promise<VerificationRequest>((resolve) => {
         const onVerificationRequestEvent = async (request: VerificationRequest) => {
-            // @ts-ignore CryptoEvent is not exported to window.matrixcs; using the string value here
-            cli.off("crypto.verification.request", onVerificationRequestEvent);
             await request.accept();
             resolve(request);
         };
-        // @ts-ignore
-        cli.on("crypto.verification.request", onVerificationRequestEvent);
+        // @ts-ignore CryptoEvent is not exported to window.matrixcs; using the string value here
+        cli.once("crypto.verificationRequestReceived", onVerificationRequestEvent);
     });
 }
 
