@@ -40,7 +40,7 @@ export const dynamicImportSendMessage = async (
 
 export const dynamicImportConversionFunctions = async (): Promise<{
     richToPlain(rich: string): Promise<string>;
-    plainToRich(plain: string): Promise<string>;
+    plainToRich(plain: string, inMessageFormat: boolean): Promise<string>;
 }> => {
     const { richToPlain, plainToRich } = await retry(() => import("@matrix-org/matrix-wysiwyg"), RETRY_COUNT);
 
