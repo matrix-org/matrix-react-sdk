@@ -37,7 +37,7 @@ describe("Device verification", () => {
             cy.window({ log: false }).should("have.property", "matrixcs");
 
             // Create a new device for alice
-            cy.getBot(homeserver, { bootstrapCrossSigning: true }).then((bot) => {
+            cy.getBot(homeserver, { rustCrypto: true, bootstrapCrossSigning: true }).then((bot) => {
                 aliceBotClient = bot;
             });
         });

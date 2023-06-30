@@ -43,6 +43,10 @@ interface CreateBotOpts {
      * Whether or not to generate cross-signing keys
      */
     bootstrapCrossSigning?: boolean;
+    /**
+     * Whether to use the rust crypto impl. Defaults to false (for now!)
+     */
+    rustCrypto?: boolean;
 }
 
 const defaultCreateBotOptions = {
@@ -162,11 +166,19 @@ function setupBotClient(
                 return cli;
             }
 
-            await cli.initCrypto();
+            if (opts.rustCrypto) {
+                await cli.initRustCrypto({ useIndexedDB: false });
+            } else {
+                await cli.initCrypto();
+            }
             cli.setGlobalErrorOnUnknownDevices(false);
             await cli.startClient();
 
             if (opts.bootstrapCrossSigning) {
+                // XXX: workaround https://github.com/matrix-org/matrix-rust-sdk/issues/2193
+                //   wait for out device list to be available, as a proxy for the device keys having been uploaded.
+                await cli.getCrypto()!.getUserDeviceInfo([credentials.userId]);
+
                 await cli.getCrypto()!.bootstrapCrossSigning({
                     authUploadDeviceSigningKeys: async (func) => {
                         await func({
