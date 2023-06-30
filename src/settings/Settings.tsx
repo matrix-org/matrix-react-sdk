@@ -46,6 +46,7 @@ import { FontWatcher } from "./watchers/FontWatcher";
 import RustCryptoSdkController from "./controllers/RustCryptoSdkController";
 import ServerSupportUnstableFeatureController from "./controllers/ServerSupportUnstableFeatureController";
 import { WatchManager } from "./WatchManager";
+import { CustomTheme } from "../theme";
 
 export const defaultWatchManager = new WatchManager();
 
@@ -93,6 +94,8 @@ export enum LabGroup {
 export enum Features {
     VoiceBroadcast = "feature_voice_broadcast",
     VoiceBroadcastForceSmallChunks = "feature_voice_broadcast_force_small_chunks",
+    NotificationSettings2 = "feature_notification_settings2",
+    OidcNativeFlow = "feature_oidc_native_flow",
 }
 
 export const labGroupNames: Record<LabGroup, string> = {
@@ -110,7 +113,15 @@ export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.Developer]: _td("Developer"),
 };
 
-export type SettingValueType = boolean | number | string | number[] | string[] | Record<string, unknown> | null;
+export type SettingValueType =
+    | boolean
+    | number
+    | string
+    | number[]
+    | string[]
+    | Record<string, unknown>
+    | Record<string, unknown>[]
+    | null;
 
 export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     isFeature?: false | undefined;
@@ -217,6 +228,28 @@ export const SETTINGS: { [setting: string]: ISetting } = {
             ),
             image: require("../../res/img/betas/video_rooms.png"),
             requiresRefresh: true,
+        },
+    },
+    [Features.NotificationSettings2]: {
+        isFeature: true,
+        labsGroup: LabGroup.Experimental,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("New Notification Settings"),
+        default: false,
+        betaInfo: {
+            title: _td("Notification Settings"),
+            caption: () => (
+                <>
+                    <p>
+                        {_t(
+                            "Introducing a simpler way to change your notification settings. Customize your %(brand)s, just the way you like.",
+                            {
+                                brand: SdkConfig.get().brand,
+                            },
+                        )}
+                    </p>
+                </>
+            ),
         },
     },
     "feature_exploring_public_spaces": {
@@ -330,13 +363,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("Show info about bridges in room settings"),
         default: false,
     },
-    "feature_breadcrumbs_v2": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Use new room breadcrumbs"),
-        default: false,
-    },
     "feature_right_panel_default_open": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
@@ -425,14 +451,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         shouldWarn: true,
         default: false,
     },
-    "feature_favourite_messages": {
-        isFeature: true,
-        labsGroup: LabGroup.Messaging,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Favourite Messages"),
-        description: _td("Under active development."),
-        default: false,
-    },
     [Features.VoiceBroadcast]: {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
@@ -443,6 +461,11 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     [Features.VoiceBroadcastForceSmallChunks]: {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         displayName: _td("Force 15s voice broadcast chunk length"),
+        default: false,
+    },
+    [Features.OidcNativeFlow]: {
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Enable new native OIDC flows (Under active development)"),
         default: false,
     },
     "feature_rust_crypto": {
@@ -459,6 +482,18 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "baseFontSize": {
         displayName: _td("Font size"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: "",
+        controller: new FontSizeController(),
+    },
+    /**
+     * With the transition to Compound we are moving to a base font size
+     * of 16px. We're taking the opportunity to move away from the `baseFontSize`
+     * setting that had a 5px offset.
+     *
+     */
+    "baseFontSizeV2": {
+        displayName: _td("Font size"),
+        supportedLevels: [SettingLevel.DEVICE],
         default: FontWatcher.DEFAULT_SIZE,
         controller: new FontSizeController(),
     },
@@ -662,7 +697,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "custom_themes": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        default: [],
+        default: [] as CustomTheme[],
     },
     "use_system_theme": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
@@ -858,7 +893,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Show shortcuts to recently viewed rooms above the room list"),
         default: true,
-        controller: new IncompatibleController("feature_breadcrumbs_v2", true),
     },
     "FTUE.userOnboardingButton": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -880,9 +914,8 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "fallbackICEServerAllowed": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        displayName: _td("Allow fallback call assist server (turn.matrix.org)"),
         description: _td(
-            "Only applies if your homeserver does not offer one. " + "Your IP address would be shared during a call.",
+            "Only applies if your homeserver does not offer one. Your IP address would be shared during a call.",
         ),
         // This is a tri-state value, where `null` means "prompt the user".
         default: null,

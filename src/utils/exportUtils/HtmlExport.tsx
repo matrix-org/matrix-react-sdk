@@ -402,7 +402,7 @@ export default class HTMLExporter extends Exporter {
             // TODO: Handle callEvent errors
             logger.error(e);
             eventTile = await this.getEventTileMarkup(
-                this.createModifiedEvent(textForEvent(mxEv), mxEv, false),
+                this.createModifiedEvent(textForEvent(mxEv, this.room.client), mxEv, false),
                 joined,
             );
         }
@@ -429,11 +429,12 @@ export default class HTMLExporter extends Exporter {
                 true,
             );
             if (this.cancelled) return this.cleanUp();
-            if (!haveRendererForEvent(event, false)) continue;
+            if (!haveRendererForEvent(event, this.room.client, false)) continue;
 
             content += this.needsDateSeparator(event, prevEvent) ? this.getDateSeparator(event) : "";
             const shouldBeJoined =
-                !this.needsDateSeparator(event, prevEvent) && shouldFormContinuation(prevEvent, event, false);
+                !this.needsDateSeparator(event, prevEvent) &&
+                shouldFormContinuation(prevEvent, event, this.room.client, false);
             const body = await this.createMessageBody(event, shouldBeJoined);
             this.totalSize += Buffer.byteLength(body);
             content += body;
