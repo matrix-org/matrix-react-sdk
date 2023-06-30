@@ -591,7 +591,7 @@
     "The following users may not exist": "Eventuell existieren folgende Benutzer nicht",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Profile für die nachfolgenden Matrix-IDs wurden nicht gefunden – willst du sie dennoch einladen?",
     "Invite anyway and never warn me again": "Trotzdem einladen und mich nicht mehr warnen",
-    "Invite anyway": "Trotzdem einladen",
+    "Invite anyway": "Dennoch einladen",
     "Upgrades a room to a new version": "Aktualisiert den Raum auf eine neue Version",
     "Sets the room name": "Setze einen Raumnamen",
     "%(senderDisplayName)s upgraded this room.": "%(senderDisplayName)s hat diesen Raum aktualisiert.",
@@ -3695,9 +3695,9 @@
     "Database unexpectedly closed": "Datenbank unerwartet geschlossen",
     "Mute room": "Raum stumm stellen",
     "Match default setting": "Standardeinstellung verwenden",
-    "Start DM anyway": "Dennoch einladen",
-    "Start DM anyway and never warn me again": "Dennoch einladen und mich nicht mehr warnen",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Konnte keine Profile für die nachfolgenden Matrix-IDs finden – möchtest du sie dennoch einladen?",
+    "Start DM anyway": "Dennoch DM beginnen",
+    "Start DM anyway and never warn me again": "Dennoch DM beginnen und mich nicht mehr warnen",
+    "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Konnte keine Profile für die folgenden Matrix-IDs finden – möchtest du dennoch eine Direktnachricht beginnen?",
     "Formatting": "Formatierung",
     "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.": "Konnte die alte Version dieses Raumes nicht finden (Raum-ID: %(roomId)s) und uns wurde „via_servers“ nicht mitgeteilt, um danach zu suchen.",
     "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "Konnte die alte Version dieses Raumes nicht finden (Raum-ID: %(roomId)s) und uns wurde „via_servers“ nicht mitgeteilt, um danach zu suchen. Es ist möglich, dass das Erraten des Servers basierend auf der Raum-ID funktioniert. Wenn du dies probieren möchtest, klicke auf folgenden Link:",
@@ -3731,5 +3731,9 @@
     "Allow fallback call assist server (%(server)s)": "Ersatz-Anrufassistenz-Server erlauben (%(server)s)",
     "User is not logged in": "Benutzer ist nicht angemeldet",
     "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Alternativ kannst du versuchen, den öffentlichen Server unter <server/> zu verwenden. Dieser wird nicht so zuverlässig sein und deine IP-Adresse wird mit ihm geteilt. Du kannst dies auch in den Einstellungen konfigurieren.",
-    "Try using %(server)s": "Versuche %(server)s zu verwenden"
+    "Try using %(server)s": "Versuche %(server)s zu verwenden",
+    "Your server requires encryption to be disabled.": "Dein Server erfordert die Deaktivierung der Verschlüsselung.",
+    "Are you sure you wish to remove (delete) this event?": "Möchtest du dieses Ereignis wirklich entfernen (löschen)?",
+    "Enable new native OIDC flows (Under active development)": "Neue native OIDC-Verfahren aktivieren (in aktiver Entwicklung)",
+    "Note that removing room changes like this could undo the change.": "Beachte, dass das Entfernen von Raumänderungen diese rückgängig machen könnte."
 }
