@@ -46,15 +46,15 @@ function pad(n: number): string {
 }
 
 function twelveHourTime(date: Date, showSeconds = false): string {
-    let hours = date.getHours() % 12;
+    let hours = date.getHours() ;
     const minutes = pad(date.getMinutes());
-    const ampm = date.getHours() >= 12 ? _t("PM") : _t("AM");
-    hours = hours ? hours : 12; // convert 0 -> 12
+    // const ampm = date.getHours() >= 12 ? _t("PM") : _t("AM");
+    // hours = hours ? hours : 12; // convert 0 -> 12tg
     if (showSeconds) {
         const seconds = pad(date.getSeconds());
-        return `${hours}:${minutes}:${seconds}${ampm}`;
+        return `${hours}:${minutes}:${seconds}`;
     }
-    return `${hours}:${minutes}${ampm}`;
+    return `${hours}:${minutes}`;
 }
 
 export function formatDate(date: Date, showTwelveHour = false): string {
