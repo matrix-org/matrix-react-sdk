@@ -134,7 +134,10 @@ export function doTwoWaySasVerification(verifier: Verifier): void {
     cy.wrap(emojiPromise).then((emojis: EmojiMapping[]) => {
         cy.get(".mx_VerificationShowSas_emojiSas_block").then((emojiBlocks) => {
             emojis.forEach((emoji: EmojiMapping, index: number) => {
-                expect(emojiBlocks[index].textContent.toLowerCase()).to.eq(emoji[0] + emoji[1]);
+                // VerificationShowSas munges the case of the emoji descriptions returned by the js-sdk before
+                // displaying them. Once we drop support for legacy crypto, that code can go away, and so can the
+                // case-munging here.
+                expect(emojiBlocks[index].textContent.toLowerCase()).to.eq(emoji[0] + emoji[1].toLowerCase());
             });
         });
     });
