@@ -19,7 +19,7 @@ import { RefObject, useEffect } from "react";
 export function usePlainTextInitialization(initialContent = "", ref: RefObject<HTMLElement>): void {
     useEffect(() => {
         if (ref.current) {
-            ref.current.innerText = initialContent;
+            ref.current.innerHTML = initialContent;
         }
     }, [ref, initialContent]);
 }
