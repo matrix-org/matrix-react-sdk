@@ -331,10 +331,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
         // From https://www.stum.de/2016/06/24/handling-ime-events-in-javascript/
         // Safari emits an additional keyDown after compositionend
-        return !!(
-            this.isIMEComposing ||
-            (event.nativeEvent && event.nativeEvent.isComposing)
-        );
+        return !!(this.isIMEComposing || (event.nativeEvent && event.nativeEvent.isComposing));
     }
 
     private onCutCopy = (event: ClipboardEvent, type: string): void => {
