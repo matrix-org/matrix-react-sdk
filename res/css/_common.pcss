@@ -49,6 +49,20 @@ limitations under the License.
     --dialog-zIndex-static: calc(var(--dialog-zIndex-static-background) + 1); /* 4010 */
     --dialog-zIndex-standard-background: calc(var(--dialog-zIndex-static) + 1); /* 4011 */
     --dialog-zIndex-standard: calc(var(--dialog-zIndex-standard-background) + 1); /* 4012 */
+
+}
+
+/**
+ * Doubling the selector to increase specificity as Compound defines it as such
+ */
+[class^="cpd-theme"][class^="cpd-theme"] {
+    /**
+     * The design tokens package currently does not expose the fallback fonts
+     * We want to keep on re-using `$font-family` to not break custom themes
+     * and because we can to use `Twemoji` to display emoji rather than using
+     * system ones
+     */
+    --cpd-font-family-sans: $font-family;
 }
 
 @media only percy {
