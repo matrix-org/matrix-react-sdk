@@ -93,7 +93,7 @@ interface IState {
     submitButtonEnabled: boolean;
 }
 
-export default class InteractiveAuthComponent<T extends IAuthDict> extends React.Component<
+export default class InteractiveAuthComponent<T extends IAuthData> extends React.Component<
     InteractiveAuthProps<T>,
     IState
 > {
