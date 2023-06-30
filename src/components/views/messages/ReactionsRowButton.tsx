@@ -107,16 +107,23 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
 
         const room = this.context.getRoom(mxEvent.getRoomId());
         let label: string | undefined;
+        let customReactionName = "";
         if (room) {
             const senders: string[] = [];
             for (const reactionEvent of reactionEvents) {
                 const member = room.getMember(reactionEvent.getSender()!);
                 senders.push(member?.name || reactionEvent.getSender()!);
+                if (reactionEvent.event.content?.["com.beeper.reaction.shortcode"]) {
+                    customReactionName = reactionEvent.event.content?.["com.beeper.reaction.shortcode"];
+                }
             }
 
             const reactors = formatCommaSeparatedList(senders, 6);
             if (content) {
-                label = _t("%(reactors)s reacted with %(content)s", { reactors, content });
+                label = _t("%(reactors)s reacted with %(content)s", {
+                    reactors,
+                    content: customReactionName || content,
+                });
             } else {
                 label = reactors;
             }
@@ -133,7 +140,7 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
                 reactionContent = (
                     <img
                         className="mx_ReactionsRowButton_content"
-                        alt={content}
+                        alt={customReactionName || content}
                         src={imageSrc}
                         width="16"
                         height="16"
