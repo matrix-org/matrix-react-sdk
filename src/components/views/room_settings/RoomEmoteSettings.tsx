@@ -342,6 +342,13 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                 decryptedemotes.set(shortcode, mediaFromMxc(val as string).srcHttp);
             }
         }
+        if (this.state.compatibility) {
+            for (const shortcode in this.imagePack["images"]) {
+                if (!decryptedemotes.has(shortcode)) {
+                    decryptedemotes.set(shortcode, mediaFromMxc(this.imagePack["images"][shortcode] as string).srcHttp);
+                }
+            }
+        }
         this.setState({
             decryptedemotes: decryptedemotes,
         });
