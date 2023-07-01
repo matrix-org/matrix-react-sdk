@@ -343,10 +343,33 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             }
         }
         if (this.state.compatibility) {
+            const client = MatrixClientPeg.safeGet();
+            let newCompatUploaded = false;
             for (const shortcode in this.imagePack["images"]) {
                 if (!decryptedemotes.has(shortcode)) {
-                    decryptedemotes.set(shortcode, mediaFromMxc(this.imagePack["images"][shortcode] as string).srcHttp);
+                    newCompatUploaded = true;
+                    this.state.value.set(shortcode, shortcode);
+                    decryptedemotes.set(
+                        shortcode,
+                        mediaFromMxc(this.imagePack["images"][shortcode]["url"] as string).srcHttp,
+                    );
+                    if (isEnc) {
+                        const blob = await mediaFromMxc(this.imagePack["images"][shortcode]["url"])
+                            .downloadSource()
+                            .then((r) => r.blob());
+                        const uploadedEmoteFile = await uploadFile(client, this.props.roomId, blob);
+                        this.state.emotes.set(shortcode, uploadedEmoteFile.file);
+                    } else {
+                        this.state.emotes.set(shortcode, this.imagePack["images"][shortcode]["url"]);
+                    }
                 }
+            }
+            if (newCompatUploaded) {
+                const emotesMxcs: { [key: string]: IEncryptedFile | string } = {};
+                for (const [shortcode, val] of this.state.emotes) {
+                    emotesMxcs[shortcode] = val;
+                }
+                client.sendStateEvent(this.props.roomId, EMOTES_STATE.name, emotesMxcs, "");
             }
         }
         this.setState({
