@@ -3340,5 +3340,11 @@
     "Enable %(brand)s as an additional calling option in this room": "Cho phép %(brand)s được làm tùy chọn gọi bổ sung trong phòng này",
     "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": "Nghĩa là bạn có tất cả các khóa cần thiết để mở khóa các tin nhắn được mã hóa và xác nhận với những người dùng khác là bạn tin tưởng phiên này.",
     "You do not have permission to start video calls": "Bạn không có quyền để bắt đầu cuộc gọi truyền hình",
-    "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Người dùng (%(user)s) đã không được mời vào %(roomId)s nhưng không có lỗi nào được đưa ra từ công cụ mời"
+    "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Người dùng (%(user)s) đã không được mời vào %(roomId)s nhưng không có lỗi nào được đưa ra từ công cụ mời",
+    "Are you sure you want to stop your live broadcast? This will end the broadcast and the full recording will be available in the room.": "Bạn có chắc chắn muốn dừng phát sóng trực tiếp của mình không? Điều này sẽ kết thúc chương trình phát sóng và bản ghi đầy đủ sẽ có sẵn trong phòng.",
+    "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "Nếu bạn bắt đầu nghe chương trình phát sóng trực tiếp này, quá trình ghi chương trình phát sóng trực tiếp hiện tại của bạn sẽ kết thúc.",
+    "Live": "Trực tiếp",
+    "Creating output…": "Đang tạo kết quả…",
+    "Listen to live broadcast?": "Nghe trình phát trực tiếp?",
+    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s đã từ chối cho phép tìm kiếm vị trí của bạn. Vui lòng cho phép truy cập vị trí trong cài đặt trình duyệt của bạn."
 }
