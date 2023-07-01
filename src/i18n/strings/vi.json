@@ -3339,5 +3339,6 @@
     "Forget this space": "Quên space này",
     "Enable %(brand)s as an additional calling option in this room": "Cho phép %(brand)s được làm tùy chọn gọi bổ sung trong phòng này",
     "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": "Nghĩa là bạn có tất cả các khóa cần thiết để mở khóa các tin nhắn được mã hóa và xác nhận với những người dùng khác là bạn tin tưởng phiên này.",
-    "You do not have permission to start video calls": "Bạn không có quyền để bắt đầu cuộc gọi truyền hình"
+    "You do not have permission to start video calls": "Bạn không có quyền để bắt đầu cuộc gọi truyền hình",
+    "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Người dùng (%(user)s) đã không được mời vào %(roomId)s nhưng không có lỗi nào được đưa ra từ công cụ mời"
 }
