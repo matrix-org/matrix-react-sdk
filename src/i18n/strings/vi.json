@@ -3346,5 +3346,6 @@
     "Live": "Trực tiếp",
     "Creating output…": "Đang tạo kết quả…",
     "Listen to live broadcast?": "Nghe trình phát trực tiếp?",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s đã từ chối cho phép tìm kiếm vị trí của bạn. Vui lòng cho phép truy cập vị trí trong cài đặt trình duyệt của bạn."
+    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s đã từ chối cho phép tìm kiếm vị trí của bạn. Vui lòng cho phép truy cập vị trí trong cài đặt trình duyệt của bạn.",
+    "Notifications silenced": "Các thông báo đã bật chế độ im lặng"
 }
