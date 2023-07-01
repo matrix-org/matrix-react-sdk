@@ -3347,7 +3347,7 @@
     "Creating output…": "Đang tạo kết quả…",
     "Listen to live broadcast?": "Nghe trình phát trực tiếp?",
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s đã từ chối cho phép tìm kiếm vị trí của bạn. Vui lòng cho phép truy cập vị trí trong cài đặt trình duyệt của bạn.",
-    "Notifications silenced": "Các thông báo đã bật chế độ im lặng",
+    "Notifications silenced": "Thông báo đã được tắt tiếng",
     "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Lệnh cho nhà phát triển: Hủy phiên ra ngoài hiện tại của nhóm và thiết lập phiên Olm mới",
     "Sliding Sync mode": "Chế độ đồng bộ tối ưu (Sync v3)",
     "Right panel stays open": "Bảng điều khiển bên phải vẫn đang mở"
