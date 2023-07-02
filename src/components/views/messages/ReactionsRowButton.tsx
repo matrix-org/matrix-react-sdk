@@ -26,6 +26,7 @@ import ReactionsRowButtonTooltip from "./ReactionsRowButtonTooltip";
 import AccessibleButton from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import SettingsStore from "../../../settings/SettingsStore";
+import { REACTION_SHORTCODE_KEY } from "./ReactionsRow";
 interface IProps {
     // The event we're displaying reactions for
     mxEvent: MatrixEvent;
@@ -115,8 +116,8 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
             for (const reactionEvent of reactionEvents) {
                 const member = room.getMember(reactionEvent.getSender()!);
                 senders.push(member?.name || reactionEvent.getSender()!);
-                if (customReactionImagesEnabled && reactionEvent.event.content?.["com.beeper.reaction.shortcode"]) {
-                    customReactionName = reactionEvent.event.content?.["com.beeper.reaction.shortcode"];
+                if (customReactionImagesEnabled && REACTION_SHORTCODE_KEY.findIn(reactionEvent.getContent())) {
+                    customReactionName = REACTION_SHORTCODE_KEY.findIn(reactionEvent.getContent());
                 }
             }
 

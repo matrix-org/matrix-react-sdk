@@ -18,6 +18,7 @@ import React, { SyntheticEvent } from "react";
 import classNames from "classnames";
 import { MatrixEvent, MatrixEventEvent, Relations, RelationsEvent } from "matrix-js-sdk/src/matrix";
 import { uniqBy } from "lodash";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 import { _t } from "../../../languageHandler";
 import { isContentActionable } from "../../../utils/EventUtils";
@@ -30,6 +31,8 @@ import AccessibleButton from "../elements/AccessibleButton";
 
 // The maximum number of reactions to initially show on a message.
 const MAX_ITEMS_WHEN_LIMITED = 8;
+
+export const REACTION_SHORTCODE_KEY = new UnstableValue("shortcode", "com.beeper.reaction.shortcode");
 
 const ReactButton: React.FC<IProps> = ({ mxEvent, reactions }) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
