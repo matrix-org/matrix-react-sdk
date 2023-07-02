@@ -34,6 +34,10 @@ jest.mock("../../../../../../src/ContentMessages", () => ({
 describe("EmoteSettingsTab", () => {
     const EMOTES_STATE = new UnstableValue("m.room.emotes", "org.matrix.msc3892.emotes");
     const EMOTES_COMP = new UnstableValue("m.room.room_emotes", "im.ponies.room_emotes");
+    const COMPAT_STATE = new UnstableValue(
+        "m.room.clientemote_compatibility",
+        "org.matrix.msc3892.clientemote_compatibility",
+    );
     const roomId = "!room:example.com";
     let cli: MatrixClient;
     let room: Room;
@@ -351,6 +355,62 @@ describe("EmoteSettingsTab", () => {
             roomId,
             EMOTES_COMP.name,
             { images: { coolnewemotecustomname: { url: "http://this.is.a.url/server/custom-emote-123.png" } } },
+            "",
+        );
+    });
+
+    it("should load emotes uploaded from other clients in compatibility mode", async () => {
+        mocked(cli.getRoom).mockReturnValue(room);
+        mocked(cli.isRoomEncrypted).mockReturnValue(false);
+        // @ts-ignore - mocked doesn't support overloads properly
+        mocked(room.currentState.getStateEvents).mockImplementation((type, key) => {
+            if (key === undefined) return [] as MatrixEvent[];
+            if (type === EMOTES_STATE.name) {
+                return new MatrixEvent({
+                    sender: "@sender:server",
+                    room_id: roomId,
+                    type: EMOTES_STATE.name,
+                    state_key: "",
+                    content: {},
+                });
+            }
+            if (type === EMOTES_COMP.name) {
+                return new MatrixEvent({
+                    sender: "@sender:server",
+                    room_id: roomId,
+                    type: EMOTES_COMP.name,
+                    state_key: "",
+                    content: {
+                        images: {
+                            testEmote: {
+                                url: "http://this.is.a.url/server/custom-emote-123.png",
+                            },
+                        },
+                    },
+                });
+            }
+            if (type === COMPAT_STATE.name) {
+                return new MatrixEvent({
+                    sender: "@sender:server",
+                    room_id: roomId,
+                    type: EMOTES_COMP.name,
+                    state_key: "",
+                    content: {
+                        isCompat: true,
+                    },
+                });
+            }
+            return null;
+        });
+
+        renderTab();
+
+        expect(cli.sendStateEvent).toHaveBeenCalledWith(
+            roomId,
+            EMOTES_STATE.name,
+            {
+                testEmote: "http://this.is.a.url/server/custom-emote-123.png",
+            },
             "",
         );
     });

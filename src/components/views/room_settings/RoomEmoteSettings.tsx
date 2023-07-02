@@ -358,9 +358,9 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                             .downloadSource()
                             .then((r) => r.blob());
                         const uploadedEmoteFile = await uploadFile(client, this.props.roomId, blob);
-                        this.state.emotes.set(shortcode, uploadedEmoteFile.file);
+                        this.state.emotes.set(shortcode, uploadedEmoteFile.file!);
                     } else {
-                        this.state.emotes.set(shortcode, this.imagePack["images"][shortcode]["url"]);
+                        this.state.emotes.set(shortcode, this.imagePack["images"][shortcode]["url"]!);
                     }
                 }
             }
