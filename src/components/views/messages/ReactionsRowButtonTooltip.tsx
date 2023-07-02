@@ -43,7 +43,7 @@ export default class ReactionsRowButtonTooltip extends React.PureComponent<IProp
         let tooltipLabel: JSX.Element | undefined;
         if (room) {
             const senders: string[] = [];
-            let customReactionName = "";
+            let customReactionName: string | undefined;
             for (const reactionEvent of reactionEvents) {
                 const member = room.getMember(reactionEvent.getSender()!);
                 const name = member?.name ?? reactionEvent.getSender()!;
