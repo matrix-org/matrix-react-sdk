@@ -22,6 +22,7 @@ import { _t } from "../../../languageHandler";
 import { formatCommaSeparatedList } from "../../../utils/FormattingUtils";
 import Tooltip from "../elements/Tooltip";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import SettingsStore from "../../../settings/SettingsStore";
 interface IProps {
     // The event we're displaying reactions for
     mxEvent: MatrixEvent;
@@ -42,13 +43,14 @@ export default class ReactionsRowButtonTooltip extends React.PureComponent<IProp
         const room = this.context.getRoom(mxEvent.getRoomId());
         let tooltipLabel: JSX.Element | undefined;
         if (room) {
+            const customReactionImagesEnabled = SettingsStore.getValue("feature_render_reaction_images");
             const senders: string[] = [];
             let customReactionName: string | undefined;
             for (const reactionEvent of reactionEvents) {
                 const member = room.getMember(reactionEvent.getSender()!);
                 const name = member?.name ?? reactionEvent.getSender()!;
                 senders.push(name);
-                if (reactionEvent.event.content?.["com.beeper.reaction.shortcode"]) {
+                if (customReactionImagesEnabled && reactionEvent.event.content?.["com.beeper.reaction.shortcode"]) {
                     customReactionName = reactionEvent.event.content?.["com.beeper.reaction.shortcode"];
                 }
             }

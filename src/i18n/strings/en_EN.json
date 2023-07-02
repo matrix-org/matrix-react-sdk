@@ -1004,6 +1004,8 @@
     "Enable new native OIDC flows (Under active development)": "Enable new native OIDC flows (Under active development)",
     "Rust cryptography implementation": "Rust cryptography implementation",
     "Font size": "Font size",
+    "Render custom images in reactions": "Render custom images in reactions",
+    "Sometimes referred to as \"custom emojis\".": "Sometimes referred to as \"custom emojis\".",
     "Use custom size": "Use custom size",
     "Enable Emoji suggestions while typing": "Enable Emoji suggestions while typing",
     "Show stickers button": "Show stickers button",

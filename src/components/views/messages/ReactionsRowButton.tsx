@@ -25,6 +25,7 @@ import dis from "../../../dispatcher/dispatcher";
 import ReactionsRowButtonTooltip from "./ReactionsRowButtonTooltip";
 import AccessibleButton from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import SettingsStore from "../../../settings/SettingsStore";
 interface IProps {
     // The event we're displaying reactions for
     mxEvent: MatrixEvent;
@@ -106,6 +107,7 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
         }
 
         const room = this.context.getRoom(mxEvent.getRoomId());
+        const customReactionImagesEnabled = SettingsStore.getValue("feature_render_reaction_images");
         let label: string | undefined;
         let customReactionName: string | undefined;
         if (room) {
@@ -113,7 +115,7 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
             for (const reactionEvent of reactionEvents) {
                 const member = room.getMember(reactionEvent.getSender()!);
                 senders.push(member?.name || reactionEvent.getSender()!);
-                if (reactionEvent.event.content?.["com.beeper.reaction.shortcode"]) {
+                if (customReactionImagesEnabled && reactionEvent.event.content?.["com.beeper.reaction.shortcode"]) {
                     customReactionName = reactionEvent.event.content?.["com.beeper.reaction.shortcode"];
                 }
             }
@@ -134,7 +136,7 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
                 {content}
             </span>
         );
-        if (content.startsWith("mxc://")) {
+        if (customReactionImagesEnabled && content.startsWith("mxc://")) {
             const imageSrc = mediaFromMxc(content).srcHttp;
             if (imageSrc) {
                 reactionContent = (
