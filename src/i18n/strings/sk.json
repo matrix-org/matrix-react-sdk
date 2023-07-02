@@ -3731,5 +3731,9 @@
     "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Prípadne môžete skúsiť použiť verejný server na adrese <server/>, ale nebude to tak spoľahlivé a vaša IP adresa bude zdieľaná s týmto serverom. Môžete to spravovať aj v nastaveniach.",
     "Try using %(server)s": "Skúste použiť %(server)s",
     "User is not logged in": "Používateľ nie je prihlásený",
-    "Allow fallback call assist server (%(server)s)": "Povoliť náhradnú službu hovorov asistenčného servera (%(server)s)"
+    "Allow fallback call assist server (%(server)s)": "Povoliť náhradnú službu hovorov asistenčného servera (%(server)s)",
+    "Enable new native OIDC flows (Under active development)": "Povoliť nové natívne toky OIDC (v štádiu aktívneho vývoja)",
+    "Your server requires encryption to be disabled.": "Váš server vyžaduje vypnuté šifrovanie.",
+    "Are you sure you wish to remove (delete) this event?": "Ste si istí, že chcete túto udalosť odstrániť (vymazať)?",
+    "Note that removing room changes like this could undo the change.": "Upozorňujeme, že odstránením takýchto zmien v miestnosti by sa zmena mohla zvrátiť."
 }
