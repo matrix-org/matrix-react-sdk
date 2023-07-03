@@ -36,7 +36,7 @@ function isAllowedHtmlTag(node: commonmark.Node): boolean {
         return true;
     }
 
-    // Regex won't work for tags with attrs, but the oens we allow
+    // Regex won't work for tags with attrs, but the tags we allow
     // shouldn't really have any anyway.
     const matches = /^<\/?(.*)>$/.exec(node.literal);
     if (matches && matches.length == 2) {
