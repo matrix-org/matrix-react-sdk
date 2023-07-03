@@ -47,7 +47,7 @@ export function mdSerialize(model: EditorModel): string {
             case Type.UserPill: {
                 const url = makeGenericPermalink(part.resourceId);
                 // Escape square brackets and backslashes; convert newlines to HTML
-                const title = part.text.replace(/[[\\\]]/g, (c) => "\\" + c).replace(/\n/g, "<br/>");
+                const title = part.text.replace(/[[\\\]]/g, (c) => "\\" + c).replace(/\n/g, "<br>");
                 return html + `[${title}](${url})`;
             }
         }
