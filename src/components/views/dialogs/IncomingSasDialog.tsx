@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { VerificationBase } from "matrix-js-sdk/src/crypto/verification/Base";
-import { GeneratedSas, ShowSasCallbacks, VerifierEvent } from "matrix-js-sdk/src/crypto-api/verification";
+import { GeneratedSas, ShowSasCallbacks, Verifier, VerifierEvent } from "matrix-js-sdk/src/crypto-api/verification";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -37,7 +36,7 @@ const PHASE_VERIFIED = 3;
 const PHASE_CANCELLED = 4;
 
 interface IProps {
-    verifier: VerificationBase<VerifierEvent, any>;
+    verifier: Verifier;
     onFinished(verified?: boolean): void;
 }
 
@@ -87,7 +86,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
 
     private async fetchOpponentProfile(): Promise<void> {
         try {
-            const prof = await MatrixClientPeg.get().getProfileInfo(this.props.verifier.userId);
+            const prof = await MatrixClientPeg.safeGet().getProfileInfo(this.props.verifier.userId);
             this.setState({
                 opponentProfile: prof,
             });
@@ -144,7 +143,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
     };
 
     private renderPhaseStart(): ReactNode {
-        const isSelf = this.props.verifier.userId === MatrixClientPeg.get().getUserId();
+        const isSelf = this.props.verifier.userId === MatrixClientPeg.safeGet().getUserId();
 
         let profile;
         const oppProfile = this.state.opponentProfile;
@@ -234,7 +233,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
                 sas={this.showSasEvent.sas}
                 onCancel={this.onCancelClick}
                 onDone={this.onSasMatchesClick}
-                isSelf={this.props.verifier.userId === MatrixClientPeg.get().getUserId()}
+                isSelf={this.props.verifier.userId === MatrixClientPeg.safeGet().getUserId()}
                 inDialog={true}
             />
         );

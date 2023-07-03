@@ -61,8 +61,9 @@ describe("StopGapWidgetDriver", () => {
 
     beforeEach(() => {
         stubClient();
-        client = mocked(MatrixClientPeg.get());
+        client = mocked(MatrixClientPeg.safeGet());
         client.getUserId.mockReturnValue("@alice:example.org");
+        client.getSafeUserId.mockReturnValue("@alice:example.org");
     });
 
     it("auto-approves capabilities of virtual Element Call widgets", async () => {

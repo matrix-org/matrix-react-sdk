@@ -17,10 +17,7 @@ limitations under the License.
 import React from "react";
 import classNames from "classnames";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import {
-    VerificationRequest,
-    VerificationRequestEvent,
-} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { VerificationPhase, VerificationRequest, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
@@ -45,7 +42,7 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
         if (request) {
             request.on(VerificationRequestEvent.Change, this.onRequestChanged);
         }
-        MatrixClientPeg.get().on(CryptoEvent.UserTrustStatusChanged, this.onTrustChanged);
+        MatrixClientPeg.safeGet().on(CryptoEvent.UserTrustStatusChanged, this.onTrustChanged);
     }
 
     public componentWillUnmount(): void {
@@ -78,11 +75,11 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
             return false;
         }
         // .cancel event that was sent after the verification finished, ignore
-        if (mxEvent.getType() === EventType.KeyVerificationCancel && !request.cancelled) {
+        if (mxEvent.getType() === EventType.KeyVerificationCancel && request.phase !== VerificationPhase.Cancelled) {
             return false;
         }
         // .done event that was sent after the verification cancelled, ignore
-        if (mxEvent.getType() === EventType.KeyVerificationDone && !request.done) {
+        if (mxEvent.getType() === EventType.KeyVerificationDone && request.phase !== VerificationPhase.Done) {
             return false;
         }
 
@@ -92,7 +89,7 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
         }
 
         // User isn't actually verified
-        if (!MatrixClientPeg.get().checkUserTrust(request.otherUserId).isCrossSigningVerified()) {
+        if (!MatrixClientPeg.safeGet().checkUserTrust(request.otherUserId).isCrossSigningVerified()) {
             return false;
         }
 
@@ -107,16 +104,16 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
             return null;
         }
 
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const myUserId = client.getUserId();
 
         let title: string | undefined;
 
-        if (request.done) {
+        if (request.phase === VerificationPhase.Done) {
             title = _t("You verified %(name)s", {
                 name: getNameForEventRoom(client, request.otherUserId, mxEvent.getRoomId()!),
             });
-        } else if (request.cancelled) {
+        } else if (request.phase === VerificationPhase.Cancelled) {
             const userId = request.cancellingUserId;
             if (userId === myUserId) {
                 title = _t("You cancelled verifying %(name)s", {
@@ -131,7 +128,7 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
 
         if (title) {
             const classes = classNames("mx_cryptoEvent mx_cryptoEvent_icon", {
-                mx_cryptoEvent_icon_verified: request.done,
+                mx_cryptoEvent_icon_verified: request.phase === VerificationPhase.Done,
             });
             return (
                 <EventTileBubble

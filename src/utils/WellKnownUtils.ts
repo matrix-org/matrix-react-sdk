@@ -26,10 +26,18 @@ const EMBEDDED_PAGES_WK_PROPERTY = "io.element.embedded_pages";
 /* eslint-disable camelcase */
 export interface ICallBehaviourWellKnown {
     widget_build_url?: string;
+    ignore_dm?: boolean;
 }
 
 export interface IE2EEWellKnown {
     default?: boolean;
+    /**
+     * Forces the encryption to disabled for all new rooms
+     * When true, overrides configured 'default' behaviour
+     * Hides the option to enable encryption on room creation
+     * Disables the option to enable encryption in room settings for all new and existing rooms
+     */
+    force_disable?: boolean;
     secure_backup_required?: boolean;
     secure_backup_setup_methods?: SecureBackupSetupMethod[];
 }

@@ -62,6 +62,11 @@ jest.mock("../../../../src/stores/OwnProfileStore", () => ({
     },
 }));
 
+// Fake random strings to give a predictable snapshot
+jest.mock("matrix-js-sdk/src/randomstring", () => ({
+    randomString: () => "abdefghi",
+}));
+
 describe("AppTile", () => {
     let cli: MatrixClient;
     let r1: Room;
@@ -82,7 +87,7 @@ describe("AppTile", () => {
 
     beforeAll(async () => {
         stubClient();
-        cli = MatrixClientPeg.get();
+        cli = MatrixClientPeg.safeGet();
         cli.hasLazyLoadMembersEnabled = () => false;
 
         // Init misc. startup deps
@@ -327,6 +332,9 @@ describe("AppTile", () => {
         expect(renderResult.getByText("Example 1")).toBeInTheDocument();
         expect(ActiveWidgetStore.instance.isLive("1", "r1")).toBe(true);
 
+        const { asFragment } = renderResult;
+        expect(asFragment()).toMatchSnapshot(); // Take snapshot of AppsDrawer with AppTile
+
         // We want to verify that as we move the widget to the center container,
         // the widget frame remains running.
 
@@ -382,6 +390,45 @@ describe("AppTile", () => {
         it("clicking 'maximise' should send the widget to the center", async () => {
             await userEvent.click(renderResult.getByTitle("Maximise"));
             expect(moveToContainerSpy).toHaveBeenCalledWith(r1, app1, Container.Center);
+        });
+
+        it("should render permission request", () => {
+            jest.spyOn(ModuleRunner.instance, "invoke").mockImplementation((lifecycleEvent, opts, widgetInfo) => {
+                if (lifecycleEvent === WidgetLifecycle.PreLoadRequest && (widgetInfo as WidgetInfo).id === app1.id) {
+                    (opts as ApprovalOpts).approved = false;
+                }
+            });
+
+            // userId and creatorUserId are different
+            const renderResult = render(
+                <MatrixClientContext.Provider value={cli}>
+                    <AppTile key={app1.id} app={app1} room={r1} userId="@user1" creatorUserId="@userAnother" />
+                </MatrixClientContext.Provider>,
+            );
+
+            const { container, asFragment } = renderResult;
+
+            expect(container.querySelector(".mx_Spinner")).toBeFalsy();
+            expect(asFragment()).toMatchSnapshot();
+
+            expect(renderResult.queryByRole("button", { name: "Continue" })).toBeInTheDocument();
+        });
+
+        it("should not display 'Continue' button on permission load", () => {
+            jest.spyOn(ModuleRunner.instance, "invoke").mockImplementation((lifecycleEvent, opts, widgetInfo) => {
+                if (lifecycleEvent === WidgetLifecycle.PreLoadRequest && (widgetInfo as WidgetInfo).id === app1.id) {
+                    (opts as ApprovalOpts).approved = true;
+                }
+            });
+
+            // userId and creatorUserId are different
+            const renderResult = render(
+                <MatrixClientContext.Provider value={cli}>
+                    <AppTile key={app1.id} app={app1} room={r1} userId="@user1" creatorUserId="@userAnother" />
+                </MatrixClientContext.Provider>,
+            );
+
+            expect(renderResult.queryByRole("button", { name: "Continue" })).not.toBeInTheDocument();
         });
 
         describe("for a maximised (centered) widget", () => {
@@ -442,22 +489,5 @@ describe("AppTile", () => {
             expect(container.querySelector(".mx_Spinner")).toBeFalsy();
             expect(asFragment()).toMatchSnapshot();
         });
-    });
-
-    it("for a pinned widget permission load", () => {
-        jest.spyOn(ModuleRunner.instance, "invoke").mockImplementation((lifecycleEvent, opts, widgetInfo) => {
-            if (lifecycleEvent === WidgetLifecycle.PreLoadRequest && (widgetInfo as WidgetInfo).id === app1.id) {
-                (opts as ApprovalOpts).approved = true;
-            }
-        });
-
-        // userId and creatorUserId are different
-        const renderResult = render(
-            <MatrixClientContext.Provider value={cli}>
-                <AppTile key={app1.id} app={app1} room={r1} userId="@user1" creatorUserId="@userAnother" />
-            </MatrixClientContext.Provider>,
-        );
-
-        expect(renderResult.queryByRole("button", { name: "Continue" })).not.toBeInTheDocument();
     });
 });

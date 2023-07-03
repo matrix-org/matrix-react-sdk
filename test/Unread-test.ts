@@ -22,7 +22,11 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { haveRendererForEvent } from "../src/events/EventTileFactory";
 import { makeBeaconEvent, mkEvent, stubClient } from "./test-utils";
 import { mkThread } from "./test-utils/threads";
-import { doesRoomHaveUnreadMessages, eventTriggersUnreadCount } from "../src/Unread";
+import {
+    doesRoomHaveUnreadMessages,
+    doesRoomOrThreadHaveUnreadMessages,
+    eventTriggersUnreadCount,
+} from "../src/Unread";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
 
 jest.mock("../src/events/EventTileFactory", () => ({
@@ -33,7 +37,7 @@ describe("Unread", () => {
     // A different user.
     const aliceId = "@alice:server.org";
     stubClient();
-    const client = MatrixClientPeg.get();
+    const client = MatrixClientPeg.safeGet();
 
     describe("eventTriggersUnreadCount()", () => {
         // setup events
@@ -67,32 +71,32 @@ describe("Unread", () => {
         });
 
         it("returns false when the event was sent by the current user", () => {
-            expect(eventTriggersUnreadCount(ourMessage)).toBe(false);
+            expect(eventTriggersUnreadCount(client, ourMessage)).toBe(false);
             // returned early before checking renderer
             expect(haveRendererForEvent).not.toHaveBeenCalled();
         });
 
         it("returns false for a redacted event", () => {
-            expect(eventTriggersUnreadCount(redactedEvent)).toBe(false);
+            expect(eventTriggersUnreadCount(client, redactedEvent)).toBe(false);
             // returned early before checking renderer
             expect(haveRendererForEvent).not.toHaveBeenCalled();
         });
 
         it("returns false for an event without a renderer", () => {
             mocked(haveRendererForEvent).mockReturnValue(false);
-            expect(eventTriggersUnreadCount(alicesMessage)).toBe(false);
-            expect(haveRendererForEvent).toHaveBeenCalledWith(alicesMessage, false);
+            expect(eventTriggersUnreadCount(client, alicesMessage)).toBe(false);
+            expect(haveRendererForEvent).toHaveBeenCalledWith(alicesMessage, client, false);
         });
 
         it("returns true for an event with a renderer", () => {
             mocked(haveRendererForEvent).mockReturnValue(true);
-            expect(eventTriggersUnreadCount(alicesMessage)).toBe(true);
-            expect(haveRendererForEvent).toHaveBeenCalledWith(alicesMessage, false);
+            expect(eventTriggersUnreadCount(client, alicesMessage)).toBe(true);
+            expect(haveRendererForEvent).toHaveBeenCalledWith(alicesMessage, client, false);
         });
 
         it("returns false for beacon locations", () => {
             const beaconLocationEvent = makeBeaconEvent(aliceId);
-            expect(eventTriggersUnreadCount(beaconLocationEvent)).toBe(false);
+            expect(eventTriggersUnreadCount(client, beaconLocationEvent)).toBe(false);
             expect(haveRendererForEvent).not.toHaveBeenCalled();
         });
 
@@ -112,7 +116,7 @@ describe("Unread", () => {
                     type: eventType,
                     sender: aliceId,
                 });
-                expect(eventTriggersUnreadCount(event)).toBe(false);
+                expect(eventTriggersUnreadCount(client, event)).toBe(false);
                 expect(haveRendererForEvent).not.toHaveBeenCalled();
             },
         );
@@ -122,7 +126,7 @@ describe("Unread", () => {
         let room: Room;
         let event: MatrixEvent;
         const roomId = "!abc:server.org";
-        const myId = client.getUserId()!;
+        const myId = client.getSafeUserId();
 
         beforeAll(() => {
             client.supportsThreads = () => true;
@@ -427,6 +431,75 @@ describe("Unread", () => {
                     readUpToId: null,
                 },
             );
+        });
+    });
+
+    describe("doesRoomOrThreadHaveUnreadMessages()", () => {
+        let room: Room;
+        let event: MatrixEvent;
+        const roomId = "!abc:server.org";
+        const myId = client.getSafeUserId();
+
+        beforeAll(() => {
+            client.supportsThreads = () => true;
+        });
+
+        beforeEach(() => {
+            room = new Room(roomId, client, myId);
+            jest.spyOn(logger, "warn");
+            event = mkEvent({
+                event: true,
+                type: "m.room.message",
+                user: aliceId,
+                room: roomId,
+                content: {},
+            });
+            room.addLiveEvents([event]);
+
+            // Don't care about the code path of hidden events.
+            mocked(haveRendererForEvent).mockClear().mockReturnValue(true);
+        });
+
+        it("should consider unthreaded read receipts for main timeline", () => {
+            // Send unthreaded receipt into room pointing at the latest event
+            room.addReceipt(
+                new MatrixEvent({
+                    type: "m.receipt",
+                    room_id: "!foo:bar",
+                    content: {
+                        [event.getId()!]: {
+                            [ReceiptType.Read]: {
+                                [myId]: { ts: 1 },
+                            },
+                        },
+                    },
+                }),
+            );
+
+            expect(doesRoomOrThreadHaveUnreadMessages(room)).toBe(false);
+        });
+
+        it("should consider unthreaded read receipts for thread timelines", () => {
+            // Provide an unthreaded read receipt with ts greater than the latest thread event
+            const receipt = new MatrixEvent({
+                type: "m.receipt",
+                room_id: "!foo:bar",
+                content: {
+                    [event.getId()!]: {
+                        [ReceiptType.Read]: {
+                            [myId]: { ts: 10000000000 },
+                        },
+                    },
+                },
+            });
+            room.addReceipt(receipt);
+
+            const { thread } = mkThread({ room, client, authorId: myId, participantUserIds: [aliceId] });
+
+            expect(thread.replyToEvent!.getTs()).toBeLessThan(
+                receipt.getContent()[event.getId()!][ReceiptType.Read][myId].ts,
+            );
+            expect(doesRoomOrThreadHaveUnreadMessages(thread)).toBe(false);
         });
     });
 });

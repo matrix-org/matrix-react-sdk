@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import { compare } from "matrix-js-sdk/src/utils";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "./languageHandler";
 import SettingsStore from "./settings/SettingsStore";
@@ -34,7 +35,8 @@ interface IFontFaces extends Omit<Record<(typeof allowedFontFaceProps)[number], 
     }[];
 }
 
-interface ICustomTheme {
+export type CustomTheme = {
+    name: string;
     colors: {
         [key: string]: string;
     };
@@ -44,7 +46,7 @@ interface ICustomTheme {
         monospace: string;
     };
     is_dark?: boolean; // eslint-disable-line camelcase
-}
+};
 
 /**
  * Given a non-high-contrast theme, find the corresponding high-contrast one
@@ -79,11 +81,20 @@ export function enumerateThemes(): { [key: string]: string } {
         "light-high-contrast": _t("Light high contrast"),
         "dark": _t("Dark"),
     };
-    const customThemes = SettingsStore.getValue("custom_themes");
+    const customThemes = SettingsStore.getValue("custom_themes") || [];
     const customThemeNames: Record<string, string> = {};
-    for (const { name } of customThemes) {
-        customThemeNames[`custom-${name}`] = name;
+
+    try {
+        for (const { name } of customThemes) {
+            customThemeNames[`custom-${name}`] = name;
+        }
+    } catch (err) {
+        logger.warn("Error loading custom themes", {
+            err,
+            customThemes,
+        });
     }
+
     return Object.assign({}, customThemeNames, BUILTIN_THEMES);
 }
 
@@ -166,7 +177,7 @@ function generateCustomFontFaceCSS(faces: IFontFaces[]): string {
         .join("\n");
 }
 
-function setCustomThemeVars(customTheme: ICustomTheme): void {
+function setCustomThemeVars(customTheme: CustomTheme): void {
     const { style } = document.body;
 
     function setCSSColorVariable(name: string, hexColor: string, doPct = true): void {
@@ -209,7 +220,7 @@ function setCustomThemeVars(customTheme: ICustomTheme): void {
     }
 }
 
-export function getCustomTheme(themeName: string): ICustomTheme {
+export function getCustomTheme(themeName: string): CustomTheme {
     // set css variables
     const customThemes = SettingsStore.getValue("custom_themes");
     if (!customThemes) {
@@ -268,6 +279,24 @@ export async function setTheme(theme?: string): Promise<void> {
 
     const styleSheet = styleElements.get(stylesheetName)!;
     styleSheet.disabled = false;
+
+    /**
+     * Adds the Compound theme class to the top-most element in the document
+     * This will automatically refresh the colour scales based on the OS or user
+     * preferences
+     *
+     * Note: Theming through Compound is not yet established. Brand theming should
+     * be done in a similar manner as it used to be done.
+     */
+    document.body.classList.remove("cpd-theme-light", "cpd-theme-dark", "cpd-theme-light-hc", "cpd-theme-dark-hc");
+
+    let compoundThemeClassName = `cpd-theme-` + (stylesheetName.includes("light") ? "light" : "dark");
+    // Always respect user OS preference!
+    if (isHighContrastTheme(theme) || window.matchMedia("(prefers-contrast: more)").matches) {
+        compoundThemeClassName += "-hc";
+    }
+
+    document.body.classList.add(compoundThemeClassName);
 
     return new Promise((resolve, reject) => {
         const switchTheme = function (): void {

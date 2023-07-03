@@ -69,6 +69,8 @@ import { htmlSerializeFromMdIfNeeded } from "./editor/serialize";
 import { leaveRoomBehaviour } from "./utils/leave-behaviour";
 import { isLocalRoom } from "./utils/localRoom/isLocalRoom";
 import { SdkContextClass } from "./contexts/SDKContext";
+import { MatrixClientPeg } from "./MatrixClientPeg";
+import { getDeviceCryptoInfo } from "./utils/crypto/deviceInfo";
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
 interface HTMLInputEvent extends Event {
@@ -79,8 +81,8 @@ const singleMxcUpload = async (cli: MatrixClient): Promise<string | null> => {
     return new Promise((resolve) => {
         const fileSelector = document.createElement("input");
         fileSelector.setAttribute("type", "file");
-        fileSelector.onchange = (ev: HTMLInputEvent) => {
-            const file = ev.target.files?.[0];
+        fileSelector.onchange = (ev: Event) => {
+            const file = (ev as HTMLInputEvent).target.files?.[0];
             if (!file) return;
 
             Modal.createDialog(UploadConfirmDialog, {
@@ -122,7 +124,7 @@ interface ICommandOpts {
     runFn?: RunFn;
     category: string;
     hideCompletionAfterSpace?: boolean;
-    isEnabled?(matrixClient?: MatrixClient): boolean;
+    isEnabled?(matrixClient: MatrixClient | null): boolean;
     renderingTypes?: TimelineRenderingType[];
 }
 
@@ -136,7 +138,7 @@ export class Command {
     public readonly hideCompletionAfterSpace: boolean;
     public readonly renderingTypes?: TimelineRenderingType[];
     public readonly analyticsName?: SlashCommandEvent["command"];
-    private readonly _isEnabled?: (matrixClient?: MatrixClient) => boolean;
+    private readonly _isEnabled?: (matrixClient: MatrixClient | null) => boolean;
 
     public constructor(opts: ICommandOpts) {
         this.command = opts.command;
@@ -189,7 +191,7 @@ export class Command {
         return _t("Usage") + ": " + this.getCommandWithArgs();
     }
 
-    public isEnabled(cli?: MatrixClient): boolean {
+    public isEnabled(cli: MatrixClient | null): boolean {
         return this._isEnabled?.(cli) ?? true;
     }
 }
@@ -206,7 +208,7 @@ function successSync(value: any): RunResult {
     return success(Promise.resolve(value));
 }
 
-const isCurrentLocalRoom = (cli?: MatrixClient): boolean => {
+const isCurrentLocalRoom = (cli: MatrixClient | null): boolean => {
     const roomId = SdkContextClass.instance.roomViewStore.getRoomId();
     if (!roomId) return false;
     const room = cli?.getRoom(roomId);
@@ -214,7 +216,7 @@ const isCurrentLocalRoom = (cli?: MatrixClient): boolean => {
     return isLocalRoom(room);
 };
 
-const canAffectPowerlevels = (cli?: MatrixClient): boolean => {
+const canAffectPowerlevels = (cli: MatrixClient | null): boolean => {
     const roomId = SdkContextClass.instance.roomViewStore.getRoomId();
     if (!cli || !roomId) return false;
     const room = cli?.getRoom(roomId);
@@ -1030,7 +1032,7 @@ export const Commands = [
 
                     return success(
                         (async (): Promise<void> => {
-                            const device = cli.getStoredDevice(userId, deviceId);
+                            const device = await getDeviceCryptoInfo(cli, userId, deviceId);
                             if (!device) {
                                 throw new UserFriendlyError(
                                     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)",
@@ -1425,7 +1427,7 @@ interface ICmd {
 export function getCommand(input: string): ICmd {
     const { cmd, args } = parseCommandString(input);
 
-    if (cmd && CommandMap.has(cmd) && CommandMap.get(cmd)!.isEnabled()) {
+    if (cmd && CommandMap.has(cmd) && CommandMap.get(cmd)!.isEnabled(MatrixClientPeg.get())) {
         return {
             cmd: CommandMap.get(cmd),
             args,

@@ -24,7 +24,7 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { User } from "matrix-js-sdk/src/models/user";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
@@ -191,7 +191,7 @@ export function DeviceItem({ userId, device }: { userId: string; device: IDevice
     const onDeviceClick = (): void => {
         const user = cli.getUser(userId);
         if (user) {
-            verifyDevice(user, device);
+            verifyDevice(cli, user, device);
         }
     };
 
@@ -1446,9 +1446,9 @@ const BasicUserInfo: React.FC<{
                         className="mx_UserInfo_field mx_UserInfo_verifyButton"
                         onClick={() => {
                             if (hasCrossSigningKeys) {
-                                verifyUser(member as User);
+                                verifyUser(cli, member as User);
                             } else {
-                                legacyVerifyUser(member as User);
+                                legacyVerifyUser(cli, member as User);
                             }
                         }}
                     >
