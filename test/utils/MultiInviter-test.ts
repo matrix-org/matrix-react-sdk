@@ -80,7 +80,7 @@ describe("MultiInviter", () => {
         jest.resetAllMocks();
 
         TestUtilsMatrix.stubClient();
-        client = MatrixClientPeg.get() as jest.Mocked<MatrixClient>;
+        client = MatrixClientPeg.safeGet() as jest.Mocked<MatrixClient>;
 
         client.invite = jest.fn();
         client.invite.mockResolvedValue({});
@@ -90,7 +90,7 @@ describe("MultiInviter", () => {
             return MXID_PROFILE_STATES[userId] || Promise.reject();
         });
 
-        inviter = new MultiInviter(ROOMID);
+        inviter = new MultiInviter(client, ROOMID);
     });
 
     describe("invite", () => {

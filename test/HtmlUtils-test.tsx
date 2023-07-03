@@ -19,7 +19,7 @@ import { mocked } from "jest-mock";
 import { render, screen } from "@testing-library/react";
 import { IContent } from "matrix-js-sdk/src/models/event";
 
-import { bodyToHtml, topicToHtml } from "../src/HtmlUtils";
+import { bodyToHtml, formatEmojis, topicToHtml } from "../src/HtmlUtils";
 import SettingsStore from "../src/settings/SettingsStore";
 
 jest.mock("../src/settings/SettingsStore");
@@ -130,5 +130,57 @@ describe("bodyToHtml", () => {
         );
 
         expect(asFragment()).toMatchSnapshot();
+    });
+
+    describe("feature_latex_maths", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((feature) => feature === "feature_latex_maths");
+        });
+
+        it("should render inline katex", () => {
+            const html = getHtml({
+                body: "hello \\xi world",
+                msgtype: "m.text",
+                formatted_body: 'hello <span data-mx-maths="\\xi"><code>\\xi</code></span> world',
+                format: "org.matrix.custom.html",
+            });
+            expect(html).toMatchSnapshot();
+        });
+
+        it("should render block katex", () => {
+            const html = getHtml({
+                body: "hello \\xi world",
+                msgtype: "m.text",
+                formatted_body: '<p>hello</p><div data-mx-maths="\\xi"><code>\\xi</code></div><p>world</p>',
+                format: "org.matrix.custom.html",
+            });
+            expect(html).toMatchSnapshot();
+        });
+
+        it("should not mangle code blocks", () => {
+            const html = getHtml({
+                body: "hello \\xi world",
+                msgtype: "m.text",
+                formatted_body: "<p>hello</p><pre><code>$\\xi$</code></pre><p>world</p>",
+                format: "org.matrix.custom.html",
+            });
+            expect(html).toMatchSnapshot();
+        });
+    });
+});
+
+describe("formatEmojis", () => {
+    it.each([
+        ["🏴󠁧󠁢󠁥󠁮󠁧󠁿", [["🏴󠁧󠁢󠁥󠁮󠁧󠁿", "flag-england"]]],
+        ["🏴󠁧󠁢󠁳󠁣󠁴󠁿", [["🏴󠁧󠁢󠁳󠁣󠁴󠁿", "flag-scotland"]]],
+        ["🏴󠁧󠁢󠁷󠁬󠁳󠁿", [["🏴󠁧󠁢󠁷󠁬󠁳󠁿", "flag-wales"]]],
+    ])("%s emoji", (emoji, expectations) => {
+        const res = formatEmojis(emoji, false);
+        expect(res).toHaveLength(expectations.length);
+        for (let i = 0; i < res.length; i++) {
+            const [emoji, title] = expectations[i];
+            expect(res[i].props.children).toEqual(emoji);
+            expect(res[i].props.title).toEqual(`:${title}:`);
+        }
     });
 });

@@ -596,9 +596,10 @@ export default class AppTile extends React.Component<IProps, IState> {
             "microphone; camera; encrypted-media; autoplay; display-capture; clipboard-write; " + "clipboard-read;";
 
         const appTileBodyClass = classNames({
-            mx_AppTileBody: !this.props.miniMode,
-            mx_AppTileBody_mini: this.props.miniMode,
-            mx_AppTile_loading: this.state.loading,
+            "mx_AppTileBody": true,
+            "mx_AppTileBody--large": !this.props.miniMode,
+            "mx_AppTileBody--mini": this.props.miniMode,
+            "mx_AppTileBody--loading": this.state.loading,
         });
         const appTileBodyStyles: CSSProperties = {};
         if (this.props.pointerEvents) {
@@ -606,7 +607,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
 
         const loadingElement = (
-            <div className="mx_AppTile_loading_fadeInSpinner">
+            <div className="mx_AppTileBody_fadeInSpinner">
                 <Spinner message={_t("Loading…")} />
             </div>
         );

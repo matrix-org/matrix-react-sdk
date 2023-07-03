@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { IGeneratedSas } from "matrix-js-sdk/src/crypto/verification/SAS";
-import { DeviceInfo } from "matrix-js-sdk/src//crypto/deviceinfo";
+import { Device } from "matrix-js-sdk/src/matrix";
+import { GeneratedSas } from "matrix-js-sdk/src/crypto-api/verification";
 
 import { _t, _td } from "../../../languageHandler";
 import { PendingActionSpinner } from "../right_panel/EncryptionInfo";
@@ -26,10 +26,13 @@ import { fixupColorFonts } from "../../../utils/FontManager";
 interface IProps {
     pending?: boolean;
     displayName?: string; // required if pending is true
-    device?: DeviceInfo;
+
+    /** Details of the other device involved in the verification, if known */
+    otherDeviceDetails?: Device;
+
     onDone: () => void;
     onCancel: () => void;
-    sas: IGeneratedSas;
+    sas: GeneratedSas;
     isSelf?: boolean;
     inDialog?: boolean; // whether this component is being shown in a dialog and to use DialogButtons
 }
@@ -111,10 +114,11 @@ export default class VerificationShowSas extends React.Component<IProps, IState>
             let text;
             // device shouldn't be null in this situation but it can be, eg. if the device is
             // logged out during verification
-            if (this.props.device) {
+            const otherDevice = this.props.otherDeviceDetails;
+            if (otherDevice) {
                 text = _t("Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…", {
-                    deviceName: this.props.device ? this.props.device.getDisplayName() : "",
-                    deviceId: this.props.device ? this.props.device.deviceId : "",
+                    deviceName: otherDevice.displayName,
+                    deviceId: otherDevice.deviceId,
                 });
             } else {
                 text = _t("Waiting for you to verify on your other device…");

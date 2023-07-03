@@ -30,7 +30,6 @@ import { UIFeature } from "../../../../../settings/UIFeature";
 import E2eAdvancedPanel, { isE2eAdvancedPanelPossible } from "../../E2eAdvancedPanel";
 import { ActionPayload } from "../../../../../dispatcher/payloads";
 import CryptographyPanel from "../../CryptographyPanel";
-import DevicesPanel from "../../DevicesPanel";
 import SettingsFlag from "../../../elements/SettingsFlag";
 import CrossSigningPanel from "../../CrossSigningPanel";
 import EventIndexPanel from "../../EventIndexPanel";
@@ -38,8 +37,6 @@ import InlineSpinner from "../../../elements/InlineSpinner";
 import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
 import { showDialog as showAnalyticsLearnMoreDialog } from "../../../dialogs/AnalyticsLearnMoreDialog";
 import { privateShouldBeEncrypted } from "../../../../../utils/rooms";
-import LoginWithQR, { Mode } from "../../../auth/LoginWithQR";
-import LoginWithQRSection from "../../devices/LoginWithQRSection";
 import type { IServerVersions } from "matrix-js-sdk/src/matrix";
 import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
@@ -83,10 +80,7 @@ interface IState {
     waitingUnignored: string[];
     managingInvites: boolean;
     invitedRoomIds: Set<string>;
-    showLoginWithQR: Mode | null;
     versions?: IServerVersions;
-    // we can't use the capabilities type from the js-sdk because it isn't exported
-    capabilities?: Record<string, any>;
 }
 
 export default class SecurityUserSettingsTab extends React.Component<IProps, IState> {
@@ -99,17 +93,16 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         const invitedRoomIds = new Set(this.getInvitedRooms().map((room) => room.roomId));
 
         this.state = {
-            ignoredUserIds: MatrixClientPeg.get().getIgnoredUsers(),
+            ignoredUserIds: MatrixClientPeg.safeGet().getIgnoredUsers(),
             waitingUnignored: [],
             managingInvites: false,
             invitedRoomIds,
-            showLoginWithQR: null,
         };
     }
 
     private onAction = ({ action }: ActionPayload): void => {
         if (action === "ignore_state_changed") {
-            const ignoredUserIds = MatrixClientPeg.get().getIgnoredUsers();
+            const ignoredUserIds = MatrixClientPeg.safeGet().getIgnoredUsers();
             const newWaitingUnignored = this.state.waitingUnignored.filter((e) => ignoredUserIds.includes(e));
             this.setState({ ignoredUserIds, waitingUnignored: newWaitingUnignored });
         }
@@ -117,18 +110,15 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
 
     public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
-        MatrixClientPeg.get().on(RoomEvent.MyMembership, this.onMyMembership);
-        MatrixClientPeg.get()
+        MatrixClientPeg.safeGet().on(RoomEvent.MyMembership, this.onMyMembership);
+        MatrixClientPeg.safeGet()
             .getVersions()
             .then((versions) => this.setState({ versions }));
-        MatrixClientPeg.get()
-            .getCapabilities()
-            .then((capabilities) => this.setState({ capabilities }));
     }
 
     public componentWillUnmount(): void {
         if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
-        MatrixClientPeg.get().removeListener(RoomEvent.MyMembership, this.onMyMembership);
+        MatrixClientPeg.safeGet().removeListener(RoomEvent.MyMembership, this.onMyMembership);
     }
 
     private onMyMembership = (room: Room, membership: string): void => {
@@ -169,15 +159,15 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         if (index !== -1) {
             currentlyIgnoredUserIds.splice(index, 1);
             this.setState(({ waitingUnignored }) => ({ waitingUnignored: [...waitingUnignored, userId] }));
-            MatrixClientPeg.get().setIgnoredUsers(currentlyIgnoredUserIds);
+            MatrixClientPeg.safeGet().setIgnoredUsers(currentlyIgnoredUserIds);
         }
     };
 
     private getInvitedRooms = (): Room[] => {
-        return MatrixClientPeg.get()
+        return MatrixClientPeg.safeGet()
             .getRooms()
             .filter((r) => {
-                return r.hasMembershipState(MatrixClientPeg.get().getUserId()!, "invite");
+                return r.hasMembershipState(MatrixClientPeg.safeGet().getUserId()!, "invite");
             });
     };
 
@@ -190,7 +180,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         const invitedRoomIdsValues = Array.from(this.state.invitedRoomIds);
 
         // Execute all acceptances/rejections sequentially
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         const action = accept ? cli.joinRoom.bind(cli) : cli.leave.bind(cli);
         for (let i = 0; i < invitedRoomIdsValues.length; i++) {
             const roomId = invitedRoomIdsValues[i];
@@ -284,14 +274,6 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         );
     }
 
-    private onShowQRClicked = (): void => {
-        this.setState({ showLoginWithQR: Mode.Show });
-    };
-
-    private onLoginWithQRFinished = (): void => {
-        this.setState({ showLoginWithQR: null });
-    };
-
     public render(): React.ReactNode {
         const secureBackup = (
             <SettingsSubsection heading={_t("Secure Backup")}>
@@ -316,7 +298,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         );
 
         let warning;
-        if (!privateShouldBeEncrypted()) {
+        if (!privateShouldBeEncrypted(MatrixClientPeg.safeGet())) {
             warning = (
                 <div className="mx_SecurityUserSettingsTab_warning">
                     {_t(
@@ -331,7 +313,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         if (PosthogAnalytics.instance.isEnabled()) {
             const onClickAnalyticsLearnMore = (): void => {
                 showAnalyticsLearnMoreDialog({
-                    primaryButton: _t("Okay"),
+                    primaryButton: _t("OK"),
                     hasCancel: false,
                 });
             };
@@ -374,42 +356,9 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
             }
         }
 
-        const useNewSessionManager = SettingsStore.getValue("feature_new_device_manager");
-        const devicesSection = useNewSessionManager ? null : (
-            <SettingsSection heading={_t("Where you're signed in")} data-testid="devices-section">
-                <SettingsSubsectionText>
-                    {_t(
-                        "Manage your signed-in devices below. " +
-                            "A device's name is visible to people you communicate with.",
-                    )}
-                </SettingsSubsectionText>
-                <DevicesPanel />
-                <LoginWithQRSection
-                    onShowQr={this.onShowQRClicked}
-                    versions={this.state.versions}
-                    capabilities={this.state.capabilities}
-                />
-            </SettingsSection>
-        );
-
-        const client = MatrixClientPeg.get();
-
-        if (this.state.showLoginWithQR) {
-            return (
-                <SettingsTab>
-                    <LoginWithQR
-                        onFinished={this.onLoginWithQRFinished}
-                        mode={this.state.showLoginWithQR}
-                        client={client}
-                    />
-                </SettingsTab>
-            );
-        }
-
         return (
             <SettingsTab>
                 {warning}
-                {devicesSection}
                 <SettingsSection heading={_t("Encryption")}>
                     {secureBackup}
                     {eventIndex}

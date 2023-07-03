@@ -16,11 +16,8 @@ limitations under the License.
 */
 
 import React, { useContext, useEffect, useState } from "react";
-import {
-    Phase,
-    VerificationRequest,
-    VerificationRequestEvent,
-} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { VerificationPhase as Phase, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import { useTypedEventEmitter, useTypedEventEmitterState } from "../../../../hooks/useEventEmitter";
@@ -86,7 +83,7 @@ const VerificationExplorer: Tool = ({ onBack }: IDevtoolsProps) => {
     const cli = useContext(MatrixClientContext);
     const context = useContext(DevtoolsContext);
 
-    const requests = useTypedEventEmitterState(cli, CryptoEvent.VerificationRequest, () => {
+    const requests = useTypedEventEmitterState(cli, CryptoEvent.VerificationRequestReceived, () => {
         return (
             cli.crypto?.inRoomVerificationRequests["requestsByRoomId"]?.get(context.room.roomId) ??
             new Map<string, VerificationRequest>()
