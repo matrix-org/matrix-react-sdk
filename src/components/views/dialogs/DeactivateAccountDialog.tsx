@@ -27,6 +27,7 @@ import StyledCheckbox from "../elements/StyledCheckbox";
 import BaseDialog from "./BaseDialog";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
+import { MatrixClient } from "matrix-js-sdk";
 
 type DialogAesthetics = Partial<{
     [x in AuthType]: {
@@ -109,7 +110,10 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         this.setState({ bodyText, continueText, continueKind });
     };
 
-    private onUIAuthFinished: InteractiveAuthCallback = (success, result) => {
+    private onUIAuthFinished: InteractiveAuthCallback<Awaited<ReturnType<MatrixClient["deactivateAccount"]>>> = (
+        success,
+        result,
+    ) => {
         if (success) return; // great! makeRequest() will be called too.
 
         if (result === ERROR_USER_CANCELLED) {
