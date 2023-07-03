@@ -49,7 +49,7 @@ export interface IMatrixClientCreds {
     identityServerUrl?: string;
     userId: string;
     deviceId?: string;
-    accessToken?: string;
+    accessToken: string;
     guest?: boolean;
     pickleKey?: string;
     freshLogin?: boolean;

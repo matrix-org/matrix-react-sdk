@@ -327,7 +327,7 @@ function registerAsGuest(hsUrl: string, isUrl?: string, defaultDeviceDisplayName
                     {
                         userId: creds.user_id,
                         deviceId: creds.device_id,
-                        accessToken: creds.access_token,
+                        accessToken: creds.access_token!,
                         homeserverUrl: hsUrl,
                         identityServerUrl: isUrl,
                         guest: true,
