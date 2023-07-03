@@ -62,10 +62,10 @@ describe("OIDC authorization", () => {
 
         jest.spyOn(randomStringUtils, "randomString").mockRestore();
 
-         // annoying to mock jwt decoding used in validateIdToken
-         jest.spyOn(OidcValidation, "validateIdToken")
-         .mockClear()
-         .mockImplementation(() => {});
+        // annoying to mock jwt decoding used in validateIdToken
+        jest.spyOn(OidcValidation, "validateIdToken")
+            .mockClear()
+            .mockImplementation(() => {});
     });
 
     afterAll(() => {
