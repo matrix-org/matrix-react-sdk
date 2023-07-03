@@ -34,7 +34,6 @@ import {
     RoomType,
     KNOWN_SAFE_ROOM_VERSION,
     ConditionKind,
-    PushRuleActionName,
     IPushRules,
     RelationType,
 } from "matrix-js-sdk/src/matrix";
@@ -60,6 +59,8 @@ import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/Matri
  * TODO: once the components are updated to get their MatrixClients from
  * the react context, we can get rid of this and just inject a test client
  * via the context instead.
+ *
+ * See also `getMockClientWithEventEmitter` which does something similar but different.
  */
 export function stubClient(): MatrixClient {
     const client = createTestClient();
@@ -794,7 +795,7 @@ export function muteRoom(room: Room): void {
                     pattern: room.roomId,
                 },
             ],
-            actions: [PushRuleActionName.DontNotify],
+            actions: [],
         },
     ];
 }
