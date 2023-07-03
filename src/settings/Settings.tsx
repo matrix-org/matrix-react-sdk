@@ -547,7 +547,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
             "feature_intentional_mentions",
             defaultWatchManager,
             [],
-            "v1.7"
+            "v1.7",
         ),
     },
     "useCompactLayout": {
