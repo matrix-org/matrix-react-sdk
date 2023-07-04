@@ -427,7 +427,6 @@
     "No Audio Outputs detected": "Nie wykryto wyjść audio",
     "Audio Output": "Wyjście audio",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Zauważ proszę, że logujesz się na serwer %(hs)s, nie matrix.org.",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "Ten serwer domowy nie oferuje żadnych trybów logowania wspieranych przez Twojego klienta.",
     "Notify the whole room": "Powiadom cały pokój",
     "Room Notification": "Powiadomienia pokoju",
     "Demote yourself?": "Zdegradować siebie?",

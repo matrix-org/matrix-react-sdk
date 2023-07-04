@@ -804,7 +804,6 @@
     "Start chatting": "Uzsākt saraksti",
     "Reject & Ignore user": "Noraidīt un ignorēt lietotāju",
     "Do you want to chat with %(user)s?": "Vai vēlaties sarakstīties ar %(user)s?",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "Šis bāzes serveris neatbalsta nevienu pierakstīšanās metodi, kuru atbalstītu šis klients.",
     "Explore rooms": "Pārlūkot istabas",
     "Confirm Security Phrase": "Apstipriniet slepeno frāzi",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Nodrošinieties pret piekļuves zaudēšanu šifrētām ziņām un datiem, dublējot šifrēšanas atslēgas savā serverī.",

@@ -381,7 +381,6 @@
     "Idle for %(duration)s": "Abwesend seit %(duration)s",
     "Offline for %(duration)s": "Offline seit %(duration)s",
     "Unknown for %(duration)s": "Unbekannt seit %(duration)s",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "Dieser Heim-Server verfügt über keines von dieser Anwendung unterstütztes Anmeldeverfahren.",
     "Call Failed": "Anruf fehlgeschlagen",
     "Send": "Senden",
     "collapse": "Verbergen",

@@ -385,7 +385,6 @@
     "Uploading %(filename)s and %(count)s others|zero": "正在上传 %(filename)s",
     "Uploading %(filename)s and %(count)s others|one": "正在上传 %(filename)s 与其他 %(count)s 个文件",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "请注意，你正在登录 %(hs)s，而非 matrix.org。",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "此家服务器不兼容本客户端支持的任何登录方式。",
     "Opens the Developer Tools dialog": "打开开发者工具窗口",
     "Notify the whole room": "通知房间全体成员",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "此操作允许你将加密房间中收到的消息的密钥导出为本地文件。你可以将文件导入其他 Matrix 客户端，以便让别的客户端在未收到密钥的情况下解密这些消息。",

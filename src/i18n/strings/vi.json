@@ -373,7 +373,6 @@
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Không thể kết nối với máy chủ - vui lòng kiểm tra kết nối của bạn, đảm bảo rằng chứng chỉ SSL của máy chủ nhà <a>homeserver's SSL certificate</a> của bạn được tin cậy và tiện ích mở rộng của trình duyệt không chặn các yêu cầu.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Không thể kết nối với máy chủ thông qua HTTP khi URL HTTPS nằm trong thanh trình duyệt của bạn. Sử dụng HTTPS hoặc bật các tập lệnh không an toàn <a>enable unsafe scripts</a>.",
     "There was a problem communicating with the homeserver, please try again later.": "Đã xảy ra sự cố khi giao tiếp với máy chủ, vui lòng thử lại sau.",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "Máy chủ nhà này không cung cấp bất kỳ luồng đăng nhập nào được hỗ trợ bởi ứng dụng khách này.",
     "Failed to perform homeserver discovery": "Không thể thực hiện khám phá máy chủ",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Xin lưu ý rằng bạn đang đăng nhập vào máy chủ %(hs)s, không phải matrix.org.",
     "Incorrect username and/or password.": "Tên người dùng và/hoặc mật khẩu không chính xác.",
