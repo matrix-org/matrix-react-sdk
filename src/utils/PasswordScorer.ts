@@ -74,9 +74,12 @@ export function scorePassword(
     if (matrixClient) {
         inputs.push(matrixClient.getUserIdLocalpart()!);
     }
-    const domain = MatrixClientPeg.getHomeserverName();
-    if (domain !== null) {
+
+    try {
+        const domain = MatrixClientPeg.getHomeserverName();
         inputs.push(domain);
+    } catch {
+        // This is fine
     }
 
     let zxcvbnResult = zxcvbn(password, inputs);
