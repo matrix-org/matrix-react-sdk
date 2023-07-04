@@ -17,11 +17,13 @@ yarn install --frozen-lockfile $@
 popd
 
 scripts/fetchdep.sh matrix-org matrix-analytics-events
-pushd matrix-analytics-events
-yarn link
-yarn install --frozen-lockfile $@
-yarn build:ts
-popd
+if [ -d matrix-analytics-events ]; then
+    pushd matrix-analytics-events
+    yarn link
+    yarn install --frozen-lockfile $@
+    yarn build:ts
+    popd
+fi
 
 yarn link matrix-js-sdk
 yarn link @matrix-org/analytics-events

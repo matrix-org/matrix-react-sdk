@@ -23,11 +23,13 @@ popd
 
 # Also set up matrix-analytics-events for branch with matching name
 scripts/fetchdep.sh matrix-org matrix-analytics-events
-pushd matrix-analytics-events
-yarn link
-yarn install --frozen-lockfile
-yarn build:ts
-popd
+if [ -d matrix-analytics-events ]; then
+    pushd matrix-analytics-events
+    yarn link
+    yarn install --frozen-lockfile
+    yarn build:ts
+    popd
+fi
 
 # Now set up the react-sdk
 yarn link matrix-js-sdk
