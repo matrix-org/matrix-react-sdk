@@ -40,6 +40,7 @@ import {
     mockClientMethodsUser,
 } from "../../test-utils";
 import * as leaveRoomUtils from "../../../src/utils/leave-behaviour";
+import { OidcClientError } from "../../../src/utils/oidc/error";
 
 describe("<MatrixChat />", () => {
     const userId = "@alice:server.org";
@@ -771,10 +772,13 @@ describe("<MatrixChat />", () => {
             expires_in: 12345,
         };
 
-        // for now when OIDC fails for any reason we just bump back to welcome
-        // error handling screens in https://github.com/vector-im/element-web/issues/25665
-        const expectOIDCError = async (): Promise<void> => {
+        const expectOIDCError = async (
+            errorMessage = "Something went wrong during authentication. Go to the sign in page and try again.",
+        ): Promise<void> => {
             await flushPromises();
+            const dialog = await screen.findByRole("dialog");
+
+            expect(within(dialog).getByText(errorMessage)).toBeInTheDocument();
             // just check we're back on welcome page
             expect(document.querySelector(".mx_Welcome")!).toBeInTheDocument();
         };
@@ -827,10 +831,13 @@ describe("<MatrixChat />", () => {
 
             expect(logger.error).toHaveBeenCalledWith(
                 "Failed to login via OIDC",
-                new Error("Cannot complete OIDC login: required properties not found in session storage"),
+                new Error(OidcClientError.StoredParamsNotFound),
             );
 
-            await expectOIDCError();
+            await expectOIDCError(
+                "We asked the browser to remember which homeserver you use to let you sign in, " +
+                    "but unfortunately your browser has forgotten it. Go to the sign in page and try again.",
+            );
         });
 
         it("should attempt to get access token", async () => {

@@ -23,6 +23,7 @@ import {
 import { QueryDict } from "matrix-js-sdk/src/utils";
 
 import { ValidatedDelegatedAuthConfig } from "../ValidatedServerConfig";
+import { OidcClientError } from "./error";
 
 /**
  * Store authorization params for retrieval when returning from OIDC OP
@@ -71,7 +72,7 @@ const validateStoredAuthorizationParams = (params: Partial<StoredAuthorizationPa
     ) {
         return params as StoredAuthorizationParams;
     }
-    throw new Error("Cannot complete OIDC login: required properties not found in session storage");
+    throw new Error(OidcClientError.StoredParamsNotFound);
 };
 
 const retrieveAuthorizationParams = (state: string): StoredAuthorizationParams => {
@@ -109,7 +110,6 @@ export const startOidcLogin = async (
     homeserverUrl: string,
     identityServerUrl?: string,
 ): Promise<void> => {
-    // TODO(kerrya) afterloginfragment https://github.com/vector-im/element-web/issues/25656
     const redirectUri = window.location.origin;
     const authParams = generateAuthorizationParams({ redirectUri });
 
@@ -136,7 +136,7 @@ const getCodeAndStateFromQueryParams = (queryParams: QueryDict): { code: string;
     const state = queryParams["state"];
 
     if (!code || typeof code !== "string" || !state || typeof state !== "string") {
-        throw new Error("Invalid query parameters for OIDC native login. `code` and `state` are required.");
+        throw new Error(OidcClientError.InvalidQueryParameters);
     }
     return { code, state };
 };

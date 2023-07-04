@@ -21,6 +21,7 @@ import * as randomStringUtils from "matrix-js-sdk/src/randomstring";
 import * as OidcValidation from "matrix-js-sdk/src/oidc/validate";
 
 import { completeOidcLogin, startOidcLogin } from "../../../src/utils/oidc/authorize";
+import { OidcClientError } from "../../../src/utils/oidc/error";
 
 describe("OIDC authorization", () => {
     const issuer = "https://auth.com/";
@@ -153,9 +154,7 @@ describe("OIDC authorization", () => {
         });
 
         it("should throw when query params do not include state and code", async () => {
-            expect(async () => await completeOidcLogin({})).rejects.toThrow(
-                "Invalid query parameters for OIDC native login. `code` and `state` are required.",
-            );
+            expect(async () => await completeOidcLogin({})).rejects.toThrow(OidcClientError.InvalidQueryParameters);
         });
 
         it("should throw when authorization params are not found in session storage", async () => {
@@ -165,7 +164,7 @@ describe("OIDC authorization", () => {
             };
 
             expect(async () => await completeOidcLogin(queryDict)).rejects.toThrow(
-                "Cannot complete OIDC login: required properties not found in session storage",
+                OidcClientError.StoredParamsNotFound,
             );
             // tried to retreive using state as part of storage key
             expect(sessionStorageGetSpy).toHaveBeenCalledWith(`oidc_${queryDict.state}_nonce`);
