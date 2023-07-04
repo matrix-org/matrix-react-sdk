@@ -396,7 +396,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                         flows: supportedFlows,
                     });
 
-                    if (!supportedFlows.length) {
+                    if (supportedFlows.length === 0) {
                         this.setState({
                             errorText: _t(
                                 "This homeserver doesn't offer any login flows that are supported by this client.",
