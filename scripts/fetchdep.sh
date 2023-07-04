@@ -82,4 +82,4 @@ fi
 # Try HEAD which is the branch name in Netlify (not BRANCH which is pull/xxxx/head for PR builds)
 clone $deforg $defrepo $HEAD
 # Use the default branch as the last resort.
-[ -n "$defbranch" ] && clone $deforg $defrepo $defbranch
+clone $deforg $defrepo $defbranch
