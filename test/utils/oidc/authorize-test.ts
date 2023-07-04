@@ -31,6 +31,7 @@ describe("startOidcLogin()", () => {
         registrationEndpoint: issuer + "registration",
         authorizationEndpoint,
         tokenEndpoint: issuer + "token",
+        revocationEndpoint: issuer + "revoke",
     };
 
     const sessionStorageGetSpy = jest.spyOn(sessionStorage.__proto__, "setItem").mockReturnValue(undefined);

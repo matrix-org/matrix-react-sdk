@@ -346,6 +346,7 @@ describe("Login", function () {
             registrationEndpoint: issuer + "register",
             tokenEndpoint: issuer + "token",
             authorizationEndpoint: issuer + "authorization",
+            revocationEndpoint: issuer + "revoke",
         };
         beforeEach(() => {
             jest.spyOn(logger, "error");

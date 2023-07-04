@@ -34,6 +34,7 @@ describe("getOidcClientId()", () => {
         registrationEndpoint,
         authorizationEndpoint: issuer + "auth",
         tokenEndpoint: issuer + "token",
+        revocationEndpoint: issuer + "revoke",
     };
 
     beforeEach(() => {
