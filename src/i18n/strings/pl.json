@@ -427,7 +427,6 @@
     "No Audio Outputs detected": "Nie wykryto wyjść audio",
     "Audio Output": "Wyjście audio",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Zauważ proszę, że logujesz się na serwer %(hs)s, nie matrix.org.",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "Ten serwer domowy nie oferuje żadnych trybów logowania wspieranych przez Twojego klienta.",
     "Notify the whole room": "Powiadom cały pokój",
     "Room Notification": "Powiadomienia pokoju",
     "Demote yourself?": "Zdegradować siebie?",
@@ -3731,5 +3730,9 @@
     "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Alternatywnie możesz spróbować użyć serwera publicznego <server/>, ale mogą wystąpić problemy i zostanie udostępniony Twój adres IP z serwerem. Zarządzaj tym również w Ustawieniach.",
     "Try using %(server)s": "Spróbuj użyć %(server)s",
     "User is not logged in": "Użytkownik nie jest zalogowany",
-    "Allow fallback call assist server (%(server)s)": "Zezwól na alternatywny serwer wspierający (%(server)s)"
+    "Allow fallback call assist server (%(server)s)": "Zezwól na alternatywny serwer wspierający (%(server)s)",
+    "Are you sure you wish to remove (delete) this event?": "Czy na pewno chcesz usunąć to wydarzenie?",
+    "Your server requires encryption to be disabled.": "Twój serwer wymaga wyłączenia szyfrowania.",
+    "Note that removing room changes like this could undo the change.": "Usuwanie zmian pokoju w taki sposób może cofnąć zmianę.",
+    "Enable new native OIDC flows (Under active development)": "Włącz natywne przepływy OIDC (W trakcie aktywnego rozwoju)"
 }

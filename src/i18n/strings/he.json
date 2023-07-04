@@ -2022,7 +2022,6 @@
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "לא ניתן להתחבר לשרת בית - אנא בדוק את הקישוריות שלך, וודא ש- <a> תעודת ה- SSL של שרת הביתה </a> שלך מהימנה ושהסיומת לדפדפן אינה חוסמת בקשות.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "לא ניתן להתחבר לשרת ביתי באמצעות HTTP כאשר כתובת HTTPS נמצאת בסרגל הדפדפן שלך. השתמש ב- HTTPS או <a> הפעל סקריפטים לא בטוחים </a>.",
     "There was a problem communicating with the homeserver, please try again later.": "הייתה תקשורת עם שרת הבית. נסה שוב מאוחר יותר.",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "שרת בית זה אינו מציע זרמי התחברות הנתמכים על ידי לקוח זה.",
     "Failed to perform homeserver discovery": "נכשל גילוי שרת הבית",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "שים לב שאתה מתחבר לשרת %(hs)s, לא ל- matrix.org.",
     "Incorrect username and/or password.": "שם משתמש ו / או סיסמה שגויים.",
