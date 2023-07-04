@@ -3731,5 +3731,9 @@
     "Try using %(server)s": "Prova ad usare %(server)s",
     "User is not logged in": "Utente non connesso",
     "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "In alternativa puoi provare ad usare il server pubblico <server/>, ma non è molto affidabile e il tuo indirizzo IP verrà condiviso con tale server. Puoi gestire questa cosa nelle impostazioni.",
-    "Allow fallback call assist server (%(server)s)": "Permetti server di chiamata di ripiego (%(server)s)"
+    "Allow fallback call assist server (%(server)s)": "Permetti server di chiamata di ripiego (%(server)s)",
+    "Enable new native OIDC flows (Under active development)": "Attiva i nuovi flussi OIDC nativi (in sviluppo attivo)",
+    "Your server requires encryption to be disabled.": "Il tuo server richiede di disattivare la crittografia.",
+    "Are you sure you wish to remove (delete) this event?": "Vuoi davvero rimuovere (eliminare) questo evento?",
+    "Note that removing room changes like this could undo the change.": "Nota che la rimozione delle modifiche della stanza come questa può annullare la modifica."
 }
