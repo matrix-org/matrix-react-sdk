@@ -9,14 +9,14 @@
 
 set -ex
 
-scripts/fetchdep.sh matrix-org matrix-js-sdk
+scripts/fetchdep.sh matrix-org matrix-js-sdk develop
 pushd matrix-js-sdk
 [ -n "$JS_SDK_GITHUB_BASE_REF" ] && git fetch --depth 1 origin $JS_SDK_GITHUB_BASE_REF && git checkout $JS_SDK_GITHUB_BASE_REF
 yarn link
 yarn install --frozen-lockfile $@
 popd
 
-scripts/fetchdep.sh matrix-org matrix-analytics-events main
+scripts/fetchdep.sh matrix-org matrix-analytics-events
 pushd matrix-analytics-events
 yarn link
 yarn install --frozen-lockfile $@

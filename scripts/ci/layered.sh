@@ -14,16 +14,15 @@ set -ex
 # for the primary repo (react-sdk in this case).
 
 # Set up the js-sdk first
-scripts/fetchdep.sh matrix-org matrix-js-sdk
+scripts/fetchdep.sh matrix-org matrix-js-sdk develop
 pushd matrix-js-sdk
 [ -n "$JS_SDK_GITHUB_BASE_REF" ] && git fetch --depth 1 origin $JS_SDK_GITHUB_BASE_REF && git checkout $JS_SDK_GITHUB_BASE_REF
 yarn link
 yarn install --frozen-lockfile
 popd
 
-# Also set up matrix-analytics-events so we get the latest from
-# the main branch or a branch with matching name
-scripts/fetchdep.sh matrix-org matrix-analytics-events main
+# Also set up matrix-analytics-events for branch with matching name
+scripts/fetchdep.sh matrix-org matrix-analytics-events
 pushd matrix-analytics-events
 yarn link
 yarn install --frozen-lockfile
@@ -37,7 +36,7 @@ yarn link
 yarn install --frozen-lockfile
 
 # Finally, set up element-web
-scripts/fetchdep.sh vector-im element-web
+scripts/fetchdep.sh vector-im element-web develop
 pushd element-web
 yarn link matrix-js-sdk
 yarn link matrix-react-sdk

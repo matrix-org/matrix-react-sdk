@@ -6,8 +6,6 @@ deforg="$1"
 defrepo="$2"
 defbranch="$3"
 
-[ -z "$defbranch" ] && defbranch="develop"
-
 rm -r "$defrepo" || true
 
 # figure out where to look for pull requests:
@@ -84,4 +82,4 @@ fi
 # Try HEAD which is the branch name in Netlify (not BRANCH which is pull/xxxx/head for PR builds)
 clone $deforg $defrepo $HEAD
 # Use the default branch as the last resort.
-clone $deforg $defrepo $defbranch
+[ -n "$defbranch" ] && clone $deforg $defrepo $defbranch
