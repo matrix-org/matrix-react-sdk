@@ -3731,5 +3731,9 @@
     "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Alternatiivina võid sa kasutada avalikku serverit <server/>, kuid see ei pruugi olla piisavalt töökindel ning sa jagad ka oma IP-aadressi selle serveriga. Täpsemalt saad seda määrata seadistustes.",
     "User is not logged in": "Kasutaja pole võrku loginud",
     "Allow fallback call assist server (%(server)s)": "Varuvariandina luba kasutada ka teist kõnehõlbustusserverit (%(server)s)",
-    "Try using %(server)s": "Proovi kasutada %(server)s serverit"
+    "Try using %(server)s": "Proovi kasutada %(server)s serverit",
+    "Enable new native OIDC flows (Under active development)": "Luba OIDC liidestus (aktiivselt arendamisel)",
+    "Your server requires encryption to be disabled.": "Sinu server eeldab, et krüptimine on välja lülitatud.",
+    "Are you sure you wish to remove (delete) this event?": "Kas sa oled kindel, et soovid kustutada selle sündmuse?",
+    "Note that removing room changes like this could undo the change.": "Palun arvesta jututoa muudatuste eemaldamine võib eemaldada ka selle muutuse."
 }
