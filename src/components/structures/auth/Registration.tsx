@@ -19,7 +19,8 @@ import React, { Fragment, ReactNode } from "react";
 import { IRegisterRequestParams, IRequestTokenResponse, MatrixClient } from "matrix-js-sdk/src/client";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ISSOFlow, RegisterResponse, SSOAction } from "matrix-js-sdk/src/@types/auth";
+import { ISSOFlow, SSOAction } from "matrix-js-sdk/src/@types/auth";
+import { RegisterResponse } from "matrix-js-sdk/src/@types/registration";
 
 import { _t } from "../../../languageHandler";
 import { adminContactStrings, messageForResourceLimitError, resourceLimitStrings } from "../../../utils/ErrorUtils";
