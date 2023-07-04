@@ -35,7 +35,7 @@ fi
 
 # Now set up the react-sdk
 yarn link matrix-js-sdk
-yarn link @matrix-org/analytics-events
+[ -d matrix-analytics-events ] && yarn link @matrix-org/analytics-events
 yarn link
 yarn install --frozen-lockfile
 

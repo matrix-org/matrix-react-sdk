@@ -28,5 +28,5 @@ if [ -d matrix-analytics-events ]; then
 fi
 
 yarn link matrix-js-sdk
-yarn link @matrix-org/analytics-events
+[ -d matrix-analytics-events ] && yarn link @matrix-org/analytics-events
 yarn install --frozen-lockfile $@
