@@ -209,7 +209,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
             type: "m.room.encryption",
             state_key: "",
             content: {
-                algorithm: opts.useMls ? "org.matrix.msc2883.v0.mls.dhkemx25519-aes128gcm-sha256-ed25519" : "m.megolm.v1.aes-sha2",
+                algorithm: opts.useMls ? "org.matrix.msc2883.v0.dmls.dhkemx25519-aes128gcm-sha256-ed25519" : "m.megolm.v1.aes-sha2",
             },
         });
     }
