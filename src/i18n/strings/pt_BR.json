@@ -389,7 +389,6 @@
     "Warning": "Atenção",
     "Check for update": "Verificar atualizações",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Note que você está se conectando ao servidor %(hs)s, e não ao servidor matrix.org.",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "Este servidor de base (homeserver) não oferece fluxos de login que funcionem neste cliente.",
     "Define the power level of a user": "Define o nível de permissões de um usuário",
     "Ignores a user, hiding their messages from you": "Bloqueia um usuário, escondendo as mensagens dele de você",
     "Stops ignoring a user, showing their messages going forward": "Desbloqueia um usuário, exibindo as mensagens dele daqui para frente",

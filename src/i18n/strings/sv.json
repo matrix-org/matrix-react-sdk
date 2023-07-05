@@ -349,7 +349,6 @@
     "Success": "Lyckades",
     "Unable to remove contact information": "Kunde inte ta bort kontaktuppgifter",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Observera att du loggar in på servern %(hs)s, inte matrix.org.",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "Denna hemserver erbjuder inga inloggningsflöden som stöds av den här klienten.",
     "Copied!": "Kopierat!",
     "Failed to copy": "Misslyckades att kopiera",
     "Delete Widget": "Radera widget",
