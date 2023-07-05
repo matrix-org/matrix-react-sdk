@@ -368,7 +368,6 @@
     "Return to login screen": "Врати ме на екран за пријаву",
     "Incorrect username and/or password.": "Нетачно корисничко име и/или лозинка.",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Знајте да се пријављујете на сервер %(hs)s, не на matrix.org.",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "Овај домаћи сервер не пружа било који начин пријаве унутар овог клијента.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Не могу да се повежем на сервер преко ХТТП када је ХТТПС УРЛ у траци вашег прегледача. Или користите HTTPS или <a>омогућите небезбедне скрипте</a>.",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Не могу да се повежем на домаћи сервер. Проверите вашу интернет везу, постарајте се да је <a>ССЛ сертификат сервера</a> од поверења и да проширење прегледача не блокира захтеве.",
     "This server does not support authentication with a phone number.": "Овај сервер не подржава идентификацију преко броја мобилног.",
