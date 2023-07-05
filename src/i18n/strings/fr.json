@@ -381,7 +381,6 @@
     "Idle for %(duration)s": "Inactif depuis %(duration)s",
     "Offline for %(duration)s": "Hors ligne depuis %(duration)s",
     "Unknown for %(duration)s": "Inconnu depuis %(duration)s",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "Ce serveur d’accueil n’offre aucune méthode d’identification compatible avec ce client.",
     "expand": "développer",
     "collapse": "réduire",
     "Call Failed": "L’appel a échoué",

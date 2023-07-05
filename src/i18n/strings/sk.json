@@ -386,7 +386,6 @@
     "expand": "rozbaliť",
     "Old cryptography data detected": "Nájdené zastaralé kryptografické údaje",
     "Warning": "Upozornenie",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "Tento domovský server neponúka žiadny prihlasovací mechanizmus podporovaný vašim klientom.",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Túto zmenu nebudete môcť vrátiť späť, pretože sa degradujete, a ak ste posledným privilegovaným používateľom v miestnosti, nebude možné získať oprávnenia späť.",
     "Send an encrypted reply…": "Odoslať šifrovanú odpoveď…",
@@ -3731,5 +3730,9 @@
     "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Prípadne môžete skúsiť použiť verejný server na adrese <server/>, ale nebude to tak spoľahlivé a vaša IP adresa bude zdieľaná s týmto serverom. Môžete to spravovať aj v nastaveniach.",
     "Try using %(server)s": "Skúste použiť %(server)s",
     "User is not logged in": "Používateľ nie je prihlásený",
-    "Allow fallback call assist server (%(server)s)": "Povoliť náhradnú službu hovorov asistenčného servera (%(server)s)"
+    "Allow fallback call assist server (%(server)s)": "Povoliť náhradnú službu hovorov asistenčného servera (%(server)s)",
+    "Enable new native OIDC flows (Under active development)": "Povoliť nové natívne toky OIDC (v štádiu aktívneho vývoja)",
+    "Your server requires encryption to be disabled.": "Váš server vyžaduje vypnuté šifrovanie.",
+    "Are you sure you wish to remove (delete) this event?": "Ste si istí, že chcete túto udalosť odstrániť (vymazať)?",
+    "Note that removing room changes like this could undo the change.": "Upozorňujeme, že odstránením takýchto zmien v miestnosti by sa zmena mohla zvrátiť."
 }
