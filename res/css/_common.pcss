@@ -820,7 +820,7 @@ legend {
     }
 }
 
-@define-mixin composerButton $border-radius, $hover-color {
+@define-mixin composerButton $border-radius, $hover-color, $hover-bg {
     --size: 26px;
     position: relative;
     cursor: pointer;
@@ -841,6 +841,7 @@ legend {
         mask-repeat: no-repeat;
         mask-size: contain;
         mask-position: center;
+        z-index: 2;
     }
 
     &::after {
@@ -856,7 +857,7 @@ legend {
 
     &:hover {
         &::after {
-            background: var(--cpd-color-bg-action-secondary-hovered);
+            background: $hover-bg;
         }
 
         &::before {
