@@ -20,7 +20,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { ISSOFlow, SSOAction } from "matrix-js-sdk/src/@types/auth";
 
 import { _t, _td, UserFriendlyError } from "../../../languageHandler";
-import Login, { ClientLoginFlow } from "../../../Login";
+import Login, { ClientLoginFlow, OidcNativeFlow } from "../../../Login";
 import { messageForConnectionError, messageForLoginError } from "../../../utils/ErrorUtils";
 import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 import AuthPage from "../../views/auth/AuthPage";
@@ -39,6 +39,7 @@ import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleBu
 import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 import { filterBoolean } from "../../../utils/arrays";
 import { Features } from "../../../settings/Settings";
+import { startOidcLogin } from "../../../utils/oidc/authorize";
 
 // These are used in several places, and come from the js-sdk's autodiscovery
 // stuff. We define them here so that they'll be picked up by i18n.
@@ -146,6 +147,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             "m.login.cas": () => this.renderSsoStep("cas"),
             // eslint-disable-next-line @typescript-eslint/naming-convention
             "m.login.sso": () => this.renderSsoStep("sso"),
+            "oidcNativeFlow": () => this.renderOidcNativeStep(),
         };
     }
 
@@ -390,19 +392,17 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                     // look for a flow where we understand all of the steps.
                     const supportedFlows = flows.filter(this.isSupportedFlow);
 
-                    if (supportedFlows.length > 0) {
-                        this.setState({
-                            flows: supportedFlows,
-                        });
-                        return;
-                    }
-
-                    // we got to the end of the list without finding a suitable flow.
                     this.setState({
-                        errorText: _t(
-                            "This homeserver doesn't offer any login flows which are supported by this client.",
-                        ),
+                        flows: supportedFlows,
                     });
+
+                    if (supportedFlows.length === 0) {
+                        this.setState({
+                            errorText: _t(
+                                "This homeserver doesn't offer any login flows that are supported by this client.",
+                            ),
+                        });
+                    }
                 },
                 (err) => {
                     this.setState({
@@ -433,7 +433,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         if (!this.state.flows) return null;
 
         // this is the ideal order we want to show the flows in
-        const order = ["m.login.password", "m.login.sso"];
+        const order = ["oidcNativeFlow", "m.login.password", "m.login.sso"];
 
         const flows = filterBoolean(order.map((type) => this.state.flows?.find((flow) => flow.type === type)));
         return (
@@ -463,6 +463,25 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 disableSubmit={this.isBusy()}
                 busy={this.props.isSyncing || this.state.busyLoggingIn}
             />
+        );
+    };
+
+    private renderOidcNativeStep = (): React.ReactNode => {
+        const flow = this.state.flows!.find((flow) => flow.type === "oidcNativeFlow")! as OidcNativeFlow;
+        return (
+            <AccessibleButton
+                className="mx_Login_fullWidthButton"
+                kind="primary"
+                onClick={async () => {
+                    await startOidcLogin(
+                        this.props.serverConfig.delegatedAuthentication!,
+                        flow.clientId,
+                        this.props.serverConfig.hsUrl,
+                    );
+                }}
+            >
+                {_t("Continue")}
+            </AccessibleButton>
         );
     };
 
