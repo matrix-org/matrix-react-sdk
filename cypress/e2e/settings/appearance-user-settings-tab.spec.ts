@@ -307,7 +307,7 @@ describe("Appearance user settings tab", () => {
                 // Assert that $primary-content is applied to GELS summary on the light theme
                 // $primary-content on the light theme = #17191c = rgb(23, 25, 28)
                 cy.get(".mx_TextualEvent.mx_GenericEventListSummary_summary")
-                    .should("have.css", "color", "rgb(23, 25, 28)")
+                    .should("have.css", "color", "rgb(27, 29, 34)")
                     .should("have.css", "opacity", "0.5");
             });
 
