@@ -202,6 +202,20 @@ describe("TimelinePanel", () => {
             content: createMessageEventContent("hello 2"),
         });
 
+        const renderTimelinePanelWithoutManagingReadMarkers = async (): Promise<void> => {
+            const ref = createRef<TimelinePanel>();
+            render(
+                <TimelinePanel
+                    timelineSet={timelineSet}
+                    manageReadMarkers={false}
+                    manageReadReceipts={true}
+                    ref={ref}
+                />,
+            );
+            await flushPromises();
+            timelinePanel = ref.current!;
+        };
+
         const renderTimelinePanel = async (): Promise<void> => {
             const ref = createRef<TimelinePanel>();
             render(
@@ -257,6 +271,13 @@ describe("TimelinePanel", () => {
         describe("when there is a non-threaded timeline", () => {
             beforeEach(() => {
                 setUpTimelineSet();
+            });
+
+            describe("and the client does not manage read markers", () => {
+                it("the read marker is never up-to-date", async () => {
+                    await renderTimelinePanelWithoutManagingReadMarkers();
+                    expect(timelinePanel.isReadMarkerUpToDate()).toBe(false);
+                });
             });
 
             describe("and receiving an event", () => {
