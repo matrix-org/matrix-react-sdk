@@ -82,7 +82,7 @@ const RoomStateHistory: React.FC<{
             <>
                 {events.map((ev) => (
                     <SyntaxHighlight language="json" key={ev.event_id}>
-                        {stringify(mxEvent.event)}
+                        {stringify(ev)}
                     </SyntaxHighlight>
                 ))}
             </>
