@@ -85,7 +85,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         const compatEvent = room.currentState.getStateEvents(COMPAT_STATE.name, "");
         const compat = compatEvent ? compatEvent.getContent().isCompat || false : false;
 
-        const imagePackEvent = room.currentState.getStateEvents(EMOTES_COMP.name, "");
+        const imagePackEvent = room.currentState.getStateEvents(EMOTES_COMP.name, "Element Compatible Emotes");
         this.imagePack = imagePackEvent ? imagePackEvent.getContent() || { images: {} } : { images: {} };
         if (!this.imagePack["images"]) {
             this.imagePack["images"] = {};
@@ -231,7 +231,12 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                 this.imagePack["images"][key] = val;
             }
 
-            await client.sendStateEvent(this.props.roomId, EMOTES_COMP.name, this.imagePack, "");
+            await client.sendStateEvent(
+                this.props.roomId,
+                EMOTES_COMP.name,
+                this.imagePack,
+                "Element Compatible Emotes",
+            );
 
             newState.newEmoteFileAdded = false;
             newState.newEmoteCodeAdded = false;
@@ -325,7 +330,12 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                 }
             }
 
-            await client.sendStateEvent(this.props.roomId, EMOTES_COMP.name, this.imagePack, "");
+            await client.sendStateEvent(
+                this.props.roomId,
+                EMOTES_COMP.name,
+                this.imagePack,
+                "Element Compatible Emotes",
+            );
         }
 
         this.setState({

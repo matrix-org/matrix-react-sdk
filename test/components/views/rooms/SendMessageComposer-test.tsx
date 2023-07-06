@@ -625,7 +625,7 @@ describe("<SendMessageComposer/>", () => {
                     sender: "@sender:server",
                     room_id: room.roomId,
                     type: EMOTES_COMP.name,
-                    state_key: "",
+                    state_key: "Element Compatible Emotes",
                     content: {
                         images: {
                             testEmote: {

@@ -270,7 +270,7 @@ describe("EmoteSettingsTab", () => {
                     },
                 },
             },
-            "",
+            "Element Compatible Emotes",
         );
     });
 
@@ -296,7 +296,7 @@ describe("EmoteSettingsTab", () => {
                     sender: "@sender:server",
                     room_id: roomId,
                     type: EMOTES_STATE.name,
-                    state_key: "",
+                    state_key: "Element Compatible Emotes",
                     content: {
                         images: {
                             testEmote: {
@@ -326,7 +326,7 @@ describe("EmoteSettingsTab", () => {
                     },
                 },
             },
-            "",
+            "Element Compatible Emotes",
         );
     });
 
@@ -355,7 +355,7 @@ describe("EmoteSettingsTab", () => {
             roomId,
             EMOTES_COMP.name,
             { images: { coolnewemotecustomname: { url: "http://this.is.a.url/server/custom-emote-123.png" } } },
-            "",
+            "Element Compatible Emotes",
         );
     });
 
@@ -379,7 +379,7 @@ describe("EmoteSettingsTab", () => {
                     sender: "@sender:server",
                     room_id: roomId,
                     type: EMOTES_COMP.name,
-                    state_key: "",
+                    state_key: "Element Compatible Emotes",
                     content: {
                         images: {
                             testEmote: {
@@ -393,7 +393,7 @@ describe("EmoteSettingsTab", () => {
                 return new MatrixEvent({
                     sender: "@sender:server",
                     room_id: roomId,
-                    type: EMOTES_COMP.name,
+                    type: COMPAT_STATE.name,
                     state_key: "",
                     content: {
                         isCompat: true,

@@ -321,7 +321,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         const compatEvent = room.currentState.getStateEvents(COMPAT_STATE.name, "");
         this.compat = compatEvent ? compatEvent.getContent().isCompat || false : false;
 
-        const imagePackEvent = room.currentState.getStateEvents(EMOTES_COMP.name, "");
+        const imagePackEvent = room.currentState.getStateEvents(EMOTES_COMP.name, "Element Compatible Emotes");
         this.imagePack = imagePackEvent?.getContent() ?? { images: {} };
         this.emotes = new Map<string, string>();
         if (!this.imagePack["images"]) {
