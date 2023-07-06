@@ -381,7 +381,6 @@
     "Offline for %(duration)s": "Не в сети %(duration)s",
     "Idle for %(duration)s": "Неактивен %(duration)s",
     "Unknown for %(duration)s": "Неизвестно %(duration)s",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "Этот домашний сервер не предлагает ни один метод входа, поддерживаемый клиентом.",
     "Call Failed": "Звонок не удался",
     "Send": "Отправить",
     "collapse": "свернуть",
