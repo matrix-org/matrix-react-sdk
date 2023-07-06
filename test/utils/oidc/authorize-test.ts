@@ -21,21 +21,16 @@ import * as randomStringUtils from "matrix-js-sdk/src/randomstring";
 import * as OidcValidation from "matrix-js-sdk/src/oidc/validate";
 
 import { completeOidcLogin, startOidcLogin } from "../../../src/utils/oidc/authorize";
+import { makeDelegatedAuthConfig, mockOpenIdConfiguration } from "../../test-utils/oidc";
 
 describe("OIDC authorization", () => {
     const issuer = "https://auth.com/";
-    const authorizationEndpoint = "https://auth.com/authorization";
     const homeserver = "https://matrix.org";
     const identityServerUrl = "https://is.org";
     const clientId = "xyz789";
     const baseUrl = "https://test.com";
 
-    const delegatedAuthConfig = {
-        issuer,
-        registrationEndpoint: issuer + "registration",
-        authorizationEndpoint,
-        tokenEndpoint: issuer + "token",
-    };
+    const delegatedAuthConfig = makeDelegatedAuthConfig(issuer);
 
     const sessionStorageSetSpy = jest.spyOn(sessionStorage.__proto__, "setItem").mockReturnValue(undefined);
     const sessionStorageGetSpy = jest.spyOn(sessionStorage.__proto__, "getItem").mockReturnValue(undefined);
@@ -60,6 +55,10 @@ describe("OIDC authorization", () => {
             origin: baseUrl,
         };
 
+        fetchMockJest.get(
+            delegatedAuthConfig.metadata.issuer + ".well-known/openid-configuration",
+            mockOpenIdConfiguration(),
+        );
         jest.spyOn(randomStringUtils, "randomString").mockRestore();
 
         // annoying to mock jwt decoding used in validateIdToken
@@ -82,15 +81,11 @@ describe("OIDC authorization", () => {
             expect(sessionStorageSetSpy).toHaveBeenCalledWith(`oidc_${state}_nonce`, randomStringUtils.randomString(8));
             expect(sessionStorageSetSpy).toHaveBeenCalledWith(`oidc_${state}_redirectUri`, baseUrl);
             expect(sessionStorageSetSpy).toHaveBeenCalledWith(
-                `oidc_${state}_codeVerifier`,
-                randomStringUtils.randomString(64),
+                `oidc_${state}_issuer`,
+                delegatedAuthConfig.issuer,
             );
             expect(sessionStorageSetSpy).toHaveBeenCalledWith(`oidc_${state}_clientId`, clientId);
             expect(sessionStorageSetSpy).toHaveBeenCalledWith(`oidc_${state}_homeserverUrl`, homeserver);
-            expect(sessionStorageSetSpy).toHaveBeenCalledWith(
-                `oidc_${state}_delegatedAuthConfig`,
-                JSON.stringify(delegatedAuthConfig),
-            );
         });
 
         it("navigates to authorization endpoint with correct parameters", async () => {

@@ -52,6 +52,7 @@ export const getOidcClientId = async (
     baseUrl: string,
     staticOidcClients?: IConfigOptions["oidc_static_clients"],
 ): Promise<string> => {
+    console.log("hhh dele", delegatedAuthConfig);
     const staticClientId = getStaticOidcClientId(delegatedAuthConfig.issuer, staticOidcClients);
     if (staticClientId) {
         logger.debug(`Using static clientId for issuer ${delegatedAuthConfig.issuer}`);

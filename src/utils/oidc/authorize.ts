@@ -21,40 +21,18 @@ import {
     completeAuthorizationCodeGrant,
 } from "matrix-js-sdk/src/oidc/authorize";
 import { QueryDict } from "matrix-js-sdk/src/utils";
+import { OidcClientConfig } from "matrix-js-sdk/src/autodiscovery";
+import { IDelegatedAuthConfig } from "matrix-js-sdk/src/client";
+import { generateOidcAuthorizationUrl } from "matrix-js-sdk/src/oidc/authorize";
+import { randomString } from "matrix-js-sdk/src/randomstring";
 
-import { ValidatedDelegatedAuthConfig } from "../ValidatedServerConfig";
 
-/**
- * Store authorization params for retrieval when returning from OIDC OP
- * @param authorizationParams from `generateAuthorizationParams`
- * @param delegatedAuthConfig used for future interactions with OP
- * @param clientId this client's id as registered with configured issuer
- * @param homeserver target homeserver
- */
-const storeAuthorizationParams = (
-    { redirectUri, state, nonce, codeVerifier }: AuthorizationParams,
-    delegatedAuthConfig: ValidatedDelegatedAuthConfig,
-    clientId: string,
-    homeserverUrl: string,
-    identityServerUrl?: string,
-): void => {
-    window.sessionStorage.setItem(`oidc_${state}_nonce`, nonce);
-    window.sessionStorage.setItem(`oidc_${state}_redirectUri`, redirectUri);
-    window.sessionStorage.setItem(`oidc_${state}_codeVerifier`, codeVerifier);
-    window.sessionStorage.setItem(`oidc_${state}_clientId`, clientId);
-    window.sessionStorage.setItem(`oidc_${state}_delegatedAuthConfig`, JSON.stringify(delegatedAuthConfig));
-    window.sessionStorage.setItem(`oidc_${state}_homeserverUrl`, homeserverUrl);
-    if (identityServerUrl) {
-        window.sessionStorage.setItem(`oidc_${state}_identityServerUrl`, identityServerUrl);
-    }
-};
-
-type StoredAuthorizationParams = Omit<ReturnType<typeof generateAuthorizationParams>, "state" | "scope"> & {
-    delegatedAuthConfig: ValidatedDelegatedAuthConfig;
-    clientId: string;
+type StoredAuthorizationParams  = IDelegatedAuthConfig & {
+    nonce: string;
     homeserverUrl: string;
-    identityServerUrl: string;
-};
+    identityServerUrl?: string;
+    clientId: string;
+}
 
 /**
  * Validate that stored params are present and valid
@@ -63,11 +41,10 @@ type StoredAuthorizationParams = Omit<ReturnType<typeof generateAuthorizationPar
  * @throws when params are invalid or missing
  */
 const validateStoredAuthorizationParams = (params: Partial<StoredAuthorizationParams>): StoredAuthorizationParams => {
-    const requiredStringProperties = ["nonce", "redirectUri", "codeVerifier", "clientId", "homeserverUrl"];
+    const requiredStringProperties = ["nonce", "clientId", "homeserverUrl", "issuer"];
     if (
         requiredStringProperties.every((key: string) => params[key] && typeof params[key] === "string") &&
-        (params.identityServerUrl === undefined || typeof params.identityServerUrl === "string") &&
-        !!params.delegatedAuthConfig
+        (params.identityServerUrl === undefined || typeof params.identityServerUrl === "string")
     ) {
         return params as StoredAuthorizationParams;
     }
@@ -75,23 +52,44 @@ const validateStoredAuthorizationParams = (params: Partial<StoredAuthorizationPa
 };
 
 const retrieveAuthorizationParams = (state: string): StoredAuthorizationParams => {
-    const nonce = window.sessionStorage.getItem(`oidc_${state}_nonce`);
-    const redirectUri = window.sessionStorage.getItem(`oidc_${state}_redirectUri`);
-    const codeVerifier = window.sessionStorage.getItem(`oidc_${state}_codeVerifier`);
-    const clientId = window.sessionStorage.getItem(`oidc_${state}_clientId`);
-    const homeserverUrl = window.sessionStorage.getItem(`oidc_${state}_homeserverUrl`);
-    const identityServerUrl = window.sessionStorage.getItem(`oidc_${state}_identityServerUrl`) ?? undefined;
-    const delegatedAuthConfig = window.sessionStorage.getItem(`oidc_${state}_delegatedAuthConfig`);
+    const nonce = window.sessionStorage.getItem(`mx_oidc_${state}_nonce`);
+    const issuer = window.sessionStorage.getItem(`mx_oidc_${state}_issuer`);
+    const account = window.sessionStorage.getItem(`mx_oidc_${state}_account`) ?? undefined;
+    const clientId = window.sessionStorage.getItem(`mx_oidc_${state}_clientId`);
+    const homeserverUrl = window.sessionStorage.getItem(`mx_oidc_${state}_homeserverUrl`);
+    const identityServerUrl = window.sessionStorage.getItem(`mx_oidc_${state}_identityServerUrl`) ?? undefined;
 
-    return validateStoredAuthorizationParams({
+    console.log('hhh', state, {
         nonce,
-        redirectUri,
-        codeVerifier,
         clientId,
         homeserverUrl,
         identityServerUrl,
-        delegatedAuthConfig: delegatedAuthConfig ? JSON.parse(delegatedAuthConfig) : undefined,
+        issuer,
+        account,
+    })
+
+    return validateStoredAuthorizationParams({
+        nonce,
+        clientId,
+        homeserverUrl,
+        identityServerUrl,
+        issuer,
+        account,
     });
+}
+
+const persistAuthorizationParams = (state, {
+    nonce, homeserverUrl, identityServerUrl, issuer, account, clientId
+}: StoredAuthorizationParams): void => {
+    // persist hs url and is url for when the user is returned to the app
+    sessionStorage.setItem(`mx_oidc_${state}_nonce`, nonce);
+    sessionStorage.setItem(`mx_oidc_${state}_issuer`, issuer);
+    sessionStorage.setItem(`mx_oidc_${state}_account`, account);
+    sessionStorage.setItem(`mx_oidc_${state}_clientId`, clientId);
+    sessionStorage.setItem(`mx_oidc_${state}_homeserverUrl`, homeserverUrl);
+    if (identityServerUrl) {
+        sessionStorage.setItem(`mx_oidc_${state}_identityServerUrl`, identityServerUrl);
+    }
 };
 
 /**
@@ -100,26 +98,39 @@ const retrieveAuthorizationParams = (state: string): StoredAuthorizationParams =
  * Navigates to configured authorization endpoint
  * @param delegatedAuthConfig from discovery
  * @param clientId this client's id as registered with configured issuer
- * @param homeserver target homeserver
+ * @param homeserverUrl target homeserver
+ * @param identityServerUrl OPTIONAL target identity server
  * @returns Promise that resolves after we have navigated to auth endpoint
  */
 export const startOidcLogin = async (
-    delegatedAuthConfig: ValidatedDelegatedAuthConfig,
+    delegatedAuthConfig: OidcClientConfig,
     clientId: string,
     homeserverUrl: string,
     identityServerUrl?: string,
 ): Promise<void> => {
-    // TODO(kerrya) afterloginfragment https://github.com/vector-im/element-web/issues/25656
     const redirectUri = window.location.origin;
-    const authParams = generateAuthorizationParams({ redirectUri });
 
-    storeAuthorizationParams(authParams, delegatedAuthConfig, clientId, homeserverUrl, identityServerUrl);
+    const nonce = randomString(10);
+    const state = randomString(8);
 
-    const authorizationUrl = await generateAuthorizationUrl(
-        delegatedAuthConfig.authorizationEndpoint,
+    
+    const authorizationUrl = await generateOidcAuthorizationUrl({
+        metadata: delegatedAuthConfig.metadata,
+        redirectUri,
         clientId,
-        authParams,
-    );
+        homeserverUrl,
+        nonce,
+        state,
+    });
+
+    persistAuthorizationParams(state, {
+        nonce,
+        issuer: delegatedAuthConfig.issuer,
+        account: delegatedAuthConfig.account,
+        homeserverUrl,
+        identityServerUrl,
+        clientId
+    });
 
     window.location.href = authorizationUrl;
 };
@@ -156,9 +167,9 @@ export const completeOidcLogin = async (
 }> => {
     const { code, state } = getCodeAndStateFromQueryParams(queryParams);
 
-    const storedAuthorizationParams = retrieveAuthorizationParams(state);
+    // const storedAuthorizationParams = retrieveAuthorizationParams(state);
 
-    const bearerTokenResponse = await completeAuthorizationCodeGrant(code, storedAuthorizationParams);
+    const bearerTokenResponse = await completeAuthorizationCodeGrant(code);
     // @TODO(kerrya) do something with the refresh token https://github.com/vector-im/element-web/issues/25444
     return {
         homeserverUrl: storedAuthorizationParams.homeserverUrl,
