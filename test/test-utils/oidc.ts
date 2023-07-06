@@ -22,7 +22,7 @@ import { ValidatedIssuerMetadata } from "matrix-js-sdk/src/oidc/validate";
  * @param issuer used as the base for all other urls
  * @returns OidcClientConfig
  */
-export const makeDelegatedAuthConfig = (issuer = "https://auth.org/"): OidcClientConfig => {
+ export const makeDelegatedAuthConfig = (issuer = "https://auth.org/"): OidcClientConfig => {
     const metadata = mockOpenIdConfiguration(issuer);
 
     return {
@@ -46,7 +46,8 @@ export const mockOpenIdConfiguration = (issuer = "https://auth.org/"): Validated
     token_endpoint: issuer + "token",
     authorization_endpoint: issuer + "auth",
     registration_endpoint: issuer + "registration",
-    response_types_supported: ["query"],
-    grant_types_supported: ["code", "refreshToken"],
+    jwks_uri: issuer + "jwks",
+    response_types_supported: ["code"],
+    grant_types_supported: ["authorization_code", "refresh_token"],
     code_challenge_methods_supported: ["S256"],
 });
