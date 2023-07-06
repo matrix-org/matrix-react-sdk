@@ -17,6 +17,7 @@ limitations under the License.
 import React from "react";
 import classNames from "classnames";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { Optional } from "matrix-events-sdk/lib/types";
 
 import { mediaFromMxc } from "../../../customisations/Media";
 import { _t } from "../../../languageHandler";
@@ -25,7 +26,6 @@ import dis from "../../../dispatcher/dispatcher";
 import ReactionsRowButtonTooltip from "./ReactionsRowButtonTooltip";
 import AccessibleButton from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import SettingsStore from "../../../settings/SettingsStore";
 import { REACTION_SHORTCODE_KEY } from "./ReactionsRow";
 interface IProps {
     // The event we're displaying reactions for
@@ -40,6 +40,8 @@ interface IProps {
     myReactionEvent?: MatrixEvent;
     // Whether to prevent quick-reactions by clicking on this reaction
     disabled?: boolean;
+    // Whether to render custom image reactions
+    customReactionImagesEnabled?: boolean;
 }
 
 interface IState {
@@ -103,20 +105,23 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
                     content={content}
                     reactionEvents={reactionEvents}
                     visible={this.state.tooltipVisible}
+                    customReactionImagesEnabled={this.props.customReactionImagesEnabled}
                 />
             );
         }
 
         const room = this.context.getRoom(mxEvent.getRoomId());
-        const customReactionImagesEnabled = SettingsStore.getValue("feature_render_reaction_images");
         let label: string | undefined;
-        let customReactionName: string | undefined;
+        let customReactionName: Optional<string>;
         if (room) {
             const senders: string[] = [];
             for (const reactionEvent of reactionEvents) {
                 const member = room.getMember(reactionEvent.getSender()!);
                 senders.push(member?.name || reactionEvent.getSender()!);
-                if (customReactionImagesEnabled && REACTION_SHORTCODE_KEY.findIn(reactionEvent.getContent())) {
+                if (
+                    this.props.customReactionImagesEnabled &&
+                    REACTION_SHORTCODE_KEY.findIn(reactionEvent.getContent())
+                ) {
                     customReactionName = REACTION_SHORTCODE_KEY.findIn(reactionEvent.getContent());
                 }
             }
@@ -137,7 +142,7 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
                 {content}
             </span>
         );
-        if (customReactionImagesEnabled && content.startsWith("mxc://")) {
+        if (this.props.customReactionImagesEnabled && content.startsWith("mxc://")) {
             const imageSrc = mediaFromMxc(content).srcHttp;
             if (imageSrc) {
                 reactionContent = (

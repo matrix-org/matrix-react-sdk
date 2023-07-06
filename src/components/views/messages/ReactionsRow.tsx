@@ -28,6 +28,7 @@ import ReactionPicker from "../emojipicker/ReactionPicker";
 import ReactionsRowButton from "./ReactionsRowButton";
 import RoomContext from "../../../contexts/RoomContext";
 import AccessibleButton from "../elements/AccessibleButton";
+import SettingsStore from "../../../settings/SettingsStore";
 
 // The maximum number of reactions to initially show on a message.
 const MAX_ITEMS_WHEN_LIMITED = 8;
@@ -172,6 +173,7 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
         if (!reactions || !isContentActionable(mxEvent)) {
             return null;
         }
+        const customReactionImagesEnabled = SettingsStore.getValue("feature_render_reaction_images");
 
         let items = reactions
             .getSortedAnnotationsByKey()
@@ -198,6 +200,7 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
                         mxEvent={mxEvent}
                         reactionEvents={deduplicatedEvents}
                         myReactionEvent={myReactionEvent}
+                        customReactionImagesEnabled={customReactionImagesEnabled}
                         disabled={
                             !this.context.canReact ||
                             (myReactionEvent && !myReactionEvent.isRedacted() && !this.context.canSelfRedact)
