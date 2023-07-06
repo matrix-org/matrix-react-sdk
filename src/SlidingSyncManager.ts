@@ -120,7 +120,7 @@ export class SlidingSyncManager {
     public slidingSync?: SlidingSync;
     private client?: MatrixClient;
 
-    public readonly configureDefer = defer<void>();
+    private configureDefer = defer<void>();
 
     public static get instance(): SlidingSyncManager {
         return SlidingSyncManager.internalInstance;
