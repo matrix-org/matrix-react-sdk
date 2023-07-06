@@ -37,7 +37,9 @@ jest.mock("matrix-js-sdk/src/matrix");
 jest.useRealTimers();
 
 const oidcStaticClientsConfig = {
-    "https://staticallyregisteredissuer.org/": "static-clientId-123",
+    "https://staticallyregisteredissuer.org/": {
+        client_id: "static-clientId-123",
+    },
 };
 
 describe("Login", function () {
@@ -52,7 +54,7 @@ describe("Login", function () {
         SdkConfig.put({
             brand: "test-brand",
             disable_custom_urls: true,
-            oidc_static_client_ids: oidcStaticClientsConfig,
+            oidc_static_clients: oidcStaticClientsConfig,
         });
         mockClient.login.mockClear().mockResolvedValue({
             access_token: "TOKEN",
@@ -216,6 +218,38 @@ describe("Login", function () {
         expect(platform.startSingleSignOn.mock.calls[1][0].baseUrl).toBe("https://server2");
     });
 
+    it("should handle updating to a server with no supported flows", async () => {
+        mockClient.loginFlows.mockResolvedValue({
+            flows: [
+                {
+                    type: "m.login.sso",
+                },
+            ],
+        });
+
+        const { container, rerender } = render(getRawComponent());
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
+
+        // update the mock for the new server with no supported flows
+        mockClient.loginFlows.mockResolvedValue({
+            flows: [
+                {
+                    type: "just something weird",
+                },
+            ],
+        });
+        // render with a new server
+        rerender(getRawComponent("https://server2"));
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
+
+        expect(
+            screen.getByText("This homeserver doesn't offer any login flows that are supported by this client."),
+        ).toBeInTheDocument();
+
+        // no sso button because server2 doesnt support sso
+        expect(container.querySelector(".mx_SSOButton")).not.toBeInTheDocument();
+    });
+
     it("should show single Continue button if OIDC MSC3824 compatibility is given by server", async () => {
         mockClient.loginFlows.mockResolvedValue({
             flows: [
@@ -289,7 +323,7 @@ describe("Login", function () {
         await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
 
         expect(
-            screen.getByText("This homeserver doesn't offer any login flows which are supported by this client."),
+            screen.getByText("This homeserver doesn't offer any login flows that are supported by this client."),
         ).toBeInTheDocument();
     });
 
