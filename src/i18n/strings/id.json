@@ -2254,7 +2254,6 @@
     "New? <a>Create account</a>": "Baru? <a>Buat akun</a>",
     "If you've joined lots of rooms, this might take a while": "Jika Anda bergabung dengan banyak ruangan, ini mungkin membutuhkan beberapa waktu",
     "There was a problem communicating with the homeserver, please try again later.": "Terjadi sebuah masalah berkomunikasi dengan homeservernya, coba lagi nanti.",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "Homeserver ini tidak menawarkan aluran login apa saja yang didukung oleh klien ini.",
     "Failed to perform homeserver discovery": "Gagal untuk melakukan penemuan homeserver",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Mohon dicatat Anda akan masuk ke server %(hs)s, bukan matrix.org.",
     "Incorrect username and/or password.": "Username dan/atau kata sandi salah.",

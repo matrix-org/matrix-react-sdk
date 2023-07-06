@@ -387,7 +387,6 @@
     "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "偵測到來自舊版 %(brand)s 的資料。這將會造成舊版的端對端加密失敗。在此版本中使用最近在舊版本交換的金鑰可能無法解密訊息。這也會造成與此版本的訊息交換失敗。若您遇到問題，請登出並重新登入。要保留訊息歷史，請匯出並重新匯入您的金鑰。",
     "Warning": "警告",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "請注意，您正在登入 %(hs)s 伺服器，不是 matrix.org。",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "這個家伺服器不提供任何此客戶端支援的登入流程。",
     "Ignores a user, hiding their messages from you": "忽略使用者，從您這裡隱藏他們的訊息",
     "Stops ignoring a user, showing their messages going forward": "停止忽略使用者，顯示他們的訊息",
     "Notify the whole room": "通知整個聊天室",
