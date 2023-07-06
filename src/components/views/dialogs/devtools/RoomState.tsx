@@ -65,7 +65,7 @@ const RoomStateHistory: React.FC<{
                     events.unshift({
                         event_id: events[0].unsigned.replaces_state,
                         unsigned: {
-                            error: e.message,
+                            error: e instanceof Error ? e.message : String(e),
                         },
                     });
                 }
