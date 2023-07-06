@@ -70,6 +70,7 @@ import { leaveRoomBehaviour } from "./utils/leave-behaviour";
 import { isLocalRoom } from "./utils/localRoom/isLocalRoom";
 import { SdkContextClass } from "./contexts/SDKContext";
 import { MatrixClientPeg } from "./MatrixClientPeg";
+import { getDeviceCryptoInfo } from "./utils/crypto/deviceInfo";
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
 interface HTMLInputEvent extends Event {
@@ -80,8 +81,8 @@ const singleMxcUpload = async (cli: MatrixClient): Promise<string | null> => {
     return new Promise((resolve) => {
         const fileSelector = document.createElement("input");
         fileSelector.setAttribute("type", "file");
-        fileSelector.onchange = (ev: HTMLInputEvent) => {
-            const file = ev.target.files?.[0];
+        fileSelector.onchange = (ev: Event) => {
+            const file = (ev as HTMLInputEvent).target.files?.[0];
             if (!file) return;
 
             Modal.createDialog(UploadConfirmDialog, {
@@ -1031,7 +1032,7 @@ export const Commands = [
 
                     return success(
                         (async (): Promise<void> => {
-                            const device = cli.getStoredDevice(userId, deviceId);
+                            const device = await getDeviceCryptoInfo(cli, userId, deviceId);
                             if (!device) {
                                 throw new UserFriendlyError(
                                     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)",
@@ -1104,7 +1105,7 @@ export const Commands = [
             try {
                 cli.forceDiscardSession(roomId);
             } catch (e) {
-                return reject(e.message);
+                return reject(e instanceof Error ? e.message : e);
             }
             return success();
         },
@@ -1133,7 +1134,7 @@ export const Commands = [
                     }),
                 );
             } catch (e) {
-                return reject(e.message);
+                return reject(e instanceof Error ? e.message : e);
             }
         },
         category: CommandCategories.advanced,

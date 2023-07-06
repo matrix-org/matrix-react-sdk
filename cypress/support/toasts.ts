@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,7 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-:root {
-    --font-normal: 400;
-    --font-semi-bold: 600;
+/// <reference types="cypress" />
+
+/**
+ * Assert that a toast with the given title exists, and return it
+ *
+ * @param expectedTitle - Expected title of the test
+ * @returns a Chainable for the DOM element of the toast
+ */
+export function getToast(expectedTitle: string): Cypress.Chainable<JQuery> {
+    return cy.contains(".mx_Toast_toast h2", expectedTitle).should("exist").closest(".mx_Toast_toast");
 }

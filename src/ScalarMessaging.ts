@@ -411,7 +411,7 @@ function kickUser(event: MessageEvent<any>, roomId: string, userId: string): voi
 }
 
 function setWidget(event: MessageEvent<any>, roomId: string | null): void {
-    const client = MatrixClientPeg.get();
+    const client = MatrixClientPeg.safeGet();
     const widgetId = event.data.widget_id;
     let widgetType = event.data.type;
     const widgetUrl = event.data.url;
@@ -535,7 +535,7 @@ function getRoomEncState(event: MessageEvent<any>, roomId: string): void {
         sendError(event, _t("This room is not recognised."));
         return;
     }
-    const roomIsEncrypted = MatrixClientPeg.get().isRoomEncrypted(roomId);
+    const roomIsEncrypted = MatrixClientPeg.safeGet().isRoomEncrypted(roomId);
 
     sendResponse(event, roomIsEncrypted);
 }
@@ -626,7 +626,8 @@ async function setBotPower(
             success: true,
         });
     } catch (err) {
-        sendError(event, err.message ? err.message : _t("Failed to send request."), err);
+        const error = err instanceof Error ? err : undefined;
+        sendError(event, error?.message ?? _t("Failed to send request."), error);
     }
 }
 
@@ -715,7 +716,7 @@ function returnStateEvent(event: MessageEvent<any>, roomId: string, eventType: s
 
 async function getOpenIdToken(event: MessageEvent<any>): Promise<void> {
     try {
-        const tokenObject = await MatrixClientPeg.get().getOpenIdToken();
+        const tokenObject = await MatrixClientPeg.safeGet().getOpenIdToken();
         sendResponse(event, tokenObject);
     } catch (ex) {
         logger.warn("Unable to fetch openId token.", ex);

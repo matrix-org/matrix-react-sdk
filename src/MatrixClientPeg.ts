@@ -49,7 +49,7 @@ export interface IMatrixClientCreds {
     identityServerUrl?: string;
     userId: string;
     deviceId?: string;
-    accessToken?: string;
+    accessToken: string;
     guest?: boolean;
     pickleKey?: string;
     freshLogin?: boolean;
@@ -71,15 +71,13 @@ export interface IMatrixClientPeg {
      *
      * @returns {string} The homeserver name, if present.
      */
-    getHomeserverName(): string | null;
+    getHomeserverName(): string;
 
-    get(): MatrixClient;
+    get(): MatrixClient | null;
     safeGet(): MatrixClient;
     unset(): void;
     assign(): Promise<any>;
     start(): Promise<any>;
-
-    getCredentials(): IMatrixClientCreds;
 
     /**
      * If we've registered a user ID we set this to the ID of the
@@ -138,11 +136,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     private matrixClient: MatrixClient | null = null;
     private justRegisteredUserId: string | null = null;
 
-    // the credentials used to init the current client object.
-    // used if we tear it down & recreate it with a different store
-    private currentClientCreds: IMatrixClientCreds | null = null;
-
-    public get(): MatrixClient {
+    public get(): MatrixClient | null {
         return this.matrixClient;
     }
 
@@ -195,7 +189,6 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     }
 
     public replaceUsingCreds(creds: IMatrixClientCreds): void {
-        this.currentClientCreds = creds;
         this.createClient(creds);
     }
 
@@ -335,33 +328,8 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         logger.log(`MatrixClientPeg: MatrixClient started`);
     }
 
-    public getCredentials(): IMatrixClientCreds {
-        if (!this.matrixClient) {
-            throw new Error("createClient must be called first");
-        }
-
-        let copiedCredentials: IMatrixClientCreds | null = this.currentClientCreds;
-        if (this.currentClientCreds?.userId !== this.matrixClient?.credentials?.userId) {
-            // cached credentials belong to a different user - don't use them
-            copiedCredentials = null;
-        }
-        return {
-            // Copy the cached credentials before overriding what we can.
-            ...(copiedCredentials ?? {}),
-
-            homeserverUrl: this.matrixClient.baseUrl,
-            identityServerUrl: this.matrixClient.idBaseUrl,
-            userId: this.matrixClient.getSafeUserId(),
-            deviceId: this.matrixClient.getDeviceId() ?? undefined,
-            accessToken: this.matrixClient.getAccessToken() ?? undefined,
-            guest: this.matrixClient.isGuest(),
-        };
-    }
-
-    public getHomeserverName(): string | null {
-        if (!this.matrixClient) return null;
-
-        const matches = /^@[^:]+:(.+)$/.exec(this.matrixClient.getSafeUserId());
+    public getHomeserverName(): string {
+        const matches = /^@[^:]+:(.+)$/.exec(this.safeGet().getSafeUserId());
         if (matches === null || matches.length < 1) {
             throw new Error("Failed to derive homeserver name from user ID!");
         }

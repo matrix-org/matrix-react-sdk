@@ -117,6 +117,7 @@ import { WidgetType } from "../../widgets/WidgetType";
 import WidgetUtils from "../../utils/WidgetUtils";
 import { shouldEncryptRoomWithSingle3rdPartyInvite } from "../../utils/room/shouldEncryptRoomWithSingle3rdPartyInvite";
 import { WaitingForThirdPartyRoomView } from "./WaitingForThirdPartyRoomView";
+import { isNotUndefined } from "../../Typeguards";
 
 const DEBUG = false;
 const PREVENT_MULTIPLE_JITSI_WITHIN = 30_000;
@@ -220,7 +221,6 @@ export interface IRoomState {
     showUrlPreview?: boolean;
     e2eStatus?: E2EStatus;
     rejecting?: boolean;
-    rejectError?: Error;
     hasPinnedWidgets?: boolean;
     mainSplitContentType?: MainSplitContentType;
     // whether or not a spaces context switch brought us here,
@@ -810,7 +810,21 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         return this.state.room?.roomId ?? this.state.roomId;
     };
 
-    private getPermalinkCreatorForRoom(room: Room): RoomPermalinkCreator {
+    private getPermalinkCreatorForRoom(): RoomPermalinkCreator {
+        const { room, roomId } = this.state;
+
+        // If room is undefined, attempt to use the roomId to create and store a permalinkCreator.
+        // Throw an error if we can not find a roomId in state.
+        if (room === undefined) {
+            if (isNotUndefined(roomId)) {
+                const permalinkCreator = new RoomPermalinkCreator(null, roomId);
+                this.permalinkCreators[roomId] = permalinkCreator;
+                return permalinkCreator;
+            } else {
+                throw new Error("Cannot get a permalink creator without a roomId");
+            }
+        }
+
         if (this.permalinkCreators[room.roomId]) return this.permalinkCreators[room.roomId];
 
         this.permalinkCreators[room.roomId] = new RoomPermalinkCreator(room);
@@ -1096,14 +1110,19 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     payload.data.threadId,
                 );
                 break;
-            case "picture_snapshot":
-                ContentMessages.sharedInstance().sendContentListToRoom(
-                    [payload.file],
-                    this.getRoomId(),
-                    undefined,
-                    this.context.client,
-                );
+            case "picture_snapshot": {
+                const roomId = this.getRoomId();
+                if (isNotUndefined(roomId)) {
+                    ContentMessages.sharedInstance().sendContentListToRoom(
+                        [payload.file],
+                        roomId,
+                        undefined,
+                        this.context.client,
+                    );
+                }
+
                 break;
+            }
             case "notifier_enabled":
             case Action.UploadStarted:
             case Action.UploadFinished:
@@ -1552,12 +1571,16 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         } else {
             Promise.resolve().then(() => {
                 const signUrl = this.props.threepidInvite?.signUrl;
-                dis.dispatch<JoinRoomPayload>({
-                    action: Action.JoinRoom,
-                    roomId: this.getRoomId(),
-                    opts: { inviteSignUrl: signUrl },
-                    metricsTrigger: this.state.room?.getMyMembership() === "invite" ? "Invite" : "RoomPreview",
-                });
+                const roomId = this.getRoomId();
+                if (isNotUndefined(roomId)) {
+                    dis.dispatch<JoinRoomPayload>({
+                        action: Action.JoinRoom,
+                        roomId,
+                        opts: { inviteSignUrl: signUrl },
+                        metricsTrigger: this.state.room?.getMyMembership() === "invite" ? "Invite" : "RoomPreview",
+                    });
+                }
+
                 return Promise.resolve();
             });
         }
@@ -1597,14 +1620,15 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private injectSticker(url: string, info: object, text: string, threadId: string | null): void {
-        if (!this.context.client) return;
+        const roomId = this.getRoomId();
+        if (!this.context.client || !roomId) return;
         if (this.context.client.isGuest()) {
             dis.dispatch({ action: "require_registration" });
             return;
         }
 
         ContentMessages.sharedInstance()
-            .sendStickerContentToRoom(url, this.getRoomId(), threadId, info, text, this.context.client)
+            .sendStickerContentToRoom(url, roomId, threadId, info, text, this.context.client)
             .then(undefined, (error) => {
                 if (error.name === "UnknownDeviceError") {
                     // Let the staus bar handle this
@@ -1636,7 +1660,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     private onSearchUpdate = (inProgress: boolean, searchResults: ISearchResults | null): void => {
         this.setState({
             search: {
-                ...this.state.search,
+                ...this.state.search!,
                 count: searchResults?.count,
                 inProgress,
             },
@@ -1658,10 +1682,12 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private onRejectButtonClicked = (): void => {
+        const roomId = this.getRoomId();
+        if (!roomId) return;
         this.setState({
             rejecting: true,
         });
-        this.context.client?.leave(this.getRoomId()).then(
+        this.context.client?.leave(roomId).then(
             () => {
                 dis.dispatch({ action: Action.ViewHomePage });
                 this.setState({
@@ -1679,7 +1705,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
                 this.setState({
                     rejecting: false,
-                    rejectError: error,
                 });
             },
         );
@@ -1705,7 +1730,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         } catch (error) {
             logger.error(`Failed to reject invite: ${error}`);
 
-            const msg = error.message ? error.message : JSON.stringify(error);
+            const msg = error instanceof Error ? error.message : JSON.stringify(error);
             Modal.createDialog(ErrorDialog, {
                 title: _t("Failed to reject invite"),
                 description: msg,
@@ -1713,7 +1738,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
             this.setState({
                 rejecting: false,
-                rejectError: error,
             });
         }
     };
@@ -1898,14 +1922,17 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
     }
 
-    private onFileDrop = (dataTransfer: DataTransfer): Promise<void> =>
-        ContentMessages.sharedInstance().sendContentListToRoom(
+    private onFileDrop = async (dataTransfer: DataTransfer): Promise<void> => {
+        const roomId = this.getRoomId();
+        if (!roomId || !this.context.client) return;
+        await ContentMessages.sharedInstance().sendContentListToRoom(
             Array.from(dataTransfer.files),
-            this.getRoomId(),
-            null,
+            roomId,
+            undefined,
             this.context.client,
             TimelineRenderingType.Room,
         );
+    };
 
     private onMeasurement = (narrow: boolean): void => {
         this.setState({ narrow });
@@ -1916,7 +1943,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     }
 
     private get permalinkCreator(): RoomPermalinkCreator {
-        return this.getPermalinkCreatorForRoom(this.state.room);
+        return this.getPermalinkCreatorForRoom();
     }
 
     private renderLocalRoomCreateLoader(localRoom: LocalRoom): ReactNode {
