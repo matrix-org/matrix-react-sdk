@@ -468,7 +468,6 @@
     "Old cryptography data detected": "오래된 암호화 데이터 감지됨",
     "Room Notification": "방 알림",
     "Notify the whole room": "방 전체에 알림",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "이 홈서버는 이 클라이언트에서 지원하는 로그인 방식을 지원하지 않습니다.",
     "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "홈서버 %(homeserverDomain)s을(를) 계속 사용하기 위해서는 저희 이용 약관을 검토하고 동의해주세요.",
     "State Key": "상태 키",
     "Clear Storage and Sign Out": "저장소를 지우고 로그아웃",

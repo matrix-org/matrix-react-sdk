@@ -802,7 +802,6 @@
     "Invalid homeserver discovery response": "Epäkelpo kotipalvelimen etsinnän vastaus",
     "Invalid identity server discovery response": "Epäkelpo identiteettipalvelimen etsinnän vastaus",
     "Failed to perform homeserver discovery": "Kotipalvelimen etsinnän suoritus epäonnistui",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "Tämä kotipalvelin ei tarjoa yhtään kirjautumistapaa, jota tämä asiakasohjelma tukisi.",
     "Set up": "Ota käyttöön",
     "New Recovery Method": "Uusi palautustapa",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Jos et ottanut käyttöön uutta palautustapaa, hyökkääjä saattaa yrittää käyttää tiliäsi. Vaihda tilisi salasana ja aseta uusi palautustapa asetuksissa välittömästi.",

@@ -484,7 +484,6 @@
     "No Audio Outputs detected": "No se han detectado salidas de sonido",
     "Audio Output": "Salida de sonido",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Por favor, ten en cuenta que estás iniciando sesión en el servidor %(hs)s, y no en matrix.org.",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "Este servidor base no ofrece ningún flujo de inicio de sesión soportado por este cliente.",
     "This server does not support authentication with a phone number.": "Este servidor no es compatible con autenticación mediante número telefónico.",
     "Notify the whole room": "Notificar a toda la sala",
     "Room Notification": "Notificación de Salas",

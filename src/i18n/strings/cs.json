@@ -373,7 +373,6 @@
     "Profile": "Profil",
     "The email address linked to your account must be entered.": "Musíte zadat e-mailovou adresu spojenou s vaším účtem.",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Právě se přihlašujete na server %(hs)s, a nikoliv na server matrix.org.",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "Tento domovský server nenabízí žádné přihlašovací toky podporované touto službou/klientem.",
     "This server does not support authentication with a phone number.": "Tento server nepodporuje ověření telefonním číslem.",
     "Deops user with given id": "Zruší stav moderátor uživateli se zadaným ID",
     "Ignores a user, hiding their messages from you": "Ignoruje uživatele a skryje všechny jeho zprávy",

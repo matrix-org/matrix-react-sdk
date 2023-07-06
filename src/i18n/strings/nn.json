@@ -481,7 +481,6 @@
     "Filter results": "Filtrer resultat",
     "Server may be unavailable, overloaded, or search timed out :(": "Tenaren er kanskje utilgjengeleg, overlasta, elles så vart søket tidsavbrote :(",
     "Profile": "Brukar",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "Heimetenaren tilbyr ingen innloggingsmetodar som er støtta av denne klienten.",
     "Export room keys": "Eksporter romnøklar",
     "Export": "Eksporter",
     "Import room keys": "Importer romnøklar",
