@@ -2483,6 +2483,7 @@
     "Add reaction": "Add reaction",
     "Reactions": "Reactions",
     "%(reactors)s reacted with %(content)s": "%(reactors)s reacted with %(content)s",
+    "Custom reaction": "Custom reaction",
     "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>",
     "Message deleted on %(date)s": "Message deleted on %(date)s",
     "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s changed the avatar for %(roomName)s",
