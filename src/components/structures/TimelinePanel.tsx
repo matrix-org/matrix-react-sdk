@@ -1399,7 +1399,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const client = MatrixClientPeg.get();
         // Clear all notifications if we already dismissed the read marker and we are at the bottom of the message panel
         if (this.isReadMarkerUpToDate() && this.canResetTimeline()) {
-            if (!!this.props.timelineSet.room) {
+            if (this.props.timelineSet.room) {
                 await clearRoomNotification(this.props.timelineSet.room, client);
             }
         } else {
