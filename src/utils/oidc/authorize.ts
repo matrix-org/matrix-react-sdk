@@ -14,33 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-    AuthorizationParams,
-    generateAuthorizationParams,
-    generateAuthorizationUrl,
-} from "matrix-js-sdk/src/oidc/authorize";
+import { OidcClientConfig } from "matrix-js-sdk/src/autodiscovery";
+import { generateOidcAuthorizationUrl } from "matrix-js-sdk/src/oidc/authorize";
+import { randomString } from "matrix-js-sdk/src/randomstring";
 
-import { ValidatedDelegatedAuthConfig } from "../ValidatedServerConfig";
+import { SSO_HOMESERVER_URL_KEY, SSO_ID_SERVER_URL_KEY } from "../../BasePlatform";
 
 /**
- * Store authorization params for retrieval when returning from OIDC OP
- * @param authorizationParams from `generateAuthorizationParams`
- * @param delegatedAuthConfig used for future interactions with OP
- * @param clientId this client's id as registered with configured issuer
+ * Store homeserver for retrieval when returning from OIDC OP
  * @param homeserver target homeserver
+ * @param identityServerUrl OPTIONAL target identity server
  */
-const storeAuthorizationParams = (
-    { redirectUri, state, nonce, codeVerifier }: AuthorizationParams,
-    { issuer }: ValidatedDelegatedAuthConfig,
-    clientId: string,
-    homeserver: string,
-): void => {
-    window.sessionStorage.setItem(`oidc_${state}_nonce`, nonce);
-    window.sessionStorage.setItem(`oidc_${state}_redirectUri`, redirectUri);
-    window.sessionStorage.setItem(`oidc_${state}_codeVerifier`, codeVerifier);
-    window.sessionStorage.setItem(`oidc_${state}_clientId`, clientId);
-    window.sessionStorage.setItem(`oidc_${state}_issuer`, issuer);
-    window.sessionStorage.setItem(`oidc_${state}_homeserver`, homeserver);
+const persistAuthorizationParams = (nonce, homeserverUrl: string, identityServerUrl?: string): void => {
+    // persist hs url and is url for when the user is returned to the app
+    sessionStorage.setItem(`oidc_nonce`, nonce);
+    sessionStorage.setItem(SSO_HOMESERVER_URL_KEY, homeserverUrl);
+    if (identityServerUrl) {
+        sessionStorage.setItem(SSO_ID_SERVER_URL_KEY, identityServerUrl);
+    }
 };
 
 /**
@@ -49,25 +40,29 @@ const storeAuthorizationParams = (
  * Navigates to configured authorization endpoint
  * @param delegatedAuthConfig from discovery
  * @param clientId this client's id as registered with configured issuer
- * @param homeserver target homeserver
+ * @param homeserverUrl target homeserver
+ * @param identityServerUrl OPTIONAL target identity server
  * @returns Promise that resolves after we have navigated to auth endpoint
  */
 export const startOidcLogin = async (
-    delegatedAuthConfig: ValidatedDelegatedAuthConfig,
+    delegatedAuthConfig: OidcClientConfig,
     clientId: string,
-    homeserver: string,
+    homeserverUrl: string,
+    identityServerUrl?: string,
 ): Promise<void> => {
-    // TODO(kerrya) afterloginfragment https://github.com/vector-im/element-web/issues/25656
     const redirectUri = window.location.origin;
-    const authParams = generateAuthorizationParams({ redirectUri });
 
-    storeAuthorizationParams(authParams, delegatedAuthConfig, clientId, homeserver);
+    const nonce = randomString(10);
 
-    const authorizationUrl = await generateAuthorizationUrl(
-        delegatedAuthConfig.authorizationEndpoint,
+    persistAuthorizationParams(nonce, homeserverUrl, identityServerUrl);
+
+    const authorizationUrl = await generateOidcAuthorizationUrl({
+        metadata: delegatedAuthConfig.metadata,
+        redirectUri,
         clientId,
-        authParams,
-    );
+        homeserverUrl,
+        nonce,
+    });
 
     window.location.href = authorizationUrl;
 };
