@@ -112,7 +112,6 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
      */
     private liveBeaconIds: BeaconIdentifier[] = [];
     private locationInterval?: number;
-    private geolocationError?: unknown;
     private clearPositionWatch?: ClearWatchCallback;
     /**
      * Track when the last position was published
@@ -462,7 +461,11 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         try {
             this.clearPositionWatch = watchPosition(this.onWatchedPosition, this.onGeolocationError);
         } catch (error) {
-            this.onGeolocationError(error);
+            if (error instanceof Error) {
+                this.onGeolocationError(error.message as GeolocationError);
+            } else {
+                console.error("Unexpected error", error);
+            }
             // don't set locationInterval if geolocation failed to setup
             return;
         }
@@ -485,7 +488,6 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         clearInterval(this.locationInterval);
         this.locationInterval = undefined;
         this.lastPublishedPositionTimestamp = undefined;
-        this.geolocationError = undefined;
 
         if (this.clearPositionWatch) {
             this.clearPositionWatch();
@@ -506,13 +508,12 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         }
     };
 
-    private onGeolocationError = async (error: unknown): Promise<void> => {
-        this.geolocationError = error;
-        logger.error("Geolocation failed", this.geolocationError);
+    private onGeolocationError = async (error: GeolocationError): Promise<void> => {
+        logger.error("Geolocation failed", error);
 
         // other errors are considered non-fatal
         // and self recovering
-        if (![GeolocationError.Unavailable, GeolocationError.PermissionDenied].includes(error as GeolocationError)) {
+        if (![GeolocationError.Unavailable, GeolocationError.PermissionDenied].includes(error)) {
             return;
         }
 
@@ -531,7 +532,11 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
             const position = await getCurrentPosition();
             this.publishLocationToBeacons(mapGeolocationPositionToTimedGeo(position));
         } catch (error) {
-            this.onGeolocationError(error);
+            if (error instanceof Error) {
+                this.onGeolocationError(error.message as GeolocationError);
+            } else {
+                console.error("Unexpected error", error);
+            }
         }
     };
 
