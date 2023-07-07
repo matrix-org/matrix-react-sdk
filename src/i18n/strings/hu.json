@@ -381,7 +381,6 @@
     "Idle for %(duration)s": "%(duration)s óta tétlen",
     "Offline for %(duration)s": "%(duration)s óta elérhetetlen",
     "Unknown for %(duration)s": "%(duration)s óta az állapota ismeretlen",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "Ez a Matrix-kiszolgáló egyetlen olyan bejelentkezési módot sem támogat, amelyet a kliens ismerne.",
     "collapse": "becsukás",
     "expand": "kinyitás",
     "Call Failed": "Sikertelen hívás",
