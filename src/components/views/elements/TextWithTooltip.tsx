@@ -14,25 +14,25 @@
  limitations under the License.
  */
 
-import React, { HTMLAttributes } from 'react';
-import classNames from 'classnames';
+import React, { HTMLAttributes } from "react";
+import classNames from "classnames";
 
-import TooltipTarget from './TooltipTarget';
+import TooltipTarget from "./TooltipTarget";
 
 interface IProps extends HTMLAttributes<HTMLSpanElement> {
     class?: string;
     tooltipClass?: string;
     tooltip: React.ReactNode;
     tooltipProps?: Omit<React.ComponentProps<typeof TooltipTarget>, "label" | "tooltipClassName" | "className">;
-    onClick?: (ev?: React.MouseEvent) => void;
+    onClick?: (ev: React.MouseEvent) => void;
 }
 
 export default class TextWithTooltip extends React.Component<IProps> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const { class: className, children, tooltip, tooltipClass, tooltipProps, ...props } = this.props;
 
         return (
@@ -45,7 +45,7 @@ export default class TextWithTooltip extends React.Component<IProps> {
                 className="mx_TextWithTooltip_tooltip"
                 {...props}
             >
-                { children }
+                {children}
             </TooltipTarget>
         );
     }

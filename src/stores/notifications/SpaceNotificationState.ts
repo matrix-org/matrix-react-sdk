@@ -21,20 +21,22 @@ import { arrayDiff } from "../../utils/arrays";
 import { RoomNotificationState } from "./RoomNotificationState";
 import { NotificationState, NotificationStateEvents } from "./NotificationState";
 import { FetchRoomFn } from "./ListNotificationState";
+import { DefaultTagID } from "../room-list/models";
+import RoomListStore from "../room-list/RoomListStore";
 
 export class SpaceNotificationState extends NotificationState {
     public rooms: Room[] = []; // exposed only for tests
     private states: { [spaceId: string]: RoomNotificationState } = {};
 
-    constructor(private getRoomFn: FetchRoomFn) {
+    public constructor(private getRoomFn: FetchRoomFn) {
         super();
     }
 
-    public get symbol(): string {
+    public get symbol(): string | null {
         return this._color === NotificationColor.Unsent ? "!" : null;
     }
 
-    public setRooms(rooms: Room[]) {
+    public setRooms(rooms: Room[]): void {
         const oldRooms = this.rooms;
         const diff = arrayDiff(oldRooms, rooms);
         this.rooms = rooms;
@@ -53,11 +55,11 @@ export class SpaceNotificationState extends NotificationState {
         this.calculateTotalState();
     }
 
-    public getFirstRoomWithNotifications() {
-        return Object.values(this.states).find(state => state.color >= this.color)?.room.roomId;
+    public getFirstRoomWithNotifications(): string | undefined {
+        return Object.values(this.states).find((state) => state.color >= this.color)?.room.roomId;
     }
 
-    public destroy() {
+    public destroy(): void {
         super.destroy();
         for (const state of Object.values(this.states)) {
             state.off(NotificationStateEvents.Update, this.onRoomNotificationStateUpdate);
@@ -65,16 +67,22 @@ export class SpaceNotificationState extends NotificationState {
         this.states = {};
     }
 
-    private onRoomNotificationStateUpdate = () => {
+    private onRoomNotificationStateUpdate = (): void => {
         this.calculateTotalState();
     };
 
-    private calculateTotalState() {
+    private calculateTotalState(): void {
         const snapshot = this.snapshot();
 
         this._count = 0;
         this._color = NotificationColor.None;
-        for (const state of Object.values(this.states)) {
+        for (const [roomId, state] of Object.entries(this.states)) {
+            const room = this.rooms.find((r) => r.roomId === roomId);
+            const roomTags = room ? RoomListStore.instance.getTagsForRoom(room) : [];
+
+            // We ignore unreads in LowPriority rooms, see https://github.com/vector-im/element-web/issues/16836
+            if (roomTags.includes(DefaultTagID.LowPriority) && state.color === NotificationColor.Bold) continue;
+
             this._count += state.count;
             this._color = Math.max(this.color, state.color);
         }

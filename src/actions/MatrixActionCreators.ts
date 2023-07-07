@@ -34,7 +34,7 @@ import { ActionPayload } from "../dispatcher/payloads";
  */
 function createSyncAction(matrixClient: MatrixClient, state: string, prevState: string): ActionPayload {
     return {
-        action: 'MatrixActions.sync',
+        action: "MatrixActions.sync",
         state,
         prevState,
         matrixClient,
@@ -48,6 +48,7 @@ function createSyncAction(matrixClient: MatrixClient, state: string, prevState: 
  * @property {MatrixEvent} event the MatrixEvent that triggered the dispatch.
  * @property {string} event_type the type of the MatrixEvent, e.g. "m.direct".
  * @property {Object} event_content the content of the MatrixEvent.
+ * @property {MatrixEvent} previousEvent the previous account data event of the same type, if present
  */
 
 /**
@@ -56,14 +57,20 @@ function createSyncAction(matrixClient: MatrixClient, state: string, prevState: 
  *
  * @param {MatrixClient} matrixClient the matrix client.
  * @param {MatrixEvent} accountDataEvent the account data event.
+ * @param {MatrixEvent | undefined} previousAccountDataEvent the previous account data event of the same type, if present
  * @returns {AccountDataAction} an action of type MatrixActions.accountData.
  */
-function createAccountDataAction(matrixClient: MatrixClient, accountDataEvent: MatrixEvent): ActionPayload {
+function createAccountDataAction(
+    matrixClient: MatrixClient,
+    accountDataEvent: MatrixEvent,
+    previousAccountDataEvent?: MatrixEvent,
+): ActionPayload {
     return {
-        action: 'MatrixActions.accountData',
+        action: "MatrixActions.accountData",
         event: accountDataEvent,
         event_type: accountDataEvent.getType(),
         event_content: accountDataEvent.getContent(),
+        previousEvent: previousAccountDataEvent,
     };
 }
 
@@ -92,7 +99,7 @@ function createRoomAccountDataAction(
     room: Room,
 ): ActionPayload {
     return {
-        action: 'MatrixActions.Room.accountData',
+        action: "MatrixActions.Room.accountData",
         event: accountDataEvent,
         event_type: accountDataEvent.getType(),
         event_content: accountDataEvent.getContent(),
@@ -116,7 +123,7 @@ function createRoomAccountDataAction(
  * @returns {RoomAction} an action of type `MatrixActions.Room`.
  */
 function createRoomAction(matrixClient: MatrixClient, room: Room): ActionPayload {
-    return { action: 'MatrixActions.Room', room };
+    return { action: "MatrixActions.Room", room };
 }
 
 /**
@@ -137,7 +144,7 @@ function createRoomAction(matrixClient: MatrixClient, room: Room): ActionPayload
  * @returns {RoomTagsAction} an action of type `MatrixActions.Room.tags`.
  */
 function createRoomTagsAction(matrixClient: MatrixClient, roomTagsEvent: MatrixEvent, room: Room): ActionPayload {
-    return { action: 'MatrixActions.Room.tags', room };
+    return { action: "MatrixActions.Room.tags", room };
 }
 
 /**
@@ -151,7 +158,7 @@ function createRoomTagsAction(matrixClient: MatrixClient, roomTagsEvent: MatrixE
  */
 function createRoomReceiptAction(matrixClient: MatrixClient, event: MatrixEvent, room: Room): ActionPayload {
     return {
-        action: 'MatrixActions.Room.receipt',
+        action: "MatrixActions.Room.receipt",
         event,
         room,
         matrixClient,
@@ -169,7 +176,7 @@ function createRoomReceiptAction(matrixClient: MatrixClient, event: MatrixEvent,
  * @property {Room} room the Room whose tags changed.
  */
 export interface IRoomTimelineActionPayload extends Pick<ActionPayload, "action"> {
-    action: 'MatrixActions.Room.timeline';
+    action: "MatrixActions.Room.timeline";
     event: MatrixEvent;
     room: Room | null;
     isLiveEvent?: boolean;
@@ -185,7 +192,7 @@ export interface IRoomTimelineActionPayload extends Pick<ActionPayload, "action"
  * @property {MatrixEvent | null} lastStateEvent the previous value for this (event-type, state-key) tuple in room state
  */
 export interface IRoomStateEventsActionPayload extends Pick<ActionPayload, "action"> {
-    action: 'MatrixActions.RoomState.events';
+    action: "MatrixActions.RoomState.events";
     event: MatrixEvent;
     state: RoomState;
     lastStateEvent: MatrixEvent | null;
@@ -218,10 +225,10 @@ function createRoomTimelineAction(
     data: IRoomTimelineData,
 ): IRoomTimelineActionPayload {
     return {
-        action: 'MatrixActions.Room.timeline',
+        action: "MatrixActions.Room.timeline",
         event: timelineEvent,
         isLiveEvent: data.liveEvent,
-        isLiveUnfilteredRoomTimelineEvent: room && data.timeline.getTimelineSet() === room.getUnfilteredTimelineSet(),
+        isLiveUnfilteredRoomTimelineEvent: data.timeline.getTimelineSet() === room?.getUnfilteredTimelineSet(),
         room,
     };
 }
@@ -244,7 +251,7 @@ function createRoomStateEventsAction(
     lastStateEvent: MatrixEvent | null,
 ): IRoomStateEventsActionPayload {
     return {
-        action: 'MatrixActions.RoomState.events',
+        action: "MatrixActions.RoomState.events",
         event,
         state,
         lastStateEvent,
@@ -277,7 +284,7 @@ function createSelfMembershipAction(
     membership: string,
     oldMembership: string,
 ): ActionPayload {
-    return { action: 'MatrixActions.Room.myMembership', room, membership, oldMembership };
+    return { action: "MatrixActions.Room.myMembership", room, membership, oldMembership };
 }
 
 /**
@@ -297,7 +304,7 @@ function createSelfMembershipAction(
  * @returns {EventDecryptedAction} an action of type `MatrixActions.Event.decrypted`.
  */
 function createEventDecryptedAction(matrixClient: MatrixClient, event: MatrixEvent): ActionPayload {
-    return { action: 'MatrixActions.Event.decrypted', event };
+    return { action: "MatrixActions.Event.decrypted", event };
 }
 
 type Listener = () => void;

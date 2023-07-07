@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom";
 
 import PlatformPeg from "../PlatformPeg";
 import LinkWithTooltip from "../components/views/elements/LinkWithTooltip";
@@ -31,7 +31,7 @@ import LinkWithTooltip from "../components/views/elements/LinkWithTooltip";
  *   React components that have been mounted by this function. The initial caller
  *   should pass in an empty array to seed the accumulator.
  */
-export function tooltipifyLinks(rootNodes: ArrayLike<Element>, ignoredNodes: Element[], containers: Element[]) {
+export function tooltipifyLinks(rootNodes: ArrayLike<Element>, ignoredNodes: Element[], containers: Element[]): void {
     if (!PlatformPeg.get()?.needsUrlTooltips()) {
         return;
     }
@@ -39,30 +39,35 @@ export function tooltipifyLinks(rootNodes: ArrayLike<Element>, ignoredNodes: Ele
     let node = rootNodes[0];
 
     while (node) {
-        let tooltipified = false;
-
-        if (ignoredNodes.indexOf(node) >= 0) {
+        if (ignoredNodes.includes(node) || containers.includes(node)) {
             node = node.nextSibling as Element;
             continue;
         }
 
-        if (node.tagName === "A" && node.getAttribute("href")
-            && node.getAttribute("href") !== node.textContent.trim()
+        if (
+            node.tagName === "A" &&
+            node.getAttribute("href") &&
+            node.getAttribute("href") !== node.textContent?.trim()
         ) {
-            const container = document.createElement("span");
-            const href = node.getAttribute("href");
+            let href = node.getAttribute("href")!;
+            try {
+                href = new URL(href, window.location.href).toString();
+            } catch (e) {
+                // Not all hrefs will be valid URLs
+            }
 
-            const tooltip = <LinkWithTooltip tooltip={new URL(href, window.location.href).toString()}>
-                <span dangerouslySetInnerHTML={{ __html: node.outerHTML }} />
-            </LinkWithTooltip>;
+            // The node's innerHTML was already sanitized before being rendered in the first place, here we are just
+            // wrapping the link with the LinkWithTooltip component, keeping the same children. Ideally we'd do this
+            // without the superfluous span but this is not something React trivially supports at this time.
+            const tooltip = (
+                <LinkWithTooltip tooltip={href}>
+                    <span dangerouslySetInnerHTML={{ __html: node.innerHTML }} />
+                </LinkWithTooltip>
+            );
 
-            ReactDOM.render(tooltip, container);
-            node.parentNode.replaceChild(container, node);
-            containers.push(container);
-            tooltipified = true;
-        }
-
-        if (node.childNodes?.length && !tooltipified) {
+            ReactDOM.render(tooltip, node);
+            containers.push(node);
+        } else if (node.childNodes?.length) {
             tooltipifyLinks(node.childNodes as NodeListOf<Element>, ignoredNodes, containers);
         }
 
@@ -78,7 +83,7 @@ export function tooltipifyLinks(rootNodes: ArrayLike<Element>, ignoredNodes: Ele
  *
  * @param {Element[]} containers - array of tooltip containers to unmount
  */
-export function unmountTooltips(containers: Element[]) {
+export function unmountTooltips(containers: Element[]): void {
     for (const container of containers) {
         ReactDOM.unmountComponentAtNode(container);
     }

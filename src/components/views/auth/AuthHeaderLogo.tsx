@@ -14,12 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 export default class AuthHeaderLogo extends React.PureComponent {
     public render(): React.ReactNode {
-        return <div className="mx_AuthHeaderLogo">
-            Matrix
-        </div>;
+        return <aside className="mx_AuthHeaderLogo">Matrix</aside>;
     }
 }
