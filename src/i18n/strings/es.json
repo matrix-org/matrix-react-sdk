@@ -1060,7 +1060,6 @@
     "Custom theme URL": "URL de tema personalizado",
     "Add theme": "Añadir tema",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para informar de un problema de seguridad relacionado con Matrix, lee la <a>Política de divulgación de seguridad</a> de Matrix.org.",
-    "Keyboard Shortcuts": "Atajos de teclado",
     "Something went wrong. Please try again or view your console for hints.": "Algo salió mal. Por favor, inténtalo de nuevo o mira tu consola para encontrar pistas.",
     "Please try again or view your console for hints.": "Por favor, inténtalo de nuevo o mira tu consola para encontrar pistas.",
     "Ban list rules - %(roomName)s": "Reglas de la lista negra - %(roomName)s",

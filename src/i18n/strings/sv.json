@@ -1219,7 +1219,6 @@
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Samtyck till identitetsserverns (%(serverName)s) användarvillkor för att låta dig själv vara upptäckbar med e-postadress eller telefonnummer.",
     "Clear cache and reload": "Rensa cache och ladda om",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "För att rapportera ett Matrix-relaterat säkerhetsproblem, vänligen läs Matrix.orgs <a>riktlinjer för säkerhetspublicering</a>.",
-    "Keyboard Shortcuts": "Tangentbordsgenvägar",
     "Ignored/Blocked": "Ignorerade/blockerade",
     "Error adding ignored user/server": "Fel vid tilläggning av användare/server",
     "Something went wrong. Please try again or view your console for hints.": "Någonting gick fel. Vänligen försök igen eller kolla i din konsol efter ledtrådar.",
