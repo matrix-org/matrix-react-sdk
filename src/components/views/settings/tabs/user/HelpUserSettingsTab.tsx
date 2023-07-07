@@ -25,10 +25,6 @@ import Modal from "../../../../../Modal";
 import PlatformPeg from "../../../../../PlatformPeg";
 import UpdateCheckButton from "../../UpdateCheckButton";
 import BugReportDialog from "../../../dialogs/BugReportDialog";
-import { OpenToTabPayload } from "../../../../../dispatcher/payloads/OpenToTabPayload";
-import { Action } from "../../../../../dispatcher/actions";
-import { UserTab } from "../../../dialogs/UserTab";
-import dis from "../../../../../dispatcher/dispatcher";
 import CopyableText from "../../../elements/CopyableText";
 import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
@@ -326,7 +322,6 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         const { appVersion, olmVersion } = this.getVersionInfo();
 
         return (
-
             <SettingsTab>
                 <SettingsSection heading={_t("Help & About")}>
                     {bugReportingSection}
