@@ -499,7 +499,6 @@
     "Please <a>contact your service administrator</a> to continue using this service.": "このサービスを引き続き使用するには、<a>サービス管理者にお問い合わせ</a>ください。",
     "Incorrect username and/or password.": "ユーザー名とパスワードの一方あるいは両方が正しくありません。",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "matrix.orgではなく、%(hs)sのサーバーにログインしていることに注意してください。",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "このホームサーバーは、このクライアントでサポートされているログインの手順を提供していません。",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "HTTPSのURLがブラウザーのバーにある場合、HTTP経由でホームサーバーに接続することはできません。HTTPSを使用するか<a>安全でないスクリプトを有効にしてください</a>。",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "ホームサーバーに接続できません。接続を確認し、<a>ホームサーバーのSSL証明書</a>が信頼できるものであり、ブラウザーの拡張機能が要求をブロックしていないことを確認してください。",
     "This server does not support authentication with a phone number.": "このサーバーは、電話番号による認証をサポートしていません。",

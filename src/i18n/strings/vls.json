@@ -833,7 +833,6 @@
     "Incorrect username and/or password.": "Verkeerde gebruukersnoame en/of paswoord.",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Zy je dervan bewust da je jen anmeldt by de %(hs)s-server, nie by matrix.org.",
     "Failed to perform homeserver discovery": "Ountdekkn van thuusserver is mislukt",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "Deze thuusserver è geen anmeldiengsmethodes da door deze cliënt wordn oundersteund.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Je ku geen verbindienge moakn me de thuusserver via HTTP wanneer dat der een HTTPS-URL in je browserbalk stoat. Gebruukt HTTPS of <a>schoakelt ounveilige scripts in</a>.",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Geen verbindienge met de thuusserver - controleer je verbindienge, zorgt dervoorn dan ’t <a>SSL-certificoat van de thuusserver</a> vertrouwd is en dat der geen browserextensies verzoekn blokkeern.",
     "Sign in with single sign-on": "Anmeldn met enkele anmeldienge",
