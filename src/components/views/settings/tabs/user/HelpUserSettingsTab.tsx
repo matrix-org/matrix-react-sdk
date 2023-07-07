@@ -232,14 +232,6 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         return `${appVersion}\n${olmVersion}`;
     };
 
-
-    private onKeyboardShortcutsClicked = (): void => {
-        dis.dispatch<OpenToTabPayload>({
-            action: Action.ViewUserSettings,
-            initialTabId: UserTab.Keyboard,
-        });
-    };
-
     public render(): React.ReactNode {
         const brand = SdkConfig.get().brand;
 
@@ -338,6 +330,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
             <SettingsTab>
                 <SettingsSection heading={_t("Help & About")}>
                     {bugReportingSection}
+                    <SettingsSubsection heading={_t("FAQ")} description={faqText} />
                     <SettingsSubsection heading={_t("Versions")}>
                         <SettingsSubsectionText>
                             <CopyableText getTextToCopy={this.getVersionTextToCopy}>
